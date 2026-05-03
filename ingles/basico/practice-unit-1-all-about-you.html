@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Unit 1 Practice: All About You | Basic English Course 1</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo-transparent.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- PRACTICE HERO -->
+    <section class="lesson-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab</p>
+
+        <h1>Unit 1: All About You</h1>
+
+        <p>
+          Complete the registration form and generate a short introduction
+          you can use for classroom role-plays and speaking practice.
+        </p>
+
+        <div class="lesson-meta">
+          <span>Speaking Practice</span>
+          <span>Personal Information</span>
+          <span>Beginner Level</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#practice-activity" class="btn btn-primary">Start activity</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="lesson-hero-image">
+        <img src="../../assets/img/english-basic/practice-lab/unit-1-all-about-you-practice-banner.png" alt="Unit 1: All About You Practice" />
+      </div>
+    </section>
+
+    <!-- PRACTICE OUTCOME -->
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice Goal</span>
+        <p>
+          By the end of this activity, you will be able to introduce yourself using your name,
+          age, city, and a simple greeting question.
+        </p>
+      </div>
+    </section>
+
+    <!-- PRACTICE CONTENT -->
+    <section class="premium-lesson-container" id="practice-activity">
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">01</span>
+          <div>
+            <p class="topic-label">Interactive Activity</p>
+            <h2>Registration Form</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Complete the form with your personal information. Then click the button to generate
+          your introduction for the class role-play.
+        </p>
+
+        <div class="practice-form-panel">
+          <div class="practice-form-header">
+            <div>
+              <h3>My Personal Information</h3>
+              <p>Write your answers and create your introduction.</p>
+            </div>
+
+            <span class="practice-badge">Role-play</span>
+          </div>
+
+          <div class="practice-form-grid">
+            <div class="practice-form-group">
+              <label for="studentName">What is your name?</label>
+              <input type="text" id="studentName" placeholder="Example: Alex" />
+            </div>
+
+            <div class="practice-form-group">
+              <label for="studentAge">How old are you?</label>
+              <input type="number" id="studentAge" placeholder="Example: 21" />
+            </div>
+
+            <div class="practice-form-group full-width">
+              <label for="studentCity">Where do you live?</label>
+              <input type="text" id="studentCity" placeholder="Example: Bogotá" />
+            </div>
+          </div>
+
+          <button class="practice-submit-btn" onclick="generateIntro()">
+            Generate My Introduction
+          </button>
+
+          <div class="practice-result-card" id="result-card">
+            <span class="result-label">Read this to the class</span>
+            <p id="speech-output"></p>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">02</span>
+          <div>
+            <p class="topic-label">Speaking Support</p>
+            <h2>Practice Instructions</h2>
+          </div>
+        </div>
+
+        <div class="lesson-grid">
+          <div class="lesson-mini-card">
+            <h3>Step 1</h3>
+            <div class="phrase-item featured-phrase">
+              <strong>Complete the form</strong>
+              <span>Use your real or invented information for the activity.</span>
+            </div>
+          </div>
+
+          <div class="lesson-mini-card">
+            <h3>Step 2</h3>
+            <div class="phrase-item featured-phrase">
+              <strong>Read your introduction</strong>
+              <span>Practice saying your introduction clearly and confidently.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-tip">
+          <span>Teacher's Tip</span>
+          <p>
+            Speak slowly and clearly. Remember: “I am 21 years old,” not “I have 21 years old.”
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- NEXT STEPS -->
+    <section class="lesson-next-section">
+      <div class="lesson-next-card">
+        <p class="eyebrow">Next activity</p>
+        <h2>Continue practicing with classmates</h2>
+
+        <p>
+          After creating your introduction, continue with the next activity to ask and answer
+          personal information questions with different partners.
+        </p>
+
+        <div class="hero-actions">
+          <a href="speed-dating-personal-information-chart.html" class="btn btn-primary">
+            Go to Speed Dating Activity
+          </a>
+          <a href="practice-lab.html" class="btn btn-secondary">
+            Back to Practice Lab
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    function generateIntro() {
+      let name = document.getElementById("studentName").value.trim();
+      let age = document.getElementById("studentAge").value.trim();
+      let city = document.getElementById("studentCity").value.trim();
+
+      if (!name) name = "[Name]";
+      if (!age) age = "[Age]";
+      if (!city) city = "[City]";
+
+      const output =
+        "Good morning! Hello, my name is " +
+        name +
+        ". I am " +
+        age +
+        " years old, and I live in " +
+        city +
+        ". How are you today?";
+
+      document.getElementById("speech-output").textContent = '"' + output + '"';
+      document.getElementById("result-card").style.display = "block";
+    }
+  </script>
+
+</body>
+</html>

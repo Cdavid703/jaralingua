@@ -1,0 +1,1290 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le passé simple – Français Niveau 7</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --cream: #fff8ef;
+      --white: #ffffff;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --purple: #6f42c1;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(214, 40, 57, 0.17), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(31, 78, 140, 0.22), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f2 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.97;
+      letter-spacing: -0.055em;
+      color: var(--blue-dark);
+      font-size: clamp(2.8rem, 7vw, 6rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.18rem, 2vw, 1.55rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 840px;
+    }
+
+    .soft-card {
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+    }
+
+    .soft-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(20, 40, 80, 0.14);
+    }
+
+    .soft-card .card-body {
+      padding: 1.45rem;
+    }
+
+    .icon-box {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: rgba(31, 78, 140, 0.1);
+      color: var(--blue);
+      font-size: 1.7rem;
+      flex: 0 0 auto;
+    }
+
+    .icon-box.red {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .icon-box.yellow {
+      background: rgba(244, 201, 93, 0.2);
+      color: #9a6b00;
+    }
+
+    .explain-panel {
+      border-radius: 32px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.4rem, 3vw, 2.5rem);
+    }
+
+    .image-panel {
+      border-radius: 32px;
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+
+    .image-panel img {
+      width: 100%;
+      border-radius: 24px;
+      object-fit: cover;
+      display: block;
+      max-height: 520px;
+    }
+
+    .timeline-card {
+      background: white;
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.4rem, 3vw, 2.5rem);
+      overflow: hidden;
+    }
+
+    .timeline-line {
+      position: relative;
+      height: 110px;
+      margin: 2rem 0 1rem;
+      border-radius: 20px;
+      background: linear-gradient(90deg, rgba(31, 78, 140, 0.09), rgba(214, 40, 57, 0.09));
+      overflow: hidden;
+    }
+
+    .timeline-line::before {
+      content: "";
+      position: absolute;
+      left: 6%;
+      right: 6%;
+      top: 50%;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.28);
+      transform: translateY(-50%);
+    }
+
+    .timeline-context {
+      position: absolute;
+      left: 8%;
+      top: 20px;
+      width: 56%;
+      padding: 0.5rem 0.75rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.11);
+      color: var(--blue-dark);
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .timeline-dot {
+      position: absolute;
+      top: 50%;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--red);
+      border: 5px solid white;
+      box-shadow: 0 8px 18px rgba(214, 40, 57, 0.28);
+      transform: translate(-50%, -50%);
+    }
+
+    .timeline-dot span {
+      position: absolute;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      color: var(--red);
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .dot-one { left: 52%; }
+    .dot-two { left: 67%; }
+    .dot-three { left: 82%; }
+
+    .formula-box {
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      box-shadow: var(--shadow);
+    }
+
+    .ending-card {
+      border-radius: 26px;
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      padding: 1.4rem;
+      height: 100%;
+      border-top: 7px solid var(--blue);
+    }
+
+    .ending-card.red {
+      border-color: var(--red);
+    }
+
+    .ending-card.yellow {
+      border-color: var(--yellow);
+    }
+
+    .ending-big {
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--blue-dark);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      line-height: 1;
+    }
+
+    .example-box {
+      border-radius: 22px;
+      background: var(--soft);
+      padding: 1.1rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      line-height: 1.65;
+    }
+
+    .example-box .muted {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .table-wrap {
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      background: white;
+    }
+
+    .table {
+      margin-bottom: 0;
+    }
+
+    .table th {
+      background: var(--blue-dark);
+      color: white;
+      font-weight: 900;
+      padding: 1rem;
+      vertical-align: middle;
+    }
+
+    .table td {
+      padding: 0.95rem 1rem;
+      vertical-align: middle;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .table .verb-form {
+      color: var(--red);
+      font-weight: 900;
+    }
+
+    .accordion-item {
+      border: 0;
+      border-radius: 22px !important;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(20, 40, 80, 0.08);
+      margin-bottom: 1rem;
+    }
+
+    .accordion-button {
+      font-weight: 900;
+      color: var(--blue-dark);
+      padding: 1.15rem 1.25rem;
+      background: white;
+    }
+
+    .accordion-button:not(.collapsed) {
+      color: var(--blue-dark);
+      background: rgba(31, 78, 140, 0.08);
+      box-shadow: none;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .compare-card {
+      border-radius: 24px;
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      padding: 1.4rem;
+      height: 100%;
+    }
+
+    .compare-card h3 {
+      color: var(--blue-dark);
+      font-weight: 800;
+    }
+
+    .marker-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      background: rgba(214, 40, 57, 0.09);
+      color: var(--red);
+      font-weight: 900;
+      padding: 0.5rem 0.75rem;
+      margin: 0.25rem;
+      font-size: 0.92rem;
+    }
+
+    .warning-card {
+      border-radius: 28px;
+      background: var(--red-soft);
+      border: 1px solid rgba(214, 40, 57, 0.12);
+      padding: 1.35rem;
+      height: 100%;
+    }
+
+    .warning-card h3 {
+      color: var(--red);
+      font-weight: 800;
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show {
+      display: grid;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .hero {
+        padding-top: 7rem;
+      }
+
+      .hero-card img {
+        min-height: 320px;
+      }
+
+      .compare-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 575px) {
+      .timeline-line {
+        height: 150px;
+      }
+
+      .timeline-context {
+        left: 5%;
+        width: 90%;
+      }
+
+      .dot-one { left: 28%; top: 68%; }
+      .dot-two { left: 52%; top: 68%; }
+      .dot-three { left: 76%; top: 68%; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#definition">Définition</a></li>
+          <li class="nav-item"><a class="nav-link" href="#formation">Formation</a></li>
+          <li class="nav-item"><a class="nav-link" href="#verbes">Verbes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#transformation">Transformation</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-book-half"></i>
+            Le récit écrit
+          </span>
+          <h1>Le passé simple</h1>
+          <p class="hero-lead">Comprendre le temps du récit écrit.</p>
+          <p class="hero-text">
+            Le passé simple est un temps du passé utilisé surtout dans les récits, les contes, les textes historiques et la littérature. Dans cette page, vous apprendrez à le reconnaître, à comprendre sa valeur et à le transformer en passé composé dans un registre plus courant.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#definition" class="btn-main"><i class="bi bi-compass"></i>Commencer</a>
+            <a href="../themes-du-cours.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux thèmes</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <img src="../img/passe-simple-hero.png" alt="Illustration du passé simple dans un récit écrit">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="definition">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Définition</p>
+          <h2 class="section-title">À quoi sert le passé simple ?</h2>
+          <p class="section-text mx-auto">
+            Le passé simple présente une action comme terminée, ponctuelle et importante dans la progression d’un récit. Il appartient principalement au français écrit.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-3 fade-in">
+            <div class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box mb-3"><i class="bi bi-book"></i></div>
+                <h3 class="h5 fw-bold">Récit écrit</h3>
+                <p class="mb-0">On le rencontre dans les romans, les contes, les biographies et les récits historiques.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <div class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box red mb-3"><i class="bi bi-lightning-charge"></i></div>
+                <h3 class="h5 fw-bold">Action ponctuelle</h3>
+                <p class="mb-0">Il marque une action précise, terminée, souvent au premier plan de l’histoire.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <div class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box yellow mb-3"><i class="bi bi-signpost-split"></i></div>
+                <h3 class="h5 fw-bold">Progression</h3>
+                <p class="mb-0">Il fait avancer l’histoire : un personnage arrive, parle, découvre ou décide.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <div class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box mb-3"><i class="bi bi-chat-left-text"></i></div>
+                <h3 class="h5 fw-bold">Registre littéraire</h3>
+                <p class="mb-0">À l’oral, on utilise normalement le passé composé à la place du passé simple.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 align-items-center mt-4">
+          <div class="col-lg-6 fade-in">
+            <div class="explain-panel">
+              <p class="section-kicker">Exemple</p>
+              <h3 class="fw-bold text-primary">Dans un texte écrit</h3>
+              <div class="example-box mb-3">
+                Il entra dans la pièce, regarda autour de lui et comprit la situation.
+              </div>
+              <h3 class="fw-bold text-danger">Dans un registre courant</h3>
+              <div class="example-box mb-0">
+                Il est entré dans la pièce, il a regardé autour de lui et il a compris la situation.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <div class="formula-box">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Idée essentielle</p>
+              <h3 class="fw-bold mb-3">Passé simple = temps du récit écrit</h3>
+              <p class="mb-0 fs-5 opacity-75">
+                Il ne faut pas forcément le produire à l’oral. L’objectif principal est de le reconnaître et de le comprendre quand on lit.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="imparfait" class="bg-white">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6 fade-in">
+            <p class="section-kicker">Contraste</p>
+            <h2 class="section-title">Passé simple ou imparfait ?</h2>
+            <p class="section-text">
+              Dans un récit, l’imparfait sert souvent à décrire le décor, l’ambiance ou une situation en cours. Le passé simple indique les actions principales qui font avancer l’histoire.
+            </p>
+
+            <div class="timeline-card mt-4">
+              <h3 class="h4 fw-bold text-primary">Visualisation</h3>
+              <div class="timeline-line">
+                <div class="timeline-context">Imparfait : contexte, décor, ambiance</div>
+                <div class="timeline-dot dot-one"><span>apparut</span></div>
+                <div class="timeline-dot dot-two"><span>marcha</span></div>
+                <div class="timeline-dot dot-three"><span>frappa</span></div>
+              </div>
+              <p class="mb-0 text-muted fw-bold">
+                Les points rouges représentent les actions au passé simple : elles font progresser le récit.
+              </p>
+            </div>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <div class="image-panel">
+              <img src="../img/passe-simple-imparfait.png" alt="Illustration de la différence entre imparfait et passé simple">
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-4">
+          <div class="col-lg-6 fade-in">
+            <div class="compare-card">
+              <h3>Imparfait</h3>
+              <p class="text-muted fw-bold">Description, contexte, habitude, action en cours.</p>
+              <div class="example-box">
+                La nuit <span class="verb-form">était</span> froide. Le vent <span class="verb-form">soufflait</span>.
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <div class="compare-card">
+              <h3>Passé simple</h3>
+              <p class="text-muted fw-bold">Action ponctuelle, événement principal, rupture dans le récit.</p>
+              <div class="example-box">
+                Soudain, un homme <span class="verb-form">frappa</span> à la porte.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="formation">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Formation</p>
+          <h2 class="section-title">Les grandes familles de terminaisons</h2>
+          <p class="section-text mx-auto">
+            Pour ce niveau, l’objectif principal est la reconnaissance. Les terminaisons les plus importantes sont les familles en <strong>-ai</strong>, <strong>-is</strong> et <strong>-us</strong>.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 fade-in">
+            <div class="ending-card">
+              <p class="section-kicker">1er groupe</p>
+              <div class="ending-big">-ai</div>
+              <p class="fw-bold text-muted mt-3">parler, donner, entrer, regarder</p>
+              <div class="example-box">
+                je parlai · tu parlas · il parla · nous parlâmes · vous parlâtes · ils parlèrent
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 fade-in">
+            <div class="ending-card red">
+              <p class="section-kicker">Formes fréquentes</p>
+              <div class="ending-big">-is</div>
+              <p class="fw-bold text-muted mt-3">finir, prendre, mettre, dire, faire</p>
+              <div class="example-box">
+                je pris · tu pris · il prit · nous prîmes · vous prîtes · ils prirent
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 fade-in">
+            <div class="ending-card yellow">
+              <p class="section-kicker">Verbes essentiels</p>
+              <div class="ending-big">-us</div>
+              <p class="fw-bold text-muted mt-3">avoir, être, pouvoir, vouloir</p>
+              <div class="example-box">
+                j’eus · tu eus · il eut · nous eûmes · vous eûtes · ils eurent
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap mt-5 fade-in">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>Famille</th>
+                <th>Terminaisons</th>
+                <th>Exemple</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Verbes en -ER</td>
+                <td><strong>-ai, -as, -a, -âmes, -âtes, -èrent</strong></td>
+                <td>il <span class="verb-form">parla</span> · ils <span class="verb-form">parlèrent</span></td>
+              </tr>
+              <tr>
+                <td>Famille en -IS</td>
+                <td><strong>-is, -is, -it, -îmes, -îtes, -irent</strong></td>
+                <td>il <span class="verb-form">prit</span> · ils <span class="verb-form">prirent</span></td>
+              </tr>
+              <tr>
+                <td>Famille en -US</td>
+                <td><strong>-us, -us, -ut, -ûmes, -ûtes, -urent</strong></td>
+                <td>il <span class="verb-form">eut</span> · ils <span class="verb-form">eurent</span></td>
+              </tr>
+              <tr>
+                <td>Radicaux spéciaux</td>
+                <td><strong>vins, vint, vinrent / vis, vit, virent</strong></td>
+                <td>il <span class="verb-form">vint</span> · il <span class="verb-form">vit</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="conjugaisons" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Conjugaisons</p>
+          <h2 class="section-title">Modèles de conjugaison</h2>
+          <p class="section-text mx-auto">
+            Ces tableaux présentent les formes principales. En lecture, observez surtout les formes avec <strong>il / elle</strong> et <strong>ils / elles</strong>.
+          </p>
+        </div>
+
+        <div class="accordion fade-in" id="accordionConjugaisons">
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEr" aria-expanded="true" aria-controls="collapseEr">
+                Verbes en -ER : parler, donner, entrer
+              </button>
+            </h3>
+            <div id="collapseEr" class="accordion-collapse collapse show" data-bs-parent="#accordionConjugaisons">
+              <div class="accordion-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-striped align-middle">
+                    <thead>
+                      <tr>
+                        <th>Sujet</th>
+                        <th>Parler</th>
+                        <th>Donner</th>
+                        <th>Entrer</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>je</td><td class="verb-form">parlai</td><td>donnai</td><td>entrai</td></tr>
+                      <tr><td>tu</td><td class="verb-form">parlas</td><td>donnas</td><td>entras</td></tr>
+                      <tr><td>il / elle / on</td><td class="verb-form">parla</td><td>donna</td><td>entra</td></tr>
+                      <tr><td>nous</td><td class="verb-form">parlâmes</td><td>donnâmes</td><td>entrâmes</td></tr>
+                      <tr><td>vous</td><td class="verb-form">parlâtes</td><td>donnâtes</td><td>entrâtes</td></tr>
+                      <tr><td>ils / elles</td><td class="verb-form">parlèrent</td><td>donnèrent</td><td>entrèrent</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIs" aria-expanded="false" aria-controls="collapseIs">
+                Famille en -IS : finir, prendre, mettre, dire, faire
+              </button>
+            </h3>
+            <div id="collapseIs" class="accordion-collapse collapse" data-bs-parent="#accordionConjugaisons">
+              <div class="accordion-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-striped align-middle">
+                    <thead>
+                      <tr>
+                        <th>Sujet</th>
+                        <th>Finir</th>
+                        <th>Prendre</th>
+                        <th>Mettre</th>
+                        <th>Dire</th>
+                        <th>Faire</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>je</td><td>finis</td><td class="verb-form">pris</td><td>mis</td><td>dis</td><td>fis</td></tr>
+                      <tr><td>tu</td><td>finis</td><td class="verb-form">pris</td><td>mis</td><td>dis</td><td>fis</td></tr>
+                      <tr><td>il / elle / on</td><td>finit</td><td class="verb-form">prit</td><td>mit</td><td>dit</td><td>fit</td></tr>
+                      <tr><td>nous</td><td>finîmes</td><td class="verb-form">prîmes</td><td>mîmes</td><td>dîmes</td><td>fîmes</td></tr>
+                      <tr><td>vous</td><td>finîtes</td><td class="verb-form">prîtes</td><td>mîtes</td><td>dîtes</td><td>fîtes</td></tr>
+                      <tr><td>ils / elles</td><td>finirent</td><td class="verb-form">prirent</td><td>mirent</td><td>dirent</td><td>firent</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseUs" aria-expanded="false" aria-controls="collapseUs">
+                Famille en -US : avoir, être, pouvoir, vouloir
+              </button>
+            </h3>
+            <div id="collapseUs" class="accordion-collapse collapse" data-bs-parent="#accordionConjugaisons">
+              <div class="accordion-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-striped align-middle">
+                    <thead>
+                      <tr>
+                        <th>Sujet</th>
+                        <th>Avoir</th>
+                        <th>Être</th>
+                        <th>Pouvoir</th>
+                        <th>Vouloir</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>je</td><td class="verb-form">eus</td><td>fus</td><td>pus</td><td>voulus</td></tr>
+                      <tr><td>tu</td><td class="verb-form">eus</td><td>fus</td><td>pus</td><td>voulus</td></tr>
+                      <tr><td>il / elle / on</td><td class="verb-form">eut</td><td>fut</td><td>put</td><td>voulut</td></tr>
+                      <tr><td>nous</td><td class="verb-form">eûmes</td><td>fûmes</td><td>pûmes</td><td>voulûmes</td></tr>
+                      <tr><td>vous</td><td class="verb-form">eûtes</td><td>fûtes</td><td>pûtes</td><td>voulûtes</td></tr>
+                      <tr><td>ils / elles</td><td class="verb-form">eurent</td><td>furent</td><td>purent</td><td>voulurent</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <h3 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpeciaux" aria-expanded="false" aria-controls="collapseSpeciaux">
+                Radicaux spéciaux : venir, tenir, voir
+              </button>
+            </h3>
+            <div id="collapseSpeciaux" class="accordion-collapse collapse" data-bs-parent="#accordionConjugaisons">
+              <div class="accordion-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-striped align-middle">
+                    <thead>
+                      <tr>
+                        <th>Sujet</th>
+                        <th>Venir</th>
+                        <th>Tenir</th>
+                        <th>Voir</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>je</td><td class="verb-form">vins</td><td>tins</td><td>vis</td></tr>
+                      <tr><td>tu</td><td class="verb-form">vins</td><td>tins</td><td>vis</td></tr>
+                      <tr><td>il / elle / on</td><td class="verb-form">vint</td><td>tint</td><td>vit</td></tr>
+                      <tr><td>nous</td><td class="verb-form">vînmes</td><td>tînmes</td><td>vîmes</td></tr>
+                      <tr><td>vous</td><td class="verb-form">vîntes</td><td>tîntes</td><td>vîtes</td></tr>
+                      <tr><td>ils / elles</td><td class="verb-form">vinrent</td><td>tinrent</td><td>virent</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="verbes">
+      <div class="container">
+        <div class="row align-items-center g-5 mb-5">
+          <div class="col-lg-6 fade-in">
+            <p class="section-kicker">Reconnaissance</p>
+            <h2 class="section-title">Les formes essentielles à mémoriser</h2>
+            <p class="section-text">
+              Dans les textes, les formes les plus fréquentes sont souvent à la troisième personne. Il faut donc reconnaître rapidement les formes avec <strong>il / elle</strong> et <strong>ils / elles</strong>.
+            </p>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <div class="image-panel">
+              <img src="../img/verbes-essentiels-passe-simple.png" alt="Illustration des verbes essentiels au passé simple">
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap fade-in">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>Infinitif</th>
+                <th>Il / Elle</th>
+                <th>Ils / Elles</th>
+                <th>Sens courant</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>parler</td><td class="verb-form">parla</td><td>parlèrent</td><td>il a parlé / ils ont parlé</td></tr>
+              <tr><td>entrer</td><td class="verb-form">entra</td><td>entrèrent</td><td>il est entré / ils sont entrés</td></tr>
+              <tr><td>finir</td><td class="verb-form">finit</td><td>finirent</td><td>il a fini / ils ont fini</td></tr>
+              <tr><td>prendre</td><td class="verb-form">prit</td><td>prirent</td><td>il a pris / ils ont pris</td></tr>
+              <tr><td>faire</td><td class="verb-form">fit</td><td>firent</td><td>il a fait / ils ont fait</td></tr>
+              <tr><td>dire</td><td class="verb-form">dit</td><td>dirent</td><td>il a dit / ils ont dit</td></tr>
+              <tr><td>avoir</td><td class="verb-form">eut</td><td>eurent</td><td>il a eu / ils ont eu</td></tr>
+              <tr><td>être</td><td class="verb-form">fut</td><td>furent</td><td>il a été / ils ont été</td></tr>
+              <tr><td>venir</td><td class="verb-form">vint</td><td>vinrent</td><td>il est venu / ils sont venus</td></tr>
+              <tr><td>voir</td><td class="verb-form">vit</td><td>virent</td><td>il a vu / ils ont vu</td></tr>
+              <tr><td>pouvoir</td><td class="verb-form">put</td><td>purent</td><td>il a pu / ils ont pu</td></tr>
+              <tr><td>vouloir</td><td class="verb-form">voulut</td><td>voulurent</td><td>il a voulu / ils ont voulu</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="marqueurs" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Indices de lecture</p>
+          <h2 class="section-title">Les marqueurs du récit</h2>
+          <p class="section-text mx-auto">
+            Certains mots annoncent souvent une action importante dans le récit. Ils aident à identifier le passé simple.
+          </p>
+        </div>
+
+        <div class="text-center fade-in">
+          <span class="marker-pill">soudain</span>
+          <span class="marker-pill">tout à coup</span>
+          <span class="marker-pill">un jour</span>
+          <span class="marker-pill">alors</span>
+          <span class="marker-pill">ensuite</span>
+          <span class="marker-pill">puis</span>
+          <span class="marker-pill">à ce moment-là</span>
+          <span class="marker-pill">le lendemain</span>
+          <span class="marker-pill">quelques minutes plus tard</span>
+        </div>
+
+        <div class="explain-panel mt-5 fade-in">
+          <h3 class="fw-bold text-primary mb-3">Exemple guidé</h3>
+          <div class="example-box mb-3">
+            Tout à coup, la porte <span class="verb-form">s’ouvrit</span>. Puis, un vieil homme <span class="verb-form">entra</span>. Alors, les enfants <span class="verb-form">se cachèrent</span>.
+          </div>
+          <p class="mb-0 text-muted fw-bold">
+            Les verbes s’ouvrit, entra et se cachèrent sont au passé simple. Ils présentent les actions principales du récit.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="transformation">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Registre courant</p>
+          <h2 class="section-title">Transformer vers le passé composé</h2>
+          <p class="section-text mx-auto">
+            En français oral ou courant, le passé simple est généralement remplacé par le passé composé.
+          </p>
+        </div>
+
+        <div class="formula-box mb-5 fade-in">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-7">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Règle pratique</p>
+              <h3 class="fw-bold mb-0">Passé simple → avoir / être + participe passé</h3>
+            </div>
+            <div class="col-lg-5">
+              <div class="bg-white text-dark rounded-4 p-3 fw-bold text-center">
+                Il entra → Il est entré<br>
+                Elle prit → Elle a pris
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 fade-in">
+            <div class="compare-card">
+              <h3>Exemple 1</h3>
+              <p class="text-muted fw-bold">Passé simple</p>
+              <div class="example-box mb-3">Il entra dans la salle.</div>
+              <p class="text-muted fw-bold">Passé composé</p>
+              <div class="example-box">Il est entré dans la salle.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 fade-in">
+            <div class="compare-card">
+              <h3>Exemple 2</h3>
+              <p class="text-muted fw-bold">Passé simple</p>
+              <div class="example-box mb-3">Elle prit son sac et sortit rapidement.</div>
+              <p class="text-muted fw-bold">Passé composé</p>
+              <div class="example-box">Elle a pris son sac et elle est sortie rapidement.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 fade-in">
+            <div class="compare-card">
+              <h3>Exemple 3</h3>
+              <p class="text-muted fw-bold">Passé simple</p>
+              <div class="example-box mb-3">Ils arrivèrent tard et demandèrent une chambre.</div>
+              <p class="text-muted fw-bold">Passé composé</p>
+              <div class="example-box">Ils sont arrivés tard et ils ont demandé une chambre.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-wrap mt-5 fade-in">
+          <table class="table table-striped align-middle">
+            <thead>
+              <tr>
+                <th>Passé simple</th>
+                <th>Passé composé</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td class="verb-form">il parla</td><td>il a parlé</td></tr>
+              <tr><td class="verb-form">elle entra</td><td>elle est entrée</td></tr>
+              <tr><td class="verb-form">ils finirent</td><td>ils ont fini</td></tr>
+              <tr><td class="verb-form">il prit</td><td>il a pris</td></tr>
+              <tr><td class="verb-form">elle fit</td><td>elle a fait</td></tr>
+              <tr><td class="verb-form">ils vinrent</td><td>ils sont venus</td></tr>
+              <tr><td class="verb-form">il fut</td><td>il a été</td></tr>
+              <tr><td class="verb-form">elle eut</td><td>elle a eu</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="texte" class="bg-white">
+      <div class="container">
+        <div class="explain-panel fade-in">
+          <p class="section-kicker">Lecture guidée</p>
+          <h2 class="section-title">Exemple de récit</h2>
+          <p class="section-text">
+            Voici un exemple pour observer la différence entre description à l’imparfait et actions principales au passé simple.
+          </p>
+
+          <div class="example-box mb-4">
+            La ville <span class="verb-form">était</span> silencieuse. Les rues <span class="verb-form">étaient</span> presque vides. Soudain, une femme <span class="verb-form">apparut</span> au bout de la rue. Elle <span class="verb-form">marcha</span> lentement vers la place, <span class="verb-form">regarda</span> autour d’elle et <span class="verb-form">frappa</span> à la porte d’une vieille maison.
+          </div>
+
+          <div class="table-responsive table-wrap">
+            <table class="table table-striped align-middle">
+              <thead>
+                <tr>
+                  <th>Verbe</th>
+                  <th>Temps</th>
+                  <th>Fonction</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>était</td><td>imparfait</td><td>description</td></tr>
+                <tr><td>étaient</td><td>imparfait</td><td>contexte</td></tr>
+                <tr><td class="verb-form">apparut</td><td>passé simple</td><td>action principale</td></tr>
+                <tr><td class="verb-form">marcha</td><td>passé simple</td><td>action principale</td></tr>
+                <tr><td class="verb-form">regarda</td><td>passé simple</td><td>action principale</td></tr>
+                <tr><td class="verb-form">frappa</td><td>passé simple</td><td>action principale</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="erreurs">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Attention</p>
+          <h2 class="section-title">Erreurs fréquentes</h2>
+          <p class="section-text mx-auto">
+            Ces points aident à éviter les confusions les plus communes quand on lit ou transforme un texte.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 fade-in">
+            <div class="warning-card">
+              <h3 class="h5">1. Utiliser le passé simple à l’oral</h3>
+              <p class="mb-2 fw-bold">Peu naturel :</p>
+              <div class="example-box mb-3">Hier, je mangeai une pizza.</div>
+              <p class="mb-2 fw-bold">Plus naturel :</p>
+              <div class="example-box">Hier, j’ai mangé une pizza.</div>
+            </div>
+          </div>
+
+          <div class="col-lg-4 fade-in">
+            <div class="warning-card">
+              <h3 class="h5">2. Confondre imparfait et passé simple</h3>
+              <div class="example-box mb-3">Il faisait froid quand elle arriva.</div>
+              <p class="mb-0">faisait = contexte<br>arriva = action principale</p>
+            </div>
+          </div>
+
+          <div class="col-lg-4 fade-in">
+            <div class="warning-card">
+              <h3 class="h5">3. Ne pas reconnaître les formes courtes</h3>
+              <div class="example-box">
+                fut = a été<br>
+                eut = a eu<br>
+                fit = a fait<br>
+                dit = a dit<br>
+                vint = est venu<br>
+                vit = a vu<br>
+                prit = a pris
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Le passé simple – Français Niveau 7</h2>
+          <p class="mb-0 opacity-75">Page explicative pour reconnaître, comprendre et transformer le passé simple.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="../themes-du-cours.html"><i class="bi bi-arrow-left"></i> Retour aux thèmes</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const btnUp = document.getElementById('btnUp');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section[id]');
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeElements.forEach(function(element) {
+      observer.observe(element);
+    });
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+
+      let current = '';
+      sections.forEach(function(section) {
+        const sectionTop = section.offsetTop - 130;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(function(link) {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

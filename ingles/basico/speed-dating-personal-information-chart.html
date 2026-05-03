@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Speed Dating & Personal Information Chart | Basic English Course 1</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo-transparent.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- PRACTICE HERO -->
+    <section class="lesson-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab</p>
+
+        <h1>Speed Dating & Personal Information Chart</h1>
+
+        <p>
+          Practice quick conversations with different partners. Ask personal information
+          questions, spell names, collect answers, and complete your class chart.
+        </p>
+
+        <div class="lesson-meta">
+          <span>Speaking Practice</span>
+          <span>Pair Work</span>
+          <span>2-Minute Rounds</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#speed-dating-activity" class="btn btn-primary">Start activity</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="lesson-hero-image">
+        <img src="../../assets/img/english-basic/practice-lab/speed-dating-chart-banner.png" alt="Speed Dating and Personal Information Chart" />
+      </div>
+    </section>
+
+    <!-- PRACTICE OUTCOME -->
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice Goal</span>
+        <p>
+          By the end of this activity, you will be able to ask and answer basic personal
+          information questions in short conversations with different classmates.
+        </p>
+      </div>
+    </section>
+
+    <!-- ACTIVITY CONTENT -->
+    <section class="premium-lesson-container" id="speed-dating-activity">
+
+      <!-- INSTRUCTIONS -->
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">01</span>
+          <div>
+            <p class="topic-label">Pair Work Activity</p>
+            <h2>How the Activity Works</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          You have exactly two minutes with each partner. Ask the questions, write their answers,
+          and add the information to your chart. When the timer finishes, switch partners.
+        </p>
+
+        <div class="lesson-grid">
+          <div class="lesson-mini-card">
+            <h3>Questions to Ask</h3>
+
+            <div class="phrase-list">
+              <div class="phrase-item">
+                <strong>What is your name?</strong>
+                <span>Ask for your partner’s name.</span>
+              </div>
+
+              <div class="phrase-item">
+                <strong>Could you please spell it?</strong>
+                <span>Ask your partner to spell their name.</span>
+              </div>
+
+              <div class="phrase-item">
+                <strong>How old are you?</strong>
+                <span>Ask for your partner’s age.</span>
+              </div>
+
+              <div class="phrase-item">
+                <strong>Where do you live?</strong>
+                <span>Ask for your partner’s city or neighborhood.</span>
+              </div>
+
+              <div class="phrase-item">
+                <strong>What is your telephone number?</strong>
+                <span>Ask for contact information.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lesson-mini-card">
+            <h3>Activity Steps</h3>
+
+            <div class="phrase-list">
+              <div class="phrase-item featured-phrase">
+                <strong>Step 1</strong>
+                <span>Start the timer and ask your partner the questions.</span>
+              </div>
+
+              <div class="phrase-item featured-phrase">
+                <strong>Step 2</strong>
+                <span>Write the answers in the form.</span>
+              </div>
+
+              <div class="phrase-item featured-phrase">
+                <strong>Step 3</strong>
+                <span>Add your partner to the chart and switch partners.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- TIMER AND FORM -->
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">02</span>
+          <div>
+            <p class="topic-label">Interactive Chart</p>
+            <h2>Partner Information Form</h2>
+          </div>
+        </div>
+
+        <div class="speed-dating-panel">
+
+          <div class="speed-timer-card">
+            <span class="speed-label">Speed Dating Timer</span>
+            <div id="timerDisplay" class="timer-display">02:00</div>
+
+            <div class="speed-timer-actions">
+              <button type="button" class="timer-btn start" id="startBtn" onclick="startTimer()">
+                Start 2 Minutes
+              </button>
+
+              <button type="button" class="timer-btn reset" id="resetBtn" onclick="resetTimer()">
+                Reset Timer
+              </button>
+            </div>
+          </div>
+
+          <form id="infoForm" class="speed-form">
+            <div class="practice-form-grid">
+              <div class="practice-form-group">
+                <label for="pName">What is your name?</label>
+                <input type="text" id="pName" placeholder="Example: Maria" required />
+              </div>
+
+              <div class="practice-form-group">
+                <label for="pSpell">Could you please spell it?</label>
+                <input type="text" id="pSpell" placeholder="Example: M-A-R-I-A" required />
+              </div>
+
+              <div class="practice-form-group">
+                <label for="pAge">How old are you?</label>
+                <input type="number" id="pAge" placeholder="Example: 22" required />
+              </div>
+
+              <div class="practice-form-group">
+                <label for="pLocation">Where do you live?</label>
+                <input type="text" id="pLocation" placeholder="Example: Medellín" required />
+              </div>
+
+              <div class="practice-form-group full-width">
+                <label for="pPhone">What is your telephone number?</label>
+                <input type="tel" id="pPhone" placeholder="Example: 555-0192" required />
+              </div>
+            </div>
+
+            <button type="submit" class="practice-submit-btn">
+              Add Partner to Chart
+            </button>
+          </form>
+
+          <div class="partner-chart-wrapper">
+            <div class="partner-chart-header">
+              <div>
+                <h3>Personal Information Chart</h3>
+                <p>Your partners will appear here.</p>
+              </div>
+
+              <button type="button" class="clear-chart-btn" onclick="clearChart()">
+                Clear chart
+              </button>
+            </div>
+
+            <div class="partner-table-container">
+              <table class="partner-table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Spelling</th>
+                    <th>Age</th>
+                    <th>Location</th>
+                    <th>Phone Number</th>
+                  </tr>
+                </thead>
+
+                <tbody id="chartBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- TEACHER TIP -->
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">03</span>
+          <div>
+            <p class="topic-label">Speaking Strategy</p>
+            <h2>Useful Classroom Language</h2>
+          </div>
+        </div>
+
+        <div class="lesson-grid">
+          <div class="lesson-mini-card">
+            <h3>When You Do Not Understand</h3>
+
+            <div class="phrase-list">
+              <div class="phrase-item">
+                <strong>Could you repeat that, please?</strong>
+                <span>Use this when you need to hear the answer again.</span>
+              </div>
+
+              <div class="phrase-item">
+                <strong>Could you spell it again?</strong>
+                <span>Use this when you need the spelling one more time.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lesson-mini-card">
+            <h3>When You Finish</h3>
+
+            <div class="phrase-list">
+              <div class="phrase-item">
+                <strong>Thank you!</strong>
+                <span>Use this after your partner answers.</span>
+              </div>
+
+              <div class="phrase-item">
+                <strong>Nice to meet you.</strong>
+                <span>Use this to close the short conversation politely.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-tip">
+          <span>Teacher's Tip</span>
+          <p>
+            Speak clearly, listen carefully, and ask your partner to repeat or spell the answer
+            if you need more time.
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- NEXT STEPS -->
+    <section class="lesson-next-section">
+      <div class="lesson-next-card">
+        <p class="eyebrow">Next activity</p>
+        <h2>Continue with listening practice</h2>
+
+        <p>
+          After practicing personal information with classmates, continue with a listening activity
+          about the first day of class.
+        </p>
+
+        <div class="hero-actions">
+          <a href="listening-first-day-class.html" class="btn btn-primary">
+            Go to Listening Practice
+          </a>
+          <a href="practice-lab.html" class="btn btn-secondary">
+            Back to Practice Lab
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    let timeLeft = 120;
+    let timerInterval;
+    let isRunning = false;
+
+    function updateDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+
+      document.getElementById("timerDisplay").innerText =
+        (minutes < 10 ? "0" : "") + minutes + ":" +
+        (seconds < 10 ? "0" : "") + seconds;
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+
+      isRunning = true;
+      document.getElementById("startBtn").disabled = true;
+
+      timerInterval = setInterval(function() {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateDisplay();
+        } else {
+          clearInterval(timerInterval);
+          isRunning = false;
+          document.getElementById("startBtn").disabled = false;
+          alert("Time is up! Switch partners, please.");
+          resetTimer();
+        }
+      }, 1000);
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isRunning = false;
+      timeLeft = 120;
+      updateDisplay();
+      document.getElementById("startBtn").disabled = false;
+    }
+
+    document.getElementById("infoForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("pName").value.trim();
+      const spell = document.getElementById("pSpell").value.trim();
+      const age = document.getElementById("pAge").value.trim();
+      const location = document.getElementById("pLocation").value.trim();
+      const phone = document.getElementById("pPhone").value.trim();
+
+      const newRow = document.createElement("tr");
+
+      const values = [name, spell, age, location, phone];
+
+      values.forEach(function(value, index) {
+        const cell = document.createElement("td");
+
+        if (index === 0) {
+          const strong = document.createElement("strong");
+          strong.textContent = value;
+          cell.appendChild(strong);
+        } else {
+          cell.textContent = value;
+        }
+
+        newRow.appendChild(cell);
+      });
+
+      document.getElementById("chartBody").appendChild(newRow);
+      document.getElementById("infoForm").reset();
+      document.getElementById("pName").focus();
+    });
+
+    function clearChart() {
+      document.getElementById("chartBody").innerHTML = "";
+    }
+
+    updateDisplay();
+  </script>
+
+</body>
+</html>

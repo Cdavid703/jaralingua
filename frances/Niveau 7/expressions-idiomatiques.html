@@ -1,0 +1,1098 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expressions idiomatiques – Français Niveau 7</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --cream: #fff8ef;
+      --white: #ffffff;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --purple: #6f42c1;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(214, 40, 57, 0.17), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(31, 78, 140, 0.22), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f2 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      color: var(--blue-dark);
+      font-size: clamp(2.6rem, 6.5vw, 5.7rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.18rem, 2vw, 1.55rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 850px;
+    }
+
+    .explain-panel {
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .explain-panel::after {
+      content: "?";
+      position: absolute;
+      right: 2rem;
+      bottom: -4rem;
+      font-size: 16rem;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      opacity: 0.07;
+      line-height: 1;
+    }
+
+    .mini-info {
+      border-radius: 22px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 1rem;
+      height: 100%;
+      backdrop-filter: blur(8px);
+    }
+
+    .controls-panel {
+      border-radius: 32px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.2rem, 3vw, 2rem);
+    }
+
+    .search-input {
+      border: 2px solid rgba(31, 78, 140, 0.16);
+      border-radius: 999px;
+      padding: 0.95rem 1.2rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .search-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 0.25rem rgba(31, 78, 140, 0.11);
+    }
+
+    .filter-btn {
+      border: 2px solid rgba(31, 78, 140, 0.16);
+      border-radius: 999px;
+      background: white;
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.65rem 0.95rem;
+      margin: 0.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .idiom-card {
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .idiom-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(20, 40, 80, 0.14);
+    }
+
+    .idiom-top {
+      min-height: 112px;
+      padding: 1.2rem;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue-dark));
+    }
+
+    .idiom-card[data-category="travail"] .idiom-top {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue-dark));
+    }
+
+    .idiom-card[data-category="emotions"] .idiom-top {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--red), var(--blue-dark));
+    }
+
+    .idiom-card[data-category="communication"] .idiom-top {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--purple), var(--blue));
+    }
+
+    .idiom-card[data-category="difficultes"] .idiom-top {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, #9a3412, var(--red));
+    }
+
+    .idiom-card[data-category="quotidien"] .idiom-top {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--yellow), var(--blue));
+    }
+
+    .idiom-icon {
+      position: absolute;
+      right: 1rem;
+      bottom: 0.15rem;
+      font-size: 4.8rem;
+      opacity: 0.16;
+    }
+
+    .category-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 0.42rem 0.68rem;
+      font-size: 0.82rem;
+      font-weight: 900;
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .idiom-card .card-body {
+      padding: 1.35rem;
+    }
+
+    .idiom-expression {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.04em;
+      margin-bottom: 1rem;
+    }
+
+    .info-line {
+      border-radius: 18px;
+      background: var(--soft);
+      padding: 0.85rem 0.95rem;
+      margin-bottom: 0.8rem;
+      line-height: 1.55;
+    }
+
+    .info-line strong {
+      color: var(--blue-dark);
+    }
+
+    .example-box {
+      border-radius: 18px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      padding: 0.9rem 1rem;
+      font-weight: 800;
+      line-height: 1.6;
+    }
+
+    .toggle-details {
+      border: 0;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.09);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.65rem 0.9rem;
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    .toggle-details:hover {
+      background: var(--blue);
+      color: white;
+    }
+
+    .idiom-details {
+      display: none;
+      margin-top: 1rem;
+    }
+
+    .idiom-details.show {
+      display: block;
+    }
+
+    .empty-state {
+      display: none;
+      border-radius: 28px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .recap-panel {
+      border-radius: 34px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .recap-item {
+      border-radius: 22px;
+      background: var(--soft);
+      padding: 1rem;
+      height: 100%;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .recap-item i {
+      color: var(--red);
+      margin-right: 0.45rem;
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show {
+      display: grid;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .hero {
+        padding-top: 7rem;
+      }
+
+      .hero-card img {
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#expressions">Expressions</a></li>
+          <li class="nav-item"><a class="nav-link" href="#recherche">Recherche</a></li>
+          <li class="nav-item"><a class="nav-link" href="#liste">Liste</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="expressions">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-chat-left-quote-fill"></i>
+            Langage vivant
+          </span>
+          <h1>Expressions idiomatiques</h1>
+          <p class="hero-lead">Comprendre ce qui ne se traduit pas mot à mot.</p>
+          <p class="hero-text">
+            Une expression idiomatique est une formule dont le sens réel n’est pas toujours évident à partir des mots utilisés. Ici, vous découvrirez des expressions françaises courantes avec leur traduction littérale, leur sens réel et un exemple en contexte.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#liste" class="btn-main"><i class="bi bi-collection"></i>Explorer les expressions</a>
+            <a href="index.html" class="btn-soft"><i class="bi bi-house-door"></i>Retour à l’accueil</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <img src="img/expressions-idiomatiques.png" alt="Illustration des expressions idiomatiques françaises">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="definition">
+      <div class="container">
+        <div class="explain-panel fade-in">
+          <div class="row align-items-center g-4 position-relative" style="z-index: 2;">
+            <div class="col-lg-5">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Définition</p>
+              <h2 class="fw-bold mb-3">Qu’est-ce qu’une expression idiomatique ?</h2>
+              <p class="mb-0 opacity-75 fs-5">
+                C’est une expression dont le sens réel est différent du sens littéral. Elle fait partie de la culture, de l’usage et du langage naturel.
+              </p>
+            </div>
+            <div class="col-lg-7">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <div class="mini-info">
+                    <h3 class="h5 fw-bold">1. Forme fixe</h3>
+                    <p class="mb-0 opacity-75">On ne change pas facilement les mots.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mini-info">
+                    <h3 class="h5 fw-bold">2. Sens non littéral</h3>
+                    <p class="mb-0 opacity-75">Le sens réel dépasse la traduction mot à mot.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mini-info">
+                    <h3 class="h5 fw-bold">3. Usage culturel</h3>
+                    <p class="mb-0 opacity-75">Elle rend le français plus naturel.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 bg-white text-dark rounded-4 p-3 fw-bold">
+                Exemple : <span class="text-primary">Mettre la main à la pâte</span> ne signifie pas seulement toucher de la pâte. Cela veut dire : <span class="text-danger">aider concrètement, collaborer, participer activement</span>.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="recherche" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Recherche</p>
+          <h2 class="section-title">Trouvez une expression</h2>
+          <p class="section-text mx-auto">
+            Utilisez la barre de recherche ou les filtres pour consulter les expressions par thème.
+          </p>
+        </div>
+
+        <div class="controls-panel fade-in">
+          <div class="row g-3 align-items-center">
+            <div class="col-lg-5">
+              <label class="form-label fw-bold text-primary" for="searchInput">Rechercher</label>
+              <input type="search" class="form-control search-input" id="searchInput" placeholder="Ex. main, pâte, chat, bras, lapin...">
+            </div>
+            <div class="col-lg-7">
+              <p class="fw-bold text-primary mb-2">Filtrer par catégorie</p>
+              <button class="filter-btn active" data-filter="all">Toutes</button>
+              <button class="filter-btn" data-filter="travail">Travail et effort</button>
+              <button class="filter-btn" data-filter="emotions">Émotions</button>
+              <button class="filter-btn" data-filter="communication">Communication</button>
+              <button class="filter-btn" data-filter="difficultes">Difficultés</button>
+              <button class="filter-btn" data-filter="quotidien">Vie quotidienne</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="liste">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Dictionnaire interactif</p>
+          <h2 class="section-title">25 expressions à découvrir</h2>
+          <p class="section-text mx-auto" id="counterText">
+            25 expressions affichées.
+          </p>
+        </div>
+
+        <div class="empty-state" id="emptyState">
+          <h3 class="fw-bold text-primary">Aucune expression trouvée</h3>
+          <p class="mb-0 text-muted fw-bold">Essayez un autre mot ou choisissez une autre catégorie.</p>
+        </div>
+
+        <div class="row g-4" id="idiomGrid"></div>
+      </div>
+    </section>
+
+    <section id="retenir" class="bg-white">
+      <div class="container">
+        <div class="recap-panel fade-in">
+          <div class="row align-items-center g-4 mb-4">
+            <div class="col-lg-8">
+              <p class="section-kicker">À retenir</p>
+              <h2 class="section-title">Comment apprendre les expressions idiomatiques ?</h2>
+              <p class="section-text mb-0">
+                Il ne suffit pas de traduire mot à mot. Il faut observer le contexte, mémoriser le sens réel et réutiliser l’expression dans une phrase personnelle.
+              </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="#liste" class="btn-main"><i class="bi bi-arrow-up-circle"></i>Revoir la liste</a>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="recap-item"><i class="bi bi-check-circle-fill"></i>Ne traduisez pas seulement mot à mot.</div>
+            </div>
+            <div class="col-md-4">
+              <div class="recap-item"><i class="bi bi-check-circle-fill"></i>Associez l’expression à une situation concrète.</div>
+            </div>
+            <div class="col-md-4">
+              <div class="recap-item"><i class="bi bi-check-circle-fill"></i>Réutilisez-la dans un exemple personnel.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Expressions idiomatiques – Français Niveau 7</h2>
+          <p class="mb-0 opacity-75">Dictionnaire interactif de modismes français avec sens réel et exemples.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="index.html"><i class="bi bi-arrow-left"></i> Retour à l’accueil</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const idioms = [
+      {
+        expression: "Mettre la main à la pâte",
+        category: "travail",
+        categoryLabel: "Travail et effort",
+        icon: "bi-tools",
+        literal: "Mettre la main dans la pâte.",
+        meaning: "Aider concrètement, participer activement à une tâche.",
+        equivalent: "Ponerse manos a la obra / echar una mano.",
+        example: "Tout le monde doit mettre la main à la pâte pour terminer le projet.",
+        context: "Usage courant. Travail, maison, projets de groupe."
+      },
+      {
+        expression: "Se serrer les coudes",
+        category: "travail",
+        categoryLabel: "Travail et effort",
+        icon: "bi-people-fill",
+        literal: "Se rapprocher les coudes.",
+        meaning: "S’entraider et rester solidaires dans une situation difficile.",
+        equivalent: "Apoyarse entre todos / mantenerse unidos.",
+        example: "Pendant la crise, les employés ont dû se serrer les coudes.",
+        context: "Usage courant. Solidarité, travail en équipe, famille."
+      },
+      {
+        expression: "Ne pas baisser les bras",
+        category: "travail",
+        categoryLabel: "Travail et effort",
+        icon: "bi-lightning-charge-fill",
+        literal: "Ne pas descendre les bras.",
+        meaning: "Continuer malgré les difficultés, ne pas abandonner.",
+        equivalent: "No tirar la toalla.",
+        example: "Même si l’exercice est difficile, il ne faut pas baisser les bras.",
+        context: "Usage courant. Motivation, études, travail, sport."
+      },
+      {
+        expression: "Donner un coup de main",
+        category: "travail",
+        categoryLabel: "Travail et effort",
+        icon: "bi-hand-thumbs-up-fill",
+        literal: "Donner un coup avec la main.",
+        meaning: "Aider quelqu’un de manière pratique.",
+        equivalent: "Echar una mano.",
+        example: "Tu peux me donner un coup de main avec les valises ?",
+        context: "Usage courant et familier. Aide pratique."
+      },
+      {
+        expression: "Avoir du pain sur la planche",
+        category: "travail",
+        categoryLabel: "Travail et effort",
+        icon: "bi-briefcase-fill",
+        literal: "Avoir du pain posé sur une planche.",
+        meaning: "Avoir beaucoup de travail à faire.",
+        equivalent: "Tener mucho trabajo pendiente.",
+        example: "Nous avons du pain sur la planche avant l’examen final.",
+        context: "Usage courant. Travail, études, tâches."
+      },
+      {
+        expression: "Avoir le cœur sur la main",
+        category: "emotions",
+        categoryLabel: "Émotions",
+        icon: "bi-heart-fill",
+        literal: "Avoir le cœur posé sur la main.",
+        meaning: "Être très généreux et prêt à aider les autres.",
+        equivalent: "Tener un gran corazón.",
+        example: "Elle aide toujours les autres ; elle a le cœur sur la main.",
+        context: "Usage courant. Description d’une qualité personnelle."
+      },
+      {
+        expression: "Avoir la chair de poule",
+        category: "emotions",
+        categoryLabel: "Émotions",
+        icon: "bi-emoji-surprise-fill",
+        literal: "Avoir une peau qui ressemble à celle d’une poule.",
+        meaning: "Ressentir des frissons à cause du froid, de la peur ou de l’émotion.",
+        equivalent: "Tener la piel de gallina.",
+        example: "Cette histoire m’a donné la chair de poule.",
+        context: "Usage courant. Peur, émotion, froid."
+      },
+      {
+        expression: "Tomber des nues",
+        category: "emotions",
+        categoryLabel: "Émotions",
+        icon: "bi-cloud-lightning-fill",
+        literal: "Tomber des nuages.",
+        meaning: "Être extrêmement surpris par une nouvelle ou une situation.",
+        equivalent: "Quedarse en shock / caer de las nubes.",
+        example: "Quand il a appris la nouvelle, il est tombé des nues.",
+        context: "Usage courant. Surprise forte."
+      },
+      {
+        expression: "Être aux anges",
+        category: "emotions",
+        categoryLabel: "Émotions",
+        icon: "bi-stars",
+        literal: "Être avec les anges.",
+        meaning: "Être très heureux, ravi ou enchanté.",
+        equivalent: "Estar feliz de la vida / estar encantado.",
+        example: "Après avoir réussi son examen, elle était aux anges.",
+        context: "Usage courant. Grande joie."
+      },
+      {
+        expression: "En avoir ras-le-bol",
+        category: "emotions",
+        categoryLabel: "Émotions",
+        icon: "bi-emoji-angry-fill",
+        literal: "Avoir le bol rempli jusqu’au bord.",
+        meaning: "Être fatigué d’une situation, ne plus la supporter.",
+        equivalent: "Estar harto / estar hasta la coronilla.",
+        example: "J’en ai ras-le-bol de ces retards !",
+        context: "Usage familier. Agacement, fatigue, frustration."
+      },
+      {
+        expression: "Appeler un chat un chat",
+        category: "communication",
+        categoryLabel: "Communication",
+        icon: "bi-chat-dots-fill",
+        literal: "Nommer un chat comme un chat.",
+        meaning: "Dire les choses clairement et directement.",
+        equivalent: "Llamar las cosas por su nombre.",
+        example: "Il faut appeler un chat un chat : ce projet n’est pas prêt.",
+        context: "Usage courant. Franchise, opinions directes."
+      },
+      {
+        expression: "Avoir un mot sur le bout de la langue",
+        category: "communication",
+        categoryLabel: "Communication",
+        icon: "bi-type",
+        literal: "Avoir un mot au bout de la langue.",
+        meaning: "Être presque capable de se souvenir d’un mot, sans réussir à le dire immédiatement.",
+        equivalent: "Tener una palabra en la punta de la lengua.",
+        example: "J’ai son nom sur le bout de la langue, mais je ne m’en souviens pas.",
+        context: "Usage courant. Mémoire, conversation."
+      },
+      {
+        expression: "Parler entre quatre yeux",
+        category: "communication",
+        categoryLabel: "Communication",
+        icon: "bi-eye-fill",
+        literal: "Parler entre deux personnes, donc quatre yeux.",
+        meaning: "Parler en privé, directement avec quelqu’un.",
+        equivalent: "Hablar a solas / cara a cara.",
+        example: "Nous devons parler entre quatre yeux après la réunion.",
+        context: "Usage courant. Conversations privées ou sérieuses."
+      },
+      {
+        expression: "Tourner autour du pot",
+        category: "communication",
+        categoryLabel: "Communication",
+        icon: "bi-arrow-repeat",
+        literal: "Tourner autour d’un récipient.",
+        meaning: "Éviter de dire quelque chose directement.",
+        equivalent: "Andarse con rodeos.",
+        example: "Arrête de tourner autour du pot et dis-moi la vérité.",
+        context: "Usage courant. Franchise, discussions, explications."
+      },
+      {
+        expression: "Mettre les points sur les i",
+        category: "communication",
+        categoryLabel: "Communication",
+        icon: "bi-pencil-fill",
+        literal: "Ajouter les points sur la lettre i.",
+        meaning: "Clarifier une situation avec précision.",
+        equivalent: "Poner los puntos sobre las íes.",
+        example: "Le professeur a mis les points sur les i avant l’examen.",
+        context: "Usage courant. Clarifications, règles, malentendus."
+      },
+      {
+        expression: "Être dans de beaux draps",
+        category: "difficultes",
+        categoryLabel: "Difficultés",
+        icon: "bi-exclamation-triangle-fill",
+        literal: "Être dans de jolis draps.",
+        meaning: "Être dans une situation compliquée ou problématique.",
+        equivalent: "Estar en un lío / estar metido en problemas.",
+        example: "S’il rate encore le train, il sera dans de beaux draps.",
+        context: "Usage courant. Problèmes, conséquences, situations délicates."
+      },
+      {
+        expression: "Mettre les pieds dans le plat",
+        category: "difficultes",
+        categoryLabel: "Difficultés",
+        icon: "bi-sign-stop-fill",
+        literal: "Mettre ses pieds dans un plat.",
+        meaning: "Dire quelque chose de maladroit, gênant ou inapproprié.",
+        equivalent: "Meter la pata.",
+        example: "Il a mis les pieds dans le plat en parlant de ce sujet sensible.",
+        context: "Usage courant. Situations sociales gênantes."
+      },
+      {
+        expression: "Chercher midi à quatorze heures",
+        category: "difficultes",
+        categoryLabel: "Difficultés",
+        icon: "bi-clock-fill",
+        literal: "Chercher midi à deux heures de l’après-midi.",
+        meaning: "Compliquer inutilement quelque chose de simple.",
+        equivalent: "Buscarle tres pies al gato / complicarse demasiado.",
+        example: "Ne cherche pas midi à quatorze heures : la réponse est simple.",
+        context: "Usage courant. Conseils, explications, problèmes simples."
+      },
+      {
+        expression: "Jeter de l’huile sur le feu",
+        category: "difficultes",
+        categoryLabel: "Difficultés",
+        icon: "bi-fire",
+        literal: "Verser de l’huile sur un feu.",
+        meaning: "Aggraver un conflit ou une tension.",
+        equivalent: "Echar leña al fuego.",
+        example: "Son commentaire a jeté de l’huile sur le feu.",
+        context: "Usage courant. Conflits, discussions, tensions."
+      },
+      {
+        expression: "Être au pied du mur",
+        category: "difficultes",
+        categoryLabel: "Difficultés",
+        icon: "bi-bricks",
+        literal: "Être placé devant un mur, sans recul possible.",
+        meaning: "Être obligé d’agir ou de prendre une décision.",
+        equivalent: "Estar contra la pared.",
+        example: "Après plusieurs erreurs, l’équipe est au pied du mur.",
+        context: "Usage courant. Décisions difficiles, urgence, responsabilité."
+      },
+      {
+        expression: "Coûter les yeux de la tête",
+        category: "quotidien",
+        categoryLabel: "Vie quotidienne",
+        icon: "bi-cash-coin",
+        literal: "Coûter les yeux que l’on a dans la tête.",
+        meaning: "Coûter extrêmement cher.",
+        equivalent: "Costar un ojo de la cara.",
+        example: "Ce téléphone coûte les yeux de la tête.",
+        context: "Usage courant. Argent, achats, prix."
+      },
+      {
+        expression: "Avoir un coup de foudre",
+        category: "quotidien",
+        categoryLabel: "Vie quotidienne",
+        icon: "bi-heart-arrow",
+        literal: "Recevoir un choc de foudre.",
+        meaning: "Tomber amoureux soudainement ou ressentir une attirance immédiate.",
+        equivalent: "Tener un flechazo / amor a primera vista.",
+        example: "Elle a eu un coup de foudre pour cette ville.",
+        context: "Usage courant. Amour, lieux, objets, expériences."
+      },
+      {
+        expression: "Faire d’une pierre deux coups",
+        category: "quotidien",
+        categoryLabel: "Vie quotidienne",
+        icon: "bi-bullseye",
+        literal: "Faire deux actions avec une seule pierre.",
+        meaning: "Atteindre deux objectifs avec une seule action.",
+        equivalent: "Matar dos pájaros de un tiro.",
+        example: "En allant à la bibliothèque, je peux rendre un livre et étudier : je fais d’une pierre deux coups.",
+        context: "Usage courant. Organisation, efficacité, vie pratique."
+      },
+      {
+        expression: "Poser un lapin",
+        category: "quotidien",
+        categoryLabel: "Vie quotidienne",
+        icon: "bi-calendar-x-fill",
+        literal: "Déposer un lapin quelque part.",
+        meaning: "Ne pas venir à un rendez-vous et laisser quelqu’un attendre.",
+        equivalent: "Dejar plantado a alguien.",
+        example: "Il m’a posé un lapin hier soir : il n’est jamais venu.",
+        context: "Usage familier ou courant. Rendez-vous, plans, rencontres."
+      },
+      {
+        expression: "Avoir la tête ailleurs",
+        category: "quotidien",
+        categoryLabel: "Vie quotidienne",
+        icon: "bi-cloud-fill",
+        literal: "Avoir sa tête dans un autre endroit.",
+        meaning: "Être distrait, ne pas être concentré.",
+        equivalent: "Tener la cabeza en otra parte / estar distraído.",
+        example: "Aujourd’hui, il a la tête ailleurs et il oublie tout.",
+        context: "Usage courant. Concentration, travail, études."
+      }
+    ];
+
+    const grid = document.getElementById('idiomGrid');
+    const searchInput = document.getElementById('searchInput');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const counterText = document.getElementById('counterText');
+    const emptyState = document.getElementById('emptyState');
+    const btnUp = document.getElementById('btnUp');
+    let activeFilter = 'all';
+
+    function normalizeText(text) {
+      return text
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/[’‘`´]/g, "'");
+    }
+
+    function renderIdioms() {
+      const query = normalizeText(searchInput.value.trim());
+
+      const filtered = idioms.filter(function(item) {
+        const matchesFilter = activeFilter === 'all' || item.category === activeFilter;
+        const searchable = normalizeText([
+          item.expression,
+          item.categoryLabel,
+          item.literal,
+          item.meaning,
+          item.equivalent,
+          item.example,
+          item.context
+        ].join(' '));
+        const matchesSearch = query === '' || searchable.includes(query);
+        return matchesFilter && matchesSearch;
+      });
+
+      grid.innerHTML = filtered.map(function(item, index) {
+        return `
+          <div class="col-md-6 col-xl-4 fade-in idiom-item">
+            <article class="card idiom-card" data-category="${item.category}">
+              <div class="idiom-top">
+                <span class="category-badge"><i class="bi ${item.icon}"></i>${item.categoryLabel}</span>
+                <i class="bi ${item.icon} idiom-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="idiom-expression">${item.expression}</h3>
+                <button class="toggle-details" type="button" data-index="${index}">
+                  Voir le sens et l’exemple
+                </button>
+                <div class="idiom-details" id="details-${index}">
+                  <div class="info-line"><strong>Traduction littérale :</strong><br>${item.literal}</div>
+                  <div class="info-line"><strong>Sens réel :</strong><br>${item.meaning}</div>
+                  <div class="info-line"><strong>Équivalent en espagnol :</strong><br>${item.equivalent}</div>
+                  <div class="example-box"><strong>Exemple :</strong><br>${item.example}</div>
+                  <div class="info-line mt-3 mb-0"><strong>Contexte :</strong><br>${item.context}</div>
+                </div>
+              </div>
+            </article>
+          </div>
+        `;
+      }).join('');
+
+      counterText.textContent = filtered.length + ' expression' + (filtered.length !== 1 ? 's' : '') + ' affichée' + (filtered.length !== 1 ? 's' : '') + '.';
+      emptyState.classList.toggle('show', filtered.length === 0);
+
+      document.querySelectorAll('.toggle-details').forEach(function(button) {
+        button.addEventListener('click', function() {
+          const details = button.nextElementSibling;
+          details.classList.toggle('show');
+          button.textContent = details.classList.contains('show') ? 'Masquer les détails' : 'Voir le sens et l’exemple';
+        });
+      });
+
+      observeFadeElements();
+    }
+
+    function observeFadeElements() {
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.fade-in').forEach(function(element) {
+        observer.observe(element);
+      });
+    }
+
+    filterButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+        filterButtons.forEach(function(btn) { btn.classList.remove('active'); });
+        button.classList.add('active');
+        activeFilter = button.dataset.filter;
+        renderIdioms();
+      });
+    });
+
+    searchInput.addEventListener('input', renderIdioms);
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+    });
+
+    renderIdioms();
+    observeFadeElements();
+  </script>
+</body>
+</html>

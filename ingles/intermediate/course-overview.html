@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Course Overview | Intermediate English Course 1 | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    .intermediate-overview-hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      padding: 4rem 8%;
+      background: linear-gradient(135deg, #f5f8ff 0%, #eef4ff 100%);
+    }
+
+    .intermediate-overview-image img {
+      width: 100%;
+      border-radius: 28px;
+      box-shadow: 0 20px 45px rgba(20, 64, 130, 0.16);
+      display: block;
+    }
+
+    .intermediate-overview-content .eyebrow,
+    .overview-section-heading .eyebrow {
+      color: #2563eb;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .intermediate-overview-content h1 {
+      font-size: clamp(2.4rem, 5vw, 4.5rem);
+      line-height: 1;
+      color: #102033;
+      margin-bottom: 1.4rem;
+    }
+
+    .intermediate-overview-content p {
+      color: #52657d;
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.6rem;
+    }
+
+    .overview-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .overview-intro-section {
+      padding: 4rem 8% 2rem;
+      background: #ffffff;
+    }
+
+    .overview-section-heading {
+      max-width: 820px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .overview-section-heading h2 {
+      color: #102033;
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin-bottom: 1rem;
+    }
+
+    .overview-section-heading p {
+      color: #52657d;
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .overview-units-dashboard {
+      padding: 2rem 8% 5rem;
+      background: #ffffff;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.8rem;
+    }
+
+    .overview-unit-card {
+      background: #ffffff;
+      border: 1px solid #dce8f8;
+      border-radius: 28px;
+      box-shadow: 0 16px 36px rgba(20, 64, 130, 0.08);
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .overview-unit-card:hover {
+      transform: translateY(-6px);
+      border-color: #b8d4ff;
+      box-shadow: 0 22px 46px rgba(20, 64, 130, 0.14);
+    }
+
+    .overview-unit-image {
+      width: 100%;
+      height: 255px;
+      background: #eef5ff;
+      overflow: hidden;
+    }
+
+    .overview-unit-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+
+    .overview-unit-card:hover .overview-unit-image img {
+      transform: scale(1.04);
+    }
+
+    .overview-unit-content {
+      padding: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .unit-label {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #2563eb;
+      font-weight: 800;
+      font-size: 0.85rem;
+      margin-bottom: 1rem;
+    }
+
+    .overview-unit-card h3 {
+      color: #102033;
+      font-size: 1.45rem;
+      line-height: 1.25;
+      margin-bottom: 0.9rem;
+    }
+
+    .overview-unit-card p {
+      color: #52657d;
+      line-height: 1.7;
+      margin-bottom: 1.3rem;
+    }
+
+    .unit-focus-list {
+      display: grid;
+      gap: 0.55rem;
+      margin-bottom: 1.5rem;
+      padding: 0;
+    }
+
+    .unit-focus-list li {
+      list-style: none;
+      display: flex;
+      gap: 0.55rem;
+      color: #27415f;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .unit-focus-list li::before {
+      content: "✓";
+      color: #0f766e;
+      font-weight: 900;
+    }
+
+    @media (max-width: 900px) {
+      .intermediate-overview-hero {
+        grid-template-columns: 1fr;
+        padding: 3rem 6%;
+      }
+
+      .overview-units-dashboard {
+        grid-template-columns: 1fr;
+        padding: 2rem 6% 4rem;
+      }
+
+      .overview-intro-section {
+        padding-left: 6%;
+        padding-right: 6%;
+      }
+
+      .overview-unit-image {
+        height: 240px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .overview-unit-content {
+        padding: 1.5rem;
+      }
+
+      .overview-unit-image {
+        height: 210px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- COURSE OVERVIEW HERO -->
+    <section class="intermediate-overview-hero">
+      <div class="intermediate-overview-image">
+        <img src="../../assets/img/english-basic/course-overview-banner.png" alt="Intermediate English Course Overview" />
+      </div>
+
+      <div class="intermediate-overview-content">
+        <p class="eyebrow">Intermediate English Course 1</p>
+
+        <h1>Course Overview</h1>
+
+        <p>
+          Welcome to the Intermediate English Course Overview. In this section, you will
+          find the main units for this level. Each unit is designed to help you speak,
+          understand, and express ideas with more detail and confidence.
+        </p>
+
+        <p>
+          You will continue developing your English through topics related to personality,
+          behavior, stereotypes, dreams, hopes, wishes, and unusual life experiences.
+        </p>
+
+        <div class="overview-actions">
+          <a href="#intermediate-units" class="btn btn-primary">Explore units</a>
+          <a href="index.html" class="btn btn-secondary">Back to course</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- COURSE INTRO -->
+    <section class="overview-intro-section">
+      <div class="overview-section-heading">
+        <p class="eyebrow">Course units</p>
+        <h2>Choose a topic to study</h2>
+        <p>
+          These units help you move from basic communication to more complete and natural
+          English. You will practice describing people, talking about habits, expressing
+          wishes, sharing dreams, and discussing unusual experiences.
+        </p>
+      </div>
+    </section>
+
+    <!-- COURSE UNITS -->
+    <section class="overview-units-dashboard" id="intermediate-units">
+
+      <article class="overview-unit-card">
+        <div class="overview-unit-image">
+          <img
+            src="../../assets/img/english-intermediate/unit-1-stereotypes-behavior.png"
+            alt="The Way We Are Stereotypes and Behavior"
+          />
+        </div>
+
+        <div class="overview-unit-content">
+          <span class="unit-label">Unit 1</span>
+
+          <h3>The Way We Are – Stereotypes and Behavior</h3>
+
+          <p>
+            Explore how people describe personality, behavior, and stereotypes. Learn how
+            to talk about the way people act, think, and interact in different situations.
+          </p>
+
+          <ul class="unit-focus-list">
+            <li>Describing personality and behavior</li>
+            <li>Talking about stereotypes carefully</li>
+            <li>Explaining how people usually act</li>
+          </ul>
+
+          <a href="the-way-we-are.html" class="card-link">Open unit</a>
+        </div>
+      </article>
+
+      <article class="overview-unit-card">
+        <div class="overview-unit-image">
+          <img
+            src="../../assets/img/english-intermediate/unit-1-personality-annoying-habits.png"
+            alt="Personality and Annoying Habits"
+          />
+        </div>
+
+        <div class="overview-unit-content">
+          <span class="unit-label">Unit 1</span>
+
+          <h3>Personality and Annoying Habits</h3>
+
+          <p>
+            Learn how to describe personality traits and talk about habits that can be
+            funny, difficult, common, or annoying in everyday life.
+          </p>
+
+          <ul class="unit-focus-list">
+            <li>Personality adjectives</li>
+            <li>Annoying habits and routines</li>
+            <li>Giving opinions about behavior</li>
+          </ul>
+
+          <a href="personality-annoying-habits.html" class="card-link">Open unit</a>
+        </div>
+      </article>
+
+      <article class="overview-unit-card">
+        <div class="overview-unit-image">
+          <img
+            src="../../assets/img/english-intermediate/unit-2-wishes-hopes-dreams.png"
+            alt="Wishes Hopes and Dreams"
+          />
+        </div>
+
+        <div class="overview-unit-content">
+          <span class="unit-label">Unit 2</span>
+
+          <h3>Wishes, Hopes and Dreams</h3>
+
+          <p>
+            Practice talking about personal dreams, future goals, hopes, and wishes using
+            clear expressions and meaningful examples.
+          </p>
+
+          <ul class="unit-focus-list">
+            <li>Talking about hopes and dreams</li>
+            <li>Expressing wishes</li>
+            <li>Sharing personal goals</li>
+          </ul>
+
+          <a href="wishes-hopes-dreams.html" class="card-link">Open unit</a>
+        </div>
+      </article>
+
+      <article class="overview-unit-card">
+        <div class="overview-unit-image">
+          <img
+            src="../../assets/img/english-intermediate/unit-2-unusual-experiences.png"
+            alt="Unusual Experiences"
+          />
+        </div>
+
+        <div class="overview-unit-content">
+          <span class="unit-label">Unit 2</span>
+
+          <h3>Unusual Experiences</h3>
+
+          <p>
+            Learn how to tell stories about surprising, strange, funny, or memorable
+            experiences using more detailed English.
+          </p>
+
+          <ul class="unit-focus-list">
+            <li>Describing past experiences</li>
+            <li>Telling short stories</li>
+            <li>Reacting to unusual situations</li>
+          </ul>
+
+          <a href="unusual-experiences.html" class="card-link">Open unit</a>
+        </div>
+      </article>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+</body>
+</html>

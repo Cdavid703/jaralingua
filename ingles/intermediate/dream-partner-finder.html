@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dream Partner Finder | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    :root {
+      --activity-blue: #2563eb;
+      --activity-blue-dark: #1e40af;
+      --activity-teal: #0f766e;
+      --activity-gold: #f59e0b;
+      --activity-green: #059669;
+      --activity-red: #dc2626;
+      --activity-purple: #7c3aed;
+      --activity-card: #ffffff;
+      --activity-text: #102033;
+      --activity-muted: #52657d;
+      --activity-border: #dce8f8;
+      --activity-soft-blue: #eef5ff;
+      --activity-soft-green: #ecfdf5;
+      --activity-soft-gold: #fff7e8;
+      --activity-soft-purple: #f3efff;
+      --activity-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.13), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--activity-text);
+    }
+
+    .activity-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .activity-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--activity-border);
+      box-shadow: var(--activity-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .activity-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--activity-soft-blue);
+      color: var(--activity-blue-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .activity-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--activity-teal);
+      box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12);
+    }
+
+    .activity-hero h1 {
+      color: var(--activity-text);
+      font-size: clamp(2.2rem, 5vw, 4.3rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .activity-hero h1 span {
+      color: var(--activity-blue);
+    }
+
+    .activity-hero p {
+      color: var(--activity-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .activity-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .activity-hero-image {
+      background: #ffffff;
+      border: 1px solid var(--activity-border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .activity-hero-image img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+
+    .activity-block {
+      background: var(--activity-card);
+      padding: 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--activity-border);
+      box-shadow: var(--activity-shadow);
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--activity-text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 860px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--activity-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .info-grid,
+    .example-grid {
+      display: grid;
+      gap: 1.3rem;
+      margin-top: 2rem;
+    }
+
+    .info-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .example-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .info-card,
+    .example-card,
+    .tool-panel,
+    .student-card,
+    .match-card {
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      border-radius: 24px;
+      padding: 1.5rem;
+    }
+
+    .info-card {
+      border-left: 6px solid var(--activity-blue);
+    }
+
+    .info-card h3,
+    .example-card h3,
+    .tool-panel h3,
+    .student-card h3,
+    .match-card h3 {
+      color: var(--activity-blue-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .info-card p,
+    .example-card p,
+    .student-card p,
+    .match-card p {
+      color: var(--activity-muted);
+      line-height: 1.75;
+    }
+
+    .example-line {
+      padding: 1rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid var(--activity-border);
+      color: var(--activity-muted);
+      line-height: 1.8;
+      margin-top: 0.9rem;
+    }
+
+    .highlight {
+      color: var(--activity-blue);
+      font-weight: 900;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-group label {
+      display: block;
+      color: var(--activity-text);
+      font-weight: 900;
+      margin-bottom: 0.5rem;
+    }
+
+    .input-group input,
+    .input-group select,
+    .input-group textarea {
+      width: 100%;
+      border: 1px solid var(--activity-border);
+      border-radius: 16px;
+      padding: 0.9rem 1rem;
+      font: inherit;
+      color: var(--activity-text);
+      background: #ffffff;
+      outline: none;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .input-group textarea {
+      min-height: 120px;
+      resize: vertical;
+      line-height: 1.7;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus,
+    .input-group textarea:focus {
+      border-color: var(--activity-blue);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+    }
+
+    .tool-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .tool-btn {
+      min-height: 50px;
+      padding: 0 1.2rem;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--activity-blue), var(--activity-blue-dark));
+      color: #ffffff;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
+    }
+
+    .tool-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .tool-btn.secondary {
+      background: #ffffff;
+      color: var(--activity-blue-dark);
+      border: 1px solid var(--activity-border);
+      box-shadow: none;
+    }
+
+    .tool-btn.danger {
+      background: #ffffff;
+      color: var(--activity-red);
+      border: 1px solid #fecaca;
+      box-shadow: none;
+    }
+
+    .message-box {
+      display: none;
+      margin-top: 1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 18px;
+      line-height: 1.7;
+      font-weight: 700;
+    }
+
+    .message-box.show {
+      display: block;
+    }
+
+    .message-box.info {
+      background: var(--activity-soft-blue);
+      border: 1px solid #b8d4ff;
+      color: #27415f;
+    }
+
+    .message-box.warning {
+      background: var(--activity-soft-gold);
+      border: 1px dashed var(--activity-gold);
+      color: #6b4d0a;
+    }
+
+    .student-grid,
+    .matches-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .student-card {
+      background: #ffffff;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .student-card-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-bottom: 0.8rem;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin: 0.8rem 0;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: var(--activity-soft-blue);
+      color: var(--activity-blue-dark);
+      font-weight: 900;
+      font-size: 0.8rem;
+    }
+
+    .remove-btn {
+      border: 1px solid #fecaca;
+      background: #ffffff;
+      color: var(--activity-red);
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .results-panel {
+      display: none;
+      margin-top: 2rem;
+    }
+
+    .results-panel.show {
+      display: block;
+    }
+
+    .match-card {
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.12), transparent 25%),
+        linear-gradient(135deg, #ffffff, #f7faff);
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .match-names {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--activity-text);
+      margin-bottom: 0.6rem;
+    }
+
+    .connection-label {
+      display: inline-flex;
+      margin-bottom: 0.9rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--activity-soft-green);
+      color: var(--activity-green);
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .reflection {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 16px;
+      background: var(--activity-soft-purple);
+      border: 1px dashed var(--activity-purple);
+      color: #3f2a73;
+      line-height: 1.75;
+    }
+
+    @media (max-width: 980px) {
+      .activity-hero,
+      .info-grid,
+      .example-grid,
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .activity-hero {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .activity-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .activity-hero,
+      .activity-block {
+        padding: 1.4rem;
+        border-radius: 24px;
+      }
+
+      .activity-actions .btn,
+      .tool-btn {
+        width: 100%;
+      }
+
+      .tool-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="activity-page">
+
+    <section class="activity-hero">
+      <div class="activity-hero-content">
+        <p class="activity-eyebrow">
+          <span class="activity-dot"></span>
+          Practice Lab · Wishes, Hopes and Dreams
+        </p>
+
+        <h1>
+          Dream Partner
+          <span>Finder</span>
+        </h1>
+
+        <p>
+          In this activity, students share a wish, hope, or dream and explain what they
+          need to achieve it. Then, the tool connects students with possible dream partners.
+        </p>
+
+        <p>
+          A dream partner is someone with a similar dream, a similar need, or a different
+          dream that could still create a meaningful connection.
+        </p>
+
+        <div class="activity-actions">
+          <a href="#instructions" class="btn btn-primary">Read instructions</a>
+          <a href="#dream-tool" class="btn btn-secondary">Open tool</a>
+        </div>
+      </div>
+
+      <div class="activity-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/dream-partner-finder.png"
+          alt="Students connecting dreams wishes and hopes"
+        />
+      </div>
+    </section>
+
+    <section class="activity-block" id="instructions">
+      <h2 class="section-title">Instructions for students</h2>
+
+      <p class="section-subtitle">
+        Each student must write one wish, hope, or dream in English. Then, they must
+        explain what they need to achieve it.
+      </p>
+
+      <div class="info-grid">
+        <div class="info-card">
+          <h3>Write your dream</h3>
+          <p>
+            Use expressions such as “I wish...”, “I hope...”, “I dream of...”, or
+            “I have always wanted to...”
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Explain your needs</h3>
+          <p>
+            Say what you need to make your dream possible: money, time, English,
+            discipline, information, support, practice, or advice.
+          </p>
+        </div>
+
+        <div class="info-card">
+          <h3>Find a connection</h3>
+          <p>
+            The tool will connect students based on similar dreams, similar needs, or
+            possible support between different dreams.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="activity-block">
+      <h2 class="section-title">Student examples</h2>
+
+      <p class="section-subtitle">
+        These examples show how students can write their information clearly.
+      </p>
+
+      <div class="example-grid">
+        <div class="example-card">
+          <h3>Example 1</h3>
+          <div class="example-line">
+            <strong>Name:</strong> Laura<br />
+            <strong>Dream:</strong> I dream of studying in another country.<br />
+            <strong>Need:</strong> I need to improve my English, save money, and learn about scholarships.
+          </div>
+        </div>
+
+        <div class="example-card">
+          <h3>Example 2</h3>
+          <div class="example-line">
+            <strong>Name:</strong> Daniel<br />
+            <strong>Hope:</strong> I hope I can travel to Europe one day.<br />
+            <strong>Need:</strong> I need to save money, get a passport, and practice English.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="activity-block" id="dream-tool">
+      <h2 class="section-title">Dream Partner Tool</h2>
+
+      <p class="section-subtitle">
+        Insert each student one by one. When everyone is added, click
+        <strong>Find Dream Partners</strong>.
+      </p>
+
+      <div class="tool-panel">
+        <div class="tool-grid">
+          <div class="input-group">
+            <label for="student-name">Student name</label>
+            <input id="student-name" type="text" placeholder="Example: Laura" />
+          </div>
+
+          <div class="input-group">
+            <label for="dream-type">Type</label>
+            <select id="dream-type">
+              <option value="Wish">Wish</option>
+              <option value="Hope">Hope</option>
+              <option value="Dream">Dream</option>
+              <option value="Always wanted to">Always wanted to</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tool-grid">
+          <div class="input-group">
+            <label for="student-dream">Wish, hope, or dream</label>
+            <textarea id="student-dream" placeholder="Paste the student's wish, hope, or dream here..."></textarea>
+          </div>
+
+          <div class="input-group">
+            <label for="student-needs">What does this student need?</label>
+            <textarea id="student-needs" placeholder="Paste what the student needs to achieve it..."></textarea>
+          </div>
+        </div>
+
+        <div class="tool-actions">
+          <button class="tool-btn" id="add-student" type="button">Add student</button>
+          <button class="tool-btn secondary" id="save-data" type="button">Save data</button>
+          <button class="tool-btn danger" id="clear-data" type="button">Clear all</button>
+        </div>
+
+        <div id="message-box" class="message-box info"></div>
+      </div>
+
+      <div id="student-grid" class="student-grid"></div>
+
+      <div class="tool-actions">
+        <button class="tool-btn" id="find-partners" type="button">Find Dream Partners</button>
+      </div>
+
+      <div id="results-panel" class="results-panel">
+        <h2 class="section-title">Dream Partner Matches</h2>
+        <p class="section-subtitle">
+          These connections can be used for class discussion, speaking practice, or final reflections.
+        </p>
+
+        <div id="matches-grid" class="matches-grid"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const studentName = document.getElementById("student-name");
+    const dreamType = document.getElementById("dream-type");
+    const studentDream = document.getElementById("student-dream");
+    const studentNeeds = document.getElementById("student-needs");
+    const addStudentButton = document.getElementById("add-student");
+    const saveDataButton = document.getElementById("save-data");
+    const clearDataButton = document.getElementById("clear-data");
+    const findPartnersButton = document.getElementById("find-partners");
+    const studentGrid = document.getElementById("student-grid");
+    const messageBox = document.getElementById("message-box");
+    const resultsPanel = document.getElementById("results-panel");
+    const matchesGrid = document.getElementById("matches-grid");
+
+    const storageKey = "jaralingua-dream-partner-finder";
+    let students = [];
+
+    const categories = {
+      english: ["english", "language", "speak", "speaking", "fluently", "practice"],
+      travel: ["travel", "europe", "country", "abroad", "passport", "trip", "visit"],
+      study: ["study", "university", "graduate", "school", "scholarship", "exam", "career"],
+      business: ["business", "company", "restaurant", "store", "entrepreneur", "money"],
+      family: ["family", "baby", "children", "parents", "house", "home"],
+      work: ["job", "work", "profession", "career", "salary"],
+      health: ["health", "healthy", "doctor", "exercise", "mental"],
+      art: ["music", "art", "artist", "dance", "sing", "paint", "creative"],
+      technology: ["technology", "computer", "programming", "app", "software", "digital"],
+      sports: ["sports", "soccer", "football", "gym", "athlete", "training"],
+      support: ["support", "advice", "help", "discipline", "motivation", "information"],
+      money: ["money", "save", "saving", "expensive", "pay", "budget"]
+    };
+
+    function showMessage(text, type = "info") {
+      messageBox.textContent = text;
+      messageBox.className = "message-box show " + type;
+    }
+
+    function hideMessage() {
+      messageBox.textContent = "";
+      messageBox.className = "message-box info";
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function detectCategories(text) {
+      const lowerText = text.toLowerCase();
+      const found = [];
+
+      Object.keys(categories).forEach((category) => {
+        const hasMatch = categories[category].some((keyword) => lowerText.includes(keyword));
+
+        if (hasMatch) {
+          found.push(category);
+        }
+      });
+
+      return found;
+    }
+
+    function addStudent() {
+      const name = studentName.value.trim();
+      const type = dreamType.value;
+      const dream = studentDream.value.trim();
+      const needs = studentNeeds.value.trim();
+
+      if (!name || !dream || !needs) {
+        showMessage("Please complete the student name, dream, and needs before adding.", "warning");
+        return;
+      }
+
+      const allText = `${dream} ${needs}`;
+
+      students.push({
+        id: Date.now(),
+        name,
+        type,
+        dream,
+        needs,
+        categories: detectCategories(allText)
+      });
+
+      studentName.value = "";
+      studentDream.value = "";
+      studentNeeds.value = "";
+      dreamType.value = "Wish";
+
+      renderStudents();
+      saveData(false);
+      showMessage("Student added successfully.", "info");
+    }
+
+    function renderStudents() {
+      studentGrid.innerHTML = "";
+
+      students.forEach((student, index) => {
+        const card = document.createElement("article");
+        card.className = "student-card";
+
+        const categoryText = student.categories.length
+          ? student.categories.map(capitalize).join(", ")
+          : "No clear category detected";
+
+        card.innerHTML = `
+          <div class="student-card-header">
+            <h3>${index + 1}. ${escapeHtml(student.name)}</h3>
+            <button class="remove-btn" type="button" onclick="removeStudent(${student.id})">Remove</button>
+          </div>
+
+          <div class="tag-row">
+            <span class="tag">${escapeHtml(student.type)}</span>
+            <span class="tag">${escapeHtml(categoryText)}</span>
+          </div>
+
+          <p><strong>Dream / Wish / Hope:</strong> ${escapeHtml(student.dream)}</p>
+          <p><strong>Needs:</strong> ${escapeHtml(student.needs)}</p>
+        `;
+
+        studentGrid.appendChild(card);
+      });
+    }
+
+    function removeStudent(id) {
+      students = students.filter((student) => student.id !== id);
+      renderStudents();
+      saveData(false);
+      resultsPanel.classList.remove("show");
+    }
+
+    function saveData(showSavedMessage = true) {
+      localStorage.setItem(storageKey, JSON.stringify(students));
+
+      if (showSavedMessage) {
+        showMessage("Data saved successfully.", "info");
+      }
+    }
+
+    function loadData() {
+      const saved = localStorage.getItem(storageKey);
+
+      if (!saved) return;
+
+      try {
+        students = JSON.parse(saved);
+        renderStudents();
+
+        if (students.length > 0) {
+          showMessage("Saved student data loaded successfully.", "info");
+        }
+      } catch (error) {
+        localStorage.removeItem(storageKey);
+        students = [];
+      }
+    }
+
+    function clearData() {
+      const confirmClear = confirm("Do you want to clear all student information?");
+
+      if (!confirmClear) return;
+
+      students = [];
+      localStorage.removeItem(storageKey);
+      renderStudents();
+      matchesGrid.innerHTML = "";
+      resultsPanel.classList.remove("show");
+      showMessage("All student information was cleared.", "info");
+    }
+
+    function findDreamPartners() {
+      if (students.length < 2) {
+        showMessage("Please add at least two students to find dream partners.", "warning");
+        return;
+      }
+
+      const unmatched = [...students];
+      const matches = [];
+
+      while (unmatched.length > 1) {
+        const current = unmatched.shift();
+        let bestIndex = -1;
+        let bestScore = -1;
+        let bestShared = [];
+
+        unmatched.forEach((candidate, index) => {
+          const shared = current.categories.filter((category) => candidate.categories.includes(category));
+          const score = shared.length;
+
+          if (score > bestScore) {
+            bestScore = score;
+            bestIndex = index;
+            bestShared = shared;
+          }
+        });
+
+        const partner = unmatched.splice(bestIndex, 1)[0];
+
+        matches.push({
+          studentA: current,
+          studentB: partner,
+          sharedCategories: bestShared,
+          isDirectMatch: bestShared.length > 0
+        });
+      }
+
+      if (unmatched.length === 1) {
+        matches.push({
+          studentA: unmatched[0],
+          studentB: null,
+          sharedCategories: [],
+          isDirectMatch: false
+        });
+      }
+
+      renderMatches(matches);
+      resultsPanel.classList.add("show");
+      resultsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function renderMatches(matches) {
+      matchesGrid.innerHTML = "";
+
+      matches.forEach((match, index) => {
+        const card = document.createElement("article");
+        card.className = "match-card";
+
+        if (!match.studentB) {
+          card.innerHTML = `
+            <span class="connection-label">Unique Dream</span>
+            <div class="match-names">${escapeHtml(match.studentA.name)}</div>
+            <p>
+              ${escapeHtml(match.studentA.name)} has a unique dream that did not have a direct partner.
+            </p>
+            <div class="reflection">
+              Final reflection: ${escapeHtml(match.studentA.name)} can share this dream with the class and ask classmates for ideas, advice, or support to make it more achievable.
+            </div>
+          `;
+        } else {
+          const sharedText = match.sharedCategories.length
+            ? match.sharedCategories.map(capitalize).join(", ")
+            : "different dreams with possible support";
+
+          const connectionText = match.isDirectMatch
+            ? `${match.studentA.name} and ${match.studentB.name} are dream partners because they share a connection related to ${sharedText}.`
+            : `${match.studentA.name} and ${match.studentB.name} have different dreams, but they can still be dream partners by listening, asking questions, and offering support.`;
+
+          const reflectionText = match.isDirectMatch
+            ? `${match.studentA.name} connected with ${match.studentB.name} because their dreams or needs are related. They can support each other by sharing ideas, practicing English, and motivating each other to keep working toward their goals.`
+            : `${match.studentA.name} connected with ${match.studentB.name} even though their dreams are different. This connection can help them understand different goals and think about how classmates can support each other.`;
+
+          card.innerHTML = `
+            <span class="connection-label">Dream Partner Match ${index + 1}</span>
+            <div class="match-names">${escapeHtml(match.studentA.name)} + ${escapeHtml(match.studentB.name)}</div>
+
+            <p><strong>Connection:</strong> ${escapeHtml(connectionText)}</p>
+
+            <p><strong>${escapeHtml(match.studentA.name)}:</strong> ${escapeHtml(match.studentA.dream)}</p>
+            <p><strong>${escapeHtml(match.studentB.name)}:</strong> ${escapeHtml(match.studentB.dream)}</p>
+
+            <div class="reflection">
+              Final reflection: ${escapeHtml(reflectionText)}
+            </div>
+          `;
+        }
+
+        matchesGrid.appendChild(card);
+      });
+    }
+
+    function capitalize(word) {
+      return word.charAt(0).toUpperCase() + word.slice(1);
+    }
+
+    addStudentButton.addEventListener("click", addStudent);
+    saveDataButton.addEventListener("click", () => saveData(true));
+    clearDataButton.addEventListener("click", clearData);
+    findPartnersButton.addEventListener("click", findDreamPartners);
+
+    window.addEventListener("load", loadData);
+  </script>
+
+</body>
+</html>

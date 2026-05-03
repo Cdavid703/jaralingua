@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Spelling Tool | Basic English Course 1</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+</head>
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo-transparent.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- LESSON HERO -->
+    <section class="lesson-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Basic English Course 1</p>
+
+        <h1>Spelling Tool</h1>
+
+        <p>
+          Practice the English alphabet, listen to each letter, and build confidence
+          when spelling names, emails, words, and personal information.
+        </p>
+
+        <div class="lesson-meta">
+          <span>Alphabet Practice</span>
+          <span>Listening Tool</span>
+          <span>Beginner Level</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#spelling-tool" class="btn btn-primary">Start practice</a>
+          <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
+        </div>
+      </div>
+
+      <div class="lesson-hero-image">
+        <img src="../../assets/img/english-basic/course-overview/spelling-tool-banner.png" alt="Spelling Tool" />
+      </div>
+    </section>
+
+    <!-- LEARNING OUTCOME -->
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Learning Outcome</span>
+        <p>
+          By the end of this practice, you will be able to recognize English letters,
+          listen to their pronunciation, and spell basic information more clearly.
+        </p>
+      </div>
+    </section>
+
+    <!-- SPELLING TOOL CONTENT -->
+    <section class="premium-lesson-container" id="spelling-tool">
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">01</span>
+          <div>
+            <p class="topic-label">Interactive Practice</p>
+            <h2>The English Alphabet</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Click on any letter to hear its pronunciation. Vowels are highlighted in red
+          because they are especially important for spelling and pronunciation.
+        </p>
+
+        <div class="spelling-tool-panel">
+          <div class="spelling-tool-header">
+            <div>
+              <h3>Alphabet Pronunciation</h3>
+              <p>Click a card and listen carefully.</p>
+            </div>
+
+            <span class="spelling-badge">A–Z</span>
+          </div>
+
+          <div class="alphabet-grid" id="alphabet"></div>
+
+          <p class="spelling-status" id="status">Click on any letter to hear it pronounced.</p>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">02</span>
+          <div>
+            <p class="topic-label">Practice Tip</p>
+            <h2>How to Use This Tool</h2>
+          </div>
+        </div>
+
+        <div class="lesson-grid">
+          <div class="lesson-mini-card">
+            <h3>Step 1</h3>
+            <div class="phrase-item featured-phrase">
+              <strong>Listen first</strong>
+              <span>Click a letter and focus on the sound before repeating it.</span>
+            </div>
+          </div>
+
+          <div class="lesson-mini-card">
+            <h3>Step 2</h3>
+            <div class="phrase-item featured-phrase">
+              <strong>Repeat clearly</strong>
+              <span>Say the letter out loud after listening to the pronunciation.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-tip">
+          <span>Teacher's Tip</span>
+          <p>
+            When spelling names or emails, say each letter slowly and clearly.
+            Example: “Alex” → A-L-E-X.
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- NEXT STEPS -->
+    <section class="lesson-next-section">
+      <div class="lesson-next-card">
+        <p class="eyebrow">Next step</p>
+        <h2>Keep practicing</h2>
+
+        <p>
+          Use this tool whenever you need to review letters, spell names,
+          or practice giving personal information in English.
+        </p>
+
+        <div class="hero-actions">
+          <a href="course-overview.html" class="btn btn-primary">Back to Course Overview</a>
+          <a href="personal-information.html" class="btn btn-secondary">Review Personal Information</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const letters = [
+      { l: "A", speak: null, sound: "eɪ", vowel: true },
+      { l: "B", speak: "bee", sound: "biː", vowel: false },
+      { l: "C", speak: "see", sound: "siː", vowel: false },
+      { l: "D", speak: "dee", sound: "diː", vowel: false },
+      { l: "E", speak: null, sound: "iː", vowel: true },
+      { l: "F", speak: "fuh", sound: "ɛf", vowel: false },
+      { l: "G", speak: "jee", sound: "dʒiː", vowel: false },
+      { l: "H", speak: "aitch", sound: "eɪtʃ", vowel: false },
+      { l: "I", speak: null, sound: "aɪ", vowel: true },
+      { l: "J", speak: "jay", sound: "dʒeɪ", vowel: false },
+      { l: "K", speak: "kay", sound: "keɪ", vowel: false },
+      { l: "L", speak: "ell", sound: "ɛl", vowel: false },
+      { l: "M", speak: "em", sound: "ɛm", vowel: false },
+      { l: "N", speak: "en", sound: "ɛn", vowel: false },
+      { l: "O", speak: null, sound: "oʊ", vowel: true },
+      { l: "P", speak: "pee", sound: "piː", vowel: false },
+      { l: "Q", speak: "cue", sound: "kjuː", vowel: false },
+      { l: "R", speak: "are", sound: "ɑːr", vowel: false },
+      { l: "S", speak: "ess", sound: "ɛs", vowel: false },
+      { l: "T", speak: "tee", sound: "tiː", vowel: false },
+      { l: "U", speak: null, sound: "juː", vowel: true },
+      { l: "V", speak: "vee", sound: "viː", vowel: false },
+      { l: "W", speak: "double you", sound: "ˈdʌb.ljuː", vowel: false },
+      { l: "X", speak: "ex", sound: "ɛks", vowel: false },
+      { l: "Y", speak: "why", sound: "waɪ", vowel: false },
+      { l: "Z", speak: "zee", sound: "ziː", vowel: false }
+    ];
+
+    let voices = [];
+
+    function loadVoices() {
+      voices = speechSynthesis.getVoices();
+    }
+
+    speechSynthesis.addEventListener("voiceschanged", loadVoices);
+    loadVoices();
+
+    function getBestVoice() {
+      const preferredVoices = [
+        "Samantha",
+        "Google US English",
+        "Microsoft Aria",
+        "Alex",
+        "Karen",
+        "Daniel"
+      ];
+
+      for (const name of preferredVoices) {
+        const voice = voices.find(function(v) {
+          return v.name.includes(name) && v.lang.startsWith("en");
+        });
+
+        if (voice) {
+          return voice;
+        }
+      }
+
+      return (
+        voices.find(function(v) { return v.lang === "en-US"; }) ||
+        voices.find(function(v) { return v.lang.startsWith("en"); }) ||
+        null
+      );
+    }
+
+    function speak(text, rate, onEnd) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = rate;
+      utterance.pitch = 1;
+
+      const voice = getBestVoice();
+
+      if (voice) {
+        utterance.voice = voice;
+      }
+
+      if (onEnd) {
+        utterance.onend = onEnd;
+      }
+
+      speechSynthesis.speak(utterance);
+    }
+
+    function pronounce(data, card) {
+      speechSynthesis.cancel();
+
+      const allCards = document.querySelectorAll(".alphabet-card");
+      allCards.forEach(function(item) {
+        item.classList.remove("playing");
+      });
+
+      card.classList.add("playing");
+
+      const status = document.getElementById("status");
+      status.textContent = "Now playing: " + data.l;
+
+      if (data.vowel) {
+        speak(data.l, 0.65, function() {
+          card.classList.remove("playing");
+        });
+      } else {
+        speak(data.speak, 0.75, function() {
+          card.classList.remove("playing");
+        });
+      }
+    }
+
+    function makeCard(data, container) {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "alphabet-card" + (data.vowel ? " vowel" : "");
+      card.setAttribute("aria-label", "Listen to letter " + data.l);
+
+      card.innerHTML =
+        '<span class="letter-pair">' +
+          data.l +
+          '<span class="lower">' + data.l.toLowerCase() + '</span>' +
+        '</span>' +
+        '<span class="sound">' + data.sound + '</span>';
+
+      card.addEventListener("click", function() {
+        pronounce(data, card);
+      });
+
+      container.appendChild(card);
+    }
+
+    const grid = document.getElementById("alphabet");
+    letters.forEach(function(letter) {
+      makeCard(letter, grid);
+    });
+  </script>
+
+</body>
+</html>

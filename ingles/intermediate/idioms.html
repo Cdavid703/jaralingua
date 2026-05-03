@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Speak Like a Local: Intermediate Idioms | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    :root {
+      --idiom-blue: #2563eb;
+      --idiom-blue-dark: #1e40af;
+      --idiom-teal: #0f766e;
+      --idiom-gold: #f59e0b;
+      --idiom-purple: #7c3aed;
+      --idiom-green: #059669;
+      --idiom-card: #ffffff;
+      --idiom-text: #102033;
+      --idiom-muted: #52657d;
+      --idiom-border: #dce8f8;
+      --idiom-soft-blue: #eef5ff;
+      --idiom-soft-gold: #fff7e8;
+      --idiom-soft-green: #ecfdf5;
+      --idiom-soft-purple: #f3efff;
+      --idiom-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.13), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--idiom-text);
+    }
+
+    .idioms-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .idioms-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--idiom-border);
+      box-shadow: var(--idiom-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .idioms-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--idiom-soft-blue);
+      color: var(--idiom-blue-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .idioms-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--idiom-teal);
+      box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12);
+    }
+
+    .idioms-hero h1 {
+      color: var(--idiom-text);
+      font-size: clamp(2.3rem, 5vw, 4.4rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .idioms-hero h1 span {
+      color: var(--idiom-blue);
+    }
+
+    .idioms-hero p {
+      color: var(--idiom-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .idioms-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .idioms-hero-image {
+      background: #ffffff;
+      border: 1px solid var(--idiom-border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .idioms-hero-image img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+
+    .idioms-block {
+      background: var(--idiom-card);
+      padding: 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--idiom-border);
+      box-shadow: var(--idiom-shadow);
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--idiom-text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 850px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--idiom-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .intro-card {
+      padding: 1.6rem;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--idiom-soft-blue), #ffffff);
+      border: 1px solid var(--idiom-border);
+      border-left: 6px solid var(--idiom-blue);
+    }
+
+    .intro-card h3 {
+      color: var(--idiom-blue-dark);
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .intro-card p {
+      color: var(--idiom-muted);
+      line-height: 1.8;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.2rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 0.45rem 0.8rem;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid var(--idiom-border);
+      color: var(--idiom-blue-dark);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .idiom-layout {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      align-items: start;
+    }
+
+    .idiom-menu {
+      display: grid;
+      gap: 0.75rem;
+      position: sticky;
+      top: 95px;
+    }
+
+    .idiom-btn {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 0.8rem;
+      width: 100%;
+      padding: 1rem;
+      border-radius: 18px;
+      border: 1px solid var(--idiom-border);
+      background: #ffffff;
+      color: var(--idiom-text);
+      cursor: pointer;
+      text-align: left;
+      font: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .idiom-btn:hover {
+      transform: translateY(-3px);
+      border-color: #b8d4ff;
+      background: #f7faff;
+    }
+
+    .idiom-btn.active {
+      background: linear-gradient(135deg, var(--idiom-blue), var(--idiom-blue-dark));
+      border-color: var(--idiom-blue);
+      color: #ffffff;
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.2);
+    }
+
+    .idiom-btn-icon {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--idiom-soft-blue);
+      font-size: 1.2rem;
+    }
+
+    .idiom-btn.active .idiom-btn-icon {
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .idiom-btn-title {
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .idiom-btn-level {
+      font-size: 0.78rem;
+      opacity: 0.75;
+      font-weight: 700;
+    }
+
+    .idiom-display {
+      min-height: 600px;
+      padding: 2rem;
+      border-radius: 28px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.14), transparent 25%),
+        linear-gradient(135deg, #ffffff, #f7faff);
+      border: 1px solid var(--idiom-border);
+      box-shadow: 0 14px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .idiom-display-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 1.5rem;
+    }
+
+    .idiom-big-icon {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--idiom-blue), var(--idiom-teal));
+      color: #ffffff;
+      font-size: 2rem;
+      box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
+    }
+
+    .idiom-display h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1;
+      letter-spacing: -1px;
+      color: var(--idiom-text);
+      margin-bottom: 0.6rem;
+    }
+
+    .idiom-category {
+      display: inline-flex;
+      padding: 0.4rem 0.8rem;
+      border-radius: 999px;
+      background: var(--idiom-soft-gold);
+      color: #92400e;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .meaning-box,
+    .usage-box,
+    .example-box,
+    .conversation-box,
+    .phrase-box {
+      padding: 1.2rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      border: 1px solid var(--idiom-border);
+    }
+
+    .meaning-box {
+      background: var(--idiom-soft-gold);
+      color: #5f4a1c;
+      border-style: dashed;
+      border-color: var(--idiom-gold);
+    }
+
+    .usage-box {
+      background: var(--idiom-soft-blue);
+      color: var(--idiom-muted);
+    }
+
+    .example-box {
+      background: #ffffff;
+      color: var(--idiom-muted);
+    }
+
+    .phrase-box {
+      background: var(--idiom-soft-green);
+      color: #065f46;
+    }
+
+    .box-label {
+      display: block;
+      color: var(--idiom-blue-dark);
+      font-weight: 900;
+      margin-bottom: 0.45rem;
+    }
+
+    .meaning-box .box-label {
+      color: #92400e;
+    }
+
+    .phrase-box .box-label {
+      color: #065f46;
+    }
+
+    .conversation-box {
+      background: #f8fbff;
+    }
+
+    .chat-line {
+      max-width: 88%;
+      padding: 0.85rem 1rem;
+      border-radius: 18px;
+      margin-bottom: 0.8rem;
+      line-height: 1.65;
+      color: var(--idiom-muted);
+    }
+
+    .chat-left {
+      background: #ffffff;
+      border: 1px solid var(--idiom-border);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-right {
+      margin-left: auto;
+      background: linear-gradient(135deg, var(--idiom-blue), var(--idiom-blue-dark));
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    .chat-right strong {
+      color: #ffe8a3;
+    }
+
+    .practice-prompt {
+      padding: 1.2rem;
+      border-radius: 20px;
+      background: var(--idiom-soft-purple);
+      border: 1px dashed var(--idiom-purple);
+      color: #3f2a73;
+      line-height: 1.7;
+    }
+
+    .practice-prompt strong {
+      color: var(--idiom-purple);
+    }
+
+    @media (max-width: 980px) {
+      .idioms-hero,
+      .idiom-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .idioms-hero {
+        padding: 2rem;
+      }
+
+      .idiom-menu {
+        position: static;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .idioms-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .idioms-hero,
+      .idioms-block,
+      .idiom-display {
+        padding: 1.4rem;
+        border-radius: 24px;
+      }
+
+      .idioms-actions .btn {
+        width: 100%;
+      }
+
+      .idiom-btn {
+        grid-template-columns: auto 1fr;
+      }
+
+      .idiom-btn-level {
+        grid-column: 2;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="idioms-page">
+
+    <section class="idioms-hero">
+      <div class="idioms-hero-content">
+        <p class="idioms-eyebrow">
+          <span class="idioms-dot"></span>
+          Intermediate English · Idioms
+        </p>
+
+        <h1>
+          Speak Like a Local:
+          <span>Intermediate Idioms</span>
+        </h1>
+
+        <p>
+          Idioms help students understand natural English and sound more fluent in
+          conversations. At the intermediate level, students can start using idioms to
+          express opinions, feelings, challenges, and everyday situations.
+        </p>
+
+        <p>
+          Click on each idiom to reveal its meaning, usage, example sentences,
+          conversation model, and a short speaking prompt.
+        </p>
+
+        <div class="idioms-actions">
+          <a href="#idioms-list" class="btn btn-primary">Explore idioms</a>
+          <a href="index.html" class="btn btn-secondary">Back to course home</a>
+        </div>
+      </div>
+
+      <div class="idioms-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/intermediate-idioms.png"
+          alt="Students learning intermediate English idioms"
+        />
+      </div>
+    </section>
+
+    <section class="idioms-block">
+      <h2 class="section-title">What is an idiom?</h2>
+
+      <p class="section-subtitle">
+        An idiom is a special expression where the meaning is different from the literal
+        meaning of the individual words. Idioms are common in real conversations, movies,
+        songs, interviews, and informal writing.
+      </p>
+
+      <div class="intro-card">
+        <h3>Why learn idioms?</h3>
+        <p>
+          Idioms help you understand English beyond grammar rules. They show emotion,
+          attitude, and cultural meaning. However, idioms should be used carefully:
+          they are usually more common in informal or semi-formal communication.
+        </p>
+
+        <div class="tag-row">
+          <span class="tag">Expressions</span>
+          <span class="tag">Figures of speech</span>
+          <span class="tag">Natural English</span>
+          <span class="tag">Conversation phrases</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="idioms-block" id="idioms-list">
+      <h2 class="section-title">Intermediate idioms</h2>
+
+      <p class="section-subtitle">
+        Select an idiom from the list. The content will open on the right side without
+        leaving the page.
+      </p>
+
+      <div class="idiom-layout">
+        <div class="idiom-menu" id="idiom-menu"></div>
+
+        <article class="idiom-display" id="idiom-display"></article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const idioms = [
+      {
+        icon: "🍰",
+        title: "A piece of cake",
+        category: "Difficulty",
+        meaning: "Something very easy to do.",
+        usage: "Use this idiom when a task, test, activity, or problem is easier than expected.",
+        example: "The grammar quiz was a piece of cake because I studied a lot.",
+        phrase: "This is useful for talking about school tasks, exams, projects, or everyday challenges.",
+        conversation: [
+          { speaker: "Alex", text: "Was the English presentation difficult?" },
+          { speaker: "Maria", text: "Not really. It was a piece of cake because our group practiced yesterday." }
+        ],
+        prompt: "Talk about something that was easier than you expected. Use: “It was a piece of cake because...”"
+      },
+      {
+        icon: "🔨",
+        title: "Hit the nail on the head",
+        category: "Accuracy",
+        meaning: "To say exactly the right thing or identify the real problem.",
+        usage: "Use this idiom when someone explains something perfectly or makes a very accurate comment.",
+        example: "You hit the nail on the head when you said the problem was lack of communication.",
+        phrase: "This idiom is useful in discussions, debates, feedback, and problem-solving.",
+        conversation: [
+          { speaker: "Teacher", text: "Why do you think the group project failed?" },
+          { speaker: "Student", text: "I think nobody organized the tasks clearly." },
+          { speaker: "Teacher", text: "Exactly. You hit the nail on the head." }
+        ],
+        prompt: "Think of a problem at school or work. What is the real cause? Use: “I think the real problem is...”"
+      },
+      {
+        icon: "🌙",
+        title: "Once in a blue moon",
+        category: "Frequency",
+        meaning: "Very rarely; almost never.",
+        usage: "Use this idiom to talk about something that does not happen often.",
+        example: "I eat fast food once in a blue moon because I usually cook at home.",
+        phrase: "This idiom connects well with frequency adverbs like always, usually, sometimes, and never.",
+        conversation: [
+          { speaker: "Luis", text: "Do you go to the gym every week?" },
+          { speaker: "Ana", text: "No, honestly, I go once in a blue moon." }
+        ],
+        prompt: "Say something you rarely do. Use: “I only do it once in a blue moon.”"
+      },
+      {
+        icon: "🤒",
+        title: "Under the weather",
+        category: "Health and feelings",
+        meaning: "Feeling sick or not very well.",
+        usage: "Use this idiom when someone feels physically bad, tired, or a little sick.",
+        example: "I stayed home yesterday because I was feeling under the weather.",
+        phrase: "This idiom is common in casual conversation and sounds more natural than always saying “sick.”",
+        conversation: [
+          { speaker: "Camila", text: "You look tired today. Are you okay?" },
+          { speaker: "Mateo", text: "I’m a little under the weather, but I’ll be fine." }
+        ],
+        prompt: "Imagine you cannot go to class. Explain why using: “I’m feeling under the weather.”"
+      },
+      {
+        icon: "🦷",
+        title: "Bite the bullet",
+        category: "Difficult decisions",
+        meaning: "To do something difficult or unpleasant because it is necessary.",
+        usage: "Use this idiom when someone finally decides to face a difficult situation.",
+        example: "I don’t like speaking in public, but I have to bite the bullet and present my project.",
+        phrase: "This idiom is useful for talking about fears, responsibilities, exams, and important decisions.",
+        conversation: [
+          { speaker: "Sofia", text: "I’m nervous about talking to the teacher." },
+          { speaker: "Daniel", text: "You should bite the bullet and ask for help." }
+        ],
+        prompt: "Talk about something difficult you need to do. Use: “I need to bite the bullet and...”"
+      },
+      {
+        icon: "🎾",
+        title: "The ball is in your court",
+        category: "Responsibility",
+        meaning: "It is your turn to make a decision or take action.",
+        usage: "Use this idiom when someone has already done their part and now another person must respond.",
+        example: "I sent you the information. Now the ball is in your court.",
+        phrase: "This idiom is useful in teamwork, communication, projects, and decision-making.",
+        conversation: [
+          { speaker: "Laura", text: "I already sent the group document." },
+          { speaker: "Nicolas", text: "Great. Now the ball is in my court. I’ll add the conclusion." }
+        ],
+        prompt: "Describe a situation where someone needs to take action. Use: “Now the ball is in...”"
+      },
+      {
+        icon: "🚪",
+        title: "Get out of your comfort zone",
+        category: "Personal growth",
+        meaning: "To try something new, challenging, or uncomfortable in order to grow.",
+        usage: "Use this idiom when someone needs to take a risk or do something unfamiliar.",
+        example: "Speaking English in front of the class helps me get out of my comfort zone.",
+        phrase: "This idiom is excellent for discussing learning, dreams, challenges, and personal goals.",
+        conversation: [
+          { speaker: "Andres", text: "I’m afraid of speaking English with strangers." },
+          { speaker: "Valentina", text: "I understand, but you need to get out of your comfort zone." }
+        ],
+        prompt: "What activity helps you grow? Use: “I need to get out of my comfort zone by...”"
+      },
+      {
+        icon: "📄",
+        title: "On the same page",
+        category: "Understanding",
+        meaning: "To understand and agree about the same idea or plan.",
+        usage: "Use this idiom when people share the same information or have the same understanding.",
+        example: "Before we start the project, let’s make sure we are on the same page.",
+        phrase: "This idiom is very useful for teamwork, group projects, and classroom instructions.",
+        conversation: [
+          { speaker: "Teacher", text: "Does everyone understand the instructions?" },
+          { speaker: "Class", text: "Yes, we are all on the same page." }
+        ],
+        prompt: "Imagine you are working in a group. Use: “Let’s make sure we are on the same page.”"
+      },
+      {
+        icon: "🕯️",
+        title: "Burn the midnight oil",
+        category: "Study and work",
+        meaning: "To work or study very late at night.",
+        usage: "Use this idiom when someone stays up late to finish work, study, or complete a task.",
+        example: "I had to burn the midnight oil to finish my English homework.",
+        phrase: "This idiom is common when talking about exams, assignments, deadlines, and responsibilities.",
+        conversation: [
+          { speaker: "Juan", text: "You look sleepy today." },
+          { speaker: "Sara", text: "I know. I burned the midnight oil studying for the exam." }
+        ],
+        prompt: "Talk about a time when you studied or worked late. Use: “I burned the midnight oil because...”"
+      },
+      {
+        icon: "🎁",
+        title: "A blessing in disguise",
+        category: "Unexpected results",
+        meaning: "Something that seems bad at first but later becomes good.",
+        usage: "Use this idiom when a negative situation produces a positive result.",
+        example: "Losing that job was a blessing in disguise because I found a better opportunity.",
+        phrase: "This idiom is useful for storytelling, life experiences, dreams, and personal reflection.",
+        conversation: [
+          { speaker: "Elena", text: "I was sad when I failed the first interview." },
+          { speaker: "David", text: "Maybe it was a blessing in disguise. Now you have a better job offer." }
+        ],
+        prompt: "Think of a bad situation that later became positive. Use: “It was a blessing in disguise because...”"
+      }
+    ];
+
+    const menu = document.getElementById("idiom-menu");
+    const display = document.getElementById("idiom-display");
+
+    function renderMenu() {
+      menu.innerHTML = "";
+
+      idioms.forEach((idiom, index) => {
+        const button = document.createElement("button");
+        button.className = "idiom-btn" + (index === 0 ? " active" : "");
+        button.type = "button";
+
+        button.innerHTML = `
+          <span class="idiom-btn-icon">${idiom.icon}</span>
+          <span>
+            <span class="idiom-btn-title">${idiom.title}</span><br />
+            <span class="idiom-btn-level">${idiom.category}</span>
+          </span>
+          <span>→</span>
+        `;
+
+        button.addEventListener("click", () => {
+          document.querySelectorAll(".idiom-btn").forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+          renderIdiom(index);
+        });
+
+        menu.appendChild(button);
+      });
+    }
+
+    function renderIdiom(index) {
+      const idiom = idioms[index];
+
+      const conversationHtml = idiom.conversation.map((line, lineIndex) => {
+        const sideClass = lineIndex % 2 === 0 ? "chat-left" : "chat-right";
+
+        return `
+          <div class="chat-line ${sideClass}">
+            <strong>${line.speaker}:</strong> ${line.text}
+          </div>
+        `;
+      }).join("");
+
+      display.innerHTML = `
+        <div class="idiom-display-header">
+          <div>
+            <h2>${idiom.title}</h2>
+            <span class="idiom-category">${idiom.category}</span>
+          </div>
+
+          <div class="idiom-big-icon">${idiom.icon}</div>
+        </div>
+
+        <div class="meaning-box">
+          <span class="box-label">Meaning</span>
+          ${idiom.meaning}
+        </div>
+
+        <div class="usage-box">
+          <span class="box-label">When do we use it?</span>
+          ${idiom.usage}
+        </div>
+
+        <div class="example-box">
+          <span class="box-label">Example sentence</span>
+          ${idiom.example}
+        </div>
+
+        <div class="phrase-box">
+          <span class="box-label">Useful note</span>
+          ${idiom.phrase}
+        </div>
+
+        <div class="conversation-box">
+          <span class="box-label">Example conversation</span>
+          ${conversationHtml}
+        </div>
+
+        <div class="practice-prompt">
+          <strong>Speaking prompt:</strong> ${idiom.prompt}
+        </div>
+      `;
+    }
+
+    renderMenu();
+    renderIdiom(0);
+  </script>
+
+</body>
+</html>

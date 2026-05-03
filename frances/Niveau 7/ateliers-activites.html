@@ -1,0 +1,765 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ateliers et activités – Français Niveau 7</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --cream: #fff8ef;
+      --white: #ffffff;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand { font-family: "Montserrat", sans-serif; }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(214, 40, 57, 0.17), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(31, 78, 140, 0.22), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f2 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      color: var(--blue-dark);
+      font-size: clamp(2.7rem, 6.5vw, 5.7rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.18rem, 2vw, 1.55rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 840px;
+    }
+
+    .workshop-card {
+      height: 100%;
+      border: 0;
+      border-radius: 34px;
+      overflow: hidden;
+      background: white;
+      box-shadow: var(--shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .workshop-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 28px 60px rgba(20, 40, 80, 0.16);
+    }
+
+    .workshop-top {
+      min-height: 220px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(244, 201, 93, 0.22), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+    }
+
+    .workshop-top.red {
+      background:
+        radial-gradient(circle at 18% 20%, rgba(244, 201, 93, 0.2), transparent 28%),
+        linear-gradient(135deg, var(--red), var(--blue-dark));
+    }
+
+    .workshop-top::after {
+      content: attr(data-mark);
+      position: absolute;
+      right: 1.2rem;
+      bottom: -1.8rem;
+      font-size: 7.5rem;
+      line-height: 1;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      opacity: 0.08;
+    }
+
+    .workshop-icon {
+      width: 70px;
+      height: 70px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.17);
+      border: 1px solid rgba(255,255,255,0.22);
+      font-size: 2rem;
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      background: rgba(47, 158, 119, 0.12);
+      color: var(--green);
+      padding: 0.48rem 0.78rem;
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .workshop-body {
+      padding: clamp(1.35rem, 3vw, 2rem);
+    }
+
+    .skill-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      padding: 0.52rem 0.78rem;
+      margin: 0.22rem;
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .coming-card {
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      position: relative;
+    }
+
+    .coming-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 50px rgba(20, 40, 80, 0.14);
+    }
+
+    .coming-top {
+      min-height: 130px;
+      padding: 1.3rem;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--red), var(--blue-dark));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coming-top.blue {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue-dark));
+    }
+
+    .coming-top.gold {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.22), transparent 30%),
+        linear-gradient(135deg, var(--yellow), var(--blue));
+    }
+
+    .coming-icon {
+      font-size: 4.8rem;
+      opacity: 0.18;
+      position: absolute;
+      right: 1rem;
+      bottom: 0.2rem;
+    }
+
+    .coming-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.18);
+      padding: 0.45rem 0.7rem;
+      font-size: 0.84rem;
+      font-weight: 900;
+      backdrop-filter: blur(8px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .coming-card .card-body {
+      padding: 1.45rem;
+    }
+
+    .coming-card h3 {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .coming-card p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .btn-disabled-soft {
+      border-radius: 999px;
+      border: 2px dashed rgba(113, 128, 150, 0.35);
+      background: rgba(113, 128, 150, 0.06);
+      color: var(--muted);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      width: 100%;
+      cursor: not-allowed;
+    }
+
+    .steps-panel {
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .steps-panel::after {
+      content: "2";
+      position: absolute;
+      right: 2rem;
+      bottom: -4rem;
+      font-size: 16rem;
+      line-height: 1;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      opacity: 0.07;
+    }
+
+    .step-item {
+      border-radius: 22px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 1rem;
+      height: 100%;
+      backdrop-filter: blur(8px);
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show { display: grid; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .hero { padding-top: 7rem; }
+      .hero-card img { min-height: 320px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#ateliers">Ateliers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#prochains">Prochainement</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-people-fill"></i>
+            Pratique du cours
+          </span>
+          <h1>Ateliers et activités</h1>
+          <p class="hero-lead">Pratiquez le français à travers des situations concrètes.</p>
+          <p class="hero-text">
+            Dans cet espace, vous trouverez les ateliers pratiques du Niveau 7. Chaque atelier vous aide à réutiliser les contenus du cours à travers des transformations, des exercices guidés et des situations de communication.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#ateliers" class="btn-main"><i class="bi bi-play-circle"></i>Voir les ateliers</a>
+            <a href="index.html" class="btn-soft"><i class="bi bi-house-door"></i>Retour à l’accueil</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <img src="img/ateliers-activites.png" alt="Étudiants participant à des ateliers et activités de français">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="ateliers">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Ateliers disponibles</p>
+          <h2 class="section-title">Choisissez votre activité</h2>
+          <p class="section-text mx-auto">
+            Deux ateliers sont maintenant disponibles autour du passé simple : un atelier de reconnaissance et un atelier de transformation.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6 fade-in">
+            <article class="workshop-card">
+              <div class="workshop-top" data-mark="PS">
+                <div class="workshop-icon"><i class="bi bi-book-half"></i></div>
+                <div class="position-relative" style="z-index: 2;">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Atelier 1</p>
+                  <h2 class="fw-bold mb-0">Le passé simple</h2>
+                </div>
+              </div>
+              <div class="workshop-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle-fill"></i>Disponible</span>
+                <h3 class="h3 fw-bold text-primary mb-3">Reconnaître le passé simple</h3>
+                <p class="section-text">
+                  Identifiez les verbes au passé simple dans des récits écrits, comprenez leur fonction et recevez une correction automatique avec rétroaction.
+                </p>
+                <div class="mb-4">
+                  <span class="skill-pill"><i class="bi bi-search"></i>Reconnaissance</span>
+                  <span class="skill-pill"><i class="bi bi-ui-checks"></i>Choix multiple</span>
+                  <span class="skill-pill"><i class="bi bi-pencil"></i>Espaces à remplir</span>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                  <a href="ateliers/passe-simple.html" class="btn-main"><i class="bi bi-door-open"></i>Entrer</a>
+                  <a href="themes/passe-simple.html" class="btn-soft"><i class="bi bi-book"></i>Revoir la théorie</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <article class="workshop-card">
+              <div class="workshop-top red" data-mark="→">
+                <div class="workshop-icon"><i class="bi bi-arrow-left-right"></i></div>
+                <div class="position-relative" style="z-index: 2;">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Atelier 2</p>
+                  <h2 class="fw-bold mb-0">Transformation</h2>
+                </div>
+              </div>
+              <div class="workshop-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle-fill"></i>Disponible</span>
+                <h3 class="h3 fw-bold text-primary mb-3">Du passé simple au passé composé</h3>
+                <p class="section-text">
+                  Transformez des phrases au passé simple vers le passé composé, d’abord avec aide grammaticale, puis en production libre.
+                </p>
+                <div class="mb-4">
+                  <span class="skill-pill"><i class="bi bi-compass"></i>Guidé</span>
+                  <span class="skill-pill"><i class="bi bi-pencil-square"></i>Libre</span>
+                  <span class="skill-pill"><i class="bi bi-arrow-repeat"></i>Transformation</span>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                  <a href="ateliers/transformation-passe-simple.html" class="btn-main"><i class="bi bi-door-open"></i>Entrer</a>
+                  <a href="ateliers/passe-simple.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Atelier 1</a>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="prochains" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">À venir</p>
+          <h2 class="section-title">Prochains ateliers</h2>
+          <p class="section-text mx-auto">
+            Ces espaces sont déjà prévus dans la progression du cours. Ils seront développés après les ateliers du passé simple.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card coming-card">
+              <div class="coming-top blue">
+                <span class="coming-badge"><i class="bi bi-clock"></i>En préparation</span>
+                <i class="bi bi-megaphone-fill coming-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">Atelier de débat</h3>
+                <p>Prendre position, défendre une idée et réagir avec nuance dans une discussion.</p>
+                <button class="btn-disabled-soft" type="button" disabled>Disponible bientôt</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card coming-card">
+              <div class="coming-top">
+                <span class="coming-badge"><i class="bi bi-clock"></i>En préparation</span>
+                <i class="bi bi-envelope-exclamation-fill coming-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">Réclamation formelle</h3>
+                <p>Écrire ou jouer une situation de réclamation avec politesse et précision.</p>
+                <button class="btn-disabled-soft" type="button" disabled>Disponible bientôt</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card coming-card">
+              <div class="coming-top gold">
+                <span class="coming-badge"><i class="bi bi-clock"></i>En préparation</span>
+                <i class="bi bi-chat-dots-fill coming-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">Discours indirect</h3>
+                <p>Rapporter les paroles d’une personne dans un article, un dialogue ou un récit.</p>
+                <button class="btn-disabled-soft" type="button" disabled>Disponible bientôt</button>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card coming-card">
+              <div class="coming-top blue">
+                <span class="coming-badge"><i class="bi bi-clock"></i>En préparation</span>
+                <i class="bi bi-chat-left-quote-fill coming-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">Expressions idiomatiques</h3>
+                <p>Utiliser des expressions utiles pour argumenter, réagir et conclure naturellement.</p>
+                <button class="btn-disabled-soft" type="button" disabled>Disponible bientôt</button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="structure">
+      <div class="container">
+        <div class="steps-panel fade-in">
+          <div class="row align-items-center g-4 position-relative" style="z-index: 2;">
+            <div class="col-lg-5">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Progression</p>
+              <h2 class="fw-bold mb-3">Deux étapes pour maîtriser le passé simple</h2>
+              <p class="mb-0 opacity-75 fs-5">
+                Les ateliers complètent la page de théorie : on commence par reconnaître les formes, puis on transforme vers un registre courant.
+              </p>
+            </div>
+            <div class="col-lg-7">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <div class="step-item">
+                    <h3 class="h5 fw-bold">1. Reconnaître</h3>
+                    <p class="mb-0 opacity-75">Identifier les formes du passé simple.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="step-item">
+                    <h3 class="h5 fw-bold">2. Comprendre</h3>
+                    <p class="mb-0 opacity-75">Analyser leur rôle dans le récit.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="step-item">
+                    <h3 class="h5 fw-bold">3. Transformer</h3>
+                    <p class="mb-0 opacity-75">Passer au passé composé.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4 d-flex flex-wrap gap-3">
+                <a href="ateliers/passe-simple.html" class="btn btn-light fw-bold rounded-pill px-4 py-3">Atelier 1</a>
+                <a href="ateliers/transformation-passe-simple.html" class="btn btn-light fw-bold rounded-pill px-4 py-3">Atelier 2</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Ateliers et activités – Français Niveau 7</h2>
+          <p class="mb-0 opacity-75">Page principale des ateliers pratiques du cours.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="index.html"><i class="bi bi-arrow-left"></i> Retour à l’accueil</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const btnUp = document.getElementById('btnUp');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('main section[id]');
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeElements.forEach(function(element) {
+      observer.observe(element);
+    });
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+
+      let current = '';
+      sections.forEach(function(section) {
+        const sectionTop = section.offsetTop - 130;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(function(link) {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

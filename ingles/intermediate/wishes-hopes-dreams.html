@@ -1,0 +1,911 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Unit 2: Wishes, Hopes and Dreams | Intermediate English | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    :root {
+      --unit-blue: #2563eb;
+      --unit-blue-dark: #1e40af;
+      --unit-teal: #0f766e;
+      --unit-gold: #f59e0b;
+      --unit-purple: #7c3aed;
+      --unit-green: #059669;
+      --unit-card: #ffffff;
+      --unit-text: #102033;
+      --unit-muted: #52657d;
+      --unit-border: #dce8f8;
+      --unit-soft-blue: #eef5ff;
+      --unit-soft-gold: #fff7e8;
+      --unit-soft-purple: #f3efff;
+      --unit-soft-green: #ecfdf5;
+      --unit-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.13), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--unit-text);
+    }
+
+    .unit-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .unit-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .unit-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--unit-soft-blue);
+      color: var(--unit-blue-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .unit-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--unit-teal);
+      box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12);
+    }
+
+    .unit-hero h1 {
+      color: var(--unit-text);
+      font-size: clamp(2.3rem, 5vw, 4.4rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .unit-hero h1 span {
+      color: var(--unit-blue);
+    }
+
+    .unit-hero p {
+      color: var(--unit-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .learning-outcome {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin: 1.5rem 0;
+      padding: 1rem 1.2rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.07);
+    }
+
+    .learning-outcome-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-teal));
+      color: #ffffff;
+      font-size: 1.2rem;
+    }
+
+    .learning-outcome strong {
+      color: var(--unit-text);
+    }
+
+    .unit-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .unit-hero-image {
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .unit-hero-image img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+
+    .topic-block {
+      background: var(--unit-card);
+      padding: 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--unit-text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 840px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--unit-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .concept-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .concept-card {
+      padding: 1.6rem;
+      border-radius: 24px;
+      border: 1px solid var(--unit-border);
+      background: #f7faff;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .concept-card.wish {
+      border-left: 6px solid var(--unit-purple);
+      background: linear-gradient(135deg, var(--unit-soft-purple), #ffffff);
+    }
+
+    .concept-card.hope {
+      border-left: 6px solid var(--unit-green);
+      background: linear-gradient(135deg, var(--unit-soft-green), #ffffff);
+    }
+
+    .concept-card.dream {
+      border-left: 6px solid var(--unit-gold);
+      background: linear-gradient(135deg, var(--unit-soft-gold), #ffffff);
+    }
+
+    .concept-card h3 {
+      color: var(--unit-blue-dark);
+      font-size: 1.35rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .concept-card p {
+      color: var(--unit-muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .example-line {
+      display: block;
+      padding: 0.9rem 1rem;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      color: var(--unit-text);
+      font-style: italic;
+      line-height: 1.6;
+      margin-top: 0.7rem;
+    }
+
+    .highlight {
+      color: var(--unit-blue);
+      font-weight: 900;
+    }
+
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .pattern-card {
+      padding: 1.5rem;
+      border-radius: 22px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+    }
+
+    .pattern-card h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .pattern {
+      display: block;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      color: var(--unit-text);
+      font-weight: 900;
+      margin-bottom: 0.75rem;
+    }
+
+    .pattern-card p {
+      color: var(--unit-muted);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .comparison-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--unit-border);
+    }
+
+    .comparison-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+
+    .comparison-table th {
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-blue-dark));
+      color: #ffffff;
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .comparison-table td {
+      padding: 1rem;
+      color: var(--unit-muted);
+      border-bottom: 1px solid #e7eef9;
+      line-height: 1.7;
+    }
+
+    .comparison-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .comparison-table strong {
+      color: var(--unit-text);
+    }
+
+    .language-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .language-card {
+      padding: 1.5rem;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #eef5ff, #ffffff);
+      border: 1px solid var(--unit-border);
+    }
+
+    .language-card h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 0.9rem;
+    }
+
+    .language-card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--unit-muted);
+      line-height: 1.85;
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .experience-card {
+      padding: 1.5rem;
+      border-radius: 24px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .experience-card h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .experience-card p {
+      color: var(--unit-muted);
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+
+    .mini-label {
+      display: inline-flex;
+      margin-bottom: 0.7rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--unit-soft-blue);
+      color: var(--unit-blue-dark);
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .mistake-list {
+      display: grid;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .mistake-card {
+      padding: 1.2rem;
+      border-radius: 20px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      line-height: 1.7;
+    }
+
+    .mistake-card strong {
+      color: var(--unit-blue-dark);
+    }
+
+    .mistake-card p {
+      color: var(--unit-muted);
+      margin-top: 0.4rem;
+    }
+
+    .reflection-box {
+      padding: 1.7rem;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.15), transparent 25%),
+        linear-gradient(135deg, #eef5ff, #ffffff);
+      border: 1px solid var(--unit-border);
+      margin-top: 2rem;
+    }
+
+    .reflection-box h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .reflection-box p {
+      color: var(--unit-muted);
+      line-height: 1.75;
+    }
+
+    @media (max-width: 980px) {
+      .unit-hero,
+      .concept-grid,
+      .pattern-grid,
+      .language-grid,
+      .experience-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .unit-hero {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .unit-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .unit-hero,
+      .topic-block {
+        padding: 1.4rem;
+        border-radius: 24px;
+      }
+
+      .unit-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="unit-page">
+
+    <section class="unit-hero">
+      <div class="unit-hero-content">
+        <p class="unit-eyebrow">
+          <span class="unit-dot"></span>
+          Intermediate English · Unit 2
+        </p>
+
+        <h1>
+          Wishes, Hopes
+          <span>and Dreams</span>
+        </h1>
+
+        <p>
+          In this lesson, students learn how to talk about wishes, hopes, and dreams
+          in English. These ideas are connected, but they are not exactly the same.
+        </p>
+
+        <p>
+          Understanding the difference helps students express personal goals, desires,
+          life plans, and future possibilities more clearly.
+        </p>
+
+        <div class="learning-outcome">
+          <div class="learning-outcome-icon">✨</div>
+          <p>
+            <strong>Learning Outcome:</strong> To differentiate wishes, hopes, and dreams
+            and use functional language to express personal desires and future goals.
+          </p>
+        </div>
+
+        <div class="unit-actions">
+          <a href="#main-difference" class="btn btn-primary">Start lesson</a>
+          <a href="course-overview.html" class="btn btn-secondary">Back to Course Overview</a>
+        </div>
+      </div>
+
+      <div class="unit-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/unit-2-wishes-hopes-dreams.png"
+          alt="People imagining wishes hopes and dreams for the future"
+        />
+      </div>
+    </section>
+
+    <section class="topic-block" id="main-difference">
+      <h2 class="section-title">What is the difference?</h2>
+
+      <p class="section-subtitle">
+        A wish, a hope, and a dream can all describe something a person wants.
+        However, each word has a different meaning and feeling in English.
+      </p>
+
+      <div class="concept-grid">
+        <div class="concept-card wish">
+          <h3>A wish</h3>
+          <p>
+            A wish usually expresses a strong desire for something to be different,
+            better, or possible. It can feel less realistic or more hypothetical.
+          </p>
+
+          <span class="example-line">
+            I wish I had more free time.
+          </span>
+
+          <span class="example-line">
+            I wish I could travel this year.
+          </span>
+        </div>
+
+        <div class="concept-card hope">
+          <h3>A hope</h3>
+          <p>
+            A hope is something you want to happen in the future. It usually sounds
+            more possible, realistic, or achievable than a wish.
+          </p>
+
+          <span class="example-line">
+            I hope I pass my exam.
+          </span>
+
+          <span class="example-line">
+            I hope to study abroad one day.
+          </span>
+        </div>
+
+        <div class="concept-card dream">
+          <h3>A dream</h3>
+          <p>
+            A dream is a big personal goal or a deep desire for the future. Dreams
+            are often emotional, meaningful, and connected to life goals.
+          </p>
+
+          <span class="example-line">
+            I dream of having a baby.
+          </span>
+
+          <span class="example-line">
+            I dream of living in another country.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">How to use “wish”</h2>
+
+      <p class="section-subtitle">
+        We use <strong>wish</strong> when we want something to be different from reality,
+        or when we want something that may not be easy or possible right now.
+      </p>
+
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <h3>Wish about the present</h3>
+
+          <span class="pattern">I wish + past form</span>
+
+          <p>
+            This structure talks about a present situation that the speaker wants to change.
+          </p>
+
+          <span class="example-line">
+            I wish I had more money.
+          </span>
+
+          <span class="example-line">
+            I wish I were more confident.
+          </span>
+        </div>
+
+        <div class="pattern-card">
+          <h3>Wish about ability or possibility</h3>
+
+          <span class="pattern">I wish + could + verb</span>
+
+          <p>
+            This structure expresses something the speaker wants to be able to do.
+          </p>
+
+          <span class="example-line">
+            I wish I could speak English fluently.
+          </span>
+
+          <span class="example-line">
+            I wish I could travel to Europe this year.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">How to use “hope”</h2>
+
+      <p class="section-subtitle">
+        We use <strong>hope</strong> when we want something good to happen in the future.
+        Hopes usually sound possible, realistic, or achievable.
+      </p>
+
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <h3>Hope + sentence</h3>
+
+          <span class="pattern">I hope + subject + verb</span>
+
+          <p>
+            Use this structure when you hope that something happens.
+          </p>
+
+          <span class="example-line">
+            I hope I can visit Europe one day.
+          </span>
+
+          <span class="example-line">
+            I hope my family stays healthy.
+          </span>
+        </div>
+
+        <div class="pattern-card">
+          <h3>Hope + infinitive</h3>
+
+          <span class="pattern">I hope to + verb</span>
+
+          <p>
+            Use this structure when the subject is the same person who has the hope.
+          </p>
+
+          <span class="example-line">
+            I hope to get a better job next year.
+          </span>
+
+          <span class="example-line">
+            I hope to improve my English this year.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">How to use “dream”</h2>
+
+      <p class="section-subtitle">
+        We use <strong>dream</strong> to describe a deep desire, life goal, or important
+        future objective. Dreams are often bigger and more emotional than hopes.
+      </p>
+
+      <div class="pattern-grid">
+        <div class="pattern-card">
+          <h3>Dream of + verb-ing</h3>
+
+          <span class="pattern">I dream of + verb-ing</span>
+
+          <p>
+            Use this structure to talk about a future action or life goal.
+          </p>
+
+          <span class="example-line">
+            I dream of having a baby.
+          </span>
+
+          <span class="example-line">
+            I dream of becoming a doctor.
+          </span>
+        </div>
+
+        <div class="pattern-card">
+          <h3>Dream of + noun</h3>
+
+          <span class="pattern">I dream of + noun</span>
+
+          <p>
+            Use this structure when the dream is a thing, place, role, or life situation.
+          </p>
+
+          <span class="example-line">
+            I dream of a beautiful house.
+          </span>
+
+          <span class="example-line">
+            I dream of a peaceful life.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Wishes vs. hopes vs. dreams</h2>
+
+      <p class="section-subtitle">
+        This table summarizes the main differences. Notice how each expression changes
+        the meaning and the feeling of the sentence.
+      </p>
+
+      <div class="comparison-table-wrap">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Expression</th>
+              <th>Meaning</th>
+              <th>Feeling</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><strong>I wish...</strong></td>
+              <td>A desire for something to be different or possible.</td>
+              <td>Often hypothetical, emotional, or less realistic.</td>
+              <td>I wish I had more time to travel.</td>
+            </tr>
+
+            <tr>
+              <td><strong>I hope...</strong></td>
+              <td>A desire for something good to happen in the future.</td>
+              <td>Usually possible, realistic, and positive.</td>
+              <td>I hope I can visit Europe one day.</td>
+            </tr>
+
+            <tr>
+              <td><strong>I dream of...</strong></td>
+              <td>A big personal goal or deep future desire.</td>
+              <td>Meaningful, long-term, and connected to life goals.</td>
+              <td>I dream of having a baby.</td>
+            </tr>
+
+            <tr>
+              <td><strong>I have always wanted to...</strong></td>
+              <td>A long-standing desire or goal.</td>
+              <td>Personal, emotional, and often connected to experiences.</td>
+              <td>I have always wanted to go to Europe.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Functional language</h2>
+
+      <p class="section-subtitle">
+        These expressions help students talk about desires, goals, future plans, and
+        meaningful life experiences.
+      </p>
+
+      <div class="language-grid">
+        <div class="language-card">
+          <h3>Main expressions</h3>
+
+          <ul>
+            <li>I wish I could...</li>
+            <li>I wish I had...</li>
+            <li>I hope I can...</li>
+            <li>I hope to...</li>
+            <li>I dream of...</li>
+            <li>I have always wanted to...</li>
+          </ul>
+        </div>
+
+        <div class="language-card">
+          <h3>Example sentences</h3>
+
+          <ul>
+            <li>I wish I had more time to travel.</li>
+            <li>I hope I can visit Europe one day.</li>
+            <li>I have always wanted to go to Europe.</li>
+            <li>I dream of having a baby.</li>
+            <li>One of my biggest dreams is to have my own house.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Experiences and future desires</h2>
+
+      <p class="section-subtitle">
+        Sometimes we talk about experiences we have already had, and sometimes we talk
+        about things we still want to do. This helps us connect the past, present, and future.
+      </p>
+
+      <div class="experience-grid">
+        <div class="experience-card">
+          <span class="mini-label">Experience already completed</span>
+
+          <h3>I have played paintball.</h3>
+
+          <p>
+            This sentence talks about a real experience. The person has already done it.
+            We can use the present perfect to talk about life experiences.
+          </p>
+
+          <span class="example-line">
+            I have played paintball, but I have never gone skydiving.
+          </span>
+        </div>
+
+        <div class="experience-card">
+          <span class="mini-label">Desire for the future</span>
+
+          <h3>I have always wanted to go to Europe.</h3>
+
+          <p>
+            This sentence talks about a long-standing desire. The person has wanted this
+            for a long time, but it may not have happened yet.
+          </p>
+
+          <span class="example-line">
+            I have always wanted to go to Europe because I love history and culture.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Common differences and mistakes</h2>
+
+      <p class="section-subtitle">
+        These notes help students choose the right expression depending on what they want
+        to communicate.
+      </p>
+
+      <div class="mistake-list">
+        <div class="mistake-card">
+          <strong>Use “hope” for realistic future possibilities.</strong>
+          <p>
+            Correct: I hope I pass the exam. This sounds possible and realistic.
+          </p>
+        </div>
+
+        <div class="mistake-card">
+          <strong>Use “wish” when something feels different from reality.</strong>
+          <p>
+            Correct: I wish I had more free time. This suggests that I do not have enough
+            free time now.
+          </p>
+        </div>
+
+        <div class="mistake-card">
+          <strong>Use “dream of” for big goals or deep personal desires.</strong>
+          <p>
+            Correct: I dream of becoming a professional musician. This is a meaningful
+            long-term goal.
+          </p>
+        </div>
+
+        <div class="mistake-card">
+          <strong>Use “I have always wanted to...” for a desire that started in the past.</strong>
+          <p>
+            Correct: I have always wanted to go to Europe. This means the desire has existed
+            for a long time.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Final reflection</h2>
+
+      <p class="section-subtitle">
+        This lesson prepares students to discuss pictures, talk about personal goals,
+        and later write letters or emails requesting help to achieve a dream.
+      </p>
+
+      <div class="reflection-box">
+        <h3>Think about your life</h3>
+
+        <p>
+          What do you wish for? What do you hope for? What do you dream of?
+          Try to notice the difference between a wish, a hope, and a dream before
+          you use these expressions in speaking or writing.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+</body>
+</html>

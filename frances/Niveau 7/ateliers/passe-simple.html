@@ -1,0 +1,1148 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier – Le passé simple | Français Niveau 7</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --green: #2f9e77;
+      --green-soft: #eaf8f2;
+      --yellow: #f4c95d;
+      --yellow-soft: #fff7dd;
+      --white: #ffffff;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(214, 40, 57, 0.17), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(31, 78, 140, 0.22), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f2 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      color: var(--blue-dark);
+      font-size: clamp(2.7rem, 6.5vw, 5.7rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.18rem, 2vw, 1.55rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section {
+      padding: 5rem 0;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 840px;
+    }
+
+    .instructions-panel {
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .instructions-panel::after {
+      content: "20";
+      position: absolute;
+      right: 1.8rem;
+      bottom: -3.8rem;
+      font-size: 14rem;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      opacity: 0.07;
+      line-height: 1;
+    }
+
+    .mini-stat {
+      border-radius: 22px;
+      background: rgba(255,255,255,0.13);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 1rem;
+      height: 100%;
+      backdrop-filter: blur(8px);
+    }
+
+    .exercise-card {
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      height: 100%;
+    }
+
+    .exercise-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 50px rgba(20, 40, 80, 0.14);
+    }
+
+    .exercise-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1.1rem 1.25rem;
+      background: linear-gradient(135deg, rgba(31, 78, 140, 0.08), rgba(214, 40, 57, 0.06));
+      border-bottom: 1px solid rgba(31, 78, 140, 0.08);
+    }
+
+    .exercise-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: var(--blue);
+      color: white;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      flex: 0 0 auto;
+    }
+
+    .exercise-type {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      padding: 0.45rem 0.7rem;
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      background: rgba(31, 78, 140, 0.1);
+      white-space: nowrap;
+    }
+
+    .exercise-card.correct {
+      outline: 3px solid rgba(47, 158, 119, 0.28);
+    }
+
+    .exercise-card.incorrect {
+      outline: 3px solid rgba(214, 40, 57, 0.25);
+    }
+
+    .exercise-body {
+      padding: 1.35rem;
+    }
+
+    .prompt-text {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+      line-height: 1.65;
+    }
+
+    .sentence-box {
+      border-radius: 20px;
+      background: var(--soft);
+      padding: 1rem;
+      color: var(--text);
+      font-weight: 800;
+      line-height: 1.65;
+      margin: 1rem 0;
+    }
+
+    .blank-input {
+      border: 2px solid rgba(31, 78, 140, 0.17);
+      border-radius: 18px;
+      padding: 0.9rem 1rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .blank-input:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 0.25rem rgba(31, 78, 140, 0.12);
+    }
+
+    .option-label {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      border-radius: 18px;
+      border: 2px solid rgba(31, 78, 140, 0.12);
+      background: white;
+      padding: 0.9rem 1rem;
+      margin-bottom: 0.75rem;
+      cursor: pointer;
+      font-weight: 800;
+      color: var(--blue-dark);
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .option-label:hover {
+      border-color: rgba(31, 78, 140, 0.35);
+      background: rgba(31, 78, 140, 0.04);
+      transform: translateX(3px);
+    }
+
+    .option-label input {
+      transform: scale(1.2);
+      accent-color: var(--blue);
+    }
+
+    .feedback-line {
+      display: none;
+      margin-top: 1rem;
+      border-radius: 18px;
+      padding: 0.9rem 1rem;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    .feedback-line.good {
+      display: block;
+      color: var(--green);
+      background: var(--green-soft);
+    }
+
+    .feedback-line.bad {
+      display: block;
+      color: var(--red);
+      background: var(--red-soft);
+    }
+
+    .result-panel {
+      display: none;
+      border-radius: 34px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .result-panel.show {
+      display: block;
+    }
+
+    .result-top {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      color: white;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(244, 201, 93, 0.22), transparent 30%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+    }
+
+    .score-circle {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.22);
+      box-shadow: inset 0 0 30px rgba(255,255,255,0.08);
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      font-size: 2.1rem;
+      margin: 0 auto;
+    }
+
+    .result-body {
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .wrong-item {
+      border-radius: 22px;
+      background: var(--red-soft);
+      border: 1px solid rgba(214, 40, 57, 0.12);
+      padding: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .wrong-item h4 {
+      color: var(--red);
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-success {
+      border-radius: 22px;
+      background: var(--green-soft);
+      color: var(--green);
+      padding: 1.2rem;
+      font-weight: 900;
+      text-align: center;
+    }
+
+    .actions-sticky {
+      position: sticky;
+      bottom: 1rem;
+      z-index: 20;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: 0 18px 45px rgba(20, 40, 80, 0.15);
+      backdrop-filter: blur(14px);
+      padding: 1rem;
+    }
+
+    .progress-soft {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.1);
+      overflow: hidden;
+    }
+
+    .progress-soft span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue), var(--red));
+      transition: width 0.4s ease;
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show {
+      display: grid;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .hero {
+        padding-top: 7rem;
+      }
+
+      .hero-card img {
+        min-height: 320px;
+      }
+
+      .score-circle {
+        width: 125px;
+        height: 125px;
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes/passe-simple.html">Théorie</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#atelier">Exercices</a></li>
+          <li class="nav-item"><a class="nav-link" href="#resultats">Résultats</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-pencil-square"></i>
+            Atelier interactif
+          </span>
+          <h1>Atelier<br>Le passé simple</h1>
+          <p class="hero-lead">20 exercices autocorrectifs de reconnaissance et de transformation.</p>
+          <p class="hero-text">
+            Complétez les phrases, choisissez la bonne forme verbale et vérifiez votre compréhension du passé simple. À la fin, vous obtiendrez une note sur 20 et une rétroaction détaillée pour chaque réponse incorrecte.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#atelier" class="btn-main"><i class="bi bi-play-circle"></i>Commencer l’atelier</a>
+            <a href="../themes/passe-simple.html" class="btn-soft"><i class="bi bi-book"></i>Revoir la théorie</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <img src="../img/atelier-passe-simple.png" alt="Atelier interactif sur le passé simple">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="consignes">
+      <div class="container">
+        <div class="instructions-panel fade-in">
+          <div class="row align-items-center g-4 position-relative" style="z-index: 2;">
+            <div class="col-lg-5">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Consignes</p>
+              <h2 class="fw-bold mb-3">Comment faire l’atelier ?</h2>
+              <p class="mb-0 opacity-75 fs-5">
+                Répondez aux 20 questions. Certaines sont à choix multiple, d’autres sont à compléter. Une seule réponse est correcte par question.
+              </p>
+            </div>
+            <div class="col-lg-7">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <div class="mini-stat">
+                    <h3 class="h5 fw-bold">20 questions</h3>
+                    <p class="mb-0 opacity-75">Chaque question vaut 1 point.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mini-stat">
+                    <h3 class="h5 fw-bold">2 formats</h3>
+                    <p class="mb-0 opacity-75">Choix multiple et espaces à remplir.</p>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="mini-stat">
+                    <h3 class="h5 fw-bold">Rétroaction</h3>
+                    <p class="mb-0 opacity-75">Correction détaillée à la fin.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <div class="progress-soft" aria-label="Progression des réponses">
+                  <span id="progressBar"></span>
+                </div>
+                <p class="mb-0 mt-2 fw-bold opacity-75" id="progressText">0 réponse sur 20</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="atelier" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Exercices</p>
+          <h2 class="section-title">Complétez l’atelier</h2>
+          <p class="section-text mx-auto">
+            Lisez attentivement chaque phrase. Pour les questions à compléter, écrivez seulement la forme verbale demandée.
+          </p>
+        </div>
+
+        <form id="quizForm">
+          <div class="row g-4" id="exerciseContainer"></div>
+
+          <div class="actions-sticky mt-5 fade-in">
+            <div class="row align-items-center g-3">
+              <div class="col-lg-7">
+                <p class="mb-1 fw-bold text-primary">Prêt à corriger ?</p>
+                <p class="mb-0 text-muted fw-bold">Vous pouvez corriger même si toutes les questions ne sont pas remplies.</p>
+              </div>
+              <div class="col-lg-5 text-lg-end">
+                <button type="button" class="btn-main me-2 mb-2 mb-lg-0" id="checkBtn">
+                  <i class="bi bi-check2-circle"></i>Corriger l’atelier
+                </button>
+                <button type="button" class="btn-soft" id="resetBtn">
+                  <i class="bi bi-arrow-clockwise"></i>Recommencer
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="resultats">
+      <div class="container">
+        <div class="result-panel" id="resultPanel">
+          <div class="result-top">
+            <div class="row align-items-center g-4">
+              <div class="col-lg-8">
+                <p class="text-uppercase fw-bold opacity-75 mb-2">Résultats</p>
+                <h2 class="fw-bold mb-3" id="resultTitle">Votre résultat</h2>
+                <p class="fs-5 opacity-75 mb-0" id="resultMessage">Corrigez l’atelier pour voir votre note.</p>
+              </div>
+              <div class="col-lg-4 text-center">
+                <div class="score-circle" id="scoreCircle">0/20</div>
+              </div>
+            </div>
+          </div>
+          <div class="result-body">
+            <div class="row g-4 mb-4">
+              <div class="col-md-4">
+                <div class="mini-stat bg-light text-dark">
+                  <h3 class="h5 fw-bold text-primary">Note</h3>
+                  <p class="mb-0 fw-bold" id="scoreText">0 sur 20</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mini-stat bg-light text-dark">
+                  <h3 class="h5 fw-bold text-primary">Pourcentage</h3>
+                  <p class="mb-0 fw-bold" id="percentText">0%</p>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="mini-stat bg-light text-dark">
+                  <h3 class="h5 fw-bold text-primary">Questions à revoir</h3>
+                  <p class="mb-0 fw-bold" id="wrongCountText">0</p>
+                </div>
+              </div>
+            </div>
+
+            <h3 class="fw-bold text-primary mb-3">Rétroaction</h3>
+            <div id="feedbackList"></div>
+
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <a href="../themes/passe-simple.html" class="btn-main"><i class="bi bi-book"></i>Revoir la théorie</a>
+              <button type="button" class="btn-soft" id="resetBtnBottom"><i class="bi bi-arrow-clockwise"></i>Refaire l’atelier</button>
+              <a href="../ateliers-activites.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux ateliers</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Atelier – Le passé simple</h2>
+          <p class="mb-0 opacity-75">20 exercices interactifs avec correction automatique et rétroaction personnalisée.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const questions = [
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Soudain, le roi ______ dans la grande salle. (entrer)",
+        answer: "entra",
+        feedback: "Avec « le roi », on utilise la troisième personne du singulier. Pour un verbe en -ER, la terminaison est -a : entrer → il entra."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez la bonne forme au passé simple.",
+        sentence: "Les enfants ______ derrière la porte.",
+        options: ["se cachèrent", "se cachaient", "se sont cachés"],
+        answer: "se cachèrent",
+        feedback: "Dans un récit écrit, l’action principale et ponctuelle peut être au passé simple : ils se cachèrent."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Elle ______ son sac et sortit rapidement. (prendre)",
+        answer: "prit",
+        feedback: "Le verbe « prendre » a une forme spéciale au passé simple : elle prit."
+      },
+      {
+        type: "mcq",
+        prompt: "Quelle phrase contient un verbe au passé simple ?",
+        sentence: "Choisissez la bonne réponse.",
+        options: ["Il regarda le ciel.", "Il regardait le ciel.", "Il a regardé le ciel."],
+        answer: "Il regarda le ciel.",
+        feedback: "« regarda » est la forme du passé simple pour il / elle avec un verbe en -ER."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Les voyageurs ______ à l’auberge avant la nuit. (arriver)",
+        answer: "arrivèrent",
+        feedback: "Avec « les voyageurs », on utilise ils. Pour les verbes en -ER, la forme est -èrent : ils arrivèrent."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez la bonne transformation vers le passé composé.",
+        sentence: "Il entra dans la maison.",
+        options: ["Il est entré dans la maison.", "Il a entré dans la maison.", "Il était entré dans la maison."],
+        answer: "Il est entré dans la maison.",
+        feedback: "Le verbe « entrer » se conjugue avec l’auxiliaire être au passé composé : il est entré."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Le témoin ______ la vérité devant tout le monde. (dire)",
+        answer: "dit",
+        feedback: "Le verbe « dire » donne : je dis, tu dis, il dit, nous dîmes, vous dîtes, ils dirent."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez la bonne forme au passé simple.",
+        sentence: "Ils ______ enfin la solution du problème.",
+        options: ["trouvèrent", "trouvaient", "ont trouvé"],
+        answer: "trouvèrent",
+        feedback: "« trouvèrent » est le passé simple de « trouver » à la troisième personne du pluriel."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Un homme mystérieux ______ frapper à la porte. (venir)",
+        answer: "vint",
+        feedback: "Le verbe « venir » a un radical spécial : il vint, ils vinrent."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez le temps du verbe souligné.",
+        sentence: "Dans la phrase « La porte s’ouvrit soudain », le verbe « s’ouvrit » est au…",
+        options: ["passé simple", "imparfait", "présent"],
+        answer: "passé simple",
+        feedback: "« s’ouvrit » est une forme du passé simple. Elle indique une action ponctuelle dans le récit."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Le héros ______ un grand effort pour continuer. (faire)",
+        answer: "fit",
+        feedback: "Le verbe « faire » donne : il fit au passé simple."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez la bonne forme au passé simple.",
+        sentence: "Elle ______ une idée brillante.",
+        options: ["eut", "avait", "a eu"],
+        answer: "eut",
+        feedback: "« eut » est le passé simple du verbe avoir à la troisième personne du singulier."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Les soldats ______ très tôt le matin. (partir)",
+        answer: "partirent",
+        feedback: "Pour « partir » avec ils, la forme du passé simple est « partirent »."
+      },
+      {
+        type: "mcq",
+        prompt: "Passé simple ou imparfait ?",
+        sentence: "Dans « Le vent soufflait quand elle arriva », quel verbe est au passé simple ?",
+        options: ["arriva", "soufflait", "vent"],
+        answer: "arriva",
+        feedback: "« soufflait » décrit le contexte à l’imparfait. « arriva » indique l’action principale au passé simple."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Ils ______ une lumière au loin. (voir)",
+        answer: "virent",
+        feedback: "Le verbe « voir » donne : il vit, ils virent."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez la bonne transformation vers le passé composé.",
+        sentence: "Elle prit son manteau.",
+        options: ["Elle a pris son manteau.", "Elle est prise son manteau.", "Elle prenait son manteau."],
+        answer: "Elle a pris son manteau.",
+        feedback: "« prit » se transforme en « a pris » au passé composé."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Le prince ______ surpris par la nouvelle. (être)",
+        answer: "fut",
+        feedback: "Le verbe « être » donne : il fut au passé simple."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez la bonne forme au passé simple.",
+        sentence: "Nous ______ la forêt avant le coucher du soleil.",
+        options: ["traversâmes", "traversions", "avons traversé"],
+        answer: "traversâmes",
+        feedback: "Pour « nous » avec un verbe en -ER, la terminaison du passé simple est -âmes : nous traversâmes."
+      },
+      {
+        type: "blank",
+        prompt: "Complétez avec le passé simple du verbe entre parenthèses.",
+        sentence: "Vous ______ la décision au bon moment. (prendre)",
+        answer: "prîtes",
+        feedback: "Avec « vous », le passé simple de prendre est « vous prîtes ». L’accent circonflexe est fréquent avec nous/vous."
+      },
+      {
+        type: "mcq",
+        prompt: "Choisissez la bonne réponse.",
+        sentence: "Quel marqueur annonce souvent une action ponctuelle dans un récit ?",
+        options: ["soudain", "tous les jours", "souvent"],
+        answer: "soudain",
+        feedback: "« Soudain » annonce souvent une rupture ou une action ponctuelle dans le récit, donc il accompagne fréquemment le passé simple."
+      }
+    ];
+
+    const exerciseContainer = document.getElementById('exerciseContainer');
+    const progressBar = document.getElementById('progressBar');
+    const progressText = document.getElementById('progressText');
+    const resultPanel = document.getElementById('resultPanel');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultMessage = document.getElementById('resultMessage');
+    const scoreCircle = document.getElementById('scoreCircle');
+    const scoreText = document.getElementById('scoreText');
+    const percentText = document.getElementById('percentText');
+    const wrongCountText = document.getElementById('wrongCountText');
+    const feedbackList = document.getElementById('feedbackList');
+    const checkBtn = document.getElementById('checkBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resetBtnBottom = document.getElementById('resetBtnBottom');
+    const btnUp = document.getElementById('btnUp');
+    const fadeElements = document.querySelectorAll('.fade-in');
+
+    function normalizeAnswer(value) {
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/[’‘`´]/g, "'")
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/\s+/g, ' ');
+    }
+
+    function renderQuestions() {
+      exerciseContainer.innerHTML = '';
+
+      questions.forEach(function(question, index) {
+        const col = document.createElement('div');
+        col.className = 'col-lg-6 fade-in';
+
+        const card = document.createElement('article');
+        card.className = 'exercise-card';
+        card.id = 'question-' + index;
+
+        const typeLabel = question.type === 'blank'
+          ? '<i class="bi bi-pencil"></i> À compléter'
+          : '<i class="bi bi-ui-checks"></i> Choix multiple';
+
+        let responseHtml = '';
+
+        if (question.type === 'blank') {
+          responseHtml = `
+            <label class="form-label fw-bold text-muted" for="answer-${index}">Votre réponse</label>
+            <input type="text" class="form-control blank-input answer-input" id="answer-${index}" data-index="${index}" autocomplete="off" placeholder="Écrivez la forme correcte">
+          `;
+        } else {
+          responseHtml = question.options.map(function(option, optionIndex) {
+            return `
+              <label class="option-label" for="answer-${index}-${optionIndex}">
+                <input type="radio" name="answer-${index}" id="answer-${index}-${optionIndex}" value="${option}" data-index="${index}" class="answer-input">
+                <span>${option}</span>
+              </label>
+            `;
+          }).join('');
+        }
+
+        card.innerHTML = `
+          <div class="exercise-header">
+            <div class="d-flex align-items-center gap-3">
+              <div class="exercise-number">${index + 1}</div>
+              <div>
+                <p class="mb-0 fw-bold text-primary">Question ${index + 1}</p>
+                <small class="text-muted fw-bold">1 point</small>
+              </div>
+            </div>
+            <span class="exercise-type">${typeLabel}</span>
+          </div>
+          <div class="exercise-body">
+            <p class="prompt-text">${question.prompt}</p>
+            <div class="sentence-box">${question.sentence}</div>
+            ${responseHtml}
+            <div class="feedback-line" id="feedback-${index}"></div>
+          </div>
+        `;
+
+        col.appendChild(card);
+        exerciseContainer.appendChild(col);
+      });
+
+      document.querySelectorAll('.answer-input').forEach(function(input) {
+        input.addEventListener('input', updateProgress);
+        input.addEventListener('change', updateProgress);
+      });
+
+      observeFadeElements();
+    }
+
+    function getUserAnswer(index) {
+      const question = questions[index];
+
+      if (question.type === 'blank') {
+        const input = document.getElementById('answer-' + index);
+        return input ? input.value : '';
+      }
+
+      const selected = document.querySelector('input[name="answer-' + index + '"]:checked');
+      return selected ? selected.value : '';
+    }
+
+    function isCorrect(index) {
+      const userAnswer = getUserAnswer(index);
+      const correctAnswer = questions[index].answer;
+      return normalizeAnswer(userAnswer) === normalizeAnswer(correctAnswer);
+    }
+
+    function updateProgress() {
+      let answered = 0;
+
+      questions.forEach(function(question, index) {
+        const answer = getUserAnswer(index);
+        if (answer.trim() !== '') answered++;
+      });
+
+      const percent = Math.round((answered / questions.length) * 100);
+      progressBar.style.width = percent + '%';
+      progressText.textContent = answered + ' réponse' + (answered > 1 ? 's' : '') + ' sur ' + questions.length;
+    }
+
+    function checkQuiz() {
+      let score = 0;
+      const wrongAnswers = [];
+
+      questions.forEach(function(question, index) {
+        const card = document.getElementById('question-' + index);
+        const feedback = document.getElementById('feedback-' + index);
+        const userAnswer = getUserAnswer(index);
+        const correct = isCorrect(index);
+
+        card.classList.remove('correct', 'incorrect');
+        feedback.className = 'feedback-line';
+
+        if (correct) {
+          score++;
+          card.classList.add('correct');
+          feedback.classList.add('good');
+          feedback.innerHTML = '<i class="bi bi-check-circle-fill me-2"></i>Correct.';
+        } else {
+          card.classList.add('incorrect');
+          feedback.classList.add('bad');
+          feedback.innerHTML = '<i class="bi bi-x-circle-fill me-2"></i>Réponse correcte : <strong>' + question.answer + '</strong>';
+
+          wrongAnswers.push({
+            number: index + 1,
+            userAnswer: userAnswer.trim() || 'Aucune réponse',
+            correctAnswer: question.answer,
+            feedback: question.feedback,
+            sentence: question.sentence
+          });
+        }
+      });
+
+      showResults(score, wrongAnswers);
+    }
+
+    function showResults(score, wrongAnswers) {
+      const total = questions.length;
+      const percent = Math.round((score / total) * 100);
+
+      scoreCircle.textContent = score + '/' + total;
+      scoreText.textContent = score + ' sur ' + total;
+      percentText.textContent = percent + '%';
+      wrongCountText.textContent = wrongAnswers.length;
+
+      if (percent >= 90) {
+        resultTitle.textContent = 'Excellent travail !';
+        resultMessage.textContent = 'Vous reconnaissez très bien les formes du passé simple et leurs transformations.';
+      } else if (percent >= 70) {
+        resultTitle.textContent = 'Bon résultat !';
+        resultMessage.textContent = 'Vous maîtrisez l’essentiel. Relisez les rétroactions pour corriger les dernières confusions.';
+      } else if (percent >= 50) {
+        resultTitle.textContent = 'Résultat encourageant';
+        resultMessage.textContent = 'Vous comprenez plusieurs formes, mais il faut revoir les verbes irréguliers et les terminaisons.';
+      } else {
+        resultTitle.textContent = 'À revoir avec attention';
+        resultMessage.textContent = 'Reprenez la page de théorie, surtout les formes essentielles : eut, fut, fit, dit, vint, vit, prit.';
+      }
+
+      if (wrongAnswers.length === 0) {
+        feedbackList.innerHTML = `
+          <div class="empty-success">
+            <i class="bi bi-trophy-fill me-2"></i>Aucune erreur. Félicitations !
+          </div>
+        `;
+      } else {
+        feedbackList.innerHTML = wrongAnswers.map(function(item) {
+          return `
+            <div class="wrong-item">
+              <h4>Question ${item.number}</h4>
+              <p class="mb-2"><strong>Phrase :</strong> ${item.sentence}</p>
+              <p class="mb-2"><strong>Votre réponse :</strong> ${item.userAnswer}</p>
+              <p class="mb-2"><strong>Réponse correcte :</strong> ${item.correctAnswer}</p>
+              <p class="mb-0"><strong>Explication :</strong> ${item.feedback}</p>
+            </div>
+          `;
+        }).join('');
+      }
+
+      resultPanel.classList.add('show');
+      resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function resetQuiz() {
+      document.getElementById('quizForm').reset();
+
+      questions.forEach(function(_, index) {
+        const card = document.getElementById('question-' + index);
+        const feedback = document.getElementById('feedback-' + index);
+        card.classList.remove('correct', 'incorrect');
+        feedback.className = 'feedback-line';
+        feedback.innerHTML = '';
+      });
+
+      resultPanel.classList.remove('show');
+      feedbackList.innerHTML = '';
+      progressBar.style.width = '0%';
+      progressText.textContent = '0 réponse sur 20';
+      document.getElementById('atelier').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function observeFadeElements() {
+      const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.12 });
+
+      document.querySelectorAll('.fade-in').forEach(function(element) {
+        observer.observe(element);
+      });
+    }
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+    });
+
+    checkBtn.addEventListener('click', checkQuiz);
+    resetBtn.addEventListener('click', resetQuiz);
+    resetBtnBottom.addEventListener('click', resetQuiz);
+
+    renderQuestions();
+    observeFadeElements();
+  </script>
+</body>
+</html>

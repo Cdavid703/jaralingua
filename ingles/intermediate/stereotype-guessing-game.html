@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Classroom Activity: The Stereotype Guessing Game | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    :root {
+      --activity-blue: #2563eb;
+      --activity-blue-dark: #1e40af;
+      --activity-teal: #0f766e;
+      --activity-gold: #f59e0b;
+      --activity-green: #059669;
+      --activity-card: #ffffff;
+      --activity-text: #102033;
+      --activity-muted: #52657d;
+      --activity-border: #dce8f8;
+      --activity-soft-blue: #eef5ff;
+      --activity-soft-green: #ecfdf5;
+      --activity-soft-gold: #fff7e8;
+      --activity-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.13), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--activity-text);
+    }
+
+    .activity-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .activity-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--activity-border);
+      box-shadow: var(--activity-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .activity-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--activity-soft-blue);
+      color: var(--activity-blue-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .activity-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--activity-teal);
+      box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12);
+    }
+
+    .activity-hero h1 {
+      color: var(--activity-text);
+      font-size: clamp(2.2rem, 5vw, 4.3rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .activity-hero h1 span {
+      color: var(--activity-blue);
+    }
+
+    .activity-hero p {
+      color: var(--activity-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .activity-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .activity-hero-image {
+      background: #ffffff;
+      border: 1px solid var(--activity-border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .activity-hero-image img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+
+    .activity-block {
+      background: var(--activity-card);
+      padding: 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--activity-border);
+      box-shadow: var(--activity-shadow);
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--activity-text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 840px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--activity-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .outcome-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.3rem;
+      margin-top: 2rem;
+    }
+
+    .outcome-card {
+      padding: 1.5rem;
+      border-radius: 22px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      border-left: 6px solid var(--activity-blue);
+    }
+
+    .outcome-card h3 {
+      color: var(--activity-blue-dark);
+      font-size: 1.15rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .outcome-card p {
+      color: var(--activity-muted);
+      line-height: 1.7;
+    }
+
+    .steps-grid {
+      display: grid;
+      gap: 1.3rem;
+      margin-top: 2rem;
+    }
+
+    .step-box {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      padding: 1.5rem;
+      border-radius: 24px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .step-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 30px rgba(20, 64, 130, 0.09);
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--activity-blue), var(--activity-teal));
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 1.1rem;
+    }
+
+    .step-box h3 {
+      color: var(--activity-blue-dark);
+      font-size: 1.22rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .step-box p,
+    .step-box li {
+      color: var(--activity-muted);
+      line-height: 1.7;
+    }
+
+    .step-box ul {
+      margin: 0.8rem 0 0;
+      padding-left: 1.2rem;
+    }
+
+    .language-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .language-card {
+      padding: 1.5rem;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #eef5ff, #ffffff);
+      border: 1px solid var(--activity-border);
+    }
+
+    .language-card h3 {
+      color: var(--activity-blue-dark);
+      margin-bottom: 0.9rem;
+    }
+
+    .language-card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--activity-muted);
+      line-height: 1.8;
+    }
+
+    .example-section {
+      background: linear-gradient(135deg, #ffffff, #f7faff);
+      border: 1px solid var(--activity-border);
+      padding: 2rem;
+      border-radius: 26px;
+      margin-top: 2rem;
+    }
+
+    .example-title {
+      display: inline-flex;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--activity-soft-green);
+      color: var(--activity-green);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 0.82rem;
+    }
+
+    .clue-list {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0 0;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .clue-list li {
+      padding: 1rem 1.1rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid var(--activity-border);
+      color: var(--activity-muted);
+      line-height: 1.7;
+    }
+
+    .clue-list li::before {
+      content: "Clue";
+      display: inline-flex;
+      margin-right: 0.5rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: var(--activity-soft-blue);
+      color: var(--activity-blue-dark);
+      font-weight: 900;
+      font-size: 0.75rem;
+    }
+
+    .highlight {
+      color: var(--activity-blue);
+      font-weight: 900;
+      text-decoration: underline;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .board-tip {
+      background: var(--activity-soft-gold);
+      border: 1px dashed var(--activity-gold);
+      padding: 1.2rem;
+      border-radius: 18px;
+      margin-top: 1.4rem;
+      color: #5f4a1c;
+      line-height: 1.8;
+    }
+
+    .board-tip strong {
+      color: #92400e;
+    }
+
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.3rem;
+      margin-top: 2rem;
+    }
+
+    .template-card {
+      padding: 1.4rem;
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid var(--activity-border);
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .template-card h3 {
+      color: var(--activity-blue-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .template-line {
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      background: #f7faff;
+      border: 1px dashed #b8d4ff;
+      color: var(--activity-muted);
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+    }
+
+    .checklist {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 2rem;
+    }
+
+    .check-item {
+      display: flex;
+      gap: 0.7rem;
+      align-items: flex-start;
+      padding: 1rem;
+      border-radius: 18px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      color: var(--activity-muted);
+      line-height: 1.6;
+    }
+
+    .check-icon {
+      width: 25px;
+      height: 25px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--activity-soft-green);
+      color: var(--activity-green);
+      font-weight: 900;
+    }
+
+    @media (max-width: 980px) {
+      .activity-hero,
+      .outcome-grid,
+      .language-grid,
+      .template-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .activity-hero {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .activity-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .activity-hero,
+      .activity-block {
+        padding: 1.4rem;
+        border-radius: 24px;
+      }
+
+      .activity-actions .btn {
+        width: 100%;
+      }
+
+      .step-box {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="activity-page">
+
+    <section class="activity-hero">
+      <div class="activity-hero-content">
+        <p class="activity-eyebrow">
+          <span class="activity-dot"></span>
+          Practice Lab · Classroom Activity
+        </p>
+
+        <h1>
+          The Stereotype
+          <span>Guessing Game</span>
+        </h1>
+
+        <p>
+          In this classroom activity, students prepare clues about a hidden identity.
+          Their classmates listen, analyze the descriptions, and guess the character.
+        </p>
+
+        <p>
+          The goal is to practice personality adjectives, manner adverbs, behavior
+          descriptions, and respectful discussion about stereotypes.
+        </p>
+
+        <div class="activity-actions">
+          <a href="#activity-steps" class="btn btn-primary">Start activity</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="activity-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/stereotype-guessing-game.png"
+          alt="Students playing a stereotype guessing game in class"
+        />
+      </div>
+    </section>
+
+    <section class="activity-block">
+      <h2 class="section-title">Activity goal</h2>
+
+      <p class="section-subtitle">
+        Students will describe a hidden character using clues. They must use descriptive
+        adjectives and manner adverbs to help their classmates guess the stereotype,
+        profession, or personality type.
+      </p>
+
+      <div class="outcome-grid">
+        <div class="outcome-card">
+          <h3>Grammar focus</h3>
+          <p>
+            Use adjectives to describe personality and manner adverbs to describe behavior.
+          </p>
+        </div>
+
+        <div class="outcome-card">
+          <h3>Speaking focus</h3>
+          <p>
+            Present clues clearly and use body language to support your description.
+          </p>
+        </div>
+
+        <div class="outcome-card">
+          <h3>Critical thinking</h3>
+          <p>
+            Discuss stereotypes respectfully and explain why a clue matches a character.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="activity-block" id="activity-steps">
+      <h2 class="section-title">How to play</h2>
+
+      <p class="section-subtitle">
+        Follow these steps to prepare and present your hidden identity to the class.
+      </p>
+
+      <div class="steps-grid">
+        <div class="step-box">
+          <div class="step-number">1</div>
+          <div>
+            <h3>Research and choose</h3>
+            <p>
+              Choose a common stereotype, role, or personality type. For example:
+              the artist, the chef, the scientist, the gamer, the athlete, the bookworm,
+              or the influencer.
+            </p>
+            <p>
+              Think about how this person usually acts, speaks, dresses, studies, works,
+              or interacts with others.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-number">2</div>
+          <div>
+            <h3>Prepare your clues</h3>
+            <p>
+              Write three clear clues to describe your hidden character. Do not write
+              the name of the character in your clues.
+            </p>
+            <ul>
+              <li>Use at least two descriptive adjectives.</li>
+              <li>Use at least two manner adverbs.</li>
+              <li>Describe actions, habits, personality, or behavior.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-number">3</div>
+          <div>
+            <h3>Present to the class</h3>
+            <p>
+              Go to the front of the class and read your clues clearly. Do not say the
+              name of the character. Let your classmates guess.
+            </p>
+            <p>
+              After they guess, explain which words helped them identify the hidden
+              character.
+            </p>
+          </div>
+        </div>
+
+        <div class="step-box">
+          <div class="step-number">4</div>
+          <div>
+            <h3>Discuss respectfully</h3>
+            <p>
+              Talk about whether the stereotype is fair or unfair. Remember: the goal is
+              to practice language, not to judge people.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="activity-block">
+      <h2 class="section-title">Language requirements</h2>
+
+      <p class="section-subtitle">
+        Use the language below to make your clues stronger and clearer.
+      </p>
+
+      <div class="language-grid">
+        <div class="language-card">
+          <h3>Descriptive adjectives</h3>
+          <ul>
+            <li>creative</li>
+            <li>sensitive</li>
+            <li>athletic</li>
+            <li>intelligent</li>
+            <li>organized</li>
+            <li>confident</li>
+            <li>curious</li>
+            <li>friendly</li>
+          </ul>
+        </div>
+
+        <div class="language-card">
+          <h3>Manner adverbs</h3>
+          <ul>
+            <li>carefully</li>
+            <li>quickly</li>
+            <li>quietly</li>
+            <li>loudly</li>
+            <li>creatively</li>
+            <li>passionately</li>
+            <li>energetically</li>
+            <li>confidently</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="activity-block">
+      <h2 class="section-title">Presentation example</h2>
+
+      <p class="section-subtitle">
+        Read this example before creating your own hidden identity.
+      </p>
+
+      <div class="example-section">
+        <span class="example-title">Example</span>
+
+        <p><strong>Hidden identity:</strong> The Artist</p>
+
+        <ul class="clue-list">
+          <li>
+            I am very <span class="highlight">creative</span> and
+            <span class="highlight">sensitive</span>.
+          </li>
+          <li>
+            I dress very <span class="highlight">artistically</span> every day.
+          </li>
+          <li>
+            I carry a sketchbook and I paint
+            <span class="highlight">passionately</span>.
+          </li>
+        </ul>
+
+        <div class="board-tip">
+          <strong>Teacher’s tip:</strong> Use your voice and body language. If your hidden
+          character is “the athlete,” you can walk <strong>energetically</strong> while
+          you give your clues.
+        </div>
+      </div>
+    </section>
+
+    <section class="activity-block">
+      <h2 class="section-title">Student planning template</h2>
+
+      <p class="section-subtitle">
+        Use this model to prepare your presentation before sharing it with your classmates.
+      </p>
+
+      <div class="template-grid">
+        <div class="template-card">
+          <h3>Plan your hidden identity</h3>
+
+          <div class="template-line">
+            My hidden identity is: ________________________________
+          </div>
+
+          <div class="template-line">
+            Two adjectives I will use are: ________________________________
+          </div>
+
+          <div class="template-line">
+            Two manner adverbs I will use are: ________________________________
+          </div>
+        </div>
+
+        <div class="template-card">
+          <h3>Write your clues</h3>
+
+          <div class="template-line">
+            Clue 1: I am very __________________ and __________________.
+          </div>
+
+          <div class="template-line">
+            Clue 2: I usually act __________________ when I __________________.
+          </div>
+
+          <div class="template-line">
+            Clue 3: I __________________ very __________________.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="activity-block">
+      <h2 class="section-title">Checklist before presenting</h2>
+
+      <p class="section-subtitle">
+        Before you present, make sure your clues include all the required elements.
+      </p>
+
+      <div class="checklist">
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>I chose a clear hidden identity.</span>
+        </div>
+
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>I used at least two descriptive adjectives.</span>
+        </div>
+
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>I used at least two manner adverbs.</span>
+        </div>
+
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>I did not say the name of the hidden identity in my clues.</span>
+        </div>
+
+        <div class="check-item">
+          <span class="check-icon">✓</span>
+          <span>I am ready to explain my clues respectfully.</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+</body>
+</html>

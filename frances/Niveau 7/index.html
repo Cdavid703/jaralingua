@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Français – Niveau 7</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --cream: #fff8ef;
+      --white: #ffffff;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(214, 40, 57, 0.16), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(31, 78, 140, 0.22), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f2 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 130px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.97;
+      letter-spacing: -0.06em;
+      color: var(--blue-dark);
+      font-size: clamp(2.7rem, 7vw, 6rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.2rem, 2vw, 1.6rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      max-width: 680px;
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.82rem 1.2rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .hero-photo {
+      min-height: 460px;
+      border-radius: 30px;
+      overflow: hidden;
+      position: relative;
+      background: var(--blue-dark);
+    }
+
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 460px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.6rem;
+      color: white;
+      background:
+        linear-gradient(180deg, rgba(21, 52, 93, 0.15), rgba(21, 52, 93, 0.82)),
+        linear-gradient(135deg, rgba(31, 78, 140, 0.38), rgba(214, 40, 57, 0.18));
+    }
+
+    .big-icon {
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.18);
+      font-size: 2.1rem;
+      margin-bottom: 1rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .keyword {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.18);
+      font-weight: 900;
+      margin: 0.25rem;
+      backdrop-filter: blur(8px);
+    }
+
+    section {
+      padding: 5.5rem 0;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 800px;
+    }
+
+    .portal-card {
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      overflow: hidden;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .portal-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 26px 56px rgba(20, 40, 80, 0.15);
+    }
+
+    .portal-img-wrap {
+      position: relative;
+      height: 220px;
+      overflow: hidden;
+      background: var(--blue-dark);
+    }
+
+    .portal-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .portal-card:hover .portal-img-wrap img {
+      transform: scale(1.07);
+    }
+
+    .portal-img-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, transparent 30%, rgba(21, 52, 93, 0.78)),
+        linear-gradient(135deg, rgba(31, 78, 140, 0.14), rgba(214, 40, 57, 0.12));
+    }
+
+    .portal-icon {
+      position: absolute;
+      left: 1.2rem;
+      bottom: 1.2rem;
+      z-index: 2;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      color: white;
+      font-size: 1.85rem;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+    }
+
+    .portal-card .card-body {
+      padding: 1.45rem;
+    }
+
+    .portal-card h3 {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .portal-card p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      padding: 0.45rem 0.7rem;
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    .objective-panel {
+      border-radius: 32px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+    }
+
+    .objective-item {
+      border-radius: 20px;
+      background: var(--soft);
+      padding: 1rem;
+      height: 100%;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .objective-item i {
+      color: var(--red);
+      margin-right: 0.45rem;
+    }
+
+    .quick-panel {
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at 18% 20%, rgba(244, 201, 93, 0.2), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quick-panel::after {
+      content: "7";
+      position: absolute;
+      right: 2rem;
+      bottom: -4rem;
+      font-size: 16rem;
+      line-height: 1;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 800;
+      opacity: 0.07;
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show {
+      display: grid;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .hero {
+        min-height: auto;
+        padding-top: 7rem;
+      }
+
+      .hero-photo,
+      .hero-photo img {
+        min-height: 360px;
+      }
+    }
+
+    @media (max-width: 575px) {
+      .portal-img-wrap {
+        height: 190px;
+      }
+
+      .hero-photo,
+      .hero-photo img {
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#accueil">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portail">Portail</a></li>
+          <li class="nav-item"><a class="nav-link" href="#objectifs-rapides">Objectifs</a></li>
+          <li class="nav-item"><a class="nav-link" href="#structure">Structure</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="accueil">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-mortarboard-fill"></i>
+            Français · Niveau 7
+          </span>
+          <h1>Français<br>Niveau 7</h1>
+          <p class="hero-lead">Argumenter, raconter, nuancer et s’exprimer avec plus d’autonomie.</p>
+          <p class="hero-text">
+            Bienvenue dans l’espace principal du cours. Depuis cette page, vous pourrez accéder aux thèmes, aux ateliers, aux activités, aux notes, aux expressions idiomatiques, à la phonétique et aux ressources du Niveau 7.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#portail" class="btn btn-main">
+              <i class="bi bi-grid-3x3-gap-fill me-2"></i>Entrer dans le cours
+            </a>
+            <button class="btn btn-soft" data-bs-toggle="modal" data-bs-target="#objectifsModal">
+              <i class="bi bi-list-check me-2"></i>Voir les objectifs
+            </button>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <div class="hero-photo">
+              <img src="img/imagen-principal-index.png" alt="Étudiants dans un cours de français niveau 7">
+              <div class="hero-overlay">
+                <div>
+                  <div class="big-icon"><i class="bi bi-chat-quote-fill"></i></div>
+                  <h2 class="fw-bold mb-2">Portail du cours</h2>
+                  <p class="mb-0 opacity-75">Un seul point d’accès pour tout le parcours.</p>
+                </div>
+                <div>
+                  <span class="keyword"><i class="bi bi-book"></i>Thèmes</span>
+                  <span class="keyword"><i class="bi bi-pencil-square"></i>Ateliers</span>
+                  <span class="keyword"><i class="bi bi-bar-chart"></i>Notes</span>
+                  <span class="keyword"><i class="bi bi-soundwave"></i>Phonétique</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="portail">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Index du cours</p>
+          <h2 class="section-title">Choisissez votre espace</h2>
+          <p class="section-text mx-auto">
+            Chaque espace du cours aura sa propre page. Pour le moment, l’index présente la structure principale et les boutons sont déjà connectés aux pages qui seront développées ensuite.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="card portal-card">
+              <div class="portal-img-wrap">
+                <img src="img/themes-du-cours.png" alt="Illustration des thèmes du cours">
+                <div class="portal-icon"><i class="bi bi-journal-text"></i></div>
+              </div>
+              <div class="card-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle"></i>Programme</span>
+                <h3 class="h4">Thèmes du cours</h3>
+                <p>Aperçu des unités principales : argumentation, récit, société, expériences et voyages.</p>
+                <a href="themes-du-cours.html" class="btn btn-main w-100">Entrer</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="card portal-card">
+              <div class="portal-img-wrap">
+                <img src="img/ateliers-activites.png" alt="Illustration des ateliers et activités">
+                <div class="portal-icon"><i class="bi bi-people-fill"></i></div>
+              </div>
+              <div class="card-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle"></i>Pratique</span>
+                <h3 class="h4">Ateliers et activités</h3>
+                <p>Accès aux débats, lectures guidées, simulations, productions et mini-projets du niveau.</p>
+                <a href="ateliers-activites.html" class="btn btn-main w-100">Entrer</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="card portal-card">
+              <div class="portal-img-wrap">
+                <img src="img/notes-evaluation.png" alt="Illustration des notes et de l’évaluation">
+                <div class="portal-icon"><i class="bi bi-clipboard-data-fill"></i></div>
+              </div>
+              <div class="card-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle"></i>Suivi</span>
+                <h3 class="h4">Notes et évaluation</h3>
+                <p>Consultation des critères, résultats, progrès et informations générales d’évaluation.</p>
+                <a href="notes-evaluation.html" class="btn btn-main w-100">Entrer</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="card portal-card">
+              <div class="portal-img-wrap">
+                <img src="img/expressions-idiomatiques.png" alt="Illustration des expressions idiomatiques">
+                <div class="portal-icon"><i class="bi bi-chat-left-quote-fill"></i></div>
+              </div>
+              <div class="card-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle"></i>Communication</span>
+                <h3 class="h4">Expressions idiomatiques</h3>
+                <p>Banque d’expressions pour argumenter, nuancer, raconter, réagir et conclure.</p>
+                <a href="expressions-idiomatiques.html" class="btn btn-main w-100">Entrer</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="card portal-card">
+              <div class="portal-img-wrap">
+                <img src="img/coin-phonetique.png" alt="Illustration du coin phonétique">
+                <div class="portal-icon"><i class="bi bi-soundwave"></i></div>
+              </div>
+              <div class="card-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle"></i>Prononciation</span>
+                <h3 class="h4">Coin phonétique</h3>
+                <p>Travail sur le rythme, l’intonation et la distinction entre futur et conditionnel.</p>
+                <a href="coin-phonetique.html" class="btn btn-main w-100">Entrer</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="card portal-card">
+              <div class="portal-img-wrap">
+                <img src="img/ressources-du-cours.png" alt="Illustration des ressources du cours">
+                <div class="portal-icon"><i class="bi bi-folder2-open"></i></div>
+              </div>
+              <div class="card-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle"></i>Matériel</span>
+                <h3 class="h4">Ressources du cours</h3>
+                <p>Documents, supports, liens, lectures, vidéos, audios et exercices complémentaires.</p>
+                <a href="ressources.html" class="btn btn-main w-100">Entrer</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="objectifs-rapides" class="bg-white">
+      <div class="container">
+        <div class="objective-panel fade-in">
+          <div class="row align-items-center g-4 mb-4">
+            <div class="col-lg-8">
+              <p class="section-kicker">Objectifs</p>
+              <h2 class="section-title">Objectifs du cours</h2>
+              <p class="section-text mb-0">
+                Les objectifs ne sont pas une page indépendante pour l’instant. Ils restent accessibles depuis le bouton d’accueil et depuis cette zone de rappel.
+              </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <button class="btn btn-main" data-bs-toggle="modal" data-bs-target="#objectifsModal">
+                <i class="bi bi-list-check me-2"></i>Afficher les objectifs
+              </button>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6 col-xl-4">
+              <div class="objective-item"><i class="bi bi-check-circle-fill"></i>Donner son opinion et la nuancer.</div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <div class="objective-item"><i class="bi bi-check-circle-fill"></i>Comprendre un récit au passé simple.</div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <div class="objective-item"><i class="bi bi-check-circle-fill"></i>Rapporter les paroles de quelqu’un.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="structure">
+      <div class="container">
+        <div class="quick-panel fade-in">
+          <div class="row align-items-center g-4 position-relative" style="z-index: 2;">
+            <div class="col-lg-8">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Navigation</p>
+              <h2 class="fw-bold mb-2">Structure prête pour développer le cours étape par étape</h2>
+              <p class="mb-0 opacity-75 fs-5">
+                Les pages sont connectées depuis l’index. Il suffira de créer chaque fichier HTML avec le même nom que le lien correspondant.
+              </p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="#portail" class="btn btn-light fw-bold rounded-pill px-4 py-3">
+                Revenir au portail
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Français – Niveau 7</h2>
+          <p class="mb-0 opacity-75">Portail principal du cours : thèmes, activités, notes, expressions, phonétique et ressources.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="#accueil">Retour en haut <i class="bi bi-arrow-up"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <div class="modal fade" id="objectifsModal" tabindex="-1" aria-labelledby="objectifsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0 rounded-4 shadow">
+        <div class="modal-header border-0 p-4 pb-0">
+          <div>
+            <p class="section-kicker mb-1">Objectifs</p>
+            <h2 class="modal-title fw-bold" id="objectifsModalLabel">Objectifs du cours</h2>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+        </div>
+        <div class="modal-body p-4">
+          <p class="fs-5 text-muted">
+            À la fin de ce niveau, vous serez capable de comprendre les points essentiels d’un langage clair, de produire un discours structuré sur des sujets complexes et de défendre un point de vue avec des arguments nuancés.
+          </p>
+          <div class="row g-3 mt-2">
+            <div class="col-md-6"><div class="p-3 bg-light rounded-4 fw-bold"><i class="bi bi-check-circle text-primary me-2"></i>Donner votre opinion et la nuancer.</div></div>
+            <div class="col-md-6"><div class="p-3 bg-light rounded-4 fw-bold"><i class="bi bi-check-circle text-primary me-2"></i>Comprendre un récit au passé simple.</div></div>
+            <div class="col-md-6"><div class="p-3 bg-light rounded-4 fw-bold"><i class="bi bi-check-circle text-primary me-2"></i>Rapporter les paroles de quelqu’un.</div></div>
+            <div class="col-md-6"><div class="p-3 bg-light rounded-4 fw-bold"><i class="bi bi-check-circle text-primary me-2"></i>Parler de votre parcours et de vos projets.</div></div>
+            <div class="col-md-6"><div class="p-3 bg-light rounded-4 fw-bold"><i class="bi bi-check-circle text-primary me-2"></i>Faire une réclamation formelle.</div></div>
+            <div class="col-md-6"><div class="p-3 bg-light rounded-4 fw-bold"><i class="bi bi-check-circle text-primary me-2"></i>Utiliser des connecteurs logiques.</div></div>
+          </div>
+        </div>
+        <div class="modal-footer border-0 p-4 pt-0">
+          <button type="button" class="btn btn-main" data-bs-dismiss="modal">Compris</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const btnUp = document.getElementById('btnUp');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sections = document.querySelectorAll('header[id], main section[id]');
+
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeElements.forEach(function(element) {
+      observer.observe(element);
+    });
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+
+      let current = '';
+      sections.forEach(function(section) {
+        const sectionTop = section.offsetTop - 130;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(function(link) {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

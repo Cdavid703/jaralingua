@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Grammar Workshop: Adjectives vs. Manner Adverbs | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    :root {
+      --unit-blue: #2563eb;
+      --unit-blue-dark: #1e40af;
+      --unit-teal: #0f766e;
+      --unit-gold: #f59e0b;
+      --unit-green: #059669;
+      --unit-red: #dc2626;
+      --unit-card: #ffffff;
+      --unit-text: #102033;
+      --unit-muted: #52657d;
+      --unit-border: #dce8f8;
+      --unit-soft-blue: #eef5ff;
+      --unit-soft-green: #ecfdf5;
+      --unit-soft-red: #fff1f2;
+      --unit-soft-gold: #fff7e8;
+      --unit-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.12), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--unit-text);
+    }
+
+    .workshop-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .workshop-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .workshop-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--unit-soft-blue);
+      color: var(--unit-blue-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .workshop-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--unit-teal);
+      box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12);
+    }
+
+    .workshop-hero h1 {
+      color: var(--unit-text);
+      font-size: clamp(2.2rem, 5vw, 4.3rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .workshop-hero h1 span {
+      color: var(--unit-blue);
+    }
+
+    .workshop-hero p {
+      color: var(--unit-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .workshop-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .workshop-hero-image {
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .workshop-hero-image img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+
+    .workshop-block {
+      background: var(--unit-card);
+      padding: 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--unit-text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 820px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--unit-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .mini-guide {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .guide-card {
+      padding: 1.5rem;
+      border-radius: 22px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      border-left: 6px solid var(--unit-blue);
+    }
+
+    .guide-card h3 {
+      color: var(--unit-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .guide-card p {
+      color: var(--unit-muted);
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+
+    .example-line {
+      display: block;
+      padding: 0.9rem 1rem;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      color: var(--unit-text);
+      font-style: italic;
+    }
+
+    .highlight {
+      color: var(--unit-blue);
+      font-weight: 800;
+    }
+
+    .quiz-status {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 2rem;
+      padding: 1rem 1.2rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #eef5ff, #ffffff);
+      border: 1px solid var(--unit-border);
+    }
+
+    .progress-wrap {
+      width: 100%;
+    }
+
+    .progress-text {
+      color: var(--unit-muted);
+      font-weight: 700;
+      margin-bottom: 0.55rem;
+    }
+
+    .progress-bar {
+      height: 12px;
+      border-radius: 999px;
+      background: #dbeafe;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--unit-blue), var(--unit-teal));
+      transition: width 0.3s ease;
+    }
+
+    .score-pill {
+      min-width: 118px;
+      text-align: center;
+      padding: 0.8rem 1rem;
+      border-radius: 999px;
+      background: var(--unit-blue);
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .questions-wrapper {
+      display: grid;
+      gap: 1.4rem;
+    }
+
+    .question-card {
+      padding: 1.5rem;
+      border-radius: 24px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      border-left: 6px solid var(--unit-blue);
+    }
+
+    .question-text {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--unit-text);
+      margin-bottom: 1rem;
+      line-height: 1.6;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.85rem;
+    }
+
+    .option-btn {
+      min-height: 48px;
+      padding: 0.8rem 1rem;
+      border: 2px solid var(--unit-blue);
+      background: #ffffff;
+      color: var(--unit-blue-dark);
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 900;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      background: var(--unit-blue);
+      color: #ffffff;
+      transform: translateY(-2px);
+    }
+
+    .option-btn:disabled {
+      cursor: default;
+      opacity: 0.92;
+    }
+
+    .option-btn.correct-answer {
+      background: var(--unit-green);
+      color: #ffffff;
+      border-color: var(--unit-green);
+    }
+
+    .option-btn.wrong-answer {
+      background: var(--unit-red);
+      color: #ffffff;
+      border-color: var(--unit-red);
+    }
+
+    .option-btn.show-correct {
+      background: var(--unit-soft-green);
+      color: #065f46;
+      border-color: var(--unit-green);
+    }
+
+    .feedback {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 16px;
+      display: none;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      font-weight: 700;
+    }
+
+    .feedback.correct {
+      display: block;
+      background-color: var(--unit-soft-green);
+      color: #065f46;
+      border: 1px solid var(--unit-green);
+    }
+
+    .feedback.wrong {
+      display: block;
+      background-color: var(--unit-soft-red);
+      color: #991b1b;
+      border: 1px solid var(--unit-red);
+    }
+
+    .quiz-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+    }
+
+    .finish-btn,
+    .reset-btn {
+      border: none;
+      cursor: pointer;
+      font-weight: 900;
+      border-radius: 999px;
+      min-height: 52px;
+      padding: 0 1.3rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .finish-btn {
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-blue-dark));
+      color: #ffffff;
+      box-shadow: 0 14px 32px rgba(37, 99, 235, 0.22);
+      flex: 1;
+    }
+
+    .reset-btn {
+      background: #ffffff;
+      color: var(--unit-blue-dark);
+      border: 1px solid var(--unit-border);
+    }
+
+    .finish-btn:hover,
+    .reset-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .score-section {
+      text-align: center;
+      margin-top: 2rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-blue-dark));
+      color: #ffffff;
+      border-radius: 24px;
+      display: none;
+      box-shadow: 0 16px 34px rgba(37, 99, 235, 0.22);
+    }
+
+    .score-section h3 {
+      font-size: 1.7rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .score-section p {
+      line-height: 1.7;
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    .teacher-note {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      border-radius: 22px;
+      background: var(--unit-soft-gold);
+      border: 1px dashed var(--unit-gold);
+      color: #5f4a1c;
+      line-height: 1.8;
+    }
+
+    .teacher-note strong {
+      color: #92400e;
+    }
+
+    @media (max-width: 980px) {
+      .workshop-hero,
+      .mini-guide,
+      .quiz-status {
+        grid-template-columns: 1fr;
+      }
+
+      .workshop-hero {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .workshop-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .workshop-hero,
+      .workshop-block {
+        padding: 1.4rem;
+        border-radius: 24px;
+      }
+
+      .workshop-actions .btn,
+      .finish-btn,
+      .reset-btn {
+        width: 100%;
+      }
+
+      .options-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quiz-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="workshop-page">
+
+    <section class="workshop-hero">
+      <div class="workshop-hero-content">
+        <p class="workshop-eyebrow">
+          <span class="workshop-dot"></span>
+          Practice Lab · Grammar Workshop
+        </p>
+
+        <h1>
+          Adjectives vs.
+          <span>Manner Adverbs</span>
+        </h1>
+
+        <p>
+          In this workshop, you will practice the difference between adjectives and
+          manner adverbs. Remember: adjectives describe people, places, or things;
+          adverbs describe how an action happens.
+        </p>
+
+        <div class="workshop-actions">
+          <a href="#quiz-workshop" class="btn btn-primary">Start workshop</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="workshop-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/grammar-workshop-adjectives-adverbs.png"
+          alt="Students practicing adjectives and manner adverbs in a grammar workshop"
+        />
+      </div>
+    </section>
+
+    <section class="workshop-block">
+      <h2 class="section-title">Before you start</h2>
+
+      <p class="section-subtitle">
+        Look at the difference between an adjective and a manner adverb. This short
+        review will help you answer the workshop questions.
+      </p>
+
+      <div class="mini-guide">
+        <div class="guide-card">
+          <h3>Adjectives</h3>
+          <p>
+            Adjectives describe <strong>nouns</strong>. They tell us what a person,
+            place, or thing is like.
+          </p>
+          <span class="example-line">
+            She is a <span class="highlight">careful</span> driver.
+          </span>
+        </div>
+
+        <div class="guide-card">
+          <h3>Manner adverbs</h3>
+          <p>
+            Manner adverbs describe <strong>verbs</strong>. They tell us how someone
+            does something.
+          </p>
+          <span class="example-line">
+            She drives <span class="highlight">carefully</span>.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="workshop-block" id="quiz-workshop">
+      <h2 class="section-title">Interactive Workshop</h2>
+
+      <p class="section-subtitle">
+        Choose the correct word to complete each sentence. Read the feedback after each
+        answer to understand why the answer is correct.
+      </p>
+
+      <div class="quiz-status">
+        <div class="progress-wrap">
+          <div class="progress-text" id="progress-text">Answered: 0 / 10</div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+          </div>
+        </div>
+
+        <div class="score-pill" id="score-pill">Score: 0</div>
+      </div>
+
+      <div id="questions-wrapper" class="questions-wrapper"></div>
+
+      <div class="quiz-actions">
+        <button id="submit-quiz" class="finish-btn" type="button">Finish Workshop</button>
+        <button id="reset-quiz" class="reset-btn" type="button">Reset Workshop</button>
+      </div>
+
+      <div id="score-display" class="score-section"></div>
+
+      <div class="teacher-note">
+        <strong>Workshop focus:</strong> Use an adjective when you describe a person,
+        place, thing, or noun. Use a manner adverb when you describe how an action is done.
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const quizData = [
+      {
+        q: "She is a ______ driver; she always follows the traffic rules.",
+        options: ["careful", "carefully"],
+        correct: 0,
+        feedback: "Correct! We use an adjective to describe the noun: driver."
+      },
+      {
+        q: "The jock runs very ______ during his morning training.",
+        options: ["fastly", "fast"],
+        correct: 1,
+        feedback: "Great! Fast is an irregular adverb. It does not change."
+      },
+      {
+        q: "The nerd studies ______ because he wants to get the highest grade.",
+        options: ["hard", "hardly"],
+        correct: 0,
+        feedback: "Correct! Hard describes effort. Hardly means almost not."
+      },
+      {
+        q: "He speaks English very ______, almost like a native speaker.",
+        options: ["good", "well"],
+        correct: 1,
+        feedback: "Excellent! Well is the irregular adverb for good."
+      },
+      {
+        q: "The bully often speaks ______ to the younger students.",
+        options: ["rudely", "rude"],
+        correct: 0,
+        feedback: "Correct! Rudely describes how he speaks."
+      },
+      {
+        q: "The hipster is very ______; he always has unique ideas.",
+        options: ["creatively", "creative"],
+        correct: 1,
+        feedback: "Right! Creative is an adjective that describes the person."
+      },
+      {
+        q: "That basketball match was ______ for the jocks; they won easily.",
+        options: ["easy", "easily"],
+        correct: 0,
+        feedback: "Correct! Easy describes the match, which is a noun."
+      },
+      {
+        q: "The students completed the task ______ before the time was up.",
+        options: ["quick", "quickly"],
+        correct: 1,
+        feedback: "Correct! Quickly describes how they completed the task."
+      },
+      {
+        q: "He is a ______ student who always finishes his work on time.",
+        options: ["competent", "competently"],
+        correct: 0,
+        feedback: "Good job! Competent is an adjective before the noun student."
+      },
+      {
+        q: "The teacher explained the topic ______, so everyone understood.",
+        options: ["clearly", "clear"],
+        correct: 0,
+        feedback: "Correct! Clearly describes how the teacher explained the topic."
+      }
+    ];
+
+    const wrapper = document.getElementById("questions-wrapper");
+    const progressText = document.getElementById("progress-text");
+    const progressFill = document.getElementById("progress-fill");
+    const scorePill = document.getElementById("score-pill");
+    const scoreDisplay = document.getElementById("score-display");
+    const submitButton = document.getElementById("submit-quiz");
+    const resetButton = document.getElementById("reset-quiz");
+
+    let score = 0;
+    const answeredQuestions = new Set();
+
+    function renderQuiz() {
+      wrapper.innerHTML = "";
+      score = 0;
+      answeredQuestions.clear();
+      scoreDisplay.style.display = "none";
+      scoreDisplay.innerHTML = "";
+      submitButton.style.display = "inline-block";
+
+      quizData.forEach((data, index) => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+
+        const options = data.options.map((option, optionIndex) => {
+          return `
+            <button
+              class="option-btn"
+              type="button"
+              data-question="${index}"
+              data-option="${optionIndex}"
+            >
+              ${option}
+            </button>
+          `;
+        }).join("");
+
+        card.innerHTML = `
+          <div class="question-text">${index + 1}. ${data.q}</div>
+          <div class="options-grid">${options}</div>
+          <div id="feedback-${index}" class="feedback"></div>
+        `;
+
+        wrapper.appendChild(card);
+      });
+
+      updateProgress();
+    }
+
+    function updateProgress() {
+      const answered = answeredQuestions.size;
+      const total = quizData.length;
+      const percentage = (answered / total) * 100;
+
+      progressText.textContent = `Answered: ${answered} / ${total}`;
+      progressFill.style.width = `${percentage}%`;
+      scorePill.textContent = `Score: ${score}`;
+    }
+
+    function checkAnswer(questionIndex, optionIndex, button) {
+      if (answeredQuestions.has(questionIndex)) return;
+
+      const question = quizData[questionIndex];
+      const feedback = document.getElementById(`feedback-${questionIndex}`);
+      const buttons = button.parentElement.querySelectorAll(".option-btn");
+
+      buttons.forEach((btn) => {
+        btn.disabled = true;
+      });
+
+      if (optionIndex === question.correct) {
+        button.classList.add("correct-answer");
+        feedback.textContent = "Correct! " + question.feedback;
+        feedback.className = "feedback correct";
+        score++;
+      } else {
+        button.classList.add("wrong-answer");
+        buttons[question.correct].classList.add("show-correct");
+        feedback.textContent = "Incorrect. Remember: adjectives describe nouns, and adverbs describe actions.";
+        feedback.className = "feedback wrong";
+      }
+
+      answeredQuestions.add(questionIndex);
+      updateProgress();
+    }
+
+    wrapper.addEventListener("click", function (event) {
+      if (!event.target.classList.contains("option-btn")) return;
+
+      const questionIndex = Number(event.target.dataset.question);
+      const optionIndex = Number(event.target.dataset.option);
+
+      checkAnswer(questionIndex, optionIndex, event.target);
+    });
+
+    submitButton.addEventListener("click", function () {
+      if (answeredQuestions.size < quizData.length) {
+        const remaining = quizData.length - answeredQuestions.size;
+        scoreDisplay.style.display = "block";
+        scoreDisplay.innerHTML = `
+          <h3>Keep going!</h3>
+          <p>You still need to answer ${remaining} question${remaining === 1 ? "" : "s"} before finishing the workshop.</p>
+        `;
+        scoreDisplay.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+
+      let message = "Good effort. Review the examples and try again to improve your score.";
+
+      if (score >= 9) {
+        message = "Excellent work! You clearly understand the difference between adjectives and manner adverbs.";
+      } else if (score >= 7) {
+        message = "Nice job! You understand the main idea. Review the irregular adverbs to get even stronger.";
+      } else if (score >= 5) {
+        message = "You are getting there. Review when to describe a noun and when to describe an action.";
+      }
+
+      scoreDisplay.style.display = "block";
+      scoreDisplay.innerHTML = `
+        <h3>Workshop Complete!</h3>
+        <p>Your final score is <strong>${score} / ${quizData.length}</strong>.</p>
+        <p>${message}</p>
+      `;
+
+      submitButton.style.display = "none";
+      scoreDisplay.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    resetButton.addEventListener("click", function () {
+      renderQuiz();
+      document.getElementById("quiz-workshop").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    renderQuiz();
+  </script>
+
+</body>
+</html>

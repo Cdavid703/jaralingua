@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Unit 1: Personality and Annoying Habits | Intermediate English | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    :root {
+      --unit-blue: #2563eb;
+      --unit-blue-dark: #1e40af;
+      --unit-teal: #0f766e;
+      --unit-gold: #f59e0b;
+      --unit-red: #dc2626;
+      --unit-green: #059669;
+      --unit-card: #ffffff;
+      --unit-text: #102033;
+      --unit-muted: #52657d;
+      --unit-border: #dce8f8;
+      --unit-soft-blue: #eef5ff;
+      --unit-soft-green: #ecfdf5;
+      --unit-soft-red: #fff1f2;
+      --unit-soft-gold: #fff7e8;
+      --unit-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.12), transparent 30%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--unit-text);
+    }
+
+    .unit-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .unit-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .unit-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--unit-soft-blue);
+      color: var(--unit-blue-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .unit-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--unit-teal);
+      box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12);
+    }
+
+    .unit-hero h1 {
+      color: var(--unit-text);
+      font-size: clamp(2.3rem, 5vw, 4.4rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .unit-hero h1 span {
+      color: var(--unit-blue);
+    }
+
+    .unit-hero p {
+      color: var(--unit-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .learning-outcome {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin: 1.5rem 0;
+      padding: 1rem 1.2rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.07);
+    }
+
+    .learning-outcome-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-teal));
+      color: #ffffff;
+      font-size: 1.2rem;
+    }
+
+    .learning-outcome strong {
+      color: var(--unit-text);
+    }
+
+    .unit-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .unit-hero-image {
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .unit-hero-image img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+
+    .topic-block {
+      background: var(--unit-card);
+      padding: 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--unit-text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 820px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--unit-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .definition-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .definition-card {
+      padding: 1.6rem;
+      border-radius: 22px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      border-left: 6px solid var(--unit-blue);
+    }
+
+    .definition-card h3 {
+      color: var(--unit-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .definition-card p {
+      color: var(--unit-muted);
+      line-height: 1.75;
+    }
+
+    .example-line {
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      border-radius: 16px;
+      background: #ffffff;
+      color: var(--unit-text);
+      border: 1px solid var(--unit-border);
+      font-style: italic;
+    }
+
+    .adjective-columns {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .word-card {
+      padding: 1.5rem;
+      border-radius: 24px;
+      border: 1px solid var(--unit-border);
+      background: #ffffff;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .word-card.positive {
+      background: linear-gradient(135deg, var(--unit-soft-green), #ffffff);
+      border-left: 6px solid var(--unit-green);
+    }
+
+    .word-card.negative {
+      background: linear-gradient(135deg, var(--unit-soft-red), #ffffff);
+      border-left: 6px solid var(--unit-red);
+    }
+
+    .word-card.neutral {
+      background: linear-gradient(135deg, var(--unit-soft-blue), #ffffff);
+      border-left: 6px solid var(--unit-blue);
+    }
+
+    .word-card h3 {
+      margin-bottom: 1rem;
+      color: var(--unit-text);
+      font-size: 1.25rem;
+    }
+
+    .word-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      padding: 0;
+      margin: 0;
+    }
+
+    .word-list li {
+      list-style: none;
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid var(--unit-border);
+      color: #27415f;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .structure-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .structure-card {
+      padding: 1.5rem;
+      border-radius: 22px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+    }
+
+    .structure-card h3 {
+      color: var(--unit-blue-dark);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .pattern {
+      display: block;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      color: var(--unit-text);
+      font-weight: 800;
+      margin-bottom: 0.7rem;
+    }
+
+    .structure-card p {
+      color: var(--unit-muted);
+      line-height: 1.7;
+      margin-bottom: 0.7rem;
+    }
+
+    .language-box {
+      display: grid;
+      gap: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    .language-example {
+      padding: 1rem 1.2rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      color: var(--unit-muted);
+      line-height: 1.7;
+    }
+
+    .language-example strong {
+      color: var(--unit-blue-dark);
+    }
+
+    .habit-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin-top: 2rem;
+      border-radius: 20px;
+      border: 1px solid var(--unit-border);
+    }
+
+    .habit-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+
+    .habit-table th {
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-blue-dark));
+      color: #ffffff;
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .habit-table td {
+      padding: 1rem;
+      color: var(--unit-muted);
+      border-bottom: 1px solid #e7eef9;
+      line-height: 1.6;
+    }
+
+    .habit-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .habit-table strong {
+      color: var(--unit-text);
+    }
+
+    .annoying-box {
+      background: var(--unit-soft-gold);
+      border: 1px dashed var(--unit-gold);
+      padding: 1.5rem;
+      border-radius: 22px;
+      margin-top: 2rem;
+      color: #5f4a1c;
+      line-height: 1.8;
+    }
+
+    .annoying-box strong {
+      color: #92400e;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .comparison-card {
+      padding: 1.6rem;
+      border-radius: 24px;
+      border: 1px solid var(--unit-border);
+      background: #ffffff;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .comparison-card h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 1rem;
+    }
+
+    .comparison-card p {
+      color: var(--unit-muted);
+      line-height: 1.7;
+      margin-bottom: 0.8rem;
+    }
+
+    .mini-label {
+      display: inline-block;
+      margin-bottom: 0.65rem;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: var(--unit-soft-blue);
+      color: var(--unit-blue-dark);
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    .useful-language {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+      margin-top: 2rem;
+    }
+
+    .useful-card {
+      padding: 1.4rem;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #eef5ff, #ffffff);
+      border: 1px solid var(--unit-border);
+    }
+
+    .useful-card h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .useful-card ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--unit-muted);
+      line-height: 1.8;
+    }
+
+    .reflection-box {
+      margin-top: 2rem;
+      padding: 1.6rem;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #eef5ff, #ffffff);
+      border: 1px solid var(--unit-border);
+    }
+
+    .reflection-box h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .reflection-box p {
+      color: var(--unit-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 980px) {
+      .unit-hero,
+      .definition-grid,
+      .structure-grid,
+      .comparison-grid,
+      .useful-language {
+        grid-template-columns: 1fr;
+      }
+
+      .adjective-columns {
+        grid-template-columns: 1fr;
+      }
+
+      .unit-hero {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .unit-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .unit-hero,
+      .topic-block {
+        padding: 1.4rem;
+        border-radius: 24px;
+      }
+
+      .unit-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="../../frances/index.html">French</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="unit-page">
+
+    <section class="unit-hero">
+      <div class="unit-hero-content">
+        <p class="unit-eyebrow">
+          <span class="unit-dot"></span>
+          Intermediate English · Unit 1
+        </p>
+
+        <h1>
+          Personality and
+          <span>Annoying Habits</span>
+        </h1>
+
+        <p>
+          In this lesson, students learn how to describe people’s personalities and talk
+          about everyday habits that can be positive, neutral, or annoying.
+        </p>
+
+        <div class="learning-outcome">
+          <div class="learning-outcome-icon">💬</div>
+          <p>
+            <strong>Learning Outcome:</strong> To describe people’s personalities using
+            descriptive adjectives, habit expressions, and clear examples.
+          </p>
+        </div>
+
+        <div class="unit-actions">
+          <a href="#personality" class="btn btn-primary">Start lesson</a>
+          <a href="course-overview.html" class="btn btn-secondary">Back to Course Overview</a>
+        </div>
+      </div>
+
+      <div class="unit-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/unit-1-personality-annoying-habits.png"
+          alt="People showing different personalities and everyday habits"
+        />
+      </div>
+    </section>
+
+    <section class="topic-block" id="personality">
+      <h2 class="section-title">What is personality?</h2>
+
+      <p class="section-subtitle">
+        Personality is the combination of qualities that describe how a person usually
+        thinks, feels, and behaves. When we describe personality, we often use adjectives
+        such as helpful, selfish, considerate, friendly, quiet, rude, generous, lazy,
+        or responsible.
+      </p>
+
+      <div class="definition-grid">
+        <div class="definition-card">
+          <h3>Personality describes what a person is like</h3>
+          <p>
+            We use personality adjectives to explain a person’s character, attitude,
+            or usual way of behaving.
+          </p>
+
+          <div class="example-line">
+            He is a very <span class="highlight">helpful</span> and
+            <span class="highlight">considerate</span> man.
+          </div>
+        </div>
+
+        <div class="definition-card">
+          <h3>Good descriptions need examples</h3>
+          <p>
+            A strong description does not only say the adjective. It also explains
+            the behavior that shows that personality trait.
+          </p>
+
+          <div class="example-line">
+            She is <span class="highlight">responsible</span> because she always
+            finishes her work on time.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Descriptive adjectives</h2>
+
+      <p class="section-subtitle">
+        Descriptive adjectives help us explain personality. Some adjectives are positive,
+        some are negative, and some depend on the situation.
+      </p>
+
+      <div class="adjective-columns">
+        <div class="word-card positive">
+          <h3>Positive adjectives</h3>
+
+          <ul class="word-list">
+            <li>helpful</li>
+            <li>considerate</li>
+            <li>friendly</li>
+            <li>amicable</li>
+            <li>responsible</li>
+            <li>generous</li>
+            <li>patient</li>
+            <li>respectful</li>
+            <li>organized</li>
+          </ul>
+        </div>
+
+        <div class="word-card negative">
+          <h3>Negative adjectives</h3>
+
+          <ul class="word-list">
+            <li>selfish</li>
+            <li>rude</li>
+            <li>annoying</li>
+            <li>irresponsible</li>
+            <li>messy</li>
+            <li>loud</li>
+            <li>careless</li>
+            <li>impatient</li>
+            <li>lazy</li>
+          </ul>
+        </div>
+
+        <div class="word-card neutral">
+          <h3>Context-based adjectives</h3>
+
+          <ul class="word-list">
+            <li>quiet</li>
+            <li>serious</li>
+            <li>talkative</li>
+            <li>independent</li>
+            <li>confident</li>
+            <li>sensitive</li>
+            <li>reserved</li>
+            <li>curious</li>
+            <li>direct</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">How to describe personality politely</h2>
+
+      <p class="section-subtitle">
+        When describing people, it is important to sound respectful. In English, we often
+        use softer expressions to avoid sounding too direct or rude.
+      </p>
+
+      <div class="structure-grid">
+        <div class="structure-card">
+          <h3>Basic structures</h3>
+
+          <span class="pattern">He / She is very + adjective.</span>
+          <p>She is very friendly.</p>
+
+          <span class="pattern">He / She is not really + adjective.</span>
+          <p>He is not really selfish.</p>
+
+          <span class="pattern">He / She can be a little + adjective.</span>
+          <p>She can be a little impatient.</p>
+        </div>
+
+        <div class="structure-card">
+          <h3>Softer descriptions</h3>
+
+          <span class="pattern">Once you get to know him/her, he/she is very + adjective.</span>
+          <p>She’s very amicable once you get to know her.</p>
+
+          <span class="pattern">He / She can be..., but...</span>
+          <p>He can be quiet, but he is very kind.</p>
+
+          <span class="pattern">Although he/she is..., he/she is also...</span>
+          <p>Although she is serious, she is also very helpful.</p>
+        </div>
+      </div>
+
+      <div class="language-box">
+        <div class="language-example">
+          <strong>Example:</strong> He is a very helpful and considerate man.
+        </div>
+
+        <div class="language-example">
+          <strong>Example:</strong> She’s not a selfish person. She’s very amicable once you get to know her.
+        </div>
+
+        <div class="language-example">
+          <strong>Example:</strong> He can be a little quiet, but he always listens carefully.
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Habit expressions</h2>
+
+      <p class="section-subtitle">
+        Habits describe what people usually do. We can use frequency adverbs and special
+        expressions to talk about repeated behavior.
+      </p>
+
+      <div class="habit-table-wrap">
+        <table class="habit-table">
+          <thead>
+            <tr>
+              <th>Expression</th>
+              <th>Use</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td><strong>always</strong></td>
+              <td>For actions that happen very frequently.</td>
+              <td>He always helps his classmates.</td>
+            </tr>
+
+            <tr>
+              <td><strong>usually</strong></td>
+              <td>For actions that happen most of the time.</td>
+              <td>She usually listens carefully.</td>
+            </tr>
+
+            <tr>
+              <td><strong>often</strong></td>
+              <td>For actions that happen many times.</td>
+              <td>He often cleans up after dinner.</td>
+            </tr>
+
+            <tr>
+              <td><strong>sometimes</strong></td>
+              <td>For actions that happen occasionally.</td>
+              <td>She sometimes forgets to answer messages.</td>
+            </tr>
+
+            <tr>
+              <td><strong>has a habit of + verb-ing</strong></td>
+              <td>For a repeated behavior that is noticeable.</td>
+              <td>He has a habit of leaving his things everywhere.</td>
+            </tr>
+
+            <tr>
+              <td><strong>is always + verb-ing</strong></td>
+              <td>Often used to complain about repeated annoying actions.</td>
+              <td>My roommate is always playing music loudly.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Annoying habits</h2>
+
+      <p class="section-subtitle">
+        Annoying habits are repeated actions that bother other people. In English, we often
+        use <strong>always + verb-ing</strong> when we want to complain about repeated behavior.
+      </p>
+
+      <div class="annoying-box">
+        <strong>Common complaint structure:</strong>
+        Subject + is always + verb-ing + extra information.
+      </div>
+
+      <div class="language-box">
+        <div class="language-example">
+          <strong>Direct complaint:</strong> He’s so annoying. He’s always clipping his nails
+          in the living room, and he doesn’t pick up after himself.
+        </div>
+
+        <div class="language-example">
+          <strong>Balanced response:</strong> At least he’s quiet.
+        </div>
+
+        <div class="language-example">
+          <strong>Another example:</strong> My roommate is always playing music loudly,
+          and I can’t sleep.
+        </div>
+
+        <div class="language-example">
+          <strong>More polite version:</strong> My roommate often plays music loudly at night,
+          and it makes it difficult for me to sleep.
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Personality vs habits</h2>
+
+      <p class="section-subtitle">
+        Personality describes what a person is like. Habits describe what a person usually does.
+        A good description often connects both ideas.
+      </p>
+
+      <div class="comparison-grid">
+        <div class="comparison-card">
+          <span class="mini-label">Personality</span>
+          <h3>He is considerate.</h3>
+          <p>
+            This describes his character. It means he thinks about other people’s feelings
+            or needs.
+          </p>
+
+          <span class="mini-label">Habit</span>
+          <h3>He always cleans up after himself.</h3>
+          <p>
+            This describes a repeated action that shows he is considerate.
+          </p>
+        </div>
+
+        <div class="comparison-card">
+          <span class="mini-label">Personality</span>
+          <h3>She is irresponsible.</h3>
+          <p>
+            This describes her personality in a negative way.
+          </p>
+
+          <span class="mini-label">Habit</span>
+          <h3>She never arrives on time.</h3>
+          <p>
+            This describes a repeated action that supports the description.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="topic-block">
+      <h2 class="section-title">Useful language</h2>
+
+      <p class="section-subtitle">
+        These expressions help you describe people naturally, especially when you want to
+        balance positive and negative ideas.
+      </p>
+
+      <div class="useful-language">
+        <div class="useful-card">
+          <h3>To add contrast</h3>
+
+          <ul>
+            <li>but</li>
+            <li>however</li>
+            <li>although</li>
+            <li>on the positive side</li>
+            <li>at least</li>
+          </ul>
+        </div>
+
+        <div class="useful-card">
+          <h3>Examples</h3>
+
+          <ul>
+            <li>He is messy, but he is very friendly.</li>
+            <li>She can be loud sometimes. However, she is very generous.</li>
+            <li>He is always complaining. At least he is honest.</li>
+            <li>Although she is quiet, she is very kind.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="reflection-box">
+        <h3>Think about it</h3>
+        <p>
+          Think about someone you know. What personality adjectives describe this person?
+          What habits does this person have? Try to describe the person with both an
+          adjective and a specific example.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+</body>
+</html>

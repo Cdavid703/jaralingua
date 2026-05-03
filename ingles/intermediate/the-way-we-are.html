@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Unit 1: The Way We Are | Intermediate English | JaraLingua</title>
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    :root {
+      --unit-blue: #2563eb;
+      --unit-blue-dark: #1e40af;
+      --unit-teal: #0f766e;
+      --unit-gold: #f59e0b;
+      --unit-bg: #f5f8ff;
+      --unit-card: #ffffff;
+      --unit-text: #102033;
+      --unit-muted: #52657d;
+      --unit-border: #dce8f8;
+      --unit-soft-blue: #eef5ff;
+      --unit-soft-gold: #fff7e8;
+      --unit-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 32%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--unit-text);
+    }
+
+    .unit-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .unit-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border-radius: 32px;
+      background:
+        radial-gradient(circle at top right, rgba(245, 158, 11, 0.18), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+      overflow: hidden;
+    }
+
+    .unit-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--unit-soft-blue);
+      color: var(--unit-blue-dark);
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .unit-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--unit-teal);
+      box-shadow: 0 0 0 6px rgba(15, 118, 110, 0.12);
+    }
+
+    .unit-hero h1 {
+      color: var(--unit-text);
+      font-size: clamp(2.3rem, 5vw, 4.4rem);
+      line-height: 0.98;
+      letter-spacing: -2px;
+      margin-bottom: 1rem;
+    }
+
+    .unit-hero h1 span {
+      color: var(--unit-blue);
+    }
+
+    .unit-hero p {
+      color: var(--unit-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .learning-outcome {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin: 1.5rem 0;
+      padding: 1rem 1.2rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.07);
+    }
+
+    .learning-outcome-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-teal));
+      color: #ffffff;
+      font-size: 1.2rem;
+    }
+
+    .learning-outcome strong {
+      color: var(--unit-text);
+    }
+
+    .unit-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .unit-hero-image {
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      border-radius: 28px;
+      padding: 1rem;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .unit-hero-image img {
+      width: 100%;
+      display: block;
+      border-radius: 22px;
+      object-fit: cover;
+    }
+
+    .unit-visual-card {
+      margin-top: 1.2rem;
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      border-radius: 24px;
+      padding: 1.4rem;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .unit-visual-card h2 {
+      color: var(--unit-blue-dark);
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+    }
+
+    .visual-list {
+      display: grid;
+      gap: 0.85rem;
+      padding: 0;
+      margin: 0;
+    }
+
+    .visual-list li {
+      list-style: none;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.85rem;
+      border-radius: 16px;
+      background: #f7faff;
+      color: var(--unit-muted);
+      line-height: 1.5;
+    }
+
+    .visual-list strong {
+      color: var(--unit-text);
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--unit-text);
+      letter-spacing: -1px;
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 780px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--unit-muted);
+      line-height: 1.8;
+      font-size: 1.05rem;
+    }
+
+    .grammar-block,
+    .stereotypes-block {
+      background: var(--unit-card);
+      padding: 2.5rem;
+      border-radius: 30px;
+      border: 1px solid var(--unit-border);
+      box-shadow: var(--unit-shadow);
+      margin-bottom: 3rem;
+    }
+
+    .grammar-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-bottom: 2rem;
+    }
+
+    .grammar-card {
+      padding: 1.5rem;
+      border-radius: 22px;
+      background: #f7faff;
+      border: 1px solid #e2ecfa;
+      border-left: 6px solid var(--unit-blue);
+    }
+
+    .grammar-card h3 {
+      color: var(--unit-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .grammar-card p,
+    .grammar-card li {
+      color: var(--unit-muted);
+      line-height: 1.7;
+    }
+
+    .grammar-card em {
+      color: var(--unit-text);
+    }
+
+    .highlight {
+      color: var(--unit-blue);
+      font-weight: 800;
+    }
+
+    .rule-table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 2rem 0;
+      border-radius: 20px;
+      border: 1px solid var(--unit-border);
+    }
+
+    .rule-table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+
+    .rule-table th {
+      background: linear-gradient(135deg, var(--unit-blue), var(--unit-blue-dark));
+      color: #ffffff;
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.95rem;
+    }
+
+    .rule-table td {
+      padding: 1rem;
+      color: var(--unit-muted);
+      border-bottom: 1px solid #e7eef9;
+    }
+
+    .rule-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .irregular-box {
+      background: linear-gradient(135deg, var(--unit-soft-blue), #ffffff);
+      border: 1px solid var(--unit-border);
+      border-left: 6px solid var(--unit-teal);
+      border-radius: 22px;
+      padding: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .irregular-box h3 {
+      color: var(--unit-teal);
+      margin-bottom: 0.8rem;
+    }
+
+    .irregular-box ul {
+      margin: 0;
+      padding-left: 1.2rem;
+      color: var(--unit-muted);
+      line-height: 1.8;
+    }
+
+    .pro-tip {
+      background: var(--unit-soft-gold);
+      border: 1px dashed var(--unit-gold);
+      padding: 1.5rem;
+      border-radius: 22px;
+      margin-top: 1.8rem;
+      color: #5f4a1c;
+      line-height: 1.8;
+    }
+
+    .pro-tip strong {
+      color: #92400e;
+    }
+
+    .character-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.4rem;
+      margin-top: 2rem;
+    }
+
+    .character-card {
+      background: #ffffff;
+      border: 1px solid var(--unit-border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 14px 32px rgba(20, 64, 130, 0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(24px);
+    }
+
+    .character-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .character-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 42px rgba(20, 64, 130, 0.14);
+    }
+
+    .character-img {
+      width: 100%;
+      height: 260px;
+      object-fit: contain;
+      background: linear-gradient(180deg, #f8fbff, #eef5ff);
+      padding: 0.8rem;
+      display: block;
+    }
+
+    .character-info {
+      padding: 1.4rem;
+    }
+
+    .character-info h3 {
+      color: var(--unit-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .character-info p {
+      color: var(--unit-muted);
+      line-height: 1.6;
+    }
+
+    .reflection-box {
+      margin-top: 2rem;
+      padding: 1.6rem;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #eef5ff, #ffffff);
+      border: 1px solid var(--unit-border);
+    }
+
+    .reflection-box h3 {
+      color: var(--unit-blue-dark);
+      margin-bottom: 0.8rem;
+    }
+
+    .reflection-box p {
+      color: var(--unit-muted);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 980px) {
+      .unit-hero {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+      }
+
+      .grammar-grid,
+      .character-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .unit-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .unit-hero,
+      .grammar-block,
+      .stereotypes-block {
+        padding: 1.4rem;
+        border-radius: 24px;
+      }
+
+      .grammar-grid,
+      .character-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .unit-actions .btn {
+        width: 100%;
+      }
+
+      .character-img {
+        height: 230px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="../../frances/index.html">French</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="unit-page">
+
+    <section class="unit-hero">
+      <div class="unit-hero-content">
+        <p class="unit-eyebrow">
+          <span class="unit-dot"></span>
+          Intermediate English · Unit 1
+        </p>
+
+        <h1>
+          The Way We Are:
+          <span>Stereotypes and Behavior</span>
+        </h1>
+
+        <p>
+          In this unit, students learn how to describe personality, behavior, and common
+          stereotypes using adjectives and manner adverbs in meaningful contexts.
+        </p>
+
+        <div class="learning-outcome">
+          <div class="learning-outcome-icon">💡</div>
+          <p>
+            <strong>Learning Outcome:</strong> Interpret stereotypes and describe behavior
+            using adjectives, manner adverbs, and examples from everyday situations.
+          </p>
+        </div>
+
+        <div class="unit-actions">
+          <a href="#grammar-guide" class="btn btn-primary">Start grammar guide</a>
+          <a href="course-overview.html" class="btn btn-secondary">Back to Course Overview</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="unit-hero-image">
+          <img
+            src="../../assets/img/english-intermediate/unit-1-stereotypes-behavior.png"
+            alt="Students showing different personalities and behaviors"
+          />
+        </div>
+
+        <aside class="unit-visual-card">
+          <h2>What will you practice?</h2>
+
+          <ul class="visual-list">
+            <li><span>🧠</span><span><strong>Adjectives:</strong> describe what people are like.</span></li>
+            <li><span>🏃</span><span><strong>Manner adverbs:</strong> describe how people do things.</span></li>
+            <li><span>💬</span><span><strong>Stereotypes:</strong> discuss labels carefully and respectfully.</span></li>
+            <li><span>✍️</span><span><strong>Examples:</strong> connect grammar with real descriptions.</span></li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <section class="grammar-block" id="grammar-guide">
+      <h2 class="section-title">Detailed Grammar Guide</h2>
+
+      <p class="section-subtitle">
+        Adjectives and manner adverbs help us describe people and actions. They are very
+        useful when talking about personality, habits, and behavior.
+      </p>
+
+      <div class="grammar-grid">
+        <div class="grammar-card">
+          <h3>Adjectives</h3>
+          <p>
+            Adjectives describe <strong>nouns</strong>, such as people, things, or places.
+            They tell us what someone or something is like.
+          </p>
+          <p>
+            <em>“She is a <span class="highlight">careful</span> driver.”</em>
+          </p>
+        </div>
+
+        <div class="grammar-card">
+          <h3>Manner Adverbs</h3>
+          <p>
+            Manner adverbs describe <strong>verbs</strong>. They tell us
+            <strong>how</strong> an action is performed.
+          </p>
+          <p>
+            <em>“She drives <span class="highlight">carefully</span>.”</em>
+          </p>
+        </div>
+      </div>
+
+      <div class="rule-table-wrap">
+        <table class="rule-table">
+          <thead>
+            <tr>
+              <th>Adjective Ending</th>
+              <th>Rule</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>General</td>
+              <td>Add <strong>-ly</strong></td>
+              <td>Slow → Slowly</td>
+            </tr>
+
+            <tr>
+              <td>Ends in <strong>-y</strong></td>
+              <td>Change <strong>y</strong> to <strong>i + ly</strong></td>
+              <td>Happy → Happily</td>
+            </tr>
+
+            <tr>
+              <td>Ends in <strong>-le</strong></td>
+              <td>Change <strong>e</strong> to <strong>y</strong></td>
+              <td>Terrible → Terribly</td>
+            </tr>
+
+            <tr>
+              <td>Ends in <strong>-ic</strong></td>
+              <td>Add <strong>-ally</strong></td>
+              <td>Artistic → Artistically</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="irregular-box">
+        <h3>Irregular Adverbs</h3>
+        <ul>
+          <li><strong>Good → Well</strong></li>
+          <li><strong>Fast → Fast</strong></li>
+          <li><strong>Hard → Hard</strong></li>
+        </ul>
+      </div>
+
+      <div class="pro-tip">
+        <strong>Pro Tip:</strong> Stereotypes often come from observing repeated actions
+        and turning them into labels. For example:
+        <em>“Because he plays video games constantly, people think he is a lazy nerd.”</em>
+      </div>
+    </section>
+
+    <section class="stereotypes-block">
+      <h2 class="section-title">School Stereotypes</h2>
+
+      <p class="section-subtitle">
+        These character examples help students notice the difference between describing
+        behavior and labeling people. Use stereotypes carefully and respectfully.
+      </p>
+
+      <div class="character-grid">
+        <article class="character-card animate-on-scroll">
+          <img
+            src="https://lh3.googleusercontent.com/d/1tC4EJ1Sc8oUOmtbXqJW5OHzgGuqFrp4S"
+            alt="The Nerd"
+            class="character-img"
+          />
+
+          <div class="character-info">
+            <h3>The Nerd</h3>
+            <p>
+              He is <strong>competent</strong> and studies
+              <span class="highlight">hard</span>.
+            </p>
+          </div>
+        </article>
+
+        <article class="character-card animate-on-scroll">
+          <img
+            src="https://lh3.googleusercontent.com/d/1tem8ZEhPQdnyPHn081kTjxmafLr1rxVd"
+            alt="The Jock"
+            class="character-img"
+          />
+
+          <div class="character-info">
+            <h3>The Jock</h3>
+            <p>
+              He is <strong>athletic</strong> and plays
+              <span class="highlight">skillfully</span>.
+            </p>
+          </div>
+        </article>
+
+        <article class="character-card animate-on-scroll">
+          <img
+            src="https://lh3.googleusercontent.com/d/10selvfGmswVxbPk_4RRnbG9AQ94sSb36"
+            alt="The Bully"
+            class="character-img"
+          />
+
+          <div class="character-info">
+            <h3>The Bully</h3>
+            <p>
+              He is <strong>aggressive</strong> and speaks
+              <span class="highlight">rudely</span>.
+            </p>
+          </div>
+        </article>
+
+        <article class="character-card animate-on-scroll">
+          <img
+            src="https://lh3.googleusercontent.com/d/1l8Yi-JMCP6fjsUs_dnnsPdO-N_fDZHbF"
+            alt="The Hipster"
+            class="character-img"
+          />
+
+          <div class="character-info">
+            <h3>The Hipster</h3>
+            <p>
+              He is <strong>stylish</strong> and creates
+              <span class="highlight">creatively</span>.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="reflection-box">
+        <h3>Think about it</h3>
+        <p>
+          What is the difference between describing a person’s behavior and judging a
+          person with a stereotype? Try to describe people with specific examples instead
+          of general labels.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const animatedCards = document.querySelectorAll(".animate-on-scroll");
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.1 });
+
+      animatedCards.forEach((card) => observer.observe(card));
+    });
+  </script>
+
+</body>
+</html>
