@@ -250,6 +250,53 @@
       opacity: 0.14;
     }
 
+    .theme-image {
+      min-height: 190px;
+      position: relative;
+      overflow: hidden;
+      background: var(--blue-dark);
+    }
+
+    .theme-image img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.06) contrast(1.03);
+      transition: transform 0.35s ease;
+    }
+
+    .theme-card:hover .theme-image img {
+      transform: scale(1.045);
+    }
+
+    .theme-image::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(21, 52, 93, 0.08), rgba(21, 52, 93, 0.72)),
+        linear-gradient(135deg, rgba(31, 78, 140, 0.2), rgba(214, 40, 57, 0.14));
+    }
+
+    .theme-image .theme-number {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      z-index: 2;
+      color: white;
+    }
+
+    .theme-image .theme-icon {
+      right: 1rem;
+      bottom: 0.6rem;
+      z-index: 2;
+      color: white;
+      font-size: 3.6rem;
+      opacity: 0.9;
+      text-shadow: 0 12px 28px rgba(0,0,0,0.26);
+    }
+
     .theme-card .card-body {
       padding: 1.45rem;
     }
@@ -411,7 +458,8 @@
         <div class="row g-4">
           <div class="col-md-6 col-xl-4 fade-in">
             <article class="card theme-card">
-              <div class="theme-top">
+              <div class="theme-image">
+                <img src="img/theme-argumentation-debat.jpg" alt="Étudiants en discussion pour le thème argumentation et débat">
                 <div class="theme-number">1</div>
                 <i class="bi bi-megaphone-fill theme-icon"></i>
               </div>
@@ -426,7 +474,8 @@
 
           <div class="col-md-6 col-xl-4 fade-in">
             <article class="card theme-card">
-              <div class="theme-top red">
+              <div class="theme-image">
+                <img src="img/theme-recit-litteraire.jpg" alt="Illustration du récit littéraire et du passé simple">
                 <div class="theme-number">2</div>
                 <i class="bi bi-book-half theme-icon"></i>
               </div>
@@ -442,7 +491,8 @@
 
           <div class="col-md-6 col-xl-4 fade-in">
             <article class="card theme-card">
-              <div class="theme-top gold">
+              <div class="theme-image">
+                <img src="img/theme-societe-actualite.jpg" alt="Étudiants analysant l’actualité et les sujets de société">
                 <div class="theme-number">3</div>
                 <i class="bi bi-newspaper theme-icon"></i>
               </div>
@@ -457,7 +507,8 @@
 
           <div class="col-md-6 col-xl-4 fade-in">
             <article class="card theme-card">
-              <div class="theme-top red">
+              <div class="theme-image">
+                <img src="img/theme-experiences-projets.jpg" alt="Étudiants préparant des expériences et projets personnels">
                 <div class="theme-number">4</div>
                 <i class="bi bi-briefcase-fill theme-icon"></i>
               </div>
@@ -472,7 +523,8 @@
 
           <div class="col-md-6 col-xl-4 fade-in">
             <article class="card theme-card">
-              <div class="theme-top">
+              <div class="theme-image">
+                <img src="img/theme-voyages-imprevus.jpg" alt="Situation de voyage et d’imprévus pour pratiquer le conditionnel">
                 <div class="theme-number">5</div>
                 <i class="bi bi-airplane-fill theme-icon"></i>
               </div>
@@ -487,7 +539,8 @@
 
           <div class="col-md-6 col-xl-4 fade-in">
             <article class="card theme-card">
-              <div class="theme-top gold">
+              <div class="theme-image">
+                <img src="img/theme-connecteurs-logiques.jpg" alt="Cartes et liens visuels pour organiser les connecteurs logiques">
                 <div class="theme-number"><i class="bi bi-link-45deg"></i></div>
                 <i class="bi bi-signpost-split-fill theme-icon"></i>
               </div>

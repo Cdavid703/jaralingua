@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ressources du cours - Français Niveau 7</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --soft: #f4f7fb;
+      --white: #ffffff;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(214, 40, 57, 0.16), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(31, 78, 140, 0.22), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f2 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: -0.055em;
+      color: var(--blue-dark);
+      font-size: clamp(2.55rem, 6.4vw, 5.55rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.18rem, 2vw, 1.5rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.88rem 1.2rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 850px;
+    }
+
+    .resource-card,
+    .routine-card,
+    .theme-resource {
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      overflow: hidden;
+    }
+
+    .resource-card {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .resource-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 24px 52px rgba(20, 40, 80, 0.15);
+    }
+
+    .resource-top {
+      padding: 1.35rem;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,0.22), transparent 28%),
+        linear-gradient(135deg, var(--blue), var(--blue-dark));
+    }
+
+    .resource-top.red {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,0.22), transparent 28%),
+        linear-gradient(135deg, var(--red), var(--blue-dark));
+    }
+
+    .resource-top.green {
+      background:
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,0.22), transparent 28%),
+        linear-gradient(135deg, var(--green), var(--blue));
+    }
+
+    .resource-icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 19px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.22);
+      font-size: 1.55rem;
+    }
+
+    .resource-card .card-body,
+    .routine-card .card-body,
+    .theme-resource .card-body {
+      padding: 1.45rem;
+    }
+
+    .resource-card h3,
+    .routine-card h3,
+    .theme-resource h3 {
+      color: var(--blue-dark);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+    }
+
+    .resource-card p,
+    .routine-card p,
+    .theme-resource p {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.4rem 0.62rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    .routine-card {
+      position: relative;
+      padding-top: 1.4rem;
+    }
+
+    .routine-number {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      margin: 0 1.45rem;
+      border-radius: 18px;
+      color: white;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--red), var(--blue));
+    }
+
+    .theme-resource {
+      border-left: 6px solid rgba(31, 78, 140, 0.35);
+    }
+
+    .theme-resource.red { border-left-color: rgba(214, 40, 57, 0.55); }
+    .theme-resource.gold { border-left-color: rgba(244, 201, 93, 0.9); }
+    .theme-resource.green { border-left-color: rgba(47, 158, 119, 0.7); }
+
+    .list-check {
+      display: grid;
+      gap: 0.8rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list-check li {
+      display: flex;
+      gap: 0.65rem;
+      color: var(--text);
+      line-height: 1.55;
+    }
+
+    .list-check i {
+      color: var(--green);
+      margin-top: 0.18rem;
+      flex: 0 0 auto;
+    }
+
+    .practice-panel {
+      border-radius: 34px;
+      color: white;
+      background:
+        radial-gradient(circle at 88% 14%, rgba(255,255,255,0.18), transparent 26%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      box-shadow: var(--shadow);
+      padding: clamp(1.6rem, 4vw, 3rem);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .practice-panel::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -75px;
+      bottom: -95px;
+      border-radius: 50%;
+      border: 36px solid rgba(255,255,255,0.08);
+    }
+
+    .practice-panel h2,
+    .practice-panel p,
+    .practice-panel li {
+      position: relative;
+      z-index: 2;
+    }
+
+    .floating-up {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 18px;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 14px 30px rgba(214, 40, 57, 0.28);
+      display: none;
+      z-index: 20;
+    }
+
+    footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    footer a:hover { color: white; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .hero { padding-top: 7rem; }
+      .hero-card img { min-height: 320px; }
+    }
+
+    @media (max-width: 575px) {
+      section { padding: 4rem 0; }
+      .hero h1 { letter-spacing: -0.035em; }
+      .hero-card img { min-height: 260px; }
+      .btn-main, .btn-soft { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir la navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#ressources">Ressources</a></li>
+          <li class="nav-item"><a class="nav-link" href="#methodes">Méthode</a></li>
+          <li class="nav-item"><a class="nav-link" href="#themes">Par thème</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="ressources">
+    <div class="container position-relative" style="z-index: 2;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <span class="badge-course"><i class="bi bi-folder2-open"></i>Bibliothèque de travail</span>
+          <h1>Ressources du cours</h1>
+          <p class="hero-lead">Un espace pour pratiquer, vérifier, écouter et préparer vos productions.</p>
+          <p class="hero-text">
+            Cette page rassemble les ressources utiles du Niveau 7 : outils de langue, supports d’écoute, stratégies de lecture, exercices recommandés et pistes de travail pour chaque unité du programme.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#essentielles" class="btn-main"><i class="bi bi-bookmark-star"></i>Ressources essentielles</a>
+            <a href="#themes" class="btn-soft"><i class="bi bi-grid-3x3-gap"></i>Choisir par thème</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-card">
+            <img src="img/ressources-du-cours.jpg" alt="Espace de ressources pour le cours de français niveau 7">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="methodes">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Méthode de travail</p>
+          <h2 class="section-title">Comment utiliser cette page</h2>
+          <p class="section-text mx-auto">
+            L’objectif n’est pas de tout faire en une seule fois. Choisissez une ressource selon le besoin du moment : préparer un débat, vérifier une conjugaison, écouter un document authentique ou améliorer une production écrite.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4 fade-in">
+            <article class="routine-card">
+              <div class="routine-number">1</div>
+              <div class="card-body">
+                <h3 class="h4">Avant le cours</h3>
+                <p>Lisez le thème, notez cinq mots utiles et préparez une opinion personnelle en deux ou trois phrases.</p>
+                <ul class="list-check">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Repérer le vocabulaire clé.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Préparer une question à poser en classe.</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-4 fade-in">
+            <article class="routine-card">
+              <div class="routine-number">2</div>
+              <div class="card-body">
+                <h3 class="h4">Pendant le cours</h3>
+                <p>Utilisez les connecteurs, demandez une reformulation et essayez de réagir aux idées des autres.</p>
+                <ul class="list-check">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Nuancer votre accord ou votre désaccord.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Donner un exemple concret.</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-4 fade-in">
+            <article class="routine-card">
+              <div class="routine-number">3</div>
+              <div class="card-body">
+                <h3 class="h4">Après le cours</h3>
+                <p>Révisez avec une tâche courte : écouter un extrait, écrire un paragraphe ou transformer quelques phrases.</p>
+                <ul class="list-check">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Corriger une erreur fréquente.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Réutiliser deux expressions nouvelles.</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="essentielles" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Outils recommandés</p>
+          <h2 class="section-title">Ressources essentielles</h2>
+          <p class="section-text mx-auto">
+            Ces ressources complètent le cours. Elles servent surtout à travailler la compréhension orale, la conjugaison, le vocabulaire et l’actualité.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card resource-card">
+              <div class="resource-top">
+                <div class="resource-icon"><i class="bi bi-play-btn-fill"></i></div>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">TV5MONDE</h3>
+                <p>Exercices de compréhension orale avec vidéos et activités classées par niveaux, utiles pour B1 et B2.</p>
+                <div class="tag-row">
+                  <span class="tag"><i class="bi bi-headphones"></i>Écoute</span>
+                  <span class="tag"><i class="bi bi-bar-chart"></i>B1-B2</span>
+                </div>
+                <a class="btn-main w-100 mt-4" href="https://apprendre.tv5monde.com/" target="_blank" rel="noopener noreferrer">Ouvrir</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card resource-card">
+              <div class="resource-top red">
+                <div class="resource-icon"><i class="bi bi-broadcast-pin"></i></div>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">RFI Français facile</h3>
+                <p>Podcasts, transcriptions et exercices pour suivre l’actualité internationale avec un français accessible.</p>
+                <div class="tag-row">
+                  <span class="tag"><i class="bi bi-mic"></i>Audio</span>
+                  <span class="tag"><i class="bi bi-newspaper"></i>Actualité</span>
+                </div>
+                <a class="btn-main w-100 mt-4" href="https://francaisfacile.rfi.fr/fr/" target="_blank" rel="noopener noreferrer">Ouvrir</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card resource-card">
+              <div class="resource-top green">
+                <div class="resource-icon"><i class="bi bi-journal-text"></i></div>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">Dico Le Robert</h3>
+                <p>Définitions, synonymes, exemples, prononciation et conjugaison pour enrichir les productions.</p>
+                <div class="tag-row">
+                  <span class="tag"><i class="bi bi-type"></i>Lexique</span>
+                  <span class="tag"><i class="bi bi-soundwave"></i>Prononciation</span>
+                </div>
+                <a class="btn-main w-100 mt-4" href="https://dictionnaire.lerobert.com/fr/" target="_blank" rel="noopener noreferrer">Ouvrir</a>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card resource-card">
+              <div class="resource-top">
+                <div class="resource-icon"><i class="bi bi-braces"></i></div>
+              </div>
+              <div class="card-body">
+                <h3 class="h5">Conjugaison</h3>
+                <p>Vérification rapide des verbes au subjonctif, au conditionnel, au plus-que-parfait et au passé simple.</p>
+                <div class="tag-row">
+                  <span class="tag"><i class="bi bi-pencil-square"></i>Grammaire</span>
+                  <span class="tag"><i class="bi bi-clock-history"></i>Temps</span>
+                </div>
+                <a class="btn-main w-100 mt-4" href="https://dictionnaire.lerobert.com/conjugaison" target="_blank" rel="noopener noreferrer">Ouvrir</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="themes">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Ressources par unité</p>
+          <h2 class="section-title">Que travailler selon le thème ?</h2>
+          <p class="section-text mx-auto">
+            Chaque unité du Niveau 7 a un objectif communicatif. Utilisez ces pistes comme point de départ pour préparer les cours et réviser après les activités.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6 fade-in">
+            <article class="theme-resource">
+              <div class="card-body">
+                <h3 class="h4">Argumentation et débat</h3>
+                <p>Préparez des opinions nuancées, des exemples et des contre-arguments.</p>
+                <ul class="list-check">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Connecteurs : cependant, néanmoins, en revanche, par conséquent.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Structures : je pense que, il faut que, bien que, il est essentiel que.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Tâche courte : défendre une position en 90 secondes.</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <article class="theme-resource red">
+              <div class="card-body">
+                <h3 class="h4">Le récit littéraire</h3>
+                <p>Entraînez-vous à reconnaître les temps du récit et à reformuler dans une langue plus orale.</p>
+                <ul class="list-check">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Identifier passé simple, imparfait et plus-que-parfait.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Transformer un extrait écrit vers le passé composé.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Repérer les marqueurs temporels : soudain, autrefois, ce jour-là.</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <article class="theme-resource gold">
+              <div class="card-body">
+                <h3 class="h4">Société et actualité</h3>
+                <p>Travaillez la compréhension d’un article ou d’un extrait audio, puis rapportez les informations principales.</p>
+                <ul class="list-check">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Discours indirect : il affirme que, elle a expliqué que, selon lui.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Lexique : faits, conséquences, témoignages, évolution, débat public.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Tâche courte : résumer une nouvelle en cinq phrases.</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <article class="theme-resource green">
+              <div class="card-body">
+                <h3 class="h4">Expériences, projets et imprévus</h3>
+                <p>Préparez des récits personnels plus précis et des situations formelles comme la réclamation.</p>
+                <ul class="list-check">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Plus-que-parfait : expliquer ce qui s’était passé avant un événement.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Conditionnel : demander poliment, formuler une hypothèse ou donner un conseil.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Tâche courte : écrire un message de réclamation de 120 à 150 mots.</span></li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="container">
+        <div class="practice-panel fade-in">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-8">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Routine personnelle</p>
+              <h2 class="fw-bold mb-3">Une mini-routine de 20 minutes</h2>
+              <p class="fs-5 opacity-75 mb-0">
+                Pour progresser régulièrement, choisissez une ressource audio, notez trois expressions utiles, puis produisez une phrase argumentée avec un connecteur logique.
+              </p>
+            </div>
+            <div class="col-lg-4">
+              <ul class="list-check">
+                <li><i class="bi bi-check-circle-fill text-warning"></i><span>7 minutes d’écoute.</span></li>
+                <li><i class="bi bi-check-circle-fill text-warning"></i><span>6 minutes de vocabulaire.</span></li>
+                <li><i class="bi bi-check-circle-fill text-warning"></i><span>7 minutes de production.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Ressources du cours - Français Niveau 7</h2>
+          <p class="mb-0 opacity-75">Une page de travail pour renforcer les unités, les activités et les productions du cours.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="index.html"><i class="bi bi-arrow-left"></i> Retour à l’accueil</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const observed = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.16 });
+
+    observed.forEach((element) => observer.observe(element));
+
+    const btnUp = document.getElementById('btnUp');
+    window.addEventListener('scroll', () => {
+      btnUp.style.display = window.scrollY > 620 ? 'grid' : 'none';
+    });
+
+    document.querySelectorAll('.nav-link[href^="#"]').forEach((link) => {
+      link.addEventListener('click', () => {
+        const nav = document.querySelector('.navbar-collapse');
+        if (nav.classList.contains('show')) {
+          bootstrap.Collapse.getOrCreateInstance(nav).hide();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

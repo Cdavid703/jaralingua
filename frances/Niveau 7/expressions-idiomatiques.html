@@ -542,7 +542,7 @@
           <h1>Expressions idiomatiques</h1>
           <p class="hero-lead">Comprendre ce qui ne se traduit pas mot à mot.</p>
           <p class="hero-text">
-            Une expression idiomatique est une formule dont le sens réel n’est pas toujours évident à partir des mots utilisés. Ici, vous découvrirez des expressions françaises courantes avec leur traduction littérale, leur sens réel et un exemple en contexte.
+            Une expression idiomatique est une formule dont le sens réel n’est pas toujours évident à partir des mots utilisés. Cette sélection est pensée pour le Niveau 7 : argumenter, nuancer, réagir, raconter une expérience et mieux comprendre des documents authentiques.
           </p>
           <div class="d-flex flex-wrap gap-3 mt-4">
             <a href="#liste" class="btn-main"><i class="bi bi-collection"></i>Explorer les expressions</a>
@@ -615,7 +615,7 @@
           <div class="row g-3 align-items-center">
             <div class="col-lg-5">
               <label class="form-label fw-bold text-primary" for="searchInput">Rechercher</label>
-              <input type="search" class="form-control search-input" id="searchInput" placeholder="Ex. main, pâte, chat, bras, lapin...">
+              <input type="search" class="form-control search-input" id="searchInput" placeholder="Ex. débat, avis, recul, défi, froid...">
             </div>
             <div class="col-lg-7">
               <p class="fw-bold text-primary mb-2">Filtrer par catégorie</p>
@@ -635,9 +635,9 @@
       <div class="container">
         <div class="text-center mb-5 fade-in">
           <p class="section-kicker">Dictionnaire interactif</p>
-          <h2 class="section-title">25 expressions à découvrir</h2>
+          <h2 class="section-title">30 expressions à découvrir</h2>
           <p class="section-text mx-auto" id="counterText">
-            25 expressions affichées.
+            30 expressions affichées.
           </p>
         </div>
 
@@ -700,11 +700,11 @@
     <i class="bi bi-arrow-up"></i>
   </button>
 
-  <!-- Bootstrap JS -->
   <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="js/expressions-idiomatiques-data.js"></script>
 
   <script>
-    const idioms = [
+    const idioms = window.jaralinguaIdioms || [
       {
         expression: "Mettre la main à la pâte",
         category: "travail",

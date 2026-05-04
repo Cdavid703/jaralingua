@@ -1,0 +1,951 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Argumentation et débat - Français Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --soft: #f4f7fb;
+      --white: #ffffff;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: -0.03em;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(214, 40, 57, 0.17), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(31, 78, 140, 0.22), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f2 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.97;
+      letter-spacing: -0.055em;
+      color: var(--blue-dark);
+      font-size: clamp(2.65rem, 6.4vw, 5.7rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.18rem, 2vw, 1.55rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.12rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: -0.05em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 860px;
+    }
+
+    .soft-card,
+    .explain-panel,
+    .formula-card,
+    .culture-card,
+    .mistake-card {
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      overflow: hidden;
+    }
+
+    .soft-card .card-body,
+    .formula-card .card-body,
+    .culture-card .card-body,
+    .mistake-card .card-body {
+      padding: 1.45rem;
+    }
+
+    .icon-box {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: rgba(31, 78, 140, 0.1);
+      color: var(--blue);
+      font-size: 1.7rem;
+      flex: 0 0 auto;
+    }
+
+    .icon-box.red {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .icon-box.yellow {
+      background: rgba(244, 201, 93, 0.22);
+      color: #9a6b00;
+    }
+
+    .icon-box.green {
+      background: rgba(47, 158, 119, 0.14);
+      color: var(--green);
+    }
+
+    .explain-panel {
+      padding: clamp(1.4rem, 3vw, 2.5rem);
+      box-shadow: var(--shadow);
+    }
+
+    .explain-panel p,
+    .soft-card p,
+    .culture-card p,
+    .mistake-card p {
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .step-list {
+      display: grid;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .step-list li {
+      display: flex;
+      gap: 0.8rem;
+      align-items: flex-start;
+      border-radius: 22px;
+      background: rgba(31, 78, 140, 0.06);
+      padding: 1rem;
+      line-height: 1.65;
+    }
+
+    .step-number {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      font-weight: 900;
+      flex: 0 0 auto;
+    }
+
+    .example-box {
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 90% 12%, rgba(244, 201, 93, 0.2), transparent 25%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      box-shadow: var(--shadow);
+    }
+
+    .example-box p {
+      color: rgba(255,255,255,0.82);
+      line-height: 1.75;
+    }
+
+    .quote-line {
+      border-left: 5px solid var(--yellow);
+      padding-left: 1rem;
+      font-weight: 900;
+      color: white;
+      font-size: 1.15rem;
+      line-height: 1.6;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 24px;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.08);
+      background: white;
+    }
+
+    table {
+      margin: 0;
+      min-width: 760px;
+    }
+
+    th {
+      background: var(--blue-dark) !important;
+      color: white !important;
+      font-weight: 900;
+      border: 0 !important;
+      padding: 1rem !important;
+    }
+
+    td {
+      padding: 1rem !important;
+      color: var(--text);
+      vertical-align: top;
+      border-color: rgba(31, 78, 140, 0.1) !important;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.5rem 0.75rem;
+      margin: 0.22rem;
+    }
+
+    .subjunctive-panel {
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(255,255,255,0.14), transparent 25%),
+        linear-gradient(135deg, var(--red), var(--blue-dark));
+      color: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.5rem, 4vw, 3rem);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .subjunctive-panel::after {
+      content: "";
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      right: -90px;
+      bottom: -100px;
+      border-radius: 50%;
+      border: 38px solid rgba(255,255,255,0.08);
+    }
+
+    .subjunctive-panel h2,
+    .subjunctive-panel p,
+    .subjunctive-panel li {
+      position: relative;
+      z-index: 2;
+    }
+
+    .list-check {
+      display: grid;
+      gap: 0.8rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .list-check li {
+      display: flex;
+      gap: 0.65rem;
+      color: inherit;
+      line-height: 1.6;
+    }
+
+    .list-check i {
+      color: var(--yellow);
+      margin-top: 0.18rem;
+      flex: 0 0 auto;
+    }
+
+    .formula-card {
+      border-left: 6px solid rgba(31, 78, 140, 0.36);
+    }
+
+    .formula-card.red { border-left-color: rgba(214, 40, 57, 0.6); }
+    .formula-card.green { border-left-color: rgba(47, 158, 119, 0.65); }
+    .formula-card.gold { border-left-color: rgba(244, 201, 93, 0.95); }
+
+    .formula {
+      color: var(--blue-dark);
+      font-weight: 900;
+      font-size: 1.05rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .infographic-card {
+      border-radius: 34px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: 1rem;
+    }
+
+    .infographic-card img {
+      width: 100%;
+      max-height: 620px;
+      object-fit: contain;
+      display: block;
+      border-radius: 26px;
+      background: var(--soft);
+    }
+
+    .floating-up {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      width: 48px;
+      height: 48px;
+      border: 0;
+      border-radius: 18px;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 14px 30px rgba(214, 40, 57, 0.28);
+      display: none;
+      z-index: 20;
+    }
+
+    footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    footer a {
+      color: rgba(255,255,255,0.82);
+      text-decoration: none;
+      font-weight: 800;
+    }
+
+    footer a:hover { color: white; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .hero { padding-top: 7rem; }
+      .hero-card img { min-height: 320px; }
+    }
+
+    @media (max-width: 575px) {
+      section { padding: 4rem 0; }
+      .hero h1 { letter-spacing: -0.035em; }
+      .hero-card img { min-height: 260px; }
+      .btn-main, .btn-soft { width: 100%; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir la navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#definition">Argumentation</a></li>
+          <li class="nav-item"><a class="nav-link" href="#subjonctif">Subjonctif</a></li>
+          <li class="nav-item"><a class="nav-link" href="#infographie">Infographie</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" id="accueil">
+    <div class="container position-relative" style="z-index: 2;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <span class="badge-course"><i class="bi bi-megaphone-fill"></i>Unité 1 · Argumentation et débat</span>
+          <h1>Argumentation et débat</h1>
+          <p class="hero-lead">Défendre une idée, nuancer son opinion et comparer des réalités culturelles avec précision.</p>
+          <p class="hero-text">
+            Dans cette unité, l’objectif n’est pas seulement de dire si l’on est d’accord ou non. Il faut apprendre à organiser une opinion, à justifier une position, à reconnaître les limites d’un argument et à utiliser le subjonctif dans des phrases qui expriment la nécessité, le doute, la volonté ou le jugement.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#definition" class="btn-main"><i class="bi bi-diagram-3"></i>Comprendre la structure</a>
+            <a href="#infographie" class="btn-soft"><i class="bi bi-download"></i>Télécharger le résumé</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-card">
+            <img src="../img/theme-argumentation-debat.jpg" alt="Étudiants en discussion pour travailler l’argumentation et le débat">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="definition">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Repères essentiels</p>
+          <h2 class="section-title">Qu’est-ce qu’argumenter ?</h2>
+          <p class="section-text mx-auto">
+            Argumenter, c’est présenter une idée de manière structurée pour la rendre compréhensible, crédible et nuancée. Dans un débat, on ne cherche pas uniquement à parler plus longtemps que les autres : on apprend à construire une pensée claire.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box mb-4"><i class="bi bi-lightbulb-fill"></i></div>
+                <h3 class="h5 fw-bold text-primary">Une thèse</h3>
+                <p class="mb-0">La thèse est l’idée principale que l’on défend. Elle doit être compréhensible dès le début.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box red mb-4"><i class="bi bi-bricks"></i></div>
+                <h3 class="h5 fw-bold text-primary">Des arguments</h3>
+                <p class="mb-0">Les arguments expliquent pourquoi la thèse est raisonnable, pertinente ou discutable.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box yellow mb-4"><i class="bi bi-search"></i></div>
+                <h3 class="h5 fw-bold text-primary">Des exemples</h3>
+                <p class="mb-0">Les exemples rendent l’argument plus concret : une situation, une expérience ou une comparaison culturelle.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="card soft-card">
+              <div class="card-body">
+                <div class="icon-box green mb-4"><i class="bi bi-signpost-split-fill"></i></div>
+                <h3 class="h5 fw-bold text-primary">Une conclusion</h3>
+                <p class="mb-0">La conclusion reformule la position et montre le lien logique entre les idées présentées.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="structure" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Organisation du discours</p>
+            <h2 class="section-title">La structure d’une prise de position</h2>
+            <p class="section-text">
+              Une bonne argumentation donne au lecteur ou à l’auditeur un chemin à suivre. Le contenu peut être personnel, mais la structure doit rester claire.
+            </p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="explain-panel">
+              <ul class="step-list">
+                <li>
+                  <span class="step-number">1</span>
+                  <span><strong>Introduire le sujet.</strong> Présenter la question sans répondre immédiatement de façon trop brutale.</span>
+                </li>
+                <li>
+                  <span class="step-number">2</span>
+                  <span><strong>Exprimer la thèse.</strong> Dire clairement ce que l’on pense : <em>Selon moi, il est important de...</em></span>
+                </li>
+                <li>
+                  <span class="step-number">3</span>
+                  <span><strong>Justifier.</strong> Donner une raison principale, puis un exemple précis qui soutient cette raison.</span>
+                </li>
+                <li>
+                  <span class="step-number">4</span>
+                  <span><strong>Nuancer.</strong> Reconnaître que d’autres points de vue existent : <em>Cependant, cela dépend du contexte...</em></span>
+                </li>
+                <li>
+                  <span class="step-number">5</span>
+                  <span><strong>Conclure.</strong> Revenir à l’idée principale avec une phrase plus mature et plus synthétique.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="culture">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Thème central</p>
+          <h2 class="section-title">Comparer les cultures sans généraliser</h2>
+          <p class="section-text mx-auto">
+            Les différences culturelles entre la Colombie et les espaces francophones peuvent servir de point de départ pour construire des exemples. L’objectif est de comparer avec respect, sans réduire une culture à un cliché.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6 fade-in">
+            <article class="culture-card">
+              <div class="card-body">
+                <h3 class="h4 fw-bold text-primary">Comparer une pratique</h3>
+                <p>On peut comparer la manière de saluer, d’exprimer un désaccord, de prendre la parole, de gérer le temps, de formuler une demande ou de montrer la politesse.</p>
+                <div class="example-box mt-4">
+                  <p class="mb-2 text-uppercase fw-bold opacity-75">Exemple guidé</p>
+                  <p class="quote-line mb-0">Il est possible que certaines habitudes de communication paraissent plus directes dans un contexte francophone, tandis qu’en Colombie la relation personnelle peut jouer un rôle plus visible.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-6 fade-in">
+            <article class="culture-card">
+              <div class="card-body">
+                <h3 class="h4 fw-bold text-primary">Éviter les affirmations trop absolues</h3>
+                <p>Une comparaison culturelle doit rester prudente. Il vaut mieux utiliser des expressions qui laissent de la place aux variations individuelles, régionales et sociales.</p>
+                <div class="mt-4">
+                  <span class="pill"><i class="bi bi-check-circle-fill"></i>dans certains contextes</span>
+                  <span class="pill"><i class="bi bi-check-circle-fill"></i>il peut arriver que</span>
+                  <span class="pill"><i class="bi bi-check-circle-fill"></i>on observe parfois</span>
+                  <span class="pill"><i class="bi bi-check-circle-fill"></i>cela dépend de</span>
+                  <span class="pill"><i class="bi bi-check-circle-fill"></i>il ne faut pas généraliser</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="subjonctif" class="bg-white">
+      <div class="container">
+        <div class="subjunctive-panel fade-in">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Point de langue</p>
+              <h2 class="fw-bold mb-3">Le subjonctif dans l’argumentation</h2>
+              <p class="fs-5 opacity-75 mb-0">
+                Au Niveau 7, le subjonctif n’est pas seulement une forme à conjuguer. Il devient un outil pour exprimer une attitude face à une idée : nécessité, doute, volonté, émotion, jugement ou concession.
+              </p>
+            </div>
+            <div class="col-lg-7">
+              <ul class="list-check">
+                <li><i class="bi bi-check-circle-fill"></i><span><strong>Nécessité :</strong> Il faut que les participants écoutent les autres.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span><strong>Doute :</strong> Je ne pense pas que cette différence soit universelle.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span><strong>Volonté :</strong> Je souhaite que le débat reste respectueux.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span><strong>Concession :</strong> Bien que les pratiques varient, on peut trouver des points communs.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="declencheurs">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Déclencheurs utiles</p>
+          <h2 class="section-title">Quand utiliser le subjonctif ?</h2>
+          <p class="section-text mx-auto">
+            Le subjonctif apparaît souvent après <strong>que</strong>, lorsque la phrase exprime une réaction subjective ou une idée qui n’est pas présentée comme un fait certain.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="formula-card">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Nécessité</h3>
+                <p class="formula">il faut que · il est nécessaire que</p>
+                <p class="mb-0">Il est nécessaire que chaque argument soit accompagné d’un exemple.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="formula-card red">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Doute</h3>
+                <p class="formula">je doute que · je ne pense pas que</p>
+                <p class="mb-0">Je ne pense pas que la politesse se manifeste partout de la même manière.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="formula-card green">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Volonté</h3>
+                <p class="formula">je souhaite que · j’aimerais que</p>
+                <p class="mb-0">J’aimerais que la discussion montre plusieurs points de vue francophones.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="formula-card gold">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Concession</h3>
+                <p class="formula">bien que · quoique</p>
+                <p class="mb-0">Bien que les cultures soient différentes, certaines valeurs peuvent se rejoindre.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="connecteurs" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Nuance et cohérence</p>
+            <h2 class="section-title">Connecteurs pour débattre</h2>
+            <p class="section-text">
+              Les connecteurs logiques servent à guider l’argumentation. Ils montrent si l’on ajoute une idée, si l’on oppose deux points de vue ou si l’on arrive à une conséquence.
+            </p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="table-wrap">
+              <table class="table table-bordered align-middle">
+                <thead>
+                  <tr>
+                    <th>Fonction</th>
+                    <th>Connecteurs</th>
+                    <th>Exemple</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Ajouter</strong></td>
+                    <td>de plus, par ailleurs, d’autant plus que</td>
+                    <td>De plus, les habitudes de communication varient selon les régions.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Opposer</strong></td>
+                    <td>cependant, pourtant, en revanche, néanmoins</td>
+                    <td>Cette idée semble convaincante ; cependant, elle reste trop générale.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Expliquer</strong></td>
+                    <td>car, puisque, étant donné que</td>
+                    <td>Il faut nuancer, puisque chaque contexte social est différent.</td>
+                  </tr>
+                  <tr>
+                    <td><strong>Conclure</strong></td>
+                    <td>ainsi, donc, par conséquent, en somme</td>
+                    <td>En somme, comparer les cultures demande de la précision et du respect.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="modeles">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Phrases modèles</p>
+          <h2 class="section-title">Formuler une opinion plus mature</h2>
+          <p class="section-text mx-auto">
+            À ce niveau, l’étudiant doit éviter les réponses trop courtes comme <em>je suis d’accord</em> ou <em>je ne suis pas d’accord</em>. Il doit ajouter une raison, une nuance et un exemple.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 fade-in">
+            <article class="formula-card">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Exprimer son opinion</h3>
+                <p class="formula">Selon moi · À mon avis · Il me semble que</p>
+                <p class="mb-0">Selon moi, les différences culturelles enrichissent la communication, à condition qu’on les observe sans jugement.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 fade-in">
+            <article class="formula-card red">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Nuancer</h3>
+                <p class="formula">Il est vrai que..., mais · Cela dépend de</p>
+                <p class="mb-0">Il est vrai que certaines pratiques semblent différentes, mais cela dépend aussi de l’âge, de la région et du contexte.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-4 fade-in">
+            <article class="formula-card green">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Reformuler</h3>
+                <p class="formula">Autrement dit · En d’autres termes</p>
+                <p class="mb-0">Autrement dit, comparer deux cultures ne signifie pas décider laquelle est meilleure.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="erreurs" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">À surveiller</p>
+          <h2 class="section-title">Erreurs fréquentes</h2>
+          <p class="section-text mx-auto">
+            Ces erreurs ne concernent pas seulement la grammaire. Elles touchent aussi la qualité du raisonnement et la manière de présenter une comparaison culturelle.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-4 fade-in">
+            <article class="mistake-card">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-danger">1. Généraliser trop vite</h3>
+                <p class="mb-0">Dire <em>les Français sont...</em> ou <em>les Colombiens font toujours...</em> ferme le débat. Il vaut mieux préciser le contexte.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-4 fade-in">
+            <article class="mistake-card">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-danger">2. Oublier l’exemple</h3>
+                <p class="mb-0">Une opinion sans exemple reste abstraite. L’exemple permet de montrer que l’argument est observable.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-md-4 fade-in">
+            <article class="mistake-card">
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-danger">3. Confondre fait et opinion</h3>
+                <p class="mb-0">Un fait peut être vérifié ; une opinion doit être défendue. Dans un débat, il faut distinguer les deux.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="infographie">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Résumé visuel</p>
+            <h2 class="section-title">Infographie téléchargeable</h2>
+            <p class="section-text">
+              Cette infographie résume la structure d’une idée, les formules de nuance, les déclencheurs utiles du subjonctif et une problématique culturelle possible.
+            </p>
+            <a class="btn-main mt-3" href="../infographies/argumentation-debat.png" download>
+              <i class="bi bi-download"></i>Télécharger l’infographie
+            </a>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="infographic-card">
+              <img src="../infographies/argumentation-debat.png" alt="Infographie résumant l’argumentation et le débat">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Argumentation et débat - Français Niveau 7</h2>
+          <p class="mb-0 opacity-75">Unité centrée sur l’opinion, la nuance, la comparaison culturelle et le subjonctif dans l’argumentation.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="../themes-du-cours.html"><i class="bi bi-arrow-left"></i> Retour aux thèmes</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const observed = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.16 });
+
+    observed.forEach((element) => observer.observe(element));
+
+    const btnUp = document.getElementById('btnUp');
+    window.addEventListener('scroll', () => {
+      btnUp.style.display = window.scrollY > 620 ? 'grid' : 'none';
+    });
+
+    document.querySelectorAll('.nav-link[href^="#"]').forEach((link) => {
+      link.addEventListener('click', () => {
+        const nav = document.querySelector('.navbar-collapse');
+        if (nav.classList.contains('show')) {
+          bootstrap.Collapse.getOrCreateInstance(nav).hide();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
