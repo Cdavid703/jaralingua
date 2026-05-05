@@ -1,0 +1,962 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier – Débat culturel France-Colombie | Français Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --soft: #f4f7fb;
+      --white: #ffffff;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: 0;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244, 201, 93, 0.2), transparent 28%),
+        radial-gradient(circle at 86% 12%, rgba(214, 40, 57, 0.18), transparent 32%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 46%, #fff0f3 100%);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0;
+      color: var(--blue-dark);
+      font-size: clamp(2.6rem, 6vw, 5.5rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.16rem, 2vw, 1.45rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .motion-chip {
+      position: absolute;
+      z-index: 3;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 999px;
+      background: white;
+      color: var(--blue-dark);
+      padding: 0.62rem 0.9rem;
+      font-weight: 900;
+      box-shadow: 0 16px 34px rgba(20, 40, 80, 0.18);
+      animation: floatChip 4.2s ease-in-out infinite;
+    }
+
+    .chip-france { top: 2rem; left: 1.6rem; }
+    .chip-colombie { right: 1.4rem; bottom: 2rem; animation-delay: 0.7s; }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 840px;
+    }
+
+    .teacher-panel {
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244, 201, 93, 0.2), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.4rem, 3vw, 2.4rem);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .teacher-panel::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -100px;
+      bottom: -120px;
+      border-radius: 50%;
+      border: 38px solid rgba(255,255,255,0.08);
+    }
+
+    .teacher-panel p,
+    .teacher-panel h2,
+    .teacher-panel .quote-box,
+    .teacher-panel .teacher-steps {
+      position: relative;
+      z-index: 2;
+    }
+
+    .quote-box {
+      border-left: 5px solid var(--yellow);
+      padding-left: 1rem;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .teacher-steps {
+      display: grid;
+      gap: 0.8rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .teacher-steps li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.7rem;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 0.95rem;
+      backdrop-filter: blur(8px);
+    }
+
+    .topic-card {
+      height: 100%;
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    .topic-card:hover {
+      transform: translateY(-7px);
+      box-shadow: 0 26px 58px rgba(20, 40, 80, 0.15);
+    }
+
+    .topic-top {
+      min-height: 136px;
+      padding: 1.25rem;
+      color: white;
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.24), transparent 30%),
+        linear-gradient(135deg, var(--blue), var(--blue-dark));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .topic-top.red {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.24), transparent 30%),
+        linear-gradient(135deg, var(--red), var(--blue-dark));
+    }
+
+    .topic-top.gold {
+      background:
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.24), transparent 30%),
+        linear-gradient(135deg, var(--yellow), var(--blue));
+    }
+
+    .topic-icon {
+      position: absolute;
+      right: 1rem;
+      bottom: 0.4rem;
+      font-size: 5rem;
+      opacity: 0.18;
+    }
+
+    .topic-card .card-body {
+      padding: 1.35rem;
+    }
+
+    .topic-question {
+      border-radius: 18px;
+      background: var(--soft);
+      padding: 0.85rem;
+      margin-top: 0.75rem;
+      color: var(--blue-dark);
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    .debate-lab {
+      border-radius: 34px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .lab-visual {
+      min-height: 260px;
+      background:
+        linear-gradient(180deg, rgba(21, 52, 93, 0.02), rgba(21, 52, 93, 0.72)),
+        url("../img/theme-argumentation-debat.jpg") center/cover no-repeat;
+      padding: 1.4rem;
+      color: white;
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .lab-visual::after {
+      content: "";
+      position: absolute;
+      left: -20%;
+      bottom: 1.2rem;
+      width: 42%;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--yellow);
+      animation: moveLine 3s ease-in-out infinite;
+    }
+
+    .lab-body {
+      padding: clamp(1.35rem, 3vw, 2rem);
+    }
+
+    .question-display {
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 92% 18%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, #f8fbff, #ffffff);
+      border: 1px solid rgba(31, 78, 140, 0.1);
+      padding: 1.2rem;
+      margin-bottom: 1rem;
+    }
+
+    .stance-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin: 1rem 0;
+    }
+
+    .stance-btn {
+      border: 2px solid rgba(31, 78, 140, 0.13);
+      border-radius: 20px;
+      background: white;
+      color: var(--blue-dark);
+      min-height: 82px;
+      padding: 0.8rem;
+      font-weight: 900;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .stance-btn:hover,
+    .stance-btn.active {
+      transform: translateY(-3px);
+      border-color: var(--red);
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .builder-card {
+      border-radius: 20px;
+      background: var(--soft);
+      border-top: 6px solid var(--blue);
+      padding: 1rem;
+      min-height: 150px;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .builder-card:nth-child(2) { border-top-color: var(--red); animation-delay: 0.08s; }
+    .builder-card:nth-child(3) { border-top-color: var(--yellow); animation-delay: 0.16s; }
+    .builder-card:nth-child(4) { border-top-color: var(--green); animation-delay: 0.24s; }
+    .builder-card:nth-child(5) { border-top-color: var(--blue-dark); animation-delay: 0.32s; }
+
+    .builder-card strong {
+      color: var(--blue-dark);
+      display: block;
+      margin-bottom: 0.45rem;
+    }
+
+    .builder-card span {
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .sample-output {
+      display: none;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 90% 15%, rgba(244, 201, 93, 0.2), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .sample-output.show {
+      display: block;
+      animation: fadeUp 0.35s ease both;
+    }
+
+    .rule-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      padding: 0.55rem 0.78rem;
+      margin: 0.22rem;
+      font-weight: 900;
+    }
+
+    .link-panel {
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.4rem, 3vw, 2.4rem);
+      box-shadow: var(--shadow);
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show { display: grid; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes floatChip {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes moveLine {
+      0% { transform: translateX(0); opacity: 0.2; }
+      50% { opacity: 0.95; }
+      100% { transform: translateX(360%); opacity: 0.2; }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 991px) {
+      .hero { padding-top: 7rem; }
+      .hero-card img { min-height: 320px; }
+      .builder-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 680px) {
+      section { padding: 4rem 0; }
+      .hero-card img { min-height: 260px; }
+      .btn-main, .btn-soft { width: 100%; }
+      .motion-chip { position: static; margin-top: 0.75rem; }
+      .stance-grid,
+      .builder-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes/argumentation-debat.html">Théorie</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#atelier">Atelier</a></li>
+          <li class="nav-item"><a class="nav-link" href="#professeur">Professeur</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-megaphone-fill"></i>
+            Atelier · Argumentation et débat
+          </span>
+          <h1>Culture française et culture colombienne</h1>
+          <p class="hero-lead">Comparer sans généraliser, défendre une idée et répondre avec nuance.</p>
+          <p class="hero-text">
+            Cet atelier transforme le thème « Argumentation et débat » en activité orale. Les étudiants choisissent une position, construisent un argument, répondent à une objection et concluent avec des connecteurs logiques.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#professeur" class="btn-main"><i class="bi bi-person-video3"></i>Ouvrir le débat</a>
+            <a href="#atelier" class="btn-soft"><i class="bi bi-ui-checks"></i>Lancer l’activité</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <img src="../img/theme-argumentation-debat.jpg" alt="Étudiants en débat culturel">
+            <span class="motion-chip chip-france"><i class="bi bi-chat-left-text-fill text-primary"></i>France</span>
+            <span class="motion-chip chip-colombie"><i class="bi bi-chat-dots-fill text-danger"></i>Colombie</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="professeur">
+      <div class="container">
+        <div class="teacher-panel fade-in">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-6">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Ouverture du débat</p>
+              <h2 class="fw-bold mb-3">Texte pour lancer l’activité</h2>
+              <p class="quote-box mb-0">
+                Aujourd’hui, nous allons comparer certains aspects de la culture française et de la culture colombienne. L’objectif n’est pas de dire qu’une culture est meilleure que l’autre, mais d’apprendre à observer, comparer, nuancer et argumenter avec respect. Première question : selon vous, les Français sont-ils plus directs que les Colombiens ? Est-ce une qualité, un défaut, ou simplement une différence culturelle ?
+              </p>
+            </div>
+            <div class="col-lg-6">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Déroulement</p>
+              <ul class="teacher-steps">
+                <li><i class="bi bi-1-circle-fill text-warning"></i><span>Chaque groupe choisit une position : d’accord, pas d’accord ou ça dépend.</span></li>
+                <li><i class="bi bi-2-circle-fill text-warning"></i><span>Le groupe prépare une thèse, un argument et un exemple culturel précis.</span></li>
+                <li><i class="bi bi-3-circle-fill text-warning"></i><span>Un autre groupe répond avec une objection ou une nuance.</span></li>
+                <li><i class="bi bi-4-circle-fill text-warning"></i><span>La dernière intervention conclut avec donc, en somme ou c’est pourquoi.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="galerie-culturelle" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Galerie culturelle</p>
+          <h2 class="section-title">Images pour lancer la comparaison</h2>
+          <p class="section-text mx-auto">
+            Utilisez ces supports pour faire décrire les situations avant de demander une position argumentée.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4 fade-in">
+            <div class="hero-card">
+              <img src="../img/theme-argumentation-debat.jpg" alt="Étudiants en discussion interculturelle">
+            </div>
+          </div>
+          <div class="col-lg-4 fade-in">
+            <div class="hero-card">
+              <img src="../img/theme-societe-actualite.jpg" alt="Discussion autour de sujets sociaux et culturels">
+            </div>
+          </div>
+          <div class="col-lg-4 fade-in">
+            <div class="hero-card">
+              <img src="../img/theme-voyages-imprevus.jpg" alt="Situation de voyage pour comparer les cultures">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="themes" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Questions possibles</p>
+          <h2 class="section-title">Thèmes pour ouvrir la discussion</h2>
+          <p class="section-text mx-auto">
+            Ces questions servent de départ. Le professeur peut en choisir une ou laisser chaque groupe tirer une carte.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="topic-card">
+              <div class="topic-top">
+                <span class="fw-bold text-uppercase opacity-75">Sujet 1</span>
+                <i class="bi bi-chat-square-text-fill topic-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Communication directe</h3>
+                <div class="topic-question">En France, est-on plus direct qu’en Colombie ? La communication directe est-elle plus claire ou plus froide ?</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="topic-card">
+              <div class="topic-top red">
+                <span class="fw-bold text-uppercase opacity-75">Sujet 2</span>
+                <i class="bi bi-clock-fill topic-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Temps et ponctualité</h3>
+                <div class="topic-question">La ponctualité est-elle une forme de respect ? La flexibilité colombienne est-elle un problème ou une richesse sociale ?</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="topic-card">
+              <div class="topic-top gold">
+                <span class="fw-bold text-uppercase opacity-75">Sujet 3</span>
+                <i class="bi bi-hand-thumbs-up-fill topic-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Politesse</h3>
+                <div class="topic-question">Dire les choses directement peut-il être poli ? La chaleur colombienne rend-elle la communication plus humaine ?</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="topic-card">
+              <div class="topic-top red">
+                <span class="fw-bold text-uppercase opacity-75">Sujet 4</span>
+                <i class="bi bi-megaphone-fill topic-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Désaccord</h3>
+                <div class="topic-question">En Colombie, évite-t-on parfois le désaccord pour garder une bonne ambiance ? En France, le débat est-il plus normal ?</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="topic-card">
+              <div class="topic-top">
+                <span class="fw-bold text-uppercase opacity-75">Sujet 5</span>
+                <i class="bi bi-people-fill topic-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Relations sociales</h3>
+                <div class="topic-question">Les relations en Colombie sont-elles plus proches qu’en France ? La distance sociale française est-elle une autre forme de respect ?</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-xl-4 fade-in">
+            <article class="topic-card">
+              <div class="topic-top gold">
+                <span class="fw-bold text-uppercase opacity-75">Sujet 6</span>
+                <i class="bi bi-globe-americas topic-icon"></i>
+              </div>
+              <div class="card-body">
+                <h3 class="h5 fw-bold text-primary">Adaptation culturelle</h3>
+                <div class="topic-question">Faut-il que les étudiants adaptent leur manière de parler quand ils voyagent dans un pays francophone ?</div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="atelier">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Atelier guidé</p>
+            <h2 class="section-title">Construire une intervention</h2>
+            <p class="section-text">
+              Choisissez une question et une position. Le générateur propose une structure pour guider l’intervention orale ou écrite.
+            </p>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <button class="btn-main" type="button" id="newQuestionBtn"><i class="bi bi-shuffle"></i>Changer de question</button>
+              <a href="../themes/argumentation-debat.html" class="btn-soft"><i class="bi bi-book"></i>Revoir le thème</a>
+            </div>
+          </div>
+
+          <div class="col-lg-7 fade-in">
+            <div class="debate-lab">
+              <div class="lab-visual">
+                <div class="position-relative" style="z-index: 2;">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Débat mouvant</p>
+                  <h3 class="fw-bold mb-0">D’accord · Pas d’accord · Ça dépend</h3>
+                </div>
+              </div>
+              <div class="lab-body">
+                <div class="question-display">
+                  <p class="text-uppercase fw-bold text-danger mb-2" id="topicLabel">Sujet</p>
+                  <h3 class="h4 fw-bold text-primary mb-0" id="topicQuestion"></h3>
+                </div>
+
+                <div class="stance-grid" id="stanceGrid">
+                  <button class="stance-btn" type="button" data-stance="d’accord"><i class="bi bi-check-circle-fill d-block fs-3 mb-2"></i>D’accord</button>
+                  <button class="stance-btn" type="button" data-stance="pas d’accord"><i class="bi bi-x-circle-fill d-block fs-3 mb-2"></i>Pas d’accord</button>
+                  <button class="stance-btn" type="button" data-stance="ça dépend"><i class="bi bi-signpost-split-fill d-block fs-3 mb-2"></i>Ça dépend</button>
+                </div>
+
+                <div class="builder-grid" id="builderGrid">
+                  <div class="builder-card"><strong>1. Position</strong><span id="positionText">Choisissez une position.</span></div>
+                  <div class="builder-card"><strong>2. Argument</strong><span>Expliquez votre raison principale avec parce que.</span></div>
+                  <div class="builder-card"><strong>3. Exemple</strong><span>Donnez une situation observée en France, en Colombie ou en classe.</span></div>
+                  <div class="builder-card"><strong>4. Nuance</strong><span>Répondez avec cependant, en revanche, bien que ou cela dépend.</span></div>
+                  <div class="builder-card"><strong>5. Conclusion</strong><span>Terminez avec donc, en somme ou c’est pourquoi.</span></div>
+                </div>
+
+                <div class="sample-output" id="sampleOutput">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Exemple de réponse</p>
+                  <p class="mb-0 fs-5" id="sampleText"></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="regles" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Règle de débat</p>
+          <h2 class="section-title">Comparer sans enfermer une culture</h2>
+          <p class="section-text mx-auto">
+            Personne ne peut dire « les Français sont... » ou « les Colombiens sont... » sans ajouter une nuance.
+          </p>
+        </div>
+
+        <div class="text-center fade-in">
+          <span class="rule-pill"><i class="bi bi-check-circle-fill"></i>dans certains contextes</span>
+          <span class="rule-pill"><i class="bi bi-check-circle-fill"></i>il peut arriver que</span>
+          <span class="rule-pill"><i class="bi bi-check-circle-fill"></i>on observe parfois que</span>
+          <span class="rule-pill"><i class="bi bi-check-circle-fill"></i>cela dépend de</span>
+          <span class="rule-pill"><i class="bi bi-check-circle-fill"></i>il ne faut pas généraliser</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="liens">
+      <div class="container">
+        <div class="link-panel fade-in">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Liens du cours</p>
+              <h2 class="fw-bold mb-2">Ce débat complète le thème « Argumentation et débat »</h2>
+              <p class="mb-0 opacity-75 fs-5">Les étudiants peuvent revoir la structure argumentative, les connecteurs et le subjonctif avant ou après l’activité.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="../themes/argumentation-debat.html" class="btn btn-light fw-bold rounded-pill px-4 py-3 mb-2">Revoir le thème</a>
+              <a href="../ateliers-activites.html#ateliers" class="btn btn-outline-light fw-bold rounded-pill px-4 py-3">Voir les ateliers</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Atelier – Débat culturel France-Colombie</h2>
+          <p class="mb-0 opacity-75">Activité orale pour comparer, nuancer et argumenter avec respect.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const topics = [
+      {
+        label: "Communication directe",
+        question: "En France, est-on plus direct qu’en Colombie ?",
+        sample: "Selon moi, cela dépend du contexte. Les Français peuvent sembler plus directs parce qu’ils expriment parfois leur désaccord rapidement. Par exemple, dans un débat, dire « je ne suis pas d’accord » peut être normal. Cependant, cela ne signifie pas forcément qu’ils sont impolis. En somme, il faut observer la situation avant de juger."
+      },
+      {
+        label: "Temps et ponctualité",
+        question: "La ponctualité est-elle une forme de respect ?",
+        sample: "Je suis plutôt d’accord, parce que la ponctualité montre que l’on respecte le temps des autres. Par exemple, dans un rendez-vous professionnel en France, arriver en retard peut donner une mauvaise impression. Cependant, en Colombie, la relation personnelle peut parfois être plus importante que l’heure exacte. Donc, il faut que les étudiants apprennent à s’adapter."
+      },
+      {
+        label: "Politesse",
+        question: "Dire les choses directement peut-il être poli ?",
+        sample: "Je pense que oui, à condition que le ton reste respectueux. Une phrase directe peut être claire et utile. Par exemple, dans un débat, on peut dire « je ne partage pas cette idée » sans attaquer la personne. En revanche, si la phrase est trop dure, elle peut être mal reçue. En somme, la politesse dépend aussi de la manière de parler."
+      },
+      {
+        label: "Désaccord",
+        question: "En Colombie, évite-t-on parfois le désaccord pour garder une bonne ambiance ?",
+        sample: "À mon avis, cela peut arriver dans certains contextes. On cherche parfois à garder une relation chaleureuse, donc on évite un conflit direct. Cependant, éviter toujours le désaccord peut empêcher un vrai débat. C’est pourquoi il est important que les étudiants apprennent à exprimer une objection avec respect."
+      },
+      {
+        label: "Relations sociales",
+        question: "La distance sociale française est-elle un manque de chaleur ou une autre forme de respect ?",
+        sample: "Je dirais que ça dépend. Pour une personne colombienne, une certaine distance peut sembler froide. Pourtant, dans un contexte français, cette distance peut montrer le respect de l’espace personnel. Par exemple, on ne parle pas toujours de sujets privés avec quelqu’un que l’on connaît peu. Donc, ce n’est pas forcément un manque de chaleur."
+      },
+      {
+        label: "Adaptation culturelle",
+        question: "Faut-il que les étudiants adaptent leur manière de parler dans un pays francophone ?",
+        sample: "Je suis d’accord. Il faut que les étudiants adaptent leur communication parce que les règles sociales changent selon le contexte. Par exemple, une blague ou une formule très familière peut ne pas fonctionner partout. Cependant, s’adapter ne veut pas dire perdre son identité. En somme, apprendre une langue, c’est aussi apprendre à lire les situations."
+      }
+    ];
+
+    let currentTopic = 0;
+    const topicLabel = document.getElementById('topicLabel');
+    const topicQuestion = document.getElementById('topicQuestion');
+    const newQuestionBtn = document.getElementById('newQuestionBtn');
+    const stanceButtons = document.querySelectorAll('.stance-btn');
+    const positionText = document.getElementById('positionText');
+    const sampleOutput = document.getElementById('sampleOutput');
+    const sampleText = document.getElementById('sampleText');
+
+    function renderTopic() {
+      const topic = topics[currentTopic];
+      topicLabel.textContent = topic.label;
+      topicQuestion.textContent = topic.question;
+      sampleText.textContent = topic.sample;
+      sampleOutput.classList.remove('show');
+      positionText.textContent = 'Choisissez une position.';
+      stanceButtons.forEach((button) => button.classList.remove('active'));
+    }
+
+    newQuestionBtn.addEventListener('click', () => {
+      currentTopic = (currentTopic + 1) % topics.length;
+      renderTopic();
+    });
+
+    stanceButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        stanceButtons.forEach((item) => item.classList.remove('active'));
+        button.classList.add('active');
+        positionText.textContent = `Je suis ${button.dataset.stance}, parce que...`;
+        sampleOutput.classList.add('show');
+      });
+    });
+
+    renderTopic();
+
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const btnUp = document.getElementById('btnUp');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeElements.forEach(function(element) {
+      observer.observe(element);
+    });
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+    });
+  </script>
+</body>
+</html>

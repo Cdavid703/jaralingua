@@ -6,10 +6,10 @@
   <title>JaraLingua | Aprende inglés y francés</title>
   <link rel="icon" href="favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="assets/img/favicon.png" />
-
+  <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-<body>
+<body class="home-page">
 
   <header class="site-header">
     <nav class="navbar">
@@ -26,68 +26,107 @@
   </header>
 
   <main>
+    <section class="home-hero">
+      <div class="home-hero-grid">
+        <div class="home-hero-copy">
+          <img class="home-hero-logo" src="assets/img/jaralingua-logo.png" alt="JaraLingua" />
+          <p class="eyebrow">Academia digital de idiomas</p>
+          <h1>Aprende idiomas con una ruta clara, visual y práctica</h1>
+          <p class="home-hero-text">
+            Francés e inglés organizados por niveles, con temas explicados, talleres interactivos,
+            recursos visuales y práctica pensada para avanzar con seguridad.
+          </p>
+          <div class="hero-actions">
+            <a href="frances/index.html" class="btn btn-primary"><i class="bi bi-stars"></i> Empezar con francés</a>
+            <a href="ingles/index.html" class="btn btn-secondary"><i class="bi bi-arrow-right-circle"></i> Explorar inglés</a>
+          </div>
+        </div>
 
-    <section class="hero">
-      <div class="hero-overlay"></div>
-
-      <div class="hero-content">
-        <img class="hero-logo" src="assets/img/jaralingua-logo.png" alt="JaraLingua" />
-
-        <p class="eyebrow">Academia digital de idiomas</p>
-
-        <h1>Aprende inglés y francés con una ruta clara y progresiva</h1>
-
-        <p class="hero-text">
-          En JaraLingua encontrarás una experiencia de aprendizaje organizada por niveles,
-          diseñada para avanzar paso a paso con práctica, claridad y constancia.
-        </p>
-
-        <div class="hero-actions">
-          <a href="frances/index.html" class="btn btn-primary">Empezar con francés</a>
-          <a href="ingles/index.html" class="btn btn-secondary">Explorar inglés</a>
+        <div class="home-visual-stage" aria-label="Vista visual de cursos JaraLingua">
+          <figure class="visual-card visual-card-main">
+            <img src="frances/Niveau 7/img/imagen-principal-index.jpg" alt="Estudiantes practicando francés en JaraLingua" />
+          </figure>
+          <figure class="visual-card visual-card-side">
+            <img src="assets/img/english-hero.jpg" alt="Estudiantes practicando inglés" />
+          </figure>
+          <div class="floating-chip chip-one"><i class="bi bi-chat-dots-fill"></i> Debate</div>
+          <div class="floating-chip chip-two"><i class="bi bi-book-half"></i> Lectura</div>
+          <div class="floating-chip chip-three"><i class="bi bi-ui-checks"></i> Talleres</div>
         </div>
       </div>
     </section>
 
-    <section class="languages-section">
+    <section class="home-showcase">
       <div class="section-heading">
-        <p class="eyebrow">Elige tu idioma</p>
-        <h2>¿Qué quieres aprender hoy?</h2>
+        <p class="eyebrow">Rutas activas</p>
+        <h2>Todo entra por aquí</h2>
         <p>
-          Selecciona el idioma que deseas estudiar y continúa tu proceso con una estructura clara.
+          Elige una ruta y continúa con unidades, explicaciones, recursos y espacios de práctica.
         </p>
       </div>
 
-      <div class="language-grid">
-
-        <article class="language-card french-card">
-          <div class="card-badge">Disponible</div>
-          <h3>Francés</h3>
-          <p>
-            Accede a la ruta de francés organizada en 7 niveles, desde las bases hasta contenidos más avanzados.
-          </p>
-          <a href="frances/index.html" class="card-link">Ver niveles de francés</a>
+      <div class="home-language-grid">
+        <article class="home-language-card">
+          <img src="frances/Niveau 7/img/themes-du-cours.jpg" alt="Ruta visual de francés" />
+          <div class="home-language-content">
+            <span class="card-badge">Disponible</span>
+            <h3>Francés</h3>
+            <p>Ruta por niveles con contenidos de conversación, lectura, gramática aplicada, cultura y talleres.</p>
+            <a href="frances/index.html" class="card-link">Ver niveles de francés</a>
+          </div>
         </article>
 
-        <article class="language-card english-card">
-          <div class="card-badge badge-soon">En preparación</div>
-          <h3>Inglés</h3>
-          <p>
-            La sección de inglés estará lista para organizar el aprendizaje con el mismo método progresivo de JaraLingua.
-          </p>
-          <a href="ingles/index.html" class="card-link">Entrar a inglés</a>
+        <article class="home-language-card">
+          <img src="assets/img/english-hero.jpg" alt="Ruta visual de inglés" />
+          <div class="home-language-content">
+            <span class="card-badge">En crecimiento</span>
+            <h3>Inglés</h3>
+            <p>Materiales organizados para practicar vocabulario, escucha, lectura, conversación y producción guiada.</p>
+            <a href="ingles/index.html" class="card-link">Entrar a inglés</a>
+          </div>
         </article>
-
       </div>
     </section>
 
-    <section class="method-section">
+    <section class="content-pulse-section">
+      <div class="content-pulse-copy">
+        <p class="eyebrow">Contenido del curso</p>
+        <h2>Aprendes con estructura, no con páginas sueltas</h2>
+        <p>
+          Cada ruta combina teoría breve, práctica guiada, imágenes, talleres y actividades que conectan con lo visto en clase.
+        </p>
+      </div>
+
+      <div class="pulse-grid">
+        <a href="frances/Niveau 7/themes-du-cours.html" class="pulse-card">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+          <strong>Temas del curso</strong>
+          <span>Argumentación, récit, sociedad, viajes y conectores.</span>
+        </a>
+        <a href="frances/Niveau 7/ateliers-activites.html" class="pulse-card">
+          <i class="bi bi-people-fill"></i>
+          <strong>Ateliers y actividades</strong>
+          <span>Ejercicios interactivos y práctica por objetivos.</span>
+        </a>
+        <a href="frances/Niveau 7/ressources.html" class="pulse-card">
+          <i class="bi bi-folder2-open"></i>
+          <strong>Recursos</strong>
+          <span>Apoyos visuales, guías y material para repasar.</span>
+        </a>
+        <a href="ingles/basico/index.html" class="pulse-card">
+          <i class="bi bi-soundwave"></i>
+          <strong>Inglés básico</strong>
+          <span>Primeras unidades, escucha, lectura y conversación.</span>
+        </a>
+      </div>
+    </section>
+
+    <section class="method-section home-method">
       <div class="method-content">
         <p class="eyebrow">Método JaraLingua</p>
-        <h2>Aprender idiomas no tiene que ser confuso</h2>
+        <h2>Claridad, práctica y avance real</h2>
         <p>
-          Nuestro enfoque se basa en avanzar con orden: vocabulario útil, gramática aplicada,
-          comprensión, pronunciación y práctica constante.
+          La página principal conecta todo el ecosistema: rutas, talleres, temas y recursos. La idea es que cada estudiante sepa dónde entrar y qué hacer después.
         </p>
       </div>
 
@@ -100,18 +139,17 @@
 
         <div class="method-item">
           <span>02</span>
-          <h3>Práctica guiada</h3>
-          <p>Actividades pensadas para reforzar lo aprendido de manera progresiva.</p>
+          <h3>Práctica conectada</h3>
+          <p>Los talleres enlazan con las explicaciones para estudiar y aplicar sin perderse.</p>
         </div>
 
         <div class="method-item">
           <span>03</span>
-          <h3>Aprendizaje claro</h3>
-          <p>Explicaciones directas, visuales y enfocadas en el uso real del idioma.</p>
+          <h3>Experiencia visual</h3>
+          <p>Imágenes, movimiento y diseños claros hacen que la navegación se sienta viva.</p>
         </div>
       </div>
     </section>
-
   </main>
 
   <footer class="site-footer">

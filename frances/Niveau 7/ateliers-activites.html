@@ -234,6 +234,32 @@
         linear-gradient(135deg, var(--blue-dark), var(--blue));
     }
 
+    .workshop-top::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background:
+        linear-gradient(180deg, rgba(21, 52, 93, 0.18), rgba(21, 52, 93, 0.82)),
+        radial-gradient(circle at 84% 20%, rgba(244, 201, 93, 0.2), transparent 32%);
+      pointer-events: none;
+    }
+
+    .workshop-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.72;
+      filter: saturate(1.08) contrast(1.04);
+      transition: transform 0.4s ease;
+    }
+
+    .workshop-card:hover .workshop-image {
+      transform: scale(1.06);
+    }
+
     .workshop-top.red {
       background:
         radial-gradient(circle at 18% 20%, rgba(244, 201, 93, 0.2), transparent 28%),
@@ -479,7 +505,7 @@
           <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
           <li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li>
           <li class="nav-item"><a class="nav-link active" href="#ateliers">Ateliers</a></li>
-          <li class="nav-item"><a class="nav-link" href="#prochains">Prochainement</a></li>
+          <li class="nav-item"><a class="nav-link" href="#prochains">À venir</a></li>
         </ul>
       </div>
     </div>
@@ -520,14 +546,15 @@
           <p class="section-kicker">Ateliers disponibles</p>
           <h2 class="section-title">Choisissez votre activité</h2>
           <p class="section-text mx-auto">
-            Deux ateliers sont maintenant disponibles autour du passé simple : un atelier de reconnaissance et un atelier de transformation.
+            Cinq ateliers sont maintenant disponibles : passé simple, transformation, subjonctif, débat culturel et écoute B1.
           </p>
         </div>
 
         <div class="row g-4">
-          <div class="col-lg-6 fade-in">
+          <div class="col-lg-3 fade-in">
             <article class="workshop-card">
               <div class="workshop-top" data-mark="PS">
+                <img class="workshop-image" src="img/atelier-passe-simple.jpg" alt="Atelier visuel sur le passé simple">
                 <div class="workshop-icon"><i class="bi bi-book-half"></i></div>
                 <div class="position-relative" style="z-index: 2;">
                   <p class="text-uppercase fw-bold opacity-75 mb-2">Atelier 1</p>
@@ -553,9 +580,10 @@
             </article>
           </div>
 
-          <div class="col-lg-6 fade-in">
+          <div class="col-lg-3 fade-in">
             <article class="workshop-card">
               <div class="workshop-top red" data-mark="→">
+                <img class="workshop-image" src="img/transformation-passe-simple.jpg" alt="Atelier de transformation du passé simple">
                 <div class="workshop-icon"><i class="bi bi-arrow-left-right"></i></div>
                 <div class="position-relative" style="z-index: 2;">
                   <p class="text-uppercase fw-bold opacity-75 mb-2">Atelier 2</p>
@@ -580,6 +608,93 @@
               </div>
             </article>
           </div>
+
+          <div class="col-lg-3 fade-in">
+            <article class="workshop-card">
+              <div class="workshop-top" data-mark="SUB">
+                <img class="workshop-image" src="img/theme-argumentation-debat.jpg" alt="Atelier de subjonctif en argumentation">
+                <div class="workshop-icon"><i class="bi bi-braces"></i></div>
+                <div class="position-relative" style="z-index: 2;">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Atelier 3</p>
+                  <h2 class="fw-bold mb-0">Subjonctif</h2>
+                </div>
+              </div>
+              <div class="workshop-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle-fill"></i>Disponible</span>
+                <h3 class="h3 fw-bold text-primary mb-3">Argumenter avec le subjonctif</h3>
+                <p class="section-text">
+                  Reconnaissez les déclencheurs, choisissez les bonnes formes et produisez des phrases utiles pour débattre avec nuance.
+                </p>
+                <div class="mb-4">
+                  <span class="skill-pill"><i class="bi bi-question-circle"></i>Doute</span>
+                  <span class="skill-pill"><i class="bi bi-exclamation-circle"></i>Nécessité</span>
+                  <span class="skill-pill"><i class="bi bi-chat-dots"></i>Mini-débat</span>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                  <a href="ateliers/subjonctif-argumentation.html" class="btn-main"><i class="bi bi-door-open"></i>Entrer</a>
+                  <a href="themes/argumentation-debat.html#subjonctif" class="btn-soft"><i class="bi bi-book"></i>Revoir la théorie</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-3 fade-in">
+            <article class="workshop-card">
+              <div class="workshop-top red" data-mark="DÉB">
+                <img class="workshop-image" src="img/theme-societe-actualite.jpg" alt="Débat culturel entre la France et la Colombie">
+                <div class="workshop-icon"><i class="bi bi-megaphone-fill"></i></div>
+                <div class="position-relative" style="z-index: 2;">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Atelier 4</p>
+                  <h2 class="fw-bold mb-0">Débat culturel</h2>
+                </div>
+              </div>
+              <div class="workshop-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle-fill"></i>Disponible</span>
+                <h3 class="h3 fw-bold text-primary mb-3">France et Colombie</h3>
+                <p class="section-text">
+                  Comparez les cultures, choisissez une position et construisez une intervention avec argument, exemple, nuance et conclusion.
+                </p>
+                <div class="mb-4">
+                  <span class="skill-pill"><i class="bi bi-chat-square-text"></i>Opinion</span>
+                  <span class="skill-pill"><i class="bi bi-globe-americas"></i>Culture</span>
+                  <span class="skill-pill"><i class="bi bi-signpost-split"></i>Nuance</span>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                  <a href="ateliers/debat-culturel-france-colombie.html" class="btn-main"><i class="bi bi-door-open"></i>Entrer</a>
+                  <a href="themes/argumentation-debat.html" class="btn-soft"><i class="bi bi-book"></i>Revoir la théorie</a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-3 fade-in">
+            <article class="workshop-card">
+              <div class="workshop-top" data-mark="B1">
+                <img class="workshop-image" src="img/ecoute-culture-francaise.png" alt="Atelier d’écoute B1 sur les cultures française et colombienne">
+                <div class="workshop-icon"><i class="bi bi-headphones"></i></div>
+                <div class="position-relative" style="z-index: 2;">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Atelier 5</p>
+                  <h2 class="fw-bold mb-0">Écoute B1</h2>
+                </div>
+              </div>
+              <div class="workshop-body">
+                <span class="status-pill mb-3"><i class="bi bi-check-circle-fill"></i>Disponible</span>
+                <h3 class="h3 fw-bold text-primary mb-3">Cultures en audio</h3>
+                <p class="section-text">
+                  Écoutez deux chroniques courtes sur la culture française et colombienne, puis répondez à 20 questions de compréhension et de comparaison.
+                </p>
+                <div class="mb-4">
+                  <span class="skill-pill"><i class="bi bi-soundwave"></i>Écoute</span>
+                  <span class="skill-pill"><i class="bi bi-ui-checks"></i>Quiz</span>
+                  <span class="skill-pill"><i class="bi bi-globe-americas"></i>Culture</span>
+                </div>
+                <div class="d-flex flex-wrap gap-3">
+                  <a href="ateliers/ecoute-cultures-b1.html" class="btn-main"><i class="bi bi-door-open"></i>Entrer</a>
+                  <a href="ateliers/debat-culturel-france-colombie.html" class="btn-soft"><i class="bi bi-megaphone"></i>Débat culturel</a>
+                </div>
+              </div>
+            </article>
+          </div>
         </div>
       </div>
     </section>
@@ -590,25 +705,11 @@
           <p class="section-kicker">À venir</p>
           <h2 class="section-title">Prochains ateliers</h2>
           <p class="section-text mx-auto">
-            Ces espaces sont déjà prévus dans la progression du cours. Ils seront développés après les ateliers du passé simple.
+            Ces espaces complètent les ateliers déjà disponibles et pourront être développés progressivement.
           </p>
         </div>
 
         <div class="row g-4">
-          <div class="col-md-6 col-xl-3 fade-in">
-            <article class="card coming-card">
-              <div class="coming-top blue">
-                <span class="coming-badge"><i class="bi bi-clock"></i>En préparation</span>
-                <i class="bi bi-megaphone-fill coming-icon"></i>
-              </div>
-              <div class="card-body">
-                <h3 class="h5">Atelier de débat</h3>
-                <p>Prendre position, défendre une idée et réagir avec nuance dans une discussion.</p>
-                <button class="btn-disabled-soft" type="button" disabled>Disponible bientôt</button>
-              </div>
-            </article>
-          </div>
-
           <div class="col-md-6 col-xl-3 fade-in">
             <article class="card coming-card">
               <div class="coming-top">
@@ -660,9 +761,9 @@
           <div class="row align-items-center g-4 position-relative" style="z-index: 2;">
             <div class="col-lg-5">
               <p class="text-uppercase fw-bold opacity-75 mb-2">Progression</p>
-              <h2 class="fw-bold mb-3">Deux étapes pour maîtriser le passé simple</h2>
+              <h2 class="fw-bold mb-3">Des ateliers reliés aux thèmes du cours</h2>
               <p class="mb-0 opacity-75 fs-5">
-                Les ateliers complètent la page de théorie : on commence par reconnaître les formes, puis on transforme vers un registre courant.
+                Chaque atelier complète une page explicative : passé simple pour le récit, subjonctif pour l’argumentation.
               </p>
             </div>
             <div class="col-lg-7">
@@ -670,25 +771,28 @@
                 <div class="col-md-4">
                   <div class="step-item">
                     <h3 class="h5 fw-bold">1. Reconnaître</h3>
-                    <p class="mb-0 opacity-75">Identifier les formes du passé simple.</p>
+                    <p class="mb-0 opacity-75">Identifier les formes clés.</p>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="step-item">
                     <h3 class="h5 fw-bold">2. Comprendre</h3>
-                    <p class="mb-0 opacity-75">Analyser leur rôle dans le récit.</p>
+                    <p class="mb-0 opacity-75">Relier la forme au thème.</p>
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="step-item">
-                    <h3 class="h5 fw-bold">3. Transformer</h3>
-                    <p class="mb-0 opacity-75">Passer au passé composé.</p>
+                    <h3 class="h5 fw-bold">3. Produire</h3>
+                    <p class="mb-0 opacity-75">Réutiliser en contexte.</p>
                   </div>
                 </div>
               </div>
               <div class="mt-4 d-flex flex-wrap gap-3">
                 <a href="ateliers/passe-simple.html" class="btn btn-light fw-bold rounded-pill px-4 py-3">Atelier 1</a>
                 <a href="ateliers/transformation-passe-simple.html" class="btn btn-light fw-bold rounded-pill px-4 py-3">Atelier 2</a>
+                <a href="ateliers/subjonctif-argumentation.html" class="btn btn-light fw-bold rounded-pill px-4 py-3">Subjonctif</a>
+                <a href="ateliers/debat-culturel-france-colombie.html" class="btn btn-light fw-bold rounded-pill px-4 py-3">Débat culturel</a>
+                <a href="ateliers/ecoute-cultures-b1.html" class="btn btn-light fw-bold rounded-pill px-4 py-3">Écoute B1</a>
               </div>
             </div>
           </div>

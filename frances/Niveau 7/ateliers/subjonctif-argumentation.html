@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier – Subjonctif pour argumenter | Français Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --soft: #f4f7fb;
+      --white: #ffffff;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: 0;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 16% 16%, rgba(244, 201, 93, 0.18), transparent 28%),
+        radial-gradient(circle at 88% 10%, rgba(214, 40, 57, 0.18), transparent 30%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 48%, #fff0f3 100%);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: 0;
+      color: var(--blue-dark);
+      font-size: clamp(2.6rem, 6vw, 5.4rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.16rem, 2vw, 1.45rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-card {
+      border-radius: 36px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-card img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      border-radius: 30px;
+      filter: saturate(1.05) contrast(1.03);
+    }
+
+    .debate-bubble {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: 999px;
+      background: white;
+      color: var(--blue-dark);
+      padding: 0.6rem 0.9rem;
+      font-weight: 900;
+      box-shadow: 0 16px 34px rgba(20, 40, 80, 0.18);
+      animation: floatBubble 4.4s ease-in-out infinite;
+    }
+
+    .bubble-one { top: 2rem; left: 1.8rem; }
+    .bubble-two { right: 1.6rem; bottom: 2rem; animation-delay: 0.7s; }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 840px;
+    }
+
+    .trigger-card,
+    .quiz-shell,
+    .production-card {
+      border: 0;
+      border-radius: var(--radius);
+      background: white;
+      box-shadow: 0 14px 38px rgba(20, 40, 80, 0.09);
+      height: 100%;
+    }
+
+    .trigger-card {
+      padding: 1.35rem;
+      border-top: 7px solid var(--blue);
+    }
+
+    .trigger-card.red { border-top-color: var(--red); }
+    .trigger-card.green { border-top-color: var(--green); }
+    .trigger-card.gold { border-top-color: var(--yellow); }
+
+    .trigger-icon {
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: rgba(31, 78, 140, 0.1);
+      color: var(--blue);
+      font-size: 1.65rem;
+      margin-bottom: 1rem;
+    }
+
+    .formula {
+      color: var(--blue-dark);
+      font-weight: 900;
+      margin-bottom: 0.45rem;
+    }
+
+    .quiz-shell {
+      padding: clamp(1.3rem, 3vw, 2rem);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .quiz-shell::after {
+      content: "S";
+      position: absolute;
+      right: 1rem;
+      bottom: -5rem;
+      color: rgba(31, 78, 140, 0.06);
+      font-family: "Montserrat", sans-serif;
+      font-size: 15rem;
+      font-weight: 800;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .quiz-progress {
+      height: 12px;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.1);
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .quiz-progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(135deg, var(--red), var(--blue));
+      transition: width 0.3s ease;
+    }
+
+    .question-card {
+      position: relative;
+      z-index: 2;
+      border-radius: 24px;
+      background: var(--soft);
+      padding: clamp(1rem, 2vw, 1.4rem);
+      margin-bottom: 1rem;
+    }
+
+    .question-card h3 {
+      color: var(--blue-dark);
+      font-weight: 800;
+      margin-bottom: 0.8rem;
+    }
+
+    .option-grid {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .option-btn {
+      width: 100%;
+      border: 2px solid rgba(31, 78, 140, 0.12);
+      border-radius: 18px;
+      background: white;
+      color: var(--text);
+      padding: 0.9rem 1rem;
+      text-align: left;
+      font-weight: 800;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .option-btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--blue);
+      background: #eef5ff;
+    }
+
+    .option-btn.correct {
+      border-color: rgba(47, 158, 119, 0.5);
+      background: rgba(47, 158, 119, 0.12);
+      color: #176447;
+    }
+
+    .option-btn.incorrect {
+      border-color: rgba(214, 40, 57, 0.45);
+      background: var(--red-soft);
+      color: #991b1b;
+    }
+
+    .feedback-box {
+      display: none;
+      border-radius: 20px;
+      padding: 1rem;
+      font-weight: 800;
+      line-height: 1.6;
+    }
+
+    .feedback-box.show {
+      display: block;
+      animation: fadeUp 0.3s ease both;
+    }
+
+    .result-panel {
+      display: none;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 85% 20%, rgba(244, 201, 93, 0.2), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.3rem, 3vw, 2rem);
+      margin-top: 1rem;
+    }
+
+    .result-panel.show { display: block; }
+
+    .production-card {
+      padding: clamp(1.3rem, 3vw, 2rem);
+    }
+
+    .prompt-card {
+      border-radius: 24px;
+      background: var(--soft);
+      padding: 1rem;
+      height: 100%;
+      border-left: 6px solid var(--red);
+    }
+
+    .prompt-card strong {
+      color: var(--blue-dark);
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+
+    .link-panel {
+      border-radius: 34px;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      color: white;
+      padding: clamp(1.4rem, 3vw, 2.4rem);
+      box-shadow: var(--shadow);
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show { display: grid; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes floatBubble {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 991px) {
+      .hero { padding-top: 7rem; }
+      .hero-card img { min-height: 320px; }
+    }
+
+    @media (max-width: 575px) {
+      section { padding: 4rem 0; }
+      .hero h1 { letter-spacing: 0; }
+      .hero-card img { min-height: 260px; }
+      .btn-main, .btn-soft { width: 100%; }
+      .debate-bubble { position: static; margin-top: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes/argumentation-debat.html#subjonctif">Théorie</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#atelier">Atelier</a></li>
+          <li class="nav-item"><a class="nav-link" href="#production">Production</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-braces"></i>
+            Atelier · Subjonctif
+          </span>
+          <h1>Le subjonctif pour argumenter</h1>
+          <p class="hero-lead">Utiliser le subjonctif pour exprimer nécessité, doute, volonté, jugement et concession.</p>
+          <p class="hero-text">
+            Cet atelier reprend le point de langue vu dans le thème « Argumentation et débat ». Vous allez reconnaître les déclencheurs, choisir la bonne forme et produire de petites phrases utiles pour débattre avec nuance.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#atelier" class="btn-main"><i class="bi bi-play-circle"></i>Commencer l’atelier</a>
+            <a href="../themes/argumentation-debat.html#subjonctif" class="btn-soft"><i class="bi bi-book"></i>Revoir la théorie</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <img src="../img/theme-argumentation-debat.jpg" alt="Étudiants en débat pour pratiquer le subjonctif">
+            <span class="debate-bubble bubble-one"><i class="bi bi-check-circle-fill text-success"></i>Il faut que...</span>
+            <span class="debate-bubble bubble-two"><i class="bi bi-question-circle-fill text-danger"></i>Je doute que...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="declencheurs">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Avant de répondre</p>
+          <h2 class="section-title">Les déclencheurs à reconnaître</h2>
+          <p class="section-text mx-auto">
+            Le subjonctif apparaît souvent après une expression qui ne présente pas l’idée comme un simple fait certain.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="trigger-card">
+              <div class="trigger-icon"><i class="bi bi-exclamation-circle-fill"></i></div>
+              <h3 class="h5 fw-bold text-primary">Nécessité</h3>
+              <p class="formula">il faut que · il est nécessaire que</p>
+              <p class="mb-0 text-muted">Il faut que chacun justifie son opinion.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="trigger-card red">
+              <div class="trigger-icon"><i class="bi bi-question-diamond-fill"></i></div>
+              <h3 class="h5 fw-bold text-primary">Doute</h3>
+              <p class="formula">je doute que · je ne pense pas que</p>
+              <p class="mb-0 text-muted">Je ne pense pas que cette idée soit universelle.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="trigger-card green">
+              <div class="trigger-icon"><i class="bi bi-heart-fill"></i></div>
+              <h3 class="h5 fw-bold text-primary">Volonté</h3>
+              <p class="formula">je souhaite que · j’aimerais que</p>
+              <p class="mb-0 text-muted">Je souhaite que le débat reste respectueux.</p>
+            </article>
+          </div>
+          <div class="col-md-6 col-xl-3 fade-in">
+            <article class="trigger-card gold">
+              <div class="trigger-icon"><i class="bi bi-signpost-split-fill"></i></div>
+              <h3 class="h5 fw-bold text-primary">Concession</h3>
+              <p class="formula">bien que · quoique</p>
+              <p class="mb-0 text-muted">Bien que les avis soient différents, on peut dialoguer.</p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="supports-visuels">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Supports visuels</p>
+          <h2 class="section-title">Le subjonctif dans une situation de débat</h2>
+          <p class="section-text mx-auto">
+            Les images replacent les formes grammaticales dans leur usage : discuter, nuancer, comparer et construire une intervention.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6 fade-in">
+            <div class="hero-card">
+              <img src="../img/theme-argumentation-debat.jpg" alt="Débat guidé pour pratiquer le subjonctif">
+            </div>
+          </div>
+          <div class="col-lg-6 fade-in">
+            <div class="hero-card">
+              <img src="../img/theme-connecteurs-logiques.jpg" alt="Connecteurs logiques utiles pour argumenter">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="atelier" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Quiz guidé</p>
+            <h2 class="section-title">Choisissez la bonne forme</h2>
+            <p class="section-text">
+              Lisez la phrase, repérez le déclencheur et choisissez la forme qui complète correctement l’argument.
+            </p>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <button class="btn-main" id="restartBtn" type="button"><i class="bi bi-arrow-repeat"></i>Recommencer</button>
+              <a href="../themes/argumentation-debat.html#subjonctif" class="btn-soft"><i class="bi bi-arrow-left-right"></i>Aller à la théorie</a>
+            </div>
+          </div>
+
+          <div class="col-lg-7 fade-in">
+            <div class="quiz-shell">
+              <div class="quiz-progress" aria-hidden="true"><span id="progressBar"></span></div>
+              <p class="text-uppercase fw-bold text-danger mb-2" id="questionCount">Question 1 / 12</p>
+              <div class="question-card">
+                <h3 id="questionTitle">Question</h3>
+                <p class="mb-0 fs-5" id="questionSentence"></p>
+              </div>
+              <div class="option-grid mb-3" id="optionGrid"></div>
+              <div class="feedback-box" id="feedbackBox"></div>
+              <div class="result-panel" id="resultPanel">
+                <p class="text-uppercase fw-bold opacity-75 mb-2">Résultat</p>
+                <h3 class="fw-bold" id="resultTitle"></h3>
+                <p class="mb-0 fs-5 opacity-75" id="resultText"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="production">
+      <div class="container">
+        <div class="production-card fade-in">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-4">
+              <p class="section-kicker">Production orale</p>
+              <h2 class="section-title">Mini-débat</h2>
+              <p class="section-text mb-0">
+                Choisissez une question et construisez deux phrases au subjonctif : une pour exprimer une nécessité, une autre pour nuancer ou concéder.
+              </p>
+            </div>
+            <div class="col-lg-8">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <div class="prompt-card">
+                    <strong>Communication culturelle</strong>
+                    Faut-il que les étudiants adaptent leur manière de parler selon le pays francophone ?
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="prompt-card">
+                    <strong>Respect dans le débat</strong>
+                    Est-il nécessaire que chaque participant reformule l’idée de l’autre avant de répondre ?
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="prompt-card">
+                    <strong>Généralisation</strong>
+                    Bien que les cultures soient différentes, peut-on trouver des règles de politesse communes ?
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="prompt-card">
+                    <strong>Opinion personnelle</strong>
+                    Souhaitez-vous que les débats en classe soient plus spontanés ou plus préparés ?
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="liens" class="bg-white">
+      <div class="container">
+        <div class="link-panel fade-in">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Aller-retour entre théorie et pratique</p>
+              <h2 class="fw-bold mb-2">Cet atelier est lié au thème « Argumentation et débat »</h2>
+              <p class="mb-0 opacity-75 fs-5">Vous pouvez revenir à la page explicative, revoir les déclencheurs, puis reprendre la pratique ici.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="../themes/argumentation-debat.html#subjonctif" class="btn btn-light fw-bold rounded-pill px-4 py-3 mb-2">Revoir la théorie</a>
+              <a href="../ateliers-activites.html#ateliers" class="btn btn-outline-light fw-bold rounded-pill px-4 py-3">Voir les ateliers</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Atelier – Subjonctif pour argumenter</h2>
+          <p class="mb-0 opacity-75">Pratique interactive liée au thème Argumentation et débat.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const questions = [
+      {
+        title: "Nécessité",
+        sentence: "Il faut que chaque participant ___ son opinion avec un exemple.",
+        options: ["justifie", "justifiera", "justifiait"],
+        answer: "justifie",
+        feedback: "Après « il faut que », on utilise le subjonctif : que chaque participant justifie."
+      },
+      {
+        title: "Doute",
+        sentence: "Je ne pense pas que cette habitude ___ la même partout.",
+        options: ["est", "soit", "sera"],
+        answer: "soit",
+        feedback: "Avec « je ne pense pas que », l’idée est incertaine : soit."
+      },
+      {
+        title: "Volonté",
+        sentence: "Nous souhaitons que le débat ___ respectueux.",
+        options: ["reste", "restera", "restait"],
+        answer: "reste",
+        feedback: "Après une volonté, on emploie le subjonctif : que le débat reste."
+      },
+      {
+        title: "Concession",
+        sentence: "Bien que les points de vue ___ différents, la discussion peut avancer.",
+        options: ["sont", "soient", "étaient"],
+        answer: "soient",
+        feedback: "« Bien que » déclenche le subjonctif : que les points de vue soient."
+      },
+      {
+        title: "Jugement",
+        sentence: "Il est important que les élèves ___ les généralisations.",
+        options: ["évitent", "éviteront", "évitaient"],
+        answer: "évitent",
+        feedback: "Le jugement « il est important que » demande le subjonctif."
+      },
+      {
+        title: "Doute",
+        sentence: "Je doute que cette comparaison ___ suffisante.",
+        options: ["est", "soit", "sera"],
+        answer: "soit",
+        feedback: "Après « je doute que », on utilise le subjonctif : soit."
+      },
+      {
+        title: "Nécessité",
+        sentence: "Il est nécessaire que nous ___ les exemples culturels.",
+        options: ["nuancions", "nuançons", "nuancerons"],
+        answer: "nuancions",
+        feedback: "Avec « nous » au subjonctif : que nous nuancions."
+      },
+      {
+        title: "Volonté",
+        sentence: "J’aimerais que vous ___ votre désaccord avec politesse.",
+        options: ["exprimez", "exprimiez", "exprimerez"],
+        answer: "exprimiez",
+        feedback: "Après « j’aimerais que », on choisit le subjonctif : que vous exprimiez."
+      },
+      {
+        title: "Concession",
+        sentence: "Quoique cette idée ___ intéressante, elle reste trop générale.",
+        options: ["est", "soit", "sera"],
+        answer: "soit",
+        feedback: "« Quoique » fonctionne comme « bien que » : subjonctif."
+      },
+      {
+        title: "Jugement",
+        sentence: "Il vaut mieux que l’argument ___ clair dès le début.",
+        options: ["est", "soit", "sera"],
+        answer: "soit",
+        feedback: "« Il vaut mieux que » appelle le subjonctif : soit."
+      },
+      {
+        title: "Nécessité",
+        sentence: "Il faut que tu ___ un exemple précis.",
+        options: ["choisis", "choisisses", "choisiras"],
+        answer: "choisisses",
+        feedback: "Avec « tu » au subjonctif du verbe choisir : que tu choisisses."
+      },
+      {
+        title: "Volonté",
+        sentence: "Le professeur veut que les groupes ___ deux arguments opposés.",
+        options: ["préparent", "prépareront", "préparaient"],
+        answer: "préparent",
+        feedback: "Après « veut que », on utilise le subjonctif : que les groupes préparent."
+      }
+    ];
+
+    let currentQuestion = 0;
+    let score = 0;
+    let answered = false;
+
+    const questionCount = document.getElementById('questionCount');
+    const questionTitle = document.getElementById('questionTitle');
+    const questionSentence = document.getElementById('questionSentence');
+    const optionGrid = document.getElementById('optionGrid');
+    const feedbackBox = document.getElementById('feedbackBox');
+    const progressBar = document.getElementById('progressBar');
+    const resultPanel = document.getElementById('resultPanel');
+    const resultTitle = document.getElementById('resultTitle');
+    const resultText = document.getElementById('resultText');
+    const restartBtn = document.getElementById('restartBtn');
+
+    function renderQuestion() {
+      answered = false;
+      const item = questions[currentQuestion];
+      questionCount.textContent = `Question ${currentQuestion + 1} / ${questions.length}`;
+      questionTitle.textContent = item.title;
+      questionSentence.textContent = item.sentence;
+      progressBar.style.width = `${(currentQuestion / questions.length) * 100}%`;
+      feedbackBox.className = 'feedback-box';
+      feedbackBox.textContent = '';
+      resultPanel.classList.remove('show');
+      optionGrid.innerHTML = '';
+
+      item.options.forEach((option) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.type = 'button';
+        button.textContent = option;
+        button.addEventListener('click', () => checkAnswer(button, option));
+        optionGrid.appendChild(button);
+      });
+    }
+
+    function checkAnswer(button, option) {
+      if (answered) return;
+      answered = true;
+      const item = questions[currentQuestion];
+      const buttons = optionGrid.querySelectorAll('button');
+      buttons.forEach((btn) => {
+        if (btn.textContent === item.answer) btn.classList.add('correct');
+      });
+
+      if (option === item.answer) {
+        score += 1;
+        button.classList.add('correct');
+        feedbackBox.style.background = 'rgba(47, 158, 119, 0.12)';
+        feedbackBox.style.color = '#176447';
+        feedbackBox.textContent = 'Correct. ' + item.feedback;
+      } else {
+        button.classList.add('incorrect');
+        feedbackBox.style.background = '#fff0f3';
+        feedbackBox.style.color = '#991b1b';
+        feedbackBox.textContent = 'À corriger. ' + item.feedback;
+      }
+
+      feedbackBox.classList.add('show');
+      setTimeout(nextQuestion, 1350);
+    }
+
+    function nextQuestion() {
+      currentQuestion += 1;
+      if (currentQuestion < questions.length) {
+        renderQuestion();
+      } else {
+        showResult();
+      }
+    }
+
+    function showResult() {
+      progressBar.style.width = '100%';
+      questionCount.textContent = 'Atelier terminé';
+      questionTitle.textContent = 'Bravo, vous avez terminé le quiz.';
+      questionSentence.textContent = `Score : ${score} / ${questions.length}`;
+      optionGrid.innerHTML = '';
+      feedbackBox.className = 'feedback-box';
+      resultPanel.classList.add('show');
+
+      if (score >= 10) {
+        resultTitle.textContent = 'Très solide';
+        resultText.textContent = 'Vous reconnaissez bien les déclencheurs et les formes du subjonctif dans l’argumentation.';
+      } else if (score >= 7) {
+        resultTitle.textContent = 'Bonne base';
+        resultText.textContent = 'Vous avez compris l’essentiel. Revoyez surtout les verbes irréguliers comme être et choisir.';
+      } else {
+        resultTitle.textContent = 'À renforcer';
+        resultText.textContent = 'Revenez à la théorie, relisez les déclencheurs, puis recommencez l’atelier.';
+      }
+    }
+
+    restartBtn.addEventListener('click', () => {
+      currentQuestion = 0;
+      score = 0;
+      renderQuestion();
+    });
+
+    renderQuestion();
+
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const btnUp = document.getElementById('btnUp');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeElements.forEach(function(element) {
+      observer.observe(element);
+    });
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+    });
+  </script>
+</body>
+</html>

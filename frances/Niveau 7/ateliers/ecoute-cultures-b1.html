@@ -1,0 +1,823 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier d'ecoute - Cultures francaise et colombienne | Francais Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --red-soft: #fff0f3;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      font-weight: 800;
+      color: var(--blue-dark);
+      letter-spacing: 0;
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      background:
+        radial-gradient(circle at 15% 18%, rgba(244, 201, 93, 0.2), transparent 28%),
+        radial-gradient(circle at 86% 12%, rgba(214, 40, 57, 0.18), transparent 30%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 48%, #fff0f3 100%);
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      color: var(--blue-dark);
+      font-weight: 900;
+      box-shadow: 0 14px 30px rgba(31, 78, 140, 0.08);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: 0;
+      color: var(--blue-dark);
+      font-size: clamp(2.55rem, 6vw, 5.3rem);
+    }
+
+    .hero-lead {
+      color: var(--blue);
+      font-size: clamp(1.16rem, 2vw, 1.45rem);
+      font-weight: 900;
+      margin: 1.2rem 0 1rem;
+    }
+
+    .hero-text {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      max-width: 760px;
+    }
+
+    .hero-visual {
+      border-radius: 34px;
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.95);
+      box-shadow: var(--shadow);
+      padding: 0.9rem;
+      overflow: hidden;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      min-height: 430px;
+      max-height: 520px;
+      object-fit: cover;
+      display: block;
+      filter: saturate(1.06) contrast(1.02);
+    }
+
+    .hero-visual img:first-child {
+      border-radius: 28px 10px 10px 28px;
+    }
+
+    .hero-visual img:nth-child(2) {
+      border-radius: 10px 28px 28px 10px;
+    }
+
+    .sound-chip {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      right: 1.5rem;
+      bottom: 1.5rem;
+      border-radius: 999px;
+      padding: 0.65rem 0.95rem;
+      background: white;
+      color: var(--blue-dark);
+      box-shadow: 0 16px 34px rgba(20, 40, 80, 0.2);
+      font-weight: 900;
+      animation: floatChip 4s ease-in-out infinite;
+    }
+
+    .btn-main {
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: white;
+      font-weight: 900;
+      padding: 0.9rem 1.25rem;
+      box-shadow: 0 16px 34px rgba(31, 78, 140, 0.24);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-3px);
+      box-shadow: 0 20px 42px rgba(31, 78, 140, 0.32);
+    }
+
+    .btn-soft {
+      border-radius: 999px;
+      border: 2px solid rgba(31, 78, 140, 0.2);
+      background: rgba(255,255,255,0.78);
+      color: var(--blue-dark);
+      font-weight: 900;
+      padding: 0.78rem 1.1rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+
+    .btn-soft:hover {
+      border-color: var(--blue);
+      background: var(--blue);
+      color: white;
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+      max-width: 850px;
+    }
+
+    .audio-card {
+      border-radius: 34px;
+      background: white;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      height: 100%;
+    }
+
+    .audio-top {
+      min-height: 300px;
+      position: relative;
+      color: white;
+      padding: 1.4rem;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--blue-dark);
+    }
+
+    .audio-top img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.88;
+      filter: saturate(1.08) contrast(1.04);
+      transition: transform 0.8s ease;
+    }
+
+    .audio-card:hover .audio-top img {
+      transform: scale(1.05);
+    }
+
+    .audio-top::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(21, 52, 93, 0.03), rgba(21, 52, 93, 0.86)),
+        radial-gradient(circle at 88% 20%, rgba(214, 40, 57, 0.22), transparent 34%);
+    }
+
+    .audio-top-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .audio-body {
+      padding: clamp(1.3rem, 3vw, 2rem);
+    }
+
+    audio {
+      width: 100%;
+      margin: 1rem 0 0;
+    }
+
+    .quiz-panel {
+      border-radius: 34px;
+      background: white;
+      box-shadow: var(--shadow);
+      padding: clamp(1.3rem, 3vw, 2rem);
+    }
+
+    .question-card {
+      border-radius: 24px;
+      background: var(--soft);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 2px solid transparent;
+    }
+
+    .question-card.correct {
+      border-color: rgba(47, 158, 119, 0.5);
+      background: rgba(47, 158, 119, 0.1);
+    }
+
+    .question-card.incorrect {
+      border-color: rgba(214, 40, 57, 0.45);
+      background: var(--red-soft);
+    }
+
+    .question-card h3 {
+      color: var(--blue-dark);
+      font-weight: 800;
+      font-size: 1.05rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .answer-option {
+      display: block;
+      border-radius: 18px;
+      background: white;
+      border: 2px solid rgba(31, 78, 140, 0.1);
+      padding: 0.75rem 0.85rem;
+      margin-bottom: 0.55rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+    }
+
+    .answer-option:hover {
+      border-color: var(--blue);
+      background: #eef5ff;
+      transform: translateY(-2px);
+    }
+
+    .answer-option input { margin-right: 0.55rem; }
+
+    .feedback-line {
+      display: none;
+      margin-top: 0.65rem;
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    .question-card.correct .feedback-line,
+    .question-card.incorrect .feedback-line {
+      display: block;
+    }
+
+    .result-box {
+      display: none;
+      margin-top: 1.2rem;
+      border-radius: 24px;
+      color: white;
+      padding: 1.2rem;
+      background:
+        radial-gradient(circle at 88% 18%, rgba(244, 201, 93, 0.2), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+    }
+
+    .result-box.show { display: block; }
+
+    .link-panel {
+      border-radius: 34px;
+      color: white;
+      background:
+        radial-gradient(circle at 18% 18%, rgba(244, 201, 93, 0.18), transparent 28%),
+        linear-gradient(135deg, var(--blue-dark), var(--blue));
+      padding: clamp(1.4rem, 3vw, 2.4rem);
+      box-shadow: var(--shadow);
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-up {
+      width: 48px;
+      height: 48px;
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      display: none;
+      place-items: center;
+      z-index: 1000;
+      border: 0;
+      border-radius: 50%;
+      background: var(--red);
+      color: white;
+      box-shadow: 0 12px 28px rgba(214, 40, 57, 0.28);
+    }
+
+    .floating-up.show { display: grid; }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes floatChip {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @media (max-width: 991px) {
+      .hero { padding-top: 7rem; }
+      .hero-visual img { min-height: 300px; }
+    }
+
+    @media (max-width: 575px) {
+      section { padding: 4rem 0; }
+      .hero-visual {
+        grid-template-columns: 1fr;
+      }
+      .hero-visual img {
+        min-height: 220px;
+        border-radius: 24px !important;
+      }
+      .btn-main, .btn-soft { width: 100%; }
+      .sound-chip { position: static; margin-top: 0.75rem; }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html">
+        <i class="bi bi-stars text-danger me-2"></i>Francais · Niveau 7
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#audios">Ecoute</a></li>
+          <li class="nav-item"><a class="nav-link" href="#quiz">Questions</a></li>
+          <li class="nav-item"><a class="nav-link" href="#liens">Debat</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course">
+            <i class="bi bi-headphones"></i>
+            Atelier d'ecoute · Niveau B1
+          </span>
+          <h1>Ecouter deux chroniques culturelles</h1>
+          <p class="hero-lead">Comprendre, comparer et discuter la culture francaise et la culture colombienne.</p>
+          <p class="hero-text">
+            L'activite contient deux audios courts avec images propres, un questionnaire de comprehension et six questions finales pour comparer les deux cultures.
+          </p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#audios" class="btn-main"><i class="bi bi-play-circle"></i>Lancer les audios</a>
+            <a href="#quiz" class="btn-soft"><i class="bi bi-check2-square"></i>Faire les 20 questions</a>
+          </div>
+        </div>
+
+        <div class="col-lg-5 fade-in">
+          <div class="hero-visual">
+            <img src="../img/ecoute-culture-francaise.png" alt="Etudiants ecoutant une chronique culturelle dans un musee francais">
+            <img src="../img/ecoute-culture-colombienne.png" alt="Groupe discutant dans une place colombienne pendant une activite d'ecoute">
+            <span class="sound-chip"><i class="bi bi-soundwave text-danger"></i>B1 · 20 questions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="audios">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Comprehension orale</p>
+          <h2 class="section-title">Deux audios culturels</h2>
+          <p class="section-text mx-auto">
+            Ecoutez chaque audio deux fois. Prenez des notes sur les idees principales, les exemples et les nuances culturelles.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-6 fade-in">
+            <article class="audio-card">
+              <div class="audio-top">
+                <img src="../img/ecoute-culture-francaise.png" alt="Chronique culturelle sur la France">
+                <div class="audio-top-content">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Audio 1 · France</p>
+                  <h3 class="fw-bold mb-0">Une nouvelle facon de vivre les musees</h3>
+                </div>
+              </div>
+              <div class="audio-body">
+                <p class="section-text mb-2">Ecoutez la chronique, puis repondez aux questions 1 a 7.</p>
+                <audio controls preload="metadata" aria-label="Audio 1 sur la culture francaise">
+                  <source src="../audio/culture-francaise-b1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-lg-6 fade-in">
+            <article class="audio-card">
+              <div class="audio-top">
+                <img src="../img/ecoute-culture-colombienne.png" alt="Chronique culturelle sur la Colombie">
+                <div class="audio-top-content">
+                  <p class="text-uppercase fw-bold opacity-75 mb-2">Audio 2 · Colombie</p>
+                  <h3 class="fw-bold mb-0">La culture colombienne au quotidien</h3>
+                </div>
+              </div>
+              <div class="audio-body">
+                <p class="section-text mb-2">Ecoutez la chronique, puis repondez aux questions 8 a 14.</p>
+                <audio controls preload="metadata" aria-label="Audio 2 sur la culture colombienne">
+                  <source src="../audio/culture-colombienne-b1.mp3" type="audio/mpeg">
+                </audio>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Questionnaire</p>
+          <h2 class="section-title">20 questions de comprehension et de comparaison</h2>
+          <p class="section-text mx-auto">
+            Les questions 1 a 14 verifient la comprehension des deux audios. Les questions 15 a 20 comparent les deux cultures.
+          </p>
+        </div>
+
+        <div class="quiz-panel fade-in">
+          <form id="listeningQuiz">
+            <div class="row g-4" id="questionGrid"></div>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <button type="button" class="btn-main" id="checkBtn"><i class="bi bi-check2-circle"></i>Corriger</button>
+              <button type="button" class="btn-soft" id="resetBtn"><i class="bi bi-arrow-repeat"></i>Recommencer</button>
+            </div>
+            <div class="result-box" id="resultBox"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="liens" class="bg-white">
+      <div class="container">
+        <div class="link-panel fade-in">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <p class="text-uppercase fw-bold opacity-75 mb-2">Lien avec le cours</p>
+              <h2 class="fw-bold mb-2">Cette ecoute prepare le debat culturel</h2>
+              <p class="mb-0 opacity-75 fs-5">Apres les audios, les etudiants peuvent comparer les cultures et reutiliser les connecteurs logiques pour argumenter.</p>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="debat-culturel-france-colombie.html" class="btn btn-light fw-bold rounded-pill px-4 py-3 mb-2">Aller au debat</a>
+              <a href="../ateliers-activites.html#ateliers" class="btn btn-outline-light fw-bold rounded-pill px-4 py-3">Voir les ateliers</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Atelier d'ecoute - Cultures francaise et colombienne</h2>
+          <p class="mb-0 opacity-75">Deux chroniques niveau B1 avec questionnaire de comprehension et comparaison interculturelle.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+    <i class="bi bi-arrow-up"></i>
+  </button>
+
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const questions = [
+      {
+        audio: "Audio 1 · France",
+        prompt: "Quel est le sujet principal de la premiere chronique ?",
+        options: ["Les musees francais et les jeunes publics", "La cuisine francaise", "Les transports en France"],
+        answer: "Les musees francais et les jeunes publics",
+        feedback: "La chronique parle des musees qui cherchent a attirer un public plus jeune."
+      },
+      {
+        audio: "Audio 1 · France",
+        prompt: "Quelles activites sont mentionnees dans les musees ?",
+        options: ["Des visites en musique et des parcours interactifs", "Des competitions sportives", "Des cours de cuisine"],
+        answer: "Des visites en musique et des parcours interactifs",
+        feedback: "Le texte mentionne des soirees, des visites en musique et des parcours interactifs."
+      },
+      {
+        audio: "Audio 1 · France",
+        prompt: "Selon la chronique, le musee moderne peut devenir...",
+        options: ["un espace de rencontre et de discussion", "un espace reserve aux experts", "un lieu uniquement silencieux"],
+        answer: "un espace de rencontre et de discussion",
+        feedback: "Le musee est presente comme un lieu vivant, d'echange et de curiosite."
+      },
+      {
+        audio: "Audio 1 · France",
+        prompt: "Pourquoi cette tendance est-elle positive selon le locuteur ?",
+        options: ["Parce qu'elle rend l'art plus accessible", "Parce qu'elle ferme les musees", "Parce qu'elle supprime les oeuvres anciennes"],
+        answer: "Parce qu'elle rend l'art plus accessible",
+        feedback: "Le locuteur dit que l'on peut decouvrir l'art sans avoir peur de ne pas tout comprendre."
+      },
+      {
+        audio: "Audio 1 · France",
+        prompt: "Quelle limite est mentionnee ?",
+        options: ["Il faut garder le respect des oeuvres", "Il faut interdire les ateliers", "Il faut eviter les jeunes visiteurs"],
+        answer: "Il faut garder le respect des oeuvres",
+        feedback: "Le texte nuance : la culture doit etre vivante, mais les oeuvres doivent rester respectees."
+      },
+      {
+        audio: "Audio 1 · France",
+        prompt: "Quelles villes sont citees ?",
+        options: ["Paris, Lyon et Nantes", "Marseille, Lille et Dijon", "Bordeaux, Toulouse et Nice"],
+        answer: "Paris, Lyon et Nantes",
+        feedback: "La chronique cite Paris, Lyon et Nantes."
+      },
+      {
+        audio: "Audio 1 · France",
+        prompt: "Quel ton correspond le mieux a l'audio ?",
+        options: ["Informatif et positif", "Tres negatif", "Publicitaire et exagere"],
+        answer: "Informatif et positif",
+        feedback: "La chronique presente une information culturelle avec un avis favorable."
+      },
+      {
+        audio: "Audio 2 · Colombie",
+        prompt: "Quel est le theme principal de la deuxieme chronique ?",
+        options: ["La culture colombienne au quotidien", "La meteo en Colombie", "Les musees francais"],
+        answer: "La culture colombienne au quotidien",
+        feedback: "La chronique explique des habitudes sociales et culturelles colombiennes."
+      },
+      {
+        audio: "Audio 2 · Colombie",
+        prompt: "Quels elements sont souvent associes a la Colombie ?",
+        options: ["La musique, la danse, le cafe et la chaleur humaine", "La neige et les chateaux", "Les trains et les musees"],
+        answer: "La musique, la danse, le cafe et la chaleur humaine",
+        feedback: "Ces elements sont cites au debut de la chronique."
+      },
+      {
+        audio: "Audio 2 · Colombie",
+        prompt: "Quelle place occupe la conversation dans beaucoup de regions ?",
+        options: ["Une place tres importante", "Une place secondaire", "Aucune place"],
+        answer: "Une place tres importante",
+        feedback: "Le texte dit que l'on prend le temps de saluer et de creer une relation."
+      },
+      {
+        audio: "Audio 2 · Colombie",
+        prompt: "Pourquoi la proximite sociale peut-elle surprendre des etrangers ?",
+        options: ["Parce qu'elle montre une autre maniere de construire la confiance", "Parce qu'elle empeche toujours de parler", "Parce qu'elle existe seulement a Bogota"],
+        answer: "Parce qu'elle montre une autre maniere de construire la confiance",
+        feedback: "La proximite est presentee comme une maniere de creer la confiance."
+      },
+      {
+        audio: "Audio 2 · Colombie",
+        prompt: "Pourquoi ne faut-il pas generaliser la culture colombienne ?",
+        options: ["Parce que les regions sont tres diverses", "Parce que la Colombie n'a pas de traditions", "Parce que toutes les villes sont identiques"],
+        answer: "Parce que les regions sont tres diverses",
+        feedback: "Le texte cite Bogota, Medellin, Cali, Cartagena et les villages pour montrer la diversite."
+      },
+      {
+        audio: "Audio 2 · Colombie",
+        prompt: "Selon le locuteur, d'ou vient la richesse de la Colombie ?",
+        options: ["De sa diversite culturelle et regionale", "D'une seule facon de vivre", "Du silence dans les conversations"],
+        answer: "De sa diversite culturelle et regionale",
+        feedback: "Le locuteur conclut que la richesse vient de plusieurs facons de parler, celebrer et vivre ensemble."
+      },
+      {
+        audio: "Audio 2 · Colombie",
+        prompt: "Quelle competence cette chronique aide-t-elle a pratiquer ?",
+        options: ["Comparer une culture avec nuance", "Raconter uniquement une histoire au passe simple", "Decrire une recette"],
+        answer: "Comparer une culture avec nuance",
+        feedback: "La chronique insiste sur l'observation, la diversite et l'importance de ne pas generaliser."
+      },
+      {
+        audio: "Comparaison · France / Colombie",
+        prompt: "Quel point commun apparait dans les deux chroniques ?",
+        options: ["La culture evolue grace aux rencontres et aux echanges", "Les deux pays ont exactement les memes traditions", "La culture doit rester separee de la vie quotidienne"],
+        answer: "La culture evolue grace aux rencontres et aux echanges",
+        feedback: "Les deux audios montrent une culture vivante : le musee devient un lieu d'echange et la Colombie valorise la conversation."
+      },
+      {
+        audio: "Comparaison · France / Colombie",
+        prompt: "Quelle difference est la plus claire entre les deux audios ?",
+        options: ["Le premier insiste sur les institutions culturelles, le second sur les relations sociales", "Le premier parle seulement de nourriture, le second seulement de sport", "Les deux audios parlent uniquement de monuments"],
+        answer: "Le premier insiste sur les institutions culturelles, le second sur les relations sociales",
+        feedback: "L'audio francais se concentre sur les musees; l'audio colombien decrit surtout les habitudes sociales."
+      },
+      {
+        audio: "Comparaison · France / Colombie",
+        prompt: "Dans les deux cultures, pourquoi faut-il eviter les stereotypes ?",
+        options: ["Parce qu'une culture est diverse et change selon les lieux et les generations", "Parce que tous les habitants pensent la meme chose", "Parce qu'il n'existe aucune difference regionale"],
+        answer: "Parce qu'une culture est diverse et change selon les lieux et les generations",
+        feedback: "Les musees changent avec les generations et la Colombie varie selon les regions."
+      },
+      {
+        audio: "Comparaison · France / Colombie",
+        prompt: "Quelle phrase pourrait ouvrir un debat apres les deux audios ?",
+        options: ["La culture doit-elle etre plus accessible aux jeunes ?", "Faut-il supprimer les conversations en classe ?", "Les musees doivent-ils interdire toutes les visites ?"],
+        answer: "La culture doit-elle etre plus accessible aux jeunes ?",
+        feedback: "Cette question relie les deux audios : acces a la culture, jeunes publics et participation sociale."
+      },
+      {
+        audio: "Comparaison · France / Colombie",
+        prompt: "Quel connecteur logique conviendrait pour comparer les deux chroniques ?",
+        options: ["Tandis que", "Parce que seulement", "Jamais"],
+        answer: "Tandis que",
+        feedback: "'Tandis que' permet d'opposer deux idees : la France est presentee par les musees, tandis que la Colombie est presentee par les liens sociaux."
+      },
+      {
+        audio: "Comparaison · France / Colombie",
+        prompt: "Quelle conclusion est la plus nuancee ?",
+        options: ["Chaque culture a ses propres formes de transmission, mais toutes peuvent creer du lien social", "Une culture est toujours superieure a l'autre", "Les differences culturelles empechent toute discussion"],
+        answer: "Chaque culture a ses propres formes de transmission, mais toutes peuvent creer du lien social",
+        feedback: "La conclusion compare sans juger : elle met en valeur la transmission culturelle et le lien social."
+      }
+    ];
+
+    const questionGrid = document.getElementById('questionGrid');
+    const checkBtn = document.getElementById('checkBtn');
+    const resetBtn = document.getElementById('resetBtn');
+    const resultBox = document.getElementById('resultBox');
+
+    function renderQuestions() {
+      questionGrid.innerHTML = questions.map((item, index) => `
+        <div class="col-lg-6">
+          <article class="question-card" id="question-${index}">
+            <p class="section-kicker mb-2">${item.audio}</p>
+            <h3>${index + 1}. ${item.prompt}</h3>
+            ${item.options.map((option) => `
+              <label class="answer-option">
+                <input type="radio" name="question-${index}" value="${option}">
+                ${option}
+              </label>
+            `).join('')}
+            <div class="feedback-line">${item.feedback}</div>
+          </article>
+        </div>
+      `).join('');
+    }
+
+    checkBtn.addEventListener('click', () => {
+      let score = 0;
+      questions.forEach((item, index) => {
+        const card = document.getElementById(`question-${index}`);
+        const selected = document.querySelector(`input[name="question-${index}"]:checked`);
+        card.classList.remove('correct', 'incorrect');
+        if (selected && selected.value === item.answer) {
+          score += 1;
+          card.classList.add('correct');
+        } else {
+          card.classList.add('incorrect');
+        }
+      });
+
+      resultBox.classList.add('show');
+      let message = "Continuez a vous entrainer avec deux ecoutes et une prise de notes.";
+      if (score >= 17) message = "Tres bon travail : vous comprenez les idees principales, les nuances et la comparaison culturelle.";
+      else if (score >= 13) message = "Bon resultat : revoyez les details qui ont pose probleme.";
+      resultBox.innerHTML = `<h3 class="fw-bold">Score : ${score} / ${questions.length}</h3><p class="mb-0 fs-5 opacity-75">${message}</p>`;
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+
+    resetBtn.addEventListener('click', () => {
+      renderQuestions();
+      resultBox.classList.remove('show');
+    });
+
+    renderQuestions();
+
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const btnUp = document.getElementById('btnUp');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    fadeElements.forEach(function(element) {
+      observer.observe(element);
+    });
+
+    window.addEventListener('scroll', function() {
+      btnUp.classList.toggle('show', window.scrollY > 500);
+    });
+  </script>
+</body>
+</html>
