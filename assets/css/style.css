@@ -129,11 +129,7 @@ a {
 .home-hero-logo {
   width: min(330px, 82%);
   margin-bottom: 18px;
-  padding: 14px 18px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 18px 42px rgba(18, 59, 143, 0.16);
-  filter: none;
+  filter: drop-shadow(0 10px 22px rgba(18, 59, 143, 0.1));
 }
 
 .home-hero-copy .eyebrow {
