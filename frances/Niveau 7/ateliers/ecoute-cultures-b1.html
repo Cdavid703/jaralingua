@@ -294,6 +294,13 @@
       background: white;
       box-shadow: var(--shadow);
       padding: clamp(1.3rem, 3vw, 2rem);
+      opacity: 1;
+      transform: none;
+      overflow: visible;
+    }
+
+    #questionGrid {
+      min-height: 1px;
     }
 
     .question-card {
@@ -430,6 +437,23 @@
 
     @media (max-width: 575px) {
       section { padding: 4rem 0; }
+      .quiz-panel {
+        border-radius: 24px;
+        padding: 1rem;
+      }
+      .question-card {
+        padding: 0.95rem;
+      }
+      .question-card h3 {
+        font-size: 1rem;
+        line-height: 1.35;
+      }
+      .answer-option {
+        border-radius: 16px;
+        padding: 0.72rem 0.78rem;
+        font-size: 0.96rem;
+        line-height: 1.35;
+      }
       .hero-visual {
         grid-template-columns: 1fr;
       }
@@ -554,7 +578,7 @@
           </p>
         </div>
 
-        <div class="quiz-panel fade-in">
+        <div class="quiz-panel">
           <form id="listeningQuiz">
             <div class="row g-4" id="questionGrid"></div>
             <div class="d-flex flex-wrap gap-3 mt-4">
