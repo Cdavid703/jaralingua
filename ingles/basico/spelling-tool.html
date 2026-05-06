@@ -10,7 +10,7 @@
 
   <link rel="stylesheet" href="../../assets/css/style.css" />
 </head>
-<body>
+<body class="english-basic-page">
 
   <header class="site-header">
     <nav class="navbar">
@@ -30,7 +30,7 @@
   <main>
 
     <!-- LESSON HERO -->
-    <section class="lesson-hero">
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/spelling-tool-banner.jpg');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Basic English Course 1</p>
 
@@ -97,6 +97,14 @@
           </div>
 
           <div class="alphabet-grid" id="alphabet"></div>
+
+          <div class="spelling-word-row">
+            <label for="wordToSpell">Spell a name, email, or word</label>
+            <div class="spelling-word-controls">
+              <input type="text" id="wordToSpell" placeholder="Example: Alex" />
+              <button type="button" class="practice-submit-btn compact" onclick="spellCustomWord()">Spell it</button>
+            </div>
+          </div>
 
           <p class="spelling-status" id="status">Click on any letter to hear it pronounced.</p>
         </div>
@@ -166,32 +174,32 @@
 
   <script>
     const letters = [
-      { l: "A", speak: null, sound: "eɪ", vowel: true },
-      { l: "B", speak: "bee", sound: "biː", vowel: false },
-      { l: "C", speak: "see", sound: "siː", vowel: false },
-      { l: "D", speak: "dee", sound: "diː", vowel: false },
-      { l: "E", speak: null, sound: "iː", vowel: true },
-      { l: "F", speak: "fuh", sound: "ɛf", vowel: false },
-      { l: "G", speak: "jee", sound: "dʒiː", vowel: false },
-      { l: "H", speak: "aitch", sound: "eɪtʃ", vowel: false },
-      { l: "I", speak: null, sound: "aɪ", vowel: true },
-      { l: "J", speak: "jay", sound: "dʒeɪ", vowel: false },
-      { l: "K", speak: "kay", sound: "keɪ", vowel: false },
-      { l: "L", speak: "ell", sound: "ɛl", vowel: false },
-      { l: "M", speak: "em", sound: "ɛm", vowel: false },
-      { l: "N", speak: "en", sound: "ɛn", vowel: false },
-      { l: "O", speak: null, sound: "oʊ", vowel: true },
-      { l: "P", speak: "pee", sound: "piː", vowel: false },
-      { l: "Q", speak: "cue", sound: "kjuː", vowel: false },
-      { l: "R", speak: "are", sound: "ɑːr", vowel: false },
-      { l: "S", speak: "ess", sound: "ɛs", vowel: false },
-      { l: "T", speak: "tee", sound: "tiː", vowel: false },
-      { l: "U", speak: null, sound: "juː", vowel: true },
-      { l: "V", speak: "vee", sound: "viː", vowel: false },
-      { l: "W", speak: "double you", sound: "ˈdʌb.ljuː", vowel: false },
-      { l: "X", speak: "ex", sound: "ɛks", vowel: false },
-      { l: "Y", speak: "why", sound: "waɪ", vowel: false },
-      { l: "Z", speak: "zee", sound: "ziː", vowel: false }
+      { l: "A", speak: "ay", sound: "/ay/", vowel: true },
+      { l: "B", speak: "bee", sound: "/bee/", vowel: false },
+      { l: "C", speak: "see", sound: "/see/", vowel: false },
+      { l: "D", speak: "dee", sound: "/dee/", vowel: false },
+      { l: "E", speak: "ee", sound: "/ee/", vowel: true },
+      { l: "F", speak: "eff", sound: "/eff/", vowel: false },
+      { l: "G", speak: "jee", sound: "/jee/", vowel: false },
+      { l: "H", speak: "aitch", sound: "/aitch/", vowel: false },
+      { l: "I", speak: "eye", sound: "/eye/", vowel: true },
+      { l: "J", speak: "jay", sound: "/jay/", vowel: false },
+      { l: "K", speak: "kay", sound: "/kay/", vowel: false },
+      { l: "L", speak: "ell", sound: "/ell/", vowel: false },
+      { l: "M", speak: "em", sound: "/em/", vowel: false },
+      { l: "N", speak: "en", sound: "/en/", vowel: false },
+      { l: "O", speak: "oh", sound: "/oh/", vowel: true },
+      { l: "P", speak: "pee", sound: "/pee/", vowel: false },
+      { l: "Q", speak: "cue", sound: "/cue/", vowel: false },
+      { l: "R", speak: "are", sound: "/are/", vowel: false },
+      { l: "S", speak: "ess", sound: "/ess/", vowel: false },
+      { l: "T", speak: "tee", sound: "/tee/", vowel: false },
+      { l: "U", speak: "you", sound: "/you/", vowel: true },
+      { l: "V", speak: "vee", sound: "/vee/", vowel: false },
+      { l: "W", speak: "double you", sound: "/double you/", vowel: false },
+      { l: "X", speak: "ex", sound: "/ex/", vowel: false },
+      { l: "Y", speak: "why", sound: "/why/", vowel: false },
+      { l: "Z", speak: "zee", sound: "/zee/", vowel: false }
     ];
 
     let voices = [];
@@ -204,30 +212,16 @@
     loadVoices();
 
     function getBestVoice() {
-      const preferredVoices = [
-        "Samantha",
-        "Google US English",
-        "Microsoft Aria",
-        "Alex",
-        "Karen",
-        "Daniel"
-      ];
+      const preferredVoices = ["Google US English", "Microsoft Aria", "Samantha", "Alex", "Karen", "Daniel"];
 
       for (const name of preferredVoices) {
         const voice = voices.find(function(v) {
           return v.name.includes(name) && v.lang.startsWith("en");
         });
-
-        if (voice) {
-          return voice;
-        }
+        if (voice) return voice;
       }
 
-      return (
-        voices.find(function(v) { return v.lang === "en-US"; }) ||
-        voices.find(function(v) { return v.lang.startsWith("en"); }) ||
-        null
-      );
+      return voices.find(function(v) { return v.lang === "en-US"; }) || voices.find(function(v) { return v.lang.startsWith("en"); }) || null;
     }
 
     function speak(text, rate, onEnd) {
@@ -237,40 +231,24 @@
       utterance.pitch = 1;
 
       const voice = getBestVoice();
-
-      if (voice) {
-        utterance.voice = voice;
-      }
-
-      if (onEnd) {
-        utterance.onend = onEnd;
-      }
+      if (voice) utterance.voice = voice;
+      if (onEnd) utterance.onend = onEnd;
 
       speechSynthesis.speak(utterance);
     }
 
     function pronounce(data, card) {
       speechSynthesis.cancel();
-
-      const allCards = document.querySelectorAll(".alphabet-card");
-      allCards.forEach(function(item) {
+      document.querySelectorAll(".alphabet-card").forEach(function(item) {
         item.classList.remove("playing");
       });
 
       card.classList.add("playing");
+      document.getElementById("status").textContent = "Now playing: " + data.l + " = " + data.speak;
 
-      const status = document.getElementById("status");
-      status.textContent = "Now playing: " + data.l;
-
-      if (data.vowel) {
-        speak(data.l, 0.65, function() {
-          card.classList.remove("playing");
-        });
-      } else {
-        speak(data.speak, 0.75, function() {
-          card.classList.remove("playing");
-        });
-      }
+      speak(data.speak, 0.72, function() {
+        card.classList.remove("playing");
+      });
     }
 
     function makeCard(data, container) {
@@ -278,25 +256,44 @@
       card.type = "button";
       card.className = "alphabet-card" + (data.vowel ? " vowel" : "");
       card.setAttribute("aria-label", "Listen to letter " + data.l);
-
       card.innerHTML =
-        '<span class="letter-pair">' +
-          data.l +
-          '<span class="lower">' + data.l.toLowerCase() + '</span>' +
-        '</span>' +
+        '<span class="letter-pair">' + data.l + '<span class="lower">' + data.l.toLowerCase() + '</span></span>' +
         '<span class="sound">' + data.sound + '</span>';
-
-      card.addEventListener("click", function() {
-        pronounce(data, card);
-      });
-
+      card.addEventListener("click", function() { pronounce(data, card); });
       container.appendChild(card);
     }
 
+    function spellCustomWord() {
+      const input = document.getElementById("wordToSpell");
+      const raw = input.value.trim();
+      const status = document.getElementById("status");
+
+      if (!raw) {
+        status.textContent = "Write a name, email, or word first.";
+        input.focus();
+        return;
+      }
+
+      const letterMap = Object.fromEntries(letters.map(function(item) {
+        return [item.l, item.speak];
+      }));
+      const spokenParts = raw.toUpperCase().split("").map(function(char) {
+        if (letterMap[char]) return letterMap[char];
+        if (char === "@") return "at";
+        if (char === ".") return "dot";
+        if (char === "-") return "dash";
+        if (char === "_") return "underscore";
+        if (char === " ") return "pause";
+        return char;
+      });
+
+      speechSynthesis.cancel();
+      status.textContent = "Spelling: " + raw + " = " + spokenParts.join(" - ");
+      speak(spokenParts.join(". "), 0.58);
+    }
+
     const grid = document.getElementById("alphabet");
-    letters.forEach(function(letter) {
-      makeCard(letter, grid);
-    });
+    letters.forEach(function(letter) { makeCard(letter, grid); });
   </script>
 
 </body>

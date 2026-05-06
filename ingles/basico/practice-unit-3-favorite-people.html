@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit 3 Practice: Favorite People | Basic English Course 1</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+</head>
+<body class="english-basic-page">
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab</p>
+        <h1>Unit 3 Practice: Favorite People</h1>
+        <p>Practice describing celebrities, classmates, and family members using be-verb sentences and yes/no questions.</p>
+        <div class="lesson-meta"><span>Unit 3</span><span>Grammar</span><span>Conversation</span></div>
+        <div class="hero-actions">
+          <a href="#practice-activity" class="btn btn-primary">Start activity</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png" alt="Unit 3 Practice: Favorite People" /></aside>
+    </section>
+
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice Goal</span>
+        <p>Practice describing celebrities, classmates, and family members using be-verb sentences and yes/no questions.</p>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="practice-activity">
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Grammar Practice</p><h2>Sentence Builder</h2></div></div>
+        <p class="lesson-text">Complete the fields, generate a model sentence, and personalize it orally with a partner.</p>
+        <div class="practice-form-panel"><div class="practice-form-header"><div><h3>Build Your Sentence</h3><p>Use the unit language to create a short speaking model.</p></div><span class="practice-badge">Unit 3</span></div><div class="practice-form-grid"><div class="practice-form-group"><label for="person">Person</label><input type="text" id="person" placeholder="Example: Sofia" /></div><div class="practice-form-group"><label for="role">Role or relation</label><input type="text" id="role" placeholder="Example: singer" /></div><div class="practice-form-group"><label for="adjective">Adjective</label><input type="text" id="adjective" placeholder="Example: friendly" /></div><div class="practice-form-group"><label for="origin">Origin</label><input type="text" id="origin" placeholder="Example: Colombia" /></div></div><button class="practice-submit-btn" type="button" onclick="generateSentence()">Generate model</button><div class="practice-result-card" id="result-card"><span class="result-label">Read this aloud</span><p id="speech-output"></p></div></div>
+      </article>
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Survey Studio</p><h2>Favorite People Interview</h2></div></div>
+        <p class="lesson-text">Students interview classmates about famous people, classmates, and family members, then present short descriptions.</p>
+        <div class="activity-steps">
+          <div class="activity-step"><b>1</b><div><h3>Celebrity survey</h3><p>Ask five classmates: "Who is your favorite singer?", "Is she famous?", "Is he Colombian?", "Are they soccer players?"</p></div></div>
+          <div class="activity-step"><b>2</b><div><h3>Photo description</h3><p>Show or imagine a photo of a family member or celebrity. Describe the person using be-verb sentences and adjectives.</p></div></div>
+          <div class="activity-step"><b>3</b><div><h3>Guess who</h3><p>Give three clues without saying the name. Classmates ask yes/no questions until they guess the person.</p></div></div>
+        </div>
+        <div class="conversation-challenge"><h3>Mini presentation</h3><p>Prepare a 45-second presentation: "This is my favorite person. He is... He is from... He is famous because..." The class asks two yes/no questions.</p><div class="role-card-grid"><span>Interviewer</span><span>Celebrity expert</span><span>Family storyteller</span><span>Question judge</span></div></div>
+      </article>
+    </section>
+
+    <section class="lesson-next-section">
+      <div class="lesson-next-card">
+        <p class="eyebrow">Related workshops</p>
+        <h2>Continue with a full classroom task</h2>
+        <p>Use these expanded Practice Lab tasks to move from controlled practice into class interaction, production and feedback.</p>
+        <div class="hero-actions"><a href="workshop-unit-3-celebrity-survey.html" class="btn btn-primary">Celebrity Survey Studio</a><a href="workshop-unit-3-family-photo.html" class="btn btn-primary">Family Photo Gallery Walk</a><a href="listening-unit-3-favorite-people.html" class="btn btn-primary">Listening Unit 3</a><a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a></div>
+      </div>
+    </section>
+
+  </main>
+  <script>
+    const template = 'This is {person}. She is a {role}. She is {adjective}, and she is from {origin}. Is she famous? Yes, she is.';
+    const fields = ['person', 'role', 'adjective', 'origin'];
+    const defaults = {'person': 'Sofia', 'role': 'singer', 'adjective': 'friendly', 'origin': 'Colombia'};
+    function generateSentence() {
+      let output = template;
+      fields.forEach(function(id) {
+        const value = document.getElementById(id).value.trim() || defaults[id];
+        output = output.replaceAll("{" + id + "}", value);
+      });
+      document.getElementById("speech-output").textContent = '"' + output + '"';
+      document.getElementById("result-card").style.display = "block";
+    }
+  </script>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+</body>
+</html>

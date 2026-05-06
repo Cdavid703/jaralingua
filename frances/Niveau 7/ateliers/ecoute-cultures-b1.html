@@ -554,6 +554,7 @@
                 <audio controls preload="metadata" aria-label="Audio 1 sur la culture française">
                   <source src="../audio/culture-francaise-b1.mp3" type="audio/mpeg">
                 </audio>
+                <button type="button" class="btn-main mt-3" onclick="downloadTranscriptPdf('Une nouvelle facon de vivre les musees', frenchTranscriptFrance, 'culture-francaise-b1-transcription.pdf')"><i class="bi bi-file-earmark-pdf"></i>Telecharger la transcription</button>
               </div>
             </article>
           </div>
@@ -572,6 +573,7 @@
                 <audio controls preload="metadata" aria-label="Audio 2 sur la culture colombienne">
                   <source src="../audio/culture-colombienne-b1.mp3" type="audio/mpeg">
                 </audio>
+                <button type="button" class="btn-main mt-3" onclick="downloadTranscriptPdf('La culture colombienne au quotidien', frenchTranscriptColombia, 'culture-colombienne-b1-transcription.pdf')"><i class="bi bi-file-earmark-pdf"></i>Telecharger la transcription</button>
               </div>
             </article>
           </div>
@@ -640,7 +642,11 @@
   </button>
 
   <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/js/transcript-pdf.js"></script>
   <script>
+
+    const frenchTranscriptFrance = "Bienvenue dans cette chronique culturelle. Aujourd'hui, nous parlons d'une nouvelle facon de vivre les musees en France. Dans plusieurs villes, les musees ne sont plus seulement des lieux silencieux ou l'on regarde des tableaux. Ils deviennent des espaces interactifs. Les visiteurs peuvent ecouter des histoires, toucher certaines installations, participer a des ateliers et comparer les oeuvres avec leur propre experience. Cette transformation attire un public plus jeune. Les familles viennent le week-end, les etudiants utilisent les visites pour apprendre l'histoire, et les touristes decouvrent la culture francaise d'une maniere plus vivante. Cependant, le respect du patrimoine reste essentiel: on modernise l'experience sans oublier la valeur des collections.";
+    const frenchTranscriptColombia = "Dans cette deuxieme chronique, nous decouvrons la culture colombienne au quotidien. En Colombie, la culture ne se trouve pas seulement dans les musees ou les festivals. Elle est aussi dans la rue, dans la musique, dans la nourriture et dans les conversations familiales. Dans beaucoup de villes, les gens partagent un cafe, ecoutent de la musique locale et se reunissent sur les places ou dans les parcs. Les traditions changent selon les regions: la cote, les montagnes et les grandes villes ont des rythmes, des plats et des expressions differentes. Ce qui unit souvent les Colombiens, c'est l'importance de la convivialite, de la famille et de la celebration. La culture devient alors une pratique quotidienne, proche et collective.";
     const questions = [
       {
         audio: "Audio 1 · France",
