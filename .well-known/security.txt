@@ -1,0 +1,5 @@
+Contact: https://www.jaralingua.com/
+Preferred-Languages: es, en, fr
+Canonical: https://www.jaralingua.com/.well-known/security.txt
+Policy: https://www.jaralingua.com/
+Expires: 2027-05-06T00:00:00Z
