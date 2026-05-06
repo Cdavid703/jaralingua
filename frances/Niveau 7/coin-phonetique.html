@@ -1,0 +1,844 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coin phonétique | Français Niveau 7</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png">
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+
+  <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #2f9e77;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 28px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      color: var(--blue-dark);
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      letter-spacing: 0;
+    }
+
+    .brand-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(21, 52, 93, 0.12));
+    }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      padding: 8rem 0 5rem;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(21, 52, 93, 0.9), rgba(31, 78, 140, 0.74), rgba(214, 40, 57, 0.5)),
+        url("img/coin-phonetique-classe.png") center/cover no-repeat;
+      color: white;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 120px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: white;
+      font-weight: 900;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      max-width: 860px;
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-size: clamp(2.6rem, 6vw, 5.4rem);
+    }
+
+    .hero-lead {
+      max-width: 790px;
+      margin: 1.2rem 0 0;
+      font-size: clamp(1.16rem, 2vw, 1.42rem);
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 800;
+    }
+
+    .btn-main,
+    .btn-soft {
+      border-radius: 999px;
+      font-weight: 900;
+      min-height: 48px;
+      padding: 0.78rem 1.1rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      text-decoration: none;
+      border: 0;
+    }
+
+    .btn-main {
+      color: white;
+      background: linear-gradient(135deg, var(--red), #a6172a);
+      box-shadow: 0 16px 34px rgba(214, 40, 57, 0.26);
+    }
+
+    .btn-main:hover {
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    .btn-soft {
+      color: var(--blue-dark);
+      background: white;
+      border: 2px solid rgba(31, 78, 140, 0.14);
+    }
+
+    section { padding: 5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(2rem, 4vw, 3.15rem);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.75;
+    }
+
+    .visual-panel,
+    .lab-panel,
+    .quiz-panel {
+      background: white;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .visual-panel img {
+      width: 100%;
+      min-height: 360px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .visual-panel .visual-copy,
+    .lab-panel,
+    .quiz-panel {
+      padding: clamp(1.4rem, 3vw, 2.2rem);
+    }
+
+    .module-shell {
+      display: grid;
+      grid-template-columns: minmax(240px, 310px) 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .module-nav {
+      position: sticky;
+      top: 92px;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .module-tab {
+      border: 2px solid rgba(31, 78, 140, 0.12);
+      background: white;
+      color: var(--blue-dark);
+      min-height: 48px;
+      border-radius: 18px;
+      padding: 0.65rem 0.8rem;
+      font-weight: 900;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .module-tab.active {
+      border-color: var(--blue-dark);
+      color: white;
+      background: var(--blue-dark);
+    }
+
+    .module-content {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .rule-card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid rgba(31, 78, 140, 0.1);
+      box-shadow: 0 14px 34px rgba(20, 40, 80, 0.08);
+      overflow: hidden;
+    }
+
+    .rule-head {
+      padding: 1.2rem;
+      border: 0;
+      width: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      text-align: left;
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    .rule-head small {
+      display: block;
+      color: var(--red);
+      font-weight: 900;
+      margin-bottom: 0.28rem;
+    }
+
+    .rule-body {
+      display: none;
+      padding: 0 1.2rem 1.2rem;
+    }
+
+    .rule-card.open .rule-body {
+      display: block;
+    }
+
+    .ipa {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      min-height: 34px;
+      padding: 0 0.8rem;
+      background: #eef5ff;
+      color: var(--blue-dark);
+      font-weight: 900;
+      margin: 0.25rem 0.25rem 0.25rem 0;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .example-card {
+      border-radius: 18px;
+      background: var(--soft);
+      padding: 0.9rem;
+      display: grid;
+      gap: 0.35rem;
+    }
+
+    .example-card strong {
+      color: var(--blue-dark);
+      font-size: 1.18rem;
+    }
+
+    .sound-btn {
+      border: 0;
+      border-radius: 999px;
+      min-height: 38px;
+      padding: 0 0.85rem;
+      width: fit-content;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: var(--blue-dark);
+      color: white;
+      font-weight: 900;
+    }
+
+    .sound-btn:hover {
+      background: var(--red);
+    }
+
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .contrast-card {
+      border-radius: 22px;
+      padding: 1.2rem;
+      background: #eef5ff;
+      border: 1px solid rgba(31, 78, 140, 0.12);
+    }
+
+    .contrast-card.red {
+      background: #fff0f3;
+      border-color: rgba(214, 40, 57, 0.14);
+    }
+
+    .practice-line {
+      border-radius: 18px;
+      background: var(--soft);
+      padding: 1rem;
+      margin-top: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      padding: 3rem 0;
+    }
+
+    .footer a {
+      color: white;
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 991px) {
+      .module-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .module-nav {
+        position: static;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .hero { padding-top: 7rem; }
+    }
+
+    @media (max-width: 640px) {
+      .module-nav,
+      .contrast-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-main,
+      .btn-soft {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua">
+        <span>Français · Niveau 7</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#modules">Sons</a></li>
+          <li class="nav-item"><a class="nav-link" href="#rythme">Rythme</a></li>
+          <li class="nav-item"><a class="nav-link" href="#futur-conditionnel">Futur / conditionnel</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index: 1;">
+      <span class="badge-course"><i class="bi bi-soundwave"></i>Coin phonétique · Niveau 7</span>
+      <h1>Rythme, intonation et sons du français</h1>
+      <p class="hero-lead">
+        Un atelier complet pour comprendre comment le français se prononce : voyelles, combinaisons de lettres, nasales, consonnes, lettres muettes, liaisons, enchaînement, e caduc, rythme et différence entre futur et conditionnel.
+      </p>
+      <div class="d-flex flex-wrap gap-3 mt-4">
+        <a href="#modules" class="btn-main"><i class="bi bi-ear"></i>Explorer les sons</a>
+        <a href="#futur-conditionnel" class="btn-soft"><i class="bi bi-arrow-left-right"></i>Comparer futur / conditionnel</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="vision">
+      <div class="container">
+        <div class="row g-4 align-items-stretch">
+          <div class="col-lg-5 fade-in">
+            <article class="visual-panel h-100">
+              <img src="img/coin-phonetique-articulation.png" alt="Apprenant observant l’arrondissement des lèvres pour pratiquer la phonétique française">
+              <div class="visual-copy">
+                <p class="section-kicker">Articulation</p>
+                <h2 class="h3 fw-bold text-primary">La bouche travaille autant que l’oreille</h2>
+                <p class="section-text mb-0">Les sons français demandent de contrôler l’arrondissement des lèvres, l’ouverture de la bouche, la nasalité, la tension des voyelles et la continuité entre les mots.</p>
+              </div>
+            </article>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <article class="lab-panel h-100">
+              <p class="section-kicker">Carte générale</p>
+              <h2 class="section-title">Ce qu’il faut maîtriser</h2>
+              <p class="section-text">La phonétique française ne se limite pas aux lettres. Une même lettre peut changer de son selon sa position, et plusieurs lettres peuvent créer un seul son. Le français parlé relie aussi les mots : c’est pour cela que la phrase sonne comme un groupe musical, pas comme une suite de mots isolés.</p>
+              <div class="row g-3 mt-2">
+                <div class="col-md-6"><div class="example-card"><strong>Graphie → son</strong><span>au, eau → /o/ ; ou → /u/ ; oi → /wa/</span></div></div>
+                <div class="col-md-6"><div class="example-card"><strong>Nasalité</strong><span>an/en, on, in/ain/ein, un selon les accents</span></div></div>
+                <div class="col-md-6"><div class="example-card"><strong>Phrase</strong><span>liaison, enchaînement, e muet, accent final</span></div></div>
+                <div class="col-md-6"><div class="example-card"><strong>Nuance</strong><span>je parlerai / je parlerais, intonation et contexte</span></div></div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="modules" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Système phonétique</p>
+          <h2 class="section-title">Règles de base à avancées</h2>
+          <p class="section-text mx-auto" style="max-width: 860px;">Chaque module s’ouvre dans cette page. Les boutons audio utilisent la voix française du navigateur quand elle est disponible ; si aucune voix française n’est installée, le contenu écrit reste complet.</p>
+        </div>
+        <div class="module-shell fade-in">
+          <div class="module-nav" id="moduleNav"></div>
+          <div class="module-content" id="moduleContent"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rythme">
+      <div class="container">
+        <div class="lab-panel fade-in">
+          <p class="section-kicker">Prosodie</p>
+          <h2 class="section-title">Rythme et intonation</h2>
+          <p class="section-text">Le français est une langue à accent de groupe. L’accent principal tombe généralement sur la dernière syllabe prononcée d’un groupe rythmique : <strong>Je voudrais parler / avec le directeur / demain matin.</strong> Les syllabes sont plus régulières qu’en anglais ou en espagnol : il faut éviter de trop allonger une syllabe au milieu du groupe.</p>
+          <div class="row g-3">
+            <div class="col-md-4"><div class="example-card"><strong>Déclaration</strong><span>La voix descend à la fin.</span><button class="sound-btn" data-say="Je voudrais réserver une table pour ce soir."><i class="bi bi-volume-up"></i>Écouter</button></div></div>
+            <div class="col-md-4"><div class="example-card"><strong>Question oui/non</strong><span>La voix monte souvent à la fin.</span><button class="sound-btn" data-say="Vous viendrez demain ?"><i class="bi bi-volume-up"></i>Écouter</button></div></div>
+            <div class="col-md-4"><div class="example-card"><strong>Question avec mot interrogatif</strong><span>La voix peut descendre après le mot clé.</span><button class="sound-btn" data-say="Pourquoi avez-vous choisi ce projet ?"><i class="bi bi-volume-up"></i>Écouter</button></div></div>
+          </div>
+          <div class="practice-line">
+            <strong>Groupe rythmique :</strong>
+            <span>Dans mon opinion / il faudrait agir / avant la fin du mois.</span>
+            <button class="sound-btn" data-say="Dans mon opinion, il faudrait agir avant la fin du mois."><i class="bi bi-volume-up"></i>Écouter</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="futur-conditionnel" class="bg-white">
+      <div class="container">
+        <div class="lab-panel fade-in">
+          <p class="section-kicker">Distinction fine</p>
+          <h2 class="section-title">Futur simple ou conditionnel présent</h2>
+          <p class="section-text">À l’écrit, la différence est claire : <strong>-ai</strong> au futur, <strong>-ais</strong> au conditionnel. À l’oral, beaucoup de locuteurs prononcent le futur avec un son plus fermé /e/ et le conditionnel avec un son plus ouvert /ɛ/. Selon les régions, cette opposition peut être moins marquée ; le contexte grammatical reste donc essentiel.</p>
+          <div class="contrast-grid mt-3">
+            <article class="contrast-card">
+              <p class="section-kicker mb-2">Futur</p>
+              <h3 class="fw-bold">Je parlerai</h3>
+              <p class="section-text mb-2">Valeur : action certaine ou prévue. Terminaison écrite : <strong>-ai</strong>. Prononciation souvent proche de /paʁləʁe/.</p>
+              <button class="sound-btn" data-say="Demain, je parlerai avec le directeur."><i class="bi bi-volume-up"></i>Écouter</button>
+            </article>
+            <article class="contrast-card red">
+              <p class="section-kicker mb-2">Conditionnel</p>
+              <h3 class="fw-bold">Je parlerais</h3>
+              <p class="section-text mb-2">Valeur : hypothèse, politesse, souhait. Terminaison écrite : <strong>-ais</strong>. Prononciation souvent proche de /paʁləʁɛ/.</p>
+              <button class="sound-btn" data-say="Si j’avais le temps, je parlerais avec le directeur."><i class="bi bi-volume-up"></i>Écouter</button>
+            </article>
+          </div>
+          <div class="row g-3 mt-3">
+            <div class="col-md-4"><div class="example-card"><strong>Futur certain</strong><span>Nous finirons le projet.</span><button class="sound-btn" data-say="Nous finirons le projet."><i class="bi bi-volume-up"></i>Écouter</button></div></div>
+            <div class="col-md-4"><div class="example-card"><strong>Hypothèse</strong><span>Nous finirions le projet si nous avions plus de temps.</span><button class="sound-btn" data-say="Nous finirions le projet si nous avions plus de temps."><i class="bi bi-volume-up"></i>Écouter</button></div></div>
+            <div class="col-md-4"><div class="example-card"><strong>Politesse</strong><span>Pourriez-vous répéter ?</span><button class="sound-btn" data-say="Pourriez-vous répéter ?"><i class="bi bi-volume-up"></i>Écouter</button></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ressources">
+      <div class="container">
+        <div class="quiz-panel fade-in">
+          <p class="section-kicker">Synthèse</p>
+          <h2 class="section-title">Comment utiliser cette page en classe</h2>
+          <p class="section-text mb-0">
+            Travaillez une seule catégorie à la fois : d’abord écouter, puis observer la bouche, répéter lentement, répéter dans une phrase, et enfin comparer deux sons proches. L’objectif n’est pas de mémoriser tous les symboles IPA, mais d’apprendre à relier une graphie, un geste articulatoire et un son réel.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Coin phonétique · Français Niveau 7</h2>
+          <p class="mb-0 opacity-75">Travail sur les sons, le rythme, l’intonation et la distinction futur / conditionnel.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="index.html"><i class="bi bi-arrow-left"></i> Retour à l’accueil</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const modules = [
+      {
+        id: "bases",
+        icon: "bi-vinyl",
+        title: "Bases voyelles",
+        rules: [
+          {
+            tag: "Voyelle simple",
+            title: "a, i, ou : trois repères stables",
+            ipa: ["/a/", "/i/", "/u/"],
+            text: "Le français garde des voyelles plutôt nettes. Le /i/ est très tendu comme dans « si ». Le /u/ de « ou » demande des lèvres très arrondies ; il ne faut pas le confondre avec /y/ de « tu ».",
+            examples: [["ami", "/ami/"], ["si", "/si/"], ["vous", "/vu/"], ["tu", "/ty/"]]
+          },
+          {
+            tag: "Important",
+            title: "au et eau se prononcent souvent /o/",
+            ipa: ["/o/"],
+            text: "Ce n’est pas la voyelle « a + u » prononcée séparément : la graphie « au » forme un seul son. « eau » donne aussi /o/ dans beaucoup de mots.",
+            examples: [["chaud", "/ʃo/"], ["eau", "/o/"], ["beau", "/bo/"], ["aussi", "/osi/"]]
+          },
+          {
+            tag: "Ouverture",
+            title: "é fermé et è ouvert",
+            ipa: ["/e/", "/ɛ/"],
+            text: "« é » est plus fermé, comme dans « été ». « è », « ê », « ai » ou « ei » peuvent produire un son plus ouvert, comme dans « mère » ou « faire ».",
+            examples: [["été", "/ete/"], ["mère", "/mɛʁ/"], ["faire", "/fɛʁ/"], ["neige", "/nɛʒ/"]]
+          }
+        ]
+      },
+      {
+        id: "combinaisons",
+        icon: "bi-bezier2",
+        title: "Combinaisons",
+        rules: [
+          {
+            tag: "Digrammes",
+            title: "ou, oi, eu, œu",
+            ipa: ["/u/", "/wa/", "/ø/", "/œ/"],
+            text: "« ou » donne /u/. « oi » donne généralement /wa/. « eu » et « œu » changent selon l’ouverture : fermé dans « peu », ouvert dans « peur ».",
+            examples: [["rouge", "/ʁuʒ/"], ["moi", "/mwa/"], ["peu", "/pø/"], ["peur", "/pœʁ/"]]
+          },
+          {
+            tag: "Semi-voyelles",
+            title: "i, u, ou peuvent glisser",
+            ipa: ["/j/", "/ɥ/", "/w/"],
+            text: "Devant une autre voyelle, certaines graphies créent une semi-voyelle : « pied » /pje/, « nuit » /nɥi/, « oui » /wi/. La bouche bouge vite vers la voyelle suivante.",
+            examples: [["pied", "/pje/"], ["nuit", "/nɥi/"], ["oui", "/wi/"], ["lui", "/lɥi/"]]
+          },
+          {
+            tag: "Graphies fréquentes",
+            title: "ai, ei, eau, au, ou, oi",
+            ipa: ["/ɛ/", "/o/", "/u/", "/wa/"],
+            text: "Ces groupes se lisent comme des unités. Un étudiant qui lit lettre par lettre perd le rythme naturel du français.",
+            examples: [["mais", "/mɛ/"], ["peine", "/pɛn/"], ["nouveau", "/nuvo/"], ["soir", "/swaʁ/"]]
+          }
+        ]
+      },
+      {
+        id: "nasales",
+        icon: "bi-wind",
+        title: "Voyelles nasales",
+        rules: [
+          {
+            tag: "Nasalité",
+            title: "an, en, am, em",
+            ipa: ["/ɑ̃/"],
+            text: "L’air passe par le nez et par la bouche. On ne prononce généralement pas le « n » ou le « m » comme une consonne si une autre voyelle ne suit pas.",
+            examples: [["France", "/fʁɑ̃s/"], ["enfant", "/ɑ̃fɑ̃/"], ["temps", "/tɑ̃/"], ["chambre", "/ʃɑ̃bʁ/"]]
+          },
+          {
+            tag: "Nasalité",
+            title: "on, om",
+            ipa: ["/ɔ̃/"],
+            text: "La bouche est arrondie, plus fermée que pour « an ». Attention à ne pas ajouter un /n/ final.",
+            examples: [["nom", "/nɔ̃/"], ["bon", "/bɔ̃/"], ["comprendre", "/kɔ̃pʁɑ̃dʁ/"], ["maison", "/mɛzɔ̃/"]]
+          },
+          {
+            tag: "Nasalité",
+            title: "in, ain, ein, aim",
+            ipa: ["/ɛ̃/"],
+            text: "Ces graphies donnent souvent le même son nasal. Dans beaucoup d’accents actuels, « un » se rapproche aussi de /ɛ̃/, même si la distinction /œ̃/ existe dans certains usages.",
+            examples: [["vin", "/vɛ̃/"], ["pain", "/pɛ̃/"], ["plein", "/plɛ̃/"], ["brun", "/bʁœ̃/ ou /bʁɛ̃/"]]
+          }
+        ]
+      },
+      {
+        id: "consonnes",
+        icon: "bi-chat-square-dots",
+        title: "Consonnes",
+        rules: [
+          {
+            tag: "C et G",
+            title: "c/g changent devant e, i, y",
+            ipa: ["/s/", "/k/", "/ʒ/", "/g/"],
+            text: "« c » se prononce /s/ devant e, i, y, mais /k/ devant a, o, u. « g » se prononce /ʒ/ devant e, i, y, mais /g/ devant a, o, u. La cédille garde le son /s/ devant a, o, u.",
+            examples: [["centre", "/sɑ̃tʁ/"], ["carte", "/kaʁt/"], ["général", "/ʒeneʁal/"], ["garçon", "/gaʁsɔ̃/"]]
+          },
+          {
+            tag: "Groupes",
+            title: "ch, gn, ph, qu",
+            ipa: ["/ʃ/", "/ɲ/", "/f/", "/k/"],
+            text: "« ch » donne souvent /ʃ/, « gn » donne /ɲ/, « ph » donne /f/, et « qu » donne /k/. Ces groupes sont très fréquents dans le vocabulaire académique.",
+            examples: [["chercher", "/ʃɛʁʃe/"], ["montagne", "/mɔ̃taɲ/"], ["philosophie", "/filɔzɔfi/"], ["question", "/kɛstjɔ̃/"]]
+          },
+          {
+            tag: "R français",
+            title: "Le r se prononce dans la gorge",
+            ipa: ["/ʁ/"],
+            text: "Le /ʁ/ français n’est pas le r roulé espagnol. Il se produit vers l’arrière de la bouche. En fin de mot, il est souvent prononcé : « parler », « culture », « pouvoir ».",
+            examples: [["rue", "/ʁy/"], ["culture", "/kyltyʁ/"], ["pouvoir", "/puvwaʁ/"], ["très", "/tʁɛ/"]]
+          }
+        ]
+      },
+      {
+        id: "muettes",
+        icon: "bi-volume-mute",
+        title: "Lettres muettes",
+        rules: [
+          {
+            tag: "Finales",
+            title: "Beaucoup de consonnes finales ne se prononcent pas",
+            ipa: ["finale muette"],
+            text: "En fin de mot, d, s, t, x, z sont souvent muets : « grand », « vous », « petit », « deux », « nez ». Mais il y a des exceptions : « sud », « fils », « net ».",
+            examples: [["grand", "/gʁɑ̃/"], ["petit", "/pəti/"], ["deux", "/dø/"], ["nez", "/ne/"]]
+          },
+          {
+            tag: "E final",
+            title: "Le e final disparaît souvent",
+            ipa: ["/ə/ variable"],
+            text: "À l’oral courant, le « e » final est souvent non prononcé : « table » peut sonner /tabl/. En poésie, théâtre ou diction lente, il peut réapparaître.",
+            examples: [["table", "/tabl/"], ["petite", "/pətit/"], ["France", "/fʁɑ̃s/"], ["porte", "/pɔʁt/"]]
+          },
+          {
+            tag: "H",
+            title: "h muet et h aspiré",
+            ipa: ["liaison possible ou bloquée"],
+            text: "Le h ne se prononce pas. Avec h muet, on fait l’élision et la liaison : « l’homme », « les hommes ». Avec h aspiré, on bloque : « le héros », « les héros » sans liaison.",
+            examples: [["l’homme", "/lɔm/"], ["les hommes", "/lez‿ɔm/"], ["le héros", "/lə eʁo/"], ["les héros", "/le eʁo/"]]
+          }
+        ]
+      },
+      {
+        id: "liaisons",
+        icon: "bi-link-45deg",
+        title: "Liaisons",
+        rules: [
+          {
+            tag: "Obligatoire",
+            title: "Déterminant + nom, pronom + verbe",
+            ipa: ["/z/", "/t/", "/n/"],
+            text: "La liaison relie une consonne finale normalement muette au mot suivant s’il commence par une voyelle ou un h muet. Elle est obligatoire dans les groupes très liés.",
+            examples: [["les amis", "/lez‿ami/"], ["vous avez", "/vuz‿ave/"], ["un enfant", "/œ̃n‿ɑ̃fɑ̃/"], ["petit ami", "/pətit‿ami/"]]
+          },
+          {
+            tag: "Interdite",
+            title: "Après et, devant h aspiré, après nom singulier",
+            ipa: ["pas de liaison"],
+            text: "On ne fait pas la liaison après « et » : « toi et elle ». On ne la fait pas devant h aspiré. Après un nom singulier, elle est généralement évitée.",
+            examples: [["toi et elle", "pas /twa tɛl/"], ["les héros", "pas /lez‿eʁo/"], ["un étudiant intelligent", "liaison après déterminant"], ["un savant anglais", "souvent sans liaison après nom"]]
+          },
+          {
+            tag: "Enchaînement",
+            title: "La consonne prononcée glisse vers la voyelle suivante",
+            ipa: ["enchaînement consonantique"],
+            text: "Si une consonne finale est déjà prononcée, elle s’attache naturellement au mot suivant : « avec elle » sonne comme un seul groupe.",
+            examples: [["avec elle", "/avɛk‿ɛl/"], ["pour eux", "/puʁ‿ø/"], ["il arrive", "/il‿aʁiv/"], ["elle écoute", "/ɛl‿ekut/"]]
+          }
+        ]
+      },
+      {
+        id: "avance",
+        icon: "bi-stars",
+        title: "Avancé",
+        rules: [
+          {
+            tag: "E caduc",
+            title: "Le e peut tomber ou se maintenir",
+            ipa: ["/ə/"],
+            text: "Le e caduc dépend du registre, du rythme et du nombre de consonnes. « Je ne sais pas » devient souvent « j’sais pas » à l’oral familier, mais en classe on garde une articulation claire.",
+            examples: [["je ne sais pas", "/ʒə nə sɛ pa/"], ["j’sais pas", "/ʃɛ pa/"], ["samedi", "/samdi/ ou /samədi/"], ["rapidement", "/ʁapidmɑ̃/"]]
+          },
+          {
+            tag: "Assimilation",
+            title: "Certains sons s’influencent",
+            ipa: ["variation naturelle"],
+            text: "Dans la parole rapide, une consonne peut devenir plus proche de la suivante. Il ne faut pas forcer ces phénomènes au début, mais les reconnaître aide à mieux comprendre les natifs.",
+            examples: [["je suis", "souvent /ʃɥi/"], ["maintenant", "souvent /mɛ̃nɑ̃/"], ["il y a", "souvent /ilja/ ou /ja/"], ["parce que", "souvent /paʁskə/"]]
+          },
+          {
+            tag: "Registre",
+            title: "Prononcer clairement sans surarticuler",
+            ipa: ["équilibre"],
+            text: "Une bonne prononciation n’est pas une lecture lettre par lettre. Elle garde les sons nécessaires, respecte les groupes rythmiques et évite d’ajouter des consonnes finales inexistantes.",
+            examples: [["beaucoup", "/boku/"], ["ils parlent", "/il paʁl/"], ["des idées", "/dez‿ide/"], ["très important", "/tʁɛz‿ɛ̃pɔʁtɑ̃/"]]
+          }
+        ]
+      }
+    ];
+
+    const moduleNav = document.getElementById("moduleNav");
+    const moduleContent = document.getElementById("moduleContent");
+
+    function speak(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("La voix du navigateur n’est pas disponible sur cet appareil.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "fr-FR";
+      utterance.rate = 0.82;
+      utterance.pitch = 1;
+      const voices = window.speechSynthesis.getVoices();
+      const frenchVoice = voices.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith("fr"));
+      if (frenchVoice) utterance.voice = frenchVoice;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function renderModules(activeId = modules[0].id) {
+      moduleNav.innerHTML = modules.map((module) => `
+        <button class="module-tab ${module.id === activeId ? "active" : ""}" type="button" data-module="${module.id}">
+          <i class="bi ${module.icon}"></i><span>${module.title}</span>
+        </button>
+      `).join("");
+
+      const active = modules.find((module) => module.id === activeId);
+      moduleContent.innerHTML = active.rules.map((rule, index) => `
+        <article class="rule-card ${index === 0 ? "open" : ""}">
+          <button class="rule-head" type="button">
+            <span><small>${rule.tag}</small>${rule.title}</span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="rule-body">
+            <div>${rule.ipa.map((item) => `<span class="ipa">${item}</span>`).join("")}</div>
+            <p class="section-text mb-0 mt-2">${rule.text}</p>
+            <div class="example-grid">
+              ${rule.examples.map(([word, ipa]) => `
+                <div class="example-card">
+                  <strong>${word}</strong>
+                  <span>${ipa}</span>
+                  <button class="sound-btn" data-say="${word.replace(/"/g, "&quot;")}"><i class="bi bi-volume-up"></i>Écouter</button>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    renderModules();
+
+    document.addEventListener("click", (event) => {
+      const moduleButton = event.target.closest("[data-module]");
+      if (moduleButton) renderModules(moduleButton.dataset.module);
+
+      const ruleHead = event.target.closest(".rule-head");
+      if (ruleHead) ruleHead.closest(".rule-card").classList.toggle("open");
+
+      const soundButton = event.target.closest("[data-say]");
+      if (soundButton) speak(soundButton.dataset.say);
+
+    });
+
+    const fadeElements = document.querySelectorAll(".fade-in");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add("visible");
+      });
+    }, { threshold: 0.12 });
+    fadeElements.forEach((element) => observer.observe(element));
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+  </script>
+</body>
+</html>

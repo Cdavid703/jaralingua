@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Atelier d'ecoute - Cultures francaise et colombienne | Francais Niveau 7</title>
+  <title>Atelier d’écoute - Cultures française et colombienne | Français Niveau 7</title>
   <link rel="icon" href="../../../favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
   <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -49,6 +49,19 @@
       color: var(--blue-dark);
       letter-spacing: 0;
     }
+    .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .navbar-brand .brand-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(21, 52, 93, 0.12));
+    }
+
 
     .nav-link {
       color: var(--text);
@@ -470,18 +483,16 @@
 <body>
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="../index.html">
-        <i class="bi bi-stars text-danger me-2"></i>Francais · Niveau 7
-      </a>
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="menuPrincipal">
         <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
           <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link active" href="#audios">Ecoute</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#audios">Écoute</a></li>
           <li class="nav-item"><a class="nav-link" href="#quiz">Questions</a></li>
-          <li class="nav-item"><a class="nav-link" href="#liens">Debat</a></li>
+          <li class="nav-item"><a class="nav-link" href="#liens">Débat</a></li>
         </ul>
       </div>
     </div>
@@ -493,12 +504,12 @@
         <div class="col-lg-7 fade-in">
           <span class="badge-course">
             <i class="bi bi-headphones"></i>
-            Atelier d'ecoute · Niveau B1
+            Atelier d’écoute · Niveau B1
           </span>
-          <h1>Ecouter deux chroniques culturelles</h1>
-          <p class="hero-lead">Comprendre, comparer et discuter la culture francaise et la culture colombienne.</p>
+          <h1>Écouter deux chroniques culturelles</h1>
+          <p class="hero-lead">Comprendre, comparer et discuter la culture française et la culture colombienne.</p>
           <p class="hero-text">
-            L'activite contient deux audios courts avec images propres, un questionnaire de comprehension et six questions finales pour comparer les deux cultures.
+            L’activité contient deux audios courts avec images propres, un questionnaire de compréhension et six questions finales pour comparer les deux cultures.
           </p>
           <div class="d-flex flex-wrap gap-3 mt-4">
             <a href="#audios" class="btn-main"><i class="bi bi-play-circle"></i>Lancer les audios</a>
@@ -508,8 +519,8 @@
 
         <div class="col-lg-5 fade-in">
           <div class="hero-visual">
-            <img src="../img/ecoute-culture-francaise.png" alt="Etudiants ecoutant une chronique culturelle dans un musee francais">
-            <img src="../img/ecoute-culture-colombienne.png" alt="Groupe discutant dans une place colombienne pendant une activite d'ecoute">
+            <img src="../img/ecoute-culture-francaise.png" alt="Étudiants écoutant une chronique culturelle dans un musée français">
+            <img src="../img/ecoute-culture-colombienne.png" alt="Groupe discutant dans une place colombienne pendant une activité d’écoute">
             <span class="sound-chip"><i class="bi bi-soundwave text-danger"></i>B1 · 20 questions</span>
           </div>
         </div>
@@ -521,10 +532,10 @@
     <section id="audios">
       <div class="container">
         <div class="text-center mb-5 fade-in">
-          <p class="section-kicker">Comprehension orale</p>
+          <p class="section-kicker">Compréhension orale</p>
           <h2 class="section-title">Deux audios culturels</h2>
           <p class="section-text mx-auto">
-            Ecoutez chaque audio deux fois. Prenez des notes sur les idees principales, les exemples et les nuances culturelles.
+            Écoutez chaque audio deux fois. Prenez des notes sur les idées principales, les exemples et les nuances culturelles.
           </p>
         </div>
 
@@ -535,12 +546,12 @@
                 <img src="../img/ecoute-culture-francaise.png" alt="Chronique culturelle sur la France">
                 <div class="audio-top-content">
                   <p class="text-uppercase fw-bold opacity-75 mb-2">Audio 1 · France</p>
-                  <h3 class="fw-bold mb-0">Une nouvelle facon de vivre les musees</h3>
+                  <h3 class="fw-bold mb-0">Une nouvelle façon de vivre les musées</h3>
                 </div>
               </div>
               <div class="audio-body">
-                <p class="section-text mb-2">Ecoutez la chronique, puis repondez aux questions 1 a 7.</p>
-                <audio controls preload="metadata" aria-label="Audio 1 sur la culture francaise">
+                <p class="section-text mb-2">Écoutez la chronique, puis répondez aux questions 1 à 7.</p>
+                <audio controls preload="metadata" aria-label="Audio 1 sur la culture française">
                   <source src="../audio/culture-francaise-b1.mp3" type="audio/mpeg">
                 </audio>
               </div>
@@ -557,7 +568,7 @@
                 </div>
               </div>
               <div class="audio-body">
-                <p class="section-text mb-2">Ecoutez la chronique, puis repondez aux questions 8 a 14.</p>
+                <p class="section-text mb-2">Écoutez la chronique, puis répondez aux questions 8 à 14.</p>
                 <audio controls preload="metadata" aria-label="Audio 2 sur la culture colombienne">
                   <source src="../audio/culture-colombienne-b1.mp3" type="audio/mpeg">
                 </audio>
@@ -572,9 +583,9 @@
       <div class="container">
         <div class="text-center mb-5 fade-in">
           <p class="section-kicker">Questionnaire</p>
-          <h2 class="section-title">20 questions de comprehension et de comparaison</h2>
+          <h2 class="section-title">20 questions de compréhension et de comparaison</h2>
           <p class="section-text mx-auto">
-            Les questions 1 a 14 verifient la comprehension des deux audios. Les questions 15 a 20 comparent les deux cultures.
+            Les questions 1 à 14 vérifient la compréhension des deux audios. Les questions 15 à 20 comparent les deux cultures.
           </p>
         </div>
 
@@ -597,11 +608,11 @@
           <div class="row align-items-center g-4">
             <div class="col-lg-8">
               <p class="text-uppercase fw-bold opacity-75 mb-2">Lien avec le cours</p>
-              <h2 class="fw-bold mb-2">Cette ecoute prepare le debat culturel</h2>
-              <p class="mb-0 opacity-75 fs-5">Apres les audios, les etudiants peuvent comparer les cultures et reutiliser les connecteurs logiques pour argumenter.</p>
+              <h2 class="fw-bold mb-2">Cette écoute prépare le débat culturel</h2>
+              <p class="mb-0 opacity-75 fs-5">Après les audios, les étudiants peuvent comparer les cultures et réutiliser les connecteurs logiques pour argumenter.</p>
             </div>
             <div class="col-lg-4 text-lg-end">
-              <a href="debat-culturel-france-colombie.html" class="btn btn-light fw-bold rounded-pill px-4 py-3 mb-2">Aller au debat</a>
+              <a href="debat-culturel-france-colombie.html" class="btn btn-light fw-bold rounded-pill px-4 py-3 mb-2">Aller au débat</a>
               <a href="../ateliers-activites.html#ateliers" class="btn btn-outline-light fw-bold rounded-pill px-4 py-3">Voir les ateliers</a>
             </div>
           </div>
@@ -614,8 +625,8 @@
     <div class="container">
       <div class="row align-items-center g-4">
         <div class="col-lg-8">
-          <h2 class="h4 fw-bold mb-2">Atelier d'ecoute - Cultures francaise et colombienne</h2>
-          <p class="mb-0 opacity-75">Deux chroniques niveau B1 avec questionnaire de comprehension et comparaison interculturelle.</p>
+          <h2 class="h4 fw-bold mb-2">Atelier d’écoute - Cultures française et colombienne</h2>
+          <p class="mb-0 opacity-75">Deux chroniques niveau B1 avec questionnaire de compréhension et comparaison interculturelle.</p>
         </div>
         <div class="col-lg-4 text-lg-end">
           <a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a>
@@ -633,142 +644,142 @@
     const questions = [
       {
         audio: "Audio 1 · France",
-        prompt: "Quel est le sujet principal de la premiere chronique ?",
-        options: ["Les musees francais et les jeunes publics", "La cuisine francaise", "Les transports en France"],
-        answer: "Les musees francais et les jeunes publics",
-        feedback: "La chronique parle des musees qui cherchent a attirer un public plus jeune."
+        prompt: "Quel est le sujet principal de la première chronique ?",
+        options: ["La restauration des œuvres anciennes", "Les musées français et les jeunes publics", "La gratuité totale des transports culturels"],
+        answer: "Les musées français et les jeunes publics",
+        feedback: "La chronique parle des musées qui cherchent à attirer un public plus jeune."
       },
       {
         audio: "Audio 1 · France",
-        prompt: "Quelles activites sont mentionnees dans les musees ?",
-        options: ["Des visites en musique et des parcours interactifs", "Des competitions sportives", "Des cours de cuisine"],
+        prompt: "Quelles activités sont mentionnées dans les musées ?",
+        options: ["Des visites exclusivement guidées par des historiens", "Des conférences longues sans interaction", "Des visites en musique et des parcours interactifs"],
         answer: "Des visites en musique et des parcours interactifs",
-        feedback: "Le texte mentionne des soirees, des visites en musique et des parcours interactifs."
+        feedback: "Le texte mentionne des soirées, des visites en musique et des parcours interactifs."
       },
       {
         audio: "Audio 1 · France",
-        prompt: "Selon la chronique, le musee moderne peut devenir...",
-        options: ["un espace de rencontre et de discussion", "un espace reserve aux experts", "un lieu uniquement silencieux"],
+        prompt: "Selon la chronique, le musée moderne peut devenir...",
+        options: ["un espace de rencontre et de discussion", "un lieu d’archives réservé aux chercheurs", "un espace où l’on remplace les œuvres par des écrans"],
         answer: "un espace de rencontre et de discussion",
-        feedback: "Le musee est presente comme un lieu vivant, d'echange et de curiosite."
+        feedback: "Le musée est présenté comme un lieu vivant, d’échange et de curiosité."
       },
       {
         audio: "Audio 1 · France",
         prompt: "Pourquoi cette tendance est-elle positive selon le locuteur ?",
-        options: ["Parce qu'elle rend l'art plus accessible", "Parce qu'elle ferme les musees", "Parce qu'elle supprime les oeuvres anciennes"],
-        answer: "Parce qu'elle rend l'art plus accessible",
-        feedback: "Le locuteur dit que l'on peut decouvrir l'art sans avoir peur de ne pas tout comprendre."
+        options: ["Parce qu’elle transforme les musées en centres commerciaux", "Parce qu’elle réduit la place des œuvres anciennes", "Parce qu’elle rend l’art plus accessible"],
+        answer: "Parce qu’elle rend l’art plus accessible",
+        feedback: "Le locuteur dit que l’on peut découvrir l’art sans avoir peur de ne pas tout comprendre."
       },
       {
         audio: "Audio 1 · France",
-        prompt: "Quelle limite est mentionnee ?",
-        options: ["Il faut garder le respect des oeuvres", "Il faut interdire les ateliers", "Il faut eviter les jeunes visiteurs"],
-        answer: "Il faut garder le respect des oeuvres",
-        feedback: "Le texte nuance : la culture doit etre vivante, mais les oeuvres doivent rester respectees."
+        prompt: "Quelle limite est mentionnée ?",
+        options: ["Il faut privilégier uniquement les expositions numériques", "Il faut garder le respect des œuvres", "Il faut limiter les musées aux visiteurs spécialistes"],
+        answer: "Il faut garder le respect des œuvres",
+        feedback: "Le texte nuance : la culture doit être vivante, mais les œuvres doivent rester respectées."
       },
       {
         audio: "Audio 1 · France",
-        prompt: "Quelles villes sont citees ?",
+        prompt: "Quelles villes sont citées ?",
         options: ["Paris, Lyon et Nantes", "Marseille, Lille et Dijon", "Bordeaux, Toulouse et Nice"],
         answer: "Paris, Lyon et Nantes",
         feedback: "La chronique cite Paris, Lyon et Nantes."
       },
       {
         audio: "Audio 1 · France",
-        prompt: "Quel ton correspond le mieux a l'audio ?",
-        options: ["Informatif et positif", "Tres negatif", "Publicitaire et exagere"],
+        prompt: "Quel ton correspond le mieux à l’audio ?",
+        options: ["Critique et alarmiste", "Neutre et administratif", "Informatif et positif"],
         answer: "Informatif et positif",
-        feedback: "La chronique presente une information culturelle avec un avis favorable."
+        feedback: "La chronique présente une information culturelle avec un avis favorable."
       },
       {
         audio: "Audio 2 · Colombie",
-        prompt: "Quel est le theme principal de la deuxieme chronique ?",
-        options: ["La culture colombienne au quotidien", "La meteo en Colombie", "Les musees francais"],
+        prompt: "Quel est le thème principal de la deuxième chronique ?",
+        options: ["L’histoire coloniale dans les musées", "La culture colombienne au quotidien", "La comparaison des systèmes scolaires"],
         answer: "La culture colombienne au quotidien",
         feedback: "La chronique explique des habitudes sociales et culturelles colombiennes."
       },
       {
         audio: "Audio 2 · Colombie",
-        prompt: "Quels elements sont souvent associes a la Colombie ?",
-        options: ["La musique, la danse, le cafe et la chaleur humaine", "La neige et les chateaux", "Les trains et les musees"],
-        answer: "La musique, la danse, le cafe et la chaleur humaine",
-        feedback: "Ces elements sont cites au debut de la chronique."
+        prompt: "Quels éléments sont souvent associés à la Colombie ?",
+        options: ["La musique, la danse, le café et la chaleur humaine", "Les festivals, les universités et les débats politiques", "Les paysages froids, les châteaux et la vie rurale européenne"],
+        answer: "La musique, la danse, le café et la chaleur humaine",
+        feedback: "Ces éléments sont cités au début de la chronique."
       },
       {
         audio: "Audio 2 · Colombie",
-        prompt: "Quelle place occupe la conversation dans beaucoup de regions ?",
-        options: ["Une place tres importante", "Une place secondaire", "Aucune place"],
-        answer: "Une place tres importante",
-        feedback: "Le texte dit que l'on prend le temps de saluer et de creer une relation."
+        prompt: "Quelle place occupe la conversation dans beaucoup de régions ?",
+        options: ["Une place surtout formelle et distante", "Une place limitée aux réunions familiales", "Une place très importante"],
+        answer: "Une place très importante",
+        feedback: "Le texte dit que l’on prend le temps de saluer et de créer une relation."
       },
       {
         audio: "Audio 2 · Colombie",
-        prompt: "Pourquoi la proximite sociale peut-elle surprendre des etrangers ?",
-        options: ["Parce qu'elle montre une autre maniere de construire la confiance", "Parce qu'elle empeche toujours de parler", "Parce qu'elle existe seulement a Bogota"],
-        answer: "Parce qu'elle montre une autre maniere de construire la confiance",
-        feedback: "La proximite est presentee comme une maniere de creer la confiance."
+        prompt: "Pourquoi la proximité sociale peut-elle surprendre des étrangers ?",
+        options: ["Parce qu’elle efface toute différence régionale", "Parce qu’elle montre une autre manière de construire la confiance", "Parce qu’elle oblige à accepter toutes les invitations"],
+        answer: "Parce qu’elle montre une autre manière de construire la confiance",
+        feedback: "La proximité est présentée comme une manière de créer la confiance."
       },
       {
         audio: "Audio 2 · Colombie",
-        prompt: "Pourquoi ne faut-il pas generaliser la culture colombienne ?",
-        options: ["Parce que les regions sont tres diverses", "Parce que la Colombie n'a pas de traditions", "Parce que toutes les villes sont identiques"],
-        answer: "Parce que les regions sont tres diverses",
-        feedback: "Le texte cite Bogota, Medellin, Cali, Cartagena et les villages pour montrer la diversite."
+        prompt: "Pourquoi ne faut-il pas généraliser la culture colombienne ?",
+        options: ["Parce que la capitale représente toutes les régions", "Parce que les traditions disparaissent dans les villes", "Parce que les régions sont très diverses"],
+        answer: "Parce que les régions sont très diverses",
+        feedback: "Le texte cite Bogotá, Medellín, Cali, Cartagena et les villages pour montrer la diversité."
       },
       {
         audio: "Audio 2 · Colombie",
-        prompt: "Selon le locuteur, d'ou vient la richesse de la Colombie ?",
-        options: ["De sa diversite culturelle et regionale", "D'une seule facon de vivre", "Du silence dans les conversations"],
-        answer: "De sa diversite culturelle et regionale",
-        feedback: "Le locuteur conclut que la richesse vient de plusieurs facons de parler, celebrer et vivre ensemble."
+        prompt: "Selon le locuteur, d’où vient la richesse de la Colombie ?",
+        options: ["De sa diversité culturelle et régionale", "D’une seule façon de parler et de célébrer", "De l’absence de différences entre les villes"],
+        answer: "De sa diversité culturelle et régionale",
+        feedback: "Le locuteur conclut que la richesse vient de plusieurs façons de parler, célébrer et vivre ensemble."
       },
       {
         audio: "Audio 2 · Colombie",
-        prompt: "Quelle competence cette chronique aide-t-elle a pratiquer ?",
-        options: ["Comparer une culture avec nuance", "Raconter uniquement une histoire au passe simple", "Decrire une recette"],
+        prompt: "Quelle compétence cette chronique aide-t-elle à pratiquer ?",
+        options: ["Décrire une recette traditionnelle", "Comparer une culture avec nuance", "Raconter uniquement une histoire au passé simple"],
         answer: "Comparer une culture avec nuance",
-        feedback: "La chronique insiste sur l'observation, la diversite et l'importance de ne pas generaliser."
+        feedback: "La chronique insiste sur l’observation, la diversité et l’importance de ne pas généraliser."
       },
       {
         audio: "Comparaison · France / Colombie",
-        prompt: "Quel point commun apparait dans les deux chroniques ?",
-        options: ["La culture evolue grace aux rencontres et aux echanges", "Les deux pays ont exactement les memes traditions", "La culture doit rester separee de la vie quotidienne"],
-        answer: "La culture evolue grace aux rencontres et aux echanges",
-        feedback: "Les deux audios montrent une culture vivante : le musee devient un lieu d'echange et la Colombie valorise la conversation."
+        prompt: "Quel point commun apparaît dans les deux chroniques ?",
+        options: ["Les deux cultures sont présentées comme immobiles", "Les deux audios défendent la même institution culturelle", "La culture évolue grâce aux rencontres et aux échanges"],
+        answer: "La culture évolue grâce aux rencontres et aux échanges",
+        feedback: "Les deux audios montrent une culture vivante : le musée devient un lieu d’échange et la Colombie valorise la conversation."
       },
       {
         audio: "Comparaison · France / Colombie",
-        prompt: "Quelle difference est la plus claire entre les deux audios ?",
-        options: ["Le premier insiste sur les institutions culturelles, le second sur les relations sociales", "Le premier parle seulement de nourriture, le second seulement de sport", "Les deux audios parlent uniquement de monuments"],
+        prompt: "Quelle différence est la plus claire entre les deux audios ?",
+        options: ["Le premier décrit surtout la famille, le second les musées", "Le premier insiste sur les institutions culturelles, le second sur les relations sociales", "Les deux audios évitent toute comparaison culturelle"],
         answer: "Le premier insiste sur les institutions culturelles, le second sur les relations sociales",
-        feedback: "L'audio francais se concentre sur les musees; l'audio colombien decrit surtout les habitudes sociales."
+        feedback: "L’audio français se concentre sur les musées ; l’audio colombien décrit surtout les habitudes sociales."
       },
       {
         audio: "Comparaison · France / Colombie",
-        prompt: "Dans les deux cultures, pourquoi faut-il eviter les stereotypes ?",
-        options: ["Parce qu'une culture est diverse et change selon les lieux et les generations", "Parce que tous les habitants pensent la meme chose", "Parce qu'il n'existe aucune difference regionale"],
-        answer: "Parce qu'une culture est diverse et change selon les lieux et les generations",
-        feedback: "Les musees changent avec les generations et la Colombie varie selon les regions."
+        prompt: "Dans les deux cultures, pourquoi faut-il éviter les stéréotypes ?",
+        options: ["Parce que les traditions ont disparu dans les deux pays", "Parce que tous les habitants pensent de la même manière", "Parce qu’une culture est diverse et change selon les lieux et les générations"],
+        answer: "Parce qu’une culture est diverse et change selon les lieux et les générations",
+        feedback: "Les musées changent avec les générations et la Colombie varie selon les régions."
       },
       {
         audio: "Comparaison · France / Colombie",
-        prompt: "Quelle phrase pourrait ouvrir un debat apres les deux audios ?",
-        options: ["La culture doit-elle etre plus accessible aux jeunes ?", "Faut-il supprimer les conversations en classe ?", "Les musees doivent-ils interdire toutes les visites ?"],
-        answer: "La culture doit-elle etre plus accessible aux jeunes ?",
-        feedback: "Cette question relie les deux audios : acces a la culture, jeunes publics et participation sociale."
+        prompt: "Quelle phrase pourrait ouvrir un débat après les deux audios ?",
+        options: ["La culture doit-elle être plus accessible aux jeunes ?", "Les musées doivent-ils remplacer toutes les conversations ?", "Les différences culturelles empêchent-elles toujours le dialogue ?"],
+        answer: "La culture doit-elle être plus accessible aux jeunes ?",
+        feedback: "Cette question relie les deux audios : accès à la culture, jeunes publics et participation sociale."
       },
       {
         audio: "Comparaison · France / Colombie",
         prompt: "Quel connecteur logique conviendrait pour comparer les deux chroniques ?",
-        options: ["Tandis que", "Parce que seulement", "Jamais"],
+        options: ["Donc", "Tandis que", "D’abord"],
         answer: "Tandis que",
-        feedback: "'Tandis que' permet d'opposer deux idees : la France est presentee par les musees, tandis que la Colombie est presentee par les liens sociaux."
+        feedback: "« Tandis que » permet d’opposer deux idées : la France est présentée par les musées, tandis que la Colombie est présentée par les liens sociaux."
       },
       {
         audio: "Comparaison · France / Colombie",
-        prompt: "Quelle conclusion est la plus nuancee ?",
-        options: ["Chaque culture a ses propres formes de transmission, mais toutes peuvent creer du lien social", "Une culture est toujours superieure a l'autre", "Les differences culturelles empechent toute discussion"],
-        answer: "Chaque culture a ses propres formes de transmission, mais toutes peuvent creer du lien social",
+        prompt: "Quelle conclusion est la plus nuancée ?",
+        options: ["Une culture est forcément plus moderne que l’autre", "Chaque culture a ses propres formes de transmission, mais toutes peuvent créer du lien social", "Les différences culturelles empêchent toute discussion"],
+        answer: "Chaque culture a ses propres formes de transmission, mais toutes peuvent créer du lien social",
         feedback: "La conclusion compare sans juger : elle met en valeur la transmission culturelle et le lien social."
       }
     ];
@@ -811,9 +822,9 @@
       });
 
       resultBox.classList.add('show');
-      let message = "Continuez a vous entrainer avec deux ecoutes et une prise de notes.";
-      if (score >= 17) message = "Tres bon travail : vous comprenez les idees principales, les nuances et la comparaison culturelle.";
-      else if (score >= 13) message = "Bon resultat : revoyez les details qui ont pose probleme.";
+      let message = "Continuez à vous entraîner avec deux écoutes et une prise de notes.";
+      if (score >= 17) message = "Très bon travail : vous comprenez les idées principales, les nuances et la comparaison culturelle.";
+      else if (score >= 13) message = "Bon résultat : revoyez les détails qui ont posé problème.";
       resultBox.innerHTML = `<h3 class="fw-bold">Score : ${score} / ${questions.length}</h3><p class="mb-0 fs-5 opacity-75">${message}</p>`;
       resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });

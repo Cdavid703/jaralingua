@@ -3,494 +3,1228 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>Phonetic Rules: Mastering English Sounds | Basic English Course 1</title>
+  <title>Phonetic Rules: Mastering English Sounds | JaraLingua</title>
   <link rel="icon" href="../../favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
-
   <link rel="stylesheet" href="../../assets/css/style.css" />
-</head>
-<body>
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
 
+  <style>
+    :root {
+      --phon-blue: #123b8f;
+      --phon-navy: #071f4f;
+      --phon-red: #d7193f;
+      --phon-gold: #f4c95d;
+      --phon-green: #218c74;
+      --phon-ink: #172033;
+      --phon-muted: #64748b;
+      --phon-soft: #f4f7fb;
+      --phon-line: rgba(18, 59, 143, 0.12);
+      --phon-shadow: 0 22px 55px rgba(15, 23, 42, 0.13);
+    }
+
+    body {
+      background: var(--phon-soft);
+    }
+
+    .phonetic-page {
+      color: var(--phon-ink);
+    }
+
+    .phonetic-hero {
+      min-height: 88vh;
+      padding: 132px 24px 70px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.82fr);
+      gap: 42px;
+      align-items: center;
+      background:
+        linear-gradient(135deg, rgba(7, 31, 79, 0.93), rgba(18, 59, 143, 0.78), rgba(215, 25, 63, 0.52)),
+        url("../../assets/img/english-basic/phonetics-english-hero.png") center/cover no-repeat;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phonetic-hero::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 110px;
+      background: linear-gradient(to bottom, transparent, var(--phon-soft));
+      pointer-events: none;
+    }
+
+    .phonetic-hero-content,
+    .phonetic-hero-panel {
+      position: relative;
+      z-index: 2;
+    }
+
+    .phonetic-hero h1 {
+      max-width: 880px;
+      font-size: clamp(2.7rem, 6vw, 5.6rem);
+      line-height: 1;
+      margin: 16px 0 22px;
+      text-wrap: balance;
+    }
+
+    .phonetic-hero p {
+      max-width: 780px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: clamp(1.08rem, 1.6vw, 1.28rem);
+      line-height: 1.72;
+    }
+
+    .phonetic-hero-panel {
+      border-radius: 28px;
+      padding: 28px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 22px 55px rgba(0, 0, 0, 0.18);
+    }
+
+    .phonetic-hero-panel ul {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .phonetic-hero-panel li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .phonetic-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 28px 0;
+    }
+
+    .phonetic-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .phonetic-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+    }
+
+    .phonetic-section {
+      padding: 82px 24px;
+    }
+
+    .phonetic-inner {
+      width: min(1180px, 100%);
+      margin: 0 auto;
+    }
+
+    .phonetic-heading {
+      max-width: 850px;
+      margin-bottom: 34px;
+    }
+
+    .phonetic-heading.center {
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+
+    .phonetic-heading h2 {
+      color: var(--phon-navy);
+      font-size: clamp(2rem, 4vw, 3.25rem);
+      line-height: 1.05;
+      margin: 10px 0 14px;
+    }
+
+    .phonetic-heading p,
+    .phonetic-copy {
+      color: var(--phon-muted);
+      font-size: 1.06rem;
+      line-height: 1.75;
+    }
+
+    .phonetic-layout {
+      display: grid;
+      grid-template-columns: 292px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .category-sidebar {
+      position: sticky;
+      top: 88px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .category-button {
+      min-height: 52px;
+      border: 2px solid var(--phon-line);
+      border-radius: 18px;
+      padding: 10px 12px;
+      background: #fff;
+      color: var(--phon-navy);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .category-button.active {
+      background: var(--phon-navy);
+      border-color: var(--phon-navy);
+      color: #fff;
+    }
+
+    .category-panel {
+      display: grid;
+      gap: 16px;
+    }
+
+    .rule-card {
+      background: #fff;
+      border: 1px solid var(--phon-line);
+      border-radius: 24px;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .rule-toggle {
+      width: 100%;
+      border: 0;
+      background: #fff;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--phon-navy);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .rule-toggle > span {
+      display: block;
+      color: var(--phon-navy);
+    }
+
+    .rule-toggle > span > span {
+      display: block;
+      color: var(--phon-red);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      margin-bottom: 5px;
+    }
+
+    .rule-toggle strong {
+      display: block;
+      font-size: clamp(1.18rem, 2vw, 1.55rem);
+      line-height: 1.25;
+    }
+
+    .rule-body {
+      display: none;
+      padding: 0 20px 22px;
+    }
+
+    .rule-card.open .rule-body {
+      display: block;
+    }
+
+    .ipa-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 4px 0 14px;
+    }
+
+    .ipa-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 12px;
+      border-radius: 999px;
+      background: #eef4ff;
+      color: var(--phon-navy);
+      font-weight: 900;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(178px, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .word-card,
+    .motion-card,
+    .resource-card {
+      background: #f8fbff;
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      border-radius: 18px;
+      padding: 16px;
+      display: grid;
+      gap: 7px;
+    }
+
+    .word-card strong {
+      color: var(--phon-navy);
+      font-size: 1.22rem;
+    }
+
+    .word-card span {
+      color: var(--phon-red);
+      font-weight: 900;
+    }
+
+    .word-card small,
+    .motion-card p,
+    .resource-card p {
+      color: var(--phon-muted);
+      line-height: 1.55;
+    }
+
+    .sound-button,
+    .resource-card a {
+      width: fit-content;
+      min-height: 38px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--phon-navy);
+      color: #fff;
+      font-weight: 900;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .sound-button:hover,
+    .resource-card a:hover {
+      background: var(--phon-red);
+      color: #fff;
+    }
+
+    .motion-grid,
+    .resource-grid,
+    .accent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .mouth-demo {
+      height: 120px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 50% 58%, rgba(215, 25, 63, 0.2), transparent 34%),
+        linear-gradient(135deg, #eef4ff, #fff);
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .mouth {
+      width: 110px;
+      height: 54px;
+      border: 5px solid var(--phon-red);
+      border-radius: 50%;
+      background: #fff;
+      position: relative;
+      animation: mouthPulse 2.4s ease-in-out infinite;
+    }
+
+    .mouth.round {
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+    }
+
+    .mouth.teeth::before {
+      content: "";
+      position: absolute;
+      left: 13px;
+      right: 13px;
+      top: 17px;
+      height: 7px;
+      background: var(--phon-navy);
+      opacity: 0.2;
+      border-radius: 999px;
+    }
+
+    .mouth.tongue::after {
+      content: "";
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 8px;
+      height: 16px;
+      border-radius: 999px 999px 18px 18px;
+      background: var(--phon-gold);
+    }
+
+    @keyframes mouthPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+
+    .articulation-figure {
+      min-height: 190px;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 85% 16%, rgba(215, 25, 63, 0.12), transparent 28%),
+        linear-gradient(135deg, #eef4ff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .articulation-figure svg {
+      width: 100%;
+      max-width: 250px;
+      height: auto;
+      display: block;
+    }
+
+    .face-line {
+      fill: #fff7f2;
+      stroke: #071f4f;
+      stroke-width: 3;
+      stroke-linejoin: round;
+    }
+
+    .lip-line {
+      fill: #f4a2a8;
+      stroke: #d7193f;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .mouth-cavity {
+      fill: #6b1f32;
+      opacity: 0.88;
+    }
+
+    .tongue-shape {
+      fill: #f4c95d;
+      stroke: #b7791f;
+      stroke-width: 2;
+    }
+
+    .teeth-shape {
+      fill: #ffffff;
+      stroke: rgba(7, 31, 79, 0.4);
+      stroke-width: 1.5;
+    }
+
+    .air-arrow {
+      fill: none;
+      stroke: #123b8f;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 8 8;
+      animation: airMove 1.8s linear infinite;
+    }
+
+    .voice-mark {
+      fill: none;
+      stroke: #218c74;
+      stroke-width: 3;
+      stroke-linecap: round;
+    }
+
+    .position-list {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .position-list li {
+      display: grid;
+      grid-template-columns: 92px 1fr;
+      gap: 10px;
+      color: var(--phon-muted);
+      line-height: 1.48;
+    }
+
+    .position-list strong {
+      color: var(--phon-navy);
+    }
+
+    .spotlight-rule {
+      margin: 24px 0;
+      padding: clamp(20px, 3vw, 28px);
+      border-radius: 24px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(238, 244, 255, 0.96));
+      border: 2px solid rgba(215, 25, 63, 0.18);
+      box-shadow: var(--phon-shadow);
+      display: grid;
+      grid-template-columns: 0.78fr 1.22fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .spotlight-rule h3 {
+      color: var(--phon-navy);
+      font-size: clamp(1.65rem, 3vw, 2.35rem);
+      line-height: 1.08;
+      margin: 8px 0 12px;
+    }
+
+    @keyframes airMove {
+      to { stroke-dashoffset: -32; }
+    }
+
+    .image-band {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 26px;
+      align-items: stretch;
+    }
+
+    .image-band img {
+      width: 100%;
+      height: 100%;
+      min-height: 390px;
+      object-fit: cover;
+      border-radius: 26px;
+      box-shadow: var(--phon-shadow);
+    }
+
+    .info-panel {
+      border-radius: 26px;
+      padding: clamp(24px, 4vw, 38px);
+      background: #fff;
+      box-shadow: var(--phon-shadow);
+      border: 1px solid var(--phon-line);
+    }
+
+    .accent-card {
+      background: #fff;
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid var(--phon-line);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+    }
+
+    .accent-card h3 {
+      color: var(--phon-navy);
+      margin-bottom: 10px;
+    }
+
+    .footer-note {
+      padding: 28px 24px;
+      background: var(--phon-navy);
+      color: #fff;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .phonetic-hero,
+      .phonetic-layout,
+      .image-band,
+      .spotlight-rule {
+        grid-template-columns: 1fr;
+      }
+
+      .category-sidebar {
+        position: static;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .phonetic-hero {
+        padding-top: 170px;
+      }
+
+      .category-sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .phonetic-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body class="phonetic-page">
   <header class="site-header">
     <nav class="navbar">
       <a href="../../index.html" class="brand">
         <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
       </a>
-
       <ul class="nav-links">
         <li><a href="../../index.html">Home</a></li>
         <li><a href="../index.html">English</a></li>
-        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="index.html">Basic</a></li>
+        <li><a href="../intermediate/index.html">Intermediate</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-
-    <!-- PHONETICS HERO -->
-    <section class="lesson-hero">
-      <div class="lesson-hero-content">
-        <p class="eyebrow">Basic English Course 1</p>
-
+    <section class="phonetic-hero">
+      <div class="phonetic-hero-content">
+        <p class="eyebrow">Shared page for Basic and Intermediate English</p>
         <h1>Phonetic Rules: Mastering English Sounds</h1>
-
         <p>
-          Explore important English pronunciation patterns through clear explanations,
-          visual examples, sound comparisons, and interactive practice.
+          A complete pronunciation reference from beginner foundations to advanced connected speech: English sounds, spelling patterns, exceptions, mouth movement, stress, rhythm, reductions, accent differences, audio buttons, video links, and real-world listening resources.
         </p>
-
-        <div class="lesson-meta">
-          <span>Pronunciation</span>
-          <span>Short U</span>
-          <span>Magic E</span>
-          <span>Exceptions</span>
+        <div class="phonetic-pill-row">
+          <span class="phonetic-pill"><i class="bi bi-soundwave"></i>44 sounds</span>
+          <span class="phonetic-pill"><i class="bi bi-ear"></i>US / UK notes</span>
+          <span class="phonetic-pill"><i class="bi bi-camera-video"></i>Video resources</span>
+          <span class="phonetic-pill"><i class="bi bi-person-video3"></i>Mouth movement</span>
         </div>
-
-        <div class="hero-actions">
-          <a href="#phonetics-lab" class="btn btn-primary">Start learning</a>
-          <a href="index.html" class="btn btn-secondary">Back to course home</a>
+        <div class="phonetic-actions">
+          <a href="#categories" class="btn btn-primary">Browse by category</a>
+          <a href="#resources" class="btn btn-secondary">Open audio/video links</a>
         </div>
       </div>
 
-      <div class="lesson-hero-image">
-        <img src="../../assets/img/english-basic/phonetics-banner.jpg" alt="Phonetic Rules Mastering English Sounds" />
+      <aside class="phonetic-hero-panel">
+        <ul>
+          <li><i class="bi bi-check-circle-fill"></i><span>Every category opens on this same page.</span></li>
+          <li><i class="bi bi-check-circle-fill"></i><span>Audio buttons use your browser’s English voice when available.</span></li>
+          <li><i class="bi bi-check-circle-fill"></i><span>Rules include common exceptions, not only “perfect textbook” patterns.</span></li>
+          <li><i class="bi bi-check-circle-fill"></i><span>Students can compare minimal pairs, spelling traps, weak forms, and accent variation.</span></li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="phonetic-section">
+      <div class="phonetic-inner image-band">
+        <img src="../../assets/img/english-basic/phonetics-english-articulation.png" alt="Learner practicing English mouth positions with a mirror" />
+        <article class="info-panel">
+          <p class="eyebrow">How English pronunciation works</p>
+          <h2>Letters are not sounds</h2>
+          <p class="phonetic-copy">
+            English spelling is historical, so one letter can represent many sounds and one sound can have many spellings. The page teaches pronunciation through three signals at the same time: <strong>sound</strong>, <strong>spelling pattern</strong>, and <strong>mouth movement</strong>. That is the fastest way to stop reading English as if it were Spanish.
+          </p>
+          <div class="example-grid">
+            <div class="word-card"><strong>one sound</strong><span>/ʃ/</span><small>sh, ti, ci, ss: ship, nation, special, mission</small></div>
+            <div class="word-card"><strong>one letter</strong><span>a</span><small>cat /æ/, name /eɪ/, father /ɑː/, about /ə/</small></div>
+            <div class="word-card"><strong>one ending</strong><span>-ed</span><small>worked /t/, played /d/, wanted /ɪd/</small></div>
+          </div>
+        </article>
       </div>
     </section>
 
-    <!-- LEARNING OUTCOME -->
-    <section class="lesson-outcome">
-      <div class="outcome-card">
-        <span class="outcome-label">Learning Outcome</span>
-        <p>
-          By the end of this section, you will understand how the letter “U” changes sound
-          in common English words and how to recognize the Short U rule, Magic E, yod-dropping,
-          and important pronunciation exceptions.
-        </p>
-      </div>
-    </section>
-
-    <!-- PHONETICS LAB -->
-    <section class="premium-lesson-container" id="phonetics-lab">
-
-      <article class="premium-topic-card">
-        <div class="topic-heading">
-          <span class="topic-number">01</span>
+    <section class="phonetic-section">
+      <div class="phonetic-inner">
+        <article class="spotlight-rule">
+          <div class="articulation-figure" aria-hidden="true">
+            <svg viewBox="0 0 260 180" role="img">
+              <path class="face-line" d="M52 44 C86 14 154 14 204 44 C224 58 232 86 222 112 C208 150 166 166 121 160 C82 156 48 134 39 102 C32 78 36 58 52 44Z"/>
+              <path class="lip-line" d="M70 92 C94 72 161 72 190 92 C165 118 99 118 70 92Z"/>
+              <ellipse class="mouth-cavity" cx="130" cy="96" rx="47" ry="19"/>
+              <path class="tongue-shape" d="M91 105 C112 96 150 96 170 107 C151 123 110 124 91 105Z"/>
+              <path class="air-arrow" d="M202 94 C220 93 233 91 246 86"/>
+              <path class="voice-mark" d="M52 137 C64 144 76 148 89 150"/>
+              <path class="voice-mark" d="M49 148 C63 156 80 160 98 160"/>
+            </svg>
+          </div>
           <div>
-            <p class="topic-label">Interactive Guide</p>
-            <h2>The “U” Sound in English</h2>
-          </div>
-        </div>
-
-        <p class="lesson-text">
-          The letter “U” does not always sound the same in English. Use the buttons below
-          to explore each rule dynamically without opening a new page.
-        </p>
-
-        <div class="phonetic-tabs">
-          <button class="phonetic-tab active" data-target="short-u">Short U /ʌ/</button>
-          <button class="phonetic-tab" data-target="magic-e">Magic E /juː/</button>
-          <button class="phonetic-tab" data-target="yod-dropping">Yod-Dropping /uː/</button>
-          <button class="phonetic-tab" data-target="exceptions">Exceptions</button>
-          <button class="phonetic-tab" data-target="practice">Practice</button>
-        </div>
-
-        <!-- SHORT U -->
-        <div class="phonetic-panel active" id="short-u">
-          <div class="phonetic-rule-card">
-            <span class="phonetic-label">Rule 1</span>
-            <h3>The Short U Rule <strong>/ʌ/</strong></h3>
-            <p>
-              In many short words where the letter <strong>U</strong> is between consonants,
-              it sounds like <strong>/ʌ/</strong>. This sound is short, relaxed, and central.
+            <p class="eyebrow">Must-see rule</p>
+            <h3>U between consonants often sounds /ʌ/</h3>
+            <p class="phonetic-copy">
+              In many short stressed words, when <strong>U</strong> is between consonants, it is pronounced as the short central vowel <strong>/ʌ/</strong>: <strong>bus, cup, sun, cut, luck, fun, run, much</strong>. The mouth is relaxed, the jaw opens a little, the lips are neutral, and the tongue stays low-central. This is not the Spanish <strong>u</strong> /u/.
             </p>
-          </div>
-
-          <div class="phonetic-word-grid">
-            <div class="phonetic-word-card">
-              <strong>Bus</strong>
-              <span>/bʌs/</span>
-              <small>Meaning: a vehicle for transportation</small>
-              <button onclick="speakWord('bus')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>Cup</strong>
-              <span>/kʌp/</span>
-              <small>Meaning: a container for drinking</small>
-              <button onclick="speakWord('cup')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>Sun</strong>
-              <span>/sʌn/</span>
-              <small>Meaning: the star in the sky</small>
-              <button onclick="speakWord('sun')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>Luck</strong>
-              <span>/lʌk/</span>
-              <small>Meaning: good or bad fortune</small>
-              <button onclick="speakWord('luck')">Listen</button>
+            <div class="example-grid">
+              <div class="word-card"><strong>bus</strong><span>/bʌs/</span><small>b + u + s: U between consonants</small><button class="sound-button" data-say="bus"><i class="bi bi-volume-up"></i>Listen</button></div>
+              <div class="word-card"><strong>cup</strong><span>/kʌp/</span><small>c + u + p: relaxed central vowel</small><button class="sound-button" data-say="cup"><i class="bi bi-volume-up"></i>Listen</button></div>
+              <div class="word-card"><strong>sun</strong><span>/sʌn/</span><small>s + u + n: not /suːn/</small><button class="sound-button" data-say="sun"><i class="bi bi-volume-up"></i>Listen</button></div>
             </div>
           </div>
-
-          <div class="teacher-tip">
-            <span>Pronunciation Tip</span>
-            <p>
-              To pronounce <strong>/ʌ/</strong>, relax your mouth. Do not open it too much.
-              The sound is short and natural.
-            </p>
-          </div>
-        </div>
-
-        <!-- MAGIC E -->
-        <div class="phonetic-panel" id="magic-e">
-          <div class="phonetic-rule-card">
-            <span class="phonetic-label">Rule 2</span>
-            <h3>The Magic E Exception <strong>/juː/</strong></h3>
-            <p>
-              When a word ends with a silent <strong>E</strong>, the letter <strong>U</strong>
-              often changes to its long sound: <strong>/juː/</strong>, similar to the name of the letter U.
-            </p>
-          </div>
-
-          <div class="phonetic-compare-grid">
-            <div class="phonetic-compare-card">
-              <span>Short Sound</span>
-              <h3>Cut</h3>
-              <p>/kʌt/</p>
-              <button onclick="speakWord('cut')">Listen</button>
-            </div>
-
-            <div class="phonetic-compare-card accent">
-              <span>Magic E</span>
-              <h3>Cute</h3>
-              <p>/kjuːt/</p>
-              <button onclick="speakWord('cute')">Listen</button>
-            </div>
-          </div>
-
-          <div class="phonetic-word-grid">
-            <div class="phonetic-word-card">
-              <strong>Use</strong>
-              <span>/juːz/</span>
-              <small>Long U sound</small>
-              <button onclick="speakWord('use')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>Cube</strong>
-              <span>/kjuːb/</span>
-              <small>Long U sound</small>
-              <button onclick="speakWord('cube')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>Music</strong>
-              <span>/ˈmjuːzɪk/</span>
-              <small>Long U sound</small>
-              <button onclick="speakWord('music')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>Student</strong>
-              <span>/ˈstuːdənt/ or /ˈstjuːdənt/</span>
-              <small>Variation depends on accent</small>
-              <button onclick="speakWord('student')">Listen</button>
-            </div>
-          </div>
-        </div>
-
-        <!-- YOD DROPPING -->
-        <div class="phonetic-panel" id="yod-dropping">
-          <div class="phonetic-rule-card">
-            <span class="phonetic-label">Rule 3</span>
-            <h3>Yod-Dropping after L, R, and J <strong>/uː/</strong></h3>
-            <p>
-              In some words, English drops the small “y” sound before the long U.
-              After sounds like <strong>L</strong>, <strong>R</strong>, and <strong>J</strong>,
-              the sound is often a pure <strong>/uː/</strong>.
-            </p>
-          </div>
-
-          <div class="phonetic-word-grid">
-            <div class="phonetic-word-card">
-              <strong>Rule</strong>
-              <span>/ruːl/</span>
-              <small>After R: pure /uː/</small>
-              <button onclick="speakWord('rule')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>Blue</strong>
-              <span>/bluː/</span>
-              <small>After L: pure /uː/</small>
-              <button onclick="speakWord('blue')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>June</strong>
-              <span>/dʒuːn/</span>
-              <small>After J sound: pure /uː/</small>
-              <button onclick="speakWord('june')">Listen</button>
-            </div>
-
-            <div class="phonetic-word-card">
-              <strong>True</strong>
-              <span>/truː/</span>
-              <small>Pure /uː/ sound</small>
-              <button onclick="speakWord('true')">Listen</button>
-            </div>
-          </div>
-
-          <div class="teacher-tip">
-            <span>Pronunciation Tip</span>
-            <p>
-              This is why <strong>blue</strong> does not sound like “bliu” and
-              <strong>rule</strong> does not sound like “riu-l”.
-            </p>
-          </div>
-        </div>
-
-        <!-- EXCEPTIONS -->
-        <div class="phonetic-panel" id="exceptions">
-          <div class="phonetic-rule-card">
-            <span class="phonetic-label">Exceptions</span>
-            <h3>Other Important U Sounds</h3>
-            <p>
-              Some common words do not follow the Short U or Magic E pattern.
-              These words are important because you will hear them often.
-            </p>
-          </div>
-
-          <div class="lesson-grid">
-            <div class="lesson-mini-card">
-              <h3>The Rounded U <strong>/ʊ/</strong></h3>
-
-              <div class="phrase-list">
-                <div class="phrase-item">
-                  <strong>Put</strong>
-                  <span>/pʊt/</span>
-                </div>
-
-                <div class="phrase-item">
-                  <strong>Push</strong>
-                  <span>/pʊʃ/</span>
-                </div>
-
-                <div class="phrase-item">
-                  <strong>Pull</strong>
-                  <span>/pʊl/</span>
-                </div>
-
-                <div class="phrase-item">
-                  <strong>Full</strong>
-                  <span>/fʊl/</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="lesson-mini-card">
-              <h3>R-Controlled U <strong>/ɜːr/</strong></h3>
-
-              <div class="phrase-list">
-                <div class="phrase-item">
-                  <strong>Burn</strong>
-                  <span>/bɜːrn/</span>
-                </div>
-
-                <div class="phrase-item">
-                  <strong>Turn</strong>
-                  <span>/tɜːrn/</span>
-                </div>
-
-                <div class="phrase-item">
-                  <strong>Surf</strong>
-                  <span>/sɜːrf/</span>
-                </div>
-
-                <div class="phrase-item">
-                  <strong>Hurt</strong>
-                  <span>/hɜːrt/</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- PRACTICE -->
-        <div class="phonetic-panel" id="practice">
-          <div class="phonetic-rule-card">
-            <span class="phonetic-label">Practice</span>
-            <h3>Choose the Correct U Sound</h3>
-            <p>
-              Read each word and select the correct sound. Then check your answers.
-            </p>
-          </div>
-
-          <form class="phonetic-quiz" id="phoneticQuiz">
-
-            <div class="quiz-question-card">
-              <h3>1. What is the U sound in “bus”?</h3>
-              <label><input type="radio" name="q1" value="A"> /ʌ/</label>
-              <label><input type="radio" name="q1" value="B"> /juː/</label>
-              <label><input type="radio" name="q1" value="C"> /ɜːr/</label>
-            </div>
-
-            <div class="quiz-question-card">
-              <h3>2. What is the U sound in “cute”?</h3>
-              <label><input type="radio" name="q2" value="A"> /ʌ/</label>
-              <label><input type="radio" name="q2" value="B"> /juː/</label>
-              <label><input type="radio" name="q2" value="C"> /ʊ/</label>
-            </div>
-
-            <div class="quiz-question-card">
-              <h3>3. What is the U sound in “blue”?</h3>
-              <label><input type="radio" name="q3" value="A"> /ʌ/</label>
-              <label><input type="radio" name="q3" value="B"> /uː/</label>
-              <label><input type="radio" name="q3" value="C"> /ɜːr/</label>
-            </div>
-
-            <div class="quiz-question-card">
-              <h3>4. What is the U sound in “put”?</h3>
-              <label><input type="radio" name="q4" value="A"> /ʊ/</label>
-              <label><input type="radio" name="q4" value="B"> /juː/</label>
-              <label><input type="radio" name="q4" value="C"> /ʌ/</label>
-            </div>
-
-            <button type="button" class="practice-submit-btn" onclick="checkPhoneticQuiz()">
-              Check Answers
-            </button>
-          </form>
-
-          <div id="phonetic-result-box" class="quiz-result-box"></div>
-        </div>
-
-      </article>
-
+        </article>
+      </div>
     </section>
 
-    <!-- NEXT STEP -->
-    <section class="lesson-next-section">
-      <div class="lesson-next-card">
-        <p class="eyebrow">Next step</p>
-        <h2>Review and practice</h2>
+    <section class="phonetic-section" id="categories">
+      <div class="phonetic-inner">
+        <div class="phonetic-heading center">
+          <p class="eyebrow">Easy access</p>
+          <h2>Choose a pronunciation category</h2>
+          <p>Open one category, then expand only the rule you need. The student never has to leave the page.</p>
+        </div>
 
-        <p>
-          Repeat the examples, listen to the words, and compare the sounds until you can
-          recognize the difference between /ʌ/, /juː/, /uː/, /ʊ/, and /ɜːr/.
-        </p>
-
-        <div class="hero-actions">
-          <a href="index.html" class="btn btn-primary">Back to Basic Course</a>
-          <a href="practice-lab.html" class="btn btn-secondary">Go to Practice Lab</a>
+        <div class="phonetic-layout">
+          <div class="category-sidebar" id="categorySidebar"></div>
+          <div class="category-panel" id="categoryPanel"></div>
         </div>
       </div>
     </section>
 
+    <section class="phonetic-section" id="movement">
+      <div class="phonetic-inner">
+        <div class="phonetic-heading">
+          <p class="eyebrow">Mouth movement coach</p>
+          <h2>What the mouth should do</h2>
+          <p>These illustrated cards show the gesture behind the sound. Use a mirror, exaggerate the position slowly, then reduce the movement until it sounds natural.</p>
+        </div>
+        <div class="motion-grid">
+          <article class="motion-card">
+            <div class="articulation-figure" aria-hidden="true">
+              <svg viewBox="0 0 260 180">
+                <path class="face-line" d="M48 42 C84 14 154 12 205 45 C228 61 235 94 218 122 C197 156 152 168 110 157 C72 147 42 123 38 91 C35 70 38 53 48 42Z"/>
+                <path class="lip-line" d="M72 92 C98 77 162 77 188 92 C164 113 97 113 72 92Z"/>
+                <ellipse class="mouth-cavity" cx="130" cy="96" rx="44" ry="17"/>
+                <path class="tongue-shape" d="M92 106 C112 98 149 99 169 108 C146 121 115 121 92 106Z"/>
+                <path class="air-arrow" d="M199 94 C218 92 232 90 247 84"/>
+              </svg>
+            </div>
+            <h3>Short U /ʌ/</h3>
+            <ul class="position-list">
+              <li><strong>Lips</strong><span>Neutral, not rounded.</span></li>
+              <li><strong>Jaw</strong><span>Slightly open, relaxed.</span></li>
+              <li><strong>Tongue</strong><span>Low-central, not tense.</span></li>
+            </ul>
+            <p>Practice: <strong>cup, bus, sun, luck, much</strong>.</p>
+            <button class="sound-button" data-say="cup, bus, sun, luck, much"><i class="bi bi-volume-up"></i>Listen</button>
+          </article>
+          <article class="motion-card">
+            <div class="articulation-figure" aria-hidden="true">
+              <svg viewBox="0 0 260 180">
+                <path class="face-line" d="M50 39 C89 13 158 15 204 47 C224 63 230 93 216 120 C198 154 151 166 110 156 C72 147 41 119 39 89 C38 67 42 50 50 39Z"/>
+                <path class="lip-line" d="M78 90 C98 55 163 55 183 90 C165 132 96 132 78 90Z"/>
+                <ellipse class="mouth-cavity" cx="130" cy="94" rx="25" ry="30"/>
+                <path class="tongue-shape" d="M101 111 C120 96 151 96 167 111 C147 121 119 122 101 111Z"/>
+                <path class="air-arrow" d="M192 91 C214 88 231 84 247 78"/>
+              </svg>
+            </div>
+            <h3>Rounded vowel /uː/</h3>
+            <ul class="position-list">
+              <li><strong>Lips</strong><span>Strongly rounded, pushed forward.</span></li>
+              <li><strong>Jaw</strong><span>Almost closed.</span></li>
+              <li><strong>Tongue</strong><span>High and back.</span></li>
+            </ul>
+            <p>Round the lips strongly and keep the tongue high/back. Do not add a Spanish-style final vowel. Practice: <strong>blue, food, move, group</strong>.</p>
+            <button class="sound-button" data-say="blue, food, move, group"><i class="bi bi-volume-up"></i>Listen</button>
+          </article>
+          <article class="motion-card">
+            <div class="articulation-figure" aria-hidden="true">
+              <svg viewBox="0 0 260 180">
+                <path class="face-line" d="M50 39 C86 13 158 13 205 46 C225 61 232 88 222 116 C208 151 163 166 119 160 C80 154 44 127 38 96 C34 73 39 52 50 39Z"/>
+                <path class="lip-line" d="M72 87 C97 69 162 69 188 87 C166 104 96 104 72 87Z"/>
+                <path class="teeth-shape" d="M84 83 C105 75 154 75 176 83 L176 93 C151 88 108 88 84 93Z"/>
+                <ellipse class="mouth-cavity" cx="130" cy="97" rx="43" ry="15"/>
+                <path class="tongue-shape" d="M91 104 C113 89 151 90 174 103 C148 111 115 111 91 104Z"/>
+                <path class="air-arrow" d="M188 88 C210 82 230 76 248 66"/>
+              </svg>
+            </div>
+            <h3>Open front vowel /æ/</h3>
+            <ul class="position-list">
+              <li><strong>Lips</strong><span>Slight smile, spread but relaxed.</span></li>
+              <li><strong>Jaw</strong><span>More open than Spanish /a/.</span></li>
+              <li><strong>Tongue</strong><span>Low and forward.</span></li>
+            </ul>
+            <p>Practice: <strong>cat, man, bad, family</strong>.</p>
+            <button class="sound-button" data-say="cat, man, bad, family"><i class="bi bi-volume-up"></i>Listen</button>
+          </article>
+          <article class="motion-card">
+            <div class="articulation-figure" aria-hidden="true">
+              <svg viewBox="0 0 260 180">
+                <path class="face-line" d="M49 40 C85 12 158 14 205 46 C226 61 232 91 219 119 C200 154 155 166 112 158 C73 150 42 124 38 94 C35 71 39 52 49 40Z"/>
+                <path class="lip-line" d="M73 90 C100 76 161 76 187 90 C164 109 96 109 73 90Z"/>
+                <path class="teeth-shape" d="M86 82 C106 78 154 78 174 82 L174 90 C149 87 111 87 86 90Z"/>
+                <ellipse class="mouth-cavity" cx="130" cy="98" rx="43" ry="17"/>
+                <path class="tongue-shape" d="M98 103 C118 92 146 93 165 103 C160 113 102 114 98 103Z"/>
+                <path class="air-arrow" d="M187 91 C211 92 228 96 246 101"/>
+                <path class="voice-mark" d="M44 139 C59 149 75 154 92 156"/>
+              </svg>
+            </div>
+            <h3>TH /θ/ and /ð/</h3>
+            <ul class="position-list">
+              <li><strong>Lips</strong><span>Open enough to show the tongue tip.</span></li>
+              <li><strong>Tongue</strong><span>Lightly between the teeth, not bitten.</span></li>
+              <li><strong>Voice</strong><span>/θ/ has air only; /ð/ vibrates.</span></li>
+            </ul>
+            <p>Place the tongue lightly between the teeth. Practice: <strong>think, this, mother, birthday</strong>.</p>
+            <button class="sound-button" data-say="think, this, mother, birthday"><i class="bi bi-volume-up"></i>Listen</button>
+          </article>
+          <article class="motion-card">
+            <div class="articulation-figure" aria-hidden="true">
+              <svg viewBox="0 0 260 180">
+                <path class="face-line" d="M50 40 C88 13 158 14 205 47 C226 63 231 94 216 121 C196 154 151 166 111 157 C73 148 42 122 39 93 C36 70 40 52 50 40Z"/>
+                <path class="lip-line" d="M78 90 C101 71 158 71 183 90 C164 113 97 113 78 90Z"/>
+                <ellipse class="mouth-cavity" cx="130" cy="97" rx="43" ry="19"/>
+                <path class="tongue-shape" d="M96 112 C119 84 156 85 169 111 C148 104 119 104 96 112Z"/>
+                <path class="air-arrow" d="M190 93 C212 89 230 84 247 75"/>
+                <path class="voice-mark" d="M47 140 C63 150 79 154 96 156"/>
+              </svg>
+            </div>
+            <h3>American R /ɹ/</h3>
+            <ul class="position-list">
+              <li><strong>Lips</strong><span>Slightly rounded.</span></li>
+              <li><strong>Tongue</strong><span>Pulled back or curled, not touching.</span></li>
+              <li><strong>Voice</strong><span>Continuous vibration.</span></li>
+            </ul>
+            <p>Pull the tongue back without touching the roof of the mouth. Keep the lips slightly rounded. Practice: <strong>red, car, around, world</strong>.</p>
+            <button class="sound-button" data-say="red, car, around, world"><i class="bi bi-volume-up"></i>Listen</button>
+          </article>
+          <article class="motion-card">
+            <div class="articulation-figure" aria-hidden="true">
+              <svg viewBox="0 0 260 180">
+                <path class="face-line" d="M50 40 C88 12 158 14 205 47 C226 63 231 92 217 120 C198 154 151 166 111 157 C72 148 42 123 39 93 C36 70 40 52 50 40Z"/>
+                <path class="lip-line" d="M67 91 C96 74 164 74 194 91 C163 101 97 101 67 91Z"/>
+                <ellipse class="mouth-cavity" cx="130" cy="94" rx="49" ry="10"/>
+                <path class="tongue-shape" d="M89 100 C115 90 150 90 173 100 C148 105 116 105 89 100Z"/>
+                <path class="air-arrow" d="M198 91 C218 90 233 88 248 84"/>
+              </svg>
+            </div>
+            <h3>/iː/ vs /ɪ/</h3>
+            <ul class="position-list">
+              <li><strong>/iː/</strong><span>Longer, tenser, smile position: seat.</span></li>
+              <li><strong>/ɪ/</strong><span>Shorter, relaxed, less smile: sit.</span></li>
+              <li><strong>Tongue</strong><span>High-front for both, tenser for /iː/.</span></li>
+            </ul>
+            <p>Practice: <strong>seat / sit, sheep / ship, leave / live</strong>.</p>
+            <button class="sound-button" data-say="seat, sit, sheep, ship, leave, live"><i class="bi bi-volume-up"></i>Listen</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="phonetic-section">
+      <div class="phonetic-inner">
+        <div class="phonetic-heading">
+          <p class="eyebrow">Accent awareness</p>
+          <h2>US, UK and international variation</h2>
+          <p>Students do not need to imitate every accent. They need to understand the most common differences so listening becomes easier.</p>
+        </div>
+        <div class="accent-grid">
+          <article class="accent-card">
+            <h3>Rhotic vs non-rhotic R</h3>
+            <p class="phonetic-copy">Most American accents pronounce final R: <strong>car /kɑr/</strong>. Many British accents do not pronounce final R before a consonant or pause: <strong>car /kɑː/</strong>.</p>
+          </article>
+          <article class="accent-card">
+            <h3>Flat A /æ/ and broad A /ɑː/</h3>
+            <p class="phonetic-copy">American English often uses /æ/ in <strong>dance, after, class</strong>. Southern British English often uses /ɑː/: <strong>dance /dɑːns/</strong>.</p>
+          </article>
+          <article class="accent-card">
+            <h3>T sounds</h3>
+            <p class="phonetic-copy">American English often has a flap /ɾ/ in <strong>water, better, city</strong>. British English more often keeps a clear /t/, though accents vary.</p>
+          </article>
+          <article class="accent-card">
+            <h3>Yod /j/ variation</h3>
+            <p class="phonetic-copy">UK: <strong>tune /tjuːn/</strong>, US often: <strong>/tuːn/</strong>. Some words keep /j/: <strong>music, huge, university</strong>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="phonetic-section" id="resources">
+      <div class="phonetic-inner">
+        <div class="phonetic-heading center">
+          <p class="eyebrow">Audio, video and real examples</p>
+          <h2>External resources for deeper listening</h2>
+          <p>These links open trusted pronunciation resources with audio, IPA, real speaker examples, or short video-based pronunciation support.</p>
+        </div>
+        <div class="resource-grid">
+          <article class="resource-card">
+            <h3>Cambridge Pronunciation</h3>
+            <p>Search words and compare British and American pronunciation with IPA and audio.</p>
+            <a href="https://dictionary.cambridge.org/us/pronunciation/" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right"></i>Open Cambridge</a>
+          </article>
+          <article class="resource-card">
+            <h3>Cambridge IPA Symbols</h3>
+            <p>Use this when students need to understand what symbols like /æ/, /ʌ/, /ə/ or /θ/ mean.</p>
+            <a href="https://dictionary.cambridge.org/us/help/phonetics.html" target="_blank" rel="noopener"><i class="bi bi-box-arrow-up-right"></i>Open IPA guide</a>
+          </article>
+          <article class="resource-card">
+            <h3>YouGlish</h3>
+            <p>Search a word or phrase and hear it in real-world clips with US, UK, Australian and other accent filters.</p>
+            <a href="https://youglish.com/?lang=en" target="_blank" rel="noopener"><i class="bi bi-play-btn"></i>Open YouGlish</a>
+          </article>
+          <article class="resource-card">
+            <h3>BBC: 5 Days to Improve Pronunciation</h3>
+            <p>Printable BBC pronunciation work on sounds, letters and phonemic awareness.</p>
+            <a href="https://downloads.bbc.co.uk/learningenglish/features/themed_weeks/day_1_5_days_to_improve_your_pronunciation.pdf" target="_blank" rel="noopener"><i class="bi bi-file-earmark-pdf"></i>Open PDF</a>
+          </article>
+          <article class="resource-card">
+            <h3>BBC: Schwa</h3>
+            <p>Focused practice for /ə/, the most frequent weak vowel in English.</p>
+            <a href="https://downloads.bbc.co.uk/learningenglish/features/themed_weeks/day_3_5_days_to_improve_your_pronunciation.pdf" target="_blank" rel="noopener"><i class="bi bi-file-earmark-pdf"></i>Open PDF</a>
+          </article>
+          <article class="resource-card">
+            <h3>BBC: Pronunciation of TH</h3>
+            <p>A short guide for /θ/ and /ð/, including tongue position and voicing.</p>
+            <a href="https://downloads.bbc.co.uk/learningenglish/eiam/unit-2/210220_pronunciation_of_th.pdf" target="_blank" rel="noopener"><i class="bi bi-file-earmark-pdf"></i>Open PDF</a>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <footer class="site-footer">
+  <footer class="footer-note">
     <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
 
   <script>
-    const phoneticTabs = document.querySelectorAll(".phonetic-tab");
-    const phoneticPanels = document.querySelectorAll(".phonetic-panel");
-
-    phoneticTabs.forEach(function(tab) {
-      tab.addEventListener("click", function() {
-        const targetId = tab.getAttribute("data-target");
-
-        phoneticTabs.forEach(function(item) {
-          item.classList.remove("active");
-        });
-
-        phoneticPanels.forEach(function(panel) {
-          panel.classList.remove("active");
-        });
-
-        tab.classList.add("active");
-        document.getElementById(targetId).classList.add("active");
-      });
-    });
-
-    function speakWord(word) {
-      speechSynthesis.cancel();
-
-      const utterance = new SpeechSynthesisUtterance(word);
-      utterance.lang = "en-US";
-      utterance.rate = 0.75;
-      utterance.pitch = 1;
-
-      const voices = speechSynthesis.getVoices();
-      const preferredVoice =
-        voices.find(function(voice) {
-          return voice.lang === "en-US";
-        }) ||
-        voices.find(function(voice) {
-          return voice.lang.startsWith("en");
-        });
-
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
+    const categories = [
+      {
+        id: "foundations",
+        icon: "bi-diagram-3",
+        title: "Foundations",
+        rules: [
+          {
+            level: "Basic",
+            title: "English has about 44 sounds, not 26",
+            ipa: ["/p/", "/æ/", "/tʃ/", "/ʃ/", "/ə/"],
+            text: "The alphabet has 26 letters, but English uses many more sounds. A word can have more letters than sounds: catch has five letters but three sounds /k æ tʃ/. Learning sound units helps students stop pronouncing every written letter.",
+            examples: [["cat", "/kæt/", "3 letters, 3 sounds"], ["catch", "/kætʃ/", "tch = one sound"], ["ship", "/ʃɪp/", "sh = one sound"], ["phone", "/foʊn/", "ph = /f/"]]
+          },
+          {
+            level: "Basic",
+            title: "Voiced vs voiceless sounds",
+            ipa: ["/b/ vs /p/", "/d/ vs /t/", "/v/ vs /f/", "/z/ vs /s/"],
+            text: "Put fingers on the throat. If it vibrates, the sound is voiced. This matters for final sounds, plural endings and past tense endings.",
+            examples: [["pat / bat", "/pæt/ /bæt/", "no voice vs voice"], ["fan / van", "/fæn/ /væn/", "teeth-lip contrast"], ["sip / zip", "/sɪp/ /zɪp/", "air only vs vibration"], ["coat / goat", "/koʊt/ /goʊt/", "back consonants"]]
+          },
+          {
+            level: "Basic",
+            title: "Syllables and word stress",
+            ipa: ["ˈ before main stress"],
+            text: "English words have stressed and unstressed syllables. Stressed syllables are clearer, longer and stronger. Unstressed syllables often reduce to schwa /ə/.",
+            examples: [["TAble", "/ˈteɪbəl/", "first syllable stressed"], ["aBOUT", "/əˈbaʊt/", "first syllable reduced"], ["PHOtograph", "/ˈfoʊtəgræf/", "stress changes in word families"], ["phoTOgraphy", "/fəˈtɑgrəfi/", "stress moves"]]
+          }
+        ]
+      },
+      {
+        id: "vowels",
+        icon: "bi-record-circle",
+        title: "Vowels",
+        rules: [
+          {
+            level: "Core",
+            title: "Short vowels: /ɪ e æ ʌ ɑ ɒ ʊ/",
+            ipa: ["/ɪ/", "/e/", "/æ/", "/ʌ/", "/ɑ/", "/ʊ/"],
+            text: "Short vowels are common in one-syllable words. The biggest traps for Spanish speakers are /ɪ/ vs /iː/, /æ/ vs /ɑ/, and /ʌ/ vs Spanish /a/.",
+            examples: [["sit", "/sɪt/", "not seat"], ["bed", "/bed/", "short e"], ["cat", "/kæt/", "open front"], ["cup", "/kʌp/", "central relaxed"], ["hot", "/hɑt/ US, /hɒt/ UK", "accent varies"], ["put", "/pʊt/", "exceptional u"]]
+          },
+          {
+            level: "Core",
+            title: "Long vowels and tense vowels",
+            ipa: ["/iː/", "/uː/", "/ɔː/", "/ɜː/"],
+            text: "Long or tense vowels are held longer and often require a more stable mouth position. Do not add an extra vowel after final consonants: food is /fuːd/, not /fuːdə/.",
+            examples: [["see", "/siː/", "long high front"], ["food", "/fuːd/", "rounded"], ["law", "/lɔː/ UK", "often /lɑ/ US"], ["bird", "/bɜːd/ UK, /bɝd/ US", "r-colored in US"]]
+          },
+          {
+            level: "Core",
+            title: "Diphthongs: one vowel glides into another",
+            ipa: ["/eɪ/", "/aɪ/", "/ɔɪ/", "/aʊ/", "/oʊ/"],
+            text: "Diphthongs move. The mouth starts in one position and glides to another. Students should not pronounce them as two separate syllables.",
+            examples: [["name", "/neɪm/", "a_e pattern"], ["time", "/taɪm/", "i_e pattern"], ["boy", "/bɔɪ/", "oy/oi"], ["now", "/naʊ/", "ow/ou"], ["go", "/goʊ/", "US long o"]]
+          },
+          {
+            level: "Essential",
+            title: "Schwa /ə/: the most common English vowel",
+            ipa: ["/ə/"],
+            text: "Schwa appears only in unstressed syllables. Any vowel letter can become schwa: a, e, i, o, u. It makes English rhythm sound natural.",
+            examples: [["about", "/əˈbaʊt/", "a = schwa"], ["problem", "/ˈprɑbləm/", "e = schwa"], ["family", "/ˈfæməli/ or /ˈfæmli/", "i may reduce"], ["support", "/səˈpɔrt/", "u = schwa"]]
+          }
+        ]
+      },
+      {
+        id: "letter-u",
+        icon: "bi-cup-hot",
+        title: "Letter U",
+        rules: [
+          {
+            level: "Essential",
+            title: "U between consonants: short U /ʌ/",
+            ipa: ["/ʌ/", "C + U + C"],
+            text: "In many short stressed words, when U is between two consonants, it often sounds /ʌ/. The lips stay neutral, the jaw opens slightly, and the tongue is low-central and relaxed. This is the first U rule students should see: bus, cup, sun, cut, luck, fun, run, much, lunch.",
+            examples: [["bus", "/bʌs/", "b + u + s"], ["cup", "/kʌp/", "c + u + p"], ["sun", "/sʌn/", "s + u + n"], ["cut", "/kʌt/", "c + u + t"], ["luck", "/lʌk/", "l + u + ck"], ["much", "/mʌtʃ/", "m + u + ch"]]
+          },
+          {
+            level: "Pattern",
+            title: "U + silent E: long U /juː/ or /uː/",
+            ipa: ["/juː/", "/uː/"],
+            text: "Silent E often changes short U /ʌ/ into a long sound. Many words use /juː/: cute, cube, use. After sounds like r, l, j, ch or sh, English often drops the /j/ and uses /uː/: rule, blue, June, true.",
+            examples: [["cut / cute", "/kʌt/ /kjuːt/", "silent E changes U"], ["cub / cube", "/kʌb/ /kjuːb/", "long U"], ["use", "/juːz/", "verb/noun sound"], ["rule", "/ruːl/", "no /j/ after r"], ["blue", "/bluː/", "no /j/ after l"]]
+          },
+          {
+            level: "Exception",
+            title: "Some U words use /ʊ/, not /ʌ/",
+            ipa: ["/ʊ/"],
+            text: "Put, push, pull, full, bush and cushion do not use /ʌ/. They use /ʊ/: a short rounded vowel. The lips round slightly and the tongue moves higher/backer than /ʌ/.",
+            examples: [["put", "/pʊt/", "not /pʌt/"], ["push", "/pʊʃ/", "short rounded"], ["pull", "/pʊl/", "dark L may appear"], ["full", "/fʊl/", "not fool"], ["bush", "/bʊʃ/", "rounded"], ["cushion", "/ˈkʊʃən/", "u = /ʊ/"]]
+          },
+          {
+            level: "R-controlled",
+            title: "U + R changes the vowel",
+            ipa: ["/ɝ/ US", "/ɜː/ UK"],
+            text: "When U is followed by R in a stressed syllable, the vowel is usually r-colored in American English: burn, turn, hurt, nurse. In many British accents, it is /ɜː/ without a strong final r unless another vowel follows.",
+            examples: [["burn", "/bɝn/ US, /bɜːn/ UK", "u + r"], ["turn", "/tɝn/ US, /tɜːn/ UK", "u + r"], ["hurt", "/hɝt/ US, /hɜːt/ UK", "u + r"], ["nurse", "/nɝs/ US, /nɜːs/ UK", "ur spelling"]]
+          }
+        ]
+      },
+      {
+        id: "consonants",
+        icon: "bi-chat-dots",
+        title: "Consonants",
+        rules: [
+          {
+            level: "Essential",
+            title: "TH has two sounds: /θ/ and /ð/",
+            ipa: ["/θ/", "/ð/"],
+            text: "Both sounds use the tongue between the teeth. /θ/ is voiceless: think, bath. /ð/ is voiced: this, mother. Do not replace them with /t/, /d/, /s/ or /z/.",
+            examples: [["think", "/θɪŋk/", "voiceless"], ["this", "/ðɪs/", "voiced"], ["birthday", "/ˈbɜrθdeɪ/", "voiceless"], ["mother", "/ˈmʌðər/", "voiced"]]
+          },
+          {
+            level: "Essential",
+            title: "SH /ʃ/, CH /tʃ/ and J /dʒ/",
+            ipa: ["/ʃ/", "/tʃ/", "/dʒ/"],
+            text: "These sounds are not interchangeable. /ʃ/ is continuous air, /tʃ/ starts with a stop, and /dʒ/ is the voiced version of /tʃ/.",
+            examples: [["ship", "/ʃɪp/", "continuous"], ["cheap", "/tʃiːp/", "stop + air"], ["job", "/dʒɑb/", "voiced"], ["judge", "/dʒʌdʒ/", "dge = /dʒ/"]]
+          },
+          {
+            level: "Essential",
+            title: "Final consonants must be closed clearly",
+            ipa: ["/t/", "/d/", "/k/", "/s/", "/z/"],
+            text: "English uses final consonants to mark meaning and grammar. Do not add a final vowel. cap, cat, cab, cad, cash and catch must end differently.",
+            examples: [["cap", "/kæp/", "lips close"], ["cat", "/kæt/", "tongue touches"], ["cab", "/kæb/", "voiced final"], ["catch", "/kætʃ/", "final affricate"]]
+          },
+          {
+            level: "Advanced",
+            title: "Dark L and clear L",
+            ipa: ["/l/", "/ɫ/"],
+            text: "At the beginning of a syllable, L is usually clear: light. At the end of a syllable, many accents use a darker L: full, milk, world.",
+            examples: [["light", "/laɪt/", "clear L"], ["full", "/fʊɫ/", "dark L"], ["milk", "/mɪɫk/", "dark L"], ["world", "/wɝɫd/", "r + dark L"]]
+          }
+        ]
+      },
+      {
+        id: "spelling",
+        icon: "bi-spellcheck",
+        title: "Spelling to sound",
+        rules: [
+          {
+            level: "Basic",
+            title: "Magic E changes the vowel",
+            ipa: ["/æ/ → /eɪ/", "/ɪ/ → /aɪ/", "/ʌ/ → /juː/ or /uː/"],
+            text: "A silent final e often makes the previous vowel long. This is useful, but not universal.",
+            examples: [["cap / cape", "/kæp/ /keɪp/", "a changes"], ["bit / bite", "/bɪt/ /baɪt/", "i changes"], ["cut / cute", "/kʌt/ /kjuːt/", "u changes"], ["not / note", "/nɑt/ /noʊt/", "o changes"]]
+          },
+          {
+            level: "Core",
+            title: "Vowel teams: common patterns",
+            ipa: ["ee /iː/", "ea /iː/ or /ɛ/", "ai /eɪ/", "oa /oʊ/", "oo /uː/ or /ʊ/"],
+            text: "Vowel teams are helpful but full of exceptions. Teach them as high-probability patterns, not absolute laws.",
+            examples: [["see", "/siː/", "ee = /iː/"], ["bread", "/bred/", "ea exception"], ["rain", "/reɪn/", "ai"], ["boat", "/boʊt/", "oa"], ["food / good", "/fuːd/ /gʊd/", "oo varies"]]
+          },
+          {
+            level: "Core",
+            title: "C, G, S and X change by context",
+            ipa: ["/k/ /s/", "/g/ /dʒ/", "/s/ /z/", "/ks/ /gz/"],
+            text: "C is often /s/ before e, i, y and /k/ elsewhere. G is often /dʒ/ before e, i, y and /g/ elsewhere, but get, give and girl are exceptions. S can be /s/ or /z/. X can be /ks/ or /gz/.",
+            examples: [["city / cat", "/ˈsɪti/ /kæt/", "c changes"], ["giant / give", "/ˈdʒaɪənt/ /gɪv/", "g has exceptions"], ["rose", "/roʊz/", "s = /z/"], ["exam", "/ɪgˈzæm/", "x = /gz/"]]
+          },
+          {
+            level: "Advanced",
+            title: "Silent letters",
+            ipa: ["silent k, b, w, gh, l, t"],
+            text: "English spelling preserves old pronunciations. Silent letters are common and must be memorized in word families.",
+            examples: [["know", "/noʊ/", "silent k"], ["debt", "/det/", "silent b"], ["write", "/raɪt/", "silent w"], ["night", "/naɪt/", "silent gh"], ["calm", "/kɑm/", "silent l"], ["listen", "/ˈlɪsən/", "silent t"]]
+          }
+        ]
+      },
+      {
+        id: "endings",
+        icon: "bi-ui-checks-grid",
+        title: "Endings",
+        rules: [
+          {
+            level: "Essential",
+            title: "Plural and third-person -s",
+            ipa: ["/s/", "/z/", "/ɪz/"],
+            text: "Use /s/ after voiceless sounds, /z/ after voiced sounds and vowels, and /ɪz/ after sibilant sounds /s z ʃ ʒ tʃ dʒ/.",
+            examples: [["cats", "/kæts/", "after /t/"], ["dogs", "/dɔgz/", "after /g/"], ["plays", "/pleɪz/", "after vowel"], ["watches", "/ˈwɑtʃɪz/", "after /tʃ/"]]
+          },
+          {
+            level: "Essential",
+            title: "Past -ed",
+            ipa: ["/t/", "/d/", "/ɪd/"],
+            text: "Use /t/ after voiceless sounds, /d/ after voiced sounds and vowels, and /ɪd/ after /t/ or /d/.",
+            examples: [["worked", "/wɝkt/", "after /k/"], ["played", "/pleɪd/", "after vowel"], ["called", "/kɔld/", "after /l/"], ["wanted", "/ˈwɑntɪd/", "after /t/"], ["needed", "/ˈnidɪd/", "after /d/"]]
+          },
+          {
+            level: "Advanced",
+            title: "Contractions and weak forms",
+            ipa: ["I’m", "you’re", "gonna", "wanna"],
+            text: "Spoken English reduces common grammar words. Students should learn to recognize reductions even if they use a clearer classroom style.",
+            examples: [["I am", "I’m /aɪm/", "contraction"], ["going to", "gonna /ˈgʌnə/", "informal"], ["want to", "wanna /ˈwɑnə/", "informal"], ["kind of", "kinda /ˈkaɪndə/", "informal"]]
+          }
+        ]
+      },
+      {
+        id: "stress",
+        icon: "bi-activity",
+        title: "Stress & rhythm",
+        rules: [
+          {
+            level: "Core",
+            title: "Content words are stressed, grammar words reduce",
+            ipa: ["sentence stress"],
+            text: "Nouns, main verbs, adjectives and adverbs usually carry stress. Articles, auxiliaries, prepositions and pronouns often reduce unless contrasted.",
+            examples: [["I WANT a CUP of COFFee", "content words strong", "natural rhythm"], ["Can you HELP me?", "can often /kən/", "weak form"], ["I can, but I WON’T.", "contrast stress", "strong form"], ["She’s FROM Canada.", "from can reduce", "context"]]
+          },
+          {
+            level: "Core",
+            title: "Linking connects words",
+            ipa: ["consonant-vowel", "vowel-vowel", "r-linking"],
+            text: "English connects words in fluent speech. Final consonants attach to following vowels. Vowel-to-vowel links may add /j/ or /w/. In many accents, r links before a vowel.",
+            examples: [["turn off", "/tɝn‿ɔf/", "consonant-vowel"], ["go out", "/goʊ‿waʊt/", "w-like link"], ["see it", "/siː‿jɪt/", "y-like link"], ["far away", "/fɑr‿əweɪ/", "r-linking in rhotic accents"]]
+          },
+          {
+            level: "Advanced",
+            title: "Thought groups and intonation",
+            ipa: ["rising", "falling", "fall-rise"],
+            text: "English speakers divide speech into thought groups. Falling intonation often sounds complete. Rising intonation can signal yes/no questions, uncertainty or continuation. Fall-rise often suggests contrast or reservation.",
+            examples: [["I finished the report.", "falling", "complete"], ["Are you ready?", "rising", "yes/no question"], ["I like it, but...", "fall-rise", "reservation"], ["When you arrive, call me.", "pause after first group", "two thought groups"]]
+          }
+        ]
+      },
+      {
+        id: "exceptions",
+        icon: "bi-exclamation-diamond",
+        title: "Exceptions",
+        rules: [
+          {
+            level: "High frequency",
+            title: "Common words that break simple rules",
+            ipa: ["memorize as chunks"],
+            text: "These words are so common that students should learn them directly, not through spelling rules.",
+            examples: [["one", "/wʌn/", "starts with /w/"], ["two", "/tuː/", "silent w"], ["said", "/sed/", "not /seɪd/"], ["does", "/dʌz/", "not /doʊz/"], ["women", "/ˈwɪmən/", "irregular plural"], ["colonel", "/ˈkɝnəl/", "very irregular"]]
+          },
+          {
+            level: "Advanced",
+            title: "GH spellings",
+            ipa: ["/f/", "silent", "/g/"],
+            text: "GH may be silent, /f/, or part of another historical spelling. It cannot be predicted perfectly.",
+            examples: [["night", "/naɪt/", "silent"], ["laugh", "/læf/", "gh = /f/"], ["through", "/θruː/", "silent"], ["ghost", "/goʊst/", "gh = /g/"], ["though", "/ðoʊ/", "silent"], ["tough", "/tʌf/", "gh = /f/"]]
+          },
+          {
+            level: "Advanced",
+            title: "Homophones and heteronyms",
+            ipa: ["same sound", "same spelling, different sound"],
+            text: "Homophones sound the same with different spelling. Heteronyms have the same spelling but different pronunciation depending on meaning or grammar.",
+            examples: [["two / too / to", "/tuː/", "same sound"], ["there / their / they’re", "/ðer/", "same sound"], ["record", "noun /ˈrekərd/, verb /rɪˈkɔrd/", "stress shift"], ["read", "/riːd/ present, /red/ past", "tense changes sound"]]
+          }
+        ]
       }
+    ];
 
-      speechSynthesis.speak(utterance);
+    const categorySidebar = document.getElementById("categorySidebar");
+    const categoryPanel = document.getElementById("categoryPanel");
+
+    function escapeAttr(text) {
+      return String(text).replace(/"/g, "&quot;");
     }
 
-    function checkPhoneticQuiz() {
-      const answers = {
-        q1: "A",
-        q2: "B",
-        q3: "B",
-        q4: "A"
-      };
+    function renderCategory(activeId = categories[0].id) {
+      categorySidebar.innerHTML = categories.map((category) => `
+        <button class="category-button ${category.id === activeId ? "active" : ""}" type="button" data-category="${category.id}">
+          <i class="bi ${category.icon}"></i><span>${category.title}</span>
+        </button>
+      `).join("");
 
-      let score = 0;
-      const totalQuestions = 4;
-      const form = document.forms["phoneticQuiz"];
-      let isComplete = true;
+      const active = categories.find((category) => category.id === activeId);
+      categoryPanel.innerHTML = active.rules.map((rule, index) => `
+        <article class="rule-card ${index === 0 ? "open" : ""}">
+          <button class="rule-toggle" type="button">
+            <span><span>${rule.level}</span><strong>${rule.title}</strong></span>
+            <i class="bi bi-chevron-down"></i>
+          </button>
+          <div class="rule-body">
+            <div class="ipa-row">${rule.ipa.map((item) => `<span class="ipa-chip">${item}</span>`).join("")}</div>
+            <p class="phonetic-copy">${rule.text}</p>
+            <div class="example-grid">
+              ${rule.examples.map(([word, ipa, note]) => `
+                <div class="word-card">
+                  <strong>${word}</strong>
+                  <span>${ipa}</span>
+                  <small>${note}</small>
+                  <button class="sound-button" type="button" data-say="${escapeAttr(word.split("/")[0].trim())}">
+                    <i class="bi bi-volume-up"></i>Listen
+                  </button>
+                </div>
+              `).join("")}
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
 
-      for (let i = 1; i <= totalQuestions; i++) {
-        const selectedOption = form["q" + i].value;
-
-        if (!selectedOption) {
-          isComplete = false;
-        } else if (selectedOption === answers["q" + i]) {
-          score++;
-        }
-      }
-
-      const resultBox = document.getElementById("phonetic-result-box");
-      resultBox.style.display = "block";
-
-      if (!isComplete) {
-        resultBox.className = "quiz-result-box incorrect";
-        resultBox.innerHTML = "Please answer all questions before checking.";
+    function speak(text) {
+      if (!("speechSynthesis" in window)) {
+        alert("Speech synthesis is not available in this browser.");
         return;
       }
-
-      if (score === totalQuestions) {
-        resultBox.className = "quiz-result-box correct";
-        resultBox.innerHTML =
-          "Excellent! You got " + score + " out of " + totalQuestions + " correct.";
-      } else {
-        resultBox.className = "quiz-result-box incorrect";
-        resultBox.innerHTML =
-          "You got " + score + " out of " + totalQuestions + " correct.<br><br>" +
-          "<strong>Correct Answers:</strong><br>" +
-          "1: A - bus = /ʌ/<br>" +
-          "2: B - cute = /juː/<br>" +
-          "3: B - blue = /uː/<br>" +
-          "4: A - put = /ʊ/";
-      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text.replace(/_/g, " "));
+      utterance.lang = "en-US";
+      utterance.rate = 0.78;
+      utterance.pitch = 1;
+      const voices = window.speechSynthesis.getVoices();
+      const englishVoice = voices.find((voice) => voice.lang === "en-US") || voices.find((voice) => voice.lang && voice.lang.startsWith("en"));
+      if (englishVoice) utterance.voice = englishVoice;
+      window.speechSynthesis.speak(utterance);
     }
 
-    speechSynthesis.onvoiceschanged = function() {};
-  </script>
+    renderCategory();
 
+    document.addEventListener("click", (event) => {
+      const categoryButton = event.target.closest("[data-category]");
+      if (categoryButton) renderCategory(categoryButton.dataset.category);
+
+      const ruleToggle = event.target.closest(".rule-toggle");
+      if (ruleToggle) ruleToggle.closest(".rule-card").classList.toggle("open");
+
+      const soundButton = event.target.closest("[data-say]");
+      if (soundButton) speak(soundButton.dataset.say);
+    });
+
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    }
+  </script>
 </body>
 </html>

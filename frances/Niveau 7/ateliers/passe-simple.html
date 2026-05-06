@@ -55,6 +55,19 @@
       color: var(--blue-dark);
       letter-spacing: -0.03em;
     }
+    .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+
+    .navbar-brand .brand-logo {
+      height: 42px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 16px rgba(21, 52, 93, 0.12));
+    }
+
 
     .nav-link {
       color: var(--text);
@@ -540,9 +553,7 @@
 <body>
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="../index.html">
-        <i class="bi bi-stars text-danger me-2"></i>Français · Niveau 7
-      </a>
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -774,7 +785,7 @@
         type: "mcq",
         prompt: "Choisissez la bonne forme au passé simple.",
         sentence: "Les enfants ______ derrière la porte.",
-        options: ["se cachèrent", "se cachaient", "se sont cachés"],
+        options: ["se cachaient", "se cachèrent", "se sont cachés"],
         answer: "se cachèrent",
         feedback: "Dans un récit écrit, l’action principale et ponctuelle peut être au passé simple : ils se cachèrent."
       },
@@ -789,7 +800,7 @@
         type: "mcq",
         prompt: "Quelle phrase contient un verbe au passé simple ?",
         sentence: "Choisissez la bonne réponse.",
-        options: ["Il regarda le ciel.", "Il regardait le ciel.", "Il a regardé le ciel."],
+        options: ["Il regardait le ciel.", "Il a regardé le ciel.", "Il regarda le ciel."],
         answer: "Il regarda le ciel.",
         feedback: "« regarda » est la forme du passé simple pour il / elle avec un verbe en -ER."
       },
@@ -804,7 +815,7 @@
         type: "mcq",
         prompt: "Choisissez la bonne transformation vers le passé composé.",
         sentence: "Il entra dans la maison.",
-        options: ["Il est entré dans la maison.", "Il a entré dans la maison.", "Il était entré dans la maison."],
+        options: ["Il était entré dans la maison.", "Il est entré dans la maison.", "Il a entré dans la maison."],
         answer: "Il est entré dans la maison.",
         feedback: "Le verbe « entrer » se conjugue avec l’auxiliaire être au passé composé : il est entré."
       },
@@ -819,7 +830,7 @@
         type: "mcq",
         prompt: "Choisissez la bonne forme au passé simple.",
         sentence: "Ils ______ enfin la solution du problème.",
-        options: ["trouvèrent", "trouvaient", "ont trouvé"],
+        options: ["ont trouvé", "trouvaient", "trouvèrent"],
         answer: "trouvèrent",
         feedback: "« trouvèrent » est le passé simple de « trouver » à la troisième personne du pluriel."
       },
@@ -834,7 +845,7 @@
         type: "mcq",
         prompt: "Choisissez le temps du verbe souligné.",
         sentence: "Dans la phrase « La porte s’ouvrit soudain », le verbe « s’ouvrit » est au…",
-        options: ["passé simple", "imparfait", "présent"],
+        options: ["imparfait", "présent", "passé simple"],
         answer: "passé simple",
         feedback: "« s’ouvrit » est une forme du passé simple. Elle indique une action ponctuelle dans le récit."
       },
@@ -849,7 +860,7 @@
         type: "mcq",
         prompt: "Choisissez la bonne forme au passé simple.",
         sentence: "Elle ______ une idée brillante.",
-        options: ["eut", "avait", "a eu"],
+        options: ["avait", "eut", "a eu"],
         answer: "eut",
         feedback: "« eut » est le passé simple du verbe avoir à la troisième personne du singulier."
       },
@@ -864,7 +875,7 @@
         type: "mcq",
         prompt: "Passé simple ou imparfait ?",
         sentence: "Dans « Le vent soufflait quand elle arriva », quel verbe est au passé simple ?",
-        options: ["arriva", "soufflait", "vent"],
+        options: ["soufflait", "avait soufflé", "arriva"],
         answer: "arriva",
         feedback: "« soufflait » décrit le contexte à l’imparfait. « arriva » indique l’action principale au passé simple."
       },
@@ -879,7 +890,7 @@
         type: "mcq",
         prompt: "Choisissez la bonne transformation vers le passé composé.",
         sentence: "Elle prit son manteau.",
-        options: ["Elle a pris son manteau.", "Elle est prise son manteau.", "Elle prenait son manteau."],
+        options: ["Elle prenait son manteau.", "Elle a pris son manteau.", "Elle est prise son manteau."],
         answer: "Elle a pris son manteau.",
         feedback: "« prit » se transforme en « a pris » au passé composé."
       },
@@ -894,7 +905,7 @@
         type: "mcq",
         prompt: "Choisissez la bonne forme au passé simple.",
         sentence: "Nous ______ la forêt avant le coucher du soleil.",
-        options: ["traversâmes", "traversions", "avons traversé"],
+        options: ["traversions", "avons traversé", "traversâmes"],
         answer: "traversâmes",
         feedback: "Pour « nous » avec un verbe en -ER, la terminaison du passé simple est -âmes : nous traversâmes."
       },
@@ -909,7 +920,7 @@
         type: "mcq",
         prompt: "Choisissez la bonne réponse.",
         sentence: "Quel marqueur annonce souvent une action ponctuelle dans un récit ?",
-        options: ["soudain", "tous les jours", "souvent"],
+        options: ["souvent", "soudain", "tous les jours"],
         answer: "soudain",
         feedback: "« Soudain » annonce souvent une rupture ou une action ponctuelle dans le récit, donc il accompagne fréquemment le passé simple."
       }

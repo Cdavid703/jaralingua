@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Speak Like a Local: Basic Idioms | JaraLingua</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+
+  <style>
+    :root {
+      --basic-blue: #123b8f;
+      --basic-navy: #071f4f;
+      --basic-red: #d7193f;
+      --basic-gold: #f4c95d;
+      --basic-green: #218c74;
+      --basic-ink: #172033;
+      --basic-muted: #64748b;
+      --basic-soft: #f4f7fb;
+      --basic-line: rgba(18, 59, 143, 0.12);
+      --basic-shadow: 0 22px 55px rgba(15, 23, 42, 0.13);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 12% 16%, rgba(215, 25, 63, 0.11), transparent 30%),
+        radial-gradient(circle at 88% 10%, rgba(18, 59, 143, 0.13), transparent 32%),
+        linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      color: var(--basic-ink);
+    }
+
+    .idioms-basic-page {
+      width: min(1140px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .basic-idioms-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: clamp(1.5rem, 4vw, 3rem);
+      margin-bottom: 3rem;
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(244, 201, 93, 0.2), transparent 28%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      border: 1px solid var(--basic-line);
+      box-shadow: var(--basic-shadow);
+      overflow: hidden;
+    }
+
+    .basic-idioms-hero h1 {
+      color: var(--basic-navy);
+      font-size: clamp(2.35rem, 5vw, 4.4rem);
+      line-height: 1;
+      margin: 0.9rem 0 1rem;
+    }
+
+    .basic-idioms-hero h1 span {
+      color: var(--basic-red);
+    }
+
+    .basic-idioms-hero p {
+      color: var(--basic-muted);
+      line-height: 1.75;
+      font-size: 1.06rem;
+    }
+
+    .basic-idioms-image {
+      background: white;
+      padding: 0.9rem;
+      border-radius: 26px;
+      border: 1px solid var(--basic-line);
+      box-shadow: 0 16px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .basic-idioms-image img {
+      width: 100%;
+      min-height: 350px;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .idioms-block {
+      background: white;
+      border: 1px solid var(--basic-line);
+      border-radius: 28px;
+      padding: clamp(1.4rem, 3vw, 2.4rem);
+      margin-bottom: 2.4rem;
+      box-shadow: var(--basic-shadow);
+    }
+
+    .section-title {
+      color: var(--basic-navy);
+      text-align: center;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.08;
+      margin-bottom: 0.9rem;
+    }
+
+    .section-subtitle {
+      max-width: 850px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--basic-muted);
+      line-height: 1.75;
+      font-size: 1.05rem;
+    }
+
+    .basic-note {
+      border-radius: 22px;
+      padding: 1.2rem;
+      background: #eef4ff;
+      border-left: 6px solid var(--basic-blue);
+      color: var(--basic-muted);
+      line-height: 1.7;
+    }
+
+    .idiom-layout {
+      display: grid;
+      grid-template-columns: 0.84fr 1.16fr;
+      gap: 1.3rem;
+      align-items: start;
+    }
+
+    .idiom-menu {
+      display: grid;
+      gap: 0.7rem;
+      position: sticky;
+      top: 95px;
+    }
+
+    .idiom-btn {
+      width: 100%;
+      border: 1px solid var(--basic-line);
+      border-radius: 18px;
+      padding: 1rem;
+      background: white;
+      color: var(--basic-ink);
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 0.85rem;
+      align-items: center;
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .idiom-btn:hover {
+      transform: translateY(-3px);
+      border-color: rgba(18, 59, 143, 0.28);
+      background: #f8fbff;
+    }
+
+    .idiom-btn.active {
+      background: linear-gradient(135deg, var(--basic-blue), var(--basic-navy));
+      border-color: var(--basic-blue);
+      color: white;
+      box-shadow: 0 14px 30px rgba(18, 59, 143, 0.18);
+    }
+
+    .idiom-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: #eef4ff;
+      color: var(--basic-blue);
+      font-size: 1.25rem;
+    }
+
+    .idiom-btn.active .idiom-icon {
+      background: rgba(255, 255, 255, 0.16);
+      color: white;
+    }
+
+    .idiom-title {
+      display: block;
+      font-weight: 900;
+      line-height: 1.18;
+    }
+
+    .idiom-category {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 0.82rem;
+      opacity: 0.78;
+      font-weight: 800;
+    }
+
+    .idiom-display {
+      min-height: 560px;
+      border-radius: 26px;
+      padding: clamp(1.2rem, 3vw, 2rem);
+      background:
+        radial-gradient(circle at top right, rgba(244, 201, 93, 0.14), transparent 25%),
+        linear-gradient(135deg, #ffffff, #f8fbff);
+      border: 1px solid var(--basic-line);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .idiom-display-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      margin-bottom: 1.3rem;
+    }
+
+    .idiom-display h2 {
+      color: var(--basic-navy);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1;
+      margin-bottom: 0.55rem;
+    }
+
+    .category-pill {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 0.42rem 0.8rem;
+      background: #fff7e8;
+      color: #8a5600;
+      font-weight: 900;
+      font-size: 0.84rem;
+    }
+
+    .display-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--basic-red), var(--basic-blue));
+      color: white;
+      font-size: 2rem;
+      box-shadow: 0 14px 30px rgba(215, 25, 63, 0.18);
+    }
+
+    .info-box,
+    .conversation-box,
+    .practice-box {
+      padding: 1.1rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      border: 1px solid var(--basic-line);
+      color: var(--basic-muted);
+      line-height: 1.65;
+      background: white;
+    }
+
+    .meaning-box {
+      background: #fff7e8;
+      border-color: rgba(244, 201, 93, 0.42);
+    }
+
+    .usage-box {
+      background: #eef4ff;
+    }
+
+    .practice-box {
+      background: #ecfdf5;
+      border-style: dashed;
+      border-color: rgba(33, 140, 116, 0.4);
+      color: #075f4c;
+    }
+
+    .box-label {
+      display: block;
+      color: var(--basic-navy);
+      font-weight: 900;
+      margin-bottom: 0.45rem;
+    }
+
+    .chat-line {
+      max-width: 88%;
+      padding: 0.85rem 1rem;
+      border-radius: 18px;
+      margin-bottom: 0.75rem;
+      line-height: 1.6;
+    }
+
+    .chat-left {
+      background: #fff;
+      border: 1px solid var(--basic-line);
+      border-bottom-left-radius: 4px;
+    }
+
+    .chat-right {
+      margin-left: auto;
+      background: linear-gradient(135deg, var(--basic-blue), var(--basic-navy));
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+
+    @media (max-width: 980px) {
+      .basic-idioms-hero,
+      .idiom-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .idiom-menu {
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .idioms-basic-page {
+        width: min(100% - 22px, 1140px);
+      }
+
+      .basic-idioms-hero,
+      .idioms-block,
+      .idiom-display {
+        border-radius: 22px;
+      }
+
+      .basic-idioms-hero .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="idioms-basic-page">
+    <section class="basic-idioms-hero">
+      <div>
+        <p class="eyebrow">Basic English · Idioms</p>
+        <h1>Speak Like a Local: <span>Basic Idioms</span></h1>
+        <p>
+          Learn common idioms that beginners can understand and use in simple conversations. Each idiom opens on this page with meaning, usage, examples, a short dialogue, and a speaking prompt.
+        </p>
+        <div class="hero-actions">
+          <a href="#idioms-list" class="btn btn-primary">Explore idioms</a>
+          <a href="index.html" class="btn btn-secondary">Back to Basic Course</a>
+        </div>
+      </div>
+      <div class="basic-idioms-image">
+        <img src="../../assets/img/english-basic/idioms-banner.jpg" alt="Students learning basic English idioms" />
+      </div>
+    </section>
+
+    <section class="idioms-block">
+      <h2 class="section-title">What is an idiom?</h2>
+      <p class="section-subtitle">
+        An idiom is a fixed expression whose meaning is different from the literal meaning of the words. This section focuses on real idioms, not greetings or simple classroom phrases, so students learn expressions that cannot be translated word by word.
+      </p>
+      <div class="basic-note">
+        <strong>Classroom tip:</strong> Students should first understand the meaning, then repeat the example sentence, and finally create one personal sentence. Idioms sound natural only when they are used in the right context.
+      </div>
+    </section>
+
+    <section class="idioms-block" id="idioms-list">
+      <h2 class="section-title">Basic idioms</h2>
+      <p class="section-subtitle">
+        Select an idiom from the list. Each one has a figurative meaning, a natural context, and a short speaking prompt that opens on the right without leaving the page.
+      </p>
+      <div class="idiom-layout">
+        <div class="idiom-menu" id="idiom-menu"></div>
+        <article class="idiom-display" id="idiom-display"></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const idioms = [
+      {
+        icon: "bi-cloud-rain-heavy",
+        title: "It's raining cats and dogs",
+        category: "Weather",
+        meaning: "It is raining very heavily.",
+        usage: "Use it when the rain is strong and intense, not for light rain.",
+        example: "Take an umbrella. It's raining cats and dogs outside.",
+        conversation: [
+          ["Ana", "Can we walk to the cafe?"],
+          ["Luis", "Not now. It's raining cats and dogs."]
+        ],
+        prompt: "Describe very heavy rain using this idiom."
+      },
+      {
+        icon: "bi-cake2",
+        title: "A piece of cake",
+        category: "Difficulty",
+        meaning: "Something is very easy to do.",
+        usage: "Use it after a task, exam, or activity feels simple.",
+        example: "The vocabulary quiz was a piece of cake.",
+        conversation: [
+          ["Sofia", "Was the homework difficult?"],
+          ["Mateo", "No, it was a piece of cake."]
+        ],
+        prompt: "Say that an easy activity was simple using this idiom."
+      },
+      {
+        icon: "bi-stars",
+        title: "Break a leg",
+        category: "Encouragement",
+        meaning: "Good luck.",
+        usage: "Use it before a performance, presentation, game, or important moment.",
+        example: "You have your English presentation today. Break a leg!",
+        conversation: [
+          ["Daniel", "I'm nervous about my speech."],
+          ["Sara", "Break a leg. You are ready."]
+        ],
+        prompt: "Wish a classmate good luck using this idiom."
+      },
+      {
+        icon: "bi-book",
+        title: "Hit the books",
+        category: "Study",
+        meaning: "To study seriously.",
+        usage: "Use it when someone needs to study hard for class, a quiz, or an exam.",
+        example: "I have a test tomorrow, so I need to hit the books tonight.",
+        conversation: [
+          ["Camila", "Do you want to watch a movie?"],
+          ["Nicolas", "I can't. I have to hit the books."]
+        ],
+        prompt: "Explain that you need to study using this idiom."
+      },
+      {
+        icon: "bi-ear",
+        title: "I'm all ears",
+        category: "Listening",
+        meaning: "I am listening carefully and I want to hear what you say.",
+        usage: "Use it when someone wants to tell you news, a story, or a problem.",
+        example: "You wanted to explain your idea? I'm all ears.",
+        conversation: [
+          ["Laura", "Can I tell you something important?"],
+          ["Andres", "Of course. I'm all ears."]
+        ],
+        prompt: "Show someone that you are ready to listen using this idiom."
+      },
+      {
+        icon: "bi-thermometer-half",
+        title: "Under the weather",
+        category: "Health",
+        meaning: "Feeling sick or not well.",
+        usage: "Use it when someone has low energy, a cold, or feels unwell.",
+        example: "I am staying home today because I feel under the weather.",
+        conversation: [
+          ["Teacher", "Are you okay today?"],
+          ["Student", "Not really. I feel under the weather."]
+        ],
+        prompt: "Say that you do not feel well using this idiom."
+      },
+      {
+        icon: "bi-cup-hot",
+        title: "Spill the beans",
+        category: "Secrets",
+        meaning: "To tell a secret or reveal information.",
+        usage: "Use it when someone shares information that was supposed to stay private.",
+        example: "Don't spill the beans about the surprise party.",
+        conversation: [
+          ["Valentina", "Does Maria know about the gift?"],
+          ["David", "No, so don't spill the beans."]
+        ],
+        prompt: "Tell someone not to reveal a secret using this idiom."
+      },
+      {
+        icon: "bi-cash-coin",
+        title: "Cost an arm and a leg",
+        category: "Money",
+        meaning: "Something is very expensive.",
+        usage: "Use it when the price of something feels extremely high.",
+        example: "That new phone costs an arm and a leg.",
+        conversation: [
+          ["Sofia", "Do you want to buy those shoes?"],
+          ["Mateo", "No way. They cost an arm and a leg."]
+        ],
+        prompt: "Describe an expensive object using this idiom."
+      },
+      {
+        icon: "bi-moon-stars",
+        title: "Once in a blue moon",
+        category: "Frequency",
+        meaning: "Very rarely.",
+        usage: "Use it for something that almost never happens.",
+        example: "I eat fast food once in a blue moon.",
+        conversation: [
+          ["Ana", "Do you watch horror movies?"],
+          ["Luis", "Once in a blue moon. I prefer comedy."]
+        ],
+        prompt: "Talk about something you rarely do using this idiom."
+      },
+      {
+        icon: "bi-arrow-right-circle",
+        title: "The ball is in your court",
+        category: "Responsibility",
+        meaning: "It is your turn to make a decision or take action.",
+        usage: "Use it when someone else must respond, decide, or continue the process.",
+        example: "I sent you my idea. Now the ball is in your court.",
+        conversation: [
+          ["Daniel", "I already chose the topic."],
+          ["Sara", "Great. The ball is in my court now."]
+        ],
+        prompt: "Tell someone it is their turn to decide using this idiom."
+      },
+      {
+        icon: "bi-bullseye",
+        title: "Give it a shot",
+        category: "Trying",
+        meaning: "To try something.",
+        usage: "Use it when encouraging someone to attempt an activity, even if it feels new.",
+        example: "This exercise looks difficult, but give it a shot.",
+        conversation: [
+          ["Teacher", "Can you answer in English?"],
+          ["Student", "I can give it a shot."]
+        ],
+        prompt: "Encourage someone to try something using this idiom."
+      },
+      {
+        icon: "bi-arrow-up-circle",
+        title: "Hang in there",
+        category: "Motivation",
+        meaning: "Do not give up; keep going.",
+        usage: "Use it when someone is tired, stressed, or having a difficult moment.",
+        example: "The course is hard, but hang in there.",
+        conversation: [
+          ["Camila", "I feel tired. English is difficult today."],
+          ["Nicolas", "Hang in there. You are improving."]
+        ],
+        prompt: "Motivate a friend who wants to stop using this idiom."
+      },
+      {
+        icon: "bi-calendar2-check",
+        title: "Call it a day",
+        category: "Work and study",
+        meaning: "To stop working or studying for today.",
+        usage: "Use it when an activity has lasted long enough and it is time to finish.",
+        example: "We practiced for two hours. Let's call it a day.",
+        conversation: [
+          ["Laura", "Do we need one more exercise?"],
+          ["Andres", "No, let's call it a day."]
+        ],
+        prompt: "Suggest stopping work for today using this idiom."
+      },
+      {
+        icon: "bi-cloud-sun",
+        title: "On cloud nine",
+        category: "Feelings",
+        meaning: "Very happy.",
+        usage: "Use it when someone feels extremely happy because of good news or success.",
+        example: "She passed the exam, and now she is on cloud nine.",
+        conversation: [
+          ["Valentina", "I got the scholarship!"],
+          ["David", "Wow, you must be on cloud nine."]
+        ],
+        prompt: "Describe someone who feels very happy using this idiom."
+      },
+      {
+        icon: "bi-exclamation-triangle",
+        title: "In hot water",
+        category: "Problems",
+        meaning: "In trouble.",
+        usage: "Use it when someone has a problem because of a mistake or bad decision.",
+        example: "He forgot the homework again, so he is in hot water.",
+        conversation: [
+          ["Sofia", "Why is Carlos worried?"],
+          ["Mateo", "He is in hot water because he missed the exam."]
+        ],
+        prompt: "Explain that someone is in trouble using this idiom."
+      }
+    ];
+
+    const menu = document.getElementById("idiom-menu");
+    const display = document.getElementById("idiom-display");
+
+    function renderMenu() {
+      menu.innerHTML = idioms.map((idiom, index) => `
+        <button class="idiom-btn ${index === 0 ? "active" : ""}" type="button" data-index="${index}">
+          <span class="idiom-icon"><i class="bi ${idiom.icon}"></i></span>
+          <span>
+            <span class="idiom-title">${idiom.title}</span>
+            <span class="idiom-category">${idiom.category}</span>
+          </span>
+        </button>
+      `).join("");
+    }
+
+    function renderIdiom(index) {
+      const idiom = idioms[index];
+      const conversation = idiom.conversation.map((line, lineIndex) => `
+        <div class="chat-line ${lineIndex % 2 === 0 ? "chat-left" : "chat-right"}">
+          <strong>${line[0]}:</strong> ${line[1]}
+        </div>
+      `).join("");
+
+      display.innerHTML = `
+        <div class="idiom-display-header">
+          <div>
+            <h2>${idiom.title}</h2>
+            <span class="category-pill">${idiom.category}</span>
+          </div>
+          <div class="display-icon"><i class="bi ${idiom.icon}"></i></div>
+        </div>
+        <div class="info-box meaning-box"><span class="box-label">Meaning</span>${idiom.meaning}</div>
+        <div class="info-box usage-box"><span class="box-label">When do we use it?</span>${idiom.usage}</div>
+        <div class="info-box"><span class="box-label">Example sentence</span>${idiom.example}</div>
+        <div class="conversation-box"><span class="box-label">Example conversation</span>${conversation}</div>
+        <div class="practice-box"><span class="box-label">Speaking prompt</span>${idiom.prompt}</div>
+      `;
+    }
+
+    renderMenu();
+    renderIdiom(0);
+
+    menu.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-index]");
+      if (!button) return;
+      document.querySelectorAll(".idiom-btn").forEach((item) => item.classList.remove("active"));
+      button.classList.add("active");
+      renderIdiom(Number(button.dataset.index));
+    });
+  </script>
+</body>
+</html>
