@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Campus Scattergories and Schedule Race | Basic English Course 1</title>
+  <title>Location Card Roulette | Basic English Course 1</title>
   <link rel="icon" href="../../favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
   <link rel="stylesheet" href="../../assets/css/style.css" />
@@ -26,49 +26,263 @@
     <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-2-in-class-banner.png');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab Workshop</p>
-        <h1>Campus Scattergories and Schedule Race</h1>
-        <p>Students play a timed word game with campus places, classroom objects and activities, then create a simple class or work schedule and ask where people are.</p>
-        <div class="lesson-meta"><span>Unit 2</span><span>Vocabulary game and schedule task</span><span>Production task</span></div>
+        <h1>Location Card Roulette</h1>
+        <p>Load the class names, spin the wheel to choose one student, select a picture card manually, and click the card to reveal the English sentence.</p>
+        <div class="lesson-meta"><span>Unit 2</span><span>Student roulette</span><span>Where questions</span><span>Verb to be</span><span>Picture cards</span></div>
         <div class="hero-actions">
-          <a href="#workshop" class="btn btn-primary">Start workshop</a>
+          <a href="#workshop" class="btn btn-primary">Start game</a>
+          <a href="unit-2-in-class.html" class="btn btn-secondary">Review Unit 2</a>
           <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-2-in-class-banner.png" alt="Campus Scattergories and Schedule Race" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-2-in-class-banner.png" alt="Location Card Roulette" /></aside>
     </section>
 
     <section class="premium-lesson-container" id="workshop">
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Workshop Brief</p><h2>Mission and Setup</h2></div></div>
-        <p class="lesson-text">Students play a timed word game with campus places, classroom objects and activities, then create a simple class or work schedule and ask where people are.</p>
-        <div class="workshop-brief-grid"><div class="workshop-brief-card"><span>Time</span><p>50 minutes</p></div><div class="workshop-brief-card"><span>Grouping</span><p>Teams of three</p></div><div class="workshop-brief-card"><span>Main output</span><p>Campus word board plus schedule interview</p></div><div class="workshop-brief-card"><span>Based on guide</span><p>Scattergories with places, materials and activities; schedule chart</p></div></div>
-        <ul class="workshop-material-list"><li>Alphabet cards</li><li>Campus categories</li><li>Blank weekly schedule</li><li>Object cards</li><li>Board or projector</li></ul>
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Game Brief</p><h2>Mission and Setup</h2></div></div>
+        <p class="lesson-text">The roulette selects a student from the class list. The teacher chooses one of the ten cards, asks the selected student to describe the image, and then clicks the card to reveal the model sentence.</p>
+        <div class="workshop-brief-grid"><div class="workshop-brief-card"><span>Time</span><p>35-45 minutes</p></div><div class="workshop-brief-card"><span>Grouping</span><p>Whole class or teams</p></div><div class="workshop-brief-card"><span>Main output</span><p>Complete sentences with be + place</p></div><div class="workshop-brief-card"><span>Target language</span><p>Where is...? He / She is...</p></div></div>
+        <ul class="workshop-material-list"><li>Paste student names</li><li>Spin to select one student</li><li>Choose a picture card manually</li><li>Ask: Where is he? / Where is she?</li><li>Click the card to reveal the model answer</li></ul>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Task Cycle</p><h2>Activity Rounds</h2></div></div>
-        <p class="lesson-text">Follow the rounds in order. The teacher can stop after any round for quick pronunciation or grammar feedback.</p>
-        <ol class="task-flow"><li><strong>Scattergories race</strong><span>The teacher gives a letter. Teams write a place, object and activity that begin with that letter when possible.</span></li><li><strong>Campus sorting</strong><span>Teams classify words into places, materials and actions, then explain two examples aloud.</span></li><li><strong>Schedule creation</strong><span>Each team creates a simple weekly schedule with place, time and course or activity.</span></li><li><strong>Location interviews</strong><span>Students walk around asking: Where is Karla? Are they in the library? What is in the computer room?</span></li><li><strong>Class report</strong><span>Teams report one schedule and one location answer to the class.</span></li></ol>
-      </article>
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Student Roulette</p><h2>Load Names and Spin</h2></div></div>
+        <div class="roulette-panel">
+          <div class="roulette-setup">
+            <div class="roulette-setup-text">
+              <h3>Load Student Names</h3>
+              <p>Type or paste the student names below. Write one name per line. Once a student is selected, the name is removed from the active list.</p>
+            </div>
+            <textarea id="studentNamesInput" class="roulette-textarea" placeholder="Example:
+Daniel
+Sofia
+Mateo
+Laura
+Emma
+Carlos"></textarea>
+            <div class="roulette-actions">
+              <button type="button" class="roulette-btn primary" onclick="loadStudentNames()">Load Names</button>
+              <button type="button" class="roulette-btn secondary" onclick="useSampleNames()">Use Sample Names</button>
+              <button type="button" class="roulette-btn danger" onclick="resetStudentRoulette()">Reset Students</button>
+            </div>
+          </div>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Student Worksheet</p><h2>Complete During the Activity</h2></div></div>
-        <p class="lesson-text">Students use this board to collect real information before speaking. It can be copied into notebooks or projected for the class.</p>
-        <div class="worksheet-board">
-          <div class="worksheet-actions"><h3>Campus Scattergories and Schedule Race Worksheet</h3><button type="button" class="practice-submit-btn" onclick="downloadWorksheetPdfFromPage()">Download worksheet PDF</button></div>
-          <table class="worksheet-table"><thead><tr><th>Day</th><th>Time</th><th>Place</th><th>Course or activity</th><th>Question to ask</th></tr></thead><tbody><tr><td>Monday</td><td></td><td></td><td></td><td></td></tr><tr><td>Tuesday</td><td></td><td></td><td></td><td></td></tr><tr><td>Wednesday</td><td></td><td></td><td></td><td></td></tr><tr><td>Thursday</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+          <div class="roulette-play-area">
+            <div class="roulette-wheel-zone">
+              <div class="roulette-pointer"></div>
+              <div class="roulette-wheel" id="studentWheel">
+                <div class="roulette-wheel-center">SPIN</div>
+              </div>
+              <button type="button" class="roulette-spin-btn" id="spinStudentBtn" onclick="spinStudentRoulette()" disabled>Spin for a Student</button>
+              <p class="roulette-status" id="studentRouletteStatus">Load at least one name to start.</p>
+            </div>
+            <div class="roulette-result-zone">
+              <div class="selected-pair-card location-selected-card">
+                <span class="result-label">Selected Student</span>
+                <strong id="selectedStudentName">No student selected yet</strong>
+                <p id="selectedStudentInstruction">After spinning, choose a card and ask the selected student to describe it.</p>
+              </div>
+              <div class="students-left-card">
+                <div class="students-left-header">
+                  <h3>Students Left</h3>
+                  <span id="studentsLeftCount">0</span>
+                </div>
+                <div class="student-chip-list" id="studentPoolList">
+                  <p class="empty-list-message">No students loaded yet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Functional Language</p><h2>Language Bank and Final Product</h2></div></div>
-        <div class="language-bank-grid"><span>He is at work.</span><span>She is studying.</span><span>They are in class.</span><span>Are they in the library?</span><span>No, they are in the computer room.</span></div>
-        <div class="deliverable-card"><h3>Final product</h3><p>Teams submit a schedule and perform a 90-second location interview using at least four Unit 2 questions.</p></div>
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Manual Card Choice</p><h2>Select a Card and Reveal</h2></div></div>
+        <p class="lesson-text">Choose any card for the selected student. The front gives the person and place question. Click once to reveal the complete English answer. Click again to cover it.</p>
+        <div class="location-card-grid" id="locationCardGrid"></div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Teacher Language</p><h2>Questions and Feedback</h2></div></div>
+        <div class="language-bank-grid"><span>Where is Daniel?</span><span>He is in the church.</span><span>Where is Sofia?</span><span>She is in the park.</span><span>Use a complete sentence.</span><span>Good. Now use he or she.</span></div>
+        <div class="deliverable-card"><h3>Final product</h3><p>Each student says at least one complete sentence using a person's name, the verb to be, and the correct place: "Daniel is in the church."</p></div>
       </article>
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/transcript-pdf.js"></script>
-  <script src="../../assets/js/worksheet-pdf.js"></script>
+
+  <script>
+    const locationCards = [
+      { name: "Daniel", pronoun: "He", place: "the church", question: "Where is Daniel?", sentence: "Daniel is in the church.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-01-daniel-church.png" },
+      { name: "Sofia", pronoun: "She", place: "the park", question: "Where is Sofia?", sentence: "Sofia is in the park.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-02-sofia-park.png" },
+      { name: "Mateo", pronoun: "He", place: "school", question: "Where is Mateo?", sentence: "Mateo is at school.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-03-mateo-school.png" },
+      { name: "Laura", pronoun: "She", place: "the mountain", question: "Where is Laura?", sentence: "Laura is on the mountain.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-04-laura-mountain.png" },
+      { name: "Emma", pronoun: "She", place: "the library", question: "Where is Emma?", sentence: "Emma is in the library.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-05-emma-library.png" },
+      { name: "Carlos", pronoun: "He", place: "the supermarket", question: "Where is Carlos?", sentence: "Carlos is at the supermarket.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-06-carlos-supermarket.png" },
+      { name: "Valentina", pronoun: "She", place: "the beach", question: "Where is Valentina?", sentence: "Valentina is at the beach.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-07-valentina-beach.png" },
+      { name: "Lucas", pronoun: "He", place: "the hospital", question: "Where is Lucas?", sentence: "Lucas is at the hospital.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-08-lucas-hospital.png" },
+      { name: "Ana", pronoun: "She", place: "the restaurant", question: "Where is Ana?", sentence: "Ana is in the restaurant.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-09-ana-restaurant.png" },
+      { name: "Nicolas", pronoun: "He", place: "the bus station", question: "Where is Nicolas?", sentence: "Nicolas is at the bus station.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-10-nicolas-bus-station.png" }
+    ];
+
+    const rouletteState = {
+      originalNames: [],
+      studentPool: [],
+      rotation: 0,
+      spinning: false
+    };
+
+    function getUniqueNames(rawText) {
+      const names = rawText
+        .split(/\n|,/)
+        .map(function(name) { return name.trim(); })
+        .filter(function(name) { return name.length > 0; });
+
+      const seen = new Set();
+      const uniqueNames = [];
+
+      names.forEach(function(name) {
+        const key = name.toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueNames.push(name);
+        }
+      });
+
+      return uniqueNames;
+    }
+
+    function loadStudentNames() {
+      const rawText = document.getElementById("studentNamesInput").value;
+      const names = getUniqueNames(rawText);
+
+      if (names.length < 1) {
+        alert("Please enter at least one student name.");
+        return;
+      }
+
+      rouletteState.originalNames = names.slice();
+      rouletteState.studentPool = names.slice();
+      document.getElementById("selectedStudentName").textContent = "No student selected yet";
+      document.getElementById("selectedStudentInstruction").textContent = "Spin the wheel, choose a card, and ask the selected student to describe it.";
+      renderStudentRoulette();
+    }
+
+    function useSampleNames() {
+      const sampleNames = ["Daniel", "Sofia", "Mateo", "Laura", "Emma", "Carlos", "Valentina", "Lucas", "Ana", "Nicolas"];
+      document.getElementById("studentNamesInput").value = sampleNames.join("\n");
+      loadStudentNames();
+    }
+
+    function renderStudentRoulette() {
+      renderStudentPool();
+      const spinBtn = document.getElementById("spinStudentBtn");
+      const status = document.getElementById("studentRouletteStatus");
+      document.getElementById("studentsLeftCount").textContent = rouletteState.studentPool.length;
+
+      if (rouletteState.studentPool.length > 0) {
+        spinBtn.disabled = false;
+        status.textContent = "Ready. Spin the wheel to select one student.";
+      } else {
+        spinBtn.disabled = true;
+        status.textContent = "All students have participated. Reset or load names again.";
+      }
+    }
+
+    function renderStudentPool() {
+      const container = document.getElementById("studentPoolList");
+      container.innerHTML = "";
+
+      if (rouletteState.studentPool.length === 0) {
+        const message = document.createElement("p");
+        message.className = "empty-list-message";
+        message.textContent = "No students left in the active list.";
+        container.appendChild(message);
+        return;
+      }
+
+      rouletteState.studentPool.forEach(function(name) {
+        const chip = document.createElement("span");
+        chip.className = "student-chip";
+        chip.textContent = name;
+        container.appendChild(chip);
+      });
+    }
+
+    function spinStudentRoulette() {
+      if (rouletteState.spinning) return;
+
+      if (rouletteState.studentPool.length < 1) {
+        alert("Load at least one student name.");
+        return;
+      }
+
+      rouletteState.spinning = true;
+      document.getElementById("spinStudentBtn").disabled = true;
+      const wheel = document.getElementById("studentWheel");
+      rouletteState.rotation += 1440 + Math.floor(Math.random() * 720);
+      wheel.style.transform = "rotate(" + rouletteState.rotation + "deg)";
+
+      setTimeout(function() {
+        const index = Math.floor(Math.random() * rouletteState.studentPool.length);
+        const student = rouletteState.studentPool.splice(index, 1)[0];
+        document.getElementById("selectedStudentName").textContent = student;
+        document.getElementById("selectedStudentInstruction").textContent = "Choose a card and ask " + student + " to answer with a complete sentence.";
+        rouletteState.spinning = false;
+        renderStudentRoulette();
+      }, 2600);
+    }
+
+    function resetStudentRoulette() {
+      rouletteState.originalNames = [];
+      rouletteState.studentPool = [];
+      rouletteState.rotation = 0;
+      rouletteState.spinning = false;
+      document.getElementById("studentNamesInput").value = "";
+      document.getElementById("studentWheel").style.transform = "rotate(0deg)";
+      document.getElementById("selectedStudentName").textContent = "No student selected yet";
+      document.getElementById("selectedStudentInstruction").textContent = "After spinning, choose a card and ask the selected student to describe it.";
+      renderStudentRoulette();
+    }
+
+    function renderLocationCards() {
+      const grid = document.getElementById("locationCardGrid");
+      grid.innerHTML = "";
+
+      locationCards.forEach(function(card, index) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "location-flip-card location-real-card";
+        button.setAttribute("aria-label", "Reveal answer for " + card.name);
+        button.onclick = function() {
+          button.classList.toggle("is-flipped");
+        };
+
+        const imageContent = card.image
+          ? '<img src="' + card.image + '" alt="' + card.name + ' in ' + card.place + '" />'
+          : '<span class="location-image-placeholder"><strong>' + card.name + '</strong><span>' + card.place + '</span></span>';
+
+        button.innerHTML =
+          '<span class="location-card-inner">' +
+            '<span class="location-card-face location-card-front">' +
+              '<span class="location-card-number">' + String(index + 1).padStart(2, "0") + '</span>' +
+              '<span class="location-card-image">' + imageContent + '</span>' +
+              '<span class="location-card-question">' + card.question + '</span>' +
+            '</span>' +
+            '<span class="location-card-face location-card-back">' +
+              '<span class="location-answer-label">Answer</span>' +
+              '<strong>' + card.sentence + '</strong>' +
+              '<span>Model: ' + card.pronoun + ' is ' + card.sentence.split(" is ")[1] + '</span>' +
+            '</span>' +
+          '</span>';
+
+        grid.appendChild(button);
+      });
+    }
+
+    renderStudentRoulette();
+    renderLocationCards();
+  </script>
 </body>
 </html>

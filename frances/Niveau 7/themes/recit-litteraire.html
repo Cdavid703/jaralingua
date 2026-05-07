@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Le récit littéraire - Français Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root { --blue:#1f4e8c; --blue-dark:#15345d; --red:#d62839; --soft:#f4f7fb; --text:#243044; --muted:#718096; --yellow:#f4c95d; --green:#2f9e77; --shadow:0 22px 55px rgba(20,40,80,.13); --radius:28px; }
+    * { scroll-behavior:smooth; }
+    body { margin:0; font-family:"Nunito",sans-serif; color:var(--text); background:var(--soft); overflow-x:hidden; }
+    h1,h2,h3,h4,h5,.navbar-brand { font-family:"Montserrat",sans-serif; }
+    .navbar { background:rgba(255,255,255,.94); backdrop-filter:blur(16px); box-shadow:0 10px 32px rgba(21,52,93,.08); }
+    .navbar-brand { display:inline-flex; align-items:center; gap:.65rem; font-weight:800; color:var(--blue-dark); }
+    .brand-logo { height:42px; width:auto; object-fit:contain; filter:drop-shadow(0 8px 16px rgba(21,52,93,.12)); }
+    .nav-link { color:var(--text); font-weight:800; border-radius:999px; padding:.55rem .9rem!important; }
+    .nav-link:hover,.nav-link.active { color:var(--blue); background:rgba(31,78,140,.08); }
+    .hero { padding:8rem 0 5rem; background:radial-gradient(circle at 15% 18%,rgba(214,40,57,.17),transparent 28%),radial-gradient(circle at 85% 12%,rgba(31,78,140,.22),transparent 32%),linear-gradient(135deg,#fff 0%,#eef5ff 46%,#fff0f2 100%); position:relative; }
+    .hero:after { content:""; position:absolute; left:0; right:0; bottom:0; height:110px; background:linear-gradient(to bottom,transparent,var(--soft)); }
+    .badge-course { display:inline-flex; align-items:center; gap:.55rem; padding:.7rem 1rem; border-radius:999px; background:rgba(255,255,255,.86); border:1px solid rgba(31,78,140,.12); color:var(--blue-dark); font-weight:900; box-shadow:0 14px 30px rgba(31,78,140,.08); }
+    .hero h1 { margin-top:1.2rem; font-weight:800; line-height:.98; letter-spacing:-.045em; color:var(--blue-dark); font-size:clamp(2.55rem,6.2vw,5.55rem); }
+    .hero-lead { color:var(--blue); font-size:clamp(1.15rem,2vw,1.5rem); font-weight:900; margin:1.2rem 0 1rem; }
+    .hero-text,.section-text { color:var(--muted); font-size:1.08rem; line-height:1.75; max-width:860px; }
+    .hero-card,.explain-panel,.focus-panel { border-radius:34px; background:#fff; box-shadow:var(--shadow); overflow:hidden; }
+    .hero-card { padding:1rem; }
+    .hero-card img { width:100%; min-height:420px; max-height:520px; object-fit:cover; display:block; border-radius:28px; }
+    .btn-main,.btn-soft { border-radius:999px; font-weight:900; padding:.88rem 1.18rem; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:.45rem; }
+    .btn-main { border:0; background:linear-gradient(135deg,var(--blue),var(--blue-dark)); color:#fff; box-shadow:0 16px 34px rgba(31,78,140,.24); }
+    .btn-main:hover { color:#fff; transform:translateY(-2px); }
+    .btn-soft { border:2px solid rgba(31,78,140,.2); background:rgba(255,255,255,.78); color:var(--blue-dark); }
+    .btn-soft:hover { border-color:var(--blue); background:var(--blue); color:#fff; }
+    section { padding:5rem 0; }
+    .section-kicker { text-transform:uppercase; color:var(--red); font-weight:900; letter-spacing:.12em; font-size:.82rem; }
+    .section-title { color:var(--blue-dark); font-size:clamp(2rem,4vw,3.1rem); font-weight:800; letter-spacing:-.045em; }
+    .explain-panel { padding:clamp(1.35rem,3vw,2.4rem); display:grid; gap:1rem; }
+    .lesson-block { display:flex; gap:1rem; padding:1rem; border-radius:24px; background:rgba(31,78,140,.055); }
+    .lesson-block h3 { color:var(--blue-dark); font-size:1.18rem; font-weight:800; margin-bottom:.35rem; }
+    .lesson-block p { color:var(--muted); line-height:1.7; margin:0; }
+    .icon-box { width:58px; height:58px; display:grid; place-items:center; border-radius:20px; background:rgba(31,78,140,.1); color:var(--blue); font-size:1.65rem; flex:0 0 auto; }
+    .icon-box.red { background:#fff0f3; color:var(--red); } .icon-box.yellow { background:rgba(244,201,93,.22); color:#9a6b00; } .icon-box.green { background:rgba(47,158,119,.14); color:var(--green); }
+    .example-box { border-radius:18px; background:#fff; border-left:5px solid var(--yellow); padding:.9rem 1rem; color:var(--blue-dark); font-weight:800; line-height:1.6; margin-top:.8rem; }
+    .focus-panel { padding:clamp(1.4rem,3vw,2.4rem); background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; position:relative; }
+    .focus-panel p { color:rgba(255,255,255,.8); line-height:1.75; }
+    .activity-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .activity-link { display:grid; gap:.65rem; padding:1.25rem; border-radius:24px; background:#fff; text-decoration:none; color:var(--text); box-shadow:0 14px 38px rgba(20,40,80,.09); min-height:100%; }
+    .activity-link span { width:52px; height:52px; border-radius:18px; display:grid; place-items:center; background:rgba(214,40,57,.09); color:var(--red); font-size:1.5rem; }
+    .activity-link strong { color:var(--blue-dark); font-size:1.1rem; } .activity-link em { color:var(--muted); font-style:normal; line-height:1.55; }
+    footer { background:var(--blue-dark); color:#fff; padding:3rem 0; }
+    footer a { color:#fff; text-decoration:none; font-weight:900; opacity:.86; }
+    .floating-up { width:48px; height:48px; position:fixed; right:1rem; bottom:1rem; display:none; place-items:center; z-index:1000; border:0; border-radius:50%; background:var(--red); color:#fff; box-shadow:0 12px 28px rgba(214,40,57,.28); }
+    .fade-in { opacity:0; transform:translateY(24px); transition:opacity .7s ease,transform .7s ease; } .fade-in.visible { opacity:1; transform:translateY(0); }
+    @media (max-width:991px) { .hero{padding-top:7rem}.hero-card img{min-height:310px}.activity-grid{grid-template-columns:1fr} }
+    @media (max-width:575px) { .lesson-block{display:block}.icon-box{margin-bottom:.8rem}.btn-main,.btn-soft{width:100%} }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir la navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#reperes">Repères</a></li><li class="nav-item"><a class="nav-link" href="#temps">Temps</a></li><li class="nav-item"><a class="nav-link" href="#culture">Culture</a></li>
+          <li class="nav-item"><a class="nav-link" href="#activites">Activités</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index:2;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course"><i class="bi bi-book-half"></i>Unité 2 · Récits et cultures</span>
+          <h1>Le récit littéraire</h1>
+          <p class="hero-lead">Lire, raconter et transformer des histoires françaises et colombiennes.</p>
+          <p class="hero-text">Cette unité relie le conte, la légende, l'anecdote culturelle et le récit historique. Les élèves apprennent à distinguer les actions principales, les descriptions et les valeurs culturelles que transmet une histoire.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#reperes" class="btn-main"><i class="bi bi-compass"></i>Commencer</a>
+            <a href="../themes-du-cours.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux thèmes</a>
+          </div>
+        </div>
+        <div class="col-lg-5 fade-in"><div class="hero-card"><img src="../img/theme-recit-litteraire.jpg" alt="Illustration du récit littéraire et des histoires interculturelles"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+    <section id="reperes" class="">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Lecture littéraire</p>
+            <h2 class="section-title">Comprendre ce qu'un récit fait avancer</h2>
+            <p class="section-text">Un récit littéraire n'est pas seulement une suite d'actions. Il installe un décor, crée une attente, fait apparaître un conflit et donne une signification à la fin.</p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="explain-panel">
+              
+                <article class="lesson-block">
+                  <div class="icon-box "><i class="bi bi-map"></i></div>
+                  <div>
+                    <h3>La situation initiale</h3>
+                    <p>Elle présente le lieu, le temps, les personnages et l'atmosphère. On y trouve souvent l'imparfait pour décrire.</p>
+                    <div class="example-box">La ville était silencieuse et les habitants attendaient la fête.</div>
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box red"><i class="bi bi-lightning-charge"></i></div>
+                  <div>
+                    <h3>L'événement déclencheur</h3>
+                    <p>Il change la situation et oblige les personnages à agir. Dans un texte écrit, il apparaît souvent au passé simple.</p>
+                    <div class="example-box">Soudain, une lettre arriva et tout le village se réunit.</div>
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box yellow"><i class="bi bi-signpost-split"></i></div>
+                  <div>
+                    <h3>Les péripéties</h3>
+                    <p>Ce sont les actions qui construisent le parcours du héros ou du témoin. Elles révèlent les valeurs du groupe.</p>
+                    
+                  </div>
+                </article>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="temps" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Grammaire du récit</p>
+            <h2 class="section-title">Passé simple et imparfait</h2>
+            <p class="section-text">L'imparfait donne le décor, les habitudes et les descriptions. Le passé simple met au premier plan les actions terminées qui font progresser l'histoire.</p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="explain-panel">
+              
+                <article class="lesson-block">
+                  <div class="icon-box "><i class="bi bi-braces"></i></div>
+                  <div>
+                    <h3>Imparfait = arrière-plan</h3>
+                    <p>On l'utilise pour ce qui durait, se répétait ou décrivait le contexte.</p>
+                    <div class="example-box">Les familles préparaient le repas et les enfants jouaient dehors.</div>
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box red"><i class="bi bi-arrow-right-circle"></i></div>
+                  <div>
+                    <h3>Passé simple = action principale</h3>
+                    <p>On l'utilise dans les récits écrits pour les actions ponctuelles.</p>
+                    <div class="example-box">Le voyageur entra, salua la famille et raconta son aventure.</div>
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box green"><i class="bi bi-arrow-left-right"></i></div>
+                  <div>
+                    <h3>Transformation vers l'oral</h3>
+                    <p>Pour raconter naturellement à l'oral, on transforme souvent le passé simple en passé composé.</p>
+                    
+                  </div>
+                </article>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="culture" class="">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Regards croisés</p>
+            <h2 class="section-title">Comparer les valeurs d'une histoire</h2>
+            <p class="section-text">Un conte ou une légende transmet des idées sur la famille, le courage, la ruse, la nature, l'hospitalité ou la justice. La comparaison doit rester précise.</p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="explain-panel">
+              
+                <article class="lesson-block">
+                  <div class="icon-box "><i class="bi bi-globe-americas"></i></div>
+                  <div>
+                    <h3>Repérer une valeur</h3>
+                    <p>Les élèves cherchent ce que l'histoire valorise : aider l'autre, respecter les anciens, protéger la nature ou tenir sa parole.</p>
+                    
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box yellow"><i class="bi bi-search"></i></div>
+                  <div>
+                    <h3>Justifier avec une scène</h3>
+                    <p>Chaque interprétation doit s'appuyer sur une scène concrète du récit.</p>
+                    
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box green"><i class="bi bi-chat-dots"></i></div>
+                  <div>
+                    <h3>Nuancer</h3>
+                    <p>On évite de dire qu'une culture est toujours comme ceci ou comme cela. On dit plutôt : dans cette histoire, on observe que...</p>
+                    
+                  </div>
+                </article>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="activites" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Pratique liée</p>
+            <h2 class="section-title">Activités interactives du thème</h2>
+            <p class="section-text">Les activités invitent les cinq élèves à reconstruire, interpréter et raconter une même histoire depuis plusieurs perspectives.</p>
+          </div>
+          <div class="col-lg-7 fade-in"><div class="activity-grid">
+    <a href="../ateliers/puzzle-narratif.html" class="activity-link">
+      <span><i class="bi bi-puzzle-fill"></i></span>
+      <strong>Puzzle narratif interculturel</strong>
+      <em>Reconstituer un conte français et une légende colombienne, puis justifier l'ordre du récit.</em>
+    </a>
+    <a href="../ateliers/recit-deux-voix.html" class="activity-link">
+      <span><i class="bi bi-chat-left-quote-fill"></i></span>
+      <strong>Récit à deux voix</strong>
+      <em>Raconter le même événement depuis une voix française et une voix colombienne.</em>
+    </a>
+    <a href="../ateliers/passe-simple.html" class="activity-link">
+      <span><i class="bi bi-braces"></i></span>
+      <strong>Atelier grammaire : passé simple</strong>
+      <em>Identifier les formes du récit écrit avant de passer à la production orale.</em>
+    </a></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Le récit littéraire - Français Niveau 7</h2><p class="mb-0 opacity-75">Unité centrée sur le récit, le passé simple en réception et la comparaison de valeurs culturelles.</p></div>
+        <div class="col-lg-4 text-lg-end"><a href="../themes-du-cours.html"><i class="bi bi-arrow-left"></i> Retour aux thèmes</a></div>
+      </div>
+    </div>
+  </footer>
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const observed=document.querySelectorAll('.fade-in'); const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('visible')}})},{threshold:.16}); observed.forEach((element)=>observer.observe(element));
+    const btnUp=document.getElementById('btnUp'); window.addEventListener('scroll',()=>{btnUp.style.display=window.scrollY>620?'grid':'none'});
+    document.querySelectorAll('.nav-link[href^="#"]').forEach((link)=>{link.addEventListener('click',()=>{const nav=document.querySelector('.navbar-collapse'); if(nav.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(nav).hide();})});
+  </script>
+</body>
+</html>

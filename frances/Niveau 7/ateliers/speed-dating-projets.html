@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Speed-dating des projets - Français Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root { --blue:#1f4e8c; --blue-dark:#15345d; --red:#d62839; --soft:#f4f7fb; --text:#243044; --muted:#718096; --yellow:#f4c95d; --green:#2f9e77; --shadow:0 22px 55px rgba(20,40,80,.13); --radius:28px; }
+    *{scroll-behavior:smooth} body{margin:0;font-family:"Nunito",sans-serif;color:var(--text);background:var(--soft);overflow-x:hidden} h1,h2,h3,h4,h5,.navbar-brand{font-family:"Montserrat",sans-serif}
+    .navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 10px 32px rgba(21,52,93,.08)} .navbar-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:800;color:var(--blue-dark)} .brand-logo{height:42px;width:auto;object-fit:contain}
+    .nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}.nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
+    .hero{padding:8rem 0 5rem;background:radial-gradient(circle at 15% 18%,rgba(214,40,57,.17),transparent 28%),radial-gradient(circle at 85% 12%,rgba(31,78,140,.22),transparent 32%),linear-gradient(135deg,#fff 0%,#eef5ff 46%,#fff0f2 100%);position:relative}.hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:110px;background:linear-gradient(to bottom,transparent,var(--soft))}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.86);border:1px solid rgba(31,78,140,.12);color:var(--blue-dark);font-weight:900;box-shadow:0 14px 30px rgba(31,78,140,.08)}
+    .hero h1{margin-top:1.2rem;font-weight:800;line-height:.98;letter-spacing:-.045em;color:var(--blue-dark);font-size:clamp(2.45rem,6vw,5.35rem)}.hero-lead{color:var(--blue);font-size:clamp(1.15rem,2vw,1.5rem);font-weight:900;margin:1.2rem 0 1rem}.hero-text,.section-text{color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:860px}
+    .hero-card,.panel,.output-panel{border-radius:34px;background:#fff;box-shadow:var(--shadow);overflow:hidden}.hero-card{padding:1rem}.hero-card img{width:100%;min-height:420px;max-height:520px;object-fit:cover;display:block;border-radius:28px}
+    .btn-main,.btn-soft{border-radius:999px;font-weight:900;padding:.88rem 1.18rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}.btn-main{border:0;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;box-shadow:0 16px 34px rgba(31,78,140,.24)}.btn-main:hover{color:#fff}.btn-soft{border:2px solid rgba(31,78,140,.2);background:rgba(255,255,255,.78);color:var(--blue-dark)}.btn-soft:hover{border-color:var(--blue);background:var(--blue);color:#fff}
+    section{padding:5rem 0}.section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}.section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.1rem);font-weight:800;letter-spacing:-.045em}
+    .step-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}.step-card{background:#fff;border-radius:24px;padding:1.2rem;box-shadow:0 14px 38px rgba(20,40,80,.09);height:100%}.step-card span,.prompt-card span{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:16px;background:rgba(31,78,140,.09);color:var(--blue);font-weight:900;margin-bottom:.8rem}.step-card h3{font-weight:800;color:var(--blue-dark);font-size:1.1rem}.step-card p{color:var(--muted);line-height:1.65;margin:0}
+    .panel{padding:clamp(1.35rem,3vw,2.4rem)}.student-grid,.prompt-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem}.student-card,.prompt-card{border:0;text-align:left;border-radius:22px;background:rgba(31,78,140,.06);padding:1rem;color:var(--text);min-height:100%;transition:transform .2s ease,box-shadow .2s ease}.student-card:hover,.prompt-card:hover,.student-card.active,.prompt-card.active{transform:translateY(-3px);box-shadow:0 18px 34px rgba(20,40,80,.14);background:#fff}.student-card span{display:grid;place-items:center;width:48px;height:48px;border-radius:18px;background:var(--red);color:#fff;font-weight:900;margin-bottom:.8rem}.student-card strong{display:block;color:var(--blue-dark);font-weight:900}.student-card em{font-style:normal;color:var(--muted);line-height:1.45;font-size:.92rem}.prompt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.prompt-card{font-weight:800;line-height:1.55}
+    .output-panel{padding:clamp(1.35rem,3vw,2.4rem);background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff}.output-panel p{color:rgba(255,255,255,.82);line-height:1.75}.mission-box{border-left:6px solid var(--yellow);background:rgba(255,255,255,.12);border-radius:20px;padding:1rem;min-height:130px}.mission-box strong{display:block;font-size:1.15rem;margin-bottom:.5rem}.checklist{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}.checklist li{display:flex;gap:.65rem;line-height:1.6}.checklist i{color:var(--yellow);margin-top:.18rem}
+    footer{background:var(--blue-dark);color:#fff;padding:3rem 0}footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}.floating-up{width:48px;height:48px;position:fixed;right:1rem;bottom:1rem;display:none;place-items:center;z-index:1000;border:0;border-radius:50%;background:var(--red);color:#fff;box-shadow:0 12px 28px rgba(214,40,57,.28)}
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:991px){.hero{padding-top:7rem}.hero-card img{min-height:310px}.step-grid{grid-template-columns:repeat(2,1fr)}.student-grid{grid-template-columns:repeat(2,1fr)}.prompt-grid{grid-template-columns:1fr}}@media(max-width:575px){.step-grid,.student-grid{grid-template-columns:1fr}.btn-main,.btn-soft{width:100%}}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir la navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMenu"><ul class="navbar-nav ms-auto gap-lg-2"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link" href="../themes/experiences-projets.html">Thème lié</a></li><li class="nav-item"><a class="nav-link" href="#atelier">Atelier</a></li></ul></div>
+    </div>
+  </nav>
+  <header class="hero">
+    <div class="container position-relative" style="z-index:2;"><div class="row align-items-center g-5"><div class="col-lg-7 fade-in"><span class="badge-course"><i class="bi bi-people-fill"></i>Unité 4 · Interaction rapide</span><h1>Speed-dating des projets</h1><p class="hero-lead">Échanger rapidement sur études, travail, voyage et adaptation.</p><p class="hero-text">Les élèves tournent de partenaire en partenaire. À chaque mini-rencontre, ils doivent présenter un projet, poser une question, rebondir et donner un conseil.</p><div class="d-flex flex-wrap gap-3 mt-4"><a href="#atelier" class="btn-main"><i class="bi bi-play-circle"></i>Lancer l'activité</a><a href="../themes/experiences-projets.html" class="btn-soft"><i class="bi bi-book"></i>Revoir le thème</a></div></div><div class="col-lg-5 fade-in"><div class="hero-card"><img src="../img/theme-experiences-projets.jpg" alt="Speed-dating des projets"></div></div></div></div>
+  </header>
+  <main>
+    <section id="preparation"><div class="container"><div class="text-center mb-5 fade-in"><p class="section-kicker">Déroulement</p><h2 class="section-title">Une activité en plusieurs temps</h2><p class="section-text mx-auto">L'activité renforce l'interaction spontanée, les questions de suivi et la capacité à reformuler un projet.</p></div><div class="step-grid">
+    <article class="step-card">
+      <span>01</span>
+      <h3>Préparer</h3>
+      <p>Chaque élève écrit son projet en trois phrases.</p>
+    </article>
+    <article class="step-card">
+      <span>02</span>
+      <h3>Rencontrer</h3>
+      <p>Deux minutes par échange : présenter, questionner, conseiller.</p>
+    </article>
+    <article class="step-card">
+      <span>03</span>
+      <h3>Noter</h3>
+      <p>Chaque élève note le meilleur conseil reçu.</p>
+    </article>
+    <article class="step-card">
+      <span>04</span>
+      <h3>Rapporter</h3>
+      <p>La classe rapporte les projets au discours indirect.</p>
+    </article></div></div></section>
+    <section id="atelier" class="bg-white"><div class="container"><div class="row g-5 align-items-start"><div class="col-lg-5 fade-in"><p class="section-kicker">Interaction entre 5 élèves</p><h2 class="section-title">Choisir un rôle et une mission</h2><p class="section-text">Chaque élève défend un projet différent et change de partenaire toutes les deux minutes.</p><div class="student-grid mt-4">
+    <button class="student-card" type="button" data-student="Camila" data-role="projet d'études">
+      <span>C</span>
+      <strong>Camila</strong>
+      <em>projet d'études</em>
+    </button>
+    <button class="student-card" type="button" data-student="Mateo" data-role="projet de stage">
+      <span>M</span>
+      <strong>Mateo</strong>
+      <em>projet de stage</em>
+    </button>
+    <button class="student-card" type="button" data-student="Valentina" data-role="projet de voyage">
+      <span>V</span>
+      <strong>Valentina</strong>
+      <em>projet de voyage</em>
+    </button>
+    <button class="student-card" type="button" data-student="Nicolas" data-role="projet familial">
+      <span>N</span>
+      <strong>Nicolas</strong>
+      <em>projet familial</em>
+    </button>
+    <button class="student-card" type="button" data-student="Sofia" data-role="projet culturel">
+      <span>S</span>
+      <strong>Sofia</strong>
+      <em>projet culturel</em>
+    </button></div></div><div class="col-lg-7 fade-in"><div class="panel"><h3 class="fw-bold text-primary mb-3">Cartes de situation</h3><div class="prompt-grid">
+    <button class="prompt-card" type="button" data-prompt="Je voudrais étudier au Québec pendant six mois.">
+      <span>01</span>Je voudrais étudier au Québec pendant six mois.
+    </button>
+    <button class="prompt-card" type="button" data-prompt="J'aimerais faire un stage dans une entreprise française.">
+      <span>02</span>J'aimerais faire un stage dans une entreprise française.
+    </button>
+    <button class="prompt-card" type="button" data-prompt="Je rêve de présenter la gastronomie colombienne à Paris.">
+      <span>03</span>Je rêve de présenter la gastronomie colombienne à Paris.
+    </button>
+    <button class="prompt-card" type="button" data-prompt="Je voudrais améliorer mon français avant de voyager.">
+      <span>04</span>Je voudrais améliorer mon français avant de voyager.
+    </button>
+    <button class="prompt-card" type="button" data-prompt="Je cherche une solution pour financer mon projet.">
+      <span>05</span>Je cherche une solution pour financer mon projet.
+    </button></div></div></div></div></div></section>
+    <section id="production"><div class="container"><div class="output-panel fade-in"><div class="row g-4 align-items-start"><div class="col-lg-5"><p class="text-uppercase fw-bold opacity-75 mb-2">Mission générée</p><h2 class="fw-bold mb-3">Combiner rôle + situation</h2><p>Chaque clic prépare une tâche orale ou écrite différente. Les élèves doivent produire en français, se répondre, se corriger et réutiliser les structures du thème.</p><div class="mission-box" id="missionBox"><strong>Choisissez un élève et une carte.</strong><span>La consigne apparaîtra ici.</span></div></div><div class="col-lg-7"><h3 class="fw-bold mb-3">Critères de réussite</h3><ul class="checklist"><li><i class="bi bi-check-circle-fill"></i><span>Chaque échange contient une question de suivi.</span></li><li><i class="bi bi-check-circle-fill"></i><span>Les élèves utilisent je voudrais, j'aimerais ou je compte.</span></li><li><i class="bi bi-check-circle-fill"></i><span>Les conseils sont précis et réalistes.</span></li><li><i class="bi bi-check-circle-fill"></i><span>La restitution finale rapporte la parole d'un camarade.</span></li></ul></div></div></div></div></section>
+  </main>
+  <footer><div class="container"><div class="row align-items-center g-4"><div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Speed-dating des projets</h2><p class="mb-0 opacity-75">Atelier lié au thème Expériences et projets.</p></div><div class="col-lg-4 text-lg-end"><a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a></div></div></div></footer>
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const observed=document.querySelectorAll('.fade-in'); const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('visible')}})},{threshold:.16}); observed.forEach((element)=>observer.observe(element));
+    const btnUp=document.getElementById('btnUp'); window.addEventListener('scroll',()=>{btnUp.style.display=window.scrollY>620?'grid':'none'});
+    let selectedStudent=""; let selectedRole=""; let selectedPrompt="";
+    const box=document.getElementById('missionBox');
+    function updateMission(){ if(!selectedStudent || !selectedPrompt){return;} box.innerHTML='<strong>'+selectedStudent+' - '+selectedRole+'</strong><span>'+selectedPrompt+' doit présenter son projet, demander un conseil et rapporter ensuite ce qu'un camarade lui a conseillé.</span>'; }
+    document.querySelectorAll('.student-card').forEach((card)=>card.addEventListener('click',()=>{document.querySelectorAll('.student-card').forEach((c)=>c.classList.remove('active'));card.classList.add('active');selectedStudent=card.dataset.student;selectedRole=card.dataset.role;updateMission();}));
+    document.querySelectorAll('.prompt-card').forEach((card)=>card.addEventListener('click',()=>{document.querySelectorAll('.prompt-card').forEach((c)=>c.classList.remove('active'));card.classList.add('active');selectedPrompt=card.dataset.prompt;updateMission();}));
+  </script>
+</body>
+</html>

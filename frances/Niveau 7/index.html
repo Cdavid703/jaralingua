@@ -393,6 +393,83 @@
       opacity: 0.07;
     }
 
+    .quick-access-panel {
+      max-width: 1120px;
+      margin: -2rem auto 0;
+      position: relative;
+      z-index: 3;
+      background: white;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 1.2rem;
+    }
+
+    .quick-access-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .quick-access-header h2 {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--blue-dark);
+      margin: 0;
+    }
+
+    .quick-access-header span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 0.85rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .quick-link-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .quick-link-grid a {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      border-radius: 18px;
+      background: rgba(31, 78, 140, 0.06);
+      padding: 0.85rem;
+      text-decoration: none;
+      color: var(--text);
+    }
+
+    .quick-link-grid b {
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: var(--blue-dark);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .quick-link-grid span {
+      min-width: 0;
+      color: var(--blue-dark);
+      font-weight: 900;
+      line-height: 1.25;
+      overflow-wrap: anywhere;
+    }
+
     .footer {
       background: var(--blue-dark);
       color: white;
@@ -447,6 +524,15 @@
       .hero-photo img {
         min-height: 360px;
       }
+
+      .quick-access-panel {
+        width: calc(100% - 2rem);
+        margin-top: -1rem;
+      }
+
+      .quick-link-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     @media (max-width: 575px) {
@@ -457,6 +543,15 @@
       .hero-photo,
       .hero-photo img {
         min-height: 320px;
+      }
+
+      .quick-access-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .quick-link-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>

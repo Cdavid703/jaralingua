@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Expériences et projets - Français Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root { --blue:#1f4e8c; --blue-dark:#15345d; --red:#d62839; --soft:#f4f7fb; --text:#243044; --muted:#718096; --yellow:#f4c95d; --green:#2f9e77; --shadow:0 22px 55px rgba(20,40,80,.13); --radius:28px; }
+    * { scroll-behavior:smooth; }
+    body { margin:0; font-family:"Nunito",sans-serif; color:var(--text); background:var(--soft); overflow-x:hidden; }
+    h1,h2,h3,h4,h5,.navbar-brand { font-family:"Montserrat",sans-serif; }
+    .navbar { background:rgba(255,255,255,.94); backdrop-filter:blur(16px); box-shadow:0 10px 32px rgba(21,52,93,.08); }
+    .navbar-brand { display:inline-flex; align-items:center; gap:.65rem; font-weight:800; color:var(--blue-dark); }
+    .brand-logo { height:42px; width:auto; object-fit:contain; filter:drop-shadow(0 8px 16px rgba(21,52,93,.12)); }
+    .nav-link { color:var(--text); font-weight:800; border-radius:999px; padding:.55rem .9rem!important; }
+    .nav-link:hover,.nav-link.active { color:var(--blue); background:rgba(31,78,140,.08); }
+    .hero { padding:8rem 0 5rem; background:radial-gradient(circle at 15% 18%,rgba(214,40,57,.17),transparent 28%),radial-gradient(circle at 85% 12%,rgba(31,78,140,.22),transparent 32%),linear-gradient(135deg,#fff 0%,#eef5ff 46%,#fff0f2 100%); position:relative; }
+    .hero:after { content:""; position:absolute; left:0; right:0; bottom:0; height:110px; background:linear-gradient(to bottom,transparent,var(--soft)); }
+    .badge-course { display:inline-flex; align-items:center; gap:.55rem; padding:.7rem 1rem; border-radius:999px; background:rgba(255,255,255,.86); border:1px solid rgba(31,78,140,.12); color:var(--blue-dark); font-weight:900; box-shadow:0 14px 30px rgba(31,78,140,.08); }
+    .hero h1 { margin-top:1.2rem; font-weight:800; line-height:.98; letter-spacing:-.045em; color:var(--blue-dark); font-size:clamp(2.55rem,6.2vw,5.55rem); }
+    .hero-lead { color:var(--blue); font-size:clamp(1.15rem,2vw,1.5rem); font-weight:900; margin:1.2rem 0 1rem; }
+    .hero-text,.section-text { color:var(--muted); font-size:1.08rem; line-height:1.75; max-width:860px; }
+    .hero-card,.explain-panel,.focus-panel { border-radius:34px; background:#fff; box-shadow:var(--shadow); overflow:hidden; }
+    .hero-card { padding:1rem; }
+    .hero-card img { width:100%; min-height:420px; max-height:520px; object-fit:cover; display:block; border-radius:28px; }
+    .btn-main,.btn-soft { border-radius:999px; font-weight:900; padding:.88rem 1.18rem; text-decoration:none; display:inline-flex; align-items:center; justify-content:center; gap:.45rem; }
+    .btn-main { border:0; background:linear-gradient(135deg,var(--blue),var(--blue-dark)); color:#fff; box-shadow:0 16px 34px rgba(31,78,140,.24); }
+    .btn-main:hover { color:#fff; transform:translateY(-2px); }
+    .btn-soft { border:2px solid rgba(31,78,140,.2); background:rgba(255,255,255,.78); color:var(--blue-dark); }
+    .btn-soft:hover { border-color:var(--blue); background:var(--blue); color:#fff; }
+    section { padding:5rem 0; }
+    .section-kicker { text-transform:uppercase; color:var(--red); font-weight:900; letter-spacing:.12em; font-size:.82rem; }
+    .section-title { color:var(--blue-dark); font-size:clamp(2rem,4vw,3.1rem); font-weight:800; letter-spacing:-.045em; }
+    .explain-panel { padding:clamp(1.35rem,3vw,2.4rem); display:grid; gap:1rem; }
+    .lesson-block { display:flex; gap:1rem; padding:1rem; border-radius:24px; background:rgba(31,78,140,.055); }
+    .lesson-block h3 { color:var(--blue-dark); font-size:1.18rem; font-weight:800; margin-bottom:.35rem; }
+    .lesson-block p { color:var(--muted); line-height:1.7; margin:0; }
+    .icon-box { width:58px; height:58px; display:grid; place-items:center; border-radius:20px; background:rgba(31,78,140,.1); color:var(--blue); font-size:1.65rem; flex:0 0 auto; }
+    .icon-box.red { background:#fff0f3; color:var(--red); } .icon-box.yellow { background:rgba(244,201,93,.22); color:#9a6b00; } .icon-box.green { background:rgba(47,158,119,.14); color:var(--green); }
+    .example-box { border-radius:18px; background:#fff; border-left:5px solid var(--yellow); padding:.9rem 1rem; color:var(--blue-dark); font-weight:800; line-height:1.6; margin-top:.8rem; }
+    .focus-panel { padding:clamp(1.4rem,3vw,2.4rem); background:linear-gradient(135deg,var(--blue-dark),var(--blue)); color:#fff; position:relative; }
+    .focus-panel p { color:rgba(255,255,255,.8); line-height:1.75; }
+    .activity-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .activity-link { display:grid; gap:.65rem; padding:1.25rem; border-radius:24px; background:#fff; text-decoration:none; color:var(--text); box-shadow:0 14px 38px rgba(20,40,80,.09); min-height:100%; }
+    .activity-link span { width:52px; height:52px; border-radius:18px; display:grid; place-items:center; background:rgba(214,40,57,.09); color:var(--red); font-size:1.5rem; }
+    .activity-link strong { color:var(--blue-dark); font-size:1.1rem; } .activity-link em { color:var(--muted); font-style:normal; line-height:1.55; }
+    footer { background:var(--blue-dark); color:#fff; padding:3rem 0; }
+    footer a { color:#fff; text-decoration:none; font-weight:900; opacity:.86; }
+    .floating-up { width:48px; height:48px; position:fixed; right:1rem; bottom:1rem; display:none; place-items:center; z-index:1000; border:0; border-radius:50%; background:var(--red); color:#fff; box-shadow:0 12px 28px rgba(214,40,57,.28); }
+    .fade-in { opacity:0; transform:translateY(24px); transition:opacity .7s ease,transform .7s ease; } .fade-in.visible { opacity:1; transform:translateY(0); }
+    @media (max-width:991px) { .hero{padding-top:7rem}.hero-card img{min-height:310px}.activity-grid{grid-template-columns:1fr} }
+    @media (max-width:575px) { .lesson-block{display:block}.icon-box{margin-bottom:.8rem}.btn-main,.btn-soft{width:100%} }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir la navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="#parcours">Parcours</a></li><li class="nav-item"><a class="nav-link" href="#plus-que-parfait">Plus-que-parfait</a></li><li class="nav-item"><a class="nav-link" href="#projets">Projets</a></li>
+          <li class="nav-item"><a class="nav-link" href="#activites">Activités</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container position-relative" style="z-index:2;">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course"><i class="bi bi-briefcase-fill"></i>Unité 4 · Parcours et mobilité</span>
+          <h1>Expériences et projets</h1>
+          <p class="hero-lead">Raconter un parcours, expliquer un choix et imaginer une mobilité.</p>
+          <p class="hero-text">Cette unité aide les élèves à parler d'expériences marquantes, de rêves professionnels, de projets d'études ou de travail, et à organiser un récit avec l'antériorité.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#parcours" class="btn-main"><i class="bi bi-compass"></i>Commencer</a>
+            <a href="../themes-du-cours.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux thèmes</a>
+          </div>
+        </div>
+        <div class="col-lg-5 fade-in"><div class="hero-card"><img src="../img/theme-experiences-projets.jpg" alt="Étudiants préparant des expériences et projets personnels"></div></div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+    <section id="parcours" class="">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Expression personnelle</p>
+            <h2 class="section-title">Présenter une expérience marquante</h2>
+            <p class="section-text">Raconter une expérience demande plus que donner une date. Il faut expliquer le contexte, l'événement, la réaction personnelle et ce que cette expérience a changé.</p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="explain-panel">
+              
+                <article class="lesson-block">
+                  <div class="icon-box "><i class="bi bi-calendar-event"></i></div>
+                  <div>
+                    <h3>Contexte</h3>
+                    <p>Où étiez-vous ? Pourquoi étiez-vous là ? Qui participait ?</p>
+                    
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box red"><i class="bi bi-stars"></i></div>
+                  <div>
+                    <h3>Moment clé</h3>
+                    <p>Quel événement a changé la situation ou votre regard ?</p>
+                    
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box green"><i class="bi bi-arrow-up-right-circle"></i></div>
+                  <div>
+                    <h3>Conséquence</h3>
+                    <p>Qu'avez-vous appris ? Quel projet est né après cette expérience ?</p>
+                    
+                  </div>
+                </article>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="plus-que-parfait" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Point de langue</p>
+            <h2 class="section-title">Exprimer l'antériorité</h2>
+            <p class="section-text">Le plus-que-parfait montre qu'une action s'est passée avant une autre action passée. Il permet de donner de la profondeur à un récit.</p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="explain-panel">
+              
+                <article class="lesson-block">
+                  <div class="icon-box "><i class="bi bi-braces"></i></div>
+                  <div>
+                    <h3>Formation</h3>
+                    <p>Imparfait de avoir ou être + participe passé.</p>
+                    <div class="example-box">J'avais préparé mon dossier avant de partir.</div>
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box red"><i class="bi bi-clock-history"></i></div>
+                  <div>
+                    <h3>Action antérieure</h3>
+                    <p>Il explique ce qui était déjà arrivé avant le moment principal.</p>
+                    <div class="example-box">Elle était arrivée au Québec parce qu'elle avait obtenu une bourse.</div>
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box yellow"><i class="bi bi-link-45deg"></i></div>
+                  <div>
+                    <h3>Connecter les étapes</h3>
+                    <p>On l'utilise avec déjà, avant, parce que, comme, lorsque, après que.</p>
+                    
+                  </div>
+                </article>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="projets" class="">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Mobilité</p>
+            <h2 class="section-title">Parler de projets réalistes</h2>
+            <p class="section-text">Un projet de mobilité peut concerner les études, le travail, la famille, la langue ou la curiosité culturelle. Les élèves doivent expliquer motivations, obstacles et solutions.</p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="explain-panel">
+              
+                <article class="lesson-block">
+                  <div class="icon-box "><i class="bi bi-mortarboard"></i></div>
+                  <div>
+                    <h3>Études</h3>
+                    <p>Demander une bourse, choisir une université, préparer un dossier.</p>
+                    
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box green"><i class="bi bi-briefcase"></i></div>
+                  <div>
+                    <h3>Travail</h3>
+                    <p>Présenter ses compétences, chercher un stage, s'adapter à un nouveau contexte professionnel.</p>
+                    
+                  </div>
+                </article>
+              
+                <article class="lesson-block">
+                  <div class="icon-box yellow"><i class="bi bi-house-heart"></i></div>
+                  <div>
+                    <h3>Adaptation</h3>
+                    <p>Trouver un logement, créer un réseau, comprendre les habitudes quotidiennes.</p>
+                    
+                  </div>
+                </article>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="activites" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-center">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Pratique liée</p>
+            <h2 class="section-title">Activités interactives du thème</h2>
+            <p class="section-text">Les activités mettent les élèves en mouvement : construire une ligne de vie fictive, puis échanger rapidement sur des projets d'études, de travail et d'adaptation.</p>
+          </div>
+          <div class="col-lg-7 fade-in"><div class="activity-grid">
+    <a href="../ateliers/ligne-vie-interculturelle.html" class="activity-link">
+      <span><i class="bi bi-diagram-3-fill"></i></span>
+      <strong>Ligne de vie interculturelle</strong>
+      <em>Créer le parcours d'un Colombien en France ou d'un Français en Colombie.</em>
+    </a>
+    <a href="../ateliers/speed-dating-projets.html" class="activity-link">
+      <span><i class="bi bi-people-fill"></i></span>
+      <strong>Speed-dating des projets</strong>
+      <em>Échanger en rotations courtes sur études, travail, voyage et adaptation.</em>
+    </a></div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Expériences et projets - Français Niveau 7</h2><p class="mb-0 opacity-75">Unité centrée sur le parcours personnel, les projets et le plus-que-parfait.</p></div>
+        <div class="col-lg-4 text-lg-end"><a href="../themes-du-cours.html"><i class="bi bi-arrow-left"></i> Retour aux thèmes</a></div>
+      </div>
+    </div>
+  </footer>
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const observed=document.querySelectorAll('.fade-in'); const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('visible')}})},{threshold:.16}); observed.forEach((element)=>observer.observe(element));
+    const btnUp=document.getElementById('btnUp'); window.addEventListener('scroll',()=>{btnUp.style.display=window.scrollY>620?'grid':'none'});
+    document.querySelectorAll('.nav-link[href^="#"]').forEach((link)=>{link.addEventListener('click',()=>{const nav=document.querySelector('.navbar-collapse'); if(nav.classList.contains('show')) bootstrap.Collapse.getOrCreateInstance(nav).hide();})});
+  </script>
+</body>
+</html>
