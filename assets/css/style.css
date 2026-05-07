@@ -3401,6 +3401,19 @@ a {
   margin-bottom: 14px;
 }
 
+.worksheet-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.worksheet-actions h3 {
+  margin: 0;
+}
+
 .worksheet-table {
   width: 100%;
   border-collapse: collapse;

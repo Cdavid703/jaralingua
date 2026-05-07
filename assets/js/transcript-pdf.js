@@ -100,7 +100,7 @@
     });
   }
 
-  function buildPdf(title, text, logo) {
+  function buildPdf(title, text, logo, documentLabel) {
     const pageWidth = 612;
     const pageHeight = 792;
     const margin = 54;
@@ -163,7 +163,7 @@
       }
 
       streamLines.push("BT /F1 18 Tf 0.09 0.21 0.36 rg " + titleX + " " + titleY + " Td (" + escapePdfText(title) + ") Tj ET");
-      streamLines.push("BT /F1 9 Tf 0.33 0.38 0.46 rg " + titleX + " " + (titleY - 22) + " Td (Transcript - Page " + (index + 1) + ") Tj ET");
+      streamLines.push("BT /F1 9 Tf 0.33 0.38 0.46 rg " + titleX + " " + (titleY - 22) + " Td (" + escapePdfText(documentLabel || "Transcript") + " - Page " + (index + 1) + ") Tj ET");
       streamLines.push("0.84 0.10 0.20 rg 54 694 504 2 re f");
 
       pageLines.forEach(function (item) {
@@ -199,9 +199,9 @@
     return pdf;
   }
 
-  window.downloadTranscriptPdf = async function (title, text, filename) {
+  window.downloadTranscriptPdf = async function (title, text, filename, options) {
     const logo = await loadLogoAsJpegHex();
-    const pdf = buildPdf(title, text, logo);
+    const pdf = buildPdf(title, text, logo, options && options.label);
     const blob = new Blob([pdf], { type: "application/pdf" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
