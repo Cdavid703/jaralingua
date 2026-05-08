@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Describing Stereotypes and Behavior | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png" />
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+
+  <style>
+    .stereotype-page-note {
+      background: linear-gradient(135deg, rgba(255, 244, 214, 0.95), rgba(236, 252, 249, 0.95));
+      border: 1px solid rgba(245, 158, 11, 0.24);
+      border-radius: 22px;
+      padding: 1.3rem;
+      margin-top: 1.2rem;
+    }
+
+    .stereotype-page-note strong {
+      display: block;
+      margin-bottom: 0.35rem;
+      color: #92400e;
+    }
+
+    .activity-steps-grid,
+    .language-toolbox-grid,
+    .stereotype-gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.4rem;
+    }
+
+    .activity-step-card,
+    .language-tool-card,
+    .stereotype-gallery-card,
+    .example-speaking-card {
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 22px;
+      padding: 1.1rem;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .activity-step-card span,
+    .language-tool-card span,
+    .stereotype-gallery-card span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 0.7rem;
+      border-radius: 999px;
+      background: #e0f2fe;
+      color: #075985;
+      font-weight: 800;
+      font-size: 0.86rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .activity-step-card h3,
+    .language-tool-card h3,
+    .stereotype-gallery-card h3,
+    .example-speaking-card h3 {
+      margin: 0 0 0.45rem;
+      color: #0f172a;
+    }
+
+    .activity-step-card p,
+    .language-tool-card p,
+    .stereotype-gallery-card p,
+    .example-speaking-card p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .example-stereotype-layout {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(320px, 1.1fr);
+      gap: 1.2rem;
+      align-items: stretch;
+      margin-top: 1.3rem;
+    }
+
+    .example-image-card {
+      background: #f8fafc;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .example-image-card img,
+    .stereotype-gallery-card img,
+    .selected-card-image-wrap img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .example-image-card img {
+      aspect-ratio: 16 / 10;
+    }
+
+    .example-image-caption {
+      padding: 1rem;
+    }
+
+    .example-image-caption strong {
+      display: block;
+      color: #0f172a;
+      margin-bottom: 0.35rem;
+      font-size: 1.15rem;
+    }
+
+    .example-image-caption small {
+      display: block;
+      color: #64748b;
+      line-height: 1.55;
+      font-weight: 700;
+      margin-bottom: 0.8rem;
+    }
+
+    .example-speaking-card {
+      background: linear-gradient(135deg, #ffffff, #f8fafc);
+    }
+
+    .example-section-block {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .example-section-block h4 {
+      margin: 0 0 0.65rem;
+      color: #0f172a;
+    }
+
+    .example-section-block p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .oral-model {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 18px;
+      background: #eff6ff;
+      border: 1px solid rgba(37, 99, 235, 0.14);
+      color: #1e3a8a;
+      line-height: 1.75;
+    }
+
+    .sentence-frame-list {
+      display: grid;
+      gap: 0.65rem;
+      margin-top: 1rem;
+    }
+
+    .sentence-frame-list div {
+      padding: 0.85rem 1rem;
+      border-radius: 16px;
+      background: #f8fafc;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      color: #334155;
+    }
+
+    .sentence-frame-list strong {
+      color: #0f172a;
+    }
+
+    .selected-speaking-support {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .selected-prompts-box,
+    .oral-structure-box {
+      background: #f8fafc;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 20px;
+      padding: 1rem;
+    }
+
+    .selected-prompts-box h4,
+    .oral-structure-box h4 {
+      margin: 0 0 0.85rem;
+      color: #0f172a;
+    }
+
+    .selected-prompts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .selected-prompt-card {
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 16px;
+      padding: 0.85rem;
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .selected-prompt-card b {
+      display: block;
+      color: #0f172a;
+      margin-bottom: 0.25rem;
+    }
+
+    .oral-structure-lines {
+      display: grid;
+      gap: 0.65rem;
+    }
+
+    .oral-structure-lines p {
+      margin: 0;
+      padding: 0.8rem 0.9rem;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #334155;
+      line-height: 1.65;
+    }
+
+    .oral-structure-lines strong {
+      color: #0f172a;
+    }
+
+    .stereotype-gallery-card {
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .stereotype-gallery-card img {
+      aspect-ratio: 16 / 10;
+      background: #e2e8f0;
+    }
+
+    .stereotype-gallery-card-content {
+      padding: 1rem;
+    }
+
+    .stereotype-gallery-card-content span {
+      margin-bottom: 0.6rem;
+    }
+
+    .roulette-single-result-grid {
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .selected-student-card,
+    .destination-result-card {
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 24px;
+      padding: 1.1rem;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .selected-student-card small,
+    .destination-result-card small {
+      display: block;
+      color: #64748b;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.45rem;
+    }
+
+    .selected-student-card strong {
+      display: block;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      color: #0f172a;
+      line-height: 1.05;
+      margin-bottom: 0.55rem;
+    }
+
+    .selected-student-card p,
+    .destination-result-card p {
+      color: #475569;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .selected-card-image-wrap {
+      overflow: hidden;
+      border-radius: 18px;
+      background: #f1f5f9;
+      margin-bottom: 1rem;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .selected-card-image-wrap img {
+      aspect-ratio: 16 / 10;
+    }
+
+    .destination-result-card h3 {
+      margin: 0.25rem 0 0.4rem;
+      color: #0f172a;
+      font-size: 1.45rem;
+    }
+
+    .selected-card-reminder {
+      background: #f8fafc;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      border-radius: 18px;
+      padding: 0.9rem;
+      margin-top: 0.9rem;
+    }
+
+    .destination-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.8rem 0 1rem;
+    }
+
+    .destination-tags span {
+      border-radius: 999px;
+      background: #ecfeff;
+      color: #155e75;
+      padding: 0.42rem 0.7rem;
+      font-size: 0.84rem;
+      font-weight: 700;
+    }
+
+    .draw-card-btn {
+      margin-top: 0.7rem;
+    }
+
+    .teacher-warning-card {
+      background: #fff7ed;
+      border: 1px solid rgba(234, 88, 12, 0.18);
+      border-radius: 20px;
+      padding: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .teacher-warning-card strong {
+      display: block;
+      color: #9a3412;
+      margin-bottom: 0.35rem;
+    }
+
+    .teacher-warning-card p {
+      margin: 0;
+      color: #7c2d12;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 820px) {
+      .example-stereotype-layout,
+      .roulette-single-result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="english-intermediate-page">
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-intermediate/describing-stereotypes-behavior.png');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab</p>
+
+        <h1>Describing Stereotypes and Behavior</h1>
+
+        <p>
+          Work like a travel website speaker. Observe a destination stereotype card,
+          describe the person in the image, and explain possible personality traits,
+          likes, identity, characteristics, and behavior using respectful English.
+        </p>
+
+        <div class="lesson-meta">
+          <span>Speaking Activity</span>
+          <span>Stereotypes</span>
+          <span>Personality</span>
+          <span>Behavior</span>
+          <span>Travel English</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#roulette-activity" class="btn btn-primary">Start the roulette</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="lesson-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/describing-stereotypes-behavior.png"
+          alt="Students describing stereotypes and behavior in a speaking activity"
+        />
+      </div>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice Goal</span>
+        <p>
+          By the end of this activity, students will be able to describe people from
+          travel stereotype images using personality adjectives, clothing vocabulary,
+          likes, identity, behavior descriptions, and careful language for generalizations.
+        </p>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="roulette-activity">
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">01</span>
+          <div>
+            <p class="topic-label">Student Instructions</p>
+            <h2>How This Speaking Activity Works</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Imagine you work for a prestigious travel website. The website is famous
+          because it publishes useful articles for travelers. Today, your job is to
+          orally describe the type of people travelers may find in a specific place,
+          based on a stereotype image. You will not write the article. You will explain
+          your ideas aloud when the roulette chooses your name.
+        </p>
+
+        <div class="stereotype-page-note">
+          <strong>Important idea</strong>
+          <p>
+            A stereotype is a general idea people may have about a group, but it is not
+            always true. In this activity, speak respectfully. Do not say “all people are...”.
+            Use careful phrases like “Some people may think...”, “This person seems...”,
+            or “This image suggests...”.
+          </p>
+        </div>
+
+        <div class="activity-steps-grid">
+          <div class="activity-step-card">
+            <span>1</span>
+            <h3>Load the names</h3>
+            <p>
+              The teacher writes or pastes the students’ names into the roulette.
+              Write one name per line.
+            </p>
+          </div>
+
+          <div class="activity-step-card">
+            <span>2</span>
+            <h3>Spin the roulette</h3>
+            <p>
+              The roulette selects one student. After participating, that student is
+              removed from the active list so more classmates can participate.
+            </p>
+          </div>
+
+          <div class="activity-step-card">
+            <span>3</span>
+            <h3>Get a destination card</h3>
+            <p>
+              The page shows a stereotype card connected to a travel destination.
+              Look carefully at the image before speaking.
+            </p>
+          </div>
+
+          <div class="activity-step-card">
+            <span>4</span>
+            <h3>Speak like a travel writer</h3>
+            <p>
+              Describe the person’s clothing, personality, likes, identity,
+              characteristics, and behavior. Speak for 45 to 90 seconds.
+            </p>
+          </div>
+        </div>
+
+        <div class="teacher-tip">
+          <span>Teacher's Tip</span>
+          <p>
+            Ask follow-up questions after each answer: “Why do you think so?”,
+            “What details can you see?”, “Is this always true?”, or “How can we say
+            that more respectfully?”.
+          </p>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">02</span>
+          <div>
+            <p class="topic-label">Oral Model</p>
+            <h2>Example Oral Description</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Before the roulette starts, study this complete example. It integrates the card,
+          the image clues, the speaking task, the six prompts, and the mini oral structure
+          in one model. When your name is selected, follow the same order with your card.
+        </p>
+
+        <div class="example-stereotype-layout">
+          <div class="example-image-card">
+            <img
+              src="../../assets/img/english-intermediate/stereotypes/stereotype-french-parisian.png"
+              alt="Illustration of a Parisian stereotype card"
+            />
+
+            <div class="example-image-caption">
+              <strong>Paris, France</strong>
+              <small>Illustration of a Parisian stereotype card</small>
+
+              <h3>The stylish cafe lover</h3>
+
+              <div class="destination-tags">
+                <span>beret</span>
+                <span>striped shirt</span>
+                <span>baguette</span>
+                <span>Eiffel Tower</span>
+              </div>
+
+              <p>
+                A common travel image of a stylish Parisian with a beret, striped shirt,
+                scarf, baguette, coffee, cafe life, and the Eiffel Tower.
+              </p>
+            </div>
+          </div>
+
+          <div class="example-speaking-card">
+            <h3>Speaking task</h3>
+
+            <div class="example-section-block">
+              <h4>What the student should describe</h4>
+              <p>
+                Describe the clothing, the baguette, the cafe setting, the Eiffel Tower,
+                possible likes, personality, and behavior. Use: <strong>Some travelers may think...</strong>
+              </p>
+            </div>
+
+            <div class="selected-speaking-support" aria-label="Example speaking prompts">
+              <div class="selected-prompts-box">
+                <h4>Use these 6 speaking prompts</h4>
+
+                <div class="selected-prompts-grid">
+                  <div class="selected-prompt-card">
+                    <b>1. Clothing</b>
+                    What is the person wearing? What does the outfit suggest?
+                  </div>
+
+                  <div class="selected-prompt-card">
+                    <b>2. Visual clues</b>
+                    What objects, food, buildings, or places help you identify the destination?
+                  </div>
+
+                  <div class="selected-prompt-card">
+                    <b>3. Personality</b>
+                    What adjectives describe this person? Why?
+                  </div>
+
+                  <div class="selected-prompt-card">
+                    <b>4. Likes</b>
+                    What might this person like, enjoy, or value?
+                  </div>
+
+                  <div class="selected-prompt-card">
+                    <b>5. Behavior</b>
+                    How might this person behave with travelers or in public places?
+                  </div>
+
+                  <div class="selected-prompt-card">
+                    <b>6. Respectful ending</b>
+                    Why is this only a stereotype and not a fact about everyone?
+                  </div>
+                </div>
+              </div>
+
+              <div class="oral-structure-box">
+                <h4>Mini oral structure</h4>
+
+                <div class="oral-structure-lines">
+                  <p><strong>Opening:</strong> This card represents a common stereotype about people from Paris, France.</p>
+                  <p><strong>Image details:</strong> I can see..., and the person is wearing...</p>
+                  <p><strong>Personality:</strong> This person seems..., because...</p>
+                  <p><strong>Likes and behavior:</strong> They might like..., and they may behave...</p>
+                  <p><strong>Respectful closing:</strong> However, this is only a stereotype. Not everyone from this place is like that.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="oral-model">
+              <strong>Complete example:</strong><br />
+              This card represents a common stereotype about people from Paris, France.
+              I can see a person wearing a beret, a striped shirt, and a scarf. The image
+              also shows a baguette, a coffee cup, a cafe setting, and the Eiffel Tower.
+              This person seems elegant, artistic, fashionable, and calm because of the
+              clothes and the cafe lifestyle. They might like coffee, bread, fashion,
+              reading, and quiet conversations. Some travelers may think that Parisians
+              are stylish, serious, direct, and interested in art or culture. They may
+              behave politely, but they might also speak directly when they give opinions.
+              However, this is only a stereotype. Not everyone from Paris is like that.
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">03</span>
+          <div>
+            <p class="topic-label">Speaking Support</p>
+            <h2>Useful Language for the Activity</h2>
+          </div>
+        </div>
+
+        <div class="language-toolbox-grid">
+          <div class="language-tool-card">
+            <span>A</span>
+            <h3>Describe the image</h3>
+            <p>
+              “I can see...” / “The person is wearing...” / “The background shows...” /
+              “This detail suggests...”
+            </p>
+          </div>
+
+          <div class="language-tool-card">
+            <span>B</span>
+            <h3>Talk about personality</h3>
+            <p>
+              “They seem...” / “They look...” / “They might be...” / “They appear to be...”
+            </p>
+          </div>
+
+          <div class="language-tool-card">
+            <span>C</span>
+            <h3>Talk about behavior</h3>
+            <p>
+              “They may behave...” / “They probably speak...” / “They usually...” /
+              “They tend to...”
+            </p>
+          </div>
+
+          <div class="language-tool-card">
+            <span>D</span>
+            <h3>Be respectful</h3>
+            <p>
+              “Some people may think...” / “This is only a stereotype.” /
+              “Of course, not everyone is like this.”
+            </p>
+          </div>
+        </div>
+
+        <div class="sentence-frame-list">
+          <div><strong>Opening:</strong> “This card represents a common stereotype about people from...”</div>
+          <div><strong>Clothing:</strong> “The person is wearing..., so they look...”</div>
+          <div><strong>Likes:</strong> “They seem to like..., and they may enjoy...”</div>
+          <div><strong>Behavior:</strong> “In this image, they behave..., and they might speak...”</div>
+          <div><strong>Respectful closing:</strong> “However, this is a general image, not a fact about everyone.”</div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">04</span>
+          <div>
+            <p class="topic-label">Destination Cards</p>
+            <h2>Stereotype Cards Used in the Roulette</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          These are the possible cards. Each card is based on a common travel stereotype.
+          Students must describe the image, but they also have to explain that stereotypes
+          are generalizations and may be incomplete or unfair.
+        </p>
+
+        <div class="stereotype-gallery-grid">
+          <div class="stereotype-gallery-card">
+            <img src="../../assets/img/english-intermediate/stereotypes/stereotype-french-parisian.png" alt="Parisian stereotype illustration" />
+            <div class="stereotype-gallery-card-content">
+              <span>Paris</span>
+              <h3>The stylish cafe lover</h3>
+              <p>Fashion, cafes, art, direct opinions, and elegant city life.</p>
+            </div>
+          </div>
+
+          <div class="stereotype-gallery-card">
+            <img src="../../assets/img/english-intermediate/stereotypes/stereotype-japanese-tokyo-local.png" alt="Tokyo local stereotype illustration" />
+            <div class="stereotype-gallery-card-content">
+              <span>Tokyo</span>
+              <h3>The organized city local</h3>
+              <p>Politeness, punctuality, technology, neat style, and calm behavior.</p>
+            </div>
+          </div>
+
+          <div class="stereotype-gallery-card">
+            <img src="../../assets/img/english-intermediate/stereotypes/stereotype-italian-roman-local.png" alt="Roman stereotype illustration" />
+            <div class="stereotype-gallery-card-content">
+              <span>Rome</span>
+              <h3>The expressive food lover</h3>
+              <p>Conversation, gestures, style, family, espresso, and traditional food.</p>
+            </div>
+          </div>
+
+          <div class="stereotype-gallery-card">
+            <img src="../../assets/img/english-intermediate/stereotypes/stereotype-british-londoner.png" alt="Londoner stereotype illustration" />
+            <div class="stereotype-gallery-card-content">
+              <span>London</span>
+              <h3>The polite tea drinker</h3>
+              <p>Queues, umbrellas, reserved manners, dry humor, and tea culture.</p>
+            </div>
+          </div>
+
+          <div class="stereotype-gallery-card">
+            <img src="../../assets/img/english-intermediate/stereotypes/stereotype-american-new-yorker.png" alt="New Yorker stereotype illustration" />
+            <div class="stereotype-gallery-card-content">
+              <span>New York</span>
+              <h3>The fast-paced city person</h3>
+              <p>Confidence, coffee to go, ambition, busy streets, and direct speech.</p>
+            </div>
+          </div>
+
+          <div class="stereotype-gallery-card">
+            <img src="../../assets/img/english-intermediate/stereotypes/stereotype-brazilian-rio-local.png" alt="Rio local stereotype illustration" />
+            <div class="stereotype-gallery-card-content">
+              <span>Rio de Janeiro</span>
+              <h3>The joyful beach local</h3>
+              <p>Music, beach life, friendliness, sports, dancing, and social energy.</p>
+            </div>
+          </div>
+
+          <div class="stereotype-gallery-card">
+            <img src="../../assets/img/english-intermediate/stereotypes/stereotype-moroccan-marrakesh-local.png" alt="Marrakesh local stereotype illustration" />
+            <div class="stereotype-gallery-card-content">
+              <span>Marrakesh</span>
+              <h3>The welcoming market guide</h3>
+              <p>Hospitality, tea, markets, negotiation, colorful textiles, and warm conversation.</p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">05</span>
+          <div>
+            <p class="topic-label">Interactive Tool</p>
+            <h2>Spin the Student Roulette</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Load the student names, spin the roulette, and let the selected student describe
+          the destination card aloud. The roulette area now shows only the selected speaker
+          and a compact destination card. Use the example and speaking support above to guide
+          the oral answer.
+        </p>
+
+        <div class="roulette-panel">
+
+          <div class="roulette-setup">
+            <div class="roulette-setup-text">
+              <h3>Load Student Names</h3>
+              <p>
+                Type or paste the student names below. Write one name per line.
+              </p>
+            </div>
+
+            <textarea id="studentNamesInput" class="roulette-textarea" placeholder="Example:
+Alex
+Sarah
+David
+Emma
+Liam
+Maria
+Sofia
+Daniel"></textarea>
+
+            <div class="roulette-actions">
+              <button type="button" class="roulette-btn primary" onclick="loadStudentNames()">
+                Load Names
+              </button>
+
+              <button type="button" class="roulette-btn secondary" onclick="useSampleNames()">
+                Use Sample Names
+              </button>
+
+              <button type="button" class="roulette-btn danger" onclick="resetRoulette()">
+                Reset Activity
+              </button>
+            </div>
+          </div>
+
+          <div class="roulette-play-area" id="roulettePlayArea">
+
+            <div class="roulette-wheel-zone">
+              <div class="roulette-pointer"></div>
+
+              <div class="roulette-wheel" id="rouletteWheel">
+                <div class="roulette-wheel-center">
+                  SPIN
+                </div>
+              </div>
+
+              <button type="button" class="roulette-spin-btn" id="spinBtn" onclick="spinRoulette()" disabled>
+                Spin the Wheel
+              </button>
+
+              <button type="button" class="roulette-btn secondary draw-card-btn" onclick="drawDestinationCard()">
+                Draw Destination Only
+              </button>
+
+              <p class="roulette-status" id="rouletteStatus">
+                Load at least one name to start.
+              </p>
+            </div>
+
+            <div class="roulette-result-zone">
+              <div class="roulette-single-result-grid">
+                <div class="selected-student-card">
+                  <small>Selected Speaker</small>
+                  <strong id="studentResult">—</strong>
+                  <p>
+                    Describe the selected destination card aloud. Use complete sentences,
+                    personality adjectives, behavior descriptions, and respectful language.
+                  </p>
+                </div>
+
+                <div class="destination-result-card">
+                  <small id="selectedCardDestination">Destination Card</small>
+
+                  <div class="selected-card-image-wrap" id="selectedCardImageWrap" style="display: none;">
+                    <img
+                      id="selectedCardImage"
+                      src=""
+                      alt="Selected stereotype destination card"
+                    />
+                  </div>
+
+                  <h3 id="selectedCardTitle">No destination selected yet</h3>
+
+                  <p class="selected-card-reminder" id="selectedCardReminder">
+                    Spin the wheel or draw a destination card. Then use the example oral description,
+                    the six speaking prompts, and the mini oral structure above.
+                  </p>
+                </div>
+              </div>
+
+              <div class="students-left-card">
+                <div class="students-left-header">
+                  <h3>Students Left</h3>
+                  <span id="studentsLeftCount">0</span>
+                </div>
+
+                <div class="student-chip-list" id="studentPoolList">
+                  <p class="empty-list-message">No students loaded yet.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="roulette-history-card">
+            <div class="roulette-history-header">
+              <h3>Participation History</h3>
+              <p>Each selected student and destination card will appear here.</p>
+            </div>
+
+            <div class="partner-table-container">
+              <table class="partner-table">
+                <thead>
+                  <tr>
+                    <th>Round</th>
+                    <th>Student</th>
+                    <th>Destination</th>
+                    <th>Stereotype Card</th>
+                  </tr>
+                </thead>
+
+                <tbody id="rouletteHistoryBody">
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="teacher-warning-card">
+          <strong>Classroom rule</strong>
+          <p>
+            This activity is for language practice, not for judging cultures. Students should
+            describe the image and use careful expressions. If a comment sounds too absolute,
+            ask the student to reformulate it respectfully.
+          </p>
+        </div>
+      </article>
+
+    </section>
+
+    <section class="lesson-next-section">
+      <div class="lesson-next-card">
+        <p class="eyebrow">Back to dashboard</p>
+        <h2>Continue practicing in the Practice Lab</h2>
+
+        <p>
+          After describing stereotypes and behavior, continue with another speaking,
+          grammar, or creative activity from the intermediate course.
+        </p>
+
+        <div class="hero-actions">
+          <a href="practice-lab.html" class="btn btn-primary">
+            Back to Practice Lab
+          </a>
+          <a href="stereotype-guessing-game.html" class="btn btn-secondary">
+            Go to Stereotype Guessing Game
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const stereotypeCards = [
+      {
+        destination: "Paris, France",
+        title: "The stylish cafe lover",
+        image: "../../assets/img/english-intermediate/stereotypes/stereotype-french-parisian.png",
+        alt: "Illustration of a Parisian stereotype card"
+      },
+      {
+        destination: "Tokyo, Japan",
+        title: "The organized city local",
+        image: "../../assets/img/english-intermediate/stereotypes/stereotype-japanese-tokyo-local.png",
+        alt: "Illustration of a Tokyo local stereotype card"
+      },
+      {
+        destination: "Rome, Italy",
+        title: "The expressive food lover",
+        image: "../../assets/img/english-intermediate/stereotypes/stereotype-italian-roman-local.png",
+        alt: "Illustration of a Roman stereotype card"
+      },
+      {
+        destination: "London, England",
+        title: "The polite tea drinker",
+        image: "../../assets/img/english-intermediate/stereotypes/stereotype-british-londoner.png",
+        alt: "Illustration of a Londoner stereotype card"
+      },
+      {
+        destination: "New York City, USA",
+        title: "The fast-paced city person",
+        image: "../../assets/img/english-intermediate/stereotypes/stereotype-american-new-yorker.png",
+        alt: "Illustration of a New Yorker stereotype card"
+      },
+      {
+        destination: "Rio de Janeiro, Brazil",
+        title: "The joyful beach local",
+        image: "../../assets/img/english-intermediate/stereotypes/stereotype-brazilian-rio-local.png",
+        alt: "Illustration of a Rio local stereotype card"
+      },
+      {
+        destination: "Marrakesh, Morocco",
+        title: "The welcoming market guide",
+        image: "../../assets/img/english-intermediate/stereotypes/stereotype-moroccan-marrakesh-local.png",
+        alt: "Illustration of a Marrakesh local stereotype card"
+      }
+    ];
+
+    const rouletteState = {
+      originalNames: [],
+      studentPool: [],
+      history: [],
+      rotation: 0,
+      spinning: false,
+      currentCardIndex: null
+    };
+
+    function getUniqueNames(rawText) {
+      const names = rawText
+        .split(/\n|,/)
+        .map(function(name) {
+          return name.trim();
+        })
+        .filter(function(name) {
+          return name.length > 0;
+        });
+
+      const seen = new Set();
+      const uniqueNames = [];
+
+      names.forEach(function(name) {
+        const key = name.toLowerCase();
+
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueNames.push(name);
+        }
+      });
+
+      return uniqueNames;
+    }
+
+    function loadStudentNames() {
+      const rawText = document.getElementById("studentNamesInput").value;
+      const names = getUniqueNames(rawText);
+
+      if (names.length < 1) {
+        alert("Please enter at least one student name.");
+        return;
+      }
+
+      rouletteState.originalNames = names.slice();
+      rouletteState.studentPool = names.slice();
+      rouletteState.history = [];
+
+      document.getElementById("studentResult").textContent = "—";
+      renderRoulette();
+    }
+
+    function useSampleNames() {
+      const sampleNames = [
+        "Alex",
+        "Sarah",
+        "David",
+        "Emma",
+        "Liam",
+        "Maria",
+        "Sofia",
+        "Daniel"
+      ];
+
+      document.getElementById("studentNamesInput").value = sampleNames.join("\n");
+      loadStudentNames();
+    }
+
+    function renderRoulette() {
+      renderStudentPool();
+      renderHistory();
+
+      const spinBtn = document.getElementById("spinBtn");
+      const status = document.getElementById("rouletteStatus");
+
+      document.getElementById("studentsLeftCount").textContent = rouletteState.studentPool.length;
+
+      if (rouletteState.studentPool.length >= 1) {
+        spinBtn.disabled = false;
+        status.textContent = "Ready. Spin the wheel to select one student.";
+      } else {
+        spinBtn.disabled = true;
+        status.textContent = "All students have participated. Reset to play again.";
+      }
+    }
+
+    function renderStudentPool() {
+      const container = document.getElementById("studentPoolList");
+      container.innerHTML = "";
+
+      if (rouletteState.studentPool.length === 0) {
+        const message = document.createElement("p");
+        message.className = "empty-list-message";
+        message.textContent = "No students left in the active list.";
+        container.appendChild(message);
+        return;
+      }
+
+      rouletteState.studentPool.forEach(function(name) {
+        const chip = document.createElement("span");
+        chip.className = "student-chip";
+        chip.textContent = name;
+        container.appendChild(chip);
+      });
+    }
+
+    function renderHistory() {
+      const body = document.getElementById("rouletteHistoryBody");
+      body.innerHTML = "";
+
+      rouletteState.history.forEach(function(round) {
+        const row = document.createElement("tr");
+
+        const roundCell = document.createElement("td");
+        roundCell.textContent = round.round;
+
+        const studentCell = document.createElement("td");
+        studentCell.textContent = round.student;
+
+        const destinationCell = document.createElement("td");
+        destinationCell.textContent = round.destination;
+
+        const cardCell = document.createElement("td");
+        cardCell.textContent = round.cardTitle;
+
+        row.appendChild(roundCell);
+        row.appendChild(studentCell);
+        row.appendChild(destinationCell);
+        row.appendChild(cardCell);
+
+        body.appendChild(row);
+      });
+    }
+
+    function getRandomCardIndex() {
+      if (stereotypeCards.length === 1) return 0;
+
+      let newIndex = Math.floor(Math.random() * stereotypeCards.length);
+
+      while (newIndex === rouletteState.currentCardIndex) {
+        newIndex = Math.floor(Math.random() * stereotypeCards.length);
+      }
+
+      return newIndex;
+    }
+
+    function renderSelectedCard(card) {
+      const imageWrap = document.getElementById("selectedCardImageWrap");
+      const image = document.getElementById("selectedCardImage");
+      const destination = document.getElementById("selectedCardDestination");
+      const title = document.getElementById("selectedCardTitle");
+      const reminder = document.getElementById("selectedCardReminder");
+
+      if (!card) {
+        destination.textContent = "Destination Card";
+        title.textContent = "No destination selected yet";
+        reminder.textContent = "Spin the wheel or draw a destination card. Then use the example oral description, the six speaking prompts, and the mini oral structure above.";
+        image.src = "";
+        image.alt = "Selected stereotype destination card";
+        imageWrap.style.display = "none";
+        return;
+      }
+
+      destination.textContent = card.destination;
+      title.textContent = card.title;
+      image.src = card.image;
+      image.alt = card.alt;
+      imageWrap.style.display = "block";
+      reminder.textContent = "Use the example oral description, the six speaking prompts, and the mini oral structure above to describe this card aloud.";
+    }
+
+    function drawDestinationCard() {
+      rouletteState.currentCardIndex = getRandomCardIndex();
+      renderSelectedCard(stereotypeCards[rouletteState.currentCardIndex]);
+    }
+
+    function spinRoulette() {
+      if (rouletteState.spinning) return;
+
+      if (rouletteState.studentPool.length < 1) {
+        alert("You need at least one student to spin.");
+        return;
+      }
+
+      rouletteState.spinning = true;
+      document.getElementById("spinBtn").disabled = true;
+
+      const wheel = document.getElementById("rouletteWheel");
+      rouletteState.rotation += 1440 + Math.floor(Math.random() * 720);
+      wheel.style.transform = "rotate(" + rouletteState.rotation + "deg)";
+
+      setTimeout(function() {
+        const studentIndex = Math.floor(Math.random() * rouletteState.studentPool.length);
+        const selectedStudent = rouletteState.studentPool.splice(studentIndex, 1)[0];
+
+        rouletteState.currentCardIndex = getRandomCardIndex();
+        const selectedCard = stereotypeCards[rouletteState.currentCardIndex];
+
+        document.getElementById("studentResult").textContent = selectedStudent;
+        renderSelectedCard(selectedCard);
+
+        rouletteState.history.push({
+          round: rouletteState.history.length + 1,
+          student: selectedStudent,
+          destination: selectedCard.destination,
+          cardTitle: selectedCard.title
+        });
+
+        rouletteState.spinning = false;
+        renderRoulette();
+      }, 2600);
+    }
+
+    function resetRoulette() {
+      rouletteState.originalNames = [];
+      rouletteState.studentPool = [];
+      rouletteState.history = [];
+      rouletteState.rotation = 0;
+      rouletteState.spinning = false;
+      rouletteState.currentCardIndex = null;
+
+      document.getElementById("studentNamesInput").value = "";
+      document.getElementById("rouletteWheel").style.transform = "rotate(0deg)";
+      document.getElementById("studentResult").textContent = "—";
+      document.getElementById("studentsLeftCount").textContent = "0";
+      document.getElementById("rouletteStatus").textContent = "Load at least one name to start.";
+      document.getElementById("spinBtn").disabled = true;
+
+      renderSelectedCard(null);
+      renderStudentPool();
+      renderHistory();
+    }
+
+    renderSelectedCard(null);
+  </script>
+
+</body>
+</html>
