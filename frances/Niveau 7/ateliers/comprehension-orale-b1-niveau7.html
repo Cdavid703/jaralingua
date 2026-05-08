@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compréhensions orales B1 - Français Niveau 7</title>
+  <link rel="icon" href="../../../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--soft:#f4f7fb;--text:#243044;--muted:#718096;--green:#2f9e77;--shadow:0 22px 55px rgba(20,40,80,.13)}
+    *{scroll-behavior:smooth}
+    body{margin:0;font-family:"Nunito",sans-serif;color:var(--text);background:var(--soft);overflow-x:hidden}
+    h1,h2,h3,h4,.navbar-brand{font-family:"Montserrat",sans-serif}
+    .navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 10px 32px rgba(21,52,93,.08)}
+    .navbar-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:800;color:var(--blue-dark)}
+    .brand-logo{height:42px}.nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}.nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
+    .hero{padding:8rem 0 5rem;background:radial-gradient(circle at 15% 18%,rgba(244,201,93,.2),transparent 28%),radial-gradient(circle at 86% 12%,rgba(214,40,57,.18),transparent 30%),linear-gradient(135deg,#fff 0%,#eef5ff 48%,#fff0f3 100%)}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.86);border:1px solid rgba(31,78,140,.12);color:var(--blue-dark);font-weight:900;box-shadow:0 14px 30px rgba(31,78,140,.08)}
+    .hero h1{margin-top:1.2rem;font-weight:800;line-height:1;color:var(--blue-dark);font-size:clamp(2.55rem,6vw,5.3rem)}
+    .hero-lead{color:var(--blue);font-size:clamp(1.16rem,2vw,1.45rem);font-weight:900;margin:1.2rem 0 1rem}.hero-text,.section-text{color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:850px}
+    .hero-card{border-radius:34px;background:#fff;box-shadow:var(--shadow);overflow:hidden;padding:1rem}.hero-card img{width:100%;min-height:390px;max-height:500px;object-fit:cover;border-radius:26px}
+    .btn-main,.btn-soft{border-radius:999px;font-weight:900;padding:.88rem 1.18rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+    .btn-main{border:0;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;box-shadow:0 16px 34px rgba(31,78,140,.24)}.btn-main:hover{color:#fff}
+    .btn-soft{border:2px solid rgba(31,78,140,.2);background:rgba(255,255,255,.78);color:var(--blue-dark)}.btn-soft:hover{border-color:var(--blue);background:var(--blue);color:#fff}
+    section{padding:5rem 0}.section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}.section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.15rem);font-weight:800}
+    .quick-access-panel{max-width:1120px;margin:-2rem auto 0;position:relative;z-index:3;background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:1.2rem}.quick-access-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:1rem}.quick-access-header h2{font-size:1.2rem;font-weight:900;color:var(--blue-dark);margin:0}.quick-link-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.7rem}.quick-link-grid a{border-radius:18px;background:rgba(31,78,140,.06);padding:.85rem;text-decoration:none;color:var(--text);display:grid;gap:.35rem}.quick-link-grid b{color:var(--red)}.quick-link-grid span{font-weight:900;color:var(--blue-dark);line-height:1.25}
+    .activity-card{border:0;border-radius:32px;background:#fff;box-shadow:var(--shadow);overflow:hidden;margin-bottom:2rem}.activity-top{padding:1.35rem;color:#fff;background:linear-gradient(135deg,var(--blue-dark),var(--blue));display:grid;gap:.35rem}.activity-top p{margin:0;color:rgba(255,255,255,.78);font-weight:900;text-transform:uppercase;letter-spacing:.08em;font-size:.82rem}.activity-top h3{margin:0;font-weight:900}.activity-body{padding:clamp(1.1rem,3vw,1.6rem)}.audio-panel{border-radius:22px;background:var(--soft);padding:1rem;margin-bottom:1rem}.audio-panel audio{width:100%;margin-top:.8rem}.question-grid{display:grid;gap:.9rem}.question-card{border:1px solid rgba(31,78,140,.1);border-radius:20px;padding:1rem;background:#fff}.question-card h4{font-size:1rem;font-weight:900;color:var(--blue-dark);margin-bottom:.75rem}.question-card label{display:block;padding:.52rem .65rem;border-radius:14px;cursor:pointer}.question-card label:hover{background:rgba(31,78,140,.06)}.result-box{display:none;margin-top:1rem;border-radius:18px;padding:1rem;font-weight:900}.result-box.correct{display:block;background:rgba(47,158,119,.12);color:var(--green)}.result-box.incorrect{display:block;background:rgba(214,40,57,.1);color:var(--red)}footer{background:var(--blue-dark);color:#fff;padding:3rem 0}footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}.fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:991px){.hero{padding-top:7rem}.hero-card img{min-height:280px}.quick-link-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:575px){.btn-main,.btn-soft{width:100%}.quick-link-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navMenu"><ul class="navbar-nav ms-auto gap-lg-2"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link active" href="#activites">Compréhension orale</a></li></ul></div></div></nav>
+  <header class="hero"><div class="container"><div class="row align-items-center g-5"><div class="col-lg-7 fade-in"><span class="badge-course"><i class="bi bi-headphones"></i>Écoute · B1</span><h1>Compréhensions orales B1</h1><p class="hero-lead">Cinq audios courts avec questions de compréhension.</p><p class="hero-text">Chaque activité propose un audio de niveau B1, un questionnaire à choix multiples et une transcription téléchargeable en PDF avec le logo JaraLingua.</p><div class="d-flex flex-wrap gap-3 mt-4"><a href="#activites" class="btn-main"><i class="bi bi-play-circle"></i>Commencer l'écoute</a><a href="../ateliers-activites.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux ateliers</a></div></div><div class="col-lg-5 fade-in"><div class="hero-card"><img src="../img/ecoute-culture-colombienne.png" alt="Compréhension orale niveau B1"></div></div></div></div></header>
+  <section class="quick-access-panel compact" aria-label="Navigation rapide"><div class="quick-access-header"><h2>Activités d'écoute</h2><span>5 thèmes B1</span></div><div class="quick-link-grid"><a href="#audio1"><b>01</b><span>Culture colombienne</span></a><a href="#audio2"><b>02</b><span>Culture française</span></a><a href="#audio3"><b>03</b><span>France-Colombie</span></a><a href="#audio4"><b>04</b><span>Mérite public</span></a><a href="#audio5"><b>05</b><span>Travail international</span></a></div></section>
+  <main>
+    <section id="activites"><div class="container"><div class="text-center mb-5 fade-in"><p class="section-kicker">Série audio</p><h2 class="section-title">Écouter, répondre, vérifier</h2><p class="section-text mx-auto">Les conversations utilisent deux voix et des tours courts pour donner plus de rythme. Les questions vérifient l'idée générale, les détails et l'interprétation.</p></div><div id="activityList"></div></div></section>
+  </main>
+  <footer><div class="container"><div class="row align-items-center g-4"><div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Compréhensions orales B1 - Français Niveau 7</h2><p class="mb-0 opacity-75">Audios, questionnaires et transcriptions PDF pour travailler l'écoute en français.</p></div><div class="col-lg-4 text-lg-end"><a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a></div></div></div></footer>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/js/transcript-pdf.js"></script>
+  <script>
+    const activities = [
+      {
+        id: "audio1",
+        label: "Audio 1",
+        title: "Culture colombienne",
+        file: "../audio/niveau7-culture-colombienne-pilote-b1.mp3",
+        pdf: "comprehension-orale-culture-colombienne-b1.pdf",
+        transcript: "Voix A: Aujourd'hui, on parle de la culture colombienne. Attention, pas seulement café, musique et fêtes.\nVoix B: Oui, parce que ces images existent, mais elles ne suffisent pas. La culture se voit aussi dans les gestes du quotidien.\nVoix A: Par exemple, saluer quelqu'un peut prendre du temps. On demande comment va la personne, comment va la famille, et parfois on partage un café.\nVoix B: Exactement. Cette proximité peut surprendre un visiteur, mais elle montre l'importance de la relation personnelle.\nVoix A: Il faut aussi penser aux régions. La côte caraïbe, Bogotá, Cali, Medellín ou les zones rurales n'ont pas les mêmes rythmes.\nVoix B: Ni les mêmes plats, ni les mêmes accents, ni les mêmes manières de célébrer.\nVoix A: Donc, si je résume, on peut parler de convivialité, de famille, de musique et de traditions.\nVoix B: Mais on doit ajouter une idée essentielle : chaque région et chaque génération vit cette culture à sa manière.\nVoix A: Voilà. La culture colombienne est vivante parce qu'elle mélange tradition, diversité et adaptation.",
+        questions: [
+          ["Quel est le message principal de l'audio ?", ["La culture colombienne se limite à quelques symboles.", "La culture colombienne est diverse et vivante.", "La culture colombienne ne change jamais."], 1],
+          ["Pourquoi les salutations peuvent-elles prendre du temps ?", ["Parce que la relation personnelle est importante.", "Parce que personne ne veut commencer une réunion.", "Parce que toutes les villes ont le même rythme."], 0],
+          ["Quels lieux montrent la diversité régionale ?", ["Seulement Bogotá.", "La côte caraïbe, Bogotá, Cali, Medellín et les zones rurales.", "Uniquement les musées."], 1],
+          ["Quelle idée faut-il éviter ?", ["Partager un café.", "Parler des régions.", "Généraliser toute la culture colombienne."], 2],
+          ["Selon l'audio, la culture colombienne combine...", ["tradition, diversité et adaptation.", "silence, distance et uniformité.", "administration, examens et formulaires."], 0]
+        ]
+      },
+      {
+        id: "audio2",
+        label: "Audio 2",
+        title: "Culture française",
+        file: "../audio/niveau7-culture-francaise-b1.mp3",
+        pdf: "comprehension-orale-culture-francaise-b1.pdf",
+        transcript: "Voix A: Quand on dit culture française, on pense souvent à Paris, aux musées, au pain ou au cinéma.\nVoix B: Oui, mais la culture française est aussi dans la manière de discuter. On aime expliquer, argumenter, justifier.\nVoix A: C'est vrai. Dans une classe, dans les médias ou parfois au travail, on demande souvent : pourquoi pensez-vous cela ?\nVoix B: Pour certains apprenants, ce style peut sembler direct. Mais un désaccord n'est pas toujours un conflit.\nVoix A: Il peut être une façon de clarifier les idées. On débat, on nuance, on cherche des exemples.\nVoix B: La France valorise aussi le patrimoine : les livres, les monuments, les festivals, les lieux historiques.\nVoix A: Et pourtant, la culture change. Les jeunes créent de nouvelles pratiques avec les réseaux sociaux et les événements interactifs.\nVoix B: Donc, pour comprendre la culture française, il faut observer les institutions, mais aussi les conversations quotidiennes.",
+        questions: [
+          ["Quels exemples culturels sont mentionnés au début ?", ["Paris, les musées, le pain et le cinéma.", "Les concours et les visas.", "Les plages et les montagnes."], 0],
+          ["Que valorise souvent la discussion en France ?", ["Le silence complet.", "L'argumentation et la justification.", "La répétition sans exemple."], 1],
+          ["Un désaccord est présenté comme...", ["toujours un conflit.", "une façon possible de clarifier les idées.", "une erreur à éviter dans toutes les situations."], 1],
+          ["Quels éléments appartiennent au patrimoine ?", ["Livres, monuments, festivals et lieux historiques.", "Dossiers, CV et diplômes.", "Accents, cafés et rythmes régionaux."], 0],
+          ["Pourquoi la culture française change-t-elle ?", ["Parce que les jeunes créent aussi de nouvelles pratiques.", "Parce que les musées disparaissent.", "Parce que les débats sont interdits."], 0]
+        ]
+      },
+      {
+        id: "audio3",
+        label: "Audio 3",
+        title: "Comparaison France-Colombie",
+        file: "../audio/niveau7-comparaison-france-colombie-b1.mp3",
+        pdf: "comprehension-orale-comparaison-france-colombie-b1.pdf",
+        transcript: "Voix A: Comparer la France et la Colombie demande de la prudence. On ne peut pas dire : ici tout est comme ça, là-bas tout est comme ça.\nVoix B: D'accord. Mais on peut observer des tendances. En France, dans certains contextes, la précision et la distance professionnelle sont importantes.\nVoix A: En Colombie, dans beaucoup de situations, la relation personnelle et la confiance sont très visibles.\nVoix B: On le remarque dans la ponctualité, dans la façon de dire non ou dans le début d'une réunion.\nVoix A: Par exemple, une réunion peut commencer très directement en France, avec un ordre du jour.\nVoix B: Et en Colombie, elle peut commencer par quelques questions personnelles avant le sujet principal.\nVoix A: Mais les deux cultures ont aussi des points communs : la conversation, la famille, la nourriture et la transmission culturelle.\nVoix B: La question n'est donc pas quelle culture est meilleure. La question est : comment s'adapter sans perdre son identité ?",
+        questions: [
+          ["Pourquoi faut-il comparer avec prudence ?", ["Parce qu'une culture est toujours meilleure.", "Parce qu'il ne faut pas réduire un pays à une seule formule.", "Parce que les deux pays sont identiques."], 1],
+          ["En France, certains contextes valorisent...", ["la précision et la distance professionnelle.", "l'absence de débat.", "uniquement les relations familiales."], 0],
+          ["En Colombie, beaucoup de situations valorisent...", ["la relation personnelle et la confiance.", "la distance totale.", "le silence dans les réunions."], 0],
+          ["Quels points communs sont cités ?", ["Conversation, famille, nourriture et transmission culturelle.", "Visa, CV, concours et expérience.", "Réseaux sociaux seulement."], 0],
+          ["Quelle est la question finale de l'audio ?", ["Comment s'adapter sans perdre son identité ?", "Quel pays est supérieur ?", "Pourquoi voyager moins ?"], 0]
+        ]
+      },
+      {
+        id: "audio4",
+        label: "Audio 4",
+        title: "Mérite et travail public en Colombie",
+        file: "../audio/niveau7-merite-travail-public-colombie-b1.mp3",
+        pdf: "comprehension-orale-merite-travail-public-colombie-b1.pdf",
+        transcript: "Voix A: En Colombie, l'accès au travail public est souvent présenté comme un système fondé sur le mérite.\nVoix B: C'est-à-dire que les concours, les examens et l'expérience devraient aider à choisir les candidats les plus préparés.\nVoix A: En théorie, ce système est important parce qu'il peut rendre l'État plus juste et plus professionnel.\nVoix B: Mais dans la pratique, certaines personnes doutent. Elles se demandent si les relations personnelles ou la politique influencent les opportunités.\nVoix A: Il ne faut pas généraliser. Il existe des concours sérieux et des institutions qui suivent des règles claires.\nVoix B: Oui, mais la confiance dépend de la transparence. Les candidats doivent comprendre les critères et vérifier les résultats.\nVoix A: Donc, le mérite existe comme principe.\nVoix B: Et sa crédibilité dépend de procédures claires, d'information accessible et de résultats contrôlables.",
+        questions: [
+          ["Sur quoi l'accès au travail public est-il souvent fondé en théorie ?", ["Le hasard.", "Le mérite.", "La nationalité française."], 1],
+          ["Quels éléments devraient aider à choisir les candidats ?", ["Concours, examens et expérience.", "Musique, fêtes et traditions.", "Tourisme et gastronomie."], 0],
+          ["Pourquoi certaines personnes doutent-elles ?", ["Elles pensent que les relations ou la politique peuvent influencer les opportunités.", "Elles ne veulent jamais travailler.", "Elles refusent tous les examens."], 0],
+          ["Qu'est-ce qui renforce la confiance ?", ["La transparence, les critères clairs et les résultats vérifiables.", "Les décisions secrètes.", "L'absence d'information."], 0],
+          ["Quelle conclusion est correcte ?", ["Le mérite n'existe jamais.", "Le mérite existe comme principe, mais sa crédibilité dépend des procédures.", "Le travail public n'a pas de règles."], 1]
+        ]
+      },
+      {
+        id: "audio5",
+        label: "Audio 5",
+        title: "Travail pour Colombiens en France ou au Canada",
+        file: "../audio/niveau7-travail-colombiens-france-canada-b1.mp3",
+        pdf: "comprehension-orale-travail-france-canada-b1.pdf",
+        transcript: "Voix A: Beaucoup de Colombiens se demandent s'il est possible de travailler en France ou au Canada.\nVoix B: La réponse est oui, mais l'accès dépend de plusieurs conditions : visa, langue, formation et expérience.\nVoix A: En France, le français est essentiel pour de nombreux emplois. Certains secteurs recrutent, mais les démarches peuvent être longues.\nVoix B: Au Canada, les possibilités changent selon la province. Au Québec, le français est très important.\nVoix A: Dans d'autres provinces, l'anglais peut être la langue principale du travail.\nVoix B: Il faut aussi préparer son dossier : CV adapté, diplômes, références et informations sur les règles locales.\nVoix A: Donc, il existe des opportunités.\nVoix B: Oui, mais elles demandent préparation, patience, niveau de langue et information fiable.",
+        questions: [
+          ["De quoi dépend l'accès au travail ?", ["Visa, langue, formation et expérience.", "Seulement de la chance.", "Uniquement du climat."], 0],
+          ["En France, quel élément est essentiel pour de nombreux emplois ?", ["Le français.", "Le passé simple.", "La musique."], 0],
+          ["Au Canada, pourquoi les possibilités changent-elles ?", ["Selon la province.", "Selon le jour de la semaine.", "Parce que tous les emplois sont identiques."], 0],
+          ["Que faut-il préparer ?", ["Un dossier avec CV adapté, diplômes, références et informations locales.", "Un débat sur la nourriture.", "Une liste de monuments."], 0],
+          ["Quelle attitude est nécessaire ?", ["Préparation, patience et information fiable.", "Improvisation totale.", "Refus d'apprendre les langues."], 0]
+        ]
+      }
+    ];
+
+    function renderActivities() {
+      const list = document.getElementById("activityList");
+      list.innerHTML = activities.map(function(activity, index) {
+        const questions = activity.questions.map(function(question, questionIndex) {
+          const name = activity.id + "_q" + questionIndex;
+          const options = question[1].map(function(option, optionIndex) {
+            return `<label><input type="radio" name="${name}" value="${optionIndex}"> ${option}</label>`;
+          }).join("");
+          return `<div class="question-card"><h4>${questionIndex + 1}. ${question[0]}</h4>${options}</div>`;
+        }).join("");
+        return `<article class="activity-card fade-in" id="${activity.id}"><div class="activity-top"><p>${activity.label} · Compréhension orale</p><h3>${activity.title}</h3></div><div class="activity-body"><div class="audio-panel"><div class="d-flex flex-wrap gap-3 align-items-center justify-content-between"><div><strong>Consigne</strong><p class="mb-0 text-muted">Écoutez l'audio, répondez aux questions, puis vérifiez vos réponses.</p></div><button type="button" class="btn-soft" onclick="downloadTranscriptPdf('${activity.title}', activities[${index}].transcript, '${activity.pdf}')"><i class="bi bi-file-earmark-pdf"></i>Télécharger la transcription PDF</button></div><audio controls preload="metadata" data-audio-index="${index}"></audio></div><form class="question-grid" data-activity="${activity.id}">${questions}</form><div class="d-flex flex-wrap gap-3 mt-4"><button type="button" class="btn-main" onclick="checkActivity('${activity.id}')"><i class="bi bi-check2-circle"></i>Corriger</button><button type="button" class="btn-soft" onclick="resetActivity('${activity.id}')"><i class="bi bi-arrow-counterclockwise"></i>Recommencer</button></div><div class="result-box" id="${activity.id}_result"></div></div></article>`;
+      }).join("");
+      document.querySelectorAll("[data-audio-index]").forEach(function(player) {
+        player.src = activities[Number(player.dataset.audioIndex)].file;
+      });
+    }
+
+    function checkActivity(id) {
+      const activity = activities.find(function(item) { return item.id === id; });
+      const result = document.getElementById(id + "_result");
+      let score = 0;
+      let complete = true;
+      activity.questions.forEach(function(question, index) {
+        const selected = document.querySelector(`input[name="${id}_q${index}"]:checked`);
+        if (!selected) complete = false;
+        if (selected && Number(selected.value) === question[2]) score++;
+      });
+      if (!complete) {
+        result.className = "result-box incorrect";
+        result.textContent = "Répondez à toutes les questions avant de corriger.";
+        return;
+      }
+      result.className = score === activity.questions.length ? "result-box correct" : "result-box incorrect";
+      result.textContent = `Résultat : ${score}/${activity.questions.length}. ${score === activity.questions.length ? "Excellent, vous avez compris l'essentiel et les détails." : "Réécoutez l'audio, puis comparez les informations importantes."}`;
+    }
+
+    function resetActivity(id) {
+      document.querySelectorAll(`input[name^="${id}_q"]`).forEach(function(input) { input.checked = false; });
+      const result = document.getElementById(id + "_result");
+      result.className = "result-box";
+      result.textContent = "";
+    }
+
+    renderActivities();
+    const observed = document.querySelectorAll(".fade-in");
+    const observer = new IntersectionObserver(function(entries){entries.forEach(function(entry){if(entry.isIntersecting){entry.target.classList.add("visible")}})},{threshold:.16});
+    observed.forEach(function(element){observer.observe(element)});
+  </script>
+</body>
+</html>

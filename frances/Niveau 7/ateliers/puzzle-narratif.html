@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -22,10 +22,11 @@
     section{padding:5rem 0}.section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}.section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.1rem);font-weight:800;letter-spacing:-.045em}
     .step-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}.step-card{background:#fff;border-radius:24px;padding:1.2rem;box-shadow:0 14px 38px rgba(20,40,80,.09);height:100%}.step-card span,.prompt-card span{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:16px;background:rgba(31,78,140,.09);color:var(--blue);font-weight:900;margin-bottom:.8rem}.step-card h3{font-weight:800;color:var(--blue-dark);font-size:1.1rem}.step-card p{color:var(--muted);line-height:1.65;margin:0}
     .panel{padding:clamp(1.35rem,3vw,2.4rem)}.student-grid,.prompt-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem}.student-card,.prompt-card{border:0;text-align:left;border-radius:22px;background:rgba(31,78,140,.06);padding:1rem;color:var(--text);min-height:100%;transition:transform .2s ease,box-shadow .2s ease}.student-card:hover,.prompt-card:hover,.student-card.active,.prompt-card.active{transform:translateY(-3px);box-shadow:0 18px 34px rgba(20,40,80,.14);background:#fff}.student-card span{display:grid;place-items:center;width:48px;height:48px;border-radius:18px;background:var(--red);color:#fff;font-weight:900;margin-bottom:.8rem}.student-card strong{display:block;color:var(--blue-dark);font-weight:900}.student-card em{font-style:normal;color:var(--muted);line-height:1.45;font-size:.92rem}.prompt-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.prompt-card{font-weight:800;line-height:1.55}
+    .reading-panel{border-radius:34px;background:#fff;box-shadow:var(--shadow);padding:clamp(1.35rem,3vw,2.4rem)}.fragment-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.fragment-card{border-radius:22px;background:var(--soft);padding:1rem;border-left:6px solid var(--blue);height:100%}.fragment-card:nth-child(2){border-left-color:var(--red)}.fragment-card:nth-child(3){border-left-color:var(--yellow)}.fragment-card:nth-child(4){border-left-color:var(--green)}.fragment-card:nth-child(5){border-left-color:var(--blue-dark)}.fragment-card strong{display:block;color:var(--blue-dark);font-weight:900;margin-bottom:.45rem}.fragment-card p{color:var(--muted);line-height:1.65;margin:0}.teacher-note{border-radius:24px;background:rgba(31,78,140,.07);padding:1rem;color:var(--blue-dark);font-weight:800;line-height:1.6}
     .output-panel{padding:clamp(1.35rem,3vw,2.4rem);background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff}.output-panel p{color:rgba(255,255,255,.82);line-height:1.75}.mission-box{border-left:6px solid var(--yellow);background:rgba(255,255,255,.12);border-radius:20px;padding:1rem;min-height:130px}.mission-box strong{display:block;font-size:1.15rem;margin-bottom:.5rem}.checklist{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}.checklist li{display:flex;gap:.65rem;line-height:1.6}.checklist i{color:var(--yellow);margin-top:.18rem}
     footer{background:var(--blue-dark);color:#fff;padding:3rem 0}footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}.floating-up{width:48px;height:48px;position:fixed;right:1rem;bottom:1rem;display:none;place-items:center;z-index:1000;border:0;border-radius:50%;background:var(--red);color:#fff;box-shadow:0 12px 28px rgba(214,40,57,.28)}
     .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
-    @media(max-width:991px){.hero{padding-top:7rem}.hero-card img{min-height:310px}.step-grid{grid-template-columns:repeat(2,1fr)}.student-grid{grid-template-columns:repeat(2,1fr)}.prompt-grid{grid-template-columns:1fr}}@media(max-width:575px){.step-grid,.student-grid{grid-template-columns:1fr}.btn-main,.btn-soft{width:100%}}
+    @media(max-width:991px){.hero{padding-top:7rem}.hero-card img{min-height:310px}.step-grid{grid-template-columns:repeat(2,1fr)}.student-grid{grid-template-columns:repeat(2,1fr)}.prompt-grid,.fragment-grid{grid-template-columns:1fr}}@media(max-width:575px){.step-grid,.student-grid{grid-template-columns:1fr}.btn-main,.btn-soft{width:100%}}
   </style>
 </head>
 <body>
@@ -61,31 +62,54 @@
       <h3>Restituer</h3>
       <p>Le rapporteur présente l'histoire reconstruite en 90 secondes.</p>
     </article></div></div></section>
-    <section id="atelier" class="bg-white"><div class="container"><div class="row g-5 align-items-start"><div class="col-lg-5 fade-in"><p class="section-kicker">Interaction entre 5 élèves</p><h2 class="section-title">Choisir un rôle et une mission</h2><p class="section-text">Chaque élève reçoit un rôle : gardien du temps, lecteur, détective des verbes, médiateur culturel ou rapporteur.</p><div class="student-grid mt-4">
-    <button class="student-card" type="button" data-student="Camila" data-role="gardien du temps">
-      <span>C</span>
-      <strong>Camila</strong>
-      <em>gardien du temps</em>
+    <section id="lecture" class="bg-white">
+      <div class="container">
+        <div class="reading-panel fade-in">
+          <div class="row g-4 align-items-start mb-4">
+            <div class="col-lg-5">
+              <p class="section-kicker">Texte de base</p>
+              <h2 class="section-title">Lecture a reconstruire</h2>
+              <p class="section-text mb-0">Le professeur peut distribuer les fragments dans le desordre. Le groupe doit retrouver l'ordre logique, puis justifier ses choix avec les indices temporels, les verbes au passe simple et les valeurs culturelles.</p>
+            </div>
+            <div class="col-lg-7">
+              <div class="teacher-note">Ordre attendu pour le professeur : B, D, A, E, C. Les eleves ne doivent pas voir cet ordre au debut ; ils doivent le reconstruire par discussion.</div>
+            </div>
+          </div>
+          <div class="fragment-grid">
+            <article class="fragment-card"><strong>Fragment A</strong><p>Soudain, une pluie tres forte tomba sur la route. Le voyageur hesita, puis il frappa a la porte d'une petite maison. Une famille l'accueillit sans lui demander d'abord qui il etait.</p></article>
+            <article class="fragment-card"><strong>Fragment B</strong><p>Au pied d'une montagne, un jeune voyageur cherchait un village dont son grand-pere lui avait souvent parle. Le soir arrivait, les chemins etaient humides et les maisons semblaient lointaines.</p></article>
+            <article class="fragment-card"><strong>Fragment C</strong><p>Le lendemain, il comprit que l'histoire de son grand-pere n'etait pas seulement une legende. Elle disait qu'une communaute existe vraiment quand elle protege celui qui arrive de loin.</p></article>
+            <article class="fragment-card"><strong>Fragment D</strong><p>Dans son sac, le voyageur portait une vieille lettre. Elle racontait qu'autrefois, dans ce village, les etrangers etaient invites a raconter leur route avant de partager le repas.</p></article>
+            <article class="fragment-card"><strong>Fragment E</strong><p>Pendant le diner, chacun posa une question avec respect. Le voyageur raconta son parcours, compara les coutumes de sa ville avec celles du village et remercia ses hotes.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="atelier"><div class="container"><div class="row g-5 align-items-start"><div class="col-lg-5 fade-in"><p class="section-kicker">Interaction entre 5 participants</p><h2 class="section-title">Choisir un rôle et une mission</h2><p class="section-text">Chaque participant reçoit un rôle : gardien du temps, lecteur, détective des verbes, médiateur culturel ou rapporteur. Aucun nom d'etudiant n'est impose.</p><div class="student-grid mt-4">
+    <button class="student-card" type="button" data-student="Participant 1" data-role="gardien/gardienne du temps">
+      <span>1</span>
+      <strong>Participant 1</strong>
+      <em>gardien/gardienne du temps</em>
     </button>
-    <button class="student-card" type="button" data-student="Mateo" data-role="lectrice du fragment">
-      <span>M</span>
-      <strong>Mateo</strong>
-      <em>lectrice du fragment</em>
+    <button class="student-card" type="button" data-student="Participant 2" data-role="lecteur/lectrice du fragment">
+      <span>2</span>
+      <strong>Participant 2</strong>
+      <em>lecteur/lectrice du fragment</em>
     </button>
-    <button class="student-card" type="button" data-student="Valentina" data-role="détective des verbes">
-      <span>V</span>
-      <strong>Valentina</strong>
+    <button class="student-card" type="button" data-student="Participant 3" data-role="détective des verbes">
+      <span>3</span>
+      <strong>Participant 3</strong>
       <em>détective des verbes</em>
     </button>
-    <button class="student-card" type="button" data-student="Nicolas" data-role="médiateur culturel">
-      <span>N</span>
-      <strong>Nicolas</strong>
+    <button class="student-card" type="button" data-student="Participant 4" data-role="médiateur culturel">
+      <span>4</span>
+      <strong>Participant 4</strong>
       <em>médiateur culturel</em>
     </button>
-    <button class="student-card" type="button" data-student="Sofia" data-role="rapporteuse finale">
-      <span>S</span>
-      <strong>Sofia</strong>
-      <em>rapporteuse finale</em>
+    <button class="student-card" type="button" data-student="Participant 5" data-role="rapporteur/rapporteuse final(e)">
+      <span>5</span>
+      <strong>Participant 5</strong>
+      <em>rapporteur/rapporteuse final(e)</em>
     </button></div></div><div class="col-lg-7 fade-in"><div class="panel"><h3 class="fw-bold text-primary mb-3">Cartes de situation</h3><div class="prompt-grid">
     <button class="prompt-card" type="button" data-prompt="Un fragment contient une action au passé simple qui change toute l'histoire.">
       <span>01</span>Un fragment contient une action au passé simple qui change toute l'histoire.
@@ -102,7 +126,7 @@
     <button class="prompt-card" type="button" data-prompt="Un fragment peut appartenir aux deux cultures : défendez votre hypothèse.">
       <span>05</span>Un fragment peut appartenir aux deux cultures : défendez votre hypothèse.
     </button></div></div></div></div></div></section>
-    <section id="production"><div class="container"><div class="output-panel fade-in"><div class="row g-4 align-items-start"><div class="col-lg-5"><p class="text-uppercase fw-bold opacity-75 mb-2">Mission générée</p><h2 class="fw-bold mb-3">Combiner rôle + situation</h2><p>Chaque clic prépare une tâche orale ou écrite différente. Les élèves doivent produire en français, se répondre, se corriger et réutiliser les structures du thème.</p><div class="mission-box" id="missionBox"><strong>Choisissez un élève et une carte.</strong><span>La consigne apparaîtra ici.</span></div></div><div class="col-lg-7"><h3 class="fw-bold mb-3">Critères de réussite</h3><ul class="checklist"><li><i class="bi bi-check-circle-fill"></i><span>L'ordre du récit est justifié par des indices textuels.</span></li><li><i class="bi bi-check-circle-fill"></i><span>Le groupe distingue description et action principale.</span></li><li><i class="bi bi-check-circle-fill"></i><span>La comparaison culturelle évite les clichés.</span></li><li><i class="bi bi-check-circle-fill"></i><span>Chaque élève prend la parole au moins une fois.</span></li></ul></div></div></div></div></section>
+    <section id="production"><div class="container"><div class="output-panel fade-in"><div class="row g-4 align-items-start"><div class="col-lg-5"><p class="text-uppercase fw-bold opacity-75 mb-2">Mission générée</p><h2 class="fw-bold mb-3">Combiner rôle + situation</h2><p>Chaque clic prépare une tâche orale ou écrite différente. Les participants doivent produire en français, se répondre, se corriger et réutiliser les structures du thème.</p><div class="mission-box" id="missionBox"><strong>Choisissez un participant et une carte.</strong><span>La consigne apparaîtra ici.</span></div></div><div class="col-lg-7"><h3 class="fw-bold mb-3">Critères de réussite</h3><ul class="checklist"><li><i class="bi bi-check-circle-fill"></i><span>L'ordre du récit est justifié par des indices textuels.</span></li><li><i class="bi bi-check-circle-fill"></i><span>Le groupe distingue description et action principale.</span></li><li><i class="bi bi-check-circle-fill"></i><span>La comparaison culturelle évite les clichés.</span></li><li><i class="bi bi-check-circle-fill"></i><span>Chaque participant prend la parole au moins une fois.</span></li></ul></div></div></div></div></section>
   </main>
   <footer><div class="container"><div class="row align-items-center g-4"><div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Puzzle narratif interculturel</h2><p class="mb-0 opacity-75">Atelier lié au thème Le récit littéraire.</p></div><div class="col-lg-4 text-lg-end"><a href="../ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a></div></div></div></footer>
   <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>

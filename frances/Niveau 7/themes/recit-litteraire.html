@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -81,9 +81,9 @@
           <h1>Le récit littéraire</h1>
           <p class="hero-lead">Lire, raconter et transformer des histoires françaises et colombiennes.</p>
           <p class="hero-text">Cette unité relie le conte, la légende, l'anecdote culturelle et le récit historique. Les élèves apprennent à distinguer les actions principales, les descriptions et les valeurs culturelles que transmet une histoire.</p>
-          <div class="d-flex flex-wrap gap-3 mt-4">
+          <div class="d-flex flex-wrap gap-3 mt-4"><button type="button" class="btn-soft" onclick="downloadPageSummaryPdf()"><i class="bi bi-file-earmark-pdf"></i>Télécharger le résumé PDF</button>
             <a href="#reperes" class="btn-main"><i class="bi bi-compass"></i>Commencer</a>
-            <a href="../themes-du-cours.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux thèmes</a>
+            <a href="../themes-du-cours.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux thèmes</a><a href="passe-simple.html" class="btn-soft"><i class="bi bi-book-half"></i>Explication détaillée du passé simple</a>
           </div>
         </div>
         <div class="col-lg-5 fade-in"><div class="hero-card"><img src="../img/theme-recit-litteraire.jpg" alt="Illustration du récit littéraire et des histoires interculturelles"></div></div>
@@ -228,7 +228,7 @@
           <div class="col-lg-5 fade-in">
             <p class="section-kicker">Pratique liée</p>
             <h2 class="section-title">Activités interactives du thème</h2>
-            <p class="section-text">Les activités invitent les cinq élèves à reconstruire, interpréter et raconter une même histoire depuis plusieurs perspectives.</p>
+            <p class="section-text">Les activités invitent les participants à reconstruire, interpréter et raconter une même histoire depuis plusieurs perspectives.</p>
           </div>
           <div class="col-lg-7 fade-in"><div class="activity-grid">
     <a href="../ateliers/puzzle-narratif.html" class="activity-link">
@@ -245,6 +245,11 @@
       <span><i class="bi bi-braces"></i></span>
       <strong>Atelier grammaire : passé simple</strong>
       <em>Identifier les formes du récit écrit avant de passer à la production orale.</em>
+    </a>
+    <a href="passe-simple.html" class="activity-link">
+      <span><i class="bi bi-book-half"></i></span>
+      <strong>Explication complète : passé simple</strong>
+      <em>Comprendre sa formation, ses emplois, ses valeurs et ses différences avec le passé composé.</em>
     </a></div></div>
         </div>
       </div>
@@ -260,7 +265,7 @@
     </div>
   </footer>
   <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
-  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script><script src="../../../assets/js/transcript-pdf.js"></script><script src="../../../assets/js/page-summary-pdf.js"></script>
   <script>
     const observed=document.querySelectorAll('.fade-in'); const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('visible')}})},{threshold:.16}); observed.forEach((element)=>observer.observe(element));
     const btnUp=document.getElementById('btnUp'); window.addEventListener('scroll',()=>{btnUp.style.display=window.scrollY>620?'grid':'none'});

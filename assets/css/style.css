@@ -78,8 +78,8 @@ a {
 }
 
 .home-hero {
-  min-height: 100vh;
-  padding: 132px 24px 72px;
+  min-height: auto;
+  padding: 88px 24px 36px;
   position: relative;
   overflow: hidden;
   background:
@@ -105,18 +105,19 @@ a {
   left: 0;
   right: 0;
   bottom: -1px;
-  height: 130px;
+  height: 90px;
   background: linear-gradient(to bottom, transparent, #f4f7fb);
 }
 
 .home-hero-grid {
   width: min(1180px, 100%);
   margin: 0 auto;
-  min-height: calc(100vh - 204px);
+  min-height: 500px;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: 44px;
-  align-items: center;
+  align-items: start;
+  padding-top: 34px;
   position: relative;
   z-index: 2;
 }
@@ -127,8 +128,8 @@ a {
 }
 
 .home-hero-logo {
-  width: min(330px, 82%);
-  margin-bottom: 18px;
+  width: min(220px, 62%);
+  margin-bottom: 10px;
   filter: drop-shadow(0 10px 22px rgba(18, 59, 143, 0.1));
 }
 
@@ -139,15 +140,15 @@ a {
 
 .home-hero h1 {
   max-width: 720px;
-  font-size: clamp(2.8rem, 6vw, 5.7rem);
+  font-size: clamp(2.35rem, 5vw, 4.9rem);
   line-height: 1.02;
-  margin-bottom: 24px;
+  margin-bottom: 18px;
   text-wrap: balance;
 }
 
 .home-hero-text {
   max-width: 640px;
-  margin-bottom: 34px;
+  margin-bottom: 26px;
   font-size: clamp(1.08rem, 1.6vw, 1.28rem);
   color: #475569;
 }
@@ -163,7 +164,8 @@ a {
 
 .home-visual-stage {
   position: relative;
-  min-height: 610px;
+  min-height: 430px;
+  margin-top: 8px;
   animation: homeRise 0.8s ease 0.12s both;
 }
 
@@ -184,7 +186,7 @@ a {
 }
 
 .visual-card-main {
-  inset: 40px 0 56px 42px;
+  inset: 20px 0 42px 42px;
   border-radius: 34px;
   animation: imageFloat 7s ease-in-out infinite;
 }
@@ -215,7 +217,7 @@ a {
 }
 
 .chip-one {
-  top: 88px;
+  top: 60px;
   right: 22px;
 }
 
@@ -227,14 +229,14 @@ a {
 
 .chip-three {
   right: 40px;
-  bottom: 42px;
+  bottom: 26px;
   animation-delay: 0.9s;
 }
 
 .home-showcase {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 96px 24px;
+  padding: 74px 24px;
 }
 
 .home-language-grid {
@@ -309,8 +311,13 @@ a {
   grid-template-columns: 0.86fr 1.14fr;
   gap: 42px;
   align-items: center;
-  padding: 94px max(24px, calc((100% - 1180px) / 2));
+  padding: 76px max(24px, calc((100% - 1180px) / 2));
   background: var(--white);
+}
+
+.home-method {
+  padding-top: 76px;
+  padding-bottom: 76px;
 }
 
 .content-pulse-copy {
@@ -428,13 +435,13 @@ a {
   }
 
   .home-visual-stage {
-    min-height: 520px;
+    min-height: 430px;
   }
 }
 
 @media (max-width: 760px) {
   .home-hero {
-    padding-top: 170px;
+    padding-top: 92px;
   }
 
   .home-hero .hero-actions {

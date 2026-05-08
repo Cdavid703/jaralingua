@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -81,7 +81,7 @@
           <h1>Société et actualité</h1>
           <p class="hero-lead">Analyser des faits sociaux et rapporter la parole des autres.</p>
           <p class="hero-text">Cette unité entraîne les élèves à comprendre un fait d'actualité, à distinguer information et opinion, puis à restituer des paroles avec le discours indirect.</p>
-          <div class="d-flex flex-wrap gap-3 mt-4">
+          <div class="d-flex flex-wrap gap-3 mt-4"><button type="button" class="btn-soft" onclick="downloadPageSummaryPdf()"><i class="bi bi-file-earmark-pdf"></i>Télécharger le résumé PDF</button>
             <a href="#analyser" class="btn-main"><i class="bi bi-compass"></i>Commencer</a>
             <a href="../themes-du-cours.html" class="btn-soft"><i class="bi bi-arrow-left"></i>Retour aux thèmes</a>
           </div>
@@ -152,7 +152,7 @@
                   <div>
                     <h3>Au présent</h3>
                     <p>Quand le verbe introducteur est au présent, le temps du message reste souvent stable.</p>
-                    <div class="example-box">Camila affirme que la politesse varie selon les contextes.</div>
+                    <div class="example-box">Participant 1 affirme que la politesse varie selon les contextes.</div>
                   </div>
                 </article>
               
@@ -161,7 +161,7 @@
                   <div>
                     <h3>Au passé</h3>
                     <p>Quand le verbe introducteur est au passé, on adapte souvent les temps et les repères.</p>
-                    <div class="example-box">Mateo a expliqué qu'il avait découvert une autre manière de communiquer.</div>
+                    <div class="example-box">Participant 2 a expliqué qu'il avait découvert une autre manière de communiquer.</div>
                   </div>
                 </article>
               
@@ -255,7 +255,7 @@
     </div>
   </footer>
   <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
-  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script><script src="../../../assets/js/transcript-pdf.js"></script><script src="../../../assets/js/page-summary-pdf.js"></script>
   <script>
     const observed=document.querySelectorAll('.fade-in'); const observer=new IntersectionObserver((entries)=>{entries.forEach((entry)=>{if(entry.isIntersecting){entry.target.classList.add('visible')}})},{threshold:.16}); observed.forEach((element)=>observer.observe(element));
     const btnUp=document.getElementById('btnUp'); window.addEventListener('scroll',()=>{btnUp.style.display=window.scrollY>620?'grid':'none'});
