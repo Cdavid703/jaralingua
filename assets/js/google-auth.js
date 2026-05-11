@@ -523,7 +523,11 @@
       exp: profile.exp
     });
 
-    closePanel();
+    if (currentRoleStatus()) {
+      closePanel();
+    } else {
+      openPanel();
+    }
   };
 
   function injectStyles() {
@@ -533,11 +537,21 @@
     style.id = "jaralingua-auth-styles";
     style.textContent = `
       .jaralingua-auth {
+        position: relative;
+        z-index: 1300;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .jaralingua-auth.is-floating {
         position: fixed;
         left: 18px;
         top: 84px;
-        z-index: 1300;
-        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      .jaralingua-auth-nav-item {
+        display: flex;
+        align-items: center;
+        list-style: none;
       }
 
       .jaralingua-auth button,
@@ -556,9 +570,18 @@
         border-radius: 999px;
         background: #ffffff;
         color: #071f4f;
+        font-size: 0.95rem;
         font-weight: 900;
         box-shadow: 0 14px 32px rgba(15, 23, 42, 0.14);
         cursor: pointer;
+      }
+
+      .jaralingua-auth.is-nav .auth-trigger {
+        min-height: 36px;
+        padding: 0 12px;
+        box-shadow: none;
+        border: 1px solid rgba(18, 59, 143, 0.14);
+        background: #f8fbff;
       }
 
       .auth-trigger:hover {
@@ -596,7 +619,7 @@
 
       .auth-panel {
         position: absolute;
-        left: 0;
+        right: 0;
         top: calc(100% + 8px);
         width: min(380px, calc(100vw - 36px));
         padding: 18px;
@@ -608,6 +631,11 @@
 
       .auth-panel[hidden] {
         display: none;
+      }
+
+      .jaralingua-auth.is-floating .auth-panel {
+        right: auto;
+        left: 0;
       }
 
       .auth-panel h2 {
@@ -627,6 +655,7 @@
       }
 
       .auth-config-note,
+      .auth-role-choice,
       .auth-google-status,
       .auth-download-note {
         border-radius: 16px;
@@ -638,6 +667,24 @@
 
       .auth-google-status[hidden] {
         display: none;
+      }
+
+      .auth-role-choice {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+        background: #f8fbff;
+        color: #071f4f;
+      }
+
+      .auth-role-choice p {
+        margin: 0;
+      }
+
+      .auth-role-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
       }
 
       .auth-user-card {
@@ -948,15 +995,23 @@
       }
 
       @media (max-width: 760px) {
-        .jaralingua-auth {
+        .jaralingua-auth.is-floating {
           top: auto;
           left: 12px;
           bottom: 12px;
         }
 
-        .auth-panel {
+        .jaralingua-auth.is-floating .auth-panel {
           top: auto;
           bottom: calc(100% + 8px);
+        }
+
+        .jaralingua-auth.is-nav .auth-panel {
+          position: fixed;
+          left: 12px;
+          right: 12px;
+          top: 76px;
+          width: auto;
         }
 
         .student-dashboard-grid,
@@ -980,10 +1035,26 @@
     let root = document.querySelector("[data-jaralingua-auth]");
     if (root) return root;
 
+    const navTarget = document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar");
     root = document.createElement("div");
     root.className = "jaralingua-auth";
     root.setAttribute("data-jaralingua-auth", "");
-    document.body.insertBefore(root, document.body.firstChild);
+
+    if (navTarget) {
+      root.classList.add("is-nav");
+      if (navTarget.matches("ul, ol")) {
+        const item = document.createElement("li");
+        item.className = "jaralingua-auth-nav-item nav-item";
+        item.appendChild(root);
+        navTarget.appendChild(item);
+      } else {
+        navTarget.appendChild(root);
+      }
+    } else {
+      root.classList.add("is-floating");
+      document.body.insertBefore(root, document.body.firstChild);
+    }
+
     return root;
   }
 
@@ -1001,6 +1072,20 @@
     }
 
     return `<button class="auth-trigger" type="button" data-auth-toggle><span class="auth-initial">G</span><span>${copy.signIn}</span></button>`;
+  }
+
+  function authRoleChoiceMarkup(roleStatus) {
+    if (roleStatus) return "";
+    return `
+      <div class="auth-role-choice">
+        <strong>${copy.chooseRole}</strong>
+        <p>${copy.chooseRoleText}</p>
+        <div class="auth-role-actions">
+          <button class="role-action" type="button" data-request-role="student">${copy.requestStudent}</button>
+          <button class="role-action secondary" type="button" data-request-role="teacher">${copy.requestTeacher}</button>
+        </div>
+      </div>
+    `;
   }
 
   function panelMarkup() {
@@ -1023,6 +1108,7 @@
             <div><strong>${stats.completed.length}</strong><span>${copy.completedPages}</span></div>
           </div>
           <p>${escapeHtml(roleSummaryText(roleStatus))}</p>
+          ${authRoleChoiceMarkup(roleStatus)}
           <div class="auth-menu">
             <a href="#jaralingua-student-panel" data-auth-close>${copy.viewDashboard}</a>
             <a href="${last ? escapeAttribute(last.url) : "#"}" data-auth-last>${copy.continue}</a>
@@ -1073,6 +1159,12 @@
         showToast(copy.noLastPage);
       });
     }
+
+    root.querySelectorAll("[data-request-role]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        requestRole(button.getAttribute("data-request-role"));
+      });
+    });
   }
 
   function closePanel() {
