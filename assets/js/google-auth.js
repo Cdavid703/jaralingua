@@ -537,15 +537,11 @@
     style.id = "jaralingua-auth-styles";
     style.textContent = `
       .jaralingua-auth {
-        position: relative;
-        z-index: 1300;
-        font-family: Arial, Helvetica, sans-serif;
-      }
-
-      .jaralingua-auth.is-floating {
         position: fixed;
         left: 18px;
         top: 84px;
+        z-index: 1300;
+        font-family: Arial, Helvetica, sans-serif;
       }
 
       .jaralingua-auth-nav-item {
@@ -554,7 +550,14 @@
         list-style: none;
       }
 
+      .jaralingua-auth-nav {
+        display: inline-flex;
+        align-items: center;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
       .jaralingua-auth button,
+      .jaralingua-auth-nav button,
       .jaralingua-student-dashboard button {
         font: inherit;
       }
@@ -576,7 +579,7 @@
         cursor: pointer;
       }
 
-      .jaralingua-auth.is-nav .auth-trigger {
+      .jaralingua-auth-nav .auth-trigger {
         min-height: 36px;
         padding: 0 12px;
         box-shadow: none;
@@ -619,7 +622,7 @@
 
       .auth-panel {
         position: absolute;
-        right: 0;
+        left: 0;
         top: calc(100% + 8px);
         width: min(380px, calc(100vw - 36px));
         padding: 18px;
@@ -631,11 +634,6 @@
 
       .auth-panel[hidden] {
         display: none;
-      }
-
-      .jaralingua-auth.is-floating .auth-panel {
-        right: auto;
-        left: 0;
       }
 
       .auth-panel h2 {
@@ -995,23 +993,15 @@
       }
 
       @media (max-width: 760px) {
-        .jaralingua-auth.is-floating {
+        .jaralingua-auth {
           top: auto;
           left: 12px;
           bottom: 12px;
         }
 
-        .jaralingua-auth.is-floating .auth-panel {
+        .auth-panel {
           top: auto;
           bottom: calc(100% + 8px);
-        }
-
-        .jaralingua-auth.is-nav .auth-panel {
-          position: fixed;
-          left: 12px;
-          right: 12px;
-          top: 76px;
-          width: auto;
         }
 
         .student-dashboard-grid,
@@ -1035,27 +1025,34 @@
     let root = document.querySelector("[data-jaralingua-auth]");
     if (root) return root;
 
-    const navTarget = document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar");
     root = document.createElement("div");
     root.className = "jaralingua-auth";
     root.setAttribute("data-jaralingua-auth", "");
+    document.body.insertBefore(root, document.body.firstChild);
+    return root;
+  }
 
-    if (navTarget) {
-      root.classList.add("is-nav");
-      if (navTarget.matches("ul, ol")) {
-        const item = document.createElement("li");
-        item.className = "jaralingua-auth-nav-item nav-item";
-        item.appendChild(root);
-        navTarget.appendChild(item);
-      } else {
-        navTarget.appendChild(root);
-      }
+  function createNavAccess() {
+    const navTarget = document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar");
+    if (!navTarget) return null;
+
+    let navRoot = document.querySelector("[data-jaralingua-auth-nav]");
+    if (navRoot) return navRoot;
+
+    navRoot = document.createElement("div");
+    navRoot.className = "jaralingua-auth-nav";
+    navRoot.setAttribute("data-jaralingua-auth-nav", "");
+
+    if (navTarget.matches("ul, ol")) {
+      const item = document.createElement("li");
+      item.className = "jaralingua-auth-nav-item nav-item";
+      item.appendChild(navRoot);
+      navTarget.appendChild(item);
     } else {
-      root.classList.add("is-floating");
-      document.body.insertBefore(root, document.body.firstChild);
+      navTarget.appendChild(navRoot);
     }
 
-    return root;
+    return navRoot;
   }
 
   function avatarMarkup(user, className) {
@@ -1164,6 +1161,28 @@
       button.addEventListener("click", function () {
         requestRole(button.getAttribute("data-request-role"));
       });
+    });
+
+    renderNavAccess();
+  }
+
+  function renderNavAccess() {
+    const navRoot = createNavAccess();
+    if (!navRoot) return;
+
+    navRoot.innerHTML = triggerMarkup().replace("data-auth-toggle", "data-auth-nav-toggle");
+    const toggle = navRoot.querySelector("[data-auth-nav-toggle]");
+    if (!toggle) return;
+
+    toggle.addEventListener("click", function (event) {
+      event.stopPropagation();
+      const panel = document.querySelector("[data-auth-panel]");
+      if (!panel) return;
+      if (panel.hidden) {
+        openPanel();
+      } else {
+        closePanel();
+      }
     });
   }
 
@@ -1315,7 +1334,6 @@
     const draftStats = activityDraftStats();
     const current = stats.progress.pages[pageKey()] || currentPageRecord("in-progress");
     const last = stats.progress.lastPage;
-    const roleStatus = currentRoleStatus();
     dashboard.hidden = false;
     dashboard.innerHTML = `
       <div class="student-dashboard-grid">
@@ -1345,7 +1363,6 @@
               ${statusButton("completed", current.status, copy.markCompleted)}
             </div>
           </div>
-          ${rolePanelMarkup(roleStatus)}
           <div class="student-panel">
             <h3>${copy.activityAutosave}</h3>
             <p>${copy.autosaveActive}</p>
