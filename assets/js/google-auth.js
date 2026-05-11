@@ -2,6 +2,8 @@
   const USER_KEY = "jaralingua_google_user";
   const CONFIG_KEY = "JARALINGUA_GOOGLE_CLIENT_ID";
   const FALLBACK_CLIENT_ID = "";
+  const API_ROOT = "/api";
+  const CLOUD_SYNC_DELAY = 600;
   const DOWNLOAD_FUNCTIONS = [
     "downloadTranscriptPdf",
     "downloadPageSummaryPdf",
@@ -48,7 +50,7 @@
       markInProgress: "Marcar en progreso",
       markCompleted: "Marcar completada",
       loginNeeded: "Inicia sesi\u00f3n con Google para usar esta descarga.",
-      savedHere: "Progreso guardado en este navegador.",
+      savedHere: "Progreso sincronizado con tu cuenta.",
       viewDashboard: "Abrir panel",
       activityAutosave: "Respuestas guardadas",
       autosaveActive: "Las respuestas de esta p\u00e1gina se guardan autom\u00e1ticamente.",
@@ -106,7 +108,7 @@
       markInProgress: "Marquer en cours",
       markCompleted: "Marquer termin\u00e9e",
       loginNeeded: "Connectez-vous avec Google pour utiliser ce t\u00e9l\u00e9chargement.",
-      savedHere: "Progr\u00e8s enregistr\u00e9 dans ce navigateur.",
+      savedHere: "Progr\u00e8s synchronis\u00e9 avec votre compte.",
       viewDashboard: "Ouvrir le panneau",
       activityAutosave: "R\u00e9ponses enregistr\u00e9es",
       autosaveActive: "Les r\u00e9ponses de cette page sont enregistr\u00e9es automatiquement.",
@@ -164,7 +166,7 @@
       markInProgress: "Mark in progress",
       markCompleted: "Mark completed",
       loginNeeded: "Sign in with Google to use this download.",
-      savedHere: "Progress saved in this browser.",
+      savedHere: "Progress synced with your account.",
       viewDashboard: "Open panel",
       activityAutosave: "Saved answers",
       autosaveActive: "Answers on this page are saved automatically.",
@@ -214,6 +216,11 @@
   let restoringActivity = false;
   let activityRestoreTimer = null;
   let activityAutosaveReady = false;
+  let cloudProgressLoaded = false;
+  let cloudProgressTimer = null;
+  let pendingProgressSync = false;
+  let activitySyncTimers = {};
+  let pendingActivitySync = {};
 
   function clientId() {
     const meta = document.querySelector('meta[name="google-signin-client_id"]');
@@ -292,9 +299,13 @@
   }
 
   function userActivityKey() {
+    return userActivityKeyForPath(pageKey());
+  }
+
+  function userActivityKeyForPath(path) {
     const userId = currentUser && (currentUser.sub || currentUser.email);
     if (!userId) return "";
-    return "jaralingua_activity_" + userId + "_" + encodeURIComponent(pageKey());
+    return "jaralingua_activity_" + userId + "_" + encodeURIComponent(path || pageKey());
   }
 
   function normalizeEmail(value) {
@@ -425,9 +436,170 @@
   }
 
   function saveProgress(progress) {
+    writeProgressLocal(progress);
+    queueProgressSync(progress);
+  }
+
+  function writeProgressLocal(progress) {
     const key = userProgressKey();
     if (!key) return;
     localStorage.setItem(key, JSON.stringify(progress));
+  }
+
+  function cloudAuthToken() {
+    return currentUser && currentUser.credential;
+  }
+
+  function cloudCanSync() {
+    return !!(cloudAuthToken() && window.fetch);
+  }
+
+  function cloudFetch(path, options) {
+    const settings = Object.assign({
+      method: "GET",
+      headers: {}
+    }, options || {});
+    settings.headers = Object.assign({
+      Authorization: "Bearer " + cloudAuthToken()
+    }, settings.headers || {});
+    if (settings.body && !settings.headers["Content-Type"]) {
+      settings.headers["Content-Type"] = "application/json";
+    }
+
+    return fetch(API_ROOT + path, settings).then(function (response) {
+      if (!response.ok) throw new Error("Cloud sync failed: " + response.status);
+      return response.json();
+    });
+  }
+
+  function queueProgressSync(progress) {
+    if (!cloudCanSync()) return;
+    if (!cloudProgressLoaded) {
+      pendingProgressSync = true;
+      return;
+    }
+
+    clearTimeout(cloudProgressTimer);
+    cloudProgressTimer = setTimeout(function () {
+      cloudFetch("/progress", {
+        method: "PUT",
+        body: JSON.stringify({ progress: progress })
+      }).catch(function () {
+        pendingProgressSync = true;
+      });
+    }, CLOUD_SYNC_DELAY);
+  }
+
+  function queueActivitySync(path, draft) {
+    if (!cloudCanSync()) return;
+    if (!cloudProgressLoaded) {
+      pendingActivitySync[path || pageKey()] = true;
+      return;
+    }
+
+    const activityPath = path || pageKey();
+    clearTimeout(activitySyncTimers[activityPath]);
+    activitySyncTimers[activityPath] = setTimeout(function () {
+      cloudFetch("/activity", {
+        method: "PUT",
+        body: JSON.stringify({
+          path: activityPath,
+          draft: draft
+        })
+      }).catch(function () {
+        pendingActivitySync[activityPath] = true;
+      });
+    }, CLOUD_SYNC_DELAY);
+  }
+
+  function queueActivityDelete(path) {
+    if (!cloudCanSync() || !cloudProgressLoaded) return;
+    const activityPath = path || pageKey();
+    cloudFetch("/activity?path=" + encodeURIComponent(activityPath), {
+      method: "DELETE"
+    }).catch(function () {
+      pendingActivitySync[activityPath] = true;
+    });
+  }
+
+  function recordTime(record) {
+    return Date.parse((record && record.updatedAt) || "") || 0;
+  }
+
+  function mergeProgress(localProgress, remoteProgress) {
+    const local = localProgress && localProgress.pages ? localProgress : { pages: {}, lastPage: null };
+    const remote = remoteProgress && remoteProgress.pages ? remoteProgress : { pages: {}, lastPage: null };
+    const pages = Object.assign({}, remote.pages || {});
+
+    Object.keys(local.pages || {}).forEach(function (key) {
+      const localPage = local.pages[key];
+      const remotePage = pages[key];
+      if (!remotePage || recordTime(localPage) >= recordTime(remotePage)) {
+        pages[key] = localPage;
+      }
+    });
+
+    const lastCandidates = [remote.lastPage, local.lastPage].filter(Boolean);
+    const lastPage = lastCandidates.sort(function (a, b) {
+      return recordTime(b) - recordTime(a);
+    })[0] || null;
+
+    return {
+      pages: pages,
+      lastPage: lastPage
+    };
+  }
+
+  function mergeActivityDraft(localDraft, remoteDraft) {
+    const local = localDraft && localDraft.fields ? localDraft : { fields: {}, updatedAt: null };
+    const remote = remoteDraft && remoteDraft.fields ? remoteDraft : { fields: {}, updatedAt: null };
+    if (!Object.keys(remote.fields || {}).length) return local;
+    if (!Object.keys(local.fields || {}).length) return remote;
+
+    if (recordTime(remote) > recordTime(local)) {
+      return {
+        fields: Object.assign({}, local.fields, remote.fields),
+        updatedAt: remote.updatedAt
+      };
+    }
+
+    return {
+      fields: Object.assign({}, remote.fields, local.fields),
+      updatedAt: local.updatedAt
+    };
+  }
+
+  function syncCloudData() {
+    if (!cloudCanSync()) return;
+
+    cloudFetch("/progress").then(function (data) {
+      const mergedProgress = mergeProgress(readProgress(), data.progress);
+      writeProgressLocal(mergedProgress);
+
+      const activities = data.activities || {};
+      Object.keys(activities).forEach(function (activityPath) {
+        const mergedDraft = mergeActivityDraft(readActivityDraft(activityPath), activities[activityPath]);
+        writeActivityDraftLocal(mergedDraft, activityPath);
+      });
+
+      cloudProgressLoaded = true;
+      renderWidget();
+      renderDashboard();
+      restoreSavedActivity();
+      updateActivityPanelCount();
+
+      if (pendingProgressSync) {
+        pendingProgressSync = false;
+        queueProgressSync(mergedProgress);
+      }
+
+      Object.keys(pendingActivitySync).forEach(function (activityPath) {
+        queueActivitySync(activityPath, readActivityDraft(activityPath));
+      });
+      pendingActivitySync = {};
+    }).catch(function () {
+      cloudProgressLoaded = false;
+    });
   }
 
   function currentPageRecord(status) {
@@ -489,12 +661,16 @@
 
   function saveUser(user) {
     currentUser = user;
+    cloudProgressLoaded = false;
+    pendingProgressSync = false;
+    pendingActivitySync = {};
     sessionStorage.setItem(USER_KEY, JSON.stringify(user));
     trackPageVisit();
     renderWidget();
     renderDashboard();
     restoreSavedActivity();
     saveAllActivityFields();
+    syncCloudData();
     updateDownloadLocks();
   }
 
@@ -502,6 +678,14 @@
     sessionStorage.removeItem(USER_KEY);
     currentUser = null;
     buttonRendered = false;
+    cloudProgressLoaded = false;
+    pendingProgressSync = false;
+    pendingActivitySync = {};
+    clearTimeout(cloudProgressTimer);
+    Object.keys(activitySyncTimers).forEach(function (key) {
+      clearTimeout(activitySyncTimers[key]);
+    });
+    activitySyncTimers = {};
 
     if (window.google && google.accounts && google.accounts.id) {
       google.accounts.id.disableAutoSelect();
@@ -521,7 +705,8 @@
       email: profile.email,
       picture: profile.picture,
       sub: profile.sub,
-      exp: profile.exp
+      exp: profile.exp,
+      credential: response.credential
     });
 
     if (currentRoleStatus()) {
@@ -1649,8 +1834,8 @@
     return cleanText((element.closest("li, article, .question-card, .activity-card, .form-group") || {}).textContent || "");
   }
 
-  function readActivityDraft() {
-    const key = userActivityKey();
+  function readActivityDraft(path) {
+    const key = path ? userActivityKeyForPath(path) : userActivityKey();
     if (!key) return { fields: {}, updatedAt: null };
     try {
       const saved = JSON.parse(localStorage.getItem(key) || "null");
@@ -1661,8 +1846,13 @@
     return { fields: {}, updatedAt: null };
   }
 
-  function saveActivityDraft(draft) {
-    const key = userActivityKey();
+  function saveActivityDraft(draft, path) {
+    writeActivityDraftLocal(draft, path);
+    queueActivitySync(path || pageKey(), draft);
+  }
+
+  function writeActivityDraftLocal(draft, path) {
+    const key = path ? userActivityKeyForPath(path) : userActivityKey();
     if (!key) return;
     localStorage.setItem(key, JSON.stringify(draft));
   }
@@ -1748,8 +1938,10 @@
   }
 
   function clearSavedActivity(showMessage) {
+    const activityPath = pageKey();
     const key = userActivityKey();
     if (key) localStorage.removeItem(key);
+    queueActivityDelete(activityPath);
     updateActivityPanelCount();
     if (showMessage) showToast(copy.answersCleared);
   }
@@ -1855,7 +2047,10 @@
 
   window.addEventListener("load", function () {
     initGoogle();
-    if (currentUser) trackPageVisit();
+    if (currentUser) {
+      trackPageVisit();
+      syncCloudData();
+    }
     renderWidget();
     renderDashboard();
     protectDownloads();
