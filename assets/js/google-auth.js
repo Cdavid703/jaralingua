@@ -464,6 +464,7 @@
     saveProgress(progress);
     renderWidget();
     renderDashboard();
+    openPanel();
   }
 
   function progressStats() {
@@ -798,6 +799,34 @@
         font-weight: 800;
       }
 
+      .auth-current-progress {
+        display: grid;
+        gap: 8px;
+        margin: 12px 0 14px;
+        padding: 12px;
+        border-radius: 16px;
+        background: #f8fbff;
+        color: #071f4f;
+      }
+
+      .auth-current-progress strong,
+      .auth-current-progress span,
+      .auth-current-progress small {
+        display: block;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .auth-current-progress span,
+      .auth-current-progress small {
+        color: #64748b;
+        font-weight: 800;
+      }
+
+      .auth-current-progress small {
+        font-size: 0.76rem;
+      }
+
       .auth-actions {
         display: flex;
         gap: 10px;
@@ -1090,6 +1119,7 @@
       const stats = progressStats();
       const last = stats.progress.lastPage;
       const roleStatus = currentRoleStatus();
+      const current = stats.progress.pages[pageKey()] || currentPageRecord("in-progress");
       return `
         <div class="auth-panel" data-auth-panel hidden>
           <h2>${copy.account}</h2>
@@ -1106,10 +1136,18 @@
           </div>
           <p>${escapeHtml(roleSummaryText(roleStatus))}</p>
           ${authRoleChoiceMarkup(roleStatus)}
+          <div class="auth-current-progress">
+            <strong>${copy.currentPage}</strong>
+            <span>${escapeHtml(current.title)} · ${escapeHtml(statusCopy[current.status] || copy.inProgress)}</span>
+            <div class="status-actions">
+              ${statusButton("pending", current.status, copy.markPending)}
+              ${statusButton("in-progress", current.status, copy.markInProgress)}
+              ${statusButton("completed", current.status, copy.markCompleted)}
+            </div>
+            <small>${copy.savedHere}</small>
+          </div>
           <div class="auth-menu">
-            <a href="#jaralingua-student-panel" data-auth-close>${copy.viewDashboard}</a>
             <a href="${last ? escapeAttribute(last.url) : "#"}" data-auth-last>${copy.continue}</a>
-            <a href="#jaralingua-progress-panel" data-auth-close>${copy.progress}</a>
           </div>
           <div class="auth-actions">
             <button class="auth-action" type="button" data-auth-signout>${copy.signOut}</button>
@@ -1160,6 +1198,12 @@
     root.querySelectorAll("[data-request-role]").forEach(function (button) {
       button.addEventListener("click", function () {
         requestRole(button.getAttribute("data-request-role"));
+      });
+    });
+
+    root.querySelectorAll("[data-progress-status]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        setPageStatus(button.getAttribute("data-progress-status"));
       });
     });
 
@@ -1308,6 +1352,10 @@
   }
 
   function renderDashboard() {
+    const existingDashboard = document.querySelector("[data-jaralingua-dashboard]");
+    if (existingDashboard) existingDashboard.remove();
+    return;
+
     injectStyles();
     let dashboard = document.querySelector("[data-jaralingua-dashboard]");
     if (!currentUser) {
