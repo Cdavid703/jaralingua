@@ -73,7 +73,9 @@
       roleRequestSent: "Solicitud enviada al administrador.",
       studentAccessReady: "Acceso de estudiante activo.",
       teacherPendingStudentAccess: "Solicitud de profesor pendiente. Mientras se aprueba, tienes acceso como estudiante.",
-      teacherApproved: "Panel de profesor aprobado."
+      teacherApproved: "Panel de profesor aprobado.",
+      googleLoading: "Cargando boton de Google...",
+      googleUnavailable: "No se pudo cargar el boton de Google. Revisa que este dominio este autorizado en Google Cloud y recarga la pagina."
     },
     fr: {
       signIn: "Connexion",
@@ -127,7 +129,9 @@
       roleRequestSent: "Demande envoy\u00e9e \u00e0 l'administrateur.",
       studentAccessReady: "Acc\u00e8s \u00e9tudiant actif.",
       teacherPendingStudentAccess: "Demande de professeur en attente. En attendant, vous avez acc\u00e8s comme \u00e9tudiant.",
-      teacherApproved: "Panneau professeur approuv\u00e9."
+      teacherApproved: "Panneau professeur approuv\u00e9.",
+      googleLoading: "Chargement du bouton Google...",
+      googleUnavailable: "Impossible de charger le bouton Google. Verifiez que ce domaine est autorise dans Google Cloud, puis rechargez la page."
     },
     en: {
       signIn: "Sign in",
@@ -181,7 +185,9 @@
       roleRequestSent: "Request sent to the administrator.",
       studentAccessReady: "Student access active.",
       teacherPendingStudentAccess: "Teacher request pending. While approved, you have student access.",
-      teacherApproved: "Teacher panel approved."
+      teacherApproved: "Teacher panel approved.",
+      googleLoading: "Loading Google button...",
+      googleUnavailable: "The Google button could not load. Check that this domain is authorized in Google Cloud, then reload the page."
     }
   };
 
@@ -196,6 +202,9 @@
   let currentUser = readUser();
   let googleReady = false;
   let buttonRendered = false;
+  let googleLoadStarted = false;
+  let googleLoadTimer = null;
+  let googleRenderRetries = 0;
   let restoringActivity = false;
   let activityRestoreTimer = null;
   let activityAutosaveReady = false;
@@ -612,12 +621,17 @@
       }
 
       .auth-config-note,
+      .auth-google-status,
       .auth-download-note {
         border-radius: 16px;
         padding: 14px;
         background: #fff7e8;
         color: #7c4a03;
         font-weight: 800;
+      }
+
+      .auth-google-status[hidden] {
+        display: none;
       }
 
       .auth-user-card {
@@ -1021,6 +1035,7 @@
         <h2>${copy.title}</h2>
         <p>${clientId() ? "" : copy.configured}</p>
         <div class="auth-google-button" data-google-button></div>
+        <div class="auth-google-status" data-google-status hidden></div>
         ${clientId() ? "" : `<div class="auth-config-note">${copy.hint}</div>`}
         <div class="auth-download-note" data-auth-download-note hidden>${copy.loginNeeded}</div>
       </div>
@@ -1066,17 +1081,78 @@
     renderGoogleButton();
   }
 
+  function googleApiReady() {
+    return !!(window.google && window.google.accounts && window.google.accounts.id);
+  }
+
+  function setGoogleStatus(message) {
+    const status = document.querySelector("[data-google-status]");
+    if (!status) return;
+    status.textContent = message || "";
+    status.hidden = !message;
+  }
+
+  function ensureGoogleScriptReady(callback) {
+    if (googleApiReady()) {
+      callback();
+      return;
+    }
+
+    setGoogleStatus(copy.googleLoading);
+
+    if (!googleLoadStarted) {
+      googleLoadStarted = true;
+      let script = document.querySelector('script[src*="accounts.google.com/gsi/client"]');
+      if (!script) {
+        script = document.createElement("script");
+        script.src = "https://accounts.google.com/gsi/client";
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+
+      script.addEventListener("load", function () {
+        renderGoogleButton();
+      });
+      script.addEventListener("error", function () {
+        setGoogleStatus(copy.googleUnavailable);
+      });
+    }
+
+    clearTimeout(googleLoadTimer);
+    googleLoadTimer = setTimeout(function retryGoogleButton() {
+      if (googleApiReady()) {
+        callback();
+        return;
+      }
+
+      googleRenderRetries += 1;
+      if (googleRenderRetries >= 20) {
+        setGoogleStatus(copy.googleUnavailable);
+        return;
+      }
+
+      googleLoadTimer = setTimeout(retryGoogleButton, 400);
+    }, 400);
+  }
+
   function initGoogle() {
-    if (!clientId() || !window.google || !google.accounts || !google.accounts.id) return;
+    if (!clientId() || !googleApiReady()) return;
 
-    google.accounts.id.initialize({
-      client_id: clientId(),
-      callback: window.jaralinguaHandleGoogleCredential,
-      auto_select: false,
-      cancel_on_tap_outside: true
-    });
+    try {
+      window.google.accounts.id.initialize({
+        client_id: clientId(),
+        callback: window.jaralinguaHandleGoogleCredential,
+        auto_select: false,
+        cancel_on_tap_outside: true
+      });
 
-    googleReady = true;
+      googleReady = true;
+      setGoogleStatus("");
+    } catch (error) {
+      googleReady = false;
+      setGoogleStatus(copy.googleUnavailable);
+    }
   }
 
   function renderGoogleButton() {
@@ -1084,17 +1160,34 @@
     if (!target || buttonRendered || !clientId()) return;
 
     if (!googleReady) initGoogle();
-    if (!googleReady) return;
+    if (!googleReady) {
+      ensureGoogleScriptReady(renderGoogleButton);
+      return;
+    }
 
-    google.accounts.id.renderButton(target, {
-      theme: "outline",
-      size: "large",
-      shape: "pill",
-      text: "signin_with",
-      width: 280
-    });
+    try {
+      target.innerHTML = "";
+      window.google.accounts.id.renderButton(target, {
+        theme: "outline",
+        size: "large",
+        shape: "pill",
+        text: "signin_with",
+        width: 280
+      });
 
-    buttonRendered = true;
+      buttonRendered = true;
+      googleRenderRetries = 0;
+      setGoogleStatus("");
+
+      setTimeout(function () {
+        if (target.children.length) return;
+        buttonRendered = false;
+        setGoogleStatus(copy.googleUnavailable);
+      }, 1200);
+    } catch (error) {
+      buttonRendered = false;
+      setGoogleStatus(copy.googleUnavailable);
+    }
   }
 
   function renderDashboard() {
