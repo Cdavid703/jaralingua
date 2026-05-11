@@ -234,8 +234,13 @@ David
 Emma
 Liam
 Maria"></textarea>
+            <input type="file" id="studentRosterFile" accept=".xlsx,.csv,.txt,.tsv" hidden />
+            <p class="roster-import-status" id="rosterImportStatus" aria-live="polite"></p>
 
             <div class="roulette-actions">
+              <button type="button" class="roulette-btn secondary" onclick="openRosterFilePicker()">
+                Import Excel/CSV
+              </button>
               <button type="button" class="roulette-btn primary" onclick="loadStudentNames()">
                 Load Names
               </button>
@@ -358,6 +363,7 @@ Maria"></textarea>
     <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
 
+  <script src="../../assets/js/roster-import.js"></script>
   <script>
     const rouletteState = {
       originalNames: [],
@@ -425,6 +431,10 @@ Maria"></textarea>
 
       document.getElementById("studentNamesInput").value = sampleNames.join("\n");
       loadStudentNames();
+    }
+
+    function openRosterFilePicker() {
+      document.getElementById("studentRosterFile").click();
     }
 
     function renderRoulette() {
@@ -546,6 +556,16 @@ Maria"></textarea>
       renderStudentPool();
       renderHistory();
     }
+
+    window.JaraLinguaRosterImport.setup({
+      fileInputId: "studentRosterFile",
+      textAreaId: "studentNamesInput",
+      statusId: "rosterImportStatus",
+      onNamesLoaded: function() {
+        loadStudentNames();
+      }
+    });
+    renderRoulette();
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

@@ -62,7 +62,10 @@ Mateo
 Laura
 Emma
 Carlos"></textarea>
+            <input type="file" id="studentRosterFile" accept=".xlsx,.csv,.txt,.tsv" hidden />
+            <p class="roster-import-status" id="rosterImportStatus" aria-live="polite"></p>
             <div class="roulette-actions">
+              <button type="button" class="roulette-btn secondary" onclick="openRosterFilePicker()">Import Excel/CSV</button>
               <button type="button" class="roulette-btn primary" onclick="loadStudentNames()">Load Names</button>
               <button type="button" class="roulette-btn secondary" onclick="useSampleNames()">Use Sample Names</button>
               <button type="button" class="roulette-btn danger" onclick="resetStudentRoulette()">Reset Students</button>
@@ -113,6 +116,7 @@ Carlos"></textarea>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
 
+  <script src="../../assets/js/roster-import.js"></script>
   <script>
     const locationCards = [
       { name: "Daniel", pronoun: "He", place: "the church", question: "Where is Daniel?", sentence: "Daniel is in the church.", image: "../../assets/img/english-basic/practice-lab/location-card-roulette/location-card-01-daniel-church.png" },
@@ -174,6 +178,10 @@ Carlos"></textarea>
       const sampleNames = ["Daniel", "Sofia", "Mateo", "Laura", "Emma", "Carlos", "Valentina", "Lucas", "Ana", "Nicolas"];
       document.getElementById("studentNamesInput").value = sampleNames.join("\n");
       loadStudentNames();
+    }
+
+    function openRosterFilePicker() {
+      document.getElementById("studentRosterFile").click();
     }
 
     function renderStudentRoulette() {
@@ -282,6 +290,14 @@ Carlos"></textarea>
       });
     }
 
+    window.JaraLinguaRosterImport.setup({
+      fileInputId: "studentRosterFile",
+      textAreaId: "studentNamesInput",
+      statusId: "rosterImportStatus",
+      onNamesLoaded: function() {
+        loadStudentNames();
+      }
+    });
     renderStudentRoulette();
     renderLocationCards();
   </script>

@@ -92,7 +92,19 @@
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/course-overview.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/verb-to-be.html</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/cardinal-ordinal-numbers.html</loc>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -122,7 +134,7 @@
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/personal-information-roulette.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -134,13 +146,19 @@
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/practice-lab.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/practice-unit-1-all-about-you.html</loc>
     <lastmod>2026-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-2-in-class.html</loc>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -183,6 +201,30 @@
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/unit-1-all-about-you.html</loc>
     <lastmod>2026-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/unit-2-in-class.html</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-2-scattergories-schedule.html</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-2-bag-exchange.html</loc>
+    <lastmod>2026-05-11</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-3-favorite-people.html</loc>
+    <lastmod>2026-05-11</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

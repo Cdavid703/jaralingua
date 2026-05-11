@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Unit 3 Practice: Favorite People | Basic English Course 1</title>
+  <title>Guess Who Game | Basic English Course 1</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css" />
@@ -23,45 +23,199 @@
       </ul>
     </nav>
   </header>
-  <main>
 
-    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png');">
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/practice-lab/guess-who-game-banner.png');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab</p>
-        <h1>Unit 3 Practice: Favorite People</h1>
-        <p>Practice describing celebrities, classmates, and family members using be-verb sentences and yes/no questions.</p>
-        <div class="lesson-meta"><span>Unit 3</span><span>Grammar</span><span>Conversation</span></div>
+        <h1>Guess Who Game</h1>
+        <p>Play a real classroom guessing game with professions, appearance clues, yes/no questions, and one student selected by roulette.</p>
+        <div class="lesson-meta"><span>Unit 3</span><span>Speaking Game</span><span>Yes/No Questions</span><span>No Repeats</span></div>
         <div class="hero-actions">
           <a href="#practice-activity" class="btn btn-primary">Start activity</a>
           <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png" alt="Unit 3 Practice: Favorite People" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/guess-who-game-banner.png" alt="Guess Who Game classroom banner" /></aside>
     </section>
-
 
     <section class="lesson-outcome">
       <div class="outcome-card">
         <span class="outcome-label">Practice Goal</span>
-        <p>Practice describing celebrities, classmates, and family members using be-verb sentences and yes/no questions.</p>
+        <p>Students ask yes/no questions in English to identify a hidden character from the professions board.</p>
       </div>
     </section>
 
     <section class="premium-lesson-container" id="practice-activity">
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Grammar Practice</p><h2>Sentence Builder</h2></div></div>
-        <p class="lesson-text">Complete the fields, generate a model sentence, and personalize it orally with a partner.</p>
-        <div class="practice-form-panel"><div class="practice-form-header"><div><h3>Build Your Sentence</h3><p>Use the unit language to create a short speaking model.</p></div><span class="practice-badge">Unit 3</span></div><div class="practice-form-grid"><div class="practice-form-group"><label for="person">Person</label><input type="text" id="person" placeholder="Example: Sofia" /></div><div class="practice-form-group"><label for="role">Role or relation</label><input type="text" id="role" placeholder="Example: singer" /></div><div class="practice-form-group"><label for="adjective">Adjective</label><input type="text" id="adjective" placeholder="Example: friendly" /></div><div class="practice-form-group"><label for="origin">Origin</label><input type="text" id="origin" placeholder="Example: Colombia" /></div></div><button class="practice-submit-btn" type="button" onclick="generateSentence()">Generate model</button><div class="practice-result-card" id="result-card"><span class="result-label">Read this aloud</span><p id="speech-output"></p></div></div>
-      </article>
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Survey Studio</p><h2>Favorite People Interview</h2></div></div>
-        <p class="lesson-text">Students interview classmates about famous people, classmates, and family members, then present short descriptions.</p>
-        <div class="activity-steps">
-          <div class="activity-step"><b>1</b><div><h3>Celebrity survey</h3><p>Ask five classmates: "Who is your favorite singer?", "Is she famous?", "Is he Colombian?", "Are they soccer players?"</p></div></div>
-          <div class="activity-step"><b>2</b><div><h3>Photo description</h3><p>Show or imagine a photo of a family member or celebrity. Describe the person using be-verb sentences and adjectives.</p></div></div>
-          <div class="activity-step"><b>3</b><div><h3>Guess who</h3><p>Give three clues without saying the name. Classmates ask yes/no questions until they guess the person.</p></div></div>
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Student Instructions</p><h2>How to Play Guess Who?</h2></div></div>
+        <p class="lesson-text">The teacher loads the student list and spins the student roulette. The selected student turns around and does not look at the TV screen. The student may use a phone to check the available character list. Then, the teacher spins the character roulette and the secret character appears on the screen for the class.</p>
+
+        <div class="guesswho-rule-list">
+          <div class="guesswho-rule-card"><b>1</b><h3>Spin for a student</h3><p>The roulette chooses one student. That student turns away from the TV.</p></div>
+          <div class="guesswho-rule-card"><b>2</b><h3>Spin for a character</h3><p>The teacher selects the secret character with the character roulette. The class can see the result.</p></div>
+          <div class="guesswho-rule-card"><b>3</b><h3>Ask yes/no questions</h3><p>The student asks questions in English. The teacher and classmates answer only yes or no.</p></div>
+          <div class="guesswho-rule-card"><b>4</b><h3>Find the character</h3><p>When the student knows the answer, the student asks: <strong>“Is the character the ...?”</strong></p></div>
         </div>
-        <div class="conversation-challenge"><h3>Mini presentation</h3><p>Prepare a 45-second presentation: "This is my favorite person. He is... He is from... He is famous because..." The class asks two yes/no questions.</p><div class="role-card-grid"><span>Interviewer</span><span>Celebrity expert</span><span>Family storyteller</span><span>Question judge</span></div></div>
+
+        <div class="guesswho-teacher-note">When the teacher clicks <strong>Character found</strong>, the student and the character are removed from the active lists. Then the next round can start.</div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Question Bank</p><h2>Examples of Questions</h2></div></div>
+        <p class="lesson-text">Use simple yes/no questions. At the end, use the final question to guess the character.</p>
+
+        <div class="guesswho-example-image">
+          <img src="../../assets/img/english-basic/practice-lab/guess-who-example-questions.png" alt="Guess Who question examples and character list" />
+        </div>
+
+        <div class="guesswho-question-grid">
+          <div class="guesswho-question-card">Is the character a man?</div>
+          <div class="guesswho-question-card">Is the character a woman?</div>
+          <div class="guesswho-question-card">Is the character wearing glasses?</div>
+          <div class="guesswho-question-card">Is the character wearing a hat?</div>
+          <div class="guesswho-question-card">Does the character have a beard?</div>
+          <div class="guesswho-question-card">Does the character have gray hair?</div>
+          <div class="guesswho-question-card">Is the character wearing a uniform?</div>
+          <div class="guesswho-question-card">Does the character work with food?</div>
+          <div class="guesswho-question-card">Does the character work with animals?</div>
+          <div class="guesswho-question-card">Is the character in the first row?</div>
+          <div class="guesswho-question-card">Is the character wearing white clothes?</div>
+          <div class="guesswho-question-card final-question">Final question: Is the character the Musician?</div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Character Board</p><h2>Available Characters</h2></div></div>
+        <p class="lesson-text">Students may check this board on their phones while the selected student asks questions.</p>
+        <div class="guesswho-board-card">
+          <img src="../../assets/img/english-basic/practice-lab/guess-who-professions-board.png" alt="Professions Guess Who board" />
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Interactive Tool</p><h2>Guess Who Roulette</h2></div></div>
+
+        <div class="guesswho-panel">
+          <div class="guesswho-setup">
+            <div>
+              <h3>Load Student Names</h3>
+              <p>Type, paste, or import the student names from Excel. Write one name per line if you paste manually.</p>
+            </div>
+
+            <textarea id="studentNamesInput" class="guesswho-textarea" placeholder="Example:
+Alex
+Sarah
+David
+Emma
+Liam
+Maria"></textarea>
+
+            <input type="file" id="studentExcelInput" accept=".xlsx,.csv,.txt,.tsv" hidden />
+            <p class="roster-import-status" id="rosterImportStatus" aria-live="polite"></p>
+
+            <div class="guesswho-actions">
+              <button type="button" class="guesswho-btn secondary" onclick="openExcelPicker()" data-i18n="extractExcel">Extract Student List from Excel</button>
+              <button type="button" class="guesswho-btn primary" onclick="loadStudentNames()" data-i18n="loadNames">Load Names</button>
+              <button type="button" class="guesswho-btn light" onclick="useSampleNames()" data-i18n="sampleNames">Use Sample Names</button>
+              <button type="button" class="guesswho-btn danger" onclick="resetActivity()" data-i18n="resetActivity">Reset Activity</button>
+            </div>
+          </div>
+
+          <div class="guesswho-play-grid">
+            <div class="guesswho-wheel-card">
+              <div class="guesswho-wheel-header"><div><h3>Student Roulette</h3><p>Select the student who will guess.</p></div><span class="guesswho-count-pill" id="studentsLeftCount">0</span></div>
+              <div class="guesswho-wheel-zone">
+                <div class="guesswho-pointer"></div>
+                <div class="guesswho-wheel" id="studentWheel"><div class="guesswho-wheel-center">STUDENT</div></div>
+                <button type="button" class="guesswho-btn primary" id="spinStudentBtn" onclick="spinStudentRoulette()" disabled data-i18n="spinStudent">Spin Student</button>
+                <p class="guesswho-status" id="studentStatus">Load at least one student to start.</p>
+              </div>
+            </div>
+
+            <div class="guesswho-wheel-card">
+              <div class="guesswho-wheel-header"><div><h3>Character Roulette</h3><p>Spin when the student is not looking.</p></div><span class="guesswho-count-pill" id="charactersLeftCount">0</span></div>
+              <div class="guesswho-wheel-zone">
+                <div class="guesswho-pointer"></div>
+                <div class="guesswho-wheel" id="characterWheel"><div class="guesswho-wheel-center">CHARACTER</div></div>
+                <button type="button" class="guesswho-btn secondary" id="spinCharacterBtn" onclick="spinCharacterRoulette()" disabled data-i18n="spinCharacter">Spin Character</button>
+                <p class="guesswho-status" id="characterStatus">Select a student first.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="guesswho-current-card">
+            <h3>Current Round</h3>
+            <p>The selected student asks questions. The class answers: <strong>Yes, he/she is</strong> or <strong>No, he/she isn’t</strong>.</p>
+            <div class="guesswho-current-grid">
+              <div class="guesswho-result-box"><small>Selected Student</small><strong id="currentStudentName">—</strong><p>Turn around and ask questions.</p></div>
+              <div class="guesswho-result-box guesswho-secret-box"><small>Secret Character</small><strong id="currentCharacterName">—</strong><p>Only the teacher and class should see this.</p></div>
+            </div>
+            <div class="guesswho-round-actions guesswho-round-actions-spaced">
+              <button type="button" class="guesswho-btn success" id="foundBtn" onclick="confirmCharacterFound()" disabled data-i18n="characterFound">Character found</button>
+              <button type="button" class="guesswho-btn light" id="cancelRoundBtn" onclick="cancelCurrentRound()" disabled data-i18n="cancelRound">Cancel Current Round</button>
+            </div>
+          </div>
+
+          <div class="guesswho-play-grid">
+            <div class="guesswho-list-card">
+              <div class="guesswho-list-header"><h3>Students Left</h3><span class="guesswho-count-pill" id="studentPoolPill">0</span></div>
+              <div class="guesswho-chip-list" id="studentPoolList"><p class="guesswho-empty-message">No students loaded yet.</p></div>
+            </div>
+
+            <div class="guesswho-list-card">
+              <div class="guesswho-list-header"><h3>Characters Left</h3><span class="guesswho-count-pill" id="characterPoolPill">0</span></div>
+              <div class="guesswho-chip-list" id="characterPoolList"></div>
+            </div>
+          </div>
+
+          <div class="guesswho-history-card">
+            <div class="guesswho-history-header"><div><h3>Participation History</h3><p>Completed rounds appear here.</p></div></div>
+            <div class="guesswho-table-container">
+              <table class="guesswho-table">
+                <thead><tr><th>Round</th><th>Student</th><th>Character</th><th>Final Question</th></tr></thead>
+                <tbody id="guesswhoHistoryBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Vocabulary Support</p><h2>Words for the Guess Who Board</h2></div></div>
+        <p class="lesson-text">Use this vocabulary after the roulettes and the participation history. Students can review character jobs and visible clues before asking questions.</p>
+        <div class="grammar-table-wrap">
+          <table class="grammar-table vocabulary-audio-table">
+            <thead><tr><th>Spanish</th><th>English</th><th>Pronunciation</th></tr></thead>
+            <tbody>
+              <tr><td>bibliotecario/a</td><td>librarian</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('librarian')">Listen</button></td></tr>
+              <tr><td>editor/a</td><td>editor</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('editor')">Listen</button></td></tr>
+              <tr><td>profesor/a</td><td>teacher</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('teacher')">Listen</button></td></tr>
+              <tr><td>artesano/a</td><td>artisan</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('artisan')">Listen</button></td></tr>
+              <tr><td>florista</td><td>florist</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('florist')">Listen</button></td></tr>
+              <tr><td>guia turistico</td><td>tour guide</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('tour guide')">Listen</button></td></tr>
+              <tr><td>musico/a</td><td>musician</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('musician')">Listen</button></td></tr>
+              <tr><td>veterinario/a</td><td>veterinarian</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('veterinarian')">Listen</button></td></tr>
+              <tr><td>relojero/a</td><td>watchmaker</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('watchmaker')">Listen</button></td></tr>
+              <tr><td>joyero/a</td><td>jeweler</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('jeweler')">Listen</button></td></tr>
+              <tr><td>apicultor/a</td><td>beekeeper</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('beekeeper')">Listen</button></td></tr>
+              <tr><td>barista</td><td>barista</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('barista')">Listen</button></td></tr>
+              <tr><td>tecnico/a de avionica</td><td>avionics technician</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('avionics technician')">Listen</button></td></tr>
+              <tr><td>autor/a</td><td>author</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('author')">Listen</button></td></tr>
+              <tr><td>tecnico/a de laboratorio</td><td>laboratory technician</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('laboratory technician')">Listen</button></td></tr>
+              <tr><td>cientifico/a investigador/a</td><td>research scientist</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('research scientist')">Listen</button></td></tr>
+              <tr><td>entrenador/a de perros</td><td>dog trainer</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('dog trainer')">Listen</button></td></tr>
+              <tr><td>chef ejecutivo/a</td><td>executive chef</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('executive chef')">Listen</button></td></tr>
+              <tr><td>pastelero/a</td><td>pastry chef</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('pastry chef')">Listen</button></td></tr>
+              <tr><td>bombero/a</td><td>firefighter</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('firefighter')">Listen</button></td></tr>
+              <tr><td>policia</td><td>police officer</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('police officer')">Listen</button></td></tr>
+              <tr><td>gafas</td><td>glasses</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('glasses')">Listen</button></td></tr>
+              <tr><td>sombrero</td><td>hat</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('hat')">Listen</button></td></tr>
+              <tr><td>uniforme</td><td>uniform</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('uniform')">Listen</button></td></tr>
+              <tr><td>herramientas</td><td>tools</td><td><button type="button" class="audio-word-btn" onclick="speakVocabulary('tools')">Listen</button></td></tr>
+            </tbody>
+          </table>
+        </div>
       </article>
     </section>
 
@@ -73,26 +227,458 @@
         <div class="hero-actions"><a href="workshop-unit-3-celebrity-survey.html" class="btn btn-primary">Celebrity Survey Studio</a><a href="workshop-unit-3-family-photo.html" class="btn btn-primary">Family Photo Gallery Walk</a><a href="listening-unit-3-favorite-people.html" class="btn btn-primary">Listening Unit 3</a><a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a></div>
       </div>
     </section>
-
   </main>
-  <script>
-    const template = 'This is {person}. She is a {role}. She is {adjective}, and she is from {origin}. Is she famous? Yes, she is.';
-    const fields = ['person', 'role', 'adjective', 'origin'];
-    const defaults = {'person': 'Sofia', 'role': 'singer', 'adjective': 'friendly', 'origin': 'Colombia'};
-    function generateSentence() {
-      let output = template;
-      fields.forEach(function(id) {
-        const value = document.getElementById(id).value.trim() || defaults[id];
-        output = output.replaceAll("{" + id + "}", value);
-      });
-      document.getElementById("speech-output").textContent = '"' + output + '"';
-      document.getElementById("result-card").style.display = "block";
-    }
-  </script>
 
   <footer class="site-footer">
     <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
+
+  <script src="../../assets/js/roster-import.js"></script>
+  <script>
+    const characterList = [
+      { id: "librarian", name: "Librarian" },
+      { id: "editor", name: "Editor" },
+      { id: "teacher", name: "Teacher" },
+      { id: "artisan", name: "Artisan" },
+      { id: "florist", name: "Florist" },
+      { id: "tour-guide", name: "Tour Guide" },
+      { id: "musician", name: "Musician" },
+      { id: "veterinarian", name: "Veterinarian" },
+      { id: "watchmaker", name: "Watchmaker" },
+      { id: "jeweler", name: "Jeweler" },
+      { id: "beekeeper", name: "Beekeeper" },
+      { id: "barista", name: "Barista" },
+      { id: "avionics-technician", name: "Avionics Technician" },
+      { id: "author", name: "Author" },
+      { id: "laboratory-technician", name: "Laboratory Technician" },
+      { id: "research-scientist", name: "Research Scientist" },
+      { id: "dog-trainer", name: "Dog Trainer" },
+      { id: "executive-chef", name: "Executive Chef" },
+      { id: "pastry-chef", name: "Pastry Chef" },
+      { id: "firefighter", name: "Firefighter" },
+      { id: "police-officer", name: "Police Officer" }
+    ];
+
+    const uiText = {
+      en: {
+        extractExcel: "Extract Student List from Excel",
+        loadNames: "Load Names",
+        sampleNames: "Use Sample Names",
+        resetActivity: "Reset Activity",
+        spinStudent: "Spin Student",
+        spinCharacter: "Spin Character",
+        characterFound: "Character found",
+        cancelRound: "Cancel Current Round",
+        needStudents: "Load at least one student to start.",
+        readyStudent: "Ready. Spin the student roulette.",
+        studentSelected: "Student selected. The student must turn away from the TV. Now spin the character roulette.",
+        selectStudentFirst: "Select a student first.",
+        readyCharacter: "Ready. Spin when the student is not looking.",
+        characterSelected: "Secret character selected. The student can start asking questions.",
+        activeRound: "Finish or cancel the current round before spinning again.",
+        allDone: "All students or all characters have been used. Reset the activity to play again.",
+        noStudents: "No students left in the active list.",
+        noCharacters: "No characters left in the active list."
+      },
+      fr: {
+        extractExcel: "Extraire la liste des étudiants depuis Excel",
+        loadNames: "Charger les noms",
+        sampleNames: "Utiliser des exemples",
+        resetActivity: "Réinitialiser l’activité",
+        spinStudent: "Lancer la roulette étudiant",
+        spinCharacter: "Lancer la roulette personnage",
+        characterFound: "Personnage trouvé",
+        cancelRound: "Annuler le tour actuel",
+        needStudents: "Chargez au moins un étudiant pour commencer.",
+        readyStudent: "Prêt. Lancez la roulette des étudiants.",
+        studentSelected: "Étudiant sélectionné. Il ne doit pas regarder l’écran. Lancez maintenant la roulette du personnage.",
+        selectStudentFirst: "Sélectionnez d’abord un étudiant.",
+        readyCharacter: "Prêt. Lancez quand l’étudiant ne regarde pas.",
+        characterSelected: "Personnage secret sélectionné. L’étudiant peut commencer à poser des questions.",
+        activeRound: "Terminez ou annulez le tour actuel avant de relancer.",
+        allDone: "Tous les étudiants ou personnages ont été utilisés. Réinitialisez l’activité pour rejouer.",
+        noStudents: "Aucun étudiant dans la liste active.",
+        noCharacters: "Aucun personnage dans la liste active."
+      }
+    };
+
+    const currentLang = document.documentElement.lang && document.documentElement.lang.toLowerCase().startsWith("fr") ? "fr" : "en";
+    const t = uiText[currentLang];
+
+    const gameState = {
+      originalNames: [],
+      studentPool: [],
+      characterPool: characterList.slice(),
+      currentStudent: null,
+      currentCharacter: null,
+      history: [],
+      studentRotation: 0,
+      characterRotation: 0,
+      spinning: false
+    };
+
+    const wheelColors = ["#f6d365", "#fda085", "#a1c4fd", "#c2e9fb", "#d4fc79", "#96e6a1", "#fbc2eb", "#fddb92", "#b7f8db", "#ffecd2"];
+
+    const soundState = {
+      audioContext: null,
+      tickTimer: null,
+      tickSpeed: 85,
+      active: false
+    };
+
+    function getAudioContext() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+
+      if (!soundState.audioContext) {
+        soundState.audioContext = new AudioContextClass();
+      }
+
+      if (soundState.audioContext.state === "suspended") {
+        soundState.audioContext.resume().catch(function() {});
+      }
+
+      return soundState.audioContext;
+    }
+
+    function playTone(frequency, duration, volume, type) {
+      const audioContext = getAudioContext();
+      if (!audioContext) return;
+
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      const now = audioContext.currentTime;
+
+      oscillator.type = type || "sine";
+      oscillator.frequency.setValueAtTime(frequency, now);
+      gainNode.gain.setValueAtTime(0.0001, now);
+      gainNode.gain.exponentialRampToValueAtTime(volume || 0.08, now + 0.01);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      oscillator.start(now);
+      oscillator.stop(now + duration + 0.02);
+    }
+
+    function startRouletteSound() {
+      getAudioContext();
+      stopRouletteSound(false);
+      soundState.active = true;
+      soundState.tickSpeed = 75;
+
+      soundState.tickTimer = window.setInterval(function() {
+        if (!soundState.active) return;
+        playTone(520 + Math.random() * 160, 0.035, 0.045, "square");
+      }, soundState.tickSpeed);
+    }
+
+    function stopRouletteSound(playPick) {
+      soundState.active = false;
+
+      if (soundState.tickTimer) {
+        window.clearInterval(soundState.tickTimer);
+        soundState.tickTimer = null;
+      }
+
+      if (playPick) {
+        playSelectionSound();
+      }
+    }
+
+    function playSelectionSound() {
+      playTone(660, 0.08, 0.08, "sine");
+      window.setTimeout(function() { playTone(880, 0.12, 0.075, "sine"); }, 90);
+      window.setTimeout(function() { playTone(1046, 0.16, 0.07, "sine"); }, 185);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      applyLanguageLabels();
+      window.JaraLinguaRosterImport.setup({
+        fileInputId: "studentExcelInput",
+        textAreaId: "studentNamesInput",
+        statusId: "rosterImportStatus",
+        onNamesLoaded: function() {
+          loadStudentNames();
+        }
+      });
+      renderGame();
+    });
+
+    function applyLanguageLabels() {
+      document.querySelectorAll("[data-i18n]").forEach(function(element) {
+        const key = element.getAttribute("data-i18n");
+        if (t[key]) element.textContent = t[key];
+      });
+    }
+
+    function getUniqueNames(rawText) {
+      const names = rawText
+        .split(/\n|,|;/)
+        .map(function(name) { return name.trim(); })
+        .filter(function(name) { return name.length > 0; });
+
+      const seen = new Set();
+      const uniqueNames = [];
+
+      names.forEach(function(name) {
+        const key = name.toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueNames.push(name);
+        }
+      });
+
+      return uniqueNames;
+    }
+
+    function loadStudentNames() {
+      const rawText = document.getElementById("studentNamesInput").value;
+      const names = getUniqueNames(rawText);
+
+      if (names.length < 1) {
+        alert(currentLang === "fr" ? "Veuillez entrer au moins un nom." : "Please enter at least one student name.");
+        return;
+      }
+
+      gameState.originalNames = names.slice();
+      gameState.studentPool = names.slice();
+      gameState.characterPool = characterList.slice();
+      gameState.currentStudent = null;
+      gameState.currentCharacter = null;
+      gameState.history = [];
+      gameState.studentRotation = 0;
+      gameState.characterRotation = 0;
+      renderGame();
+    }
+
+    function useSampleNames() {
+      const sampleNames = ["Alex", "Sarah", "David", "Emma", "Liam", "Maria", "Sofia", "Daniel", "Camila", "Mateo"];
+      document.getElementById("studentNamesInput").value = sampleNames.join("\n");
+      loadStudentNames();
+    }
+
+    function openExcelPicker() {
+      document.getElementById("studentExcelInput").click();
+    }
+
+    function renderGame() {
+      renderWheel("studentWheel", gameState.studentPool, gameState.studentRotation, "STUDENT");
+      renderWheel("characterWheel", gameState.characterPool.map(function(c) { return c.name; }), gameState.characterRotation, "CHARACTER");
+      renderPools();
+      renderCurrentRound();
+      renderHistory();
+      updateControls();
+    }
+
+    function renderWheel(wheelId, items, rotation, centerText) {
+      const wheel = document.getElementById(wheelId);
+      wheel.innerHTML = '<div class="guesswho-wheel-center">' + centerText + '</div>';
+
+      const safeItems = items.length ? items : ["—"];
+      const slice = 360 / safeItems.length;
+      const gradient = safeItems.map(function(_, index) {
+        const start = index * slice;
+        const end = (index + 1) * slice;
+        return wheelColors[index % wheelColors.length] + " " + start + "deg " + end + "deg";
+      }).join(", ");
+
+      wheel.style.background = "conic-gradient(" + gradient + ")";
+      wheel.style.transform = "rotate(" + rotation + "deg)";
+
+      const labelLimit = Math.min(safeItems.length, 24);
+      safeItems.slice(0, labelLimit).forEach(function(item, index) {
+        const angle = index * slice + slice / 2;
+        const label = document.createElement("span");
+        label.className = "guesswho-wheel-label";
+        label.textContent = shortenLabel(item, 22);
+        label.style.transform = "rotate(" + angle + "deg) translateY(-116px) rotate(-" + angle + "deg)";
+        wheel.appendChild(label);
+      });
+    }
+
+    function shortenLabel(label, maxLength) {
+      return label.length > maxLength ? label.slice(0, maxLength - 1) + "…" : label;
+    }
+
+    function updateControls() {
+      const spinStudentBtn = document.getElementById("spinStudentBtn");
+      const spinCharacterBtn = document.getElementById("spinCharacterBtn");
+      const foundBtn = document.getElementById("foundBtn");
+      const cancelRoundBtn = document.getElementById("cancelRoundBtn");
+      const studentStatus = document.getElementById("studentStatus");
+      const characterStatus = document.getElementById("characterStatus");
+
+      const hasActiveRound = Boolean(gameState.currentStudent || gameState.currentCharacter);
+      const canStart = gameState.studentPool.length > 0 && gameState.characterPool.length > 0;
+
+      spinStudentBtn.disabled = gameState.spinning || !canStart || hasActiveRound;
+      spinCharacterBtn.disabled = gameState.spinning || !gameState.currentStudent || Boolean(gameState.currentCharacter);
+      foundBtn.disabled = !gameState.currentStudent || !gameState.currentCharacter;
+      cancelRoundBtn.disabled = !gameState.currentStudent && !gameState.currentCharacter;
+
+      if (!canStart && gameState.originalNames.length > 0) {
+        studentStatus.textContent = t.allDone;
+      } else if (gameState.studentPool.length < 1) {
+        studentStatus.textContent = t.needStudents;
+      } else if (hasActiveRound) {
+        studentStatus.textContent = t.activeRound;
+      } else {
+        studentStatus.textContent = t.readyStudent;
+      }
+
+      if (!gameState.currentStudent) {
+        characterStatus.textContent = t.selectStudentFirst;
+      } else if (!gameState.currentCharacter) {
+        characterStatus.textContent = t.readyCharacter;
+      } else {
+        characterStatus.textContent = t.characterSelected;
+      }
+    }
+
+    function renderPools() {
+      document.getElementById("studentsLeftCount").textContent = gameState.studentPool.length;
+      document.getElementById("studentPoolPill").textContent = gameState.studentPool.length;
+      document.getElementById("charactersLeftCount").textContent = gameState.characterPool.length;
+      document.getElementById("characterPoolPill").textContent = gameState.characterPool.length;
+
+      renderChipList("studentPoolList", gameState.studentPool, "guesswho-chip", t.noStudents);
+      renderChipList("characterPoolList", gameState.characterPool.map(function(character) { return character.name; }), "guesswho-chip character-chip", t.noCharacters);
+    }
+
+    function renderChipList(containerId, items, chipClass, emptyMessage) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+
+      if (items.length === 0) {
+        const message = document.createElement("p");
+        message.className = "guesswho-empty-message";
+        message.textContent = emptyMessage;
+        container.appendChild(message);
+        return;
+      }
+
+      items.forEach(function(item) {
+        const chip = document.createElement("span");
+        chip.className = chipClass;
+        chip.textContent = item;
+        container.appendChild(chip);
+      });
+    }
+
+    function renderCurrentRound() {
+      document.getElementById("currentStudentName").textContent = gameState.currentStudent || "—";
+      document.getElementById("currentCharacterName").textContent = gameState.currentCharacter ? gameState.currentCharacter.name : "—";
+    }
+
+    function renderHistory() {
+      const body = document.getElementById("guesswhoHistoryBody");
+      body.innerHTML = "";
+
+      gameState.history.forEach(function(round) {
+        const row = document.createElement("tr");
+        [round.round, round.student, round.character, round.finalQuestion].forEach(function(value) {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        body.appendChild(row);
+      });
+    }
+
+    function spinStudentRoulette() {
+      if (gameState.spinning) return;
+      if (gameState.studentPool.length < 1 || gameState.characterPool.length < 1 || gameState.currentStudent || gameState.currentCharacter) return;
+
+      gameState.spinning = true;
+      startRouletteSound();
+      updateControls();
+      gameState.studentRotation += 1440 + Math.floor(Math.random() * 720);
+      document.getElementById("studentWheel").style.transform = "rotate(" + gameState.studentRotation + "deg)";
+
+      setTimeout(function() {
+        const index = Math.floor(Math.random() * gameState.studentPool.length);
+        gameState.currentStudent = gameState.studentPool[index];
+        stopRouletteSound(true);
+        gameState.spinning = false;
+        renderGame();
+      }, 2650);
+    }
+
+    function spinCharacterRoulette() {
+      if (gameState.spinning) return;
+      if (!gameState.currentStudent || gameState.currentCharacter || gameState.characterPool.length < 1) return;
+
+      gameState.spinning = true;
+      startRouletteSound();
+      updateControls();
+      gameState.characterRotation += 1440 + Math.floor(Math.random() * 720);
+      document.getElementById("characterWheel").style.transform = "rotate(" + gameState.characterRotation + "deg)";
+
+      setTimeout(function() {
+        const index = Math.floor(Math.random() * gameState.characterPool.length);
+        gameState.currentCharacter = gameState.characterPool[index];
+        stopRouletteSound(true);
+        gameState.spinning = false;
+        renderGame();
+      }, 2650);
+    }
+
+    function confirmCharacterFound() {
+      if (!gameState.currentStudent || !gameState.currentCharacter) return;
+
+      const student = gameState.currentStudent;
+      const character = gameState.currentCharacter;
+
+      gameState.studentPool = gameState.studentPool.filter(function(name) { return name !== student; });
+      gameState.characterPool = gameState.characterPool.filter(function(item) { return item.id !== character.id; });
+
+      gameState.history.push({
+        round: gameState.history.length + 1,
+        student: student,
+        character: character.name,
+        finalQuestion: "Is the character the " + character.name + "?"
+      });
+
+      gameState.currentStudent = null;
+      gameState.currentCharacter = null;
+      renderGame();
+    }
+
+    function cancelCurrentRound() {
+      stopRouletteSound(false);
+      gameState.currentStudent = null;
+      gameState.currentCharacter = null;
+      renderGame();
+    }
+
+    function resetActivity() {
+      stopRouletteSound(false);
+      gameState.originalNames = [];
+      gameState.studentPool = [];
+      gameState.characterPool = characterList.slice();
+      gameState.currentStudent = null;
+      gameState.currentCharacter = null;
+      gameState.history = [];
+      gameState.studentRotation = 0;
+      gameState.characterRotation = 0;
+      gameState.spinning = false;
+      document.getElementById("studentNamesInput").value = "";
+      renderGame();
+    }
+
+    function speakVocabulary(word) {
+      if (!("speechSynthesis" in window)) {
+        alert("Pronunciation is not available in this browser.");
+        return;
+      }
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(word);
+      utterance.lang = "en-US";
+      utterance.rate = 0.86;
+      window.speechSynthesis.speak(utterance);
+    }
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
