@@ -75,7 +75,9 @@
       teacherPendingStudentAccess: "Solicitud de profesor pendiente. Mientras se aprueba, tienes acceso como estudiante.",
       teacherApproved: "Panel de profesor aprobado.",
       googleLoading: "Cargando boton de Google...",
-      googleUnavailable: "No se pudo cargar el boton de Google. Revisa que este dominio este autorizado en Google Cloud y recarga la pagina."
+      googleUnavailable: "No se pudo cargar el boton de Google. Revisa que este dominio este autorizado en Google Cloud y recarga la pagina.",
+      googleScriptUnavailable: "No se pudo cargar el script de Google. Prueba sin bloqueadores o en una ventana incognito.",
+      googleOriginRejected: "Google cargo, pero no permitio mostrar el boton. Autoriza este origen en Google Cloud: "
     },
     fr: {
       signIn: "Connexion",
@@ -131,7 +133,9 @@
       teacherPendingStudentAccess: "Demande de professeur en attente. En attendant, vous avez acc\u00e8s comme \u00e9tudiant.",
       teacherApproved: "Panneau professeur approuv\u00e9.",
       googleLoading: "Chargement du bouton Google...",
-      googleUnavailable: "Impossible de charger le bouton Google. Verifiez que ce domaine est autorise dans Google Cloud, puis rechargez la page."
+      googleUnavailable: "Impossible de charger le bouton Google. Verifiez que ce domaine est autorise dans Google Cloud, puis rechargez la page.",
+      googleScriptUnavailable: "Impossible de charger le script Google. Essayez sans bloqueurs ou dans une fenetre privee.",
+      googleOriginRejected: "Google est charge, mais n'a pas autorise le bouton. Autorisez cette origine dans Google Cloud : "
     },
     en: {
       signIn: "Sign in",
@@ -187,7 +191,9 @@
       teacherPendingStudentAccess: "Teacher request pending. While approved, you have student access.",
       teacherApproved: "Teacher panel approved.",
       googleLoading: "Loading Google button...",
-      googleUnavailable: "The Google button could not load. Check that this domain is authorized in Google Cloud, then reload the page."
+      googleUnavailable: "The Google button could not load. Check that this domain is authorized in Google Cloud, then reload the page.",
+      googleScriptUnavailable: "The Google script could not load. Try without blockers or in an incognito window.",
+      googleOriginRejected: "Google loaded, but did not allow the button. Authorize this origin in Google Cloud: "
     }
   };
 
@@ -1115,7 +1121,7 @@
         renderGoogleButton();
       });
       script.addEventListener("error", function () {
-        setGoogleStatus(copy.googleUnavailable);
+        setGoogleStatus(copy.googleScriptUnavailable);
       });
     }
 
@@ -1128,7 +1134,7 @@
 
       googleRenderRetries += 1;
       if (googleRenderRetries >= 20) {
-        setGoogleStatus(copy.googleUnavailable);
+        setGoogleStatus(copy.googleScriptUnavailable);
         return;
       }
 
@@ -1182,11 +1188,11 @@
       setTimeout(function () {
         if (target.children.length) return;
         buttonRendered = false;
-        setGoogleStatus(copy.googleUnavailable);
+        setGoogleStatus(copy.googleOriginRejected + window.location.origin);
       }, 1200);
     } catch (error) {
       buttonRendered = false;
-      setGoogleStatus(copy.googleUnavailable);
+      setGoogleStatus(copy.googleOriginRejected + window.location.origin);
     }
   }
 
