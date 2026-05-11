@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 <body>
-
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../index.html">Home</a><a href="../frances/index.html">French</a><a href="../frances/Niveau%207/index.html">French Level 7</a><a href="./index.html">English</a><a href="./basico/index.html">Basic English</a><a href="./intermediate/index.html">Intermediate English</a></nav></details></div>
   <header class="site-header">
     <nav class="navbar">
       <a href="../index.html" class="brand">
@@ -46,7 +46,7 @@
     </section>
     <section class="quick-access-panel compact" aria-label="Quick navigation">
       <div class="quick-access-header"><h2>English quick access</h2><span>Levels</span></div>
-      <div class="quick-link-grid"><a href="basico/index.html"><b>01</b><span>Basic English Course 1</span></a><a href="intermediate/index.html"><b>02</b><span>Intermediate English</span></a><a href="basico/course-overview.html"><b>03</b><span>Basic Course Overview</span></a><a href="basico/practice-lab.html"><b>04</b><span>Basic Practice Lab</span></a><a href="intermediate/course-overview.html"><b>05</b><span>Intermediate Overview</span></a><a href="intermediate/practice-lab.html"><b>06</b><span>Intermediate Practice Lab</span></a></div>
+      <details class="quick-access-dropdown"><summary>Show English quick access</summary><div class="quick-link-list"><a href="basico/index.html"><b>01</b><span>Basic English Course 1</span></a><a href="intermediate/index.html"><b>02</b><span>Intermediate English</span></a><a href="basico/course-overview.html"><b>03</b><span>Basic Course Overview</span></a><a href="basico/practice-lab.html"><b>04</b><span>Basic Practice Lab</span></a><a href="intermediate/course-overview.html"><b>05</b><span>Intermediate Overview</span></a><a href="intermediate/practice-lab.html"><b>06</b><span>Intermediate Practice Lab</span></a></div></details>
     </section>
 
 
@@ -136,6 +136,8 @@
   <footer class="site-footer">
     <p>JaraLingua. English and French for steady progress.</p>
   </footer>
-
+  <script src="../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../assets/js/google-auth.js"></script>
 </body>
 </html>

@@ -1,13 +1,13 @@
 window.jaralinguaIdioms = [
   {
-    expression: "Mettre la main à la p�te",
+    expression: "Mettre la main à la pâte",
     category: "travail",
     categoryLabel: "Travail et effort",
     icon: "bi-tools",
     literal: "Mettre sa main dans la préparation.",
-    meaning: "Participer concrètement à une t�che ou aider de manière active.",
+    meaning: "Participer concrètement à une tâche ou aider de manière active.",
     equivalent: "Ponerse manos a la obra / ayudar de forma práctica.",
-    example: "Pour préparer le débat, chacun doit mettre la main à la p�te.",
+    example: "Pour préparer le débat, chacun doit mettre la main à la pâte.",
     context: "Projet de groupe, préparation d’un exposé, organisation d’une activité."
   },
   {
@@ -62,7 +62,7 @@ window.jaralinguaIdioms = [
     literal: "Retirer sa petite épingle du jeu.",
     meaning: "Réussir à bien s’en sortir dans une situation compliquée.",
     equivalent: "Salir bien parado / desenvolverse bien.",
-    example: "Pendant le débat, elle a tiré son épingle du jeu gr�ce à des exemples précis.",
+    example: "Pendant le débat, elle a tiré son épingle du jeu grâce à des exemples précis.",
     context: "Débat, entretien, situation compétitive ou délicate."
   },
   {

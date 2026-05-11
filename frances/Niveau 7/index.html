@@ -555,8 +555,14 @@
       }
     }
   </style>
+<style id="jaralingua-global-navigation-css">
+body .hero h1,body .hero .hero-lead,body .hero .hero-text{color:#fff!important;text-shadow:0 12px 34px rgba(0,0,0,.22)}body .hero .section-text{color:rgba(255,255,255,.9)!important}
+body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.25rem 0 4rem;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(21,52,93,.94),rgba(31,78,140,.78),rgba(214,40,57,.54)),var(--hero-image,linear-gradient(135deg,#fff,#eef5ff,#fff0f2)) center/cover no-repeat!important}body .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 14% 18%,rgba(255,255,255,.18),transparent 27%),radial-gradient(circle at 88% 12%,rgba(244,201,93,.16),transparent 24%);pointer-events:none}body .hero>.container{position:relative;z-index:1}.hero-card{background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.25)!important;backdrop-filter:blur(14px)}body section{padding-top:4rem;padding-bottom:4rem}.quick-access-panel.compact{margin-top:-1.25rem!important}
+.global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200;font-family:Arial,Helvetica,sans-serif}.global-course-switcher details{position:relative}.global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:#15345d;color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}.global-course-switcher summary::-webkit-details-marker{display:none}.global-course-switcher summary:after{content:"v";font-size:.8rem}.global-course-switcher details[open] summary:after{transform:rotate(180deg)}.global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}.global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:#15345d;text-decoration:none;font-weight:900}.global-course-switcher a:hover{background:#eef5ff;color:#d62839}.quick-access-dropdown{border:1px solid rgba(31,78,140,.12);border-radius:18px;background:#f8fbff;overflow:hidden}.quick-access-dropdown summary{min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:.85rem;padding:0 1rem;cursor:pointer;color:#15345d;font-weight:900;list-style:none}.quick-access-dropdown summary::-webkit-details-marker{display:none}.quick-access-dropdown summary:after{content:"v";width:30px;height:30px;display:grid;place-items:center;border-radius:999px;background:#15345d;color:#fff}.quick-access-dropdown[open] summary:after{transform:rotate(180deg)}.quick-link-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.65rem;padding:0 .9rem .9rem}.quick-link-list a{min-height:46px;display:flex;align-items:center;gap:.65rem;border-radius:14px;background:#fff;border:1px solid rgba(31,78,140,.1);padding:.65rem .75rem;text-decoration:none;color:#15345d;font-weight:900}.quick-link-list b{width:30px;height:30px;display:grid;place-items:center;flex:0 0 30px;border-radius:999px;background:#15345d;color:#fff;font-size:.78rem}.quick-link-list span{min-width:0;line-height:1.25;overflow-wrap:anywhere}@media(max-width:575px){.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}.quick-access-panel{width:calc(100% - 1.5rem)!important;margin-top:-.75rem!important;padding:1rem!important}.quick-access-header{gap:.5rem!important}.hero{padding-top:5.75rem!important;padding-bottom:3rem!important;min-height:auto!important}section{padding-top:3.25rem!important;padding-bottom:3.25rem!important}}
+</style>
 </head>
 <body>
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Français</a><a href="./index.html">Français Niveau 7</a><a href="../../ingles/index.html">Anglais</a><a href="../../ingles/basico/index.html">Anglais débutant</a><a href="../../ingles/intermediate/index.html">Anglais intermédiaire</a></nav></details></div>
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#accueil"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
@@ -568,13 +574,12 @@
           <li class="nav-item"><a class="nav-link" href="#accueil">Accueil</a></li>
           <li class="nav-item"><a class="nav-link" href="#portail">Portail</a></li>
           <li class="nav-item"><a class="nav-link" href="#objectifs-rapides">Objectifs</a></li>
-          <li class="nav-item"><a class="nav-link" href="#structure">Structure</a></li>
-        </ul>
+          </ul>
       </div>
     </div>
   </nav>
 
-  <header class="hero" id="accueil">
+  <header class="hero" id="accueil" style="--hero-image: url('img/imagen-principal-index.jpg')">
     <div class="container position-relative" style="z-index: 1;">
       <div class="row align-items-center g-5">
         <div class="col-lg-7 fade-in">
@@ -622,7 +627,7 @@
   </header>
     <section class="quick-access-panel compact" aria-label="Quick navigation">
       <div class="quick-access-header"><h2>Portail rapide</h2><span>Niveau 7</span></div>
-      <div class="quick-link-grid"><a href="themes-du-cours.html"><b>01</b><span>Thèmes du cours</span></a><a href="ateliers-activites.html"><b>02</b><span>Ateliers et activités</span></a><a href="expressions-idiomatiques.html"><b>03</b><span>Expressions idiomatiques</span></a><a href="coin-phonetique.html"><b>04</b><span>Coin phonétique</span></a><a href="ressources.html"><b>05</b><span>Ressources</span></a><a href="ateliers/ecoute-cultures-b1.html"><b>06</b><span>Écoute cultures B1</span></a><a href="ateliers/comprehension-orale-b1-niveau7.html"><b>07</b><span>Compréhensions orales B1</span></a><a href="grammaire/subjonctif-present.html"><b>08</b><span>Subjonctif présent</span></a><a href="themes/passe-simple.html"><b>09</b><span>Passé simple expliqué</span></a></div>
+      <details class="quick-access-dropdown"><summary>Afficher le portail rapide</summary><div class="quick-link-list"><a href="themes-du-cours.html"><b>01</b><span>Thèmes du cours</span></a><a href="ateliers-activites.html"><b>02</b><span>Ateliers et activités</span></a><a href="expressions-idiomatiques.html"><b>03</b><span>Expressions idiomatiques</span></a><a href="coin-phonetique.html"><b>04</b><span>Coin phonétique</span></a><a href="ressources.html"><b>05</b><span>Ressources</span></a><a href="ateliers/ecoute-cultures-b1.html"><b>06</b><span>Écoute cultures B1</span></a><a href="ateliers/comprehension-orale-b1-niveau7.html"><b>07</b><span>Compréhensions orales B1</span></a><a href="grammaire/subjonctif-present.html"><b>08</b><span>Subjonctif présent</span></a><a href="themes/passe-simple.html"><b>09</b><span>Passé simple expliqué</span></a></div></details>
     </section>
 
 
@@ -633,7 +638,7 @@
           <p class="section-kicker">Index du cours</p>
           <h2 class="section-title">Choisissez votre espace</h2>
           <p class="section-text mx-auto">
-            Chaque espace du cours aura sa propre page. Pour le moment, l’index présente la structure principale et les boutons sont déjà connectés aux pages qui seront développées ensuite.
+            Chaque espace du cours est déjà organisé pour entrer directement aux thèmes, ateliers, activités, ressources et outils de pratique du Niveau 7.
           </p>
         </div>
 
@@ -738,7 +743,7 @@
               <p class="section-kicker">Objectifs</p>
               <h2 class="section-title">Objectifs du cours</h2>
               <p class="section-text mb-0">
-                Les objectifs ne sont pas une page indépendante pour l’instant. Ils restent accessibles depuis le bouton d’accueil et depuis cette zone de rappel.
+                Ces objectifs résument le travail du niveau et restent disponibles ici pour consulter rapidement le cap du cours.
               </p>
             </div>
             <div class="col-lg-4 text-lg-end">
@@ -762,28 +767,7 @@
         </div>
       </div>
     </section>
-
-    <section id="structure">
-      <div class="container">
-        <div class="quick-panel fade-in">
-          <div class="row align-items-center g-4 position-relative" style="z-index: 2;">
-            <div class="col-lg-8">
-              <p class="text-uppercase fw-bold opacity-75 mb-2">Navigation</p>
-              <h2 class="fw-bold mb-2">Structure prête pour développer le cours étape par étape</h2>
-              <p class="mb-0 opacity-75 fs-5">
-                Les pages sont connectées depuis l’index. Il suffira de créer chaque fichier HTML avec le même nom que le lien correspondant.
-              </p>
-            </div>
-            <div class="col-lg-4 text-lg-end">
-              <a href="#portail" class="btn btn-light fw-bold rounded-pill px-4 py-3">
-                Revenir au portail
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+</main>
 
   <footer class="footer">
     <div class="container">
@@ -872,5 +856,8 @@
       });
     });
   </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
 </body>
 </html>

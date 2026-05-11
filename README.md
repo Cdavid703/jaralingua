@@ -2,15 +2,15 @@
 
 JaraLingua es un proyecto web educativo para organizar rutas de aprendizaje de idiomas de forma clara, visual y progresiva.
 
-El sitio reune contenidos de ingles y frances, con paginas por nivel, secciones de practica, recursos visuales y actividades pensadas para acompanar el proceso de aprendizaje paso a paso.
+El sitio reúne contenidos de inglés y francés, con páginas por nivel, secciones de práctica, recursos visuales y actividades pensadas para acompañar el proceso de aprendizaje paso a paso.
 
 ## Contenido principal
 
-- Pagina inicial de JaraLingua.
-- Ruta de ingles con niveles basico e intermedio.
-- Material de frances para Niveau 7.
-- Actividades interactivas y paginas de practica.
-- Recursos graficos e imagenes de apoyo para cada modulo.
+- Página inicial de JaraLingua.
+- Ruta de inglés con niveles básico e intermedio.
+- Material de francés para Niveau 7.
+- Actividades interactivas y páginas de práctica.
+- Recursos gráficos e imágenes de apoyo para cada módulo.
 
 ## Estructura del proyecto
 
@@ -19,6 +19,7 @@ Jaralingua/
 ├── index.html
 ├── assets/
 │   ├── css/
+│   ├── js/
 │   └── img/
 ├── ingles/
 │   ├── basico/
@@ -27,17 +28,13 @@ Jaralingua/
     └── Niveau 7/
 ```
 
-## Como abrir el sitio
+## Cómo abrir el sitio
 
-Este proyecto esta construido con HTML, CSS y archivos estaticos, por lo que no necesita instalacion de dependencias.
+Este proyecto está construido con HTML, CSS y archivos estáticos, por lo que no necesita instalación de dependencias.
 
 Para verlo localmente:
 
 1. Descarga o clona este repositorio.
 2. Abre el archivo `index.html` en tu navegador.
 
-Tambien puede publicarse facilmente en GitHub Pages, Netlify, Vercel o en un servidor propio.
-
-## Estado del proyecto
-
-El proyecto esta en desarrollo y seguira creciendo con mas niveles, actividades y recursos para los estudiantes.
+También puede publicarse fácilmente en GitHub Pages, Netlify, Vercel o en un servidor propio.

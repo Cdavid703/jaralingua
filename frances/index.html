@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="../assets/css/style.css" />
 </head>
 <body>
-
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../index.html">Accueil</a><a href="./index.html">Français</a><a href="./Niveau%207/index.html">Français Niveau 7</a><a href="../ingles/index.html">Anglais</a><a href="../ingles/basico/index.html">Anglais débutant</a><a href="../ingles/intermediate/index.html">Anglais intermédiaire</a></nav></details></div>
   <header class="site-header">
     <nav class="navbar">
       <a href="../index.html" class="brand">
@@ -31,12 +31,11 @@
         <p class="eyebrow">Parcours de français</p>
         <h1>Progressez en français avec un parcours organisé par niveaux</h1>
         <p class="hero-text">
-          Cette section réunira les niveaux de français de JaraLingua. Pour le moment,
-          le Niveau 7 est disponible comme espace principal de travail.
+          Cette section donne accès au parcours de français disponible dans JaraLingua, avec le Niveau 7 comme espace principal de travail.
         </p>
         <div class="hero-actions">
           <a href="Niveau%207/index.html" class="btn btn-primary">Entrer au Niveau 7</a>
-          <a href="#niveaux" class="btn btn-secondary">Voir le parcours</a>
+          <a href="../ingles/index.html" class="btn btn-secondary">Voir anglais</a>
         </div>
       </div>
 
@@ -45,64 +44,26 @@
       </div>
     </section>
     <section class="quick-access-panel compact" aria-label="Quick navigation">
-      <div class="quick-access-header"><h2>Acces rapide</h2><span>Niveaux</span></div>
-      <div class="quick-link-grid"><a href="#niveaux"><b>01</b><span>Niveau 1</span></a><a href="#niveaux"><b>02</b><span>Niveau 2</span></a><a href="#niveaux"><b>03</b><span>Niveau 3</span></a><a href="#niveaux"><b>04</b><span>Niveau 4</span></a><a href="#niveaux"><b>05</b><span>Niveau 5</span></a><a href="#niveaux"><b>06</b><span>Niveau 6</span></a><a href="Niveau%207/index.html"><b>07</b><span>Niveau 7</span></a></div>
+      <div class="quick-access-header"><h2>Accès rapide</h2><span>Parcours</span></div>
+      <details class="quick-access-dropdown"><summary>Afficher le parcours</summary><div class="quick-link-list"><a href="Niveau%207/index.html"><b>01</b><span>Français Niveau 7</span></a><a href="../ingles/index.html"><b>02</b><span>Anglais</span></a><a href="../index.html"><b>03</b><span>Accueil JaraLingua</span></a></div></details>
     </section>
 
 
     <section class="french-levels-section" id="niveaux">
       <div class="section-heading">
         <p class="eyebrow">Niveaux</p>
-        <h2>Choisissez votre niveau de français</h2>
+        <h2>Entrez dans le parcours de français</h2>
         <p>
-          Les niveaux 1 à 6 sont réservés pour une prochaine étape. Le Niveau 7
-          est déjà connecté à ses thèmes, ateliers et activités.
+          Le Niveau 7 rassemble les thèmes, ateliers, activités, expressions, ressources et outils de pratique du parcours actuel.
         </p>
       </div>
 
       <div class="french-level-grid">
-        <article class="french-level-card locked-level">
-          <span>01</span>
-          <h3>Niveau 1</h3>
-          <p>Base initiale du parcours. Ce niveau sera activé quand le contenu sera prêt.</p>
-        </article>
-
-        <article class="french-level-card locked-level">
-          <span>02</span>
-          <h3>Niveau 2</h3>
-          <p>Suite du niveau initial. Espace réservé pour une prochaine étape.</p>
-        </article>
-
-        <article class="french-level-card locked-level">
-          <span>03</span>
-          <h3>Niveau 3</h3>
-          <p>Espace réservé pour de nouvelles unités et pratiques de français.</p>
-        </article>
-
-        <article class="french-level-card locked-level">
-          <span>04</span>
-          <h3>Niveau 4</h3>
-          <p>Niveau réservé aux contenus intermédiaires du parcours.</p>
-        </article>
-
-        <article class="french-level-card locked-level">
-          <span>05</span>
-          <h3>Niveau 5</h3>
-          <p>Module futur pour renforcer les compétences communicatives et grammaticales.</p>
-        </article>
-
-        <article class="french-level-card locked-level">
-          <span>06</span>
-          <h3>Niveau 6</h3>
-          <p>Étape préalable au travail avancé du Niveau 7.</p>
-        </article>
-
         <article class="french-level-card active-level">
           <span>07</span>
           <h3>Niveau 7</h3>
           <p>
-            Disponible maintenant : thèmes du cours, ateliers, activités,
-            expressions idiomatiques et ressources pour continuer à progresser.
+            Disponible maintenant : thèmes du cours, ateliers, activités, expressions idiomatiques, phonétique, écoutes B1 et ressources pour continuer à progresser.
           </p>
           <a href="Niveau%207/index.html" class="card-link">Entrer au Niveau 7</a>
         </article>
@@ -113,6 +74,8 @@
   <footer class="site-footer">
     <p>JaraLingua. Français et anglais pour avancer pas à pas.</p>
   </footer>
-
+  <script src="../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../assets/js/google-auth.js"></script>
 </body>
 </html>
