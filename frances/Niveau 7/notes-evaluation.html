@@ -1,45 +1,65 @@
 <!doctype html>
-<html lang="fr">
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Notes et évaluation | Français Niveau 7</title>
+  <title>Notas del estudiante | Francés Nivel 7</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
   <style>
+    :root {
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --green: #2f9e77;
+      --yellow: #f4c95d;
+      --white: #ffffff;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+    }
+
+    * {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       font-family: "Nunito", sans-serif;
-      color: #243044;
-      background: #f4f7fb;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
     }
 
-    h1, h2, h3, .navbar-brand {
+    h1, h2, h3, h4, .navbar-brand {
       font-family: "Montserrat", sans-serif;
     }
 
     .navbar {
-      background: rgba(255,255,255,0.94);
+      background: rgba(255, 255, 255, 0.94);
       backdrop-filter: blur(16px);
       box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
     }
 
     .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
       font-weight: 800;
-      color: #15345d;
+      color: var(--blue-dark);
     }
 
     .brand-logo {
       height: 42px;
       width: auto;
-      margin-right: 0.65rem;
     }
 
     .nav-link {
-      color: #243044;
+      color: var(--text);
       font-weight: 800;
       border-radius: 999px;
       padding: 0.55rem 0.9rem !important;
@@ -47,103 +67,492 @@
 
     .nav-link:hover,
     .nav-link.active {
-      color: #1f4e8c;
+      color: var(--blue);
       background: rgba(31, 78, 140, 0.08);
     }
 
     .hero {
-      min-height: 72vh;
+      min-height: min(680px, 82vh);
       display: flex;
       align-items: center;
-      padding: 8rem 0 4rem;
+      padding: 6.25rem 0 4rem;
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
       background:
-        linear-gradient(90deg, rgba(21, 52, 93, 0.88), rgba(31, 78, 140, 0.58)),
+        linear-gradient(135deg, rgba(21, 52, 93, 0.94), rgba(31, 78, 140, 0.78), rgba(214, 40, 57, 0.54)),
         url("img/notes-evaluation.jpg") center / cover no-repeat;
-      color: white;
     }
 
-    .hero h1 {
-      font-weight: 900;
-      font-size: clamp(2.5rem, 5vw, 5rem);
-      line-height: 1;
-      letter-spacing: 0;
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(255, 255, 255, 0.18), transparent 27%),
+        radial-gradient(circle at 88% 12%, rgba(244, 201, 93, 0.16), transparent 24%);
+      pointer-events: none;
     }
 
-    .hero p {
-      max-width: 760px;
-      font-size: 1.18rem;
-      line-height: 1.75;
-      opacity: 0.88;
+    .hero .container {
+      position: relative;
+      z-index: 1;
     }
 
     .badge-course {
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      padding: 0.65rem 1rem;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
       border-radius: 999px;
-      background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: var(--white);
       font-weight: 900;
+      box-shadow: 0 14px 30px rgba(20, 40, 80, 0.14);
+      backdrop-filter: blur(12px);
     }
 
-    .btn-main {
-      border: 0;
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 800;
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-size: clamp(2.6rem, 6vw, 5.4rem);
+      text-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-text {
+      max-width: 820px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.12rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-main,
+    .btn-soft {
+      min-height: 46px;
       border-radius: 999px;
-      background: #ffffff;
-      color: #15345d;
       font-weight: 900;
-      padding: 0.86rem 1.2rem;
+      padding: 0.78rem 1.15rem;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 0.45rem;
+      border: 0;
+    }
+
+    .btn-main {
+      background: var(--white);
+      color: var(--blue-dark);
+    }
+
+    .btn-soft {
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(12px);
+    }
+
+    .global-course-switcher {
+      position: fixed;
+      right: 1rem;
+      top: 5.25rem;
+      z-index: 1200;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .global-course-switcher details {
+      position: relative;
+    }
+
+    .global-course-switcher summary {
+      list-style: none;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 1rem;
+      border-radius: 999px;
+      background: var(--blue-dark);
+      color: var(--white);
+      font-weight: 900;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.18);
+      cursor: pointer;
+    }
+
+    .global-course-switcher summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .global-course-switcher summary::after {
+      content: "v";
+      font-size: 0.8rem;
+    }
+
+    .global-course-switcher details[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .global-course-switcher nav {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 0.5rem);
+      width: min(250px, calc(100vw - 2rem));
+      display: grid;
+      gap: 0.35rem;
+      padding: 0.65rem;
+      border-radius: 18px;
+      background: var(--white);
+      border: 1px solid rgba(21, 52, 93, 0.12);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+    }
+
+    .global-course-switcher a {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 0.85rem;
+      border-radius: 12px;
+      color: var(--blue-dark);
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .global-course-switcher a:hover {
+      background: #eef5ff;
+      color: var(--red);
     }
 
     section {
-      padding: 4.5rem 0;
+      padding: 4rem 0;
     }
 
-    .info-card {
-      height: 100%;
-      border: 0;
-      border-radius: 24px;
-      box-shadow: 0 18px 40px rgba(20, 40, 80, 0.11);
+    .grades-shell {
+      width: min(1180px, calc(100% - 2rem));
+      margin: -2.2rem auto 0;
+      position: relative;
+      z-index: 2;
     }
 
-    .info-card .icon {
-      width: 54px;
-      height: 54px;
-      border-radius: 18px;
+    .grades-card,
+    .grades-panel,
+    .locked-card,
+    .reminder-card {
+      border-radius: 28px;
+      background: var(--white);
+      border: 1px solid rgba(31, 78, 140, 0.1);
+      box-shadow: var(--shadow);
+    }
+
+    .grades-card {
+      padding: clamp(1.1rem, 2.6vw, 2rem);
+    }
+
+    .grades-panel {
+      padding: 1.2rem;
+    }
+
+    .section-kicker {
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.8rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(1.7rem, 3vw, 2.65rem);
+      font-weight: 800;
+      letter-spacing: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.68;
+      margin-bottom: 0;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.1rem;
+    }
+
+    .metric-card {
+      min-height: 112px;
+      border-radius: 20px;
+      padding: 1rem;
+      background: #f8fbff;
+      border: 1px solid rgba(31, 78, 140, 0.1);
+      display: grid;
+      align-content: center;
+      gap: 0.25rem;
+    }
+
+    .metric-card span {
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .metric-card strong {
+      color: var(--blue-dark);
+      font-size: clamp(1.35rem, 3vw, 2.25rem);
+      line-height: 1;
+    }
+
+    .privacy-note,
+    .reminder-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 1rem;
+      border-radius: 22px;
+      background: #eef5ff;
+      color: var(--blue-dark);
+      font-weight: 800;
+    }
+
+    .reminder-card {
+      margin-bottom: 1rem;
+      background: #fff8e6;
+      border: 1px solid rgba(244, 201, 93, 0.42);
+      color: #6d4b00;
+    }
+
+    .reminder-card.is-urgent {
+      background: #fff0f3;
+      border-color: rgba(214, 40, 57, 0.22);
+      color: #7b1023;
+    }
+
+    .privacy-note i,
+    .reminder-card i {
+      font-size: 1.35rem;
+      flex: 0 0 auto;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 22px;
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      background: var(--white);
+    }
+
+    .grades-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    .grades-table th,
+    .grades-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid rgba(31, 78, 140, 0.09);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .grades-table th {
+      color: var(--blue-dark);
+      background: #eef5ff;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .grades-table td {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .status-pill {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(31, 78, 140, 0.1);
-      color: #1f4e8c;
-      font-size: 1.6rem;
+      min-height: 30px;
+      padding: 0 0.7rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      font-size: 0.78rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-pill.done {
+      background: rgba(47, 158, 119, 0.12);
+      color: var(--green);
+    }
+
+    .status-pill.pending {
+      background: rgba(244, 201, 93, 0.18);
+      color: #7a5500;
+    }
+
+    .status-pill.late {
+      background: rgba(214, 40, 57, 0.1);
+      color: var(--red);
+    }
+
+    .obligation-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+
+    .obligation-card {
+      min-height: 172px;
+      display: grid;
+      align-content: space-between;
+      gap: 0.9rem;
+      padding: 1rem;
+      border-radius: 22px;
+      background: #f8fbff;
+      border: 1px solid rgba(31, 78, 140, 0.1);
+    }
+
+    .obligation-card h3 {
+      color: var(--blue-dark);
+      font-size: 1.05rem;
+      margin: 0 0 0.35rem;
+      font-weight: 900;
+    }
+
+    .obligation-card p {
+      color: var(--muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .obligation-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .locked-card {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      text-align: center;
+    }
+
+    .locked-card i {
+      width: 64px;
+      height: 64px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 24px;
+      background: #eef5ff;
+      color: var(--blue);
+      font-size: 2rem;
       margin-bottom: 1rem;
     }
 
     .footer {
-      background: #15345d;
-      color: white;
-      padding: 2rem 0;
+      background: var(--blue-dark);
+      color: var(--white);
+      padding: 2.4rem 0;
+    }
+
+    .footer a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    .floating-reminder {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 2000;
+      width: min(420px, calc(100vw - 2rem));
+      padding: 1rem;
+      border-radius: 22px;
+      background: var(--blue-dark);
+      color: var(--white);
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.24);
+    }
+
+    .floating-reminder button {
+      margin-top: 0.8rem;
+      border: 0;
+      border-radius: 999px;
+      padding: 0.45rem 0.8rem;
+      background: var(--white);
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    @media (max-width: 768px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .global-course-switcher {
+        top: auto;
+        right: 0.75rem;
+        bottom: 0.75rem;
+      }
+    }
+
+    @media (max-width: 575px) {
+      .hero {
+        padding-top: 5.75rem;
+        padding-bottom: 3rem;
+        min-height: auto;
+      }
+
+      .hero-actions .btn-main,
+      .hero-actions .btn-soft {
+        width: 100%;
+      }
+
+      section {
+        padding-top: 3.25rem;
+        padding-bottom: 3.25rem;
+      }
     }
   </style>
-<style id="jaralingua-global-navigation-css">
-body .hero h1,body .hero .hero-lead,body .hero .hero-text{color:#fff!important;text-shadow:0 12px 34px rgba(0,0,0,.22)}body .hero .section-text{color:rgba(255,255,255,.9)!important}
-body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.25rem 0 4rem;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(21,52,93,.94),rgba(31,78,140,.78),rgba(214,40,57,.54)),var(--hero-image,linear-gradient(135deg,#fff,#eef5ff,#fff0f2)) center/cover no-repeat!important}body .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 14% 18%,rgba(255,255,255,.18),transparent 27%),radial-gradient(circle at 88% 12%,rgba(244,201,93,.16),transparent 24%);pointer-events:none}body .hero>.container{position:relative;z-index:1}.hero-card{background:rgba(255,255,255,.16)!important;border-color:rgba(255,255,255,.25)!important;backdrop-filter:blur(14px)}body section{padding-top:4rem;padding-bottom:4rem}.quick-access-panel.compact{margin-top:-1.25rem!important}
-.global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200;font-family:Arial,Helvetica,sans-serif}.global-course-switcher details{position:relative}.global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:#15345d;color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}.global-course-switcher summary::-webkit-details-marker{display:none}.global-course-switcher summary:after{content:"v";font-size:.8rem}.global-course-switcher details[open] summary:after{transform:rotate(180deg)}.global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}.global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:#15345d;text-decoration:none;font-weight:900}.global-course-switcher a:hover{background:#eef5ff;color:#d62839}.quick-access-dropdown{border:1px solid rgba(31,78,140,.12);border-radius:18px;background:#f8fbff;overflow:hidden}.quick-access-dropdown summary{min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:.85rem;padding:0 1rem;cursor:pointer;color:#15345d;font-weight:900;list-style:none}.quick-access-dropdown summary::-webkit-details-marker{display:none}.quick-access-dropdown summary:after{content:"v";width:30px;height:30px;display:grid;place-items:center;border-radius:999px;background:#15345d;color:#fff}.quick-access-dropdown[open] summary:after{transform:rotate(180deg)}.quick-link-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.65rem;padding:0 .9rem .9rem}.quick-link-list a{min-height:46px;display:flex;align-items:center;gap:.65rem;border-radius:14px;background:#fff;border:1px solid rgba(31,78,140,.1);padding:.65rem .75rem;text-decoration:none;color:#15345d;font-weight:900}.quick-link-list b{width:30px;height:30px;display:grid;place-items:center;flex:0 0 30px;border-radius:999px;background:#15345d;color:#fff;font-size:.78rem}.quick-link-list span{min-width:0;line-height:1.25;overflow-wrap:anywhere}@media(max-width:575px){.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}.quick-access-panel{width:calc(100% - 1.5rem)!important;margin-top:-.75rem!important;padding:1rem!important}.quick-access-header{gap:.5rem!important}.hero{padding-top:5.75rem!important;padding-bottom:3rem!important;min-height:auto!important}section{padding-top:3.25rem!important;padding-bottom:3.25rem!important}}
-</style>
 </head>
 <body>
-  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Français</a><a href="./index.html">Français Niveau 7</a><a href="../../ingles/index.html">Anglais</a><a href="../../ingles/basico/index.html">Anglais débutant</a><a href="../../ingles/intermediate/index.html">Anglais intermédiaire</a></nav></details></div>
+  <div class="global-course-switcher" aria-label="Navegación global">
+    <details>
+      <summary><span>Navegación</span></summary>
+      <nav>
+        <a href="../../index.html">Inicio</a>
+        <a href="../index.html">Francés</a>
+        <a href="./index.html">Francés Nivel 7</a>
+        <a href="../../ingles/index.html">Inglés</a>
+        <a href="../../ingles/basico/index.html">Inglés básico</a>
+        <a href="../../ingles/intermediate/index.html">Inglés intermedio</a>
+      </nav>
+    </details>
+  </div>
+
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand d-flex align-items-center" href="index.html">
-        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua" class="brand-logo"> Français Niveau 7
+      <a class="navbar-brand" href="index.html">
+        <img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua">
+        <span>Francés · Nivel 7</span>
       </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Afficher le menu">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Mostrar menú">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
@@ -151,7 +560,7 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
           <li class="nav-item"><a class="nav-link" href="index.html">Portail</a></li>
           <li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li>
           <li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li>
-          <li class="nav-item"><a class="nav-link active" href="notes-evaluation.html">Notes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="notes-evaluation.html">Notas</a></li>
         </ul>
       </div>
     </div>
@@ -159,47 +568,34 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
 
   <header class="hero">
     <div class="container">
-      <span class="badge-course"><i class="bi bi-clipboard-data-fill"></i> Suivi du cours</span>
-      <h1 class="mt-4 mb-3">Notes et évaluation</h1>
-      <p>Un espace clair pour consulter les critères d'évaluation, suivre les progrès et préparer les productions orales et écrites du niveau.</p>
-      <a href="index.html" class="btn-main mt-3"><i class="bi bi-arrow-left-circle"></i>Retour au portail</a>
+      <span class="badge-course"><i class="bi bi-clipboard-data-fill"></i> Seguimiento académico</span>
+      <h1>Notas del estudiante</h1>
+      <p class="hero-text">
+        Consulta protegida por cuenta de Google para resultados, porcentajes, estados y obligaciones próximas del curso. Los datos personales completos solo aparecen para administrador o profesor aprobado.
+      </p>
+      <div class="hero-actions">
+        <a href="#notas" class="btn-main"><i class="bi bi-bar-chart-line-fill"></i> Ver notas</a>
+        <a href="index.html" class="btn-soft"><i class="bi bi-arrow-left-circle"></i> Volver al portal</a>
+      </div>
     </div>
   </header>
 
-  <main>
-    <section>
-      <div class="container">
-        <div class="row g-4">
-          <div class="col-md-4">
-            <article class="card info-card p-4">
-              <div class="icon"><i class="bi bi-check2-square"></i></div>
-              <h2 class="h4 fw-bold">Compréhension</h2>
-              <p class="mb-0">Écoute, lecture, prise d'informations principales et réponses justifiées avec des exemples du document.</p>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="card info-card p-4">
-              <div class="icon"><i class="bi bi-chat-square-text"></i></div>
-              <h2 class="h4 fw-bold">Production</h2>
-              <p class="mb-0">Participation orale, débats guidés, organisation des idées et utilisation de connecteurs adaptés au niveau B1.</p>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="card info-card p-4">
-              <div class="icon"><i class="bi bi-graph-up-arrow"></i></div>
-              <h2 class="h4 fw-bold">Progression</h2>
-              <p class="mb-0">Suivi des ateliers, corrections, autoévaluation et objectifs personnels pour renforcer les points à améliorer.</p>
-            </article>
-          </div>
+  <main id="notas">
+    <div class="grades-shell">
+      <div id="french7GradesApp" class="grades-card" aria-live="polite">
+        <div class="locked-card">
+          <i class="bi bi-hourglass-split"></i>
+          <h2 class="section-title">Cargando panel de notas</h2>
+          <p class="section-text">Estamos verificando la sesión de Google antes de mostrar la información.</p>
         </div>
       </div>
-    </section>
+    </div>
   </main>
 
-  <footer class="footer">
+  <footer class="footer mt-5">
     <div class="container d-flex flex-wrap justify-content-between gap-3">
       <span>© 2026 JaraLingua</span>
-      <a class="text-white" href="../index.html">Retour au français</a>
+      <a href="../index.html">Volver a francés</a>
     </div>
   </footer>
 
@@ -207,5 +603,6 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
+  <script src="../../assets/js/french7-grades.js"></script>
 </body>
 </html>
