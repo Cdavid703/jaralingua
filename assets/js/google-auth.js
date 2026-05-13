@@ -117,7 +117,7 @@
       clearAnswers: "Effacer les r\u00e9ponses",
       answersCleared: "R\u00e9ponses enregistr\u00e9es effac\u00e9es.",
       adminPanel: "Panneau administrateur",
-      french7Grades: "Notes Francais 7",
+      french7Grades: "Notes du cours",
       pendingRoleRequests: "Demandes en attente",
       noPendingRequests: "Aucune demande en attente.",
       approveAsStudent: "Accepter \u00e9tudiant",

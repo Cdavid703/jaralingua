@@ -1,6 +1,7 @@
 (function () {
   const USER_KEY = "jaralingua_google_user";
   const ROLE_REQUESTS_KEY = "jaralingua_role_requests";
+  const STUDENT_LINKS_KEY = "jaralingua_french7_student_links";
   const ADMIN_EMAILS = ["cdavid.jaramillo@gmail.com"];
 
   const students = [
@@ -56,19 +57,19 @@
       id: "finalExam",
       title: "Examen final",
       weight: 20,
-      type: "Parcial",
+      type: "Examen",
       date: "2026-06-05",
-      displayDate: "Viernes 5 de junio",
-      description: "Evaluacion final con los temas principales del curso."
+      displayDate: "Vendredi 5 juin",
+      description: "Évaluation finale sur les thèmes principaux du cours."
     },
     {
       id: "shortStoryProject",
-      title: "Cuento corto con imagenes",
+      title: "Conte court avec images",
       weight: 15,
-      type: "Proyecto",
+      type: "Projet",
       date: "2026-06-02",
-      displayDate: "Martes 2 de junio",
-      description: "Entrega y exposicion. Maximo 150 palabras."
+      displayDate: "Mardi 2 juin",
+      description: "Remise et présentation orale. Maximum 150 mots."
     },
     {
       id: "debateMay8",
@@ -76,8 +77,8 @@
       weight: 15,
       type: "Debate",
       date: "2026-05-08",
-      displayDate: "Viernes 8 de mayo",
-      description: "Primer debate evaluado."
+      displayDate: "Vendredi 8 mai",
+      description: "Premier débat évalué."
     },
     {
       id: "debateMay26",
@@ -85,8 +86,8 @@
       weight: 15,
       type: "Debate",
       date: "2026-05-26",
-      displayDate: "Martes 26 de mayo",
-      description: "Segundo debate evaluado."
+      displayDate: "Mardi 26 mai",
+      description: "Deuxième débat évalué."
     },
     {
       id: "quizMay12",
@@ -94,37 +95,37 @@
       weight: 15,
       type: "Quiz",
       date: "2026-05-12",
-      displayDate: "Martes 12 de mayo",
-      description: "Quiz del curso."
+      displayDate: "Mardi 12 mai",
+      description: "Quiz du cours."
     },
     {
       id: "bookPresentation",
-      title: "Presentacion de libro",
+      title: "Présentation de livre",
       weight: 15,
-      type: "Presentacion",
+      type: "Présentation",
       date: null,
-      displayDate: "Fecha individual",
-      description: "Presentacion oral del libro asignado."
+      displayDate: "Date individuelle",
+      description: "Présentation orale du livre assigné."
     },
     {
       id: "projectAudio",
-      title: "Audio de presentacion de proyecto",
+      title: "Audio de présentation du projet",
       weight: 5,
       type: "Audio",
       date: "2026-05-25",
-      displayDate: "Semana del 25 al 29 de mayo",
-      description: "Audio de avance o presentacion del proyecto."
+      displayDate: "Semaine du 25 au 29 mai",
+      description: "Audio d'avancement ou de présentation du projet."
     }
   ];
 
   const bonusEvent = {
     id: "finalWorkshopBonus",
-    title: "Taller de preparacion del final",
+    title: "Atelier de préparation à l'examen final",
     weight: 0,
     type: "Bonus",
     date: "2026-05-29",
-    displayDate: "Viernes 29 de mayo",
-    description: "Nota informativa. Si supera 4.0 queda registrado como bonus de conocimiento."
+    displayDate: "Vendredi 29 mai",
+    description: "Activité informative. Une note supérieure à 4.0 reste enregistrée comme bonus de connaissance."
   };
 
   let lastSignature = "";
@@ -153,6 +154,19 @@
     }
   }
 
+  function readStudentLinks() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STUDENT_LINKS_KEY) || "{}");
+      return saved && typeof saved === "object" ? saved : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
+  function writeStudentLinks(links) {
+    localStorage.setItem(STUDENT_LINKS_KEY, JSON.stringify(links));
+  }
+
   function isAdmin(user) {
     return ADMIN_EMAILS.indexOf(normalizeEmail(user && user.email)) !== -1;
   }
@@ -160,20 +174,36 @@
   function currentRole(user) {
     if (!user) return "guest";
     if (isAdmin(user)) return "admin";
-    const requests = readRoleRequests();
-    const id = user.sub || user.email || "";
-    const request = requests.find(function (item) {
-      return item.id === id || normalizeEmail(item.email) === normalizeEmail(user.email);
-    });
-    if (request && request.status === "approved" && request.role === "teacher") return "teacher";
     return "student";
   }
 
   function studentForUser(user) {
     const email = normalizeEmail(user && user.email);
-    return students.find(function (student) {
+    const directMatch = students.find(function (student) {
       return normalizeEmail(student.email) === email;
+    });
+    if (directMatch) return directMatch;
+    const linkedId = readStudentLinks()[userKey(user)];
+    if (!linkedId) return null;
+    return students.find(function (student) {
+      return student.id === linkedId;
     }) || null;
+  }
+
+  function userKey(user) {
+    return (user && (user.sub || normalizeEmail(user.email))) || "";
+  }
+
+  function linkStudentById(user, studentId) {
+    const cleanId = String(studentId || "").replace(/\D/g, "");
+    const student = students.find(function (item) {
+      return item.id === cleanId;
+    });
+    if (!student || !userKey(user)) return null;
+    const links = readStudentLinks();
+    links[userKey(user)] = student.id;
+    writeStudentLinks(links);
+    return student;
   }
 
   function escapeHtml(value) {
@@ -211,25 +241,25 @@
 
   function individualBookDateLabel(studentId) {
     const labels = {
-      "1036448851": "Viernes 8 de mayo",
-      "1037616675": "Martes 12 de mayo",
-      "1039083985": "Martes 19 de mayo",
-      "1040572353": "Viernes 22 de mayo",
-      "1122508989": "Martes 26 de mayo"
+      "1036448851": "Vendredi 8 mai",
+      "1037616675": "Mardi 12 mai",
+      "1039083985": "Mardi 19 mai",
+      "1040572353": "Vendredi 22 mai",
+      "1122508989": "Mardi 26 mai"
     };
-    return labels[studentId] || "Fecha individual";
+    return labels[studentId] || "Date individuelle";
   }
 
   function formatGrade(value) {
-    return typeof value === "number" ? value.toFixed(1) : "Pendiente";
+    return typeof value === "number" ? value.toFixed(1) : "En attente";
   }
 
   function gradeStatus(evaluation, student) {
     const grade = student.grades[evaluation.id];
-    if (typeof grade === "number") return { label: "Calificado", className: "done" };
+    if (typeof grade === "number") return { label: "Noté", className: "done" };
     const date = parseDate(dateForEvaluation(evaluation, student));
-    if (date && dayDiff(date) < 0) return { label: "Pendiente de nota", className: "late" };
-    return { label: "Pendiente", className: "pending" };
+    if (date && dayDiff(date) < 0) return { label: "Note en attente", className: "late" };
+    return { label: "En attente", className: "pending" };
   }
 
   function gradeSummary(student) {
@@ -278,36 +308,42 @@
   }
 
   function statusForObligation(item) {
-    if (item.completed) return { label: "Calificado", className: "done" };
-    if (!item.date) return { label: "Pendiente", className: "pending" };
+    if (item.completed) return { label: "Noté", className: "done" };
+    if (!item.date) return { label: "En attente", className: "pending" };
     const diff = dayDiff(item.date);
-    if (diff < 0) return { label: item.bonus ? "Registrado como informativo" : "Pendiente de nota", className: "late" };
-    if (diff === 0) return { label: "Hoy", className: "late" };
-    if (diff === 1) return { label: "Mañana", className: "late" };
-    return { label: "Programado", className: "pending" };
+    if (diff < 0) return { label: item.bonus ? "Information enregistrée" : "Note en attente", className: "late" };
+    if (diff === 0) return { label: "Aujourd'hui", className: "late" };
+    if (diff === 1) return { label: "Demain", className: "late" };
+    return { label: "Programmé", className: "pending" };
   }
 
   function renderLocked() {
     return `
       <div class="locked-card">
         <i class="bi bi-shield-lock-fill"></i>
-        <h2 class="section-title">Inicia sesion con Google</h2>
+        <h2 class="section-title">Connexion requise</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          Para consultar notas u obligaciones debes ingresar con tu cuenta de Google. Si eres estudiante, solo veras tu numero ID, tus notas, porcentajes, fechas y estados.
+          Connectez-vous pour consulter vos résultats et les échéances du cours. Dans l'espace étudiant, seuls le numéro ID, les notes, les pourcentages, les dates et les états sont affichés.
         </p>
-        <button class="btn-main mt-4" type="button" data-open-google-login><i class="bi bi-google"></i> Abrir acceso con Google</button>
+        <button class="btn-main mt-4" type="button" data-open-google-login><i class="bi bi-box-arrow-in-right"></i> Se connecter</button>
       </div>
     `;
   }
 
-  function renderNoRecord() {
+  function renderNoRecord(user) {
     return `
       <div class="locked-card">
-        <i class="bi bi-person-x-fill"></i>
-        <h2 class="section-title">No hay registro de notas para esta cuenta</h2>
+        <i class="bi bi-person-check-fill"></i>
+        <h2 class="section-title">Associer votre numéro ID</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          La sesion de Google esta activa, pero este correo no esta asociado todavia a un estudiante del listado de Frances 7.
+          Pour consulter vos résultats, saisissez votre numéro ID institutionnel. Cette étape permet d'afficher uniquement vos notes et vos échéances.
         </p>
+        <form class="mt-4 mx-auto" data-link-student-form style="max-width: 420px;">
+          <label class="visually-hidden" for="studentIdLinkInput">Numéro ID</label>
+          <input id="studentIdLinkInput" class="form-control form-control-lg text-center fw-bold" inputmode="numeric" autocomplete="off" placeholder="Numéro ID" data-link-student-id>
+          <button class="btn-main mt-3 w-100" type="submit"><i class="bi bi-check-circle"></i> Voir mes résultats</button>
+          <p class="section-text mt-3" data-link-student-error hidden>Numéro ID non trouvé dans le groupe.</p>
+        </form>
       </div>
     `;
   }
@@ -319,14 +355,14 @@
         <div class="reminder-card">
           <i class="bi bi-check-circle-fill"></i>
           <div>
-            <strong>No hay obligaciones futuras pendientes registradas.</strong>
-            <p class="mb-0">Revisa la grilla para ver notas pendientes o actividades ya evaluadas.</p>
+            <strong>Aucune échéance future enregistrée.</strong>
+            <p class="mb-0">Consultez les résultats du cours pour voir les notes saisies et les activités en attente.</p>
           </div>
         </div>
       `;
     }
     const diff = dayDiff(item.date);
-    const headline = diff === 0 ? "Tienes una obligacion hoy" : diff === 1 ? "Tienes una obligacion mañana" : "Proxima obligacion";
+    const headline = diff === 0 ? "Échéance aujourd'hui" : diff === 1 ? "Échéance demain" : "Prochaine échéance";
     return `
       <div class="reminder-card ${diff <= 1 ? "is-urgent" : ""}">
         <i class="bi bi-bell-fill"></i>
@@ -342,9 +378,9 @@
     const summary = gradeSummary(student);
     return `
       <div class="metric-grid">
-        <div class="metric-card"><span>Numero ID</span><strong>${escapeHtml(student.id)}</strong></div>
-        <div class="metric-card"><span>Promedio calificado</span><strong>${summary.average == null ? "Pendiente" : summary.average.toFixed(2)}</strong></div>
-        <div class="metric-card"><span>Peso evaluado</span><strong>${summary.completedWeight}%</strong></div>
+        <div class="metric-card"><span>Numéro ID</span><strong>${escapeHtml(student.id)}</strong></div>
+        <div class="metric-card"><span>Moyenne des notes saisies</span><strong>${summary.average == null ? "En attente" : summary.average.toFixed(2)}</strong></div>
+        <div class="metric-card"><span>Pourcentage évalué</span><strong>${summary.completedWeight}%</strong></div>
       </div>
     `;
   }
@@ -389,19 +425,19 @@
       <div class="row g-4">
         <div class="col-lg-5">
           <div class="grades-panel h-100">
-            <p class="section-kicker">Panel del estudiante</p>
-            <h2 class="section-title">Consulta individual</h2>
-            <p class="section-text">Este panel no muestra nombre, correo ni contacto. Solo se presenta el numero ID, notas, porcentajes, fechas y estados de las obligaciones.</p>
+            <p class="section-kicker">Suivi individuel</p>
+            <h2 class="section-title">Consultation des résultats</h2>
+            <p class="section-text">Cet espace affiche uniquement le numéro ID, les notes, les pourcentages, les dates et les états des échéances.</p>
             ${studentMetricsMarkup(student)}
           </div>
         </div>
         <div class="col-lg-7">
           <div class="grades-panel h-100">
-            <p class="section-kicker">Resultados</p>
-            <h2 class="section-title">Grilla de notas</h2>
+            <p class="section-kicker">Résultats</p>
+            <h2 class="section-title">Notes du cours</h2>
             <div class="table-wrap">
               <table class="grades-table">
-                <thead><tr><th>Actividad</th><th>Peso</th><th>Fecha</th><th>Nota</th><th>Estado</th></tr></thead>
+                <thead><tr><th>Évaluation</th><th>Pourcentage</th><th>Date</th><th>Note</th><th>État</th></tr></thead>
                 <tbody>${studentGradesRows(student)}</tbody>
               </table>
             </div>
@@ -410,8 +446,8 @@
       </div>
       <section class="px-0 pb-0">
         <div class="grades-panel">
-          <p class="section-kicker">Calendario</p>
-          <h2 class="section-title">Obligaciones del estudiante</h2>
+          <p class="section-kicker">Calendrier</p>
+          <h2 class="section-title">Échéances du cours</h2>
           <div class="obligation-grid">${obligationsMarkup(student)}</div>
         </div>
       </section>
@@ -427,7 +463,7 @@
           <td>${escapeHtml(student.id)}</td>
           <td>${escapeHtml(student.email)}</td>
           <td>${escapeHtml(student.contact)}</td>
-          <td>${summary.average == null ? "Pendiente" : summary.average.toFixed(2)}</td>
+          <td>${summary.average == null ? "En attente" : summary.average.toFixed(2)}</td>
           <td>${summary.completedWeight}%</td>
         </tr>
       `;
@@ -459,7 +495,7 @@
     const events = evaluations.concat([bonusEvent]);
     return events.map(function (evaluation) {
       const display = evaluation.id === "bookPresentation"
-        ? "Tomás: 8 mayo. Sebastián: 12 mayo. Carmen: 19 mayo. Cristian: 22 mayo. Camilo: 26 mayo."
+        ? "Tomás : 8 mai. Sebastián : 12 mai. Carmen : 19 mai. Cristian : 22 mai. Camilo : 26 mai."
         : evaluation.displayDate;
       return `
         <article class="obligation-card">
@@ -478,7 +514,7 @@
   }
 
   function renderStaffPanel(role) {
-    const roleLabel = role === "admin" ? "Administrador" : "Profesor aprobado";
+    const roleLabel = role === "admin" ? "Administrateur" : "Professeur approuvé";
     const totalWeight = evaluations.reduce(function (sum, evaluation) {
       return sum + evaluation.weight;
     }, 0);
@@ -486,33 +522,33 @@
       <div class="privacy-note mb-4">
         <i class="bi bi-shield-check"></i>
         <div>
-          <strong>Vista de ${roleLabel}</strong>
-          <p class="mb-0">Esta vista muestra datos completos del estudiante y el resumen de notas. La vista de estudiante no muestra nombre, correo ni contacto.</p>
+          <strong>Vue ${roleLabel}</strong>
+          <p class="mb-0">Cette vue affiche les données complètes et le résumé des notes. La vue étudiante ne montre ni nom, ni courriel, ni contact.</p>
         </div>
       </div>
       <div class="metric-grid mb-4">
-        <div class="metric-card"><span>Estudiantes</span><strong>${students.length}</strong></div>
-        <div class="metric-card"><span>Porcentaje evaluativo</span><strong>${totalWeight}%</strong></div>
+        <div class="metric-card"><span>Étudiants</span><strong>${students.length}</strong></div>
+        <div class="metric-card"><span>Pourcentage évaluatif</span><strong>${totalWeight}%</strong></div>
         <div class="metric-card"><span>Bonus</span><strong>Info</strong></div>
       </div>
       <div class="grades-panel mb-4">
-        <p class="section-kicker">Datos privados</p>
-        <h2 class="section-title">Listado de estudiantes</h2>
+        <p class="section-kicker">Données privées</p>
+        <h2 class="section-title">Liste des étudiants</h2>
         <div class="table-wrap">
           <table class="grades-table">
-            <thead><tr><th>Nombre completo</th><th>Numero ID</th><th>Correo institucional</th><th>Contacto</th><th>Promedio calificado</th><th>Peso evaluado</th></tr></thead>
+            <thead><tr><th>Nom complet</th><th>Numéro ID</th><th>Courriel institutionnel</th><th>Contact</th><th>Moyenne des notes saisies</th><th>Pourcentage évalué</th></tr></thead>
             <tbody>${staffStudentRows()}</tbody>
           </table>
         </div>
       </div>
       <div class="grades-panel mb-4">
-        <p class="section-kicker">Notas</p>
-        <h2 class="section-title">Grilla general de resultados</h2>
+        <p class="section-kicker">Résultats</p>
+        <h2 class="section-title">Notes du cours</h2>
         <div class="table-wrap">
           <table class="grades-table">
             <thead>
               <tr>
-                <th>Estudiante</th>
+                <th>Étudiant</th>
                 ${evaluations.map(function (evaluation) { return `<th>${escapeHtml(evaluation.title)}<br>${evaluation.weight}%</th>`; }).join("")}
               </tr>
             </thead>
@@ -521,8 +557,8 @@
         </div>
       </div>
       <div class="grades-panel">
-        <p class="section-kicker">Calendario</p>
-        <h2 class="section-title">Obligaciones del curso</h2>
+        <p class="section-kicker">Calendrier</p>
+        <h2 class="section-title">Échéances du cours</h2>
         <div class="obligation-grid">${staffCalendarMarkup()}</div>
       </div>
     `;
@@ -545,9 +581,9 @@
     const reminder = document.createElement("div");
     reminder.className = "floating-reminder";
     reminder.innerHTML = `
-      <strong>${diff === 0 ? "Obligacion para hoy" : "Recordatorio para mañana"}</strong>
+      <strong>${diff === 0 ? "Échéance aujourd'hui" : "Rappel pour demain"}</strong>
       <p class="mb-0">${escapeHtml(item.title)} · ${escapeHtml(item.displayDate)} · ${escapeHtml(item.description)}</p>
-      <button type="button">Entendido</button>
+      <button type="button">Compris</button>
     `;
     reminder.querySelector("button").addEventListener("click", function () {
       reminder.remove();
@@ -563,7 +599,9 @@
     if (!root) return;
     const user = readUser();
     const role = currentRole(user);
-    const signature = user ? normalizeEmail(user.email) + ":" + role + ":" + localStorage.getItem(ROLE_REQUESTS_KEY) : "guest";
+    const signature = user
+      ? normalizeEmail(user.email) + ":" + role + ":" + localStorage.getItem(STUDENT_LINKS_KEY)
+      : "guest";
     if (signature === lastSignature) return;
     lastSignature = signature;
 
@@ -581,7 +619,22 @@
 
     const student = studentForUser(user);
     if (!student) {
-      root.innerHTML = renderNoRecord();
+      root.innerHTML = renderNoRecord(user);
+      const form = root.querySelector("[data-link-student-form]");
+      if (form) {
+        form.addEventListener("submit", function (event) {
+          event.preventDefault();
+          const input = root.querySelector("[data-link-student-id]");
+          const error = root.querySelector("[data-link-student-error]");
+          const linkedStudent = linkStudentById(user, input && input.value);
+          if (!linkedStudent) {
+            if (error) error.hidden = false;
+            return;
+          }
+          lastSignature = "";
+          render();
+        });
+      }
       return;
     }
 
