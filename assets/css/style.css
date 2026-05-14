@@ -1694,6 +1694,116 @@ a {
   color: var(--white);
 }
 
+.practice-unit-folders {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 24px 95px;
+  display: grid;
+  gap: 22px;
+}
+
+.practice-unit-folder {
+  background: var(--white);
+  border: 1px solid rgba(18, 59, 143, 0.10);
+  border-radius: 24px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.10);
+  overflow: hidden;
+}
+
+.practice-unit-folder summary {
+  min-height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 22px 26px;
+  cursor: pointer;
+  list-style: none;
+  background: linear-gradient(135deg, #f8fbff, #fff7f8);
+}
+
+.practice-unit-folder summary::-webkit-details-marker {
+  display: none;
+}
+
+.practice-unit-folder summary::after {
+  content: "v";
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--blue-dark);
+  color: var(--white);
+  font-weight: 900;
+}
+
+.practice-unit-folder[open] summary::after {
+  transform: rotate(180deg);
+}
+
+.practice-folder-title {
+  display: grid;
+  gap: 4px;
+}
+
+.practice-folder-title span {
+  color: var(--red);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.practice-folder-title h3 {
+  margin: 0;
+  color: var(--blue-dark);
+  font-size: clamp(1.35rem, 2.2vw, 2rem);
+}
+
+.practice-folder-title p {
+  margin: 0;
+  color: var(--gray);
+  font-weight: 700;
+}
+
+.practice-folder-count {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #eef4ff;
+  color: var(--blue-dark);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.unit-folder-grid {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.unit-folder-grid .course-section-card {
+  border-radius: 20px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+}
+
+.unit-folder-grid .course-section-image {
+  height: 175px;
+}
+
+.unit-folder-grid .course-section-content {
+  padding: 24px;
+}
+
+.unit-folder-grid .course-section-content h3 {
+  font-size: 1.35rem;
+}
+
 /* SPECIAL ACCENTS BY CARD */
 
 .course-section-card:nth-child(2) .section-number {
@@ -1724,6 +1834,10 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .unit-folder-grid {
+    grid-template-columns: 1fr;
+  }
+
   .course-section-image {
     height: 240px;
   }
@@ -1732,6 +1846,15 @@ a {
 @media (max-width: 560px) {
   .basic-course-hero {
     padding: 165px 18px 55px;
+  }
+
+  .practice-unit-folder summary {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .practice-folder-count {
+    white-space: normal;
   }
 
   .basic-hero-image {
@@ -3813,6 +3936,15 @@ a {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.audio-speed-actions {
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.audio-speed-actions .audio-btn {
+  background: var(--blue-dark);
 }
 
 .audio-btn {
