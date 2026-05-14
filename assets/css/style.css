@@ -1783,25 +1783,45 @@ a {
 .unit-folder-grid {
   padding: 24px;
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .unit-folder-grid .course-section-card {
-  border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.09);
+  border-radius: 16px;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
 }
 
 .unit-folder-grid .course-section-image {
-  height: 175px;
+  height: 116px;
 }
 
 .unit-folder-grid .course-section-content {
-  padding: 24px;
+  padding: 18px;
+}
+
+.unit-folder-grid .section-number {
+  width: 34px;
+  height: 34px;
+  margin-bottom: 12px;
+  font-size: 0.86rem;
 }
 
 .unit-folder-grid .course-section-content h3 {
-  font-size: 1.35rem;
+  font-size: 1.08rem;
+  line-height: 1.2;
+}
+
+.unit-folder-grid .course-section-content p {
+  font-size: 0.94rem;
+  line-height: 1.45;
+  margin-bottom: 16px;
+}
+
+.unit-folder-grid .course-section-content .card-link {
+  min-height: 40px;
+  padding: 0 16px;
+  font-size: 0.9rem;
 }
 
 /* SPECIAL ACCENTS BY CARD */
