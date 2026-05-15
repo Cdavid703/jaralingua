@@ -19,6 +19,24 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/atelier-conditionnel-present.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-conditionnel-quebec-b1.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/lecture-conditionnel-quebec-b1.html</loc>
+    <lastmod>2026-05-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/passe-simple.html</loc>
     <lastmod>2026-05-06</lastmod>
     <changefreq>weekly</changefreq>
@@ -75,6 +93,12 @@
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/themes/passe-simple.html</loc>
     <lastmod>2026-05-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/grammaire/conditionnel-present.html</loc>
+    <lastmod>2026-05-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
