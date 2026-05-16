@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Listening: The Mirror Guardian | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+
+  <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+
+  <style>
+    .listening-focus-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.3rem;
+    }
+
+    .listening-focus-card,
+    .listening-character-card {
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      border-radius: 20px;
+      padding: 1rem;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+    }
+
+    .listening-focus-card span,
+    .listening-character-card span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 0.7rem;
+      border-radius: 999px;
+      background: #ecfeff;
+      color: #155e75;
+      font-weight: 900;
+      font-size: 0.82rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .listening-focus-card h3,
+    .listening-character-card h3 {
+      margin: 0 0 0.45rem;
+      color: #0f172a;
+      font-size: 1.08rem;
+    }
+
+    .listening-focus-card p,
+    .listening-character-card p {
+      margin: 0;
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .listening-character-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 1rem;
+      margin-top: 1.2rem;
+    }
+
+    .listening-reminder-box {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 18px;
+      background: #fff7ed;
+      border: 1px solid rgba(234, 88, 12, 0.16);
+      color: #7c2d12;
+      line-height: 1.65;
+    }
+
+    .listening-reminder-box strong {
+      display: block;
+      margin-bottom: 0.25rem;
+      color: #9a3412;
+    }
+
+    .vocabulary-audio-grid {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 1.2rem;
+    }
+
+    .vocabulary-audio-row {
+      display: grid;
+      grid-template-columns: minmax(140px, 0.8fr) minmax(180px, 1fr) auto;
+      gap: 0.8rem;
+      align-items: center;
+      padding: 0.9rem 1rem;
+      border-radius: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.06);
+    }
+
+    .vocabulary-audio-row strong {
+      color: #0f172a;
+      font-size: 1rem;
+    }
+
+    .vocabulary-audio-row span {
+      color: #475569;
+      line-height: 1.45;
+    }
+
+    .vocab-play-btn,
+    .secondary-quiz-btn {
+      border: 0;
+      border-radius: 999px;
+      min-height: 42px;
+      padding: 0 0.95rem;
+      background: #0f766e;
+      color: #ffffff;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 24px rgba(15, 118, 110, 0.2);
+      white-space: nowrap;
+    }
+
+    .vocab-play-btn:hover,
+    .secondary-quiz-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .vocab-play-btn.is-playing {
+      background: #dc2626;
+    }
+
+    .quiz-question-card.is-correct {
+      border-color: rgba(22, 101, 52, 0.32);
+      background: #f0fdf4;
+    }
+
+    .quiz-question-card.is-incorrect {
+      border-color: rgba(159, 18, 57, 0.28);
+      background: #fff1f2;
+    }
+
+    .quiz-question-card label.correct-option {
+      border-color: rgba(22, 101, 52, 0.35);
+      background: #dcfce7;
+      color: #14532d;
+      font-weight: 800;
+    }
+
+    .quiz-question-card label.wrong-option {
+      border-color: rgba(159, 18, 57, 0.3);
+      background: #ffe4e6;
+      color: #881337;
+      font-weight: 800;
+    }
+
+    .quiz-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    .secondary-quiz-btn {
+      background: #ffffff;
+      color: #1e3a8a;
+      border: 1px solid rgba(37, 99, 235, 0.18);
+      box-shadow: none;
+    }
+
+    .character-analysis-table-wrap {
+      overflow-x: auto;
+      margin-top: 1.2rem;
+      border-radius: 20px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: #ffffff;
+    }
+
+    .character-analysis-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    .character-analysis-table th,
+    .character-analysis-table td {
+      padding: 1rem;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .character-analysis-table th {
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-weight: 900;
+    }
+
+    .character-analysis-table td:first-child {
+      color: #0f172a;
+      font-weight: 900;
+    }
+
+    .open-response-box {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .open-response-box textarea {
+      width: 100%;
+      min-height: 150px;
+      border: 1px solid rgba(37, 99, 235, 0.16);
+      border-radius: 18px;
+      padding: 1rem;
+      resize: vertical;
+      font: inherit;
+      line-height: 1.65;
+      color: #0f172a;
+      background: #ffffff;
+    }
+
+    .progress-summary-card,
+    .teacher-admin-panel {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 18px;
+      background: #f8fafc;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .teacher-admin-panel {
+      display: none;
+      background: #fefce8;
+      border-color: rgba(202, 138, 4, 0.22);
+    }
+
+    .teacher-admin-panel.is-visible {
+      display: block;
+    }
+
+    .teacher-admin-panel h3,
+    .progress-summary-card h3 {
+      margin: 0 0 0.45rem;
+      color: #0f172a;
+    }
+
+    .teacher-transcript {
+      display: none;
+      white-space: pre-wrap;
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #334155;
+      line-height: 1.65;
+    }
+
+    .teacher-transcript.is-visible {
+      display: block;
+    }
+
+    @media (max-width: 760px) {
+      .vocabulary-audio-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .quiz-feedback-list {
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 1rem;
+    }
+
+    .quiz-feedback-item {
+      padding: 0.85rem 1rem;
+      border-radius: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .quiz-feedback-item strong {
+      color: #0f172a;
+    }
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-intermediate/mirror-guardian-listening.png');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab</p>
+
+        <h1>Listening: The Mirror Guardian</h1>
+
+        <p>
+          Listen to an A2+ superhero story about stereotypes, first impressions, and
+          learning to describe people carefully and respectfully.
+        </p>
+
+        <div class="lesson-meta">
+          <span>Intermediate A2+</span>
+          <span>Stereotypes</span>
+          <span>Superhero Story</span>
+          <span>15 questions</span>
+          <span>American multi-voice audio</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#listening-activity" class="btn btn-primary">Start listening</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="lesson-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/mirror-guardian-listening.png"
+          alt="The Mirror Guardian superhero with different city characters"
+        />
+      </div>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice Goal</span>
+        <p>
+          Understand a detailed intermediate listening text, identify implied meaning,
+          distinguish stereotypes from evidence, and answer comprehension questions with
+          careful attention to character descriptions.
+        </p>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="listening-activity">
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">01</span>
+          <div>
+            <p class="topic-label">Before Listening</p>
+            <h2>Meet the Characters</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          In this story, people in a city make quick judgments about others. The Mirror
+          Guardian uses a special power to help them look again and notice real details.
+        </p>
+
+        <div class="listening-character-grid">
+          <div class="listening-character-card">
+            <span>Hero</span>
+            <h3>The Mirror Guardian</h3>
+            <p>A calm and empathetic superhero who reveals people's real qualities, not only their appearance.</p>
+          </div>
+
+          <div class="listening-character-card">
+            <span>Scientist</span>
+            <h3>Dr. Lina Frost</h3>
+            <p>A quiet scientist who looks serious, but is actually creative, generous, and brave.</p>
+          </div>
+
+          <div class="listening-character-card">
+            <span>Teenager</span>
+            <h3>Maya</h3>
+            <p>A fashionable teenager who is not careless; she uses her style to express confidence.</p>
+          </div>
+
+          <div class="listening-character-card">
+            <span>Mechanic</span>
+            <h3>Mr. Bruno</h3>
+            <p>A mechanic who repairs machines and also reads poetry because people are more complex than labels.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">02</span>
+          <div>
+            <p class="topic-label">Vocabulary Preview</p>
+            <h2>Key Words Before the Audio</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Study these words before listening. Use the pronunciation buttons to hear each
+          item in American English.
+        </p>
+
+        <div class="vocabulary-audio-grid" id="vocabularyGrid">
+          <div class="vocabulary-audio-row">
+            <strong>stereotype</strong>
+            <span>estereotipo; idea generalizada sobre un grupo</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('stereotype', this)">Listen</button>
+          </div>
+          <div class="vocabulary-audio-row">
+            <strong>label</strong>
+            <span>etiqueta; forma simple de clasificar a alguien</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('label', this)">Listen</button>
+          </div>
+          <div class="vocabulary-audio-row">
+            <strong>rumor</strong>
+            <span>rumor; información que se repite sin confirmar</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('rumor', this)">Listen</button>
+          </div>
+          <div class="vocabulary-audio-row">
+            <strong>unfriendly</strong>
+            <span>poco amable; que no parece amistoso</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('unfriendly', this)">Listen</button>
+          </div>
+          <div class="vocabulary-audio-row">
+            <strong>generous</strong>
+            <span>generoso; que ayuda o comparte con otros</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('generous', this)">Listen</button>
+          </div>
+          <div class="vocabulary-audio-row">
+            <strong>careless</strong>
+            <span>descuidado; que no presta suficiente atención</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('careless', this)">Listen</button>
+          </div>
+          <div class="vocabulary-audio-row">
+            <strong>brave</strong>
+            <span>valiente; que actúa con coraje</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('brave', this)">Listen</button>
+          </div>
+          <div class="vocabulary-audio-row">
+            <strong>look again</strong>
+            <span>mirar de nuevo; observar con más cuidado</span>
+            <button type="button" class="vocab-play-btn" onclick="playVocabulary('look-again', this)">Listen</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">03</span>
+          <div>
+            <p class="topic-label">Audio Practice</p>
+            <h2>The Mirror Guardian</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Play the audio twice. First, listen for the main idea. Then listen again for
+          character details, stereotypes, and the lesson at the end of the story.
+        </p>
+
+        <div class="listening-panel">
+          <div class="listening-audio-card">
+            <div>
+              <span class="listening-label">Listening</span>
+              <h3>The Mirror Guardian</h3>
+              <p>American English dialogue with distinct voices for the narrator and characters.</p>
+            </div>
+          </div>
+
+          <audio id="mirrorGuardianAudio" class="course-audio-player" controls preload="metadata" src="audio/the-mirror-guardian-listening.mp3"></audio>
+
+          <div class="audio-actions audio-speed-actions" aria-label="Audio speed controls">
+            <button type="button" class="audio-btn" onclick="setAudioSpeed(0.75)">0.75x</button>
+            <button type="button" class="audio-btn play" onclick="setAudioSpeed(1)">1x</button>
+            <button type="button" class="audio-btn" onclick="setAudioSpeed(1.25)">1.25x</button>
+          </div>
+        </div>
+
+        <div class="listening-reminder-box">
+          <strong>Listening strategy</strong>
+          Do not choose an answer only because one word sounds familiar. Compare the
+          options with the whole situation in the story.
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">04</span>
+          <div>
+            <p class="topic-label">Comprehension Check</p>
+            <h2>Answer the Questions</h2>
+          </div>
+        </div>
+
+        <form id="quizForm" class="listening-quiz">
+          <div class="quiz-question-card" data-question="q1"><h3>1. Where does the story begin?</h3><label><input type="radio" name="q1" value="A" /> In a school cafeteria after lunch</label><label><input type="radio" name="q1" value="B" /> In Silver City after a storm</label><label><input type="radio" name="q1" value="C" /> In a quiet village before sunrise</label></div>
+          <div class="quiz-question-card" data-question="q2"><h3>2. What is the Mirror Guardian's special power?</h3><label><input type="radio" name="q2" value="A" /> He can erase every person's memories</label><label><input type="radio" name="q2" value="B" /> He can become invisible in mirrors</label><label><input type="radio" name="q2" value="C" /> He can show the truth behind people's labels</label></div>
+          <div class="quiz-question-card" data-question="q3"><h3>3. What do some neighbors think about Dr. Lina Frost at first?</h3><label><input type="radio" name="q3" value="A" /> That she is cold and unfriendly</label><label><input type="radio" name="q3" value="B" /> That she is noisy and careless</label><label><input type="radio" name="q3" value="C" /> That she is lazy and always late</label></div>
+          <div class="quiz-question-card" data-question="q4"><h3>4. Which detail shows that Dr. Frost is not simply cold?</h3><label><input type="radio" name="q4" value="A" /> She refuses to help the neighborhood</label><label><input type="radio" name="q4" value="B" /> She leaves the city during the emergency</label><label><input type="radio" name="q4" value="C" /> She builds water filters for poor families</label></div>
+          <div class="quiz-question-card" data-question="q5"><h3>5. Why do people judge Maya unfairly?</h3><label><input type="radio" name="q5" value="A" /> Because she speaks too loudly in class</label><label><input type="radio" name="q5" value="B" /> Because of her bright clothes and purple hair</label><label><input type="radio" name="q5" value="C" /> Because she refuses to talk to anyone</label></div>
+          <div class="quiz-question-card" data-question="q6"><h3>6. What does Maya explain about her style?</h3><label><input type="radio" name="q6" value="A" /> It makes her feel brave when she feels shy</label><label><input type="radio" name="q6" value="B" /> It helps her hide from her classmates</label><label><input type="radio" name="q6" value="C" /> It proves she is better than other people</label></div>
+          <div class="quiz-question-card" data-question="q7"><h3>7. What stereotype do some people have about Mr. Bruno?</h3><label><input type="radio" name="q7" value="A" /> They think he is a famous singer</label><label><input type="radio" name="q7" value="B" /> They think he is a strict science teacher</label><label><input type="radio" name="q7" value="C" /> They think he only cares about engines</label></div>
+          <div class="quiz-question-card" data-question="q8"><h3>8. What surprising detail do people learn about Mr. Bruno?</h3><label><input type="radio" name="q8" value="A" /> He reads poetry every night</label><label><input type="radio" name="q8" value="B" /> He secretly dislikes all machines</label><label><input type="radio" name="q8" value="C" /> He wants to become a superhero</label></div>
+          <div class="quiz-question-card" data-question="q9"><h3>9. What problem happens at the bridge?</h3><label><input type="radio" name="q9" value="A" /> A parade blocks the road for hours</label><label><input type="radio" name="q9" value="B" /> The old bridge starts to break</label><label><input type="radio" name="q9" value="C" /> The city loses all its electricity</label></div>
+          <div class="quiz-question-card" data-question="q10"><h3>10. How do the three characters help during the emergency?</h3><label><input type="radio" name="q10" value="A" /> They wait for the Mirror Guardian to solve everything alone</label><label><input type="radio" name="q10" value="B" /> They leave because they are afraid of the danger</label><label><input type="radio" name="q10" value="C" /> They use science, social media, and practical tools together</label></div>
+          <div class="quiz-question-card" data-question="q11"><h3>11. What does the Mirror Guardian tell the crowd?</h3><label><input type="radio" name="q11" value="A" /> A stereotype is not a full story</label><label><input type="radio" name="q11" value="B" /> First impressions are always correct</label><label><input type="radio" name="q11" value="C" /> Heroes should never trust ordinary people</label></div>
+          <div class="quiz-question-card" data-question="q12"><h3>12. Which description best matches the Mirror Guardian?</h3><label><input type="radio" name="q12" value="A" /> Angry, impatient, and competitive</label><label><input type="radio" name="q12" value="B" /> Funny, careless, and disorganized</label><label><input type="radio" name="q12" value="C" /> Calm, reflective, and respectful</label></div>
+          <div class="quiz-question-card" data-question="q13"><h3>13. What is the main message of the story?</h3><label><input type="radio" name="q13" value="A" /> People with powers are more important than normal people</label><label><input type="radio" name="q13" value="B" /> We should look for real evidence before judging people</label><label><input type="radio" name="q13" value="C" /> Cities are safer when everyone dresses the same</label></div>
+          <div class="quiz-question-card" data-question="q14"><h3>14. Which option is an example of careful language?</h3><label><input type="radio" name="q14" value="A" /> Some people may think she is serious, but she is also generous</label><label><input type="radio" name="q14" value="B" /> All scientists are cold and unfriendly</label><label><input type="radio" name="q14" value="C" /> Fashionable people are always careless</label></div>
+          <div class="quiz-question-card" data-question="q15"><h3>15. Why is this listening connected to stereotypes?</h3><label><input type="radio" name="q15" value="A" /> It teaches students to memorize superhero powers</label><label><input type="radio" name="q15" value="B" /> It shows how labels can hide complex personalities</label><label><input type="radio" name="q15" value="C" /> It says stereotypes are useful facts about everyone</label></div>
+
+          <div class="quiz-actions-row">
+            <button type="button" class="practice-submit-btn" onclick="checkAnswers()">Check Answers</button>
+            <button type="button" class="secondary-quiz-btn" onclick="resetQuiz()">Try Again</button>
+          </div>
+        </form>
+
+        <div id="result-box" class="quiz-result-box"></div>
+        <div id="progress-summary" class="progress-summary-card"></div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">05</span>
+          <div>
+            <p class="topic-label">Character Analysis</p>
+            <h2>First Impression vs. Real Evidence</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Use this table after listening to compare the stereotype, the real personality,
+          and the evidence from the story.
+        </p>
+
+        <div class="character-analysis-table-wrap">
+          <table class="character-analysis-table">
+            <thead>
+              <tr>
+                <th>Character</th>
+                <th>First impression or label</th>
+                <th>Real personality</th>
+                <th>Evidence from the audio</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Dr. Lina Frost</td>
+                <td>Cold and unfriendly because she rarely smiles.</td>
+                <td>Serious, generous, brave, and helpful.</td>
+                <td>She works late and builds free water filters for poor families.</td>
+              </tr>
+              <tr>
+                <td>Maya</td>
+                <td>Careless because of her purple hair and bright clothes.</td>
+                <td>Shy sometimes, but brave, expressive, and responsible.</td>
+                <td>Her clothes help her feel brave, and she helps younger students cross flooded streets.</td>
+              </tr>
+              <tr>
+                <td>Mr. Bruno</td>
+                <td>Only interested in engines because he is a mechanic.</td>
+                <td>Practical, sensitive, generous, and artistic.</td>
+                <td>He reads poetry every night and repairs old wheelchairs for free.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">06</span>
+          <div>
+            <p class="topic-label">Open Response</p>
+            <h2>Think Beyond the Story</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Write a short answer. Your response is saved in this browser so you can return
+          to it later.
+        </p>
+
+        <div class="open-response-box">
+          <label for="openResponse"><strong>Describe a time when someone judged another person too quickly. What was the first impression, and what was the truth?</strong></label>
+          <textarea id="openResponse" placeholder="Write 4 to 6 sentences using careful language: Some people may think..., but..."></textarea>
+          <button type="button" class="secondary-quiz-btn" onclick="saveOpenResponse()">Save response</button>
+        </div>
+      </article>
+
+      <article class="premium-topic-card teacher-admin-panel" id="teacherAdminPanel">
+        <div class="topic-heading">
+          <span class="topic-number">T</span>
+          <div>
+            <p class="topic-label">Teacher / Admin</p>
+            <h2>Transcript and Teaching Notes</h2>
+          </div>
+        </div>
+
+        <p>
+          This section is visible only for the administrator account or approved teacher
+          roles on this browser.
+        </p>
+
+        <div class="hero-actions">
+          <button type="button" class="secondary-quiz-btn" onclick="toggleTeacherTranscript()">Show / hide transcript</button>
+          <button type="button" class="secondary-quiz-btn" onclick="downloadTranscriptPdf('The Mirror Guardian', listeningText, 'the-mirror-guardian-transcript.pdf')">Download transcript PDF</button>
+        </div>
+
+        <div class="teacher-transcript" id="teacherTranscript"></div>
+
+        <div class="listening-focus-grid">
+          <div class="listening-focus-card">
+            <span>1</span>
+            <h3>First listening</h3>
+            <p>Students identify the main message: stereotypes are incomplete labels.</p>
+          </div>
+          <div class="listening-focus-card">
+            <span>2</span>
+            <h3>Second listening</h3>
+            <p>Students complete the quiz and justify answers with story evidence.</p>
+          </div>
+          <div class="listening-focus-card">
+            <span>3</span>
+            <h3>Discussion</h3>
+            <p>Students compare first impressions and real evidence using careful language.</p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="lesson-next-section">
+      <div class="lesson-next-card">
+        <p class="eyebrow">Continue practicing</p>
+        <h2>Use the story for speaking practice</h2>
+        <p>
+          After checking your answers, discuss which character was judged most unfairly
+          and describe one person in your life using careful, respectful language.
+        </p>
+
+        <div class="hero-actions">
+          <a href="describing-stereotypes-behavior.html" class="btn btn-primary">Practice stereotypes and behavior</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const listeningText = "Narrator: After a big storm, Silver City was full of rumors. People looked at others quickly and gave them simple labels. That was the moment when the Mirror Guardian arrived. He was not the strongest superhero in the city, but he had a rare power. His silver shield could show the truth behind a stereotype.\n\nNeighbor: Dr. Lina Frost never smiles. Maybe she is cold and unfriendly.\n\nMirror Guardian: Look again. A quiet person is not always an unfriendly person.\n\nDr. Lina Frost: I work late because families need clean water. These filters are free for them.\n\nNarrator: In the mirror, the neighbors saw Lina building water filters at night. She was serious, but she was also generous and brave.\n\nMaya: People also judge me because of my purple hair, bright boots, and star jacket.\n\nNeighbor: Some adults say you are careless.\n\nMaya: My clothes help me feel brave when I feel shy. And today I helped younger students cross flooded streets.\n\nNarrator: Then they met Mr. Bruno, a mechanic with strong arms and oil on his hands. Some people thought he only cared about engines.\n\nMr. Bruno: I repair engines, yes, but I also read poetry every night. I repair old wheelchairs for free, too.\n\nMirror Guardian: One job, one style, or one face cannot tell a full story.\n\nNarrator: Suddenly, the old bridge started to break.\n\nDr. Lina Frost: The left side is weak. We need to move people away now.\n\nMaya: I can send clear warnings online. People will see them quickly.\n\nMr. Bruno: I have tools in my truck. I can hold the metal support for a few minutes.\n\nNarrator: Lina checked the structure, Maya sent warnings, and Bruno used his tools. The city was safe.\n\nMirror Guardian: A stereotype is not a full story. Look again. People are always more than one label.";
+    const progressStorageKey = "jaralingua-mirror-guardian-progress-v1";
+    const openResponseStorageKey = "jaralingua-mirror-guardian-open-response-v1";
+    const vocabularyAudio = {
+      stereotype: "audio/vocab/mirror-guardian-stereotype.mp3",
+      label: "audio/vocab/mirror-guardian-label.mp3",
+      rumor: "audio/vocab/mirror-guardian-rumor.mp3",
+      unfriendly: "audio/vocab/mirror-guardian-unfriendly.mp3",
+      generous: "audio/vocab/mirror-guardian-generous.mp3",
+      careless: "audio/vocab/mirror-guardian-careless.mp3",
+      brave: "audio/vocab/mirror-guardian-brave.mp3",
+      "look-again": "audio/vocab/mirror-guardian-look-again.mp3"
+    };
+    let activeVocabularyAudio = null;
+    let activeVocabularyButton = null;
+
+    const quizData = {
+      q1: { answer: "B", correctText: "In Silver City after a storm", feedback: "The opening says the story begins after a big storm in Silver City." },
+      q2: { answer: "C", correctText: "He can show the truth behind people's labels", feedback: "His shield reveals the truth behind stereotypes, not physical invisibility or memory control." },
+      q3: { answer: "A", correctText: "That she is cold and unfriendly", feedback: "Neighbors judge Dr. Frost because she is quiet and rarely smiles." },
+      q4: { answer: "C", correctText: "She builds water filters for poor families", feedback: "This detail shows she is generous and helpful, even if she looks serious." },
+      q5: { answer: "B", correctText: "Because of her bright clothes and purple hair", feedback: "People judge Maya by her appearance before understanding her personality." },
+      q6: { answer: "A", correctText: "It makes her feel brave when she feels shy", feedback: "Maya directly explains that her style gives her courage." },
+      q7: { answer: "C", correctText: "They think he only cares about engines", feedback: "The stereotype about Mr. Bruno is connected to his job as a mechanic." },
+      q8: { answer: "A", correctText: "He reads poetry every night", feedback: "This detail shows Mr. Bruno has a sensitive, artistic side." },
+      q9: { answer: "B", correctText: "The old bridge starts to break", feedback: "The emergency is the breaking bridge after the storm." },
+      q10: { answer: "C", correctText: "They use science, social media, and practical tools together", feedback: "Each character contributes a different skill during the emergency." },
+      q11: { answer: "A", correctText: "A stereotype is not a full story", feedback: "This is the final lesson the hero gives to the crowd." },
+      q12: { answer: "C", correctText: "Calm, reflective, and respectful", feedback: "The hero listens, reveals evidence, and teaches people to look again." },
+      q13: { answer: "B", correctText: "We should look for real evidence before judging people", feedback: "The story shows that first labels can be incomplete or unfair." },
+      q14: { answer: "A", correctText: "Some people may think she is serious, but she is also generous", feedback: "Careful language avoids saying that all people in a group are the same." },
+      q15: { answer: "B", correctText: "It shows how labels can hide complex personalities", feedback: "The story is about seeing beyond simple labels and noticing full personalities." }
+    };
+
+    function setAudioSpeed(rate) {
+      document.getElementById("mirrorGuardianAudio").playbackRate = rate;
+    }
+
+    function playVocabulary(key, button) {
+      if (activeVocabularyAudio) {
+        activeVocabularyAudio.pause();
+        activeVocabularyAudio.currentTime = 0;
+      }
+
+      if (activeVocabularyButton) {
+        activeVocabularyButton.classList.remove("is-playing");
+        activeVocabularyButton.textContent = "Listen";
+      }
+
+      const audioPath = vocabularyAudio[key];
+      if (!audioPath) return;
+
+      activeVocabularyAudio = new Audio(audioPath);
+      activeVocabularyButton = button;
+      button.classList.add("is-playing");
+      button.textContent = "Playing";
+
+      activeVocabularyAudio.addEventListener("ended", function() {
+        button.classList.remove("is-playing");
+        button.textContent = "Listen";
+      });
+
+      activeVocabularyAudio.play().catch(function() {
+        button.classList.remove("is-playing");
+        button.textContent = "Listen";
+      });
+    }
+
+    function clearQuestionFeedback() {
+      document.querySelectorAll(".quiz-question-card").forEach(function(card) {
+        card.classList.remove("is-correct", "is-incorrect");
+        card.querySelectorAll("label").forEach(function(label) {
+          label.classList.remove("correct-option", "wrong-option");
+        });
+      });
+    }
+
+    function markQuestionFeedback(key, selected) {
+      const card = document.querySelector('[data-question="' + key + '"]');
+      if (!card) return;
+
+      const correctAnswer = quizData[key].answer;
+      card.classList.add(selected === correctAnswer ? "is-correct" : "is-incorrect");
+
+      card.querySelectorAll("label").forEach(function(label) {
+        const input = label.querySelector("input");
+        if (!input) return;
+
+        if (input.value === correctAnswer) {
+          label.classList.add("correct-option");
+        }
+
+        if (input.value === selected && selected !== correctAnswer) {
+          label.classList.add("wrong-option");
+        }
+      });
+    }
+
+    function saveProgress(score, total) {
+      const progress = {
+        score: score,
+        total: total,
+        percentage: Math.round((score / total) * 100),
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(progressStorageKey, JSON.stringify(progress));
+      renderProgressSummary(progress);
+    }
+
+    function readProgress() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(progressStorageKey) || "null");
+        return saved && saved.total ? saved : null;
+      } catch (error) {
+        localStorage.removeItem(progressStorageKey);
+        return null;
+      }
+    }
+
+    function renderProgressSummary(progress) {
+      const box = document.getElementById("progress-summary");
+      if (!box) return;
+
+      if (!progress) {
+        box.innerHTML = "<h3>Saved Progress</h3><p>No score saved yet. Complete the quiz to save your result in this browser.</p>";
+        return;
+      }
+
+      const date = new Date(progress.updatedAt);
+      const dateText = isNaN(date.getTime()) ? "recently" : date.toLocaleString();
+      box.innerHTML =
+        "<h3>Saved Progress</h3><p>Last score: <strong>" +
+        progress.score +
+        " / " +
+        progress.total +
+        "</strong> (" +
+        progress.percentage +
+        "%). Saved: " +
+        dateText +
+        ".</p>";
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      let complete = true;
+      const feedbackItems = [];
+      clearQuestionFeedback();
+
+      Object.keys(quizData).forEach(function(key, index) {
+        const selected = document.forms.quizForm[key].value;
+
+        if (!selected) {
+          complete = false;
+          return;
+        }
+
+        if (selected === quizData[key].answer) {
+          score++;
+        } else {
+          feedbackItems.push(
+            "<div class=\"quiz-feedback-item\"><strong>" +
+            (index + 1) +
+            ". Correct answer: " +
+            quizData[key].answer +
+            " - " +
+            quizData[key].correctText +
+            ".</strong><br />" +
+            quizData[key].feedback +
+            "</div>"
+          );
+        }
+
+        markQuestionFeedback(key, selected);
+      });
+
+      const resultBox = document.getElementById("result-box");
+      resultBox.style.display = "block";
+
+      if (!complete) {
+        resultBox.className = "quiz-result-box incorrect";
+        resultBox.innerHTML = "Please answer all questions before checking.";
+        return;
+      }
+
+      if (score === Object.keys(quizData).length) {
+        resultBox.className = "quiz-result-box correct";
+        resultBox.innerHTML = "Excellent. You got " + score + " out of " + Object.keys(quizData).length + " correct. Your listening for detail is very strong.";
+        saveProgress(score, Object.keys(quizData).length);
+        return;
+      }
+
+      resultBox.className = "quiz-result-box incorrect";
+      resultBox.innerHTML =
+        "You got " +
+        score +
+        " out of " +
+        Object.keys(quizData).length +
+        " correct.<br /><br /><strong>Review your incorrect answers:</strong><div class=\"quiz-feedback-list\">" +
+        feedbackItems.join("") +
+        "</div>";
+      saveProgress(score, Object.keys(quizData).length);
+    }
+
+    function resetQuiz() {
+      document.getElementById("quizForm").reset();
+      clearQuestionFeedback();
+      const resultBox = document.getElementById("result-box");
+      resultBox.style.display = "none";
+      resultBox.className = "quiz-result-box";
+      resultBox.innerHTML = "";
+    }
+
+    function saveOpenResponse() {
+      const response = document.getElementById("openResponse").value.trim();
+      localStorage.setItem(openResponseStorageKey, response);
+      alert("Response saved in this browser.");
+    }
+
+    function restoreOpenResponse() {
+      const saved = localStorage.getItem(openResponseStorageKey);
+      if (saved) document.getElementById("openResponse").value = saved;
+    }
+
+    function readCurrentUser() {
+      try {
+        const user = JSON.parse(sessionStorage.getItem("jaralingua_google_user") || "null");
+        if (!user || !user.exp || Date.now() / 1000 > user.exp) return null;
+        return user;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function readRoleRequests() {
+      try {
+        const requests = JSON.parse(localStorage.getItem("jaralingua_role_requests") || "[]");
+        return Array.isArray(requests) ? requests : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function canViewTeacherContent() {
+      const user = readCurrentUser();
+      if (!user) return false;
+
+      const email = String(user.email || "").trim().toLowerCase();
+      if (email === "cdavid.jaramillo@gmail.com") return true;
+
+      const id = user.sub || user.email || "";
+      return readRoleRequests().some(function(request) {
+        const requestEmail = String(request.email || "").trim().toLowerCase();
+        return (request.id === id || requestEmail === email) &&
+          request.status === "approved" &&
+          (request.role === "teacher" || request.role === "admin");
+      });
+    }
+
+    function initTeacherPanel() {
+      const panel = document.getElementById("teacherAdminPanel");
+      const transcript = document.getElementById("teacherTranscript");
+      if (!panel || !transcript || !canViewTeacherContent()) return;
+      transcript.textContent = listeningText;
+      panel.classList.add("is-visible");
+    }
+
+    function toggleTeacherTranscript() {
+      const transcript = document.getElementById("teacherTranscript");
+      if (transcript) transcript.classList.toggle("is-visible");
+    }
+
+    renderProgressSummary(readProgress());
+    restoreOpenResponse();
+    window.addEventListener("load", initTeacherPanel);
+  </script>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+  <script src="../../assets/js/transcript-pdf.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+</body>
+</html>

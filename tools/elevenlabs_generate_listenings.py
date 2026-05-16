@@ -156,8 +156,27 @@ def parse_name_set(value, defaults):
     return names
 
 
+def parse_speaker_voice_map(value):
+    speaker_map = {}
+    if not value:
+        return speaker_map
+
+    for raw_item in value.split(","):
+        item = raw_item.strip()
+        if not item or "=" not in item:
+            continue
+        speaker, voice_id = item.split("=", 1)
+        speaker = speaker.strip().lower()
+        voice_id = voice_id.strip()
+        if speaker and voice_id:
+            speaker_map[speaker] = voice_id
+
+    return speaker_map
+
+
 def build_speaker_voice_map(turns, female_voice_id, male_voice_id, female_speakers, male_speakers):
     speaker_to_voice = {}
+    explicit_voice_map = parse_speaker_voice_map(os.environ.get("ELEVENLABS_SPEAKER_VOICE_IDS"))
     fallback_index = 0
     fallback_voices = [female_voice_id, male_voice_id]
 
@@ -166,7 +185,9 @@ def build_speaker_voice_map(turns, female_voice_id, male_voice_id, female_speake
         key = speaker.lower()
         if speaker in speaker_to_voice:
             continue
-        if key in female_speakers:
+        if key in explicit_voice_map:
+            speaker_to_voice[speaker] = explicit_voice_map[key]
+        elif key in female_speakers:
             speaker_to_voice[speaker] = female_voice_id
         elif key in male_speakers:
             speaker_to_voice[speaker] = male_voice_id
