@@ -4,11 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Spelling Tool | Basic English Course 1</title>
+  <title>Unit 1 Spelling Tool | Basic English Course 1</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
 
   <link rel="stylesheet" href="../../assets/css/style.css" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
 </head>
 <body class="english-basic-page">
   <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
@@ -32,23 +33,24 @@
     <!-- LESSON HERO -->
     <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/spelling-tool-banner.jpg');">
       <div class="lesson-hero-content">
-        <p class="eyebrow">Basic English Course 1</p>
+        <p class="eyebrow">Basic English Course 1 · Unit 1 Toolkit</p>
 
-        <h1>Spelling Tool</h1>
+        <h1>Unit 1 Spelling Tool</h1>
 
         <p>
-          Practice the English alphabet, listen to each letter, and build confidence
-          when spelling names, emails, words, and personal information.
+          Practice letters, names, emails, phone numbers, and classroom spelling with
+          professional American English audio.
         </p>
 
         <div class="lesson-meta">
-          <span>Alphabet Practice</span>
-          <span>Listening Tool</span>
-          <span>Beginner Level</span>
+          <span>Unit 1</span>
+          <span>Alphabet + personal information</span>
+          <span>ElevenLabs audio</span>
         </div>
 
         <div class="hero-actions">
           <a href="#spelling-tool" class="btn btn-primary">Start practice</a>
+          <a href="unit-1-all-about-you.html" class="btn btn-secondary">Back to Unit 1</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
         </div>
       </div>
@@ -77,36 +79,59 @@
           <span class="topic-number">01</span>
           <div>
             <p class="topic-label">Interactive Practice</p>
-            <h2>The English Alphabet</h2>
+            <h2>Spelling Console</h2>
           </div>
         </div>
 
         <p class="lesson-text">
-          Click on any letter to hear its pronunciation. Vowels are highlighted in red
-          because they are especially important for spelling and pronunciation.
+          Use this Unit 1 tool for names, last names, emails, classroom words, and phone
+          numbers. Every playable item uses local ElevenLabs audio files.
         </p>
 
         <div class="spelling-tool-panel">
           <div class="spelling-tool-header">
             <div>
-              <h3>Alphabet Pronunciation</h3>
-              <p>Click a card and listen carefully.</p>
+              <h3>Letters, Numbers, and Email Symbols</h3>
+              <p>Choose a card or type your own item.</p>
             </div>
 
             <span class="spelling-badge">A–Z</span>
           </div>
 
+          <div class="spelling-section-label">
+            <i class="bi bi-alphabet-uppercase"></i>
+            <span>Alphabet</span>
+          </div>
           <div class="alphabet-grid" id="alphabet"></div>
 
+          <div class="spelling-section-label">
+            <i class="bi bi-123"></i>
+            <span>Numbers and symbols</span>
+          </div>
+          <div class="alphabet-grid compact-grid" id="symbolGrid"></div>
+
           <div class="spelling-word-row">
-            <label for="wordToSpell">Spell a name, email, or word</label>
+            <label for="wordToSpell">Spell a name, email, phone number, or word</label>
             <div class="spelling-word-controls">
-              <input type="text" id="wordToSpell" placeholder="Example: Alex" />
-              <button type="button" class="practice-submit-btn compact" onclick="spellCustomWord()">Spell it</button>
+              <input type="text" id="wordToSpell" placeholder="Example: alex.rivera@example.com" autocomplete="off" />
+              <button type="button" class="practice-submit-btn compact" onclick="spellCustomWord()">
+                <i class="bi bi-play-fill"></i>Spell it
+              </button>
+              <button type="button" class="practice-submit-btn compact secondary" onclick="stopCurrentAudio()">
+                <i class="bi bi-stop-fill"></i>Stop
+              </button>
+            </div>
+            <div class="sample-spelling-row" aria-label="Sample spelling prompts">
+              <button type="button" onclick="loadSample('Alex Rivera')">Alex Rivera</button>
+              <button type="button" onclick="loadSample('Ana-Maria')">Ana-Maria</button>
+              <button type="button" onclick="loadSample('alex.rivera@example.com')">alex.rivera@example.com</button>
+              <button type="button" onclick="loadSample('555-0182')">555-0182</button>
+              <button type="button" onclick="loadSample('+1 555-0199')">+1 555-0199</button>
             </div>
           </div>
 
-          <p class="spelling-status" id="status">Click on any letter to hear it pronounced.</p>
+          <div class="spelling-preview" id="spellingPreview" aria-live="polite"></div>
+          <p class="spelling-status" id="status">Choose a card or type an item to spell.</p>
         </div>
       </article>
 
@@ -114,25 +139,41 @@
         <div class="topic-heading">
           <span class="topic-number">02</span>
           <div>
-            <p class="topic-label">Practice Tip</p>
-            <h2>How to Use This Tool</h2>
+            <p class="topic-label">Unit 1 Classroom Use</p>
+            <h2>What This Supports</h2>
           </div>
         </div>
 
         <div class="lesson-grid">
           <div class="lesson-mini-card">
-            <h3>Step 1</h3>
+            <h3>Names</h3>
             <div class="phrase-item featured-phrase">
-              <strong>Listen first</strong>
-              <span>Click a letter and focus on the sound before repeating it.</span>
+              <strong>How do you spell your name?</strong>
+              <span>Students hear each letter and repeat the sequence clearly.</span>
             </div>
           </div>
 
           <div class="lesson-mini-card">
-            <h3>Step 2</h3>
+            <h3>Email</h3>
             <div class="phrase-item featured-phrase">
-              <strong>Repeat clearly</strong>
-              <span>Say the letter out loud after listening to the pronunciation.</span>
+              <strong>at, dot, dash, underscore</strong>
+              <span>The tool separates common email symbols from letter sounds.</span>
+            </div>
+          </div>
+
+          <div class="lesson-mini-card">
+            <h3>Phone Number</h3>
+            <div class="phrase-item featured-phrase">
+              <strong>zero to nine</strong>
+              <span>Digits now have their own American English audio files.</span>
+            </div>
+          </div>
+
+          <div class="lesson-mini-card">
+            <h3>Dictation</h3>
+            <div class="phrase-item featured-phrase">
+              <strong>Listen, repeat, write</strong>
+              <span>Use the preview chips to follow the active letter or number.</span>
             </div>
           </div>
         </div>
@@ -160,8 +201,9 @@
         </p>
 
         <div class="hero-actions">
-          <a href="course-overview.html" class="btn btn-primary">Back to Course Overview</a>
+          <a href="unit-1-all-about-you.html" class="btn btn-primary">Back to Unit 1</a>
           <a href="personal-information.html" class="btn btn-secondary">Review Personal Information</a>
+          <a href="course-overview.html" class="btn btn-secondary">Course Overview</a>
         </div>
       </div>
     </section>
@@ -174,79 +216,146 @@
 
   <script>
     const letters = [
-      { l: "A", speak: "ay", sound: "/ay/", vowel: true },
-      { l: "B", speak: "bee", sound: "/bee/", vowel: false },
-      { l: "C", speak: "see", sound: "/see/", vowel: false },
-      { l: "D", speak: "dee", sound: "/dee/", vowel: false },
-      { l: "E", speak: "ee", sound: "/ee/", vowel: true },
-      { l: "F", speak: "eff", sound: "/eff/", vowel: false },
-      { l: "G", speak: "jee", sound: "/jee/", vowel: false },
-      { l: "H", speak: "aitch", sound: "/aitch/", vowel: false },
-      { l: "I", speak: "eye", sound: "/eye/", vowel: true },
-      { l: "J", speak: "jay", sound: "/jay/", vowel: false },
-      { l: "K", speak: "kay", sound: "/kay/", vowel: false },
-      { l: "L", speak: "ell", sound: "/ell/", vowel: false },
-      { l: "M", speak: "em", sound: "/em/", vowel: false },
-      { l: "N", speak: "en", sound: "/en/", vowel: false },
-      { l: "O", speak: "oh", sound: "/oh/", vowel: true },
-      { l: "P", speak: "pee", sound: "/pee/", vowel: false },
-      { l: "Q", speak: "cue", sound: "/cue/", vowel: false },
-      { l: "R", speak: "are", sound: "/are/", vowel: false },
-      { l: "S", speak: "ess", sound: "/ess/", vowel: false },
-      { l: "T", speak: "tee", sound: "/tee/", vowel: false },
-      { l: "U", speak: "you", sound: "/you/", vowel: true },
-      { l: "V", speak: "vee", sound: "/vee/", vowel: false },
-      { l: "W", speak: "double you", sound: "/double you/", vowel: false },
-      { l: "X", speak: "ex", sound: "/ex/", vowel: false },
-      { l: "Y", speak: "why", sound: "/why/", vowel: false },
-      { l: "Z", speak: "zee", sound: "/zee/", vowel: false }
+      { key: "A", label: "A", speak: "letter A", sound: "/eɪ/", file: "a.mp3", vowel: true },
+      { key: "B", label: "B", speak: "bee", sound: "/bee/", file: "b.mp3" },
+      { key: "C", label: "C", speak: "see", sound: "/see/", file: "c.mp3" },
+      { key: "D", label: "D", speak: "dee", sound: "/dee/", file: "d.mp3" },
+      { key: "E", label: "E", speak: "letter E", sound: "/iː/", file: "e.mp3", vowel: true },
+      { key: "F", label: "F", speak: "eff", sound: "/eff/", file: "f.mp3" },
+      { key: "G", label: "G", speak: "gee", sound: "/dʒiː/", file: "g.mp3" },
+      { key: "H", label: "H", speak: "aitch", sound: "/aitch/", file: "h.mp3" },
+      { key: "I", label: "I", speak: "eye", sound: "/aɪ/", file: "i.mp3", vowel: true },
+      { key: "J", label: "J", speak: "jay", sound: "/jay/", file: "j.mp3" },
+      { key: "K", label: "K", speak: "kay", sound: "/kay/", file: "k.mp3" },
+      { key: "L", label: "L", speak: "ell", sound: "/ell/", file: "l.mp3" },
+      { key: "M", label: "M", speak: "em", sound: "/em/", file: "m.mp3" },
+      { key: "N", label: "N", speak: "en", sound: "/en/", file: "n.mp3" },
+      { key: "O", label: "O", speak: "oh", sound: "/oʊ/", file: "o.mp3", vowel: true },
+      { key: "P", label: "P", speak: "pee", sound: "/pee/", file: "p.mp3" },
+      { key: "Q", label: "Q", speak: "cue", sound: "/cue/", file: "q.mp3" },
+      { key: "R", label: "R", speak: "are", sound: "/are/", file: "r.mp3" },
+      { key: "S", label: "S", speak: "ess", sound: "/ess/", file: "s.mp3" },
+      { key: "T", label: "T", speak: "tee", sound: "/tee/", file: "t.mp3" },
+      { key: "U", label: "U", speak: "you", sound: "/juː/", file: "u.mp3", vowel: true },
+      { key: "V", label: "V", speak: "vee", sound: "/vee/", file: "v.mp3" },
+      { key: "W", label: "W", speak: "double you", sound: "/double you/", file: "w.mp3" },
+      { key: "X", label: "X", speak: "ex", sound: "/ex/", file: "x.mp3" },
+      { key: "Y", label: "Y", speak: "why", sound: "/why/", file: "y.mp3" },
+      { key: "Z", label: "Z", speak: "zee", sound: "/zee/", file: "z.mp3" }
     ];
 
-    let voices = [];
+    const digits = [
+      { key: "0", label: "0", speak: "zero", sound: "zero", file: "zero.mp3" },
+      { key: "1", label: "1", speak: "one", sound: "one", file: "one.mp3" },
+      { key: "2", label: "2", speak: "two", sound: "two", file: "two.mp3" },
+      { key: "3", label: "3", speak: "three", sound: "three", file: "three.mp3" },
+      { key: "4", label: "4", speak: "four", sound: "four", file: "four.mp3" },
+      { key: "5", label: "5", speak: "five", sound: "five", file: "five.mp3" },
+      { key: "6", label: "6", speak: "six", sound: "six", file: "six.mp3" },
+      { key: "7", label: "7", speak: "seven", sound: "seven", file: "seven.mp3" },
+      { key: "8", label: "8", speak: "eight", sound: "eight", file: "eight.mp3" },
+      { key: "9", label: "9", speak: "nine", sound: "nine", file: "nine.mp3" }
+    ];
 
-    function loadVoices() {
-      voices = speechSynthesis.getVoices();
+    const symbols = [
+      { key: "@", label: "@", speak: "at", sound: "at", file: "at.mp3" },
+      { key: ".", label: ".", speak: "dot", sound: "dot", file: "dot.mp3" },
+      { key: "-", label: "-", speak: "dash", sound: "dash", file: "dash.mp3" },
+      { key: "_", label: "_", speak: "underscore", sound: "underscore", file: "underscore.mp3" },
+      { key: "+", label: "+", speak: "plus", sound: "plus", file: "plus.mp3" }
+    ];
+
+    const audioBase = "audio/alphabet/";
+    const audioVersion = "20260517-vowels-fixed";
+    const tokenLibrary = {};
+    let currentAudio = null;
+    let activeSequence = 0;
+
+    letters.concat(digits, symbols).forEach(function(item) {
+      tokenLibrary[item.key] = item;
+    });
+
+    function setStatus(message) {
+      document.getElementById("status").textContent = message;
     }
 
-    speechSynthesis.addEventListener("voiceschanged", loadVoices);
-    loadVoices();
+    function clearActiveStates() {
+      document.querySelectorAll(".alphabet-card.playing, .spelling-token.active").forEach(function(item) {
+        item.classList.remove("playing", "active");
+      });
+    }
 
-    function getBestVoice() {
-      const preferredVoices = ["Google US English", "Microsoft Aria", "Samantha", "Alex", "Karen", "Daniel"];
+    function stopCurrentAudio() {
+      activeSequence += 1;
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+        currentAudio = null;
+      }
+      clearActiveStates();
+      setStatus("Audio stopped.");
+    }
 
-      for (const name of preferredVoices) {
-        const voice = voices.find(function(v) {
-          return v.name.includes(name) && v.lang.startsWith("en");
-        });
-        if (voice) return voice;
+    function playAudioItem(item, onEnd) {
+      if (!item || !item.file) {
+        if (onEnd) onEnd();
+        return;
+      }
+      if (currentAudio) {
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+      currentAudio = new Audio(audioBase + item.file + "?v=" + audioVersion);
+      currentAudio.preload = "auto";
+      currentAudio.addEventListener("ended", function() {
+        currentAudio = null;
+        if (onEnd) onEnd();
+      }, { once: true });
+      currentAudio.addEventListener("error", function() {
+        setStatus("Audio file not available for: " + item.speak);
+        if (onEnd) onEnd();
+      }, { once: true });
+      currentAudio.play().catch(function() {
+        setStatus("Tap again to play the audio.");
+        if (onEnd) onEnd();
+      });
+    }
+
+    function playSequence(items, index, sequenceId) {
+      if (sequenceId !== activeSequence) return;
+      if (index >= items.length) {
+        clearActiveStates();
+        setStatus("Finished spelling.");
+        return;
       }
 
-      return voices.find(function(v) { return v.lang === "en-US"; }) || voices.find(function(v) { return v.lang.startsWith("en"); }) || null;
-    }
+      const item = items[index];
+      clearActiveStates();
+      const chip = document.querySelector('[data-token-index="' + index + '"]');
+      if (chip) chip.classList.add("active");
 
-    function speak(text, rate, onEnd) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "en-US";
-      utterance.rate = rate;
-      utterance.pitch = 1;
+      if (!item.file) {
+        window.setTimeout(function() {
+          playSequence(items, index + 1, sequenceId);
+        }, item.pause ? 180 : 80);
+        return;
+      }
 
-      const voice = getBestVoice();
-      if (voice) utterance.voice = voice;
-      if (onEnd) utterance.onend = onEnd;
-
-      speechSynthesis.speak(utterance);
+      setStatus("Now playing: " + item.label);
+      playAudioItem(item, function() {
+        window.setTimeout(function() {
+          playSequence(items, index + 1, sequenceId);
+        }, 120);
+      });
     }
 
     function pronounce(data, card) {
-      speechSynthesis.cancel();
-      document.querySelectorAll(".alphabet-card").forEach(function(item) {
-        item.classList.remove("playing");
-      });
-
+      stopCurrentAudio();
+      activeSequence += 1;
+      clearActiveStates();
       card.classList.add("playing");
-      document.getElementById("status").textContent = "Now playing: " + data.l + " = " + data.speak;
-
-      speak(data.speak, 0.72, function() {
+      setStatus("Now playing: " + data.label);
+      playAudioItem(data, function() {
         card.classList.remove("playing");
       });
     }
@@ -255,45 +364,67 @@
       const card = document.createElement("button");
       card.type = "button";
       card.className = "alphabet-card" + (data.vowel ? " vowel" : "");
-      card.setAttribute("aria-label", "Listen to letter " + data.l);
+      card.setAttribute("aria-label", "Listen to " + data.speak);
       card.innerHTML =
-        '<span class="letter-pair">' + data.l + '<span class="lower">' + data.l.toLowerCase() + '</span></span>' +
+        '<span class="letter-pair">' + data.label + (/[A-Z]/.test(data.label) ? '<span class="lower">' + data.label.toLowerCase() + '</span>' : '') + '</span>' +
         '<span class="sound">' + data.sound + '</span>';
       card.addEventListener("click", function() { pronounce(data, card); });
       container.appendChild(card);
     }
 
-    function spellCustomWord() {
+    function tokenForCharacter(char, index) {
+      const upper = char.toUpperCase();
+      if (tokenLibrary[upper]) return Object.assign({ index: index }, tokenLibrary[upper]);
+      if (tokenLibrary[char]) return Object.assign({ index: index }, tokenLibrary[char]);
+      if (char === " ") return { index: index, label: "space", speak: "pause", pause: true, file: null };
+      return { index: index, label: char, speak: "unsupported: " + char, unsupported: true, file: null };
+    }
+
+    function renderPreview(items) {
+      const preview = document.getElementById("spellingPreview");
+      preview.innerHTML = items.map(function(item) {
+        const classes = "spelling-token" + (item.pause ? " pause" : "") + (item.unsupported ? " unsupported" : "");
+        return '<span class="' + classes + '" data-token-index="' + item.index + '"><b>' + item.label + '</b><small>' + item.speak + '</small></span>';
+      }).join("");
+    }
+
+    function spellCustomWord(value) {
       const input = document.getElementById("wordToSpell");
+      if (value) input.value = value;
       const raw = input.value.trim();
-      const status = document.getElementById("status");
 
       if (!raw) {
-        status.textContent = "Write a name, email, or word first.";
+        setStatus("Write a name, email, phone number, or word first.");
         input.focus();
         return;
       }
 
-      const letterMap = Object.fromEntries(letters.map(function(item) {
-        return [item.l, item.speak];
-      }));
-      const spokenParts = raw.toUpperCase().split("").map(function(char) {
-        if (letterMap[char]) return letterMap[char];
-        if (char === "@") return "at";
-        if (char === ".") return "dot";
-        if (char === "-") return "dash";
-        if (char === "_") return "underscore";
-        if (char === " ") return "pause";
-        return char;
-      });
+      const spokenItems = raw.split("").map(tokenForCharacter);
+      const unsupported = spokenItems.filter(function(item) { return item.unsupported; });
+      activeSequence += 1;
+      const sequenceId = activeSequence;
+      renderPreview(spokenItems);
 
-      speechSynthesis.cancel();
-      status.textContent = "Spelling: " + raw + " = " + spokenParts.join(" - ");
-      speak(spokenParts.join(". "), 0.58);
+      if (unsupported.length) {
+        setStatus("Some characters do not have audio yet: " + unsupported.map(function(item) { return item.label; }).join(", "));
+      } else {
+        setStatus("Spelling: " + raw);
+      }
+
+      playSequence(spokenItems, 0, sequenceId);
+    }
+
+    function loadSample(value) {
+      spellCustomWord(value);
     }
 
     const grid = document.getElementById("alphabet");
+    const symbolGrid = document.getElementById("symbolGrid");
     letters.forEach(function(letter) { makeCard(letter, grid); });
+    digits.concat(symbols).forEach(function(item) { makeCard(item, symbolGrid); });
+    document.getElementById("wordToSpell").addEventListener("keydown", function(event) {
+      if (event.key === "Enter") spellCustomWord();
+    });
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

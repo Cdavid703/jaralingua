@@ -1,0 +1,56 @@
+{
+  "speakers": {
+    "Narrator": {
+      "voice_id": "put_professional_us_narrator_voice_id_here",
+      "name": "US Narrator",
+      "profile": "english-us",
+      "gender": "neutral"
+    },
+    "Teacher": {
+      "voice_id": "put_professional_us_teacher_voice_id_here",
+      "name": "US Teacher",
+      "profile": "english-us",
+      "gender": "female"
+    },
+    "Voix A": {
+      "voice_id": "put_professional_france_voice_a_id_here",
+      "name": "Voix A France",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Voix B": {
+      "voice_id": "put_professional_france_voice_b_id_here",
+      "name": "Voix B France",
+      "profile": "french-france",
+      "gender": "male"
+    }
+  },
+  "pools": {
+    "english-us": {
+      "female": [
+        { "voice_id": "put_us_female_voice_id_1_here", "name": "US Female 1" },
+        { "voice_id": "put_us_female_voice_id_2_here", "name": "US Female 2" }
+      ],
+      "male": [
+        { "voice_id": "put_us_male_voice_id_1_here", "name": "US Male 1" },
+        { "voice_id": "put_us_male_voice_id_2_here", "name": "US Male 2" }
+      ],
+      "neutral": [
+        { "voice_id": "put_us_narrator_voice_id_here", "name": "US Narrator" }
+      ]
+    },
+    "french-france": {
+      "female": [
+        { "voice_id": "put_france_female_voice_id_1_here", "name": "FR Female 1" },
+        { "voice_id": "put_france_female_voice_id_2_here", "name": "FR Female 2" }
+      ],
+      "male": [
+        { "voice_id": "put_france_male_voice_id_1_here", "name": "FR Male 1" },
+        { "voice_id": "put_france_male_voice_id_2_here", "name": "FR Male 2" }
+      ],
+      "neutral": [
+        { "voice_id": "put_france_narrator_voice_id_here", "name": "FR Narrator" }
+      ]
+    }
+  }
+}

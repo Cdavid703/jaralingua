@@ -2181,6 +2181,37 @@ a {
   color: var(--white);
 }
 
+.overview-resource-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.overview-resource-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 14px;
+  border-radius: 999px;
+  background: var(--blue-dark);
+  color: var(--white);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.overview-resource-links a:not(:first-child) {
+  background: var(--white);
+  color: var(--blue-dark);
+  border: 2px solid rgba(18, 59, 143, 0.16);
+}
+
+.overview-resource-links a:hover {
+  background: var(--red);
+  color: var(--white);
+  border-color: var(--red);
+}
+
 .overview-card:nth-child(2) .section-number {
   background: var(--red);
 }
@@ -2752,6 +2783,20 @@ a {
   gap: 14px;
 }
 
+.alphabet-grid.compact-grid {
+  grid-template-columns: repeat(auto-fill, minmax(86px, 1fr));
+  margin-top: 10px;
+}
+
+.spelling-section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 18px 0 10px;
+  color: var(--blue-dark);
+  font-weight: 900;
+}
+
 .alphabet-card {
   aspect-ratio: 1;
   display: flex;
@@ -2841,7 +2886,7 @@ a {
 
 .spelling-word-controls {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   gap: 12px;
 }
 
@@ -2863,6 +2908,81 @@ a {
   width: auto;
   margin-top: 0;
   padding: 0 22px;
+}
+
+.practice-submit-btn.compact.secondary {
+  background: var(--white);
+  color: var(--blue-dark);
+  border: 2px solid rgba(18, 59, 143, 0.18);
+  box-shadow: none;
+}
+
+.sample-spelling-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.sample-spelling-row button {
+  border: 1px solid rgba(18, 59, 143, 0.16);
+  border-radius: 999px;
+  background: #f8fbff;
+  color: var(--blue-dark);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 8px 12px;
+}
+
+.sample-spelling-row button:hover {
+  background: var(--blue-dark);
+  color: var(--white);
+}
+
+.spelling-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 18px;
+  min-height: 42px;
+}
+
+.spelling-token {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 38px;
+  padding: 6px 10px;
+  border-radius: 12px;
+  background: var(--white);
+  border: 1px solid rgba(18, 59, 143, 0.12);
+  color: var(--blue-dark);
+  font-weight: 900;
+}
+
+.spelling-token small {
+  color: var(--gray);
+  font-weight: 800;
+}
+
+.spelling-token.active {
+  background: var(--blue-dark);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.spelling-token.active small {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.spelling-token.pause {
+  opacity: 0.72;
+}
+
+.spelling-token.unsupported {
+  border-color: rgba(215, 25, 63, 0.34);
+  color: var(--red);
 }
 
 @media (max-width: 560px) {

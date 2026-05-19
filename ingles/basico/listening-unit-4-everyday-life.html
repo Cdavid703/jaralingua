@@ -68,16 +68,6 @@
   </main>
   <script>
     const dialogueText = "Maya is a student and a receptionist. She wakes up at six o'clock every morning. She takes a shower, has breakfast, and listens to music on the bus. She starts work at eight. After work, she studies English at the institute. Maya usually goes to the gym on Tuesday and Thursday. She never runs in the morning because she is very busy. On Sundays, she sleeps late and visits her grandmother. Her routine is busy, but she likes it.";
-    function playDialogue() {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(dialogueText);
-      utterance.lang = "en-US"; utterance.rate = 0.82; utterance.pitch = 1;
-      const voices = speechSynthesis.getVoices();
-      const voice = voices.find(v => v.lang === "en-US") || voices.find(v => v.lang && v.lang.startsWith("en"));
-      if (voice) utterance.voice = voice;
-      speechSynthesis.speak(utterance);
-    }
-    function stopDialogue() { speechSynthesis.cancel(); }
     function checkAnswers() {
       const answers = {'q1': 'B', 'q2': 'A', 'q3': 'C', 'q4': 'A', 'q5': 'B', 'q6': 'A', 'q7': 'C', 'q8': 'A', 'q9': 'B', 'q10': 'A'};
       let score = 0; let complete = true;
@@ -92,7 +82,6 @@
       if (score === Object.keys(answers).length) { resultBox.className = "quiz-result-box correct"; resultBox.innerHTML = "Excellent! You got " + score + " out of " + Object.keys(answers).length + " correct."; }
       else { resultBox.className = "quiz-result-box incorrect"; resultBox.innerHTML = "You got " + score + " out of " + Object.keys(answers).length + " correct.<br><br><strong>Correct Answers:</strong><br>1: B - Student and receptionist<br>2: A - She takes a shower and has breakfast<br>3: C - On the bus<br>4: A - She studies English at the institute<br>5: B - Tuesday and Thursday<br>6: A - She is very busy<br>7: C - Sleeps late and visits her grandmother<br>8: A - Usually<br>9: B - Her routine is busy, but she likes it<br>10: A - How often do you go to the gym?"; }
     }
-    speechSynthesis.onvoiceschanged = function() {};
   </script>
 
   <footer class="site-footer">

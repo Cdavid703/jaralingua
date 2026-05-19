@@ -68,16 +68,6 @@
   </main>
   <script>
     const dialogueText = "Sara: Good morning. Welcome to the registration table. My name is Sara.\nAlex: Good morning. My name is Alex Rivera. I am twenty-two years old, and I live in Medellin. Today is my first day at this business event.\nSara: Nice to meet you, Alex. Could you please spell your last name?\nAlex: Yes. R-I-V-E-R-A.\nSara: Thank you, Alex. I am twenty-one years old, and I live in Envigado.\nAlex: Nice to meet you, Sara.\nSara: Nice to meet you too, Alex. Have a great day.\nAlex: Thank you. Goodbye.";
-    function playDialogue() {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(dialogueText);
-      utterance.lang = "en-US"; utterance.rate = 0.82; utterance.pitch = 1;
-      const voices = speechSynthesis.getVoices();
-      const voice = voices.find(v => v.lang === "en-US") || voices.find(v => v.lang && v.lang.startsWith("en"));
-      if (voice) utterance.voice = voice;
-      speechSynthesis.speak(utterance);
-    }
-    function stopDialogue() { speechSynthesis.cancel(); }
     function checkAnswers() {
       const answers = {'q1': 'A', 'q2': 'B', 'q3': 'A', 'q4': 'B', 'q5': 'A', 'q6': 'B', 'q7': 'C', 'q8': 'A', 'q9': 'B', 'q10': 'C'};
       let score = 0; let complete = true;
@@ -92,7 +82,6 @@
       if (score === Object.keys(answers).length) { resultBox.className = "quiz-result-box correct"; resultBox.innerHTML = "Excellent! You got " + score + " out of " + Object.keys(answers).length + " correct."; }
       else { resultBox.className = "quiz-result-box incorrect"; resultBox.innerHTML = "You got " + score + " out of " + Object.keys(answers).length + " correct.<br><br><strong>Correct Answers:</strong><br>1: A - He is arriving at a business event for the first time<br>2: B - He is twenty-two and lives in Medellin<br>3: A - She needs it for the registration information<br>4: B - R-I-V-E-R-A<br>5: A - She lives in Envigado<br>6: B - Good morning<br>7: C - Their name and city<br>8: A - Helping at the registration table<br>9: B - Polite and introductory<br>10: C - With a goodbye and a polite wish"; }
     }
-    speechSynthesis.onvoiceschanged = function() {};
   </script>
 
   <footer class="site-footer">

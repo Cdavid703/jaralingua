@@ -68,16 +68,6 @@
   </main>
   <script>
     const dialogueText = "Nina: It is Friday after class. Mateo, what do you do in your free time?\nMateo: I like going out. I meet friends at the park, and sometimes I go to the movies. What about you?\nNina: I like staying in. I watch cooking shows twice a week, and I play video games on Saturday night.\nMateo: What kind of TV shows do you like?\nNina: I like cooking shows and documentaries. Do you watch TV every day?\nMateo: No, I do not. But I like documentaries too.\nNina: Let's meet on Sunday afternoon and watch a documentary at my house.\nMateo: Great idea.";
-    function playDialogue() {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(dialogueText);
-      utterance.lang = "en-US"; utterance.rate = 0.82; utterance.pitch = 1;
-      const voices = speechSynthesis.getVoices();
-      const voice = voices.find(v => v.lang === "en-US") || voices.find(v => v.lang && v.lang.startsWith("en"));
-      if (voice) utterance.voice = voice;
-      speechSynthesis.speak(utterance);
-    }
-    function stopDialogue() { speechSynthesis.cancel(); }
     function checkAnswers() {
       const answers = {'q1': 'B', 'q2': 'A', 'q3': 'A', 'q4': 'B', 'q5': 'C', 'q6': 'A', 'q7': 'B', 'q8': 'A', 'q9': 'B', 'q10': 'A'};
       let score = 0; let complete = true;
@@ -92,7 +82,6 @@
       if (score === Object.keys(answers).length) { resultBox.className = "quiz-result-box correct"; resultBox.innerHTML = "Excellent! You got " + score + " out of " + Object.keys(answers).length + " correct."; }
       else { resultBox.className = "quiz-result-box incorrect"; resultBox.innerHTML = "You got " + score + " out of " + Object.keys(answers).length + " correct.<br><br><strong>Correct Answers:</strong><br>1: B - On Friday after class<br>2: A - He likes going out and meeting friends<br>3: A - Staying in<br>4: B - Twice a week<br>5: C - She plays video games<br>6: A - Cooking shows and documentaries<br>7: B - Documentaries<br>8: A - Staying in and going out<br>9: B - What kind of TV shows do you like?<br>10: A - Meet on Sunday afternoon and watch a documentary at Nina's house"; }
     }
-    speechSynthesis.onvoiceschanged = function() {};
   </script>
 
   <footer class="site-footer">

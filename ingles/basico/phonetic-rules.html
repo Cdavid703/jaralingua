@@ -1194,20 +1194,29 @@
       `).join("");
     }
 
+    let activePronunciationAudio = null;
+
+    function audioSlug(text) {
+      return text
+        .normalize("NFKD")
+        .replace(/[^\x00-\x7F]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 90)
+        .replace(/-+$/g, "");
+    }
+
     function speak(text) {
-      if (!("speechSynthesis" in window)) {
-        alert("Speech synthesis is not available in this browser.");
-        return;
+      if (activePronunciationAudio) {
+        activePronunciationAudio.pause();
+        activePronunciationAudio.currentTime = 0;
       }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text.replace(/_/g, " "));
-      utterance.lang = "en-US";
-      utterance.rate = 0.78;
-      utterance.pitch = 1;
-      const voices = window.speechSynthesis.getVoices();
-      const englishVoice = voices.find((voice) => voice.lang === "en-US") || voices.find((voice) => voice.lang && voice.lang.startsWith("en"));
-      if (englishVoice) utterance.voice = englishVoice;
-      window.speechSynthesis.speak(utterance);
+      const cleanText = text.replace(/_/g, " ").trim();
+      activePronunciationAudio = new Audio("audio/phonetics/" + audioSlug(cleanText) + ".mp3");
+      activePronunciationAudio.play().catch(function() {
+        alert("Audio file not available yet.");
+      });
     }
 
     renderCategory();
@@ -1223,9 +1232,6 @@
       if (soundButton) speak(soundButton.dataset.say);
     });
 
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-    }
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

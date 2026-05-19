@@ -667,16 +667,28 @@ Maria"></textarea>
       renderGame();
     }
 
+    let activeVocabularyAudio = null;
+
+    function audioSlug(text) {
+      return text
+        .normalize("NFKD")
+        .replace(/[^\x00-\x7F]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 90)
+        .replace(/-+$/g, "");
+    }
+
     function speakVocabulary(word) {
-      if (!("speechSynthesis" in window)) {
-        alert("La prononciation n’est pas disponible dans ce navigateur.");
-        return;
+      if (activeVocabularyAudio) {
+        activeVocabularyAudio.pause();
+        activeVocabularyAudio.currentTime = 0;
       }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(word);
-      utterance.lang = "fr-FR";
-      utterance.rate = 0.86;
-      window.speechSynthesis.speak(utterance);
+      activeVocabularyAudio = new Audio("../audio/professions/" + audioSlug(word) + ".mp3");
+      activeVocabularyAudio.play().catch(function() {
+        alert("Le fichier audio de prononciation n’est pas encore disponible.");
+      });
     }
   </script>
   <script src="../../../assets/js/google-auth-config.js"></script>

@@ -773,20 +773,28 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
     const moduleNav = document.getElementById("moduleNav");
     const moduleContent = document.getElementById("moduleContent");
 
+    let activePronunciationAudio = null;
+
+    function audioSlug(text) {
+      return text
+        .normalize("NFKD")
+        .replace(/[^\x00-\x7F]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 90)
+        .replace(/-+$/g, "");
+    }
+
     function speak(text) {
-      if (!("speechSynthesis" in window)) {
-        alert("La voix du navigateur n’est pas disponible sur cet appareil.");
-        return;
+      if (activePronunciationAudio) {
+        activePronunciationAudio.pause();
+        activePronunciationAudio.currentTime = 0;
       }
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "fr-FR";
-      utterance.rate = 0.82;
-      utterance.pitch = 1;
-      const voices = window.speechSynthesis.getVoices();
-      const frenchVoice = voices.find((voice) => voice.lang && voice.lang.toLowerCase().startsWith("fr"));
-      if (frenchVoice) utterance.voice = frenchVoice;
-      window.speechSynthesis.speak(utterance);
+      activePronunciationAudio = new Audio("audio/phonetics/" + audioSlug(text.trim()) + ".mp3");
+      activePronunciationAudio.play().catch(function() {
+        alert("Le fichier audio n’est pas encore disponible.");
+      });
     }
 
     function renderModules(activeId = modules[0].id) {
@@ -842,9 +850,6 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
     }, { threshold: 0.12 });
     fadeElements.forEach((element) => observer.observe(element));
 
-    if ("speechSynthesis" in window) {
-      window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
-    }
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

@@ -68,16 +68,6 @@
   </main>
   <script>
     const dialogueText = "My neighborhood is small, but it is very nice. There is a beautiful park near my apartment, and there are two cafes across from the park. My favorite cafe opens at seven thirty in the morning. On Saturdays, I have breakfast there with my sister. There is also a library next to the supermarket. It is quiet and modern. At five o'clock, many people walk in the park. I think it is the best place in my city because it is clean, friendly, and safe.";
-    function playDialogue() {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(dialogueText);
-      utterance.lang = "en-US"; utterance.rate = 0.82; utterance.pitch = 1;
-      const voices = speechSynthesis.getVoices();
-      const voice = voices.find(v => v.lang === "en-US") || voices.find(v => v.lang && v.lang.startsWith("en"));
-      if (voice) utterance.voice = voice;
-      speechSynthesis.speak(utterance);
-    }
-    function stopDialogue() { speechSynthesis.cancel(); }
     function checkAnswers() {
       const answers = {'q1': 'B', 'q2': 'A', 'q3': 'B', 'q4': 'A', 'q5': 'B', 'q6': 'C', 'q7': 'A', 'q8': 'A', 'q9': 'A', 'q10': 'B'};
       let score = 0; let complete = true;
@@ -92,7 +82,6 @@
       if (score === Object.keys(answers).length) { resultBox.className = "quiz-result-box correct"; resultBox.innerHTML = "Excellent! You got " + score + " out of " + Object.keys(answers).length + " correct."; }
       else { resultBox.className = "quiz-result-box incorrect"; resultBox.innerHTML = "You got " + score + " out of " + Object.keys(answers).length + " correct.<br><br><strong>Correct Answers:</strong><br>1: B - His neighborhood<br>2: A - A park and two cafes<br>3: B - At seven thirty in the morning<br>4: A - He has breakfast with his sister<br>5: B - Next to the supermarket<br>6: C - Quiet and modern<br>7: A - Many people walk there<br>8: A - Clean, friendly and safe<br>9: A - There is / there are and places in town<br>10: B - What places are there near your house?"; }
     }
-    speechSynthesis.onvoiceschanged = function() {};
   </script>
 
   <footer class="site-footer">

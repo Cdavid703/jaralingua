@@ -69,12 +69,12 @@
         <form id="readingQuizForm" class="listening-quiz">
           <div class="quiz-question-card"><h3>1. What does Sofia open after class?</h3><label><input type="radio" name="q1" value="A" /> Her blue backpack</label><label><input type="radio" name="q1" value="B" /> Her green notebook</label><label><input type="radio" name="q1" value="C" /> Her phone</label></div>
           <div class="quiz-question-card"><h3>2. What object is missing from the front pocket?</h3><label><input type="radio" name="q2" value="A" /> A pencil</label><label><input type="radio" name="q2" value="B" /> A red marker</label><label><input type="radio" name="q2" value="C" /> A class card</label></div>
-          <div class="quiz-question-card"><h3>3. Where does Leo see a marker first?</h3><label><input type="radio" name="q3" value="A" /> On Ana's desk</label><label><input type="radio" name="q3" value="B" /> Under his chair</label><label><input type="radio" name="q3" value="C" /> In the backpack</label></div>
+          <div class="quiz-question-card"><h3>3. Where does Leo see a marker first?</h3><label><input type="radio" name="q3" value="A" /> On the teacher's table</label><label><input type="radio" name="q3" value="B" /> In Sofia's backpack</label><label><input type="radio" name="q3" value="C" /> On Ana's desk</label></div>
           <div class="quiz-question-card"><h3>4. What does Ana say about the marker on her desk?</h3><label><input type="radio" name="q4" value="A" /> It is Daniel's</label><label><input type="radio" name="q4" value="B" /> It is mine</label><label><input type="radio" name="q4" value="C" /> It is Sofia's</label></div>
-          <div class="quiz-question-card"><h3>5. Where is Sofia's marker?</h3><label><input type="radio" name="q5" value="A" /> On the teacher's table</label><label><input type="radio" name="q5" value="B" /> At the door</label><label><input type="radio" name="q5" value="C" /> In Daniel's bag</label></div>
+          <div class="quiz-question-card"><h3>5. Where is Sofia's marker?</h3><label><input type="radio" name="q5" value="A" /> On Ana's desk</label><label><input type="radio" name="q5" value="B" /> In the front pocket</label><label><input type="radio" name="q5" value="C" /> On the teacher's table</label></div>
           <div class="quiz-question-card"><h3>6. Which marker is the teacher's?</h3><label><input type="radio" name="q6" value="A" /> The red marker</label><label><input type="radio" name="q6" value="B" /> The green marker</label><label><input type="radio" name="q6" value="C" /> The black marker</label></div>
           <div class="quiz-question-card"><h3>7. What can the students use English to solve?</h3><label><input type="radio" name="q7" value="A" /> Small classroom problems</label><label><input type="radio" name="q7" value="B" /> Math exams</label><label><input type="radio" name="q7" value="C" /> Bus routes</label></div>
-          <div class="quiz-question-card"><h3>8. What personal information does Leo write?</h3><label><input type="radio" name="q8" value="A" /> Name, age, and phone number</label><label><input type="radio" name="q8" value="B" /> Address, job, and email</label><label><input type="radio" name="q8" value="C" /> Country, city, and school</label></div>
+          <div class="quiz-question-card"><h3>8. What personal information does Leo write?</h3><label><input type="radio" name="q8" value="A" /> Country, city, and school</label><label><input type="radio" name="q8" value="B" /> Address, job, and email</label><label><input type="radio" name="q8" value="C" /> Name, age, and phone number</label></div>
           <button type="button" class="practice-submit-btn" onclick="checkReadingAnswers()">Check Answers</button>
         </form>
         <div id="result-box" class="quiz-result-box"></div>
@@ -88,7 +88,7 @@
 
   <script>
     function checkReadingAnswers() {
-      const answers = {q1: "A", q2: "B", q3: "A", q4: "B", q5: "A", q6: "B", q7: "A", q8: "A"};
+      const answers = {q1: "A", q2: "B", q3: "C", q4: "B", q5: "C", q6: "B", q7: "A", q8: "C"};
       let score = 0;
       let complete = true;
       Object.keys(answers).forEach(function(key) {
@@ -108,7 +108,7 @@
         resultBox.innerHTML = "Excellent! You got " + score + " out of " + Object.keys(answers).length + " correct.";
       } else {
         resultBox.className = "quiz-result-box incorrect";
-        resultBox.innerHTML = "You got " + score + " out of " + Object.keys(answers).length + " correct.<br><br><strong>Correct Answers:</strong><br>1: A - Her blue backpack<br>2: B - A red marker<br>3: A - On Ana's desk<br>4: B - It is mine<br>5: A - On the teacher's table<br>6: B - The green marker<br>7: A - Small classroom problems<br>8: A - Name, age, and phone number";
+        resultBox.innerHTML = "You got " + score + " out of " + Object.keys(answers).length + " correct.<br><br><strong>Correct Answers:</strong><br>1: A - Her blue backpack<br>2: B - A red marker<br>3: C - On Ana's desk<br>4: B - It is mine<br>5: C - On the teacher's table<br>6: B - The green marker<br>7: A - Small classroom problems<br>8: C - Name, age, and phone number";
       }
     }
   </script>

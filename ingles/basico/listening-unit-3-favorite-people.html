@@ -68,16 +68,6 @@
   </main>
   <script>
     const dialogueText = "Luis: This is my favorite singer. Her name is Emma Lee. She is from Canada, and she is twenty-five years old.\nPartner: Is she an actor?\nLuis: No, she is not. She is a singer. She is creative and friendly.\nPartner: Is she famous?\nLuis: Yes, she is. And this is my family photo.\nPartner: Who is the woman in the photo?\nLuis: She is my mother. This is my brother. He is sixteen, and he is a student.\nPartner: Nice photo, Luis.";
-    function playDialogue() {
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(dialogueText);
-      utterance.lang = "en-US"; utterance.rate = 0.82; utterance.pitch = 1;
-      const voices = speechSynthesis.getVoices();
-      const voice = voices.find(v => v.lang === "en-US") || voices.find(v => v.lang && v.lang.startsWith("en"));
-      if (voice) utterance.voice = voice;
-      speechSynthesis.speak(utterance);
-    }
-    function stopDialogue() { speechSynthesis.cancel(); }
     function checkAnswers() {
       const answers = {'q1': 'C', 'q2': 'C', 'q3': 'B', 'q4': 'A', 'q5': 'A', 'q6': 'A', 'q7': 'C', 'q8': 'B', 'q9': 'A', 'q10': 'B'};
       let score = 0; let complete = true;
@@ -92,7 +82,6 @@
       if (score === Object.keys(answers).length) { resultBox.className = "quiz-result-box correct"; resultBox.innerHTML = "Excellent! You got " + score + " out of " + Object.keys(answers).length + " correct."; }
       else { resultBox.className = "quiz-result-box incorrect"; resultBox.innerHTML = "You got " + score + " out of " + Object.keys(answers).length + " correct.<br><br><strong>Correct Answers:</strong><br>1: C - His favorite singer<br>2: C - Canada<br>3: B - She is a singer, creative and friendly<br>4: A - Luis's classmate or partner<br>5: A - Is she an actor?<br>6: A - No, she is not<br>7: C - A family photo<br>8: B - His mother and brother<br>9: A - Describing people and asking yes/no questions<br>10: B - Is he a student?"; }
     }
-    speechSynthesis.onvoiceschanged = function() {};
   </script>
 
   <footer class="site-footer">
