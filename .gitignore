@@ -1,5 +1,7 @@
 desktop.ini
 elevenlabs.local.env
+deploy.local.env
+deploy.local.*.env
 __pycache__/
 *.pyc
 chrome-tmp/

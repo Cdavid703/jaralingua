@@ -1,0 +1,21 @@
+#!/bin/sh
+set -u
+
+repo_root="$(git rev-parse --show-toplevel 2>/dev/null)" || exit 0
+
+if command -v cygpath >/dev/null 2>&1; then
+  repo_root_ps="$(cygpath -w "$repo_root")"
+else
+  repo_root_ps="$repo_root"
+fi
+
+script_path="$repo_root_ps/scripts/post-commit-sync.ps1"
+
+if command -v powershell.exe >/dev/null 2>&1; then
+  powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$script_path" -RepoRoot "$repo_root_ps"
+elif command -v pwsh >/dev/null 2>&1; then
+  pwsh -NoProfile -File "$script_path" -RepoRoot "$repo_root_ps"
+else
+  echo "[auto-sync] PowerShell was not found; skipping GitHub/VPS sync." >&2
+  exit 0
+fi
