@@ -1,362 +1,650 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.jaralingua.com/frances/index.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/debat-culturel-france-colombie.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/ecoute-cultures-b1.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/atelier-conditionnel-passe.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/atelier-conditionnel-present.html</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/atelier-connecteurs-logiques-avances.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/atelier-subjonctif-passe.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/atelier-subjonctif-present.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-b1-niveau7.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-conditionnel-quebec-b1.html</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/debat-culturel-france-colombie.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/ecoute-cultures-b1.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/entretien-rapporte.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/journal-televise-interculturel.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/lecture-conditionnel-quebec-b1.html</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/ligne-vie-interculturelle.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/listenings-b1-niveau7.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/passe-simple.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/puzzle-narratif.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/qui-est-ce-professions.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/recit-deux-voix.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/reclamation-formelle.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/simulation-consulaire.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/speed-dating-projets.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/subjonctif-argumentation.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers/transformation-passe-simple.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/ateliers-activites.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/coin-phonetique.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/expressions-idiomatiques.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/frances/Niveau%207/index.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/frances/Niveau%207/ressources.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/argumentation-debat.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/passe-simple.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/grammaire/conditionnel-passe.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/grammaire/conditionnel-present.html</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/grammaire/connecteurs-logiques-avances.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/grammaire/subjonctif-passe.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/grammaire/subjonctif-present.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/index.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/notes-evaluation.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/ressources.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/argumentation-debat.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/experiences-projets.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/passe-simple.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/recit-litteraire.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/societe-actualite.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/frances/Niveau%207/themes/voyages-imprevus.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/frances/Niveau%207/themes-du-cours.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/course-overview.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/ingles/basico/verb-to-be.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.jaralingua.com/ingles/basico/cardinal-ordinal-numbers.html</loc>
-    <lastmod>2026-05-14</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/course-overview.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/english-learning-links.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/idioms.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/index.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/listening-first-day-class.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/personal-information.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/ingles/basico/personal-information-roulette.html</loc>
-    <lastmod>2026-05-11</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/ingles/basico/phonetic-rules.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/ingles/basico/practice-lab.html</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-1-all-about-you.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-2-in-class.html</loc>
-    <lastmod>2026-05-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-2-verb-to-be-present.html</loc>
-    <lastmod>2026-05-14</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/listening-unit-2-in-class.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/listening-unit-2-the-blue-backpack.html</loc>
-    <lastmod>2026-05-14</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/reading-unit-2-the-blue-backpack-part-two.html</loc>
-    <lastmod>2026-05-14</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/listening-unit-3-favorite-people.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/reading-my-family.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/listening-unit-4-everyday-life.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/reading-nice-to-meet-you.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/listening-unit-5-free-time.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/speed-dating-personal-information-chart.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/listening-unit-6-neighborhoods.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/spelling-tool.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/personal-information.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/talking-about-others-family.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/personal-information-roulette.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/talking-about-your-family.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/phonetic-rules.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/unit-1-all-about-you.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-lab.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/unit-2-in-class.html</loc>
-    <lastmod>2026-05-14</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-1-all-about-you.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-2-scattergories-schedule.html</loc>
-    <lastmod>2026-05-11</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-2-in-class.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-2-bag-exchange.html</loc>
-    <lastmod>2026-05-14</lastmod>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-2-verb-to-be-present.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/practice-unit-3-favorite-people.html</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-4-everyday-life.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-5-free-time.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-6-neighborhoods.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/reading-my-family.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/reading-nice-to-meet-you.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/reading-unit-2-the-blue-backpack-part-two.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/speed-dating-personal-information-chart.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/spelling-tool.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/talking-about-others-family.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/talking-about-your-family.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/unit-1-all-about-you.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/unit-2-in-class.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/unit-3-favorite-people.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/unit-4-everyday-life.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/unit-5-free-time.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/unit-6-neighborhoods.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/verb-to-be.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-1-business-event-mixer.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-2-bag-exchange.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-2-scattergories-schedule.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-3-celebrity-survey.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-3-family-photo.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-4-character-comic.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-4-routine-timeline.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-5-free-time-poll.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-5-tv-habits.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-6-city-map-presentation.html</loc>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-6-fictional-neighborhood.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/index.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/course-overview.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/intermediate/describing-stereotypes-behavior.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/dream-partner-finder.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/intermediate/english-learning-links.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/grammar-workshop-adjectives-adverbs.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/idioms.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/index.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/intermediate/personality-annoying-habits.html</loc>
-    <lastmod>2026-05-06</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/listening-the-mirror-guardian.html</loc>
-    <lastmod>2026-05-15</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/intermediate/reading-the-wall-of-names.html</loc>
-    <lastmod>2026-05-16</lastmod>
+    <loc>https://www.jaralingua.com/ingles/intermediate/personality-annoying-habits.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/practice-lab.html</loc>
-    <lastmod>2026-05-16</lastmod>
+    <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/intermediate/reading-the-wall-of-names.html</loc>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/stereotype-guessing-game.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/superhero-vs-supervillain.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/the-way-we-are.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/unusual-experiences.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://www.jaralingua.com/ingles/intermediate/wishes-hopes-dreams.html</loc>
-    <lastmod>2026-05-06</lastmod>
+    <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

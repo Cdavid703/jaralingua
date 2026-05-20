@@ -1,0 +1,42 @@
+{
+  "adminEmails": [
+    "admin@example.com"
+  ],
+  "teacherEmails": [
+    "teacher@example.com"
+  ],
+  "allowStudentIdClaim": false,
+  "students": [
+    {
+      "id": "0000000000",
+      "fullName": "Student Name",
+      "level": "Intensivo Nivel 7",
+      "email": "student@example.com",
+      "contact": "0000000000",
+      "bookDate": "2026-05-19",
+      "grades": {
+        "debateMay8": 4.5
+      }
+    }
+  ],
+  "evaluations": [
+    {
+      "id": "finalExam",
+      "title": "Examen final",
+      "weight": 20,
+      "type": "Examen",
+      "date": "2026-06-05",
+      "displayDate": "Vendredi 5 juin",
+      "description": "Evaluation finale sur les themes principaux du cours."
+    }
+  ],
+  "bonusEvent": {
+    "id": "finalWorkshopBonus",
+    "title": "Atelier de preparation a l'examen final",
+    "weight": 0,
+    "type": "Bonus",
+    "date": "2026-05-29",
+    "displayDate": "Vendredi 29 mai",
+    "description": "Activite informative."
+  }
+}

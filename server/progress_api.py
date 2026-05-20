@@ -12,6 +12,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 CLIENT_ID = os.environ.get("JARALINGUA_GOOGLE_CLIENT_ID", "").strip()
 DATA_PATH = os.environ.get("JARALINGUA_PROGRESS_DATA", "/var/lib/jaralingua/progress.json")
+GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib/jaralingua/french7-grades.json")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
 MAX_BODY_BYTES = 1024 * 1024
@@ -149,6 +150,121 @@ def sanitize_activity(value):
     }
 
 
+def normalize_email(value):
+    return str(value or "").strip().lower()
+
+
+def read_grades_data():
+    if not os.path.exists(GRADES_PATH):
+        return {
+            "adminEmails": [],
+            "teacherEmails": [],
+            "students": [],
+            "evaluations": [],
+            "bonusEvent": None,
+            "allowStudentIdClaim": False
+        }
+    with open(GRADES_PATH, "r", encoding="utf-8-sig") as handle:
+        try:
+            data = json.load(handle)
+        except json.JSONDecodeError:
+            return {
+                "adminEmails": [],
+                "teacherEmails": [],
+                "students": [],
+                "evaluations": [],
+                "bonusEvent": None,
+                "allowStudentIdClaim": False
+            }
+    if not isinstance(data, dict):
+        return {
+            "adminEmails": [],
+            "teacherEmails": [],
+            "students": [],
+            "evaluations": [],
+            "bonusEvent": None,
+            "allowStudentIdClaim": False
+        }
+    data.setdefault("adminEmails", [])
+    data.setdefault("teacherEmails", [])
+    data.setdefault("students", [])
+    data.setdefault("evaluations", [])
+    data.setdefault("bonusEvent", None)
+    data.setdefault("allowStudentIdClaim", False)
+    return data
+
+
+def grade_user_role(profile, grades_data):
+    email = normalize_email(profile.get("email"))
+    admin_emails = {normalize_email(item) for item in grades_data.get("adminEmails", [])}
+    teacher_emails = {normalize_email(item) for item in grades_data.get("teacherEmails", [])}
+    if email in admin_emails:
+        return "admin"
+    if email in teacher_emails:
+        return "teacher"
+    return "student"
+
+
+def student_public_view(student):
+    return {
+        "id": student.get("id", ""),
+        "level": student.get("level", ""),
+        "bookDate": student.get("bookDate"),
+        "grades": student.get("grades", {})
+    }
+
+
+def staff_student_view(student):
+    return {
+        "id": student.get("id", ""),
+        "fullName": student.get("fullName", ""),
+        "level": student.get("level", ""),
+        "email": student.get("email", ""),
+        "contact": student.get("contact", ""),
+        "bookDate": student.get("bookDate"),
+        "grades": student.get("grades", {})
+    }
+
+
+def grade_payload_for(profile, grades_data, query):
+    role = grade_user_role(profile, grades_data)
+    students = grades_data.get("students", [])
+    email = normalize_email(profile.get("email"))
+    response = {
+        "role": role,
+        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "evaluations": grades_data.get("evaluations", []),
+        "bonusEvent": grades_data.get("bonusEvent"),
+        "students": [],
+        "student": None
+    }
+
+    if role in ("admin", "teacher"):
+        response["students"] = [staff_student_view(item) for item in students if isinstance(item, dict)]
+        return response
+
+    direct_match = next(
+        (item for item in students if isinstance(item, dict) and normalize_email(item.get("email")) == email),
+        None
+    )
+    if direct_match:
+        response["student"] = student_public_view(direct_match)
+        return response
+
+    requested_id = (query.get("studentId") or [""])[0]
+    clean_id = "".join(ch for ch in requested_id if ch.isdigit())
+    if clean_id and grades_data.get("allowStudentIdClaim") is True:
+        id_match = next(
+            (item for item in students if isinstance(item, dict) and str(item.get("id", "")) == clean_id),
+            None
+        )
+        if id_match:
+            response["student"] = student_public_view(id_match)
+            return response
+
+    return response
+
+
 class ProgressHandler(BaseHTTPRequestHandler):
     server_version = "JaraLinguaProgress/1.0"
 
@@ -193,6 +309,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {
                     "draft": record.get("activities", {}).get(page_path, {"fields": {}, "updatedAt": None})
                 })
+            return
+
+        if parsed.path == "/api/french7/grades":
+            grades_data = read_grades_data()
+            query = urllib.parse.parse_qs(parsed.query)
+            json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
         json_response(self, 404, {"error": "not_found"})

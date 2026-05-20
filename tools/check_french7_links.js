@@ -35,7 +35,9 @@ for (const file of files) {
     }
     url = url.split("#")[0];
     if (!url) continue;
-    const target = path.resolve(path.dirname(file), url);
+    const target = url.startsWith("/")
+      ? path.resolve(root, url.slice(1))
+      : path.resolve(path.dirname(file), url);
     if (!fs.existsSync(target)) {
       broken.push(`${path.relative(root, file)} -> ${match[1]}`);
     }

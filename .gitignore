@@ -6,3 +6,5 @@ __pycache__/
 *.pyc
 chrome-tmp/
 oauth-screen.*
+data/*.local.json
+data/*private*.json
