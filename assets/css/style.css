@@ -1998,6 +1998,13 @@ a {
   background: rgba(255, 255, 255, 0.92);
 }
 
+.english-basic-page .immersive-basic-hero .lesson-hero-content p.eyebrow,
+.english-basic-page .immersive-basic-hero .overview-hero-content p.eyebrow,
+.english-basic-page .immersive-basic-hero p.eyebrow {
+  color: var(--blue-dark);
+  background: rgba(255, 255, 255, 0.94);
+}
+
 .english-basic-page .immersive-basic-hero .lesson-meta span {
   background: rgba(255, 255, 255, 0.16);
   color: var(--white);
@@ -3542,6 +3549,16 @@ a {
 .lesson-hero-content .eyebrow {
   color: var(--blue-dark);
   background: rgba(255, 255, 255, 0.92);
+}
+
+.english-hero-panel p.eyebrow,
+.french-hero-content p.eyebrow,
+.basic-hero-content p.eyebrow,
+.overview-hero-content p.eyebrow,
+.lesson-hero-content p.eyebrow,
+.hero-content p.eyebrow {
+  color: var(--blue-dark);
+  background: rgba(255, 255, 255, 0.94);
 }
 
 .english-hero-image,
