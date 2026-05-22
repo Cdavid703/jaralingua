@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listening: Catching Up After Years | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <style>
+    .catchup-hero{background:linear-gradient(135deg,rgba(21,52,93,.9),rgba(31,78,140,.56)),url("../../assets/img/english-intermediate/catching-up-listening-hero.png") center/cover no-repeat;color:#fff}
+    .catchup-hero .lesson-hero-content p,.catchup-hero .eyebrow{color:#fff}
+    .listening-layout{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:1.25rem;align-items:start}
+    .listening-panel,.strategy-box,.image-card,.teacher-transcript{background:#fff;border-radius:18px;box-shadow:0 14px 38px rgba(20,40,80,.1);padding:1.25rem}
+    .course-audio-player{width:100%;margin:1rem 0}
+    .audio-speed-actions{display:flex;flex-wrap:wrap;gap:.6rem}
+    .audio-btn{border:2px solid rgba(31,78,140,.2);background:#fff;color:#15345d;border-radius:999px;font-weight:900;padding:.65rem .9rem;cursor:pointer}
+    .audio-btn:hover,.audio-btn.play{background:#1f4e8c;color:#fff;border-color:#1f4e8c}
+    .image-card{overflow:hidden;padding:0}
+    .image-card img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+    .image-card figcaption{padding:1rem;color:#15345d;font-weight:900}
+    .strategy-box{border-left:5px solid #d62839;color:#354156;line-height:1.7}
+    .listening-quiz{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .quiz-question-card{border:2px solid rgba(31,78,140,.1);border-radius:18px;background:#fff;padding:1rem}
+    .quiz-question-card h3{font-size:1rem;color:#15345d;margin-top:0}
+    .quiz-question-card label{display:block;border-radius:14px;border:1px solid rgba(31,78,140,.13);padding:.65rem .75rem;margin:.5rem 0;color:#354156;font-weight:700;cursor:pointer}
+    .quiz-question-card label:hover{background:#eef5ff;border-color:#1f4e8c}
+    .quiz-question-card.is-correct{border-color:rgba(47,158,119,.65);background:rgba(47,158,119,.08)}
+    .quiz-question-card.is-incorrect{border-color:rgba(214,40,57,.5);background:#fff0f3}
+    .correct-option{background:rgba(47,158,119,.12)!important;border-color:rgba(47,158,119,.65)!important}
+    .wrong-option{background:rgba(214,40,57,.1)!important;border-color:rgba(214,40,57,.5)!important}
+    .quiz-actions-row{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.5rem}
+    .practice-submit-btn,.secondary-quiz-btn{border:0;border-radius:999px;font-weight:900;padding:.85rem 1.1rem;cursor:pointer}
+    .practice-submit-btn{background:#15345d;color:#fff}
+    .secondary-quiz-btn{background:#eef5ff;color:#15345d;border:2px solid rgba(31,78,140,.18)}
+    .quiz-result-box{display:none;margin-top:1rem;border-radius:18px;padding:1rem;font-weight:800;line-height:1.6}
+    .quiz-result-box.correct{display:block;background:rgba(47,158,119,.12);color:#1f6f54}
+    .quiz-result-box.incorrect{display:block;background:#fff0f3;color:#8a1c28}
+    .quiz-feedback-list{display:grid;gap:.75rem;margin-top:.8rem}
+    .quiz-feedback-item{background:#fff;border-radius:14px;padding:.8rem;border:1px solid rgba(214,40,57,.18)}
+    .teacher-admin-panel{display:none}
+    .teacher-admin-panel.is-visible{display:block}
+    .teacher-transcript{display:none;white-space:pre-wrap;line-height:1.75;color:#354156;margin-top:1rem}
+    .teacher-transcript.is-visible{display:block}
+    @media(max-width:900px){.listening-layout,.listening-quiz{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero catchup-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab · Listening</p>
+        <h1>Catching Up After Years</h1>
+        <p>
+          Listen to two friends sharing recent life events, organizing their stories
+          in a timeline, and asking thoughtful follow-up questions.
+        </p>
+        <div class="lesson-meta">
+          <span>American English</span>
+          <span>Two voices</span>
+          <span>Timeline order</span>
+          <span>20 questions</span>
+          <span>A2+ / B1</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#listening-activity" class="btn btn-primary">Start listening</a>
+          <a href="timeline-catch-up-writing.html" class="btn btn-secondary">Written activity</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="listening-activity">
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">01</span>
+          <div>
+            <p class="topic-label">Listening Task</p>
+            <h2>Follow the Timeline</h2>
+          </div>
+        </div>
+        <div class="listening-layout">
+          <div>
+            <p class="lesson-text">
+              Maya and Ethan were close friends in high school, but they have not had
+              a long conversation for years. Now they meet again and share what has
+              happened in their lives.
+            </p>
+            <div class="listening-panel">
+              <h3>Audio conversation</h3>
+              <p>Two American English voices: Maya and Ethan.</p>
+              <audio id="catchupAudio" class="course-audio-player" controls preload="metadata" src="audio/catching-up-after-years.mp3"></audio>
+              <div class="audio-speed-actions" aria-label="Audio speed controls">
+                <button type="button" class="audio-btn" onclick="setAudioSpeed(0.75)">0.75x</button>
+                <button type="button" class="audio-btn play" onclick="setAudioSpeed(1)">1x</button>
+                <button type="button" class="audio-btn" onclick="setAudioSpeed(1.25)">1.25x</button>
+              </div>
+            </div>
+            <p class="strategy-box">
+              Listening strategy: do not choose an answer because one word sounds
+              familiar. Compare dates, reasons, feelings, and results before choosing.
+            </p>
+          </div>
+          <figure class="image-card">
+            <img src="../../assets/img/english-intermediate/catching-up-listening-notes.png" alt="Cafe table with coffee cups, photos, and a visual timeline" />
+            <figcaption>Use the details to rebuild each person's timeline.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">02</span>
+          <div>
+            <p class="topic-label">Comprehension Check</p>
+            <h2>Answer the 20 Questions</h2>
+          </div>
+        </div>
+        <form id="quizForm" class="listening-quiz">
+          <div class="quiz-question-card" data-question="q1"><h3>1. Why do Maya and Ethan meet at the cafe?</h3><label><input type="radio" name="q1" value="A" /> They are planning a school reunion for their whole class</label><label><input type="radio" name="q1" value="B" /> They want to catch up after not talking properly for years</label><label><input type="radio" name="q1" value="C" /> They need to prepare a business presentation together</label></div>
+          <div class="quiz-question-card" data-question="q2"><h3>2. What was Maya's first big event after graduation?</h3><label><input type="radio" name="q2" value="A" /> She opened a cafe with her cousin</label><label><input type="radio" name="q2" value="B" /> She moved back to her hometown immediately</label><label><input type="radio" name="q2" value="C" /> She moved to Denver for a marketing internship</label></div>
+          <div class="quiz-question-card" data-question="q3"><h3>3. How did Maya feel during her first month in Denver?</h3><label><input type="radio" name="q3" value="A" /> Excited but lonely</label><label><input type="radio" name="q3" value="B" /> Angry because she disliked marketing</label><label><input type="radio" name="q3" value="C" /> Relaxed because everything was easy</label></div>
+          <div class="quiz-question-card" data-question="q4"><h3>4. What helped Maya feel more connected in Denver?</h3><label><input type="radio" name="q4" value="A" /> A weekend cooking class at the university</label><label><input type="radio" name="q4" value="B" /> A small design club after work</label><label><input type="radio" name="q4" value="C" /> A sports team organized by her landlord</label></div>
+          <div class="quiz-question-card" data-question="q5"><h3>5. What happened to Maya's company later?</h3><label><input type="radio" name="q5" value="A" /> It closed suddenly</label><label><input type="radio" name="q5" value="B" /> It promoted her to manager</label><label><input type="radio" name="q5" value="C" /> It sent her abroad for a year</label></div>
+          <div class="quiz-question-card" data-question="q6"><h3>6. What did Maya do after she moved back home?</h3><label><input type="radio" name="q6" value="A" /> She stopped working to travel for six months</label><label><input type="radio" name="q6" value="B" /> She prepared for a restaurant competition</label><label><input type="radio" name="q6" value="C" /> She helped her mother improve an online store</label></div>
+          <div class="quiz-question-card" data-question="q7"><h3>7. Why did Ethan postpone one college semester?</h3><label><input type="radio" name="q7" value="A" /> He wanted to join Maya in Denver</label><label><input type="radio" name="q7" value="B" /> His father got sick and the family needed help</label><label><input type="radio" name="q7" value="C" /> He failed all his classes and had to restart</label></div>
+          <div class="quiz-question-card" data-question="q8"><h3>8. Where did Ethan spend many long days during that period?</h3><label><input type="radio" name="q8" value="A" /> At his family's restaurant</label><label><input type="radio" name="q8" value="B" /> At a hospital office as a receptionist</label><label><input type="radio" name="q8" value="C" /> At a community theater downtown</label></div>
+          <div class="quiz-question-card" data-question="q9"><h3>9. What did Ethan eventually realize about that difficult semester?</h3><label><input type="radio" name="q9" value="A" /> It proved college was not useful for him</label><label><input type="radio" name="q9" value="B" /> It was mostly a waste of time</label><label><input type="radio" name="q9" value="C" /> It taught him responsibility and organization</label></div>
+          <div class="quiz-question-card" data-question="q10"><h3>10. When did Ethan return to classes?</h3><label><input type="radio" name="q10" value="A" /> During the previous summer</label><label><input type="radio" name="q10" value="B" /> In January</label><label><input type="radio" name="q10" value="C" /> After the next graduation ceremony</label></div>
+          <div class="quiz-question-card" data-question="q11"><h3>11. What recent goal has Ethan started working on?</h3><label><input type="radio" name="q11" value="A" /> Training for a ten-kilometer race</label><label><input type="radio" name="q11" value="B" /> Writing a cookbook with his father</label><label><input type="radio" name="q11" value="C" /> Learning to repair bicycles professionally</label></div>
+          <div class="quiz-question-card" data-question="q12"><h3>12. Where does Maya work now?</h3><label><input type="radio" name="q12" value="A" /> At the same Denver company</label><label><input type="radio" name="q12" value="B" /> At Ethan's family restaurant</label><label><input type="radio" name="q12" value="C" /> At a community center</label></div>
+          <div class="quiz-question-card" data-question="q13"><h3>13. What does Maya interview people about?</h3><label><input type="radio" name="q13" value="A" /> Their favorite restaurants and recipes</label><label><input type="radio" name="q13" value="B" /> Their opinions about local sports teams</label><label><input type="radio" name="q13" value="C" /> Their stories and neighborhood memories</label></div>
+          <div class="quiz-question-card" data-question="q14"><h3>14. Which idea do both friends seem to share?</h3><label><input type="radio" name="q14" value="A" /> Every plan has worked exactly as expected</label><label><input type="radio" name="q14" value="B" /> Unexpected changes can still teach useful lessons</label><label><input type="radio" name="q14" value="C" /> It is better not to talk about difficult moments</label></div>
+          <div class="quiz-question-card" data-question="q15"><h3>15. What do Maya and Ethan promise to do next?</h3><label><input type="radio" name="q15" value="A" /> Meet again next month and share one new goal</label><label><input type="radio" name="q15" value="B" /> Move to the same city before summer</label><label><input type="radio" name="q15" value="C" /> Record a podcast about their whole friendship</label></div>
+          <div class="quiz-question-card" data-question="q16"><h3>16. Which follow-up question does Ethan ask Maya?</h3><label><input type="radio" name="q16" value="A" /> Why did you stop talking to everyone from school?</label><label><input type="radio" name="q16" value="B" /> Did you ever want to become a nurse?</label><label><input type="radio" name="q16" value="C" /> What changed after the company closed?</label></div>
+          <div class="quiz-question-card" data-question="q17"><h3>17. Why is the conversation a good model for the written activity?</h3><label><input type="radio" name="q17" value="A" /> The speakers organize events in clear chronological order</label><label><input type="radio" name="q17" value="B" /> The speakers avoid personal details completely</label><label><input type="radio" name="q17" value="C" /> The speakers only discuss future vacations</label></div>
+          <div class="quiz-question-card" data-question="q18"><h3>18. What does Maya say a good catch-up conversation should not be?</h3><label><input type="radio" name="q18" value="A" /> A timeline with specific details</label><label><input type="radio" name="q18" value="B" /> A competition about who is more successful</label><label><input type="radio" name="q18" value="C" /> A friendly conversation with questions</label></div>
+          <div class="quiz-question-card" data-question="q19"><h3>19. What does Ethan say about listening to Maya's timeline?</h3><label><input type="radio" name="q19" value="A" /> It makes him feel confused about her choices</label><label><input type="radio" name="q19" value="B" /> It proves she should move back to Denver</label><label><input type="radio" name="q19" value="C" /> It helps him understand why each change mattered</label></div>
+          <div class="quiz-question-card" data-question="q20"><h3>20. What is the best summary of the conversation?</h3><label><input type="radio" name="q20" value="A" /> Two friends argue about who made better decisions</label><label><input type="radio" name="q20" value="B" /> Two friends reconnect by sharing ordered life experiences</label><label><input type="radio" name="q20" value="C" /> Two classmates plan a trip without discussing the past</label></div>
+          <div class="quiz-actions-row">
+            <button type="button" class="practice-submit-btn" onclick="checkAnswers()">Check Answers</button>
+            <button type="button" class="secondary-quiz-btn" onclick="resetQuiz()">Try Again</button>
+          </div>
+        </form>
+        <div id="result-box" class="quiz-result-box"></div>
+      </article>
+
+      <article class="premium-topic-card teacher-admin-panel" id="teacherAdminPanel">
+        <div class="topic-heading">
+          <span class="topic-number">T</span>
+          <div>
+            <p class="topic-label">Teacher / Admin</p>
+            <h2>Transcript and PDF</h2>
+          </div>
+        </div>
+        <p class="lesson-text">
+          This section is visible only for the administrator account or approved teacher
+          roles on this browser.
+        </p>
+        <div class="hero-actions">
+          <button type="button" class="secondary-quiz-btn" onclick="toggleTeacherTranscript()">Show / hide transcript</button>
+          <button type="button" class="secondary-quiz-btn" onclick="downloadTranscriptPdf('Catching Up After Years', listeningText, 'catching-up-after-years-transcript.pdf')">Download transcript PDF</button>
+        </div>
+        <div class="teacher-transcript" id="teacherTranscript"></div>
+      </article>
+
+      <section class="lesson-next-section">
+        <div class="lesson-next-card">
+          <p class="eyebrow">Speaking connection</p>
+          <h2>Use the audio as a model</h2>
+          <p>
+            Now prepare your own five-event timeline and speak with your partner for
+            five to seven minutes.
+          </p>
+          <div class="hero-actions">
+            <a href="timeline-catch-up-writing.html" class="btn btn-primary">Open written activity</a>
+            <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const listeningText = "Maya: Ethan? Wow, I almost walked past you. It has been such a long time.\n\nEthan: Maya! I know. We have sent short messages, but we have not really talked for years. I am glad we finally chose a day to catch up.\n\nMaya: Me too. So, my timeline is a little messy, but I will try to put it in order. First, after graduation, I moved to Denver for a marketing internship. I was excited, but during the first month I felt really lonely.\n\nEthan: That sounds hard. What helped you adjust?\n\nMaya: After that, I joined a small design club after work. At first, I only went because I needed friends. Later, I realized I loved creative projects. Then, the company closed suddenly, and I had to move back home.\n\nEthan: What changed after the company closed?\n\nMaya: A lot. I helped my mom improve her online store. By the time we finished the new product photos and descriptions, her sales were better, and I felt more confident. Recently, I got a job at a community center. I interview neighbors about their stories and memories, so now marketing feels more human to me.\n\nEthan: That makes sense. Hearing the timeline helps me understand why each change mattered.\n\nMaya: What about you? What has happened in your life?\n\nEthan: First, my father got sick last year, so I postponed one college semester. I spent many long days at my family's restaurant. At first, I thought I was falling behind everyone else.\n\nMaya: I can imagine. Did that feeling change?\n\nEthan: Yes. Later, I managed deliveries, created a better schedule, and listened to customers more carefully. Eventually, I realized the semester was not just lost time. It taught me responsibility and organization.\n\nMaya: That is a big lesson.\n\nEthan: Since then, I returned to classes in January. I am studying business again, but I understand it differently now. Recently, I also started training for a ten-kilometer race because I wanted a goal outside work and school.\n\nMaya: I like that. A good catch-up conversation should not be a competition about who is more successful. It should help us understand the story behind each change.\n\nEthan: Exactly. Let us not wait years again. Next month, we can meet here and share one new goal.\n\nMaya: Deal. And next time, I want to hear how the race training is going.";
+
+    const quizData = {
+      q1: { answer: "B", correctText: "They want to catch up after not talking properly for years", feedback: "Ethan says they have sent short messages, but they have not really talked for years." },
+      q2: { answer: "C", correctText: "She moved to Denver for a marketing internship", feedback: "Maya starts her timeline with the move to Denver after graduation." },
+      q3: { answer: "A", correctText: "Excited but lonely", feedback: "She was excited, but during the first month she felt really lonely." },
+      q4: { answer: "B", correctText: "A small design club after work", feedback: "The club first helped her make friends, and later helped her discover creative projects." },
+      q5: { answer: "A", correctText: "It closed suddenly", feedback: "Maya says the company closed suddenly, so she had to move back home." },
+      q6: { answer: "C", correctText: "She helped her mother improve an online store", feedback: "She worked on product photos and descriptions for her mother's store." },
+      q7: { answer: "B", correctText: "His father got sick and the family needed help", feedback: "Ethan postponed one semester because his father got sick." },
+      q8: { answer: "A", correctText: "At his family's restaurant", feedback: "He spent many long days there while helping his family." },
+      q9: { answer: "C", correctText: "It taught him responsibility and organization", feedback: "Ethan says the semester was not just lost time because it taught him those skills." },
+      q10: { answer: "B", correctText: "In January", feedback: "He returned to classes in January." },
+      q11: { answer: "A", correctText: "Training for a ten-kilometer race", feedback: "The race gives him a goal outside work and school." },
+      q12: { answer: "C", correctText: "At a community center", feedback: "Maya recently got a job at a community center." },
+      q13: { answer: "C", correctText: "Their stories and neighborhood memories", feedback: "She interviews neighbors about stories and memories." },
+      q14: { answer: "B", correctText: "Unexpected changes can still teach useful lessons", feedback: "Both timelines include difficult changes that lead to learning." },
+      q15: { answer: "A", correctText: "Meet again next month and share one new goal", feedback: "Ethan suggests meeting next month and sharing one new goal." },
+      q16: { answer: "C", correctText: "What changed after the company closed?", feedback: "Ethan asks this exact follow-up question." },
+      q17: { answer: "A", correctText: "The speakers organize events in clear chronological order", feedback: "They use first, after that, later, then, by the time, recently, and since then." },
+      q18: { answer: "B", correctText: "A competition about who is more successful", feedback: "Maya directly says a catch-up conversation should not be a success competition." },
+      q19: { answer: "C", correctText: "It helps him understand why each change mattered", feedback: "Ethan says Maya's timeline helps him understand the meaning behind each change." },
+      q20: { answer: "B", correctText: "Two friends reconnect by sharing ordered life experiences", feedback: "This best captures the purpose and content of the listening." }
+    };
+
+    function setAudioSpeed(rate) {
+      document.getElementById("catchupAudio").playbackRate = rate;
+    }
+
+    function clearQuestionFeedback() {
+      document.querySelectorAll(".quiz-question-card").forEach(function(card) {
+        card.classList.remove("is-correct", "is-incorrect");
+        card.querySelectorAll("label").forEach(function(label) {
+          label.classList.remove("correct-option", "wrong-option");
+        });
+      });
+    }
+
+    function markQuestionFeedback(key, selected) {
+      const card = document.querySelector('[data-question="' + key + '"]');
+      if (!card) return;
+      const correctAnswer = quizData[key].answer;
+      card.classList.add(selected === correctAnswer ? "is-correct" : "is-incorrect");
+      card.querySelectorAll("label").forEach(function(label) {
+        const input = label.querySelector("input");
+        if (!input) return;
+        if (input.value === correctAnswer) label.classList.add("correct-option");
+        if (input.value === selected && selected !== correctAnswer) label.classList.add("wrong-option");
+      });
+    }
+
+    function checkAnswers() {
+      let score = 0;
+      let complete = true;
+      const feedbackItems = [];
+      clearQuestionFeedback();
+
+      Object.keys(quizData).forEach(function(key, index) {
+        const selected = document.forms.quizForm[key].value;
+        if (!selected) {
+          complete = false;
+          return;
+        }
+        if (selected === quizData[key].answer) {
+          score++;
+        } else {
+          feedbackItems.push(
+            "<div class=\"quiz-feedback-item\"><strong>" +
+            (index + 1) +
+            ". Correct answer: " +
+            quizData[key].answer +
+            " - " +
+            quizData[key].correctText +
+            ".</strong><br />" +
+            quizData[key].feedback +
+            "</div>"
+          );
+        }
+        markQuestionFeedback(key, selected);
+      });
+
+      const resultBox = document.getElementById("result-box");
+      resultBox.style.display = "block";
+
+      if (!complete) {
+        resultBox.className = "quiz-result-box incorrect";
+        resultBox.innerHTML = "Please answer all questions before checking.";
+        return;
+      }
+
+      if (score === Object.keys(quizData).length) {
+        resultBox.className = "quiz-result-box correct";
+        resultBox.innerHTML = "Excellent. You got " + score + " out of " + Object.keys(quizData).length + " correct.";
+        return;
+      }
+
+      resultBox.className = "quiz-result-box incorrect";
+      resultBox.innerHTML =
+        "You got " +
+        score +
+        " out of " +
+        Object.keys(quizData).length +
+        " correct.<br /><br /><strong>Review your incorrect answers:</strong><div class=\"quiz-feedback-list\">" +
+        feedbackItems.join("") +
+        "</div>";
+    }
+
+    function resetQuiz() {
+      document.getElementById("quizForm").reset();
+      clearQuestionFeedback();
+      const resultBox = document.getElementById("result-box");
+      resultBox.style.display = "none";
+      resultBox.className = "quiz-result-box";
+      resultBox.innerHTML = "";
+    }
+
+    function readCurrentUser() {
+      try {
+        const user = JSON.parse(sessionStorage.getItem("jaralingua_google_user") || "null");
+        if (!user || !user.exp || Date.now() / 1000 > user.exp) return null;
+        return user;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function readRoleRequests() {
+      try {
+        const requests = JSON.parse(localStorage.getItem("jaralingua_role_requests") || "[]");
+        return Array.isArray(requests) ? requests : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    function canViewTeacherContent() {
+      const user = readCurrentUser();
+      if (!user) return false;
+      const email = String(user.email || "").trim().toLowerCase();
+      if (email === "cdavid.jaramillo@gmail.com") return true;
+      const id = user.sub || user.email || "";
+      return readRoleRequests().some(function(request) {
+        const requestEmail = String(request.email || "").trim().toLowerCase();
+        return (request.id === id || requestEmail === email) &&
+          request.status === "approved" &&
+          (request.role === "teacher" || request.role === "admin");
+      });
+    }
+
+    function initTeacherPanel() {
+      const panel = document.getElementById("teacherAdminPanel");
+      const transcript = document.getElementById("teacherTranscript");
+      if (!panel || !transcript || !canViewTeacherContent()) return;
+      transcript.textContent = listeningText;
+      panel.classList.add("is-visible");
+    }
+
+    function toggleTeacherTranscript() {
+      const transcript = document.getElementById("teacherTranscript");
+      if (transcript) transcript.classList.toggle("is-visible");
+    }
+
+    window.addEventListener("load", initTeacherPanel);
+  </script>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+  <script src="../../assets/js/transcript-pdf.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+</body>
+</html>
