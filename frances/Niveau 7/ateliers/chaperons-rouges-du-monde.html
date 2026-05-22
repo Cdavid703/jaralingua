@@ -56,6 +56,8 @@
     .story-shot figcaption{padding:.8rem .95rem;color:var(--blue-dark);font-weight:900}
     .story-text{font-size:1.08rem;line-height:1.9;color:#354156}
     .story-text p{margin-bottom:1rem}
+    .story-line{display:grid;grid-template-columns:minmax(110px,auto) 1fr;gap:.8rem;margin-bottom:.85rem}
+    .story-line .speaker{color:var(--blue-dark);font-weight:900}
     .grammar-chip{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;background:rgba(214,40,57,.09);color:var(--red);font-weight:900;padding:.45rem .7rem;margin:.12rem}
     .region-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
     .region-card{border:0;border-radius:24px;background:#fff;color:var(--text);box-shadow:0 14px 36px rgba(20,40,80,.1);padding:0;overflow:hidden;text-align:left;display:block;width:100%;transition:transform .22s ease,box-shadow .22s ease}
@@ -83,7 +85,7 @@
     .global-course-switcher details{position:relative}.global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:#15345d;color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}.global-course-switcher summary::-webkit-details-marker{display:none}.global-course-switcher summary:after{content:"v";font-size:.8rem}.global-course-switcher details[open] summary:after{transform:rotate(180deg)}.global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}.global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:#15345d;text-decoration:none;font-weight:900}.global-course-switcher a:hover{background:#eef5ff;color:#d62839}
     .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
     @media(max-width:991px){.step-grid,.story-gallery,.region-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding-top:7rem}.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}}
-    @media(max-width:575px){.step-grid,.story-gallery,.region-grid,.assignment-list{grid-template-columns:1fr}.btn-main,.btn-soft{width:100%}.connector-table{min-width:760px}.table-scroll{overflow-x:auto}.hero{min-height:auto;padding-top:6rem}.quick-access-panel{width:calc(100% - 1.5rem)}}
+    @media(max-width:575px){.step-grid,.story-gallery,.region-grid,.assignment-list{grid-template-columns:1fr}.story-line{display:block}.story-line .speaker{display:block;margin-bottom:.15rem}.btn-main,.btn-soft{width:100%}.connector-table{min-width:760px}.table-scroll{overflow-x:auto}.hero{min-height:auto;padding-top:6rem}.quick-access-panel{width:calc(100% - 1.5rem)}}
   </style>
 </head>
 <body data-back-fallback="../ateliers-activites.html#recit-passe-simple">
@@ -226,10 +228,21 @@
         </div>
         <div class="story-panel mt-5 fade-in">
           <div class="story-text">
-            <p>À Tokyo, Akari portait une cape rouge brodée de fleurs blanches. Chaque samedi, elle visitait sa grand-mère, qui habitait près d'un vieux jardin de Yanaka. Ce matin-là, sa mère lui confia un panier de bento, du thé vert et une lettre. « Ne prends pas les ruelles du marché », dit-elle. « Promis, maman. Je garderai mon sang-froid », répondit Akari.</p>
-            <p>Akari prit le métro, salua le vendeur de mochi et marcha sous les lanternes. Soudain, un renard noir, élégant et trop poli, apparut devant elle. Il lui proposa le chemin du canal pour trouver des fleurs de cerisier. Akari hésita. Le canal brillait, et les fleurs semblaient l'appeler. Elle suivit le renard et perdit quelques minutes.</p>
-            <p>Pendant ce temps, le renard courut chez la grand-mère. Il entra, imita sa voix et cacha la vieille dame dans le jardin. Quand Akari arriva, elle observa les oreilles pointues, la voix grave et les lunettes mal placées. Alors elle comprit le piège. Au lieu de crier, elle prit les devants: elle fit tomber le panier, ouvrit la lettre de sa mère et appela la gardienne du sanctuaire, qui passait à vélo.</p>
-            <p>Le renard avoua tout. La grand-mère revint en riant, un peu fâchée mais saine et sauve. « Merci, Akari. Tu as gardé ton sang-froid, et tu as sauvé notre dîner », dit-elle. Ce soir-là, Akari partagea le bento sur le toit. Elle apprit qu'un récit peut changer de ville, mais que la prudence reste toujours un bon guide.</p>
+            <p class="story-line"><span class="speaker">Narratrice</span><span>À Tokyo, Akari portait une cape rouge brodée de fleurs blanches. Chaque samedi, elle visitait sa grand-mère, qui habitait près d'un vieux jardin de Yanaka. Ce matin-là, sa mère lui confia un panier de bento, du thé vert et une lettre.</span></p>
+            <p class="story-line"><span class="speaker">Maman</span><span>Ne prends pas les ruelles du marché. Elles sont belles, mais elles cachent beaucoup de détours.</span></p>
+            <p class="story-line"><span class="speaker">Akari</span><span>Promis, maman. Je garderai mon sang-froid.</span></p>
+            <p class="story-line"><span class="speaker">Narratrice</span><span>Akari prit le métro, salua le vendeur de mochi et marcha sous les lanternes. Soudain, un renard noir, élégant et trop poli, apparut devant elle.</span></p>
+            <p class="story-line"><span class="speaker">Renard</span><span>Petite voyageuse, ta grand-mère serait heureuse de recevoir des fleurs de cerisier. Le chemin du canal est plus rapide.</span></p>
+            <p class="story-line"><span class="speaker">Narratrice</span><span>Akari hésita. Le canal brillait, et les fleurs semblaient l'appeler. Elle suivit le renard et perdit quelques minutes à choisir une branche parfumée. Pendant ce temps, le renard courut chez la grand-mère. Il entra, imita sa voix et cacha la vieille dame dans le jardin, près des bonsaïs.</span></p>
+            <p class="story-line"><span class="speaker">Akari</span><span>Grand-mère, comme ta voix est grave aujourd'hui !</span></p>
+            <p class="story-line"><span class="speaker">Renard</span><span>C'est le thé chaud, ma petite.</span></p>
+            <p class="story-line"><span class="speaker">Akari</span><span>Et comme tes oreilles sont pointues !</span></p>
+            <p class="story-line"><span class="speaker">Renard</span><span>C'est pour mieux entendre les secrets de Tokyo.</span></p>
+            <p class="story-line"><span class="speaker">Narratrice</span><span>Akari comprit le piège. Au lieu de crier, elle prit les devants: elle fit tomber le panier, ouvrit la lettre de sa mère et appela la gardienne du sanctuaire, qui passait à vélo.</span></p>
+            <p class="story-line"><span class="speaker">Gardienne</span><span>Monsieur Renard, sortez de ce lit. Ici, on ne vole ni les bentos ni les grands-mères.</span></p>
+            <p class="story-line"><span class="speaker">Narratrice</span><span>Le renard avoua tout. La grand-mère revint en riant, un peu fâchée mais saine et sauve.</span></p>
+            <p class="story-line"><span class="speaker">Grand-mère</span><span>Merci, Akari. Tu as gardé ton sang-froid, et tu as sauvé notre dîner.</span></p>
+            <p class="story-line"><span class="speaker">Narratrice</span><span>Ce soir-là, Akari partagea le bento sur le toit. Elle apprit qu'un récit peut changer de ville, mais que la prudence reste toujours un bon guide.</span></p>
           </div>
         </div>
       </div>
