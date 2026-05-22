@@ -74,6 +74,7 @@ DEFAULT_SOURCE_PATTERNS = [
     "ingles/intermediate/audio/*.md",
     "ingles/intermediate/audio/vocab/*.md",
     "frances/Niveau 7/audio/*.md",
+    "frances/Niveau 7/audio/caperucita-roja-scripts.md",
     "frances/Niveau 7/audio/phonetics/*.md",
     "frances/Niveau 7/audio/professions/*.md",
     "frances/Niveau 7/audio/vocab/*.md",
@@ -542,6 +543,9 @@ def parse_dialogue(script: str) -> list[Turn]:
         turns.append(Turn(speaker=speaker, text=text))
 
     unique_speakers = {turn.speaker for turn in turns}
+    if len(unique_speakers) == 1 and turns:
+        speaker = turns[0].speaker
+        return [Turn(speaker=speaker, text=" ".join(turn.text for turn in turns))]
     return turns if len(unique_speakers) >= 2 else []
 
 

@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chaperons rouges du monde - Français Niveau 7</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--red-soft:#fff0f3;--soft:#f4f7fb;--text:#243044;--muted:#718096;--yellow:#f4c95d;--green:#2f9e77;--shadow:0 22px 55px rgba(20,40,80,.13);--radius:28px}
+    *{scroll-behavior:smooth}
+    body{margin:0;font-family:"Nunito",sans-serif;color:var(--text);background:var(--soft);overflow-x:hidden}
+    h1,h2,h3,h4,h5,.navbar-brand{font-family:"Montserrat",sans-serif}
+    .navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 10px 32px rgba(21,52,93,.08)}
+    .navbar-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:800;color:var(--blue-dark)}
+    .brand-logo{height:42px;width:auto;object-fit:contain;filter:drop-shadow(0 8px 16px rgba(21,52,93,.12))}
+    .nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}
+    .nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
+    .hero{min-height:min(690px,86vh);display:flex;align-items:center;padding:6.5rem 0 4rem;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(21,52,93,.92),rgba(31,78,140,.72),rgba(214,40,57,.5)),url("../img/caperucita-roja/akari-scene-01-tokyo-rue.png") center/cover no-repeat}
+    .hero:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(21,52,93,.78),rgba(21,52,93,.2) 64%,rgba(21,52,93,.05));pointer-events:none}
+    .hero>.container{position:relative;z-index:1}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.72rem 1rem;border-radius:999px;background:rgba(255,255,255,.9);border:1px solid rgba(255,255,255,.35);color:var(--blue-dark);font-weight:900;box-shadow:0 14px 30px rgba(31,78,140,.08)}
+    .hero h1{margin-top:1.15rem;color:#fff;font-weight:900;line-height:1;font-size:clamp(2.55rem,6vw,5.45rem);text-shadow:0 14px 34px rgba(0,0,0,.24)}
+    .hero-lead{color:#fff;font-size:clamp(1.15rem,2vw,1.5rem);font-weight:900;margin:1.2rem 0 1rem;text-shadow:0 12px 30px rgba(0,0,0,.22)}
+    .hero-text,.section-text{color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:860px}
+    .hero .hero-text{color:rgba(255,255,255,.92)}
+    .btn-main,.btn-soft,.pronounce-btn,.speed-btn,.region-card{border-radius:999px;font-weight:900;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+    .btn-main{border:0;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;padding:.9rem 1.18rem;box-shadow:0 16px 34px rgba(31,78,140,.24)}
+    .btn-main:hover{color:#fff;transform:translateY(-2px)}
+    .btn-soft,.pronounce-btn,.speed-btn{border:2px solid rgba(31,78,140,.2);background:#fff;color:var(--blue-dark);padding:.78rem 1.05rem}
+    .btn-soft:hover,.pronounce-btn:hover,.speed-btn:hover{border-color:var(--blue);background:var(--blue);color:#fff}
+    .speed-btn.active{border-color:var(--blue-dark);background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;box-shadow:0 14px 28px rgba(31,78,140,.2)}
+    section{padding:4.4rem 0}
+    .section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}
+    .section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.15rem);font-weight:900}
+    .quick-access-panel{max-width:1120px;margin:-1.2rem auto 0;position:relative;z-index:3;background:#fff;border-radius:28px;box-shadow:var(--shadow);padding:1.1rem}
+    .quick-link-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.65rem}
+    .quick-link-list a{min-height:46px;display:flex;align-items:center;gap:.65rem;border-radius:14px;background:#f8fbff;border:1px solid rgba(31,78,140,.1);padding:.65rem .75rem;text-decoration:none;color:var(--blue-dark);font-weight:900}
+    .quick-link-list b{width:30px;height:30px;display:grid;place-items:center;flex:0 0 30px;border-radius:999px;background:var(--blue-dark);color:#fff;font-size:.78rem}
+    .panel,.audio-panel,.story-panel,.quiz-panel,.region-panel{border-radius:34px;background:#fff;box-shadow:var(--shadow);padding:clamp(1.25rem,3vw,2rem)}
+    .step-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+    .step-card{background:#fff;border-radius:24px;padding:1.2rem;box-shadow:0 14px 38px rgba(20,40,80,.09);height:100%}
+    .step-card span{display:grid;place-items:center;width:44px;height:44px;border-radius:16px;background:rgba(31,78,140,.09);color:var(--blue);font-weight:900;margin-bottom:.8rem}
+    .step-card h3{font-size:1.06rem;color:var(--blue-dark);font-weight:900}.step-card p{color:var(--muted);line-height:1.62;margin:0}
+    .connector-table{width:100%;border-collapse:collapse}
+    .connector-table th{background:var(--blue-dark);color:#fff;padding:.85rem;text-align:left}
+    .connector-table td{padding:.85rem;border-bottom:1px solid rgba(31,78,140,.1);vertical-align:middle}
+    .connector-table strong{color:var(--blue-dark)}
+    .audio-panel audio{width:100%;margin:1rem 0}
+    .story-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .story-shot{border-radius:24px;overflow:hidden;background:#fff;box-shadow:0 14px 34px rgba(20,40,80,.1)}
+    .story-shot img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+    .story-shot figcaption{padding:.8rem .95rem;color:var(--blue-dark);font-weight:900}
+    .story-text{font-size:1.08rem;line-height:1.9;color:#354156}
+    .story-text p{margin-bottom:1rem}
+    .grammar-chip{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;background:rgba(214,40,57,.09);color:var(--red);font-weight:900;padding:.45rem .7rem;margin:.12rem}
+    .region-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .region-card{border:0;border-radius:24px;background:#fff;color:var(--text);box-shadow:0 14px 36px rgba(20,40,80,.1);padding:0;overflow:hidden;text-align:left;display:block;width:100%;transition:transform .22s ease,box-shadow .22s ease}
+    .region-card:hover,.region-card.active{transform:translateY(-4px);box-shadow:0 22px 48px rgba(20,40,80,.16)}
+    .region-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+    .region-card span{display:block;padding:1rem}
+    .region-card strong{display:block;color:var(--blue-dark);font-size:1.05rem}
+    .region-card em{display:block;font-style:normal;color:var(--muted);line-height:1.45;margin-top:.28rem}
+    .player-note{border-radius:18px;background:#f8fbff;border:1px solid rgba(31,78,140,.1);padding:.85rem 1rem;color:var(--blue-dark);font-weight:900}
+    .quiz-card{border:2px solid rgba(31,78,140,.1);border-radius:22px;background:#fff;padding:1rem;height:100%}
+    .quiz-card.correct{border-color:rgba(47,158,119,.55);background:rgba(47,158,119,.09)}
+    .quiz-card.incorrect{border-color:rgba(214,40,57,.45);background:var(--red-soft)}
+    .answer-option{display:block;border-radius:16px;background:#fff;border:2px solid rgba(31,78,140,.1);padding:.68rem .8rem;margin-bottom:.55rem;font-weight:800;cursor:pointer}
+    .answer-option:hover{border-color:var(--blue);background:#eef5ff}
+    .feedback-line{display:none;color:var(--blue-dark);font-weight:900;margin-top:.6rem}
+    .quiz-card.correct .feedback-line,.quiz-card.incorrect .feedback-line{display:block}
+    .result-box{display:none;margin-top:1rem;border-radius:22px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;padding:1rem}
+    .result-box.show{display:block}
+    .assignment-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem;margin:0;padding:0;list-style:none}
+    .assignment-list li{display:flex;gap:.65rem;border-radius:18px;background:#f8fbff;border:1px solid rgba(31,78,140,.1);padding:.85rem;color:#354156;line-height:1.55}
+    .assignment-list i{color:var(--red);margin-top:.18rem}
+    footer{background:var(--blue-dark);color:#fff;padding:3rem 0}footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}
+    .floating-up{width:48px;height:48px;position:fixed;right:1rem;bottom:1rem;display:none;place-items:center;z-index:1000;border:0;border-radius:50%;background:var(--red);color:#fff;box-shadow:0 12px 28px rgba(214,40,57,.28)}
+    .global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200;font-family:Arial,Helvetica,sans-serif}
+    .global-course-switcher details{position:relative}.global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:#15345d;color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}.global-course-switcher summary::-webkit-details-marker{display:none}.global-course-switcher summary:after{content:"v";font-size:.8rem}.global-course-switcher details[open] summary:after{transform:rotate(180deg)}.global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}.global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:#15345d;text-decoration:none;font-weight:900}.global-course-switcher a:hover{background:#eef5ff;color:#d62839}
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:991px){.step-grid,.story-gallery,.region-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero{padding-top:7rem}.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}}
+    @media(max-width:575px){.step-grid,.story-gallery,.region-grid,.assignment-list{grid-template-columns:1fr}.btn-main,.btn-soft{width:100%}.connector-table{min-width:760px}.table-scroll{overflow-x:auto}.hero{min-height:auto;padding-top:6rem}.quick-access-panel{width:calc(100% - 1.5rem)}}
+  </style>
+</head>
+<body data-back-fallback="../ateliers-activites.html#recit-passe-simple">
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../../index.html">Accueil</a><a href="../../index.html">Français</a><a href="../index.html">Français Niveau 7</a><a href="../../../ingles/index.html">Anglais</a><a href="../../../ingles/basico/index.html">Anglais débutant</a><a href="../../../ingles/intermediate/index.html">Anglais intermédiaire</a></nav></details></div>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes/recit-litteraire.html">Thème lié</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#exemple">Exemple</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8 fade-in">
+          <span class="badge-course"><i class="bi bi-book-half"></i>Récit littéraire · Atelier créatif</span>
+          <h1>Chaperons rouges du monde</h1>
+          <p class="hero-lead">Créer une version locale de Caperucita Roja avec les bases du récit littéraire.</p>
+          <p class="hero-text">Chaque atelier transforme la même histoire selon une ville ou une région différente. On garde la structure du conte, on change les personnages, les lieux, les objets et le conflit, puis on ajoute quelques verbes au passé simple.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#mission" class="btn-main"><i class="bi bi-play-circle"></i>Lancer l'atelier</a>
+            <a href="#exemple" class="btn-soft"><i class="bi bi-headphones"></i>Écouter l'exemple</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="quick-access-panel" aria-label="Navigation rapide">
+    <div class="quick-link-list">
+      <a href="#mission"><b>01</b><span>Mission</span></a>
+      <a href="#connecteurs"><b>02</b><span>Connecteurs</span></a>
+      <a href="#exemple"><b>03</b><span>Tokyo</span></a>
+      <a href="#quiz"><b>04</b><span>Mini quiz</span></a>
+      <a href="#regions"><b>05</b><span>Régions</span></a>
+    </div>
+  </section>
+
+  <main>
+    <section id="mission">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Consigne d'atelier</p>
+          <h2 class="section-title">Une Caperucita différente par groupe</h2>
+          <p class="section-text mx-auto">Le but est d'écrire un récit de 250 à 300 mots, niveau B1, en gardant le squelette du conte original mais en changeant le monde autour de l'héroïne.</p>
+        </div>
+        <div class="step-grid">
+          <article class="step-card fade-in"><span>01</span><h3>Choisir la ville</h3><p>Le lieu décide du décor, des dangers, des objets et des personnages secondaires.</p></article>
+          <article class="step-card fade-in"><span>02</span><h3>Transformer</h3><p>Remplacez la forêt, le loup, la maison et le panier par des éléments cohérents avec la région.</p></article>
+          <article class="step-card fade-in"><span>03</span><h3>Écrire</h3><p>Utilisez surtout un français libre, avec quelques actions au passé simple pour faire avancer le récit.</p></article>
+          <article class="step-card fade-in"><span>04</span><h3>Présenter</h3><p>Lisez votre version, expliquez vos choix culturels et comparez avec une autre version.</p></article>
+        </div>
+        <div class="panel mt-4 fade-in">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+              <p class="section-kicker">Obligatoire</p>
+              <h3 class="fw-bold text-primary">Ingrédients du récit</h3>
+              <p class="section-text mb-0">Situation initiale, élément déclencheur, péripéties, dénouement et situation finale. Ajoutez au moins 4 connecteurs avancés et une expression idiomatique de la section du cours.</p>
+            </div>
+            <div class="col-lg-7">
+              <span class="grammar-chip"><i class="bi bi-braces"></i>Passé simple: entra, vit, prit, comprit</span>
+              <span class="grammar-chip"><i class="bi bi-chat-square-text"></i>Expression: garder son sang-froid</span>
+              <span class="grammar-chip"><i class="bi bi-diagram-3"></i>Connecteurs: cependant, or, ainsi</span>
+              <span class="grammar-chip"><i class="bi bi-globe2"></i>Version locale cohérente</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="connecteurs" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-4 fade-in">
+            <p class="section-kicker">Outils d'écriture</p>
+            <h2 class="section-title">Connecteurs avancés</h2>
+            <p class="section-text">Utilisez-les pour organiser votre récit, créer une opposition, signaler une conséquence ou faire avancer l'action.</p>
+          </div>
+          <div class="col-lg-8 fade-in">
+            <div class="panel table-scroll">
+              <table class="connector-table">
+                <thead><tr><th>Connecteur</th><th>Traducción al español</th><th>Utilité</th><th>Prononciation</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Cependant</strong></td><td>sin embargo</td><td>opposition douce</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/cependant.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Toutefois</strong></td><td>no obstante</td><td>restriction</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/toutefois.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>En revanche</strong></td><td>en cambio</td><td>contraste</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/en-revanche.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Néanmoins</strong></td><td>sin embargo / no obstante</td><td>opposition soutenue</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/neanmoins.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Par conséquent</strong></td><td>por consiguiente</td><td>conséquence</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/par-consequent.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>C'est pourquoi</strong></td><td>por eso</td><td>explication finale</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/cest-pourquoi.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>De plus</strong></td><td>además</td><td>ajout</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/de-plus.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>D'ailleurs</strong></td><td>por cierto / además</td><td>précision</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/dailleurs.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Tandis que</strong></td><td>mientras que / en cambio</td><td>simultanéité ou contraste</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/tandis-que.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Au moment où</strong></td><td>en el momento en que</td><td>repère narratif</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/au-moment-ou.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Or</strong></td><td>ahora bien</td><td>tournant logique</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/or.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Ainsi</strong></td><td>así / de este modo</td><td>bilan ou conséquence</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/ainsi.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                  <tr><td><strong>Malgré cela</strong></td><td>a pesar de eso</td><td>résistance</td><td><button class="pronounce-btn" data-audio="../audio/connecteurs/malgre-cela.mp3"><i class="bi bi-volume-up"></i>Écouter</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="exemple">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Exemple modèle</p>
+            <h2 class="section-title">Le chaperon rouge de Tokyo</h2>
+            <p class="section-text">Cette version garde les bases de Caperucita Roja, mais elle change le décor, l'objet à transporter, le danger et le dénouement. Le vocabulaire reste B1 et le passé simple apparaît seulement pour les actions principales.</p>
+            <div class="audio-panel mt-4">
+              <h3 class="fw-bold text-primary">Audio multi-voix</h3>
+              <audio id="storyAudio" controls preload="metadata"><source src="../audio/caperucita/akari-tokyo-recit.mp3" type="audio/mpeg"></audio>
+              <div class="speed-group" aria-label="Contrôle de vitesse du récit">
+                <button type="button" class="speed-btn" data-target="storyAudio" data-speed="0.75">0.75x</button>
+                <button type="button" class="speed-btn active" data-target="storyAudio" data-speed="1">1x</button>
+                <button type="button" class="speed-btn" data-target="storyAudio" data-speed="1.25">1.25x</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="story-gallery">
+              <figure class="story-shot"><img src="../img/caperucita-roja/akari-scene-01-tokyo-rue.png" alt="Akari traverse un quartier de Tokyo avec son panier"><figcaption>Situation initiale</figcaption></figure>
+              <figure class="story-shot"><img src="../img/caperucita-roja/akari-scene-02-depart.png" alt="La mère confie un panier à Akari"><figcaption>La mission</figcaption></figure>
+              <figure class="story-shot"><img src="../img/caperucita-roja/akari-scene-03-renard.png" alt="Akari rencontre le renard dans une ruelle"><figcaption>Le piège</figcaption></figure>
+              <figure class="story-shot"><img src="../img/caperucita-roja/akari-scene-04-grand-mere.png" alt="Le renard déguisé attend dans la chambre"><figcaption>La fausse grand-mère</figcaption></figure>
+              <figure class="story-shot"><img src="../img/caperucita-roja/akari-scene-05-festival.png" alt="Akari et la gardienne confrontent le renard"><figcaption>Le dénouement</figcaption></figure>
+              <figure class="story-shot"><img src="../img/caperucita-roja/akari-scene-06-the.png" alt="Akari et sa grand-mère partagent le thé"><figcaption>Situation finale</figcaption></figure>
+            </div>
+          </div>
+        </div>
+        <div class="story-panel mt-5 fade-in">
+          <div class="story-text">
+            <p>À Tokyo, Akari portait une cape rouge brodée de fleurs blanches. Chaque samedi, elle visitait sa grand-mère, qui habitait près d'un vieux jardin de Yanaka. Ce matin-là, sa mère lui confia un panier de bento, du thé vert et une lettre. « Ne prends pas les ruelles du marché », dit-elle. « Promis, maman. Je garderai mon sang-froid », répondit Akari.</p>
+            <p>Akari prit le métro, salua le vendeur de mochi et marcha sous les lanternes. Soudain, un renard noir, élégant et trop poli, apparut devant elle. Il lui proposa le chemin du canal pour trouver des fleurs de cerisier. Akari hésita. Le canal brillait, et les fleurs semblaient l'appeler. Elle suivit le renard et perdit quelques minutes.</p>
+            <p>Pendant ce temps, le renard courut chez la grand-mère. Il entra, imita sa voix et cacha la vieille dame dans le jardin. Quand Akari arriva, elle observa les oreilles pointues, la voix grave et les lunettes mal placées. Alors elle comprit le piège. Au lieu de crier, elle prit les devants: elle fit tomber le panier, ouvrit la lettre de sa mère et appela la gardienne du sanctuaire, qui passait à vélo.</p>
+            <p>Le renard avoua tout. La grand-mère revint en riant, un peu fâchée mais saine et sauve. « Merci, Akari. Tu as gardé ton sang-froid, et tu as sauvé notre dîner », dit-elle. Ce soir-là, Akari partagea le bento sur le toit. Elle apprit qu'un récit peut changer de ville, mais que la prudence reste toujours un bon guide.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="quiz" class="bg-white">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Compréhension et analyse</p>
+          <h2 class="section-title">Mini-questionnaire</h2>
+          <p class="section-text mx-auto">Les options se mélangent à chaque chargement pour éviter un patron de réponse. Lisez attentivement: plusieurs distracteurs sont plausibles.</p>
+        </div>
+        <div class="quiz-panel fade-in">
+          <form id="quizForm">
+            <div class="row g-4" id="questionGrid"></div>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <button type="button" class="btn-main" id="checkBtn"><i class="bi bi-check2-circle"></i>Corriger</button>
+              <button type="button" class="btn-soft" id="resetBtn"><i class="bi bi-arrow-repeat"></i>Recommencer</button>
+            </div>
+            <div class="result-box" id="resultBox"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="regions">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-4 fade-in">
+            <p class="section-kicker">Ateliers par région</p>
+            <h2 class="section-title">Choisir sa Caperucita</h2>
+            <p class="section-text">Cliquez sur une image pour écouter sa présentation en français. Ensuite, chaque groupe reçoit une version à développer.</p>
+            <div class="region-panel mt-4">
+              <p class="player-note" id="regionStatus">Aucune présentation lancée.</p>
+              <audio id="regionAudio" controls preload="metadata"></audio>
+              <div class="speed-group mt-3" aria-label="Contrôle de vitesse des présentations">
+                <button type="button" class="speed-btn region-speed" data-speed="0.75">0.75x</button>
+                <button type="button" class="speed-btn region-speed active" data-speed="1">1x</button>
+                <button type="button" class="speed-btn region-speed" data-speed="1.25">1.25x</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-8 fade-in">
+            <div class="region-grid">
+              <button class="region-card" type="button" data-title="Caperucita de Colombie" data-audio="../audio/caperucita/caperucita-colombie-intro.mp3"><img src="../img/caperucita-roja/caperucita-colombie.png" alt="Caperucita de Colombie"><span><strong>Colombie</strong><em>Ville andine, voisins, panier local.</em></span></button>
+              <button class="region-card" type="button" data-title="Caperucita de Russie" data-audio="../audio/caperucita/caperucita-russie-intro.mp3"><img src="../img/caperucita-roja/caperucita-russie.png" alt="Caperucita de Russie"><span><strong>Russie</strong><em>Neige, bouleaux, silence et traces.</em></span></button>
+              <button class="region-card" type="button" data-title="Caperucita de France" data-audio="../audio/caperucita/caperucita-france-intro.mp3"><img src="../img/caperucita-roja/caperucita-france.png" alt="Caperucita de France"><span><strong>France</strong><em>Village, boulangerie et forêt.</em></span></button>
+              <button class="region-card" type="button" data-title="Caperucita du Brésil" data-audio="../audio/caperucita/caperucita-bresil-intro.mp3"><img src="../img/caperucita-roja/caperucita-bresil.png" alt="Caperucita du Brésil"><span><strong>Brésil</strong><em>Ville lumineuse, mer et quartier.</em></span></button>
+              <button class="region-card" type="button" data-title="Caperucita des États-Unis" data-audio="../audio/caperucita/caperucita-etats-unis-intro.mp3"><img src="../img/caperucita-roja/caperucita-etats-unis.png" alt="Caperucita des États-Unis"><span><strong>États-Unis</strong><em>Petite ville, forêt et automne.</em></span></button>
+              <button class="region-card" type="button" data-title="Caperucita à votre choix" data-audio="../audio/caperucita/caperucita-choix-libre-intro.mp3"><img src="../img/caperucita-roja/caperucita-choix-libre.png" alt="Caperucita à inventer par l'étudiant"><span><strong>Choix libre</strong><em>Une ville choisie par l'étudiant.</em></span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="production" class="bg-white">
+      <div class="container">
+        <div class="panel fade-in">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-5">
+              <p class="section-kicker">Production finale</p>
+              <h2 class="section-title h1">Ce que le groupe remet</h2>
+              <p class="section-text mb-0">Un récit écrit de 250 à 300 mots, une lecture orale courte et une justification des choix culturels. Les étudiants peuvent dessiner ou chercher une image d'ambiance pour accompagner leur version.</p>
+            </div>
+            <div class="col-lg-7">
+              <ul class="assignment-list">
+                <li><i class="bi bi-check-circle-fill"></i><span>Le récit contient une situation initiale, un élément déclencheur, des péripéties et une fin claire.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>Le groupe utilise au moins 6 verbes au passé simple dans les actions principales.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>La ville choisie influence réellement les objets, les personnages et le danger.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>Le texte inclut au moins 4 connecteurs avancés et une expression idiomatique du cours.</span></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Chaperons rouges du monde</h2><p class="mb-0 opacity-75">Atelier lié au récit littéraire, au passé simple et aux expressions idiomatiques.</p></div>
+        <div class="col-lg-4 text-lg-end"><a href="../ateliers-activites.html#recit-passe-simple"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a></div>
+      </div>
+    </div>
+  </footer>
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const observed=document.querySelectorAll(".fade-in");const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible")}})},{threshold:.16});observed.forEach(el=>observer.observe(el));
+    const btnUp=document.getElementById("btnUp");window.addEventListener("scroll",()=>{btnUp.style.display=window.scrollY>620?"grid":"none"});
+
+    document.querySelectorAll(".pronounce-btn").forEach(btn=>btn.addEventListener("click",()=>{const audio=new Audio(btn.dataset.audio);audio.play()}));
+
+    document.querySelectorAll(".speed-btn[data-target]").forEach(btn=>btn.addEventListener("click",()=>{const audio=document.getElementById(btn.dataset.target);audio.playbackRate=Number(btn.dataset.speed);document.querySelectorAll(`.speed-btn[data-target="${btn.dataset.target}"]`).forEach(item=>item.classList.remove("active"));btn.classList.add("active")}));
+
+    const regionAudio=document.getElementById("regionAudio");const regionStatus=document.getElementById("regionStatus");let regionRate=1;
+    document.querySelectorAll(".region-speed").forEach(btn=>btn.addEventListener("click",()=>{regionRate=Number(btn.dataset.speed);regionAudio.playbackRate=regionRate;document.querySelectorAll(".region-speed").forEach(item=>item.classList.remove("active"));btn.classList.add("active")}));
+    document.querySelectorAll(".region-card").forEach(card=>card.addEventListener("click",()=>{document.querySelectorAll(".region-card").forEach(item=>item.classList.remove("active"));card.classList.add("active");regionAudio.src=card.dataset.audio;regionAudio.playbackRate=regionRate;regionStatus.textContent="Présentation en cours : "+card.dataset.title;regionAudio.play()}));
+
+    const questions=[
+      {p:"Quel élément montre le mieux que cette version respecte la base du conte original ?",o:["Akari transporte un panier et rencontre un personnage trompeur","Le récit se passe dans une grande ville moderne","La gardienne utilise un vélo au lieu d'une voiture","La grand-mère possède un jardin près de Yanaka"],a:"Akari transporte un panier et rencontre un personnage trompeur",f:"Le panier, le trajet vers la grand-mère et le trompeur rappellent directement la structure du conte."},
+      {p:"Dans le récit, quelle fonction a le passé simple ?",o:["Il décrit les habitudes d'Akari chaque samedi","Il marque les actions principales qui font avancer l'histoire","Il remplace toutes les descriptions de Tokyo","Il sert surtout à rapporter les paroles des personnages"],a:"Il marque les actions principales qui font avancer l'histoire",f:"Des formes comme prit, salua, entra, comprit ou appela portent les événements du premier plan."},
+      {p:"Pourquoi le renard propose-t-il le chemin du canal ?",o:["Pour créer un détour séduisant qui retarde Akari","Pour aider Akari à éviter le marché trop bruyant","Pour montrer que la grand-mère aime les fleurs","Pour expliquer l'origine des lanternes du quartier"],a:"Pour créer un détour séduisant qui retarde Akari",f:"Le détour donne au renard le temps d'arriver avant Akari chez la grand-mère."},
+      {p:"Quelle interprétation de l'expression garder son sang-froid convient le mieux à la scène finale ?",o:["Akari refuse de parler au renard","Akari reste calme et choisit une action intelligente","Akari oublie la lettre de sa mère","Akari court immédiatement sans observer la chambre"],a:"Akari reste calme et choisit une action intelligente",f:"Elle ne crie pas; elle observe, comprend et appelle de l'aide."},
+      {p:"Quel changement culturel est le plus cohérent avec le décor japonais de l'exemple ?",o:["Le bento, le thé vert, les lanternes et le sanctuaire remplacent les objets traditionnels du conte","La forêt reste le seul espace important du récit","Le loup devient un roi médiéval qui vit dans un château","La grand-mère disparaît complètement de l'histoire"],a:"Le bento, le thé vert, les lanternes et le sanctuaire remplacent les objets traditionnels du conte",f:"Ces éléments transforment le contexte sans perdre la logique de Caperucita Roja."}
+    ];
+    function shuffle(items){return items.map(value=>({value,sort:Math.random()})).sort((a,b)=>a.sort-b.sort).map(item=>item.value)}
+    function renderQuiz(){const grid=document.getElementById("questionGrid");grid.innerHTML=questions.map((q,index)=>{const opts=shuffle(q.o);return `<div class="col-lg-6"><article class="quiz-card" id="q${index}"><h3 class="h5 fw-bold text-primary">${index+1}. ${q.p}</h3>${opts.map(opt=>`<label class="answer-option"><input type="radio" name="q${index}" value="${opt}"> ${opt}</label>`).join("")}<div class="feedback-line">${q.f}</div></article></div>`}).join("")}
+    document.getElementById("checkBtn").addEventListener("click",()=>{let score=0;questions.forEach((q,index)=>{const card=document.getElementById(`q${index}`);const selected=document.querySelector(`input[name="q${index}"]:checked`);card.classList.remove("correct","incorrect");if(selected&&selected.value===q.a){score++;card.classList.add("correct")}else{card.classList.add("incorrect")}});const result=document.getElementById("resultBox");result.classList.add("show");result.innerHTML=`<h3 class="fw-bold mb-1">Score : ${score} / ${questions.length}</h3><p class="mb-0">${score>=4?"Très bien : vous avez compris la structure et les transformations du récit.":"Réécoutez l'exemple et observez comment les objets, les lieux et les actions principales ont changé."}</p>`;result.scrollIntoView({behavior:"smooth",block:"center"})});
+    document.getElementById("resetBtn").addEventListener("click",()=>{renderQuiz();document.getElementById("resultBox").classList.remove("show")});
+    document.querySelectorAll('.nav-link[href^="#"]').forEach(link=>{link.addEventListener("click",()=>{const nav=document.querySelector(".navbar-collapse");if(nav.classList.contains("show")) bootstrap.Collapse.getOrCreateInstance(nav).hide()})});
+    renderQuiz();
+  </script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js"></script>
+  <script src="../../../assets/js/jaralingua-back-button.js"></script>
+</body>
+</html>
