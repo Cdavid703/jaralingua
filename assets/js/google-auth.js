@@ -1494,7 +1494,8 @@
         client_id: clientId(),
         callback: window.jaralinguaHandleGoogleCredential,
         auto_select: false,
-        cancel_on_tap_outside: true
+        cancel_on_tap_outside: true,
+        use_fedcm_for_button: true
       });
 
       googleReady = true;
