@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -69,21 +69,96 @@
         <div class="teacher-tip"><span>Teacher's Tip</span><p>In short answers, do not repeat everything every time: <strong>Yes, she is</strong> is enough.</p></div>
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Family</p><h2>Talking About Family Members</h2></div></div>
-        <p class="lesson-text">Use family vocabulary and possessives to describe people in a photo.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Family Words</h3><div class="phrase-list"><div class="phrase-item"><strong>my mother / my father</strong><span>Use my for your family.</span></div><div class="phrase-item"><strong>her siblings</strong><span>Use her for a woman or girl.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Photo Questions</h3><div class="phrase-list"><div class="phrase-item"><strong>Who is the man in the photo?</strong><span>He is my brother.</span></div><div class="phrase-item"><strong>Is she your aunt?</strong><span>Yes, she is.</span></div></div></div>
+      <article class="premium-topic-card" id="talking-about-your-family">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Favorite People + Family</p><h2>Talking About Your Family</h2></div></div>
+        <p class="lesson-text">Favorite people are often famous people, classmates, friends, and family members. Use the accordions below to study family vocabulary, pronouns, possessives, and simple questions for a family photo conversation.</p>
+
+        <div class="family-accordion-list">
+          <details class="family-accordion" open>
+            <summary><span>01</span> Family Vocabulary With Audio</summary>
+            <p class="lesson-text">Listen to each word, then use it in a short sentence: <strong>This is my mother.</strong> / <strong>He is my cousin.</strong> / <strong>They are my grandparents.</strong></p>
+            <div class="family-vocab-grid">
+              <div class="family-vocab-card"><strong>mother</strong><span>mama / madre</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('mother')">Listen</button></div>
+              <div class="family-vocab-card"><strong>mom</strong><span>mama</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('mom')">Listen</button></div>
+              <div class="family-vocab-card"><strong>father</strong><span>padre</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('father')">Listen</button></div>
+              <div class="family-vocab-card"><strong>dad</strong><span>papa</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('dad')">Listen</button></div>
+              <div class="family-vocab-card"><strong>parents</strong><span>padres</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('parents')">Listen</button></div>
+              <div class="family-vocab-card"><strong>brother</strong><span>hermano</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('brother')">Listen</button></div>
+              <div class="family-vocab-card"><strong>sister</strong><span>hermana</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('sister')">Listen</button></div>
+              <div class="family-vocab-card"><strong>siblings</strong><span>hermanos/as</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('siblings')">Listen</button></div>
+              <div class="family-vocab-card"><strong>son</strong><span>hijo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('son')">Listen</button></div>
+              <div class="family-vocab-card"><strong>daughter</strong><span>hija</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('daughter')">Listen</button></div>
+              <div class="family-vocab-card"><strong>child</strong><span>hijo/a, nino/a</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('child')">Listen</button></div>
+              <div class="family-vocab-card"><strong>children</strong><span>hijos/as</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('children')">Listen</button></div>
+              <div class="family-vocab-card"><strong>grandmother</strong><span>abuela</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandmother')">Listen</button></div>
+              <div class="family-vocab-card"><strong>grandma</strong><span>abuelita / abuela</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandma')">Listen</button></div>
+              <div class="family-vocab-card"><strong>grandfather</strong><span>abuelo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandfather')">Listen</button></div>
+              <div class="family-vocab-card"><strong>grandpa</strong><span>abuelito / abuelo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandpa')">Listen</button></div>
+              <div class="family-vocab-card"><strong>grandparents</strong><span>abuelos</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandparents')">Listen</button></div>
+              <div class="family-vocab-card"><strong>aunt</strong><span>tia</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('aunt')">Listen</button></div>
+              <div class="family-vocab-card"><strong>uncle</strong><span>tio</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('uncle')">Listen</button></div>
+              <div class="family-vocab-card"><strong>cousin</strong><span>primo/a</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('cousin')">Listen</button></div>
+              <div class="family-vocab-card"><strong>niece</strong><span>sobrina</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('niece')">Listen</button></div>
+              <div class="family-vocab-card"><strong>nephew</strong><span>sobrino</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('nephew')">Listen</button></div>
+              <div class="family-vocab-card"><strong>wife</strong><span>esposa</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('wife')">Listen</button></div>
+              <div class="family-vocab-card"><strong>husband</strong><span>esposo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('husband')">Listen</button></div>
+              <div class="family-vocab-card"><strong>partner</strong><span>pareja</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('partner')">Listen</button></div>
+              <div class="family-vocab-card"><strong>stepmother</strong><span>madrastra</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepmother')">Listen</button></div>
+              <div class="family-vocab-card"><strong>stepfather</strong><span>padrastro</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepfather')">Listen</button></div>
+              <div class="family-vocab-card"><strong>stepsister</strong><span>hermanastra</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepsister')">Listen</button></div>
+              <div class="family-vocab-card"><strong>stepbrother</strong><span>hermanastro</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepbrother')">Listen</button></div>
+              <div class="family-vocab-card"><strong>mother-in-law</strong><span>suegra</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('mother-in-law')">Listen</button></div>
+              <div class="family-vocab-card"><strong>father-in-law</strong><span>suegro</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('father-in-law')">Listen</button></div>
+              <div class="family-vocab-card"><strong>family photo</strong><span>foto familiar</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('family photo')">Listen</button></div>
+              <div class="family-vocab-card"><strong>family member</strong><span>miembro de la familia</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('family member')">Listen</button></div>
+              <div class="family-vocab-card"><strong>relatives</strong><span>familiares / parientes</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('relatives')">Listen</button></div>
+              <div class="family-vocab-card"><strong>pet</strong><span>mascota</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('pet')">Listen</button></div>
+            </div>
+          </details>
+
+          <details class="family-accordion">
+            <summary><span>02</span> Pronouns and Possessives</summary>
+            <p class="lesson-text">When you describe favorite people in your family, choose the correct subject pronoun and possessive word.</p>
+            <div class="family-table-wrapper">
+              <table class="family-comparison-table">
+                <thead><tr><th>Subject</th><th>Possessive</th><th>Use</th><th>Example</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>He</strong></td><td><strong>His</strong></td><td>One male person</td><td>He is my brother. His name is Daniel.</td></tr>
+                  <tr><td><strong>She</strong></td><td><strong>Her</strong></td><td>One female person</td><td>She is my aunt. Her name is Laura.</td></tr>
+                  <tr><td><strong>They</strong></td><td><strong>Their</strong></td><td>Two or more people</td><td>They are my parents. Their names are Ana and Luis.</td></tr>
+                  <tr><td><strong>It</strong></td><td><strong>Its</strong></td><td>A pet or thing</td><td>It is my dog. Its name is Toby.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="family-accordion">
+            <summary><span>03</span> Simple Family Structures</summary>
+            <div class="lesson-grid">
+              <div class="lesson-mini-card"><h3>Introduce One Person</h3><div class="phrase-list"><div class="phrase-item featured-phrase"><strong>This is my sister.</strong><span>Say the relationship.</span></div><div class="phrase-item featured-phrase"><strong>Her name is Sofia.</strong><span>Use her for a female person.</span></div><div class="phrase-item featured-phrase"><strong>She is nineteen.</strong><span>Use is for one person.</span></div></div></div>
+              <div class="lesson-mini-card"><h3>Introduce Two People</h3><div class="phrase-list"><div class="phrase-item featured-phrase"><strong>These are my grandparents.</strong><span>Use these are for two or more people.</span></div><div class="phrase-item featured-phrase"><strong>Their names are Grace and Paul.</strong><span>Use their for two names.</span></div><div class="phrase-item featured-phrase"><strong>They are happy.</strong><span>Use are with they.</span></div></div></div>
+            </div>
+          </details>
+
+          <details class="family-accordion">
+            <summary><span>04</span> Questions for a Family Photo</summary>
+            <div class="family-question-panel">
+              <h3>Useful Questions</h3>
+              <div class="family-question-grid">
+                <div class="family-question-card"><span>01</span><p>Who is the person in the photo?</p></div>
+                <div class="family-question-card"><span>02</span><p>Is he your father, brother, or cousin?</p></div>
+                <div class="family-question-card"><span>03</span><p>Is she your mother, sister, or aunt?</p></div>
+                <div class="family-question-card"><span>04</span><p>Are they your parents or grandparents?</p></div>
+              </div>
+            </div>
+          </details>
         </div>
-        <div class="hero-actions"><a href="talking-about-your-family.html" class="btn btn-secondary">Open full family lesson</a></div>
-        
       </article>
 
       <article class="premium-topic-card linked-practice-card">
         <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
-        <p class="lesson-text">After studying this unit, go to Practice Lab for a grammar and conversation activity, then complete the listening comprehension task.</p>
-        <div class="hero-actions"><a href="practice-unit-3-favorite-people.html" class="btn btn-primary">Open unit practice</a><a href="talking-about-your-family.html" class="btn btn-secondary">Open family lesson</a><a href="listening-unit-3-favorite-people.html" class="btn btn-secondary">Open listening</a></div>
+        <p class="lesson-text">After studying this unit, go to Practice Lab for a grammar and conversation activity, then complete the listening comprehension tasks.</p>
+        <div class="hero-actions"><a href="practice-unit-3-favorite-people.html" class="btn btn-primary">Open unit practice</a><a href="#talking-about-your-family" class="btn btn-secondary">Review family vocabulary</a><a href="listening-unit-3-family-photo-table.html" class="btn btn-secondary">Open family listening</a></div>
       </article>
     </section>
   </main>
@@ -91,8 +166,34 @@
   <footer class="site-footer">
     <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
-  <script src="../../assets/js/google-auth-config.js"></script>
+  <script>
+    let activeFamilyVocabularyAudio = null;
+
+    function familyAudioSlug(text) {
+      return text
+        .normalize("NFKD")
+        .replace(/[^\x00-\x7F]/g, "")
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 90)
+        .replace(/-+$/g, "");
+    }
+
+    function speakFamilyVocabulary(word) {
+      if (activeFamilyVocabularyAudio) {
+        activeFamilyVocabularyAudio.pause();
+        activeFamilyVocabularyAudio.currentTime = 0;
+      }
+      activeFamilyVocabularyAudio = new Audio("audio/family/" + familyAudioSlug(word) + ".mp3");
+      activeFamilyVocabularyAudio.play().catch(function() {
+        alert("Pronunciation audio is not available yet.");
+      });
+    }
+  </script>  <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
 </body>
 </html>
+
+

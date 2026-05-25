@@ -1,4 +1,4 @@
-:root {
+﻿:root {
   --blue: #123b8f;
   --blue-dark: #071f4f;
   --red: #d7193f;
@@ -6168,3 +6168,109 @@ a {
     .teacher-note-card strong {
       color: #9a3412;
     }
+
+.family-accordion-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 24px;
+}
+
+.family-accordion {
+  background: linear-gradient(135deg, #f8fbff, #ffffff);
+  border: 1px solid rgba(18, 59, 143, 0.12);
+  border-radius: 22px;
+  padding: 18px 20px;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.06);
+}
+
+.family-accordion summary {
+  cursor: pointer;
+  color: var(--blue-dark);
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  line-height: 1.35;
+}
+
+.family-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.family-accordion summary span {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--red);
+  color: var(--white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  font-size: 0.86rem;
+}
+
+.family-accordion[open] summary {
+  margin-bottom: 18px;
+}
+
+.family-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.family-vocab-card {
+  min-height: 138px;
+  background: var(--white);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+}
+
+.family-vocab-card strong {
+  color: var(--blue-dark);
+  font-size: 1.04rem;
+}
+
+.family-vocab-card span {
+  color: var(--gray);
+  font-size: 0.92rem;
+  min-height: 1.35em;
+}
+
+.listening-hero-activity-image {
+  width: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(18, 59, 143, 0.12);
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  margin-bottom: 22px;
+}
+
+.listening-hero-activity-image img {
+  width: 100%;
+  display: block;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+@media (max-width: 900px) {
+  .family-vocab-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .family-vocab-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .family-accordion {
+    padding: 16px;
+  }
+}
