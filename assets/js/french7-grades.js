@@ -291,11 +291,14 @@
   function staffStudentRows(payload) {
     return payload.students.map(function (student) {
       const summary = gradeSummary(student, payload.evaluations);
+      const aliasText = Array.isArray(student.emailAliases) && student.emailAliases.length
+        ? "<br><small>Alias: " + student.emailAliases.map(escapeHtml).join(", ") + "</small>"
+        : "";
       return `
         <tr>
           <td>${escapeHtml(student.fullName)}<br><span class="status-pill">${escapeHtml(student.level)}</span></td>
           <td>${escapeHtml(student.id)}</td>
-          <td>${escapeHtml(student.email)}</td>
+          <td>${escapeHtml(student.email)}${aliasText}</td>
           <td>${escapeHtml(student.contact)}</td>
           <td>${summary.average == null ? "En attente" : summary.average.toFixed(2)}</td>
           <td>${summary.completedWeight}%</td>

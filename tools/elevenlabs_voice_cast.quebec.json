@@ -1,0 +1,16 @@
+{
+  "speakers": {
+    "Narratrice Québec": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline - Soft Quebec accent",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Narratrice France": {
+      "voice_id": "JvD1a0L9rABccms2q9zH",
+      "name": "JaraLingua FR Jade Parisienne",
+      "profile": "french-france",
+      "gender": "female"
+    }
+  }
+}

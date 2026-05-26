@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Compréhension orale B1 - La culture française de Québec | Français Niveau 7</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--red-soft:#fff0f3;--soft:#f4f7fb;--text:#243044;--muted:#718096;--yellow:#f4c95d;--green:#2f9e77;--shadow:0 22px 55px rgba(20,40,80,.13)}
+    *{scroll-behavior:smooth}
+    body{margin:0;font-family:"Nunito",sans-serif;color:var(--text);background:var(--soft);overflow-x:hidden}
+    h1,h2,h3,h4,.navbar-brand{font-family:"Montserrat",sans-serif}
+    .navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 10px 32px rgba(21,52,93,.08)}
+    .navbar-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:800;color:var(--blue-dark)}
+    .brand-logo{height:42px;width:auto;object-fit:contain}
+    .nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}
+    .nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
+    .global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200;font-family:Arial,Helvetica,sans-serif}
+    .global-course-switcher details{position:relative}
+    .global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:#15345d;color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}
+    .global-course-switcher summary::-webkit-details-marker{display:none}
+    .global-course-switcher summary:after{content:"v";font-size:.8rem}
+    .global-course-switcher details[open] summary:after{transform:rotate(180deg)}
+    .global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}
+    .global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:#15345d;text-decoration:none;font-weight:900}
+    .global-course-switcher a:hover{background:#eef5ff;color:#d62839}
+    .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.25rem 0 4rem;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(21,52,93,.94),rgba(31,78,140,.72),rgba(214,40,57,.52)),var(--hero-image) center/cover no-repeat}
+    .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 14% 18%,rgba(255,255,255,.18),transparent 27%),radial-gradient(circle at 88% 12%,rgba(244,201,93,.16),transparent 24%);pointer-events:none}
+    .hero>.container{position:relative;z-index:1}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.86);border:1px solid rgba(31,78,140,.12);color:var(--blue-dark);font-weight:900}
+    .hero h1{margin-top:1.2rem;font-weight:800;line-height:1;color:#fff;text-shadow:0 12px 34px rgba(0,0,0,.22);font-size:clamp(2.55rem,6vw,5.25rem)}
+    .hero-lead{color:#fff;font-size:clamp(1.16rem,2vw,1.45rem);font-weight:900;margin:1.2rem 0 1rem;text-shadow:0 12px 34px rgba(0,0,0,.22)}
+    .hero-text,.section-text{color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:850px}
+    .hero .hero-text{color:rgba(255,255,255,.9)}
+    .hero-card{border-radius:34px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.25);box-shadow:var(--shadow);overflow:hidden;padding:1rem;backdrop-filter:blur(14px)}
+    .hero-card img{width:100%;min-height:390px;max-height:500px;object-fit:cover;border-radius:26px}
+    .btn-main,.btn-soft,.speed-btn{border-radius:999px;font-weight:900;padding:.82rem 1.08rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+    .btn-main,.speed-btn.active{border:0;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;box-shadow:0 16px 34px rgba(31,78,140,.24)}
+    .btn-main:hover,.speed-btn.active:hover{color:#fff}
+    .btn-soft,.speed-btn{border:2px solid rgba(31,78,140,.2);background:#fff;color:var(--blue-dark)}
+    .btn-soft:hover,.speed-btn:hover{border-color:var(--blue);background:var(--blue);color:#fff}
+    section{padding:4rem 0}
+    .section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}
+    .section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.15rem);font-weight:800}
+    .panel,.audio-card,.quiz-card,.teacher-panel{border-radius:34px;background:#fff;box-shadow:var(--shadow);padding:clamp(1.2rem,3vw,2rem)}
+    .audio-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.1rem}
+    .audio-card{height:100%;border:3px solid transparent}
+    .audio-card.quebec{border-color:rgba(31,78,140,.18)}
+    .audio-card.france{border-color:rgba(214,40,57,.18)}
+    .audio-card h3{color:var(--blue-dark);font-weight:900}
+    .accent-pill{display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;background:rgba(31,78,140,.08);color:var(--blue-dark);padding:.55rem .78rem;font-weight:900}
+    .audio-card.france .accent-pill{background:rgba(214,40,57,.09);color:var(--red)}
+    .audio-card audio{width:100%;margin:1rem 0}
+    .speed-group{display:flex;flex-wrap:wrap;gap:.6rem}
+    .quiz-card{margin-bottom:1rem;border:2px solid transparent}
+    .quiz-card.correct{border-color:rgba(47,158,119,.5);background:rgba(47,158,119,.09)}
+    .quiz-card.incorrect{border-color:rgba(214,40,57,.45);background:var(--red-soft)}
+    .answer-option{display:block;border-radius:18px;background:#fff;border:2px solid rgba(31,78,140,.1);padding:.74rem .85rem;margin-bottom:.55rem;font-weight:800;cursor:pointer;line-height:1.4}
+    .answer-option:hover{border-color:var(--blue);background:#eef5ff}
+    .feedback-line{display:none;margin-top:.65rem;color:var(--blue-dark);font-weight:900}
+    .quiz-card.correct .feedback-line,.quiz-card.incorrect .feedback-line{display:block}
+    .result-box{display:none;margin-top:1.2rem;border-radius:24px;color:#fff;padding:1.2rem;background:linear-gradient(135deg,var(--blue-dark),var(--blue))}
+    .result-box.show{display:block}
+    .teacher-panel{background:linear-gradient(135deg,#fff,#f8fbff)}
+    .teacher-lock{border-radius:22px;background:rgba(31,78,140,.07);padding:1rem}
+    .transcript-box{display:none;margin-top:1rem;border-radius:22px;background:#fff;border:2px solid rgba(31,78,140,.12);padding:1rem;color:var(--blue-dark);line-height:1.75}
+    .transcript-box.show{display:block}
+    footer{background:var(--blue-dark);color:#fff;padding:3rem 0}
+    footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}
+    .floating-up{width:48px;height:48px;position:fixed;right:1rem;bottom:1rem;display:none;place-items:center;z-index:1000;border:0;border-radius:50%;background:var(--red);color:#fff;box-shadow:0 12px 28px rgba(214,40,57,.28)}
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}.fade-in.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:991px){.hero{padding-top:7rem}.hero-card img{min-height:280px}.audio-grid{grid-template-columns:1fr}}
+    @media(max-width:575px){.btn-main,.btn-soft{width:100%}.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}.hero{padding-top:5.5rem;padding-bottom:2.25rem;min-height:auto}.hero h1{font-size:clamp(2.25rem,11vw,3.35rem)}.hero-text{font-size:1rem;line-height:1.55}.hero-card{display:none}.audio-card,.panel,.teacher-panel{border-radius:24px}}
+  </style>
+</head>
+<body data-back-fallback="../themes/societe-actualite.html#activites">
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../../index.html">Accueil</a><a href="../../index.html">Français</a><a href="../index.html">Français Niveau 7</a><a href="../../../ingles/index.html">Anglais</a><a href="../../../ingles/basico/index.html">Anglais débutant</a><a href="../../../ingles/intermediate/index.html">Anglais intermédiaire</a></nav></details></div>
+  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navMenu"><ul class="navbar-nav ms-auto gap-lg-2"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../themes/societe-actualite.html">Thème lié</a></li><li class="nav-item"><a class="nav-link active" href="#ecoute">Écoute</a></li><li class="nav-item"><a class="nav-link" href="#questions">Questions</a></li></ul></div></div></nav>
+  <header class="hero" style="--hero-image:url('../img/ecoute-culture-quebecoise.png')"><div class="container"><div class="row align-items-center g-5"><div class="col-lg-7 fade-in"><span class="badge-course"><i class="bi bi-headphones"></i>Société et actualité · Compréhension orale B1</span><h1>La culture française de Québec</h1><p class="hero-lead">La même chronique en deux accents: québécois et français.</p><p class="hero-text">Écoutez d'abord la version québécoise, puis comparez avec la version de France. Le texte est identique: seules la voix et la couleur de l'accent changent.</p><div class="d-flex flex-wrap gap-3 mt-4"><a href="#ecoute" class="btn-main"><i class="bi bi-play-circle"></i>Lancer les audios</a><a href="#questions" class="btn-soft"><i class="bi bi-check2-square"></i>Faire les questions</a></div></div><div class="col-lg-5 fade-in"><div class="hero-card"><img src="../img/ecoute-culture-quebecoise.png" alt="Étudiants écoutant une chronique sur la culture francophone du Québec"></div></div></div></div></header>
+  <main>
+    <section id="ecoute" class="bg-white"><div class="container"><div class="text-center mb-5 fade-in"><p class="section-kicker">Écoute comparée</p><h2 class="section-title">Choisissez un accent</h2><p class="section-text mx-auto">Les deux lecteurs contiennent la même chronique. Les boutons sont séparés pour que les élèves puissent écouter, comparer et revenir à la version de leur choix.</p></div><div class="audio-grid fade-in"><article class="audio-card quebec"><span class="accent-pill"><i class="bi bi-soundwave"></i>Accent québécois</span><h3 class="mt-3">Version 1 · Québec</h3><p class="section-text mb-2">Écoutez cette version pour reconnaître la musicalité du français québécois.</p><audio class="listening-audio" controls preload="metadata" aria-label="Chronique avec accent québécois"><source src="../audio/culture-quebecoise-quebec-b1.mp3" type="audio/mpeg"></audio></article><article class="audio-card france"><span class="accent-pill"><i class="bi bi-volume-up"></i>Accent français</span><h3 class="mt-3">Version 2 · France</h3><p class="section-text mb-2">Écoutez cette version pour comparer avec un accent de France.</p><audio class="listening-audio" controls preload="metadata" aria-label="Chronique avec accent français de France"><source src="../audio/culture-quebecoise-france-b1.mp3" type="audio/mpeg"></audio></article></div><div class="panel mt-4 fade-in"><div class="d-flex flex-wrap gap-3 align-items-center justify-content-between"><div><h3 class="fw-bold text-primary mb-1">Vitesse d'écoute</h3><p class="section-text mb-0">Le changement de vitesse s'applique aux deux audios.</p></div><div class="speed-group" aria-label="Contrôle de vitesse"><button type="button" class="speed-btn" data-speed="0.75">0.75x</button><button type="button" class="speed-btn active" data-speed="1">1x</button><button type="button" class="speed-btn" data-speed="1.25">1.25x</button></div></div></div></div></section>
+    <section id="questions"><div class="container"><div class="text-center mb-5 fade-in"><p class="section-kicker">Questionnaire</p><h2 class="section-title">10 questions de compréhension</h2><p class="section-text mx-auto">Répondez après deux écoutes. Les réponses demandent d'identifier les idées principales, les nuances et le vocabulaire en contexte.</p></div><div class="panel"><form id="quizForm"><div class="row g-4" id="questionGrid"></div><div class="d-flex flex-wrap gap-3 mt-4"><button type="button" class="btn-main" id="checkBtn"><i class="bi bi-check2-circle"></i>Corriger</button><button type="button" class="btn-soft" id="resetBtn"><i class="bi bi-arrow-repeat"></i>Recommencer</button></div><div class="result-box" id="resultBox"></div></form></div></div></section>
+    <section id="transcription" class="bg-white"><div class="container"><div class="teacher-panel fade-in"><div class="row g-4 align-items-center"><div class="col-lg-8"><p class="section-kicker">Espace professeur</p><h2 class="section-title h1">Transcription réservée</h2><p class="section-text mb-0">La transcription apparaît uniquement pour un administrateur ou un professeur approuvé dans l'espace Google JaraLingua.</p></div><div class="col-lg-4 text-lg-end"><button type="button" class="btn-main" id="teacherTranscriptBtn"><i class="bi bi-person-check"></i>Voir la transcription</button></div></div><div class="teacher-lock mt-4" id="teacherStatus">Connectez-vous comme professeur pour afficher la transcription.</div><div class="transcript-box" id="transcriptBox"></div></div></div></section>
+  </main>
+  <footer><div class="container"><div class="row align-items-center g-4"><div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Compréhension orale B1 - Culture française de Québec</h2><p class="mb-0 opacity-75">Deux accents, un même texte, dix questions et transcription réservée au professeur.</p></div><div class="col-lg-4 text-lg-end"><a href="../themes/societe-actualite.html#activites"><i class="bi bi-arrow-left"></i> Retour au thème</a></div></div></div></footer>
+  <button class="floating-up" id="btnUp" aria-label="Retour en haut" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i class="bi bi-arrow-up"></i></button>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const listeningTranscript = "Bonjour. Aujourd'hui, je vous propose une courte chronique sur la culture française que le Québec a héritée, puis transformée. Quand les colons français sont arrivés en Amérique du Nord, ils ont apporté leur langue, leurs fêtes, leur religion, leur cuisine et une certaine manière de vivre ensemble. Mais le Québec n'est pas une copie de la France. Avec le temps, cette culture a pris une couleur locale. Le français reste au centre de l'identité québécoise: on le parle à l'école, au travail, dans les médias et dans la vie publique. On entend aussi des expressions particulières, un rythme différent et des mots qui racontent l'histoire du territoire. La musique, le théâtre, la littérature et le cinéma québécois montrent cette double origine: un héritage français, mais aussi une expérience nord-américaine. Par exemple, les traditions familiales, les fêtes d'hiver, les chansons populaires et l'humour créent un style très reconnaissable. Il faut mettre les points sur les i: protéger le français au Québec ne signifie pas refuser les autres cultures. Au contraire, beaucoup de Québécois veulent vivre en français dans une société ouverte, où les influences autochtones, britanniques, irlandaises, haïtiennes, maghrébines et latino-américaines ont aussi laissé des traces. On pourrait croire que la culture québécoise regarde seulement vers le passé. Pourtant, elle est très actuelle: elle discute d'immigration, d'identité, d'environnement et de justice sociale. Aujourd'hui, les jeunes artistes mélangent les accents, les styles et les références. À mon avis, le Québec a du pain sur la planche pour garder sa langue vivante, mais cette énergie rend sa culture dynamique. Comprendre le Québec, c'est donc écouter une francophonie différente: proche de la France par l'histoire, mais unique par son parcours.";
+    const questions=[
+      {p:"Quelle idée résume le mieux la chronique ?",o:["Le Québec a conservé une culture française sans aucune transformation.","Le Québec a reçu un héritage français, puis l'a adapté à son histoire locale.","La culture québécoise dépend surtout des traditions touristiques récentes."],a:"Le Québec a reçu un héritage français, puis l'a adapté à son histoire locale.",f:"La chronique insiste sur l'héritage français transformé par l'expérience québécoise."},
+      {p:"Quels éléments les colons français ont-ils apportés en Amérique du Nord ?",o:["Des systèmes numériques, des médias modernes et une industrie culturelle.","Des règles politiques actuelles et une littérature déjà québécoise.","La langue, les fêtes, la religion, la cuisine et une manière de vivre ensemble."],a:"La langue, les fêtes, la religion, la cuisine et une manière de vivre ensemble.",f:"Ces éléments sont cités au début pour expliquer l'héritage français."},
+      {p:"Pourquoi le texte affirme-t-il que le Québec n'est pas une copie de la France ?",o:["Parce que sa culture a pris une couleur locale avec le temps.","Parce que le français a disparu de la vie publique québécoise.","Parce que les traditions européennes n'ont laissé aucune trace."],a:"Parce que sa culture a pris une couleur locale avec le temps.",f:"La chronique dit que l'héritage français a été transformé par le territoire et l'histoire."},
+      {p:"Dans quels espaces le français reste-t-il central selon l'audio ?",o:["Uniquement dans les archives historiques et les musées.","Seulement dans les familles qui viennent directement de France.","À l'école, au travail, dans les médias et dans la vie publique."],a:"À l'école, au travail, dans les médias et dans la vie publique.",f:"Le français est présenté comme une langue vivante et sociale, pas seulement patrimoniale."},
+      {p:"Que montrent la musique, le théâtre, la littérature et le cinéma québécois ?",o:["Une rupture totale avec toute tradition francophone.","Une double origine: héritage français et expérience nord-américaine.","Une culture limitée aux fêtes d'hiver et aux chansons anciennes."],a:"Une double origine: héritage français et expérience nord-américaine.",f:"Ces domaines artistiques illustrent la combinaison entre mémoire française et réalité nord-américaine."},
+      {p:"Que signifie l'expression « mettre les points sur les i » dans la chronique ?",o:["Clarifier une idée importante pour éviter un malentendu.","Faire une liste complète des artistes québécois actuels.","Prononcer chaque mot de manière plus lente et plus scolaire."],a:"Clarifier une idée importante pour éviter un malentendu.",f:"L'expression annonce une précision: protéger le français ne veut pas dire refuser les autres cultures."},
+      {p:"Quelle nuance le locuteur ajoute-t-il sur la protection du français ?",o:["Elle empêcherait toute influence extérieure dans la société.","Elle concernerait seulement les personnes âgées et les institutions.","Elle peut exister dans une société ouverte à d'autres influences."],a:"Elle peut exister dans une société ouverte à d'autres influences.",f:"Le texte mentionne plusieurs influences culturelles qui ont aussi marqué le Québec."},
+      {p:"Quels sujets actuels sont associés à la culture québécoise ?",o:["La généalogie royale, la mode parisienne et les châteaux.","L'immigration, l'identité, l'environnement et la justice sociale.","La disparition de la musique et le retour exclusif aux traditions religieuses."],a:"L'immigration, l'identité, l'environnement et la justice sociale.",f:"Ces sujets montrent que la culture québécoise est actuelle."},
+      {p:"Dans la phrase « On pourrait croire que la culture québécoise regarde seulement vers le passé », quel temps verbal apparaît ?",o:["Le conditionnel présent.","Le passé simple.","Le futur antérieur."],a:"Le conditionnel présent.",f:"« Pourrait » est le conditionnel présent du verbe pouvoir."},
+      {p:"Quelle conclusion est la plus nuancée ?",o:["La culture québécoise est proche de la France et identique à elle.","La culture québécoise rejette son héritage français pour devenir seulement nord-américaine.","La culture québécoise est liée à la France par l'histoire, mais unique par son parcours."],a:"La culture québécoise est liée à la France par l'histoire, mais unique par son parcours.",f:"La dernière phrase présente exactement cette idée de proximité historique et d'identité propre."}
+    ];
+    const audios=Array.from(document.querySelectorAll(".listening-audio"));
+    audios.forEach(audio=>audio.addEventListener("play",()=>audios.forEach(other=>{if(other!==audio) other.pause()})));
+    document.querySelectorAll(".speed-btn").forEach(btn=>btn.addEventListener("click",()=>{const speed=Number(btn.dataset.speed);audios.forEach(audio=>audio.playbackRate=speed);document.querySelectorAll(".speed-btn").forEach(item=>item.classList.remove("active"));btn.classList.add("active")}));
+    const grid=document.getElementById("questionGrid"),resultBox=document.getElementById("resultBox");
+    function render(){grid.innerHTML=questions.map((q,i)=>`<div class="col-lg-6"><article class="quiz-card" id="q${i}"><h3 class="h5 fw-bold text-primary">${i+1}. ${q.p}</h3>${q.o.map(opt=>`<label class="answer-option"><input type="radio" name="q${i}" value="${opt}"> ${opt}</label>`).join("")}<div class="feedback-line">${q.f}</div></article></div>`).join("")}
+    document.getElementById("checkBtn").addEventListener("click",()=>{let score=0;questions.forEach((q,i)=>{const card=document.getElementById(`q${i}`);const selected=document.querySelector(`input[name="q${i}"]:checked`);card.classList.remove("correct","incorrect");if(selected&&selected.value===q.a){score++;card.classList.add("correct")}else{card.classList.add("incorrect")}});resultBox.classList.add("show");resultBox.innerHTML=`<h3 class="fw-bold">Score : ${score} / ${questions.length}</h3><p class="mb-0 fs-5 opacity-75">${score>=8?"Très bon travail : vous avez compris les idées principales et les nuances culturelles.":"Réécoutez les deux versions et notez les mots qui justifient chaque réponse."}</p>`;resultBox.scrollIntoView({behavior:"smooth",block:"center"})});
+    document.getElementById("resetBtn").addEventListener("click",()=>{render();resultBox.classList.remove("show")});
+    function readUser(){try{return JSON.parse(sessionStorage.getItem("jaralingua_google_user")||"null")}catch(error){return null}}
+    function normalizeEmail(value){return String(value||"").trim().toLowerCase()}
+    function currentRole(user){try{const requests=JSON.parse(localStorage.getItem("jaralingua_role_requests")||"[]");return requests.find(request=>request.id===(user&&user.sub)||normalizeEmail(request.email)===normalizeEmail(user&&user.email))||null}catch(error){return null}}
+    function canSeeTeacherTranscript(){const user=readUser();if(!user) return false;if(normalizeEmail(user.email)==="cdavid.jaramillo@gmail.com") return true;const role=currentRole(user);return !!(role&&role.status==="approved"&&role.role==="teacher")}
+    document.getElementById("teacherTranscriptBtn").addEventListener("click",()=>{const status=document.getElementById("teacherStatus");const box=document.getElementById("transcriptBox");if(!canSeeTeacherTranscript()){status.textContent="Accès réservé: connectez-vous avec un compte professeur approuvé ou administrateur.";box.classList.remove("show");return}status.textContent="Accès professeur vérifié. La transcription est visible.";box.textContent=listeningTranscript;box.classList.add("show")});
+    render();
+    const observed=document.querySelectorAll(".fade-in");const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible")}})},{threshold:.16});observed.forEach(el=>observer.observe(el));
+    const btnUp=document.getElementById("btnUp");window.addEventListener("scroll",()=>{btnUp.style.display=window.scrollY>620?"grid":"none"});
+  </script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js"></script>
+  <script src="../../../assets/js/jaralingua-back-button.js"></script>
+</body>
+</html>

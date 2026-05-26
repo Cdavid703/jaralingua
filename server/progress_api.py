@@ -154,6 +154,36 @@ def normalize_email(value):
     return str(value or "").strip().lower()
 
 
+def normalize_name(value):
+    return " ".join(str(value or "").strip().lower().split())
+
+
+def email_matches_student(student, email):
+    if normalize_email(student.get("email")) == email:
+        return True
+    aliases = student.get("emailAliases", [])
+    if not isinstance(aliases, list):
+        return False
+    return email in {normalize_email(item) for item in aliases}
+
+
+def name_matches_student(student, profile):
+    email = normalize_email(profile.get("email"))
+    if not email.endswith("@gmail.com"):
+        return False
+    profile_name = normalize_name(profile.get("name"))
+    if not profile_name:
+        return False
+    aliases = student.get("nameAliases", [])
+    if not isinstance(aliases, list):
+        return False
+    for alias in aliases:
+        normalized_alias = normalize_name(alias)
+        if normalized_alias and (profile_name == normalized_alias or normalized_alias in profile_name):
+            return True
+    return False
+
+
 def read_grades_data():
     if not os.path.exists(GRADES_PATH):
         return {
@@ -220,6 +250,7 @@ def staff_student_view(student):
         "fullName": student.get("fullName", ""),
         "level": student.get("level", ""),
         "email": student.get("email", ""),
+        "emailAliases": student.get("emailAliases", []),
         "contact": student.get("contact", ""),
         "bookDate": student.get("bookDate"),
         "grades": student.get("grades", {})
@@ -244,11 +275,19 @@ def grade_payload_for(profile, grades_data, query):
         return response
 
     direct_match = next(
-        (item for item in students if isinstance(item, dict) and normalize_email(item.get("email")) == email),
+        (item for item in students if isinstance(item, dict) and email_matches_student(item, email)),
         None
     )
     if direct_match:
         response["student"] = student_public_view(direct_match)
+        return response
+
+    name_match = next(
+        (item for item in students if isinstance(item, dict) and name_matches_student(item, profile)),
+        None
+    )
+    if name_match:
+        response["student"] = student_public_view(name_match)
         return response
 
     requested_id = (query.get("studentId") or [""])[0]
