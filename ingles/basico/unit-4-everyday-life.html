@@ -8,6 +8,265 @@
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .unit4-map {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .unit4-map a {
+      min-height: 132px;
+      border-radius: 24px;
+      padding: 22px;
+      background: #ffffff;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+      text-decoration: none;
+      color: var(--blue-dark);
+      display: grid;
+      gap: 8px;
+    }
+
+    .unit4-map span {
+      color: var(--red);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.78rem;
+    }
+
+    .unit4-map strong {
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.15;
+    }
+
+    .unit4-module {
+      border-radius: 34px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.11);
+      overflow: hidden;
+    }
+
+    .unit4-module-header {
+      padding: clamp(1.4rem, 3vw, 2.4rem);
+      background:
+        linear-gradient(135deg, rgba(18, 59, 143, 0.96), rgba(7, 31, 79, 0.94)),
+        var(--module-image, none) center/cover;
+      color: #ffffff;
+    }
+
+    .unit4-module-header span {
+      display: inline-flex;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .unit4-module-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .unit4-module-header p {
+      max-width: 860px;
+      line-height: 1.75;
+      opacity: 0.9;
+      margin: 0;
+    }
+
+    .unit4-module-body {
+      padding: clamp(1.25rem, 3vw, 2rem);
+      display: grid;
+      gap: 18px;
+    }
+
+    .unit4-topic {
+      border-radius: 24px;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
+      padding: 18px 20px;
+      box-shadow: 0 12px 26px rgba(15, 23, 42, 0.05);
+    }
+
+    .unit4-topic summary {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--blue-dark);
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .unit4-topic summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .unit4-topic summary i {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(18, 59, 143, 0.09);
+      color: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .unit4-topic[open] summary {
+      margin-bottom: 18px;
+    }
+
+    .unit4-teach-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .unit4-rule-card,
+    .unit4-example-card,
+    .unit4-practice-card {
+      border-radius: 20px;
+      padding: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      color: var(--gray);
+      line-height: 1.65;
+    }
+
+    .unit4-rule-card h3,
+    .unit4-example-card h3,
+    .unit4-practice-card h3 {
+      color: var(--blue-dark);
+      font-size: 1.12rem;
+      margin-bottom: 10px;
+    }
+
+    .unit4-formula {
+      display: block;
+      margin-top: 10px;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: #eef4ff;
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    .unit4-frequency-grid,
+    .unit4-vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .unit4-audio-card {
+      min-height: 154px;
+      border-radius: 20px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+    }
+
+    .unit4-audio-card strong {
+      color: var(--blue-dark);
+      font-size: 1.04rem;
+    }
+
+    .unit4-audio-card em {
+      color: var(--red);
+      font-style: normal;
+      font-weight: 900;
+      font-size: 0.88rem;
+    }
+
+    .unit4-audio-card span {
+      color: var(--gray);
+      font-size: 0.92rem;
+      line-height: 1.45;
+    }
+
+    .unit4-frequency-card {
+      min-height: 190px;
+    }
+
+    .unit4-progress {
+      height: 8px;
+      border-radius: 999px;
+      background: #e2e8f0;
+      overflow: hidden;
+    }
+
+    .unit4-progress b {
+      display: block;
+      height: 100%;
+      width: var(--value);
+      background: linear-gradient(90deg, var(--red), var(--blue));
+    }
+
+    .unit4-table-wrapper {
+      overflow-x: auto;
+      border-radius: 20px;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      background: #ffffff;
+    }
+
+    .unit4-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    .unit4-table th,
+    .unit4-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.07);
+      text-align: left;
+      vertical-align: top;
+      color: var(--gray);
+    }
+
+    .unit4-table th {
+      color: var(--blue-dark);
+      background: #eef4ff;
+      font-weight: 900;
+    }
+
+    .unit4-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .unit4-note {
+      border-left: 6px solid var(--red);
+      background: #fff7e8;
+      border-radius: 20px;
+      padding: 18px;
+      color: #7c4a03;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 900px) {
+      .unit4-map,
+      .unit4-teach-grid,
+      .unit4-frequency-grid,
+      .unit4-vocab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body class="english-basic-page">
   <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
@@ -24,13 +283,12 @@
     </nav>
   </header>
   <main>
-
     <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-4-everyday-life-banner.png');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Basic English Course 1</p>
         <h1>Unit 4: Everyday Life</h1>
-        <p>By the end of this unit, you will be able to describe typical mornings, daily routines, sports routines, and healthy life activities.</p>
-        <div class="lesson-meta"><span>Sessions 10-11</span><span>Daily routines</span><span>Frequency</span><span>Healthy habits</span></div>
+        <p>Learn how Americans describe daily routines, weekly habits, sports routines, and healthy life activities using simple present, adverbs of frequency, time expressions, and natural everyday vocabulary.</p>
+        <div class="lesson-meta"><span>Sessions 10-11</span><span>American English</span><span>Simple present</span><span>Frequency</span></div>
         <div class="hero-actions">
           <a href="#lesson-content" class="btn btn-primary">Start lesson</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
@@ -39,39 +297,250 @@
       <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-4-everyday-life-banner.png" alt="Unit 4: Everyday Life" /></aside>
     </section>
 
-
     <section class="lesson-outcome">
       <div class="outcome-card">
-        <span class="outcome-label">Learning Outcome</span>
-        <p>By the end of this unit, you will be able to describe typical mornings, daily routines, sports routines, and healthy life activities.</p>
+        <span class="outcome-label">Unit Structure</span>
+        <p>This unit has two main goals. First, <strong>to identify daily routines</strong>. Second, <strong>to describe sports routines and healthy life activities</strong>. Open each module and study the topics in order.</p>
+        <div class="unit4-map">
+          <a href="#daily-routines"><span>Module 1</span><strong>To identify daily routines</strong><small>Daily actions, simple present, time expressions, and frequency.</small></a>
+          <a href="#healthy-routines"><span>Module 2</span><strong>To describe sports routines and healthy life activities</strong><small>Sports verbs, healthy habits, phrasal verbs, and useful idioms.</small></a>
+        </div>
       </div>
     </section>
 
     <section class="premium-lesson-container" id="lesson-content">
+      <article class="unit4-module" id="daily-routines">
+        <header class="unit4-module-header">
+          <span>01</span>
+          <h2>To identify daily routines</h2>
+          <p>In this module, students learn to recognize and explain everyday actions: waking up, getting ready, going to school or work, studying, eating, relaxing, and sleeping. The grammar focus is the simple present because routines are repeated actions.</p>
+        </header>
+        <div class="unit4-module-body">
+          <details class="unit4-topic" open>
+            <summary><i class="bi bi-list-check"></i> Topic 1: What is a daily routine?</summary>
+            <div class="unit4-teach-grid">
+              <div class="unit4-rule-card">
+                <h3>Meaning</h3>
+                <p>A <strong>daily routine</strong> is a group of actions a person normally does every day or almost every day. In English, we identify routines with action verbs and time expressions.</p>
+                <span class="unit4-formula">person + routine verb + time/detail</span>
+              </div>
+              <div class="unit4-example-card">
+                <h3>Guided examples</h3>
+                <p><strong>I wake up at 6:00.</strong> This identifies the first action of the day.</p>
+                <p><strong>She goes to work in the morning.</strong> This identifies an action and a part of the day.</p>
+                <p><strong>They study after school.</strong> This identifies what happens after another activity.</p>
+              </div>
+            </div>
+          </details>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Routines</p><h2>A Typical Morning</h2></div></div>
-        <p class="lesson-text">Use simple present verbs to describe what you do every day.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Morning Verbs</h3><div class="phrase-list"><div class="phrase-item"><strong>I wake up at 6:00.</strong><span>Use at for clock time.</span></div><div class="phrase-item"><strong>I listen to music.</strong><span>Use base verbs after I/you/we/they.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Questions</h3><div class="phrase-list"><div class="phrase-item"><strong>Do you practice sports?</strong><span>Yes, I do. / No, I do not.</span></div><div class="phrase-item"><strong>What do you do in the morning?</strong><span>I take a shower and have breakfast.</span></div></div></div>
+          <details class="unit4-topic">
+            <summary><i class="bi bi-chat-square-text"></i> Topic 2: Simple present for routines</summary>
+            <div class="unit4-teach-grid">
+              <div class="unit4-rule-card">
+                <h3>Why simple present?</h3>
+                <p>Use the <strong>simple present</strong> because a routine is not happening only right now. It is normal, repeated, or typical.</p>
+                <span class="unit4-formula">I / you / we / they + base verb</span>
+                <span class="unit4-formula">he / she / it + verb + s/es</span>
+              </div>
+              <div class="unit4-example-card">
+                <h3>Forms</h3>
+                <p><strong>I get up early.</strong> Base verb after I.</p>
+                <p><strong>She gets up early.</strong> Add <strong>-s</strong> after she.</p>
+                <p><strong>He watches TV at night.</strong> Add <strong>-es</strong> to verbs ending in <strong>-ch, -sh, -x, -s, -o</strong>.</p>
+              </div>
+              <div class="unit4-rule-card">
+                <h3>Negative form</h3>
+                <p>Use <strong>do not / don't</strong> with I, you, we, and they. Use <strong>does not / doesn't</strong> with he, she, and it. After <strong>doesn't</strong>, the main verb returns to the base form.</p>
+                <span class="unit4-formula">She doesn't wakes up. = incorrect</span>
+                <span class="unit4-formula">She doesn't wake up early. = correct</span>
+              </div>
+              <div class="unit4-practice-card">
+                <h3>Mini practice</h3>
+                <p>Change the subject: <strong>I study at night.</strong></p>
+                <p>Correct answer: <strong>She studies at night.</strong></p>
+              </div>
+            </div>
+          </details>
+
+          <details class="unit4-topic">
+            <summary><i class="bi bi-question-circle"></i> Topic 3: Questions to identify routines</summary>
+            <div class="unit4-teach-grid">
+              <div class="unit4-rule-card">
+                <h3>Use do / does</h3>
+                <p>To ask about routines, put <strong>do</strong> or <strong>does</strong> before the subject. Use <strong>what</strong>, <strong>when</strong>, or <strong>what time</strong> when you need more information.</p>
+                <span class="unit4-formula">Do + you + verb?</span>
+                <span class="unit4-formula">What time + do + you + verb?</span>
+              </div>
+              <div class="unit4-example-card">
+                <h3>Useful questions</h3>
+                <p><strong>What do you do in the morning?</strong> I take a shower and have breakfast.</p>
+                <p><strong>What time do you wake up?</strong> I wake up at 6:30.</p>
+                <p><strong>Does your brother study at night?</strong> Yes, he does.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="unit4-topic">
+            <summary><i class="bi bi-clock"></i> Topic 4: Time expressions and why we use at</summary>
+            <div class="unit4-teach-grid">
+              <div class="unit4-rule-card">
+                <h3>Use at for exact clock times</h3>
+                <p><strong>At</strong> points to one exact moment on the clock. That is why English says <strong>at 6:00</strong>, <strong>at 7:30</strong>, <strong>at noon</strong>, and <strong>at midnight</strong>.</p>
+                <span class="unit4-formula">I wake up at 6:00.</span>
+              </div>
+              <div class="unit4-rule-card">
+                <h3>Use in for parts of the day</h3>
+                <p>Use <strong>in</strong> when the time is a larger period, not an exact clock time.</p>
+                <span class="unit4-formula">in the morning / in the afternoon / in the evening</span>
+              </div>
+              <div class="unit4-rule-card">
+                <h3>Use on for days</h3>
+                <p>Use <strong>on</strong> for days and repeated days of the week.</p>
+                <span class="unit4-formula">on Monday / on Fridays / on the weekend</span>
+              </div>
+              <div class="unit4-note">
+                <strong>American English note:</strong> In the United States, people often say <strong>on the weekend</strong>. British English often uses <strong>at the weekend</strong>. This course uses American English.
+              </div>
+            </div>
+          </details>
+
+          <details class="unit4-topic" open>
+            <summary><i class="bi bi-soundwave"></i> Topic 5: Daily routine vocabulary with audio</summary>
+            <div class="unit4-vocab-grid">
+              <div class="unit4-audio-card"><strong>wake up</strong><em>phrasal verb</em><span>to stop sleeping</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('wake-up')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>get up</strong><em>phrasal verb</em><span>to leave the bed</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('get-up')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>brush my teeth</strong><em>routine action</em><span>to clean your teeth</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('brush-my-teeth')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>take a shower</strong><em>routine action</em><span>to shower</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('take-a-shower')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>get dressed</strong><em>routine action</em><span>to put on clothes</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('get-dressed')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>have breakfast</strong><em>routine action</em><span>to eat in the morning</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('have-breakfast')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>go to work</strong><em>routine action</em><span>to travel to your job</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('go-to-work')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>go to school</strong><em>routine action</em><span>to travel to school</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('go-to-school')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>go to bed</strong><em>routine action</em><span>to go to sleep</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('go-to-bed')">Listen</button></div>
+            </div>
+          </details>
+
+          <details class="unit4-topic" open>
+            <summary><i class="bi bi-bar-chart"></i> Topic 6: Adverbs of frequency</summary>
+            <p class="lesson-text">Adverbs of frequency explain <strong>how often</strong> a routine happens. They are important because daily-life English is not only about the action; it is also about how regular the action is.</p>
+            <div class="unit4-frequency-grid">
+              <div class="unit4-audio-card unit4-frequency-card"><strong>always</strong><em>100%</em><div class="unit4-progress" style="--value: 100%;"><b></b></div><span>Use it when something happens every time. I always brush my teeth.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('always')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>almost always</strong><em>90-95%</em><div class="unit4-progress" style="--value: 92%;"><b></b></div><span>Use it when there are very few exceptions. She almost always gets up early.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('almost-always')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>usually</strong><em>80%</em><div class="unit4-progress" style="--value: 80%;"><b></b></div><span>Use it for a normal habit. I usually have breakfast at home.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('usually')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>often</strong><em>70%</em><div class="unit4-progress" style="--value: 70%;"><b></b></div><span>Use it when something happens many times. We often study after class.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('often')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>frequently</strong><em>70%</em><div class="unit4-progress" style="--value: 70%;"><b></b></div><span>Similar to often, but a little more formal. He frequently works late.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('frequently')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>sometimes</strong><em>50%</em><div class="unit4-progress" style="--value: 50%;"><b></b></div><span>Use it when something happens, but not regularly. I sometimes walk to school.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('sometimes')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>occasionally</strong><em>30-40%</em><div class="unit4-progress" style="--value: 35%;"><b></b></div><span>Less common than sometimes. She occasionally eats out.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('occasionally')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>rarely</strong><em>10-20%</em><div class="unit4-progress" style="--value: 15%;"><b></b></div><span>Use it when something almost never happens. I rarely drink soda.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('rarely')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>hardly ever</strong><em>5%</em><div class="unit4-progress" style="--value: 5%;"><b></b></div><span>Use it for almost zero. We hardly ever eat fast food.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('hardly-ever')">Listen</button></div>
+              <div class="unit4-audio-card unit4-frequency-card"><strong>never</strong><em>0%</em><div class="unit4-progress" style="--value: 0%;"><b></b></div><span>Use it when something does not happen. He never skips breakfast.</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('never')">Listen</button></div>
+            </div>
+            <div class="unit4-table-wrapper">
+              <table class="unit4-table">
+                <thead><tr><th>Position</th><th>Rule</th><th>Example</th><th>Why?</th></tr></thead>
+                <tbody>
+                  <tr><td>Before the main verb</td><td>Subject + adverb + verb</td><td>I usually study at night.</td><td>The adverb modifies the action: study.</td></tr>
+                  <tr><td>After be</td><td>Subject + am/is/are + adverb</td><td>She is always busy.</td><td>With be, the adverb comes after the verb.</td></tr>
+                  <tr><td>At the beginning</td><td>Sometimes / Occasionally + sentence</td><td>Sometimes, I walk to work.</td><td>This adds variety and sounds natural.</td></tr>
+                  <tr><td>With how often</td><td>How often + do/does + subject + verb?</td><td>How often do you work out?</td><td>The question asks for frequency.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
         </div>
-        
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Frequency</p><h2>Sports and Work Routines</h2></div></div>
-        <p class="lesson-text">Add frequency words to explain how often activities happen.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>How Often?</h3><div class="phrase-list"><div class="phrase-item"><strong>How often do you go to the gym?</strong><span>I go twice a week.</span></div><div class="phrase-item"><strong>What sport do you practice?</strong><span>I practice soccer.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Habits</h3><div class="phrase-list"><div class="phrase-item"><strong>I usually study at night.</strong><span>Usually means most days.</span></div><div class="phrase-item"><strong>I never run in the morning.</strong><span>Never means zero times.</span></div></div></div>
+      <article class="unit4-module" id="healthy-routines">
+        <header class="unit4-module-header">
+          <span>02</span>
+          <h2>To describe sports routines and healthy life activities</h2>
+          <p>In this module, students learn how to describe exercise, sports, hobbies, and healthy habits with correct English structures. The focus is not only vocabulary; it is choosing the right verb pattern.</p>
+        </header>
+        <div class="unit4-module-body">
+          <details class="unit4-topic" open>
+            <summary><i class="bi bi-trophy"></i> Topic 1: Sports and hobbies need different verbs</summary>
+            <div class="unit4-table-wrapper">
+              <table class="unit4-table">
+                <thead><tr><th>Structure</th><th>Use it for</th><th>Examples</th><th>Common mistake</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>play + sport/game</strong></td><td>Team sports, ball sports, games</td><td>I play soccer. She plays basketball. They play chess.</td><td>Do not say "practice soccer" for a normal hobby.</td></tr>
+                  <tr><td><strong>go + -ing</strong></td><td>Movement activities</td><td>I go running. We go swimming. He goes cycling.</td><td>Do not say "go to running".</td></tr>
+                  <tr><td><strong>do + activity</strong></td><td>Exercise, yoga, martial arts</td><td>I do yoga. She does karate. They do exercise.</td><td>Do not say "make yoga".</td></tr>
+                  <tr><td><strong>work out</strong></td><td>General exercise</td><td>I work out three times a week.</td><td>Do not add "in" after work out.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="unit4-topic">
+            <summary><i class="bi bi-heart-pulse"></i> Topic 2: Healthy life vocabulary with audio</summary>
+            <div class="unit4-vocab-grid">
+              <div class="unit4-audio-card"><strong>work out</strong><em>phrasal verb</em><span>to exercise</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('work-out')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>go running</strong><em>go + -ing</em><span>to run as exercise</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('go-running')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>go swimming</strong><em>go + -ing</em><span>to swim as exercise</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('go-swimming')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>play soccer</strong><em>play + sport</em><span>to participate in soccer</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('play-soccer')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>do yoga</strong><em>do + activity</em><span>to practice yoga</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('do-yoga')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>eat healthy food</strong><em>healthy habit</em><span>to eat good food for your body</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('eat-healthy-food')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>drink water</strong><em>healthy habit</em><span>to stay hydrated</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('drink-water')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>sleep well</strong><em>healthy habit</em><span>to get good sleep</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('sleep-well')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>stretch</strong><em>healthy habit</em><span>to move your body before or after exercise</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('stretch')">Listen</button></div>
+            </div>
+          </details>
+
+          <details class="unit4-topic" open>
+            <summary><i class="bi bi-calendar-week"></i> Topic 3: Describing a sports routine</summary>
+            <div class="unit4-teach-grid">
+              <div class="unit4-rule-card">
+                <h3>Complete structure</h3>
+                <p>A strong sports routine sentence usually includes the activity, frequency, and time.</p>
+                <span class="unit4-formula">subject + frequency + activity + time</span>
+              </div>
+              <div class="unit4-example-card">
+                <h3>Examples</h3>
+                <p><strong>I work out three times a week.</strong></p>
+                <p><strong>She usually goes running in the morning.</strong></p>
+                <p><strong>We play soccer on Saturdays at 4:00.</strong></p>
+              </div>
+              <div class="unit4-rule-card">
+                <h3>Frequency phrases</h3>
+                <p>Use phrases like <strong>once a week</strong>, <strong>twice a week</strong>, and <strong>three times a week</strong> after the action.</p>
+                <span class="unit4-formula">I go swimming twice a week.</span>
+              </div>
+              <div class="unit4-practice-card">
+                <h3>Build it</h3>
+                <p>Activity: yoga. Frequency: usually. Time: at night.</p>
+                <p>Answer: <strong>I usually do yoga at night.</strong></p>
+              </div>
+            </div>
+          </details>
+
+          <details class="unit4-topic">
+            <summary><i class="bi bi-lightning-charge"></i> Topic 4: Phrasal verbs and idioms for this unit</summary>
+            <div class="unit4-teach-grid">
+              <div class="unit4-rule-card">
+                <h3>Phrasal verbs</h3>
+                <p><strong>wake up</strong>: stop sleeping. <strong>get up</strong>: leave the bed. <strong>work out</strong>: exercise. <strong>cut down on</strong>: reduce something unhealthy.</p>
+                <span class="unit4-formula">I want to cut down on soda.</span>
+              </div>
+              <div class="unit4-rule-card">
+                <h3>Idioms</h3>
+                <p><strong>early bird</strong>: a person who starts the day early. <strong>night owl</strong>: a person who is active late at night. <strong>once in a blue moon</strong>: very rarely.</p>
+                <span class="unit4-formula">I am a night owl, so I study at night.</span>
+              </div>
+            </div>
+            <div class="unit4-vocab-grid">
+              <div class="unit4-audio-card"><strong>cut down on</strong><em>phrasal verb</em><span>to reduce something</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('cut-down-on')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>early bird</strong><em>idiom</em><span>a person who wakes up early</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('early-bird')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>night owl</strong><em>idiom</em><span>a person who is active late at night</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('night-owl')">Listen</button></div>
+              <div class="unit4-audio-card"><strong>once in a blue moon</strong><em>idiom</em><span>very rarely</span><button type="button" class="audio-word-btn" onclick="playUnit4Audio('once-in-a-blue-moon')">Listen</button></div>
+            </div>
+            <div class="hero-actions"><a href="idioms.html" class="btn btn-secondary">Open idioms bank</a></div>
+          </details>
         </div>
-        <div class="teacher-tip"><span>Teacher's Tip</span><p>Frequency words usually go before the main verb: <strong>I usually study</strong>.</p></div>
       </article>
 
       <article class="premium-topic-card linked-practice-card">
         <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
-        <p class="lesson-text">After studying this unit, go to Practice Lab for a grammar and conversation activity, then complete the listening comprehension task.</p>
+        <p class="lesson-text">After studying both modules, go to Practice Lab for sentence building, then complete the listening comprehension task.</p>
         <div class="hero-actions"><a href="practice-unit-4-everyday-life.html" class="btn btn-primary">Open unit practice</a><a href="listening-unit-4-everyday-life.html" class="btn btn-secondary">Open listening</a></div>
       </article>
     </section>
@@ -80,6 +549,20 @@
   <footer class="site-footer">
     <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
+  <script>
+    let activeUnit4Audio = null;
+
+    function playUnit4Audio(slug) {
+      if (activeUnit4Audio) {
+        activeUnit4Audio.pause();
+        activeUnit4Audio.currentTime = 0;
+      }
+      activeUnit4Audio = new Audio("audio/everyday-life/" + slug + ".mp3");
+      activeUnit4Audio.play().catch(function() {
+        alert("This ElevenLabs audio is not available yet.");
+      });
+    }
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
