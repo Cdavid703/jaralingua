@@ -168,7 +168,7 @@
     return {
       auth: {
         clientId: MICROSOFT_CLIENT_ID,
-        authority: "https://login.microsoftonline.com/" + MICROSOFT_TENANT_ID,
+        authority: "https://login.microsoftonline.com/consumers",
         redirectUri: window.location.origin + "/ingles/basico/notas.html"
       },
       cache: {
