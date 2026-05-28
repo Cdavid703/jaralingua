@@ -1,17 +1,34 @@
 (function () {
-  const USER_KEY = "jaralingua_google_user";
+  const GOOGLE_USER_KEY = "jaralingua_google_user";
+  const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const API_PATH = "/api/basic/grades";
+  const MICROSOFT_CLIENT_ID = "4e729f8a-d101-4c5d-af68-609d749bc95a";
+  const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
+  const MICROSOFT_SCOPES = ["User.Read"];
 
   let lastSignature = "";
+  let microsoftClient = null;
 
-  function readUser() {
+  function readStoredUser(key) {
     try {
-      const saved = JSON.parse(sessionStorage.getItem(USER_KEY) || "null");
-      if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) return null;
+      const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+      if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
       return saved;
     } catch (error) {
+      sessionStorage.removeItem(key);
       return null;
     }
+  }
+
+  function readUser() {
+    const googleUser = readStoredUser(GOOGLE_USER_KEY);
+    if (googleUser && googleUser.credential) return Object.assign({ provider: "google" }, googleUser);
+    const microsoftUser = readStoredUser(MICROSOFT_USER_KEY);
+    if (microsoftUser && microsoftUser.credential) return Object.assign({ provider: "microsoft" }, microsoftUser);
+    return null;
   }
 
   function normalizeEmail(value) {
@@ -52,15 +69,117 @@
     if (trigger) trigger.click();
   }
 
+  function microsoftAuthConfig() {
+    return {
+      auth: {
+        clientId: MICROSOFT_CLIENT_ID,
+        authority: "https://login.microsoftonline.com/" + MICROSOFT_TENANT_ID,
+        redirectUri: window.location.origin + "/ingles/basico/notas.html"
+      },
+      cache: {
+        cacheLocation: "sessionStorage"
+      }
+    };
+  }
+
+  function microsoftApp() {
+    if (!window.msal) throw new Error("Microsoft sign-in library is not available.");
+    if (!microsoftClient) microsoftClient = new window.msal.PublicClientApplication(microsoftAuthConfig());
+    return microsoftClient;
+  }
+
+  function storeMicrosoftSession(account, tokenResponse) {
+    const expiresOn = tokenResponse.expiresOn instanceof Date
+      ? Math.floor(tokenResponse.expiresOn.getTime() / 1000)
+      : Math.floor(Date.now() / 1000) + 3300;
+    const email = (account && (account.username || account.name)) || "";
+    sessionStorage.setItem(MICROSOFT_USER_KEY, JSON.stringify({
+      provider: "microsoft",
+      sub: account && account.homeAccountId,
+      email: email,
+      name: (account && account.name) || email,
+      credential: tokenResponse.accessToken,
+      exp: expiresOn
+    }));
+  }
+
+  function signInMicrosoft(root) {
+    if (!window.msal) {
+      root.innerHTML = renderError("Microsoft sign-in could not load. Please reload the page and try again.");
+      return;
+    }
+    const app = microsoftApp();
+    root.innerHTML = renderLoading();
+    app.loginPopup({
+      scopes: MICROSOFT_SCOPES,
+      prompt: "select_account"
+    }).then(function (loginResponse) {
+      const account = loginResponse.account;
+      app.setActiveAccount(account);
+      return app.acquireTokenSilent({
+        scopes: MICROSOFT_SCOPES,
+        account: account
+      }).catch(function () {
+        return app.acquireTokenPopup({
+          scopes: MICROSOFT_SCOPES,
+          account: account
+        });
+      }).then(function (tokenResponse) {
+        storeMicrosoftSession(account, tokenResponse);
+        lastSignature = "";
+        render();
+      });
+    }).catch(function () {
+      root.innerHTML = renderLocked();
+      wireLockedActions(root);
+    });
+  }
+
+  function signOutMicrosoft() {
+    sessionStorage.removeItem(MICROSOFT_USER_KEY);
+    if (microsoftClient) {
+      const account = microsoftClient.getActiveAccount();
+      if (account) microsoftClient.logoutPopup({ account: account }).catch(function () {});
+    }
+    lastSignature = "";
+    render();
+  }
+
+  function authActionsMarkup(user) {
+    if (!user || user.provider !== "microsoft") return "";
+    return `
+      <div class="mt-3">
+        <button class="btn-main" type="button" data-microsoft-signout><i class="bi bi-box-arrow-right"></i> Sign out Microsoft</button>
+      </div>
+    `;
+  }
+
+  function wireMicrosoftSignout(root) {
+    const button = root.querySelector("[data-microsoft-signout]");
+    if (button) button.addEventListener("click", signOutMicrosoft);
+  }
+
+  function wireLockedActions(root) {
+    const googleButton = root.querySelector("[data-open-google-login]");
+    if (googleButton) googleButton.addEventListener("click", openGooglePanel);
+    const microsoftButton = root.querySelector("[data-open-microsoft-login]");
+    if (microsoftButton) microsoftButton.addEventListener("click", function () {
+      signInMicrosoft(root);
+    });
+  }
+
   function renderLocked() {
     return `
       <div class="locked-card">
         <i class="bi bi-shield-lock-fill"></i>
         <h2 class="section-title">Sign in required</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          Sign in with your Google account to see only your own Basic English grades.
+          Sign in with your Google or Microsoft account to see only your own Basic English grades.
         </p>
-        <button class="btn-main mt-4" type="button" data-open-google-login><i class="bi bi-box-arrow-in-right"></i> Sign in with Google</button>
+        <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
+          <button class="btn-main" type="button" data-open-google-login><i class="bi bi-google"></i> Sign in with Google</button>
+          <button class="btn-main" type="button" data-open-microsoft-login><i class="bi bi-microsoft"></i> Sign in with Microsoft</button>
+        </div>
       </div>
     `;
   }
@@ -91,7 +210,7 @@
         <i class="bi bi-person-check-fill"></i>
         <h2 class="section-title">No grade record linked</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          Your Google email is not linked to a Basic English student record yet. Contact the teacher to review the email in the grade list.
+          Your signed-in email is not linked to a Basic English student record yet. Contact the teacher to review the email in the grade list.
         </p>
       </div>
     `;
@@ -124,13 +243,14 @@
     }).join("");
   }
 
-  function renderStudentPanel(student, payload) {
+  function renderStudentPanel(student, payload, user) {
     return `
       <div class="privacy-note mb-4">
         <i class="bi bi-shield-check"></i>
         <div>
           <strong>Private student view</strong>
-          <p class="mb-0">This page shows only the grades linked to your signed-in Google email.</p>
+          <p class="mb-0">This page shows only the grades linked to your signed-in email.</p>
+          ${authActionsMarkup(user)}
         </div>
       </div>
       <div class="row g-4">
@@ -177,7 +297,7 @@
     }).join("");
   }
 
-  function renderStaffPanel(payload) {
+  function renderStaffPanel(payload, user) {
     const headers = payload.evaluations.map(function (evaluation) {
       return `<th>${escapeHtml(evaluation.title)}<br>${evaluation.weight}%</th>`;
     }).join("");
@@ -187,6 +307,7 @@
         <div>
           <strong>Authorized staff view</strong>
           <p class="mb-0">The API allowed this full-group view because your account is registered as teacher or administrator.</p>
+          ${authActionsMarkup(user)}
         </div>
       </div>
       <div class="metric-grid mb-4">
@@ -210,7 +331,8 @@
   function fetchGrades(user) {
     return fetch(API_PATH, {
       headers: {
-        Authorization: "Bearer " + user.credential
+        Authorization: "Bearer " + user.credential,
+        "X-Jaralingua-Auth-Provider": user.provider || "google"
       }
     }).then(function (response) {
       if (!response.ok) throw new Error("The API rejected the request: " + response.status);
@@ -218,12 +340,14 @@
     });
   }
 
-  function renderPayload(root, payload) {
+  function renderPayload(root, payload, user) {
     if (payload.role === "admin" || payload.role === "teacher") {
-      root.innerHTML = renderStaffPanel(payload);
+      root.innerHTML = renderStaffPanel(payload, user);
+      wireMicrosoftSignout(root);
       return;
     }
-    root.innerHTML = payload.student ? renderStudentPanel(payload.student, payload) : renderNoRecord();
+    root.innerHTML = payload.student ? renderStudentPanel(payload.student, payload, user) : renderNoRecord();
+    wireMicrosoftSignout(root);
   }
 
   function render() {
@@ -236,15 +360,14 @@
 
     if (!user || !user.credential) {
       root.innerHTML = renderLocked();
-      const button = root.querySelector("[data-open-google-login]");
-      if (button) button.addEventListener("click", openGooglePanel);
+      wireLockedActions(root);
       return;
     }
 
     root.innerHTML = renderLoading();
     fetchGrades(user)
       .then(function (payload) {
-        renderPayload(root, payload);
+        renderPayload(root, payload, user);
       })
       .catch(function () {
         root.innerHTML = renderError("We could not load your grades. Please check your session and reload the page.");

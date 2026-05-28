@@ -11,6 +11,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 
 CLIENT_ID = os.environ.get("JARALINGUA_GOOGLE_CLIENT_ID", "").strip()
+MICROSOFT_CLIENT_ID = os.environ.get("JARALINGUA_MICROSOFT_CLIENT_ID", "4e729f8a-d101-4c5d-af68-609d749bc95a").strip()
+MICROSOFT_TENANT_ID = os.environ.get("JARALINGUA_MICROSOFT_TENANT_ID", "e1664f47-3c02-4a23-a559-0f33d25d8f86").strip()
 DATA_PATH = os.environ.get("JARALINGUA_PROGRESS_DATA", "/var/lib/jaralingua/progress.json")
 FRENCH7_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib/jaralingua/french7-grades.json")
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
@@ -120,6 +122,44 @@ def validate_google_token(token):
         raise ValueError("Google token has no subject.")
 
     token_cache[token] = {"exp": exp, "profile": profile}
+    return profile
+
+
+def validate_microsoft_token(token):
+    if not MICROSOFT_CLIENT_ID or not MICROSOFT_TENANT_ID:
+        raise ValueError("Microsoft sign-in is not configured.")
+    cache_key = "microsoft:" + token
+    cached = token_cache.get(cache_key)
+    if cached and cached.get("exp", 0) > time.time() + 30:
+        return cached["profile"]
+
+    url = "https://graph.microsoft.com/v1.0/me?" + urllib.parse.urlencode({
+        "$select": "id,displayName,mail,userPrincipalName"
+    })
+    request = urllib.request.Request(url, headers={
+        "Authorization": "Bearer " + token,
+        "Accept": "application/json"
+    })
+    try:
+        with urllib.request.urlopen(request, timeout=8) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except (urllib.error.URLError, json.JSONDecodeError) as error:
+        raise ValueError("Could not validate Microsoft token.") from error
+
+    subject = payload.get("id", "")
+    email = payload.get("mail") or payload.get("userPrincipalName") or ""
+    if not subject:
+        raise ValueError("Microsoft token has no subject.")
+    if not email:
+        raise ValueError("Microsoft account has no email.")
+
+    profile = {
+        "sub": "microsoft:" + subject,
+        "email": email,
+        "name": payload.get("displayName") or email,
+        "picture": ""
+    }
+    token_cache[cache_key] = {"exp": time.time() + 300, "profile": profile}
     return profile
 
 
@@ -427,7 +467,10 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if not token:
             json_response(self, 401, {"error": "missing_token"})
             return None
+        provider = normalize_email(self.headers.get("X-Jaralingua-Auth-Provider"))
         try:
+            if provider == "microsoft":
+                return validate_microsoft_token(token)
             return validate_google_token(token)
         except ValueError as error:
             json_response(self, 401, {"error": "invalid_token", "message": str(error)})
