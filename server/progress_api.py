@@ -68,6 +68,20 @@ def write_store(data):
             os.unlink(temp_path)
 
 
+def write_json_file(path, data, prefix):
+    directory = os.path.dirname(path)
+    os.makedirs(directory, exist_ok=True)
+    fd, temp_path = tempfile.mkstemp(prefix=prefix, suffix=".json", dir=directory)
+    try:
+        with os.fdopen(fd, "w", encoding="utf-8") as handle:
+            json.dump(data, handle, ensure_ascii=False, indent=2)
+            handle.write("\n")
+        os.replace(temp_path, path)
+    finally:
+        if os.path.exists(temp_path):
+            os.unlink(temp_path)
+
+
 def user_record(store, profile):
     users = store.setdefault("users", {})
     subject = profile["sub"]
@@ -265,6 +279,104 @@ def read_grades_data(path):
     return data
 
 
+def clean_text(value, limit=200):
+    return " ".join(str(value or "").strip().split())[:limit]
+
+
+def clean_email(value):
+    email = normalize_email(value)
+    if "@" not in email or len(email) > 200:
+        return ""
+    return email
+
+
+def clean_grade(value):
+    if value in (None, ""):
+        return None
+    try:
+        grade = float(value)
+    except (TypeError, ValueError):
+        return None
+    if grade < 0 or grade > 5:
+        return None
+    return round(grade, 2)
+
+
+def clean_weight(value):
+    try:
+        weight = float(value)
+    except (TypeError, ValueError):
+        return 0
+    if weight < 0:
+        weight = 0
+    if weight > 100:
+        weight = 100
+    return int(weight) if weight.is_integer() else round(weight, 2)
+
+
+def clean_gradebook_payload(payload, existing):
+    if not isinstance(payload, dict):
+        raise ValueError("invalid_payload")
+    evaluations = payload.get("evaluations")
+    students = payload.get("students")
+    if not isinstance(evaluations, list) or not isinstance(students, list):
+        raise ValueError("invalid_gradebook")
+
+    clean_evaluations = []
+    seen_ids = set()
+    for item in evaluations[:80]:
+        if not isinstance(item, dict):
+            continue
+        raw_id = clean_text(item.get("id"), 80)
+        eval_id = "".join(ch for ch in raw_id if ch.isalnum() or ch in ("-", "_"))
+        title = clean_text(item.get("title"), 160)
+        if not eval_id or not title or eval_id in seen_ids:
+            continue
+        seen_ids.add(eval_id)
+        clean_evaluations.append({
+            "id": eval_id,
+            "title": title,
+            "weight": clean_weight(item.get("weight")),
+            "type": clean_text(item.get("type") or "Assessment", 80),
+            "description": clean_text(item.get("description"), 300)
+        })
+
+    clean_students = []
+    for item in students[:300]:
+        if not isinstance(item, dict):
+            continue
+        student_id = clean_text(item.get("id"), 40)
+        full_name = clean_text(item.get("fullName"), 160)
+        if not student_id or not full_name:
+            continue
+        grades = {}
+        raw_grades = item.get("grades", {})
+        if isinstance(raw_grades, dict):
+            for evaluation in clean_evaluations:
+                grade = clean_grade(raw_grades.get(evaluation["id"]))
+                if grade is not None:
+                    grades[evaluation["id"]] = grade
+        clean_students.append({
+            "id": student_id,
+            "fullName": full_name,
+            "level": clean_text(item.get("level") or "Basic English Course 1", 100),
+            "email": clean_email(item.get("email")),
+            "emailAliases": [clean_email(email) for email in item.get("emailAliases", []) if clean_email(email)] if isinstance(item.get("emailAliases"), list) else [],
+            "contact": clean_text(item.get("contact"), 100),
+            "bookDate": clean_text(item.get("bookDate"), 40) or None,
+            "grades": grades
+        })
+
+    return {
+        "adminEmails": existing.get("adminEmails", []),
+        "teacherEmails": existing.get("teacherEmails", []),
+        "allowStudentIdClaim": existing.get("allowStudentIdClaim") is True,
+        "students": clean_students,
+        "evaluations": clean_evaluations,
+        "bonusEvent": existing.get("bonusEvent")
+    }
+
+
 def grade_user_role(profile, grades_data):
     email = normalize_email(profile.get("email"))
     admin_emails = {normalize_email(item) for item in grades_data.get("adminEmails", [])}
@@ -438,6 +550,21 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 record["updatedAt"] = now_iso()
                 write_store(store)
             json_response(self, 200, {"ok": True})
+            return
+
+        if parsed.path == "/api/basic/grades":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                try:
+                    next_data = clean_gradebook_payload(payload, grades_data)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                write_json_file(BASIC_ENGLISH_GRADES_PATH, next_data, ".basic-grades-")
+                json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
             return
 
         json_response(self, 404, {"error": "not_found"})

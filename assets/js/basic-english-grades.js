@@ -80,6 +80,28 @@
     };
   }
 
+  function slugify(value) {
+    return String(value || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48) || "assessment";
+  }
+
+  function uniqueEvaluationId(title, evaluations) {
+    const base = slugify(title);
+    const ids = new Set(evaluations.map(function (evaluation) { return evaluation.id; }));
+    let candidate = base;
+    let index = 2;
+    while (ids.has(candidate)) {
+      candidate = base + "-" + index;
+      index += 1;
+    }
+    return candidate;
+  }
+
   function openGooglePanel() {
     const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
     if (trigger) trigger.click();
@@ -363,7 +385,7 @@
         return `<td>${escapeHtml(formatGrade(grades[evaluation.id]))}</td>`;
       }).join("");
       return `
-        <tr>
+        <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
           <td>${escapeHtml(student.fullName)}<br><span class="status-pill">${escapeHtml(student.level)}</span></td>
           <td>${escapeHtml(student.email || "No email")}</td>
           ${gradeCells}
@@ -372,6 +394,66 @@
         </tr>
       `;
     }).join("");
+  }
+
+  function adminGradeInputs(payload) {
+    return payload.students.map(function (student) {
+      return `
+        <label class="admin-grade-row">
+          <span>${escapeHtml(student.fullName)}</span>
+          <input class="form-control" type="number" min="0" max="5" step="0.1" data-new-grade-student="${escapeHtml(student.id)}" placeholder="0.0 - 5.0">
+        </label>
+      `;
+    }).join("");
+  }
+
+  function adminToolsMarkup(payload) {
+    return `
+      <div class="grades-panel mb-4" data-admin-tools>
+        <p class="section-kicker">Administrator</p>
+        <h2 class="section-title">Add a new grade</h2>
+        <form data-add-grade-form class="admin-grade-form">
+          <div class="row g-3">
+            <div class="col-md-5">
+              <label class="form-label fw-bold" for="newGradeTitle">Assessment name</label>
+              <input id="newGradeTitle" class="form-control" data-new-grade-title placeholder="Final Speaking Task" required>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label fw-bold" for="newGradeType">Type</label>
+              <input id="newGradeType" class="form-control" data-new-grade-type placeholder="Speaking">
+            </div>
+            <div class="col-md-2">
+              <label class="form-label fw-bold" for="newGradeWeight">Weight %</label>
+              <input id="newGradeWeight" class="form-control" type="number" min="0" max="100" step="1" data-new-grade-weight placeholder="20" required>
+            </div>
+            <div class="col-md-2 d-grid align-items-end">
+              <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save</button>
+            </div>
+          </div>
+          <label class="form-label fw-bold mt-3" for="newGradeDescription">Description</label>
+          <input id="newGradeDescription" class="form-control" data-new-grade-description placeholder="Short description for students">
+          <div class="admin-grade-grid mt-3">${adminGradeInputs(payload)}</div>
+          <p class="section-text mt-3" data-admin-grade-status></p>
+        </form>
+      </div>
+    `;
+  }
+
+  function staffControlsMarkup() {
+    return `
+      <div class="grades-panel mb-4">
+        <p class="section-kicker">Tools</p>
+        <div class="row g-3 align-items-end">
+          <div class="col-lg-7">
+            <label class="form-label fw-bold" for="studentFilter">Filter students by name or email</label>
+            <input id="studentFilter" class="form-control" data-student-filter placeholder="Type a name, last name, or email">
+          </div>
+          <div class="col-lg-5 d-flex flex-wrap gap-2">
+            <button class="btn-main" type="button" data-export-excel><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</button>
+          </div>
+        </div>
+      </div>
+    `;
   }
 
   function renderStaffPanel(payload, user) {
@@ -392,6 +474,8 @@
         <div class="metric-card"><span>Assessments</span><strong>${payload.evaluations.length}</strong></div>
         <div class="metric-card"><span>Course</span><strong>Basic English</strong></div>
       </div>
+      ${staffControlsMarkup()}
+      ${payload.role === "admin" ? adminToolsMarkup(payload) : ""}
       <div class="grades-panel">
         <p class="section-kicker">Private data</p>
         <h2 class="section-title">Basic English gradebook</h2>
@@ -403,6 +487,164 @@
         </div>
       </div>
     `;
+  }
+
+  function gradebookForSave(payload) {
+    return {
+      evaluations: payload.evaluations,
+      students: payload.students.map(function (student) {
+        return {
+          id: student.id,
+          fullName: student.fullName,
+          level: student.level,
+          email: student.email,
+          emailAliases: student.emailAliases || [],
+          contact: student.contact || "",
+          bookDate: student.bookDate || null,
+          grades: student.grades || {}
+        };
+      })
+    };
+  }
+
+  function saveGradebook(user, payload) {
+    return fetch(API_PATH, {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + user.credential,
+        "X-Jaralingua-Auth-Provider": user.provider || "google",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(gradebookForSave(payload))
+    }).then(function (response) {
+      if (!response.ok) throw new Error("The API rejected the update: " + response.status);
+      return response.json();
+    });
+  }
+
+  function wireStudentFilter(root) {
+    const input = root.querySelector("[data-student-filter]");
+    if (!input) return;
+    input.addEventListener("input", function () {
+      const query = input.value.trim().toLowerCase();
+      root.querySelectorAll("[data-student-row]").forEach(function (row) {
+        const search = row.getAttribute("data-student-search") || "";
+        row.hidden = query && search.indexOf(query) === -1;
+      });
+    });
+  }
+
+  function excelCell(value) {
+    return escapeHtml(value == null ? "" : value);
+  }
+
+  function exportExcel(payload) {
+    const headers = payload.evaluations.map(function (evaluation) {
+      return `<th>${excelCell(evaluation.title + " (" + evaluation.weight + "%)")}</th>`;
+    }).join("");
+    const rows = payload.students.map(function (student) {
+      const grades = student.grades || {};
+      const summary = gradeSummary(student, payload.evaluations);
+      const gradeCells = payload.evaluations.map(function (evaluation) {
+        return `<td style="text-align:center;">${excelCell(formatGrade(grades[evaluation.id]))}</td>`;
+      }).join("");
+      return `
+        <tr>
+          <td>${excelCell(student.id)}</td>
+          <td>${excelCell(student.fullName)}</td>
+          <td>${excelCell(student.email)}</td>
+          ${gradeCells}
+          <td style="text-align:center;">${summary.average == null ? "Pending" : summary.average.toFixed(2)}</td>
+          <td style="text-align:center;">${summary.completedWeight}%</td>
+        </tr>
+      `;
+    }).join("");
+    const html = `
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            table { border-collapse: collapse; font-family: Arial, sans-serif; }
+            th { background: #1f4e8c; color: #ffffff; font-weight: bold; }
+            th, td { border: 1px solid #c8d3e1; padding: 8px; }
+            tr:nth-child(even) td { background: #eef5ff; }
+            .title { background: #d62839; color: #ffffff; font-size: 18px; font-weight: bold; }
+          </style>
+        </head>
+        <body>
+          <table>
+            <tr><td class="title" colspan="${payload.evaluations.length + 5}">Basic English Course 1 - Grades</td></tr>
+            <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr>
+            ${rows}
+          </table>
+        </body>
+      </html>
+    `;
+    const blob = new Blob(["\ufeff", html], { type: "application/vnd.ms-excel;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "basic-english-grades.xls";
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(function () {
+      URL.revokeObjectURL(link.href);
+      link.remove();
+    }, 0);
+  }
+
+  function wireExport(root, payload) {
+    const button = root.querySelector("[data-export-excel]");
+    if (button) button.addEventListener("click", function () {
+      exportExcel(payload);
+    });
+  }
+
+  function wireAdminTools(root, payload, user) {
+    const form = root.querySelector("[data-add-grade-form]");
+    if (!form) return;
+    const status = root.querySelector("[data-admin-grade-status]");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const title = (root.querySelector("[data-new-grade-title]") || {}).value || "";
+      const type = (root.querySelector("[data-new-grade-type]") || {}).value || "Assessment";
+      const weight = Number((root.querySelector("[data-new-grade-weight]") || {}).value || 0);
+      const description = (root.querySelector("[data-new-grade-description]") || {}).value || "";
+      if (!title.trim()) {
+        if (status) status.textContent = "Write an assessment name.";
+        return;
+      }
+      const evaluation = {
+        id: uniqueEvaluationId(title, payload.evaluations),
+        title: title.trim(),
+        type: type.trim() || "Assessment",
+        weight: weight,
+        description: description.trim()
+      };
+      const nextPayload = JSON.parse(JSON.stringify(payload));
+      nextPayload.evaluations.push(evaluation);
+      root.querySelectorAll("[data-new-grade-student]").forEach(function (input) {
+        const value = input.value.trim();
+        if (!value) return;
+        const grade = Number(value);
+        if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
+        const student = nextPayload.students.find(function (item) {
+          return item.id === input.getAttribute("data-new-grade-student");
+        });
+        if (!student) return;
+        student.grades = student.grades || {};
+        student.grades[evaluation.id] = Math.round(grade * 100) / 100;
+      });
+      if (status) status.textContent = "Saving...";
+      saveGradebook(user, nextPayload)
+        .then(function () {
+          lastSignature = "";
+          if (status) status.textContent = "Saved.";
+          renderPayload(root, nextPayload, user);
+        })
+        .catch(function () {
+          if (status) status.textContent = "Could not save the new grade.";
+        });
+    });
   }
 
   function fetchGrades(user) {
@@ -421,6 +663,9 @@
     if (payload.role === "admin" || payload.role === "teacher") {
       root.innerHTML = renderStaffPanel(payload, user);
       wireMicrosoftSignout(root);
+      wireStudentFilter(root);
+      wireExport(root, payload);
+      wireAdminTools(root, payload, user);
       return;
     }
     root.innerHTML = payload.student ? renderStudentPanel(payload.student, payload, user) : renderNoRecord();
