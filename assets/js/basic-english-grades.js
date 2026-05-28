@@ -2,12 +2,14 @@
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const API_PATH = "/api/basic/grades";
+  const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
   const MICROSOFT_CLIENT_ID = "4e729f8a-d101-4c5d-af68-609d749bc95a";
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
   const MICROSOFT_SCOPES = ["User.Read"];
 
   let lastSignature = "";
   let microsoftClient = null;
+  let googleInlineReady = false;
 
   function readStoredUser(key) {
     try {
@@ -44,6 +46,20 @@
       .replace(/'/g, "&#39;");
   }
 
+  function decodeJwt(token) {
+    const payload = token.split(".")[1];
+    const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const json = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (char) {
+          return "%" + ("00" + char.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+    return JSON.parse(json);
+  }
+
   function formatGrade(value) {
     return typeof value === "number" ? value.toFixed(1) : "Pending";
   }
@@ -67,6 +83,63 @@
   function openGooglePanel() {
     const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
     if (trigger) trigger.click();
+  }
+
+  function storeGoogleSession(response) {
+    if (!response || !response.credential) return;
+    const profile = decodeJwt(response.credential);
+    sessionStorage.setItem(GOOGLE_USER_KEY, JSON.stringify({
+      provider: "google",
+      sub: profile.sub,
+      email: profile.email,
+      name: profile.name || profile.email,
+      picture: profile.picture || "",
+      credential: response.credential,
+      exp: profile.exp
+    }));
+    lastSignature = "";
+    render();
+  }
+
+  function renderInlineGoogleButton(root) {
+    const target = root.querySelector("[data-inline-google-button]");
+    const status = root.querySelector("[data-inline-google-status]");
+    if (!target) return;
+    if (!GOOGLE_CLIENT_ID) {
+      if (status) status.textContent = "Google Client ID is not configured.";
+      return;
+    }
+    if (!(window.google && window.google.accounts && window.google.accounts.id)) {
+      if (status) status.textContent = "Loading Google...";
+      setTimeout(function () {
+        renderInlineGoogleButton(root);
+      }, 450);
+      return;
+    }
+    try {
+      if (!googleInlineReady) {
+        window.google.accounts.id.initialize({
+          client_id: GOOGLE_CLIENT_ID,
+          callback: storeGoogleSession
+        });
+        googleInlineReady = true;
+      }
+      target.innerHTML = "";
+      window.google.accounts.id.renderButton(target, {
+        theme: "outline",
+        size: "large",
+        shape: "pill",
+        text: "signin_with",
+        width: 280
+      });
+      if (status) status.textContent = "";
+      setTimeout(function () {
+        if (target.children.length || !status) return;
+        status.textContent = "Google did not allow the inline button. Use the floating Sign in button.";
+      }, 1200);
+    } catch (error) {
+      if (status) status.textContent = "Google sign-in is not available. Use the floating Sign in button.";
+    }
   }
 
   function microsoftAuthConfig() {
@@ -176,8 +249,12 @@
         <p class="section-text mx-auto" style="max-width: 720px;">
           Sign in with your Google or Microsoft account to see only your own Basic English grades.
         </p>
-        <div class="d-flex flex-wrap justify-content-center gap-2 mt-4">
-          <button class="btn-main" type="button" data-open-google-login><i class="bi bi-google"></i> Sign in with Google</button>
+        <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mt-4">
+          <div>
+            <div data-inline-google-button></div>
+            <small class="d-block mt-2 section-text" data-inline-google-status></small>
+            <button class="btn-main mt-2" type="button" data-open-google-login><i class="bi bi-google"></i> Open Google panel</button>
+          </div>
           <button class="btn-main" type="button" data-open-microsoft-login><i class="bi bi-microsoft"></i> Sign in with Microsoft</button>
         </div>
       </div>
@@ -361,6 +438,7 @@
     if (!user || !user.credential) {
       root.innerHTML = renderLocked();
       wireLockedActions(root);
+      renderInlineGoogleButton(root);
       return;
     }
 
