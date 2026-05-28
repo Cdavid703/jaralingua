@@ -59,6 +59,7 @@
       answersCleared: "Respuestas guardadas borradas.",
       adminPanel: "Panel de administrador",
       french7Grades: "Notas Frances 7",
+      basicEnglishGrades: "Notas Ingles basico",
       pendingRoleRequests: "Solicitudes pendientes",
       noPendingRequests: "No hay solicitudes pendientes.",
       approveAsStudent: "Aceptar estudiante",
@@ -118,6 +119,7 @@
       answersCleared: "R\u00e9ponses enregistr\u00e9es effac\u00e9es.",
       adminPanel: "Panneau administrateur",
       french7Grades: "Notes du cours",
+      basicEnglishGrades: "Notes anglais debutant",
       pendingRoleRequests: "Demandes en attente",
       noPendingRequests: "Aucune demande en attente.",
       approveAsStudent: "Accepter \u00e9tudiant",
@@ -177,6 +179,7 @@
       answersCleared: "Saved answers cleared.",
       adminPanel: "Admin panel",
       french7Grades: "French 7 grades",
+      basicEnglishGrades: "Basic English grades",
       pendingRoleRequests: "Pending requests",
       noPendingRequests: "No pending requests.",
       approveAsStudent: "Approve student",
@@ -1336,6 +1339,7 @@
           </div>
           <div class="auth-menu">
             <a href="${last ? escapeAttribute(last.url) : "#"}" data-auth-last>${copy.continue}</a>
+            <a href="${rootHref("ingles/basico/notas.html")}">${copy.basicEnglishGrades}</a>
             <a href="${rootHref("frances/Niveau%207/notes-evaluation.html")}">${copy.french7Grades}</a>
           </div>
           <div class="auth-actions">

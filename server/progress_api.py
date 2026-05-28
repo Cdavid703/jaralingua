@@ -12,7 +12,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 CLIENT_ID = os.environ.get("JARALINGUA_GOOGLE_CLIENT_ID", "").strip()
 DATA_PATH = os.environ.get("JARALINGUA_PROGRESS_DATA", "/var/lib/jaralingua/progress.json")
-GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib/jaralingua/french7-grades.json")
+FRENCH7_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib/jaralingua/french7-grades.json")
+BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
 MAX_BODY_BYTES = 1024 * 1024
@@ -184,8 +185,8 @@ def name_matches_student(student, profile):
     return False
 
 
-def read_grades_data():
-    if not os.path.exists(GRADES_PATH):
+def read_grades_data(path):
+    if not os.path.exists(path):
         return {
             "adminEmails": [],
             "teacherEmails": [],
@@ -194,7 +195,7 @@ def read_grades_data():
             "bonusEvent": None,
             "allowStudentIdClaim": False
         }
-    with open(GRADES_PATH, "r", encoding="utf-8-sig") as handle:
+    with open(path, "r", encoding="utf-8-sig") as handle:
         try:
             data = json.load(handle)
         except json.JSONDecodeError:
@@ -351,7 +352,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/french7/grades":
-            grades_data = read_grades_data()
+            grades_data = read_grades_data(FRENCH7_GRADES_PATH)
+            query = urllib.parse.parse_qs(parsed.query)
+            json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
+        if parsed.path == "/api/basic/grades":
+            grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
             query = urllib.parse.parse_qs(parsed.query)
             json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return

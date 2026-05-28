@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grades | Basic English Course 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #202938;
+      --muted: #64748b;
+      --blue: #2563eb;
+      --green: #16805f;
+      --red: #d62839;
+      --yellow: #f6c453;
+      --surface: #f5f7fb;
+      --white: #ffffff;
+      --line: rgba(32, 41, 56, 0.12);
+      --shadow: 0 22px 55px rgba(21, 34, 62, 0.13);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--ink);
+      background: var(--surface);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 34, 62, 0.08);
+    }
+
+    .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .brand-logo {
+      height: 42px;
+      width: auto;
+    }
+
+    .nav-link {
+      color: var(--ink);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    .hero {
+      min-height: min(660px, 82vh);
+      display: flex;
+      align-items: center;
+      padding: 6.25rem 0 4rem;
+      color: var(--white);
+      background:
+        linear-gradient(110deg, rgba(17, 24, 39, 0.92), rgba(37, 99, 235, 0.66), rgba(22, 128, 95, 0.48)),
+        url("../../assets/img/english-basic/basic-course-banner.jpg") center / cover no-repeat;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-size: clamp(2.7rem, 6vw, 5.2rem);
+      text-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-text {
+      max-width: 820px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.12rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-main,
+    .btn-soft {
+      min-height: 46px;
+      border-radius: 999px;
+      font-weight: 900;
+      padding: 0.78rem 1.15rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border: 0;
+    }
+
+    .btn-main {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .btn-soft {
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(12px);
+    }
+
+    .global-course-switcher {
+      position: fixed;
+      right: 1rem;
+      top: 5.25rem;
+      z-index: 1200;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .global-course-switcher summary {
+      list-style: none;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 1rem;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 900;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.18);
+      cursor: pointer;
+    }
+
+    .global-course-switcher summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .global-course-switcher summary::after {
+      content: "v";
+      font-size: 0.8rem;
+    }
+
+    .global-course-switcher details[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .global-course-switcher nav {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 0.5rem);
+      width: min(250px, calc(100vw - 2rem));
+      display: grid;
+      gap: 0.35rem;
+      padding: 0.65rem;
+      border-radius: 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+    }
+
+    .global-course-switcher a {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 0.85rem;
+      border-radius: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .global-course-switcher a:hover {
+      background: #eef4ff;
+      color: var(--blue);
+    }
+
+    .grades-shell {
+      width: min(1180px, calc(100% - 2rem));
+      margin: -2.2rem auto 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .grades-card,
+    .grades-panel,
+    .locked-card,
+    .privacy-note {
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .grades-card {
+      padding: clamp(1.1rem, 2.6vw, 2rem);
+    }
+
+    .grades-panel {
+      padding: 1.2rem;
+    }
+
+    .section-kicker {
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+    }
+
+    .section-title {
+      color: var(--ink);
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      font-weight: 900;
+      letter-spacing: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.68;
+      margin-bottom: 0;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.1rem;
+    }
+
+    .metric-card {
+      min-height: 112px;
+      border-radius: 8px;
+      padding: 1rem;
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: center;
+      gap: 0.25rem;
+    }
+
+    .metric-card span {
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-card strong {
+      color: var(--ink);
+      font-size: clamp(1.25rem, 2.7vw, 2rem);
+      line-height: 1.05;
+    }
+
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 1rem;
+      background: #eef4ff;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .privacy-note i {
+      font-size: 1.35rem;
+      color: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .grades-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    .grades-table th,
+    .grades-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .grades-table th {
+      color: var(--ink);
+      background: #eef4ff;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .grades-table td {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 0.7rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-pill.done {
+      background: rgba(22, 128, 95, 0.12);
+      color: var(--green);
+    }
+
+    .status-pill.pending {
+      background: rgba(246, 196, 83, 0.22);
+      color: #735000;
+    }
+
+    .locked-card {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      text-align: center;
+    }
+
+    .locked-card i {
+      width: 64px;
+      height: 64px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #eef4ff;
+      color: var(--blue);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .footer {
+      background: var(--ink);
+      color: var(--white);
+      padding: 2.4rem 0;
+    }
+
+    .footer a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    @media (max-width: 768px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .global-course-switcher {
+        top: auto;
+        right: 0.75rem;
+        bottom: 0.75rem;
+      }
+    }
+
+    @media (max-width: 575px) {
+      .hero {
+        padding-top: 5.75rem;
+        padding-bottom: 3rem;
+        min-height: auto;
+      }
+
+      .hero-actions .btn-main,
+      .hero-actions .btn-soft {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="global-course-switcher" aria-label="Global navigation">
+    <details>
+      <summary><span>Navigation</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">English</a>
+        <a href="./index.html">Basic English</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+      </nav>
+    </details>
+  </div>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua">
+        <span>Basic English</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Show menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Portal</a></li>
+          <li class="nav-item"><a class="nav-link" href="course-overview.html">Course</a></li>
+          <li class="nav-item"><a class="nav-link" href="practice-lab.html">Practice Lab</a></li>
+          <li class="nav-item"><a class="nav-link active" href="notas.html">Grades</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <span class="badge-course"><i class="bi bi-clipboard-data-fill"></i> Private academic progress</span>
+      <h1>Basic English grades</h1>
+      <p class="hero-text">
+        A secure space for students to check their own Basic English Course 1 grades. The page requires a verified Google session and the server only returns the record linked to that email.
+      </p>
+      <div class="hero-actions">
+        <a href="#grades" class="btn-main"><i class="bi bi-bar-chart-line-fill"></i> Check grades</a>
+        <a href="index.html" class="btn-soft"><i class="bi bi-arrow-left-circle"></i> Back to portal</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="grades">
+    <div class="grades-shell">
+      <div id="basicEnglishGradesApp" class="grades-card" aria-live="polite">
+        <div class="locked-card">
+          <i class="bi bi-hourglass-split"></i>
+          <h2 class="section-title">Loading grades</h2>
+          <p class="section-text">We are verifying your session before showing course information.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container d-flex flex-wrap justify-content-between gap-3">
+      <span>© 2026 JaraLingua</span>
+      <a href="../index.html">Back to English</a>
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="../../assets/js/basic-english-grades.js"></script>
+  <script src="../../assets/js/jaralingua-back-button.js"></script>
+</body>
+</html>

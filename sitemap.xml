@@ -301,6 +301,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.jaralingua.com/ingles/basico/notas.html</loc>
+    <lastmod>2026-05-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.jaralingua.com/ingles/basico/listening-first-day-class.html</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
