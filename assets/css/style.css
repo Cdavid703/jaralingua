@@ -6421,3 +6421,220 @@ a {
     padding: 16px;
   }
 }
+
+/* Mobile resilience layer: keeps legacy workshops usable on phones. */
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+iframe {
+  max-width: 100%;
+}
+
+iframe {
+  display: block;
+}
+
+.trust-table-wrap,
+.table-responsive,
+.worksheet-table,
+.partner-table-container,
+.grammar-table-wrap,
+.family-table-wrapper,
+.guesswho-table-container {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.trust-table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+}
+
+.trust-table th,
+.trust-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.1);
+  text-align: left;
+  vertical-align: top;
+}
+
+.trust-table th {
+  color: var(--blue-dark);
+  background: #eef4ff;
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    position: sticky;
+  }
+
+  .navbar {
+    align-items: stretch;
+    padding: 10px 14px;
+  }
+
+  .brand {
+    display: flex;
+    justify-content: center;
+  }
+
+  .nav-links {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 4px 2px 8px;
+    scrollbar-width: thin;
+  }
+
+  .nav-links li {
+    flex: 0 0 auto;
+  }
+
+  .nav-links a {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    padding: 0 12px;
+    border-radius: 999px;
+    background: #eef4ff;
+    white-space: nowrap;
+  }
+
+  .global-course-switcher {
+    top: auto;
+    right: 12px;
+    bottom: 12px;
+  }
+
+  .global-course-switcher summary {
+    min-height: 46px;
+    padding: 0 14px;
+  }
+
+  .global-course-switcher nav {
+    top: auto;
+    bottom: calc(100% + 8px);
+    max-height: min(70vh, 430px);
+    overflow-y: auto;
+  }
+
+  .home-hero,
+  .english-hero,
+  .french-hero,
+  .basic-hero,
+  .overview-hero,
+  .lesson-hero,
+  .trust-hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .home-hero-grid,
+  .home-showcase,
+  .content-pulse-section,
+  .method-section,
+  .levels-section,
+  .basic-section,
+  .overview-section,
+  .lesson-section,
+  .trust-container {
+    width: min(100% - 24px, 1180px);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-actions,
+  .home-hero .hero-actions,
+  .english-hero-panel .hero-actions,
+  .french-hero-content .hero-actions,
+  .basic-hero-content .hero-actions,
+  .overview-hero-content .hero-actions,
+  .lesson-hero-content .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .btn,
+  .btn-main,
+  .btn-soft,
+  .practice-submit-btn,
+  .roulette-btn,
+  .timer-btn,
+  .audio-btn {
+    width: 100%;
+    max-width: 100%;
+    min-height: 44px;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .home-visual-stage {
+    min-height: 260px;
+  }
+
+  .visual-card-side,
+  .floating-chip {
+    display: none;
+  }
+
+  .visual-card-main {
+    inset: 0;
+  }
+
+  iframe[src*="youtube.com"],
+  iframe[src*="youtube-nocookie.com"] {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .trust-hero {
+    padding-top: 58px;
+  }
+
+  .trust-document {
+    margin-top: 42px;
+  }
+
+  .trust-panel,
+  .trust-card,
+  .trust-link-grid a {
+    border-radius: 16px;
+  }
+
+  .site-footer {
+    padding: 26px 16px 78px;
+  }
+}
+
+@media (max-width: 420px) {
+  .home-hero h1,
+  .trust-hero h1,
+  .trust-document h1 {
+    font-size: clamp(2rem, 11vw, 2.65rem);
+  }
+
+  .home-hero-text,
+  .trust-hero p,
+  .trust-document p {
+    font-size: 1rem;
+  }
+
+  .trust-panel {
+    padding: 18px;
+  }
+}

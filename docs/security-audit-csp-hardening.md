@@ -20,6 +20,7 @@ Reduce corporate-security warnings by moving toward a stricter Content Security 
 
 - CSP currently allows `script-src 'unsafe-inline'`.
 - CSP currently allows `style-src 'unsafe-inline'`.
+- Current live HTML audit, excluding `chrome-tmp` snapshots, found 978 script, inline-style, or inline-handler occurrences.
 - Many pages still use inline `<script>` blocks.
 - Many pages still use inline event handlers such as `onclick`.
 - Some pages load third-party services: Google Sign-In, Microsoft MSAL, and YouTube embeds.
@@ -31,6 +32,24 @@ Reduce corporate-security warnings by moving toward a stricter Content Security 
 3. Move page-specific inline CSS into `assets/css/style.css` or a scoped stylesheet.
 4. Test each course section after extraction.
 5. Remove `unsafe-inline` from CSP only after the affected pages no longer depend on it.
+
+## Institutional Pages Added
+
+- `seguridad-privacidad.html`
+- `privacidad.html`
+- `terminos.html`
+- `uso-de-datos.html`
+- `tratamiento-de-datos.html`
+- `tecnologia-proveedores.html`
+- `modo-basico.html`
+- `instituciones.html`
+- `dominios-permitidos.html`
+- `status.html`
+- `accesibilidad.html`
+
+## Server Header Step
+
+Production should keep the active CSP compatible with current activities while adding `Content-Security-Policy-Report-Only` for a stricter future policy. This lets browser and corporate-security tests see the intended direction without breaking existing workshops.
 
 ## Suggested Refactor Order
 
