@@ -6406,6 +6406,40 @@ a {
   object-fit: cover;
 }
 
+.youtube-growth-panel {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  padding: 18px;
+  border: 1px solid rgba(215, 25, 63, 0.16);
+  border-radius: 20px;
+  background: linear-gradient(135deg, #fff7f8, #ffffff);
+}
+
+.youtube-growth-panel h3 {
+  margin: 4px 0 6px;
+  color: var(--blue-dark);
+}
+
+.youtube-growth-panel p {
+  margin: 0;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.youtube-growth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.youtube-growth-actions .btn {
+  min-height: 44px;
+}
+
 @media (max-width: 900px) {
   .family-vocab-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -6618,6 +6652,16 @@ iframe {
 
   .site-footer {
     padding: 26px 16px 78px;
+  }
+
+  .youtube-growth-panel {
+    grid-template-columns: 1fr;
+  }
+
+  .youtube-growth-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: stretch;
   }
 }
 
