@@ -2091,7 +2091,7 @@ a {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(7, 31, 79, 0.94), rgba(18, 59, 143, 0.78), rgba(215, 25, 63, 0.52)),
+    linear-gradient(135deg, rgba(3, 12, 32, 0.96), rgba(7, 31, 79, 0.88), rgba(80, 12, 30, 0.72)),
     var(--hero-image) center/cover no-repeat;
 }
 
@@ -2123,16 +2123,17 @@ a {
 
 .english-basic-page .immersive-basic-hero .lesson-hero-content,
 .english-basic-page .immersive-basic-hero .overview-hero-content {
-  background: rgba(255, 255, 255, 0.14);
+  background: rgba(7, 31, 79, 0.72);
   border: 1px solid rgba(255, 255, 255, 0.22);
   color: var(--white);
   backdrop-filter: blur(14px);
-  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.32);
 }
 
 .english-basic-page .immersive-basic-hero .lesson-hero-content h1,
 .english-basic-page .immersive-basic-hero .overview-hero-content h1 {
   color: var(--white);
+  text-shadow: 0 3px 22px rgba(0, 0, 0, 0.52);
 }
 
 .english-basic-page .immersive-basic-hero .lesson-hero-content p,
@@ -3617,7 +3618,7 @@ a {
   position: relative;
   overflow: hidden;
   background:
-    linear-gradient(135deg, rgba(7, 31, 79, 0.93), rgba(18, 59, 143, 0.76), rgba(215, 25, 63, 0.54)),
+    linear-gradient(135deg, rgba(3, 12, 32, 0.96), rgba(7, 31, 79, 0.88), rgba(80, 12, 30, 0.72)),
     var(--hero-image, url("../img/hero-languages.jpg")) center/cover no-repeat;
 }
 
@@ -3666,11 +3667,11 @@ a {
 .basic-hero-content,
 .overview-hero-content,
 .lesson-hero-content {
-  background: rgba(255, 255, 255, 0.16);
+  background: rgba(7, 31, 79, 0.74);
   border-color: rgba(255, 255, 255, 0.25);
   color: var(--white);
   backdrop-filter: blur(14px);
-  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 24px 62px rgba(0, 0, 0, 0.34);
 }
 
 .english-hero-panel h1,
@@ -3679,6 +3680,7 @@ a {
 .overview-hero-content h1,
 .lesson-hero-content h1 {
   color: var(--white);
+  text-shadow: 0 3px 22px rgba(0, 0, 0, 0.54);
 }
 
 .english-hero-panel .hero-text,
