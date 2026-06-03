@@ -74,3 +74,43 @@ postuler
 File: `sadapter.mp3`
 
 s'adapter
+
+## un refuge
+File: `refuge.mp3`
+
+un refuge
+
+## un animal errant
+File: `animal-errant.mp3`
+
+un animal errant
+
+## la stérilisation
+File: `sterilisation.mp3`
+
+la stérilisation
+
+## responsabiliser
+File: `responsabiliser.mp3`
+
+responsabiliser
+
+## une famille d'accueil
+File: `famille-daccueil.mp3`
+
+une famille d'accueil
+
+## la vaccination
+File: `vaccination.mp3`
+
+la vaccination
+
+## un abandon
+File: `abandon.mp3`
+
+un abandon
+
+## prendre en charge
+File: `prendre-en-charge.mp3`
+
+prendre en charge
