@@ -1,0 +1,260 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lecture-débat - Adoption responsable | Français Niveau 7</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--red-soft:#fff0f3;--soft:#f4f7fb;--text:#243044;--muted:#718096;--yellow:#f4c95d;--green:#2f9e77;--shadow:0 22px 55px rgba(20,40,80,.13)}
+    *{scroll-behavior:smooth}
+    body{margin:0;font-family:"Nunito",sans-serif;color:var(--text);background:var(--soft);overflow-x:hidden}
+    h1,h2,h3,h4,.navbar-brand{font-family:"Montserrat",sans-serif}
+    .navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 10px 32px rgba(21,52,93,.08)}
+    .navbar-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:800;color:var(--blue-dark)}
+    .brand-logo{height:42px}
+    .nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}
+    .nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
+    .global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200;font-family:Arial,Helvetica,sans-serif}
+    .global-course-switcher details{position:relative}
+    .global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:#15345d;color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}
+    .global-course-switcher summary::-webkit-details-marker{display:none}
+    .global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}
+    .global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:#15345d;text-decoration:none;font-weight:900}
+    .global-course-switcher a:hover{background:#eef5ff;color:#d62839}
+    .hero{padding:8rem 0 5rem;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(21,52,93,.92),rgba(31,78,140,.72),rgba(47,158,119,.48)),url("../img/lecture-debat-adoption-animaux.png") center/cover no-repeat}
+    .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 16% 20%,rgba(255,255,255,.18),transparent 28%),radial-gradient(circle at 88% 14%,rgba(244,201,93,.18),transparent 25%)}
+    .hero>.container{position:relative;z-index:1}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.88);border:1px solid rgba(31,78,140,.12);color:var(--blue-dark);font-weight:900}
+    .hero h1{margin-top:1.2rem;font-weight:800;line-height:1;color:#fff;text-shadow:0 12px 34px rgba(0,0,0,.25);font-size:clamp(2.45rem,6vw,5.2rem)}
+    .hero-lead{color:#fff;font-size:clamp(1.15rem,2vw,1.42rem);font-weight:900;margin:1.2rem 0 1rem;text-shadow:0 12px 34px rgba(0,0,0,.25)}
+    .hero-text,.section-text{color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:860px}
+    .hero .hero-text{color:rgba(255,255,255,.92);text-shadow:0 12px 34px rgba(0,0,0,.25)}
+    .hero-card{border-radius:34px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);box-shadow:var(--shadow);overflow:hidden;padding:1rem;backdrop-filter:blur(14px)}
+    .hero-card img{width:100%;min-height:360px;max-height:480px;object-fit:cover;border-radius:26px}
+    .btn-main,.btn-soft{border-radius:999px;font-weight:900;padding:.82rem 1.08rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+    .btn-main{border:0;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;box-shadow:0 16px 34px rgba(31,78,140,.24)}
+    .btn-main:hover{color:#fff}
+    .btn-soft{border:2px solid rgba(31,78,140,.2);background:#fff;color:var(--blue-dark)}
+    .btn-soft:hover{border-color:var(--blue);background:var(--blue);color:#fff}
+    section{padding:4rem 0}
+    .section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}
+    .section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.15rem);font-weight:800}
+    .panel,.reading-panel,.quiz-card,.vocab-panel,.debate-card{border-radius:30px;background:#fff;box-shadow:var(--shadow);padding:clamp(1.2rem,3vw,2rem)}
+    .reading-panel article{font-size:1.08rem;line-height:1.9;color:var(--text)}
+    .reading-panel article p{margin-bottom:1.1rem}
+    .vocab-table{width:100%;border-collapse:collapse}
+    .vocab-table th{background:var(--blue-dark);color:#fff;padding:.9rem;text-align:left}
+    .vocab-table td{padding:.85rem;border-bottom:1px solid rgba(31,78,140,.1);vertical-align:middle}
+    .vocab-table strong{color:var(--blue-dark)}
+    .pronunciation{display:inline-flex;border-radius:999px;background:#eef5ff;color:var(--blue-dark);font-weight:900;padding:.3rem .65rem}
+    .quiz-card{margin-bottom:1rem;border:2px solid transparent}
+    .quiz-card.correct{border-color:rgba(47,158,119,.5);background:rgba(47,158,119,.09)}
+    .quiz-card.incorrect{border-color:rgba(214,40,57,.45);background:var(--red-soft)}
+    .answer-option{display:block;border-radius:18px;background:#fff;border:2px solid rgba(31,78,140,.1);padding:.78rem .85rem;margin-bottom:.55rem;font-weight:800;cursor:pointer}
+    .answer-option:hover{border-color:var(--blue);background:#eef5ff}
+    .answer-option span{display:inline-grid;place-items:center;width:28px;height:28px;margin-right:.45rem;border-radius:999px;background:#15345d;color:#fff;font-size:.82rem;text-transform:uppercase}
+    .feedback-line{display:none;margin-top:.65rem;color:var(--blue-dark);font-weight:900}
+    .quiz-card.correct .feedback-line,.quiz-card.incorrect .feedback-line{display:block}
+    .result-box{display:none;margin-top:1.2rem;border-radius:24px;color:#fff;padding:1.2rem;background:linear-gradient(135deg,var(--blue-dark),var(--blue))}
+    .result-box.show{display:block}
+    .debate-list{display:grid;gap:1rem;margin:0;padding:0;list-style:none}
+    .debate-list li{border-radius:22px;background:#f8fbff;border:1px solid rgba(31,78,140,.12);padding:1rem;font-weight:900;color:var(--blue-dark)}
+    .model-answer{border-left:6px solid var(--green);background:#f3fbf8;border-radius:22px;padding:1.2rem;font-size:1.05rem;line-height:1.75}
+    footer{background:var(--blue-dark);color:#fff;padding:3rem 0}
+    footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:991px){.hero{padding-top:7rem}.hero-card img{min-height:280px}.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}}
+    @media(max-width:575px){.btn-main,.btn-soft{width:100%}.vocab-table{min-width:760px}.vocab-scroll{overflow-x:auto}}
+  </style>
+</head>
+<body data-back-fallback="../ateliers-activites.html#argumentation-debat">
+  <div class="global-course-switcher" aria-label="Navigation globale">
+    <details>
+      <summary><span>Navigation</span></summary>
+      <nav>
+        <a href="../../../index.html">Accueil</a>
+        <a href="../../index.html">Français</a>
+        <a href="../index.html">Français Niveau 7</a>
+        <a href="../../../ingles/index.html">Anglais</a>
+        <a href="../../../ingles/basico/index.html">Anglais débutant</a>
+        <a href="../../../ingles/intermediate/index.html">Anglais intermédiaire</a>
+      </nav>
+    </details>
+  </div>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes/argumentation-debat.html">Débat</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#lecture">Lecture</a></li>
+          <li class="nav-item"><a class="nav-link" href="#debat-final">Débat final</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7 fade-in">
+          <span class="badge-course"><i class="bi bi-chat-square-text"></i>Lecture-débat · B1</span>
+          <h1>Adopter, ce n’est pas seulement aimer</h1>
+          <p class="hero-lead">Une lecture pour discuter de l’adoption responsable, de la santé publique et de l’éthique envers les animaux.</p>
+          <p class="hero-text">L’activité combine compréhension écrite, vocabulaire guidé, conditionnel présent, passé composé et débat argumenté.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#lecture" class="btn-main"><i class="bi bi-book"></i>Lire l’article</a>
+            <a href="#questions" class="btn-soft"><i class="bi bi-check2-square"></i>Faire le quiz</a>
+            <a href="#debat-final" class="btn-soft"><i class="bi bi-megaphone"></i>Débattre</a>
+          </div>
+        </div>
+        <div class="col-lg-5 fade-in">
+          <div class="hero-card">
+            <img src="../img/lecture-debat-adoption-animaux.png" alt="Illustration d’un refuge et d’un débat sur l’adoption responsable">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="vocabulaire">
+      <div class="container">
+        <div class="vocab-panel fade-in">
+          <div class="row g-4 align-items-start">
+            <div class="col-lg-4">
+              <p class="section-kicker">Avant de lire</p>
+              <h2 class="section-title h1">Vocabulaire utile</h2>
+              <p class="section-text">Lisez les mots clés, observez la prononciation et utilisez la traduction pour préparer la lecture.</p>
+            </div>
+            <div class="col-lg-8 vocab-scroll">
+              <table class="vocab-table">
+                <thead><tr><th>Mot ou expression</th><th>Prononciation</th><th>Traduction en espagnol</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>un refuge</strong></td><td><span class="pronunciation">/œ̃ ʁə.fyʒ/</span></td><td>un refugio</td></tr>
+                  <tr><td><strong>un animal errant</strong></td><td><span class="pronunciation">/œ̃.n‿a.ni.mal e.ʁɑ̃/</span></td><td>un animal callejero</td></tr>
+                  <tr><td><strong>la stérilisation</strong></td><td><span class="pronunciation">/la ste.ʁi.li.za.sjɔ̃/</span></td><td>la esterilización</td></tr>
+                  <tr><td><strong>responsabiliser</strong></td><td><span class="pronunciation">/ʁɛs.pɔ̃.sa.bi.li.ze/</span></td><td>responsabilizar</td></tr>
+                  <tr><td><strong>une famille d’accueil</strong></td><td><span class="pronunciation">/yn fa.mij da.kœj/</span></td><td>un hogar temporal</td></tr>
+                  <tr><td><strong>la vaccination</strong></td><td><span class="pronunciation">/la vak.si.na.sjɔ̃/</span></td><td>la vacunación</td></tr>
+                  <tr><td><strong>un abandon</strong></td><td><span class="pronunciation">/œ̃.n‿a.bɑ̃.dɔ̃/</span></td><td>un abandono</td></tr>
+                  <tr><td><strong>prendre en charge</strong></td><td><span class="pronunciation">/pʁɑ̃.dʁ‿ɑ̃ ʃaʁʒ/</span></td><td>hacerse cargo de</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lecture" class="bg-white">
+      <div class="container">
+        <div class="reading-panel fade-in">
+          <p class="section-kicker">Article · environ 230 mots</p>
+          <h2 class="section-title">Adopter, ce n’est pas seulement aimer</h2>
+          <article>
+            <p>Dans plusieurs villes, les refuges ont reçu plus d’animaux que prévu. Beaucoup sont arrivés après un déménagement, une séparation ou une décision prise trop vite. Cette situation concerne aussi la santé publique : les animaux errants peuvent transmettre des maladies, provoquer des accidents et souffrir dans l’espace urbain.</p>
+            <p>Depuis quelques mois, une association locale a lancé une campagne d’adoption responsable. Elle explique que chaque famille devrait réfléchir avant de choisir un animal : temps disponible, budget, vaccination, stérilisation et visites vétérinaires. Adopter réduirait les abandons, mais seulement si les futurs propriétaires comprenaient leurs obligations.</p>
+            <p>Lors d’une réunion municipale, une vétérinaire rappela que l’amour ne suffit pas. Selon elle, une ville responsable créerait des familles d’accueil, contrôlerait mieux la vente d’animaux et organiserait des journées gratuites de stérilisation. Les écoles pourraient aussi participer, car un enfant qui respecte le vivant deviendrait peut-être un adulte plus conscient.</p>
+            <p>Cependant, certaines personnes disent que l’État ne devrait pas payer pour les erreurs des propriétaires. D’autres répondent qu’ignorer le problème coûterait plus cher : plus de morsures, plus de déchets, plus de souffrance. Le vrai débat n’est donc pas seulement « adopter ou acheter », mais « qui doit prendre en charge les conséquences de nos choix ? »</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="questions">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Compréhension</p>
+          <h2 class="section-title">5 questions à choix multiple</h2>
+          <p class="section-text mx-auto">Choisissez la réponse la plus précise. Les questions demandent d’interpréter les idées, pas seulement de retrouver un mot.</p>
+        </div>
+        <div class="panel fade-in">
+          <form id="quizForm">
+            <div id="questionGrid"></div>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <button type="button" class="btn-main" id="checkBtn"><i class="bi bi-check2-circle"></i>Corriger</button>
+              <button type="button" class="btn-soft" id="resetBtn"><i class="bi bi-arrow-repeat"></i>Recommencer</button>
+            </div>
+            <div class="result-box" id="resultBox"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="debat-final" class="bg-white">
+      <div class="container">
+        <div class="row g-4 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Débat</p>
+            <h2 class="section-title">Questions problématisantes</h2>
+            <p class="section-text">Préparez une réponse avec une opinion, une nuance, un exemple et une conclusion courte.</p>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="debate-card">
+              <ul class="debate-list">
+                <li>1. L’adoption devrait-elle être contrôlée par un entretien obligatoire avant de donner un animal ?</li>
+                <li>2. Une ville devrait-elle financer la stérilisation gratuite si certains propriétaires sont irresponsables ?</li>
+                <li>3. Acheter un animal dans une boutique est-il moralement acceptable quand les refuges sont pleins ?</li>
+                <li>4. Les écoles devraient-elles enseigner le respect des animaux comme une question de citoyenneté ?</li>
+              </ul>
+              <div class="model-answer mt-4">
+                <h3 class="h5 fw-bold text-success">Exemple de réponse</h3>
+                <p class="mb-0">À mon avis, la ville devrait financer certaines campagnes de stérilisation, même si les propriétaires ont une grande responsabilité. Il est vrai que l’argent public ne peut pas tout résoudre ; cependant, si la ville n’agit pas, le problème deviendrait plus grave et plus coûteux. Par exemple, moins d’animaux errants réduirait les risques sanitaires et la souffrance dans la rue. En somme, la prévention serait plus intelligente que l’indifférence.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Lecture-débat - Adoption responsable</h2>
+          <p class="mb-0 opacity-75">Compréhension écrite B1 liée à l’argumentation et au débat.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end">
+          <a href="../ateliers-activites.html#argumentation-debat"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const questions=[
+      {p:"Quelle idée résume le mieux le premier paragraphe ?",o:[["a","Les refuges sont pleins surtout parce que les vétérinaires coûtent trop cher."],["b","L’abandon d’animaux touche aussi la santé publique et la vie urbaine."],["c","Les animaux errants sont seulement un problème affectif pour les familles."]],a:"b",f:"Le texte relie l’abandon à la santé publique, aux accidents et à la souffrance."},
+      {p:"Selon l’article, quand l’adoption réduirait-elle réellement les abandons ?",o:[["a","Si les refuges acceptaient tous les animaux sans conditions."],["b","Si l’État interdisait définitivement l’achat d’animaux."],["c","Si les futurs propriétaires comprenaient leurs obligations concrètes."]],a:"c",f:"L’article insiste sur le temps, l’argent, la vaccination, la stérilisation et le suivi vétérinaire."},
+      {p:"Pourquoi l’intervention de la vétérinaire est-elle importante dans l’argumentation ?",o:[["a","Elle déplace le débat de l’émotion vers la responsabilité collective."],["b","Elle affirme que les familles d’accueil remplaceraient toutes les adoptions."],["c","Elle propose que les écoles choisissent les animaux pour les familles."]],a:"a",f:"Elle rappelle que l’amour ne suffit pas et propose des mesures publiques."},
+      {p:"Quelle opposition structure la fin du texte ?",o:[["a","Refuge gratuit contre refuge privé."],["b","Passé composé contre conditionnel présent."],["c","Responsabilité individuelle contre intervention publique."]],a:"c",f:"Le dernier paragraphe oppose ceux qui refusent de payer et ceux qui défendent l’action publique."},
+      {p:"Dans la phrase « ignorer le problème coûterait plus cher », que suggère le conditionnel ?",o:[["a","Une action terminée dans le passé."],["b","Une conséquence probable si l’on ne fait rien."],["c","Une obligation officielle déjà votée par la ville."]],a:"b",f:"Le conditionnel présente ici une conséquence possible et argumentée."}
+    ];
+    const grid=document.getElementById("questionGrid"),resultBox=document.getElementById("resultBox");
+    function render(){
+      grid.innerHTML=questions.map((q,i)=>`<article class="quiz-card" id="q${i}"><h3 class="h5 fw-bold text-primary">${i+1}. ${q.p}</h3>${q.o.map(opt=>`<label class="answer-option"><input type="radio" name="q${i}" value="${opt[0]}"> <span>${opt[0]}</span>${opt[1]}</label>`).join("")}<div class="feedback-line">${q.f}</div></article>`).join("");
+    }
+    document.getElementById("checkBtn").addEventListener("click",()=>{let score=0;questions.forEach((q,i)=>{const card=document.getElementById(`q${i}`);const selected=document.querySelector(`input[name="q${i}"]:checked`);card.classList.remove("correct","incorrect");if(selected&&selected.value===q.a){score++;card.classList.add("correct")}else{card.classList.add("incorrect")}});resultBox.classList.add("show");resultBox.innerHTML=`<h3 class="fw-bold">Score : ${score} / ${questions.length}</h3><p class="mb-0 fs-5 opacity-75">${score>=4?"Très bien : vous avez compris les arguments principaux et les nuances.":"Relisez l’article en soulignant les causes, les conséquences et les verbes au conditionnel."}</p>`;resultBox.scrollIntoView({behavior:"smooth",block:"center"})});
+    document.getElementById("resetBtn").addEventListener("click",()=>{render();resultBox.classList.remove("show")});
+    render();
+    const observed=document.querySelectorAll(".fade-in");
+    const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){entry.target.classList.add("visible")}})},{threshold:.16});
+    observed.forEach(el=>observer.observe(el));
+  </script>
+  <script src="../../../assets/js/jaralingua-back-button.js"></script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js"></script>
+</body>
+</html>
