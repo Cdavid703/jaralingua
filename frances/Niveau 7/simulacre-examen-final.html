@@ -295,6 +295,64 @@
       line-height: 1.72;
     }
 
+    .access-panel {
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(21, 52, 93, 0.08);
+      padding: clamp(1.25rem, 3vw, 2rem);
+    }
+
+    .access-icon {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: rgba(244, 123, 32, 0.12);
+      color: var(--iue-orange);
+      font-size: 2rem;
+    }
+
+    .media-figure {
+      margin: 0 0 1rem;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--blue-dark);
+      box-shadow: 0 16px 34px rgba(20, 40, 80, 0.12);
+    }
+
+    .media-figure img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .audio-speed-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+
+    .audio-btn {
+      border: 2px solid rgba(31, 78, 140, 0.16);
+      background: #fff;
+      color: var(--blue-dark);
+      border-radius: 999px;
+      font-weight: 900;
+      padding: 0.56rem 0.82rem;
+      cursor: pointer;
+    }
+
+    .audio-btn:hover,
+    .audio-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
     .reading-box h3,
     .audio-box h3 {
       color: var(--blue-dark);
@@ -432,14 +490,40 @@
         <p class="hero-lead">Français Niveau 7 · 50 points</p>
         <p class="hero-text">Pratiquez les compétences du niveau : vocabulaire en contexte, passé simple, conditionnel présent, organisation du récit, compréhension écrite et compréhension orale.</p>
         <div class="d-flex flex-wrap gap-3 mt-4">
-          <a class="btn-main" href="#instructions"><i class="bi bi-play-circle-fill"></i>Commencer</a>
+          <a class="btn-main" href="#access"><i class="bi bi-play-circle-fill"></i>Commencer</a>
           <a class="btn-soft" href="index.html"><i class="bi bi-arrow-left"></i>Retour au portail</a>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="exam-shell">
+  <section id="access" class="exam-shell">
+    <div class="container">
+      <div class="access-panel" id="accessPanel">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-8">
+            <div class="d-flex align-items-start gap-3">
+              <div class="access-icon"><i class="bi bi-google"></i></div>
+              <div>
+                <p class="section-kicker mb-2">Accès au simulacre</p>
+                <h2 class="section-title mb-3">Connexion Gmail requise</h2>
+                <p class="section-text mb-2">Pour tester les identités avant l'examen final, ce simulacre s'ouvre seulement avec le compte Gmail autorisé de l'étudiant.</p>
+                <p class="section-text mb-0" id="accessStatus">Connectez-vous avec Google pour vérifier votre accès.</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="d-grid gap-2">
+              <button class="btn-main" type="button" data-open-google-login><i class="bi bi-box-arrow-in-right"></i>Connexion Google</button>
+              <a class="btn-soft" href="index.html"><i class="bi bi-arrow-left"></i>Retour au portail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="exam-shell" id="examContent" hidden>
     <div class="container">
       <div class="score-panel" aria-label="Score du simulacre">
         <div class="score-tile"><strong id="totalScore">0/50</strong><span>Score total</span></div>
@@ -511,6 +595,9 @@
           <p class="section-kicker">III. Compréhension écrite · 10 points</p>
           <h2 class="section-title">Lisez le texte et répondez Vrai ou Faux</h2>
           <div class="reading-box mb-4">
+            <figure class="media-figure">
+              <img src="img/simulacre-examen-final-lecture.png" alt="Documents de lecture et notes de preparation pour le simulacre">
+            </figure>
             <h3>Adopter, ce n'est pas seulement aimer</h3>
             <p>Dans plusieurs villes colombiennes, l'adoption responsable est devenue un sujet de débat public. Les refuges accueillent des chiens et des chats abandonnés, mais ils ne peuvent pas résoudre seuls le problème des animaux errants. Les bénévoles expliquent que l'amour pour les animaux doit être accompagné d'une vraie responsabilité : nourriture, vaccination, stérilisation et suivi vétérinaire.</p>
             <p>Avant de lancer une campagne dans son quartier, une association locale avait observé que beaucoup de familles adoptaient par émotion, sans réfléchir aux dépenses ni au temps nécessaires. Quelques mois plus tard, certains animaux revenaient au refuge. C'est pourquoi les organisateurs ont décidé de mettre les points sur les i : adopter, c'est prendre en charge un être vivant pendant plusieurs années.</p>
@@ -532,11 +619,19 @@
           <p class="section-kicker">IV. Compréhension orale · 10 points</p>
           <h2 class="section-title">Écoutez et choisissez la bonne réponse</h2>
           <div class="audio-box mb-4">
+            <figure class="media-figure">
+              <img src="img/simulacre-examen-final-animaux-audio.png" alt="Campagne communautaire pour les animaux errants à Medellín">
+            </figure>
             <h3>Une campagne pour les animaux errants à Medellín</h3>
             <p>Écoutez deux fois le document. Les questions portent sur les idées principales, le vocabulaire et le ton général.</p>
-            <audio controls preload="metadata" aria-label="Audio du simulacre d'examen final sur les animaux errants">
+            <audio id="listeningAudio" controls preload="metadata" aria-label="Audio du simulacre d'examen final sur les animaux errants">
               <source src="audio/simulacre-examen-final-animaux-b1.mp3" type="audio/mpeg">
             </audio>
+            <div class="audio-speed-actions" aria-label="Contrôle de vitesse de l'audio">
+              <button type="button" class="audio-btn" data-audio-rate="0.75">0.75x</button>
+              <button type="button" class="audio-btn active" data-audio-rate="1">1x</button>
+              <button type="button" class="audio-btn" data-audio-rate="1.25">1.25x</button>
+            </div>
           </div>
           <form id="listeningForm" class="row g-3"></form>
           <div class="d-flex flex-wrap gap-2 mt-4">
@@ -894,10 +989,112 @@
     document.querySelectorAll("[data-reset-section]").forEach(button => {
       button.addEventListener("click", () => resetSection(button.dataset.resetSection));
     });
+
+    document.querySelectorAll("[data-audio-rate]").forEach(button => {
+      button.addEventListener("click", () => {
+        const audio = document.getElementById("listeningAudio");
+        if (!audio) return;
+        audio.playbackRate = Number(button.dataset.audioRate);
+        document.querySelectorAll("[data-audio-rate]").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
+  <script>
+    (function () {
+      const ACCESS_API = "/api/french7/grades";
+      const GOOGLE_USER_KEY = "jaralingua_google_user";
+      const examContent = document.getElementById("examContent");
+      const accessSection = document.getElementById("access");
+      const accessStatus = document.getElementById("accessStatus");
+      let lastCredential = "";
+      let verifying = false;
+
+      function readGoogleUser() {
+        try {
+          return JSON.parse(sessionStorage.getItem(GOOGLE_USER_KEY) || "null");
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function showLocked(message) {
+        if (examContent) examContent.hidden = true;
+        if (accessSection) accessSection.hidden = false;
+        if (accessStatus) accessStatus.textContent = message;
+      }
+
+      function showExam(studentName) {
+        if (examContent) examContent.hidden = false;
+        if (accessSection) accessSection.hidden = true;
+        if (accessStatus) accessStatus.textContent = "Accès autorisé pour " + studentName + ".";
+      }
+
+      function verifyAccess() {
+        if (verifying) return;
+        const user = readGoogleUser();
+        if (!user || !user.credential) {
+          lastCredential = "";
+          showLocked("Connectez-vous avec le compte Gmail autorisé pour ouvrir le simulacre.");
+          return;
+        }
+
+        const email = String(user.email || "").trim().toLowerCase();
+        if (!email.endsWith("@gmail.com")) {
+          showLocked("Compte détecté : " + (user.email || "sans courriel") + ". Utilisez le Gmail personnel autorisé dans la liste du cours.");
+          return;
+        }
+
+        if (lastCredential === user.credential && !examContent.hidden) return;
+        lastCredential = user.credential;
+        verifying = true;
+        showLocked("Vérification du compte Gmail en cours...");
+
+        fetch(ACCESS_API, {
+          headers: {
+            Authorization: "Bearer " + user.credential,
+            "X-Jaralingua-Auth-Provider": "google"
+          }
+        })
+          .then(response => {
+            if (!response.ok) throw new Error("Access denied");
+            return response.json();
+          })
+          .then(payload => {
+            if (payload && payload.student) {
+              showExam(user.name || user.email || "l'étudiant");
+              return;
+            }
+            if (payload && (payload.role === "admin" || payload.role === "teacher")) {
+              showExam(user.name || user.email || "l'administrateur");
+              return;
+            }
+            showLocked("Ce Gmail n'est pas encore associé à la liste de Français Niveau 7. Contactez l'administrateur.");
+          })
+          .catch(() => {
+            showLocked("Impossible de vérifier ce Gmail pour le moment. Rechargez la page et réessayez.");
+          })
+          .finally(() => {
+            verifying = false;
+          });
+      }
+
+      document.querySelectorAll("[data-open-google-login]").forEach(button => {
+        button.addEventListener("click", () => {
+          const authButton = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+          if (authButton) authButton.click();
+          verifyAccess();
+        });
+      });
+
+      window.addEventListener("load", verifyAccess);
+      window.addEventListener("storage", verifyAccess);
+      setInterval(verifyAccess, 1500);
+    })();
+  </script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
 </body>
 </html>
