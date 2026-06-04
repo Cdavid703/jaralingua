@@ -15,6 +15,9 @@ MICROSOFT_CLIENT_ID = os.environ.get("JARALINGUA_MICROSOFT_CLIENT_ID", "4e729f8a
 MICROSOFT_TENANT_ID = os.environ.get("JARALINGUA_MICROSOFT_TENANT_ID", "e1664f47-3c02-4a23-a559-0f33d25d8f86").strip()
 DATA_PATH = os.environ.get("JARALINGUA_PROGRESS_DATA", "/var/lib/jaralingua/progress.json")
 FRENCH7_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib/jaralingua/french7-grades.json")
+FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "/var/lib/jaralingua/french7-final-exam.json")
+FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
+FRENCH7_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french7-final-exam-audio.mp3")
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
@@ -32,6 +35,15 @@ def json_response(handler, status, payload):
     body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
     handler.send_response(status)
     handler.send_header("Content-Type", "application/json; charset=utf-8")
+    handler.send_header("Cache-Control", "no-store")
+    handler.send_header("Content-Length", str(len(body)))
+    handler.end_headers()
+    handler.wfile.write(body)
+
+
+def binary_response(handler, status, body, content_type):
+    handler.send_response(status)
+    handler.send_header("Content-Type", content_type)
     handler.send_header("Cache-Control", "no-store")
     handler.send_header("Content-Length", str(len(body)))
     handler.end_headers()
@@ -80,6 +92,17 @@ def write_json_file(path, data, prefix):
     finally:
         if os.path.exists(temp_path):
             os.unlink(temp_path)
+
+
+def read_json_file(path, default):
+    if not os.path.exists(path):
+        return default
+    with open(path, "r", encoding="utf-8-sig") as handle:
+        try:
+            data = json.load(handle)
+        except json.JSONDecodeError:
+            return default
+    return data if isinstance(data, dict) else default
 
 
 def user_record(store, profile):
@@ -410,6 +433,21 @@ def staff_student_view(student):
     }
 
 
+def matched_student_for_profile(profile, grades_data):
+    students = grades_data.get("students", [])
+    email = normalize_email(profile.get("email"))
+    direct_match = next(
+        (item for item in students if isinstance(item, dict) and email_matches_student(item, email)),
+        None
+    )
+    if direct_match:
+        return direct_match
+    return next(
+        (item for item in students if isinstance(item, dict) and name_matches_student(item, profile)),
+        None
+    )
+
+
 def grade_payload_for(profile, grades_data, query):
     role = grade_user_role(profile, grades_data)
     students = grades_data.get("students", [])
@@ -457,6 +495,217 @@ def grade_payload_for(profile, grades_data, query):
     return response
 
 
+def default_final_exam_bundle():
+    return {
+        "state": {
+            "isOpen": False,
+            "openedAt": None,
+            "closedAt": None,
+            "openedBy": None,
+            "updatedAt": None
+        },
+        "exam": {
+            "id": "french7-final-exam",
+            "title": "Examen final",
+            "totalPoints": 50,
+            "sections": []
+        }
+    }
+
+
+def read_final_exam_bundle():
+    data = read_json_file(FRENCH7_FINAL_EXAM_PATH, default_final_exam_bundle())
+    if not isinstance(data.get("state"), dict):
+        data["state"] = default_final_exam_bundle()["state"]
+    if not isinstance(data.get("exam"), dict):
+        data["exam"] = default_final_exam_bundle()["exam"]
+    data["state"].setdefault("isOpen", False)
+    data["state"].setdefault("openedAt", None)
+    data["state"].setdefault("closedAt", None)
+    data["state"].setdefault("openedBy", None)
+    data["state"].setdefault("updatedAt", None)
+    data["exam"].setdefault("sections", [])
+    data["exam"].setdefault("totalPoints", 50)
+    return data
+
+
+def write_final_exam_bundle(data):
+    write_json_file(FRENCH7_FINAL_EXAM_PATH, data, ".french7-final-exam-")
+
+
+def read_final_exam_submissions():
+    data = read_json_file(FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH, {"submissions": {}})
+    if not isinstance(data.get("submissions"), dict):
+        data["submissions"] = {}
+    return data
+
+
+def write_final_exam_submissions(data):
+    write_json_file(FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH, data, ".french7-final-submissions-")
+
+
+def final_exam_public_question(question):
+    public = {
+        "id": clean_text(question.get("id"), 80),
+        "type": clean_text(question.get("type"), 40),
+        "prompt": clean_text(question.get("prompt"), 1000),
+        "points": question.get("points", 1)
+    }
+    for optional in ("block", "title"):
+        if question.get(optional):
+            public[optional] = clean_text(question.get(optional), 300)
+    if isinstance(question.get("options"), list):
+        public["options"] = [clean_text(item, 500) for item in question.get("options", [])[:8]]
+    if isinstance(question.get("bank"), list):
+        public["bank"] = [clean_text(item, 800) for item in question.get("bank", [])[:10]]
+    return public
+
+
+def final_exam_public_payload(bundle):
+    exam = bundle.get("exam", {})
+    sections = []
+    for section in exam.get("sections", []):
+        if not isinstance(section, dict):
+            continue
+        questions = section.get("questions", [])
+        sections.append({
+            "id": clean_text(section.get("id"), 80),
+            "title": clean_text(section.get("title"), 200),
+            "subtitle": clean_text(section.get("subtitle"), 300),
+            "points": section.get("points", 0),
+            "instructions": clean_text(section.get("instructions"), 500),
+            "readingTitle": clean_text(section.get("readingTitle"), 200),
+            "readingText": [clean_text(item, 1400) for item in section.get("readingText", [])] if isinstance(section.get("readingText"), list) else [],
+            "audioTitle": clean_text(section.get("audioTitle"), 200),
+            "audioText": clean_text(section.get("audioText"), 500),
+            "audioSrc": clean_text(section.get("audioSrc"), 300),
+            "questions": [final_exam_public_question(item) for item in questions if isinstance(item, dict)]
+        })
+    return {
+        "id": clean_text(exam.get("id") or "french7-final-exam", 80),
+        "title": clean_text(exam.get("title") or "Examen final", 200),
+        "totalPoints": exam.get("totalPoints", 50),
+        "sections": sections
+    }
+
+
+def final_exam_state_payload(profile, grades_data, bundle, submissions):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    return {
+        "role": role,
+        "state": bundle.get("state", {}),
+        "student": student_public_view(student) if isinstance(student, dict) else None,
+        "submitted": submissions.get("submissions", {}).get(student_id) if student_id else None
+    }
+
+
+def final_exam_allowed_student(profile, grades_data):
+    email = normalize_email(profile.get("email"))
+    if not email.endswith("@gmail.com"):
+        return None
+    return matched_student_for_profile(profile, grades_data)
+
+
+def normalize_answer(value):
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, int):
+        return value
+    if isinstance(value, list):
+        normalized = []
+        for item in value[:20]:
+            try:
+                normalized.append(int(item))
+            except (TypeError, ValueError):
+                normalized.append(item)
+        return normalized
+    if isinstance(value, str):
+        stripped = value.strip().lower()
+        if stripped == "true":
+            return True
+        if stripped == "false":
+            return False
+        try:
+            return int(stripped)
+        except ValueError:
+            return stripped[:500]
+    return None
+
+
+def score_final_exam(exam, answers):
+    if not isinstance(answers, dict):
+        answers = {}
+    score = 0
+    total = 0
+    section_scores = {}
+    details = {}
+    for section in exam.get("sections", []):
+        if not isinstance(section, dict):
+            continue
+        section_id = clean_text(section.get("id"), 80)
+        section_score = 0
+        section_total = 0
+        for question in section.get("questions", []):
+            if not isinstance(question, dict):
+                continue
+            question_id = clean_text(question.get("id"), 80)
+            points = question.get("points", 1)
+            try:
+                points = float(points)
+            except (TypeError, ValueError):
+                points = 1
+            normalized = normalize_answer(answers.get(question_id))
+            expected = normalize_answer(question.get("answer"))
+            is_correct = normalized == expected
+            if is_correct:
+                score += points
+                section_score += points
+            total += points
+            section_total += points
+            details[question_id] = {
+                "answer": normalized,
+                "correct": is_correct,
+                "points": points if is_correct else 0
+            }
+        section_scores[section_id] = {
+            "score": clean_exam_number(section_score),
+            "total": clean_exam_number(section_total)
+        }
+    grade = round((score / total) * 5, 2) if total else 0
+    return {
+        "scorePoints": clean_exam_number(score),
+        "totalPoints": clean_exam_number(total),
+        "grade": grade,
+        "sectionScores": section_scores,
+        "details": details
+    }
+
+
+def clean_exam_number(value):
+    try:
+        numeric = float(value)
+    except (TypeError, ValueError):
+        return 0
+    return int(numeric) if numeric.is_integer() else round(numeric, 2)
+
+
+def ensure_final_exam_evaluation(grades_data):
+    evaluations = grades_data.setdefault("evaluations", [])
+    if any(isinstance(item, dict) and item.get("id") == "finalExam" for item in evaluations):
+        return
+    evaluations.insert(0, {
+        "id": "finalExam",
+        "title": "Examen final",
+        "weight": 20,
+        "type": "Examen",
+        "date": "2026-06-05",
+        "displayDate": "Vendredi 5 juin",
+        "description": "Evaluation finale sur les themes principaux du cours."
+    })
+
+
 class ProgressHandler(BaseHTTPRequestHandler):
     server_version = "JaraLinguaProgress/1.0"
 
@@ -467,7 +716,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "https://www.jaralingua.com")
         self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Jaralingua-Auth-Provider")
-        self.send_header("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         self.end_headers()
 
     def do_GET(self):
@@ -509,10 +758,130 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/french7/final-exam/state":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH7_GRADES_PATH)
+                bundle = read_final_exam_bundle()
+                submissions = read_final_exam_submissions()
+                json_response(self, 200, final_exam_state_payload(profile, grades_data, bundle, submissions))
+            return
+
+        if parsed.path == "/api/french7/final-exam":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH7_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = final_exam_allowed_student(profile, grades_data)
+                bundle = read_final_exam_bundle()
+                submissions = read_final_exam_submissions()
+                state = bundle.get("state", {})
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+
+                if role not in ("admin", "teacher") and not student:
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if submitted:
+                    json_response(self, 200, {"status": "submitted", "state": state, "result": submitted})
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+
+                json_response(self, 200, {
+                    "status": "open" if state.get("isOpen") is True else "admin-preview",
+                    "role": role,
+                    "state": state,
+                    "student": student_public_view(student) if isinstance(student, dict) else None,
+                    "exam": final_exam_public_payload(bundle)
+                })
+            return
+
+        if parsed.path == "/api/french7/final-exam/audio":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH7_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = final_exam_allowed_student(profile, grades_data)
+                bundle = read_final_exam_bundle()
+                state = bundle.get("state", {})
+                if role not in ("admin", "teacher") and not student:
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed"})
+                    return
+                audio_path = FRENCH7_FINAL_EXAM_AUDIO_PATH
+            if not os.path.exists(audio_path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(audio_path, "rb") as handle:
+                binary_response(self, 200, handle.read(), "audio/mpeg")
+            return
+
         if parsed.path == "/api/basic/grades":
             grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
             query = urllib.parse.parse_qs(parsed.query)
             json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
+        json_response(self, 404, {"error": "not_found"})
+
+    def do_POST(self):
+        parsed = urllib.parse.urlparse(self.path)
+        profile = self.require_user()
+        if not profile:
+            return
+        payload = self.read_json_body()
+        if payload is None:
+            return
+
+        if parsed.path == "/api/french7/final-exam/submit":
+            provider = normalize_email(self.headers.get("X-Jaralingua-Auth-Provider"))
+            if provider != "google":
+                json_response(self, 403, {"error": "google_required"})
+                return
+
+            with data_lock:
+                grades_data = read_grades_data(FRENCH7_GRADES_PATH)
+                student = final_exam_allowed_student(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+
+                bundle = read_final_exam_bundle()
+                state = bundle.get("state", {})
+                if state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+
+                submissions = read_final_exam_submissions()
+                student_id = clean_text(student.get("id"), 40)
+                if submissions.get("submissions", {}).get(student_id):
+                    json_response(self, 409, {
+                        "error": "already_submitted",
+                        "result": submissions["submissions"][student_id]
+                    })
+                    return
+
+                result = score_final_exam(bundle.get("exam", {}), payload.get("answers"))
+                submitted_at = now_iso()
+                submission = {
+                    "studentId": student_id,
+                    "studentName": student.get("fullName", ""),
+                    "email": normalize_email(profile.get("email")),
+                    "scorePoints": result["scorePoints"],
+                    "totalPoints": result["totalPoints"],
+                    "grade": result["grade"],
+                    "sectionScores": result["sectionScores"],
+                    "submittedAt": submitted_at,
+                    "answers": result["details"]
+                }
+                submissions.setdefault("submissions", {})[student_id] = submission
+
+                ensure_final_exam_evaluation(grades_data)
+                student.setdefault("grades", {})["finalExam"] = result["grade"]
+                write_final_exam_submissions(submissions)
+                write_json_file(FRENCH7_GRADES_PATH, grades_data, ".french7-grades-")
+                json_response(self, 200, {"ok": True, "result": submission})
             return
 
         json_response(self, 404, {"error": "not_found"})
@@ -565,6 +934,28 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 write_json_file(BASIC_ENGLISH_GRADES_PATH, next_data, ".basic-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+            return
+
+        if parsed.path == "/api/french7/final-exam/state":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH7_GRADES_PATH)
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                bundle = read_final_exam_bundle()
+                state = bundle.setdefault("state", {})
+                desired_open = payload.get("isOpen") is True
+                timestamp = now_iso()
+                state["isOpen"] = desired_open
+                state["updatedAt"] = timestamp
+                if desired_open:
+                    state["openedAt"] = timestamp
+                    state["openedBy"] = profile.get("email", "")
+                    state["closedAt"] = None
+                else:
+                    state["closedAt"] = timestamp
+                write_final_exam_bundle(bundle)
+                json_response(self, 200, {"ok": True, "state": state})
             return
 
         json_response(self, 404, {"error": "not_found"})

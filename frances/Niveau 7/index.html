@@ -804,6 +804,42 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
         </div>
       </div>
     </section>
+
+    <section id="examen-final-portal" hidden>
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-6 fade-in">
+            <p class="section-kicker">Évaluation finale</p>
+            <h2 class="section-title">Examen final</h2>
+            <p class="section-text" id="finalExamPortalStatus">
+              Accès contrôlé par administrateur. L'examen est visible uniquement quand il est ouvert ou pour l'administrateur.
+            </p>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <a href="examen-final.html" class="btn btn-main">
+                <i class="bi bi-shield-lock-fill me-2"></i>Entrer dans l'examen final
+              </a>
+              <a href="notes-evaluation.html" class="btn btn-soft">
+                <i class="bi bi-bar-chart me-2"></i>Voir les notes
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 fade-in">
+            <article class="card portal-card">
+              <div class="portal-img-wrap">
+                <img src="img/simulacre-examen-final-niveau7.png" alt="Examen final du niveau 7">
+                <div class="portal-icon"><i class="bi bi-lock-fill"></i></div>
+              </div>
+              <div class="card-body">
+                <span class="status-pill mb-3" id="finalExamPortalPill"><i class="bi bi-lock"></i>Accès contrôlé</span>
+                <h3 class="h4">Examen officiel</h3>
+                <p>Le résultat est corrigé par le système et enregistré directement dans les notes du cours.</p>
+                <a href="examen-final.html" class="btn btn-main w-100">Accéder</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
 </main>
 
   <footer class="footer">
@@ -892,6 +928,61 @@ body .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.
         }
       });
     });
+  </script>
+  <script>
+    (function () {
+      const USER_KEY = "jaralingua_google_user";
+      const section = document.getElementById("examen-final-portal");
+      const status = document.getElementById("finalExamPortalStatus");
+      const pill = document.getElementById("finalExamPortalPill");
+
+      function readUser() {
+        try {
+          return JSON.parse(sessionStorage.getItem(USER_KEY) || "null");
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function showFinalExamPortal(copy, isOpen) {
+        section.hidden = false;
+        if (status) status.textContent = copy;
+        if (pill) {
+          pill.innerHTML = isOpen
+            ? '<i class="bi bi-unlock"></i>Ouvert'
+            : '<i class="bi bi-person-lock"></i>Administration';
+        }
+      }
+
+      function refreshFinalExamPortal() {
+        const user = readUser();
+        if (!user || !user.credential) return;
+        fetch("/api/french7/final-exam/state", {
+          headers: {
+            Authorization: "Bearer " + user.credential,
+            "X-Jaralingua-Auth-Provider": "google"
+          }
+        })
+          .then(response => response.ok ? response.json() : null)
+          .then(payload => {
+            if (!payload) return;
+            const isAdmin = payload.role === "admin";
+            const isOpen = payload.state && payload.state.isOpen === true;
+            const hasStudent = Boolean(payload.student);
+            if (isAdmin) {
+              showFinalExamPortal("Panneau administrateur disponible : vous pouvez ouvrir ou fermer l'examen final.", isOpen);
+              return;
+            }
+            if (isOpen && hasStudent) {
+              showFinalExamPortal("L'examen final est ouvert pour votre compte Gmail autorisé.", true);
+            }
+          })
+          .catch(function () {});
+      }
+
+      window.addEventListener("load", refreshFinalExamPortal);
+      setInterval(refreshFinalExamPortal, 5000);
+    })();
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

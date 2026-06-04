@@ -1,0 +1,992 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Examen final - Français Niveau 7</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root {
+      --iue-orange: #f47b20;
+      --iue-blue: #00395c;
+      --iue-black: #050505;
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --green: #1f9d75;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 26px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .navbar-brand { font-family: "Montserrat", sans-serif; }
+
+    .institutional-band { background: var(--iue-black); overflow: hidden; }
+    .institutional-band img { width: 100%; display: block; }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .brand-logo { height: 42px; }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7.6rem 0 4.5rem;
+      background:
+        linear-gradient(90deg, rgba(3, 19, 35, 0.86) 0%, rgba(21, 52, 93, 0.72) 44%, rgba(21, 52, 93, 0.08) 100%),
+        url("img/simulacre-examen-final-niveau7.png") center/cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 130px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      color: #fff;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fff;
+      font-weight: 900;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 {
+      margin: 1.15rem 0 0.8rem;
+      font-size: clamp(2.6rem, 6.6vw, 5.6rem);
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-lead {
+      font-size: clamp(1.15rem, 2vw, 1.55rem);
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .hero-text {
+      max-width: 690px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .btn-main,
+    .btn-soft,
+    .btn-danger-soft {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.78rem 1.15rem;
+      font-weight: 900;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .btn-main {
+      border: 0;
+      background: linear-gradient(135deg, var(--iue-orange), #ff9b2f);
+      color: #111;
+      box-shadow: 0 16px 34px rgba(244, 123, 32, 0.24);
+    }
+
+    .btn-soft {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--blue-dark);
+      border: 2px solid rgba(31, 78, 140, 0.12);
+    }
+
+    .btn-danger-soft {
+      background: #fff;
+      color: var(--red);
+      border: 2px solid rgba(214, 40, 57, 0.18);
+    }
+
+    .btn-main:disabled,
+    .btn-soft:disabled,
+    .btn-danger-soft:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .exam-shell {
+      margin-top: -2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .score-panel,
+    .exam-section,
+    .instructions-panel,
+    .access-panel,
+    .admin-panel {
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(21, 52, 93, 0.08);
+    }
+
+    .score-panel {
+      padding: 1.1rem;
+      display: grid;
+      grid-template-columns: 1.2fr repeat(4, minmax(120px, 1fr));
+      gap: 0.8rem;
+      align-items: stretch;
+    }
+
+    .score-tile {
+      border-radius: 18px;
+      background: #f8fbff;
+      padding: 0.9rem;
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    .score-tile strong {
+      display: block;
+      font-size: 1.65rem;
+      line-height: 1;
+      color: var(--iue-blue);
+    }
+
+    .score-tile span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    section { padding: 4.5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(1.9rem, 4vw, 3.05rem);
+      font-weight: 900;
+      letter-spacing: -0.045em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.7;
+    }
+
+    .access-panel,
+    .admin-panel,
+    .instructions-panel,
+    .exam-section {
+      padding: clamp(1.2rem, 2.5vw, 2rem);
+    }
+
+    .access-icon {
+      width: 66px;
+      height: 66px;
+      display: grid;
+      place-items: center;
+      border-radius: 20px;
+      background: rgba(244, 123, 32, 0.12);
+      color: var(--iue-orange);
+      font-size: 2rem;
+      flex: 0 0 auto;
+    }
+
+    .question-card {
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid rgba(31, 78, 140, 0.08);
+      padding: 1rem;
+      height: 100%;
+    }
+
+    .question-card legend,
+    .question-title {
+      display: block;
+      width: 100%;
+      margin: 0 0 0.75rem;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .choice {
+      min-height: 42px;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      margin: 0.45rem 0;
+      padding: 0.65rem 0.75rem;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid rgba(31, 78, 140, 0.1);
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .choice input { margin-top: 0.22rem; flex: 0 0 auto; }
+
+    .reading-box,
+    .audio-box,
+    .order-workspace {
+      border-radius: 20px;
+      background: #f8fbff;
+      border-left: 6px solid var(--iue-orange);
+      padding: 1rem;
+      color: var(--text);
+      line-height: 1.72;
+    }
+
+    .reading-box h3,
+    .audio-box h3 {
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    .media-figure {
+      margin: 0 0 1rem;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--blue-dark);
+      box-shadow: 0 16px 34px rgba(20, 40, 80, 0.12);
+    }
+
+    .media-figure img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 0.8rem;
+    }
+
+    .audio-speed-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      margin-top: 0.85rem;
+    }
+
+    .audio-btn {
+      border: 2px solid rgba(31, 78, 140, 0.16);
+      background: #fff;
+      color: var(--blue-dark);
+      border-radius: 999px;
+      font-weight: 900;
+      padding: 0.56rem 0.82rem;
+      cursor: pointer;
+    }
+
+    .audio-btn:hover,
+    .audio-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+    }
+
+    .order-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .sentence-bank,
+    .sentence-answer {
+      display: grid;
+      gap: 0.55rem;
+      min-height: 210px;
+    }
+
+    .sentence-btn,
+    .chosen-sentence {
+      width: 100%;
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--blue-dark);
+      padding: 0.72rem;
+      text-align: left;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .sentence-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .chosen-sentence {
+      background: rgba(244, 123, 32, 0.08);
+      display: flex;
+      gap: 0.65rem;
+    }
+
+    .chosen-sentence b { color: var(--iue-orange); flex: 0 0 auto; }
+
+    .result-box {
+      display: none;
+      margin-top: 1rem;
+      border-radius: 22px;
+      padding: 1rem;
+      background: var(--blue-dark);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .result-box.show { display: block; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 0.8rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      font-weight: 900;
+      font-size: 0.86rem;
+    }
+
+    .footer {
+      background: var(--iue-black);
+      color: #fff;
+      margin-top: 3rem;
+    }
+
+    .footer-main { padding: 2.4rem 0; }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    @media (max-width: 991px) {
+      .score-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .order-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 7rem; }
+    }
+
+    @media (max-width: 575px) {
+      .score-panel { grid-template-columns: 1fr; }
+      .btn-main, .btn-soft, .btn-danger-soft { width: 100%; }
+      .jara-back-button { display: none !important; }
+      .hero h1 { font-size: clamp(2.25rem, 12vw, 3.35rem); }
+      section { padding: 3.25rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="institutional-band" aria-label="Institution Universitaire de Envigado">
+    <img src="img/institutionnel/iue-header.png" alt="Institución Universitaria de Envigado">
+  </div>
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#access">Accès</a></li>
+          <li class="nav-item"><a class="nav-link" href="#instructions">Instructions</a></li>
+          <li class="nav-item"><a class="nav-link" href="#vocabulaire">Vocabulaire</a></li>
+          <li class="nav-item"><a class="nav-link" href="#grammaire">Grammaire</a></li>
+          <li class="nav-item"><a class="nav-link" href="#lecture">Lecture</a></li>
+          <li class="nav-item"><a class="nav-link" href="#ecoute">Écoute</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="badge-course"><i class="bi bi-shield-lock-fill"></i>Examen final · Accès contrôlé</span>
+        <h1>Examen final</h1>
+        <p class="hero-lead">Français Niveau 7 · 50 points</p>
+        <p class="hero-text">Cette évaluation s'ouvre uniquement quand l'administrateur active l'examen. Les réponses sont envoyées au serveur, corrigées automatiquement et enregistrées dans les notes du cours.</p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          <a class="btn-main" href="#access"><i class="bi bi-box-arrow-in-right"></i>Accéder</a>
+          <a class="btn-soft" href="index.html"><i class="bi bi-arrow-left"></i>Retour au portail</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="access" class="exam-shell">
+    <div class="container">
+      <div class="admin-panel mb-4" id="adminPanel" hidden></div>
+      <div class="access-panel" id="accessPanel">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-8">
+            <div class="d-flex align-items-start gap-3">
+              <div class="access-icon"><i class="bi bi-google"></i></div>
+              <div>
+                <p class="section-kicker mb-2">Accès à l'examen</p>
+                <h2 class="section-title mb-3">Connexion Gmail requise</h2>
+                <p class="section-text mb-2">L'examen final est fermé par défaut. Connectez-vous avec le Gmail autorisé du cours et attendez l'ouverture par l'administrateur.</p>
+                <p class="section-text mb-0" id="accessStatus">Vérification de l'accès...</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="d-grid gap-2">
+              <button class="btn-main" type="button" data-open-google-login><i class="bi bi-box-arrow-in-right"></i>Connexion Google</button>
+              <a class="btn-soft" href="index.html"><i class="bi bi-arrow-left"></i>Retour au portail</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main class="exam-shell" id="examContent" hidden>
+    <div class="container">
+      <div class="score-panel" aria-label="Score de l'examen">
+        <div class="score-tile"><strong id="totalScore">0/50</strong><span>Score total</span></div>
+        <div class="score-tile"><strong id="vocabScore">0/15</strong><span>Vocabulaire</span></div>
+        <div class="score-tile"><strong id="grammarScore">0/15</strong><span>Grammaire et récit</span></div>
+        <div class="score-tile"><strong id="readingScore">0/10</strong><span>Compréhension écrite</span></div>
+        <div class="score-tile"><strong id="listeningScore">0/10</strong><span>Compréhension orale</span></div>
+      </div>
+    </div>
+
+    <section id="instructions">
+      <div class="container">
+        <div class="instructions-panel">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-8">
+              <p class="section-kicker">Instructions générales</p>
+              <h2 class="section-title">Format de l'examen</h2>
+              <p class="section-text mb-0">Répondez aux quatre sections. Il n'y a pas de correction par section pendant l'examen. Quand vous envoyez vos réponses, le système calcule la note finale et l'enregistre dans le cours.</p>
+            </div>
+            <div class="col-lg-4">
+              <div class="d-grid gap-2">
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Vocabulaire : 15 points</span>
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Grammaire et récit : 15 points</span>
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Lecture : 10 points</span>
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Écoute : 10 points</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <form id="examForm">
+      <div id="examSections"></div>
+      <section id="envoyer" class="bg-white">
+        <div class="container">
+          <div class="exam-section">
+            <p class="section-kicker">Envoi final</p>
+            <h2 class="section-title">Envoyer l'examen</h2>
+            <p class="section-text">Vérifiez vos réponses avant d'envoyer. Un seul envoi est autorisé par étudiant.</p>
+            <div class="d-flex flex-wrap gap-2 mt-4">
+              <button class="btn-main" type="submit" id="submitExamBtn"><i class="bi bi-send-check-fill"></i>Envoyer l'examen</button>
+              <a class="btn-soft" href="notes-evaluation.html"><i class="bi bi-bar-chart"></i>Voir les notes</a>
+            </div>
+            <div class="result-box" id="submitResult"></div>
+          </div>
+        </div>
+      </section>
+    </form>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <h2 class="h4 fw-bold mb-2">Examen final · Français Niveau 7</h2>
+            <p class="mb-0 opacity-75">Évaluation institutionnelle avec accès contrôlé par administrateur.</p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <a href="#top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">Retour en haut <i class="bi bi-arrow-up"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="institutional-band" aria-label="Coordonnées Institution Universitaire de Envigado">
+      <img src="img/institutionnel/iue-footer.png" alt="Coordonnées de l'Institution Universitaire de Envigado">
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script>
+    (function () {
+      const USER_KEY = "jaralingua_google_user";
+      const API_STATE = "/api/french7/final-exam/state";
+      const API_EXAM = "/api/french7/final-exam";
+      const API_SUBMIT = "/api/french7/final-exam/submit";
+      const sectionScoreIds = {
+        vocabulaire: "vocabScore",
+        grammaire: "grammarScore",
+        lecture: "readingScore",
+        ecoute: "listeningScore"
+      };
+      let currentExam = null;
+
+      function escapeHtml(value) {
+        return String(value == null ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function cssEscape(value) {
+        if (window.CSS && typeof window.CSS.escape === "function") return window.CSS.escape(value);
+        return String(value).replace(/"/g, '\\"');
+      }
+
+      function readUser() {
+        try {
+          return JSON.parse(sessionStorage.getItem(USER_KEY) || "null");
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function authHeaders() {
+        const user = readUser();
+        return user && user.credential ? {
+          Authorization: "Bearer " + user.credential,
+          "X-Jaralingua-Auth-Provider": "google",
+          "Content-Type": "application/json"
+        } : {};
+      }
+
+      function requestJson(url, options) {
+        return fetch(url, Object.assign({ headers: authHeaders() }, options || {}))
+          .then(response => response.json().then(data => ({ ok: response.ok, status: response.status, data })));
+      }
+
+      function showLocked(message) {
+        document.getElementById("examContent").hidden = true;
+        document.getElementById("accessPanel").hidden = false;
+        document.getElementById("accessStatus").textContent = message;
+      }
+
+      function showExam() {
+        document.getElementById("examContent").hidden = false;
+        document.getElementById("accessPanel").hidden = true;
+      }
+
+      function openGooglePanel() {
+        const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+        if (trigger) trigger.click();
+      }
+
+      function renderAdminPanel(payload) {
+        const panel = document.getElementById("adminPanel");
+        if (!payload || payload.role !== "admin") {
+          panel.hidden = true;
+          panel.innerHTML = "";
+          return;
+        }
+        const isOpen = payload.state && payload.state.isOpen === true;
+        panel.hidden = false;
+        panel.innerHTML = `
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-7">
+              <p class="section-kicker mb-2">Administration</p>
+              <h2 class="section-title mb-2">Contrôle de disponibilité</h2>
+              <p class="section-text mb-0">État actuel : <strong>${isOpen ? "ouvert" : "fermé"}</strong>. Les étudiants ne reçoivent les questions que si l'examen est ouvert.</p>
+            </div>
+            <div class="col-lg-5">
+              <div class="d-flex flex-wrap gap-2 justify-content-lg-end">
+                <button class="btn-main" type="button" data-set-open="true"><i class="bi bi-unlock-fill"></i>Ouvrir examen final</button>
+                <button class="btn-danger-soft" type="button" data-set-open="false"><i class="bi bi-lock-fill"></i>Fermer examen final</button>
+                <a class="btn-soft" href="notes-evaluation.html"><i class="bi bi-bar-chart"></i>Notes</a>
+              </div>
+            </div>
+          </div>
+        `;
+        panel.querySelectorAll("[data-set-open]").forEach(button => {
+          button.addEventListener("click", () => {
+            setExamState(button.dataset.setOpen === "true");
+          });
+        });
+      }
+
+      function setExamState(isOpen) {
+        requestJson(API_STATE, {
+          method: "PUT",
+          body: JSON.stringify({ isOpen })
+        }).then(result => {
+          if (!result.ok) {
+            showLocked("Impossible de modifier l'état de l'examen.");
+            return;
+          }
+          loadState();
+        });
+      }
+
+      function renderQuestion(question, number) {
+        if (question.type === "ordering") {
+          return `
+            <article class="order-workspace mt-3" data-order-question="${escapeHtml(question.id)}">
+              <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
+                <h3 class="h5 fw-bold text-primary mb-0">${number}. ${escapeHtml(question.title || question.prompt)}</h3>
+                <button type="button" class="btn-soft" data-order-reset="${escapeHtml(question.id)}"><i class="bi bi-arrow-counterclockwise"></i>Recommencer</button>
+              </div>
+              <div class="order-grid">
+                <div>
+                  <p class="fw-bold text-primary">Phrases disponibles</p>
+                  <div class="sentence-bank">
+                    ${(question.bank || []).map((sentence, index) => `<button type="button" class="sentence-btn" data-order-pick="${escapeHtml(question.id)}" data-sentence-index="${index}">${escapeHtml(sentence)}</button>`).join("")}
+                  </div>
+                </div>
+                <div>
+                  <p class="fw-bold text-primary">Votre ordre</p>
+                  <div class="sentence-answer" data-order-answer="${escapeHtml(question.id)}"></div>
+                </div>
+              </div>
+            </article>
+          `;
+        }
+
+        const choices = question.type === "trueFalse"
+          ? [
+              { value: "true", label: "Vrai" },
+              { value: "false", label: "Faux" }
+            ]
+          : (question.options || []).map((option, index) => ({ value: String(index), label: String.fromCharCode(97 + index) + ". " + option }));
+
+        return `
+          <div class="col-lg-6">
+            <fieldset class="question-card">
+              ${question.block ? `<span class="pill mb-2">${escapeHtml(question.block)}</span>` : ""}
+              <legend>${number}. ${escapeHtml(question.prompt)}</legend>
+              ${choices.map(choice => `
+                <label class="choice">
+                  <input type="radio" name="${escapeHtml(question.id)}" value="${escapeHtml(choice.value)}">
+                  <span>${escapeHtml(choice.label)}</span>
+                </label>
+              `).join("")}
+            </fieldset>
+          </div>
+        `;
+      }
+
+      function renderSection(section, index) {
+        const isReading = section.id === "lecture";
+        const isListening = section.id === "ecoute";
+        const image = isReading
+          ? `<figure class="media-figure"><img src="img/simulacre-examen-final-lecture.png" alt="Documents de lecture pour l'examen final"></figure>`
+          : isListening
+            ? `<figure class="media-figure"><img src="img/simulacre-examen-final-animaux-audio.png" alt="Campagne de protection animale"></figure>`
+            : "";
+        const reading = isReading ? `
+          <div class="reading-box mb-4">
+            ${image}
+            <h3>${escapeHtml(section.readingTitle)}</h3>
+            ${(section.readingText || []).map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join("")}
+          </div>
+        ` : "";
+        const audio = isListening ? `
+          <div class="audio-box mb-4">
+            ${image}
+            <h3>${escapeHtml(section.audioTitle)}</h3>
+            <p>${escapeHtml(section.audioText)}</p>
+            <audio id="finalExamAudio" controls preload="metadata" data-audio-src="${escapeHtml(section.audioSrc)}" aria-label="Audio de l'examen final"></audio>
+            <div class="audio-speed-actions" aria-label="Contrôle de vitesse de l'audio">
+              <button type="button" class="audio-btn" data-audio-rate="0.75">0.75x</button>
+              <button type="button" class="audio-btn active" data-audio-rate="1">1x</button>
+              <button type="button" class="audio-btn" data-audio-rate="1.25">1.25x</button>
+            </div>
+          </div>
+        ` : "";
+        const questions = section.questions || [];
+        return `
+          <section id="${escapeHtml(section.id)}" class="${index % 2 ? "bg-white" : ""}">
+            <div class="container">
+              <div class="exam-section">
+                <p class="section-kicker">${escapeHtml(section.title)} · ${escapeHtml(section.points)} points</p>
+                <h2 class="section-title">${escapeHtml(section.subtitle)}</h2>
+                <p class="section-text">${escapeHtml(section.instructions)}</p>
+                ${reading}
+                ${audio}
+                <div class="row g-3">
+                  ${questions.map((question, questionIndex) => renderQuestion(question, questionIndex + 1)).join("")}
+                </div>
+              </div>
+            </div>
+          </section>
+        `;
+      }
+
+      function wireOrdering() {
+        document.querySelectorAll("[data-order-pick]").forEach(button => {
+          button.addEventListener("click", () => {
+            const questionId = button.dataset.orderPick;
+            const answer = document.querySelector(`[data-order-answer="${cssEscape(questionId)}"]`);
+            const position = answer.children.length + 1;
+            const chosen = document.createElement("button");
+            chosen.type = "button";
+            chosen.className = "chosen-sentence";
+            chosen.dataset.sentenceIndex = button.dataset.sentenceIndex;
+            chosen.innerHTML = `<b>${position}</b><span>${escapeHtml(button.textContent.trim())}</span>`;
+            chosen.addEventListener("click", () => {
+              button.disabled = false;
+              chosen.remove();
+              Array.from(answer.children).forEach((item, index) => {
+                item.querySelector("b").textContent = String(index + 1);
+              });
+            });
+            answer.appendChild(chosen);
+            button.disabled = true;
+          });
+        });
+
+        document.querySelectorAll("[data-order-reset]").forEach(button => {
+          button.addEventListener("click", () => {
+            const questionId = button.dataset.orderReset;
+            document.querySelector(`[data-order-answer="${cssEscape(questionId)}"]`).innerHTML = "";
+            document.querySelectorAll(`[data-order-pick="${cssEscape(questionId)}"]`).forEach(item => { item.disabled = false; });
+          });
+        });
+      }
+
+      function wireAudioSpeed() {
+        document.querySelectorAll("[data-audio-rate]").forEach(button => {
+          button.addEventListener("click", () => {
+            const audio = document.getElementById("finalExamAudio");
+            if (!audio) return;
+            audio.playbackRate = Number(button.dataset.audioRate);
+            document.querySelectorAll("[data-audio-rate]").forEach(item => item.classList.remove("active"));
+            button.classList.add("active");
+          });
+        });
+      }
+
+      function loadSecureAudio() {
+        const audio = document.getElementById("finalExamAudio");
+        if (!audio) return;
+        const src = audio.dataset.audioSrc || "";
+        if (!src) return;
+        if (!src.startsWith("/api/")) {
+          audio.src = src;
+          return;
+        }
+        fetch(src, { headers: authHeaders() })
+          .then(response => {
+            if (!response.ok) throw new Error("audio");
+            return response.blob();
+          })
+          .then(blob => {
+            audio.src = URL.createObjectURL(blob);
+          })
+          .catch(() => {
+            audio.outerHTML = '<p class="section-text mb-0">Audio indisponible pour le moment. Rechargez la page.</p>';
+          });
+      }
+
+      function renderExam(exam) {
+        currentExam = exam;
+        document.getElementById("examSections").innerHTML = (exam.sections || []).map(renderSection).join("");
+        wireOrdering();
+        wireAudioSpeed();
+        loadSecureAudio();
+        showExam();
+      }
+
+      function renderSubmitted(result) {
+        showExam();
+        document.getElementById("examForm").hidden = false;
+        document.getElementById("examSections").innerHTML = "";
+        document.getElementById("submitExamBtn").hidden = true;
+        updateScores(result);
+        const box = document.getElementById("submitResult");
+        box.classList.add("show");
+        box.innerHTML = `Examen envoyé. Note finale : ${escapeHtml(result.grade)} / 5.0 · Score : ${escapeHtml(result.scorePoints)} / ${escapeHtml(result.totalPoints)}.`;
+      }
+
+      function updateScores(result) {
+        document.getElementById("totalScore").textContent = `${result.scorePoints || 0}/${result.totalPoints || 50}`;
+        const map = result.sectionScores || {};
+        Object.keys(sectionScoreIds).forEach(sectionId => {
+          const item = map[sectionId] || {};
+          document.getElementById(sectionScoreIds[sectionId]).textContent = `${item.score || 0}/${item.total || (sectionId === "vocabulaire" || sectionId === "grammaire" ? 15 : 10)}`;
+        });
+      }
+
+      function loadExam() {
+        requestJson(API_EXAM).then(result => {
+          if (result.ok && result.data.status === "submitted") {
+            renderSubmitted(result.data.result);
+            return;
+          }
+          if (!result.ok) {
+            const error = result.data && result.data.error;
+            showLocked(error === "exam_closed" ? "L'examen final n'est pas encore ouvert par l'administrateur." : "Votre compte Gmail n'est pas autorisé pour cet examen.");
+            return;
+          }
+          renderExam(result.data.exam);
+        });
+      }
+
+      function loadState() {
+        const user = readUser();
+        if (!user || !user.credential) {
+          showLocked("Connectez-vous avec Google pour vérifier votre accès.");
+          renderAdminPanel(null);
+          return;
+        }
+        requestJson(API_STATE).then(result => {
+          if (!result.ok) {
+            showLocked("Impossible de vérifier l'accès. Rechargez la page.");
+            return;
+          }
+          renderAdminPanel(result.data);
+          if (result.data.submitted) {
+            renderSubmitted(result.data.submitted);
+            return;
+          }
+          if (result.data.role === "admin" || result.data.role === "teacher" || (result.data.state && result.data.state.isOpen === true)) {
+            loadExam();
+            return;
+          }
+          showLocked("L'examen final n'est pas encore ouvert par l'administrateur.");
+        });
+      }
+
+      function collectAnswers() {
+        const answers = {};
+        if (!currentExam) return answers;
+        (currentExam.sections || []).forEach(section => {
+          (section.questions || []).forEach(question => {
+            if (question.type === "ordering") {
+              answers[question.id] = Array.from(document.querySelectorAll(`[data-order-answer="${cssEscape(question.id)}"] .chosen-sentence`))
+                .map(item => Number(item.dataset.sentenceIndex));
+              return;
+            }
+            const selected = document.querySelector(`input[name="${cssEscape(question.id)}"]:checked`);
+            if (selected) {
+              answers[question.id] = question.type === "trueFalse" ? selected.value === "true" : Number(selected.value);
+            }
+          });
+        });
+        return answers;
+      }
+
+      document.getElementById("examForm").addEventListener("submit", event => {
+        event.preventDefault();
+        const button = document.getElementById("submitExamBtn");
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i>Envoi en cours...';
+        requestJson(API_SUBMIT, {
+          method: "POST",
+          body: JSON.stringify({ answers: collectAnswers() })
+        }).then(result => {
+          if (!result.ok) {
+            const message = result.data && result.data.error === "already_submitted"
+              ? "Vous avez déjà envoyé cet examen."
+              : "L'envoi n'a pas été accepté. Vérifiez l'ouverture de l'examen et votre session.";
+            const box = document.getElementById("submitResult");
+            box.classList.add("show");
+            box.textContent = message;
+            if (result.data && result.data.result) renderSubmitted(result.data.result);
+            button.disabled = false;
+            button.innerHTML = '<i class="bi bi-send-check-fill"></i>Envoyer l\'examen';
+            return;
+          }
+          renderSubmitted(result.data.result);
+        });
+      });
+
+      document.querySelectorAll("[data-open-google-login]").forEach(button => {
+        button.addEventListener("click", () => {
+          openGooglePanel();
+          loadState();
+        });
+      });
+
+      window.addEventListener("load", loadState);
+      setInterval(() => {
+        if (document.getElementById("examContent").hidden) loadState();
+      }, 2500);
+    })();
+  </script>
+  <script src="../../assets/js/jaralingua-back-button.js"></script>
+</body>
+</html>
