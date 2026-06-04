@@ -6461,6 +6461,69 @@ a {
   margin-top: 18px;
 }
 
+.routine-question-bank-toggle {
+  margin-top: 16px;
+}
+
+.routine-question-bank-toggle summary {
+  position: relative;
+  min-height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  background: #f8fbff;
+  border: 1px solid rgba(18, 59, 143, 0.14);
+  color: var(--blue-dark);
+  cursor: pointer;
+  font-weight: 900;
+  list-style: none;
+}
+
+.routine-question-bank-toggle .toggle-open-label,
+.routine-question-bank-toggle[open] .toggle-closed-label {
+  display: none;
+}
+
+.routine-question-bank-toggle[open] .toggle-open-label {
+  display: inline;
+}
+
+.routine-question-bank-toggle summary::-webkit-details-marker {
+  display: none;
+}
+
+.routine-question-bank-toggle summary::after {
+  content: "+";
+  width: 34px;
+  height: 34px;
+  flex: 0 0 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--blue);
+  color: #fff;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.routine-question-bank-toggle[open] summary::after {
+  content: "-";
+}
+
+.routine-question-bank-toggle summary small {
+  margin-left: auto;
+  color: #64748b;
+  font-weight: 800;
+}
+
+.routine-question-bank-toggle .lesson-text {
+  margin: 18px 0 0;
+}
+
 .routine-question-bank span {
   min-height: 64px;
   display: flex;
@@ -6720,6 +6783,21 @@ a {
     width: 96px;
     margin-left: -48px;
     font-size: 0.5rem;
+  }
+
+  .routine-question-bank-toggle summary {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-right: 62px;
+  }
+
+  .routine-question-bank-toggle summary small {
+    margin-left: 0;
+  }
+
+  .routine-question-bank-toggle summary::after {
+    position: absolute;
+    right: 16px;
   }
 }
 
