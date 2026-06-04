@@ -3,9 +3,11 @@
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const API_PATH = "/api/basic/grades";
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
-  const MICROSOFT_CLIENT_ID = "4e729f8a-d101-4c5d-af68-609d749bc95a";
+  const MICROSOFT_CLIENT_ID = (window.JARALINGUA_MICROSOFT_CLIENT_ID || "4e729f8a-d101-4c5d-af68-609d749bc95a").trim();
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
-  const MICROSOFT_SCOPES = ["User.Read"];
+  const MICROSOFT_AUTHORITY = window.JARALINGUA_MICROSOFT_AUTHORITY || "https://login.microsoftonline.com/consumers";
+  const MICROSOFT_REDIRECT_URI = window.JARALINGUA_MICROSOFT_REDIRECT_URI || (window.location.origin + "/ingles/basico/notas.html");
+  const MICROSOFT_SCOPES = Array.isArray(window.JARALINGUA_MICROSOFT_SCOPES) ? window.JARALINGUA_MICROSOFT_SCOPES : ["User.Read"];
 
   let lastSignature = "";
   let microsoftClient = null;
@@ -168,8 +170,8 @@
     return {
       auth: {
         clientId: MICROSOFT_CLIENT_ID,
-        authority: "https://login.microsoftonline.com/consumers",
-        redirectUri: window.location.origin + "/ingles/basico/notas.html"
+        authority: MICROSOFT_AUTHORITY,
+        redirectUri: MICROSOFT_REDIRECT_URI
       },
       cache: {
         cacheLocation: "sessionStorage"

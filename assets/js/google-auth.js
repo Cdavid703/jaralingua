@@ -1,7 +1,14 @@
 (function () {
-  const USER_KEY = "jaralingua_google_user";
+  const GOOGLE_USER_KEY = "jaralingua_google_user";
+  const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const CONFIG_KEY = "JARALINGUA_GOOGLE_CLIENT_ID";
+  const MICROSOFT_CONFIG_KEY = "JARALINGUA_MICROSOFT_CLIENT_ID";
+  const MICROSOFT_AUTHORITY_KEY = "JARALINGUA_MICROSOFT_AUTHORITY";
+  const MICROSOFT_REDIRECT_URI_KEY = "JARALINGUA_MICROSOFT_REDIRECT_URI";
+  const MICROSOFT_SCOPES_KEY = "JARALINGUA_MICROSOFT_SCOPES";
+  const MICROSOFT_SCRIPT_SRC = "https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js";
   const FALLBACK_CLIENT_ID = "";
+  const FALLBACK_MICROSOFT_CLIENT_ID = "4e729f8a-d101-4c5d-af68-609d749bc95a";
   const API_ROOT = "/api";
   const CLOUD_SYNC_DELAY = 600;
   const DOWNLOAD_FUNCTIONS = [
@@ -26,9 +33,9 @@
     es: {
       signIn: "Iniciar sesi\u00f3n",
       signOut: "Cerrar sesi\u00f3n",
-      title: "Acceso con Google",
-      configured: "El acceso se activar\u00e1 cuando configures el Client ID de Google.",
-      hint: "Edita assets/js/google-auth-config.js y pega el Client ID web.",
+      title: "Acceso a JaraLingua",
+      configured: "El acceso con Google se activar\u00e1 cuando configures el Client ID.",
+      hint: "Edita assets/js/google-auth-config.js y pega los Client ID web.",
       account: "Cuenta activa",
       close: "Cerrar",
       studentSpace: "Mi espacio JaraLingua",
@@ -49,7 +56,7 @@
       markPending: "Marcar pendiente",
       markInProgress: "Marcar en progreso",
       markCompleted: "Marcar completada",
-      loginNeeded: "Inicia sesi\u00f3n con Google para usar esta descarga.",
+      loginNeeded: "Inicia sesi\u00f3n con Google o Microsoft para usar esta descarga.",
       savedHere: "Progreso sincronizado con tu cuenta.",
       viewDashboard: "Abrir panel",
       activityAutosave: "Respuestas guardadas",
@@ -81,14 +88,18 @@
       googleLoading: "Cargando boton de Google...",
       googleUnavailable: "No se pudo cargar el boton de Google. Revisa que este dominio este autorizado en Google Cloud y recarga la pagina.",
       googleScriptUnavailable: "No se pudo cargar el script de Google. Prueba sin bloqueadores o en una ventana incognito.",
-      googleOriginRejected: "Google cargo, pero no permitio mostrar el boton. Autoriza este origen en Google Cloud: "
+      googleOriginRejected: "Google cargo, pero no permitio mostrar el boton. Autoriza este origen en Google Cloud: ",
+      microsoftSignIn: "Continuar con Microsoft",
+      microsoftLoading: "Cargando Microsoft...",
+      microsoftUnavailable: "No se pudo cargar el acceso con Microsoft. Recarga la pagina e intenta de nuevo.",
+      microsoftPopupBlocked: "Microsoft no pudo abrir la ventana de inicio. Permite ventanas emergentes e intenta de nuevo."
     },
     fr: {
       signIn: "Connexion",
       signOut: "D\u00e9connexion",
-      title: "Connexion avec Google",
-      configured: "La connexion sera active apr\u00e8s configuration du Client ID Google.",
-      hint: "Modifiez assets/js/google-auth-config.js et collez le Client ID web.",
+      title: "Connexion JaraLingua",
+      configured: "La connexion Google sera active apr\u00e8s configuration du Client ID.",
+      hint: "Modifiez assets/js/google-auth-config.js et collez les Client ID web.",
       account: "Compte actif",
       close: "Fermer",
       studentSpace: "Mon espace JaraLingua",
@@ -109,7 +120,7 @@
       markPending: "Marquer en attente",
       markInProgress: "Marquer en cours",
       markCompleted: "Marquer termin\u00e9e",
-      loginNeeded: "Connectez-vous avec Google pour utiliser ce t\u00e9l\u00e9chargement.",
+      loginNeeded: "Connectez-vous avec Google ou Microsoft pour utiliser ce t\u00e9l\u00e9chargement.",
       savedHere: "Progr\u00e8s synchronis\u00e9 avec votre compte.",
       viewDashboard: "Ouvrir le panneau",
       activityAutosave: "R\u00e9ponses enregistr\u00e9es",
@@ -141,14 +152,18 @@
       googleLoading: "Chargement du bouton Google...",
       googleUnavailable: "Impossible de charger le bouton Google. Verifiez que ce domaine est autorise dans Google Cloud, puis rechargez la page.",
       googleScriptUnavailable: "Impossible de charger le script Google. Essayez sans bloqueurs ou dans une fenetre privee.",
-      googleOriginRejected: "Google est charge, mais n'a pas autorise le bouton. Autorisez cette origine dans Google Cloud : "
+      googleOriginRejected: "Google est charge, mais n'a pas autorise le bouton. Autorisez cette origine dans Google Cloud : ",
+      microsoftSignIn: "Continuer avec Microsoft",
+      microsoftLoading: "Chargement de Microsoft...",
+      microsoftUnavailable: "Impossible de charger la connexion Microsoft. Rechargez la page et reessayez.",
+      microsoftPopupBlocked: "Microsoft n'a pas pu ouvrir la fenetre de connexion. Autorisez les fenetres contextuelles et reessayez."
     },
     en: {
       signIn: "Sign in",
       signOut: "Sign out",
-      title: "Sign in with Google",
-      configured: "Google sign-in will work after the Google Client ID is configured.",
-      hint: "Edit assets/js/google-auth-config.js and paste the web Client ID.",
+      title: "JaraLingua sign-in",
+      configured: "Google sign-in will work after the Client ID is configured.",
+      hint: "Edit assets/js/google-auth-config.js and paste the web Client IDs.",
       account: "Active account",
       close: "Close",
       studentSpace: "My JaraLingua Space",
@@ -169,7 +184,7 @@
       markPending: "Mark pending",
       markInProgress: "Mark in progress",
       markCompleted: "Mark completed",
-      loginNeeded: "Sign in with Google to use this download.",
+      loginNeeded: "Sign in with Google or Microsoft to use this download.",
       savedHere: "Progress synced with your account.",
       viewDashboard: "Open panel",
       activityAutosave: "Saved answers",
@@ -201,7 +216,11 @@
       googleLoading: "Loading Google button...",
       googleUnavailable: "The Google button could not load. Check that this domain is authorized in Google Cloud, then reload the page.",
       googleScriptUnavailable: "The Google script could not load. Try without blockers or in an incognito window.",
-      googleOriginRejected: "Google loaded, but did not allow the button. Authorize this origin in Google Cloud: "
+      googleOriginRejected: "Google loaded, but did not allow the button. Authorize this origin in Google Cloud: ",
+      microsoftSignIn: "Continue with Microsoft",
+      microsoftLoading: "Loading Microsoft...",
+      microsoftUnavailable: "Microsoft sign-in could not load. Reload the page and try again.",
+      microsoftPopupBlocked: "Microsoft could not open the sign-in window. Allow pop-ups and try again."
     }
   };
 
@@ -219,6 +238,9 @@
   let googleLoadStarted = false;
   let googleLoadTimer = null;
   let googleRenderRetries = 0;
+  let microsoftClient = null;
+  let microsoftLoadStarted = false;
+  let microsoftLoadPromise = null;
   let restoringActivity = false;
   let activityRestoreTimer = null;
   let activityAutosaveReady = false;
@@ -235,6 +257,25 @@
       (meta && meta.content) ||
       FALLBACK_CLIENT_ID
     ).trim();
+  }
+
+  function microsoftClientId() {
+    return (
+      window[MICROSOFT_CONFIG_KEY] ||
+      FALLBACK_MICROSOFT_CLIENT_ID
+    ).trim();
+  }
+
+  function microsoftAuthority() {
+    return window[MICROSOFT_AUTHORITY_KEY] || "https://login.microsoftonline.com/consumers";
+  }
+
+  function microsoftRedirectUri() {
+    return window[MICROSOFT_REDIRECT_URI_KEY] || (window.location.origin + "/ingles/basico/notas.html");
+  }
+
+  function microsoftScopes() {
+    return Array.isArray(window[MICROSOFT_SCOPES_KEY]) ? window[MICROSOFT_SCOPES_KEY] : ["User.Read"];
   }
 
   function siteRootUrl() {
@@ -285,18 +326,26 @@
     return JSON.parse(json);
   }
 
-  function readUser() {
+  function readStoredUser(key, provider) {
     try {
-      const saved = JSON.parse(sessionStorage.getItem(USER_KEY) || "null");
+      const saved = JSON.parse(sessionStorage.getItem(key) || "null");
       if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
-        sessionStorage.removeItem(USER_KEY);
+        sessionStorage.removeItem(key);
         return null;
       }
-      return saved;
+      return Object.assign({ provider: provider }, saved);
     } catch (error) {
-      sessionStorage.removeItem(USER_KEY);
+      sessionStorage.removeItem(key);
       return null;
     }
+  }
+
+  function readUser() {
+    const googleUser = readStoredUser(GOOGLE_USER_KEY, "google");
+    if (googleUser && googleUser.credential) return googleUser;
+    const microsoftUser = readStoredUser(MICROSOFT_USER_KEY, "microsoft");
+    if (microsoftUser && microsoftUser.credential) return microsoftUser;
+    return null;
   }
 
   function userProgressKey() {
@@ -456,6 +505,10 @@
     return currentUser && currentUser.credential;
   }
 
+  function cloudAuthProvider() {
+    return (currentUser && currentUser.provider) || "google";
+  }
+
   function cloudCanSync() {
     return !!(cloudAuthToken() && window.fetch);
   }
@@ -466,7 +519,8 @@
       headers: {}
     }, options || {});
     settings.headers = Object.assign({
-      Authorization: "Bearer " + cloudAuthToken()
+      Authorization: "Bearer " + cloudAuthToken(),
+      "X-Jaralingua-Auth-Provider": cloudAuthProvider()
     }, settings.headers || {});
     if (settings.body && !settings.headers["Content-Type"]) {
       settings.headers["Content-Type"] = "application/json";
@@ -666,11 +720,13 @@
   }
 
   function saveUser(user) {
-    currentUser = user;
+    const provider = user && user.provider === "microsoft" ? "microsoft" : "google";
+    currentUser = Object.assign({}, user, { provider: provider });
     cloudProgressLoaded = false;
     pendingProgressSync = false;
     pendingActivitySync = {};
-    sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    sessionStorage.removeItem(provider === "microsoft" ? GOOGLE_USER_KEY : MICROSOFT_USER_KEY);
+    sessionStorage.setItem(provider === "microsoft" ? MICROSOFT_USER_KEY : GOOGLE_USER_KEY, JSON.stringify(currentUser));
     trackPageVisit();
     renderWidget();
     renderDashboard();
@@ -681,7 +737,11 @@
   }
 
   function signOut() {
-    sessionStorage.removeItem(USER_KEY);
+    if (currentUser && currentUser.provider === "microsoft") {
+      signOutMicrosoftSession();
+    }
+    sessionStorage.removeItem(GOOGLE_USER_KEY);
+    sessionStorage.removeItem(MICROSOFT_USER_KEY);
     currentUser = null;
     buttonRendered = false;
     cloudProgressLoaded = false;
@@ -707,6 +767,7 @@
 
     const profile = decodeJwt(response.credential);
     saveUser({
+      provider: "google",
       name: profile.name || profile.given_name || profile.email,
       email: profile.email,
       picture: profile.picture,
@@ -817,6 +878,8 @@
         left: 0;
         top: calc(100% + 8px);
         width: min(380px, calc(100vw - 36px));
+        max-height: min(720px, calc(100vh - 112px));
+        overflow-y: auto;
         padding: 18px;
         border-radius: 22px;
         background: rgba(255, 255, 255, 0.98);
@@ -844,9 +907,57 @@
         min-height: 44px;
       }
 
+      .auth-provider-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .auth-microsoft-button {
+        min-height: 44px;
+        width: 280px;
+        max-width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 0 14px;
+        border: 1px solid #dadce0;
+        border-radius: 999px;
+        background: #ffffff;
+        color: #1f1f1f;
+        font-size: 0.94rem;
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .auth-microsoft-button:hover {
+        border-color: #8ab4f8;
+        box-shadow: 0 3px 10px rgba(60, 64, 67, 0.12);
+      }
+
+      .auth-microsoft-button:disabled {
+        cursor: wait;
+        opacity: 0.72;
+      }
+
+      .auth-microsoft-icon {
+        width: 18px;
+        height: 18px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2px;
+        flex: 0 0 18px;
+      }
+
+      .auth-microsoft-icon span:nth-child(1) { background: #f25022; }
+      .auth-microsoft-icon span:nth-child(2) { background: #7fba00; }
+      .auth-microsoft-icon span:nth-child(3) { background: #00a4ef; }
+      .auth-microsoft-icon span:nth-child(4) { background: #ffb900; }
+
       .auth-config-note,
       .auth-role-choice,
       .auth-google-status,
+      .auth-microsoft-status,
       .auth-download-note {
         border-radius: 16px;
         padding: 14px;
@@ -855,7 +966,8 @@
         font-weight: 800;
       }
 
-      .auth-google-status[hidden] {
+      .auth-google-status[hidden],
+      .auth-microsoft-status[hidden] {
         display: none;
       }
 
@@ -1222,6 +1334,7 @@
         .auth-panel {
           top: auto;
           bottom: calc(100% + 8px);
+          max-height: calc(100vh - 92px);
         }
 
         .student-dashboard-grid,
@@ -1288,7 +1401,7 @@
       return `<button class="auth-trigger" type="button" data-auth-toggle>${avatarMarkup(currentUser)}<span>${escapeHtml(currentUser.name)}</span></button>`;
     }
 
-    return `<button class="auth-trigger" type="button" data-auth-toggle><span class="auth-initial">G</span><span>${copy.signIn}</span></button>`;
+    return `<button class="auth-trigger" type="button" data-auth-toggle><span class="auth-initial">J</span><span>${copy.signIn}</span></button>`;
   }
 
   function authRoleChoiceMarkup(roleStatus) {
@@ -1353,10 +1466,19 @@
     return `
       <div class="auth-panel" data-auth-panel hidden>
         <h2>${copy.title}</h2>
-        <p>${clientId() ? "" : copy.configured}</p>
-        <div class="auth-google-button" data-google-button></div>
+        <p>${clientId() || microsoftClientId() ? "" : copy.configured}</p>
+        <div class="auth-provider-list">
+          <div class="auth-google-button" data-google-button></div>
+          ${microsoftClientId() ? `
+            <button class="auth-microsoft-button" type="button" data-microsoft-login>
+              <span class="auth-microsoft-icon" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+              <span>${copy.microsoftSignIn}</span>
+            </button>
+          ` : ""}
+        </div>
         <div class="auth-google-status" data-google-status hidden></div>
-        ${clientId() ? "" : `<div class="auth-config-note">${copy.hint}</div>`}
+        <div class="auth-microsoft-status" data-microsoft-status hidden></div>
+        ${clientId() || microsoftClientId() ? "" : `<div class="auth-config-note">${copy.hint}</div>`}
         <div class="auth-download-note" data-auth-download-note hidden>${copy.loginNeeded}</div>
       </div>
     `;
@@ -1370,6 +1492,7 @@
     const panel = root.querySelector("[data-auth-panel]");
     const closeButtons = root.querySelectorAll("[data-auth-close]");
     const signOutButton = root.querySelector("[data-auth-signout]");
+    const microsoftButton = root.querySelector("[data-microsoft-login]");
     const lastLink = root.querySelector("[data-auth-last]");
 
     toggle.addEventListener("click", function () {
@@ -1381,6 +1504,11 @@
       button.addEventListener("click", closePanel);
     });
     if (signOutButton) signOutButton.addEventListener("click", signOut);
+    if (microsoftButton) {
+      microsoftButton.addEventListener("click", function () {
+        signInMicrosoft(microsoftButton);
+      });
+    }
     if (lastLink && lastLink.getAttribute("href") === "#") {
       lastLink.addEventListener("click", function (event) {
         event.preventDefault();
@@ -1441,6 +1569,13 @@
 
   function setGoogleStatus(message) {
     const status = document.querySelector("[data-google-status]");
+    if (!status) return;
+    status.textContent = message || "";
+    status.hidden = !message;
+  }
+
+  function setMicrosoftStatus(message) {
+    const status = document.querySelector("[data-microsoft-status]");
     if (!status) return;
     status.textContent = message || "";
     status.hidden = !message;
@@ -1543,6 +1678,141 @@
       buttonRendered = false;
       setGoogleStatus(copy.googleOriginRejected + window.location.origin);
     }
+  }
+
+  function microsoftAuthConfig() {
+    return {
+      auth: {
+        clientId: microsoftClientId(),
+        authority: microsoftAuthority(),
+        redirectUri: microsoftRedirectUri()
+      },
+      cache: {
+        cacheLocation: "sessionStorage"
+      }
+    };
+  }
+
+  function microsoftApp() {
+    if (!window.msal) throw new Error("Microsoft sign-in library is not available.");
+    if (!microsoftClient) {
+      microsoftClient = new window.msal.PublicClientApplication(microsoftAuthConfig());
+    }
+    return microsoftClient;
+  }
+
+  function ensureMicrosoftScriptReady() {
+    if (window.msal) return Promise.resolve();
+    if (microsoftLoadPromise) return microsoftLoadPromise;
+
+    setMicrosoftStatus(copy.microsoftLoading);
+    microsoftLoadStarted = true;
+    microsoftLoadPromise = new Promise(function (resolve, reject) {
+      let script = document.querySelector('script[src*="msal-browser"]');
+      if (!script) {
+        script = document.createElement("script");
+        script.src = MICROSOFT_SCRIPT_SRC;
+        script.async = true;
+        script.defer = true;
+        document.head.appendChild(script);
+      }
+
+      script.addEventListener("load", function () {
+        if (window.msal) {
+          setMicrosoftStatus("");
+          resolve();
+          return;
+        }
+        reject(new Error("MSAL did not initialize."));
+      }, { once: true });
+
+      script.addEventListener("error", function () {
+        reject(new Error("MSAL script failed."));
+      }, { once: true });
+
+      setTimeout(function () {
+        if (window.msal) {
+          setMicrosoftStatus("");
+          resolve();
+        }
+      }, microsoftLoadStarted ? 450 : 0);
+    }).catch(function (error) {
+      microsoftLoadPromise = null;
+      setMicrosoftStatus(copy.microsoftUnavailable);
+      throw error;
+    });
+
+    return microsoftLoadPromise;
+  }
+
+  function storeMicrosoftSession(account, tokenResponse) {
+    const expiresOn = tokenResponse.expiresOn instanceof Date
+      ? Math.floor(tokenResponse.expiresOn.getTime() / 1000)
+      : Math.floor(Date.now() / 1000) + 3300;
+    const email = (account && (account.username || account.name)) || "";
+
+    saveUser({
+      provider: "microsoft",
+      sub: (account && (account.homeAccountId || account.localAccountId)) || email,
+      email: email,
+      name: (account && account.name) || email,
+      picture: "",
+      credential: tokenResponse.accessToken,
+      exp: expiresOn
+    });
+
+    if (currentRoleStatus()) {
+      closePanel();
+    } else {
+      openPanel();
+    }
+  }
+
+  function signInMicrosoft(button) {
+    if (!microsoftClientId()) {
+      setMicrosoftStatus(copy.microsoftUnavailable);
+      return;
+    }
+
+    button.disabled = true;
+    setMicrosoftStatus(copy.microsoftLoading);
+
+    ensureMicrosoftScriptReady().then(function () {
+      const app = microsoftApp();
+      return app.loginPopup({
+        scopes: microsoftScopes(),
+        prompt: "select_account"
+      }).then(function (loginResponse) {
+        const account = loginResponse.account;
+        if (app.setActiveAccount) app.setActiveAccount(account);
+        return app.acquireTokenSilent({
+          scopes: microsoftScopes(),
+          account: account
+        }).catch(function () {
+          return app.acquireTokenPopup({
+            scopes: microsoftScopes(),
+            account: account
+          });
+        }).then(function (tokenResponse) {
+          setMicrosoftStatus("");
+          storeMicrosoftSession(account, tokenResponse);
+        });
+      });
+    }).catch(function () {
+      setMicrosoftStatus(copy.microsoftPopupBlocked);
+    }).finally(function () {
+      button.disabled = false;
+    });
+  }
+
+  function signOutMicrosoftSession() {
+    if (!window.msal || !microsoftClient) return;
+    try {
+      const account = microsoftClient.getActiveAccount && microsoftClient.getActiveAccount();
+      if (account && microsoftClient.logoutPopup) {
+        microsoftClient.logoutPopup({ account: account }).catch(function () {});
+      }
+    } catch (error) {}
   }
 
   function renderDashboard() {

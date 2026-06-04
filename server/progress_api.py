@@ -466,7 +466,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "https://www.jaralingua.com")
-        self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type")
+        self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Jaralingua-Auth-Provider")
         self.send_header("Access-Control-Allow-Methods", "GET, PUT, DELETE, OPTIONS")
         self.end_headers()
 
