@@ -8,6 +8,7 @@ param(
 )
 
 $ErrorActionPreference = "Stop"
+$script:TemporarySshKeyPaths = @()
 
 function Write-Step {
     param([string]$Message)
@@ -156,7 +157,7 @@ function Protect-PrivateKey {
     }
     $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
         $identity,
-        [System.Security.AccessControl.FileSystemRights]::Read,
+        [System.Security.AccessControl.FileSystemRights]::FullControl,
         [System.Security.AccessControl.AccessControlType]::Allow
     )
     $acl.AddAccessRule($accessRule)
@@ -178,9 +179,10 @@ function Get-SshReadyPrivateKey {
     if ($IsWindows -or $PSVersionTable.PSVersion.Major -lt 6) {
         $hashBytes = [System.Security.Cryptography.SHA256]::Create().ComputeHash([System.Text.Encoding]::UTF8.GetBytes($resolvedPath.ToLowerInvariant()))
         $hash = -join ($hashBytes[0..7] | ForEach-Object { $_.ToString("x2") })
-        $tempKeyPath = Join-Path ([System.IO.Path]::GetTempPath()) "jaralingua-vps-key-$hash"
+        $tempKeyPath = Join-Path ([System.IO.Path]::GetTempPath()) "jaralingua-vps-key-$hash-$PID-$([System.Guid]::NewGuid().ToString('n'))"
         Copy-Item -LiteralPath $resolvedPath -Destination $tempKeyPath -Force
         Protect-PrivateKey -Path $tempKeyPath
+        $script:TemporarySshKeyPaths += $tempKeyPath
         return $tempKeyPath
     }
 
@@ -322,6 +324,11 @@ try {
     Write-Step "GitHub push and VPS deploy completed."
 }
 finally {
+    foreach ($tempKeyPath in $script:TemporarySshKeyPaths) {
+        if (Test-Path -LiteralPath $tempKeyPath) {
+            Remove-Item -LiteralPath $tempKeyPath -Force -ErrorAction SilentlyContinue
+        }
+    }
     if ($lockStream) {
         $lockStream.Dispose()
     }
