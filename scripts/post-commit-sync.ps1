@@ -127,6 +127,67 @@ function Quote-Sh {
     return "'" + $Value.Replace("'", "'\''") + "'"
 }
 
+function Resolve-RepoPath {
+    param([string]$Path)
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return ""
+    }
+    if ([System.IO.Path]::IsPathRooted($Path)) {
+        return $Path
+    }
+    return (Join-Path $RepoRoot $Path)
+}
+
+function Protect-PrivateKey {
+    param([string]$Path)
+
+    if ([string]::IsNullOrWhiteSpace($Path) -or -not (Test-Path -LiteralPath $Path)) {
+        return
+    }
+    if (-not $IsWindows -and $PSVersionTable.PSVersion.Major -ge 6) {
+        return
+    }
+    $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent().Name
+    $acl = Get-Acl -LiteralPath $Path
+    $acl.SetAccessRuleProtection($true, $false)
+    foreach ($rule in @($acl.Access)) {
+        [void]$acl.RemoveAccessRule($rule)
+    }
+    $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule(
+        $identity,
+        [System.Security.AccessControl.FileSystemRights]::Read,
+        [System.Security.AccessControl.AccessControlType]::Allow
+    )
+    $acl.AddAccessRule($accessRule)
+    Set-Acl -LiteralPath $Path -AclObject $acl
+}
+
+function Get-SshReadyPrivateKey {
+    param([string]$Path)
+
+    if ([string]::IsNullOrWhiteSpace($Path)) {
+        return ""
+    }
+
+    $resolvedPath = Resolve-RepoPath -Path $Path
+    if (-not (Test-Path -LiteralPath $resolvedPath)) {
+        return $resolvedPath
+    }
+
+    if ($IsWindows -or $PSVersionTable.PSVersion.Major -lt 6) {
+        $hashBytes = [System.Security.Cryptography.SHA256]::Create().ComputeHash([System.Text.Encoding]::UTF8.GetBytes($resolvedPath.ToLowerInvariant()))
+        $hash = -join ($hashBytes[0..7] | ForEach-Object { $_.ToString("x2") })
+        $tempKeyPath = Join-Path ([System.IO.Path]::GetTempPath()) "jaralingua-vps-key-$hash"
+        Copy-Item -LiteralPath $resolvedPath -Destination $tempKeyPath -Force
+        Protect-PrivateKey -Path $tempKeyPath
+        return $tempKeyPath
+    }
+
+    Protect-PrivateKey -Path $resolvedPath
+    return $resolvedPath
+}
+
 if ([string]::IsNullOrWhiteSpace($RepoRoot)) {
     $RepoRoot = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot "..")).Path
 }
@@ -246,6 +307,7 @@ try {
     $sshPort = Get-Setting -Name "VPS_SSH_PORT"
 
     if (-not [string]::IsNullOrWhiteSpace($sshKey)) {
+        $sshKey = Get-SshReadyPrivateKey -Path $sshKey
         $sshArgs += @("-i", $sshKey)
     }
 

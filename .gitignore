@@ -1,7 +1,9 @@
 desktop.ini
+.claude/
 elevenlabs.local.env
 deploy.local.env
 deploy.local.*.env
+.jaralingua-local/
 __pycache__/
 *.pyc
 chrome-tmp/
