@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulacre d'examen final - Français Niveau 7</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root {
+      --iue-orange: #f47b20;
+      --iue-blue: #00395c;
+      --iue-black: #050505;
+      --blue: #1f4e8c;
+      --blue-dark: #15345d;
+      --red: #d62839;
+      --soft: #f4f7fb;
+      --text: #243044;
+      --muted: #718096;
+      --yellow: #f4c95d;
+      --green: #1f9d75;
+      --shadow: 0 22px 55px rgba(20, 40, 80, 0.13);
+      --radius: 26px;
+    }
+
+    * { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--text);
+      background: var(--soft);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .institutional-band {
+      background: var(--iue-black);
+      overflow: hidden;
+    }
+
+    .institutional-band img {
+      width: 100%;
+      display: block;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 52, 93, 0.08);
+    }
+
+    .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 800;
+      color: var(--blue-dark);
+    }
+
+    .brand-logo { height: 42px; }
+
+    .nav-link {
+      color: var(--text);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(31, 78, 140, 0.08);
+    }
+
+    .hero {
+      min-height: 640px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 7.6rem 0 4.5rem;
+      background:
+        linear-gradient(90deg, rgba(3, 19, 35, 0.86) 0%, rgba(21, 52, 93, 0.72) 44%, rgba(21, 52, 93, 0.08) 100%),
+        url("img/simulacre-examen-final-niveau7.png") center/cover no-repeat;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 130px;
+      background: linear-gradient(to bottom, transparent, var(--soft));
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      color: #fff;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      color: #fff;
+      font-weight: 900;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero h1 {
+      margin: 1.15rem 0 0.8rem;
+      font-size: clamp(2.6rem, 6.6vw, 5.6rem);
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-lead {
+      font-size: clamp(1.15rem, 2vw, 1.55rem);
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.92);
+    }
+
+    .hero-text {
+      max-width: 690px;
+      color: rgba(255, 255, 255, 0.82);
+      font-size: 1.08rem;
+      line-height: 1.7;
+    }
+
+    .btn-main,
+    .btn-soft {
+      min-height: 46px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border-radius: 999px;
+      padding: 0.78rem 1.15rem;
+      font-weight: 900;
+      text-decoration: none;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .btn-main {
+      background: linear-gradient(135deg, var(--iue-orange), #ff9b2f);
+      color: #111;
+      box-shadow: 0 16px 34px rgba(244, 123, 32, 0.24);
+    }
+
+    .btn-main:hover { color: #111; filter: brightness(1.03); }
+
+    .btn-soft {
+      background: rgba(255, 255, 255, 0.9);
+      color: var(--blue-dark);
+      border: 2px solid rgba(31, 78, 140, 0.12);
+    }
+
+    .exam-shell {
+      margin-top: -2.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .score-panel,
+    .exam-section,
+    .instructions-panel {
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(21, 52, 93, 0.08);
+    }
+
+    .score-panel {
+      padding: 1.1rem;
+      display: grid;
+      grid-template-columns: 1.2fr repeat(4, minmax(120px, 1fr));
+      gap: 0.8rem;
+      align-items: stretch;
+    }
+
+    .score-tile {
+      border-radius: 18px;
+      background: #f8fbff;
+      padding: 0.9rem;
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    .score-tile strong {
+      display: block;
+      font-size: 1.65rem;
+      line-height: 1;
+      color: var(--iue-blue);
+    }
+
+    .score-tile span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    section { padding: 4.5rem 0; }
+
+    .section-kicker {
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      font-size: 0.82rem;
+    }
+
+    .section-title {
+      color: var(--blue-dark);
+      font-size: clamp(1.9rem, 4vw, 3.05rem);
+      font-weight: 900;
+      letter-spacing: -0.045em;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.7;
+    }
+
+    .instructions-panel {
+      padding: clamp(1.2rem, 2.5vw, 2rem);
+    }
+
+    .exam-section {
+      padding: clamp(1.2rem, 2.5vw, 2rem);
+    }
+
+    .question-card {
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid rgba(31, 78, 140, 0.08);
+      padding: 1rem;
+      height: 100%;
+    }
+
+    .question-card.correct { border-color: rgba(31, 157, 117, 0.48); background: #f1fbf7; }
+    .question-card.incorrect { border-color: rgba(214, 40, 57, 0.45); background: #fff6f7; }
+
+    .question-card legend,
+    .question-title {
+      display: block;
+      width: 100%;
+      margin: 0 0 0.75rem;
+      color: var(--blue-dark);
+      font-size: 1rem;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .choice {
+      min-height: 42px;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.55rem;
+      margin: 0.45rem 0;
+      padding: 0.65rem 0.75rem;
+      border-radius: 14px;
+      background: #fff;
+      border: 1px solid rgba(31, 78, 140, 0.1);
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 800;
+      line-height: 1.35;
+    }
+
+    .choice input { margin-top: 0.22rem; flex: 0 0 auto; }
+
+    .reading-box,
+    .audio-box,
+    .order-workspace {
+      border-radius: 20px;
+      background: #f8fbff;
+      border-left: 6px solid var(--iue-orange);
+      padding: 1rem;
+      color: var(--text);
+      line-height: 1.72;
+    }
+
+    .reading-box h3,
+    .audio-box h3 {
+      color: var(--blue-dark);
+      font-weight: 900;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 0.8rem;
+    }
+
+    .order-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    .sentence-bank,
+    .sentence-answer {
+      display: grid;
+      gap: 0.55rem;
+      min-height: 210px;
+    }
+
+    .sentence-btn,
+    .chosen-sentence {
+      width: 100%;
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      border-radius: 14px;
+      background: #fff;
+      color: var(--blue-dark);
+      padding: 0.72rem;
+      text-align: left;
+      font-weight: 800;
+      line-height: 1.4;
+    }
+
+    .sentence-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+    }
+
+    .chosen-sentence {
+      background: rgba(244, 123, 32, 0.08);
+      display: flex;
+      gap: 0.65rem;
+    }
+
+    .chosen-sentence b {
+      color: var(--iue-orange);
+      flex: 0 0 auto;
+    }
+
+    .result-box {
+      display: none;
+      margin-top: 1rem;
+      border-radius: 22px;
+      padding: 1rem;
+      background: var(--blue-dark);
+      color: #fff;
+      font-weight: 900;
+    }
+
+    .result-box.show { display: block; }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: 0 0.8rem;
+      border-radius: 999px;
+      background: rgba(31, 78, 140, 0.08);
+      color: var(--blue-dark);
+      font-weight: 900;
+      font-size: 0.86rem;
+    }
+
+    .footer {
+      background: var(--iue-black);
+      color: #fff;
+      margin-top: 3rem;
+    }
+
+    .footer-main { padding: 2.4rem 0; }
+
+    .footer a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    @media (max-width: 991px) {
+      .score-panel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .order-grid { grid-template-columns: 1fr; }
+      .hero { min-height: auto; padding-top: 7rem; }
+    }
+
+    @media (max-width: 575px) {
+      .score-panel { grid-template-columns: 1fr; }
+      .btn-main, .btn-soft { width: 100%; }
+      .jara-back-button { display: none !important; }
+      .hero h1 { font-size: clamp(2.25rem, 12vw, 3.35rem); }
+      section { padding: 3.25rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="institutional-band" aria-label="Institution Universitaire de Envigado">
+    <img src="img/institutionnel/iue-header.png" alt="Institución Universitaria de Envigado">
+  </div>
+
+  <nav class="navbar navbar-expand-lg sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="#instructions">Instructions</a></li>
+          <li class="nav-item"><a class="nav-link" href="#vocabulaire">Vocabulaire</a></li>
+          <li class="nav-item"><a class="nav-link" href="#grammaire">Grammaire</a></li>
+          <li class="nav-item"><a class="nav-link" href="#lecture">Lecture</a></li>
+          <li class="nav-item"><a class="nav-link" href="#ecoute">Écoute</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <span class="badge-course"><i class="bi bi-clipboard2-check-fill"></i>Simulacre · Examen final</span>
+        <h1>Simulacre d'examen final</h1>
+        <p class="hero-lead">Français Niveau 7 · 50 points</p>
+        <p class="hero-text">Pratiquez les compétences du niveau : vocabulaire en contexte, passé simple, conditionnel présent, organisation du récit, compréhension écrite et compréhension orale.</p>
+        <div class="d-flex flex-wrap gap-3 mt-4">
+          <a class="btn-main" href="#instructions"><i class="bi bi-play-circle-fill"></i>Commencer</a>
+          <a class="btn-soft" href="index.html"><i class="bi bi-arrow-left"></i>Retour au portail</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="exam-shell">
+    <div class="container">
+      <div class="score-panel" aria-label="Score du simulacre">
+        <div class="score-tile"><strong id="totalScore">0/50</strong><span>Score total</span></div>
+        <div class="score-tile"><strong id="vocabScore">0/15</strong><span>Vocabulaire</span></div>
+        <div class="score-tile"><strong id="grammarScore">0/15</strong><span>Grammaire et récit</span></div>
+        <div class="score-tile"><strong id="readingScore">0/10</strong><span>Compréhension écrite</span></div>
+        <div class="score-tile"><strong id="listeningScore">0/10</strong><span>Compréhension orale</span></div>
+      </div>
+    </div>
+
+    <section id="instructions">
+      <div class="container">
+        <div class="instructions-panel">
+          <div class="row g-4 align-items-center">
+            <div class="col-lg-8">
+              <p class="section-kicker">Instructions générales</p>
+              <h2 class="section-title">Format du simulacre</h2>
+              <p class="section-text mb-0">Ce simulacre reprend la structure de l'examen final sur papier : quatre sections, cinquante points, choix multiples, vrai/faux, écoute et un exercice de récit à ordonner par clicks.</p>
+            </div>
+            <div class="col-lg-4">
+              <div class="d-grid gap-2">
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Vocabulaire : 15 points</span>
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Grammaire et récit : 15 points</span>
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Lecture : 10 points</span>
+                <span class="pill"><i class="bi bi-check2-circle me-2"></i>Écoute : 10 points</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vocabulaire" class="pt-0">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">I. Vocabulaire · 15 points</p>
+          <h2 class="section-title">Choisissez le sens correct</h2>
+          <p class="section-text">Lisez chaque phrase et choisissez la réponse qui correspond au mot ou à l'expression en gras.</p>
+          <form id="vocabForm" class="row g-3"></form>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <button class="btn-main" type="button" data-check-section="vocab"><i class="bi bi-check2-circle"></i>Corriger le vocabulaire</button>
+            <button class="btn-soft" type="button" data-reset-section="vocab"><i class="bi bi-arrow-counterclockwise"></i>Réinitialiser</button>
+          </div>
+          <div class="result-box" id="vocabResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="grammaire" class="bg-white">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">II. Grammaire et récit · 15 points</p>
+          <h2 class="section-title">Temps, conditionnel et organisation narrative</h2>
+          <p class="section-text">Répondez aux questions, puis ordonnez deux mini-récits en cliquant sur les phrases dans le bon ordre.</p>
+          <form id="grammarForm" class="row g-3"></form>
+          <div class="mt-4" id="orderingArea"></div>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <button class="btn-main" type="button" data-check-section="grammar"><i class="bi bi-check2-circle"></i>Corriger la grammaire</button>
+            <button class="btn-soft" type="button" data-reset-section="grammar"><i class="bi bi-arrow-counterclockwise"></i>Réinitialiser</button>
+          </div>
+          <div class="result-box" id="grammarResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lecture">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">III. Compréhension écrite · 10 points</p>
+          <h2 class="section-title">Lisez le texte et répondez Vrai ou Faux</h2>
+          <div class="reading-box mb-4">
+            <h3>Adopter, ce n'est pas seulement aimer</h3>
+            <p>Dans plusieurs villes colombiennes, l'adoption responsable est devenue un sujet de débat public. Les refuges accueillent des chiens et des chats abandonnés, mais ils ne peuvent pas résoudre seuls le problème des animaux errants. Les bénévoles expliquent que l'amour pour les animaux doit être accompagné d'une vraie responsabilité : nourriture, vaccination, stérilisation et suivi vétérinaire.</p>
+            <p>Avant de lancer une campagne dans son quartier, une association locale avait observé que beaucoup de familles adoptaient par émotion, sans réfléchir aux dépenses ni au temps nécessaires. Quelques mois plus tard, certains animaux revenaient au refuge. C'est pourquoi les organisateurs ont décidé de mettre les points sur les i : adopter, c'est prendre en charge un être vivant pendant plusieurs années.</p>
+            <p>La campagne propose aussi des familles d'accueil pour les animaux qui ne sont pas encore prêts à être adoptés. De plus, elle invite les écoles et les universités à responsabiliser les jeunes. Malgré les difficultés, les bénévoles ne baissent pas les bras. Ils savent qu'ils ont du pain sur la planche, mais chaque adoption bien préparée montre qu'une ville peut devenir plus humaine.</p>
+          </div>
+          <form id="readingForm" class="row g-3"></form>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <button class="btn-main" type="button" data-check-section="reading"><i class="bi bi-check2-circle"></i>Corriger la lecture</button>
+            <button class="btn-soft" type="button" data-reset-section="reading"><i class="bi bi-arrow-counterclockwise"></i>Réinitialiser</button>
+          </div>
+          <div class="result-box" id="readingResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ecoute" class="bg-white">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">IV. Compréhension orale · 10 points</p>
+          <h2 class="section-title">Écoutez et choisissez la bonne réponse</h2>
+          <div class="audio-box mb-4">
+            <h3>Une campagne pour les animaux errants à Medellín</h3>
+            <p>Écoutez deux fois le document. Les questions portent sur les idées principales, le vocabulaire et le ton général.</p>
+            <audio controls preload="metadata" aria-label="Audio du simulacre d'examen final sur les animaux errants">
+              <source src="audio/simulacre-examen-final-animaux-b1.mp3" type="audio/mpeg">
+            </audio>
+          </div>
+          <form id="listeningForm" class="row g-3"></form>
+          <div class="d-flex flex-wrap gap-2 mt-4">
+            <button class="btn-main" type="button" data-check-section="listening"><i class="bi bi-check2-circle"></i>Corriger l'écoute</button>
+            <button class="btn-soft" type="button" data-reset-section="listening"><i class="bi bi-arrow-counterclockwise"></i>Réinitialiser</button>
+          </div>
+          <div class="result-box" id="listeningResult"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-main">
+      <div class="container">
+        <div class="row align-items-center g-4">
+          <div class="col-lg-8">
+            <h2 class="h4 fw-bold mb-2">Simulacre d'examen final · Français Niveau 7</h2>
+            <p class="mb-0 opacity-75">Activité de pratique institutionnelle pour préparer l'examen final du cours.</p>
+          </div>
+          <div class="col-lg-4 text-lg-end">
+            <a href="#top" onclick="window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">Retour en haut <i class="bi bi-arrow-up"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="institutional-band" aria-label="Coordonnées Institution Universitaire de Envigado">
+      <img src="img/institutionnel/iue-footer.png" alt="Coordonnées de l'Institution Universitaire de Envigado">
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const sectionScores = { vocab: 0, grammar: 0, reading: 0, listening: 0 };
+
+    const vocabQuestions = [
+      { p: "Pour adopter un chien, la famille doit d'abord faire une démarche auprès du refuge.", o: ["un animal sans propriétaire", "une profession médicale", "une procédure à suivre"], a: 2 },
+      { p: "La main-d'œuvre qualifiée est importante dans certains secteurs au Québec.", o: ["les travailleurs disponibles", "les documents officiels", "les lieux touristiques"], a: 0 },
+      { p: "Avant de travailler à l'étranger, il faut parfois demander un permis de travail.", o: ["un conseil d'ami", "une autorisation officielle", "un contrat oral"], a: 1 },
+      { p: "Andrés veut postuler dans une entreprise montréalaise.", o: ["refuser un emploi", "traduire un diplôme", "envoyer sa candidature"], a: 2 },
+      { p: "Faire reconnaître un diplôme peut prendre plusieurs mois.", o: ["faire accepter officiellement ses études", "faire imprimer son CV", "changer de profession"], a: 0 },
+      { p: "Un employeur cherche une personne fiable et ponctuelle.", o: ["un candidat sans expérience", "un collègue de classe", "une personne ou entreprise qui donne du travail"], a: 2 },
+      { p: "S'adapter à une nouvelle culture demande du temps.", o: ["s'habituer à une situation différente", "abandonner son identité", "éviter toute conversation"], a: 0 },
+      { p: "Le refuge accueille des animaux abandonnés.", o: ["un document pour voyager", "un lieu qui protège temporairement des animaux", "un quartier historique"], a: 1 },
+      { p: "Un animal errant vit souvent dans la rue.", o: ["un animal très âgé", "un animal dressé pour travailler", "un animal sans maison fixe"], a: 2 },
+      { p: "La stérilisation aide à réduire le nombre d'animaux abandonnés.", o: ["un concours public", "une intervention pour éviter la reproduction", "une maladie contagieuse"], a: 1 },
+      { p: "La vaccination protège les animaux contre certaines maladies.", o: ["une protection médicale", "une famille temporaire", "une promenade obligatoire"], a: 0 },
+      { p: "Une famille d'accueil prend soin d'un animal avant l'adoption.", o: ["une clinique privée", "une famille temporaire", "une association politique"], a: 1 },
+      { p: "Prendre en charge un animal exige du temps et de l'argent.", o: ["le photographier", "l'oublier au refuge", "assumer sa responsabilité"], a: 2 },
+      { p: "La campagne veut responsabiliser les habitants.", o: ["les déplacer dans un autre quartier", "les rendre plus conscients de leurs devoirs", "les empêcher d'aider"], a: 1 },
+      { p: "L'abandon d'un animal crée un problème social.", o: ["le fait de laisser l'animal sans protection", "une adoption définitive", "un examen vétérinaire"], a: 0 }
+    ];
+
+    const grammarQuestions = [
+      { block: "Bloc A · Passé simple", p: "Le renard noir __________ devant Akari.", o: ["apparaissait", "est apparu", "apparut"], a: 2 },
+      { block: "Bloc A · Passé simple", p: "La mère lui __________ un panier de bento.", o: ["confiait", "confia", "a confié"], a: 1 },
+      { block: "Bloc A · Passé simple", p: "Akari __________ son sang-froid.", o: ["garda", "gardait", "a gardé"], a: 0 },
+      { block: "Bloc A · Passé simple", p: "Les bénévoles __________ une solution après la réunion.", o: ["cherchaient", "ont cherché", "cherchèrent"], a: 2 },
+      { block: "Bloc B · Temps du récit", p: "Pendant que la grand-mère dormait, le renard __________ dans la maison.", o: ["entrait", "entra", "entre"], a: 1 },
+      { block: "Bloc B · Temps du récit", p: "Hier, les étudiants __________ l'article sur l'adoption responsable.", o: ["lurent", "lisaient", "ont lu"], a: 2 },
+      { block: "Bloc B · Temps du récit", p: "Quand elle était petite, elle __________ souvent des contes.", o: ["lisait", "lut", "a lu"], a: 0 },
+      { block: "Bloc C · Conditionnel présent", p: "Si j'améliorais mon français, je __________ postuler plus facilement.", o: ["pourrai", "pourrais", "peux"], a: 1 },
+      { block: "Bloc C · Conditionnel présent", p: "Vous __________ préparer un CV adapté.", o: ["devriez", "devrez", "devez"], a: 0 },
+      { block: "Bloc C · Conditionnel présent", p: "Avec plus d'informations, le projet __________ crédible.", o: ["sera", "était", "deviendrait"], a: 2 },
+      { block: "Bloc C · Conditionnel présent", p: "Il __________ mieux demander conseil avant d'envoyer le dossier.", o: ["vaut", "vaudrait", "valait"], a: 1 },
+      { block: "Bloc D · Connecteurs", p: "Les refuges aident beaucoup; __________, ils ne peuvent pas tout résoudre seuls.", o: ["par conséquent", "cependant", "ainsi"], a: 1 },
+      { block: "Bloc D · Connecteurs", p: "Les animaux sont vaccinés; __________, les risques sanitaires diminuent.", o: ["en revanche", "au moment où", "par conséquent"], a: 2 }
+    ];
+
+    const orderingExercises = [
+      {
+        title: "Récit 1 · Akari et le renard",
+        bank: [
+          "Akari comprit le piège et décida de garder son sang-froid.",
+          "Ce matin-là, sa mère lui confia un panier et une lettre.",
+          "Elle suivit le chemin du canal et perdit quelques minutes.",
+          "Le renard arriva avant elle chez la grand-mère.",
+          "Finalement, la gardienne du sanctuaire aida Akari."
+        ],
+        answer: [1, 2, 3, 0, 4]
+      },
+      {
+        title: "Récit 2 · Une adoption responsable",
+        bank: [
+          "Quelques semaines plus tard, l'animal fut adopté définitivement.",
+          "Ensuite, une famille d'accueil le prit en charge.",
+          "D'abord, les bénévoles trouvèrent un chien près du marché.",
+          "Le vétérinaire le vaccina et vérifia son état de santé.",
+          "Ainsi, le refuge transforma une urgence en nouvelle chance."
+        ],
+        answer: [2, 3, 1, 0, 4]
+      }
+    ];
+
+    const readingQuestions = [
+      { p: "Les refuges peuvent résoudre seuls le problème des animaux errants.", a: false },
+      { p: "Le texte associe l'adoption à la responsabilité et aux soins.", a: true },
+      { p: "L'association avait observé des abandons après certaines adoptions impulsives.", a: true },
+      { p: "La campagne affirme que l'amour suffit pour adopter.", a: false },
+      { p: "Les familles d'accueil peuvent aider avant une adoption définitive.", a: true },
+      { p: "Le texte dit que les écoles et universités ne doivent pas participer.", a: false },
+      { p: "Les bénévoles abandonnent la campagne à cause des difficultés.", a: false },
+      { p: "L'expression 'avoir du pain sur la planche' indique qu'il reste beaucoup de travail.", a: true },
+      { p: "Le texte présente l'adoption responsable comme une question uniquement privée.", a: false },
+      { p: "Le dernier paragraphe relie la responsabilité envers les animaux à une ville plus humaine.", a: true }
+    ];
+
+    const listeningQuestions = [
+      { p: "Quel est le nom de la campagne ?", o: ["Animaux sans frontières", "Un foyer, une chance", "La ville des chiens"], a: 1 },
+      { p: "Selon le document, le problème touche aussi...", o: ["la santé publique et la responsabilité citoyenne", "la météo et les transports", "les examens universitaires seulement"], a: 0 },
+      { p: "Quelles sont les trois actions principales mentionnées ?", o: ["Cours de dressage, concours et promenades", "Publicité, voyages et dons d'argent", "Vaccination, stérilisation et familles d'accueil"], a: 2 },
+      { p: "Que cherchent les refuges ?", o: ["Des téléphones portables", "Des familles d'accueil", "Des billets d'avion"], a: 1 },
+      { p: "Que signifie l'idée : adopter, ce n'est pas seulement aimer ?", o: ["Il faut choisir l'animal le plus jeune", "Il faut éviter les vétérinaires", "Il faut prévoir du temps, un budget et des soins"], a: 2 },
+      { p: "Quelle expression indique que la responsable a clarifié la situation ?", o: ["Elle a mis les points sur les i", "Elle a perdu le fil", "Elle a tourné autour du pot"], a: 0 },
+      { p: "Que se passe-t-il si une personne adopte par émotion puis abandonne l'animal ?", o: ["Le refuge ferme immédiatement", "Le problème recommence", "L'animal devient vétérinaire"], a: 1 },
+      { p: "Quelle expression montre que les associations continuent malgré les difficultés ?", o: ["Elles ont la tête ailleurs", "Elles ne baissent pas les bras", "Elles voient le revers de la médaille"], a: 1 },
+      { p: "Qui participe aux collectes ou aux journées d'information ?", o: ["Des étudiants, des familles et des commerçants", "Seulement des touristes", "Uniquement des policiers"], a: 0 },
+      { p: "Quel est le ton général du document ?", o: ["Une critique contre tous les refuges", "Une publicité pour acheter un animal cher", "Une initiative sociale responsable"], a: 2 }
+    ];
+
+    function escapeHtml(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function renderMcq(formId, questions, prefix) {
+      const form = document.getElementById(formId);
+      form.innerHTML = questions.map((q, index) => {
+        const block = q.block ? `<span class="pill mb-2">${escapeHtml(q.block)}</span>` : "";
+        const choices = q.o.map((option, choiceIndex) => `
+          <label class="choice">
+            <input type="radio" name="${prefix}${index}" value="${choiceIndex}">
+            <span>${String.fromCharCode(97 + choiceIndex)}. ${escapeHtml(option)}</span>
+          </label>
+        `).join("");
+        return `
+          <div class="col-lg-6">
+            <fieldset class="question-card" data-question="${prefix}${index}">
+              ${block}
+              <legend>${index + 1}. ${escapeHtml(q.p)}</legend>
+              ${choices}
+            </fieldset>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function renderTrueFalse() {
+      const form = document.getElementById("readingForm");
+      form.innerHTML = readingQuestions.map((q, index) => `
+        <div class="col-lg-6">
+          <fieldset class="question-card" data-question="reading${index}">
+            <legend>${index + 1}. ${escapeHtml(q.p)}</legend>
+            <label class="choice"><input type="radio" name="reading${index}" value="true"><span>Vrai</span></label>
+            <label class="choice"><input type="radio" name="reading${index}" value="false"><span>Faux</span></label>
+          </fieldset>
+        </div>
+      `).join("");
+    }
+
+    function renderOrdering() {
+      const area = document.getElementById("orderingArea");
+      area.innerHTML = orderingExercises.map((exercise, exerciseIndex) => `
+        <article class="order-workspace mt-3" data-order-exercise="${exerciseIndex}">
+          <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
+            <h3 class="h5 fw-bold text-primary mb-0">${escapeHtml(exercise.title)}</h3>
+            <button type="button" class="btn-soft" data-order-reset="${exerciseIndex}"><i class="bi bi-arrow-counterclockwise"></i>Recommencer ce récit</button>
+          </div>
+          <div class="order-grid">
+            <div>
+              <p class="fw-bold text-primary">Phrases disponibles</p>
+              <div class="sentence-bank">
+                ${exercise.bank.map((sentence, sentenceIndex) => `<button type="button" class="sentence-btn" data-order-pick="${exerciseIndex}" data-sentence-index="${sentenceIndex}">${escapeHtml(sentence)}</button>`).join("")}
+              </div>
+            </div>
+            <div>
+              <p class="fw-bold text-primary">Votre ordre</p>
+              <div class="sentence-answer" data-order-answer="${exerciseIndex}"></div>
+            </div>
+          </div>
+        </article>
+      `).join("");
+    }
+
+    function clearQuestionStates(scope) {
+      scope.querySelectorAll(".question-card").forEach(card => card.classList.remove("correct", "incorrect"));
+    }
+
+    function checkMcq(section, questions, prefix) {
+      let score = 0;
+      questions.forEach((q, index) => {
+        const card = document.querySelector(`[data-question="${prefix}${index}"]`);
+        const selected = document.querySelector(`input[name="${prefix}${index}"]:checked`);
+        card.classList.remove("correct", "incorrect");
+        if (selected && Number(selected.value) === q.a) {
+          score += 1;
+          card.classList.add("correct");
+        } else {
+          card.classList.add("incorrect");
+        }
+      });
+      sectionScores[section] = score;
+      updateScore();
+      showResult(section, score, questions.length);
+    }
+
+    function checkReading() {
+      let score = 0;
+      readingQuestions.forEach((q, index) => {
+        const card = document.querySelector(`[data-question="reading${index}"]`);
+        const selected = document.querySelector(`input[name="reading${index}"]:checked`);
+        card.classList.remove("correct", "incorrect");
+        if (selected && (selected.value === "true") === q.a) {
+          score += 1;
+          card.classList.add("correct");
+        } else {
+          card.classList.add("incorrect");
+        }
+      });
+      sectionScores.reading = score;
+      updateScore();
+      showResult("reading", score, readingQuestions.length);
+    }
+
+    function getOrderSelection(exerciseIndex) {
+      return Array.from(document.querySelectorAll(`[data-order-answer="${exerciseIndex}"] .chosen-sentence`))
+        .map(item => Number(item.dataset.sentenceIndex));
+    }
+
+    function checkGrammar() {
+      let score = 0;
+      grammarQuestions.forEach((q, index) => {
+        const card = document.querySelector(`[data-question="grammar${index}"]`);
+        const selected = document.querySelector(`input[name="grammar${index}"]:checked`);
+        card.classList.remove("correct", "incorrect");
+        if (selected && Number(selected.value) === q.a) {
+          score += 1;
+          card.classList.add("correct");
+        } else {
+          card.classList.add("incorrect");
+        }
+      });
+      orderingExercises.forEach((exercise, index) => {
+        const article = document.querySelector(`[data-order-exercise="${index}"]`);
+        const selection = getOrderSelection(index);
+        article.classList.remove("correct", "incorrect");
+        const isCorrect = selection.length === exercise.answer.length && selection.every((value, orderIndex) => value === exercise.answer[orderIndex]);
+        if (isCorrect) {
+          score += 1;
+          article.classList.add("correct");
+        } else {
+          article.classList.add("incorrect");
+        }
+      });
+      sectionScores.grammar = score;
+      updateScore();
+      showResult("grammar", score, 15);
+    }
+
+    function showResult(section, score, total) {
+      const box = document.getElementById(`${section}Result`);
+      box.classList.add("show");
+      box.innerHTML = `Résultat : ${score} / ${total}`;
+    }
+
+    function updateScore() {
+      const total = sectionScores.vocab + sectionScores.grammar + sectionScores.reading + sectionScores.listening;
+      document.getElementById("totalScore").textContent = `${total}/50`;
+      document.getElementById("vocabScore").textContent = `${sectionScores.vocab}/15`;
+      document.getElementById("grammarScore").textContent = `${sectionScores.grammar}/15`;
+      document.getElementById("readingScore").textContent = `${sectionScores.reading}/10`;
+      document.getElementById("listeningScore").textContent = `${sectionScores.listening}/10`;
+    }
+
+    function resetSection(section) {
+      const result = document.getElementById(`${section}Result`);
+      if (result) result.classList.remove("show");
+      if (section === "vocab") {
+        document.getElementById("vocabForm").reset();
+        clearQuestionStates(document.getElementById("vocabForm"));
+      }
+      if (section === "grammar") {
+        document.getElementById("grammarForm").reset();
+        clearQuestionStates(document.getElementById("grammarForm"));
+        renderOrdering();
+        wireOrdering();
+      }
+      if (section === "reading") {
+        document.getElementById("readingForm").reset();
+        clearQuestionStates(document.getElementById("readingForm"));
+      }
+      if (section === "listening") {
+        document.getElementById("listeningForm").reset();
+        clearQuestionStates(document.getElementById("listeningForm"));
+      }
+      sectionScores[section] = 0;
+      updateScore();
+    }
+
+    function wireOrdering() {
+      document.querySelectorAll("[data-order-pick]").forEach(button => {
+        button.addEventListener("click", () => {
+          const exerciseIndex = Number(button.dataset.orderPick);
+          const sentenceIndex = Number(button.dataset.sentenceIndex);
+          const answer = document.querySelector(`[data-order-answer="${exerciseIndex}"]`);
+          const position = answer.children.length + 1;
+          const chosen = document.createElement("button");
+          chosen.type = "button";
+          chosen.className = "chosen-sentence";
+          chosen.dataset.sentenceIndex = String(sentenceIndex);
+          chosen.innerHTML = `<b>${position}</b><span>${escapeHtml(button.textContent.trim())}</span>`;
+          chosen.addEventListener("click", () => {
+            button.disabled = false;
+            chosen.remove();
+            Array.from(answer.children).forEach((item, index) => {
+              item.querySelector("b").textContent = String(index + 1);
+            });
+          });
+          answer.appendChild(chosen);
+          button.disabled = true;
+        });
+      });
+
+      document.querySelectorAll("[data-order-reset]").forEach(button => {
+        button.addEventListener("click", () => {
+          const exerciseIndex = Number(button.dataset.orderReset);
+          document.querySelector(`[data-order-answer="${exerciseIndex}"]`).innerHTML = "";
+          document.querySelectorAll(`[data-order-pick="${exerciseIndex}"]`).forEach(item => { item.disabled = false; });
+          document.querySelector(`[data-order-exercise="${exerciseIndex}"]`).classList.remove("correct", "incorrect");
+        });
+      });
+    }
+
+    renderMcq("vocabForm", vocabQuestions, "vocab");
+    renderMcq("grammarForm", grammarQuestions, "grammar");
+    renderTrueFalse();
+    renderMcq("listeningForm", listeningQuestions, "listening");
+    renderOrdering();
+    wireOrdering();
+
+    document.querySelectorAll("[data-check-section]").forEach(button => {
+      button.addEventListener("click", () => {
+        const section = button.dataset.checkSection;
+        if (section === "vocab") checkMcq("vocab", vocabQuestions, "vocab");
+        if (section === "grammar") checkGrammar();
+        if (section === "reading") checkReading();
+        if (section === "listening") checkMcq("listening", listeningQuestions, "listening");
+      });
+    });
+
+    document.querySelectorAll("[data-reset-section]").forEach(button => {
+      button.addEventListener("click", () => resetSection(button.dataset.resetSection));
+    });
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="../../assets/js/jaralingua-back-button.js"></script>
+</body>
+</html>
