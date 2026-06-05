@@ -878,7 +878,12 @@
         updateScores(result);
         const box = document.getElementById("submitResult");
         box.classList.add("show");
-        box.innerHTML = `Examen envoyé. Note finale : ${escapeHtml(result.grade)} / 5.0 · Score : ${escapeHtml(result.scorePoints)} / ${escapeHtml(result.totalPoints)}.`;
+        box.innerHTML = `
+          Examen envoyé. Note finale : ${escapeHtml(result.grade)} / 5.0 · Score : ${escapeHtml(result.scorePoints)} / ${escapeHtml(result.totalPoints)}.
+          <div class="mt-3">
+            <a class="btn-soft" href="notes-evaluation.html"><i class="bi bi-bar-chart"></i>Consulter la note enregistrée</a>
+          </div>
+        `;
       }
 
       function updateScores(result) {

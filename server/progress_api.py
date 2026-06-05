@@ -19,6 +19,9 @@ FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
 FRENCH7_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french7-final-exam-audio.mp3")
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
+BUNDLED_FRENCH7_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "frances", "Niveau 7", "audio", "examen-final-refuge-universitaire-b1.mp3")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
 MAX_BODY_BYTES = 1024 * 1024
@@ -514,7 +517,8 @@ def default_final_exam_bundle():
 
 
 def read_final_exam_bundle():
-    data = read_json_file(FRENCH7_FINAL_EXAM_PATH, default_final_exam_bundle())
+    source_path = FRENCH7_FINAL_EXAM_PATH if os.path.exists(FRENCH7_FINAL_EXAM_PATH) else BUNDLED_FRENCH7_FINAL_EXAM_PATH
+    data = read_json_file(source_path, default_final_exam_bundle())
     if not isinstance(data.get("state"), dict):
         data["state"] = default_final_exam_bundle()["state"]
     if not isinstance(data.get("exam"), dict):
@@ -810,6 +814,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 403, {"error": "exam_closed"})
                     return
                 audio_path = FRENCH7_FINAL_EXAM_AUDIO_PATH
+                if not os.path.exists(audio_path):
+                    audio_path = BUNDLED_FRENCH7_FINAL_EXAM_AUDIO_PATH
             if not os.path.exists(audio_path):
                 json_response(self, 404, {"error": "audio_not_found"})
                 return
