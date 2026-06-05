@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The Superlative Wall | Practice Lab Unit 3 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+
+  <style>
+    :root {
+      --wall-ink: #102033;
+      --wall-muted: #52657d;
+      --wall-blue: #1f5fbf;
+      --wall-blue-dark: #173f83;
+      --wall-green: #15803d;
+      --wall-teal: #0f766e;
+      --wall-gold: #b45309;
+      --wall-plum: #6d3a86;
+      --wall-red: #b91c1c;
+      --wall-card: #ffffff;
+      --wall-border: #dce8f8;
+      --wall-soft-blue: #eef5ff;
+      --wall-soft-green: #ecfdf5;
+      --wall-soft-gold: #fff7e8;
+      --wall-soft-plum: #f7efff;
+      --wall-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 9% 7%, rgba(31, 95, 191, 0.12), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(21, 128, 61, 0.11), transparent 26%),
+        linear-gradient(180deg, #f8fbff 0%, #f1f7f4 100%);
+      color: var(--wall-ink);
+    }
+
+    .wall-page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .wall-hero {
+      display: grid;
+      grid-template-columns: 1.03fr 0.97fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border: 1px solid var(--wall-border);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(180, 83, 9, 0.14), transparent 30%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      box-shadow: var(--wall-shadow);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .wall-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--wall-soft-green);
+      color: var(--wall-green);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .wall-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--wall-gold);
+      box-shadow: 0 0 0 6px rgba(180, 83, 9, 0.13);
+    }
+
+    .wall-hero h1 {
+      color: var(--wall-ink);
+      font-size: clamp(2.35rem, 5vw, 4.3rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .wall-hero h1 span {
+      color: var(--wall-blue);
+    }
+
+    .wall-hero p {
+      color: var(--wall-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .wall-actions,
+    .tool-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .wall-hero-image {
+      padding: 1rem;
+      border: 1px solid var(--wall-border);
+      border-radius: 26px;
+      background: #ffffff;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .wall-hero-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .wall-block {
+      background: var(--wall-card);
+      padding: 2.4rem;
+      border: 1px solid var(--wall-border);
+      border-radius: 28px;
+      box-shadow: var(--wall-shadow);
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.85rem, 4vw, 2.8rem);
+      color: var(--wall-ink);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 860px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--wall-muted);
+      line-height: 1.8;
+      font-size: 1.04rem;
+    }
+
+    .overview-grid,
+    .language-grid,
+    .round-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .language-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .overview-card,
+    .language-card,
+    .round-card,
+    .tool-panel,
+    .selection-panel,
+    .prompt-card {
+      border: 1px solid var(--wall-border);
+      border-radius: 20px;
+      background: #ffffff;
+      padding: 1.3rem;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .overview-card:nth-child(1) {
+      border-left: 6px solid var(--wall-blue);
+    }
+
+    .overview-card:nth-child(2) {
+      border-left: 6px solid var(--wall-green);
+    }
+
+    .overview-card:nth-child(3) {
+      border-left: 6px solid var(--wall-gold);
+    }
+
+    .overview-card h3,
+    .language-card h3,
+    .round-card h3,
+    .tool-panel h3,
+    .selection-panel h3,
+    .prompt-card h3 {
+      color: var(--wall-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .overview-card p,
+    .language-card p,
+    .round-card p,
+    .tool-panel p,
+    .selection-panel p,
+    .prompt-card p {
+      color: var(--wall-muted);
+      line-height: 1.75;
+      margin-bottom: 0.7rem;
+    }
+
+    .wall-tabs {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .wall-tab {
+      min-height: 76px;
+      border: 1px solid var(--wall-border);
+      border-radius: 18px;
+      background: #ffffff;
+      color: var(--wall-blue-dark);
+      cursor: pointer;
+      font-weight: 900;
+      padding: 0.8rem;
+      text-align: left;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .wall-tab span {
+      display: block;
+      color: var(--wall-muted);
+      font-size: 0.78rem;
+      font-weight: 800;
+      margin-top: 0.25rem;
+      line-height: 1.35;
+    }
+
+    .wall-tab:hover,
+    .wall-tab.active {
+      transform: translateY(-2px);
+      border-color: #9fc2f7;
+      background: var(--wall-soft-blue);
+    }
+
+    .wall-stage-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.2rem;
+    }
+
+    .wall-stage-header h2 {
+      color: var(--wall-ink);
+      margin-bottom: 0.45rem;
+    }
+
+    .wall-stage-header p {
+      color: var(--wall-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .wall-focus {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      justify-content: flex-end;
+      max-width: 430px;
+    }
+
+    .focus-pill,
+    .mini-label {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      background: var(--wall-soft-green);
+      color: var(--wall-green);
+      font-weight: 900;
+      font-size: 0.78rem;
+    }
+
+    .wall-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .place-card {
+      border: 1px solid var(--wall-border);
+      border-radius: 20px;
+      background: #ffffff;
+      overflow: hidden;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+      cursor: pointer;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      min-height: 310px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .place-card:hover,
+    .place-card.selected {
+      transform: translateY(-4px);
+      border-color: #91bdf5;
+      box-shadow: 0 18px 36px rgba(20, 64, 130, 0.12);
+    }
+
+    .place-visual {
+      min-height: 165px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 1rem;
+      color: #ffffff;
+      background:
+        linear-gradient(145deg, rgba(16, 32, 51, 0.1), rgba(16, 32, 51, 0.34)),
+        linear-gradient(135deg, #1f5fbf, #0f766e);
+    }
+
+    .place-visual.mountain { background: linear-gradient(145deg, rgba(12, 25, 43, 0.05), rgba(12, 25, 43, 0.38)), linear-gradient(135deg, #dbeafe 0%, #1f5fbf 45%, #0f172a 100%); }
+    .place-visual.city { background: linear-gradient(145deg, rgba(12, 25, 43, 0.04), rgba(12, 25, 43, 0.36)), linear-gradient(135deg, #bae6fd 0%, #2563eb 42%, #475569 100%); }
+    .place-visual.nature { background: linear-gradient(145deg, rgba(12, 25, 43, 0.04), rgba(12, 25, 43, 0.33)), linear-gradient(135deg, #bbf7d0 0%, #15803d 48%, #0f766e 100%); }
+    .place-visual.desert { background: linear-gradient(145deg, rgba(12, 25, 43, 0.04), rgba(12, 25, 43, 0.26)), linear-gradient(135deg, #fde68a 0%, #b45309 52%, #7c2d12 100%); }
+    .place-visual.history { background: linear-gradient(145deg, rgba(12, 25, 43, 0.03), rgba(12, 25, 43, 0.32)), linear-gradient(135deg, #fef3c7 0%, #a16207 47%, #57534e 100%); }
+    .place-visual.coast { background: linear-gradient(145deg, rgba(12, 25, 43, 0.04), rgba(12, 25, 43, 0.28)), linear-gradient(135deg, #ccfbf1 0%, #0891b2 48%, #0f766e 100%); }
+
+    .place-visual::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      border-radius: 16px;
+    }
+
+    .place-title {
+      position: relative;
+      z-index: 1;
+    }
+
+    .place-title strong {
+      display: block;
+      font-size: 1.25rem;
+      line-height: 1.2;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.28);
+    }
+
+    .place-title span {
+      display: block;
+      margin-top: 0.35rem;
+      font-weight: 800;
+      opacity: 0.95;
+    }
+
+    .place-body {
+      padding: 1rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .place-body p {
+      color: var(--wall-muted);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .file-chip {
+      margin-top: auto;
+      display: block;
+      padding: 0.55rem 0.7rem;
+      border-radius: 12px;
+      background: #f8fbff;
+      border: 1px solid #e2ecfa;
+      color: #42556d;
+      font-size: 0.8rem;
+      word-break: break-word;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 0.7rem;
+      margin: 1.2rem 0;
+    }
+
+    .question-btn {
+      border: 1px solid var(--wall-border);
+      border-radius: 14px;
+      background: #ffffff;
+      color: var(--wall-ink);
+      text-align: left;
+      font-weight: 900;
+      padding: 0.85rem 1rem;
+      cursor: pointer;
+    }
+
+    .question-btn:hover,
+    .question-btn.active {
+      background: var(--wall-soft-gold);
+      border-color: #f2c987;
+    }
+
+    .selection-panel {
+      background:
+        radial-gradient(circle at top right, rgba(31, 95, 191, 0.08), transparent 30%),
+        #ffffff;
+      margin-top: 1.2rem;
+    }
+
+    .sentence-box {
+      padding: 1rem;
+      border: 1px solid var(--wall-border);
+      border-radius: 16px;
+      background: var(--wall-soft-blue);
+      color: var(--wall-ink);
+      line-height: 1.65;
+      font-weight: 800;
+      margin: 0.8rem 0;
+    }
+
+    .textarea-field {
+      width: 100%;
+      min-height: 96px;
+      resize: vertical;
+      border: 1px solid var(--wall-border);
+      border-radius: 16px;
+      padding: 1rem;
+      font: inherit;
+      color: var(--wall-ink);
+      background: #ffffff;
+    }
+
+    .score-strip {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .score-box {
+      border: 1px solid var(--wall-border);
+      border-radius: 16px;
+      padding: 1rem;
+      background: #f8fbff;
+      color: var(--wall-muted);
+      line-height: 1.55;
+    }
+
+    .score-box strong {
+      display: block;
+      color: var(--wall-blue-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    .prompt-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .prompt-card {
+      background: linear-gradient(135deg, #ffffff, #f8fbff);
+    }
+
+    .prompt-card code {
+      display: block;
+      padding: 0.75rem;
+      border-radius: 12px;
+      background: #102033;
+      color: #ffffff;
+      white-space: pre-wrap;
+      line-height: 1.5;
+      font-size: 0.82rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @media (max-width: 980px) {
+      .wall-hero,
+      .overview-grid,
+      .language-grid,
+      .round-grid,
+      .wall-grid,
+      .prompt-grid,
+      .score-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .wall-tabs {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .wall-stage-header {
+        display: block;
+      }
+
+      .wall-focus {
+        justify-content: flex-start;
+        margin-top: 1rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wall-page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 1.5rem;
+      }
+
+      .wall-hero,
+      .wall-block {
+        padding: 1.35rem;
+        border-radius: 22px;
+      }
+
+      .wall-tabs {
+        grid-template-columns: 1fr;
+      }
+
+      .wall-actions .btn,
+      .tool-actions .btn,
+      .tool-actions button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wall-page">
+    <section class="wall-hero">
+      <div>
+        <p class="wall-eyebrow"><span class="wall-dot"></span>Practice Lab - Unit 3</p>
+        <h1>The Superlative <span>Wall</span></h1>
+        <p>
+          Students observe visual place cards, choose the strongest example in a group,
+          ask superlative questions, and justify their answers with complete sentences.
+        </p>
+        <p>
+          The activity moves from visual observation to vocabulary, superlative meaning,
+          speaking, short answers, full sentences, opinions, agreement, disagreement,
+          and justification.
+        </p>
+        <div class="wall-actions">
+          <a href="#game-wall" class="btn btn-primary">Start game</a>
+          <a href="human-natural-wonders-world-records.html" class="btn btn-secondary">Review Unit 3</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="wall-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png"
+          alt="Students comparing human and natural wonders"
+        />
+      </div>
+    </section>
+
+    <section class="wall-block">
+      <h2 class="section-title">Game Objective</h2>
+      <p class="section-subtitle">
+        By the end of the activity, students should identify, compare, discuss, and
+        justify choices about famous places, wonders, cities, buildings, rivers,
+        mountains, and destinations.
+      </p>
+
+      <div class="overview-grid">
+        <div class="overview-card">
+          <h3>Language goal</h3>
+          <p>Use superlatives such as <strong>the highest</strong>, <strong>the longest</strong>, <strong>the oldest</strong>, <strong>the most beautiful</strong>, <strong>the most famous</strong>, and <strong>the best</strong>.</p>
+        </div>
+        <div class="overview-card">
+          <h3>Speaking goal</h3>
+          <p>Answer questions first with a short answer, then expand with a full sentence and a reason.</p>
+        </div>
+        <div class="overview-card">
+          <h3>Interaction goal</h3>
+          <p>Agree, disagree, compare ideas politely, and defend a choice using visual evidence or personal opinion.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wall-block" id="game-wall">
+      <h2 class="section-title">Choose a Wall</h2>
+      <p class="section-subtitle">
+        Each wall focuses on a different group of superlatives. Select a wall, choose
+        a question, then click the place card that best answers it.
+      </p>
+
+      <div class="wall-tabs" id="wallTabs" aria-label="Superlative wall selector"></div>
+
+      <div class="wall-stage-header">
+        <div>
+          <p class="mini-label" id="wallNumber">Wall 1</p>
+          <h2 id="wallTitle">Height and Size</h2>
+          <p id="wallReason">Students begin with visual comparisons and basic superlatives.</p>
+        </div>
+        <div class="wall-focus" id="wallFocus"></div>
+      </div>
+
+      <div class="question-list" id="questionList"></div>
+
+      <div class="wall-grid" id="placeGrid"></div>
+
+      <div class="selection-panel" aria-live="polite">
+        <h3>Class Answer Builder</h3>
+        <p id="selectedQuestion">Choose a question and a place card.</p>
+        <div class="sentence-box" id="modelSentence">Model sentence will appear here.</div>
+        <textarea class="textarea-field" id="studentReason" placeholder="Student reason: I chose this place because..."></textarea>
+        <div class="tool-actions">
+          <button type="button" class="btn btn-primary" id="copyModelBtn">Copy model sentence</button>
+          <button type="button" class="btn btn-secondary" id="clearReasonBtn">Clear reason</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="wall-block">
+      <h2 class="section-title">How to Play</h2>
+      <p class="section-subtitle">
+        Use the wall as a fast speaking game or as a preparation task before the Unit 3
+        commercial video and world record writing activities.
+      </p>
+
+      <div class="round-grid">
+        <div class="round-card">
+          <h3>Round 1: Observe</h3>
+          <p>Students look at one wall and identify the places they recognize.</p>
+          <p><strong>Prompt:</strong> What place do you know? Where is it?</p>
+        </div>
+        <div class="round-card">
+          <h3>Round 2: Choose</h3>
+          <p>The teacher asks one superlative question. Students choose a card and give a short answer.</p>
+          <p><strong>Prompt:</strong> Which one is the most famous?</p>
+        </div>
+        <div class="round-card">
+          <h3>Round 3: Justify</h3>
+          <p>Students expand with a full sentence, a reason, and agreement or disagreement.</p>
+          <p><strong>Prompt:</strong> I agree because... / I disagree because...</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wall-block">
+      <h2 class="section-title">Language Bank</h2>
+      <p class="section-subtitle">
+        Keep these forms visible while students speak. They support complete answers,
+        not only isolated grammar forms.
+      </p>
+
+      <div class="language-grid">
+        <div class="language-card">
+          <h3>Answer patterns</h3>
+          <p><strong>Short answer:</strong> Mount Everest.</p>
+          <p><strong>Full sentence:</strong> Mount Everest is the highest mountain in the world.</p>
+          <p><strong>Opinion:</strong> In my opinion, Ca&ntilde;o Cristales is the most beautiful river because it is colorful and unique.</p>
+          <p><strong>Group form:</strong> Cartagena is one of the most beautiful cities in Colombia.</p>
+        </div>
+
+        <div class="language-card">
+          <h3>Agreement and disagreement</h3>
+          <p>I agree because it is very famous.</p>
+          <p>I agree, but I think another place is more interesting.</p>
+          <p>I disagree because this place is more historic.</p>
+          <p>Maybe, but I think the best place to visit is...</p>
+        </div>
+      </div>
+
+      <div class="score-strip">
+        <div class="score-box"><strong>1 point</strong>Correct place name.</div>
+        <div class="score-box"><strong>2 points</strong>Correct superlative form.</div>
+        <div class="score-box"><strong>3 points</strong>Complete sentence with <strong>the</strong> or <strong>the most</strong>.</div>
+        <div class="score-box"><strong>4 points</strong>Sentence plus clear reason.</div>
+      </div>
+    </section>
+
+    <section class="wall-block">
+      <h2 class="section-title">Image Production Notes</h2>
+      <p class="section-subtitle">
+        The activity is ready with visual classroom cards. When generated images are
+        available, place them in the folder below using the exact names from the guide.
+      </p>
+
+      <div class="prompt-grid">
+        <div class="prompt-card">
+          <h3>Image folder</h3>
+          <p>Save generated cards here:</p>
+          <code>assets/img/english-intermediate/practice-lab/superlative-wall/</code>
+        </div>
+        <div class="prompt-card">
+          <h3>Prompt guide</h3>
+          <p>The full list of 30 prompts and filenames is stored here:</p>
+          <code>assets/img/english-intermediate/practice-lab/superlative-wall/image-prompts.md</code>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const walls = [
+      {
+        number: "Wall 1",
+        title: "Height and Size",
+        reason: "Students begin with visual comparisons and basic superlatives.",
+        focus: ["the tallest", "the highest", "the biggest"],
+        questions: ["Which one is the tallest?", "Which one is the highest?", "Which one is the biggest?"],
+        places: [
+          { name: "Mount Everest", country: "Nepal / Tibet", fact: "8,849 meters high", file: "wall-1-mount-everest.png", type: "mountain" },
+          { name: "Burj Khalifa", country: "United Arab Emirates", fact: "828 meters tall", file: "wall-1-burj-khalifa.png", type: "city" },
+          { name: "Eiffel Tower", country: "France", fact: "330 meters tall", file: "wall-1-eiffel-tower.png", type: "city" },
+          { name: "Monserrate", country: "Colombia", fact: "3,152 meters high", file: "wall-1-monserrate.png", type: "mountain" },
+          { name: "Amazon Rainforest", country: "South America", fact: "one of the largest rainforests", file: "wall-1-amazon-rainforest.png", type: "nature" },
+          { name: "Sahara Desert", country: "Africa", fact: "one of the largest deserts", file: "wall-1-sahara-desert.png", type: "desert" }
+        ]
+      },
+      {
+        number: "Wall 2",
+        title: "Beauty and Nature",
+        reason: "Students move from objective ideas to opinion-based superlatives.",
+        focus: ["the most beautiful", "the most amazing", "the most colorful", "the most interesting"],
+        questions: ["Which one is the most beautiful?", "Which one is the most amazing?", "Which one is the most colorful?", "Which one is the most interesting?"],
+        places: [
+          { name: "Ca&ntilde;o Cristales", country: "Colombia", fact: "colorful river", file: "wall-2-cano-cristales.png", type: "nature" },
+          { name: "Niagara Falls", country: "Canada / United States", fact: "powerful waterfall", file: "wall-2-niagara-falls.png", type: "nature" },
+          { name: "The Grand Canyon", country: "United States", fact: "amazing canyon", file: "wall-2-grand-canyon.png", type: "desert" },
+          { name: "Cocora Valley", country: "Colombia", fact: "tall wax palms", file: "wall-2-cocora-valley.png", type: "nature" },
+          { name: "The Amazon River", country: "South America", fact: "long river", file: "wall-2-amazon-river.png", type: "nature" },
+          { name: "Tayrona National Park", country: "Colombia", fact: "beach and rainforest", file: "wall-2-tayrona-national-park.png", type: "coast" }
+        ]
+      },
+      {
+        number: "Wall 3",
+        title: "History and Age",
+        reason: "This wall practices oldest, ancient, historic, important, and famous.",
+        focus: ["the oldest", "the most ancient", "the most historic", "the most important"],
+        questions: ["Which one is the oldest?", "Which one is the most historic?", "Which one is the most important?", "Which one is the most famous ancient place?"],
+        places: [
+          { name: "The Great Wall of China", country: "China", fact: "ancient wall", file: "wall-3-great-wall-china.png", type: "history" },
+          { name: "The Pyramids of Egypt", country: "Egypt", fact: "ancient monuments", file: "wall-3-pyramids-egypt.png", type: "history" },
+          { name: "Machu Picchu", country: "Peru", fact: "historic mountain city", file: "wall-3-machu-picchu.png", type: "mountain" },
+          { name: "The Colosseum", country: "Italy", fact: "historic amphitheater", file: "wall-3-colosseum.png", type: "history" },
+          { name: "The Lost City", country: "Colombia", fact: "ancient stone terraces", file: "wall-3-lost-city.png", type: "nature" },
+          { name: "Stonehenge", country: "United Kingdom", fact: "ancient stone circle", file: "wall-3-stonehenge.png", type: "history" }
+        ]
+      },
+      {
+        number: "Wall 4",
+        title: "Famous Places",
+        reason: "Students practice superlatives with the most + adjective.",
+        focus: ["the most famous", "the most visited", "the most popular", "the most recognizable"],
+        questions: ["Which one is the most famous?", "Which one is the most popular?", "Which one is the most recognizable?", "Which one is the most visited?"],
+        places: [
+          { name: "The Great Wall of China", country: "China", fact: "famous human wonder", file: "wall-4-great-wall-china.png", type: "history" },
+          { name: "Eiffel Tower", country: "France", fact: "famous landmark", file: "wall-4-eiffel-tower.png", type: "city" },
+          { name: "Statue of Liberty", country: "United States", fact: "recognizable monument", file: "wall-4-statue-liberty.png", type: "city" },
+          { name: "Christ the Redeemer", country: "Brazil", fact: "famous monument", file: "wall-4-christ-redeemer.png", type: "mountain" },
+          { name: "Burj Khalifa", country: "United Arab Emirates", fact: "famous skyscraper", file: "wall-4-burj-khalifa.png", type: "city" },
+          { name: "Taj Mahal", country: "India", fact: "famous monument", file: "wall-4-taj-mahal.png", type: "history" }
+        ]
+      },
+      {
+        number: "Wall 5",
+        title: "Best Place to Visit",
+        reason: "This connects directly with the Unit 3 commercial video task.",
+        focus: ["the best place to visit", "the most relaxing", "the most exciting", "the best place for tourists"],
+        questions: ["Which one is the best place to visit?", "Which one is the most exciting?", "Which one is the most relaxing?", "Which one is the best place for a long weekend?", "Which one is the best place for tourists?"],
+        places: [
+          { name: "Cartagena", country: "Colombia", fact: "colorful walled city", file: "wall-5-cartagena.png", type: "coast" },
+          { name: "San Andres", country: "Colombia", fact: "Caribbean island", file: "wall-5-san-andres.png", type: "coast" },
+          { name: "Medellin", country: "Colombia", fact: "modern mountain city", file: "wall-5-medellin.png", type: "city" },
+          { name: "Santa Marta", country: "Colombia", fact: "beach and mountains", file: "wall-5-santa-marta.png", type: "coast" },
+          { name: "Guatape", country: "Colombia", fact: "colorful town and lake", file: "wall-5-guatape.png", type: "nature" },
+          { name: "Salento", country: "Colombia", fact: "coffee town", file: "wall-5-salento.png", type: "nature" }
+        ]
+      }
+    ];
+
+    let activeWallIndex = 0;
+    let activeQuestion = "";
+    let activePlace = null;
+
+    const wallTabs = document.getElementById("wallTabs");
+    const wallNumber = document.getElementById("wallNumber");
+    const wallTitle = document.getElementById("wallTitle");
+    const wallReason = document.getElementById("wallReason");
+    const wallFocus = document.getElementById("wallFocus");
+    const questionList = document.getElementById("questionList");
+    const placeGrid = document.getElementById("placeGrid");
+    const selectedQuestion = document.getElementById("selectedQuestion");
+    const modelSentence = document.getElementById("modelSentence");
+    const studentReason = document.getElementById("studentReason");
+
+    function stripHtml(value) {
+      const span = document.createElement("span");
+      span.innerHTML = value;
+      return span.textContent || span.innerText || "";
+    }
+
+    function superlativeFromQuestion(question) {
+      return question
+        .replace("Which one is ", "")
+        .replace("?", "")
+        .trim();
+    }
+
+    function buildSentence(place, question) {
+      if (!place || !question) {
+        return "Model sentence will appear here.";
+      }
+      const cleanName = stripHtml(place.name);
+      const superlative = superlativeFromQuestion(question);
+      if (superlative.includes("best place")) {
+        return cleanName + " is " + superlative + " because it is " + place.fact + ".";
+      }
+      if (superlative.startsWith("the most") || superlative.startsWith("the best")) {
+        return "In my opinion, " + cleanName + " is " + superlative + " because it is " + place.fact + ".";
+      }
+      return cleanName + " is " + superlative + " because it is " + place.fact + ".";
+    }
+
+    function renderTabs() {
+      wallTabs.innerHTML = "";
+      walls.forEach((wall, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "wall-tab" + (index === activeWallIndex ? " active" : "");
+        button.innerHTML = wall.number + "<span>" + wall.title + "</span>";
+        button.addEventListener("click", () => {
+          activeWallIndex = index;
+          activeQuestion = "";
+          activePlace = null;
+          renderWall();
+        });
+        wallTabs.appendChild(button);
+      });
+    }
+
+    function renderWall() {
+      const wall = walls[activeWallIndex];
+      wallNumber.textContent = wall.number;
+      wallTitle.textContent = wall.title;
+      wallReason.textContent = wall.reason;
+
+      wallFocus.innerHTML = "";
+      wall.focus.forEach((item) => {
+        const pill = document.createElement("span");
+        pill.className = "focus-pill";
+        pill.textContent = item;
+        wallFocus.appendChild(pill);
+      });
+
+      questionList.innerHTML = "";
+      wall.questions.forEach((question) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "question-btn" + (question === activeQuestion ? " active" : "");
+        button.textContent = question;
+        button.addEventListener("click", () => {
+          activeQuestion = question;
+          updateBuilder();
+          renderQuestionsOnly();
+        });
+        questionList.appendChild(button);
+      });
+
+      placeGrid.innerHTML = "";
+      wall.places.forEach((place) => {
+        const card = document.createElement("article");
+        card.className = "place-card" + (activePlace && activePlace.file === place.file ? " selected" : "");
+        card.innerHTML = [
+          '<div class="place-visual ' + place.type + '">',
+          '<div class="place-title"><strong>' + place.name + '</strong><span>' + place.country + '</span></div>',
+          "</div>",
+          '<div class="place-body">',
+          '<p><strong>Fact:</strong> ' + place.fact + '</p>',
+          '<span class="file-chip">Expected image: ' + place.file + '</span>',
+          "</div>"
+        ].join("");
+        card.addEventListener("click", () => {
+          activePlace = place;
+          updateBuilder();
+          renderPlaceSelection();
+        });
+        placeGrid.appendChild(card);
+      });
+
+      renderTabs();
+      updateBuilder();
+    }
+
+    function renderQuestionsOnly() {
+      Array.from(questionList.children).forEach((button) => {
+        button.classList.toggle("active", button.textContent === activeQuestion);
+      });
+    }
+
+    function renderPlaceSelection() {
+      Array.from(placeGrid.children).forEach((card) => {
+        const chip = card.querySelector(".file-chip");
+        const file = chip ? chip.textContent.replace("Expected image: ", "") : "";
+        card.classList.toggle("selected", activePlace && file === activePlace.file);
+      });
+    }
+
+    function updateBuilder() {
+      selectedQuestion.textContent = activeQuestion || "Choose a question and a place card.";
+      modelSentence.textContent = buildSentence(activePlace, activeQuestion);
+    }
+
+    document.getElementById("copyModelBtn").addEventListener("click", async () => {
+      const text = modelSentence.textContent.trim();
+      if (!text || text === "Model sentence will appear here.") return;
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (error) {
+        studentReason.value = text;
+      }
+    });
+
+    document.getElementById("clearReasonBtn").addEventListener("click", () => {
+      studentReason.value = "";
+    });
+
+    renderWall();
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+</body>
+</html>
