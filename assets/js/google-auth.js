@@ -2338,6 +2338,8 @@
 
   document.addEventListener("click", function (event) {
     const root = document.querySelector("[data-jaralingua-auth]");
+    const externalAuthTrigger = event.target && event.target.closest ? event.target.closest("[data-open-google-login]") : null;
+    if (externalAuthTrigger) return;
     if (!root || root.contains(event.target)) return;
     closePanel();
   });
