@@ -317,6 +317,7 @@
       align-items: flex-end;
       padding: 1rem;
       color: #ffffff;
+      overflow: hidden;
       background:
         linear-gradient(145deg, rgba(16, 32, 51, 0.1), rgba(16, 32, 51, 0.34)),
         linear-gradient(135deg, #1f5fbf, #0f766e);
@@ -335,11 +336,29 @@
       inset: 18px;
       border: 1px solid rgba(255, 255, 255, 0.24);
       border-radius: 16px;
+      z-index: 2;
+    }
+
+    .place-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .place-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(180deg, rgba(16, 32, 51, 0.05), rgba(16, 32, 51, 0.64));
     }
 
     .place-title {
       position: relative;
-      z-index: 1;
+      z-index: 3;
     }
 
     .place-title strong {
@@ -894,6 +913,7 @@
         card.className = "place-card" + (activePlace && activePlace.file === place.file ? " selected" : "");
         card.innerHTML = [
           '<div class="place-visual ' + place.type + '">',
+          '<img src="../../assets/img/english-intermediate/practice-lab/superlative-wall/' + place.file + '" alt="' + stripHtml(place.name) + '" loading="lazy" onerror="this.remove()" />',
           '<div class="place-title"><strong>' + place.name + '</strong><span>' + place.country + '</span></div>',
           "</div>",
           '<div class="place-body">',
