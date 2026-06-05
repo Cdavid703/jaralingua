@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Unit 3: Human and Natural Wonders | Intermediate English | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+
+  <style>
+    :root {
+      --wonder-ink: #102033;
+      --wonder-muted: #52657d;
+      --wonder-blue: #1f5fbf;
+      --wonder-blue-dark: #173f83;
+      --wonder-teal: #0f766e;
+      --wonder-green: #15803d;
+      --wonder-rust: #b45309;
+      --wonder-plum: #6d3a86;
+      --wonder-soft-blue: #eef5ff;
+      --wonder-soft-green: #ecfdf5;
+      --wonder-soft-gold: #fff7e8;
+      --wonder-soft-plum: #f7efff;
+      --wonder-border: #dce8f8;
+      --wonder-card: #ffffff;
+      --wonder-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 8% 6%, rgba(31, 95, 191, 0.12), transparent 28%),
+        radial-gradient(circle at 92% 10%, rgba(21, 128, 61, 0.11), transparent 26%),
+        linear-gradient(180deg, #f8fbff 0%, #f1f7f4 100%);
+      color: var(--wonder-ink);
+    }
+
+    .wonder-page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .wonder-hero {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(180, 83, 9, 0.14), transparent 30%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      box-shadow: var(--wonder-shadow);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .wonder-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--wonder-soft-green);
+      color: var(--wonder-green);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .wonder-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--wonder-rust);
+      box-shadow: 0 0 0 6px rgba(180, 83, 9, 0.13);
+    }
+
+    .wonder-hero h1 {
+      color: var(--wonder-ink);
+      font-size: clamp(2.3rem, 5vw, 4.2rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .wonder-hero h1 span {
+      color: var(--wonder-blue);
+    }
+
+    .wonder-hero p {
+      color: var(--wonder-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .hero-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+      margin: 1.4rem 0;
+      padding: 1rem 1.1rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.07);
+    }
+
+    .hero-note strong {
+      color: var(--wonder-ink);
+    }
+
+    .hero-note-mark {
+      flex: 0 0 auto;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--wonder-blue), var(--wonder-teal));
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 900;
+    }
+
+    .wonder-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-top: 1.4rem;
+    }
+
+    .wonder-hero-image {
+      padding: 1rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 26px;
+      background: #ffffff;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .wonder-hero-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .wonder-block {
+      background: var(--wonder-card);
+      padding: 2.5rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 28px;
+      box-shadow: var(--wonder-shadow);
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.85rem, 4vw, 2.8rem);
+      color: var(--wonder-ink);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 850px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--wonder-muted);
+      line-height: 1.8;
+      font-size: 1.04rem;
+    }
+
+    .anchor-grid,
+    .concept-grid,
+    .grammar-grid,
+    .product-grid,
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .anchor-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .anchor-card,
+    .concept-card,
+    .grammar-card,
+    .product-card,
+    .summary-card,
+    .audio-card {
+      border: 1px solid var(--wonder-border);
+      border-radius: 20px;
+      background: #ffffff;
+      padding: 1.3rem;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .anchor-card {
+      display: block;
+      text-decoration: none;
+      color: var(--wonder-ink);
+      background: linear-gradient(135deg, #ffffff, var(--wonder-soft-blue));
+      min-height: 112px;
+    }
+
+    .anchor-card b {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      background: var(--wonder-blue);
+      color: #ffffff;
+      margin-bottom: 0.8rem;
+    }
+
+    .anchor-card span {
+      display: block;
+      color: var(--wonder-muted);
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .concept-card.natural {
+      border-left: 6px solid var(--wonder-green);
+      background: linear-gradient(135deg, var(--wonder-soft-green), #ffffff);
+    }
+
+    .concept-card.human {
+      border-left: 6px solid var(--wonder-rust);
+      background: linear-gradient(135deg, var(--wonder-soft-gold), #ffffff);
+    }
+
+    .concept-card h3,
+    .grammar-card h3,
+    .product-card h3,
+    .summary-card h3,
+    .audio-card h3 {
+      color: var(--wonder-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .concept-card p,
+    .grammar-card p,
+    .product-card p,
+    .summary-card p,
+    .audio-card p {
+      color: var(--wonder-muted);
+      line-height: 1.75;
+      margin-bottom: 0.8rem;
+    }
+
+    .example-line,
+    .pattern-line {
+      display: block;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 14px;
+      background: #ffffff;
+      color: var(--wonder-ink);
+      line-height: 1.6;
+      margin-top: 0.65rem;
+    }
+
+    .pattern-line {
+      font-weight: 900;
+      background: var(--wonder-soft-blue);
+    }
+
+    .mini-label {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 0.75rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: var(--wonder-soft-blue);
+      color: var(--wonder-blue-dark);
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .audio-card {
+      margin-top: 1.2rem;
+      background:
+        radial-gradient(circle at top right, rgba(31, 95, 191, 0.09), transparent 28%),
+        #ffffff;
+    }
+
+    .audio-card audio {
+      width: 100%;
+      margin-top: 0.4rem;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.4rem 0;
+      border: 1px solid var(--wonder-border);
+      border-radius: 18px;
+    }
+
+    .wonder-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+      background: #ffffff;
+    }
+
+    .wonder-table th {
+      padding: 0.95rem;
+      background: linear-gradient(135deg, var(--wonder-blue), var(--wonder-blue-dark));
+      color: #ffffff;
+      text-align: left;
+      font-size: 0.94rem;
+    }
+
+    .wonder-table td {
+      padding: 0.95rem;
+      border-bottom: 1px solid #e7eef9;
+      color: var(--wonder-muted);
+      line-height: 1.65;
+      vertical-align: top;
+    }
+
+    .wonder-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .wonder-table strong {
+      color: var(--wonder-ink);
+    }
+
+    .rule-list,
+    .check-list {
+      margin: 0;
+      padding-left: 1.15rem;
+      color: var(--wonder-muted);
+      line-height: 1.8;
+    }
+
+    .callout {
+      padding: 1.4rem;
+      border-radius: 20px;
+      border: 1px solid var(--wonder-border);
+      background:
+        radial-gradient(circle at top right, rgba(180, 83, 9, 0.12), transparent 28%),
+        linear-gradient(135deg, #ffffff, var(--wonder-soft-gold));
+      color: var(--wonder-muted);
+      line-height: 1.75;
+      margin-top: 1.2rem;
+    }
+
+    .callout strong {
+      color: var(--wonder-rust);
+    }
+
+    .product-card {
+      background: linear-gradient(135deg, #ffffff, #f8fbff);
+    }
+
+    .product-card:nth-child(2) {
+      background: linear-gradient(135deg, #ffffff, var(--wonder-soft-green));
+    }
+
+    .product-card:nth-child(3) {
+      background: linear-gradient(135deg, #ffffff, var(--wonder-soft-plum));
+    }
+
+    .product-grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .assessment-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .assessment-item {
+      padding: 1rem;
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid var(--wonder-border);
+      color: var(--wonder-muted);
+      line-height: 1.6;
+    }
+
+    .assessment-item strong {
+      display: block;
+      color: var(--wonder-blue-dark);
+      margin-bottom: 0.35rem;
+    }
+
+    @media (max-width: 980px) {
+      .wonder-hero,
+      .anchor-grid,
+      .concept-grid,
+      .grammar-grid,
+      .product-grid,
+      .product-grid.three,
+      .summary-grid,
+      .assessment-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wonder-hero {
+        padding: 2rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wonder-page {
+        width: min(100% - 22px, 1120px);
+        padding-top: 1.5rem;
+      }
+
+      .wonder-hero,
+      .wonder-block {
+        padding: 1.35rem;
+        border-radius: 22px;
+      }
+
+      .wonder-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wonder-page">
+    <section class="wonder-hero">
+      <div class="wonder-hero-content">
+        <p class="wonder-eyebrow">
+          <span class="wonder-dot"></span>
+          Intermediate English - Unit 3
+        </p>
+
+        <h1>
+          Human and Natural Wonders
+          <span>World Records</span>
+        </h1>
+
+        <p>
+          In this unit, students compare human and natural wonders using superlatives.
+          They describe places, ask measurement questions, and prepare short spoken and
+          written products about amazing places and meaningful world records.
+        </p>
+
+        <div class="hero-note">
+          <div class="hero-note-mark">3</div>
+          <p>
+            <strong>Learning Outcome:</strong> To compare human and natural wonders
+            using superlatives, questions, measurements, and clear descriptive examples.
+          </p>
+        </div>
+
+        <div class="wonder-actions">
+          <a href="#wonders" class="btn btn-primary">Start unit</a>
+          <a href="course-overview.html" class="btn btn-secondary">Back to Course Overview</a>
+        </div>
+      </div>
+
+      <div class="wonder-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png"
+          alt="Students comparing human and natural wonders around the world"
+        />
+      </div>
+    </section>
+
+    <section class="wonder-block" aria-label="Unit navigation">
+      <h2 class="section-title">Unit Map</h2>
+      <p class="section-subtitle">
+        Move through the topic from meaning to grammar, then from grammar to speaking
+        and writing products.
+      </p>
+
+      <div class="anchor-grid">
+        <a class="anchor-card" href="#wonders"><b>1</b><span>Human and natural wonders</span></a>
+        <a class="anchor-card" href="#superlatives"><b>2</b><span>Superlative grammar</span></a>
+        <a class="anchor-card" href="#questions"><b>3</b><span>Questions and measurements</span></a>
+        <a class="anchor-card" href="#products"><b>4</b><span>Final product models</span></a>
+      </div>
+    </section>
+
+    <section class="wonder-block" id="wonders">
+      <h2 class="section-title">Human Wonders and Natural Wonders</h2>
+      <p class="section-subtitle">
+        A wonder is an impressive place, object, or creation. Some wonders come from
+        nature. Other wonders are created by people.
+      </p>
+
+      <div class="concept-grid">
+        <div class="concept-card natural">
+          <span class="mini-label">Natural wonders</span>
+          <h3>Places made by nature</h3>
+          <p>
+            Natural wonders include rivers, mountains, forests, waterfalls, canyons,
+            deserts, caves, beaches, and other places created by the natural world.
+          </p>
+          <span class="example-line">Mount Everest is the highest mountain in the world.</span>
+          <span class="example-line">Ca&ntilde;o Cristales is one of the most beautiful rivers in Colombia.</span>
+          <span class="example-line">The Amazon is one of the most important natural wonders in the world.</span>
+        </div>
+
+        <div class="concept-card human">
+          <span class="mini-label">Human wonders</span>
+          <h3>Places made by people</h3>
+          <p>
+            Human wonders include buildings, monuments, walls, cities, pyramids,
+            bridges, towers, and historic places created by human effort.
+          </p>
+          <span class="example-line">The Great Wall of China is one of the most famous human wonders in the world.</span>
+          <span class="example-line">Burj Khalifa is one of the tallest buildings in the world.</span>
+          <span class="example-line">Cartagena is one of the most popular cities in Colombia.</span>
+        </div>
+      </div>
+
+      <div class="audio-card">
+        <h3>Audio 1 - Introduction</h3>
+        <p>
+          Listen for the difference between natural wonders and human wonders.
+        </p>
+        <audio controls preload="metadata">
+          <source src="audio/human-natural-wonders/intro-human-natural-wonders.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
+    </section>
+
+    <section class="wonder-block" id="superlatives">
+      <h2 class="section-title">What Is a Superlative?</h2>
+      <p class="section-subtitle">
+        A superlative shows that something is number one in a group. We use
+        superlatives to describe the biggest, tallest, longest, most beautiful, or best
+        example in a category.
+      </p>
+
+      <div class="table-wrap">
+        <table class="wonder-table">
+          <thead>
+            <tr>
+              <th>Form</th>
+              <th>Use</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Comparative</strong></td>
+              <td>Compares two things.</td>
+              <td>The Amazon is longer than the Magdalena River.</td>
+            </tr>
+            <tr>
+              <td><strong>Superlative</strong></td>
+              <td>Shows number one in a group.</td>
+              <td>Mount Everest is the highest mountain in the world.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grammar-grid">
+        <div class="grammar-card">
+          <span class="mini-label">Basic structure</span>
+          <h3>Subject + be + the + superlative</h3>
+          <span class="pattern-line">Subject + verb to be + the + superlative + noun or complement</span>
+          <p>
+            Most superlatives need <strong>the</strong> because they point to the top
+            example in a group.
+          </p>
+          <span class="example-line">The Great Wall is one of the most famous human wonders in the world.</span>
+          <span class="example-line">Cartagena is the best place to visit during a long weekend.</span>
+        </div>
+
+        <div class="grammar-card">
+          <span class="mini-label">Short adjectives</span>
+          <h3>The + adjective + -est</h3>
+          <span class="pattern-line">the tallest, the longest, the highest, the largest</span>
+          <p>
+            Use <strong>-est</strong> with many one-syllable adjectives and some short
+            two-syllable adjectives.
+          </p>
+          <span class="example-line">Mount Everest is the highest mountain in the world.</span>
+          <span class="example-line">The Amazon is one of the longest rivers in the world.</span>
+        </div>
+      </div>
+
+      <div class="audio-card">
+        <h3>Audio 2 - Short Superlatives</h3>
+        <p>
+          Listen and repeat short superlatives with <strong>-est</strong>.
+        </p>
+        <audio controls preload="metadata">
+          <source src="audio/human-natural-wonders/short-superlatives-est.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
+
+      <div class="table-wrap">
+        <table class="wonder-table">
+          <thead>
+            <tr>
+              <th>Rule</th>
+              <th>Adjective</th>
+              <th>Superlative</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Add <strong>-est</strong></td>
+              <td>tall</td>
+              <td>the tallest</td>
+              <td>It is the tallest building in the city.</td>
+            </tr>
+            <tr>
+              <td>Ending in <strong>e</strong>: add <strong>-st</strong></td>
+              <td>large</td>
+              <td>the largest</td>
+              <td>It is one of the largest walls in the world.</td>
+            </tr>
+            <tr>
+              <td>Consonant + vowel + consonant: double the final consonant</td>
+              <td>big</td>
+              <td>the biggest</td>
+              <td>This is the biggest canyon in the region.</td>
+            </tr>
+            <tr>
+              <td>Ending in <strong>y</strong>: change <strong>y</strong> to <strong>i</strong> + <strong>-est</strong></td>
+              <td>pretty</td>
+              <td>the prettiest</td>
+              <td>It is one of the prettiest towns near the coast.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grammar-grid">
+        <div class="grammar-card">
+          <span class="mini-label">Long adjectives</span>
+          <h3>The most + adjective</h3>
+          <span class="pattern-line">the most beautiful, the most important, the most popular</span>
+          <p>
+            Use <strong>the most</strong> with long adjectives. Do not add
+            <strong>-est</strong> to these adjectives.
+          </p>
+          <span class="example-line">Ca&ntilde;o Cristales is one of the most beautiful rivers in Colombia.</span>
+          <span class="example-line">The Amazon is one of the most important natural wonders in the world.</span>
+        </div>
+
+        <div class="grammar-card">
+          <span class="mini-label">Irregular forms</span>
+          <h3>Good, bad, and far</h3>
+          <span class="pattern-line">good - the best | bad - the worst | far - the farthest</span>
+          <p>
+            These adjectives do not follow the regular <strong>-est</strong> or
+            <strong>the most</strong> patterns.
+          </p>
+          <span class="example-line">Cartagena is the best place to visit during a long weekend.</span>
+          <span class="example-line">That was the worst trip of my life.</span>
+        </div>
+      </div>
+
+      <div class="grammar-grid">
+        <div class="audio-card">
+          <h3>Audio 3 - Long Superlatives</h3>
+          <p>
+            Listen and repeat long superlatives with <strong>the most</strong>.
+          </p>
+          <audio controls preload="metadata">
+            <source src="audio/human-natural-wonders/long-superlatives-most.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+
+        <div class="audio-card">
+          <h3>Audio 4 - Irregular Superlatives</h3>
+          <p>
+            Listen to the irregular forms: <strong>the best</strong>,
+            <strong>the worst</strong>, and <strong>the farthest</strong>.
+          </p>
+          <audio controls preload="metadata">
+            <source src="audio/human-natural-wonders/irregular-superlatives.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">One of the Most...</h2>
+      <p class="section-subtitle">
+        Use this structure when something is not necessarily number one, but it belongs
+        to a small group of excellent or famous examples.
+      </p>
+
+      <div class="grammar-grid">
+        <div class="grammar-card">
+          <span class="mini-label">Structure</span>
+          <h3>One of the most + plural noun</h3>
+          <span class="pattern-line">Subject + is + one of the most + adjective + plural noun + complement</span>
+          <p>
+            The noun after this expression is plural because the sentence talks about
+            one item inside a group.
+          </p>
+          <span class="example-line">Cartagena is one of the most beautiful cities in Colombia.</span>
+          <span class="example-line">The Great Pyramid is one of the most famous human wonders in the world.</span>
+        </div>
+
+        <div class="grammar-card">
+          <span class="mini-label">Common correction</span>
+          <h3>Use plural nouns</h3>
+          <span class="example-line">Correct: one of the most beautiful cities</span>
+          <span class="example-line">Incorrect: one of the most beautiful city</span>
+          <div class="callout">
+            <strong>Teacher note:</strong> Students often forget the plural noun. Make
+            them underline the noun after <strong>one of the most</strong>.
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="wonder-table">
+          <thead>
+            <tr>
+              <th>Use <strong>in</strong></th>
+              <th>Use <strong>of</strong></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>in the world, in Colombia, in South America, in the city, in the country</td>
+              <td>of my life, of all time, of the three places, of all the cities I know</td>
+            </tr>
+            <tr>
+              <td>The Amazon is one of the most important rivers <strong>in the world</strong>.</td>
+              <td>That was the best trip <strong>of my life</strong>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="wonder-block" id="questions">
+      <h2 class="section-title">Questions and Measurements</h2>
+      <p class="section-subtitle">
+        Students need question forms to compare places naturally. They also need
+        measurement language to answer with real-world facts.
+      </p>
+
+      <div class="grammar-grid">
+        <div class="grammar-card">
+          <span class="mini-label">Superlative questions</span>
+          <h3>What is the most...?</h3>
+          <ul class="rule-list">
+            <li>What is the most beautiful river in Colombia?</li>
+            <li>What is the tallest mountain in the world?</li>
+            <li>What is the best place to visit during a long weekend?</li>
+            <li>What is the most famous human wonder in the world?</li>
+          </ul>
+        </div>
+
+        <div class="grammar-card">
+          <span class="mini-label">How + adjective</span>
+          <h3>Ask for measurements</h3>
+          <ul class="rule-list">
+            <li>How tall is it? Use this for buildings, towers, people, and trees.</li>
+            <li>How high is it? Use this for mountains, altitude, and elevated places.</li>
+            <li>How long is it? Use this for rivers, roads, walls, and bridges.</li>
+            <li>How old is it? Use this for monuments, cities, and historic places.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grammar-grid">
+        <div class="audio-card">
+          <h3>Audio 5 - Superlative Questions</h3>
+          <p>
+            Listen to question forms students can use in interviews and discussions.
+          </p>
+          <audio controls preload="metadata">
+            <source src="audio/human-natural-wonders/superlative-questions.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+
+        <div class="audio-card">
+          <h3>Audio 6 - Measurements</h3>
+          <p>
+            Listen to model answers with <strong>meters tall</strong>,
+            <strong>meters high</strong>, <strong>kilometers long</strong>, and
+            <strong>years old</strong>.
+          </p>
+          <audio controls preload="metadata">
+            <source src="audio/human-natural-wonders/measurements-how-adjective.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table class="wonder-table">
+          <thead>
+            <tr>
+              <th>Question</th>
+              <th>Answer structure</th>
+              <th>Example</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>How tall is the building?</td>
+              <td>It is + number + meters tall.</td>
+              <td>It is 828 meters tall.</td>
+            </tr>
+            <tr>
+              <td>How high is the mountain?</td>
+              <td>It is + number + meters high.</td>
+              <td>It is 8,849 meters high.</td>
+            </tr>
+            <tr>
+              <td>How long is the river?</td>
+              <td>It is + number + kilometers long.</td>
+              <td>It is 6,400 kilometers long.</td>
+            </tr>
+            <tr>
+              <td>How old is the monument?</td>
+              <td>It is + number + years old.</td>
+              <td>It is 2,000 years old.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="audio-card">
+        <h3>Audio 7 - Big Numbers</h3>
+        <p>
+          Listen to common numbers students need when describing measurements and
+          records.
+        </p>
+        <audio controls preload="metadata">
+          <source src="audio/human-natural-wonders/big-numbers-world-records.mp3" type="audio/mpeg" />
+        </audio>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Country Wonders Rating Chart</h2>
+      <p class="section-subtitle">
+        This chart prepares students to compare countries and organize superlative
+        sentences before speaking or writing.
+      </p>
+
+      <div class="table-wrap">
+        <table class="wonder-table">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Human Wonder</th>
+              <th>Natural Wonder</th>
+              <th>Superlative Sentence</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Colombia</td>
+              <td>Lost City</td>
+              <td>Ca&ntilde;o Cristales</td>
+              <td>Ca&ntilde;o Cristales is one of the most beautiful rivers in Colombia.</td>
+            </tr>
+            <tr>
+              <td>China</td>
+              <td>The Great Wall</td>
+              <td>Zhangjiajie Mountains</td>
+              <td>The Great Wall is one of the most famous human wonders in the world.</td>
+            </tr>
+            <tr>
+              <td>Egypt</td>
+              <td>The Pyramids</td>
+              <td>The Nile River</td>
+              <td>The Nile is one of the longest rivers in the world.</td>
+            </tr>
+            <tr>
+              <td>United Arab Emirates</td>
+              <td>Burj Khalifa</td>
+              <td>Arabian Desert</td>
+              <td>Burj Khalifa is one of the tallest buildings in the world.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <strong>Useful phrases:</strong> I think..., In my opinion..., It is one of
+        the most..., It is the best place because..., You can visit..., You should see...
+      </div>
+    </section>
+
+    <section class="wonder-block" id="products">
+      <h2 class="section-title">Final Product Models</h2>
+      <p class="section-subtitle">
+        These are the unit products from the document. The detailed practice activities
+        can be added later, but students can already see the language goals.
+      </p>
+
+      <div class="product-grid three">
+        <div class="product-card">
+          <span class="mini-label">Product 1</span>
+          <h3>Country Wonders Rating Chart</h3>
+          <p>
+            Students choose countries, identify one human wonder and one natural wonder,
+            and write accurate superlative sentences.
+          </p>
+          <ul class="check-list">
+            <li>Use at least four countries.</li>
+            <li>Include human and natural wonders.</li>
+            <li>Write one clear superlative sentence per country.</li>
+          </ul>
+        </div>
+
+        <div class="product-card">
+          <span class="mini-label">Product 2</span>
+          <h3>Commercial Video</h3>
+          <p>
+            Students promote the best place to visit during a long weekend in Colombia.
+          </p>
+          <ul class="check-list">
+            <li>Use at least three superlatives.</li>
+            <li>Use one <strong>one of the most</strong> sentence.</li>
+            <li>Use one <strong>the best</strong> sentence.</li>
+            <li>Include two <strong>You can...</strong> sentences and one <strong>You should...</strong> sentence.</li>
+          </ul>
+        </div>
+
+        <div class="product-card">
+          <span class="mini-label">Product 3</span>
+          <h3>World Record Blog Entry</h3>
+          <p>
+            Students imagine new world records that help people and the planet.
+          </p>
+          <ul class="check-list">
+            <li>Choose a helpful world record.</li>
+            <li>Explain why it matters.</li>
+            <li>Use superlatives and measurement language when possible.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grammar-grid">
+        <div class="audio-card">
+          <h3>Audio 8 - Cartagena Commercial Model</h3>
+          <p>
+            Listen to a model for the commercial video product.
+          </p>
+          <audio controls preload="metadata">
+            <source src="audio/human-natural-wonders/cartagena-commercial-model.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+
+        <div class="audio-card">
+          <h3>Audio 9 - World Record Blog Model</h3>
+          <p>
+            Listen to a model opening for the blog entry.
+          </p>
+          <audio controls preload="metadata">
+            <source src="audio/human-natural-wonders/world-record-blog-model.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Grammar Summary</h2>
+      <p class="section-subtitle">
+        Use this section as a quick reference before speaking, writing, or preparing a
+        presentation.
+      </p>
+
+      <div class="summary-grid">
+        <div class="summary-card">
+          <h3>Short adjectives</h3>
+          <p><strong>the + adjective + -est</strong></p>
+          <span class="example-line">the tallest building</span>
+          <span class="example-line">the longest river</span>
+        </div>
+
+        <div class="summary-card">
+          <h3>Long adjectives</h3>
+          <p><strong>the most + adjective</strong></p>
+          <span class="example-line">the most beautiful city</span>
+          <span class="example-line">the most important natural wonder</span>
+        </div>
+
+        <div class="summary-card">
+          <h3>Irregular forms</h3>
+          <p><strong>good - the best | bad - the worst | far - the farthest</strong></p>
+          <span class="example-line">Cartagena is the best place to visit.</span>
+        </div>
+
+        <div class="summary-card">
+          <h3>Questions</h3>
+          <p><strong>What is the most...? How tall is it?</strong></p>
+          <span class="example-line">What is the tallest mountain in the world?</span>
+          <span class="example-line">How long is the river?</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Suggested Lesson Order</h2>
+      <p class="section-subtitle">
+        This sequence follows the document and keeps the unit progressive.
+      </p>
+
+      <div class="table-wrap">
+        <table class="wonder-table">
+          <thead>
+            <tr>
+              <th>Lesson</th>
+              <th>Main Focus</th>
+              <th>Outcome</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Human and natural wonders</td><td>Classify examples and activate vocabulary.</td></tr>
+            <tr><td>2</td><td>Superlative meaning</td><td>Understand number one in a group.</td></tr>
+            <tr><td>3</td><td>Short and long adjective forms</td><td>Use <strong>-est</strong> and <strong>the most</strong> accurately.</td></tr>
+            <tr><td>4</td><td>Irregular superlatives</td><td>Use <strong>the best</strong>, <strong>the worst</strong>, and <strong>the farthest</strong>.</td></tr>
+            <tr><td>5</td><td>Questions and measurements</td><td>Ask and answer factual questions about places.</td></tr>
+            <tr><td>6</td><td>Country wonders chart</td><td>Organize comparisons by country.</td></tr>
+            <tr><td>7</td><td>Commercial video planning</td><td>Prepare a persuasive travel script.</td></tr>
+            <tr><td>8</td><td>World record blog entry</td><td>Write about helpful records for the future.</td></tr>
+            <tr><td>9</td><td>Presentation and feedback</td><td>Share final products and revise language.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Assessment Criteria</h2>
+      <p class="section-subtitle">
+        The final assessment can measure grammar, vocabulary, speaking, writing, and
+        listening in a balanced way.
+      </p>
+
+      <div class="assessment-grid">
+        <div class="assessment-item"><strong>Grammar</strong>Accurate superlative forms and correct use of <strong>the</strong>.</div>
+        <div class="assessment-item"><strong>Vocabulary</strong>Appropriate human wonders, natural wonders, and measurement words.</div>
+        <div class="assessment-item"><strong>Speaking</strong>Clear pronunciation, organized ideas, and useful travel language.</div>
+        <div class="assessment-item"><strong>Writing</strong>Logical sentences, clear paragraph structure, and meaningful examples.</div>
+        <div class="assessment-item"><strong>Listening</strong>Understanding key ideas, examples, questions, and numbers from audio.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+</body>
+</html>
