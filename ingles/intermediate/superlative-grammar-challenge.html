@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Superlative Grammar Challenge | Practice Lab Unit 3 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+
+  <style>
+    :root {
+      --challenge-ink: #102033;
+      --challenge-muted: #52657d;
+      --challenge-blue: #1f5fbf;
+      --challenge-blue-dark: #173f83;
+      --challenge-green: #15803d;
+      --challenge-teal: #0f766e;
+      --challenge-amber: #b45309;
+      --challenge-red: #b91c1c;
+      --challenge-card: #ffffff;
+      --challenge-border: #dce8f8;
+      --challenge-soft-blue: #eef5ff;
+      --challenge-soft-green: #ecfdf5;
+      --challenge-soft-gold: #fff7e8;
+      --challenge-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 10% 8%, rgba(31, 95, 191, 0.12), transparent 30%),
+        radial-gradient(circle at 86% 10%, rgba(21, 128, 61, 0.11), transparent 26%),
+        linear-gradient(180deg, #f8fbff 0%, #f1f7f4 100%);
+      color: var(--challenge-ink);
+    }
+
+    .challenge-page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .challenge-hero {
+      display: grid;
+      grid-template-columns: 1.03fr 0.97fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border: 1px solid var(--challenge-border);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(180, 83, 9, 0.14), transparent 30%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      box-shadow: var(--challenge-shadow);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .challenge-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--challenge-soft-green);
+      color: var(--challenge-green);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .challenge-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--challenge-amber);
+      box-shadow: 0 0 0 6px rgba(180, 83, 9, 0.13);
+    }
+
+    .challenge-hero h1 {
+      color: var(--challenge-ink);
+      font-size: clamp(2.35rem, 5vw, 4.3rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .challenge-hero h1 span {
+      color: var(--challenge-blue);
+    }
+
+    .challenge-hero p {
+      color: var(--challenge-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .challenge-actions,
+    .quiz-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .challenge-hero-image {
+      padding: 1rem;
+      border: 1px solid var(--challenge-border);
+      border-radius: 26px;
+      background: #ffffff;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .challenge-hero-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .challenge-block {
+      background: var(--challenge-card);
+      padding: 2.4rem;
+      border: 1px solid var(--challenge-border);
+      border-radius: 28px;
+      box-shadow: var(--challenge-shadow);
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.85rem, 4vw, 2.8rem);
+      color: var(--challenge-ink);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 860px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--challenge-muted);
+      line-height: 1.8;
+      font-size: 1.04rem;
+    }
+
+    .grammar-grid,
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .grammar-card,
+    .question-card,
+    .result-card {
+      border: 1px solid var(--challenge-border);
+      border-radius: 20px;
+      background: #ffffff;
+      padding: 1.3rem;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .grammar-card:nth-child(1) { border-left: 6px solid var(--challenge-blue); }
+    .grammar-card:nth-child(2) { border-left: 6px solid var(--challenge-green); }
+    .grammar-card:nth-child(3) { border-left: 6px solid var(--challenge-amber); }
+
+    .grammar-card h3,
+    .question-card h3,
+    .result-card h3 {
+      color: var(--challenge-blue-dark);
+      font-size: 1.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .grammar-card p,
+    .question-card p,
+    .result-card p {
+      color: var(--challenge-muted);
+      line-height: 1.7;
+      margin-bottom: 0.75rem;
+    }
+
+    .example-line {
+      display: block;
+      padding: 0.8rem 0.9rem;
+      border: 1px solid var(--challenge-border);
+      border-radius: 14px;
+      background: var(--challenge-soft-blue);
+      color: var(--challenge-ink);
+      line-height: 1.55;
+      font-weight: 800;
+      margin-top: 0.65rem;
+    }
+
+    .quiz-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .score-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      background: var(--challenge-soft-green);
+      color: var(--challenge-green);
+      font-weight: 900;
+    }
+
+    .question-list {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .question-card {
+      position: relative;
+    }
+
+    .question-top {
+      display: flex;
+      gap: 0.85rem;
+      align-items: flex-start;
+      margin-bottom: 0.85rem;
+    }
+
+    .question-number {
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: var(--challenge-blue);
+      color: #ffffff;
+      font-weight: 900;
+    }
+
+    .sentence {
+      color: var(--challenge-ink);
+      font-size: 1.05rem;
+      line-height: 1.65;
+      font-weight: 800;
+    }
+
+    .blank {
+      display: inline-flex;
+      min-width: 118px;
+      justify-content: center;
+      padding: 0 0.35rem;
+      border-bottom: 3px solid var(--challenge-amber);
+      color: var(--challenge-blue-dark);
+    }
+
+    .option-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .option-btn {
+      min-height: 54px;
+      border: 1px solid var(--challenge-border);
+      border-radius: 15px;
+      background: #ffffff;
+      color: var(--challenge-ink);
+      cursor: pointer;
+      font: inherit;
+      font-weight: 900;
+      line-height: 1.25;
+      padding: 0.8rem;
+      transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .option-btn:hover {
+      transform: translateY(-2px);
+      border-color: #9fc2f7;
+      background: var(--challenge-soft-blue);
+    }
+
+    .option-btn.selected {
+      border-color: var(--challenge-blue);
+      background: var(--challenge-soft-blue);
+      color: var(--challenge-blue-dark);
+    }
+
+    .option-btn.correct {
+      border-color: #86efac;
+      background: #dcfce7;
+      color: var(--challenge-green);
+    }
+
+    .option-btn.incorrect {
+      border-color: #fecaca;
+      background: #fff1f2;
+      color: var(--challenge-red);
+    }
+
+    .feedback {
+      display: none;
+      margin-top: 0.95rem;
+      padding: 0.9rem 1rem;
+      border-radius: 15px;
+      border: 1px solid var(--challenge-border);
+      background: #f8fbff;
+      color: var(--challenge-muted);
+      line-height: 1.65;
+    }
+
+    .question-card.checked .feedback {
+      display: block;
+    }
+
+    .feedback strong {
+      color: var(--challenge-blue-dark);
+    }
+
+    .result-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 1rem;
+    }
+
+    .result-card {
+      background: linear-gradient(135deg, #ffffff, #f8fbff);
+    }
+
+    @media (max-width: 980px) {
+      .challenge-hero,
+      .grammar-grid,
+      .result-grid,
+      .option-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .challenge-page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 1.5rem;
+      }
+
+      .challenge-hero,
+      .challenge-block {
+        padding: 1.35rem;
+        border-radius: 22px;
+      }
+
+      .challenge-actions .btn,
+      .quiz-actions .btn {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="challenge-page">
+    <section class="challenge-hero">
+      <div>
+        <p class="challenge-eyebrow"><span class="challenge-dot"></span>Practice Lab - Unit 3</p>
+        <h1>Superlative <span>Grammar Challenge</span></h1>
+        <p>
+          Complete twenty detailed fill-in-the-blank sentences about human wonders,
+          natural wonders, world records, measurements, and travel opinions.
+        </p>
+        <p>
+          Each question has three serious answer choices. The distractors are common
+          grammar mistakes, so students must notice form, meaning, articles, plural nouns,
+          and the difference between comparative and superlative language.
+        </p>
+        <div class="challenge-actions">
+          <a href="#quiz" class="btn btn-primary">Start grammar practice</a>
+          <a href="human-natural-wonders-world-records.html" class="btn btn-secondary">Review Unit 3</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="challenge-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/superlative-grammar-challenge.png"
+          alt="Students practicing superlative grammar with wonder cards"
+        />
+      </div>
+    </section>
+
+    <section class="challenge-block">
+      <h2 class="section-title">Grammar Focus</h2>
+      <p class="section-subtitle">
+        Use this quick review before answering. The exercise follows the Unit 3 grammar:
+        short adjective superlatives, long adjective superlatives, irregular forms,
+        measurement language, and the expression <strong>one of the most</strong>.
+      </p>
+
+      <div class="grammar-grid">
+        <div class="grammar-card">
+          <h3>Short adjectives</h3>
+          <p>Use <strong>the + adjective + -est</strong> for many short adjectives.</p>
+          <span class="example-line">Mount Everest is the highest mountain in the world.</span>
+        </div>
+        <div class="grammar-card">
+          <h3>Long adjectives</h3>
+          <p>Use <strong>the most + adjective</strong>. Do not add <strong>-est</strong>.</p>
+          <span class="example-line">Ca&ntilde;o Cristales is one of the most colorful rivers in Colombia.</span>
+        </div>
+        <div class="grammar-card">
+          <h3>Special forms</h3>
+          <p>Use irregular forms and plural nouns after <strong>one of the most</strong>.</p>
+          <span class="example-line">Cartagena is one of the best places to visit.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="challenge-block" id="quiz">
+      <div class="quiz-header">
+        <div>
+          <h2 class="section-title" style="text-align: left; margin-bottom: 0.4rem;">20 Fill-in-the-Blank Exercises</h2>
+          <p class="section-subtitle" style="text-align: left; margin: 0;">
+            Choose one option for each sentence, then check your answers.
+          </p>
+        </div>
+        <div class="score-pill" id="scorePill">Score: -- / 20</div>
+      </div>
+
+      <div class="question-list" id="questionList"></div>
+
+      <div class="quiz-actions">
+        <button class="btn btn-primary" type="button" id="checkBtn">Check answers</button>
+        <button class="btn btn-secondary" type="button" id="resetBtn">Reset practice</button>
+      </div>
+    </section>
+
+    <section class="challenge-block">
+      <h2 class="section-title">Teacher Notes</h2>
+      <p class="section-subtitle">
+        Suggested use: first let students answer individually, then compare answers in
+        pairs and explain why the other two options do not work.
+      </p>
+
+      <div class="result-grid">
+        <div class="result-card"><h3>18-20</h3><p>Ready for oral production with superlatives and measurements.</p></div>
+        <div class="result-card"><h3>14-17</h3><p>Good control; review irregular forms and <strong>one of the most</strong>.</p></div>
+        <div class="result-card"><h3>10-13</h3><p>Review the form difference between <strong>-est</strong> and <strong>the most</strong>.</p></div>
+        <div class="result-card"><h3>0-9</h3><p>Return to the Unit 3 grammar summary and complete the quiz again with notes.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const questions = [
+      {
+        sentence: "Mount Everest is ___ mountain in the world.",
+        options: ["the highest", "the most high", "higher"],
+        answer: "the highest",
+        feedback: "Use the + highest because high is a short adjective and the sentence identifies number one in a group."
+      },
+      {
+        sentence: "Ca&ntilde;o Cristales is one of ___ rivers in Colombia.",
+        options: ["the most colorful", "the colorfulest", "most colorful"],
+        answer: "the most colorful",
+        feedback: "Use the most colorful for a long adjective. The article the is part of the superlative form."
+      },
+      {
+        sentence: "Burj Khalifa is one of ___ buildings in the world.",
+        options: ["the tallest", "the most tall", "taller"],
+        answer: "the tallest",
+        feedback: "Tall is a short adjective, so the superlative is the tallest."
+      },
+      {
+        sentence: "The Amazon is one of ___ rainforests on Earth.",
+        options: ["the largest", "the most large", "larger"],
+        answer: "the largest",
+        feedback: "Large ends in e, so add -st: the largest."
+      },
+      {
+        sentence: "Cartagena is one of ___ cities to visit in Colombia.",
+        options: ["the best", "the goodest", "the most good"],
+        answer: "the best",
+        feedback: "Good is irregular. The correct superlative form is the best."
+      },
+      {
+        sentence: "The Sahara is one of ___ deserts in the world.",
+        options: ["the biggest", "the most big", "biggest than"],
+        answer: "the biggest",
+        feedback: "Big doubles the final consonant before -est: the biggest."
+      },
+      {
+        sentence: "The Great Wall of China is one of ___ human wonders in history.",
+        options: ["the most famous", "the famousest", "more famous"],
+        answer: "the most famous",
+        feedback: "Famous is a long adjective, so use the most famous."
+      },
+      {
+        sentence: "The Nile is often described as one of ___ rivers in the world.",
+        options: ["the longest", "the most long", "longer"],
+        answer: "the longest",
+        feedback: "Long is a short adjective. Use the longest for a superlative."
+      },
+      {
+        sentence: "Machu Picchu is one of ___ ancient places in South America.",
+        options: ["the most impressive", "the impressivest", "more impressive"],
+        answer: "the most impressive",
+        feedback: "Impressive is a long adjective, so the correct form is the most impressive."
+      },
+      {
+        sentence: "The Colosseum is one of ___ monuments in Rome.",
+        options: ["the oldest", "the most old", "older"],
+        answer: "the oldest",
+        feedback: "Old can take -est in this context: the oldest."
+      },
+      {
+        sentence: "Niagara Falls is one of ___ natural attractions in North America.",
+        options: ["the most powerful", "the powerfulest", "most powerful"],
+        answer: "the most powerful",
+        feedback: "Powerful needs the most, and the article the must be included."
+      },
+      {
+        sentence: "The Grand Canyon is one of ___ landscapes in the United States.",
+        options: ["the most dramatic", "the dramaticest", "more dramatic"],
+        answer: "the most dramatic",
+        feedback: "Dramatic is a long adjective, so use the most dramatic."
+      },
+      {
+        sentence: "Monserrate is one of ___ viewpoints in Bogota.",
+        options: ["the highest", "the most high", "higher than"],
+        answer: "the highest",
+        feedback: "This sentence compares Monserrate with a group of viewpoints, so use the superlative the highest."
+      },
+      {
+        sentence: "Tayrona National Park is one of ___ places for nature lovers in Colombia.",
+        options: ["the most exciting", "the excitingest", "more exciting"],
+        answer: "the most exciting",
+        feedback: "Exciting is a long adjective. Use the most exciting."
+      },
+      {
+        sentence: "The Pyramids of Egypt are among ___ monuments in the world.",
+        options: ["the most recognizable", "the recognizablest", "more recognizable"],
+        answer: "the most recognizable",
+        feedback: "Recognizable is a long adjective, so use the most recognizable."
+      },
+      {
+        sentence: "A commercial video should describe ___ place to visit during a long weekend.",
+        options: ["the best", "the better", "the most best"],
+        answer: "the best",
+        feedback: "Best is already the superlative form of good. Do not say the most best."
+      },
+      {
+        sentence: "The Amazon River is about 6,400 kilometers ___.",
+        options: ["long", "longest", "the longest"],
+        answer: "long",
+        feedback: "After a measurement, use the adjective form: kilometers long, meters tall, meters high, years old."
+      },
+      {
+        sentence: "Burj Khalifa is 828 meters ___.",
+        options: ["tall", "the tallest", "most tall"],
+        answer: "tall",
+        feedback: "With a measurement, use meters tall. The superlative is used in a different sentence: It is the tallest building."
+      },
+      {
+        sentence: "Stonehenge is one of the most mysterious ___ in the United Kingdom.",
+        options: ["places", "place", "placing"],
+        answer: "places",
+        feedback: "After one of the most, use a plural noun because the sentence refers to one item inside a group."
+      },
+      {
+        sentence: "In my opinion, Salento is one of the prettiest ___ in the coffee region.",
+        options: ["towns", "town", "the towns"],
+        answer: "towns",
+        feedback: "The noun after one of the prettiest must be plural: towns."
+      }
+    ];
+
+    const questionList = document.getElementById("questionList");
+    const scorePill = document.getElementById("scorePill");
+    const checkBtn = document.getElementById("checkBtn");
+    const resetBtn = document.getElementById("resetBtn");
+
+    function renderQuestions() {
+      questionList.innerHTML = "";
+      questions.forEach((question, index) => {
+        const article = document.createElement("article");
+        article.className = "question-card";
+        article.dataset.index = index;
+        article.innerHTML = [
+          '<div class="question-top">',
+          '<span class="question-number">' + String(index + 1).padStart(2, "0") + '</span>',
+          '<div class="sentence">' + question.sentence.replace("___", '<span class="blank">_____</span>') + '</div>',
+          "</div>",
+          '<div class="option-grid">' + question.options.map((option) => (
+            '<button class="option-btn" type="button" data-value="' + option.replace(/"/g, "&quot;") + '">' + option + '</button>'
+          )).join("") + "</div>",
+          '<div class="feedback"><strong>Explanation:</strong> ' + question.feedback + '</div>'
+        ].join("");
+        questionList.appendChild(article);
+      });
+    }
+
+    questionList.addEventListener("click", (event) => {
+      const button = event.target.closest(".option-btn");
+      if (!button) return;
+      const card = button.closest(".question-card");
+      card.classList.remove("checked");
+      card.querySelectorAll(".option-btn").forEach((option) => {
+        option.classList.remove("selected", "correct", "incorrect");
+      });
+      button.classList.add("selected");
+    });
+
+    checkBtn.addEventListener("click", () => {
+      let score = 0;
+      document.querySelectorAll(".question-card").forEach((card) => {
+        const question = questions[Number(card.dataset.index)];
+        const selected = card.querySelector(".option-btn.selected");
+        card.classList.add("checked");
+        card.querySelectorAll(".option-btn").forEach((option) => {
+          const isCorrect = option.dataset.value === question.answer;
+          option.classList.toggle("correct", isCorrect);
+          option.classList.toggle("incorrect", selected === option && !isCorrect);
+        });
+        if (selected && selected.dataset.value === question.answer) {
+          score += 1;
+        }
+      });
+      scorePill.textContent = "Score: " + score + " / " + questions.length;
+    });
+
+    resetBtn.addEventListener("click", () => {
+      document.querySelectorAll(".question-card").forEach((card) => {
+        card.classList.remove("checked");
+        card.querySelectorAll(".option-btn").forEach((option) => {
+          option.classList.remove("selected", "correct", "incorrect");
+        });
+      });
+      scorePill.textContent = "Score: -- / 20";
+      document.getElementById("quiz").scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    renderQuestions();
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+</body>
+</html>
