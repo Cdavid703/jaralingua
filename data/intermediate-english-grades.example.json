@@ -1,0 +1,41 @@
+{
+  "adminEmails": [
+    "admin@example.com"
+  ],
+  "teacherEmails": [
+    "teacher@example.com"
+  ],
+  "allowStudentIdClaim": false,
+  "students": [
+    {
+      "id": "0000000000",
+      "fullName": "Student Name",
+      "level": "Intermediate English Course 1",
+      "email": "student@example.com",
+      "emailAliases": [],
+      "contact": "",
+      "bookDate": null,
+      "grades": {
+        "midtermWritingTask": 4.2,
+        "midtermOralTask": 4.5
+      }
+    }
+  ],
+  "evaluations": [
+    {
+      "id": "midtermWritingTask",
+      "title": "MIDTERM WRITING TASK (20%)",
+      "weight": 20,
+      "type": "Writing",
+      "description": "MIDTERM WRITING TASK (20%)"
+    },
+    {
+      "id": "midtermOralTask",
+      "title": "MIDTERM ORAL TASK (20%)",
+      "weight": 20,
+      "type": "Speaking",
+      "description": "MIDTERM ORAL TASK (20%)"
+    }
+  ],
+  "bonusEvent": null
+}

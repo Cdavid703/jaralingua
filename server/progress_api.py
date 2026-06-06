@@ -19,6 +19,7 @@ FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
 FRENCH7_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french7-final-exam-audio.mp3")
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
+INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
 BUNDLED_FRENCH7_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "frances", "Niveau 7", "audio", "examen-final-refuge-universitaire-b1.mp3")
@@ -829,6 +830,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/intermediate/grades":
+            grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+            query = urllib.parse.parse_qs(parsed.query)
+            json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
         json_response(self, 404, {"error": "not_found"})
 
     def do_POST(self):
@@ -939,6 +946,21 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 400, {"error": str(error)})
                     return
                 write_json_file(BASIC_ENGLISH_GRADES_PATH, next_data, ".basic-grades-")
+                json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+            return
+
+        if parsed.path == "/api/intermediate/grades":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                try:
+                    next_data = clean_gradebook_payload(payload, grades_data)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, next_data, ".intermediate-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
             return
 

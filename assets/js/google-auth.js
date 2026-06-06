@@ -67,6 +67,7 @@
       adminPanel: "Panel de administrador",
       french7Grades: "Notas Frances 7",
       basicEnglishGrades: "Notas Ingles basico",
+      intermediateEnglishGrades: "Notas Ingles intermedio",
       pendingRoleRequests: "Solicitudes pendientes",
       noPendingRequests: "No hay solicitudes pendientes.",
       approveAsStudent: "Aceptar estudiante",
@@ -131,6 +132,7 @@
       adminPanel: "Panneau administrateur",
       french7Grades: "Notes du cours",
       basicEnglishGrades: "Notes anglais debutant",
+      intermediateEnglishGrades: "Notes anglais intermediaire",
       pendingRoleRequests: "Demandes en attente",
       noPendingRequests: "Aucune demande en attente.",
       approveAsStudent: "Accepter \u00e9tudiant",
@@ -195,6 +197,7 @@
       adminPanel: "Admin panel",
       french7Grades: "French 7 grades",
       basicEnglishGrades: "Basic English grades",
+      intermediateEnglishGrades: "Intermediate English grades",
       pendingRoleRequests: "Pending requests",
       noPendingRequests: "No pending requests.",
       approveAsStudent: "Approve student",
@@ -1453,6 +1456,7 @@
           <div class="auth-menu">
             <a href="${last ? escapeAttribute(last.url) : "#"}" data-auth-last>${copy.continue}</a>
             <a href="${rootHref("ingles/basico/notas.html")}">${copy.basicEnglishGrades}</a>
+            <a href="${rootHref("ingles/intermediate/notas.html")}">${copy.intermediateEnglishGrades}</a>
             <a href="${rootHref("frances/Niveau%207/notes-evaluation.html")}">${copy.french7Grades}</a>
           </div>
           <div class="auth-actions">
