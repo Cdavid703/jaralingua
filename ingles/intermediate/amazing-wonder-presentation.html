@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>The Most Amazing Wonder Presentation | Practice Lab Unit 3 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+
+  <style>
+    :root {
+      --wonder-ink: #102033;
+      --wonder-muted: #52657d;
+      --wonder-blue: #1f5fbf;
+      --wonder-blue-dark: #173f83;
+      --wonder-teal: #0f766e;
+      --wonder-green: #15803d;
+      --wonder-amber: #b45309;
+      --wonder-card: #ffffff;
+      --wonder-border: #dce8f8;
+      --wonder-soft-blue: #eef5ff;
+      --wonder-soft-green: #ecfdf5;
+      --wonder-soft-gold: #fff7e8;
+      --wonder-shadow: 0 18px 42px rgba(20, 64, 130, 0.1);
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 9% 7%, rgba(31, 95, 191, 0.12), transparent 30%),
+        radial-gradient(circle at 88% 12%, rgba(21, 128, 61, 0.11), transparent 26%),
+        linear-gradient(180deg, #f8fbff 0%, #f1f7f4 100%);
+      color: var(--wonder-ink);
+    }
+
+    .wonder-page {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2.5rem 0 4rem;
+    }
+
+    .wonder-hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 3rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 30px;
+      background:
+        radial-gradient(circle at top right, rgba(180, 83, 9, 0.14), transparent 30%),
+        linear-gradient(135deg, #ffffff 0%, #eef5ff 100%);
+      box-shadow: var(--wonder-shadow);
+      margin-bottom: 2rem;
+      overflow: hidden;
+    }
+
+    .wonder-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin-bottom: 1rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      background: var(--wonder-soft-green);
+      color: var(--wonder-green);
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .wonder-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--wonder-amber);
+      box-shadow: 0 0 0 6px rgba(180, 83, 9, 0.13);
+    }
+
+    .wonder-hero h1 {
+      color: var(--wonder-ink);
+      font-size: clamp(2.35rem, 5vw, 4.3rem);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+
+    .wonder-hero h1 span {
+      color: var(--wonder-blue);
+    }
+
+    .wonder-hero p {
+      color: var(--wonder-muted);
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .wonder-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.4rem;
+    }
+
+    .wonder-hero-image {
+      padding: 1rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 26px;
+      background: #ffffff;
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.08);
+    }
+
+    .wonder-hero-image img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .wonder-block {
+      background: var(--wonder-card);
+      padding: 2.4rem;
+      border: 1px solid var(--wonder-border);
+      border-radius: 28px;
+      box-shadow: var(--wonder-shadow);
+      margin-bottom: 2rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(1.85rem, 4vw, 2.8rem);
+      color: var(--wonder-ink);
+      margin-bottom: 1rem;
+    }
+
+    .section-subtitle {
+      max-width: 860px;
+      margin: 0 auto 2rem;
+      text-align: center;
+      color: var(--wonder-muted);
+      line-height: 1.8;
+      font-size: 1.04rem;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .overview-card {
+      border: 1px solid var(--wonder-border);
+      border-radius: 20px;
+      background: #ffffff;
+      padding: 1.3rem;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .overview-card:nth-child(1) { border-left: 6px solid var(--wonder-blue); }
+    .overview-card:nth-child(2) { border-left: 6px solid var(--wonder-teal); }
+    .overview-card:nth-child(3) { border-left: 6px solid var(--wonder-amber); }
+
+    .overview-card h3 {
+      color: var(--wonder-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .overview-card p {
+      color: var(--wonder-muted);
+      line-height: 1.75;
+      margin-bottom: 0.7rem;
+    }
+
+    .wonder-type-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .wonder-tab {
+      padding: 1rem 1.5rem;
+      border: 2px solid var(--wonder-border);
+      border-radius: 18px;
+      background: #ffffff;
+      cursor: pointer;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--wonder-ink);
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .wonder-tab span {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--wonder-muted);
+      margin-top: 0.3rem;
+    }
+
+    .wonder-tab:hover,
+    .wonder-tab.active {
+      transform: translateY(-2px);
+      border-color: #9fc2f7;
+      background: var(--wonder-soft-blue);
+    }
+
+    .wonder-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .wonder-card {
+      border: 2px solid var(--wonder-border);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 6px 18px rgba(20, 64, 130, 0.05);
+      text-align: left;
+      width: 100%;
+    }
+
+    .wonder-card:hover,
+    .wonder-card.selected {
+      transform: translateY(-4px);
+      border-color: #91bdf5;
+      background: var(--wonder-soft-blue);
+      box-shadow: 0 18px 36px rgba(20, 64, 130, 0.12);
+    }
+
+    .wonder-card-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.78rem;
+      font-weight: 900;
+      color: var(--wonder-blue-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .wonder-card-icon.mountain  { background: #dbeafe; }
+    .wonder-card-icon.river     { background: #ccfbf1; }
+    .wonder-card-icon.waterfall { background: #e0f2fe; }
+    .wonder-card-icon.canyon    { background: #fef3c7; }
+    .wonder-card-icon.desert    { background: #fff7ed; }
+    .wonder-card-icon.park      { background: #dcfce7; }
+    .wonder-card-icon.valley    { background: #f0fdf4; }
+    .wonder-card-icon.wall      { background: #f5f3ff; }
+    .wonder-card-icon.tower     { background: #fef9c3; }
+    .wonder-card-icon.building  { background: #f1f5f9; }
+    .wonder-card-icon.city      { background: #fff1f2; }
+    .wonder-card-icon.monument  { background: #fef3c7; }
+    .wonder-card-icon.theater   { background: #fdf2f8; }
+    .wonder-card-icon.statue    { background: #eff6ff; }
+
+    .wonder-card strong {
+      display: block;
+      font-size: 0.88rem;
+      color: var(--wonder-ink);
+      line-height: 1.35;
+      margin-bottom: 0.25rem;
+    }
+
+    .wonder-card small {
+      display: block;
+      font-size: 0.76rem;
+      color: var(--wonder-muted);
+    }
+
+    .builder-panel {
+      border: 1px solid var(--wonder-border);
+      border-radius: 22px;
+      background:
+        radial-gradient(circle at top right, rgba(31, 95, 191, 0.07), transparent 30%),
+        #ffffff;
+      overflow: hidden;
+    }
+
+    .builder-header {
+      padding: 1.4rem 1.6rem;
+      border-bottom: 1px solid var(--wonder-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .builder-header h3 {
+      color: var(--wonder-blue-dark);
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .builder-header p {
+      color: var(--wonder-muted);
+      margin: 0.25rem 0 0;
+      font-size: 0.9rem;
+    }
+
+    .part-list {
+      padding: 1.2rem 1.6rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .part-item {
+      border: 1px solid var(--wonder-border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .part-header {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.9rem 1.1rem;
+      background: #f8fbff;
+      border-bottom: 1px solid var(--wonder-border);
+    }
+
+    .part-number {
+      width: 30px;
+      height: 30px;
+      border-radius: 10px;
+      background: var(--wonder-blue);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .part-header h4 {
+      color: var(--wonder-ink);
+      font-size: 1rem;
+      margin: 0 0 0.15rem;
+    }
+
+    .part-header p {
+      color: var(--wonder-muted);
+      font-size: 0.8rem;
+      margin: 0;
+    }
+
+    .part-body {
+      padding: 1rem 1.1rem;
+    }
+
+    .model-hint {
+      padding: 0.7rem 0.9rem;
+      border-radius: 12px;
+      background: var(--wonder-soft-gold);
+      color: #92400e;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-bottom: 0.7rem;
+      line-height: 1.6;
+    }
+
+    .model-hint strong {
+      display: block;
+      margin-bottom: 0.2rem;
+      color: #78350f;
+    }
+
+    .part-textarea {
+      width: 100%;
+      min-height: 78px;
+      resize: vertical;
+      border: 1px solid var(--wonder-border);
+      border-radius: 12px;
+      padding: 0.8rem;
+      font: inherit;
+      font-size: 0.95rem;
+      color: var(--wonder-ink);
+      background: #ffffff;
+      line-height: 1.65;
+      box-sizing: border-box;
+    }
+
+    .part-textarea:focus {
+      outline: 2px solid var(--wonder-blue);
+      border-color: transparent;
+    }
+
+    .builder-actions {
+      display: flex;
+      gap: 0.85rem;
+      flex-wrap: wrap;
+      padding: 1.2rem 1.6rem;
+      border-top: 1px solid var(--wonder-border);
+    }
+
+    .req-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .req-table th,
+    .req-table td {
+      text-align: left;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--wonder-border);
+      color: var(--wonder-muted);
+      font-size: 0.95rem;
+    }
+
+    .req-table th {
+      color: var(--wonder-blue-dark);
+      font-weight: 900;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: #f8fbff;
+    }
+
+    .req-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .req-badge {
+      display: inline-block;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      background: var(--wonder-soft-green);
+      color: var(--wonder-green);
+    }
+
+    .language-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.2rem;
+    }
+
+    .language-card {
+      border: 1px solid var(--wonder-border);
+      border-radius: 20px;
+      background: #ffffff;
+      padding: 1.3rem;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
+    }
+
+    .language-card h3 {
+      color: var(--wonder-blue-dark);
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .language-card p {
+      color: var(--wonder-muted);
+      line-height: 1.75;
+      margin-bottom: 0.7rem;
+    }
+
+    .phrase-list {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .phrase-item {
+      padding: 0.55rem 0.85rem;
+      border-radius: 12px;
+      background: var(--wonder-soft-blue);
+      color: var(--wonder-ink);
+      font-size: 0.9rem;
+      font-weight: 700;
+      line-height: 1.5;
+    }
+
+    .vote-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .vote-card {
+      border: 1px solid var(--wonder-border);
+      border-radius: 18px;
+      padding: 1.2rem;
+      background: #ffffff;
+      box-shadow: 0 6px 16px rgba(20, 64, 130, 0.05);
+      text-align: center;
+    }
+
+    .vote-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: var(--wonder-blue-dark);
+      margin: 0 auto 0.75rem;
+    }
+
+    .vote-card:nth-child(1) .vote-icon { background: #fef3c7; }
+    .vote-card:nth-child(2) .vote-icon { background: #dcfce7; }
+    .vote-card:nth-child(3) .vote-icon { background: #dbeafe; }
+    .vote-card:nth-child(4) .vote-icon { background: #f3e8ff; }
+    .vote-card:nth-child(5) .vote-icon { background: #ccfbf1; }
+    .vote-card:nth-child(6) .vote-icon { background: #fce7f3; }
+
+    .vote-card h4 {
+      color: var(--wonder-ink);
+      font-size: 0.95rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .vote-card p {
+      color: var(--wonder-muted);
+      font-size: 0.82rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .prompt-code {
+      display: block;
+      padding: 0.75rem;
+      border-radius: 12px;
+      background: #102033;
+      color: #ffffff;
+      white-space: pre-wrap;
+      line-height: 1.55;
+      font-size: 0.82rem;
+      font-family: monospace;
+      margin-top: 0.75rem;
+    }
+
+    .hidden { display: none; }
+
+    @media (max-width: 980px) {
+      .wonder-hero,
+      .overview-grid,
+      .language-grid,
+      .vote-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .wonder-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .wonder-type-tabs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wonder-page {
+        width: min(100% - 22px, 1180px);
+        padding-top: 1.5rem;
+      }
+
+      .wonder-hero,
+      .wonder-block {
+        padding: 1.35rem;
+        border-radius: 22px;
+      }
+
+      .wonder-cards-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .wonder-actions .btn {
+        width: 100%;
+      }
+
+      .req-table th:last-child,
+      .req-table td:last-child {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand">
+        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="wonder-page">
+
+    <section class="wonder-hero">
+      <div>
+        <p class="wonder-eyebrow"><span class="wonder-dot"></span>Practice Lab &mdash; Unit 3</p>
+        <h1>The Most Amazing Wonder <span>Presentation</span></h1>
+        <p>
+          Students choose a human or natural wonder and prepare a 2 to 4 minute
+          oral presentation in English using superlatives.
+        </p>
+        <p>
+          The goal is to convince the class that their place is
+          <strong>one of the most amazing wonders in the world</strong>.
+        </p>
+        <div class="wonder-actions">
+          <a href="#presentation-builder" class="btn btn-primary">Open Presentation Builder</a>
+          <a href="superlative-wall.html" class="btn btn-secondary">Superlative Wall</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+
+      <div class="wonder-hero-image">
+        <img
+          src="../../assets/img/english-intermediate/amazing-wonder-presentation.png"
+          alt="Students presenting about world wonders using superlatives"
+          onerror="this.src='../../assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png'"
+        />
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Activity Overview</h2>
+      <p class="section-subtitle">
+        Each student or group selects a wonder and prepares a short oral
+        presentation with visual support. The presentation must include
+        superlatives, a number or measurement, reasons, and a recommendation.
+      </p>
+      <div class="overview-grid">
+        <div class="overview-card">
+          <h3>Language goal</h3>
+          <p>Use superlatives such as <strong>the highest</strong>, <strong>the most beautiful</strong>, and <strong>one of the most amazing</strong>, plus location phrases and measurement language.</p>
+        </div>
+        <div class="overview-card">
+          <h3>Speaking goal</h3>
+          <p>Deliver a 2 to 4 minute oral presentation with a clear opening, a superlative description, supporting facts, and a final recommendation.</p>
+        </div>
+        <div class="overview-card">
+          <h3>Final product</h3>
+          <p>An oral presentation with visual support: a large image, a slide, a poster, a visual card, or a short digital presentation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block" id="presentation-builder">
+      <h2 class="section-title">Presentation Builder</h2>
+      <p class="section-subtitle">
+        Choose a wonder and the builder generates a 6-part speech scaffold with
+        model sentences. Edit each section to personalize your presentation.
+      </p>
+
+      <div class="wonder-type-tabs">
+        <button type="button" class="wonder-tab active" id="tabNatural">
+          Natural Wonders
+          <span>Mount Everest &middot; Ca&ntilde;o Cristales &middot; Amazon River &middot; and more</span>
+        </button>
+        <button type="button" class="wonder-tab" id="tabHuman">
+          Human Wonders
+          <span>Great Wall &middot; Eiffel Tower &middot; Burj Khalifa &middot; and more</span>
+        </button>
+      </div>
+
+      <div class="wonder-cards-grid" id="wonderGrid"></div>
+
+      <div class="builder-panel">
+        <div class="builder-header">
+          <div>
+            <h3 id="builderTitle">Select a wonder above to begin</h3>
+            <p id="builderSubtitle">Your speech scaffold will appear here.</p>
+          </div>
+        </div>
+        <div class="part-list" id="partList">
+          <p style="color:var(--wonder-muted);padding:0.5rem 0;">Choose a wonder from the list above to generate your presentation template.</p>
+        </div>
+        <div class="builder-actions hidden" id="builderActionsBar">
+          <button type="button" class="btn btn-primary" id="copyAllBtn">Copy full presentation</button>
+          <button type="button" class="btn btn-secondary" id="clearAllBtn">Clear all fields</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Presentation Structure</h2>
+      <p class="section-subtitle">
+        Every presentation must follow these six parts in order.
+        They represent the complete speaking sequence for the activity.
+      </p>
+      <div class="language-grid">
+        <div class="language-card">
+          <h3>Parts 1 &ndash; 3</h3>
+          <p><strong>01 Opening:</strong> Greet the class and introduce the place.<br><em>Good morning. Today I am going to talk about&hellip;</em></p>
+          <p><strong>02 Basic information:</strong> Say what it is, where it is, and whether it is natural or human.<br><em>It is located in&hellip; / It is a natural wonder.</em></p>
+          <p><strong>03 Superlative description:</strong> Use at least 3 superlatives.<br><em>It is the highest&hellip; / It is one of the most beautiful&hellip;</em></p>
+        </div>
+        <div class="language-card">
+          <h3>Parts 4 &ndash; 6</h3>
+          <p><strong>04 Numbers and measurements:</strong> Include at least one fact with a number.<br><em>It is 8,849 meters high. / It is more than 2,000 years old.</em></p>
+          <p><strong>05 Why is it special?</strong> Give at least 2 reasons.<br><em>It is special because&hellip; / It is famous because&hellip;</em></p>
+          <p><strong>06 Final recommendation:</strong> Close by recommending the place.<br><em>You should visit it because it is unforgettable.</em></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Required Structures</h2>
+      <p class="section-subtitle">
+        Every presentation must include these six sentence structures.
+        They are the core language points of Unit 3.
+      </p>
+      <div class="language-grid">
+        <div class="language-card">
+          <h3>Mandatory phrases</h3>
+          <div class="phrase-list">
+            <div class="phrase-item">It is located in&hellip;</div>
+            <div class="phrase-item">It is a human / natural wonder.</div>
+            <div class="phrase-item">It is one of the most&hellip;</div>
+            <div class="phrase-item">It is the highest / longest / biggest / oldest&hellip;</div>
+            <div class="phrase-item">It is special because&hellip;</div>
+            <div class="phrase-item">You should visit it because&hellip;</div>
+          </div>
+        </div>
+        <div class="language-card">
+          <h3>Superlative patterns</h3>
+          <p><strong>Short superlative:</strong><br>It is the + adjective + noun.<br><em>Mount Everest is <strong>the highest mountain</strong> in the world.</em></p>
+          <p><strong>Group superlative:</strong><br>It is one of the most + adjective + noun.<br><em>Ca&ntilde;o Cristales is <strong>one of the most colorful rivers</strong> in Colombia.</em></p>
+          <p><strong>Opinion form:</strong><br>In my opinion, it is one of the most&hellip;<br><em>In my opinion, <strong>The Grand Canyon</strong> is one of the most impressive natural wonders.</em></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Minimum Requirements</h2>
+      <p class="section-subtitle">
+        Use this checklist to review your presentation before you deliver it in class.
+        Every row must be covered.
+      </p>
+      <table class="req-table">
+        <thead>
+          <tr>
+            <th>Requirement</th>
+            <th>Minimum</th>
+            <th>Example</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Place name</td>
+            <td><span class="req-badge">1</span></td>
+            <td>Today I am going to talk about <strong>Mount Everest</strong>.</td>
+          </tr>
+          <tr>
+            <td>Type of wonder</td>
+            <td><span class="req-badge">1</span></td>
+            <td>It is a <strong>natural</strong> wonder.</td>
+          </tr>
+          <tr>
+            <td>Location</td>
+            <td><span class="req-badge">1</span></td>
+            <td>It is located in <strong>Nepal and Tibet</strong>.</td>
+          </tr>
+          <tr>
+            <td>Superlatives</td>
+            <td><span class="req-badge">min. 3</span></td>
+            <td>It is <strong>the highest mountain</strong> in the world.</td>
+          </tr>
+          <tr>
+            <td>Number or measurement</td>
+            <td><span class="req-badge">min. 1</span></td>
+            <td>It is <strong>8,849 meters</strong> high.</td>
+          </tr>
+          <tr>
+            <td>Reason</td>
+            <td><span class="req-badge">min. 2</span></td>
+            <td>It is special because it is <strong>unique and natural</strong>.</td>
+          </tr>
+          <tr>
+            <td>Recommendation</td>
+            <td><span class="req-badge">min. 1</span></td>
+            <td>You should visit this place because it is <strong>unforgettable</strong>.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Sample Presentation</h2>
+      <p class="section-subtitle">Topic: Ca&ntilde;o Cristales &mdash; a complete model for students</p>
+      <div class="language-grid">
+        <div class="language-card">
+          <h3>Parts 1&ndash;3: Opening, Information, Superlatives</h3>
+          <p>Good morning. Today I am going to talk about Ca&ntilde;o Cristales.</p>
+          <p>Ca&ntilde;o Cristales is a natural wonder in Colombia. It is located in Meta. It is one of the most beautiful rivers in Colombia.</p>
+          <p>This river is famous because it has many colors. It is <strong>one of the most colorful rivers in the world</strong>. It is also <strong>one of the most amazing natural places in Colombia</strong>. In my opinion, it is <strong>one of the most unique places</strong> on Earth.</p>
+        </div>
+        <div class="language-card">
+          <h3>Parts 4&ndash;6: Measurements, Reasons, Recommendation</h3>
+          <p>Ca&ntilde;o Cristales is about <strong>100 kilometers long</strong>. It is not very long compared to other rivers, but it is very special because of its colors.</p>
+          <p>It is special because it is <strong>unique and natural</strong>. It is also famous because <strong>many tourists visit it</strong> every year and love its colors.</p>
+          <p>In my opinion, Ca&ntilde;o Cristales is one of the best places to visit in Colombia because it is beautiful, natural, and unique.</p>
+          <p><strong>You should visit Ca&ntilde;o Cristales because it is unforgettable. Thank you for listening.</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="wonder-block">
+      <h2 class="section-title">Class Vote</h2>
+      <p class="section-subtitle">
+        After all groups have presented, the class votes in six categories.
+        This closes the activity using more superlatives in a natural context.
+      </p>
+      <div class="vote-grid">
+        <div class="vote-card">
+          <div class="vote-icon">TOP</div>
+          <h4>The most beautiful presentation</h4>
+          <p>The group with the most visual and creative display.</p>
+        </div>
+        <div class="vote-card">
+          <div class="vote-icon">INT</div>
+          <h4>The most interesting wonder</h4>
+          <p>The place that surprised the class the most.</p>
+        </div>
+        <div class="vote-card">
+          <div class="vote-icon">SPK</div>
+          <h4>The best speaker</h4>
+          <p>The student with the clearest and most confident delivery.</p>
+        </div>
+        <div class="vote-card">
+          <div class="vote-icon">CRE</div>
+          <h4>The most creative group</h4>
+          <p>The group with the most original visual support.</p>
+        </div>
+        <div class="vote-card">
+          <div class="vote-icon">VIS</div>
+          <h4>The best place to visit</h4>
+          <p>The wonder the class most wants to visit after hearing all presentations.</p>
+        </div>
+        <div class="vote-card">
+          <div class="vote-icon">FACT</div>
+          <h4>The most surprising fact</h4>
+          <p>The number or measurement that nobody expected.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    const wonders = {
+      natural: [
+        {
+          name: "Mount Everest",
+          location: "Nepal and Tibet",
+          category: "natural",
+          fact: "the highest mountain in the world",
+          superlatives: [
+            "the highest mountain in the world",
+            "one of the most impressive natural wonders on Earth",
+            "one of the most challenging places for climbers in the world"
+          ],
+          measurement: "It is 8,849 meters high.",
+          age: "It is about 60 million years old.",
+          type: "mountain",
+          label: "MTN"
+        },
+        {
+          name: "Caño Cristales",
+          location: "Meta, Colombia",
+          category: "natural",
+          fact: "one of the most colorful rivers in the world",
+          superlatives: [
+            "one of the most colorful rivers in the world",
+            "one of the most beautiful natural places in Colombia",
+            "one of the most unique rivers on Earth"
+          ],
+          measurement: "It is about 100 kilometers long.",
+          age: null,
+          type: "river",
+          label: "RIV"
+        },
+        {
+          name: "The Amazon River",
+          location: "South America",
+          category: "natural",
+          fact: "one of the longest and most important rivers in the world",
+          superlatives: [
+            "one of the longest rivers in the world",
+            "one of the most important ecosystems for the environment",
+            "one of the most biodiverse regions on the planet"
+          ],
+          measurement: "It is about 6,400 kilometers long.",
+          age: null,
+          type: "river",
+          label: "RIV"
+        },
+        {
+          name: "Niagara Falls",
+          location: "Canada and the United States",
+          category: "natural",
+          fact: "one of the most powerful waterfalls in North America",
+          superlatives: [
+            "one of the most powerful waterfalls in North America",
+            "one of the most visited natural places in the world",
+            "one of the most impressive waterfalls on Earth"
+          ],
+          measurement: "The falls are about 57 meters high.",
+          age: null,
+          type: "waterfall",
+          label: "FLS"
+        },
+        {
+          name: "The Grand Canyon",
+          location: "Arizona, the United States",
+          category: "natural",
+          fact: "one of the most impressive canyons in the world",
+          superlatives: [
+            "one of the most impressive canyons in the world",
+            "one of the oldest geological formations in North America",
+            "one of the most visited natural parks in the United States"
+          ],
+          measurement: "It is about 446 kilometers long and 1,800 meters deep.",
+          age: "It is about 5 to 6 million years old.",
+          type: "canyon",
+          label: "CYN"
+        },
+        {
+          name: "The Sahara Desert",
+          location: "North Africa",
+          category: "natural",
+          fact: "the largest hot desert in the world",
+          superlatives: [
+            "the largest hot desert in the world",
+            "one of the hottest and driest places on Earth",
+            "one of the most extreme natural environments in the world"
+          ],
+          measurement: "It covers about 9 million square kilometers.",
+          age: null,
+          type: "desert",
+          label: "DES"
+        },
+        {
+          name: "Tayrona National Park",
+          location: "Santa Marta, Colombia",
+          category: "natural",
+          fact: "one of the most beautiful natural parks in Colombia",
+          superlatives: [
+            "one of the most beautiful natural parks in Colombia",
+            "one of the most biodiverse coastal areas in South America",
+            "one of the most popular tourist destinations in Colombia"
+          ],
+          measurement: "It covers about 150 square kilometers.",
+          age: null,
+          type: "park",
+          label: "PRK"
+        },
+        {
+          name: "Cocora Valley",
+          location: "Quindío, Colombia",
+          category: "natural",
+          fact: "home to the tallest wax palm trees in the world",
+          superlatives: [
+            "home to the tallest wax palm trees in the world",
+            "one of the most scenic valleys in Colombia",
+            "one of the most unique landscapes in South America"
+          ],
+          measurement: "The wax palms can grow up to 60 meters tall.",
+          age: null,
+          type: "valley",
+          label: "VAL"
+        }
+      ],
+      human: [
+        {
+          name: "The Great Wall of China",
+          location: "China",
+          category: "human",
+          fact: "one of the longest human structures ever built",
+          superlatives: [
+            "one of the longest human structures ever built",
+            "one of the most famous historical monuments in the world",
+            "one of the most impressive engineering achievements in history"
+          ],
+          measurement: "It is about 21,000 kilometers long.",
+          age: "It is more than 2,000 years old.",
+          type: "wall",
+          label: "WAL"
+        },
+        {
+          name: "The Eiffel Tower",
+          location: "Paris, France",
+          category: "human",
+          fact: "one of the most recognizable towers in the world",
+          superlatives: [
+            "one of the most famous towers in the world",
+            "one of the most visited monuments in Europe",
+            "one of the most recognizable structures on Earth"
+          ],
+          measurement: "It is 330 meters tall.",
+          age: "It was built in 1889.",
+          type: "tower",
+          label: "TWR"
+        },
+        {
+          name: "Burj Khalifa",
+          location: "Dubai, United Arab Emirates",
+          category: "human",
+          fact: "the tallest building in the world",
+          superlatives: [
+            "the tallest building in the world",
+            "one of the most impressive modern structures on Earth",
+            "one of the most visited skyscrapers in the world"
+          ],
+          measurement: "It is 828 meters tall.",
+          age: "It was completed in 2010.",
+          type: "building",
+          label: "BLD"
+        },
+        {
+          name: "Machu Picchu",
+          location: "Cusco, Peru",
+          category: "human",
+          fact: "one of the most impressive ancient cities in the world",
+          superlatives: [
+            "one of the most impressive ancient cities in the world",
+            "one of the most visited historical sites in South America",
+            "one of the most mysterious and beautiful places in history"
+          ],
+          measurement: "It is located about 2,430 meters above sea level.",
+          age: "It was built in the 15th century.",
+          type: "city",
+          label: "CTY"
+        },
+        {
+          name: "The Pyramids of Egypt",
+          location: "Giza, Egypt",
+          category: "human",
+          fact: "some of the oldest and most famous monuments in the world",
+          superlatives: [
+            "some of the oldest monuments in the world",
+            "one of the most visited historical sites in Africa",
+            "one of the most mysterious human creations in history"
+          ],
+          measurement: "The Great Pyramid is about 138 meters high.",
+          age: "They are more than 4,500 years old.",
+          type: "monument",
+          label: "MON"
+        },
+        {
+          name: "The Colosseum",
+          location: "Rome, Italy",
+          category: "human",
+          fact: "one of the most historic amphitheaters in the world",
+          superlatives: [
+            "one of the most historic amphitheaters in the world",
+            "one of the most impressive examples of Roman architecture",
+            "one of the most visited monuments in Italy"
+          ],
+          measurement: "It could hold between 50,000 and 80,000 visitors.",
+          age: "It was built in 70 AD.",
+          type: "theater",
+          label: "ROM"
+        },
+        {
+          name: "The Statue of Liberty",
+          location: "New York, the United States",
+          category: "human",
+          fact: "one of the most recognizable symbols of freedom in the world",
+          superlatives: [
+            "one of the most recognizable symbols of freedom in the world",
+            "one of the most visited monuments in the United States",
+            "one of the most famous statues on Earth"
+          ],
+          measurement: "It is 93 meters tall including the base.",
+          age: "It was built in 1886.",
+          type: "statue",
+          label: "STU"
+        },
+        {
+          name: "Cartagena's Walled City",
+          location: "Cartagena, Colombia",
+          category: "human",
+          fact: "one of the most beautiful walled cities in Latin America",
+          superlatives: [
+            "one of the most beautiful walled cities in Latin America",
+            "one of the most historic cities in Colombia",
+            "one of the most popular tourist destinations in Colombia"
+          ],
+          measurement: "The walls are about 11 kilometers long.",
+          age: "They were built in the 16th century.",
+          type: "city",
+          label: "CTY"
+        }
+      ]
+    };
+
+    const parts = [
+      {
+        number: "01",
+        title: "Opening",
+        description: "Greet the class and introduce the place.",
+        getHint: (w) => `Good morning. Today I am going to talk about ${w.name}.`,
+        getDefault: (w) => `Good morning. Today I am going to talk about ${w.name}.`
+      },
+      {
+        number: "02",
+        title: "Basic Information",
+        description: "Say what it is, where it is, and whether it is natural or human.",
+        getHint: (w) => `It is a ${w.category} wonder. It is located in ${w.location}. It is ${w.fact}.`,
+        getDefault: (w) => `${w.name} is a ${w.category} wonder.\nIt is located in ${w.location}.\nIt is ${w.fact}.`
+      },
+      {
+        number: "03",
+        title: "Superlative Description",
+        description: "Use at least 3 superlatives to describe the place.",
+        getHint: (w) => `${w.name} is ${w.superlatives[0]}. It is also ${w.superlatives[1]}. In my opinion, it is ${w.superlatives[2]}.`,
+        getDefault: (w) => `${w.name} is ${w.superlatives[0]}.\nIt is also ${w.superlatives[1]}.\nIn my opinion, it is ${w.superlatives[2]}.`
+      },
+      {
+        number: "04",
+        title: "Numbers and Measurements",
+        description: "Include at least one number: size, height, length, age, or year.",
+        getHint: (w) => [w.measurement, w.age].filter(Boolean).join(" "),
+        getDefault: (w) => [w.measurement, w.age].filter(Boolean).join("\n")
+      },
+      {
+        number: "05",
+        title: "Why Is It Special?",
+        description: "Give at least 2 reasons why the place is important, beautiful, or interesting.",
+        getHint: (w) => `It is special because it is unique and ${w.category === "natural" ? "a beautiful natural place" : "an important part of human history"}. It is also famous because many people visit it every year.`,
+        getDefault: (w) => `It is special because it is unique and ${w.category === "natural" ? "a beautiful natural place" : "an important part of human history"}.\nIt is also famous because many people visit it every year.`
+      },
+      {
+        number: "06",
+        title: "Final Recommendation",
+        description: "Close by recommending the place to the class.",
+        getHint: (w) => `You should visit ${w.name} because it is unforgettable. In my opinion, it is one of the most amazing places in the world. Thank you for listening.`,
+        getDefault: (w) => `You should visit ${w.name} because it is unforgettable.\nIn my opinion, it is one of the most amazing places in the world.\nThank you for listening.`
+      }
+    ];
+
+    let activeType = "natural";
+    let activeWonder = null;
+
+    document.getElementById("tabNatural").addEventListener("click", () => switchType("natural"));
+    document.getElementById("tabHuman").addEventListener("click", () => switchType("human"));
+
+    function switchType(type) {
+      activeType = type;
+      activeWonder = null;
+      document.getElementById("tabNatural").classList.toggle("active", type === "natural");
+      document.getElementById("tabHuman").classList.toggle("active", type === "human");
+      renderWonderGrid();
+      renderBuilder();
+    }
+
+    function renderWonderGrid() {
+      const grid = document.getElementById("wonderGrid");
+      grid.innerHTML = "";
+      wonders[activeType].forEach((wonder) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "wonder-card" + (activeWonder && activeWonder.name === wonder.name ? " selected" : "");
+        card.innerHTML =
+          '<div class="wonder-card-icon ' + wonder.type + '">' + wonder.label + "</div>" +
+          "<strong>" + wonder.name + "</strong>" +
+          "<small>" + wonder.location + "</small>";
+        card.addEventListener("click", () => {
+          activeWonder = wonder;
+          renderWonderGrid();
+          renderBuilder();
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    function renderBuilder() {
+      const titleEl = document.getElementById("builderTitle");
+      const subtitleEl = document.getElementById("builderSubtitle");
+      const partListEl = document.getElementById("partList");
+      const actionsBar = document.getElementById("builderActionsBar");
+
+      if (!activeWonder) {
+        titleEl.textContent = "Select a wonder above to begin";
+        subtitleEl.textContent = "Your speech scaffold will appear here.";
+        partListEl.innerHTML = '<p style="color:var(--wonder-muted);padding:0.5rem 0;">Choose a wonder from the list above to generate your presentation template.</p>';
+        actionsBar.classList.add("hidden");
+        return;
+      }
+
+      titleEl.textContent = activeWonder.name;
+      subtitleEl.textContent =
+        (activeWonder.category === "natural" ? "Natural Wonder" : "Human Wonder") +
+        " · " + activeWonder.location;
+      actionsBar.classList.remove("hidden");
+
+      partListEl.innerHTML = "";
+      parts.forEach((part) => {
+        const item = document.createElement("div");
+        item.className = "part-item";
+        item.innerHTML =
+          '<div class="part-header">' +
+            '<div class="part-number">' + part.number + "</div>" +
+            "<div>" +
+              "<h4>" + part.title + "</h4>" +
+              "<p>" + part.description + "</p>" +
+            "</div>" +
+          "</div>" +
+          '<div class="part-body">' +
+            '<div class="model-hint"><strong>Model sentence:</strong>' + part.getHint(activeWonder) + "</div>" +
+            '<textarea class="part-textarea" id="part-' + part.number + '" rows="3">' + part.getDefault(activeWonder) + "</textarea>" +
+          "</div>";
+        partListEl.appendChild(item);
+      });
+    }
+
+    document.getElementById("copyAllBtn").addEventListener("click", async () => {
+      const textareas = document.querySelectorAll(".part-textarea");
+      const text = Array.from(textareas).map((ta) => ta.value.trim()).filter(Boolean).join("\n\n");
+      if (!text) return;
+      try {
+        await navigator.clipboard.writeText(text);
+        const btn = document.getElementById("copyAllBtn");
+        const original = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = original; }, 2000);
+      } catch (e) {
+        console.error(e);
+      }
+    });
+
+    document.getElementById("clearAllBtn").addEventListener("click", () => {
+      document.querySelectorAll(".part-textarea").forEach((ta) => { ta.value = ""; });
+    });
+
+    renderWonderGrid();
+    renderBuilder();
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+</body>
+</html>
