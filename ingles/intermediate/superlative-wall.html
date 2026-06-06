@@ -286,8 +286,8 @@
 
     .wall-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.15rem;
     }
 
     .place-card {
@@ -298,7 +298,7 @@
       box-shadow: 0 12px 28px rgba(20, 64, 130, 0.06);
       cursor: pointer;
       transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
-      min-height: 310px;
+      min-height: 390px;
       display: flex;
       flex-direction: column;
     }
@@ -311,11 +311,11 @@
     }
 
     .place-visual {
-      min-height: 165px;
+      min-height: 280px;
       position: relative;
       display: flex;
       align-items: flex-end;
-      padding: 1rem;
+      padding: 0.95rem 1rem 1rem;
       color: #ffffff;
       overflow: hidden;
       background:
@@ -380,7 +380,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 0.65rem;
+      gap: 0.6rem;
     }
 
     .place-body p {
@@ -389,16 +389,19 @@
       margin: 0;
     }
 
-    .file-chip {
+    .place-review {
+      color: var(--wall-ink);
+      font-size: 0.96rem;
+    }
+
+    .place-audio {
+      width: 100%;
+      height: 34px;
       margin-top: auto;
-      display: block;
-      padding: 0.55rem 0.7rem;
-      border-radius: 12px;
-      background: #f8fbff;
-      border: 1px solid #e2ecfa;
-      color: #42556d;
-      font-size: 0.8rem;
-      word-break: break-word;
+    }
+
+    .place-audio::-webkit-media-controls-panel {
+      background-color: #eef5ff;
     }
 
     .question-list {
@@ -643,16 +646,6 @@
 
       <div class="wall-grid" id="placeGrid"></div>
 
-      <div class="selection-panel" aria-live="polite">
-        <h3>Class Answer Builder</h3>
-        <p id="selectedQuestion">Choose a question and a place card.</p>
-        <div class="sentence-box" id="modelSentence">Model sentence will appear here.</div>
-        <textarea class="textarea-field" id="studentReason" placeholder="Student reason: I chose this place because..."></textarea>
-        <div class="tool-actions">
-          <button type="button" class="btn btn-primary" id="copyModelBtn">Copy model sentence</button>
-          <button type="button" class="btn btn-secondary" id="clearReasonBtn">Clear reason</button>
-        </div>
-      </div>
     </section>
 
     <section class="wall-block">
@@ -714,26 +707,6 @@
       </div>
     </section>
 
-    <section class="wall-block">
-      <h2 class="section-title">Image Production Notes</h2>
-      <p class="section-subtitle">
-        The activity is ready with visual classroom cards. When generated images are
-        available, place them in the folder below using the exact names from the guide.
-      </p>
-
-      <div class="prompt-grid">
-        <div class="prompt-card">
-          <h3>Image folder</h3>
-          <p>Save generated cards here:</p>
-          <code>assets/img/english-intermediate/practice-lab/superlative-wall/</code>
-        </div>
-        <div class="prompt-card">
-          <h3>Prompt guide</h3>
-          <p>The full list of 30 prompts and filenames is stored here:</p>
-          <code>assets/img/english-intermediate/practice-lab/superlative-wall/image-prompts.md</code>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -749,12 +722,12 @@
         focus: ["the tallest", "the highest", "the biggest"],
         questions: ["Which one is the tallest?", "Which one is the highest?", "Which one is the biggest?"],
         places: [
-          { name: "Mount Everest", country: "Nepal / Tibet", fact: "8,849 meters high", file: "wall-1-mount-everest.png", type: "mountain" },
-          { name: "Burj Khalifa", country: "United Arab Emirates", fact: "828 meters tall", file: "wall-1-burj-khalifa.png", type: "city" },
-          { name: "Eiffel Tower", country: "France", fact: "330 meters tall", file: "wall-1-eiffel-tower.png", type: "city" },
-          { name: "Monserrate", country: "Colombia", fact: "3,152 meters high", file: "wall-1-monserrate.png", type: "mountain" },
-          { name: "Amazon Rainforest", country: "South America", fact: "one of the largest rainforests", file: "wall-1-amazon-rainforest.png", type: "nature" },
-          { name: "Sahara Desert", country: "Africa", fact: "one of the largest deserts", file: "wall-1-sahara-desert.png", type: "desert" }
+          { name: "Mount Everest", country: "Nepal / Tibet", fact: "8,849 meters high", file: "wall-1-mount-everest.png", type: "mountain", review: "A snowy giant and the clearest image for extreme height." },
+          { name: "Burj Khalifa", country: "United Arab Emirates", fact: "828 meters tall", file: "wall-1-burj-khalifa.png", type: "city", review: "A modern skyscraper that makes tall comparisons easy." },
+          { name: "Eiffel Tower", country: "France", fact: "330 meters tall", file: "wall-1-eiffel-tower.png", type: "city", review: "A famous tower with a strong city landmark profile." },
+          { name: "Monserrate", country: "Colombia", fact: "3,152 meters high", file: "wall-1-monserrate.png", type: "mountain", review: "A mountain viewpoint above Bogota, useful for high places." },
+          { name: "Amazon Rainforest", country: "South America", fact: "one of the largest rainforests", file: "wall-1-amazon-rainforest.png", type: "nature", review: "A vast green forest for talking about big natural areas." },
+          { name: "Sahara Desert", country: "Africa", fact: "one of the largest deserts", file: "wall-1-sahara-desert.png", type: "desert", review: "Wide golden dunes that help students picture size." }
         ]
       },
       {
@@ -764,12 +737,12 @@
         focus: ["the most beautiful", "the most amazing", "the most colorful", "the most interesting"],
         questions: ["Which one is the most beautiful?", "Which one is the most amazing?", "Which one is the most colorful?", "Which one is the most interesting?"],
         places: [
-          { name: "Ca&ntilde;o Cristales", country: "Colombia", fact: "colorful river", file: "wall-2-cano-cristales.png", type: "nature" },
-          { name: "Niagara Falls", country: "Canada / United States", fact: "powerful waterfall", file: "wall-2-niagara-falls.png", type: "nature" },
-          { name: "The Grand Canyon", country: "United States", fact: "amazing canyon", file: "wall-2-grand-canyon.png", type: "desert" },
-          { name: "Cocora Valley", country: "Colombia", fact: "tall wax palms", file: "wall-2-cocora-valley.png", type: "nature" },
-          { name: "The Amazon River", country: "South America", fact: "long river", file: "wall-2-amazon-river.png", type: "nature" },
-          { name: "Tayrona National Park", country: "Colombia", fact: "beach and rainforest", file: "wall-2-tayrona-national-park.png", type: "coast" }
+          { name: "Ca&ntilde;o Cristales", country: "Colombia", fact: "colorful river", file: "wall-2-cano-cristales.png", type: "nature", review: "A bright river that invites opinions about color and beauty." },
+          { name: "Niagara Falls", country: "Canada / United States", fact: "powerful waterfall", file: "wall-2-niagara-falls.png", type: "nature", review: "A dramatic waterfall for talking about power and impact." },
+          { name: "The Grand Canyon", country: "United States", fact: "amazing canyon", file: "wall-2-grand-canyon.png", type: "desert", review: "A huge red-rock landscape with strong visual depth." },
+          { name: "Cocora Valley", country: "Colombia", fact: "tall wax palms", file: "wall-2-cocora-valley.png", type: "nature", review: "A green valley with palms that feel unusual and peaceful." },
+          { name: "The Amazon River", country: "South America", fact: "long river", file: "wall-2-amazon-river.png", type: "nature", review: "A wide river that connects nature, distance, and scale." },
+          { name: "Tayrona National Park", country: "Colombia", fact: "beach and rainforest", file: "wall-2-tayrona-national-park.png", type: "coast", review: "A coast where sea, rocks, and forest meet in one view." }
         ]
       },
       {
@@ -779,12 +752,12 @@
         focus: ["the oldest", "the most ancient", "the most historic", "the most important"],
         questions: ["Which one is the oldest?", "Which one is the most historic?", "Which one is the most important?", "Which one is the most famous ancient place?"],
         places: [
-          { name: "The Great Wall of China", country: "China", fact: "ancient wall", file: "wall-3-great-wall-china.png", type: "history" },
-          { name: "The Pyramids of Egypt", country: "Egypt", fact: "ancient monuments", file: "wall-3-pyramids-egypt.png", type: "history" },
-          { name: "Machu Picchu", country: "Peru", fact: "historic mountain city", file: "wall-3-machu-picchu.png", type: "mountain" },
-          { name: "The Colosseum", country: "Italy", fact: "historic amphitheater", file: "wall-3-colosseum.png", type: "history" },
-          { name: "The Lost City", country: "Colombia", fact: "ancient stone terraces", file: "wall-3-lost-city.png", type: "nature" },
-          { name: "Stonehenge", country: "United Kingdom", fact: "ancient stone circle", file: "wall-3-stonehenge.png", type: "history" }
+          { name: "The Great Wall of China", country: "China", fact: "ancient wall", file: "wall-3-great-wall-china.png", type: "history", review: "A long ancient wall that shows history across mountains." },
+          { name: "The Pyramids of Egypt", country: "Egypt", fact: "ancient monuments", file: "wall-3-pyramids-egypt.png", type: "history", review: "Stone monuments that make age and history visible." },
+          { name: "Machu Picchu", country: "Peru", fact: "historic mountain city", file: "wall-3-machu-picchu.png", type: "mountain", review: "A mountain city that mixes history, mystery, and scenery." },
+          { name: "The Colosseum", country: "Italy", fact: "historic amphitheater", file: "wall-3-colosseum.png", type: "history", review: "A Roman arena that helps students discuss famous history." },
+          { name: "The Lost City", country: "Colombia", fact: "ancient stone terraces", file: "wall-3-lost-city.png", type: "nature", review: "Jungle terraces that feel old, remote, and important." },
+          { name: "Stonehenge", country: "United Kingdom", fact: "ancient stone circle", file: "wall-3-stonehenge.png", type: "history", review: "A stone circle that works well for ancient-place comparisons." }
         ]
       },
       {
@@ -794,12 +767,12 @@
         focus: ["the most famous", "the most visited", "the most popular", "the most recognizable"],
         questions: ["Which one is the most famous?", "Which one is the most popular?", "Which one is the most recognizable?", "Which one is the most visited?"],
         places: [
-          { name: "The Great Wall of China", country: "China", fact: "famous human wonder", file: "wall-4-great-wall-china.png", type: "history" },
-          { name: "Eiffel Tower", country: "France", fact: "famous landmark", file: "wall-4-eiffel-tower.png", type: "city" },
-          { name: "Statue of Liberty", country: "United States", fact: "recognizable monument", file: "wall-4-statue-liberty.png", type: "city" },
-          { name: "Christ the Redeemer", country: "Brazil", fact: "famous monument", file: "wall-4-christ-redeemer.png", type: "mountain" },
-          { name: "Burj Khalifa", country: "United Arab Emirates", fact: "famous skyscraper", file: "wall-4-burj-khalifa.png", type: "city" },
-          { name: "Taj Mahal", country: "India", fact: "famous monument", file: "wall-4-taj-mahal.png", type: "history" }
+          { name: "The Great Wall of China", country: "China", fact: "famous human wonder", file: "wall-4-great-wall-china.png", type: "history", review: "A world icon that many students recognize quickly." },
+          { name: "Eiffel Tower", country: "France", fact: "famous landmark", file: "wall-4-eiffel-tower.png", type: "city", review: "A classic Paris symbol for fame and recognition." },
+          { name: "Statue of Liberty", country: "United States", fact: "recognizable monument", file: "wall-4-statue-liberty.png", type: "city", review: "A harbor monument that represents freedom and identity." },
+          { name: "Christ the Redeemer", country: "Brazil", fact: "famous monument", file: "wall-4-christ-redeemer.png", type: "mountain", review: "A statue above Rio with a powerful city view." },
+          { name: "Burj Khalifa", country: "United Arab Emirates", fact: "famous skyscraper", file: "wall-4-burj-khalifa.png", type: "city", review: "A famous modern tower for skyline comparisons." },
+          { name: "Taj Mahal", country: "India", fact: "famous monument", file: "wall-4-taj-mahal.png", type: "history", review: "A marble monument known for beauty and symmetry." }
         ]
       },
       {
@@ -809,12 +782,12 @@
         focus: ["the best place to visit", "the most relaxing", "the most exciting", "the best place for tourists"],
         questions: ["Which one is the best place to visit?", "Which one is the most exciting?", "Which one is the most relaxing?", "Which one is the best place for a long weekend?", "Which one is the best place for tourists?"],
         places: [
-          { name: "Cartagena", country: "Colombia", fact: "colorful walled city", file: "wall-5-cartagena.png", type: "coast" },
-          { name: "San Andres", country: "Colombia", fact: "Caribbean island", file: "wall-5-san-andres.png", type: "coast" },
-          { name: "Medellin", country: "Colombia", fact: "modern mountain city", file: "wall-5-medellin.png", type: "city" },
-          { name: "Santa Marta", country: "Colombia", fact: "beach and mountains", file: "wall-5-santa-marta.png", type: "coast" },
-          { name: "Guatape", country: "Colombia", fact: "colorful town and lake", file: "wall-5-guatape.png", type: "nature" },
-          { name: "Salento", country: "Colombia", fact: "coffee town", file: "wall-5-salento.png", type: "nature" }
+          { name: "Cartagena", country: "Colombia", fact: "colorful walled city", file: "wall-5-cartagena.png", type: "coast", review: "A warm Caribbean city with color, history, and music." },
+          { name: "San Andres", country: "Colombia", fact: "Caribbean island", file: "wall-5-san-andres.png", type: "coast", review: "A beach destination with clear water and island energy." },
+          { name: "Medellin", country: "Colombia", fact: "modern mountain city", file: "wall-5-medellin.png", type: "city", review: "A green mountain city with transport, views, and culture." },
+          { name: "Santa Marta", country: "Colombia", fact: "beach and mountains", file: "wall-5-santa-marta.png", type: "coast", review: "A coastal city close to beaches, mountains, and parks." },
+          { name: "Guatape", country: "Colombia", fact: "colorful town and lake", file: "wall-5-guatape.png", type: "nature", review: "A bright town beside a lake, good for weekend trips." },
+          { name: "Salento", country: "Colombia", fact: "coffee town", file: "wall-5-salento.png", type: "nature", review: "A coffee-region town with color, mountains, and calm streets." }
         ]
       }
     ];
@@ -830,36 +803,11 @@
     const wallFocus = document.getElementById("wallFocus");
     const questionList = document.getElementById("questionList");
     const placeGrid = document.getElementById("placeGrid");
-    const selectedQuestion = document.getElementById("selectedQuestion");
-    const modelSentence = document.getElementById("modelSentence");
-    const studentReason = document.getElementById("studentReason");
 
     function stripHtml(value) {
       const span = document.createElement("span");
       span.innerHTML = value;
       return span.textContent || span.innerText || "";
-    }
-
-    function superlativeFromQuestion(question) {
-      return question
-        .replace("Which one is ", "")
-        .replace("?", "")
-        .trim();
-    }
-
-    function buildSentence(place, question) {
-      if (!place || !question) {
-        return "Model sentence will appear here.";
-      }
-      const cleanName = stripHtml(place.name);
-      const superlative = superlativeFromQuestion(question);
-      if (superlative.includes("best place")) {
-        return cleanName + " is " + superlative + " because it is " + place.fact + ".";
-      }
-      if (superlative.startsWith("the most") || superlative.startsWith("the best")) {
-        return "In my opinion, " + cleanName + " is " + superlative + " because it is " + place.fact + ".";
-      }
-      return cleanName + " is " + superlative + " because it is " + place.fact + ".";
     }
 
     function renderTabs() {
@@ -901,7 +849,6 @@
         button.textContent = question;
         button.addEventListener("click", () => {
           activeQuestion = question;
-          updateBuilder();
           renderQuestionsOnly();
         });
         questionList.appendChild(button);
@@ -911,6 +858,8 @@
       wall.places.forEach((place) => {
         const card = document.createElement("article");
         card.className = "place-card" + (activePlace && activePlace.file === place.file ? " selected" : "");
+        card.dataset.file = place.file;
+        const audioFile = place.file.replace(".png", ".mp3");
         card.innerHTML = [
           '<div class="place-visual ' + place.type + '">',
           '<img src="../../assets/img/english-intermediate/practice-lab/superlative-wall/' + place.file + '" alt="' + stripHtml(place.name) + '" loading="lazy" onerror="this.remove()" />',
@@ -918,19 +867,18 @@
           "</div>",
           '<div class="place-body">',
           '<p><strong>Fact:</strong> ' + place.fact + '</p>',
-          '<span class="file-chip">Expected image: ' + place.file + '</span>',
+          '<p class="place-review">' + place.review + '</p>',
+          '<audio class="place-audio" controls preload="metadata" src="audio/superlative-wall/' + audioFile + '" onerror="this.remove()"></audio>',
           "</div>"
         ].join("");
         card.addEventListener("click", () => {
           activePlace = place;
-          updateBuilder();
           renderPlaceSelection();
         });
         placeGrid.appendChild(card);
       });
 
       renderTabs();
-      updateBuilder();
     }
 
     function renderQuestionsOnly() {
@@ -941,30 +889,10 @@
 
     function renderPlaceSelection() {
       Array.from(placeGrid.children).forEach((card) => {
-        const chip = card.querySelector(".file-chip");
-        const file = chip ? chip.textContent.replace("Expected image: ", "") : "";
+        const file = card.dataset.file || "";
         card.classList.toggle("selected", activePlace && file === activePlace.file);
       });
     }
-
-    function updateBuilder() {
-      selectedQuestion.textContent = activeQuestion || "Choose a question and a place card.";
-      modelSentence.textContent = buildSentence(activePlace, activeQuestion);
-    }
-
-    document.getElementById("copyModelBtn").addEventListener("click", async () => {
-      const text = modelSentence.textContent.trim();
-      if (!text || text === "Model sentence will appear here.") return;
-      try {
-        await navigator.clipboard.writeText(text);
-      } catch (error) {
-        studentReason.value = text;
-      }
-    });
-
-    document.getElementById("clearReasonBtn").addEventListener("click", () => {
-      studentReason.value = "";
-    });
 
     renderWall();
   </script>
