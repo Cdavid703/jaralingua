@@ -342,9 +342,39 @@
 
     .unit5-status {
       font-size: 0.9rem;
-      color: #64748b;
+      color: #334155;
       min-height: 1.3em;
     }
+
+    .unit5-page .audio-btn:not(.play) { background: #123b8f; color: #ffffff; border: 2px solid #123b8f; }
+    .unit5-page .audio-btn:not(.play):hover,
+    .unit5-page .audio-btn:not(.play):focus-visible { background: #071f4f; border-color: #071f4f; }
+    .unit5-page .phrase-item span,
+    .unit5-page .unit5-activity-card small,
+    .unit5-page .unit5-speaking-part small { color: #334155; }
+
+    .unit5-pronunciation {
+      border: 0; border-radius: 999px; padding: 9px 13px; background: #e7efff;
+      color: #071f4f; font: inherit; font-size: 0.93rem; font-weight: 850; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    }
+    .unit5-pronunciation::before { content: "\f57e"; font-family: "bootstrap-icons"; font-size: 0.86rem; }
+    .unit5-pronunciation:hover,
+    .unit5-pronunciation:focus-visible,
+    .unit5-pronunciation.is-playing { background: #123b8f; color: #ffffff; transform: translateY(-1px); }
+    .unit5-pill strong[data-pronunciation],
+    .unit5-activity-card strong[data-pronunciation] {
+      cursor: pointer; text-decoration: underline; text-decoration-color: rgba(18, 59, 143, 0.3); text-underline-offset: 4px;
+    }
+    .unit5-grammar-why {
+      grid-column: 1 / -1; border: 2px solid rgba(18, 59, 143, 0.18); border-left: 7px solid #123b8f;
+      border-radius: 18px; padding: 18px; background: #f3f7ff; color: #1e293b; line-height: 1.7;
+    }
+    .unit5-grammar-why strong { color: #071f4f; }
+    .unit5-idiom-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .unit5-idiom { border-radius: 16px; padding: 15px; background: #fff7e8; border: 1px solid rgba(193, 18, 31, 0.16); }
+    .unit5-idiom p { margin: 7px 0 0; color: #334155; }
 
     @media (max-width: 980px) {
       .unit5-map,
@@ -368,6 +398,8 @@
         justify-content: flex-start;
       }
 
+      .unit5-idiom-grid { grid-template-columns: 1fr; }
+
       .unit5-module-header p {
         padding-right: 0;
       }
@@ -379,6 +411,25 @@
     }
 
     @media (max-width: 560px) {
+      .unit5-page { overflow-x: hidden; }
+      .unit5-page .lesson-hero {
+        display: block; width: 100vw; max-width: 100vw; padding-left: 18px !important;
+        padding-right: 18px !important; box-sizing: border-box; overflow: hidden;
+      }
+      .unit5-page .lesson-hero-content,
+      .unit5-page .lesson-hero-content > *,
+      .unit5-page .lesson-hero-content .hero-actions,
+      .unit5-page .lesson-hero-content .btn { min-width: 0; max-width: 100%; box-sizing: border-box; }
+      .unit5-page .lesson-hero-content {
+        width: calc(100vw - 36px); max-width: calc(100vw - 36px); padding: 28px;
+        overflow-wrap: anywhere;
+      }
+      .unit5-page .lesson-hero-image { width: calc(100vw - 36px); max-width: calc(100vw - 36px); margin-top: 24px; }
+      .unit5-page .site-header .navbar { overflow-x: auto; gap: 18px; justify-content: flex-start; scrollbar-width: none; }
+      .unit5-page .site-header .navbar::-webkit-scrollbar { display: none; }
+      .unit5-page .site-header .nav-links { flex: 0 0 auto; gap: 16px; }
+      .unit5-page .site-header .brand { flex: 0 0 auto; }
+
       .unit5-map,
       .unit5-card-grid,
       .unit5-pill-grid,
@@ -425,7 +476,7 @@
     <section class="lesson-outcome">
       <div class="outcome-card">
         <span class="outcome-label">Unit Route</span>
-        <p>Students move from vocabulary to controlled sentences, then to short listening models and speaking production. The ElevenLabs audio files can be added later in <strong>audio/unit5/</strong>; until then, the listen buttons use browser speech as a classroom preview.</p>
+        <p>Move from visual vocabulary to clear grammar, professional pronunciation practice, short listening models, and speaking production. Click any highlighted vocabulary word or phrase to hear its American English pronunciation.</p>
         <div class="unit5-map">
           <a href="#free-time-start"><span>01</span><strong>Free Time Introduction</strong><small>Topic, first question, and core examples.</small></a>
           <a href="#activities"><span>02</span><strong>Indoor and Outdoor Cards</strong><small>Visual vocabulary with listening buttons.</small></a>
@@ -482,7 +533,7 @@
         <header class="unit5-module-header">
           <span>02</span>
           <h2>Indoor and Outdoor Activity Cards</h2>
-          <p>Students learn free-time vocabulary visually and orally before studying grammar. Each card has a future ElevenLabs audio route and a browser-speech fallback.</p>
+          <p>Learn free-time vocabulary visually and orally before studying grammar. Click the activity name or its Listen button to hear professional American English pronunciation.</p>
         </header>
         <div class="unit5-module-body">
           <div class="unit5-teach-grid">
@@ -566,16 +617,19 @@
             <div class="unit5-example-card">
               <h3>Correct</h3>
               <div class="phrase-list">
-                <div class="phrase-item"><strong>I like watching TV.</strong><span>Use -ing after like.</span></div>
-                <div class="phrase-item"><strong>I prefer staying in.</strong><span>Use -ing after prefer.</span></div>
+                <div class="phrase-item"><strong>I like watching TV.</strong><span><em>Watching</em> names the activity that I enjoy. After <em>like</em>, an activity verb normally takes <strong>-ing</strong>.</span></div>
+                <div class="phrase-item"><strong>I prefer staying in.</strong><span><em>Staying in</em> is the activity I choose over another option. After <em>prefer</em>, an activity verb normally takes <strong>-ing</strong>.</span></div>
               </div>
             </div>
             <div class="unit5-example-card">
               <h3>Common mistake</h3>
               <div class="phrase-list">
-                <div class="phrase-item"><strong>I like watch TV.</strong><span>Incorrect: missing -ing.</span></div>
-                <div class="phrase-item"><strong>I prefer stay in.</strong><span>Incorrect: missing -ing.</span></div>
+                <div class="phrase-item"><strong>I like watch TV.</strong><span>Incorrect because <em>watch</em> is left in its base form. Here it must name an activity, so write <strong>watching</strong>.</span></div>
+                <div class="phrase-item"><strong>I prefer stay in.</strong><span>Incorrect because <em>stay</em> is left in its base form. Here it must name the preferred activity, so write <strong>staying</strong>.</span></div>
               </div>
+            </div>
+            <div class="unit5-grammar-why">
+              <strong>General rule:</strong> when <em>like</em> or <em>prefer</em> is followed by an activity verb in this unit, use the gerund: <strong>verb + -ing</strong>. The gerund works like the name of the activity: <em>watching TV</em>, <em>reading</em>, <em>going out</em>. Do not place the bare verb directly after <em>like</em> or <em>prefer</em>. Compare: <strong>I like music</strong> (noun) and <strong>I like listening to music</strong> (activity).
             </div>
           </div>
         </div>
@@ -754,6 +808,19 @@
               </div>
             </div>
           </div>
+
+          <div class="unit5-example-card">
+            <h3>Natural expressions and phrasal verbs</h3>
+            <p>These expressions are common when people talk naturally about free time. Click each expression to hear it.</p>
+            <div class="unit5-idiom-grid">
+              <div class="unit5-idiom"><button class="unit5-pronunciation" type="button" data-audio-text="hang out">hang out</button><p>Spend relaxed time with people. <strong>I hang out with my friends.</strong></p></div>
+              <div class="unit5-idiom"><button class="unit5-pronunciation" type="button" data-audio-text="chill out">chill out</button><p>Relax. <strong>I chill out at home after class.</strong></p></div>
+              <div class="unit5-idiom"><button class="unit5-pronunciation" type="button" data-audio-text="catch up with friends">catch up with friends</button><p>Talk after not seeing someone for a while.</p></div>
+              <div class="unit5-idiom"><button class="unit5-pronunciation" type="button" data-audio-text="be into something">be into something</button><p>Be very interested in it. <strong>I am into video games.</strong></p></div>
+              <div class="unit5-idiom"><button class="unit5-pronunciation" type="button" data-audio-text="binge-watch a series">binge-watch a series</button><p>Watch many episodes in one sitting.</p></div>
+              <div class="unit5-idiom"><button class="unit5-pronunciation" type="button" data-audio-text="take it easy">take it easy</button><p>Relax and avoid doing too much.</p></div>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -798,7 +865,7 @@
 
           <div class="unit5-audio-panel">
             <div>
-              <span class="unit5-mini-label">Audio 8</span>
+              <span class="unit5-mini-label">Speaking model</span>
               <h3>My Free Time Habits</h3>
               <p>Hello. My name is Laura. In my free time, I usually listen to music and watch TV. I like watching comedy shows because they are funny. I prefer staying in because it is relaxing. I sometimes go out with my friends on weekends. After class, I usually go home and do my homework. I use my phone every day, but I do not play video games. Thank you.</p>
             </div>
@@ -820,32 +887,11 @@
         </div>
       </article>
 
-      <article class="unit5-module">
-        <header class="unit5-module-header">
-          <span>08</span>
-          <h2>Final Audio Structure</h2>
-          <p>This is the recommended set of ElevenLabs files for the completed version of Unit 5.</p>
-        </header>
-        <div class="unit5-module-body">
-          <div class="unit5-route-grid">
-            <div class="unit5-route-item"><span>Audio 1</span><strong>audio/unit5/free-time-introduction.mp3</strong><small>Present the theme Free Time.</small></div>
-            <div class="unit5-route-item"><span>Cards</span><strong>audio/unit5/cards/*.mp3</strong><small>One short pronunciation file per card.</small></div>
-            <div class="unit5-route-item"><span>Audio 2</span><strong>audio/unit5/likes-and-preferences.mp3</strong><small>Practice like and prefer.</small></div>
-            <div class="unit5-route-item"><span>Audio 3</span><strong>audio/unit5/tv-shows.mp3</strong><small>Present TV genres.</small></div>
-            <div class="unit5-route-item"><span>Audio 4</span><strong>audio/unit5/because-reasons.mp3</strong><small>Give reasons with because.</small></div>
-            <div class="unit5-route-item"><span>Audio 5</span><strong>audio/unit5/after-class-routine.mp3</strong><small>Talk about after-class habits.</small></div>
-            <div class="unit5-route-item"><span>Audio 6</span><strong>audio/unit5/technology-habits.mp3</strong><small>Talk about technology habits.</small></div>
-            <div class="unit5-route-item"><span>Audio 7</span><strong>audio/unit5/free-time-conversation.mp3</strong><small>Integrate the unit in a dialogue.</small></div>
-            <div class="unit5-route-item"><span>Audio 8</span><strong>audio/unit5/final-speaking-model.mp3</strong><small>Model final oral production.</small></div>
-          </div>
-          <div class="unit5-status" id="unit5AudioStatus" aria-live="polite"></div>
-        </div>
-      </article>
-
       <article class="premium-topic-card linked-practice-card">
-        <div class="topic-heading"><span class="topic-number">09</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">08</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
         <p class="lesson-text">After studying the explanation, students can complete the Unit 5 practice page, listening task, and production workshops.</p>
         <div class="hero-actions"><a href="practice-unit-5-free-time.html" class="btn btn-primary">Open unit practice</a><a href="listening-unit-5-free-time.html" class="btn btn-secondary">Open listening</a><a href="workshop-unit-5-free-time-poll.html" class="btn btn-secondary">Free-time poll</a><a href="workshop-unit-5-tv-habits.html" class="btn btn-secondary">TV habits workshop</a></div>
+        <div class="unit5-status" id="unit5AudioStatus" aria-live="polite"></div>
       </article>
     </section>
   </main>
@@ -872,55 +918,72 @@
       if (status) status.textContent = message;
     }
 
-    function speakUnit5Text(text) {
-      if (!("speechSynthesis" in window)) {
-        setUnit5AudioStatus("Audio preview is not available in this browser.");
-        return;
-      }
-
-      window.speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "en-US";
-      utterance.rate = 0.82;
-      window.speechSynthesis.speak(utterance);
-      setUnit5AudioStatus("Previewing with browser voice. Replace with ElevenLabs MP3 when ready.");
-    }
-
-    function playUnit5Audio(slug, fallbackText) {
+    function playUnit5Source(source, trigger) {
       if (activeUnit5Audio) {
         activeUnit5Audio.pause();
         activeUnit5Audio.currentTime = 0;
       }
-      window.speechSynthesis && window.speechSynthesis.cancel();
-
-      const source = "audio/unit5/" + slug + ".mp3";
+      document.querySelectorAll(".is-playing").forEach(function(element) {
+        element.classList.remove("is-playing");
+      });
       activeUnit5Audio = new Audio(source);
       activeUnit5Audio.addEventListener("error", function() {
-        speakUnit5Text(fallbackText);
+        setUnit5AudioStatus("This professional audio is temporarily unavailable.");
+      }, { once: true });
+      activeUnit5Audio.addEventListener("ended", function() {
+        if (trigger) trigger.classList.remove("is-playing");
+        setUnit5AudioStatus("");
       }, { once: true });
       activeUnit5Audio.play().then(function() {
-        setUnit5AudioStatus("Playing " + source);
+        if (trigger) trigger.classList.add("is-playing");
+        setUnit5AudioStatus("Playing professional American English audio.");
       }).catch(function() {
-        speakUnit5Text(fallbackText);
+        setUnit5AudioStatus("Select the audio again to play it.");
       });
     }
 
-    function playUnit5Card(slug, phrase) {
-      if (activeUnit5Audio) {
-        activeUnit5Audio.pause();
-        activeUnit5Audio.currentTime = 0;
-      }
-      window.speechSynthesis && window.speechSynthesis.cancel();
+    function playUnit5Audio(slug) {
+      playUnit5Source("audio/unit5/" + slug + ".mp3", null);
+    }
 
-      const source = "audio/unit5/cards/" + slug + ".mp3";
-      activeUnit5Audio = new Audio(source);
-      activeUnit5Audio.addEventListener("error", function() {
-        speakUnit5Text(phrase);
-      }, { once: true });
-      activeUnit5Audio.play().then(function() {
-        setUnit5AudioStatus("Playing " + source);
-      }).catch(function() {
-        speakUnit5Text(phrase);
+    function playUnit5Card(slug, phrase) {
+      playUnit5Source("audio/unit5/cards/" + slug + ".mp3", null);
+    }
+
+    function unit5AudioSlug(text) {
+      return text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function prepareUnit5VocabularyAudio() {
+      document.querySelectorAll(".unit5-word-bank span").forEach(function(word) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "unit5-pronunciation";
+        button.dataset.audioText = word.textContent.trim();
+        button.textContent = word.textContent.trim();
+        word.replaceWith(button);
+      });
+
+      document.querySelectorAll(".unit5-pill strong, .unit5-activity-card strong").forEach(function(word) {
+        word.dataset.pronunciation = "true";
+        word.tabIndex = 0;
+        word.setAttribute("role", "button");
+        word.setAttribute("aria-label", "Listen to " + word.textContent.trim());
+      });
+
+      document.addEventListener("click", function(event) {
+        const button = event.target.closest("[data-audio-text], [data-pronunciation]");
+        if (!button) return;
+        const text = button.dataset.audioText || button.textContent.trim();
+        const folder = button.closest(".unit5-activity-card") ? "cards/" : "vocabulary/";
+        playUnit5Source("audio/unit5/" + folder + unit5AudioSlug(text) + ".mp3", button);
+      });
+
+      document.addEventListener("keydown", function(event) {
+        if ((event.key === "Enter" || event.key === " ") && event.target.matches("[data-pronunciation]")) {
+          event.preventDefault();
+          event.target.click();
+        }
       });
     }
 
@@ -976,6 +1039,8 @@
 
         setUnit5ModuleOpen(module, index === 0);
       });
+
+      prepareUnit5VocabularyAudio();
     });
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
