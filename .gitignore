@@ -1,5 +1,7 @@
 desktop.ini
 .claude/
+tmp/
+/Unit_*_Kahoot_Questions.docx
 elevenlabs.local.env
 deploy.local.env
 deploy.local.*.env
