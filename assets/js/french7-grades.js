@@ -1,6 +1,8 @@
 (function () {
   const USER_KEY = "jaralingua_google_user";
   const API_PATH = "/api/french7/grades";
+  const IUE_HEADER_SRC = "img/institutionnel/iue-header.png";
+  const IUE_FOOTER_SRC = "img/institutionnel/iue-footer.png";
 
   let lastSignature = "";
   let reminderShownFor = "";
@@ -82,7 +84,8 @@
     });
     return {
       completedWeight: completedWeight,
-      average: completedWeight ? earned / completedWeight : null
+      average: completedWeight ? earned / completedWeight : null,
+      weightedTotal: earned / 100
     };
   }
 
@@ -133,7 +136,7 @@
         <i class="bi bi-shield-lock-fill"></i>
         <h2 class="section-title">Connexion requise</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          Connectez-vous pour consulter vos resultats et les echeances du cours.
+          Connectez-vous pour consulter vos resultats et les pourcentages du cours.
         </p>
         <button class="btn-main mt-4" type="button" data-open-google-login><i class="bi bi-box-arrow-in-right"></i> Se connecter</button>
       </div>
@@ -145,7 +148,7 @@
       <div class="locked-card">
         <i class="bi bi-hourglass-split"></i>
         <h2 class="section-title">Chargement des resultats</h2>
-        <p class="section-text">Nous verifions la session avant d'afficher les informations du cours.</p>
+        <p class="section-text">Nous verifions la session avant d'afficher les notes du cours.</p>
       </div>
     `;
   }
@@ -255,13 +258,12 @@
 
   function renderStudentPanel(student, payload) {
     return `
-      ${reminderMarkup(student, payload)}
       <div class="row g-4">
         <div class="col-lg-5">
           <div class="grades-panel h-100">
             <p class="section-kicker">Suivi individuel</p>
             <h2 class="section-title">Consultation des resultats</h2>
-            <p class="section-text">Cet espace affiche uniquement vos notes, vos pourcentages et vos echeances.</p>
+            <p class="section-text">Cet espace affiche uniquement vos notes et vos pourcentages.</p>
             ${studentMetricsMarkup(student, payload.evaluations)}
           </div>
         </div>
@@ -278,13 +280,6 @@
           </div>
         </div>
       </div>
-      <section class="px-0 pb-0">
-        <div class="grades-panel">
-          <p class="section-kicker">Calendrier</p>
-          <h2 class="section-title">Echeances du cours</h2>
-          <div class="obligation-grid">${obligationsMarkup(student, payload)}</div>
-        </div>
-      </section>
     `;
   }
 
@@ -329,6 +324,164 @@
     }).join("");
   }
 
+  function levelLabel(level) {
+    const match = String(level || "").match(/nivel\s*(\d+)/i);
+    return match ? "Niveau " + match[1] : String(level || "Niveau");
+  }
+
+  function levelSlug(level) {
+    return levelLabel(level).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "niveau";
+  }
+
+  function gradeLevels(payload) {
+    const seen = {};
+    return payload.students.reduce(function (levels, student) {
+      const level = student.level || "Niveau";
+      if (!seen[level]) {
+        seen[level] = true;
+        levels.push(level);
+      }
+      return levels;
+    }, []).sort(function (a, b) {
+      return levelLabel(a).localeCompare(levelLabel(b), "fr", { numeric: true });
+    });
+  }
+
+  function downloadButtonsForLevels(payload, audience) {
+    return gradeLevels(payload).map(function (level) {
+      const label = levelLabel(level);
+      const icon = audience === "directives" ? "bi-file-earmark-pdf-fill" : "bi-file-earmark-person-fill";
+      const className = audience === "directives" ? "btn-main" : "btn-soft";
+      const actionLabel = audience === "directives" ? "Directions" : "Étudiants";
+      return `
+        <button class="${className}" type="button" data-download-audience="${audience}" data-download-level="${escapeHtml(level)}">
+          <i class="bi ${icon}"></i>${escapeHtml(actionLabel)} · ${escapeHtml(label)}
+        </button>
+      `;
+    }).join("");
+  }
+
+  function staffDownloadTools(payload) {
+    if (payload.role !== "admin") return "";
+    return `
+      <div class="grades-panel mb-4" data-admin-downloads>
+        <p class="section-kicker">Documents PDF</p>
+        <h2 class="section-title">Téléchargements administratifs</h2>
+        <p class="section-text mb-3">Ces documents sont réservés à l'administrateur du cours et séparés par niveau.</p>
+        <div class="mb-3">
+          <h3 class="h6 fw-bold text-primary mb-2">Pour les directions</h3>
+          <div class="d-flex flex-wrap gap-2">${downloadButtonsForLevels(payload, "directives")}</div>
+        </div>
+        <div>
+          <h3 class="h6 fw-bold text-primary mb-2">Pour les étudiants</h3>
+          <div class="d-flex flex-wrap gap-2">${downloadButtonsForLevels(payload, "students")}</div>
+        </div>
+      </div>
+    `;
+  }
+
+  function adminStudentGradeInputs(payload, student) {
+    const grades = student && student.grades ? student.grades : {};
+    return payload.evaluations.map(function (evaluation) {
+      const value = typeof grades[evaluation.id] === "number" ? grades[evaluation.id] : "";
+      return `
+        <label class="admin-grade-row">
+          <span>${escapeHtml(evaluation.title)}</span>
+          <input class="form-control" type="number" min="0" max="5" step="0.1" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="En attente">
+        </label>
+      `;
+    }).join("");
+  }
+
+  function adminStudentCards(payload) {
+    return payload.students.map(function (student, index) {
+      return `
+        <article class="admin-student-card mb-3" data-student-editor-card data-student-index="${index}">
+          <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
+            <h3 class="h5 fw-bold mb-0">${escapeHtml(student.fullName)}</h3>
+            <label class="form-check fw-bold text-danger mb-0">
+              <input class="form-check-input" type="checkbox" data-student-delete>
+              Supprimer
+            </label>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label fw-bold">Numero ID</label>
+              <input class="form-control" value="${escapeHtml(student.id)}" data-student-field="id">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label fw-bold">Nom complet</label>
+              <input class="form-control" value="${escapeHtml(student.fullName)}" data-student-field="fullName">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Niveau</label>
+              <input class="form-control" value="${escapeHtml(student.level || "")}" data-student-field="level">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Courriel</label>
+              <input class="form-control" type="email" value="${escapeHtml(student.email || "")}" data-student-field="email">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Contact</label>
+              <input class="form-control" value="${escapeHtml(student.contact || "")}" data-student-field="contact">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Date livre</label>
+              <input class="form-control" value="${escapeHtml(student.bookDate || "")}" data-student-field="bookDate" placeholder="YYYY-MM-DD">
+            </div>
+          </div>
+          <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, student)}</div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function adminStudentEditorMarkup(payload) {
+    if (payload.role !== "admin") return "";
+    return `
+      <div class="grades-panel mb-4" data-admin-student-tools>
+        <p class="section-kicker">Administration</p>
+        <h2 class="section-title">Modifier les etudiants et les notes</h2>
+        <p class="section-text mb-3">Changez les noms, numeros ID, niveaux, courriels et notes. Les champs de note vides restent en attente.</p>
+        <form data-edit-students-form>
+          ${adminStudentCards(payload)}
+          <article class="admin-student-card mb-3" data-new-student-card>
+            <h3 class="h5 fw-bold mb-3">Ajouter un etudiant</h3>
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label fw-bold">Numero ID</label>
+                <input class="form-control" data-new-student-field="id">
+              </div>
+              <div class="col-md-5">
+                <label class="form-label fw-bold">Nom complet</label>
+                <input class="form-control" data-new-student-field="fullName">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Niveau</label>
+                <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || "Niveau 7")}" data-new-student-field="level">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Courriel</label>
+                <input class="form-control" type="email" data-new-student-field="email">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Contact</label>
+                <input class="form-control" data-new-student-field="contact">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Date livre</label>
+                <input class="form-control" data-new-student-field="bookDate" placeholder="YYYY-MM-DD">
+              </div>
+            </div>
+            <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, { grades: {} })}</div>
+          </article>
+          <button class="btn-main" type="submit"><i class="bi bi-save"></i> Enregistrer les changements</button>
+          <p class="section-text mt-3" data-edit-students-status></p>
+        </form>
+      </div>
+    `;
+  }
+
   function staffCalendarMarkup(payload) {
     const events = payload.bonusEvent ? payload.evaluations.concat([payload.bonusEvent]) : payload.evaluations;
     return events.map(function (evaluation) {
@@ -367,6 +520,8 @@
         <div class="metric-card"><span>Pourcentage evaluatif</span><strong>${totalWeight}%</strong></div>
         <div class="metric-card"><span>Bonus</span><strong>Info</strong></div>
       </div>
+      ${staffDownloadTools(payload)}
+      ${adminStudentEditorMarkup(payload)}
       <div class="grades-panel mb-4">
         <p class="section-kicker">Donnees privees</p>
         <h2 class="section-title">Liste des etudiants</h2>
@@ -392,12 +547,458 @@
           </table>
         </div>
       </div>
-      <div class="grades-panel">
-        <p class="section-kicker">Calendrier</p>
-        <h2 class="section-title">Echeances du cours</h2>
-        <div class="obligation-grid">${staffCalendarMarkup(payload)}</div>
-      </div>
     `;
+  }
+
+  function escapePdfText(value) {
+    return String(value == null ? "" : value)
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/[^\x20-\x7E\n]/g, "")
+      .replace(/\\/g, "\\\\")
+      .replace(/\(/g, "\\(")
+      .replace(/\)/g, "\\)");
+  }
+
+  function pdfTextWidth(value, fontSize) {
+    return String(value == null ? "" : value).length * fontSize * 0.48;
+  }
+
+  function wrapPdfCell(value, fontSize, maxWidth, maxLines) {
+    const text = String(value == null ? "" : value);
+    const words = text.split(/\s+/).filter(Boolean);
+    const lines = [];
+    let current = "";
+    words.forEach(function (word) {
+      const candidate = current ? current + " " + word : word;
+      if (pdfTextWidth(candidate, fontSize) > maxWidth && current) {
+        lines.push(current);
+        current = word;
+      } else {
+        current = candidate;
+      }
+    });
+    if (current) lines.push(current);
+    if (!lines.length) lines.push("");
+    if (lines.length > maxLines) {
+      lines.length = maxLines;
+      lines[maxLines - 1] = lines[maxLines - 1].slice(0, Math.max(1, lines[maxLines - 1].length - 3)) + "...";
+    }
+    return lines;
+  }
+
+  function arrayBufferToHex(buffer) {
+    const bytes = new Uint8Array(buffer);
+    let hex = "";
+    for (let i = 0; i < bytes.length; i += 1) {
+      hex += bytes[i].toString(16).padStart(2, "0");
+    }
+    return hex;
+  }
+
+  function loadImageAsJpegHex(source, maxWidth) {
+    return new Promise(function (resolve) {
+      if (typeof Image === "undefined") {
+        resolve(null);
+        return;
+      }
+      const image = new Image();
+      image.onload = function () {
+        try {
+          const scale = Math.min(1, maxWidth / image.naturalWidth);
+          const width = Math.max(1, Math.round(image.naturalWidth * scale));
+          const height = Math.max(1, Math.round(image.naturalHeight * scale));
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const context = canvas.getContext("2d");
+          context.fillStyle = "#ffffff";
+          context.fillRect(0, 0, width, height);
+          context.drawImage(image, 0, 0, width, height);
+          canvas.toBlob(function (blob) {
+            if (!blob) {
+              resolve(null);
+              return;
+            }
+            const reader = new FileReader();
+            reader.onload = function () {
+              resolve({ width: width, height: height, hex: arrayBufferToHex(reader.result) });
+            };
+            reader.onerror = function () { resolve(null); };
+            reader.readAsArrayBuffer(blob);
+          }, "image/jpeg", 0.92);
+        } catch (error) {
+          resolve(null);
+        }
+      };
+      image.onerror = function () { resolve(null); };
+      try {
+        image.src = new URL(source, document.baseURI).href;
+      } catch (error) {
+        image.src = source;
+      }
+    });
+  }
+
+  function buildGradebookPdf(title, columns, rows, images) {
+    const pageWidth = 842;
+    const pageHeight = 595;
+    const margin = 24;
+    const headerHeight = 62;
+    const footerHeight = 30;
+    const titleY = pageHeight - margin - headerHeight - 18;
+    const tableTop = titleY - 30;
+    const tableBottom = margin + footerHeight + 16;
+    const rowFont = 6.4;
+    const headerFont = 6.2;
+    const objects = [];
+    const pageIds = [];
+
+    function addObject(body) {
+      objects.push(body);
+      return objects.length;
+    }
+
+    function addImageObject(image) {
+      if (!image || !image.hex) return null;
+      const stream = image.hex + ">";
+      return addObject("<< /Type /XObject /Subtype /Image /Width " + image.width + " /Height " + image.height + " /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter [/ASCIIHexDecode /DCTDecode] /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream");
+    }
+
+    const fontId = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+    const boldFontId = addObject("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>");
+    const headerImageId = addImageObject(images.header);
+    const footerImageId = addImageObject(images.footer);
+    const usableWidth = pageWidth - margin * 2;
+    const totalUnits = columns.reduce(function (sum, column) { return sum + column.width; }, 0);
+    const widths = columns.map(function (column) { return usableWidth * column.width / totalUnits; });
+
+    let pages = [];
+    let currentRows = [];
+    let y = tableTop - 24;
+    rows.forEach(function (row) {
+      const lineCounts = row.map(function (cell, index) {
+        return wrapPdfCell(cell, rowFont, widths[index] - 6, index === 1 ? 3 : 2).length;
+      });
+      const rowHeight = Math.max(18, Math.max.apply(null, lineCounts) * 8 + 8);
+      if (y - rowHeight < tableBottom && currentRows.length) {
+        pages.push(currentRows);
+        currentRows = [];
+        y = tableTop - 24;
+      }
+      currentRows.push({ cells: row, height: rowHeight });
+      y -= rowHeight;
+    });
+    if (currentRows.length) pages.push(currentRows);
+    if (!pages.length) pages = [[]];
+
+    pages.forEach(function (pageRows, pageIndex) {
+      const streamLines = [];
+      const xObjectNames = [];
+      if (headerImageId && images.header) {
+        const drawWidth = usableWidth;
+        const drawHeight = Math.min(headerHeight, drawWidth * images.header.height / images.header.width);
+        streamLines.push("q " + drawWidth.toFixed(2) + " 0 0 " + drawHeight.toFixed(2) + " " + margin + " " + (pageHeight - margin - drawHeight).toFixed(2) + " cm /HeaderImg Do Q");
+        xObjectNames.push("/HeaderImg " + headerImageId + " 0 R");
+      }
+      if (footerImageId && images.footer) {
+        const drawWidth = usableWidth;
+        const drawHeight = Math.min(footerHeight, drawWidth * images.footer.height / images.footer.width);
+        streamLines.push("q " + drawWidth.toFixed(2) + " 0 0 " + drawHeight.toFixed(2) + " " + margin + " " + margin + " cm /FooterImg Do Q");
+        xObjectNames.push("/FooterImg " + footerImageId + " 0 R");
+      }
+
+      streamLines.push("BT /F2 14 Tf 0.00 0.22 0.36 rg " + margin + " " + titleY + " Td (" + escapePdfText(title) + ") Tj ET");
+      streamLines.push("BT /F1 7 Tf 0.36 0.40 0.46 rg " + margin + " " + (titleY - 13) + " Td (" + escapePdfText("Francais Niveau 7 - Genere le " + new Date().toLocaleDateString("fr-FR")) + ") Tj ET");
+
+      let x = margin;
+      let headerCellY = tableTop;
+      streamLines.push("0.00 0.22 0.36 rg " + margin + " " + (headerCellY - 20) + " " + usableWidth + " 20 re f");
+      columns.forEach(function (column, index) {
+        wrapPdfCell(column.label, headerFont, widths[index] - 6, 2).forEach(function (line, lineIndex) {
+          streamLines.push("BT /F2 " + headerFont + " Tf 1 1 1 rg " + (x + 3).toFixed(2) + " " + (headerCellY - 8 - lineIndex * 7).toFixed(2) + " Td (" + escapePdfText(line) + ") Tj ET");
+        });
+        x += widths[index];
+      });
+
+      let rowY = tableTop - 20;
+      pageRows.forEach(function (row, rowIndex) {
+        const fill = rowIndex % 2 === 0 ? "0.97 0.99 1 rg" : "1 1 1 rg";
+        streamLines.push(fill + " " + margin + " " + (rowY - row.height).toFixed(2) + " " + usableWidth + " " + row.height.toFixed(2) + " re f");
+        x = margin;
+        row.cells.forEach(function (cell, cellIndex) {
+          const lines = wrapPdfCell(cell, rowFont, widths[cellIndex] - 6, cellIndex === 1 ? 3 : 2);
+          lines.forEach(function (line, lineIndex) {
+            streamLines.push("BT /F1 " + rowFont + " Tf 0.12 0.16 0.23 rg " + (x + 3).toFixed(2) + " " + (rowY - 10 - lineIndex * 7.5).toFixed(2) + " Td (" + escapePdfText(line) + ") Tj ET");
+          });
+          streamLines.push("0.86 0.90 0.95 RG 0.35 w " + x.toFixed(2) + " " + (rowY - row.height).toFixed(2) + " m " + x.toFixed(2) + " " + rowY.toFixed(2) + " l S");
+          x += widths[cellIndex];
+        });
+        streamLines.push("0.86 0.90 0.95 RG 0.35 w " + margin + " " + (rowY - row.height).toFixed(2) + " m " + (margin + usableWidth) + " " + (rowY - row.height).toFixed(2) + " l S");
+        rowY -= row.height;
+      });
+      streamLines.push("BT /F1 7 Tf 0.36 0.40 0.46 rg " + (pageWidth - margin - 48) + " " + (margin + footerHeight + 4) + " Td (" + escapePdfText("Page " + (pageIndex + 1) + "/" + pages.length) + ") Tj ET");
+
+      const stream = streamLines.join("\n");
+      const contentId = addObject("<< /Length " + stream.length + " >>\nstream\n" + stream + "\nendstream");
+      const xObject = xObjectNames.length ? " /XObject << " + xObjectNames.join(" ") + " >>" : "";
+      const pageId = addObject("<< /Type /Page /Parent 0 0 R /MediaBox [0 0 " + pageWidth + " " + pageHeight + "] /Resources << /Font << /F1 " + fontId + " 0 R /F2 " + boldFontId + " 0 R >>" + xObject + " >> /Contents " + contentId + " 0 R >>");
+      pageIds.push(pageId);
+    });
+
+    const pagesId = addObject("<< /Type /Pages /Kids [" + pageIds.map(function (id) { return id + " 0 R"; }).join(" ") + "] /Count " + pageIds.length + " >>");
+    pageIds.forEach(function (pageId) {
+      objects[pageId - 1] = objects[pageId - 1].replace("/Parent 0 0 R", "/Parent " + pagesId + " 0 R");
+    });
+    const catalogId = addObject("<< /Type /Catalog /Pages " + pagesId + " 0 R >>");
+
+    let pdf = "%PDF-1.4\n";
+    const offsets = [0];
+    objects.forEach(function (body, index) {
+      offsets.push(pdf.length);
+      pdf += index + 1 + " 0 obj\n" + body + "\nendobj\n";
+    });
+    const xref = pdf.length;
+    pdf += "xref\n0 " + (objects.length + 1) + "\n0000000000 65535 f \n";
+    for (let i = 1; i <= objects.length; i += 1) {
+      pdf += String(offsets[i]).padStart(10, "0") + " 00000 n \n";
+    }
+    pdf += "trailer\n<< /Size " + (objects.length + 1) + " /Root " + catalogId + " 0 R >>\nstartxref\n" + xref + "\n%%EOF";
+    return pdf;
+  }
+
+  function savePdf(pdf, filename) {
+    const blob = new Blob([pdf], { type: "application/pdf" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function gradeValueForPdf(student, evaluation) {
+    const grades = student.grades || {};
+    return typeof grades[evaluation.id] === "number" ? grades[evaluation.id].toFixed(1) : "En attente";
+  }
+
+  function totalValueForPdf(student, evaluations) {
+    const summary = gradeSummary(student, evaluations);
+    return summary.completedWeight ? summary.weightedTotal.toFixed(2) : "En attente";
+  }
+
+  function reportColumns(payload, audience) {
+    const base = audience === "directives"
+      ? [
+          { label: "Numero ID", width: 1.05 },
+          { label: "Nom complet", width: 1.65 },
+          { label: "Contact", width: 1.05 },
+          { label: "Moyenne des notes saisies", width: 1.15 },
+          { label: "Pourcentage evalue", width: 1.05 }
+        ]
+      : [
+          { label: "Numero ID", width: 1.1 },
+          { label: "Moyenne des notes saisies", width: 1.1 },
+          { label: "Pourcentage evalue", width: 1.0 }
+        ];
+    return base.concat(payload.evaluations.map(function (evaluation) {
+      return { label: evaluation.title + " " + evaluation.weight + "%", width: 1.05 };
+    })).concat([{ label: "Total pondere", width: 1 }]);
+  }
+
+  function reportRows(payload, audience) {
+    return payload.students.map(function (student) {
+      const summary = gradeSummary(student, payload.evaluations);
+      const base = audience === "directives"
+        ? [
+            student.id,
+            student.fullName,
+            student.contact,
+            summary.average == null ? "En attente" : summary.average.toFixed(2),
+            summary.completedWeight + "%"
+          ]
+        : [
+            student.id,
+            summary.average == null ? "En attente" : summary.average.toFixed(2),
+            summary.completedWeight + "%"
+          ];
+      return base.concat(payload.evaluations.map(function (evaluation) {
+        return gradeValueForPdf(student, evaluation);
+      })).concat([totalValueForPdf(student, payload.evaluations)]);
+    });
+  }
+
+  function filteredPayloadByLevel(payload, level) {
+    return Object.assign({}, payload, {
+      students: payload.students.filter(function (student) {
+        return student.level === level;
+      })
+    });
+  }
+
+  async function downloadGradeReport(payload, audience, level) {
+    const scopedPayload = filteredPayloadByLevel(payload, level);
+    const images = {
+      header: await loadImageAsJpegHex(IUE_HEADER_SRC, 1600),
+      footer: await loadImageAsJpegHex(IUE_FOOTER_SRC, 1600)
+    };
+    const label = levelLabel(level);
+    const title = audience === "directives"
+      ? "Tableau des notes - Direction - " + label
+      : "Tableau des notes - Etudiants - " + label;
+    const pdf = buildGradebookPdf(title, reportColumns(scopedPayload, audience), reportRows(scopedPayload, audience), images);
+    savePdf(pdf, audience === "directives"
+      ? "notes-francais-7-directions-" + levelSlug(level) + ".pdf"
+      : "notes-francais-7-etudiants-" + levelSlug(level) + ".pdf");
+  }
+
+  function bindStaffDownloads(root, payload) {
+    if (payload.role !== "admin") return;
+    root.querySelectorAll("[data-download-audience][data-download-level]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        downloadGradeReport(payload, button.dataset.downloadAudience, button.dataset.downloadLevel);
+      });
+    });
+  }
+
+  function gradebookForSave(payload) {
+    return {
+      evaluations: payload.evaluations,
+      students: payload.students.map(function (student) {
+        return {
+          id: student.id,
+          fullName: student.fullName,
+          level: student.level,
+          email: student.email,
+          emailAliases: student.emailAliases || [],
+          contact: student.contact || "",
+          bookDate: student.bookDate || null,
+          grades: student.grades || {}
+        };
+      })
+    };
+  }
+
+  function saveGradebook(user, payload) {
+    return fetch(API_PATH, {
+      method: "PUT",
+      headers: {
+        Authorization: "Bearer " + user.credential,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(gradebookForSave(payload))
+    }).then(function (response) {
+      if (!response.ok) throw new Error("La API rechazo la actualizacion: " + response.status);
+      return response.json();
+    });
+  }
+
+  function cardField(card, name) {
+    const input = card.querySelector('[data-student-field="' + name + '"]');
+    return input ? input.value.trim() : "";
+  }
+
+  function newStudentField(card, name) {
+    const input = card.querySelector('[data-new-student-field="' + name + '"]');
+    return input ? input.value.trim() : "";
+  }
+
+  function gradesFromCard(card) {
+    const grades = {};
+    card.querySelectorAll("[data-student-grade]").forEach(function (input) {
+      const value = input.value.trim();
+      if (!value) return;
+      const grade = Number(value);
+      if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
+      grades[input.getAttribute("data-student-grade")] = Math.round(grade * 100) / 100;
+    });
+    return grades;
+  }
+
+  function studentFromEditorCard(card, payload) {
+    if (card.querySelector("[data-student-delete]") && card.querySelector("[data-student-delete]").checked) return null;
+    const original = payload.students[Number(card.getAttribute("data-student-index"))] || {};
+    const id = cardField(card, "id");
+    const fullName = cardField(card, "fullName");
+    if (!id || !fullName) return null;
+    return {
+      id: id,
+      fullName: fullName,
+      level: cardField(card, "level") || "Niveau 7",
+      email: cardField(card, "email"),
+      emailAliases: original.emailAliases || [],
+      contact: cardField(card, "contact"),
+      bookDate: cardField(card, "bookDate") || null,
+      grades: gradesFromCard(card)
+    };
+  }
+
+  function newStudentFromEditor(card) {
+    if (!card) return null;
+    const id = newStudentField(card, "id");
+    const fullName = newStudentField(card, "fullName");
+    if (!id && !fullName) return null;
+    if (!id || !fullName) return false;
+    return {
+      id: id,
+      fullName: fullName,
+      level: newStudentField(card, "level") || "Niveau 7",
+      email: newStudentField(card, "email"),
+      emailAliases: [],
+      contact: newStudentField(card, "contact"),
+      bookDate: newStudentField(card, "bookDate") || null,
+      grades: gradesFromCard(card)
+    };
+  }
+
+  function hasDuplicateStudentIds(students) {
+    const seen = new Set();
+    return students.some(function (student) {
+      const key = String(student.id || "").trim();
+      if (!key) return false;
+      if (seen.has(key)) return true;
+      seen.add(key);
+      return false;
+    });
+  }
+
+  function bindStudentEditor(root, payload, user) {
+    if (payload.role !== "admin") return;
+    const form = root.querySelector("[data-edit-students-form]");
+    if (!form) return;
+    const status = root.querySelector("[data-edit-students-status]");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const nextPayload = JSON.parse(JSON.stringify(payload));
+      const students = [];
+      root.querySelectorAll("[data-student-editor-card]").forEach(function (card) {
+        const student = studentFromEditorCard(card, payload);
+        if (student) students.push(student);
+      });
+      const newStudent = newStudentFromEditor(root.querySelector("[data-new-student-card]"));
+      if (newStudent === false) {
+        if (status) status.textContent = "Le nouvel etudiant a besoin d'un ID et d'un nom complet.";
+        return;
+      }
+      if (newStudent) students.push(newStudent);
+      if (hasDuplicateStudentIds(students)) {
+        if (status) status.textContent = "Il y a un numero ID duplique.";
+        return;
+      }
+      nextPayload.students = students;
+      if (status) status.textContent = "Enregistrement...";
+      saveGradebook(user, nextPayload)
+        .then(function () {
+          lastSignature = "";
+          if (status) status.textContent = "Enregistre.";
+          renderPayload(root, user, nextPayload);
+        })
+        .catch(function () {
+          if (status) status.textContent = "Impossible d'enregistrer les changements.";
+        });
+    });
   }
 
   function openGooglePanel() {
@@ -445,11 +1046,12 @@
   function renderPayload(root, user, payload) {
     if (payload.role === "admin" || payload.role === "teacher") {
       root.innerHTML = renderStaffPanel(payload);
+      bindStaffDownloads(root, payload);
+      bindStudentEditor(root, payload, user);
       return;
     }
     if (payload.student) {
       root.innerHTML = renderStudentPanel(payload.student, payload);
-      showFloatingReminder(payload.student, payload);
       return;
     }
     root.innerHTML = renderNoRecord(payload);

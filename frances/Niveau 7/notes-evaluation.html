@@ -162,6 +162,13 @@
       backdrop-filter: blur(12px);
     }
 
+    .grades-panel .btn-soft {
+      background: #eef5ff;
+      color: var(--blue-dark);
+      border: 1px solid rgba(31, 78, 140, 0.18);
+      backdrop-filter: none;
+    }
+
     .global-course-switcher {
       position: fixed;
       right: 1rem;
@@ -411,6 +418,45 @@
       color: var(--red);
     }
 
+    .admin-student-card {
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      border-radius: 8px;
+      padding: 1rem;
+      background: #f8fbff;
+    }
+
+    .admin-grade-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.75rem;
+      max-height: 460px;
+      overflow: auto;
+      padding: 0.75rem;
+      border: 1px solid rgba(31, 78, 140, 0.12);
+      border-radius: 8px;
+      background: #eef5ff;
+    }
+
+    .admin-grade-row {
+      display: grid;
+      grid-template-columns: 1fr 100px;
+      align-items: center;
+      gap: 0.65rem;
+      margin: 0;
+      padding: 0.6rem;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid rgba(31, 78, 140, 0.1);
+      font-weight: 800;
+    }
+
+    .admin-grade-row span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .obligation-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -571,7 +617,7 @@
       <span class="badge-course"><i class="bi bi-clipboard-data-fill"></i> Suivi académique</span>
       <h1>Notes du cours</h1>
       <p class="hero-text">
-        Espace de consultation des résultats, des pourcentages, des états et des prochaines échéances du cours. Les informations personnelles complètes sont réservées à l'administrateur et aux professeurs approuvés.
+        Espace de consultation des résultats, des pourcentages et des états du cours. Les informations personnelles complètes sont réservées à l'administrateur et aux professeurs approuvés.
       </p>
       <div class="hero-actions">
         <a href="#notes" class="btn-main"><i class="bi bi-bar-chart-line-fill"></i> Consulter les notes</a>
@@ -603,7 +649,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
-  <script src="../../assets/js/french7-grades.js"></script>
+  <script src="../../assets/js/french7-grades.js?v=20260608-4"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
 </body>
 </html>

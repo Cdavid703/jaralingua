@@ -360,13 +360,18 @@ def clean_gradebook_payload(payload, existing):
         if not eval_id or not title or eval_id in seen_ids:
             continue
         seen_ids.add(eval_id)
-        clean_evaluations.append({
+        clean_evaluation = {
             "id": eval_id,
             "title": title,
             "weight": clean_weight(item.get("weight")),
             "type": clean_text(item.get("type") or "Assessment", 80),
             "description": clean_text(item.get("description"), 300)
-        })
+        }
+        if "date" in item:
+            clean_evaluation["date"] = clean_text(item.get("date"), 40) or None
+        if "displayDate" in item:
+            clean_evaluation["displayDate"] = clean_text(item.get("displayDate"), 80)
+        clean_evaluations.append(clean_evaluation)
 
     clean_students = []
     for item in students[:300]:
@@ -932,6 +937,21 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 record["updatedAt"] = now_iso()
                 write_store(store)
             json_response(self, 200, {"ok": True})
+            return
+
+        if parsed.path == "/api/french7/grades":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH7_GRADES_PATH)
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                try:
+                    next_data = clean_gradebook_payload(payload, grades_data)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                write_json_file(FRENCH7_GRADES_PATH, next_data, ".french7-grades-")
+                json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
             return
 
         if parsed.path == "/api/basic/grades":

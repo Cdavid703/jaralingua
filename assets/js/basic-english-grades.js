@@ -78,7 +78,8 @@
     });
     return {
       completedWeight: completedWeight,
-      average: completedWeight ? earned / completedWeight : null
+      average: completedWeight ? earned / completedWeight : null,
+      weightedTotal: earned / 100
     };
   }
 
@@ -441,6 +442,99 @@
     `;
   }
 
+  function adminStudentGradeInputs(payload, student) {
+    const grades = student && student.grades ? student.grades : {};
+    return payload.evaluations.map(function (evaluation) {
+      const value = typeof grades[evaluation.id] === "number" ? grades[evaluation.id] : "";
+      return `
+        <label class="admin-grade-row">
+          <span>${escapeHtml(evaluation.title)}</span>
+          <input class="form-control" type="number" min="0" max="5" step="0.1" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="Pending">
+        </label>
+      `;
+    }).join("");
+  }
+
+  function adminStudentCards(payload) {
+    return payload.students.map(function (student, index) {
+      return `
+        <article class="admin-student-card mb-3" data-student-editor-card data-student-index="${index}">
+          <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
+            <h3 class="h5 fw-bold mb-0">${escapeHtml(student.fullName)}</h3>
+            <label class="form-check fw-bold text-danger mb-0">
+              <input class="form-check-input" type="checkbox" data-student-delete>
+              Delete
+            </label>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label fw-bold">ID</label>
+              <input class="form-control" value="${escapeHtml(student.id)}" data-student-field="id">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label fw-bold">Full name</label>
+              <input class="form-control" value="${escapeHtml(student.fullName)}" data-student-field="fullName">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold">Level</label>
+              <input class="form-control" value="${escapeHtml(student.level || "")}" data-student-field="level">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Email</label>
+              <input class="form-control" type="email" value="${escapeHtml(student.email || "")}" data-student-field="email">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold">Contact</label>
+              <input class="form-control" value="${escapeHtml(student.contact || "")}" data-student-field="contact">
+            </div>
+          </div>
+          <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, student)}</div>
+        </article>
+      `;
+    }).join("");
+  }
+
+  function adminStudentEditorMarkup(payload) {
+    return `
+      <div class="grades-panel mb-4" data-admin-student-tools>
+        <p class="section-kicker">Administrator</p>
+        <h2 class="section-title">Edit students and grades</h2>
+        <p class="section-text mb-3">Change names, IDs, levels, emails and grades. Empty grade fields remain pending.</p>
+        <form data-edit-students-form>
+          ${adminStudentCards(payload)}
+          <article class="admin-student-card mb-3" data-new-student-card>
+            <h3 class="h5 fw-bold mb-3">Add a student</h3>
+            <div class="row g-3">
+              <div class="col-md-3">
+                <label class="form-label fw-bold">ID</label>
+                <input class="form-control" data-new-student-field="id">
+              </div>
+              <div class="col-md-5">
+                <label class="form-label fw-bold">Full name</label>
+                <input class="form-control" data-new-student-field="fullName">
+              </div>
+              <div class="col-md-4">
+                <label class="form-label fw-bold">Level</label>
+                <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || "Basic English Course 1")}" data-new-student-field="level">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Email</label>
+                <input class="form-control" type="email" data-new-student-field="email">
+              </div>
+              <div class="col-md-6">
+                <label class="form-label fw-bold">Contact</label>
+                <input class="form-control" data-new-student-field="contact">
+              </div>
+            </div>
+            <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, { grades: {} })}</div>
+          </article>
+          <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save student changes</button>
+          <p class="section-text mt-3" data-edit-students-status></p>
+        </form>
+      </div>
+    `;
+  }
+
   function staffControlsMarkup() {
     return `
       <div class="grades-panel mb-4">
@@ -453,6 +547,40 @@
           <div class="col-lg-5 d-flex flex-wrap gap-2">
             <button class="btn-main" type="button" data-export-excel><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</button>
           </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function staffPdfToolsMarkup(payload) {
+    if (payload.role !== "admin" || !window.JaraEnglishGradeReports) return "";
+    const levels = window.JaraEnglishGradeReports.levels(payload);
+    const directorsButtons = levels.map(function (level) {
+      return `
+        <button class="btn-main" type="button" data-download-pdf-audience="directors" data-download-pdf-level="${escapeHtml(level)}">
+          <i class="bi bi-file-earmark-pdf-fill"></i> Directors · ${escapeHtml(window.JaraEnglishGradeReports.levelLabel(level))}
+        </button>
+      `;
+    }).join("");
+    const studentButtons = levels.map(function (level) {
+      return `
+        <button class="btn-soft" type="button" data-download-pdf-audience="students" data-download-pdf-level="${escapeHtml(level)}">
+          <i class="bi bi-file-earmark-person-fill"></i> Students · ${escapeHtml(window.JaraEnglishGradeReports.levelLabel(level))}
+        </button>
+      `;
+    }).join("");
+    return `
+      <div class="grades-panel mb-4" data-admin-pdf-tools>
+        <p class="section-kicker">PDF reports</p>
+        <h2 class="section-title">ITM Plurilingüe downloads</h2>
+        <p class="section-text mb-3">Download PDF grade reports separated by level with the ITM Plurilingüe Presupuesto Participativo banner.</p>
+        <div class="mb-3">
+          <h3 class="h6 fw-bold text-primary mb-2">For directors</h3>
+          <div class="d-flex flex-wrap gap-2">${directorsButtons}</div>
+        </div>
+        <div>
+          <h3 class="h6 fw-bold text-primary mb-2">For students</h3>
+          <div class="d-flex flex-wrap gap-2">${studentButtons}</div>
         </div>
       </div>
     `;
@@ -477,7 +605,9 @@
         <div class="metric-card"><span>Course</span><strong>Basic English</strong></div>
       </div>
       ${staffControlsMarkup()}
+      ${staffPdfToolsMarkup(payload)}
       ${payload.role === "admin" ? adminToolsMarkup(payload) : ""}
+      ${payload.role === "admin" ? adminStudentEditorMarkup(payload) : ""}
       <div class="grades-panel">
         <p class="section-kicker">Private data</p>
         <h2 class="section-title">Basic English gradebook</h2>
@@ -601,6 +731,22 @@
     });
   }
 
+  function wirePdfExport(root, payload) {
+    if (!window.JaraEnglishGradeReports) return;
+    root.querySelectorAll("[data-download-pdf-audience][data-download-pdf-level]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        window.JaraEnglishGradeReports.download(
+          payload,
+          button.dataset.downloadPdfAudience,
+          button.dataset.downloadPdfLevel,
+          "Basic English",
+          "basic-english-grades",
+          { directorDetail: "level" }
+        );
+      });
+    });
+  }
+
   function wireAdminTools(root, payload, user) {
     const form = root.querySelector("[data-add-grade-form]");
     if (!form) return;
@@ -649,6 +795,111 @@
     });
   }
 
+  function cardField(card, name) {
+    const input = card.querySelector('[data-student-field="' + name + '"]');
+    return input ? input.value.trim() : "";
+  }
+
+  function newStudentField(card, name) {
+    const input = card.querySelector('[data-new-student-field="' + name + '"]');
+    return input ? input.value.trim() : "";
+  }
+
+  function gradesFromCard(card) {
+    const grades = {};
+    card.querySelectorAll("[data-student-grade]").forEach(function (input) {
+      const value = input.value.trim();
+      if (!value) return;
+      const grade = Number(value);
+      if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
+      grades[input.getAttribute("data-student-grade")] = Math.round(grade * 100) / 100;
+    });
+    return grades;
+  }
+
+  function studentFromEditorCard(card, payload) {
+    if (card.querySelector("[data-student-delete]") && card.querySelector("[data-student-delete]").checked) return null;
+    const original = payload.students[Number(card.getAttribute("data-student-index"))] || {};
+    const id = cardField(card, "id");
+    const fullName = cardField(card, "fullName");
+    if (!id || !fullName) return null;
+    return {
+      id: id,
+      fullName: fullName,
+      level: cardField(card, "level") || "Basic English Course 1",
+      email: cardField(card, "email"),
+      emailAliases: original.emailAliases || [],
+      contact: cardField(card, "contact"),
+      bookDate: original.bookDate || null,
+      grades: gradesFromCard(card)
+    };
+  }
+
+  function newStudentFromEditor(card) {
+    if (!card) return null;
+    const id = newStudentField(card, "id");
+    const fullName = newStudentField(card, "fullName");
+    if (!id && !fullName) return null;
+    if (!id || !fullName) return false;
+    return {
+      id: id,
+      fullName: fullName,
+      level: newStudentField(card, "level") || "Basic English Course 1",
+      email: newStudentField(card, "email"),
+      emailAliases: [],
+      contact: newStudentField(card, "contact"),
+      bookDate: null,
+      grades: gradesFromCard(card)
+    };
+  }
+
+  function hasDuplicateStudentIds(students) {
+    const seen = new Set();
+    return students.some(function (student) {
+      const key = String(student.id || "").trim();
+      if (!key) return false;
+      if (seen.has(key)) return true;
+      seen.add(key);
+      return false;
+    });
+  }
+
+  function wireStudentEditor(root, payload, user) {
+    const form = root.querySelector("[data-edit-students-form]");
+    if (!form) return;
+    const status = root.querySelector("[data-edit-students-status]");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const nextPayload = JSON.parse(JSON.stringify(payload));
+      const students = [];
+      root.querySelectorAll("[data-student-editor-card]").forEach(function (card) {
+        const student = studentFromEditorCard(card, payload);
+        if (student) students.push(student);
+      });
+      const newStudent = newStudentFromEditor(root.querySelector("[data-new-student-card]"));
+      if (newStudent === false) {
+        if (status) status.textContent = "The new student needs ID and full name.";
+        return;
+      }
+      if (newStudent) students.push(newStudent);
+      if (hasDuplicateStudentIds(students)) {
+        if (status) status.textContent = "There is a duplicated student ID.";
+        return;
+      }
+      nextPayload.students = students;
+      if (status) status.textContent = "Saving...";
+      saveGradebook(user, nextPayload)
+        .then(function () {
+          lastSignature = "";
+          if (status) status.textContent = "Saved.";
+          renderPayload(root, nextPayload, user);
+        })
+        .catch(function () {
+          if (status) status.textContent = "Could not save student changes.";
+        });
+    });
+  }
+
   function fetchGrades(user) {
     return fetch(API_PATH, {
       headers: {
@@ -667,7 +918,9 @@
       wireMicrosoftSignout(root);
       wireStudentFilter(root);
       wireExport(root, payload);
+      wirePdfExport(root, payload);
       wireAdminTools(root, payload, user);
+      wireStudentEditor(root, payload, user);
       return;
     }
     root.innerHTML = payload.student ? renderStudentPanel(payload.student, payload, user) : renderNoRecord();
