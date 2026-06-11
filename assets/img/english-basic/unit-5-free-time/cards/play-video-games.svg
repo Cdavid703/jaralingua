@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="play video games">
+  <rect width="256" height="256" rx="36" fill="#f0edff"/>
+  <path d="M63 99h130c19 0 33 17 29 36l-9 43c-4 18-27 24-40 11l-18-18H101l-18 18c-13 13-36 7-40-11l-9-43c-4-19 10-36 29-36z" fill="#123b8f"/>
+  <path d="M76 136h38M95 117v38" stroke="#ffffff" stroke-width="11" stroke-linecap="round"/>
+  <circle cx="164" cy="130" r="10" fill="#fff"/>
+  <circle cx="190" cy="151" r="10" fill="#c1121f"/>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="go to the gym">
+  <rect width="256" height="256" rx="36" fill="#fff0ec"/>
+  <path d="M55 128h146" stroke="#071f4f" stroke-width="16" stroke-linecap="round"/>
+  <rect x="37" y="96" width="28" height="64" rx="8" fill="#123b8f"/>
+  <rect x="70" y="86" width="24" height="84" rx="8" fill="#123b8f"/>
+  <rect x="162" y="86" width="24" height="84" rx="8" fill="#c1121f"/>
+  <rect x="191" y="96" width="28" height="64" rx="8" fill="#c1121f"/>
+  <path d="M91 201h74M128 55v41M107 76h42" stroke="#123b8f" stroke-width="12" stroke-linecap="round"/>
+</svg>

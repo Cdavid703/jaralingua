@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="go to the movies">
+  <rect width="256" height="256" rx="36" fill="#fff4df"/>
+  <rect x="46" y="75" width="164" height="116" rx="18" fill="#123b8f"/>
+  <rect x="64" y="97" width="128" height="69" rx="8" fill="#ffffff"/>
+  <path d="M104 114l42 24-42 24z" fill="#c1121f"/>
+  <path d="M62 63h132" stroke="#071f4f" stroke-width="14" stroke-linecap="round"/>
+  <path d="M78 190h100" stroke="#071f4f" stroke-width="12" stroke-linecap="round"/>
+</svg>

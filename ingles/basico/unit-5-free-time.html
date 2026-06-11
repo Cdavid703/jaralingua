@@ -8,8 +8,391 @@
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .unit5-page {
+      --unit5-blue: #123b8f;
+      --unit5-ink: #071f4f;
+      --unit5-red: #c1121f;
+      --unit5-soft: #f8fbff;
+      --unit5-warm: #fff7e8;
+    }
+
+    .unit5-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .unit5-map a,
+    .unit5-route-item {
+      min-height: 118px;
+      border-radius: 20px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+      text-decoration: none;
+      color: var(--unit5-ink);
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .unit5-route-item strong {
+      overflow-wrap: anywhere;
+    }
+
+    .unit5-map a span,
+    .unit5-route-item span,
+    .unit5-mini-label {
+      color: var(--unit5-red);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+    }
+
+    .unit5-module {
+      border-radius: 30px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.1);
+      overflow: hidden;
+    }
+
+    .unit5-module + .unit5-module,
+    .unit5-module + .premium-topic-card {
+      margin-top: 28px;
+    }
+
+    .unit5-module-header {
+      padding: clamp(1.4rem, 3vw, 2.35rem);
+      background:
+        linear-gradient(135deg, rgba(18, 59, 143, 0.96), rgba(7, 31, 79, 0.92)),
+        var(--module-image, none) center/cover;
+      color: #ffffff;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .unit5-module-header:focus {
+      outline: 3px solid rgba(255, 255, 255, 0.75);
+      outline-offset: -8px;
+    }
+
+    .unit5-module-header span {
+      display: inline-flex;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .unit5-module-header h2 {
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .unit5-module-header p {
+      max-width: 900px;
+      line-height: 1.7;
+      opacity: 0.92;
+      margin: 0;
+      padding-right: clamp(0px, 10vw, 150px);
+    }
+
+    .unit5-module-toggle {
+      position: absolute;
+      right: clamp(1rem, 3vw, 2rem);
+      top: clamp(1rem, 3vw, 2rem);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 9px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .unit5-module-toggle i {
+      transition: transform 0.2s ease;
+    }
+
+    .unit5-module.is-collapsed .unit5-module-toggle i {
+      transform: rotate(-90deg);
+    }
+
+    .unit5-module-body {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      display: grid;
+      gap: 20px;
+    }
+
+    .unit5-module.is-collapsed .unit5-module-body {
+      display: none;
+    }
+
+    .unit5-section-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .unit5-audio-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.12);
+    }
+
+    .unit5-audio-panel h3 {
+      color: var(--unit5-ink);
+      margin-bottom: 8px;
+      font-size: 1.14rem;
+    }
+
+    .unit5-audio-panel p {
+      color: #475569;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .unit5-audio-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .unit5-pill-grid,
+    .unit5-card-grid,
+    .unit5-teach-grid,
+    .unit5-tv-grid,
+    .unit5-reason-grid,
+    .unit5-speaking-grid,
+    .unit5-route-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .unit5-pill-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .unit5-card-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .unit5-teach-grid,
+    .unit5-tv-grid,
+    .unit5-reason-grid,
+    .unit5-speaking-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .unit5-route-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .unit5-activity-card {
+      min-height: 176px;
+      border-radius: 18px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .unit5-card-visual {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 16px;
+      object-fit: cover;
+      background: rgba(18, 59, 143, 0.06);
+    }
+
+    .unit5-activity-card strong,
+    .unit5-rule-card h3,
+    .unit5-example-card h3,
+    .unit5-dialogue-card h3 {
+      color: var(--unit5-ink);
+    }
+
+    .unit5-activity-card small {
+      color: #64748b;
+      line-height: 1.45;
+    }
+
+    .unit5-rule-card,
+    .unit5-example-card,
+    .unit5-dialogue-card,
+    .unit5-pill,
+    .unit5-speaking-part {
+      border-radius: 20px;
+      padding: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .unit5-rule-card {
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
+    }
+
+    .unit5-rule-card h3,
+    .unit5-example-card h3,
+    .unit5-dialogue-card h3 {
+      font-size: 1.08rem;
+      margin-bottom: 10px;
+    }
+
+    .unit5-formula {
+      display: block;
+      margin-top: 10px;
+      border-radius: 14px;
+      padding: 12px 14px;
+      background: #eef4ff;
+      color: var(--unit5-ink);
+      font-weight: 900;
+    }
+
+    .unit5-pill {
+      min-height: 118px;
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+
+    .unit5-pill strong {
+      color: var(--unit5-ink);
+      font-size: 1.05rem;
+    }
+
+    .unit5-note {
+      border-left: 6px solid var(--unit5-red);
+      background: var(--unit5-warm);
+      border-radius: 20px;
+      padding: 18px;
+      color: #7c4a03;
+      line-height: 1.65;
+    }
+
+    .unit5-word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .unit5-word-bank span {
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: #eef4ff;
+      color: var(--unit5-ink);
+      font-weight: 800;
+      font-size: 0.93rem;
+    }
+
+    .unit5-dialogue-lines {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .unit5-dialogue-lines p {
+      margin: 0;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #f8fbff;
+      color: #334155;
+      line-height: 1.55;
+    }
+
+    .unit5-dialogue-lines strong {
+      color: var(--unit5-red);
+    }
+
+    .unit5-speaking-part {
+      min-height: 132px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .unit5-speaking-part strong {
+      color: var(--unit5-ink);
+    }
+
+    .unit5-status {
+      font-size: 0.9rem;
+      color: #64748b;
+      min-height: 1.3em;
+    }
+
+    @media (max-width: 980px) {
+      .unit5-map,
+      .unit5-card-grid,
+      .unit5-pill-grid,
+      .unit5-route-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .unit5-audio-panel,
+      .unit5-teach-grid,
+      .unit5-tv-grid,
+      .unit5-reason-grid,
+      .unit5-speaking-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .unit5-audio-tools {
+        justify-content: flex-start;
+      }
+
+      .unit5-module-header p {
+        padding-right: 0;
+      }
+
+      .unit5-module-toggle {
+        position: static;
+        margin-top: 16px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .unit5-map,
+      .unit5-card-grid,
+      .unit5-pill-grid,
+      .unit5-route-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .unit5-activity-card {
+        min-height: auto;
+      }
+    }
+  </style>
 </head>
-<body class="english-basic-page">
+<body class="english-basic-page unit5-page">
   <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
   <header class="site-header">
     <nav class="navbar">
@@ -24,55 +407,445 @@
     </nav>
   </header>
   <main>
-
     <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-5-free-time-banner.png');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Basic English Course 1</p>
         <h1>Unit 5: Free Time</h1>
-        <p>By the end of this unit, you will be able to talk about indoor and outdoor free-time activities, TV shows, and after-class routines.</p>
-        <div class="lesson-meta"><span>Sessions 12-14</span><span>Going out</span><span>Staying in</span><span>TV shows</span></div>
+        <p>Learn how to talk about free-time activities, staying in, going out, TV habits, reasons with because, after-class routines, and technology habits.</p>
+        <div class="lesson-meta"><span>Sessions 12-14</span><span>American English</span><span>Free time</span><span>Likes and preferences</span></div>
         <div class="hero-actions">
           <a href="#lesson-content" class="btn btn-primary">Start lesson</a>
+          <a href="practice-unit-5-free-time.html" class="btn btn-secondary">Practice</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
         </div>
       </div>
       <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-5-free-time-banner.png" alt="Unit 5: Free Time" /></aside>
     </section>
 
-
     <section class="lesson-outcome">
       <div class="outcome-card">
-        <span class="outcome-label">Learning Outcome</span>
-        <p>By the end of this unit, you will be able to talk about indoor and outdoor free-time activities, TV shows, and after-class routines.</p>
+        <span class="outcome-label">Unit Route</span>
+        <p>Students move from vocabulary to controlled sentences, then to short listening models and speaking production. The ElevenLabs audio files can be added later in <strong>audio/unit5/</strong>; until then, the listen buttons use browser speech as a classroom preview.</p>
+        <div class="unit5-map">
+          <a href="#free-time-start"><span>01</span><strong>Free Time Introduction</strong><small>Topic, first question, and core examples.</small></a>
+          <a href="#activities"><span>02</span><strong>Indoor and Outdoor Cards</strong><small>Visual vocabulary with listening buttons.</small></a>
+          <a href="#likes-preferences"><span>03</span><strong>Like and Prefer</strong><small>Use verb + -ing after like and prefer.</small></a>
+          <a href="#models"><span>04</span><strong>Conversation and Speaking</strong><small>Final models for listening and oral production.</small></a>
+        </div>
+        <div class="unit5-section-controls" aria-label="Unit section controls">
+          <button type="button" class="audio-btn play" onclick="setUnit5Sections(true)">Open all sections</button>
+          <button type="button" class="audio-btn" onclick="setUnit5Sections(false)">Close all sections</button>
+        </div>
       </div>
     </section>
 
     <section class="premium-lesson-container" id="lesson-content">
+      <article class="unit5-module" id="free-time-start">
+        <header class="unit5-module-header" style="--module-image: url('../../assets/img/english-basic/course-overview/unit-5-free-time-banner.png');">
+          <span>01</span>
+          <h2>Free Time Introduction</h2>
+          <p>Free time is the time when people relax, have fun, and do activities they like. This first section presents the topic and the main classroom question.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 1</span>
+              <h3>Free Time Introduction</h3>
+              <p>In this unit, we are going to talk about free time. Free time is the time when people relax, have fun, and do activities they like. Some people like staying in and watching TV. Other people prefer going out with friends, playing sports, or going to the park. In this unit, you will learn how to talk about your free time activities, your preferences, your TV habits, and your after-class routine.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('free-time-introduction', unit5AudioScripts.introduction)">Listen</button>
+            </div>
+          </div>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Activities</p><h2>Going Out and Staying In</h2></div></div>
-        <p class="lesson-text">Classify free-time activities and ask simple questions about preferences.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Going Out</h3><div class="phrase-list"><div class="phrase-item"><strong>I go to the movies.</strong><span>Outdoor or social activity.</span></div><div class="phrase-item"><strong>I meet friends.</strong><span>Use meet for spending time with people.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Staying In</h3><div class="phrase-list"><div class="phrase-item"><strong>I watch TV.</strong><span>Indoor activity.</span></div><div class="phrase-item"><strong>I play video games.</strong><span>Technology activity.</span></div></div></div>
+          <div class="unit5-teach-grid">
+            <div class="unit5-rule-card">
+              <h3>Main question</h3>
+              <p>Use this question to start a conversation about hobbies, relaxation, and regular activities.</p>
+              <span class="unit5-formula">What do you do in your free time?</span>
+            </div>
+            <div class="unit5-example-card">
+              <h3>First answers</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I watch TV.</strong><span>A simple indoor activity.</span></div>
+                <div class="phrase-item"><strong>I listen to music.</strong><span>A common relaxing activity.</span></div>
+                <div class="phrase-item"><strong>I play soccer.</strong><span>A sport or outdoor activity.</span></div>
+                <div class="phrase-item"><strong>I go out with my friends.</strong><span>A social activity.</span></div>
+                <div class="phrase-item"><strong>I stay home.</strong><span>A simple way to say staying in.</span></div>
+              </div>
+            </div>
+          </div>
         </div>
-        
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">TV and Habits</p><h2>Talking About Shows</h2></div></div>
-        <p class="lesson-text">Use questions with <strong>what kind</strong> and <strong>how often</strong>.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>TV Questions</h3><div class="phrase-list"><div class="phrase-item"><strong>What kind of TV shows do you like?</strong><span>I like comedy shows.</span></div><div class="phrase-item"><strong>How often do you watch TV?</strong><span>I watch TV every night.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>After Class</h3><div class="phrase-list"><div class="phrase-item"><strong>I finish class at 8:00.</strong><span>Use finish for the end of an activity.</span></div><div class="phrase-item"><strong>Do you work or study?</strong><span>I work and study.</span></div></div></div>
+      <article class="unit5-module" id="activities">
+        <header class="unit5-module-header">
+          <span>02</span>
+          <h2>Indoor and Outdoor Activity Cards</h2>
+          <p>Students learn free-time vocabulary visually and orally before studying grammar. Each card has a future ElevenLabs audio route and a browser-speech fallback.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-teach-grid">
+            <div class="unit5-rule-card">
+              <h3>Indoor activities</h3>
+              <p>Indoor activities are activities people do at home or inside a place.</p>
+              <span class="unit5-formula">Staying in means doing activities at home.</span>
+            </div>
+            <div class="unit5-rule-card">
+              <h3>Outdoor activities</h3>
+              <p>Outdoor activities are activities people do outside the home.</p>
+              <span class="unit5-formula">Going out means doing activities outside the home.</span>
+            </div>
+          </div>
+
+          <h3>Indoor Activities</h3>
+          <div class="unit5-card-grid" aria-label="Indoor activities">
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/watch-tv.svg" alt="" aria-hidden="true" /><strong>watch TV</strong><small>staying in</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('watch-tv', 'watch TV')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/listen-to-music.svg" alt="" aria-hidden="true" /><strong>listen to music</strong><small>staying in or outside</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('listen-to-music', 'listen to music')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/read-a-book.svg" alt="" aria-hidden="true" /><strong>read a book</strong><small>quiet activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('read-a-book', 'read a book')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/play-video-games.svg" alt="" aria-hidden="true" /><strong>play video games</strong><small>technology activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('play-video-games', 'play video games')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/cook.svg" alt="" aria-hidden="true" /><strong>cook</strong><small>home activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('cook', 'cook')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/study.svg" alt="" aria-hidden="true" /><strong>study</strong><small>school activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('study', 'study')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/use-the-computer.svg" alt="" aria-hidden="true" /><strong>use the computer</strong><small>technology activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('use-the-computer', 'use the computer')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/watch-movies.svg" alt="" aria-hidden="true" /><strong>watch movies</strong><small>home entertainment</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('watch-movies', 'watch movies')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/sleep.svg" alt="" aria-hidden="true" /><strong>sleep</strong><small>rest</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('sleep', 'sleep')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/chat-with-friends.svg" alt="" aria-hidden="true" /><strong>chat with friends</strong><small>social activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('chat-with-friends', 'chat with friends')">Listen</button></div>
+          </div>
+
+          <h3>Outdoor Activities</h3>
+          <div class="unit5-card-grid" aria-label="Outdoor activities">
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/go-to-the-park.svg" alt="" aria-hidden="true" /><strong>go to the park</strong><small>outside activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('go-to-the-park', 'go to the park')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/go-to-the-movies.svg" alt="" aria-hidden="true" /><strong>go to the movies</strong><small>going out</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('go-to-the-movies', 'go to the movies')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/go-shopping.svg" alt="" aria-hidden="true" /><strong>go shopping</strong><small>going out</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('go-shopping', 'go shopping')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/eat-out.svg" alt="" aria-hidden="true" /><strong>eat out</strong><small>restaurant activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('eat-out', 'eat out')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/play-soccer.svg" alt="" aria-hidden="true" /><strong>play soccer</strong><small>sport</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('play-soccer', 'play soccer')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/go-for-a-walk.svg" alt="" aria-hidden="true" /><strong>go for a walk</strong><small>outside routine</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('go-for-a-walk', 'go for a walk')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/visit-friends.svg" alt="" aria-hidden="true" /><strong>visit friends</strong><small>social activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('visit-friends', 'visit friends')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/go-to-a-restaurant.svg" alt="" aria-hidden="true" /><strong>go to a restaurant</strong><small>going out</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('go-to-a-restaurant', 'go to a restaurant')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/ride-a-bike.svg" alt="" aria-hidden="true" /><strong>ride a bike</strong><small>outside activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('ride-a-bike', 'ride a bike')">Listen</button></div>
+            <div class="unit5-activity-card"><img class="unit5-card-visual" src="../../assets/img/english-basic/unit-5-free-time/cards/go-to-the-gym.svg" alt="" aria-hidden="true" /><strong>go to the gym</strong><small>fitness activity</small><button type="button" class="audio-word-btn" onclick="playUnit5Card('go-to-the-gym', 'go to the gym')">Listen</button></div>
+          </div>
+
+          <div class="unit5-note">
+            <strong>Useful contrast:</strong> I like staying in. I like going out. I stay in and watch movies. I go out and play soccer.
+          </div>
         </div>
-        <div class="teacher-tip"><span>Teacher's Tip</span><p>Use <strong>like + noun</strong>: I like documentaries. Use <strong>like + -ing</strong>: I like watching documentaries.</p></div>
+      </article>
+
+      <article class="unit5-module" id="likes-preferences">
+        <header class="unit5-module-header">
+          <span>03</span>
+          <h2>I like + verb-ing / I prefer + verb-ing</h2>
+          <p>Students learn how to express activities they enjoy and activities they choose first.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 2</span>
+              <h3>Likes and Preferences</h3>
+              <p>I like watching TV. I like listening to music. I like playing soccer. I like reading books. I like going out with my friends. I prefer staying in because it is relaxing. I prefer going out because it is fun. I like watching movies, but I prefer listening to music. I like playing video games, but I prefer playing soccer.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('likes-and-preferences', unit5AudioScripts.likes)">Listen</button>
+            </div>
+          </div>
+
+          <div class="unit5-teach-grid">
+            <div class="unit5-rule-card">
+              <h3>Like</h3>
+              <p>Use <strong>I like + verb-ing</strong> to talk about activities a person enjoys.</p>
+              <span class="unit5-formula">I like watching TV.</span>
+              <span class="unit5-formula">I like listening to music.</span>
+            </div>
+            <div class="unit5-rule-card">
+              <h3>Prefer</h3>
+              <p>Use <strong>I prefer + verb-ing</strong> to say one activity is a favorite or a stronger choice.</p>
+              <span class="unit5-formula">I prefer staying in.</span>
+              <span class="unit5-formula">I prefer going out.</span>
+            </div>
+            <div class="unit5-example-card">
+              <h3>Correct</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I like watching TV.</strong><span>Use -ing after like.</span></div>
+                <div class="phrase-item"><strong>I prefer staying in.</strong><span>Use -ing after prefer.</span></div>
+              </div>
+            </div>
+            <div class="unit5-example-card">
+              <h3>Common mistake</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I like watch TV.</strong><span>Incorrect: missing -ing.</span></div>
+                <div class="phrase-item"><strong>I prefer stay in.</strong><span>Incorrect: missing -ing.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit5-module" id="frequency-tv">
+        <header class="unit5-module-header">
+          <span>04</span>
+          <h2>Frequency in Context and TV Shows</h2>
+          <p>Frequency adverbs appear in examples and conversations, but this unit does not need a separate frequency audio. Students also learn how to name TV show genres.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-note">
+            <strong>Audio decision:</strong> Frequency adverbs, do / does questions, and third person singular are integrated in examples and the main conversation. They do not have independent audio tracks in this unit.
+          </div>
+
+          <div class="unit5-pill-grid" aria-label="Frequency adverbs">
+            <div class="unit5-pill"><span>100%</span><strong>always</strong><small>I always listen to music after class.</small></div>
+            <div class="unit5-pill"><span>normal habit</span><strong>usually</strong><small>I usually watch TV at night.</small></div>
+            <div class="unit5-pill"><span>many times</span><strong>often</strong><small>I often go out on weekends.</small></div>
+            <div class="unit5-pill"><span>not regular</span><strong>sometimes</strong><small>I sometimes play video games.</small></div>
+            <div class="unit5-pill"><span>almost never</span><strong>rarely / never</strong><small>I rarely go to the movies. I never watch horror shows.</small></div>
+          </div>
+
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 3</span>
+              <h3>TV Shows</h3>
+              <p>I like comedy shows because they are funny. My sister likes documentaries because they are interesting. My brother likes cartoons because they are fun. My father often watches sports shows. My mother sometimes watches cooking shows. We never watch horror shows because they are scary. At night, we usually watch a series together.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('tv-shows', unit5AudioScripts.tvShows)">Listen</button>
+            </div>
+          </div>
+
+          <div class="unit5-tv-grid">
+            <div class="unit5-rule-card">
+              <h3>Main question</h3>
+              <span class="unit5-formula">What kind of TV shows do you like?</span>
+              <p>Use this question to ask about genres and preferences.</p>
+            </div>
+            <div class="unit5-example-card">
+              <h3>TV show genres</h3>
+              <div class="unit5-word-bank">
+                <span>comedy shows</span><span>documentaries</span><span>cartoons</span><span>reality shows</span><span>sports shows</span><span>horror shows</span><span>cooking shows</span><span>series</span><span>news programs</span>
+              </div>
+            </div>
+            <div class="unit5-rule-card">
+              <h3>Like + noun</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I like comedy shows.</strong><span>Genre as a noun.</span></div>
+                <div class="phrase-item"><strong>I like documentaries.</strong><span>Genre as a noun.</span></div>
+              </div>
+            </div>
+            <div class="unit5-rule-card">
+              <h3>Like watching + genre</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I like watching comedy shows.</strong><span>Activity with -ing.</span></div>
+                <div class="phrase-item"><strong>I like watching series at night.</strong><span>Activity plus time.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit5-module" id="because-after-class">
+        <header class="unit5-module-header">
+          <span>05</span>
+          <h2>Because and After-Class Routines</h2>
+          <p>Students connect preferences with reasons, then describe what they do after class or after work.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 4</span>
+              <h3>Giving Reasons with Because</h3>
+              <p>I like comedy shows because they are funny. I like documentaries because they are interesting. I like sports shows because they are exciting. I do not like horror shows because they are scary. I prefer staying in because it is relaxing. I prefer going out because it is fun.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('because-reasons', unit5AudioScripts.because)">Listen</button>
+            </div>
+          </div>
+
+          <div class="unit5-reason-grid">
+            <div class="unit5-rule-card">
+              <h3>Reason structure</h3>
+              <p><strong>Because</strong> gives a reason. It explains why a person likes or prefers something.</p>
+              <span class="unit5-formula">I like ___ because ___.</span>
+            </div>
+            <div class="unit5-example-card">
+              <h3>Useful reasons</h3>
+              <div class="unit5-word-bank">
+                <span>funny</span><span>interesting</span><span>exciting</span><span>relaxing</span><span>boring</span><span>scary</span><span>fun</span><span>popular</span><span>entertaining</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 5</span>
+              <h3>After Class Routine</h3>
+              <p>I finish class at five p.m. After class, I usually go home. I sometimes watch TV, and I often listen to music. At night, I do my homework and use my phone. On Fridays, I go out with my friends. I like going out, but I prefer staying home during the week.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('after-class-routine', unit5AudioScripts.afterClass)">Listen</button>
+            </div>
+          </div>
+
+          <div class="unit5-teach-grid">
+            <div class="unit5-rule-card">
+              <h3>Main questions</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>What do you do after class?</strong><span>Ask about routine after school.</span></div>
+                <div class="phrase-item"><strong>What time do you finish class?</strong><span>Ask for the end time.</span></div>
+                <div class="phrase-item"><strong>Do you work or study?</strong><span>Ask about daily life.</span></div>
+              </div>
+            </div>
+            <div class="unit5-example-card">
+              <h3>After class models</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I finish class at five p.m.</strong><span>End time.</span></div>
+                <div class="phrase-item"><strong>After class, I usually go home.</strong><span>Routine plus frequency.</span></div>
+                <div class="phrase-item"><strong>After class, I do my homework.</strong><span>School routine.</span></div>
+                <div class="phrase-item"><strong>After class, I use my phone.</strong><span>Technology habit.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit5-module" id="technology">
+        <header class="unit5-module-header">
+          <span>06</span>
+          <h2>Technology Habits</h2>
+          <p>Students use simple vocabulary to talk about phones, computers, social media, online videos, screen time, and using technology carefully.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 6</span>
+              <h3>Technology Habits</h3>
+              <p>I use my phone every day. I usually watch videos at night. I sometimes play video games, and I often use social media. I think I spend too much time online. My brother uses his phone a lot too. He likes playing video games, but he rarely reads books. In my family, technology is very important, but we try to use it carefully.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('technology-habits', unit5AudioScripts.technology)">Listen</button>
+            </div>
+          </div>
+
+          <div class="unit5-teach-grid">
+            <div class="unit5-example-card">
+              <h3>Technology vocabulary</h3>
+              <div class="unit5-word-bank">
+                <span>phone</span><span>computer</span><span>tablet</span><span>social media</span><span>internet</span><span>video games</span><span>online videos</span><span>apps</span><span>screen time</span><span>technology addict</span>
+              </div>
+            </div>
+            <div class="unit5-rule-card">
+              <h3>Too much</h3>
+              <p>Use <strong>too much</strong> when something is more than good or healthy.</p>
+              <span class="unit5-formula">I use my phone too much.</span>
+              <span class="unit5-formula">She spends too much time online.</span>
+            </div>
+            <div class="unit5-rule-card">
+              <h3>Main questions</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>How often do you use your phone?</strong><span>Ask about frequency.</span></div>
+                <div class="phrase-item"><strong>How much time do you spend online?</strong><span>Ask about screen time.</span></div>
+                <div class="phrase-item"><strong>Do you use social media every day?</strong><span>Yes/no question.</span></div>
+              </div>
+            </div>
+            <div class="unit5-example-card">
+              <h3>Sentence models</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I use my phone every day.</strong><span>Simple habit.</span></div>
+                <div class="phrase-item"><strong>I spend two hours online.</strong><span>Time online.</span></div>
+                <div class="phrase-item"><strong>I think I use technology too much.</strong><span>Opinion plus habit.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit5-module" id="models">
+        <header class="unit5-module-header">
+          <span>07</span>
+          <h2>Main Conversation and Final Speaking Model</h2>
+          <p>The final two audios integrate free-time vocabulary, likes, preferences, frequency, do / does questions, TV shows, after-class routines, and technology habits.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 7</span>
+              <h3>Free Time Conversation</h3>
+              <p>A natural A1 conversation between Sofia and Daniel about free-time habits, staying in, going out, family habits, TV shows, and technology.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('free-time-conversation', unit5AudioScripts.conversation)">Listen</button>
+            </div>
+          </div>
+
+          <div class="unit5-dialogue-card">
+            <h3>Conversation script</h3>
+            <div class="unit5-dialogue-lines">
+              <p><strong>Sofia:</strong> Hi, Daniel. What do you do in your free time?</p>
+              <p><strong>Daniel:</strong> Hi, Sofia. In my free time, I usually play soccer with my friends. I also like watching movies at home. What about you?</p>
+              <p><strong>Sofia:</strong> I like listening to music and reading books. I always listen to music after class. I sometimes go out with my sister.</p>
+              <p><strong>Daniel:</strong> That sounds nice. Do you prefer going out or staying in?</p>
+              <p><strong>Sofia:</strong> I prefer staying in because I like relaxing at home. But on weekends, I sometimes go to the park. Do you go out often?</p>
+              <p><strong>Daniel:</strong> Yes, I do. I often go out on Saturdays. I rarely stay home all weekend. I like playing soccer, eating out, and visiting my cousins.</p>
+              <p><strong>Sofia:</strong> Does your brother play soccer too?</p>
+              <p><strong>Daniel:</strong> Yes, he does. He usually plays soccer with me. But he never watches movies. He prefers playing video games.</p>
+              <p><strong>Sofia:</strong> Really? My brother is different. He always watches TV after school. He likes watching cartoons and comedy shows.</p>
+              <p><strong>Daniel:</strong> Does he use his phone a lot?</p>
+              <p><strong>Sofia:</strong> Yes, he does. He often uses his phone at night. My mom says he uses technology too much.</p>
+              <p><strong>Daniel:</strong> I understand. I sometimes use my phone too much too. But I prefer doing sports in my free time.</p>
+              <p><strong>Sofia:</strong> That is good. I think sports are healthy. I prefer quiet activities, like reading and listening to music.</p>
+              <p><strong>Daniel:</strong> So, you like staying in, and I like going out.</p>
+              <p><strong>Sofia:</strong> Yes, exactly. We have different free time habits.</p>
+            </div>
+          </div>
+
+          <div class="unit5-audio-panel">
+            <div>
+              <span class="unit5-mini-label">Audio 8</span>
+              <h3>My Free Time Habits</h3>
+              <p>Hello. My name is Laura. In my free time, I usually listen to music and watch TV. I like watching comedy shows because they are funny. I prefer staying in because it is relaxing. I sometimes go out with my friends on weekends. After class, I usually go home and do my homework. I use my phone every day, but I do not play video games. Thank you.</p>
+            </div>
+            <div class="unit5-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit5Audio('final-speaking-model', unit5AudioScripts.finalSpeaking)">Listen</button>
+            </div>
+          </div>
+
+          <div class="unit5-speaking-grid">
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">01</span><strong>Introduction</strong><small>Hello. My name is Laura.</small></div>
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">02</span><strong>Free time activities</strong><small>In my free time, I usually listen to music and watch TV.</small></div>
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">03</span><strong>Likes</strong><small>I like watching comedy shows because they are funny.</small></div>
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">04</span><strong>Preferences</strong><small>I prefer staying in because it is relaxing.</small></div>
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">05</span><strong>Frequency</strong><small>I sometimes go out with my friends on weekends.</small></div>
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">06</span><strong>After class routine</strong><small>After class, I usually go home and do my homework.</small></div>
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">07</span><strong>Technology habit</strong><small>I use my phone every day, but I do not play video games.</small></div>
+            <div class="unit5-speaking-part"><span class="unit5-mini-label">08</span><strong>Closing</strong><small>Thank you.</small></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit5-module">
+        <header class="unit5-module-header">
+          <span>08</span>
+          <h2>Final Audio Structure</h2>
+          <p>This is the recommended set of ElevenLabs files for the completed version of Unit 5.</p>
+        </header>
+        <div class="unit5-module-body">
+          <div class="unit5-route-grid">
+            <div class="unit5-route-item"><span>Audio 1</span><strong>audio/unit5/free-time-introduction.mp3</strong><small>Present the theme Free Time.</small></div>
+            <div class="unit5-route-item"><span>Cards</span><strong>audio/unit5/cards/*.mp3</strong><small>One short pronunciation file per card.</small></div>
+            <div class="unit5-route-item"><span>Audio 2</span><strong>audio/unit5/likes-and-preferences.mp3</strong><small>Practice like and prefer.</small></div>
+            <div class="unit5-route-item"><span>Audio 3</span><strong>audio/unit5/tv-shows.mp3</strong><small>Present TV genres.</small></div>
+            <div class="unit5-route-item"><span>Audio 4</span><strong>audio/unit5/because-reasons.mp3</strong><small>Give reasons with because.</small></div>
+            <div class="unit5-route-item"><span>Audio 5</span><strong>audio/unit5/after-class-routine.mp3</strong><small>Talk about after-class habits.</small></div>
+            <div class="unit5-route-item"><span>Audio 6</span><strong>audio/unit5/technology-habits.mp3</strong><small>Talk about technology habits.</small></div>
+            <div class="unit5-route-item"><span>Audio 7</span><strong>audio/unit5/free-time-conversation.mp3</strong><small>Integrate the unit in a dialogue.</small></div>
+            <div class="unit5-route-item"><span>Audio 8</span><strong>audio/unit5/final-speaking-model.mp3</strong><small>Model final oral production.</small></div>
+          </div>
+          <div class="unit5-status" id="unit5AudioStatus" aria-live="polite"></div>
+        </div>
       </article>
 
       <article class="premium-topic-card linked-practice-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
-        <p class="lesson-text">After studying this unit, go to Practice Lab for a grammar and conversation activity, then complete the listening comprehension task.</p>
-        <div class="hero-actions"><a href="practice-unit-5-free-time.html" class="btn btn-primary">Open unit practice</a><a href="listening-unit-5-free-time.html" class="btn btn-secondary">Open listening</a></div>
+        <div class="topic-heading"><span class="topic-number">09</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
+        <p class="lesson-text">After studying the explanation, students can complete the Unit 5 practice page, listening task, and production workshops.</p>
+        <div class="hero-actions"><a href="practice-unit-5-free-time.html" class="btn btn-primary">Open unit practice</a><a href="listening-unit-5-free-time.html" class="btn btn-secondary">Open listening</a><a href="workshop-unit-5-free-time-poll.html" class="btn btn-secondary">Free-time poll</a><a href="workshop-unit-5-tv-habits.html" class="btn btn-secondary">TV habits workshop</a></div>
       </article>
     </section>
   </main>
@@ -80,6 +853,131 @@
   <footer class="site-footer">
     <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
+  <script>
+    let activeUnit5Audio = null;
+
+    const unit5AudioScripts = {
+      introduction: "In this unit, we are going to talk about free time. Free time is the time when people relax, have fun, and do activities they like. Some people like staying in and watching TV. Other people prefer going out with friends, playing sports, or going to the park. In this unit, you will learn how to talk about your free time activities, your preferences, your TV habits, and your after-class routine.",
+      likes: "I like watching TV. I like listening to music. I like playing soccer. I like reading books. I like going out with my friends. I prefer staying in because it is relaxing. I prefer going out because it is fun. I like watching movies, but I prefer listening to music. I like playing video games, but I prefer playing soccer.",
+      tvShows: "I like comedy shows because they are funny. My sister likes documentaries because they are interesting. My brother likes cartoons because they are fun. My father often watches sports shows. My mother sometimes watches cooking shows. We never watch horror shows because they are scary. At night, we usually watch a series together.",
+      because: "I like comedy shows because they are funny. I like documentaries because they are interesting. I like sports shows because they are exciting. I do not like horror shows because they are scary. I prefer staying in because it is relaxing. I prefer going out because it is fun.",
+      afterClass: "I finish class at five p.m. After class, I usually go home. I sometimes watch TV, and I often listen to music. At night, I do my homework and use my phone. On Fridays, I go out with my friends. I like going out, but I prefer staying home during the week.",
+      technology: "I use my phone every day. I usually watch videos at night. I sometimes play video games, and I often use social media. I think I spend too much time online. My brother uses his phone a lot too. He likes playing video games, but he rarely reads books. In my family, technology is very important, but we try to use it carefully.",
+      conversation: "Sofia: Hi, Daniel. What do you do in your free time? Daniel: Hi, Sofia. In my free time, I usually play soccer with my friends. I also like watching movies at home. What about you? Sofia: I like listening to music and reading books. I always listen to music after class. I sometimes go out with my sister. Daniel: That sounds nice. Do you prefer going out or staying in? Sofia: I prefer staying in because I like relaxing at home. But on weekends, I sometimes go to the park. Do you go out often? Daniel: Yes, I do. I often go out on Saturdays. I rarely stay home all weekend. I like playing soccer, eating out, and visiting my cousins. Sofia: Does your brother play soccer too? Daniel: Yes, he does. He usually plays soccer with me. But he never watches movies. He prefers playing video games. Sofia: Really? My brother is different. He always watches TV after school. He likes watching cartoons and comedy shows. Daniel: Does he use his phone a lot? Sofia: Yes, he does. He often uses his phone at night. My mom says he uses technology too much. Daniel: I understand. I sometimes use my phone too much too. But I prefer doing sports in my free time. Sofia: That is good. I think sports are healthy. I prefer quiet activities, like reading and listening to music. Daniel: So, you like staying in, and I like going out. Sofia: Yes, exactly. We have different free time habits.",
+      finalSpeaking: "Hello. My name is Laura. In my free time, I usually listen to music and watch TV. I like watching comedy shows because they are funny. I prefer staying in because it is relaxing. I sometimes go out with my friends on weekends. After class, I usually go home and do my homework. I use my phone every day, but I do not play video games. Thank you."
+    };
+
+    function setUnit5AudioStatus(message) {
+      const status = document.getElementById("unit5AudioStatus");
+      if (status) status.textContent = message;
+    }
+
+    function speakUnit5Text(text) {
+      if (!("speechSynthesis" in window)) {
+        setUnit5AudioStatus("Audio preview is not available in this browser.");
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = 0.82;
+      window.speechSynthesis.speak(utterance);
+      setUnit5AudioStatus("Previewing with browser voice. Replace with ElevenLabs MP3 when ready.");
+    }
+
+    function playUnit5Audio(slug, fallbackText) {
+      if (activeUnit5Audio) {
+        activeUnit5Audio.pause();
+        activeUnit5Audio.currentTime = 0;
+      }
+      window.speechSynthesis && window.speechSynthesis.cancel();
+
+      const source = "audio/unit5/" + slug + ".mp3";
+      activeUnit5Audio = new Audio(source);
+      activeUnit5Audio.addEventListener("error", function() {
+        speakUnit5Text(fallbackText);
+      }, { once: true });
+      activeUnit5Audio.play().then(function() {
+        setUnit5AudioStatus("Playing " + source);
+      }).catch(function() {
+        speakUnit5Text(fallbackText);
+      });
+    }
+
+    function playUnit5Card(slug, phrase) {
+      if (activeUnit5Audio) {
+        activeUnit5Audio.pause();
+        activeUnit5Audio.currentTime = 0;
+      }
+      window.speechSynthesis && window.speechSynthesis.cancel();
+
+      const source = "audio/unit5/cards/" + slug + ".mp3";
+      activeUnit5Audio = new Audio(source);
+      activeUnit5Audio.addEventListener("error", function() {
+        speakUnit5Text(phrase);
+      }, { once: true });
+      activeUnit5Audio.play().then(function() {
+        setUnit5AudioStatus("Playing " + source);
+      }).catch(function() {
+        speakUnit5Text(phrase);
+      });
+    }
+
+    function setUnit5ModuleOpen(module, isOpen) {
+      const header = module.querySelector(".unit5-module-header");
+      const toggle = module.querySelector(".unit5-module-toggle");
+      module.classList.toggle("is-collapsed", !isOpen);
+      if (header) header.setAttribute("aria-expanded", String(isOpen));
+      if (toggle) {
+        toggle.querySelector("span").textContent = isOpen ? "Close" : "Open";
+      }
+    }
+
+    function setUnit5Sections(open) {
+      document.querySelectorAll(".unit5-module").forEach(function(module) {
+        setUnit5ModuleOpen(module, open);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const modules = document.querySelectorAll(".unit5-module");
+      modules.forEach(function(module, index) {
+        const header = module.querySelector(".unit5-module-header");
+        if (!header) return;
+
+        header.setAttribute("role", "button");
+        header.setAttribute("tabindex", "0");
+        header.setAttribute("aria-controls", "unit5-section-" + (index + 1));
+
+        const body = module.querySelector(".unit5-module-body");
+        if (body) body.id = "unit5-section-" + (index + 1);
+
+        const toggle = document.createElement("span");
+        toggle.className = "unit5-module-toggle";
+        toggle.innerHTML = '<i class="bi bi-chevron-down" aria-hidden="true"></i><span>Open</span>';
+        header.appendChild(toggle);
+
+        function toggleModule() {
+          setUnit5ModuleOpen(module, module.classList.contains("is-collapsed"));
+        }
+
+        header.addEventListener("click", function(event) {
+          if (event.target.closest("a, button")) return;
+          toggleModule();
+        });
+
+        header.addEventListener("keydown", function(event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleModule();
+          }
+        });
+
+        setUnit5ModuleOpen(module, index === 0);
+      });
+    });
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>

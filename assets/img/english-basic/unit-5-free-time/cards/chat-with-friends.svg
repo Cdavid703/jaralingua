@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="chat with friends">
+  <rect width="256" height="256" rx="36" fill="#edf7ef"/>
+  <circle cx="91" cy="93" r="27" fill="#123b8f"/>
+  <circle cx="165" cy="93" r="27" fill="#c1121f"/>
+  <path d="M45 183c9-37 83-37 92 0z" fill="#123b8f"/>
+  <path d="M119 183c9-37 83-37 92 0z" fill="#c1121f"/>
+  <path d="M77 44h102c16 0 28 12 28 27s-12 27-28 27h-42l-25 21V98H77c-16 0-28-12-28-27s12-27 28-27z" fill="#ffffff"/>
+  <path d="M88 71h80" stroke="#071f4f" stroke-width="8" stroke-linecap="round"/>
+</svg>
