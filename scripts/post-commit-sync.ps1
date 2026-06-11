@@ -319,8 +319,15 @@ try {
 
     $sshArgs += @($vpsTarget, ($remoteCommandParts -join "; "))
 
+    # Git hooks prepend Git's MSYS bin to PATH; its ssh.exe crashes when spawned
+    # from PowerShell, so prefer the native Windows OpenSSH client when present.
+    $sshExe = Join-Path $env:SystemRoot "System32\OpenSSH\ssh.exe"
+    if (-not (Test-Path -LiteralPath $sshExe)) {
+        $sshExe = "ssh"
+    }
+
     Write-Step "Deploying $branch on ${vpsTarget}:$vpsAppDir."
-    Invoke-Checked -File "ssh" -Arguments $sshArgs
+    Invoke-Checked -File $sshExe -Arguments $sshArgs
     Write-Step "GitHub push and VPS deploy completed."
 }
 finally {
