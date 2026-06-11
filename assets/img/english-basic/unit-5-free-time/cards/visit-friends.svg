@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="visit friends">
-  <rect width="256" height="256" rx="36" fill="#f3f6ff"/>
-  <path d="M57 119l71-58 71 58v81H57z" fill="#ffffff"/>
-  <path d="M43 124l85-70 85 70" fill="none" stroke="#123b8f" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="104" cy="139" r="18" fill="#c1121f"/>
-  <circle cx="153" cy="139" r="18" fill="#123b8f"/>
-  <path d="M72 188c7-28 57-28 64 0z" fill="#c1121f"/>
-  <path d="M121 188c7-28 57-28 64 0z" fill="#123b8f"/>
-</svg>

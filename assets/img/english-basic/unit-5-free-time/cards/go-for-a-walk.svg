@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="go for a walk">
-  <rect width="256" height="256" rx="36" fill="#eef7ff"/>
-  <circle cx="128" cy="67" r="22" fill="#c1121f"/>
-  <path d="M126 91l-25 48 42 21 24-44" fill="none" stroke="#123b8f" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M114 151l-33 48M144 160l25 45M107 118l-45 15M156 116l38-24" stroke="#071f4f" stroke-width="14" stroke-linecap="round"/>
-  <path d="M47 211h162" stroke="#2f9e77" stroke-width="12" stroke-linecap="round"/>
-</svg>
