@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Listening Unit 5: Free Time Activities | Basic English Course 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .teacher-note-panel{border-left:6px solid var(--red);border-radius:20px;background:#fff7e8;padding:18px;color:#7c4a03;line-height:1.65}
+    .video-listening-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:22px;overflow:hidden;box-shadow:0 18px 42px rgba(15,23,42,.18);background:#071f4f}
+    .video-listening-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video-pending{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#071f4f}
+    .video-pending img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.58}
+    .video-pending::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,31,79,.2),rgba(7,31,79,.88))}
+    .video-pending-content{position:relative;z-index:1;max-width:560px;padding:24px;color:#fff}
+    .video-pending-content i{font-size:3rem;color:#fff}
+    .video-pending-content h3{color:#fff;margin:10px 0 6px}
+    .video-pending-content p{margin:0;color:rgba(255,255,255,.92)}
+    .free-time-video-page .premium-topic-card .topic-heading{padding:16px;border-radius:18px;background:#f8fbff;border:1px solid rgba(18,59,143,.12)}
+    .free-time-video-page .premium-topic-card .topic-label{color:#9f1239!important;text-shadow:none!important}
+    .free-time-video-page .premium-topic-card .topic-heading h2,.free-time-video-page .youtube-growth-panel h3{color:#071f4f!important;text-shadow:none!important}
+    .free-time-video-page .listening-panel .listening-label{background:#eef4ff;color:#071f4f}
+    .pending-action{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;padding:0 20px;border-radius:999px;background:#334155;color:#fff;font-weight:900}
+    .teacher-only-transcript[hidden]{display:none!important}
+    .quiz-question-card label{transition:border-color .2s ease,background .2s ease}
+    .quiz-question-card label:hover{background:#eef4ff;border-color:rgba(18,59,143,.22)}
+  </style>
+</head>
+<body class="english-basic-page free-time-video-page">
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Basic Course</a></li><li><a href="course-overview.html">Course Overview</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-basic/practice-lab/unit-5/free-time-activities-video-banner.png')">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 5</p>
+        <h1>Video Listening: Free Time Activities</h1>
+        <p>Listen to Sofia and Daniel compare their free-time habits, preferences, TV choices, sports, and technology use. Then answer fifteen A1 comprehension questions.</p>
+        <div class="lesson-meta"><span>Video listening</span><span>Free-time habits</span><span>15 questions</span><span>Teacher transcript</span></div>
+        <div class="hero-actions"><a href="#video-activity" class="btn btn-primary">Start activity</a><a href="unit-5-free-time.html" class="btn btn-secondary">Review Unit 5</a><a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a></div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/unit-5/free-time-activities-video-banner.png" alt="Sofia and Daniel discussing their free-time activities" /></aside>
+    </section>
+
+    <section class="premium-lesson-container" id="video-activity">
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Video Practice</p><h2>Conversation: Free Time Activities</h2></div></div>
+        <p class="lesson-text">Watch once to identify Sofia and Daniel's main preferences. Watch again to notice frequency words, family habits, and the reasons they give.</p>
+        <div class="listening-panel">
+          <div class="listening-audio-card">
+            <div><span class="listening-label">YouTube Video</span><h3>Free Time Activities</h3><p>Conversation between Sofia and Daniel.</p></div>
+            <div class="audio-actions teacher-only-transcript" hidden><button type="button" class="audio-btn play" onclick="downloadTeacherTranscript()">Download teacher transcript PDF</button></div>
+          </div>
+          <div class="video-listening-frame" id="videoFrame">
+            <div class="video-pending" id="videoPending">
+              <img src="../../assets/img/english-basic/practice-lab/unit-5/free-time-activities-video-banner.png" alt="" />
+              <div class="video-pending-content"><i class="bi bi-play-circle" aria-hidden="true"></i><h3>Video link pending</h3><p>The activity and questions are ready. The YouTube video will appear here when its link is added.</p></div>
+            </div>
+          </div>
+          <div class="youtube-growth-panel" aria-label="YouTube channel actions">
+            <div><span class="listening-label">Support the channel</span><h3>Watch on YouTube</h3><p>Play the video here for the activity, or open it on YouTube to like, comment, subscribe, and support the channel.</p></div>
+            <div class="youtube-growth-actions"><span class="pending-action"><i class="bi bi-youtube"></i> Video link pending</span><a class="btn btn-secondary" href="https://www.youtube.com/@JaraLingua?sub_confirmation=1" target="_blank" rel="noopener noreferrer"><i class="bi bi-bell"></i> Subscribe</a><a class="btn btn-secondary" href="https://www.youtube.com/@JaraLingua/videos" target="_blank" rel="noopener noreferrer"><i class="bi bi-collection-play"></i> More videos</a></div>
+          </div>
+        </div>
+        <div class="teacher-note-panel teacher-only-transcript" hidden><strong>Teacher use:</strong> Use the transcript for preparation, accommodations, answer checking, or feedback after students complete the listening.</div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Comprehension Check</p><h2>Answer the Questions</h2></div></div>
+        <p class="lesson-text">Choose the best answer. The options use similar vocabulary, so listen for who does each activity, how often, and why.</p>
+        <form id="quizForm" class="listening-quiz">
+          <div class="quiz-question-card"><h3>1. What does Daniel usually do with his friends?</h3><label><input type="radio" name="q1" value="A" /> He watches movies at their homes.</label><label><input type="radio" name="q1" value="B" /> He plays soccer with them.</label><label><input type="radio" name="q1" value="C" /> He visits the park with them.</label></div>
+          <div class="quiz-question-card"><h3>2. Which two quiet activities does Sofia like?</h3><label><input type="radio" name="q2" value="A" /> Watching movies and using her phone.</label><label><input type="radio" name="q2" value="B" /> Playing games and watching cartoons.</label><label><input type="radio" name="q2" value="C" /> Listening to music and reading books.</label></div>
+          <div class="quiz-question-card"><h3>3. What does Sofia always do after class?</h3><label><input type="radio" name="q3" value="A" /> She listens to music.</label><label><input type="radio" name="q3" value="B" /> She goes out with her sister.</label><label><input type="radio" name="q3" value="C" /> She reads a book in the park.</label></div>
+          <div class="quiz-question-card"><h3>4. Why does Sofia prefer staying in?</h3><label><input type="radio" name="q4" value="A" /> Because her sister stays home.</label><label><input type="radio" name="q4" value="B" /> Because she does not like parks.</label><label><input type="radio" name="q4" value="C" /> Because she likes relaxing at home.</label></div>
+          <div class="quiz-question-card"><h3>5. What does Sofia sometimes do on weekends?</h3><label><input type="radio" name="q5" value="A" /> She plays soccer with Daniel.</label><label><input type="radio" name="q5" value="B" /> She goes to the park.</label><label><input type="radio" name="q5" value="C" /> She eats out with her cousins.</label></div>
+          <div class="quiz-question-card"><h3>6. Which sentence is true about Daniel's Saturdays?</h3><label><input type="radio" name="q6" value="A" /> He often goes out.</label><label><input type="radio" name="q6" value="B" /> He always stays home.</label><label><input type="radio" name="q6" value="C" /> He rarely sees his friends.</label></div>
+          <div class="quiz-question-card"><h3>7. What does Daniel's brother prefer doing?</h3><label><input type="radio" name="q7" value="A" /> Watching movies with Daniel.</label><label><input type="radio" name="q7" value="B" /> Playing video games.</label><label><input type="radio" name="q7" value="C" /> Reading and listening to music.</label></div>
+          <div class="quiz-question-card"><h3>8. When does Sofia's brother always watch TV?</h3><label><input type="radio" name="q8" value="A" /> After school.</label><label><input type="radio" name="q8" value="B" /> Before school.</label><label><input type="radio" name="q8" value="C" /> On Saturday mornings.</label></div>
+          <div class="quiz-question-card"><h3>9. What kind of TV shows does Sofia's brother like?</h3><label><input type="radio" name="q9" value="A" /> Sports shows and news programs.</label><label><input type="radio" name="q9" value="B" /> Documentaries and cooking shows.</label><label><input type="radio" name="q9" value="C" /> Cartoons and comedy shows.</label></div>
+          <div class="quiz-question-card"><h3>10. What technology habit does Sofia describe?</h3><label><input type="radio" name="q10" value="A" /> Her brother often uses his phone at night.</label><label><input type="radio" name="q10" value="B" /> Her brother never uses a phone at home.</label><label><input type="radio" name="q10" value="C" /> Her brother only uses technology at school.</label></div>
+          <div class="quiz-question-card"><h3>11. What does "uses technology too much" mean here?</h3><label><input type="radio" name="q11" value="A" /> He needs technology for every class.</label><label><input type="radio" name="q11" value="B" /> He has many different devices.</label><label><input type="radio" name="q11" value="C" /> He spends more time on it than is good.</label></div>
+          <div class="quiz-question-card"><h3>12. How are Daniel and Sofia's preferences different?</h3><label><input type="radio" name="q12" value="A" /> Daniel prefers movies, while Sofia prefers cartoons.</label><label><input type="radio" name="q12" value="B" /> Daniel prefers sports, while Sofia prefers quiet activities.</label><label><input type="radio" name="q12" value="C" /> Daniel prefers reading, while Sofia prefers soccer.</label></div>
+          <div class="quiz-question-card"><h3>13. What do Daniel and Sofia's brother have in common?</h3><label><input type="radio" name="q13" value="A" /> They both always watch TV after school.</label><label><input type="radio" name="q13" value="B" /> They both prefer playing soccer on Saturdays.</label><label><input type="radio" name="q13" value="C" /> They both may spend too much time using a phone.</label></div>
+          <div class="quiz-question-card"><h3>14. What is the main contrast at the end?</h3><label><input type="radio" name="q14" value="A" /> Sofia likes weekends, but Daniel likes weekdays.</label><label><input type="radio" name="q14" value="B" /> Sofia likes staying in, but Daniel likes going out.</label><label><input type="radio" name="q14" value="C" /> Sofia likes family activities, but Daniel does not.</label></div>
+          <div class="quiz-question-card"><h3>15. What is the best summary of the conversation?</h3><label><input type="radio" name="q15" value="A" /> Sofia and Daniel have different habits, but both enjoy free-time activities.</label><label><input type="radio" name="q15" value="B" /> Sofia and Daniel do the same activities every weekend.</label><label><input type="radio" name="q15" value="C" /> Sofia and Daniel only discuss their brothers' technology habits.</label></div>
+          <button type="button" class="practice-submit-btn" onclick="checkAnswers()">Check Answers</button>
+        </form>
+        <div id="result-box" class="quiz-result-box" aria-live="polite"></div>
+      </article>
+    </section>
+  </main>
+  <script>
+    const youtubeVideoId = "SkHhKM0yQWs";
+    const dialogueText = `Sofia: Hi, Daniel. What do you do in your free time?
+Daniel: Hi, Sofia. In my free time, I usually play soccer with my friends. I also like watching movies at home. What about you?
+Sofia: I like listening to music and reading books. I always listen to music after class. I sometimes go out with my sister.
+Daniel: That sounds nice. Do you prefer going out or staying in?
+Sofia: I prefer staying in because I like relaxing at home. But on weekends, I sometimes go to the park. Do you go out often?
+Daniel: Yes, I do. I often go out on Saturdays. I rarely stay home all weekend. I like playing soccer, eating out, and visiting my cousins.
+Sofia: Does your brother play soccer too?
+Daniel: Yes, he does. He usually plays soccer with me. But he never watches movies. He prefers playing video games.
+Sofia: Really? My brother is different. He always watches TV after school. He likes watching cartoons and comedy shows.
+Daniel: Does he use his phone a lot?
+Sofia: Yes, he does. He often uses his phone at night. My mom says he uses technology too much.
+Daniel: I understand. I sometimes use my phone too much too. But I prefer doing sports in my free time.
+Sofia: That is good. I think sports are healthy. I prefer quiet activities, like reading and listening to music.
+Daniel: So, you like staying in, and I like going out.
+Sofia: Yes, exactly. We have different free time habits.`;
+
+    const answerDetails = {
+      q1:["B","Daniel usually plays soccer with his friends."],q2:["C","Sofia likes listening to music and reading books."],q3:["A","Sofia always listens to music after class."],q4:["C","She prefers staying in because she likes relaxing at home."],q5:["B","She sometimes goes to the park on weekends."],q6:["A","Daniel often goes out on Saturdays."],q7:["B","Daniel's brother prefers playing video games."],q8:["A","Sofia's brother always watches TV after school."],q9:["C","He likes cartoons and comedy shows."],q10:["A","He often uses his phone at night."],q11:["C","Too much means more than is good or healthy."],q12:["B","Daniel prefers sports; Sofia prefers quiet activities."],q13:["C","Daniel and Sofia's brother both may spend too much time using a phone."],q14:["B","Sofia likes staying in; Daniel likes going out."],q15:["A","They have different habits, but both enjoy free-time activities."]
+    };
+
+    function checkAnswers(){let score=0;let complete=true;Object.keys(answerDetails).forEach(function(key){const selected=document.forms.quizForm[key].value;if(!selected)complete=false;if(selected===answerDetails[key][0])score++});const box=document.getElementById("result-box");box.style.display="block";if(!complete){box.className="quiz-result-box incorrect";box.textContent="Please answer all 15 questions before checking.";return}if(score===15){box.className="quiz-result-box correct";box.textContent="Excellent! You got 15 out of 15 correct.";return}box.className="quiz-result-box incorrect";box.innerHTML="You got "+score+" out of 15 correct.<br><br><strong>Correct Answers:</strong><br>"+Object.keys(answerDetails).map(function(key,index){return(index+1)+": "+answerDetails[key][0]+" - "+answerDetails[key][1]}).join("<br>")}
+
+    function configureYouTube(){if(!youtubeVideoId)return;const frame=document.getElementById("videoFrame");frame.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(youtubeVideoId)+'" title="Conversation: Free Time Activities" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';const action=document.querySelector(".pending-action");if(action){const link=document.createElement("a");link.className="btn btn-primary";link.href="https://www.youtube.com/watch?v="+encodeURIComponent(youtubeVideoId);link.target="_blank";link.rel="noopener noreferrer";link.innerHTML='<i class="bi bi-youtube"></i> Watch on YouTube';action.replaceWith(link)}}
+    function readTeacherUser(){try{const saved=JSON.parse(sessionStorage.getItem("jaralingua_google_user")||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp)return null;return saved}catch(error){return null}}
+    function readTeacherRoleRequests(){try{const saved=JSON.parse(localStorage.getItem("jaralingua_role_requests")||"[]");return Array.isArray(saved)?saved:[]}catch(error){return[]}}
+    function normalizeTeacherEmail(value){return String(value||"").trim().toLowerCase()}
+    function canDownloadTeacherTranscript(){const user=readTeacherUser();if(!user)return false;if(normalizeTeacherEmail(user.email)==="cdavid.jaramillo@gmail.com")return true;const id=user.sub||user.email||"";return readTeacherRoleRequests().some(function(request){const sameUser=request.id===id||normalizeTeacherEmail(request.email)===normalizeTeacherEmail(user.email);return sameUser&&request.role==="teacher"&&request.status==="approved"})}
+    function updateTeacherTranscriptAccess(){document.querySelectorAll(".teacher-only-transcript").forEach(function(element){element.hidden=!canDownloadTeacherTranscript()})}
+    function downloadTeacherTranscript(){if(!canDownloadTeacherTranscript()){alert("This transcript is only available for approved teacher accounts.");updateTeacherTranscriptAccess();return}downloadTranscriptPdf("Free Time Activities",dialogueText,"unit-5-free-time-activities-transcript.pdf")}
+    document.addEventListener("DOMContentLoaded",function(){configureYouTube();updateTeacherTranscriptAccess()});
+    window.addEventListener("storage",updateTeacherTranscriptAccess);window.addEventListener("focus",updateTeacherTranscriptAccess);setInterval(updateTeacherTranscriptAccess,1500);
+  </script>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script src="../../assets/js/transcript-pdf.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+</body>
+</html>
