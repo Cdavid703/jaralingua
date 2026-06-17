@@ -79,6 +79,7 @@ DEFAULT_SOURCE_PATTERNS = [
     "frances/Niveau 7/audio/professions/*.md",
     "frances/Niveau 7/audio/vocab/*.md",
     "frances/Niveau 7/ateliers/ecoute-cultures-b1.html",
+    "frances/Niveau 8/audio/*.md",
 ]
 
 LANGUAGE_PROFILES = {

@@ -66,6 +66,7 @@
       answersCleared: "Respuestas guardadas borradas.",
       adminPanel: "Panel de administrador",
       french7Grades: "Notas Frances 7",
+      french8Grades: "Notas Frances 8",
       basicEnglishGrades: "Notas Ingles basico",
       intermediateEnglishGrades: "Notas Ingles intermedio",
       pendingRoleRequests: "Solicitudes pendientes",
@@ -130,7 +131,8 @@
       clearAnswers: "Effacer les r\u00e9ponses",
       answersCleared: "R\u00e9ponses enregistr\u00e9es effac\u00e9es.",
       adminPanel: "Panneau administrateur",
-      french7Grades: "Notes du cours",
+      french7Grades: "Notes du cours 7",
+      french8Grades: "Notes du cours 8",
       basicEnglishGrades: "Notes anglais debutant",
       intermediateEnglishGrades: "Notes anglais intermediaire",
       pendingRoleRequests: "Demandes en attente",
@@ -196,6 +198,7 @@
       answersCleared: "Saved answers cleared.",
       adminPanel: "Admin panel",
       french7Grades: "French 7 grades",
+      french8Grades: "French 8 grades",
       basicEnglishGrades: "Basic English grades",
       intermediateEnglishGrades: "Intermediate English grades",
       pendingRoleRequests: "Pending requests",
@@ -308,6 +311,7 @@
   function courseNameFromPath(path) {
     const value = (path || pageKey()).toLowerCase();
     if (value.indexOf("/frances/niveau 7/") !== -1 || value.indexOf("/frances/niveau%207/") !== -1) return "Fran\u00e7ais Niveau 7";
+    if (value.indexOf("/frances/niveau 8/") !== -1 || value.indexOf("/frances/niveau%208/") !== -1) return "Fran\u00e7ais Niveau 8";
     if (value.indexOf("/frances/") !== -1) return "Fran\u00e7ais";
     if (value.indexOf("/ingles/basico/") !== -1) return "Basic English";
     if (value.indexOf("/ingles/intermediate/") !== -1) return "Intermediate English";
@@ -1458,6 +1462,7 @@
             <a href="${rootHref("ingles/basico/notas.html")}">${copy.basicEnglishGrades}</a>
             <a href="${rootHref("ingles/intermediate/notas.html")}">${copy.intermediateEnglishGrades}</a>
             <a href="${rootHref("frances/Niveau%207/notes-evaluation.html")}">${copy.french7Grades}</a>
+            <a href="${rootHref("frances/Niveau%208/notes-evaluation.html")}">${copy.french8Grades}</a>
           </div>
           <div class="auth-actions">
             <button class="auth-action" type="button" data-auth-signout>${copy.signOut}</button>

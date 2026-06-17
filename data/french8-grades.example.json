@@ -1,0 +1,58 @@
+{
+  "adminEmails": [
+    "admin@example.com"
+  ],
+  "teacherEmails": [
+    "teacher@example.com"
+  ],
+  "allowStudentIdClaim": false,
+  "students": [
+    {
+      "id": "0000000000",
+      "fullName": "Student Name",
+      "level": "Niveau 8",
+      "email": "student@example.com",
+      "contact": "0000000000",
+      "bookDate": "2026-07-01",
+      "grades": {}
+    }
+  ],
+  "evaluations": [
+    {
+      "id": "diagnosticB2",
+      "title": "Diagnostic B1+ / B2",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 10
+    },
+    {
+      "id": "grammarWorkshop",
+      "title": "Atelier de grammaire avancee",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 20
+    },
+    {
+      "id": "oralDebate",
+      "title": "Debat oral argumentatif",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 20
+    },
+    {
+      "id": "writtenArgumentation",
+      "title": "Texte argumentatif B2",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 20
+    },
+    {
+      "id": "finalProject",
+      "title": "Projet final: dilemme contemporain",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 30
+    }
+  ],
+  "bonusEvent": null
+}

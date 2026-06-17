@@ -1,0 +1,101 @@
+{
+  "speakers": {
+    "Claire": {
+      "voice_id": "JvD1a0L9rABccms2q9zH",
+      "name": "JaraLingua FR Jade Parisienne",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Sophie": {
+      "voice_id": "y2FQJ8BW8vDxCuLkIFp1",
+      "name": "JaraLingua FR Poppy France",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Léa": {
+      "voice_id": "JvD1a0L9rABccms2q9zH",
+      "name": "JaraLingua FR Jade Parisienne",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Jade": {
+      "voice_id": "y2FQJ8BW8vDxCuLkIFp1",
+      "name": "JaraLingua FR Poppy France",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Thomas": {
+      "voice_id": "aQROLel5sQbj1vuIVi6B",
+      "name": "Voix Nicolas Petit IA AUDIO Narration",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Martin": {
+      "voice_id": "a5n9pJUnAhX4fn7lx3uo",
+      "name": "Martin Dupont Intime",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Nicolas": {
+      "voice_id": "GPAQQPp9dazaB2bl4zg9",
+      "name": "Victor - Casual and Conversational",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Victor": {
+      "voice_id": "aQROLel5sQbj1vuIVi6B",
+      "name": "Voix Nicolas Petit IA AUDIO Narration",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Présentateur": {
+      "voice_id": "a5n9pJUnAhX4fn7lx3uo",
+      "name": "Martin Dupont Intime",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Présentatrice": {
+      "voice_id": "JvD1a0L9rABccms2q9zH",
+      "name": "JaraLingua FR Jade Parisienne",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Invité": {
+      "voice_id": "GPAQQPp9dazaB2bl4zg9",
+      "name": "Victor - Casual and Conversational",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Invitée": {
+      "voice_id": "y2FQJ8BW8vDxCuLkIFp1",
+      "name": "JaraLingua FR Poppy France",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Journaliste": {
+      "voice_id": "aQROLel5sQbj1vuIVi6B",
+      "name": "Voix Nicolas Petit IA AUDIO Narration",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Reporter": {
+      "voice_id": "y2FQJ8BW8vDxCuLkIFp1",
+      "name": "JaraLingua FR Poppy France",
+      "profile": "french-france",
+      "gender": "female"
+    }
+  },
+  "pools": {
+    "french-france": {
+      "female": [
+        { "voice_id": "JvD1a0L9rABccms2q9zH", "name": "JaraLingua FR Jade Parisienne" },
+        { "voice_id": "y2FQJ8BW8vDxCuLkIFp1", "name": "JaraLingua FR Poppy France" }
+      ],
+      "male": [
+        { "voice_id": "a5n9pJUnAhX4fn7lx3uo", "name": "Martin Dupont Intime" },
+        { "voice_id": "aQROLel5sQbj1vuIVi6B", "name": "Voix Nicolas Petit IA AUDIO Narration" },
+        { "voice_id": "GPAQQPp9dazaB2bl4zg9", "name": "Victor - Casual and Conversational" }
+      ]
+    }
+  }
+}
