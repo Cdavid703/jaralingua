@@ -1,0 +1,98 @@
+{
+  "speakers": {
+    "Caroline": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Marc": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "\u00c9milie": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Philippe": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Nathalie": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Jean-Fran\u00e7ois": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Pr\u00e9sentateur": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Pr\u00e9sentatrice": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Invit\u00e9": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "male"
+    },
+    "Invit\u00e9e": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Journaliste": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "neutral"
+    },
+    "Reporter": {
+      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+      "name": "Caroline Quebec voice",
+      "profile": "french-france",
+      "gender": "neutral"
+    }
+  },
+  "pools": {
+    "french-france": {
+      "female": [
+        {
+          "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+          "name": "Caroline Quebec voice"
+        }
+      ],
+      "male": [
+        {
+          "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+          "name": "Caroline Quebec voice"
+        }
+      ],
+      "neutral": [
+        {
+          "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
+          "name": "Caroline Quebec voice"
+        }
+      ]
+    }
+  }
+}
