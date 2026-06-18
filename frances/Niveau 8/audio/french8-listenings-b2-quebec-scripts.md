@@ -2,7 +2,7 @@
 
 
 ## Audio 01a - Un choix de carrière regretté (Québec)
-File: `n8-01a-choix-carriere-quebec-b2.mp3`
+File: `complete/n8-01a-choix-carriere-quebec-b2.mp3`
 
 Caroline: Tu sais, Marc, ça fait dix ans que j'ai quitté l'architecture pour la finance. Et franchement, j'aurais dû y réfléchir davantage avant de prendre cette décision.
 
@@ -26,7 +26,7 @@ Marc: C'est encourageant. On aurait pu rester dans le regret, mais au moins main
 
 
 ## Audio 01b - Les regrets des Français (Québec)
-File: `n8-01b-regrets-francais-quebec-b2.mp3`
+File: `complete/n8-01b-regrets-francais-quebec-b2.mp3`
 
 Émilie: Bienvenue dans notre chronique « Regards croisés ». Aujourd'hui, nous recevons Philippe, sociologue, pour parler d'une enquête fascinante sur les regrets des Français. Philippe, quels sont les résultats principaux ?
 
@@ -52,7 +52,7 @@ Philippe: Absolument. Les psychologues affirment que le regret, quand il est ana
 
 
 ## Audio 01c - Bilan d'un projet municipal raté (Québec)
-File: `n8-01c-projet-municipal-quebec-b2.mp3`
+File: `complete/n8-01c-projet-municipal-quebec-b2.mp3`
 
 Nathalie: Bonsoir et bienvenue dans votre flash info. Ce soir, retour sur le projet de réaménagement du quartier Sainte-Catherine, abandonné après trois ans de travaux. Notre reporter Jean-François est sur place. Jean-François, que s'est-il passé ?
 
@@ -78,7 +78,7 @@ Nathalie: Merci, Jean-François. Nous suivrons ce dossier de près.
 
 
 ## Audio 02a - Si j'avais su… (Québec)
-File: `n8-02a-si-javais-su-quebec-b2.mp3`
+File: `complete/n8-02a-si-javais-su-quebec-b2.mp3`
 
 Philippe: Tu te rappelles quand on hésitait entre partir à Vancouver ou rester à Montréal après le diplôme ?
 
@@ -102,7 +102,7 @@ Philippe: Finalement, si on avait pu voir l'avenir, on aurait peut-être fait ex
 
 
 ## Audio 02b - Les grands « et si » de l'histoire (Québec)
-File: `n8-02b-et-si-histoire-quebec-b2.mp3`
+File: `complete/n8-02b-et-si-histoire-quebec-b2.mp3`
 
 Marc: Bienvenue dans « Contre-courant », la chronique qui explore l'histoire autrement. Aujourd'hui, Caroline, vous êtes historienne spécialiste de l'uchronie. Expliquez-nous ce concept.
 
@@ -128,7 +128,7 @@ Marc: Ces réflexions montrent à quel point chaque événement historique est u
 
 
 ## Audio 02c - Accident évité de justesse (Québec)
-File: `n8-02c-accident-evite-quebec-b2.mp3`
+File: `complete/n8-02c-accident-evite-quebec-b2.mp3`
 
 Caroline: Bonsoir. En titre de votre flash info ce soir : un incident aérien grave évité de justesse à l'aéroport Montréal-Trudeau. Notre reporter Philippe est en direct. Philippe, que savons-nous à cette heure ?
 
@@ -154,7 +154,7 @@ Caroline: Merci, Philippe. Un incident qui rappelle l'importance cruciale de la 
 
 
 ## Audio 03a - Réactions après un scandale (Québec)
-File: `n8-03a-scandale-reactions-quebec-b2.mp3`
+File: `complete/n8-03a-scandale-reactions-quebec-b2.mp3`
 
 Jean-François: Tu as suivi l'affaire du ministre Delcourt ? C'est incroyable qu'il ait détourné des fonds publics pendant trois ans sans que personne s'en soit aperçu.
 
@@ -178,7 +178,7 @@ Nathalie: Espérons que cette affaire ait au moins servi de leçon pour renforce
 
 
 ## Audio 03b - Critique culturelle : un film controversé (Québec)
-File: `n8-03b-film-controverse-quebec-b2.mp3`
+File: `complete/n8-03b-film-controverse-quebec-b2.mp3`
 
 Marc: Bienvenue dans « Écran large ». Aujourd'hui, nous débattons du dernier film de la réalisatrice Agnès Morel, qui divise la critique. Émilie, vous êtes critique de cinéma. Quelle est votre analyse ?
 
@@ -204,7 +204,7 @@ Marc: Merci, Émilie, pour cette critique passionnée et éclairante.
 
 
 ## Audio 03c - Rapport sur une crise sanitaire (Québec)
-File: `n8-03c-crise-sanitaire-quebec-b2.mp3`
+File: `complete/n8-03c-crise-sanitaire-quebec-b2.mp3`
 
 Philippe: Bonsoir. Ce soir dans votre flash info, un rapport accablant sur la crise sanitaire liée à la contamination de produits laitiers dans la région de Lanaudière. Notre reporter Nathalie est sur place. Nathalie, que contient ce rapport ?
 
@@ -230,7 +230,7 @@ Philippe: Merci, Nathalie. Un dossier que nous continuerons à suivre attentivem
 
 
 ## Audio 04a - Ce qu'a vraiment dit le ministre (Québec)
-File: `n8-04a-dit-ministre-quebec-b2.mp3`
+File: `complete/n8-04a-dit-ministre-quebec-b2.mp3`
 
 Émilie: Tu as vu la conférence de presse du ministre de l'Éducation hier ? Les médias rapportent des versions complètement différentes.
 
@@ -254,7 +254,7 @@ Jean-François: Il a dit qu'il clarifierait sa position la semaine prochaine. On
 
 
 ## Audio 04b - Rumeurs et vérités au bureau (Québec)
-File: `n8-04b-rumeurs-bureau-quebec-b2.mp3`
+File: `complete/n8-04b-rumeurs-bureau-quebec-b2.mp3`
 
 Nathalie: Bienvenue dans « Vie pro », la chronique qui décrypte le monde du travail. Aujourd'hui, on parle des rumeurs en entreprise avec Marc, consultant en communication interne. Marc, pourquoi les rumeurs circulent-elles aussi vite au bureau ?
 
@@ -280,7 +280,7 @@ Nathalie: Un conseil précieux. Merci, Marc, pour ces éclairages.
 
 
 ## Audio 04c - Sommet international : déclarations (Québec)
-File: `n8-04c-sommet-declarations-quebec-b2.mp3`
+File: `complete/n8-04c-sommet-declarations-quebec-b2.mp3`
 
 Caroline: Bonsoir. En ouverture de votre flash info, le sommet sur le climat à Genève. De nombreuses déclarations ont marqué cette première journée. Notre reporter Marc est sur place. Marc, quels sont les faits marquants ?
 
@@ -306,7 +306,7 @@ Caroline: Merci, Marc. Le sommet se poursuit demain avec les négociations sur l
 
 
 ## Audio 05a - Démêler le vrai du faux (Québec)
-File: `n8-05a-vrai-faux-quebec-b2.mp3`
+File: `complete/n8-05a-vrai-faux-quebec-b2.mp3`
 
 Nathalie: Tu as vu cet article qui circule sur les réseaux ? Celui qui prétend que les vaccins contiennent des métaux lourds dangereux ?
 
@@ -332,7 +332,7 @@ Nathalie: Oui, c'est vrai. Ce qu'on peut faire à notre échelle, c'est vérifie
 
 
 ## Audio 05b - Les médias face aux algorithmes (Québec)
-File: `n8-05b-medias-algorithmes-quebec-b2.mp3`
+File: `complete/n8-05b-medias-algorithmes-quebec-b2.mp3`
 
 Jean-François: Bienvenue dans « Décryptage ». Aujourd'hui, nous recevons Caroline, chercheuse en sciences de l'information, pour parler de la relation entre médias traditionnels et algorithmes. Caroline, quel est le problème fondamental ?
 
@@ -362,7 +362,7 @@ Jean-François: Un message fort. Merci, Caroline, pour cette analyse indispensab
 
 
 ## Audio 05c - Alerte aux infox : rapport annuel (Québec)
-File: `n8-05c-infox-rapport-quebec-b2.mp3`
+File: `complete/n8-05c-infox-rapport-quebec-b2.mp3`
 
 Émilie: Bonsoir. Ã€ la une de votre flash info ce soir : la publication du rapport annuel de l'Observatoire de la désinformation. Les chiffres sont alarmants. Notre reporter Philippe est en studio. Philippe, que révèle ce rapport ?
 
@@ -392,7 +392,7 @@ Philippe: C'est exactement ce que conclut le rapport. Ce qui est en jeu, c'est l
 
 
 ## Audio 06a - L'IA au travail : menace ou outil ? (Québec)
-File: `n8-06a-ia-travail-quebec-b2.mp3`
+File: `complete/n8-06a-ia-travail-quebec-b2.mp3`
 
 Marc: Tu as entendu parler de la nouvelle politique de notre entreprise ? Ils veulent intégrer l'intelligence artificielle dans tous les départements d'ici six mois.
 
@@ -416,7 +416,7 @@ Nathalie: D'accord. Mais il faut que la direction s'engage concrètement pour qu
 
 
 ## Audio 06b - Éthique et reconnaissance faciale (Québec)
-File: `n8-06b-reconnaissance-faciale-quebec-b2.mp3`
+File: `complete/n8-06b-reconnaissance-faciale-quebec-b2.mp3`
 
 Caroline: Bienvenue dans « Techno-éthique ». Aujourd'hui, nous abordons un sujet brûlant avec Philippe, juriste spécialisé en droit numérique : la reconnaissance faciale. Philippe, pourquoi ce débat est-il si vif ?
 
@@ -444,7 +444,7 @@ Philippe: Merci, Caroline. Puisque ce débat nous concerne tous, j'encourage cha
 
 
 ## Audio 06c - Nouvelle régulation européenne sur l'IA (Québec)
-File: `n8-06c-regulation-ia-quebec-b2.mp3`
+File: `complete/n8-06c-regulation-ia-quebec-b2.mp3`
 
 Jean-François: Bonsoir. En tête de votre flash info : le Parlement européen a adopté aujourd'hui un texte historique sur la régulation de l'intelligence artificielle. Notre reporter Émilie nous en détaille les grandes lignes. Émilie ?
 
@@ -470,7 +470,7 @@ Jean-François: Merci, Émilie. Une avancée législative majeure que nous conti
 
 
 ## Audio 07a - Égalité des chances : réalité ou illusion ? (Québec)
-File: `n8-07a-egalite-chances-quebec-b2.mp3`
+File: `complete/n8-07a-egalite-chances-quebec-b2.mp3`
 
 Philippe: Tu crois vraiment que l'égalité des chances existe en France ? Moi, j'ai de sérieux doutes.
 
@@ -494,7 +494,7 @@ Caroline: Tu as raison. Quoique la situation soit préoccupante, abandonner le c
 
 
 ## Audio 07b - Engagement citoyen et participation locale (Québec)
-File: `n8-07b-engagement-citoyen-quebec-b2.mp3`
+File: `complete/n8-07b-engagement-citoyen-quebec-b2.mp3`
 
 Émilie: Bienvenue dans « Agora ». Aujourd'hui, nous parlons d'engagement citoyen avec Marc, politologue et spécialiste de la démocratie participative. Marc, la participation citoyenne est-elle en crise ?
 
@@ -524,7 +524,7 @@ Marc: Absolument. Bien que le chemin soit semé d'embûches, l'engagement citoye
 
 
 ## Audio 07c - Discrimination à l'embauche : le testing (Québec)
-File: `n8-07c-discrimination-embauche-quebec-b2.mp3`
+File: `complete/n8-07c-discrimination-embauche-quebec-b2.mp3`
 
 Nathalie: Bonsoir. Ce soir dans votre flash info, les résultats d'une vaste opération de testing sur la discrimination à l'embauche. Notre reporter Jean-François nous livre les conclusions. Jean-François ?
 
@@ -554,7 +554,7 @@ Nathalie: Merci, Jean-François.
 
 
 ## Audio 08a - Parler comme un Parisien (Québec)
-File: `n8-08a-parler-parisien-quebec-b2.mp3`
+File: `complete/n8-08a-parler-parisien-quebec-b2.mp3`
 
 Émilie: Dis-moi, Jean-François, toi qui as vécu trois ans à Paris, c'est vrai que les Parisiens ont un langage particulier ?
 
@@ -582,7 +582,7 @@ Jean-François: C'est ça. C'est pas juste du vocabulaire, c'est une compétence
 
 
 ## Audio 08b - La francophonie en mouvement (Québec)
-File: `n8-08b-francophonie-mouvement-quebec-b2.mp3`
+File: `complete/n8-08b-francophonie-mouvement-quebec-b2.mp3`
 
 Nathalie: Bienvenue dans « Horizons francophones ». Aujourd'hui, Philippe, vous êtes linguiste et vous étudiez l'évolution du français dans le monde. Le français est-il une langue en danger ou en pleine expansion ?
 
@@ -612,7 +612,7 @@ Nathalie: Un message optimiste. Merci, Philippe, pour ce panorama éclairant.
 
 
 ## Audio 08c - Portrait : un rappeur et la langue (Québec)
-File: `n8-08c-rappeur-langue-quebec-b2.mp3`
+File: `complete/n8-08c-rappeur-langue-quebec-b2.mp3`
 
 Marc: Bonsoir. Dans votre flash info culturel ce soir, le portrait d'Amine Kouachi, rappeur lyonnais dont le dernier album mêle trois registres de langue. Notre reporter Caroline l'a rencontré. Caroline ?
 

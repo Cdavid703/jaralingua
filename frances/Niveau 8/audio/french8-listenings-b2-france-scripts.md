@@ -3,7 +3,7 @@
 
 ## Audio 01a - Un choix de carrière regretté (France)
 
-File: `n8-01a-choix-carriere-france-b2.mp3`
+File: `complete/n8-01a-choix-carriere-france-b2.mp3`
 
 Sophie: Tu sais, Martin, en repensant à mon parcours, je me dis que j'aurais dû accepter cette offre à Genève il y a cinq ans. C'était une opportunité exceptionnelle dans la recherche pharmaceutique.
 
@@ -26,7 +26,7 @@ Sophie: Tu as raison. On aurait pu passer des années à ruminer. Autant agir ma
 
 ## Audio 01b - Les regrets des Français (France)
 
-File: `n8-01b-regrets-francais-france-b2.mp3`
+File: `complete/n8-01b-regrets-francais-france-b2.mp3`
 
 Claire: Bienvenue dans notre chronique « Société et vous ». Aujourd'hui, nous recevons Thomas Lefèvre, sociologue, pour parler d'une enquête fascinante sur les regrets des Français. Thomas, quels sont les résultats les plus marquants ?
 
@@ -53,7 +53,7 @@ Claire: Un constat puissant. Merci beaucoup, Thomas, pour cette analyse éclaira
 
 ## Audio 01c - Bilan d'un projet municipal raté (France)
 
-File: `n8-01c-projet-municipal-france-b2.mp3`
+File: `complete/n8-01c-projet-municipal-france-b2.mp3`
 
 Léa: Bonsoir. Ce soir dans notre édition, retour sur l'échec du projet de rénovation du quartier des Lilas à Montfort. Trois ans après le lancement des travaux, le bilan est accablant. Notre reporter Nicolas Ferrand est sur place. Nicolas, que s'est-il passé ?
 
@@ -76,7 +76,7 @@ Léa: Un audit qui arrive bien tard, diront certains. On aurait pu l'exiger dès
 
 ## Audio 02a - Si j'avais su… (France)
 
-File: `n8-02a-si-javais-su-france-b2.mp3`
+File: `complete/n8-02a-si-javais-su-france-b2.mp3`
 
 Jade: Tu te souviens de l'époque où on hésitait à partir en Erasmus ? Si j'avais accepté la bourse pour Barcelone, j'aurais probablement appris l'espagnol couramment. Ma vie professionnelle serait complètement différente aujourd'hui.
 
@@ -99,7 +99,7 @@ Jade: Exactement. Si j'avais compris ça plus tôt, j'aurais perdu beaucoup moin
 
 ## Audio 02b - Les grands « et si » de l'histoire (France)
 
-File: `n8-02b-et-si-histoire-france-b2.mp3`
+File: `complete/n8-02b-et-si-histoire-france-b2.mp3`
 
 Thomas: Bonsoir à tous et bienvenue dans « Hypothèses », le podcast qui réécrit l'histoire. Ce soir, nous accueillons Sophie Marchal, historienne spécialisée dans l'histoire contrefactuelle. Sophie, commençons par un grand classique : et si Napoléon avait gagné à Waterloo ?
 
@@ -122,7 +122,7 @@ Thomas: On voit que chaque embranchement historique aurait généré un monde tr
 
 ## Audio 02c - Accident évité de justesse (France)
 
-File: `n8-02c-accident-evite-france-b2.mp3`
+File: `complete/n8-02c-accident-evite-france-b2.mp3`
 
 Claire: Édition spéciale ce soir. Un incident aérien majeur a été évité de justesse cet après-midi à l'aéroport de Lyon-Saint-Exupéry. Deux avions ont failli entrer en collision sur la piste principale. Notre reporter Martin Dubois est en direct depuis l'aéroport. Martin, que savons-nous à cette heure ?
 
@@ -145,7 +145,7 @@ Claire: Si cet incident avait eu une issue différente, nous parlerions ce soir 
 
 ## Audio 03a - Réactions après un scandale (France)
 
-File: `n8-03a-scandale-reactions-france-b2.mp3`
+File: `complete/n8-03a-scandale-reactions-france-b2.mp3`
 
 Léa: Tu as suivi l'affaire Bertrand ? Je suis stupéfaite qu'il ait détourné autant de fonds publics pendant toutes ces années. C'est absolument scandaleux.
 
@@ -168,7 +168,7 @@ Léa: Oui, bien que le chemin ait été long, c'est un premier pas vers plus de 
 
 ## Audio 03b - Critique culturelle : un film controversé (France)
 
-File: `n8-03b-film-controverse-france-b2.mp3`
+File: `complete/n8-03b-film-controverse-france-b2.mp3`
 
 Sophie: Bienvenue dans « Regard critique ». Ce soir, nous parlons du film « Les Ombres du silence » qui divise la critique et le public. Victor Lemoine, vous êtes critique de cinéma. Qu'avez-vous pensé de ce film ?
 
@@ -195,7 +195,7 @@ Sophie: Merci Victor pour cette analyse. Nous invitons nos auditeurs à se forge
 
 ## Audio 03c - Rapport sur une crise sanitaire (France)
 
-File: `n8-03c-crise-sanitaire-france-b2.mp3`
+File: `complete/n8-03c-crise-sanitaire-france-b2.mp3`
 
 Jade: Bonsoir. Nous ouvrons ce journal avec une alerte sanitaire majeure. L'Agence régionale de santé a confirmé que des lots de fromage contaminés par la bactérie Listeria ont été distribués dans plusieurs supermarchés du sud-est de la France. Notre reporter Thomas Girard est en direct de Valence. Thomas ?
 
@@ -218,7 +218,7 @@ Jade: Merci Thomas. Nous actualiserons ce dossier tout au long de la soirée.
 
 ## Audio 04a - Ce qu'a vraiment dit le ministre (France)
 
-File: `n8-04a-dit-ministre-france-b2.mp3`
+File: `complete/n8-04a-dit-ministre-france-b2.mp3`
 
 Claire: Tu as vu la conférence de presse du ministre de l'Éducation hier soir ? Les médias rapportent des versions complètement différentes.
 
@@ -241,7 +241,7 @@ Claire: Comme d'habitude, on nous a dit ce qu'on voulait bien nous dire. Il faud
 
 ## Audio 04b - Rumeurs et vérités au bureau (France)
 
-File: `n8-04b-rumeurs-bureau-france-b2.mp3`
+File: `complete/n8-04b-rumeurs-bureau-france-b2.mp3`
 
 Léa: Bienvenue dans « Vie professionnelle », le podcast qui décrypte les dynamiques de bureau. Aujourd'hui, nous parlons des rumeurs en entreprise avec Nicolas Berger, consultant en communication interne. Nicolas, pourquoi les rumeurs circulent-elles aussi vite au travail ?
 
@@ -266,7 +266,7 @@ Nicolas: Vérifiez toujours la source. Si quelqu'un vous dit que le directeur a 
 
 ## Audio 04c - Sommet international : déclarations (France)
 
-File: `n8-04c-sommet-declarations-france-b2.mp3`
+File: `complete/n8-04c-sommet-declarations-france-b2.mp3`
 
 Sophie: Bonsoir. Nous ouvrons cette édition avec le sommet européen de Bruxelles qui s'est achevé aujourd'hui après trois jours de négociations intenses sur la politique migratoire et la transition énergétique. Notre reporter Victor Dumont est sur place. Victor, quelles sont les déclarations marquantes ?
 
@@ -289,7 +289,7 @@ Sophie: Des annonces ambitieuses. Mais plusieurs observateurs nous ont confié q
 
 ## Audio 05a - Démêler le vrai du faux (France)
 
-File: `n8-05a-vrai-faux-france-b2.mp3`
+File: `complete/n8-05a-vrai-faux-france-b2.mp3`
 
 Jade: Tu as vu cette vidéo virale sur les réseaux ? Celle qui prétend que l'eau du robinet à Paris est toxique. C'est partagé partout, mais ce qui m'inquiète, c'est que personne ne vérifie la source avant de relayer.
 
@@ -312,7 +312,7 @@ Jade: Absolument. C'est notre responsabilité collective. Ce que je refuse, c'es
 
 ## Audio 05b - Les médias face aux algorithmes (France)
 
-File: `n8-05b-medias-algorithmes-france-b2.mp3`
+File: `complete/n8-05b-medias-algorithmes-france-b2.mp3`
 
 Martin: Bonsoir et bienvenue dans « Décryptages ». Ce soir, nous abordons un sujet brûlant : les bulles informationnelles. Notre invitée est Claire Fontaine, chercheuse en sciences de l'information. Claire, qu'est-ce qu'une bulle de filtre exactement ?
 
@@ -343,7 +343,7 @@ Martin: Un message salutaire. Merci Claire pour cet éclairage indispensable.
 
 ## Audio 05c - Alerte aux infox : rapport annuel (France)
 
-File: `n8-05c-infox-rapport-france-b2.mp3`
+File: `complete/n8-05c-infox-rapport-france-b2.mp3`
 
 Nicolas: Bonsoir. L'Observatoire européen de la désinformation a publié aujourd'hui son rapport annuel, et les chiffres sont alarmants. Notre reporter Léa Renault est en direct de Strasbourg où le rapport a été présenté. Léa ?
 
@@ -366,7 +366,7 @@ Nicolas: Ce sont des enjeux majeurs pour nos démocraties. Ce qui ressort de ce 
 
 ## Audio 06a - L'IA au travail : menace ou outil ? (France)
 
-File: `n8-06a-ia-travail-france-b2.mp3`
+File: `complete/n8-06a-ia-travail-france-b2.mp3`
 
 Sophie: Victor, je voulais te parler de la nouvelle directive de la direction. Ils veulent intégrer un assistant IA dans notre service, étant donné que la charge de travail a considérablement augmenté ces derniers mois. Qu'est-ce que tu en penses ?
 
@@ -389,7 +389,7 @@ Sophie: Tout à fait d'accord. Puisque nous sommes représentants du personnel, 
 
 ## Audio 06b - Éthique et reconnaissance faciale (France)
 
-File: `n8-06b-reconnaissance-faciale-france-b2.mp3`
+File: `complete/n8-06b-reconnaissance-faciale-france-b2.mp3`
 
 Thomas: Bonsoir à tous. Ce soir dans « Enjeux numériques », nous abordons la reconnaissance faciale avec Jade Morel, juriste spécialisée en droit du numérique. Jade, pourquoi ce sujet est-il si controversé ?
 
@@ -416,7 +416,7 @@ Thomas: Un sujet qui continuera de nous interpeller. Merci Jade pour cet éclair
 
 ## Audio 06c - Nouvelle régulation européenne sur l'IA (France)
 
-File: `n8-06c-regulation-ia-france-b2.mp3`
+File: `complete/n8-06c-regulation-ia-france-b2.mp3`
 
 Claire: Édition spéciale ce soir. Le Parlement européen a adopté aujourd'hui la version finale du règlement sur l'intelligence artificielle, un texte qualifié d'historique par les observateurs. Notre reporter Martin Vasseur est en direct de Bruxelles. Martin ?
 
@@ -443,7 +443,7 @@ Claire: Un tournant majeur. Merci Martin pour ce décryptage depuis Bruxelles.
 
 ## Audio 07a - Égalité des chances : réalité ou illusion ? (France)
 
-File: `n8-07a-egalite-chances-france-b2.mp3`
+File: `complete/n8-07a-egalite-chances-france-b2.mp3`
 
 Léa: Martin, tu as lu le rapport de l'INSEE sur la mobilité sociale ? Les chiffres sont édifiants. Bien que le système éducatif français prône l'égalité des chances, la reproduction sociale reste massive. Les enfants de cadres ont toujours cinq fois plus de chances d'accéder aux grandes écoles.
 
@@ -464,7 +464,7 @@ Martin: Malgré tout, je pense qu'il ne faut pas baisser les bras. Il faut repen
 
 ## Audio 07b - Engagement citoyen et participation locale (France)
 
-File: `n8-07b-engagement-citoyen-france-b2.mp3`
+File: `complete/n8-07b-engagement-citoyen-france-b2.mp3`
 
 Nicolas: Bonsoir et bienvenue dans « Citoyens en action ». Ce soir, nous parlons de l'engagement citoyen avec Sophie Dumas, politologue et auteure de l'essai « Démocratie de proximité ». Sophie, les Français sont souvent décrits comme désengagés. Est-ce vraiment le cas ?
 
@@ -491,7 +491,7 @@ Nicolas: Un défi passionnant. Merci Sophie pour cette réflexion stimulante sur
 
 ## Audio 07c - Discrimination à l'embauche : le testing (France)
 
-File: `n8-07c-discrimination-embauche-france-b2.mp3`
+File: `complete/n8-07c-discrimination-embauche-france-b2.mp3`
 
 Jade: Bonsoir. La discrimination à l'embauche reste un fléau en France. Une nouvelle étude par testing vient de confirmer l'ampleur du phénomène. Notre reporter Thomas Bernard est à la DARES, où les résultats ont été présentés ce matin. Thomas ?
 
@@ -514,7 +514,7 @@ Jade: Malgré les avancées législatives, le chemin vers l'égalité réelle re
 
 ## Audio 08a - Parler comme un Parisien (France)
 
-File: `n8-08a-parler-parisien-france-b2.mp3`
+File: `complete/n8-08a-parler-parisien-france-b2.mp3`
 
 Claire: Victor, j'ai une question un peu délicate. Mon correspondant allemand arrive la semaine prochaine et il m'a dit qu'il voulait « parler comme un vrai Parisien ». Il a appris le français dans les manuels, mais il ne comprend rien quand il regarde des vidéos sur YouTube. Tu pourrais m'aider à lui préparer un petit guide ?
 
@@ -539,7 +539,7 @@ Victor: Bonne idée. Genre, dis-lui aussi que « c'est chaud » ça veut dire qu
 
 ## Audio 08b - La francophonie en mouvement (France)
 
-File: `n8-08b-francophonie-mouvement-france-b2.mp3`
+File: `complete/n8-08b-francophonie-mouvement-france-b2.mp3`
 
 Sophie: Bienvenue dans « Paroles francophones ». Aujourd'hui, nous explorons les variétés du français à travers le monde avec Nicolas Beaumont, linguiste au CNRS. Nicolas, on dit souvent qu'il n'y a qu'un seul français. Est-ce vrai ?
 
@@ -566,7 +566,7 @@ Sophie: C'est fascinant de voir comment une même langue peut s'exprimer de mani
 
 ## Audio 08c - Portrait : un rappeur et la langue (France)
 
-File: `n8-08c-rappeur-langue-france-b2.mp3`
+File: `complete/n8-08c-rappeur-langue-france-b2.mp3`
 
 Léa: Ce soir dans notre rubrique culture, portrait d'un artiste qui bouscule les codes de la langue française. Le rappeur Karim Ziani, connu sous le nom de scène K-Zed, fait l'unanimité chez les critiques pour sa maîtrise exceptionnelle du français, de l'argot le plus cru au registre littéraire le plus sophistiqué. Notre reporter Martin Chevalier l'a rencontré. Martin ?
 

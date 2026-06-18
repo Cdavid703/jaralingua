@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="undefined-title">
+  <title id="undefined-title">French level 8 grades and evaluation</title>
+  
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#14213d" flood-opacity=".22"/>
+    </filter>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+    <linearGradient id="paper" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#fffaf1"/>
+      <stop offset="1" stop-color="#f0f7ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#23395b"/>
+  <path d="M0 0H1600V900H0Z" fill="url(#bg-undefined)"/>
+  <defs>
+    <linearGradient id="bg-undefined" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#23395b"/>
+      <stop offset=".55" stop-color="#2c7a7b"/>
+      <stop offset="1" stop-color="#f2c078"/>
+    </linearGradient>
+  </defs>
+  <circle cx="1320" cy="120" r="190" fill="#ffffff" opacity=".16" filter="url(#soft)"/>
+  <circle cx="220" cy="780" r="230" fill="#ffffff" opacity=".12" filter="url(#soft)"/>
+  <g opacity=".16" stroke="#ffffff" stroke-width="2">
+    <path d="M120 80V820"/><path d="M270 80V820"/><path d="M420 80V820"/><path d="M570 80V820"/><path d="M720 80V820"/><path d="M870 80V820"/><path d="M1020 80V820"/><path d="M1170 80V820"/><path d="M1320 80V820"/><path d="M1470 80V820"/>
+    <path d="M80 150H1520"/><path d="M80 295H1520"/><path d="M80 440H1520"/><path d="M80 585H1520"/><path d="M80 730H1520"/>
+  </g>
+  <rect x="118" y="96" width="1364" height="708" rx="44" fill="#ffffff" opacity=".9" filter="url(#shadow)"/>
+  <rect x="158" y="136" width="1284" height="628" rx="34" fill="url(#paper)"/>
+  
+      <rect x="420" y="210" width="760" height="464" rx="38" fill="#ffffff" stroke="#23395b" stroke-width="10"/>
+      <circle cx="504" cy="294" r="18" fill="#2c7a7b"/><rect x="548" y="276" width="220" height="36" rx="18" fill="#2c7a7b" opacity=".75"/><path d="M910 294h168" stroke="#465569" stroke-width="14" stroke-linecap="round" opacity=".18"/><circle cx="504" cy="360" r="18" fill="#f2c078"/><rect x="548" y="342" width="290" height="36" rx="18" fill="#f2c078" opacity=".75"/><path d="M910 360h168" stroke="#465569" stroke-width="14" stroke-linecap="round" opacity=".18"/><circle cx="504" cy="426" r="18" fill="#d84a4a"/><rect x="548" y="408" width="360" height="36" rx="18" fill="#d84a4a" opacity=".75"/><path d="M910 426h168" stroke="#465569" stroke-width="14" stroke-linecap="round" opacity=".18"/><circle cx="504" cy="492" r="18" fill="#5964a8"/><rect x="548" y="474" width="430" height="36" rx="18" fill="#5964a8" opacity=".75"/><path d="M910 492h168" stroke="#465569" stroke-width="14" stroke-linecap="round" opacity=".18"/><circle cx="504" cy="558" r="18" fill="#6a994e"/><rect x="548" y="540" width="500" height="36" rx="18" fill="#6a994e" opacity=".75"/><path d="M910 558h168" stroke="#465569" stroke-width="14" stroke-linecap="round" opacity=".18"/>
+      <path d="M388 700h824" stroke="#23395b" stroke-width="24" stroke-linecap="round" opacity=".2"/>
+      
+  <g transform="translate(285 702)">
+    <circle cx="0" cy="-82" r="42" fill="#c78355"/>
+    <path d="M-35-94c16-42 78-35 88 4 0 0-38-20-83 6z" fill="#27364a"/>
+    <path d="M-72 82c12-88 38-138 76-138 40 0 66 52 78 138z" fill="#2c7a7b"/>
+    <path d="M-58 82h128" stroke="#1f2937" stroke-width="18" stroke-linecap="round" opacity=".28"/>
+  </g>
+      
+  <g transform="translate(1315 702)">
+    <circle cx="0" cy="-82" r="42" fill="#9f6647"/>
+    <path d="M-35-94c16-42 78-35 88 4 0 0-38-20-83 6z" fill="#27364a"/>
+    <path d="M-72 82c12-88 38-138 76-138 40 0 66 52 78 138z" fill="#f2c078"/>
+    <path d="M-58 82h128" stroke="#1f2937" stroke-width="18" stroke-linecap="round" opacity=".28"/>
+  </g>
+    
+</svg>
