@@ -2,73 +2,73 @@
   "speakers": {
     "Caroline": {
       "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
-      "name": "Caroline Voix Québécoise Douce",
+      "name": "JaraLingua QC Caroline",
       "profile": "french-france",
       "gender": "female"
     },
-    "Émilie": {
-      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
-      "name": "Caroline Voix Québécoise Douce",
+    "\u00c9milie": {
+      "voice_id": "UJCi4DDncuo0VJDSIegj",
+      "name": "JaraLingua QC Amelie",
       "profile": "french-france",
       "gender": "female"
     },
     "Nathalie": {
-      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
-      "name": "Caroline Voix Québécoise Douce",
+      "voice_id": "WW0JfNPk5DgcQdM0d6X6",
+      "name": "JaraLingua QC Claudia",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Pr\u00e9sentatrice": {
+      "voice_id": "K7gx0ylJdff0yjM2uVQS",
+      "name": "JaraLingua QC Jeanne",
+      "profile": "french-france",
+      "gender": "female"
+    },
+    "Invit\u00e9e": {
+      "voice_id": "UJCi4DDncuo0VJDSIegj",
+      "name": "JaraLingua QC Amelie",
       "profile": "french-france",
       "gender": "female"
     },
     "Marc": {
-      "voice_id": "a5n9pJUnAhX4fn7lx3uo",
-      "name": "Martin Dupont Intime",
+      "voice_id": "nXbV1oNjVZJeyUXiHwTn",
+      "name": "JaraLingua QC Pascal",
       "profile": "french-france",
       "gender": "male"
     },
-    "Jean-François": {
-      "voice_id": "GPAQQPp9dazaB2bl4zg9",
-      "name": "Victor - Casual and Conversational",
+    "Jean-Fran\u00e7ois": {
+      "voice_id": "j9RedbMRSNQ74PyikQwD",
+      "name": "JaraLingua QC Louis",
       "profile": "french-france",
       "gender": "male"
     },
     "Philippe": {
-      "voice_id": "aQROLel5sQbj1vuIVi6B",
-      "name": "Voix Nicolas Petit IA AUDIO Narration",
+      "voice_id": "XTyroWkQl32ZSd3rRVZ1",
+      "name": "JaraLingua QC Patrick",
       "profile": "french-france",
       "gender": "male"
     },
-    "Présentateur": {
-      "voice_id": "GPAQQPp9dazaB2bl4zg9",
-      "name": "Victor - Casual and Conversational",
+    "Pr\u00e9sentateur": {
+      "voice_id": "nXbV1oNjVZJeyUXiHwTn",
+      "name": "JaraLingua QC Pascal",
       "profile": "french-france",
       "gender": "male"
     },
-    "Présentatrice": {
-      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
-      "name": "Caroline Voix Québécoise Douce",
-      "profile": "french-france",
-      "gender": "female"
-    },
-    "Invité": {
-      "voice_id": "a5n9pJUnAhX4fn7lx3uo",
-      "name": "Martin Dupont Intime",
+    "Invit\u00e9": {
+      "voice_id": "j9RedbMRSNQ74PyikQwD",
+      "name": "JaraLingua QC Louis",
       "profile": "french-france",
       "gender": "male"
-    },
-    "Invitée": {
-      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
-      "name": "Caroline Voix Québécoise Douce",
-      "profile": "french-france",
-      "gender": "female"
     },
     "Journaliste": {
-      "voice_id": "aQROLel5sQbj1vuIVi6B",
-      "name": "Voix Nicolas Petit IA AUDIO Narration",
+      "voice_id": "XTyroWkQl32ZSd3rRVZ1",
+      "name": "JaraLingua QC Patrick",
       "profile": "french-france",
       "gender": "male"
     },
     "Reporter": {
-      "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
-      "name": "Caroline Voix Québécoise Douce",
+      "voice_id": "K7gx0ylJdff0yjM2uVQS",
+      "name": "JaraLingua QC Jeanne",
       "profile": "french-france",
       "gender": "female"
     }
@@ -76,12 +76,19 @@
   "pools": {
     "french-france": {
       "female": [
-        { "voice_id": "bBRsDJSAcL1ubkrtJ3hM", "name": "Caroline Voix Québécoise Douce" }
+        { "voice_id": "bBRsDJSAcL1ubkrtJ3hM", "name": "JaraLingua QC Caroline" },
+        { "voice_id": "UJCi4DDncuo0VJDSIegj", "name": "JaraLingua QC Amelie" },
+        { "voice_id": "WW0JfNPk5DgcQdM0d6X6", "name": "JaraLingua QC Claudia" },
+        { "voice_id": "K7gx0ylJdff0yjM2uVQS", "name": "JaraLingua QC Jeanne" }
       ],
       "male": [
-        { "voice_id": "a5n9pJUnAhX4fn7lx3uo", "name": "Martin Dupont Intime" },
-        { "voice_id": "GPAQQPp9dazaB2bl4zg9", "name": "Victor - Casual and Conversational" },
-        { "voice_id": "aQROLel5sQbj1vuIVi6B", "name": "Voix Nicolas Petit IA AUDIO Narration" }
+        { "voice_id": "nXbV1oNjVZJeyUXiHwTn", "name": "JaraLingua QC Pascal" },
+        { "voice_id": "j9RedbMRSNQ74PyikQwD", "name": "JaraLingua QC Louis" },
+        { "voice_id": "XTyroWkQl32ZSd3rRVZ1", "name": "JaraLingua QC Patrick" }
+      ],
+      "neutral": [
+        { "voice_id": "K7gx0ylJdff0yjM2uVQS", "name": "JaraLingua QC Jeanne" },
+        { "voice_id": "XTyroWkQl32ZSd3rRVZ1", "name": "JaraLingua QC Patrick" }
       ]
     }
   }
