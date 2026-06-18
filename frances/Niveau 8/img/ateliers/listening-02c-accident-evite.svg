@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Accident évité de justesse</title>
+  <desc id="desc">Illustration d'une tour de contrôle observant deux avions sur une piste sécurisée.</desc>
+  <defs>
+    <linearGradient id="dusk" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#0d1b33"/>
+      <stop offset=".58" stop-color="#15345d"/>
+      <stop offset="1" stop-color="#596f93"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" x2="1">
+      <stop offset="0" stop-color="#cce4ff" stop-opacity=".28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity=".08"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#dusk)"/>
+  <path d="M0 560 C360 500 650 610 980 555 C1220 515 1410 520 1600 570 V900 H0Z" fill="#26364f"/>
+  <path d="M120 745 L1480 575" stroke="#111827" stroke-width="120" stroke-linecap="round"/>
+  <path d="M220 730 L1380 585" stroke="#ffc857" stroke-width="18" stroke-dasharray="70 58" stroke-linecap="round"/>
+  <path d="M1020 520 L1285 470 L1395 520 L1168 555Z" fill="#eef5ff"/>
+  <path d="M1180 492 L1280 410 L1320 425 L1250 505Z" fill="#d7dfeb"/>
+  <path d="M1185 542 L1290 605 L1330 588 L1255 524Z" fill="#d7dfeb"/>
+  <circle cx="1110" cy="548" r="17" fill="#111827"/>
+  <circle cx="1300" cy="512" r="17" fill="#111827"/>
+  <path d="M260 545 L520 495 L635 545 L405 580Z" fill="#f8fbff"/>
+  <path d="M415 518 L515 440 L555 455 L485 535Z" fill="#d7dfeb"/>
+  <path d="M420 568 L525 630 L565 614 L490 550Z" fill="#d7dfeb"/>
+  <circle cx="350" cy="575" r="17" fill="#111827"/>
+  <circle cx="540" cy="535" r="17" fill="#111827"/>
+  <rect x="165" y="90" width="610" height="390" rx="28" fill="url(#glass)" stroke="#d7ecff" stroke-opacity=".24" stroke-width="4"/>
+  <rect x="245" y="570" width="400" height="250" rx="22" fill="#17253d"/>
+  <rect x="280" y="610" width="330" height="120" rx="18" fill="#0e1c33"/>
+  <path d="M310 690 C390 630 480 705 580 640" fill="none" stroke="#60b5c8" stroke-width="10" stroke-linecap="round"/>
+  <path d="M315 660 H580 M315 710 H580" stroke="#eef5ff" stroke-width="5" opacity=".18"/>
+  <circle cx="470" cy="465" r="68" fill="#d39a7a"/>
+  <path d="M400 455 C420 390 510 386 538 450 C500 430 442 430 400 455Z" fill="#1f2937"/>
+  <path d="M385 650 C400 540 430 505 470 505 C515 505 552 546 568 650Z" fill="#d62839"/>
+  <path d="M725 170 V520" stroke="#15345d" stroke-width="28"/>
+  <rect x="645" y="130" width="160" height="70" rx="12" fill="#15345d"/>
+  <circle cx="1390" cy="230" r="62" fill="#ffc857" opacity=".78"/>
+  <path d="M780 790 C1000 840 1250 825 1450 760" fill="none" stroke="#ffc857" stroke-width="16" opacity=".25"/>
+</svg>

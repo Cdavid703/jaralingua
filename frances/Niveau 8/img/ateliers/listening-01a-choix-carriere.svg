@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Un choix de carrière regretté</title>
+  <desc id="desc">Illustration d'une professionnelle devant deux chemins de carrière possibles.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#15345d"/>
+      <stop offset="0.55" stop-color="#1f4e8c"/>
+      <stop offset="1" stop-color="#d62839"/>
+    </linearGradient>
+    <linearGradient id="desk" x1="0" x2="1">
+      <stop offset="0" stop-color="#26364f"/>
+      <stop offset="1" stop-color="#17253d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="#f4f8ff"/>
+  <rect width="1600" height="520" fill="url(#sky)"/>
+  <path d="M0 520 C260 450 390 590 610 520 S1040 420 1600 520 V900 H0Z" fill="#e8effa"/>
+  <rect x="170" y="95" width="1260" height="480" rx="34" fill="#ffffff" opacity=".13"/>
+  <rect x="215" y="140" width="540" height="360" rx="22" fill="#f9fbff" opacity=".18"/>
+  <rect x="845" y="140" width="540" height="360" rx="22" fill="#f9fbff" opacity=".18"/>
+  <path d="M484 500 C425 385 430 262 505 150" fill="none" stroke="#ffc857" stroke-width="18" stroke-linecap="round"/>
+  <path d="M1115 500 C1180 360 1142 250 1070 150" fill="none" stroke="#ffc857" stroke-width="18" stroke-linecap="round" opacity=".72"/>
+  <rect x="205" y="604" width="1190" height="170" rx="28" fill="url(#desk)"/>
+  <rect x="295" y="567" width="265" height="145" rx="16" fill="#fff"/>
+  <path d="M325 613 H525 M325 651 H485" stroke="#8ea0ba" stroke-width="14" stroke-linecap="round"/>
+  <rect x="1030" y="562" width="275" height="150" rx="16" fill="#fff"/>
+  <path d="M1060 608 H1268 M1060 648 H1220" stroke="#8ea0ba" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="784" cy="440" r="72" fill="#f0b28f"/>
+  <path d="M708 426 C725 344 832 336 858 418 C825 390 760 390 708 426Z" fill="#243044"/>
+  <path d="M656 720 C668 590 710 520 785 520 C860 520 910 592 920 720Z" fill="#d62839"/>
+  <path d="M707 596 C750 632 817 631 861 596" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".8"/>
+  <path d="M792 520 L802 650" stroke="#ffc857" stroke-width="12" stroke-linecap="round"/>
+  <circle cx="984" cy="502" r="45" fill="#d39a7a"/>
+  <path d="M934 492 C946 432 1028 430 1044 492 C1012 468 968 469 934 492Z" fill="#1f2937"/>
+  <path d="M920 718 C927 626 952 560 1000 560 C1052 560 1083 622 1090 718Z" fill="#1f4e8c"/>
+  <path d="M610 774 C720 700 875 700 990 774" fill="none" stroke="#ffc857" stroke-width="16" stroke-linecap="round" opacity=".85"/>
+  <circle cx="610" cy="774" r="13" fill="#ffc857"/>
+  <circle cx="990" cy="774" r="13" fill="#ffc857"/>
+</svg>

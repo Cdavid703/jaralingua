@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Les regrets des Français</title>
+  <desc id="desc">Illustration d'une émission radio avec une sociologue et des résultats de sondage abstraits.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#f8fbff"/>
+      <stop offset=".55" stop-color="#dfeafa"/>
+      <stop offset="1" stop-color="#fff4d6"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" x2="1">
+      <stop offset="0" stop-color="#15345d"/>
+      <stop offset="1" stop-color="#1f4e8c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect x="120" y="90" width="1360" height="650" rx="36" fill="#fff" opacity=".92"/>
+  <rect x="175" y="150" width="500" height="470" rx="24" fill="url(#panel)"/>
+  <circle cx="330" cy="305" r="92" fill="#ffc857" opacity=".9"/>
+  <path d="M270 450 H590 M270 506 H520 M270 562 H560" stroke="#fff" stroke-width="24" stroke-linecap="round" opacity=".72"/>
+  <rect x="770" y="175" width="650" height="315" rx="26" fill="#eef5ff"/>
+  <rect x="845" y="380" width="72" height="70" rx="8" fill="#d62839"/>
+  <rect x="955" y="320" width="72" height="130" rx="8" fill="#1f4e8c"/>
+  <rect x="1065" y="250" width="72" height="200" rx="8" fill="#ffc857"/>
+  <rect x="1175" y="295" width="72" height="155" rx="8" fill="#2f9e77"/>
+  <rect x="1285" y="345" width="72" height="105" rx="8" fill="#15345d"/>
+  <rect x="720" y="612" width="760" height="110" rx="20" fill="#243044"/>
+  <circle cx="900" cy="585" r="72" fill="#f0b28f"/>
+  <path d="M828 575 C850 500 941 498 972 570 C930 544 870 545 828 575Z" fill="#2f3442"/>
+  <path d="M810 720 C818 640 852 610 900 610 C950 610 990 642 1002 720Z" fill="#d62839"/>
+  <circle cx="1240" cy="585" r="72" fill="#d8a17f"/>
+  <path d="M1170 580 C1185 502 1282 492 1314 570 C1270 548 1215 548 1170 580Z" fill="#1f2937"/>
+  <path d="M1152 720 C1166 640 1194 610 1242 610 C1295 610 1334 642 1348 720Z" fill="#1f4e8c"/>
+  <path d="M900 560 V447 M1240 560 V447" stroke="#15345d" stroke-width="16" stroke-linecap="round"/>
+  <circle cx="900" cy="430" r="36" fill="#15345d"/>
+  <circle cx="1240" cy="430" r="36" fill="#15345d"/>
+  <path d="M746 782 C958 828 1185 828 1420 782" fill="none" stroke="#d62839" stroke-width="14" stroke-linecap="round" opacity=".75"/>
+</svg>

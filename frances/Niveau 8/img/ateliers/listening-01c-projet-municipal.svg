@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Bilan d'un projet municipal raté</title>
+  <desc id="desc">Illustration d'un reportage devant un chantier municipal inachevé.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#cfd8e6"/>
+      <stop offset="1" stop-color="#f4f8ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#sky)"/>
+  <rect x="150" y="160" width="430" height="390" fill="#d7dfeb"/>
+  <rect x="205" y="220" width="80" height="80" fill="#eef5ff"/>
+  <rect x="325" y="220" width="80" height="80" fill="#eef5ff"/>
+  <rect x="445" y="220" width="80" height="80" fill="#eef5ff"/>
+  <rect x="205" y="340" width="80" height="80" fill="#eef5ff"/>
+  <rect x="325" y="340" width="80" height="80" fill="#eef5ff"/>
+  <rect x="445" y="340" width="80" height="80" fill="#eef5ff"/>
+  <rect x="695" y="145" width="660" height="420" rx="12" fill="#e9eef7"/>
+  <path d="M720 550 L1320 165" stroke="#a9b7cc" stroke-width="20" opacity=".65"/>
+  <rect x="0" y="565" width="1600" height="335" fill="#dde6f1"/>
+  <path d="M125 706 H1480" stroke="#ffc857" stroke-width="30" stroke-dasharray="75 55" stroke-linecap="round"/>
+  <rect x="640" y="615" width="265" height="92" rx="12" fill="#15345d"/>
+  <rect x="660" y="638" width="225" height="22" rx="11" fill="#fff" opacity=".82"/>
+  <rect x="660" y="674" width="160" height="18" rx="9" fill="#fff" opacity=".55"/>
+  <circle cx="455" cy="560" r="68" fill="#d39a7a"/>
+  <path d="M390 548 C410 480 497 478 520 545 C485 520 430 521 390 548Z" fill="#1f2937"/>
+  <path d="M375 762 C388 650 420 600 455 600 C498 600 538 654 552 762Z" fill="#d62839"/>
+  <path d="M520 630 L635 675" stroke="#1f2937" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="662" cy="686" r="30" fill="#243044"/>
+  <rect x="690" y="674" width="92" height="26" rx="13" fill="#243044"/>
+  <circle cx="1060" cy="585" r="58" fill="#f0b28f"/>
+  <path d="M1000 575 C1015 515 1090 510 1115 570 C1080 548 1034 548 1000 575Z" fill="#26364f"/>
+  <path d="M980 765 C990 670 1018 620 1060 620 C1100 620 1130 672 1142 765Z" fill="#1f4e8c"/>
+  <circle cx="1240" cy="600" r="50" fill="#c98f73"/>
+  <path d="M1192 594 C1204 538 1275 535 1294 590 C1268 572 1222 572 1192 594Z" fill="#1f2937"/>
+  <path d="M1168 765 C1180 688 1204 632 1240 632 C1278 632 1308 690 1320 765Z" fill="#ffc857"/>
+  <path d="M250 800 C560 845 1040 835 1380 795" fill="none" stroke="#15345d" stroke-width="18" opacity=".22"/>
+</svg>

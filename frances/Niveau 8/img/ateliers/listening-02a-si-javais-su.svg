@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Si j'avais su</title>
+  <desc id="desc">Illustration d'une conversation dans un café avec des reflets de vies alternatives.</desc>
+  <defs>
+    <linearGradient id="night" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#10223d"/>
+      <stop offset=".55" stop-color="#15345d"/>
+      <stop offset="1" stop-color="#3b1f3c"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx=".5" cy=".2" r=".7">
+      <stop offset="0" stop-color="#ffc857" stop-opacity=".95"/>
+      <stop offset=".45" stop-color="#ffc857" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#ffc857" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#night)"/>
+  <circle cx="800" cy="120" r="440" fill="url(#lamp)"/>
+  <rect x="105" y="110" width="1390" height="510" rx="34" fill="#ffffff" opacity=".13"/>
+  <rect x="155" y="155" width="380" height="395" rx="24" fill="#0c1b31" opacity=".72"/>
+  <rect x="610" y="155" width="380" height="395" rx="24" fill="#0c1b31" opacity=".72"/>
+  <rect x="1065" y="155" width="380" height="395" rx="24" fill="#0c1b31" opacity=".72"/>
+  <path d="M255 430 C300 330 395 280 470 220" fill="none" stroke="#60b5c8" stroke-width="16" stroke-linecap="round" opacity=".65"/>
+  <path d="M720 450 C790 330 840 300 925 225" fill="none" stroke="#ffc857" stroke-width="16" stroke-linecap="round" opacity=".7"/>
+  <path d="M1175 450 C1225 360 1335 315 1395 235" fill="none" stroke="#d62839" stroke-width="16" stroke-linecap="round" opacity=".6"/>
+  <rect x="0" y="595" width="1600" height="305" fill="#211b2b"/>
+  <ellipse cx="800" cy="705" rx="360" ry="88" fill="#362b3f"/>
+  <rect x="500" y="660" width="600" height="70" rx="35" fill="#ffc857"/>
+  <circle cx="660" cy="530" r="68" fill="#f0b28f"/>
+  <path d="M590 520 C610 452 702 448 728 518 C692 495 630 495 590 520Z" fill="#2f3442"/>
+  <path d="M575 704 C590 600 625 570 660 570 C704 570 742 612 755 704Z" fill="#d62839"/>
+  <circle cx="950" cy="535" r="70" fill="#d39a7a"/>
+  <path d="M878 528 C894 454 990 448 1022 520 C986 500 920 500 878 528Z" fill="#1f2937"/>
+  <path d="M865 704 C878 604 910 575 950 575 C996 575 1035 614 1050 704Z" fill="#1f4e8c"/>
+  <path d="M710 665 C765 635 830 634 890 665" fill="none" stroke="#fff" stroke-width="12" stroke-linecap="round" opacity=".82"/>
+  <circle cx="765" cy="642" r="22" fill="#fff" opacity=".9"/>
+  <circle cx="840" cy="642" r="22" fill="#fff" opacity=".9"/>
+  <path d="M220 760 C520 830 1060 832 1380 760" fill="none" stroke="#ffc857" stroke-width="16" opacity=".25"/>
+</svg>
