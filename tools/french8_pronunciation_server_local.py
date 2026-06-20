@@ -19,8 +19,14 @@ import numpy as np
 
 
 ROOT = Path(__file__).resolve().parents[1]
-API_PATH = "/api/french8/pronunciation-assessment"
-HEALTH_PATH = "/api/french8/pronunciation-health"
+API_ROUTES = {
+    "/api/french8/pronunciation-assessment": "fr",
+    "/api/english-basic/pronunciation-assessment": "en",
+}
+HEALTH_PATHS = {
+    "/api/french8/pronunciation-health",
+    "/api/english-basic/pronunciation-health",
+}
 MAX_AUDIO_BYTES = 15 * 1024 * 1024
 MAX_DURATION_SECONDS = 90
 MAX_CONCURRENT_TRANSCRIPTIONS = 2
@@ -55,7 +61,7 @@ def get_model() -> WhisperModel:
     return _model
 
 
-def transcribe_local(audio: bytes, suffix: str = ".webm") -> dict:
+def transcribe_local(audio: bytes, suffix: str = ".webm", language: str = "fr") -> dict:
     temporary_path: str | None = None
     try:
         with tempfile.NamedTemporaryFile(prefix="jaralingua-pronunciation-", suffix=suffix, delete=False) as temporary:
@@ -70,7 +76,7 @@ def transcribe_local(audio: bytes, suffix: str = ".webm") -> dict:
         with _inference_lock:
             segments, info = get_model().transcribe(
                 decoded_audio,
-                language="fr",
+                language=language,
                 beam_size=5,
                 vad_filter=False,
                 no_speech_threshold=0.9,
@@ -141,7 +147,7 @@ class PronunciationHandler(SimpleHTTPRequestHandler):
         self.wfile.write(data)
 
     def do_GET(self) -> None:
-        if self.path.split("?", 1)[0] == HEALTH_PATH:
+        if self.path.split("?", 1)[0] in HEALTH_PATHS:
             self.send_json(200, {
                 "ok": True,
                 "provider": "local Whisper",
@@ -154,35 +160,52 @@ class PronunciationHandler(SimpleHTTPRequestHandler):
         super().do_GET()
 
     def do_POST(self) -> None:
-        if self.path.split("?", 1)[0] != API_PATH:
+        request_path = self.path.split("?", 1)[0]
+        language = API_ROUTES.get(request_path)
+        if language is None:
             self.send_json(404, {"error": "Route introuvable."})
             return
+        messages = ({
+            "rate": "Too many attempts. Wait one minute and try again.",
+            "empty": "The recording is empty or too short.",
+            "large": "The recording exceeds the allowed size.",
+            "busy": "The server is already analyzing several recordings. Try again in a few seconds.",
+            "duration": f"The reading cannot exceed {MAX_DURATION_SECONDS} seconds.",
+            "failed": "Local Whisper could not analyze this recording.",
+        } if language == "en" else {
+            "rate": "Trop de tentatives. Attendez une minute avant de r\u00e9essayer.",
+            "empty": "L\u2019enregistrement est vide ou trop court.",
+            "large": "L\u2019enregistrement d\u00e9passe la taille autoris\u00e9e.",
+            "busy": "Le serveur analyse d\u00e9j\u00e0 plusieurs lectures. R\u00e9essayez dans quelques secondes.",
+            "duration": f"La lecture ne doit pas d\u00e9passer {MAX_DURATION_SECONDS} secondes.",
+            "failed": "Whisper local n\u2019a pas pu analyser cet enregistrement.",
+        })
         if self.rate_limited():
-            self.send_json(429, {"error": "Trop de tentatives. Attendez une minute avant de réessayer."})
+            self.send_json(429, {"error": messages["rate"]})
             return
         try:
             length = int(self.headers.get("Content-Length", "0"))
         except ValueError:
             length = 0
         if length < 100:
-            self.send_json(400, {"error": "L’enregistrement est vide ou trop court."})
+            self.send_json(400, {"error": messages["empty"]})
             return
         if length > MAX_AUDIO_BYTES:
-            self.send_json(413, {"error": "L’enregistrement dépasse la taille autorisée."})
+            self.send_json(413, {"error": messages["large"]})
             return
         audio = self.rfile.read(length)
         content_type = self.headers.get("Content-Type", "audio/webm").lower()
         suffix = ".ogg" if "ogg" in content_type else ".mp4" if "mp4" in content_type else ".webm"
         if not _transcription_slots.acquire(blocking=False):
-            self.send_json(503, {"error": "Le serveur analyse déjà plusieurs lectures. Réessayez dans quelques secondes."})
+            self.send_json(503, {"error": messages["busy"]})
             return
         try:
-            self.send_json(200, transcribe_local(audio, suffix))
+            self.send_json(200, transcribe_local(audio, suffix, language))
         except ValueError:
-            self.send_json(413, {"error": f"La lecture ne doit pas dépasser {MAX_DURATION_SECONDS} secondes."})
+            self.send_json(413, {"error": messages["duration"]})
         except Exception as error:  # pragma: no cover - safety net for local runtime
             print(f"Local Whisper transcription error: {error}", file=sys.stderr, flush=True)
-            self.send_json(500, {"error": "Whisper local n’a pas pu analyser cet enregistrement."})
+            self.send_json(500, {"error": messages["failed"]})
         finally:
             _transcription_slots.release()
 
