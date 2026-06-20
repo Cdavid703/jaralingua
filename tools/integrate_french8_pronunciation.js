@@ -14,7 +14,7 @@ function replaceOnce(filePath, search, replacement) {
   return true;
 }
 
-const card = '<a class="practice-card" href="ateliers/prononciation-01d-conditionnel-passe.html"><img src="img/ateliers/listening-01a-choix-carriere-v2.webp" alt="Pratique de prononciation du conditionnel passé"><div class="practice-card-body"><b>Prononciation · 01D</b><h3>Le conditionnel passé à voix haute</h3><p>Voix modèle ElevenLabs, enregistrement et feedback immédiat sur votre lecture.</p><span>S\'entraîner <i class="bi bi-mic-fill"></i></span></div></a>';
+const card = '<a class="practice-card" href="ateliers/prononciation-01d-conditionnel-passe.html"><img src="img/ateliers/prononciation-conditionnel-passe-v1.webp" alt="Apprenante pratiquant la prononciation du conditionnel passé"><div class="practice-card-body"><b>Prononciation · 01D</b><h3>Le conditionnel passé à voix haute</h3><p>Voix modèle professionnelle, progression guidée et feedback Whisper immédiat.</p><span>S\'entraîner <i class="bi bi-mic-fill"></i></span></div></a>';
 const themeTwoMarker = '</div></article><article class="practice-theme" id="theme-02">';
 const workshopChanged = replaceOnce(workshopPath, themeTwoMarker, card + themeTwoMarker);
 

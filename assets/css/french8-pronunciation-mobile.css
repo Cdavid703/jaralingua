@@ -9,10 +9,16 @@ html,body{max-width:100%;overflow-x:hidden}
   .navbar-brand .brand-logo{height:36px}
   .navbar-brand span{font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .navbar-toggler{padding:.35rem .5rem}
-  .hero{padding:6.5rem .15rem 2.7rem}
+  .hero{min-height:auto;padding:6.5rem .15rem 2.7rem}
   .hero .container{padding-inline:1rem}
   .hero h1{font-size:clamp(2rem,11vw,3rem);line-height:1.03;margin:.85rem 0}
   .hero p{font-size:1rem;line-height:1.55}
+  .hero .row{--bs-gutter-y:1.25rem}
+  .hero-card{width:100%;max-width:520px;margin-inline:auto;padding:.55rem}
+  .hero-card img{height:240px;object-position:center 44%}
+  .hero .btn-main,.hero .btn-soft{width:100%;min-height:48px}
+  .nav-pills-panel{margin-top:-1rem;padding:.75rem}
+  .nav-pills-panel .btn-soft{min-height:44px;flex:1 1 140px}
   .badge-course{font-size:.82rem;padding:.55rem .75rem}
   .back-link{min-height:44px;margin-top:.6rem}
   main{padding:1rem 0 3rem}
