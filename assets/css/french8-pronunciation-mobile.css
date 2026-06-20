@@ -1,0 +1,79 @@
+/* Mobile-first refinements for Prononciation 01D. */
+html,body{max-width:100%;overflow-x:hidden}
+.activity-visual img{object-position:center 42%}
+.student-audio,#studentAudio{max-width:100%}
+
+@media(max-width:767.98px){
+  .navbar .container{padding-inline:.85rem}
+  .navbar-brand{gap:.5rem;min-width:0}
+  .navbar-brand .brand-logo{height:36px}
+  .navbar-brand span{font-size:.82rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .navbar-toggler{padding:.35rem .5rem}
+  .hero{padding:6.5rem .15rem 2.7rem}
+  .hero .container{padding-inline:1rem}
+  .hero h1{font-size:clamp(2rem,11vw,3rem);line-height:1.03;margin:.85rem 0}
+  .hero p{font-size:1rem;line-height:1.55}
+  .badge-course{font-size:.82rem;padding:.55rem .75rem}
+  .back-link{min-height:44px;margin-top:.6rem}
+  main{padding:1rem 0 3rem}
+  main>.container{padding-inline:.75rem}
+  .activity-visual{height:clamp(220px,72vw,315px);margin-bottom:.8rem;border-radius:16px}
+  .activity-visual img{object-position:center 44%}
+  .activity-visual figcaption{left:1rem;bottom:.85rem;font-size:1rem;line-height:1.3}
+  .practice-layout{gap:.85rem}
+  .panel{padding:1rem;border-radius:14px;box-shadow:0 12px 28px rgba(15,23,42,.1)}
+  .panel h2{font-size:1.55rem}
+  .instructions{font-size:.96rem;line-height:1.55}
+  .model-player{align-items:center;gap:.75rem;padding:.8rem}
+  .round-button{width:50px;height:50px;flex-basis:50px}
+  .player-copy{min-width:0}
+  .player-copy strong,.player-copy span{overflow-wrap:anywhere}
+  .player-copy strong{font-size:.9rem}
+  .player-copy span{font-size:.78rem}
+  .stage-panel{margin:.85rem 0 .55rem;padding:.85rem;gap:.65rem}
+  .stage-panel-copy{display:grid;gap:.25rem;align-items:start}
+  .stage-panel-copy strong{text-align:left;font-size:.95rem}
+  .stage-progress{gap:.3rem}
+  .stage-dot{min-width:0;min-height:40px;padding:.2rem;font-size:.7rem}
+  .reading-text{margin:.75rem 0;padding:.85rem;font-size:1.28rem;line-height:1.9}
+  .reading-word{min-height:40px;padding:.18rem .2rem;border-radius:.4rem;vertical-align:middle}
+  .word-help{margin:-.15rem 0 .75rem;font-size:.9rem}
+  .legend{gap:.5rem;margin-top:.5rem}
+  .microphone-picker{margin-bottom:.7rem}
+  .microphone-picker select{min-height:48px;font-size:16px}
+  .level-meter{grid-template-columns:1fr;margin-bottom:.85rem;gap:.35rem}
+  .level-meter>div{height:12px}
+  .level-meter b{min-width:0}
+  .record-zone{padding:1rem .75rem;margin-top:.85rem}
+  .mic-button{width:82px;height:82px;margin-bottom:.65rem}
+  .record-status{font-size:.95rem}
+  .record-help{font-size:.82rem;overflow-wrap:anywhere}
+  .actions{display:grid;grid-template-columns:1fr;gap:.55rem}
+  .action-button{width:100%;min-height:48px;justify-content:center}
+  #studentAudio{display:block;width:100%;margin-top:.75rem}
+  #studentAudio[hidden]{display:none}
+  .live-transcript{font-size:.9rem;overflow-wrap:anywhere}
+  .score-ring{width:128px;height:128px}
+  .score-ring strong{font-size:1.9rem}
+  .metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:.35rem}
+  .metric{padding:.6rem .2rem}
+  .metric strong{font-size:1.05rem}
+  .metric span{font-size:.62rem}
+  .stage-history>div{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .final-summary>div{grid-template-columns:1fr}
+  .feedback,.final-summary{font-size:.92rem}
+  .tips{gap:.65rem}
+  .tip p{font-size:.86rem}
+}
+
+@media(max-width:374.98px){
+  .hero h1{font-size:1.95rem}
+  .stage-dot{min-height:36px;font-size:.64rem}
+  .reading-text{font-size:1.18rem;padding:.7rem}
+  .metrics{grid-template-columns:1fr}
+  .metric{display:flex;justify-content:space-between;align-items:center;padding:.55rem .75rem}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
