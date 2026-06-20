@@ -22,10 +22,12 @@ ROOT = Path(__file__).resolve().parents[1]
 API_ROUTES = {
     "/api/french8/pronunciation-assessment": "fr",
     "/api/english-basic/pronunciation-assessment": "en",
+    "/api/english-intermediate/pronunciation-assessment": "en",
 }
 HEALTH_PATHS = {
     "/api/french8/pronunciation-health",
     "/api/english-basic/pronunciation-health",
+    "/api/english-intermediate/pronunciation-health",
 }
 MAX_AUDIO_BYTES = 15 * 1024 * 1024
 MAX_DURATION_SECONDS = 90
