@@ -1,0 +1,11 @@
+{
+  "speakers": {
+    "Narrator": { "voice_id": "SAz9YHcvj6GT2YYXdXww", "name": "River - Neutral US Narrator", "profile": "english-us", "gender": "neutral" },
+    "Daniel": { "voice_id": "DwwuoY7Uz8AP8zrY5TAo", "name": "Sean - Professional US", "profile": "english-us", "gender": "male" },
+    "Emma": { "voice_id": "XrExE9yKIg1WjnnlVkGX", "name": "Matilda - Professional US", "profile": "english-us", "gender": "female" },
+    "Noah": { "voice_id": "bIHbv24MWmeRgasZH58o", "name": "Will - Relaxed US", "profile": "english-us", "gender": "male" },
+    "Olivia": { "voice_id": "EXAVITQu4vr4xnSDxMaL", "name": "Sarah - Confident US", "profile": "english-us", "gender": "female" },
+    "Marcus": { "voice_id": "iP95p4xoKVk53GoZ742B", "name": "Chris - Conversational US", "profile": "english-us", "gender": "male" },
+    "Sofia": { "voice_id": "hpp4J3VqNfWAUOO0d1Us", "name": "Bella - Bright US", "profile": "english-us", "gender": "female" }
+  }
+}

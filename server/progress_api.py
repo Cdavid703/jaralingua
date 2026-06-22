@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import json
 import os
+import re
+import secrets
 import tempfile
 import threading
 import time
@@ -20,10 +22,15 @@ FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
 FRENCH7_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french7-final-exam-audio.mp3")
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
+BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/basic-integrated-task.json")
+BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
+BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
 BUNDLED_FRENCH7_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "frances", "Niveau 7", "audio", "examen-final-refuge-universitaire-b1.mp3")
+BUNDLED_BASIC_INTEGRATED_TASK_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task.local.json")
+BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task-real.local.mp3")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
 MAX_BODY_BYTES = 1024 * 1024
@@ -717,6 +724,172 @@ def ensure_final_exam_evaluation(grades_data):
     })
 
 
+
+def default_basic_integrated_task_bundle():
+    return {
+        "state": {"isOpen": False, "openedAt": None, "closedAt": None, "updatedAt": None, "openedBy": None},
+        "exam": {
+            "id": "basic-course-1-integrated-task",
+            "title": "BASIC COURSE 1 – INTEGRATED TASK (20%)",
+            "totalPoints": 50,
+            "listeningPoints": 25,
+            "writingPoints": 25,
+            "maxAudioPlays": 3,
+            "questions": []
+        }
+    }
+
+
+def read_basic_integrated_task_bundle():
+    source = BASIC_INTEGRATED_TASK_PATH if os.path.exists(BASIC_INTEGRATED_TASK_PATH) else BUNDLED_BASIC_INTEGRATED_TASK_PATH
+    data = read_json_file(source, default_basic_integrated_task_bundle())
+    if not isinstance(data.get("state"), dict):
+        data["state"] = default_basic_integrated_task_bundle()["state"]
+    if not isinstance(data.get("exam"), dict):
+        data["exam"] = default_basic_integrated_task_bundle()["exam"]
+    for key, value in default_basic_integrated_task_bundle()["state"].items():
+        data["state"].setdefault(key, value)
+    data["exam"].setdefault("questions", [])
+    data["exam"].setdefault("totalPoints", 50)
+    data["exam"].setdefault("listeningPoints", 25)
+    data["exam"].setdefault("writingPoints", 25)
+    return data
+
+
+def write_basic_integrated_task_bundle(data):
+    write_json_file(BASIC_INTEGRATED_TASK_PATH, data, ".basic-integrated-task-")
+
+
+def read_basic_integrated_task_submissions():
+    data = read_json_file(BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH, {"submissions": {}})
+    if not isinstance(data.get("submissions"), dict):
+        data["submissions"] = {}
+    return data
+
+
+def write_basic_integrated_task_submissions(data):
+    write_json_file(BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH, data, ".basic-integrated-submissions-")
+
+
+def basic_integrated_student_identity(student):
+    if not isinstance(student, dict):
+        return None
+    return {
+        "id": clean_text(student.get("id"), 40),
+        "fullName": clean_text(student.get("fullName"), 200),
+        "level": clean_text(student.get("level"), 120)
+    }
+
+
+def basic_integrated_public_question(question):
+    return {
+        "id": clean_text(question.get("id"), 80),
+        "prompt": clean_text(question.get("prompt"), 500),
+        "options": [clean_text(item, 300) for item in question.get("options", [])[:6]],
+        "points": clean_exam_number(question.get("points", 2.5))
+    }
+
+
+def basic_integrated_public_exam(bundle):
+    exam = bundle.get("exam", {})
+    return {
+        "id": clean_text(exam.get("id") or "basic-course-1-integrated-task", 80),
+        "title": clean_text(exam.get("title") or "BASIC COURSE 1 – INTEGRATED TASK (20%)", 200),
+        "totalPoints": clean_exam_number(exam.get("totalPoints", 50)),
+        "listeningPoints": clean_exam_number(exam.get("listeningPoints", 25)),
+        "writingPoints": clean_exam_number(exam.get("writingPoints", 25)),
+        "maxAudioPlays": 3,
+        "questions": [basic_integrated_public_question(item) for item in exam.get("questions", []) if isinstance(item, dict)]
+    }
+
+
+def basic_integrated_submission_public(submission):
+    if not isinstance(submission, dict):
+        return None
+    keys = (
+        "receiptId", "studentId", "studentName", "email", "courseCode", "clientDate",
+        "submittedAt", "audioPlays", "listeningPoints", "writingPoints", "finalPoints",
+        "grade", "status", "writing", "rubric", "teacherComments", "gradedAt", "gradedBy"
+    )
+    return {key: submission.get(key) for key in keys}
+
+
+def basic_integrated_state_payload(profile, grades_data, bundle, submissions):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+    return {
+        "role": role,
+        "state": bundle.get("state", {}),
+        "student": basic_integrated_student_identity(student),
+        "submitted": basic_integrated_submission_public(submitted)
+    }
+
+
+def basic_integrated_score(exam, answers):
+    if not isinstance(answers, dict):
+        answers = {}
+    score = 0.0
+    details = {}
+    for question in exam.get("questions", []):
+        if not isinstance(question, dict):
+            continue
+        question_id = clean_text(question.get("id"), 80)
+        try:
+            points = float(question.get("points", 2.5))
+        except (TypeError, ValueError):
+            points = 2.5
+        supplied = normalize_answer(answers.get(question_id))
+        expected = normalize_answer(question.get("answer"))
+        correct = supplied == expected
+        if correct:
+            score += points
+        details[question_id] = {
+            "answer": supplied,
+            "correct": correct,
+            "points": clean_exam_number(points if correct else 0)
+        }
+    return {"score": clean_exam_number(score), "details": details}
+
+
+def clean_basic_writing(value):
+    return str(value or "").replace("\r\n", "\n").replace("\r", "\n").strip()[:6000]
+
+
+def basic_word_count(value):
+    return len(re.findall(r"\b[\w'-]+\b", value or "", flags=re.UNICODE))
+
+
+def ensure_basic_integrated_task_evaluation(grades_data):
+    evaluations = grades_data.setdefault("evaluations", [])
+    if any(isinstance(item, dict) and item.get("id") == "integratedTask20" for item in evaluations):
+        return False
+    evaluations.append({
+        "id": "integratedTask20",
+        "title": "BASIC COURSE 1 – INTEGRATED TASK (20%)",
+        "weight": 20,
+        "type": "Integrated task",
+        "description": "Listening and integrated writing assessment. Writing is reviewed with the institutional rubric."
+    })
+    return True
+
+
+def clean_basic_rubric(value):
+    if not isinstance(value, dict):
+        return None
+    rubric = {}
+    for key in ("content", "composing", "vocabulary", "structure", "mechanics"):
+        try:
+            score = int(value.get(key))
+        except (TypeError, ValueError):
+            return None
+        if score < 1 or score > 5:
+            return None
+        rubric[key] = score
+    return rubric
+
+
 class ProgressHandler(BaseHTTPRequestHandler):
     server_version = "JaraLinguaProgress/1.0"
 
@@ -836,6 +1009,79 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 binary_response(self, 200, handle.read(), "audio/mpeg")
             return
 
+
+        if parsed.path == "/api/basic/integrated-task/state":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                bundle = read_basic_integrated_task_bundle()
+                submissions = read_basic_integrated_task_submissions()
+                json_response(self, 200, basic_integrated_state_payload(profile, grades_data, bundle, submissions))
+            return
+
+        if parsed.path == "/api/basic/integrated-task":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_basic_integrated_task_bundle()
+                submissions = read_basic_integrated_task_submissions()
+                state = bundle.get("state", {})
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if submitted:
+                    json_response(self, 200, {"status": "submitted", "state": state, "result": basic_integrated_submission_public(submitted)})
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+                json_response(self, 200, {
+                    "status": "open" if state.get("isOpen") is True else "staff-preview",
+                    "role": role,
+                    "state": state,
+                    "student": basic_integrated_student_identity(student),
+                    "exam": basic_integrated_public_exam(bundle)
+                })
+            return
+
+        if parsed.path == "/api/basic/integrated-task/audio":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_basic_integrated_task_bundle()
+                state = bundle.get("state", {})
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed"})
+                    return
+                audio_path = BASIC_INTEGRATED_TASK_AUDIO_PATH
+                if not os.path.exists(audio_path):
+                    audio_path = BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH
+            if not os.path.exists(audio_path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(audio_path, "rb") as handle:
+                binary_response(self, 200, handle.read(), "audio/mpeg")
+            return
+
+        if parsed.path == "/api/basic/integrated-task/submissions":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                submissions = read_basic_integrated_task_submissions().get("submissions", {})
+                items = [basic_integrated_submission_public(item) for item in submissions.values() if isinstance(item, dict)]
+                items.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
+                json_response(self, 200, {"role": role, "submissions": items})
+            return
+
         if parsed.path == "/api/basic/grades":
             grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
             query = urllib.parse.parse_qs(parsed.query)
@@ -857,6 +1103,64 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
         payload = self.read_json_body()
         if payload is None:
+            return
+
+
+        if parsed.path == "/api/basic/integrated-task/submit":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                bundle = read_basic_integrated_task_bundle()
+                state = bundle.get("state", {})
+                if state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+                submissions = read_basic_integrated_task_submissions()
+                student_id = clean_text(student.get("id"), 40)
+                existing = submissions.get("submissions", {}).get(student_id)
+                if existing:
+                    json_response(self, 409, {"error": "already_submitted", "result": basic_integrated_submission_public(existing)})
+                    return
+                writing = clean_basic_writing(payload.get("writing"))
+                if basic_word_count(writing) < 60:
+                    json_response(self, 400, {"error": "writing_too_short", "wordCount": basic_word_count(writing)})
+                    return
+                result = basic_integrated_score(bundle.get("exam", {}), payload.get("answers"))
+                try:
+                    audio_plays = max(0, min(3, int(payload.get("audioPlays", 0))))
+                except (TypeError, ValueError):
+                    audio_plays = 0
+                submitted_at = now_iso()
+                submission = {
+                    "receiptId": "BIT-" + secrets.token_hex(5).upper(),
+                    "studentId": student_id,
+                    "studentName": clean_text(student.get("fullName"), 200),
+                    "email": normalize_email(profile.get("email")),
+                    "courseCode": clean_text(payload.get("courseCode"), 40),
+                    "clientDate": clean_text(payload.get("clientDate"), 30),
+                    "submittedAt": submitted_at,
+                    "audioPlays": audio_plays,
+                    "listeningPoints": result["score"],
+                    "writingPoints": None,
+                    "finalPoints": None,
+                    "grade": None,
+                    "status": "pending-writing",
+                    "writing": writing,
+                    "answers": result["details"],
+                    "rubric": None,
+                    "teacherComments": "",
+                    "gradedAt": None,
+                    "gradedBy": ""
+                }
+                submissions.setdefault("submissions", {})[student_id] = submission
+                gradebook_changed = ensure_basic_integrated_task_evaluation(grades_data)
+                write_basic_integrated_task_submissions(submissions)
+                if gradebook_changed:
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
             return
 
         if parsed.path == "/api/french7/final-exam/submit":
@@ -975,6 +1279,69 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 write_json_file(FRENCH8_GRADES_PATH, next_data, ".french8-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+            return
+
+
+        if parsed.path == "/api/basic/integrated-task/state":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                bundle = read_basic_integrated_task_bundle()
+                state = bundle.setdefault("state", {})
+                desired_open = payload.get("isOpen") is True
+                timestamp = now_iso()
+                state["isOpen"] = desired_open
+                state["updatedAt"] = timestamp
+                if desired_open:
+                    state["openedAt"] = timestamp
+                    state["openedBy"] = normalize_email(profile.get("email"))
+                    state["closedAt"] = None
+                else:
+                    state["closedAt"] = timestamp
+                write_basic_integrated_task_bundle(bundle)
+                json_response(self, 200, {"ok": True, "state": state})
+            return
+
+        if parsed.path == "/api/basic/integrated-task/submissions/grade":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                rubric = clean_basic_rubric(payload.get("rubric"))
+                if rubric is None:
+                    json_response(self, 400, {"error": "invalid_rubric"})
+                    return
+                student_id = clean_text(payload.get("studentId"), 40)
+                submissions = read_basic_integrated_task_submissions()
+                submission = submissions.get("submissions", {}).get(student_id)
+                if not isinstance(submission, dict):
+                    json_response(self, 404, {"error": "submission_not_found"})
+                    return
+                student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+                if not isinstance(student, dict):
+                    json_response(self, 404, {"error": "student_not_found"})
+                    return
+                writing_points = sum(rubric.values())
+                listening_points = float(submission.get("listeningPoints", 0))
+                final_points = clean_exam_number(listening_points + writing_points)
+                grade = round(float(final_points) / 10.0, 2)
+                submission["rubric"] = rubric
+                submission["writingPoints"] = writing_points
+                submission["finalPoints"] = final_points
+                submission["grade"] = grade
+                submission["status"] = "graded"
+                submission["teacherComments"] = str(payload.get("teacherComments") or "").strip()[:2000]
+                submission["gradedAt"] = now_iso()
+                submission["gradedBy"] = normalize_email(profile.get("email"))
+                ensure_basic_integrated_task_evaluation(grades_data)
+                student.setdefault("grades", {})["integratedTask20"] = grade
+                write_basic_integrated_task_submissions(submissions)
+                write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
             return
 
         if parsed.path == "/api/basic/grades":

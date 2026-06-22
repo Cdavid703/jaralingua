@@ -33,6 +33,13 @@
       "weight": 20,
       "type": "Speaking",
       "description": "Oral midterm task for Basic English Course 1."
+    },
+    {
+      "id": "integratedTask20",
+      "title": "BASIC COURSE 1 – INTEGRATED TASK (20%)",
+      "weight": 20,
+      "type": "Integrated task",
+      "description": "Listening and integrated writing assessment. Writing is reviewed with the institutional rubric."
     }
   ],
   "bonusEvent": null

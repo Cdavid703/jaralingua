@@ -601,8 +601,10 @@ class VoiceCatalog:
     def __init__(self, config: dict[str, Any]):
         self.speaker_map: dict[str, VoiceChoice] = {}
         self.pools: dict[tuple[str, str], list[VoiceChoice]] = {}
-        self._load_config(config)
         self._load_env()
+        # An explicitly selected --voice-cast must win over generic values
+        # from elevenlabs.local.env (which may contain example placeholders).
+        self._load_config(config)
 
     def _add_to_pool(self, profile: str, gender: str, choices: list[VoiceChoice]) -> None:
         clean = [choice for choice in choices if choice.voice_id]
