@@ -36,6 +36,7 @@ function renderAdmin(){if(!isReal||!els.admin||role!=="admin"){if(els.admin)els.
 async function setState(open,button){const feedback=document.getElementById("activationFeedback");button.disabled=true;const old=button.innerHTML;button.innerHTML='<i class="bi bi-hourglass-split"></i> Updating...';feedback.textContent="Saving the new exam state...";try{const result=await request(API.state,{method:"PUT",body:JSON.stringify({isOpen:open})});if(!result.ok)throw new Error("state_failed");state=result.data.state;renderAdmin();const text=open?"The real exam was successfully activated. Students can now enter and play the protected audio.":"The real exam was successfully closed. Student access and audio are locked.";const next=document.getElementById("activationFeedback");if(next){next.textContent=text;next.style.color=open?"#177a52":"#b42336"}toast(text,open?"success":"")}catch(e){feedback.textContent="The exam state could not be changed. Please try again.";feedback.style.color="#b42336";button.disabled=false;button.innerHTML=old;toast("The activation change failed.","error")}}
 async function loadExam(){const result=await request(API.exam);if(!result.ok){lock(result.data&&result.data.error==="exam_closed"?"The real exam is still closed. The administrator must activate it before the questions and audio become available.":"This account is not authorized for the real exam.");return}if(result.data.status==="submitted"){renderSubmitted(result.data.result);return}config=result.data.exam;student=result.data.student;role=result.data.role||role;setupExam(student||{fullName:user.name})}
 function rubricSelect(key,value){let options='<option value="">Select</option>';for(let i=1;i<=5;i++)options+='<option value="'+i+'" '+(Number(value)===i?"selected":"")+'>'+i+'</option>';return '<div class="field"><label>'+key[0].toUpperCase()+key.slice(1)+'</label><select data-rubric="'+key+'">'+options+'</select></div>'}
+function reviewWordCount(text){return (String(text||"").trim().match(/\b[\w'-]+\b/g)||[]).length}
 function renderReviews(items){
   if(!els.review)return;
   els.review.hidden=false;
@@ -43,18 +44,29 @@ function renderReviews(items){
     els.reviewGrid.innerHTML='<p class="section-copy">There are no submitted exams yet.</p>';
     return;
   }
-  els.reviewGrid.innerHTML=items.map(item=>{
+  let graded=0;items.forEach(it=>{if(it.status==="graded")graded++});
+  const pending=items.length-graded;
+  const overview='<div class="review-overview"><div class="review-stats">'+
+    '<span class="stat-pill"><strong>'+items.length+'</strong> submitted</span>'+
+    '<span class="stat-pill pending"><strong>'+pending+'</strong> pending writing</span>'+
+    '<span class="stat-pill graded"><strong>'+graded+'</strong> graded</span></div>'+
+    '<div class="overview-scroll"><table class="overview-table"><thead><tr><th>#</th><th>Student</th><th>Email</th><th>Listening</th><th>Words</th><th>Status</th><th>Submitted</th><th></th></tr></thead><tbody>'+
+    items.map((item,i)=>'<tr><td>'+(i+1)+'</td><td>'+esc(item.studentName||"")+'</td><td>'+esc(item.email||"")+'</td><td>'+esc(item.listeningPoints)+'/25</td><td>'+reviewWordCount(item.writing)+'</td><td><span class="status-tag '+(item.status==="graded"?"graded":"")+'">'+esc(item.status||"pending-writing")+'</span></td><td>'+esc(String(item.submittedAt||"").replace("T"," ").replace("Z"," UTC"))+'</td><td><a class="overview-link" href="#review-'+esc(item.studentId)+'">Open</a></td></tr>').join("")+
+    '</tbody></table></div></div>';
+  const cards=items.map(item=>{
     const rubric=item.rubric||{};
     const criteria=["content","composing","vocabulary","structure","mechanics"].map(key=>rubricSelect(key,rubric[key])).join("");
-    return '<article class="review-card" data-review="'+esc(item.studentId)+'">'+
+    const finalLine=item.status==="graded"?'<span class="stat-pill graded">Final '+esc(item.grade)+' / 5.0</span>':'';
+    return '<article class="review-card" id="review-'+esc(item.studentId)+'" data-review="'+esc(item.studentId)+'">'+
       '<h3>'+esc(item.studentName)+'</h3>'+
-      '<div class="review-meta"><span>ID: '+esc(item.studentId)+'</span><span>Listening: '+esc(item.listeningPoints)+'/25</span><span>'+esc(item.status||"pending-writing")+'</span><span>'+esc(item.submittedAt||"")+'</span></div>'+
+      '<div class="review-meta"><span>ID: '+esc(item.studentId)+'</span><span>'+esc(item.email||"")+'</span><span>Listening: '+esc(item.listeningPoints)+'/25</span><span>'+reviewWordCount(item.writing)+' words</span><span>'+esc(item.status||"pending-writing")+'</span><span>'+esc(item.submittedAt||"")+'</span>'+finalLine+'</div>'+
       '<div class="student-writing">'+esc(item.writing||"")+'</div>'+
       '<div class="rubric-grid">'+criteria+'</div>'+
       '<div class="field"><label>Teacher comments</label><textarea data-comments>'+esc(item.teacherComments||"")+'</textarea></div>'+
       '<div class="btn-row"><button class="btn-main" type="button" data-save-grade>Save rubric and final grade</button></div>'+
       '<div class="activation-feedback" data-grade-feedback></div></article>';
   }).join("");
+  els.reviewGrid.innerHTML=overview+cards;
   els.reviewGrid.querySelectorAll("[data-save-grade]").forEach(button=>{
     button.addEventListener("click",()=>saveGrade(button.closest("[data-review]")));
   });
