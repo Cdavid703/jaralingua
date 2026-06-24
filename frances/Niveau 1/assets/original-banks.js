@@ -9,7 +9,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« sept » = 7.",
-      "audio": "../audio/theme-1/nombres-verifies/sept.mp3?v=20260624-nombres-verifies"
+      "audio": "../audio/theme-1/nombres/sept.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -20,7 +20,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« douze » = 12.",
-      "audio": "../audio/theme-1/nombres-verifies/douze.mp3?v=20260624-nombres-verifies"
+      "audio": "../audio/theme-1/nombres/douze.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis la bonne écriture.",
@@ -31,7 +31,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 0,
       "explanation": "« quinze » = 15.",
-      "audio": "../audio/theme-1/nombres-verifies/quinze.mp3?v=20260624-nombres-verifies"
+      "audio": "../audio/theme-1/nombres/quinze.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -42,7 +42,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« neuf » = 9.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-009.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-009.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis la bonne écriture.",
@@ -53,7 +53,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 0,
       "explanation": "« onze » = 11.",
-      "audio": "../audio/theme-1/nombres-verifies/onze.mp3?v=20260624-nombres-verifies"
+      "audio": "../audio/theme-1/nombres/onze.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -64,7 +64,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 2,
       "explanation": "« vingt » = 20.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-020.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-020.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis la bonne écriture.",
@@ -75,7 +75,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« quatre » = 4.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-004.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-004.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -86,7 +86,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 2,
       "explanation": "« huit » = 8.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-008.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-008.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis la bonne écriture.",
@@ -97,7 +97,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« dix-neuf » = 19.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-019.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-019.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -108,7 +108,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« trois » = 3.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-003.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-003.mp3?v=20260624-nombres-seuls"
     }
   ],
   "articles-definis": [
