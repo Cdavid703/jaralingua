@@ -36,6 +36,40 @@
     });
   });
 
+  function playAudioSequence(sources, button, target) {
+    let index = 0;
+    const playNext = () => {
+      if (index >= sources.length) {
+        button.setAttribute("aria-pressed", "false");
+        if (target) target.textContent = "Groupe terminé. Répétez lentement avant de passer au groupe suivant.";
+        return;
+      }
+      if (window.__niveau1Audio) window.__niveau1Audio.pause();
+      const audio = new Audio(sources[index]);
+      window.__niveau1Audio = audio;
+      if (target) target.textContent = `Lecture du groupe : lettre ${index + 1} sur ${sources.length}.`;
+      index += 1;
+      audio.addEventListener("ended", playNext, { once: true });
+      audio.addEventListener("error", () => {
+        button.setAttribute("aria-pressed", "false");
+        if (target) target.textContent = "Un audio du groupe n’a pas pu être chargé. Réessayez dans un instant.";
+      }, { once: true });
+      audio.play().catch(() => button.setAttribute("aria-pressed", "false"));
+    };
+    button.setAttribute("aria-pressed", "true");
+    playNext();
+  }
+
+  document.querySelectorAll("[data-letter-group]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const letters = (button.getAttribute("data-letter-group") || "").split(",").map((letter) => letter.trim()).filter(Boolean);
+      const target = document.getElementById(button.getAttribute("aria-describedby") || "");
+      const sources = letters.map((letter) => `../audio/theme-1/alphabet/lettre-${letter}.mp3?v=20260626-audio`);
+      if (!sources.length) return;
+      playAudioSequence(sources, button, target);
+    });
+  });
+
   document.querySelectorAll("[data-audio-src]").forEach((button) => {
     button.addEventListener("click", () => {
       const src = button.getAttribute("data-audio-src");
