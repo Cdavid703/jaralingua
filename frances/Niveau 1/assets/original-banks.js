@@ -9,18 +9,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« sept » = 7.",
-      "audio": "../audio/theme-1/nombres/sept.mp3?v=20260624-nombres-seuls"
-    },
-    {
-      "question": "Écoute le nombre, puis choisis le bon chiffre.",
-      "options": [
-        "10",
-        "12",
-        "20"
-      ],
-      "answer": 1,
-      "explanation": "« douze » = 12.",
-      "audio": "../audio/theme-1/nombres/douze.mp3?v=20260624-nombres-seuls"
+      "audio": "../audio/theme-1/nombres-shtooka/sept.mp3?v=20260624-shtooka-nombres"
     },
     {
       "question": "Écoute le nombre, puis choisis la bonne écriture.",
@@ -31,7 +20,18 @@ window.french1OriginalBanks = {
       ],
       "answer": 0,
       "explanation": "« quinze » = 15.",
-      "audio": "../audio/theme-1/nombres/quinze.mp3?v=20260624-nombres-seuls"
+      "audio": "../audio/theme-1/nombres-shtooka/quinze.mp3?v=20260624-shtooka-nombres"
+    },
+    {
+      "question": "Écoute le nombre, puis choisis la bonne écriture.",
+      "options": [
+        "onze",
+        "dix",
+        "deux"
+      ],
+      "answer": 0,
+      "explanation": "« onze » = 11.",
+      "audio": "../audio/theme-1/nombres-shtooka/onze.mp3?v=20260624-shtooka-nombres"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -43,17 +43,6 @@ window.french1OriginalBanks = {
       "answer": 1,
       "explanation": "« neuf » = 9.",
       "audio": "../audio/theme-1/nombres-1-100/nombre-009.mp3?v=20260624-nombres-seuls"
-    },
-    {
-      "question": "Écoute le nombre, puis choisis la bonne écriture.",
-      "options": [
-        "onze",
-        "dix",
-        "deux"
-      ],
-      "answer": 0,
-      "explanation": "« onze » = 11.",
-      "audio": "../audio/theme-1/nombres/onze.mp3?v=20260624-nombres-seuls"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -98,6 +87,17 @@ window.french1OriginalBanks = {
       "answer": 1,
       "explanation": "« dix-neuf » = 19.",
       "audio": "../audio/theme-1/nombres-1-100/nombre-019.mp3?v=20260624-nombres-seuls"
+    },
+    {
+      "question": "Écoute le nombre, puis choisis le bon chiffre.",
+      "options": [
+        "10",
+        "12",
+        "20"
+      ],
+      "answer": 1,
+      "explanation": "« douze » = 12.",
+      "audio": "../audio/theme-1/nombres-shtooka/douze.mp3?v=20260624-shtooka-nombres"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
