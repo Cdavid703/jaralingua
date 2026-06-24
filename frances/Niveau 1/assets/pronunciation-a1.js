@@ -138,6 +138,8 @@
     nextBtn: document.getElementById("nextBtn"),
     playback: document.getElementById("recordingPlayback"),
     timer: document.getElementById("timer"),
+    recordHelp: document.getElementById("recordHelp"),
+    micPermissionHelp: document.getElementById("micPermissionHelp"),
     feedback: document.getElementById("feedback"),
     tips: document.getElementById("tips"),
     stageBadge: document.getElementById("stageBadge"),
@@ -167,6 +169,113 @@
 
   function currentModelAudio() {
     return set.audios?.[stageIndex] || set.audio;
+  }
+
+  function deviceGuide() {
+    const agent = navigator.userAgent || "";
+    const isiOS = /iPad|iPhone|iPod/.test(agent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const isAndroid = /Android/i.test(agent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(agent);
+    if (isiOS) {
+      return [
+        "iPhone/iPad Safari : touchez AA ou l’icône du site, puis Réglages du site web, Microphone, Autoriser.",
+        "Si le blocage continue : Réglages iOS > Safari > Microphone > Autoriser ou Demander.",
+        "Rechargez ensuite cette page et touchez à nouveau le micro."
+      ];
+    }
+    if (isAndroid) {
+      return [
+        "Android Chrome : touchez le cadenas près de l’adresse, puis Autorisations, Microphone, Autoriser.",
+        "Si nécessaire : Paramètres Android > Applications > Chrome > Autorisations > Microphone.",
+        "Rechargez ensuite cette page et touchez à nouveau le micro."
+      ];
+    }
+    if (isSafari) {
+      return [
+        "Mac Safari : Safari > Réglages pour ce site web > Microphone > Autoriser.",
+        "Vous pouvez aussi vérifier Réglages système > Confidentialité et sécurité > Microphone.",
+        "Rechargez ensuite cette page et touchez à nouveau le micro."
+      ];
+    }
+    return [
+      "Chrome/Edge/Brave sur ordinateur : cliquez sur le cadenas à gauche de l’adresse, puis Microphone, Autoriser.",
+      "Vérifiez aussi les paramètres système : Windows ou macOS doit autoriser le navigateur à utiliser le micro.",
+      "Rechargez ensuite cette page et touchez à nouveau le micro."
+    ];
+  }
+
+  async function microphonePermissionState() {
+    if (!navigator.permissions?.query) return "unknown";
+    try {
+      const permission = await navigator.permissions.query({ name: "microphone" });
+      return permission.state || "unknown";
+    } catch (_error) {
+      return "unknown";
+    }
+  }
+
+  function showPermissionHelp(title, detail, options = {}) {
+    if (!els.micPermissionHelp) return;
+    const guide = options.guide || deviceGuide();
+    els.micPermissionHelp.hidden = false;
+    els.micPermissionHelp.innerHTML = `
+      <strong><i class="bi bi-mic-mute"></i> ${title}</strong>
+      <span>${detail}</span>
+      <ul>${guide.map((item) => `<li>${item}</li>`).join("")}</ul>
+    `;
+  }
+
+  function hidePermissionHelp() {
+    if (els.micPermissionHelp) {
+      els.micPermissionHelp.hidden = true;
+      els.micPermissionHelp.innerHTML = "";
+    }
+  }
+
+  async function updateMicrophoneReadiness() {
+    if (location.protocol === "file:") {
+      els.recordBtn.disabled = true;
+      els.stopBtn.disabled = true;
+      els.micStatus.textContent = "Le microphone ne fonctionne pas en mode fichier.";
+      els.recordHelp.textContent = "Ouvrez cette activité depuis le site HTTPS de JaraLingua ou depuis localhost.";
+      showPermissionHelp("Mode fichier détecté", "Les navigateurs bloquent le microphone sur les adresses file://.", {
+        guide: ["Utilisez https://www.jaralingua.com ou une adresse localhost.", "Rechargez la page, puis touchez le bouton du micro."]
+      });
+      return;
+    }
+    if (!window.isSecureContext) {
+      els.recordBtn.disabled = true;
+      els.stopBtn.disabled = true;
+      els.micStatus.textContent = "Connexion non sécurisée.";
+      els.recordHelp.textContent = "Le microphone exige HTTPS ou localhost.";
+      showPermissionHelp("HTTPS requis", "Le navigateur ne peut demander l’autorisation du micro que sur une page sécurisée.", {
+        guide: ["Ouvrez la page avec https://www.jaralingua.com.", "Sur ordinateur, localhost fonctionne aussi pour les tests locaux."]
+      });
+      return;
+    }
+    if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+      els.recordBtn.disabled = true;
+      els.stopBtn.disabled = true;
+      els.micStatus.textContent = "Ce navigateur ne prend pas en charge l’enregistrement audio.";
+      els.recordHelp.textContent = "Essayez Chrome, Edge, Safari récent ou Firefox à jour.";
+      showPermissionHelp("Navigateur non compatible", "Cette activité nécessite getUserMedia et MediaRecorder.", {
+        guide: ["Android : utilisez Chrome à jour.", "iPhone/iPad : utilisez Safari à jour.", "PC/Mac : utilisez Chrome, Edge, Firefox ou Safari récent."]
+      });
+      return;
+    }
+    const permission = await microphonePermissionState();
+    if (permission === "denied") {
+      els.micStatus.textContent = "Microphone bloqué pour ce site.";
+      els.recordHelp.textContent = "Le navigateur ne montrera plus la fenêtre d’autorisation tant que le site restera bloqué.";
+      showPermissionHelp("Autorisation déjà bloquée", "Débloquez le microphone dans les paramètres du site, rechargez la page, puis touchez à nouveau le micro.");
+      return;
+    }
+    hidePermissionHelp();
+    els.recordBtn.disabled = false;
+    els.stopBtn.disabled = true;
+    els.recordHelp.textContent = permission === "prompt"
+      ? "Touchez le micro : le navigateur doit vous demander d’autoriser l’accès."
+      : "Microphone prêt. Touchez le micro pour commencer.";
   }
 
   function updateSelfAssessment() {
@@ -302,6 +411,7 @@
 
   async function startRecording() {
     try {
+      hidePermissionHelp();
       if (!window.isSecureContext) {
         const error = new Error("secure_context");
         error.name = "SecurityError";
@@ -312,11 +422,27 @@
         error.name = "NotSupportedError";
         throw error;
       }
+      const permission = await microphonePermissionState();
+      if (permission === "denied") {
+        const error = new Error("permission_denied_before_prompt");
+        error.name = "NotAllowedError";
+        throw error;
+      }
       els.micStatus.textContent = "Demande d’autorisation du microphone…";
-      const audioConstraints = { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 };
+      els.recordHelp.textContent = "Si une fenêtre apparaît, choisissez Autoriser pour JaraLingua.";
+      const audioConstraints = {
+        echoCancellation: { ideal: true },
+        noiseSuppression: { ideal: true },
+        autoGainControl: { ideal: true },
+        channelCount: { ideal: 1 }
+      };
       if (els.microphoneSelect.value) audioConstraints.deviceId = { exact: els.microphoneSelect.value };
       stream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints, video: false });
+      const activeTrack = stream.getAudioTracks()[0];
       await refreshMicrophones();
+      const activeDeviceId = activeTrack?.getSettings?.().deviceId;
+      if (activeDeviceId && [...els.microphoneSelect.options].some((option) => option.value === activeDeviceId)) els.microphoneSelect.value = activeDeviceId;
+      els.recordHelp.textContent = activeTrack?.label ? `Microphone actif : ${activeTrack.label}` : "Microphone actif.";
       startLevelMeter(stream);
       chunks = [];
       const preferredType = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((type) => MediaRecorder.isTypeSupported(type)) || "";
@@ -330,7 +456,7 @@
       els.micStatus.textContent = `Enregistrement : « ${currentText()} »`;
     } catch (error) {
       const messages = {
-        NotAllowedError: "Autorisation refusée. Ouvrez les paramètres du navigateur, autorisez le microphone pour JaraLingua et réessayez.",
+        NotAllowedError: "Le microphone est bloqué ou l’autorisation n’a pas été accordée.",
         SecurityError: "Le microphone exige HTTPS ou localhost. En production, vérifiez que la page est servie en HTTPS.",
         NotFoundError: "Aucun microphone n’a été détecté.",
         NotReadableError: "Le microphone est utilisé par une autre application.",
@@ -339,6 +465,32 @@
         NotSupportedError: "Ce navigateur ne prend pas en charge l’enregistrement audio."
       };
       els.micStatus.textContent = messages[error.name] || `Impossible d’activer le microphone : ${error.message}`;
+      if (error.name === "NotAllowedError") {
+        const permission = await microphonePermissionState();
+        if (permission === "denied") {
+          els.recordHelp.textContent = "Le site est actuellement bloqué : le navigateur ne peut pas afficher une nouvelle fenêtre d’autorisation.";
+          showPermissionHelp("Microphone bloqué pour JaraLingua", "Débloquez le micro dans les paramètres du site, rechargez la page, puis réessayez.");
+        } else {
+          els.recordHelp.textContent = "Touchez à nouveau le micro et choisissez Autoriser si la fenêtre apparaît.";
+          showPermissionHelp("Autorisation non accordée", "Si aucune fenêtre ne s’ouvre, le navigateur ou le système bloque peut-être le micro.");
+        }
+      } else if (error.name === "NotFoundError") {
+        els.recordHelp.textContent = "Connectez un microphone ou vérifiez que votre téléphone autorise l’accès au micro.";
+        showPermissionHelp("Aucun microphone détecté", "Le navigateur ne voit aucun périphérique audio disponible.", {
+          guide: ["Vérifiez que le micro n’est pas désactivé dans le système.", "Sur téléphone, fermez les autres applications qui utilisent le micro.", "Rechargez la page et réessayez."]
+        });
+      } else if (error.name === "NotReadableError") {
+        els.recordHelp.textContent = "Fermez Zoom, Teams, WhatsApp, l’enregistreur vocal ou toute autre application utilisant le micro.";
+        showPermissionHelp("Microphone occupé", "Le micro existe, mais une autre application semble l’utiliser.", {
+          guide: ["Fermez les applications d’appel ou d’enregistrement.", "Sur mobile, redémarrez le navigateur si nécessaire.", "Rechargez la page et réessayez."]
+        });
+      } else if (error.name === "OverconstrainedError") {
+        els.microphoneSelect.value = "";
+        els.recordHelp.textContent = "Le microphone choisi n’est plus disponible. La sélection revient au micro par défaut.";
+        showPermissionHelp("Microphone indisponible", "Sélectionnez Microphone par défaut, puis réessayez.", {
+          guide: ["Débranchez/rebranchez le micro si nécessaire.", "Rechargez la page si la liste ne se met pas à jour."]
+        });
+      }
     }
   }
 
@@ -373,8 +525,10 @@
     els.playback.removeAttribute("src");
     els.timer.textContent = "00:00";
     els.micStatus.textContent = "Prêt pour votre lecture.";
+    els.recordHelp.textContent = "Le navigateur demandera l’autorisation uniquement lorsque vous cliquez sur le micro.";
     els.wordHelp.hidden = true;
     stopLevelMeter();
+    updateMicrophoneReadiness();
   }
 
   function nextStage() {
@@ -403,5 +557,6 @@
   els.nextBtn.addEventListener("click", nextStage);
 
   refreshMicrophones();
+  updateMicrophoneReadiness();
   render();
 })();
