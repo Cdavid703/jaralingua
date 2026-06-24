@@ -3,7 +3,111 @@
 ## Alphabet complet
 File: `alphabet-complet.mp3`
 
-Narrateur: Écoutez et répétez. A, B, C, D, E, F, G. H, I, J, K, L, M, N. O, P, Q, R, S, T. U, V, W, X, Y, Z.
+Narrateur: Écoutez et répétez lentement. A. B. C. D. E. F. G. Première pause. H. I. J. K. L. M. N. Deuxième pause. O. P. Q. R. S. T. Troisième pause. U. V. W. X. Y. Z. Répétez à votre rythme.
+
+## Lettres interactives
+File: `alphabet/lettre-a.mp3`
+Narrateur: A. A comme ami.
+
+## Lettre B
+File: `alphabet/lettre-b.mp3`
+Narrateur: B. B comme bonjour.
+
+## Lettre C
+File: `alphabet/lettre-c.mp3`
+Narrateur: C. C comme café.
+
+## Lettre D
+File: `alphabet/lettre-d.mp3`
+Narrateur: D. D comme dimanche.
+
+## Lettre E
+File: `alphabet/lettre-e.mp3`
+Narrateur: E. E comme Europe.
+
+## Lettre F
+File: `alphabet/lettre-f.mp3`
+Narrateur: F. F comme France.
+
+## Lettre G
+File: `alphabet/lettre-g.mp3`
+Narrateur: G. G comme girafe.
+
+## Lettre H
+File: `alphabet/lettre-h.mp3`
+Narrateur: H. H comme hôtel.
+
+## Lettre I
+File: `alphabet/lettre-i.mp3`
+Narrateur: I. I comme idée.
+
+## Lettre J interactive
+File: `alphabet/lettre-j.mp3`
+Narrateur: J. J comme Julie.
+
+## Lettre K
+File: `alphabet/lettre-k.mp3`
+Narrateur: K. K comme kilo.
+
+## Lettre L
+File: `alphabet/lettre-l.mp3`
+Narrateur: L. L comme livre.
+
+## Lettre M
+File: `alphabet/lettre-m.mp3`
+Narrateur: M. M comme maison.
+
+## Lettre N
+File: `alphabet/lettre-n.mp3`
+Narrateur: N. N comme nature.
+
+## Lettre O
+File: `alphabet/lettre-o.mp3`
+Narrateur: O. O comme orange.
+
+## Lettre P
+File: `alphabet/lettre-p.mp3`
+Narrateur: P. P comme Paris.
+
+## Lettre Q
+File: `alphabet/lettre-q.mp3`
+Narrateur: Q. Q comme question.
+
+## Lettre R
+File: `alphabet/lettre-r.mp3`
+Narrateur: R. R comme rouge.
+
+## Lettre S
+File: `alphabet/lettre-s.mp3`
+Narrateur: S. S comme salut.
+
+## Lettre T
+File: `alphabet/lettre-t.mp3`
+Narrateur: T. T comme téléphone.
+
+## Lettre U
+File: `alphabet/lettre-u.mp3`
+Narrateur: U. U comme université.
+
+## Lettre V
+File: `alphabet/lettre-v.mp3`
+Narrateur: V. V comme ville.
+
+## Lettre W
+File: `alphabet/lettre-w.mp3`
+Narrateur: W. W comme wagon.
+
+## Lettre X
+File: `alphabet/lettre-x.mp3`
+Narrateur: X. X comme xylophone.
+
+## Lettre Y
+File: `alphabet/lettre-y.mp3`
+Narrateur: Y. Y comme yoga.
+
+## Lettre Z
+File: `alphabet/lettre-z.mp3`
+Narrateur: Z. Z comme zéro.
 
 ## Lettre J
 File: `lettre-j.mp3`

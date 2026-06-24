@@ -150,6 +150,9 @@ section { padding: 4.5rem 0; }
 .aside-nav a:hover { background: #eef5ff; }
 
 .alphabet-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(64px,1fr)); gap: .65rem; }
+.letter-card { border: 1px solid rgba(31,78,140,.15); cursor: pointer; font: inherit; transition: transform .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.letter-card i { color: var(--blue); font-size: .8rem; opacity: .68; }
+.letter-card:hover, .letter-card:focus-visible, .letter-card[aria-pressed="true"] { transform: translateY(-3px); border-color: var(--blue); box-shadow: 0 10px 24px rgba(31,78,140,.16); outline: none; }
 .letter-card { min-height: 80px; display: grid; place-items: center; padding: .5rem; border: 1px solid rgba(31,78,140,.12); border-radius: 18px; background: #f8fbff; text-align: center; }
 .letter-card strong { color: var(--blue-dark); font-size: 1.65rem; }
 .letter-card small { display: block; color: var(--muted); font-weight: 800; }
