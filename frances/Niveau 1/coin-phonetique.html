@@ -1,9 +1,283 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Coin phonétique | Français Niveau 1</title><link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="assets/niveau1.css?v=20260625" rel="stylesheet"></head><body><nav class="navbar fixed-top"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a><a class="nav-link" href="ateliers-activites.html">Pratiquer</a></div></nav><header class="hero lesson-hero"><div class="container"><span class="badge-course"><i class="bi bi-soundwave"></i> Phonétique française A1</span><h1>Comprendre et placer les sons</h1><p class="hero-text">Une introduction concrète : observez la bouche, sentez la position de la langue et entraînez le rythme avant de chercher la vitesse.</p></div></header><main><section><div class="container"><div class="lesson-layout"><div class="lesson-main">
-<article class="content-card"><p class="section-kicker">Point de départ</p><h2>L’alphabet et le nom des lettres</h2><p>Le nom d’une lettre n’est pas toujours le son produit dans un mot. Cliquez sur chaque lettre dans le thème 1 pour l’entendre seule, puis écoutez l’alphabet complet.</p><audio controls class="w-100" src="audio/theme-1/alphabet-complet.mp3?v=20260624-alphabet-nz-fix"></audio><a class="btn-main mt-3" href="themes/premiers-contacts.html#alphabet">Alphabet interactif</a></article>
-<article class="content-card"><h2>Les lèvres : [i], [y] et [u]</h2><div class="sound-grid"><div class="sound-card"><strong>[i] — si</strong><p>Lèvres étirées comme un sourire, langue haute vers l’avant.</p></div><div class="sound-card"><strong>[y] — tu</strong><p>Gardez la langue de [i], mais arrondissez fortement les lèvres.</p></div><div class="sound-card"><strong>[u] — tout</strong><p>Lèvres arrondies et langue reculée. Ne transformez pas [y] en [u].</p></div></div><audio controls class="w-100 mt-3" src="audio/theme-1/son-u-ou.mp3"></audio></article>
-<article class="content-card"><h2>La mâchoire et les voyelles</h2><p><strong>[a]</strong> : bouche ouverte et langue basse. <strong>[e]</strong> : ouverture moyenne et lèvres légèrement étirées. <strong>[o]</strong> : lèvres arrondies. Travaillez devant un miroir : le mouvement doit être précis, sans tension excessive.</p><div class="callout">Prononcez lentement : <em>ma — mes — mot</em>. La bouche change de forme avant que la voix ne commence.</div></article>
-<article class="content-card"><h2>Les voyelles nasales</h2><p>Pour [ɑ̃], [ɔ̃] et [ɛ̃], le voile du palais laisse passer une partie de l’air par le nez. La lettre <em>n</em> ou <em>m</em> ne se prononce généralement pas comme une consonne complète.</p><div class="sound-grid"><div class="sound-card"><strong>[ɑ̃]</strong><p>sans, enfant, France</p></div><div class="sound-card"><strong>[ɔ̃]</strong><p>nom, bon, maison</p></div><div class="sound-card"><strong>[ɛ̃]</strong><p>cinq, matin, vingt</p></div></div><audio controls class="w-100 mt-3" src="audio/theme-1/son-an.mp3"></audio></article>
-<article class="content-card"><h2>Le R français [ʁ]</h2><p>La langue ne roule pas contre les dents. Sa pointe reste détendue derrière les dents du bas ; le frottement se produit au fond de la bouche. Commencez doucement avec <em>rue, Paris, français</em>. Une légère friction suffit.</p></article>
-<article class="content-card"><h2>Consonnes finales et liaison</h2><p>Beaucoup de consonnes finales sont silencieuses : <em>petit, français, parlent</em>. À ce niveau, retenez que les terminaisons <em>-e, -es, -ent</em> des verbes en -ER sonnent souvent de la même manière. Dans <em>les amis</em>, la liaison produit [z] : <em>les‿amis</em>.</p></article>
-<article class="content-card"><h2>Rythme et intonation</h2><p>Le français organise la parole en groupes, pas en mots isolés. L’accent tombe légèrement sur la dernière syllabe prononcée du groupe. Une affirmation descend ; une question totale peut monter.</p><div class="callout">Je m’appelle Lina ↘ · Vous êtes français ? ↗</div></article>
-</div><aside class="lesson-aside"><div class="content-card"><h2 class="h5">Routine de 7 minutes</h2><ol><li>Écouter à 0,75×.</li><li>Observer la bouche.</li><li>Répéter trois fois.</li><li>S’enregistrer.</li><li>Comparer le rythme.</li></ol></div><div class="content-card"><h2 class="h5">Cinq laboratoires</h2><p>Chaque thème possède désormais son propre défi de prononciation et son modèle audio.</p><a class="btn-main" href="ateliers-activites.html">Choisir un thème</a></div></aside></div></div></section></main><footer class="footer"><div class="container"><a href="index.html">← Retour au portail</a></div></footer><script src="assets/niveau1.js?v=20260624-alphabet-nz-fix"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Coin phonétique | Français Niveau 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="assets/niveau1.css?v=20260626-phonetic" rel="stylesheet">
+  <style>
+    .phonetic-map { display: grid; gap: 1rem; }
+    .phonetic-row {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1rem;
+      align-items: start;
+      padding: 1rem;
+      border-radius: 20px;
+      background: #f8fbff;
+      border: 1px solid rgba(31,78,140,.1);
+    }
+    .phonetic-symbol {
+      display: grid;
+      place-items: center;
+      min-height: 74px;
+      border-radius: 18px;
+      background: linear-gradient(135deg,var(--blue-dark),var(--blue));
+      color: #fff;
+      font-size: 1.55rem;
+      font-weight: 900;
+    }
+    .phonetic-row h3 { margin: 0 0 .35rem; color: var(--blue-dark); font-weight: 900; }
+    .phonetic-row p { margin: 0; color: var(--muted); line-height: 1.65; }
+    .practice-box {
+      padding: 1rem 1.1rem;
+      border-radius: 20px;
+      background: linear-gradient(135deg,rgba(31,78,140,.08),rgba(214,40,57,.06));
+      border: 1px solid rgba(31,78,140,.12);
+    }
+    .mini-rule { display: grid; gap: .45rem; margin: 0; padding: 0; list-style: none; }
+    .mini-rule li { display: flex; gap: .65rem; line-height: 1.58; color: var(--text); }
+    .mini-rule i { color: var(--red); margin-top: .16rem; flex: 0 0 auto; }
+    .contrast-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(210px,1fr)); gap: .9rem; }
+    .contrast-card { padding: 1rem; border-radius: 18px; background: #eef5ff; border-left: 5px solid var(--blue); }
+    .contrast-card strong { display: block; color: var(--blue-dark); margin-bottom: .35rem; }
+    .contrast-card span { color: var(--muted); line-height: 1.5; }
+    @media (max-width: 575px) {
+      .phonetic-row { grid-template-columns: 1fr; }
+      .phonetic-symbol { min-height: 58px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="global-course-switcher" aria-label="Navigation globale">
+    <details>
+      <summary><span>Navigation</span></summary>
+      <nav>
+        <a href="../../index.html">Accueil</a>
+        <a href="../index.html">Français</a>
+        <a href="./index.html">Français Niveau 1</a>
+        <a href="themes-du-cours.html">Thèmes</a>
+        <a href="ateliers-activites.html">Ateliers</a>
+      </nav>
+    </details>
+  </div>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li>
+          <li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li>
+          <li class="nav-item"><a class="nav-link active" href="coin-phonetique.html">Phonétique</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/portail/coin-phonetique.png')">
+    <div class="container">
+      <span class="badge-course"><i class="bi bi-soundwave"></i> Phonétique française A1</span>
+      <h1>Comprendre et placer les sons</h1>
+      <p class="hero-lead">Le français ne se prononce pas lettre par lettre : il se prononce par groupes de sons.</p>
+      <p class="hero-text">Ce coin phonétique explique comment écouter, placer la bouche, reconnaître les contrastes et parler plus clairement avant de chercher la vitesse.</p>
+      <div class="d-flex flex-wrap gap-3 mt-4">
+        <a class="btn-main" href="#systeme"><i class="bi bi-ear-fill"></i> Comprendre le système</a>
+        <a class="btn-soft" href="ateliers-activites.html"><i class="bi bi-controller"></i> Pratiquer</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container">
+        <div class="lesson-layout">
+          <div class="lesson-main">
+            <article class="content-card" id="systeme">
+              <p class="section-kicker">Point de départ</p>
+              <h2>La logique sonore du français</h2>
+              <p>En français, l’écrit donne des indices, mais il ne suffit pas. Une même lettre peut produire plusieurs sons, plusieurs lettres peuvent représenter un seul son, et certaines lettres écrites ne se prononcent pas. Pour bien prononcer, il faut donc penser en <strong>sons</strong>, en <strong>syllabes</strong> et en <strong>groupes rythmiques</strong>.</p>
+              <div class="phonetic-map mt-4">
+                <div class="phonetic-row">
+                  <div class="phonetic-symbol">son</div>
+                  <div>
+                    <h3>Un son n’est pas une lettre</h3>
+                    <p>Dans <em>eau</em>, trois lettres produisent un seul son : [o]. Dans <em>femme</em>, la lettre <em>e</em> se prononce [a]. Le travail phonétique commence quand l’étudiant arrête de lire chaque lettre isolément.</p>
+                  </div>
+                </div>
+                <div class="phonetic-row">
+                  <div class="phonetic-symbol">rythme</div>
+                  <div>
+                    <h3>Le français avance par groupes</h3>
+                    <p>On ne frappe pas fortement chaque mot. La voix avance de façon régulière, puis donne un léger appui à la dernière syllabe prononcée du groupe : <em>Je m’appelle Lina</em>, <em>j’habite à Bogotá</em>.</p>
+                  </div>
+                </div>
+                <div class="phonetic-row">
+                  <div class="phonetic-symbol">liaison</div>
+                  <div>
+                    <h3>Les mots se connectent</h3>
+                    <p>Quand un mot se termine par une consonne normalement silencieuse et que le mot suivant commence par une voyelle, le français peut les lier : <em>les amis</em> se prononce avec un [z].</p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="content-card">
+              <h2>Le rythme : la base de l’accent français</h2>
+              <p>Le français n’a pas un accent tonique fort comme l’anglais ou l’espagnol. L’accent principal tombe généralement à la fin d’un groupe de sens, pas au hasard dans chaque mot. C’est pour cela qu’une phrase française peut sembler “liée” ou “fluide”.</p>
+              <div class="practice-box mt-3">
+                <ul class="mini-rule">
+                  <li><i class="bi bi-check-circle-fill"></i><span><strong>Phrase courte :</strong> <em>Bonjour.</em> La voix descend naturellement.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span><strong>Groupe de sens :</strong> <em>Je m’appelle Lina</em> se dit en un bloc, avec l’appui final sur <em>Li-na</em>.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span><strong>Question oui/non :</strong> <em>Vous êtes français ?</em> peut monter légèrement à la fin.</span></li>
+                </ul>
+              </div>
+              <div class="callout mt-3">Objectif A1 : parler lentement, mais avec des groupes complets. Lent ne veut pas dire mot par mot.</div>
+            </article>
+
+            <article class="content-card">
+              <h2>Les voyelles orales : précision de la bouche</h2>
+              <p>Les voyelles françaises demandent une bouche plus stable que dans beaucoup de langues. Évitez de transformer une voyelle courte en diphtongue. Par exemple, <em>é</em> ne doit pas glisser vers “ei” : il reste net.</p>
+              <div class="contrast-grid mt-3">
+                <div class="contrast-card"><strong>[i] — si</strong><span>Lèvres étirées, langue haute vers l’avant. Son clair, sans relâchement final.</span></div>
+                <div class="contrast-card"><strong>[e] — mes</strong><span>Bouche moyenne, lèvres légèrement étirées. Ne pas ajouter un “y” à la fin.</span></div>
+                <div class="contrast-card"><strong>[a] — ma</strong><span>Bouche ouverte, langue basse. Son direct, sans tension dans la gorge.</span></div>
+                <div class="contrast-card"><strong>[o] — mot</strong><span>Lèvres arrondies. La bouche garde une forme ronde et stable.</span></div>
+              </div>
+            </article>
+
+            <article class="content-card">
+              <h2>Le contraste [i], [y] et [u]</h2>
+              <p>Ce contraste est essentiel dès le niveau 1, car il permet de distinguer des mots très fréquents. Le son [y] de <em>tu</em> est souvent difficile : il combine la langue de [i] avec les lèvres arrondies de [u].</p>
+              <div class="sound-grid">
+                <div class="sound-card"><strong>[i] — si</strong><p>Lèvres étirées comme un sourire, langue haute vers l’avant.</p></div>
+                <div class="sound-card"><strong>[y] — tu</strong><p>Gardez la langue de [i], mais arrondissez fortement les lèvres.</p></div>
+                <div class="sound-card"><strong>[u] — tout</strong><p>Lèvres arrondies et langue reculée. Ne transformez pas [y] en [u].</p></div>
+              </div>
+              <audio controls class="w-100 mt-3" src="audio/theme-1/son-u-ou.mp3"></audio>
+              <div class="callout mt-3">Routine : dites <em>si</em>, gardez la langue en place, arrondissez les lèvres, puis dites <em>tu</em>. Ensuite seulement, reculez la langue pour <em>tout</em>.</div>
+            </article>
+
+            <article class="content-card">
+              <h2>Les voyelles nasales : l’air passe aussi par le nez</h2>
+              <p>Dans une voyelle nasale, la lettre <em>n</em> ou <em>m</em> n’est généralement pas une consonne complète. Elle indique que la voyelle devient nasale. L’erreur fréquente est de prononcer une voyelle orale puis un “n” séparé.</p>
+              <div class="sound-grid">
+                <div class="sound-card"><strong>[ɑ̃]</strong><p><em>sans, enfant, France</em> : bouche ouverte, son large et nasal.</p></div>
+                <div class="sound-card"><strong>[ɔ̃]</strong><p><em>nom, bon, maison</em> : lèvres plus arrondies.</p></div>
+                <div class="sound-card"><strong>[ɛ̃]</strong><p><em>cinq, matin, vingt</em> : son plus clair, sans fermer sur “n”.</p></div>
+              </div>
+              <audio controls class="w-100 mt-3" src="audio/theme-1/son-an.mp3"></audio>
+              <div class="callout mt-3">Test simple : si vous entendez un “n” final fort dans <em>bon</em> ou <em>vin</em>, il faut relâcher la consonne et garder la nasalité dans la voyelle.</div>
+            </article>
+
+            <article class="content-card">
+              <h2>Le <em>e</em> muet : présent à l’écrit, discret à l’oral</h2>
+              <p>Le <em>e</em> final est souvent silencieux : <em>je parle</em>, <em>une table</em>, <em>petite</em>. Il peut cependant aider à prononcer une consonne avant lui. Comparez <em>petit</em> et <em>petite</em> : dans <em>petit</em>, le <em>t</em> final est silencieux ; dans <em>petite</em>, on entend [t].</p>
+              <div class="practice-box mt-3">
+                <ul class="mini-rule">
+                  <li><i class="bi bi-check-circle-fill"></i><span><strong>Il parle</strong> : la finale <em>-e</em> ne crée pas une syllabe forte.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span><strong>Ils parlent</strong> : <em>-ent</em> ne se prononce pas dans la conjugaison régulière.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span><strong>Petite amie</strong> : certains <em>e</em> aident le rythme et l’enchaînement.</span></li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="content-card">
+              <h2>Consonnes finales, liaison et enchaînement</h2>
+              <p>Beaucoup de consonnes finales sont silencieuses : <em>petit</em>, <em>français</em>, <em>vous</em>, <em>parlent</em>. Mais le français relie souvent les mots pour éviter une coupure trop forte entre deux voyelles.</p>
+              <div class="contrast-grid mt-3">
+                <div class="contrast-card"><strong>Consonne finale silencieuse</strong><span><em>petit</em> → pas de [t] final. <em>français</em> → pas de [s] final.</span></div>
+                <div class="contrast-card"><strong>Liaison</strong><span><em>les amis</em> → [lezami]. La consonne écrite devient audible devant voyelle.</span></div>
+                <div class="contrast-card"><strong>Enchaînement</strong><span><em>il aime</em> se dit de manière continue : la consonne déjà prononcée se colle à la voyelle suivante.</span></div>
+              </div>
+              <div class="callout mt-3">Pour le niveau 1, retenez surtout les liaisons très fréquentes : <em>les amis</em>, <em>vous êtes</em>, <em>un étudiant</em>.</div>
+            </article>
+
+            <article class="content-card">
+              <h2>Le R français [ʁ]</h2>
+              <p>Le <em>r</em> français standard ne se roule pas avec la pointe de la langue. La pointe reste détendue vers le bas ; la friction se produit plus loin, vers le fond de la bouche. Le son doit rester léger : trop forcer donne une gorge dure et fatigue rapidement.</p>
+              <div class="practice-box mt-3">
+                <ul class="mini-rule">
+                  <li><i class="bi bi-check-circle-fill"></i><span>Commencez par une respiration douce, comme un léger frottement.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Ajoutez une voyelle : <em>ra, ré, ri, ro, ru</em>.</span></li>
+                  <li><i class="bi bi-check-circle-fill"></i><span>Puis utilisez des mots utiles : <em>bonjour, Paris, français, professeur</em>.</span></li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="content-card">
+              <h2>Intonation : affirmation, question et politesse</h2>
+              <p>L’intonation aide à comprendre l’intention. Une affirmation descend souvent à la fin. Une question fermée peut monter. Une question avec mot interrogatif descend plus naturellement après le mot important.</p>
+              <div class="contrast-grid mt-3">
+                <div class="contrast-card"><strong>Affirmation</strong><span><em>Je suis colombienne.</em> La voix descend à la fin.</span></div>
+                <div class="contrast-card"><strong>Question oui/non</strong><span><em>Vous êtes français ?</em> La voix peut monter à la fin.</span></div>
+                <div class="contrast-card"><strong>Question avec mot interrogatif</strong><span><em>Comment vous vous appelez ?</em> Le rythme reste fluide, sans couper chaque mot.</span></div>
+              </div>
+            </article>
+          </div>
+
+          <aside class="lesson-aside">
+            <div class="content-card">
+              <h2 class="h5">Routine de 10 minutes</h2>
+              <ol>
+                <li>Écouter une phrase sans lire.</li>
+                <li>Marquer les groupes de sens.</li>
+                <li>Répéter lentement, sans couper chaque mot.</li>
+                <li>Isoler le son difficile.</li>
+                <li>Replacer le son dans la phrase.</li>
+                <li>S’enregistrer et comparer.</li>
+              </ol>
+            </div>
+
+            <div class="content-card">
+              <h2 class="h5">Priorités A1</h2>
+              <ul class="mini-rule">
+                <li><i class="bi bi-1-circle-fill"></i><span>Rythme par groupes, pas mot par mot.</span></li>
+                <li><i class="bi bi-2-circle-fill"></i><span>Différence entre [y] et [u].</span></li>
+                <li><i class="bi bi-3-circle-fill"></i><span>Voyelles nasales sans “n” final fort.</span></li>
+                <li><i class="bi bi-4-circle-fill"></i><span>Consonnes finales silencieuses.</span></li>
+                <li><i class="bi bi-5-circle-fill"></i><span>Liaisons fréquentes et naturelles.</span></li>
+              </ul>
+            </div>
+
+            <div class="content-card">
+              <h2 class="h5">Alphabet interactif</h2>
+              <p>Pour écouter le nom isolé des lettres, utilisez l’activité dédiée du thème 1.</p>
+              <a class="btn-main" href="themes/premiers-contacts.html#alphabet">Ouvrir l’alphabet</a>
+            </div>
+
+            <div class="content-card">
+              <h2 class="h5">Laboratoires</h2>
+              <p>Chaque thème possède son propre défi de prononciation avec modèle audio.</p>
+              <a class="btn-main" href="ateliers-activites.html">Choisir un thème</a>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container d-flex flex-wrap justify-content-between gap-3">
+      <div>
+        <h2 class="h4">Coin phonétique</h2>
+        <p class="mb-0 opacity-75">Français Niveau 1 · A1.1</p>
+      </div>
+      <a href="index.html">← Retour au portail</a>
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/jaralingua-back-button.js"></script>
+  <script src="assets/niveau1.js?v=20260624-alphabet-nz-fix"></script>
+</body>
+</html>
