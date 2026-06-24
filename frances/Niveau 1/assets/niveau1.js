@@ -26,7 +26,7 @@
     card.setAttribute("tabindex", "0");
     card.setAttribute("aria-label", `Écouter la lettre ${letter.toUpperCase()}`);
     card.setAttribute("aria-describedby", "audioAlphabet");
-    card.setAttribute("data-audio-src", `../audio/theme-1/alphabet/lettre-${letter}.mp3?v=20260626-audio`);
+    card.setAttribute("data-audio-src", `../audio/theme-1/alphabet/lettre-${letter}.mp3?v=20260624-alphabet-nz-fix`);
     if (!card.querySelector("i")) card.insertAdjacentHTML("beforeend", '<i class="bi bi-volume-up-fill" aria-hidden="true"></i>');
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {
@@ -64,7 +64,7 @@
     button.addEventListener("click", () => {
       const letters = (button.getAttribute("data-letter-group") || "").split(",").map((letter) => letter.trim()).filter(Boolean);
       const target = document.getElementById(button.getAttribute("aria-describedby") || "");
-      const sources = letters.map((letter) => `../audio/theme-1/alphabet/lettre-${letter}.mp3?v=20260626-audio`);
+      const sources = letters.map((letter) => `../audio/theme-1/alphabet/lettre-${letter}.mp3?v=20260624-alphabet-nz-fix`);
       if (!sources.length) return;
       playAudioSequence(sources, button, target);
     });

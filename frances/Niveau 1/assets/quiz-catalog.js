@@ -3,18 +3,18 @@
   const A = (title, theme, skill, description, questions) => ({ title, theme, skill, description, questions });
   window.quizCatalog = {
     "alphabet-sons": A("Alphabet et premiers sons", "Thème 1 · Premiers contacts", "Phonétique", "Écoutez, observez et reconnaissez les lettres et les sons de base.", [
-      Q("Quelle lettre entendez-vous ?", ["A", "E", "I"], 0, "La lettre A se prononce a, ouverte et brève.", "../audio/theme-1/alphabet/lettre-a.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["C", "G", "J"], 0, "La lettre C se prononce cé.", "../audio/theme-1/alphabet/lettre-c.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["D", "T", "P"], 0, "La lettre D se prononce dé.", "../audio/theme-1/alphabet/lettre-d.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["E", "U", "I"], 0, "La lettre E se prononce e, sans ajouter de consonne finale.", "../audio/theme-1/alphabet/lettre-e.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["H", "R", "K"], 0, "La lettre H se prononce ache.", "../audio/theme-1/alphabet/lettre-h.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["Q", "K", "U"], 0, "La lettre Q se prononce ku, avec le son français u.", "../audio/theme-1/alphabet/lettre-q.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["R", "L", "N"], 0, "La lettre R se prononce erre, avec le r français.", "../audio/theme-1/alphabet/lettre-r.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["U", "O", "I"], 0, "La lettre U se prononce u, lèvres arrondies.", "../audio/theme-1/alphabet/lettre-u.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["W", "V", "Y"], 0, "La lettre W se prononce double vé.", "../audio/theme-1/alphabet/lettre-w.mp3?v=20260626-audio"),
-      Q("Quelle lettre entendez-vous ?", ["Y", "I", "X"], 0, "La lettre Y se prononce i grec.", "../audio/theme-1/alphabet/lettre-y.mp3?v=20260626-audio"),
+      Q("Quelle lettre entendez-vous ?", ["A", "E", "I"], 0, "La lettre A se prononce a, ouverte et brève.", "../audio/theme-1/alphabet/lettre-a.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["C", "G", "J"], 0, "La lettre C se prononce cé.", "../audio/theme-1/alphabet/lettre-c.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["D", "T", "P"], 0, "La lettre D se prononce dé.", "../audio/theme-1/alphabet/lettre-d.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["E", "U", "I"], 0, "La lettre E se prononce eu, sans ajouter de consonne finale.", "../audio/theme-1/alphabet/lettre-e.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["H", "R", "K"], 0, "La lettre H se prononce ache.", "../audio/theme-1/alphabet/lettre-h.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["Q", "K", "U"], 0, "La lettre Q se prononce ku, avec la voyelle française u.", "../audio/theme-1/alphabet/lettre-q.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["R", "L", "N"], 0, "La lettre R se prononce erre, avec le r français.", "../audio/theme-1/alphabet/lettre-r.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["U", "O", "I"], 0, "La lettre U se prononce u, lèvres arrondies.", "../audio/theme-1/alphabet/lettre-u.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["W", "V", "Y"], 0, "La lettre W se prononce double vé.", "../audio/theme-1/alphabet/lettre-w.mp3?v=20260624-alphabet-nz-fix"),
+      Q("Quelle lettre entendez-vous ?", ["Y", "I", "X"], 0, "La lettre Y se prononce i grec.", "../audio/theme-1/alphabet/lettre-y.mp3?v=20260624-alphabet-nz-fix"),
       Q("Quel contraste entendez-vous ?", ["tu / tout", "bon / banc", "mais / mes"], 0, "L’exercice oppose [y] dans tu et [u] dans tout.", "../audio/theme-1/son-u-ou.mp3?v=20260626-audio"),
-      Q("Quelle épellation correspond à LINA ?", ["L-I-N-A", "R-I-M-A", "L-E-N-E"], 0, "Lina s’épelle L-I-N-A.", "../audio/theme-1/epellation-lina.mp3?v=20260626-audio")
+      Q("Quelle épellation correspond à LINA ?", ["L-I-N-A", "R-I-M-A", "L-E-N-E"], 0, "Lina s’épelle L-I-N-A.", "../audio/theme-1/epellation-lina.mp3?v=20260624-alphabet-nz-fix")
     ]),
     "ecoute-nombres-1-20": A("Écoute : nombres de 1 à 20", "Thème 1 · Premiers contacts", "Compréhension orale", "Écoutez chaque nombre, puis choisissez sa forme écrite.", [
       Q("Quel nombre entendez-vous ?", ["sept", "seize", "dix-sept"], 0, "Vous avez entendu sept.", "../audio/theme-1/nombres/sept.mp3?v=20260626-audio"),

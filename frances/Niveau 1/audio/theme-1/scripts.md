@@ -3,11 +3,11 @@
 ## Alphabet complet
 File: `alphabet-complet.mp3`
 
-Narrateur: Écoutez et répétez lentement. ah. bé. cé. dé. euh. effe. gé. Pause. ache. i. ji. ka. elle. aime. haine. Pause. o. pé. cu. air. esse. té. Pause. u. vé. double vé. ixe. i grec. zède.
+Narrateur: Écoutez et répétez lentement : a, bé, cé, dé, eu, effe, gé... ache, i, ji, ka, elle, emme, N... o, pé, ku, erre, esse, té... u, vé, double vé, iks, i grec, Z.
 
 ## Lettre A
 File: `alphabet/lettre-a.mp3`
-Narrateur: ah.
+Narrateur: a.
 
 ## Lettre B
 File: `alphabet/lettre-b.mp3`
@@ -23,7 +23,7 @@ Narrateur: dé.
 
 ## Lettre E
 File: `alphabet/lettre-e.mp3`
-Narrateur: euh.
+Narrateur: eu.
 
 ## Lettre F
 File: `alphabet/lettre-f.mp3`
@@ -55,11 +55,11 @@ Narrateur: elle.
 
 ## Lettre M
 File: `alphabet/lettre-m.mp3`
-Narrateur: aime.
+Narrateur: emme.
 
 ## Lettre N
 File: `alphabet/lettre-n.mp3`
-Narrateur: haine.
+Narrateur: N.
 
 ## Lettre O
 File: `alphabet/lettre-o.mp3`
@@ -71,11 +71,11 @@ Narrateur: pé.
 
 ## Lettre Q
 File: `alphabet/lettre-q.mp3`
-Narrateur: cu.
+Narrateur: ku.
 
 ## Lettre R
 File: `alphabet/lettre-r.mp3`
-Narrateur: air.
+Narrateur: erre.
 
 ## Lettre S
 File: `alphabet/lettre-s.mp3`
@@ -99,7 +99,7 @@ Narrateur: double vé.
 
 ## Lettre X
 File: `alphabet/lettre-x.mp3`
-Narrateur: ixe.
+Narrateur: iks.
 
 ## Lettre Y
 File: `alphabet/lettre-y.mp3`
@@ -107,7 +107,7 @@ Narrateur: i grec.
 
 ## Lettre Z
 File: `alphabet/lettre-z.mp3`
-Narrateur: zède.
+Narrateur: Z.
 
 ## Son AN
 File: `son-an.mp3`
@@ -122,7 +122,7 @@ Narrateur: Écoutez la différence. Tu. Tout. Tu. Tout. Rue. Roue. Rue. Roue.
 ## Épellation Lina
 File: `epellation-lina.mp3`
 
-Narrateur: Le prénom Lina s’épelle : elle, i, haine, ah. Lina. elle, i, haine, ah.
+Narrateur: Le prénom Lina s’épelle : elle, i, N, a. Lina. elle, i, N, a.
 
 ## Nombre sept
 File: `nombres/sept.mp3`
