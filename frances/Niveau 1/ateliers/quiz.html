@@ -9,7 +9,7 @@
   <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
-  <link href="../assets/niveau1.css?v=20260624-hero-bg" rel="stylesheet">
+  <link href="../assets/niveau1.css?v=20260624-present-detail" rel="stylesheet">
   <style>
     .teacher-only{display:none!important}.can-view-transcripts .teacher-only{display:inline-flex!important}
     .teacher-note{display:none;color:var(--muted);font-weight:800}.can-view-transcripts .teacher-note{display:block}
@@ -54,7 +54,7 @@
   <script src="../../../assets/js/transcript-pdf.js"></script>
   <script src="../assets/quiz-catalog.js?v=20260624-shtooka-nombres"></script>
   <script src="../assets/original-banks.js?v=20260624-shtooka-nombres"></script>
-  <script src="../assets/expanded-catalog.js?v=20260626-transcripts"></script>
+  <script src="../assets/expanded-catalog.js?v=20260624-present-detail"></script>
   <script>
     (function(){
       const key = new URLSearchParams(location.search).get("activite") || "alphabet-sons";
@@ -119,6 +119,19 @@
       document.querySelector(".lesson-hero").style.setProperty("--hero-image", `url('/frances/Niveau%201/img/ateliers/${activityHeroImages[key] || "atelier-alphabet-sons.png"}?v=20260624-activity-images')`);
 
       const material = document.getElementById("activityMaterial");
+      if (key === "present-indicatif") {
+        material.innerHTML = `<article class="content-card activity-material">
+          <p class="section-kicker">Avant de répondre</p>
+          <h2 class="h4">Le présent sert à parler du réel</h2>
+          <p class="section-text">Utilisez le présent pour une action actuelle, une habitude ou une vérité générale. Pour nier, placez <strong>ne / n’</strong> avant le verbe et <strong>pas</strong> après le verbe.</p>
+          <div class="grammar-table">
+            <div><b>Affirmation</b><span>Je parle français.</span></div>
+            <div><b>Négation</b><span>Je <strong>ne parle pas</strong> allemand.</span></div>
+            <div><b>Question</b><span>Est-ce que tu habites à Medellín ?</span></div>
+          </div>
+          <a class="btn-soft" href="../themes/present-indicatif.html"><i class="bi bi-book"></i> Revoir l’explication complète</a>
+        </article>`;
+      }
       if (item.audio) {
         material.innerHTML = `<article class="content-card activity-material">
           <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">

@@ -1,7 +1,7 @@
 (function(){
 const Q=(q,o,a,e)=>({question:q,options:o,answer:a,explanation:e||"La réponse se trouve dans le document."});
 const A=(title,theme,skill,description,questions,extra)=>Object.assign({title,theme,skill,description,questions},extra||{});
-const from=(rows)=>rows.map(r=>Q(r[0],r[1],r[2]));
+const from=(rows)=>rows.map(r=>Q(r[0],r[1],r[2],r[3]));
 const C={
 "premiere-rencontre":A("Première rencontre","Thème 1 · Premiers contacts","Compréhension orale","Écoutez le dialogue complet avec les commandes de vitesse, puis répondez.",from([
 ["Pourquoi Lina parle-t-elle à Thomas ?",["Ils se rencontrent pour la première fois","Ils commandent un repas","Ils cherchent une adresse"],0],["D’où vient Lina ?",["De Colombie","De Belgique","Du Canada"],0],["Quelle est la nationalité de Thomas ?",["Suisse","Française","Belge"],1],["Quel âge a Lina ?",["Dix-neuf ans","Vingt et un ans","Vingt-quatre ans"],1],["Où Thomas habite-t-il maintenant ?",["À Bogotá","À Paris","À Lyon"],0],["Pourquoi Lina apprend-elle le français ?",["Pour voyager et étudier","Pour devenir médecin","Pour vendre sa voiture"],0],["Que propose Thomas ?",["Prendre un café","Visiter un musée","Téléphoner au professeur"],0],["Quel registre utilisent-ils ?",["Une présentation polie et simple","Une dispute familière","Une annonce officielle"],0]]),{audio:"../audio/theme-1/dialogue-premiere-rencontre.mp3?v=20260626-audio"}),
@@ -26,26 +26,26 @@ readings.forEach(([k,t,th,text,rows])=>C[k]=A(t,th,"Compréhension écrite","Lis
 C["conjugaison-er"]=A("Les verbes du premier groupe en contexte","Thème 3 · Verbes du premier groupe","Grammaire en contexte","Complétez vingt phrases A1 avec la forme correcte du présent.",from([
 ["Je ___ français tous les soirs.",["étudie","étudies","étudient"],0],["Tu ___ près de l’université.",["habite","habites","habitons"],1],["Lina ___ un café sans sucre.",["commande","commandes","commandez"],0],["Nous ___ au professeur.",["parlons","parlez","parlent"],0],["Vous ___ la radio le matin.",["écoutez","écoutons","écoutent"],0],["Mes amis ___ au football.",["joue","jouez","jouent"],2],["Paul et moi ___ à Lyon.",["habitons","habitez","habitent"],0],["Je ___ le dîner à dix-neuf heures.",["prépare","prépares","préparons"],0],["Tu ___ la bibliothèque à dix-huit heures.",["fermes","ferme","fermez"],0],["Le cours ___ à huit heures.",["commence","commences","commencent"],0],["Nous ___ notre projet vendredi.",["terminons","terminez","terminent"],0],["Vous ___ souvent en France.",["voyagez","voyageons","voyagent"],0],["Elles ___ dans un petit café.",["travaille","travaillez","travaillent"],2],["J’___ la musique française.",["aime","aimes","aimons"],0],["Tu ___ une question utile.",["poses","pose","posent"],0],["Ma sœur ___ avec ses amis.",["danse","danses","dansons"],0],["Nous ___ le vocabulaire ensemble.",["révisons","révisez","révisent"],0],["Vous ___ votre nom sur la fiche.",["notez","notons","notent"],0],["Les étudiants ___ les phrases.",["répète","répétez","répètent"],2],["Je ___ mes parents le dimanche.",["téléphone à","téléphones à","téléphonons à"],0]]));
 C["present-indicatif"]=A("Le présent : emplois, négation et questions","Thème 2 · Le présent de l’indicatif","Grammaire fondamentale","Répondez à vingt questions A1 sur les emplois du présent, la négation et l’interrogation.",from([
-["Quelle phrase exprime une habitude ?",["Je travaille chaque lundi.","Je vais travailler demain.","J’ai travaillé hier."],0],
-["Quelle phrase décrit une action actuelle ?",["Elle parle avec le professeur.","Elle parlera plus tard.","Elle a parlé hier."],0],
-["Quelle phrase exprime une vérité générale ?",["Paris est en France.","Paris va en France.","Paris a été demain."],0],
-["Choisissez la négation correcte : Je parle espagnol.",["Je ne parle pas espagnol.","Je pas parle espagnol.","Je ne pas parle espagnol."],0],
-["Complétez : Il ___ habite pas à Lyon.",["ne","n’","pas"],1],
-["Complétez : Nous ne ___ pas le dimanche.",["travaillons","travailler","travaillez"],0],
-["Quelle question utilise l’intonation ?",["Tu étudies le français ?","Est-ce que tu étudies le français ?","Étudies-tu le français ?"],0],
-["Complétez : ___ tu habites à Bogotá ?",["Est-ce que","Est que","Qu’est-ce"],0],
-["Quel mot demande un lieu ?",["Où","Quand","Pourquoi"],0],
-["Quel mot demande une raison ?",["Comment","Pourquoi","Combien"],1],
-["Choisissez la question correcte.",["Où est-ce que vous habitez ?","Où vous est-ce que habitez ?","Est-ce où vous habitez ?"],0],
-["Transformez : Elle aime le café.",["Elle n’aime pas le café.","Elle ne pas aime le café.","Elle n’pas aime le café."],0],
-["Quelle forme est la plus simple à l’oral A1 ?",["Vous habitez ici ?","Habitez-vous ici ?","Ici habitez-vous donc ?"],0],
-["Complétez : ___ est ta nationalité ?",["Quel","Quelle","Quels"],1],
-["Quelle phrase est affirmative ?",["Je ne suis pas étudiant.","Je suis étudiant.","Est-ce que je suis étudiant ?"],1],
-["Quelle phrase est négative ?",["Nous avons un cours.","Avons-nous un cours ?","Nous n’avons pas de cours."],2],
-["Choisissez l’ordre correct d’une négation.",["sujet + ne + verbe + pas","sujet + pas + ne + verbe","ne + pas + sujet + verbe"],0],
-["Complétez : Quand ___ le cours ?",["commence","commencent","commencer"],0],
-["Quelle question demande l’identité ?",["Comment tu t’appelles ?","Où tu habites ?","Quand tu travailles ?"],0],
-["Quelle phrase convient à une routine ?",["Le matin, je prépare un café.","Demain, je vais préparer un café.","Hier, j’ai préparé un café."],0]
+["Quelle phrase exprime une habitude ?",["Je travaille chaque lundi.","Je vais travailler demain.","J’ai travaillé hier."],0,"« Chaque lundi » indique une répétition : le présent décrit ici une habitude."],
+["Quelle phrase décrit une action actuelle ?",["Elle parle avec le professeur.","Elle parlera plus tard.","Elle a parlé hier."],0,"« Elle parle » est au présent et décrit une action en cours ou actuelle."],
+["Quelle phrase exprime une vérité générale ?",["Paris est en France.","Paris va en France.","Paris a été demain."],0,"« Paris est en France » présente une information stable : c’est une vérité générale."],
+["Choisissez la négation correcte : Je parle espagnol.",["Je ne parle pas espagnol.","Je pas parle espagnol.","Je ne pas parle espagnol."],0,"La négation encadre le verbe conjugué : ne + parle + pas."],
+["Complétez : Il ___ habite pas à Lyon.",["ne","n’","pas"],1,"Devant une voyelle ou un h muet, « ne » devient « n’ » : Il n’habite pas."],
+["Complétez : Nous ne ___ pas le dimanche.",["travaillons","travailler","travaillez"],0,"Après « nous », le verbe doit être conjugué : nous travaillons."],
+["Quelle question utilise l’intonation ?",["Tu étudies le français ?","Est-ce que tu étudies le français ?","Étudies-tu le français ?"],0,"La phrase garde l’ordre affirmatif et devient question grâce au point d’interrogation et à l’intonation."],
+["Complétez : ___ tu habites à Bogotá ?",["Est-ce que","Est que","Qu’est-ce"],0,"Pour une question oui/non simple, on utilise « Est-ce que » + sujet + verbe."],
+["Quel mot demande un lieu ?",["Où","Quand","Pourquoi"],0,"« Où » sert à demander un lieu : Où habites-tu ?"],
+["Quel mot demande une raison ?",["Comment","Pourquoi","Combien"],1,"« Pourquoi » demande une cause ou une raison."],
+["Choisissez la question correcte.",["Où est-ce que vous habitez ?","Où vous est-ce que habitez ?","Est-ce où vous habitez ?"],0,"Avec un mot interrogatif, on peut dire : mot interrogatif + est-ce que + sujet + verbe."],
+["Transformez : Elle aime le café.",["Elle n’aime pas le café.","Elle ne pas aime le café.","Elle n’pas aime le café."],0,"Comme « aime » commence par une voyelle, « ne » devient « n’ » : Elle n’aime pas."],
+["Quelle forme est la plus simple à l’oral A1 ?",["Vous habitez ici ?","Habitez-vous ici ?","Ici habitez-vous donc ?"],0,"L’intonation est la forme la plus directe à l’oral : Vous habitez ici ?"],
+["Complétez : ___ est ta nationalité ?",["Quel","Quelle","Quels"],1,"« Nationalité » est féminin singulier, donc on utilise « quelle »."],
+["Quelle phrase est affirmative ?",["Je ne suis pas étudiant.","Je suis étudiant.","Est-ce que je suis étudiant ?"],1,"Une phrase affirmative donne l’information sans négation et sans question : Je suis étudiant."],
+["Quelle phrase est négative ?",["Nous avons un cours.","Avons-nous un cours ?","Nous n’avons pas de cours."],2,"« N’avons pas » est la négation de « avons »."],
+["Choisissez l’ordre correct d’une négation.",["sujet + ne + verbe + pas","sujet + pas + ne + verbe","ne + pas + sujet + verbe"],0,"L’ordre de base est : sujet + ne/n’ + verbe conjugué + pas."],
+["Complétez : Quand ___ le cours ?",["commence","commencent","commencer"],0,"Le sujet « le cours » est singulier : le cours commence."],
+["Quelle question demande l’identité ?",["Comment tu t’appelles ?","Où tu habites ?","Quand tu travailles ?"],0,"Pour demander le nom ou l’identité, on utilise « Comment tu t’appelles ? »."],
+["Quelle phrase convient à une routine ?",["Le matin, je prépare un café.","Demain, je vais préparer un café.","Hier, j’ai préparé un café."],0,"« Le matin » peut présenter une habitude quotidienne : le présent convient pour une routine."]
 ]));
 C["negation-present"]=A("La négation au présent","Thème 2 · Le présent de l’indicatif","Grammaire","Transformez des phrases simples avec ne/n’ + verbe + pas.",from([
 ["Transformez : Je parle français.",["Je ne parle pas français.","Je parle ne pas français.","Je pas parle français."],0],
