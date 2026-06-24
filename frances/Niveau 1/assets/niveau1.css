@@ -267,6 +267,11 @@ section { padding: 4.5rem 0; }
 .metric-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem; }.metric-card { padding:1rem;border-radius:18px;background:#eef5ff;display:grid;gap:.3rem }.metric-card span{font-weight:900;color:var(--muted)}.metric-card strong{font-size:2rem;color:var(--blue-dark)}
 .table-wrap{overflow:auto;border:1px solid rgba(31,78,140,.12);border-radius:18px}.grades-table{width:100%;min-width:620px;border-collapse:collapse}.grades-table th,.grades-table td{padding:.8rem;border-bottom:1px solid rgba(31,78,140,.1)}.grades-table th{background:#eef5ff;color:var(--blue-dark)}
 .admin-student-card{padding:1rem;border:1px solid rgba(31,78,140,.14);border-radius:20px;background:#f8fbff}.admin-grade-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.7rem}.admin-grade-row{display:grid;grid-template-columns:1fr 90px;gap:.5rem;align-items:center;padding:.65rem;border-radius:14px;background:#fff;font-weight:800}
+.grades-editor-panel{padding:1rem;border:1px solid rgba(31,78,140,.14);border-radius:24px;background:linear-gradient(135deg,#f8fbff,#fff)}
+.evaluation-editor-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem}
+.evaluation-editor-card{padding:1rem;border-radius:20px;background:#fff;border:1px solid rgba(31,78,140,.12);box-shadow:0 12px 28px rgba(20,40,80,.06)}
+.evaluation-editor-card label,.admin-student-card label{font-weight:800;color:var(--blue-dark)}
+.evaluation-editor-card textarea{resize:vertical}
 .feedback-box { min-height: 54px; margin-top: .85rem; padding: .8rem 1rem; border-radius: 14px; background: #f4f7fb; color: var(--muted); font-weight: 800; }
 .score-panel { padding: 1.2rem; border-radius: 20px; background: var(--blue-dark); color: #fff; text-align: center; }
 
