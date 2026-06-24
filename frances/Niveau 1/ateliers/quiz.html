@@ -9,7 +9,7 @@
   <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
-  <link href="../assets/niveau1.css?v=20260626" rel="stylesheet">
+  <link href="../assets/niveau1.css?v=20260624-hero-bg" rel="stylesheet">
   <style>
     .teacher-only{display:none!important}.can-view-transcripts .teacher-only{display:inline-flex!important}
     .teacher-note{display:none;color:var(--muted);font-weight:800}.can-view-transcripts .teacher-note{display:block}
@@ -23,7 +23,7 @@
     </div>
   </nav>
 
-  <header class="hero lesson-hero">
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/ateliers/atelier-alphabet-sons.png')">
     <div class="container">
       <div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html">Ateliers</a><span>›</span><span id="quizCrumb">Activité</span></div>
       <span class="badge-course" id="quizTheme">Français A1.1</span>
@@ -59,6 +59,42 @@
     (function(){
       const key = new URLSearchParams(location.search).get("activite") || "alphabet-sons";
       const item = window.quizCatalog[key] || window.quizCatalog["alphabet-sons"];
+      const activityHeroImages = {
+        "alphabet-sons":"atelier-alphabet-sons.png",
+        "ecoute-nombres-1-20":"atelier-ecoute-nombres.png",
+        "ecoute-nombres-1-100":"atelier-nombres-aleatoires-100.png",
+        "nombres-dates":"atelier-nombres-aleatoires-100.png",
+        "premiere-rencontre":"atelier-premiere-rencontre.png",
+        "articles-definis":"atelier-articles-definis.png",
+        "lecture-premiers-contacts":"lecture-premiers-contacts.png",
+        "present-indicatif":"atelier-present-indicatif.png",
+        "negation-present":"atelier-negation-present.png",
+        "questions-present":"atelier-questions-present.png",
+        "lecture-present-classe":"lecture-present-classe.png",
+        "production-routine-present":"production-routine-present.png",
+        "conjugaison-er":"atelier-conjugaison-er.png",
+        "radical-terminaison":"atelier-conjugaison-er.png",
+        "verbes-er-contexte":"lecture-routine-malik.png",
+        "ecoute-verbes-er":"ecoute-routine-camille.png",
+        "lecture-verbes-er":"lecture-routine-malik.png",
+        "verbe-etre":"atelier-verbe-etre.png",
+        "verbe-avoir":"atelier-verbe-avoir.png",
+        "verbe-aller":"atelier-verbe-aller.png",
+        "verbe-faire":"atelier-verbe-faire.png",
+        "informations-personnelles":"carte-identite-creative-a1.png",
+        "ecoute-verbes-essentiels":"ecoute-samedi-lyon.png",
+        "lecture-verbes-essentiels":"lecture-sortie-musee.png",
+        "famille-relations":"atelier-famille-vocabulaire.png",
+        "adjectifs-possessifs":"atelier-adjectifs-possessifs.png",
+        "arbre-familial":"atelier-arbre-familial.png",
+        "ecoute-ma-famille":"ecoute-dejeuner-famille.png",
+        "lecture-famille":"lecture-famille-lea.png",
+        "accord-adjectifs":"atelier-accord-adjectifs.png",
+        "portrait-guide":"atelier-portrait-guide.png",
+        "qui-est-ce-description":"qui-est-ce-portraits-a1.png",
+        "ecoute-portrait":"ecoute-portrait-sofia.png",
+        "lecture-description":"lecture-amie-ines.png"
+      };
       const original = window.french1OriginalBanks && window.french1OriginalBanks[key];
       const expanded = window.french1ExpandedActivities && window.french1ExpandedActivities[key];
       let questions = !expanded && original && original.length ? original.slice() : item.questions.slice();
@@ -77,6 +113,7 @@
       document.getElementById("quizTheme").textContent = item.theme;
       document.getElementById("quizDescription").textContent = item.description;
       document.getElementById("quizSkill").textContent = item.skill;
+      document.querySelector(".lesson-hero").style.setProperty("--hero-image", `url('/frances/Niveau%201/img/ateliers/${activityHeroImages[key] || "atelier-alphabet-sons.png"}?v=20260624-activity-images')`);
 
       const material = document.getElementById("activityMaterial");
       if (item.audio) {
