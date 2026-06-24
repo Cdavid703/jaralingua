@@ -18,7 +18,7 @@ function numberToFrench(number) {
 const sections = ["# Français Niveau 1 — Nombres de 1 à 100", ""];
 for (let number = 1; number <= 100; number += 1) {
   sections.push(`## Nombre ${String(number).padStart(3,"0")}`);
-  sections.push(`File: \`nombre-${String(number).padStart(3,"0")}.mp3\``);
+  sections.push(`File: \`nombres-1-100/nombre-${String(number).padStart(3,"0")}.mp3\``);
   sections.push("");
   sections.push(`Narrateur: ${numberToFrench(number)}.`);
   sections.push("");

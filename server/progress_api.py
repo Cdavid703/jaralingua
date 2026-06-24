@@ -17,6 +17,7 @@ MICROSOFT_CLIENT_ID = os.environ.get("JARALINGUA_MICROSOFT_CLIENT_ID", "4e729f8a
 MICROSOFT_TENANT_ID = os.environ.get("JARALINGUA_MICROSOFT_TENANT_ID", "e1664f47-3c02-4a23-a559-0f33d25d8f86").strip()
 DATA_PATH = os.environ.get("JARALINGUA_PROGRESS_DATA", "/var/lib/jaralingua/progress.json")
 FRENCH7_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib/jaralingua/french7-grades.json")
+FRENCH1_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH1_GRADES_DATA", "/var/lib/jaralingua/french1-grades.json")
 FRENCH8_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH8_GRADES_DATA", "/var/lib/jaralingua/french8-grades.json")
 FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "/var/lib/jaralingua/french7-final-exam.json")
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
@@ -942,6 +943,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/french1/grades":
+            grades_data = read_grades_data(FRENCH1_GRADES_PATH)
+            query = urllib.parse.parse_qs(parsed.query)
+            json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
         if parsed.path == "/api/french8/grades":
             grades_data = read_grades_data(FRENCH8_GRADES_PATH)
             query = urllib.parse.parse_qs(parsed.query)
@@ -1262,6 +1269,21 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 400, {"error": str(error)})
                     return
                 write_json_file(FRENCH7_GRADES_PATH, next_data, ".french7-grades-")
+                json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+            return
+
+        if parsed.path == "/api/french1/grades":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH1_GRADES_PATH)
+                if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                try:
+                    next_data = clean_gradebook_payload(payload, grades_data)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                write_json_file(FRENCH1_GRADES_PATH, next_data, ".french1-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
             return
 

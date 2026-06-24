@@ -1,0 +1,14 @@
+{
+  "adminEmails": [],
+  "teacherEmails": ["lcvelasqueza@correo.iue.edu.co"],
+  "allowStudentIdClaim": false,
+  "students": [],
+  "evaluations": [
+    {"id":"participation","title":"Participation et ateliers","weight":20,"type":"Suivi continu","description":"Participation, productions et ateliers du niveau."},
+    {"id":"ecoute","title":"Compréhension orale","weight":20,"type":"Écoute","description":"Cinq écoutes thématiques et questionnaires."},
+    {"id":"lecture","title":"Compréhension écrite","weight":20,"type":"Lecture","description":"Cinq lectures A1 et questionnaires."},
+    {"id":"prononciation","title":"Prononciation","weight":20,"type":"Oral","description":"Cinq défis de prononciation."},
+    {"id":"projetFinal","title":"Projet final A1.1","weight":20,"type":"Production","description":"Présentation personnelle, famille, habitudes et description."}
+  ],
+  "bonusEvent": null
+}

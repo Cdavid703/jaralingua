@@ -42,4 +42,24 @@
   document.querySelectorAll("[data-current-year]").forEach((node) => {
     node.textContent = new Date().getFullYear();
   });
+
+  document.querySelectorAll("audio").forEach((audio) => {
+    if (audio.dataset.speedReady === "true") return;
+    audio.dataset.speedReady = "true";
+    const controls = document.createElement("div");
+    controls.className = "speed-controls mt-2";
+    controls.setAttribute("aria-label", "Vitesse de lecture");
+    [0.75, 1, 1.25].forEach((rate) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = `speed-btn${rate === 1 ? " active" : ""}`;
+      button.textContent = `${String(rate).replace(".", ",")}×`;
+      button.addEventListener("click", () => {
+        audio.playbackRate = rate;
+        controls.querySelectorAll(".speed-btn").forEach((candidate) => candidate.classList.toggle("active", candidate === button));
+      });
+      controls.appendChild(button);
+    });
+    audio.insertAdjacentElement("afterend", controls);
+  });
 })();

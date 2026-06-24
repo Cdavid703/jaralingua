@@ -3,7 +3,7 @@
   const A = (title, theme, skill, description, questions) => ({ title, theme, skill, description, questions });
   window.quizCatalog = {
     "alphabet-sons": A("Alphabet et premiers sons", "Thème 1 · Premiers contacts", "Phonétique", "Écoutez, observez et reconnaissez les lettres et les sons de base.", [
-      Q("Quelle lettre entendez-vous ?", ["G", "J", "R"], 1, "La lettre J se prononce /ʒi/.", "../audio/theme-1/lettre-j.mp3"),
+      Q("Quelle lettre entendez-vous ?", ["G", "J", "R"], 1, "La lettre J se prononce /ʒi/.", "../audio/theme-1/alphabet/lettre-j.mp3"),
       Q("Quel mot contient le son [ɑ̃] ?", ["France", "bonjour", "cinq"], 0, "France contient la voyelle nasale [ɑ̃].", "../audio/theme-1/son-an.mp3"),
       Q("Quel contraste entendez-vous ?", ["tu / tout", "bon / banc", "mais / mes"], 0, "L’exercice oppose [y] dans tu et [u] dans tout.", "../audio/theme-1/son-u-ou.mp3"),
       Q("Quelle épellation correspond à LINA ?", ["L-I-N-A", "R-I-M-A", "L-E-N-E"], 0, "Lina s’épelle L-I-N-A.", "../audio/theme-1/epellation-lina.mp3")

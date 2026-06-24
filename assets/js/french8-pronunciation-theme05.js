@@ -424,6 +424,18 @@
     if (analyzing) return;
     resetAttempt(false);
     try {
+      if (!window.isSecureContext) {
+        const error = new Error("secure_context");
+        error.name = "SecurityError";
+        throw error;
+      }
+      if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+        const error = new Error("unsupported");
+        error.name = "NotSupportedError";
+        throw error;
+      }
+      recordStatus.textContent = "Demande d’autorisation du microphone…";
+      recordHelp.textContent = "Acceptez la demande du navigateur pour commencer l’enregistrement.";
       const audioConstraints = { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 };
       if (microphoneSelect.value) audioConstraints.deviceId = { exact: microphoneSelect.value };
       mediaStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints, video: false });
@@ -435,7 +447,7 @@
       if (activeDeviceId && [...microphoneSelect.options].some((option) => option.value === activeDeviceId)) microphoneSelect.value = activeDeviceId;
       chunks = [];
       discardRecording = false;
-      const preferredType = window.MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
+      const preferredType = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((type) => MediaRecorder.isTypeSupported(type)) || "";
       mediaRecorder = preferredType ? new MediaRecorder(mediaStream, { mimeType: preferredType }) : new MediaRecorder(mediaStream);
       mediaRecorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
       mediaRecorder.onerror = () => {
@@ -461,7 +473,17 @@
       liveTranscript.textContent = "Lisez uniquement le texte affiché.";
     } catch (error) {
       stopTracks();
-      recordStatus.textContent = error?.name === "NotAllowedError" ? "L’accès au microphone a été refusé." : "Impossible d’accéder au microphone. Choisissez un autre périphérique.";
+      const messages = {
+        NotAllowedError: "L’accès au microphone a été refusé. Autorisez le microphone pour JaraLingua dans les paramètres du navigateur, puis rechargez la page.",
+        SecurityError: error?.message === "secure_context" ? "Le microphone exige une connexion HTTPS sécurisée." : "La politique de sécurité du navigateur bloque le microphone sur cette page.",
+        NotFoundError: "Aucun microphone n’a été détecté. Vérifiez qu’il est connecté et activé.",
+        NotReadableError: "Le microphone est déjà utilisé par une autre application. Fermez-la, puis réessayez.",
+        AbortError: "L’activation du microphone a été interrompue. Réessayez.",
+        OverconstrainedError: "Le microphone sélectionné n’est plus disponible. Choisissez le microphone par défaut.",
+        NotSupportedError: "Ce navigateur ne prend pas en charge l’enregistrement audio. Utilisez une version récente de Chrome, Edge ou Safari."
+      };
+      recordStatus.textContent = messages[error?.name] || "Impossible d’accéder au microphone. Vérifiez les autorisations et choisissez un autre périphérique.";
+      recordHelp.textContent = "Android ou ordinateur : ouvrez les paramètres du site, autorisez le microphone et fermez les applications qui l’utilisent déjà.";
       setControls(false, false);
     }
   }

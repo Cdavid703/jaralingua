@@ -1,110 +1,15 @@
 (function () {
   "use strict";
-  const MAX_QUESTIONS = 10;
-  const allData = Array.isArray(window.quizData) ? window.quizData : [];
-  if (!allData.length) return;
-
+  const data = Array.isArray(window.quizData) ? window.quizData : [];
   const root = document.querySelector("[data-quiz]");
-  if (!root) return;
-
-  /* --- Shuffle helper (Fisher-Yates) --- */
-  function shuffle(arr) {
-    const a = arr.slice();
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
-  }
-
-  /* --- Select a random subset of up to MAX_QUESTIONS --- */
-  function pickQuestions() {
-    if (allData.length <= MAX_QUESTIONS) return shuffle(allData);
-    return shuffle(allData).slice(0, MAX_QUESTIONS);
-  }
-
-  let data = pickQuestions();
-  const state = { index: 0, score: 0, answered: false };
+  if (!root || !data.length) return;
+  const shuffle = (items) => { const copy = items.slice(); for (let i = copy.length - 1; i > 0; i -= 1) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; } return copy; };
+  const questions = data.map((item) => { const options = shuffle(item.options.map((text, originalIndex) => ({ text, originalIndex }))); return { ...item, options, correctIndex: options.findIndex((option) => option.originalIndex === item.answer) }; });
   const progress = document.querySelector("[data-quiz-progress]");
   const scoreEl = document.querySelector("[data-quiz-score]");
-
-  function render() {
-    const item = data[state.index];
-    state.answered = false;
-
-    /* Shuffle options while tracking the new position of the correct answer */
-    const indexed = item.options.map((text, i) => ({ text, orig: i }));
-    const shuffled = shuffle(indexed);
-    const correctShuffled = shuffled.findIndex(o => o.orig === item.answer);
-
-    root.innerHTML = `
-      <div class="question-card">
-        <p class="section-kicker">Question ${state.index + 1} sur ${data.length}</p>
-        <h2 class="h4">${item.question}</h2>
-        ${item.audio ? `<button class="audio-btn mb-3" type="button" data-question-audio="${item.audio}"><i class="bi bi-volume-up-fill"></i> Écouter</button>` : ""}
-        <div class="option-grid">${shuffled.map((opt, idx) => `<button class="option-btn" type="button" data-option="${idx}">${opt.text}</button>`).join("")}</div>
-        <div class="feedback-box" aria-live="polite">Choisissez une réponse.</div>
-      </div>`;
-    progress.style.width = `${(state.index / data.length) * 100}%`;
-    scoreEl.textContent = `${state.score} point${state.score > 1 ? "s" : ""}`;
-
-    root.querySelectorAll("[data-option]").forEach(btn =>
-      btn.addEventListener("click", () => answer(btn, item, correctShuffled))
-    );
-    const audioBtn = root.querySelector("[data-question-audio]");
-    if (audioBtn) audioBtn.addEventListener("click", () =>
-      new Audio(audioBtn.dataset.questionAudio).play().catch(() => {
-        root.querySelector(".feedback-box").textContent = "L'audio n'a pas pu être chargé.";
-      })
-    );
-  }
-
-  function answer(button, item, correctIdx) {
-    if (state.answered) return;
-    state.answered = true;
-    const selected = Number(button.dataset.option);
-    const buttons = [...root.querySelectorAll("[data-option]")];
-    buttons.forEach((opt, idx) => {
-      opt.disabled = true;
-      if (idx === correctIdx) opt.classList.add("correct");
-    });
-    if (selected === correctIdx) {
-      state.score += 1;
-      button.classList.add("correct");
-      root.querySelector(".feedback-box").innerHTML = `<strong>Bravo !</strong> ${item.explanation || "Bonne réponse."}`;
-    } else {
-      button.classList.add("wrong");
-      root.querySelector(".feedback-box").innerHTML = `<strong>Pas encore.</strong> ${item.explanation || "Observez la correction."}`;
-    }
-    scoreEl.textContent = `${state.score} point${state.score > 1 ? "s" : ""}`;
-    const next = document.createElement("button");
-    next.type = "button";
-    next.className = "btn-main mt-3";
-    next.textContent = state.index + 1 === data.length ? "Voir mon résultat" : "Question suivante";
-    next.addEventListener("click", advance);
-    root.querySelector(".question-card").appendChild(next);
-  }
-
-  function advance() {
-    state.index += 1;
-    if (state.index < data.length) return render();
-    progress.style.width = "100%";
-    const percent = Math.round((state.score / data.length) * 100);
-    let level, feedback;
-    if (percent === 100) { level = "Parfait"; feedback = "Vous avez tout réussi !"; }
-    else if (percent >= 80) { level = "Excellent"; feedback = "Excellent travail !"; }
-    else if (percent >= 60) { level = "Bon"; feedback = "Bonne base : refaites les questions difficiles."; }
-    else { level = "En progrès"; feedback = "Reprenez la théorie puis essayez encore."; }
-    root.innerHTML = `<div class="score-panel"><p class="section-kicker text-white">Atelier terminé</p><h2>${state.score} / ${data.length}</h2><p>${feedback}</p><button class="btn-soft" type="button" data-restart>Recommencer</button></div>`;
-    root.querySelector("[data-restart]").addEventListener("click", restart);
-  }
-
-  function restart() {
-    data = pickQuestions();
-    state.index = 0;
-    state.score = 0;
-    render();
-  }
-
-  render();
+  let activeAudio = null;
+  const audioControls = (item, index) => item.audio ? `<div class="question-audio" data-audio-group="${index}"><button class="audio-btn" type="button" data-play-audio="${item.audio}"><i class="bi bi-play-fill"></i> Écouter</button><div class="speed-controls" aria-label="Vitesse de lecture">${[0.75, 1, 1.25].map((rate) => `<button type="button" class="speed-btn${rate === 1 ? " active" : ""}" data-rate="${rate}">${String(rate).replace(".", ",")}×</button>`).join("")}</div></div>` : "";
+  root.innerHTML = `<form class="complete-quiz" data-complete-quiz novalidate><div class="quiz-intro"><strong>${questions.length} questions</strong><span>Répondez à votre rythme, puis corrigez tout l’atelier.</span></div>${questions.map((item, q) => `<article class="question-card" data-question="${q}"><p class="section-kicker">Question ${q + 1} sur ${questions.length}</p><h2 class="h5">${item.question}</h2>${audioControls(item, q)}<div class="option-grid">${item.options.map((option, o) => `<label class="option-label"><input type="radio" name="q${q}" value="${o}"><span>${option.text}</span></label>`).join("")}</div><div class="feedback-box" data-feedback aria-live="polite" hidden></div></article>`).join("")}<div class="quiz-submit-panel"><p data-unanswered aria-live="polite"></p><button class="btn-main" type="submit"><i class="bi bi-check2-circle"></i> Corriger l’atelier</button></div></form>`;
+  root.querySelectorAll("[data-audio-group]").forEach((group) => { let rate = 1; const play = group.querySelector("[data-play-audio]"); group.querySelectorAll("[data-rate]").forEach((button) => button.addEventListener("click", () => { rate = Number(button.dataset.rate); group.querySelectorAll("[data-rate]").forEach((candidate) => candidate.classList.toggle("active", candidate === button)); if (activeAudio) activeAudio.playbackRate = rate; })); play.addEventListener("click", () => { if (activeAudio) activeAudio.pause(); activeAudio = new Audio(play.dataset.playAudio); activeAudio.playbackRate = rate; activeAudio.play().catch(() => { play.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Audio indisponible'; }); }); });
+  root.querySelector("[data-complete-quiz]").addEventListener("submit", (event) => { event.preventDefault(); const firstMissing = questions.findIndex((_, index) => !root.querySelector(`input[name="q${index}"]:checked`)); const warning = root.querySelector("[data-unanswered]"); if (firstMissing >= 0) { const total = questions.filter((_, index) => !root.querySelector(`input[name="q${index}"]:checked`)).length; warning.textContent = `Il reste ${total} question${total > 1 ? "s" : ""} sans réponse.`; root.querySelector(`input[name="q${firstMissing}"]`)?.focus(); return; } warning.textContent = ""; let score = 0; questions.forEach((item, index) => { const card = root.querySelector(`[data-question="${index}"]`); const selected = Number(root.querySelector(`input[name="q${index}"]:checked`).value); const correct = selected === item.correctIndex; if (correct) score += 1; card.querySelectorAll("input").forEach((input) => { input.disabled = true; }); card.querySelectorAll(".option-label").forEach((label, optionIndex) => { label.classList.toggle("correct", optionIndex === item.correctIndex); label.classList.toggle("wrong", optionIndex === selected && !correct); }); const feedback = card.querySelector("[data-feedback]"); feedback.hidden = false; feedback.innerHTML = `<strong>${correct ? "Bonne réponse." : "À revoir."}</strong> ${item.explanation || "Observez la correction."}`; }); const percent = Math.round((score / questions.length) * 100); scoreEl.textContent = `${score} / ${questions.length}`; progress.style.width = `${percent}%`; root.querySelector(".quiz-submit-panel").innerHTML = `<div class="score-panel"><h2>${score} / ${questions.length}</h2><p>${percent}% de réussite</p><button class="btn-soft" type="button" data-restart>Recommencer</button></div>`; root.querySelector("[data-restart]").addEventListener("click", () => location.reload()); });
 })();

@@ -7,107 +7,107 @@ Narrateur: Écoutez et répétez lentement. A. B. C. D. E. F. G. Première pause
 
 ## Lettres interactives
 File: `alphabet/lettre-a.mp3`
-Narrateur: A. A comme ami.
+Narrateur: A.
 
 ## Lettre B
 File: `alphabet/lettre-b.mp3`
-Narrateur: B. B comme bonjour.
+Narrateur: B.
 
 ## Lettre C
 File: `alphabet/lettre-c.mp3`
-Narrateur: C. C comme café.
+Narrateur: C.
 
 ## Lettre D
 File: `alphabet/lettre-d.mp3`
-Narrateur: D. D comme dimanche.
+Narrateur: D.
 
 ## Lettre E
 File: `alphabet/lettre-e.mp3`
-Narrateur: E. E comme Europe.
+Narrateur: E.
 
 ## Lettre F
 File: `alphabet/lettre-f.mp3`
-Narrateur: F. F comme France.
+Narrateur: F.
 
 ## Lettre G
 File: `alphabet/lettre-g.mp3`
-Narrateur: G. G comme girafe.
+Narrateur: G.
 
 ## Lettre H
 File: `alphabet/lettre-h.mp3`
-Narrateur: H. H comme hôtel.
+Narrateur: H.
 
 ## Lettre I
 File: `alphabet/lettre-i.mp3`
-Narrateur: I. I comme idée.
+Narrateur: I.
 
 ## Lettre J interactive
 File: `alphabet/lettre-j.mp3`
-Narrateur: J. J comme Julie.
+Narrateur: J.
 
 ## Lettre K
 File: `alphabet/lettre-k.mp3`
-Narrateur: K. K comme kilo.
+Narrateur: K.
 
 ## Lettre L
 File: `alphabet/lettre-l.mp3`
-Narrateur: L. L comme livre.
+Narrateur: L.
 
 ## Lettre M
 File: `alphabet/lettre-m.mp3`
-Narrateur: M. M comme maison.
+Narrateur: M.
 
 ## Lettre N
 File: `alphabet/lettre-n.mp3`
-Narrateur: N. N comme nature.
+Narrateur: N.
 
 ## Lettre O
 File: `alphabet/lettre-o.mp3`
-Narrateur: O. O comme orange.
+Narrateur: O.
 
 ## Lettre P
 File: `alphabet/lettre-p.mp3`
-Narrateur: P. P comme Paris.
+Narrateur: P.
 
 ## Lettre Q
 File: `alphabet/lettre-q.mp3`
-Narrateur: Q. Q comme question.
+Narrateur: Q.
 
 ## Lettre R
 File: `alphabet/lettre-r.mp3`
-Narrateur: R. R comme rouge.
+Narrateur: R.
 
 ## Lettre S
 File: `alphabet/lettre-s.mp3`
-Narrateur: S. S comme salut.
+Narrateur: S.
 
 ## Lettre T
 File: `alphabet/lettre-t.mp3`
-Narrateur: T. T comme téléphone.
+Narrateur: T.
 
 ## Lettre U
 File: `alphabet/lettre-u.mp3`
-Narrateur: U. U comme université.
+Narrateur: U.
 
 ## Lettre V
 File: `alphabet/lettre-v.mp3`
-Narrateur: V. V comme ville.
+Narrateur: V.
 
 ## Lettre W
 File: `alphabet/lettre-w.mp3`
-Narrateur: W. W comme wagon.
+Narrateur: W.
 
 ## Lettre X
 File: `alphabet/lettre-x.mp3`
-Narrateur: X. X comme xylophone.
+Narrateur: X.
 
 ## Lettre Y
 File: `alphabet/lettre-y.mp3`
-Narrateur: Y. Y comme yoga.
+Narrateur: Y.
 
 ## Lettre Z
 File: `alphabet/lettre-z.mp3`
-Narrateur: Z. Z comme zéro.
+Narrateur: Z.
 
 ## Lettre J
 File: `lettre-j.mp3`
