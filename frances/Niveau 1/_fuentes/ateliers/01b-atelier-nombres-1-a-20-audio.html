@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Atelier : Nombres de 1 à 20 en français (avec audio)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #dbeafe;
+      --correct: #16a34a;
+      --incorrect: #dc2626;
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --text: #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #e0f2fe 0, #f3f4f6 40%, #e5e7eb 100%);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .app {
+      max-width: 900px;
+      width: 100%;
+      padding: 24px 16px 40px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 20px 18px;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.15);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h1 span.emoji {
+      font-size: 2rem;
+    }
+
+    .subtitle {
+      margin-bottom: 18px;
+      color: #4b5563;
+      font-size: 0.97rem;
+    }
+
+    .subtitle strong {
+      color: var(--primary);
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .score-badge {
+      background: var(--primary-light);
+      color: var(--primary);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 600;
+    }
+
+    .score-badge span.big {
+      font-size: 1.1rem;
+    }
+
+    .progress-wrapper {
+      flex: 1;
+      min-width: 190px;
+    }
+
+    .progress-label {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-bottom: 4px;
+    }
+
+    .progress-bar-bg {
+      background: #e5e7eb;
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #2563eb);
+      transition: width 0.25s ease-out;
+    }
+
+    .questions {
+      display: grid;
+      gap: 14px;
+      margin-top: 10px;
+    }
+
+    .question-card {
+      background: #f9fafb;
+      border-radius: 15px;
+      padding: 14px 14px 12px;
+      border: 1px solid #e5e7eb;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .question-main {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .question-number {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #6b7280;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .question-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .pill {
+      font-size: 0.7rem;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #2563eb;
+      border: 1px solid #bfdbfe;
+      white-space: nowrap;
+    }
+
+    .listen-btn {
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 5px 12px;
+      background: #ffffff;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out, border-color 0.08s ease-out;
+    }
+
+    .listen-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(15, 23, 42, 0.12);
+      border-color: #9ca3af;
+    }
+
+    .listen-btn:active {
+      transform: translateY(0px) scale(0.98);
+      box-shadow: none;
+    }
+
+    .options {
+      display: grid;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 8px 10px;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+      background: #ffffff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out,
+        border-color 0.08s ease-out, background-color 0.1s ease-out;
+    }
+
+    .option-btn span.label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .option-key {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #2563eb;
+      font-size: 0.72rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+    }
+
+    .option-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.12);
+      border-color: #cbd5f5;
+    }
+
+    .option-btn:active {
+      transform: translateY(0px) scale(0.99);
+      box-shadow: none;
+    }
+
+    .option-btn.correct {
+      background: #ecfdf3;
+      border-color: #4ade80;
+      color: #166534;
+    }
+
+    .option-btn.incorrect {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+
+    .option-status {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .option-status.correct {
+      color: #16a34a;
+    }
+
+    .option-status.incorrect {
+      color: #dc2626;
+    }
+
+    .feedback {
+      margin-top: 6px;
+      font-size: 0.82rem;
+      color: #4b5563;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .feedback.hidden {
+      display: none;
+    }
+
+    .feedback .icon {
+      font-size: 1rem;
+    }
+
+    .footer {
+      margin-top: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .result-text {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .result-text span {
+      color: var(--primary);
+    }
+
+    .btn-reset {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #2563eb, #4f46e5);
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out;
+    }
+
+    .btn-reset:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(37, 99, 235, 0.55);
+    }
+
+    .btn-reset:active {
+      transform: translateY(0px) scale(0.98);
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
+    }
+
+    .hint {
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 16px 14px;
+      }
+      h1 {
+        font-size: 1.5rem;
+      }
+      .subtitle {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <div class="card">
+      <h1>
+        <span class="emoji">🔊</span>
+        Atelier : nombres de 1 à 20 (audio)
+      </h1>
+      <p class="subtitle">
+        Clique sur <strong>« Écouter »</strong> pour entendre le nombre en français, puis choisis la bonne réponse.
+        Ton objectif est d’atteindre <strong>10/10</strong> 🏆
+      </p>
+
+      <div class="top-bar">
+        <div class="score-badge" id="scoreBadge">
+          ✅ Score : <span class="big" id="score">0</span>/10 ·
+          Questions répondues : <span id="answered">0</span>/10
+        </div>
+        <div class="progress-wrapper">
+          <div class="progress-label">Progression de l’atelier</div>
+          <div class="progress-bar-bg">
+            <div class="progress-bar-fill" id="progressBar"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="questions" id="questionsContainer">
+        <!-- Les questions sont générées en JavaScript -->
+      </div>
+
+      <div class="footer">
+        <div class="result-text" id="resultText">
+          Réponds à toutes les questions pour voir ton résultat final ! 💪
+        </div>
+        <button class="btn-reset" id="resetBtn">
+          🔄 Recommencer l’atelier
+        </button>
+      </div>
+
+      <div class="hint">
+        💡 Astuce : refais l’activité jusqu’à ce que tu reconnaisses les nombres automatiquement.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // IMPORTANT:
+    // Cambia cada audioSrc por la URL real de tus audios (mp3, wav, etc.)
+    const questionsData = [
+      {
+        text: "Écoute le nombre, puis choisis la bonne écriture.",
+        audioSrc: "https://example.com/audio/sept.mp3",   // ← reemplaza esta URL
+        options: ["six", "sept", "dix"],
+        correctIndex: 1,
+        hint: "« sept » = 7."
+      },
+      {
+        text: "Écoute le nombre, puis choisis le bon chiffre.",
+        audioSrc: "https://example.com/audio/douze.mp3", // ← reemplaza esta URL
+        options: ["10", "12", "20"],
+        correctIndex: 1,
+        hint: "« douze » = 12."
+      },
+      {
+        text: "Écoute le nombre, puis choisis la bonne écriture.",
+        audioSrc: "https://example.com/audio/quinze.mp3", // ← reemplaza esta URL
+        options: ["quinze", "cinq", "vingt"],
+        correctIndex: 0,
+        hint: "« quinze » = 15."
+      },
+      {
+        text: "Écoute le nombre, puis choisis le bon chiffre.",
+        audioSrc: "https://example.com/audio/neuf.mp3", // ← reemplaza esta URL
+        options: ["8", "9", "19"],
+        correctIndex: 1,
+        hint: "« neuf » = 9."
+      },
+      {
+        text: "Écoute le nombre, puis choisis la bonne écriture.",
+        audioSrc: "https://example.com/audio/onze.mp3", // ← reemplaza esta URL
+        options: ["onze", "dix", "deux"],
+        correctIndex: 0,
+        hint: "« onze » = 11."
+      },
+      {
+        text: "Écoute le nombre, puis choisis le bon chiffre.",
+        audioSrc: "https://example.com/audio/vingt.mp3", // ← reemplaza esta URL
+        options: ["15", "18", "20"],
+        correctIndex: 2,
+        hint: "« vingt » = 20."
+      },
+      {
+        text: "Écoute le nombre, puis choisis la bonne écriture.",
+        audioSrc: "https://example.com/audio/quatre.mp3", // ← reemplaza esta URL
+        options: ["deux", "quatre", "trois"],
+        correctIndex: 1,
+        hint: "« quatre » = 4."
+      },
+      {
+        text: "Écoute le nombre, puis choisis le bon chiffre.",
+        audioSrc: "https://example.com/audio/huit.mp3", // ← reemplaza esta URL
+        options: ["6", "7", "8"],
+        correctIndex: 2,
+        hint: "« huit » = 8."
+      },
+      {
+        text: "Écoute le nombre, puis choisis la bonne écriture.",
+        audioSrc: "https://example.com/audio/dix-neuf.mp3", // ← reemplaza esta URL
+        options: ["neuf", "dix-neuf", "quatorze"],
+        correctIndex: 1,
+        hint: "« dix-neuf » = 19."
+      },
+      {
+        text: "Écoute le nombre, puis choisis le bon chiffre.",
+        audioSrc: "https://example.com/audio/trois.mp3", // ← reemplaza esta URL
+        options: ["2", "3", "13"],
+        correctIndex: 1,
+        hint: "« trois » = 3."
+      }
+    ];
+
+    const questionsContainer = document.getElementById("questionsContainer");
+    const scoreSpan = document.getElementById("score");
+    const answeredSpan = document.getElementById("answered");
+    const progressBar = document.getElementById("progressBar");
+    const resultText = document.getElementById("resultText");
+    const resetBtn = document.getElementById("resetBtn");
+
+    let score = 0;
+    let answered = 0;
+
+    function createQuestions() {
+      questionsContainer.innerHTML = "";
+      questionsData.forEach((q, index) => {
+        const card = document.createElement("div");
+        card.className = "question-card";
+        card.dataset.index = index;
+        card.dataset.answered = "false";
+
+        card.innerHTML = `
+          <div class="question-header">
+            <div class="question-main">
+              <div class="question-number">Question ${index + 1}</div>
+              <div class="question-text">${q.text}</div>
+              <button type="button" class="listen-btn">
+                ▶ Écouter
+              </button>
+              <audio preload="auto" class="audio-player" src="${q.audioSrc}"></audio>
+            </div>
+            <div class="pill">Compréhension orale</div>
+          </div>
+          <div class="options">
+            ${q.options
+              .map(
+                (opt, i) => `
+              <button class="option-btn" data-option-index="${i}">
+                <span class="label">
+                  <span class="option-key">${String.fromCharCode(
+                    65 + i
+                  )}</span> ${opt}
+                </span>
+                <span class="option-status"></span>
+              </button>
+            `
+              )
+              .join("")}
+          </div>
+          <div class="feedback hidden">
+            <span class="icon">💬</span>
+            <span class="text">${q.hint}</span>
+          </div>
+        `;
+
+        const buttons = card.querySelectorAll(".option-btn");
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () =>
+            handleAnswer(card, btn, q.correctIndex)
+          );
+        });
+
+        const listenBtn = card.querySelector(".listen-btn");
+        const audioEl = card.querySelector(".audio-player");
+
+        listenBtn.addEventListener("click", () => {
+          if (!audioEl) return;
+          audioEl.currentTime = 0;
+          audioEl.play().catch(err => {
+            console.warn("Erreur de lecture audio:", err);
+          });
+        });
+
+        questionsContainer.appendChild(card);
+      });
+    }
+
+    function handleAnswer(card, button, correctIndex) {
+      if (card.dataset.answered === "true") {
+        return; // ne pas permettre de changer la réponse
+      }
+
+      const selectedIndex = parseInt(
+        button.getAttribute("data-option-index"),
+        10
+      );
+      const buttons = card.querySelectorAll(".option-btn");
+      const feedback = card.querySelector(".feedback");
+      const statusSpan = button.querySelector(".option-status");
+
+      // Marquer la carte comme répondue
+      card.dataset.answered = "true";
+      answered++;
+      answeredSpan.textContent = answered;
+      updateProgress();
+
+      // Bloquer toutes les options
+      buttons.forEach((btn, i) => {
+        btn.disabled = true;
+        if (i === correctIndex && i !== selectedIndex) {
+          // mettre en évidence la bonne réponse si l’élève s’est trompé
+          btn.classList.add("correct");
+        }
+      });
+
+      // Vérifier la réponse
+      if (selectedIndex === correctIndex) {
+        score++;
+        scoreSpan.textContent = score;
+        button.classList.add("correct");
+        statusSpan.textContent = "Bravo !";
+        statusSpan.classList.add("correct");
+      } else {
+        button.classList.add("incorrect");
+        statusSpan.textContent = "Essaie encore…";
+        statusSpan.classList.add("incorrect");
+      }
+
+      // Afficher la piste / explication
+      feedback.classList.remove("hidden");
+
+      // Message final
+      if (answered === questionsData.length) {
+        showFinalMessage();
+      }
+    }
+
+    function updateProgress() {
+      const total = questionsData.length;
+      const percent = (answered / total) * 100;
+      progressBar.style.width = percent + "%";
+    }
+
+    // Versión con calificación + retroalimentación en francés
+    function showFinalMessage() {
+      const total = questionsData.length;
+      const percentage = Math.round((score / total) * 100);
+
+      let level = "";
+      let feedback = "";
+
+      if (score === total) {
+        level = "Expert des nombres";
+        feedback = "Parfait ! Tu as tout réussi, tu comprends très bien les nombres de 1 à 20.";
+      } else if (percentage >= 80) {
+        level = "Très bon niveau";
+        feedback = "Bravo ! Il ne te manque que quelques réponses pour atteindre le sans-faute.";
+      } else if (percentage >= 60) {
+        level = "Niveau intermédiaire";
+        feedback = "C’est bien ! Tu reconnais déjà plusieurs nombres, continue à t’entraîner.";
+      } else if (percentage >= 40) {
+        level = "Niveau débutant";
+        feedback = "Tu es sur la bonne voie. Réécoute bien les audios et recommence l’atelier.";
+      } else {
+        level = "En progrès";
+        feedback = "Pas de souci, les nombres se mémorisent avec le temps. Refais l’activité plusieurs fois.";
+      }
+
+      const summaryHtml = `Note finale : <span>${score}/${total} (${percentage} %)</span>`;
+      const levelLine = `Niveau : <strong>${level}</strong>`;
+      const feedbackLine = `Feedback : ${feedback}`;
+
+      resultText.innerHTML = `
+        ${summaryHtml}<br>
+        ${levelLine}<br>
+        ${feedbackLine}
+      `;
+    }
+
+    function resetQuiz() {
+      score = 0;
+      answered = 0;
+      scoreSpan.textContent = score;
+      answeredSpan.textContent = answered;
+      progressBar.style.width = "0%";
+      resultText.innerHTML =
+        "Réponds à toutes les questions pour voir ton résultat final ! 💪";
+      createQuestions();
+    }
+
+    resetBtn.addEventListener("click", resetQuiz);
+
+    // Initialisation
+    createQuestions();
+  </script>
+</body>
+</html>

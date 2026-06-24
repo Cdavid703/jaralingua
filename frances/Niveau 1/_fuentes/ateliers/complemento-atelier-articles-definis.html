@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller: Les Articles Définis</title>
+<style>
+    /* Style général pour le conteneur */
+    .quiz-container {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        padding: 25px;
+        border-radius: 10px;
+        max-width: 700px;
+        margin: auto;
+        border: 1px solid #ddd;
+    }
+    /* Style pour l'explication initiale */
+    .quiz-explanation {
+        font-size: 1em;
+        color: #333;
+        margin-bottom: 25px;
+        line-height: 1.5;
+        border-left: 4px solid #007bff;
+        padding-left: 15px;
+        background-color: #e7f3ff;
+        padding: 10px 15px;
+    }
+    /* Style pour chaque bloc de question */
+    .question-block {
+        margin-bottom: 20px;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        background-color: #ffffff;
+        font-size: 1.2em; /* Taille de police plus grande pour la lisibilité */
+    }
+    /* Style pour le menu déroulant */
+    .article-select {
+        font-size: 1em;
+        padding: 5px;
+        margin: 0 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-weight: bold;
+        color: #d63333;
+    }
+    /* Style pour le bouton de résultats */
+    #submit-btn {
+        display: block; width: 100%; padding: 15px; font-size: 1.2em; font-weight: bold;
+        color: white; background-color: #28a745; border: none; border-radius: 5px;
+        cursor: pointer; margin-top: 20px; transition: background-color 0.3s;
+    }
+    #submit-btn:hover { background-color: #218838; }
+    
+    /* Styles pour les résultats */
+    #results-container { margin-top: 25px; padding: 15px; border-radius: 5px; }
+    .final-score { font-size: 1.5em; font-weight: bold; text-align: center; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+    .score-high { background-color: #d4edda; color: #155724; }
+    .score-medium { background-color: #fff3cd; color: #856404; }
+    .score-low { background-color: #f8d7da; color: #721c24; }
+    .incorrect-feedback { background-color: #f8d7da; border-left: 4px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 15px; }
+    .incorrect-feedback p { margin: 5px 0; }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="quiz-explanation">
+        Complétez chaque phrase en choisissant le bon article défini (le, la, l', les) dans le menu déroulant. Faites attention au genre (masculin/féminin) et au nombre (singulier/pluriel) de chaque nom.
+    </div>
+
+    <form id="quizForm"></form>
+
+    <button id="submit-btn" onclick="checkAnswers()">Voir les résultats</button>
+
+    <div id="results-container"></div>
+</div>
+
+<script>
+    const quizForm = document.getElementById('quizForm');
+    let questionsData = [];
+
+    const questionBank = [
+        {
+            sentence_start: "J'aime beaucoup",
+            sentence_end: "chocolat suisse.",
+            answer: "le",
+            explanation: "'Chocolat' est un nom masculin singulier. On utilise donc 'le'."
+        },
+        {
+            sentence_start: "Regarde !",
+            sentence_end: "voiture rouge est magnifique.",
+            answer: "la",
+            explanation: "'Voiture' est un nom féminin singulier. On utilise donc 'la'."
+        },
+        {
+            sentence_start: "Mon père écoute",
+            sentence_end: "informations à la radio.",
+            answer: "les",
+            explanation: "'Informations' est un nom au pluriel. On utilise toujours 'les' pour le pluriel."
+        },
+        {
+            sentence_start: "C'est",
+            sentence_end: "ami de ma sœur.",
+            answer: "l'",
+            explanation: "'Ami' est un nom masculin singulier qui commence par une voyelle ('a'). On utilise donc 'l''."
+        },
+        {
+            sentence_start: "Nous allons à",
+            sentence_end: "école en bus.",
+            answer: "l'",
+            explanation: "'École' est un nom féminin singulier qui commence par une voyelle ('é'). On utilise donc 'l''."
+        },
+        {
+            sentence_start: "Le professeur corrige",
+            sentence_end: "exercices des étudiants.",
+            answer: "les",
+            explanation: "'Exercices' est un nom au pluriel. On utilise donc 'les'."
+        },
+        {
+            sentence_start: "",
+            sentence_end: "Tour Eiffel est le symbole de Paris.",
+            answer: "la",
+            explanation: "'Tour' (dans ce contexte) est un nom féminin singulier."
+        },
+        {
+            sentence_start: "En général, j'adore",
+            sentence_end: "livres d'aventure.",
+            answer: "les",
+            explanation: "On parle des 'livres' en général, donc c'est un nom au pluriel. On utilise 'les'."
+        },
+        {
+            sentence_start: "Pour cette recette, il faut",
+            sentence_end: "sucre et de la farine.",
+            answer: "le",
+            explanation: "'Sucre' est un nom masculin singulier. On utilise 'le'."
+        },
+        {
+            sentence_start: "L'été, j'aime sentir",
+            sentence_end: "odeur des fleurs.",
+            answer: "l'",
+            explanation: "'Odeur' est un nom féminin singulier qui commence par une voyelle ('o'). On utilise 'l''."
+        },
+        {
+            sentence_start: "Il a perdu",
+            sentence_end: "clés de sa maison.",
+            answer: "les",
+            explanation: "'Clés' est un nom au pluriel. On utilise donc 'les'."
+        },
+        {
+            sentence_start: "",
+            sentence_end: "courage est une qualité importante.",
+            answer: "le",
+            explanation: "'Courage' est un nom masculin singulier."
+        }
+    ];
+    
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function generateQuiz() {
+        shuffleArray(questionBank);
+        questionsData = questionBank.slice(0, 10);
+        renderQuestions();
+    }
+
+    function renderQuestions() {
+        quizForm.innerHTML = '';
+        const articles = ["", "le", "la", "l'", "les"];
+        questionsData.forEach((item, index) => {
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            
+            let optionsHTML = articles.map(article => `<option value="${article}">${article}</option>`).join('');
+
+            questionBlock.innerHTML = `
+                <label for="q${index}">
+                    ${index + 1}. ${item.sentence_start}
+                    <select id="q${index}" class="article-select">
+                        ${optionsHTML}
+                    </select>
+                    ${item.sentence_end}
+                </label>
+            `;
+            quizForm.appendChild(questionBlock);
+        });
+    }
+    
+    function checkAnswers() {
+        let score = 0;
+        let feedbackHTML = '';
+        
+        questionsData.forEach((item, index) => {
+            const selectElement = document.getElementById(`q${index}`);
+            const userAnswer = selectElement.value;
+
+            if (userAnswer === item.answer) {
+                score++;
+            } else {
+                const fullSentence = `${item.sentence_start} <strong>${item.answer}</strong> ${item.sentence_end}`;
+                feedbackHTML += `
+                    <div class="incorrect-feedback">
+                        <p><strong>Question ${index + 1} :</strong> ${item.sentence_start} ___ ${item.sentence_end}</p>
+                        <p><strong>Votre réponse :</strong> "${userAnswer}". <strong>Réponse correcte :</strong> "${item.answer}".</p>
+                        <p><strong>Explication :</strong> ${item.explanation}</p>
+                        <p><em>Phrase correcte : ${fullSentence}</em></p>
+                    </div>
+                `;
+            }
+        });
+
+        const resultsContainer = document.getElementById('results-container');
+        let scoreClass = score >= 8 ? 'score-high' : score >= 6 ? 'score-medium' : 'score-low';
+        
+        let finalScoreHTML = `<div class="final-score ${scoreClass}">Votre score est de ${score} / ${questionsData.length}</div>`;
+        
+        if (score < questionsData.length) {
+             finalScoreHTML += `<h3>Corrigé des erreurs :</h3>`;
+        }
+        
+        resultsContainer.innerHTML = finalScoreHTML + feedbackHTML;
+
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').style.backgroundColor = '#6c757d';
+        document.getElementById('submit-btn').style.cursor = 'not-allowed';
+    }
+
+    window.onload = generateQuiz;
+</script>
+
+</body>
+</html>

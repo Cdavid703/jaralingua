@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller: Le verbe Aller</title>
+<style>
+    /* Estilos generales del taller */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f4f7;
+        padding: 20px;
+    }
+    .quiz-container {
+        max-width: 650px;
+        margin: 20px auto;
+        padding: 25px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    .quiz-title {
+        text-align: center;
+        color: #004085;
+        font-size: 2em;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #004085;
+        padding-bottom: 10px;
+    }
+    .quiz-explanation {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 25px;
+        padding: 15px;
+        background-color: #e7f3ff;
+        border-radius: 8px;
+        border-left: 5px solid #007bff;
+    }
+
+    /* Estilos para cada pregunta */
+    .question-block {
+        margin-bottom: 25px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+    }
+    .sentence {
+        font-size: 1.3em;
+        margin-bottom: 15px;
+        color: #495057;
+        line-height: 1.5;
+    }
+    .blank {
+        display: inline-block;
+        min-width: 80px;
+        text-align: center;
+        font-weight: bold;
+        color: #007bff;
+        border-bottom: 2px dashed #007bff;
+        padding: 0 5px;
+    }
+
+    /* Estilos para los botones de opciones */
+    .options-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 15px;
+    }
+    .option-btn {
+        flex: 1 1 auto;
+        padding: 10px 20px;
+        font-size: 1.1em;
+        font-weight: bold;
+        border: 2px solid #ced4da;
+        background-color: #e9ecef;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.2s ease-in-out;
+        color: #343a40;
+        text-transform: uppercase;
+        min-width: 90px;
+        text-align: center;
+    }
+    .option-btn:hover {
+        background-color: #d1d5db;
+        border-color: #b0b4b8;
+    }
+    .option-btn.selected {
+        background-color: #007bff;
+        color: white;
+        border-color: #0056b3;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+    }
+    @media (max-width: 480px) {
+        .option-btn {
+            flex-grow: 1;
+            min-width: 100px;
+        }
+    }
+
+    /* Estilos del botón de envío */
+    #submit-btn {
+        display: block;
+        width: 100%;
+        padding: 15px;
+        font-size: 1.3em;
+        font-weight: bold;
+        color: white;
+        background-color: #28a745;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        margin-top: 30px;
+        transition: background-color 0.3s, transform 0.2s;
+        box-shadow: 0 4px 10px rgba(40, 167, 69, 0.4);
+    }
+    #submit-btn:hover {
+        background-color: #218838;
+        transform: translateY(-2px);
+    }
+    #submit-btn:disabled {
+        background-color: #6c757d;
+        cursor: not-allowed;
+        box-shadow: none;
+        transform: none;
+    }
+
+    /* Estilos para los resultados */
+    #results-container {
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #f1f1f1;
+    }
+    .final-score {
+        font-size: 1.8em;
+        font-weight: bold;
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+    }
+    .score-high {
+        background-color: #d4edda;
+        color: #155724;
+    }
+    .score-medium {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+    .score-low {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+    .incorrect-feedback {
+        background-color: #f8d7da;
+        border-left: 5px solid #dc3545;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+    }
+    .incorrect-feedback p {
+        margin: 5px 0;
+    }
+    .incorrect-feedback strong {
+        color: #dc3545;
+    }
+    .correct-answer-text {
+        font-style: italic;
+        color: #218838;
+        font-weight: bold;
+    }
+    .feedback-title {
+        font-size: 1.5em;
+        color: #343a40;
+        margin-top: 0;
+    }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <h2 class="quiz-title">Le Verbe "ALLER"</h2>
+    <div class="quiz-explanation">
+        Conjuguez le verbe **aller** au présent de l'indicatif. Choisissez la bonne réponse pour chaque phrase.
+    </div>
+
+    <form id="quizForm"></form>
+
+    <button id="submit-btn" onclick="checkAnswers()">Voir les résultats</button>
+
+    <div id="results-container"></div>
+</div>
+
+<script>
+    const quizForm = document.getElementById('quizForm');
+    const resultsContainer = document.getElementById('results-container');
+    const submitBtn = document.getElementById('submit-btn');
+
+    // Banco de preguntas con la conjugación correcta y retroalimentación
+    const questionBank = [
+        { sentence_start: "Je", sentence_end: "au cinéma ce soir.", options: ["vas", "vais", "va"], answer: "vais", explanation: "La conjugaison de 'aller' avec le pronom 'je' est 'vais'." },
+        { sentence_start: "Tu", sentence_end: "à la bibliothèque?", options: ["va", "vas", "allez"], answer: "vas", explanation: "Avec le pronom 'tu', la conjugaison est 'vas'." },
+        { sentence_start: "Elle", sentence_end: "à Paris le mois prochain.", options: ["va", "allez", "vont"], answer: "va", explanation: "Pour 'il/elle/on', on utilise la forme 'va'." },
+        { sentence_start: "Nous", sentence_end: "à la piscine cet après-midi.", options: ["allons", "allez", "vont"], answer: "allons", explanation: "La conjugaison de 'aller' avec le pronom 'nous' est 'allons'." },
+        { sentence_start: "Vous", sentence_end: "bien?", options: ["allez", "allons", "vas"], answer: "allez", explanation: "Avec le pronom 'vous', la forme correcte est 'allez'." },
+        { sentence_start: "Les enfants", sentence_end: "jouer dans le jardin.", options: ["vont", "va", "allons"], answer: "vont", explanation: "Le sujet 'les enfants' équivaut à 'ils/elles', donc la conjugaison est 'vont'." },
+        { sentence_start: "Ma sœur et moi", sentence_end: "faire du shopping.", options: ["allez", "allons", "vont"], answer: "allons", explanation: "Le sujet 'ma sœur et moi' équivaut à 'nous', donc la conjugaison est 'allons'." },
+        { sentence_start: "Où", sentence_end: "il ?", options: ["vas", "va", "allez"], answer: "va", explanation: "Le pronom 'il' se conjugue comme 'elle/on' : 'va'." },
+        { sentence_start: "Claire et toi", sentence_end: "au concert?", options: ["allez", "allons", "vont"], answer: "allez", explanation: "Le sujet 'Claire et toi' équivaut à 'vous', donc la conjugaison est 'allez'." },
+        { sentence_start: "Je", sentence_end: "souvent au supermarché.", options: ["va", "vas", "vais"], answer: "vais", explanation: "La conjugaison de 'aller' avec le pronom 'je' est 'vais'." }
+    ];
+
+    let userAnswers = [];
+
+    // Función para mezclar un array de forma aleatoria
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    // Función para generar las preguntas en la página
+    function generateQuiz() {
+        shuffleArray(questionBank);
+        userAnswers = new Array(questionBank.length).fill(null);
+
+        quizForm.innerHTML = '';
+        questionBank.forEach((item, index) => {
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            
+            shuffleArray(item.options);
+            
+            const optionsHTML = item.options.map(option => 
+                `<button type="button" class="option-btn" onclick="selectAnswer(${index}, this, '${option}')">${option}</button>`
+            ).join('');
+
+            questionBlock.innerHTML = `
+                <p class="sentence">
+                    ${index + 1}. ${item.sentence_start} 
+                    <span class="blank" id="blank-${index}">___</span> 
+                    ${item.sentence_end}
+                </p>
+                <div class="options-buttons" id="q${index}">
+                    ${optionsHTML}
+                </div>
+            `;
+            quizForm.appendChild(questionBlock);
+        });
+    }
+
+    // Función para manejar la selección de una respuesta
+    function selectAnswer(questionIndex, buttonElement, selectedOption) {
+        userAnswers[questionIndex] = selectedOption;
+        document.getElementById(`blank-${questionIndex}`).textContent = selectedOption;
+        const buttonGroup = document.querySelectorAll(`#q${questionIndex} .option-btn`);
+        buttonGroup.forEach(btn => btn.classList.remove('selected'));
+        buttonElement.classList.add('selected');
+    }
+    
+    // Función para revisar las respuestas y mostrar los resultados
+    function checkAnswers() {
+        let score = 0;
+        let feedbackHTML = '';
+        
+        questionBank.forEach((item, index) => {
+            if (userAnswers[index] === item.answer) {
+                score++;
+            } else {
+                const userAnswerText = userAnswers[index] ? `"${userAnswers[index]}"` : "aucune réponse";
+                feedbackHTML += `
+                    <div class="incorrect-feedback">
+                        <p><strong>Question ${index + 1} :</strong> ${item.sentence_start} ___ ${item.sentence_end}</p>
+                        <p><strong>Votre réponse :</strong> ${userAnswerText}.</p>
+                        <p><strong class="correct-answer-text">Réponse correcte :</strong> "${item.answer}".</p>
+                        <p><strong>Explication :</strong> ${item.explanation}</p>
+                    </div>
+                `;
+            }
+        });
+
+        let scoreClass = score >= 8 ? 'score-high' : score >= 5 ? 'score-medium' : 'score-low';
+        
+        let finalScoreHTML = `<div class="final-score ${scoreClass}">Votre score est de ${score} / ${questionBank.length}</div>`;
+        
+        if (score < questionBank.length) {
+             finalScoreHTML += `<h3 class="feedback-title">Corrigé des erreurs :</h3>`;
+        }
+        
+        resultsContainer.innerHTML = finalScoreHTML + feedbackHTML;
+        
+        submitBtn.disabled = true;
+    }
+
+    // Inicializar el quiz al cargar la página
+    window.onload = generateQuiz;
+</script>
+
+</body>
+</html>

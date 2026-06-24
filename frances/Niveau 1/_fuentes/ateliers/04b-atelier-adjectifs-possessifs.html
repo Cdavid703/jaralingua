@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller: Les Adjectifs Possessifs</title>
+<style>
+    /* Style général pour le conteneur */
+    .quiz-container {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        padding: 25px;
+        border-radius: 10px;
+        max-width: 700px;
+        margin: auto;
+        border: 1px solid #ddd;
+    }
+    /* Style pour l'explication initiale */
+    .quiz-explanation {
+        font-size: 1em;
+        color: #333;
+        margin-bottom: 25px;
+        line-height: 1.5;
+        border-left: 4px solid #007bff;
+        padding-left: 15px;
+        background-color: #e7f3ff;
+        padding: 10px 15px;
+    }
+    /* Style pour chaque bloc de question */
+    .question-block {
+        margin-bottom: 25px;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        background-color: #ffffff;
+    }
+    .sentence {
+        font-size: 1.2em;
+        margin-bottom: 15px;
+        line-height: 1.8;
+    }
+    .blank {
+        display: inline-block;
+        min-width: 60px;
+        text-align: center;
+        font-weight: bold;
+        color: #005a9e;
+        border-bottom: 2px solid #005a9e;
+        padding: 0 5px;
+    }
+    /* Style pour les boutons de réponse */
+    .options-buttons {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+    .option-btn {
+        padding: 8px 15px;
+        font-size: 1em;
+        font-weight: bold;
+        border: 1px solid #ccc;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.2s, border-color 0.2s;
+    }
+    .option-btn:hover {
+        background-color: #ddd;
+    }
+    .option-btn.selected {
+        background-color: #007bff;
+        color: white;
+        border-color: #0056b3;
+    }
+    /* Style pour le bouton de résultats */
+    #submit-btn {
+        display: block; width: 100%; padding: 15px; font-size: 1.2em; font-weight: bold;
+        color: white; background-color: #28a745; border: none; border-radius: 5px;
+        cursor: pointer; margin-top: 20px; transition: background-color 0.3s;
+    }
+    #submit-btn:hover { background-color: #218838; }
+    
+    /* Styles pour les résultats */
+    #results-container { margin-top: 25px; padding: 15px; border-radius: 5px; }
+    .final-score { font-size: 1.5em; font-weight: bold; text-align: center; padding: 20px; border-radius: 5px; margin-bottom: 20px; }
+    .score-high { background-color: #d4edda; color: #155724; }
+    .score-medium { background-color: #fff3cd; color: #856404; }
+    .score-low { background-color: #f8d7da; color: #721c24; }
+    .incorrect-feedback { background-color: #f8d7da; border-left: 4px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-bottom: 15px; }
+    .incorrect-feedback p { margin: 5px 0; }
+</style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <div class="quiz-explanation">
+        Complétez chaque phrase en cliquant sur le bon adjectif possessif. Votre choix remplira automatiquement l'espace vide.
+    </div>
+
+    <form id="quizForm"></form>
+
+    <button id="submit-btn" onclick="checkAnswers()">Voir les résultats</button>
+
+    <div id="results-container"></div>
+</div>
+
+<script>
+    const quizForm = document.getElementById('quizForm');
+    const questionCount = 15;
+    let questionsData = [];
+    let userAnswers = [];
+
+    // --- Banque de questions avec 3 options pour chaque question ---
+    const questionBank = [
+        { sentence_start: "Voici", sentence_end: "livre de français.", options: ["mon", "ma", "mes"], answer: "mon", explanation: "'Livre' est un nom masculin singulier. L'adjectif possessif est donc 'mon'." },
+        { sentence_start: "Sophie cherche", sentence_end: "clés partout.", options: ["son", "sa", "ses"], answer: "ses", explanation: "'Clés' est un nom au pluriel, donc on utilise 'ses'." },
+        // --- PREGUNTA CORREGIDA ---
+        { sentence_start: "Tu aimes", sentence_end: "nouvelle école ?", options: ["ton", "ta", "tes"], answer: "ta", explanation: "'École' est un nom féminin singulier. L'adjectif 'nouvelle' se place devant et ne change pas la règle de l'accord. L'adjectif possessif est donc 'ta'." },
+        { sentence_start: "Nous adorons", sentence_end: "professeur.", options: ["notre", "nos", "votre"], answer: "notre", explanation: "'Professeur' est au singulier, donc on utilise 'notre'." },
+        { sentence_start: "Vous avez fini", sentence_end: "devoirs ?", options: ["votre", "vos", "nos"], answer: "vos", explanation: "'Devoirs' est au pluriel, donc on utilise 'vos'." },
+        // --- PREGUNTA CORREGIDA ---
+        { sentence_start: "Les étudiants parlent à", sentence_end: "professeur.", options: ["leur", "leurs", "son"], answer: "leur", explanation: "Il y a plusieurs étudiants mais un seul 'professeur'. On utilise 'leur' pour la 3e personne du pluriel avec un nom singulier." },
+        { sentence_start: "J'ai oublié", sentence_end: "écharpe à la maison.", options: ["mon", "ma", "mes"], answer: "mon", explanation: "'Écharpe' est un nom féminin qui commence par une voyelle, donc on utilise 'mon' pour éviter la cacophonie." },
+        { sentence_start: "Paul, où est", sentence_end: "sœur ?", options: ["ton", "ta", "tes"], answer: "ta", explanation: "'Sœur' est un nom féminin singulier, donc on utilise 'ta'." },
+        { sentence_start: "Le chat a mangé toute", sentence_end: "nourriture.", options: ["son", "sa", "ses"], answer: "sa", explanation: "'Nourriture' est un nom féminin singulier, donc on utilise 'sa'." },
+        { sentence_start: "J'appelle", sentence_end: "parents chaque semaine.", options: ["mon", "ma", "mes"], answer: "mes", explanation: "'Parents' est un nom au pluriel, donc on utilise 'mes'." },
+        { sentence_start: "Les touristes prennent des photos de", sentence_end: "monuments.", options: ["leur", "leurs", "ses"], answer: "leurs", explanation: "'Monuments' est un nom au pluriel, donc on utilise 'leurs'." },
+        { sentence_start: "Claire, c'est", sentence_end: "ordinateur ?", options: ["ton", "ta", "tes"], answer: "ton", explanation: "'Ordinateur' est un nom masculin singulier, donc on utilise 'ton'." },
+        { sentence_start: "Nous rangeons", sentence_end: "chambre.", options: ["notre", "nos", "leur"], answer: "notre", explanation: "Nous avons une seule 'chambre' à ranger, donc on utilise 'notre'." },
+        { sentence_start: "J'aime beaucoup", sentence_end: "idée !", options: ["mon", "ma", "mes"], answer: "mon", explanation: "'Idée' est un nom féminin qui commence par une voyelle, donc on utilise 'mon' pour éviter la cacophonie." },
+        { sentence_start: "Vous connaissez bien", sentence_end: "voisins ?", options: ["votre", "vos", "leurs"], answer: "vos", explanation: "'Voisins' est un nom au pluriel, donc on utilise 'vos'." },
+        { sentence_start: "Marie présente", sentence_end: "nouvel ami.", options: ["son", "sa", "ses"], answer: "son", explanation: "'Ami' est un nom masculin singulier, donc on utilise 'son'." },
+        { sentence_start: "Les enfants jouent avec", sentence_end: "jouets.", options: ["leur", "leurs", 'ses'], answer: "leurs", explanation: "Il y a plusieurs 'jouets', donc on utilise 'leurs'." }
+    ];
+    
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function generateQuiz() {
+        shuffleArray(questionBank);
+        questionsData = questionBank.slice(0, questionCount);
+        userAnswers = new Array(questionCount).fill(null);
+        renderQuestions();
+    }
+
+    function renderQuestions() {
+        quizForm.innerHTML = '';
+        questionsData.forEach((item, index) => {
+            const questionBlock = document.createElement('div');
+            questionBlock.className = 'question-block';
+            
+            // On mélange les 3 options pour qu'elles n'apparaissent pas toujours dans le même ordre
+            shuffleArray(item.options);
+            
+            const optionsHTML = item.options.map(option => 
+                `<button type="button" class="option-btn" onclick="selectAnswer(${index}, this, '${option}')">${option}</button>`
+            ).join('');
+
+            questionBlock.innerHTML = `
+                <p class="sentence">
+                    ${index + 1}. ${item.sentence_start} 
+                    <span class="blank" id="blank-${index}">___</span> 
+                    ${item.sentence_end}
+                </p>
+                <div class="options-buttons" id="q${index}">
+                    ${optionsHTML}
+                </div>
+            `;
+            quizForm.appendChild(questionBlock);
+        });
+    }
+
+    function selectAnswer(questionIndex, buttonElement, selectedOption) {
+        userAnswers[questionIndex] = selectedOption;
+        document.getElementById(`blank-${questionIndex}`).textContent = selectedOption;
+        const buttonGroup = document.querySelectorAll(`#q${questionIndex} .option-btn`);
+        buttonGroup.forEach(btn => btn.classList.remove('selected'));
+        buttonElement.classList.add('selected');
+    }
+    
+    function checkAnswers() {
+        let score = 0;
+        let feedbackHTML = '';
+        
+        questionsData.forEach((item, index) => {
+            if (userAnswers[index] === item.answer) {
+                score++;
+            } else {
+                const fullSentence = `${item.sentence_start} <strong>${item.answer}</strong> ${item.sentence_end}`;
+                const userAnswerText = userAnswers[index] ? `"${userAnswers[index]}"` : "aucune réponse";
+                feedbackHTML += `
+                    <div class="incorrect-feedback">
+                        <p><strong>Question ${index + 1} :</strong> ${item.sentence_start} ___ ${item.sentence_end}</p>
+                        <p><strong>Votre réponse :</strong> ${userAnswerText}. <strong>Réponse correcte :</strong> "${item.answer}".</p>
+                        <p><strong>Explication :</strong> ${item.explanation}</p>
+                        <p><em>Phrase correcte : ${fullSentence}</em></p>
+                    </div>
+                `;
+            }
+        });
+
+        const resultsContainer = document.getElementById('results-container');
+        let scoreClass = score >= 12 ? 'score-high' : score >= 8 ? 'score-medium' : 'score-low';
+        
+        let finalScoreHTML = `<div class="final-score ${scoreClass}">Votre score est de ${score} / ${questionCount}</div>`;
+        
+        if (score < questionCount) {
+             finalScoreHTML += `<h3>Corrigé des erreurs :</h3>`;
+        }
+        
+        resultsContainer.innerHTML = finalScoreHTML + feedbackHTML;
+
+        document.getElementById('submit-btn').disabled = true;
+        document.getElementById('submit-btn').style.backgroundColor = '#6c757d';
+        document.getElementById('submit-btn').style.cursor = 'not-allowed';
+    }
+
+    window.onload = generateQuiz;
+</script>
+
+</body>
+</html>
