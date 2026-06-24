@@ -11,293 +11,56 @@
   <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
   <link href="assets/niveau1.css?v=20260626" rel="stylesheet">
   <style>
-    .resource-list { display: grid; gap: .8rem; margin-top: 1rem; }
-    .resource-link {
-      display: grid;
-      grid-template-columns: auto 1fr auto;
-      align-items: center;
-      gap: .85rem;
-      padding: .95rem 1rem;
-      border: 1px solid rgba(31,78,140,.12);
-      border-radius: 18px;
-      background: #fff;
-      color: var(--blue-dark);
-      text-decoration: none;
-      box-shadow: 0 10px 24px rgba(20,40,80,.06);
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .resource-link:hover {
-      color: var(--blue-dark);
-      transform: translateY(-3px);
-      border-color: rgba(214,40,57,.28);
-      box-shadow: 0 16px 34px rgba(20,40,80,.11);
-    }
-    .resource-link i:first-child {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 15px;
-      background: rgba(31,78,140,.08);
-      color: var(--red);
-      font-size: 1.25rem;
-    }
-    .resource-link strong { display: block; font-weight: 900; line-height: 1.2; }
-    .resource-link span { display: block; color: var(--muted); font-size: .95rem; line-height: 1.45; margin-top: .12rem; }
-    .resource-link .bi-arrow-right { color: var(--red); }
-    .routine-list { margin: 0; padding-left: 1.15rem; color: var(--muted); line-height: 1.65; }
-    .resource-tag-row { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .9rem; }
-    .resource-tag { border-radius: 999px; background: rgba(31,78,140,.08); color: var(--blue-dark); padding: .38rem .62rem; font-weight: 900; font-size: .84rem; }
+    .external-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.15rem}
+    .external-card{height:100%;display:flex;flex-direction:column;gap:.9rem;padding:1.35rem;border-radius:26px;background:#fff;box-shadow:0 14px 38px rgba(20,40,80,.09);border:1px solid rgba(31,78,140,.08)}
+    .external-top{display:flex;align-items:flex-start;justify-content:space-between;gap:.8rem}
+    .external-icon{width:52px;height:52px;border-radius:18px;display:grid;place-items:center;background:rgba(31,78,140,.09);color:var(--red);font-size:1.35rem;flex:0 0 auto}
+    .external-card h3{margin:.75rem 0 .15rem;color:var(--blue-dark);font-weight:900}
+    .external-card p{color:var(--muted);line-height:1.6;margin:0}
+    .badge-stack{display:flex;flex-wrap:wrap;gap:.4rem}
+    .resource-badge{display:inline-flex;align-items:center;gap:.3rem;border-radius:999px;background:#eef5ff;color:var(--blue-dark);font-weight:900;font-size:.78rem;padding:.34rem .58rem}
+    .resource-badge.free{background:#eaf8f1;color:#17694b}.resource-badge.music{background:#fff0f2;color:var(--red)}.resource-badge.level{background:#fff8dc;color:#765000}
+    .review-label{font-weight:900;color:var(--blue-dark);margin-top:.15rem}
+    .external-card .btn-main{margin-top:auto;width:100%}
   </style>
 </head>
 <body>
-  <div class="global-course-switcher" aria-label="Navigation globale">
-    <details>
-      <summary><span>Navigation</span></summary>
-      <nav>
-        <a href="../../index.html">Accueil</a>
-        <a href="../index.html">Français</a>
-        <a href="./index.html">Français Niveau 1</a>
-        <a href="../Niveau%207/index.html">Français Niveau 7</a>
-        <a href="../Niveau%208/index.html">Français Niveau 8</a>
-        <a href="../../ingles/index.html">Anglais</a>
-      </nav>
-    </details>
-  </div>
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Français</a><a href="./index.html">Français Niveau 1</a><a href="../Niveau%207/index.html">Français Niveau 7</a><a href="../Niveau%208/index.html">Français Niveau 8</a><a href="../../ingles/index.html">Anglais</a></nav></details></div>
+  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link active" href="ressources.html">Ressources</a></li><li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li></ul></div></div></nav>
 
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="menuPrincipal">
-        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
-          <li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li>
-          <li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li>
-          <li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li>
-          <li class="nav-item"><a class="nav-link active" href="ressources.html">Ressources</a></li>
-          <li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/portail/ressources-du-cours.png')">
-    <div class="container">
-      <span class="badge-course"><i class="bi bi-folder2-open"></i> Boîte à outils A1</span>
-      <h1>Ressources du cours</h1>
-      <p class="hero-lead">Un espace pour préparer, pratiquer, écouter et réviser sans perdre le fil.</p>
-      <p class="hero-text">Cette page rassemble les ressources utiles du Niveau 1 : thèmes, ateliers, audios, phonétique, expressions, évaluation et outils externes adaptés aux premiers pas en français.</p>
-      <div class="d-flex flex-wrap gap-3 mt-4">
-        <a href="#internes" class="btn-main"><i class="bi bi-grid-3x3-gap-fill"></i> Ressources internes</a>
-        <a href="#themes" class="btn-soft"><i class="bi bi-journal-text"></i> Choisir par thème</a>
-      </div>
-    </div>
-  </header>
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/portail/ressources-du-cours.png')"><div class="container"><span class="badge-course"><i class="bi bi-globe2"></i> Ressources externes A1</span><h1>Ressources du cours</h1><p class="hero-lead">Sitios gratuitos o con plan gratis para practicar francés fuera de JaraLingua.</p><p class="hero-text">Esta selección conecta el nivel 1 con herramientas externas para escuchar, repetir, cantar, practicar vocabulario, verificar pronunciación y reforzar gramática básica.</p><div class="d-flex flex-wrap gap-3 mt-4"><a href="#ressources" class="btn-main"><i class="bi bi-box-arrow-up-right"></i> Ver enlaces</a><a href="coin-phonetique.html" class="btn-soft"><i class="bi bi-soundwave"></i> Coin phonétique</a></div></div></header>
 
   <main>
-    <section id="methodes">
+    <section id="ressources">
       <div class="container">
         <div class="section-heading">
-          <p class="section-kicker">Méthode</p>
-          <h2 class="section-title">Avant, pendant et après le cours</h2>
-          <p class="section-text">La logique est la même que dans les niveaux avancés, mais adaptée au A1 : peu de théorie à la fois, beaucoup d’écoute, répétition lente et production courte.</p>
+          <p class="section-kicker">Curaduría externa</p>
+          <h2 class="section-title">15+ sitios para empezar bien</h2>
+          <p class="section-text">Para A1 conviene priorizar recursos visuales, audio claro, ejercicios autocorregibles y práctica corta. Algunas plataformas tienen versión premium, pero todas ofrecen uso gratuito o contenido gratuito útil.</p>
         </div>
-        <div class="theme-grid">
-          <article class="content-card">
-            <h3>Avant le cours</h3>
-            <ol class="routine-list">
-              <li>Ouvrir le thème prévu.</li>
-              <li>Écouter l’audio modèle à vitesse lente.</li>
-              <li>Noter cinq mots utiles et une question.</li>
-            </ol>
-          </article>
-          <article class="content-card">
-            <h3>Pendant le cours</h3>
-            <ol class="routine-list">
-              <li>Garder le thème et les ateliers ouverts.</li>
-              <li>Répéter les phrases modèles à voix haute.</li>
-              <li>Noter les corrections de prononciation.</li>
-            </ol>
-          </article>
-          <article class="content-card">
-            <h3>Après le cours</h3>
-            <ol class="routine-list">
-              <li>Refaire un atelier court.</li>
-              <li>Écouter une transcription disponible.</li>
-              <li>Préparer une phrase personnelle pour le cours suivant.</li>
-            </ol>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="internes" class="bg-white">
-      <div class="container">
-        <div class="section-heading">
-          <p class="section-kicker">Dans JaraLingua</p>
-          <h2 class="section-title">Ressources internes du Niveau 1</h2>
-          <p class="section-text">Ces liens donnent accès aux vraies pages du cours : thèmes, ateliers, audios, phonétique, expressions, jeux et suivi académique.</p>
-        </div>
-        <div class="theme-grid">
-          <article class="content-card">
-            <h3>Parcours principal</h3>
-            <div class="resource-list">
-              <a class="resource-link" href="themes-du-cours.html"><i class="bi bi-journal-text"></i><span><strong>Thèmes du cours</strong><span>Les unités A1.1 avec cours, exemples et accès aux ateliers.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers-activites.html"><i class="bi bi-controller"></i><span><strong>Ateliers et activités</strong><span>Exercices groupés par thème : écoute, lecture, grammaire, production et jeux.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="notes-evaluation.html"><i class="bi bi-clipboard-data"></i><span><strong>Notes et évaluation</strong><span>Suivi académique sécurisé pour consulter les résultats.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-
-          <article class="content-card">
-            <h3>Écoute et prononciation</h3>
-            <div class="resource-list">
-              <a class="resource-link" href="bibliotheque-audio.html"><i class="bi bi-headphones"></i><span><strong>Bibliothèque audio</strong><span>Documents d’écoute avec accès aux questions et aux transcriptions du professeur.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="coin-phonetique.html"><i class="bi bi-soundwave"></i><span><strong>Coin phonétique</strong><span>Rythme, alphabet, sons de base et défis de prononciation.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="themes/premiers-contacts.html#alphabet"><i class="bi bi-volume-up"></i><span><strong>Alphabet interactif</strong><span>Cliquer sur chaque lettre pour écouter uniquement le nom de la lettre en français.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-
-          <article class="content-card">
-            <h3>Langue en contexte</h3>
-            <div class="resource-list">
-              <a class="resource-link" href="expressions-idiomatiques.html"><i class="bi bi-chat-quote"></i><span><strong>Expressions idiomatiques</strong><span>Expressions avec significado en español, sens réel et deux exemples.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/roulette-presentations.html"><i class="bi bi-shuffle"></i><span><strong>Roulette des présentations</strong><span>Interaction orale pour combiner identité, questions et réponses courtes.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/qui-est-ce-professions.html"><i class="bi bi-person-bounding-box"></i><span><strong>Qui est-ce ? Professions</strong><span>Jeu visuel pour décrire une personne et poser des questions simples.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="themes">
-      <div class="container">
-        <div class="section-heading">
-          <p class="section-kicker">Par thème</p>
-          <h2 class="section-title">Que travailler selon l’unité ?</h2>
-          <p class="section-text">Chaque bloc propose une entrée théorique et plusieurs activités. Le professeur peut choisir une route courte ou construire une séance complète.</p>
-        </div>
-        <div class="theme-grid">
-          <article class="content-card">
-            <p class="section-kicker">Thème 1</p>
-            <h3>Premiers contacts</h3>
-            <p>Alphabet, sons de base, salutations, présentation, nombres, dates et articles définis.</p>
-            <div class="resource-tag-row"><span class="resource-tag">Alphabet</span><span class="resource-tag">Écoute</span><span class="resource-tag">Identité</span></div>
-            <div class="resource-list">
-              <a class="resource-link" href="themes/premiers-contacts.html"><i class="bi bi-book"></i><span><strong>Cours complet</strong><span>Entrer dans les premiers échanges.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="themes/nombres-dates.html"><i class="bi bi-123"></i><span><strong>Nombres et dates</strong><span>Compter, donner l’âge, le téléphone et la date.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="themes/articles-definis.html"><i class="bi bi-type"></i><span><strong>Articles définis</strong><span>Le, la, l’ et les en contexte.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers-activites.html#theme-1"><i class="bi bi-controller"></i><span><strong>Ateliers du thème 1</strong><span>Alphabet, nombres, rencontre, lecture, carte d’identité et roulette.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-
-          <article class="content-card">
-            <p class="section-kicker">Thème 2</p>
-            <h3>Le présent de l’indicatif</h3>
-            <p>Usage du présent, phrase affirmative, négation et questions simples.</p>
-            <div class="resource-tag-row"><span class="resource-tag">Présent</span><span class="resource-tag">Négation</span><span class="resource-tag">Questions</span></div>
-            <div class="resource-list">
-              <a class="resource-link" href="themes/present-indicatif.html"><i class="bi bi-clock-history"></i><span><strong>Cours complet</strong><span>Comprendre le présent et ses usages A1.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/quiz.html?activite=present-indicatif"><i class="bi bi-ui-checks"></i><span><strong>Présent, négation et questions</strong><span>Vérification guidée en contexte.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/quiz.html?activite=production-routine-present"><i class="bi bi-pencil-square"></i><span><strong>Ma routine au présent</strong><span>Production courte pour parler de ses habitudes.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-
-          <article class="content-card">
-            <p class="section-kicker">Thème 3</p>
-            <h3>Verbes du premier groupe</h3>
-            <p>Conjuguer les verbes en -er et les utiliser dans des phrases de classe et de routine.</p>
-            <div class="resource-tag-row"><span class="resource-tag">-er</span><span class="resource-tag">Conjugaison</span><span class="resource-tag">Lecture</span></div>
-            <div class="resource-list">
-              <a class="resource-link" href="themes/verbes-premier-groupe.html"><i class="bi bi-braces"></i><span><strong>Cours complet</strong><span>Terminaisons et exemples en contexte.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/quiz.html?activite=conjugaison-er"><i class="bi bi-ui-checks-grid"></i><span><strong>20 verbes en contexte</strong><span>Choisir la forme correcte au présent.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/prononciation.html?theme=theme-2"><i class="bi bi-mic"></i><span><strong>Défi de prononciation</strong><span>Répéter les finales verbales sans ajouter de sons inutiles.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-
-          <article class="content-card">
-            <p class="section-kicker">Thème 4</p>
-            <h3>Être, avoir, aller et faire</h3>
-            <p>Les quatre verbes indispensables pour parler de soi, de ses activités et de ses déplacements.</p>
-            <div class="resource-tag-row"><span class="resource-tag">Être</span><span class="resource-tag">Avoir</span><span class="resource-tag">Aller</span><span class="resource-tag">Faire</span></div>
-            <div class="resource-list">
-              <a class="resource-link" href="themes/verbes-essentiels.html"><i class="bi bi-lightning-charge"></i><span><strong>Cours complet</strong><span>Formes et usages des verbes essentiels.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/quiz.html?activite=ecoute-verbes-essentiels"><i class="bi bi-headphones"></i><span><strong>Notre samedi à Lyon</strong><span>Compréhension orale avec verbes essentiels.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/prononciation.html?theme=theme-3"><i class="bi bi-mic-fill"></i><span><strong>Prononciation du thème</strong><span>Travailler les formes fréquentes sans robotiser la voix.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-
-          <article class="content-card">
-            <p class="section-kicker">Thème 5</p>
-            <h3>Famille et relations</h3>
-            <p>Présenter sa famille, utiliser les possessifs et comprendre une description familiale simple.</p>
-            <div class="resource-tag-row"><span class="resource-tag">Famille</span><span class="resource-tag">Possessifs</span><span class="resource-tag">Arbre familial</span></div>
-            <div class="resource-list">
-              <a class="resource-link" href="themes/famille-relations.html"><i class="bi bi-people"></i><span><strong>Cours complet</strong><span>Vocabulaire de la famille et relations.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/quiz.html?activite=adjectifs-possessifs"><i class="bi bi-card-checklist"></i><span><strong>Adjectifs possessifs</strong><span>Mon, ma, mes, ton, ta, tes en contexte.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/quiz.html?activite=ecoute-ma-famille"><i class="bi bi-headphones"></i><span><strong>Le déjeuner chez Mamie</strong><span>Compréhension orale sur la famille.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-
-          <article class="content-card">
-            <p class="section-kicker">Thème 6</p>
-            <h3>Description et personnalité</h3>
-            <p>Décrire une personne, accorder les adjectifs et poser des questions pour identifier quelqu’un.</p>
-            <div class="resource-tag-row"><span class="resource-tag">Portrait</span><span class="resource-tag">Adjectifs</span><span class="resource-tag">Jeu</span></div>
-            <div class="resource-list">
-              <a class="resource-link" href="themes/description-personnalite.html"><i class="bi bi-person-vcard"></i><span><strong>Cours complet</strong><span>Portrait physique, caractère et accords.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/qui-est-ce-professions.html"><i class="bi bi-question-diamond"></i><span><strong>Qui est-ce ?</strong><span>Jeu complet avec professions et portraits.</span></span><i class="bi bi-arrow-right"></i></a>
-              <a class="resource-link" href="ateliers/prononciation.html?theme=theme-5"><i class="bi bi-soundwave"></i><span><strong>Prononciation du portrait</strong><span>Décrire sans accélérer ni perdre les accords.</span></span><i class="bi bi-arrow-right"></i></a>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="externes" class="bg-white">
-      <div class="container">
-        <div class="section-heading">
-          <p class="section-kicker">Sources fiables</p>
-          <h2 class="section-title">Outils externes essentiels</h2>
-          <p class="section-text">Ces ressources complètent le cours, mais elles ne remplacent pas les thèmes et ateliers internes. Pour A1, il faut les utiliser de façon ciblée.</p>
-        </div>
-        <div class="theme-grid">
-          <article class="content-card">
-            <h3>TV5MONDE</h3>
-            <p>Vidéos et exercices classés par niveau. Choisissez A1 pour éviter de brûler les étapes.</p>
-            <a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://apprendre.tv5monde.com/">Ouvrir</a>
-          </article>
-          <article class="content-card">
-            <h3>RFI Français facile</h3>
-            <p>Écoute progressive, actualité accessible et transcriptions utiles pour l’oreille.</p>
-            <a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://francaisfacile.rfi.fr/fr/">Ouvrir</a>
-          </article>
-          <article class="content-card">
-            <h3>Dictionnaire Le Robert</h3>
-            <p>Définitions, exemples, prononciation et vérification du sens d’un mot.</p>
-            <a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://dictionnaire.lerobert.com/fr/">Ouvrir</a>
-          </article>
-          <article class="content-card">
-            <h3>Conjugaison Le Robert</h3>
-            <p>Vérifier rapidement les formes au présent avant une production écrite.</p>
-            <a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://dictionnaire.lerobert.com/conjugaison">Ouvrir</a>
-          </article>
+        <div class="external-grid">
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-play-btn-fill"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge level">A1</span></div></div><h3>TV5MONDE · Première classe</h3><p><span class="review-label">Reseña:</span> excelente punto de partida para saludos, presentaciones, vida cotidiana y comprensión oral con videos cortos. Es ideal para estudiantes que necesitan escuchar francés real pero guiado.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://apprendre.tv5monde.com/fr/exercices/premiere-classe">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-broadcast-pin"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge level">A1-A2</span></div></div><h3>RFI Français facile</h3><p><span class="review-label">Reseña:</span> ofrece audios, ejercicios y transcripciones. Para nivel 1 conviene usar los contenidos más simples y repetir fragmentos cortos para entrenar el oído.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://francaisfacile.rfi.fr/fr/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-music-note-beamed"></i></div><div class="badge-stack"><span class="resource-badge music">Música</span><span class="resource-badge">Plan gratis</span></div></div><h3>LyricsTraining / LingoClip</h3><p><span class="review-label">Reseña:</span> permite completar letras de canciones mientras se escucha. Para A1 se recomienda elegir canciones lentas, modo principiante y trabajar solo una estrofa por sesión.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://lyricstraining.com/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-image"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge level">A1</span></div></div><h3>LanguageGuide · French Vocabulary</h3><p><span class="review-label">Reseña:</span> vocabulario visual con audio. Muy útil para números, objetos, escuela, familia y temas concretos porque el estudiante escucha al pasar por cada imagen.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.languageguide.org/french/vocabulary/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-volume-up-fill"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Pronunciación</span></div></div><h3>Forvo · Pronunciación francesa</h3><p><span class="review-label">Reseña:</span> diccionario de pronunciación con voces de hablantes nativos. Sirve para verificar palabras aisladas antes de grabar o repetir en clase.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://forvo.com/languages/fr/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-camera-video-fill"></i></div><div class="badge-stack"><span class="resource-badge">Plan gratis</span><span class="resource-badge">Pronunciación</span></div></div><h3>YouGlish French</h3><p><span class="review-label">Reseña:</span> busca palabras dentro de videos reales. En A1 es mejor usar frases simples como <em>bonjour</em>, <em>je m’appelle</em> o <em>comment ça va</em> para escuchar ritmo natural.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://youglish.com/french">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-journal-check"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge level">A1-C1</span></div></div><h3>Bonjour de France</h3><p><span class="review-label">Reseña:</span> reúne ejercicios, pruebas de nivel, vocabulario, gramática y cultura. Para nivel 1 use la categoría A1 y actividades de presentación, familia y vida diaria.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.bonjourdefrance.com/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-diagram-3-fill"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Directorio</span></div></div><h3>Le Point du FLE</h3><p><span class="review-label">Reseña:</span> es un gran directorio de recursos gratuitos FLE. Funciona como “mapa” para encontrar ejercicios por tema cuando se necesita práctica extra.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.lepointdufle.net/p/apprendre_le_francais.htm">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-pencil-square"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Ejercicios</span></div></div><h3>Français Facile</h3><p><span class="review-label">Reseña:</span> sitio clásico de cursos y ejercicios autocorregibles. Útil para reforzar artículos, presente, negación y vocabulario básico con repetición.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.francaisfacile.com/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-layers-fill"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Gramática</span></div></div><h3>Lingolia Français</h3><p><span class="review-label">Reseña:</span> explicaciones claras de gramática y vocabulario con ejercicios. Conviene para consultar una regla después de verla en clase.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://francais.lingolia.com/en/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-book-half"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Referencia</span></div></div><h3>Lawless French</h3><p><span class="review-label">Reseña:</span> biblioteca de explicaciones por nivel CECR. Aunque está en inglés, ayuda mucho a estudiantes autónomos que quieren una explicación ordenada y ejemplos.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.lawlessfrench.com/faq/lessons-by-level/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-braces"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Conjugación</span></div></div><h3>Conjuguemos · Le présent</h3><p><span class="review-label">Reseña:</span> práctica interactiva de verbos. Para nivel 1 se recomienda usar presente, verbos frecuentes y sesiones cortas de 5 a 8 minutos.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://conjuguemos.com/verb/22">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-mortarboard-fill"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Universidad</span></div></div><h3>Tex’s French Grammar</h3><p><span class="review-label">Reseña:</span> gramática gratuita de la Universidad de Texas. Es mejor usarla como consulta puntual: artículos, verbos, pronombres y frases simples.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.laits.utexas.edu/tex/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-headphones"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Audio</span></div></div><h3>Podcast Français Facile</h3><p><span class="review-label">Reseña:</span> audios, dictados, diálogos y ejercicios para aprendices. En A1 es útil para escuchar conversaciones muy guiadas y repetir con pausa.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.podcastfrancaisfacile.com/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-translate"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Diccionario</span></div></div><h3>WordReference Français</h3><p><span class="review-label">Reseña:</span> diccionario bilingüe con ejemplos y foros. Úselo para confirmar significado, género de sustantivos y expresiones frecuentes sin depender de traducciones automáticas.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://www.wordreference.com/fres/">Abrir recurso</a></article>
+          <article class="external-card"><div class="external-top"><div class="external-icon"><i class="bi bi-card-text"></i></div><div class="badge-stack"><span class="resource-badge free">Gratis</span><span class="resource-badge">Contexto</span></div></div><h3>Reverso Context</h3><p><span class="review-label">Reseña:</span> muestra palabras dentro de frases reales traducidas. Para principiantes sirve si se usa con cuidado: copiar una frase corta, observar el patrón y adaptarlo.</p><a class="btn-main" target="_blank" rel="noopener noreferrer" href="https://context.reverso.net/traduction/">Abrir recurso</a></article>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
-    <div class="container d-flex flex-wrap justify-content-between gap-3">
-      <div>
-        <h2 class="h4">Ressources du cours</h2>
-        <p class="mb-0 opacity-75">Français Niveau 1 · A1.1</p>
-      </div>
-      <a href="index.html">← Retour au portail</a>
-    </div>
-  </footer>
-
+  <footer class="footer"><div class="container d-flex flex-wrap justify-content-between gap-3"><div><h2 class="h4">Ressources du cours</h2><p class="mb-0 opacity-75">Français Niveau 1 · enlaces externos seleccionados</p></div><a href="index.html">← Retour au portail</a></div></footer>
   <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
