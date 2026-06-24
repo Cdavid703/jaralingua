@@ -15,6 +15,11 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 CLIENT_ID = os.environ.get("JARALINGUA_GOOGLE_CLIENT_ID", "").strip()
 MICROSOFT_CLIENT_ID = os.environ.get("JARALINGUA_MICROSOFT_CLIENT_ID", "4e729f8a-d101-4c5d-af68-609d749bc95a").strip()
 MICROSOFT_TENANT_ID = os.environ.get("JARALINGUA_MICROSOFT_TENANT_ID", "e1664f47-3c02-4a23-a559-0f33d25d8f86").strip()
+GLOBAL_ADMIN_EMAILS = {
+    normalize.strip().lower()
+    for normalize in os.environ.get("JARALINGUA_ADMIN_EMAILS", "cdavid.jaramillo@gmail.com").split(",")
+    if normalize.strip()
+}
 DATA_PATH = os.environ.get("JARALINGUA_PROGRESS_DATA", "/var/lib/jaralingua/progress.json")
 FRENCH7_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib/jaralingua/french7-grades.json")
 FRENCH1_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH1_GRADES_DATA", "/var/lib/jaralingua/french1-grades.json")
@@ -420,6 +425,8 @@ def clean_gradebook_payload(payload, existing):
 
 def grade_user_role(profile, grades_data):
     email = normalize_email(profile.get("email"))
+    if email in GLOBAL_ADMIN_EMAILS:
+        return "admin"
     admin_emails = {normalize_email(item) for item in grades_data.get("adminEmails", [])}
     teacher_emails = {normalize_email(item) for item in grades_data.get("teacherEmails", [])}
     if email in admin_emails:

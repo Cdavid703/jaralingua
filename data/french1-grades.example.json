@@ -1,5 +1,7 @@
 {
-  "adminEmails": [],
+  "adminEmails": [
+    "cdavid.jaramillo@gmail.com"
+  ],
   "teacherEmails": ["lcvelasqueza@correo.iue.edu.co"],
   "allowStudentIdClaim": false,
   "students": [],
