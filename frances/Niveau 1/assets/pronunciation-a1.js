@@ -122,6 +122,9 @@
   const params = new URLSearchParams(location.search);
   const key = params.get("theme") || "theme-1";
   const set = SETS[key] || SETS["theme-1"];
+  const API_PATH = "/api/french8/pronunciation-assessment";
+  const STORAGE_KEY = `jaralingua:french1:pronunciation:${key}:v2`;
+
   const els = {
     title: document.getElementById("pronTitle"),
     modelAudio: document.getElementById("modelAudio"),
@@ -142,26 +145,37 @@
     micPermissionHelp: document.getElementById("micPermissionHelp"),
     feedback: document.getElementById("feedback"),
     tips: document.getElementById("tips"),
-    stageBadge: document.getElementById("stageBadge"),
     microphoneSelect: document.getElementById("microphoneSelect"),
     levelMeterBar: document.getElementById("levelMeterBar"),
     levelMeterValue: document.getElementById("levelMeterValue"),
     comparisonNote: document.getElementById("comparisonNote"),
     results: document.getElementById("results"),
-    metrics: document.getElementById("metrics")
+    stageHistory: document.getElementById("stageHistory"),
+    resultTitle: document.getElementById("resultTitle"),
+    overallScore: document.getElementById("overallScore"),
+    accuracyScore: document.getElementById("accuracyScore"),
+    completenessScore: document.getElementById("completenessScore"),
+    fluencyScore: document.getElementById("fluencyScore"),
+    scoreRing: document.getElementById("scoreRing")
   };
 
-  let stageIndex = 0;
-  const completedStages = new Set();
+  let savedProgress = null;
+  try { savedProgress = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (_error) { savedProgress = null; }
+
+  let stageIndex = Number.isInteger(savedProgress?.stageIndex) ? Math.max(0, Math.min(set.stages.length - 1, savedProgress.stageIndex)) : 0;
+  const stageScores = Array.from({ length: set.stages.length }, (_, index) => savedProgress?.stageScores?.[index] || null);
+  const attemptHistory = Array.from({ length: set.stages.length }, (_, index) => Array.isArray(savedProgress?.attemptHistory?.[index]) ? savedProgress.attemptHistory[index] : []);
   let stream = null;
   let recorder = null;
   let chunks = [];
   let startedAt = 0;
+  let recordedDurationMs = 0;
   let timerHandle = null;
   let objectUrl = null;
   let audioContext = null;
   let analyser = null;
   let meterFrame = null;
+  let analyzing = false;
 
   function currentText() {
     return set.stages[stageIndex];
@@ -169,6 +183,14 @@
 
   function currentModelAudio() {
     return set.audios?.[stageIndex] || set.audio;
+  }
+
+  function isFinalStage() {
+    return stageIndex === set.stages.length - 1;
+  }
+
+  function saveProgress() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ stageIndex, stageScores, attemptHistory }));
   }
 
   function deviceGuide() {
@@ -271,43 +293,90 @@
       return;
     }
     hidePermissionHelp();
-    els.recordBtn.disabled = false;
-    els.stopBtn.disabled = true;
+    setRecordingControls(false, false);
     els.recordHelp.textContent = permission === "prompt"
       ? "Touchez le micro : le navigateur doit vous demander d’autoriser l’accès."
       : "Microphone prêt. Touchez le micro pour commencer.";
   }
 
-  function updateSelfAssessment() {
-    const total = set.stages.length;
-    const completed = completedStages.size;
-    const percent = total ? Math.round((completed / total) * 100) : 0;
-    els.results.classList.toggle("is-empty", completed === 0);
-    els.results.style.setProperty("--score-progress", `${percent}%`);
-    els.stageBadge.textContent = `${completed}/${total}`;
-    els.metrics.innerHTML = `
-      <div class="metric"><strong>${completed}</strong><span>Lectures enregistrées</span></div>
-      <div class="metric"><strong>${Math.min(completed, total - 1)}/${total - 1}</strong><span>Sections guidées</span></div>
-      <div class="metric"><strong>${completed === total ? "Oui" : "—"}</strong><span>Défi final</span></div>
-    `;
-    els.feedback.textContent = completed === 0
-      ? "Aucun progrès enregistré pour le moment. Le bilan commence seulement après une lecture terminée."
-      : completed === total
-        ? "Parcours complet : écoutez votre défi final après le modèle et notez les sons à reprendre."
-        : `Étape validée : continuez avec la section suivante. Progrès réel : ${completed} lecture${completed > 1 ? "s" : ""} enregistrée${completed > 1 ? "s" : ""}.`;
+  function normalizeWord(value) {
+    return value
+      .toLocaleLowerCase("fr-FR")
+      .replace(/[\u2019’]/g, "'")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/œ/g, "oe")
+      .replace(/æ/g, "ae")
+      .replace(/[^a-z'-]/g, "")
+      .replace(/^[-']+|[-']+$/g, "");
+  }
+
+  function tokens(value) {
+    return value.split(/\s+/).map(normalizeWord).filter(Boolean);
+  }
+
+  function spokenWord(value) {
+    return value.replace(/[.,!?;:()[\]{}«»"]/g, "").trim();
+  }
+
+  function renderReference(states = []) {
+    let index = 0;
+    els.readingText.innerHTML = currentText().split(/(\s+)/).map((part) => {
+      if (/^\s+$/.test(part)) return part;
+      const state = states[index++] || "";
+      const clean = spokenWord(part);
+      return `<button type="button" class="reading-word ${state}" data-word="${clean}" title="Écouter ce mot">${part}</button>`;
+    }).join("");
   }
 
   function renderStageProgress() {
     els.stageProgress.innerHTML = set.stages.map((_, index) => {
       const classes = ["stage-dot"];
       if (index === stageIndex) classes.push("is-active");
-      if (completedStages.has(index)) classes.push("is-done");
-      return `<span class="${classes.join(" ")}">${index === set.stages.length - 1 ? "Défi" : index + 1}</span>`;
+      if (stageScores[index]) classes.push("is-done");
+      const label = index === set.stages.length - 1 ? "Défi" : index + 1;
+      return `<span class="${classes.join(" ")}">${stageScores[index] ? stageScores[index].overall : label}</span>`;
     }).join("");
   }
 
+  function renderHistory() {
+    const completed = stageScores.map((score, index) => ({ score, index })).filter((entry) => entry.score);
+    els.stageHistory.hidden = completed.length === 0;
+    els.stageHistory.innerHTML = completed.length ? `<p>Progression par mini défi</p><div>${completed.map((entry) => {
+      const label = entry.index === set.stages.length - 1 ? "Défi final" : `Section ${entry.index + 1}`;
+      return `<span class="history-score ${entry.index === set.stages.length - 1 ? "is-final" : ""}"><small>${label}</small><strong>${entry.score.overall}%</strong></span>`;
+    }).join("")}</div>` : "";
+  }
+
+  function resetDisplayedResult() {
+    els.results.classList.add("is-empty");
+    els.resultTitle.textContent = "Bilan de lecture";
+    els.overallScore.textContent = "0";
+    els.accuracyScore.textContent = "0%";
+    els.completenessScore.textContent = "0%";
+    els.fluencyScore.textContent = "0%";
+    els.scoreRing.style.setProperty("--score", "0");
+    els.feedback.textContent = "Aucun progrès enregistré pour le moment. Le bilan commence seulement après une lecture terminée.";
+  }
+
+  function renderScore(score) {
+    if (!score) {
+      resetDisplayedResult();
+      renderHistory();
+      return;
+    }
+    els.results.classList.remove("is-empty");
+    els.resultTitle.textContent = `Bilan de lecture · ${isFinalStage() ? "Défi final" : `Section ${stageIndex + 1}`}`;
+    els.overallScore.textContent = score.overall;
+    els.accuracyScore.textContent = `${score.accuracy}%`;
+    els.completenessScore.textContent = `${score.completeness}%`;
+    els.fluencyScore.textContent = `${score.fluency}%`;
+    els.scoreRing.style.setProperty("--score", String(score.overall));
+    renderHistory();
+  }
+
   function render() {
-    const finalStage = stageIndex === set.stages.length - 1;
+    const finalStage = isFinalStage();
     els.title.textContent = set.title;
     els.modelAudio.pause();
     els.modelButton.querySelector("i").className = "bi bi-play-fill";
@@ -320,17 +389,31 @@
     if (heroImage) heroImage.src = set.image;
     els.stageCounter.textContent = finalStage ? "Défi final" : `Pratique guidée · ${stageIndex + 1} sur ${set.stages.length - 1}`;
     els.stageTitle.textContent = finalStage ? "Lisez maintenant le paragraphe complet" : `Section ${stageIndex + 1}`;
+    els.nextBtn.innerHTML = finalStage
+      ? '<i class="bi bi-arrow-counterclockwise"></i> Recommencer tout l’atelier'
+      : '<i class="bi bi-arrow-right"></i> Section suivante';
     renderStageProgress();
-    els.readingText.innerHTML = currentText().split(/(\s+)/).map((part) => {
-      if (/^\s+$/.test(part)) return part;
-      const clean = part.replace(/[.,!?;:()[\]{}«»"]/g, "");
-      return `<button type="button" class="reading-word" data-word="${clean}">${part}</button>`;
-    }).join("");
+    renderReference();
     els.tips.innerHTML = set.tips.map(([icon, text]) => `<div class="tip"><i class="bi ${icon}"></i><p>${text}</p></div>`).join("");
-    els.comparisonNote.textContent = finalStage
-      ? "Défi final : écoutez le modèle complet, enregistrez-vous, puis comparez votre fluidité globale."
-      : "Objectif : répéter cette phrase courte avec une articulation lente, claire et régulière.";
-    updateSelfAssessment();
+    els.comparisonNote.textContent = "Après l’enregistrement, la transcription apparaîtra ici et le bilan corrigera la phrase mot par mot.";
+    renderScore(stageScores[stageIndex]);
+    setRecordingControls(false, false);
+  }
+
+  function pronunciationTip(word) {
+    const lower = word.toLocaleLowerCase("fr-FR");
+    if (/[é]/.test(lower) || /(?:er|ez)$/.test(lower)) return "Le son é se prononce /e/, comme une voyelle fermée et nette.";
+    if (/[èêë]/.test(lower) || /(?:ais|ait|aient)$/.test(lower)) return "Le son è se prononce /ɛ/, avec la bouche un peu plus ouverte que pour é.";
+    if (/eau|au/.test(lower)) return "Le groupe eau ou au se prononce /o/ : gardez les lèvres arrondies.";
+    if (/ou/.test(lower)) return "Le groupe ou se prononce /u/, avec les lèvres bien arrondies.";
+    if (/u/.test(lower)) return "Pour le son u /y/, arrondissez les lèvres comme pour ou, mais gardez la langue en position de i.";
+    if (/(?:an|en|on|in|ain|ein|un)/.test(lower)) return "Voyelle nasale : laissez passer l’air par le nez sans prononcer séparément le n final.";
+    if (/oi/.test(lower)) return "Le groupe oi se prononce /wa/, en une seule émission fluide.";
+    if (/gn/.test(lower)) return "Le groupe gn se prononce /ɲ/, comme le ñ espagnol.";
+    if (/ch/.test(lower)) return "Le groupe ch se prononce /ʃ/, comme le son ch dans chat.";
+    if (/r/.test(lower)) return "Le r français se produit doucement au fond de la gorge, sans rouler la langue.";
+    if (/(?:ent|s|t|d|x|z)$/.test(lower)) return "Attention à la consonne finale : elle est souvent muette en français.";
+    return "Écoutez le mot complet, puis répétez-le lentement en conservant tous ses accents et ses syllabes.";
   }
 
   function speakWord(word) {
@@ -344,7 +427,7 @@
     if (frenchVoice) utterance.voice = frenchVoice;
     speechSynthesis.speak(utterance);
     els.wordHelp.hidden = false;
-    els.wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> ${word}</strong><span>Écoutez le mot, puis répétez-le lentement avant de lire toute la phrase.</span>`;
+    els.wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> ${word}</strong><span>${pronunciationTip(word)}</span>`;
   }
 
   function formatTime(ms) {
@@ -401,15 +484,127 @@
     }
   }
 
-  function setRecordingControls(recording) {
-    els.recordBtn.disabled = recording;
-    els.stopBtn.disabled = !recording;
-    els.microphoneSelect.disabled = recording;
+  function setRecordingControls(recording, busy = false) {
+    els.recordBtn.disabled = recording || busy;
+    els.stopBtn.disabled = !recording || busy;
+    els.retryBtn.disabled = busy;
+    els.nextBtn.disabled = busy || !stageScores[stageIndex];
+    els.microphoneSelect.disabled = recording || busy;
     els.recordBtn.classList.toggle("is-recording", recording);
     els.recordBtn.querySelector("i").className = recording ? "bi bi-soundwave" : "bi bi-mic-fill";
   }
 
+  function align(reference, spoken) {
+    const rows = reference.length + 1;
+    const cols = spoken.length + 1;
+    const dp = Array.from({ length: rows }, () => Array(cols).fill(0));
+    for (let i = 0; i < rows; i += 1) dp[i][0] = i;
+    for (let j = 0; j < cols; j += 1) dp[0][j] = j;
+    for (let i = 1; i < rows; i += 1) {
+      for (let j = 1; j < cols; j += 1) {
+        dp[i][j] = Math.min(
+          dp[i - 1][j] + 1,
+          dp[i][j - 1] + 1,
+          dp[i - 1][j - 1] + (reference[i - 1] === spoken[j - 1] ? 0 : 1)
+        );
+      }
+    }
+    let i = reference.length;
+    let j = spoken.length;
+    let matches = 0;
+    const states = Array(reference.length).fill("is-missed");
+    while (i > 0 || j > 0) {
+      if (i > 0 && j > 0 && dp[i][j] === dp[i - 1][j - 1] + (reference[i - 1] === spoken[j - 1] ? 0 : 1)) {
+        if (reference[i - 1] === spoken[j - 1]) {
+          states[i - 1] = "is-correct";
+          matches += 1;
+        }
+        i -= 1;
+        j -= 1;
+      } else if (i > 0 && dp[i][j] === dp[i - 1][j] + 1) {
+        i -= 1;
+      } else {
+        j -= 1;
+      }
+    }
+    return { distance: dp[reference.length][spoken.length], matches, states };
+  }
+
+  function clamp(value, min = 0, max = 100) {
+    return Math.max(min, Math.min(max, Math.round(value)));
+  }
+
+  function feedbackFor(score, missed, wpm) {
+    const focus = missed.slice(0, 5).join(", ");
+    if (score >= 88) return "Excellente lecture. Cette section est très fidèle au modèle et votre rythme est clair.";
+    if (score >= 70) return `Bonne lecture. Reprenez surtout : ${focus || "les mots signalés"}.${wpm < 75 ? " Essayez de lire un peu plus continûment." : ""}`;
+    return `Réécoutez le modèle et reprenez cette section par petits groupes de mots. Travaillez d’abord : ${focus || "les mots en rouge"}.`;
+  }
+
+  function evaluate(transcript) {
+    const spoken = tokens(transcript);
+    const referenceWords = tokens(currentText());
+    if (!spoken.length) throw new Error("Aucune parole n’a été reconnue.");
+    const aligned = align(referenceWords, spoken);
+    const durationMinutes = Math.max(1 / 60, recordedDurationMs / 60000);
+    const wpm = spoken.length / durationMinutes;
+    const completeness = clamp((aligned.matches / referenceWords.length) * 100);
+    const accuracy = clamp((1 - aligned.distance / Math.max(referenceWords.length, spoken.length)) * 100);
+    const targetWpm = isFinalStage() ? 95 : 80;
+    const fluency = clamp(100 - Math.abs(wpm - targetWpm) * 1.25);
+    const overall = clamp(accuracy * .55 + completeness * .3 + fluency * .15);
+    const previousAttempt = attemptHistory[stageIndex].at(-1) || null;
+    const attempt = { overall, accuracy, completeness, fluency, at: new Date().toISOString() };
+    attemptHistory[stageIndex].push(attempt);
+    stageScores[stageIndex] = attempt;
+    saveProgress();
+
+    renderReference(aligned.states);
+    renderStageProgress();
+    renderScore(attempt);
+    setRecordingControls(false, false);
+
+    const displayWords = currentText().split(/\s+/).map(spokenWord).filter(Boolean);
+    const missed = displayWords.filter((_, index) => aligned.states[index] !== "is-correct");
+    const comparison = previousAttempt
+      ? ` ${overall > previousAttempt.overall ? "Vous avez gagné" : overall < previousAttempt.overall ? "Variation" : "Même résultat"}${overall === previousAttempt.overall ? "" : ` ${Math.abs(overall - previousAttempt.overall)} points`} par rapport à l’essai précédent.`
+      : "";
+    const guidedScores = stageScores.slice(0, set.stages.length - 1).filter(Boolean);
+    const guidedAverage = guidedScores.length ? Math.round(guidedScores.reduce((sum, item) => sum + item.overall, 0) / guidedScores.length) : null;
+    els.feedback.textContent = isFinalStage()
+      ? `${feedbackFor(overall, missed, wpm)}${guidedAverage === null ? "" : ` Moyenne des sections : ${guidedAverage}/100. Défi final : ${overall}/100.`}`
+      : `${feedbackFor(overall, missed, wpm)}${comparison}`;
+  }
+
+  async function transcribeAndEvaluate(blob) {
+    analyzing = true;
+    setRecordingControls(false, true);
+    els.micStatus.textContent = "Analyse de cette lecture…";
+    els.comparisonNote.textContent = "Transcription en cours…";
+    try {
+      const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(payload.error || `Erreur serveur (${response.status}).`);
+      const transcript = (payload.text || "").trim();
+      const audioStats = payload.audio || {};
+      if (!transcript) {
+        if (Number(audioStats.rms || 0) < 0.0008) throw new Error("L’enregistrement semble silencieux. Choisissez un autre microphone et réessayez.");
+        throw new Error("Whisper a détecté du son, mais pas de mots français clairs. Parlez un peu plus près du microphone.");
+      }
+      els.comparisonNote.textContent = transcript;
+      evaluate(transcript);
+      els.micStatus.textContent = `${isFinalStage() ? "Défi final" : `Section ${stageIndex + 1}`} évalué. Consultez le bilan.`;
+    } catch (error) {
+      els.micStatus.textContent = "L’analyse n’a pas pu être terminée.";
+      els.comparisonNote.textContent = error.message || "Erreur de transcription.";
+    } finally {
+      analyzing = false;
+      setRecordingControls(false, false);
+    }
+  }
+
   async function startRecording() {
+    if (analyzing) return;
     try {
       hidePermissionHelp();
       if (!window.isSecureContext) {
@@ -428,8 +623,10 @@
         error.name = "NotAllowedError";
         throw error;
       }
+      renderReference();
       els.micStatus.textContent = "Demande d’autorisation du microphone…";
       els.recordHelp.textContent = "Si une fenêtre apparaît, choisissez Autoriser pour JaraLingua.";
+      els.comparisonNote.textContent = "Lisez uniquement le texte affiché au-dessus.";
       const audioConstraints = {
         echoCancellation: { ideal: true },
         noiseSuppression: { ideal: true },
@@ -449,10 +646,11 @@
       recorder = preferredType ? new MediaRecorder(stream, { mimeType: preferredType }) : new MediaRecorder(stream);
       recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
       recorder.onstop = finishRecording;
-      recorder.start();
+      recorder.start(250);
       startedAt = Date.now();
+      recordedDurationMs = 0;
       timerHandle = setInterval(updateTimer, 250);
-      setRecordingControls(true);
+      setRecordingControls(true, false);
       els.micStatus.textContent = `Enregistrement : « ${currentText()} »`;
     } catch (error) {
       const messages = {
@@ -491,34 +689,44 @@
           guide: ["Débranchez/rebranchez le micro si nécessaire.", "Rechargez la page si la liste ne se met pas à jour."]
         });
       }
+      setRecordingControls(false, false);
     }
   }
 
-  function finishRecording() {
+  async function finishRecording() {
     clearInterval(timerHandle);
     timerHandle = null;
     stopLevelMeter();
     if (stream) stream.getTracks().forEach((track) => track.stop());
     stream = null;
-    setRecordingControls(false);
+    setRecordingControls(false, true);
     const blob = new Blob(chunks, { type: recorder?.mimeType || "audio/webm" });
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     objectUrl = URL.createObjectURL(blob);
     els.playback.src = objectUrl;
     els.playback.hidden = false;
-    els.micStatus.textContent = "Enregistrement prêt. Écoutez-vous, puis comparez avec le modèle.";
-    els.comparisonNote.textContent = "Conseil : écoutez le modèle une fois, puis votre enregistrement. Si votre version est beaucoup plus rapide, relisez avec des pauses plus visibles.";
-    completedStages.add(stageIndex);
-    renderStageProgress();
-    updateSelfAssessment();
+    if (!blob.size) {
+      els.micStatus.textContent = "Aucun audio n’a été enregistré. Réessayez.";
+      setRecordingControls(false, false);
+      return;
+    }
+    await transcribeAndEvaluate(blob);
   }
 
   function stopRecording() {
-    if (recorder && recorder.state === "recording") recorder.stop();
+    if (recorder && recorder.state === "recording") {
+      recordedDurationMs = Date.now() - startedAt;
+      startedAt = 0;
+      clearInterval(timerHandle);
+      els.timer.textContent = formatTime(recordedDurationMs);
+      els.micStatus.textContent = "Préparation de l’analyse…";
+      setRecordingControls(false, true);
+      recorder.stop();
+    }
   }
 
   function resetStage() {
-    stopRecording();
+    if (recorder && recorder.state === "recording") recorder.stop();
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     objectUrl = null;
     els.playback.hidden = true;
@@ -527,13 +735,24 @@
     els.micStatus.textContent = "Prêt pour votre lecture.";
     els.recordHelp.textContent = "Le navigateur demandera l’autorisation uniquement lorsque vous cliquez sur le micro.";
     els.wordHelp.hidden = true;
+    els.comparisonNote.textContent = "Après l’enregistrement, la transcription apparaîtra ici et le bilan corrigera la phrase mot par mot.";
     stopLevelMeter();
+    renderReference();
+    renderScore(stageScores[stageIndex]);
     updateMicrophoneReadiness();
   }
 
   function nextStage() {
     resetStage();
-    stageIndex = (stageIndex + 1) % set.stages.length;
+    if (isFinalStage()) {
+      stageIndex = 0;
+      stageScores.fill(null);
+      attemptHistory.forEach((attempts) => attempts.splice(0));
+      localStorage.removeItem(STORAGE_KEY);
+    } else {
+      stageIndex += 1;
+    }
+    saveProgress();
     render();
   }
 
@@ -557,6 +776,7 @@
   els.nextBtn.addEventListener("click", nextStage);
 
   refreshMicrophones();
-  updateMicrophoneReadiness();
+  navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);
   render();
+  updateMicrophoneReadiness();
 })();
