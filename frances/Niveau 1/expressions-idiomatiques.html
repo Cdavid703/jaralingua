@@ -16,9 +16,11 @@
     .idiom-card h2{margin:0;color:var(--blue-dark);font-size:1.35rem;font-weight:900}
     .idiom-meta{display:grid;gap:.65rem}
     .idiom-line{padding:.85rem;border-radius:16px;background:#f8fbff;border-left:5px solid var(--blue)}
-    .idiom-line.literal{border-left-color:var(--yellow);background:#fff8dc}
-    .idiom-line.example{border-left-color:var(--red);background:#fff0f3}
+    .idiom-line.spanish{border-left-color:var(--yellow);background:#fff8dc}
+    .idiom-line.examples{border-left-color:var(--red);background:#fff0f3}
     .idiom-line strong{display:block;color:var(--blue-dark);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+    .idiom-line ul{margin:.35rem 0 0;padding-left:1.15rem}
+    .idiom-line li+li{margin-top:.35rem}
   </style>
 </head>
 <body>
@@ -32,7 +34,7 @@
     <div class="container">
       <span class="badge-course"><i class="bi bi-chat-heart"></i> Français vivant A1</span>
       <h1>Expressions idiomatiques</h1>
-      <p class="hero-text">Une expression idiomatique ne se comprend pas toujours mot à mot. Ici, on observe le sens réel, le sens littéral et un exemple simple.</p>
+      <p class="hero-text">Une expression idiomatique ne se comprend pas toujours mot à mot. Ici, on observe le sens réel, l’équivalence en espagnol et plusieurs exemples simples.</p>
     </div>
   </header>
 
@@ -42,13 +44,13 @@
         <article class="content-card mb-4">
           <p class="section-kicker">Avant de commencer</p>
           <h2>Qu’est-ce qu’une expression idiomatique ?</h2>
-          <p class="section-text mb-0">C’est une formule figée dont le sens global est différent de la traduction mot à mot. Par exemple, <em>donner un coup de main</em> signifie aider quelqu’un, pas frapper avec la main.</p>
+          <p class="section-text mb-0">C’est une formule figée dont le sens global est différent d’une traduction mot à mot. Pour apprendre une expression, il faut retenir son usage réel, une traduction naturelle ou approximative en espagnol, puis la réutiliser dans des phrases courtes.</p>
         </article>
 
         <div class="idiom-toolbar">
           <label class="flex-grow-1 mb-0">
             <span class="visually-hidden">Chercher une expression</span>
-            <input id="idiomSearch" type="search" placeholder="Chercher : main, famille, aide, humeur…" autocomplete="off">
+            <input id="idiomSearch" type="search" placeholder="Chercher : main, familia, ayuda, humeur…" autocomplete="off">
           </label>
           <span class="skill-pill" id="idiomCount">10 expressions</span>
         </div>
@@ -62,30 +64,120 @@
 
   <script>
     const data = [
-      ["Donner un coup de main","Aider quelqu’un.","Donner un petit coup avec la main.","Je donne un coup de main à mon frère pour ses devoirs.","aide main famille"],
-      ["Mettre la main à la pâte","Participer activement au travail.","Mettre la main dans la pâte.","Tout le monde met la main à la pâte pour préparer la fête.","travail aide groupe"],
-      ["Avoir le cœur sur la main","Être généreux.","Avoir son cœur posé sur la main.","Sofia a le cœur sur la main : elle aide toujours ses amis.","description personnalité généreux"],
-      ["Se ressembler comme deux gouttes d’eau","Être presque identiques.","Deux gouttes d’eau identiques.","Les deux sœurs se ressemblent comme deux gouttes d’eau.","famille description"],
-      ["Être haut comme trois pommes","Être très petit, surtout pour un enfant.","Avoir la hauteur de trois pommes.","Mon cousin est haut comme trois pommes, mais il parle beaucoup.","famille description enfant"],
-      ["Avoir la tête dans les nuages","Être distrait ou rêveur.","Avoir la tête dans le ciel.","Aujourd’hui, Paul a la tête dans les nuages et oublie son cahier.","personnalité classe"],
-      ["Avoir un poil dans la main","Être paresseux.","Avoir un poil dans la main.","Il ne range jamais sa chambre : il a un poil dans la main.","personnalité routine"],
-      ["Tomber dans les pommes","S’évanouir.","Tomber dans un panier de pommes.","Elle a très chaud et tombe dans les pommes.","santé action"],
-      ["Coûter les yeux de la tête","Coûter très cher.","Payer avec ses yeux.","Ce téléphone coûte les yeux de la tête.","nombres prix quotidien"],
-      ["Poser un lapin","Ne pas venir à un rendez-vous.","Mettre un lapin quelque part.","Marc ne vient pas au café : il pose un lapin à ses amis.","rendez-vous amis"]
+      {
+        expression: "Donner un coup de main",
+        meaning: "Aider quelqu’un dans une tâche.",
+        spanish: "Echar una mano / ayudar.",
+        examples: [
+          "Je donne un coup de main à mon frère pour ses devoirs.",
+          "Est-ce que tu peux me donner un coup de main avec l’exercice ?"
+        ],
+        tags: "aide main ayuda familia classe"
+      },
+      {
+        expression: "Mettre la main à la pâte",
+        meaning: "Participer activement à un travail collectif.",
+        spanish: "Ponerse manos a la obra / colaborar activamente.",
+        examples: [
+          "Tout le monde met la main à la pâte pour préparer la fête.",
+          "Dans le groupe, chaque étudiant met la main à la pâte."
+        ],
+        tags: "travail groupe colaborar ayudar"
+      },
+      {
+        expression: "Avoir le cœur sur la main",
+        meaning: "Être très généreux et prêt à aider.",
+        spanish: "Tener un gran corazón / ser muy generoso.",
+        examples: [
+          "Sofia a le cœur sur la main : elle aide toujours ses amis.",
+          "Mon voisin a le cœur sur la main ; il aide les personnes âgées."
+        ],
+        tags: "description personnalité généreux generoso ayuda"
+      },
+      {
+        expression: "Se ressembler comme deux gouttes d’eau",
+        meaning: "Être presque identiques physiquement ou dans l’apparence.",
+        spanish: "Parecerse como dos gotas de agua.",
+        examples: [
+          "Les deux sœurs se ressemblent comme deux gouttes d’eau.",
+          "Sur la photo, Paul et son père se ressemblent comme deux gouttes d’eau."
+        ],
+        tags: "famille description parecido apariencia"
+      },
+      {
+        expression: "Être haut comme trois pommes",
+        meaning: "Être très petit, surtout pour parler d’un enfant.",
+        spanish: "Ser muy bajito / ser apenas un niño.",
+        examples: [
+          "Mon cousin est haut comme trois pommes, mais il parle beaucoup.",
+          "Quand j’étais haut comme trois pommes, j’adorais écouter des histoires."
+        ],
+        tags: "famille description enfant pequeño bajo"
+      },
+      {
+        expression: "Avoir la tête dans les nuages",
+        meaning: "Être distrait, rêveur ou peu concentré.",
+        spanish: "Estar en las nubes / estar distraído.",
+        examples: [
+          "Aujourd’hui, Paul a la tête dans les nuages et oublie son cahier.",
+          "En classe, Lina a parfois la tête dans les nuages."
+        ],
+        tags: "personnalité classe distrait nube concentración"
+      },
+      {
+        expression: "Avoir un poil dans la main",
+        meaning: "Être paresseux ou éviter de travailler.",
+        spanish: "Ser perezoso / no querer mover un dedo.",
+        examples: [
+          "Il ne range jamais sa chambre : il a un poil dans la main.",
+          "Tu as un poil dans la main aujourd’hui ? Allez, aide-nous un peu !"
+        ],
+        tags: "personnalité routine paresseux perezoso trabajo"
+      },
+      {
+        expression: "Tomber dans les pommes",
+        meaning: "S’évanouir, perdre connaissance.",
+        spanish: "Desmayarse / perder el conocimiento.",
+        examples: [
+          "Elle a très chaud et tombe dans les pommes.",
+          "Si tu ne manges pas avant l’examen, tu risques de tomber dans les pommes."
+        ],
+        tags: "santé action desmayarse cuerpo"
+      },
+      {
+        expression: "Coûter les yeux de la tête",
+        meaning: "Coûter très cher.",
+        spanish: "Costar un ojo de la cara.",
+        examples: [
+          "Ce téléphone coûte les yeux de la tête.",
+          "Le billet d’avion coûte les yeux de la tête en décembre."
+        ],
+        tags: "nombres prix quotidien cher caro dinero"
+      },
+      {
+        expression: "Poser un lapin",
+        meaning: "Ne pas venir à un rendez-vous sans prévenir.",
+        spanish: "Dejar plantado a alguien.",
+        examples: [
+          "Marc ne vient pas au café : il pose un lapin à ses amis.",
+          "Elle attend Pierre depuis une heure ; il lui a posé un lapin."
+        ],
+        tags: "rendez-vous amis plantado cita"
+      }
     ];
     const grid = document.getElementById("idioms");
     const count = document.getElementById("idiomCount");
     function render(filter = "") {
       const q = filter.trim().toLowerCase();
-      const items = data.filter((item) => !q || item.join(" ").toLowerCase().includes(q));
+      const items = data.filter((item) => !q || [item.expression, item.meaning, item.spanish, item.tags, ...item.examples].join(" ").toLowerCase().includes(q));
       count.textContent = `${items.length} expression${items.length === 1 ? "" : "s"}`;
       grid.innerHTML = items.map((item, index) => `<article class="idiom-card">
         <span class="skill-pill">Expression ${index + 1}</span>
-        <h2>${item[0]}</h2>
+        <h2>${item.expression}</h2>
         <div class="idiom-meta">
-          <div class="idiom-line"><strong>Sens réel</strong><span>${item[1]}</span></div>
-          <div class="idiom-line literal"><strong>Sens littéral</strong><span>${item[2]}</span></div>
-          <div class="idiom-line example"><strong>Exemple</strong><span>${item[3]}</span></div>
+          <div class="idiom-line spanish"><strong>Significado en español</strong><span>${item.spanish}</span></div>
+          <div class="idiom-line"><strong>Sens réel en français</strong><span>${item.meaning}</span></div>
+          <div class="idiom-line examples"><strong>Exemples</strong><ul>${item.examples.map((example) => `<li>${example}</li>`).join("")}</ul></div>
         </div>
       </article>`).join("");
     }
