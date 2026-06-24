@@ -380,6 +380,18 @@
     if (analyzing) return;
     resetAttempt(false);
     try {
+      if (!window.isSecureContext) {
+        const error = new Error("secure_context");
+        error.name = "SecurityError";
+        throw error;
+      }
+      if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
+        const error = new Error("unsupported");
+        error.name = "NotSupportedError";
+        throw error;
+      }
+      recordStatus.textContent = "Requesting microphone permission?";
+      recordHelp.textContent = "Accept the browser permission prompt to start recording.";
       const audioConstraints = { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 };
       if (microphoneSelect.value) audioConstraints.deviceId = { exact: microphoneSelect.value };
       mediaStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints, video: false });
@@ -391,7 +403,7 @@
       if (activeDeviceId && [...microphoneSelect.options].some((option) => option.value === activeDeviceId)) microphoneSelect.value = activeDeviceId;
       chunks = [];
       discardRecording = false;
-      const preferredType = window.MediaRecorder.isTypeSupported("audio/webm;codecs=opus") ? "audio/webm;codecs=opus" : "";
+      const preferredType = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((type) => MediaRecorder.isTypeSupported(type)) || "";
       mediaRecorder = preferredType ? new MediaRecorder(mediaStream, { mimeType: preferredType }) : new MediaRecorder(mediaStream);
       mediaRecorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
       mediaRecorder.onerror = () => {
@@ -413,11 +425,21 @@
       timerHandle = setInterval(updateTimer, 250);
       mediaRecorder.start(250);
       setControls(true, false);
-      recordStatus.textContent = `Recording · ${currentStage().label}`;
+      recordStatus.textContent = `Recording ? ${currentStage().label}`;
       liveTranscript.textContent = "Read only the text shown above.";
     } catch (error) {
       stopTracks();
-      recordStatus.textContent = error?.name === "NotAllowedError" ? "Microphone access was denied." : "The microphone is unavailable. Choose another device.";
+      const messages = {
+        NotAllowedError: "Microphone permission was denied. Open your browser settings, allow the microphone for JaraLingua, and try again.",
+        SecurityError: "The microphone requires HTTPS or localhost. On production, make sure the page is served securely.",
+        NotFoundError: "No microphone was detected on this device.",
+        NotReadableError: "The microphone is being used by another application. Close other apps and try again.",
+        AbortError: "The browser interrupted microphone activation. Please try again.",
+        OverconstrainedError: "The selected microphone is not available. Choose the default microphone and try again.",
+        NotSupportedError: "This browser does not support audio recording. Use a recent version of Chrome or Edge."
+      };
+      recordStatus.textContent = messages[error?.name] || `The microphone is unavailable: ${error?.message || "unknown error"}`;
+      recordHelp.textContent = "On Android or desktop, check browser permissions and make sure no other app is using the microphone.";
       setControls(false, false);
     }
   }

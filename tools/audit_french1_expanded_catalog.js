@@ -19,7 +19,8 @@ const ids = [
   "lecture-verbes-essentiels",
   "lecture-famille",
   "lecture-description",
-  "conjugaison-er"
+  "conjugaison-er",
+  "present-indicatif"
 ];
 
 let failed = false;
@@ -28,7 +29,7 @@ for (const id of ids) {
   const letters = activity.questions.map((question) => "ABC"[question.answer]).join("");
   const counts = [0, 1, 2].map((answer) => activity.questions.filter((question) => question.answer === answer).length);
   const words = activity.reading ? activity.reading.trim().split(/\s+/).length : null;
-  const expected = id === "conjugaison-er" ? 20 : id.startsWith("lecture-") ? 6 : 8;
+  const expected = ["conjugaison-er", "present-indicatif"].includes(id) ? 20 : id.startsWith("lecture-") ? 6 : 8;
   if (activity.questions.length !== expected || Math.max(...counts) - Math.min(...counts) > 2 || (words !== null && words > 100)) failed = true;
   console.log(`${id}: ${activity.questions.length} questions | réponses ${letters}${words === null ? "" : ` | ${words} mots`}`);
 }

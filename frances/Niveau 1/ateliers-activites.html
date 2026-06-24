@@ -1,21 +1,62 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="Ateliers complets de Français Niveau 1 par thème."><title>Ateliers et activités | Français Niveau 1</title><link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="assets/niveau1.css?v=20260625" rel="stylesheet"></head><body>
-<nav class="navbar fixed-top"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a><div class="d-flex"><a class="nav-link" href="themes-du-cours.html">Thèmes</a><a class="nav-link active" href="ateliers-activites.html">Ateliers</a><a class="nav-link" href="notes-evaluation.html">Notes</a></div></div></nav>
-<header class="hero lesson-hero"><div class="container"><span class="badge-course"><i class="bi bi-controller"></i> Laboratoire A1.1</span><h1>Ateliers et activités</h1><p class="hero-text">Chaque thème réunit pratique de langue, compréhension orale, lecture, prononciation et production. Ouvrez uniquement le dossier que vous souhaitez travailler.</p></div></header>
-<main><section><div class="container"><div class="section-heading"><p class="section-kicker">Parcours complet</p><h2 class="section-title">Cinq dossiers de pratique</h2><p class="section-text">Toutes les questions apparaissent ensemble et se corrigent avec un seul bouton.</p></div>
-<div id="folders"></div></div></section></main><footer class="footer"><div class="container"><a href="index.html">← Retour au portail</a></div></footer>
-<script>
-const activityImages={"ateliers/quiz.html?activite=articles-definis":"img/ateliers/atelier-articles-definis.png","ateliers/carte-identite.html":"img/ateliers/carte-identite-creative-a1.png","ateliers/roulette-presentations.html":"img/ateliers/roulette-presentations-a1.png","ateliers/qui-est-ce.html":"img/ateliers/qui-est-ce-portraits-a1.png"};
-const folders=[
-{n:"01",id:"theme-1",title:"Premiers contacts",text:"Alphabet, nombres, identité, rencontre, lecture et prononciation.",image:"img/themes/theme-01-premiers-contacts.png",items:[
-["Alphabet et premiers sons","Phonétique","ateliers/quiz.html?activite=alphabet-sons"],["Écoute : nombres de 1 à 20","Écoute","ateliers/quiz.html?activite=ecoute-nombres-1-20"],["Écoute aléatoire : nombres 1–100","Écoute","ateliers/quiz.html?activite=ecoute-nombres-1-100"],["Première rencontre","Compréhension orale","ateliers/quiz.html?activite=premiere-rencontre"],["Les articles définis","Grammaire","ateliers/quiz.html?activite=articles-definis"],["Une nouvelle étudiante","Lecture","ateliers/quiz.html?activite=lecture-premiers-contacts"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-1"],["Ma carte d’identité","Création","ateliers/carte-identite.html"],["La roulette des présentations","Interaction","ateliers/roulette-presentations.html"]]},
-{n:"02",id:"theme-2",title:"Les verbes du premier groupe",text:"Vingt phrases en contexte, écoute, lecture et prononciation.",image:"img/themes/theme-02-verbes-premier-groupe.png",items:[
-["20 verbes en contexte","Grammaire","ateliers/quiz.html?activite=conjugaison-er"],["Une journée bien organisée","Compréhension orale","ateliers/quiz.html?activite=ecoute-verbes-er"],["La routine de Malik","Lecture","ateliers/quiz.html?activite=lecture-verbes-er"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-2"]]},
-{n:"03",id:"theme-3",title:"Être, avoir, aller et faire",text:"Les quatre verbes essentiels dans des situations A1.",image:"img/themes/theme-03-verbes-essentiels.png",items:[
-["Le verbe être","Grammaire","ateliers/quiz.html?activite=verbe-etre"],["Le verbe avoir","Grammaire","ateliers/quiz.html?activite=verbe-avoir"],["Le verbe aller","Grammaire","ateliers/quiz.html?activite=verbe-aller"],["Le verbe faire","Grammaire","ateliers/quiz.html?activite=verbe-faire"],["Notre samedi à Lyon","Compréhension orale","ateliers/quiz.html?activite=ecoute-verbes-essentiels"],["Une sortie au musée","Lecture","ateliers/quiz.html?activite=lecture-verbes-essentiels"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-3"]]},
-{n:"04",id:"theme-4",title:"Famille et relations",text:"Relations familiales, possessifs, écoute, lecture et prononciation.",image:"img/themes/theme-04-famille-relations.png",items:[
-["Qui est dans la famille ?","Vocabulaire","ateliers/quiz.html?activite=famille-relations"],["Adjectifs possessifs","Grammaire","ateliers/quiz.html?activite=adjectifs-possessifs"],["Arbre familial","Logique","ateliers/quiz.html?activite=arbre-familial"],["Le déjeuner chez Mamie","Compréhension orale","ateliers/quiz.html?activite=ecoute-ma-famille"],["La famille de Léa","Lecture","ateliers/quiz.html?activite=lecture-famille"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-4"]]},
-{n:"05",id:"theme-5",title:"Description et personnalité",text:"Portraits, adjectifs, écoute, lecture, jeu et prononciation.",image:"img/themes/theme-05-description-personnalite.png",items:[
-["Accord des adjectifs","Grammaire","ateliers/quiz.html?activite=accord-adjectifs"],["Constructeur de portrait","Production","ateliers/quiz.html?activite=portrait-guide"],["Qui est-ce ?","Jeu","ateliers/qui-est-ce.html"],["Qui est Sofia ?","Compréhension orale","ateliers/quiz.html?activite=ecoute-portrait"],["Mon amie Inès","Lecture","ateliers/quiz.html?activite=lecture-description"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-5"]]}
-];
-document.getElementById("folders").innerHTML=folders.map(f=>`<details class="unit-folder" id="${f.id}"><summary><span class="folder-number">${f.n}</span><span class="folder-copy"><h3>${f.title}</h3><p>${f.text}</p></span><strong class="folder-count">${f.items.length} activités</strong></summary><div class="activity-grid">${f.items.map((a,i)=>`<article class="activity-card"><div class="card-visual" style="--card-image:url('/frances/Niveau%201/${activityImages[a[2]]||f.image}')"></div><div class="card-body"><span class="skill-pill">${a[1]}</span><h3 class="h5">${a[0]}</h3><a class="btn-main" href="${a[2]}">Commencer</a></div></article>`).join("")}</div></details>`).join("");
-</script><script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Ateliers complets de Français Niveau 1 par thème.">
+  <title>Ateliers et activités | Français Niveau 1</title>
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="assets/niveau1.css?v=20260626" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar fixed-top"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a><div class="d-flex"><a class="nav-link" href="themes-du-cours.html">Thèmes</a><a class="nav-link active" href="ateliers-activites.html">Ateliers</a><a class="nav-link" href="notes-evaluation.html">Notes</a></div></div></nav>
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/portail/ateliers-activites.png')"><div class="container"><span class="badge-course"><i class="bi bi-controller"></i> Laboratoire A1.1</span><h1>Ateliers et activités</h1><p class="hero-text">Chaque thème réunit pratique de langue, compréhension orale, lecture, prononciation et production. Toutes les cartes possèdent une illustration propre.</p></div></header>
+  <main><section><div class="container"><div class="section-heading"><p class="section-kicker">Parcours complet</p><h2 class="section-title">Six dossiers de pratique</h2><p class="section-text">Les dossiers restent fermés par défaut. Dans les questionnaires, toutes les questions apparaissent ensemble et se corrigent avec un seul bouton.</p></div><div id="folders"></div></div></section></main>
+  <footer class="footer"><div class="container"><a href="index.html">← Retour au portail</a></div></footer>
+  <script>
+  const activityImages={
+    "ateliers/quiz.html?activite=alphabet-sons":"img/ateliers/atelier-alphabet-sons.png",
+    "ateliers/quiz.html?activite=ecoute-nombres-1-20":"img/ateliers/atelier-ecoute-nombres.png",
+    "ateliers/quiz.html?activite=ecoute-nombres-1-100":"img/ateliers/atelier-nombres-aleatoires-100.png",
+    "ateliers/quiz.html?activite=premiere-rencontre":"img/ateliers/atelier-premiere-rencontre.png",
+    "ateliers/quiz.html?activite=articles-definis":"img/ateliers/atelier-articles-definis.png",
+    "ateliers/quiz.html?activite=lecture-premiers-contacts":"img/ateliers/lecture-premiers-contacts.png",
+    "ateliers/prononciation.html?theme=theme-1":"img/ateliers/prononciation-premiers-contacts.png",
+    "ateliers/carte-identite.html":"img/ateliers/carte-identite-creative-a1.png",
+    "ateliers/roulette-presentations.html":"img/ateliers/roulette-presentations-a1.png",
+    "ateliers/quiz.html?activite=present-indicatif":"img/ateliers/atelier-present-indicatif.png",
+    "ateliers/quiz.html?activite=conjugaison-er":"img/ateliers/atelier-conjugaison-er.png",
+    "ateliers/quiz.html?activite=ecoute-verbes-er":"img/ateliers/ecoute-routine-camille.png",
+    "ateliers/quiz.html?activite=lecture-verbes-er":"img/ateliers/lecture-routine-malik.png",
+    "ateliers/prononciation.html?theme=theme-2":"img/ateliers/prononciation-verbes-er.png",
+    "ateliers/quiz.html?activite=verbe-etre":"img/ateliers/atelier-verbe-etre.png",
+    "ateliers/quiz.html?activite=verbe-avoir":"img/ateliers/atelier-verbe-avoir.png",
+    "ateliers/quiz.html?activite=verbe-aller":"img/ateliers/atelier-verbe-aller.png",
+    "ateliers/quiz.html?activite=verbe-faire":"img/ateliers/atelier-verbe-faire.png",
+    "ateliers/quiz.html?activite=ecoute-verbes-essentiels":"img/ateliers/ecoute-samedi-lyon.png",
+    "ateliers/quiz.html?activite=lecture-verbes-essentiels":"img/ateliers/lecture-sortie-musee.png",
+    "ateliers/prononciation.html?theme=theme-3":"img/ateliers/prononciation-verbes-essentiels.png",
+    "ateliers/quiz.html?activite=famille-relations":"img/ateliers/atelier-famille-vocabulaire.png",
+    "ateliers/quiz.html?activite=adjectifs-possessifs":"img/ateliers/atelier-adjectifs-possessifs.png",
+    "ateliers/quiz.html?activite=arbre-familial":"img/ateliers/atelier-arbre-familial.png",
+    "ateliers/quiz.html?activite=ecoute-ma-famille":"img/ateliers/ecoute-dejeuner-famille.png",
+    "ateliers/quiz.html?activite=lecture-famille":"img/ateliers/lecture-famille-lea.png",
+    "ateliers/prononciation.html?theme=theme-4":"img/ateliers/prononciation-famille.png",
+    "ateliers/quiz.html?activite=accord-adjectifs":"img/ateliers/atelier-accord-adjectifs.png",
+    "ateliers/quiz.html?activite=portrait-guide":"img/ateliers/atelier-portrait-guide.png",
+    "ateliers/qui-est-ce-professions.html":"img/ateliers/qui-est-ce-portraits-a1.png",
+    "ateliers/quiz.html?activite=ecoute-portrait":"img/ateliers/ecoute-portrait-sofia.png",
+    "ateliers/quiz.html?activite=lecture-description":"img/ateliers/lecture-amie-ines.png",
+    "ateliers/prononciation.html?theme=theme-5":"img/ateliers/prononciation-description.png"
+  };
+  const folders=[
+    {n:"01",id:"theme-1",title:"Premiers contacts",text:"Alphabet, nombres, identité, rencontre, lecture et prononciation.",items:[["Alphabet et premiers sons","Phonétique","ateliers/quiz.html?activite=alphabet-sons"],["Écoute : nombres de 1 à 20","Écoute","ateliers/quiz.html?activite=ecoute-nombres-1-20"],["Écoute aléatoire : nombres 1–100","Écoute","ateliers/quiz.html?activite=ecoute-nombres-1-100"],["Première rencontre","Compréhension orale","ateliers/quiz.html?activite=premiere-rencontre"],["Les articles définis","Grammaire","ateliers/quiz.html?activite=articles-definis"],["Une nouvelle étudiante","Lecture","ateliers/quiz.html?activite=lecture-premiers-contacts"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-1"],["Ma carte d’identité","Création","ateliers/carte-identite.html"],["La roulette des présentations","Interaction","ateliers/roulette-presentations.html"]]},
+    {n:"02",id:"theme-2",title:"Le présent de l’indicatif",text:"Emplois, affirmation, négation et questions simples.",items:[["Présent, négation et questions","Grammaire","ateliers/quiz.html?activite=present-indicatif"]]},
+    {n:"03",id:"theme-3",title:"Les verbes du premier groupe",text:"Vingt phrases en contexte, écoute, lecture et prononciation.",items:[["20 verbes en contexte","Grammaire","ateliers/quiz.html?activite=conjugaison-er"],["Une journée bien organisée","Compréhension orale","ateliers/quiz.html?activite=ecoute-verbes-er"],["La routine de Malik","Lecture","ateliers/quiz.html?activite=lecture-verbes-er"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-2"]]},
+    {n:"04",id:"theme-4",title:"Être, avoir, aller et faire",text:"Les quatre verbes essentiels dans des situations A1.",items:[["Le verbe être","Grammaire","ateliers/quiz.html?activite=verbe-etre"],["Le verbe avoir","Grammaire","ateliers/quiz.html?activite=verbe-avoir"],["Le verbe aller","Grammaire","ateliers/quiz.html?activite=verbe-aller"],["Le verbe faire","Grammaire","ateliers/quiz.html?activite=verbe-faire"],["Notre samedi à Lyon","Compréhension orale","ateliers/quiz.html?activite=ecoute-verbes-essentiels"],["Une sortie au musée","Lecture","ateliers/quiz.html?activite=lecture-verbes-essentiels"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-3"]]},
+    {n:"05",id:"theme-5",title:"Famille et relations",text:"Relations familiales, possessifs, écoute, lecture et prononciation.",items:[["Qui est dans la famille ?","Vocabulaire","ateliers/quiz.html?activite=famille-relations"],["Adjectifs possessifs","Grammaire","ateliers/quiz.html?activite=adjectifs-possessifs"],["Arbre familial","Logique","ateliers/quiz.html?activite=arbre-familial"],["Le déjeuner chez Mamie","Compréhension orale","ateliers/quiz.html?activite=ecoute-ma-famille"],["La famille de Léa","Lecture","ateliers/quiz.html?activite=lecture-famille"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-4"]]},
+    {n:"06",id:"theme-6",title:"Description et personnalité",text:"Portraits, adjectifs, écoute, lecture, jeu complet et prononciation.",items:[["Accord des adjectifs","Grammaire","ateliers/quiz.html?activite=accord-adjectifs"],["Constructeur de portrait","Production","ateliers/quiz.html?activite=portrait-guide"],["Qui est-ce ? Les professions","Jeu","ateliers/qui-est-ce-professions.html"],["Qui est Sofia ?","Compréhension orale","ateliers/quiz.html?activite=ecoute-portrait"],["Mon amie Inès","Lecture","ateliers/quiz.html?activite=lecture-description"],["Défi de prononciation","Prononciation","ateliers/prononciation.html?theme=theme-5"]]}
+  ];
+  document.getElementById("folders").innerHTML=folders.map((folder)=>`<details class="unit-folder" id="${folder.id}"><summary><span class="folder-number">${folder.n}</span><span class="folder-copy"><h3>${folder.title}</h3><p>${folder.text}</p></span><strong class="folder-count">${folder.items.length} activité${folder.items.length>1?"s":""}</strong></summary><div class="activity-grid">${folder.items.map((activity)=>`<article class="activity-card"><div class="card-visual" style="--card-image:url('/frances/Niveau%201/${activityImages[activity[2]]}')"></div><div class="card-body"><span class="skill-pill">${activity[1]}</span><h3 class="h5">${activity[0]}</h3><a class="btn-main" href="${activity[2]}">Commencer</a></div></article>`).join("")}</div></details>`).join("");
+  </script>
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script><script src="assets/niveau1.js?v=20260626"></script>
+</body>
+</html>

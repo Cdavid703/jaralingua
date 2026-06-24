@@ -1,1 +1,97 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Expressions idiomatiques | Français Niveau 1</title><link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="assets/niveau1.css?v=20260625" rel="stylesheet"></head><body><nav class="navbar fixed-top"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a></div></nav><header class="hero lesson-hero"><div class="container"><span class="badge-course">Français vivant A1</span><h1>Expressions idiomatiques</h1><p class="hero-text">Des expressions courtes et naturelles liées aux cinq thèmes du cours.</p></div></header><main><section><div class="container"><div class="theme-grid" id="expressions"></div></div></section></main><footer class="footer"><div class="container"><a href="index.html">← Retour au portail</a></div></footer><script>const data=[["Ça va ?","Comment allez-vous ?","— Salut, ça va ? — Oui, très bien !"],["Enchanté(e)","Formule utilisée lors d’une première rencontre.","Je m’appelle Lina. Enchantée !"],["Ça marche !","D’accord ; c’est entendu.","On travaille à dix heures ? Ça marche !"],["Avoir faim","Ressentir le besoin de manger.","J’ai faim, allons au café."],["Avoir soif","Ressentir le besoin de boire.","Après le sport, nous avons soif."],["Être en retard","Arriver après l’heure prévue.","Paul est en retard pour le cours."],["Faire attention","Être attentif ou prudent.","Faites attention à la prononciation."],["Donner un coup de main","Aider quelqu’un.","Je donne un coup de main à mon frère."],["Être de bonne humeur","Se sentir joyeux et positif.","Sofia est de bonne humeur aujourd’hui."],["Se ressembler comme deux gouttes d’eau","Être physiquement très semblables.","Les deux sœurs se ressemblent comme deux gouttes d’eau."]];expressions.innerHTML=data.map((x,i)=>`<article class="content-card"><span class="skill-pill">Expression ${i+1}</span><h2 class="h4 mt-3">${x[0]}</h2><p>${x[1]}</p><div class="callout">${x[2]}</div></article>`).join('');</script></body></html>
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Expressions idiomatiques | Français Niveau 1</title>
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="assets/niveau1.css?v=20260626" rel="stylesheet">
+  <style>
+    .idiom-toolbar{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between;margin-bottom:1.2rem;padding:1rem;border-radius:22px;background:#fff;box-shadow:var(--shadow)}
+    .idiom-toolbar input{min-height:48px;flex:1 1 260px;border:2px solid rgba(31,78,140,.14);border-radius:999px;padding:0 1rem;font-weight:800;color:var(--blue-dark)}
+    .idiom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+    .idiom-card{display:grid;gap:.9rem;padding:1.3rem;border-radius:24px;background:#fff;box-shadow:var(--shadow)}
+    .idiom-card h2{margin:0;color:var(--blue-dark);font-size:1.35rem;font-weight:900}
+    .idiom-meta{display:grid;gap:.65rem}
+    .idiom-line{padding:.85rem;border-radius:16px;background:#f8fbff;border-left:5px solid var(--blue)}
+    .idiom-line.literal{border-left-color:var(--yellow);background:#fff8dc}
+    .idiom-line.example{border-left-color:var(--red);background:#fff0f3}
+    .idiom-line strong{display:block;color:var(--blue-dark);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em}
+  </style>
+</head>
+<body>
+  <nav class="navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a>
+      <a class="nav-link" href="index.html">Portail</a>
+    </div>
+  </nav>
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/portail/expressions-essentielles.png')">
+    <div class="container">
+      <span class="badge-course"><i class="bi bi-chat-heart"></i> Français vivant A1</span>
+      <h1>Expressions idiomatiques</h1>
+      <p class="hero-text">Une expression idiomatique ne se comprend pas toujours mot à mot. Ici, on observe le sens réel, le sens littéral et un exemple simple.</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container">
+        <article class="content-card mb-4">
+          <p class="section-kicker">Avant de commencer</p>
+          <h2>Qu’est-ce qu’une expression idiomatique ?</h2>
+          <p class="section-text mb-0">C’est une formule figée dont le sens global est différent de la traduction mot à mot. Par exemple, <em>donner un coup de main</em> signifie aider quelqu’un, pas frapper avec la main.</p>
+        </article>
+
+        <div class="idiom-toolbar">
+          <label class="flex-grow-1 mb-0">
+            <span class="visually-hidden">Chercher une expression</span>
+            <input id="idiomSearch" type="search" placeholder="Chercher : main, famille, aide, humeur…" autocomplete="off">
+          </label>
+          <span class="skill-pill" id="idiomCount">10 expressions</span>
+        </div>
+
+        <div class="idiom-grid" id="idioms"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><a href="index.html">← Retour au portail</a></div></footer>
+
+  <script>
+    const data = [
+      ["Donner un coup de main","Aider quelqu’un.","Donner un petit coup avec la main.","Je donne un coup de main à mon frère pour ses devoirs.","aide main famille"],
+      ["Mettre la main à la pâte","Participer activement au travail.","Mettre la main dans la pâte.","Tout le monde met la main à la pâte pour préparer la fête.","travail aide groupe"],
+      ["Avoir le cœur sur la main","Être généreux.","Avoir son cœur posé sur la main.","Sofia a le cœur sur la main : elle aide toujours ses amis.","description personnalité généreux"],
+      ["Se ressembler comme deux gouttes d’eau","Être presque identiques.","Deux gouttes d’eau identiques.","Les deux sœurs se ressemblent comme deux gouttes d’eau.","famille description"],
+      ["Être haut comme trois pommes","Être très petit, surtout pour un enfant.","Avoir la hauteur de trois pommes.","Mon cousin est haut comme trois pommes, mais il parle beaucoup.","famille description enfant"],
+      ["Avoir la tête dans les nuages","Être distrait ou rêveur.","Avoir la tête dans le ciel.","Aujourd’hui, Paul a la tête dans les nuages et oublie son cahier.","personnalité classe"],
+      ["Avoir un poil dans la main","Être paresseux.","Avoir un poil dans la main.","Il ne range jamais sa chambre : il a un poil dans la main.","personnalité routine"],
+      ["Tomber dans les pommes","S’évanouir.","Tomber dans un panier de pommes.","Elle a très chaud et tombe dans les pommes.","santé action"],
+      ["Coûter les yeux de la tête","Coûter très cher.","Payer avec ses yeux.","Ce téléphone coûte les yeux de la tête.","nombres prix quotidien"],
+      ["Poser un lapin","Ne pas venir à un rendez-vous.","Mettre un lapin quelque part.","Marc ne vient pas au café : il pose un lapin à ses amis.","rendez-vous amis"]
+    ];
+    const grid = document.getElementById("idioms");
+    const count = document.getElementById("idiomCount");
+    function render(filter = "") {
+      const q = filter.trim().toLowerCase();
+      const items = data.filter((item) => !q || item.join(" ").toLowerCase().includes(q));
+      count.textContent = `${items.length} expression${items.length === 1 ? "" : "s"}`;
+      grid.innerHTML = items.map((item, index) => `<article class="idiom-card">
+        <span class="skill-pill">Expression ${index + 1}</span>
+        <h2>${item[0]}</h2>
+        <div class="idiom-meta">
+          <div class="idiom-line"><strong>Sens réel</strong><span>${item[1]}</span></div>
+          <div class="idiom-line literal"><strong>Sens littéral</strong><span>${item[2]}</span></div>
+          <div class="idiom-line example"><strong>Exemple</strong><span>${item[3]}</span></div>
+        </div>
+      </article>`).join("");
+    }
+    document.getElementById("idiomSearch").addEventListener("input", (event) => render(event.target.value));
+    render();
+  </script>
+  <script src="assets/niveau1.js?v=20260626"></script>
+</body>
+</html>

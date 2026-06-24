@@ -1,4 +1,133 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Prononciation A1 | Français Niveau 1</title><link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau1.css?v=20260625" rel="stylesheet"></head><body>
-<nav class="navbar fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></div></nav>
-<header class="hero lesson-hero"><div class="container"><span class="badge-course"><i class="bi bi-mic-fill"></i> Laboratoire de prononciation A1</span><h1 id="pronTitle">Prononciation</h1><p class="hero-text">Écoutez le modèle français, choisissez un défi, enregistrez-vous et comparez votre rythme et vos sons.</p></div></header>
-<main><section><div class="container"><div class="lesson-layout"><div class="lesson-main"><article class="content-card"><h2>1. Écouter le modèle</h2><audio id="modelAudio" controls preload="metadata" class="w-100"></audio><p class="section-text mt-3">Commencez à 0,75×, puis répétez à vitesse normale.</p></article><article class="content-card"><h2>2. Choisir un défi</h2><div id="challengeList" class="challenge-grid"></div></article><article class="content-card"><h2>3. S’enregistrer</h2><div class="callout"><strong>Phrase choisie :</strong> <span id="selectedText"></span></div><div class="d-flex flex-wrap gap-2 mt-3"><button id="recordBtn" class="btn-main" type="button"><i class="bi bi-mic-fill"></i> Autoriser et enregistrer</button><button id="stopBtn" class="btn-soft" type="button" disabled><i class="bi bi-stop-fill"></i> Arrêter</button></div><p id="micStatus" class="feedback-box" aria-live="polite">Le navigateur demandera l’autorisation uniquement lorsque vous cliquez sur le bouton.</p><audio id="recordingPlayback" controls hidden class="w-100 mt-3"></audio></article></div><aside class="lesson-aside"><div class="content-card"><h2 class="h5">Méthode</h2><ol><li>Écoutez deux fois.</li><li>Repérez les groupes rythmiques.</li><li>Enregistrez une phrase.</li><li>Comparez sans vous presser.</li></ol></div><div class="content-card"><h2 class="h5">Dépannage</h2><p>Sur Android ou ordinateur, vérifiez que le navigateur possède l’autorisation microphone et qu’aucune autre application ne l’utilise.</p></div></aside></div></div></section></main><footer class="footer"><div class="container"><a href="../ateliers-activites.html">← Tous les ateliers</a></div></footer><script src="../assets/niveau1.js?v=20260625"></script><script src="../assets/pronunciation-a1.js?v=20260625"></script></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="../../../favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../../../assets/css/french8-pronunciation-mobile.css" rel="stylesheet">
+  <link href="../assets/niveau1.css?v=20260626-pron" rel="stylesheet">
+  <title>Prononciation A1 | Français Niveau 1</title>
+  <style>
+    main{padding:3.5rem 0 5rem}.practice-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.65fr);gap:1.25rem;align-items:start}.panel{background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:clamp(1.15rem,3vw,2rem)}.panel h2,.panel h3{color:var(--blue-dark);font-weight:900}.eyebrow{text-transform:uppercase;letter-spacing:.11em;color:var(--red);font-size:.78rem;font-weight:900}.instructions{color:var(--muted);line-height:1.65}.hero-card{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.24);border-radius:8px;padding:.75rem;backdrop-filter:blur(12px)}.hero-card img{width:100%;height:min(390px,42vh);object-fit:cover;object-position:center 44%;border-radius:6px}.nav-pills-panel{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:1rem;margin-top:-1.35rem;position:relative;z-index:4}.model-player{display:flex;align-items:center;gap:1rem;padding:1rem;border-radius:16px;background:linear-gradient(135deg,#eef5ff,#fff7e3)}.round-button{width:54px;height:54px;flex:0 0 54px;border:0;border-radius:50%;display:grid;place-items:center;background:var(--blue-dark);color:#fff;font-size:1.35rem;box-shadow:0 10px 22px rgba(21,52,93,.22)}.player-copy strong{display:block;color:var(--blue-dark)}.player-copy span{display:block;color:var(--muted);font-size:.9rem}.stage-panel{display:grid;gap:.8rem;margin:1.2rem 0 .7rem;padding:1rem;border-radius:16px;background:linear-gradient(135deg,#eef5ff,#fff7df)}.stage-panel-copy{display:flex;justify-content:space-between;gap:1rem;align-items:center}.stage-panel-copy span{color:var(--red);font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em}.stage-panel-copy strong{color:var(--blue-dark);text-align:right}.stage-progress{display:grid;grid-template-columns:repeat(4,1fr);gap:.45rem}.stage-dot{min-height:34px;display:grid;place-items:center;border-radius:999px;background:#fff;color:var(--muted);border:1px solid rgba(31,78,140,.15);font-size:.78rem;font-weight:900}.stage-dot.is-active{background:var(--blue-dark);color:#fff;box-shadow:0 7px 15px rgba(21,52,93,.2)}.reading-text{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.22rem,2.4vw,1.65rem);line-height:1.95;padding:1.3rem;border-radius:16px;background:#f8fbff;border:1px solid rgba(31,78,140,.12);margin:1.2rem 0}.reading-word{border:0;background:transparent;font:inherit;text-align:inherit;cursor:pointer;border-radius:.35rem;padding:.08rem .12rem}.reading-word:hover{background:#eaf2ff}.word-help{display:grid;gap:.25rem;margin:-.5rem 0 1rem;padding:.85rem;border-radius:12px;background:#eef5ff;color:var(--muted)}.word-help strong{color:var(--blue-dark)}.word-help[hidden]{display:none}.record-zone{margin-top:1.2rem;padding:1.2rem;border:2px dashed rgba(31,78,140,.2);border-radius:18px;text-align:center}.mic-button{width:86px;height:86px;border:0;border-radius:50%;display:grid;place-items:center;margin:0 auto .8rem;background:linear-gradient(135deg,var(--red),#9f1d2a);color:#fff;font-size:2rem;box-shadow:0 16px 30px rgba(214,40,57,.25);transition:transform .2s,box-shadow .2s}.mic-button.is-recording{animation:pulse 1.25s infinite}.mic-button:disabled{opacity:.52;box-shadow:none}.record-status{font-weight:900;color:var(--blue-dark);margin:0}.record-help{color:var(--muted);font-size:.9rem;margin:.35rem 0 0}.timer{display:inline-flex;margin-top:.7rem;padding:.3rem .65rem;border-radius:999px;background:#eef5ff;color:var(--blue-dark);font-weight:900;font-variant-numeric:tabular-nums}.actions{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-top:1rem}.action-button{border:0;border-radius:999px;padding:.72rem 1rem;font-weight:900;display:inline-flex;align-items:center;gap:.45rem}.action-button.stop{background:var(--blue-dark);color:#fff}.action-button.reset{background:#eef5ff;color:var(--blue-dark)}.action-button:disabled{opacity:.5}.microphone-picker{display:grid;gap:.35rem;max-width:620px;margin:0 auto 1rem;text-align:left;color:var(--blue-dark);font-weight:900}.microphone-picker select{width:100%;padding:.65rem .8rem;border:1px solid rgba(31,78,140,.22);border-radius:10px;background:#fff;color:var(--blue-dark)}.level-meter{display:grid;grid-template-columns:auto 1fr auto;gap:.65rem;align-items:center;max-width:620px;margin:0 auto 1rem;color:var(--muted);font-size:.78rem;font-weight:800}.level-meter>div{height:10px;border-radius:999px;background:#e3eaf4;overflow:hidden}.level-meter i{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--green),var(--yellow),var(--red));transition:width .1s}.level-meter b{min-width:88px;color:var(--blue-dark)}.live-transcript{text-align:left;margin-top:1rem;padding:.85rem;border-radius:12px;background:#f8fbff;color:var(--muted);min-height:54px}.student-audio{width:100%;margin-top:1rem}.results[hidden]{display:none}.score-ring{width:145px;height:145px;margin:0 auto 1rem;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--green) 70%,#e8eef7 0);position:relative}.score-ring:before{content:"";position:absolute;inset:13px;border-radius:50%;background:#fff}.score-ring div{position:relative;text-align:center}.score-ring strong{display:block;color:var(--blue-dark);font-size:2.2rem;line-height:1}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem}.metric{padding:.75rem .35rem;border-radius:12px;background:#f7faff;text-align:center}.metric strong{display:block;color:var(--blue-dark);font-size:1.2rem}.metric span{font-size:.72rem;color:var(--muted);font-weight:800}.feedback{margin-top:1rem;padding:1rem;border-radius:14px;background:#fff7df;border-left:5px solid var(--yellow);color:#5c4930;line-height:1.55}.tips{display:grid;gap:.75rem}.tip{display:flex;gap:.75rem;align-items:flex-start}.tip i{width:35px;height:35px;flex:0 0 35px;border-radius:10px;display:grid;place-items:center;background:#eef5ff;color:var(--blue)}.tip p{margin:0;color:var(--muted);line-height:1.5;font-size:.92rem}@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(214,40,57,.38)}50%{box-shadow:0 0 0 16px rgba(214,40,57,0)}}@media(max-width:900px){.practice-layout{grid-template-columns:1fr}.hero{padding-top:7rem}}@media(max-width:575px){.metrics{grid-template-columns:1fr}.level-meter{grid-template-columns:1fr}.actions{display:grid}.action-button{width:100%;justify-content:center}}
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li>
+          <li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" style="--hero-image:url('../img/ateliers/prononciation-premiers-contacts.png')">
+    <div class="container">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-7">
+          <span class="badge-course"><i class="bi bi-soundwave"></i> Prononciation A1</span>
+          <h1 id="pronTitle">Premiers contacts à voix haute</h1>
+          <p class="hero-lead">3 sections guidées · 1 défi final.</p>
+          <p class="hero-text">Écoutez le modèle, avancez une courte phrase à la fois, enregistrez-vous et comparez votre rythme avec une voix française lente et claire.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a class="btn-main" href="#atelier"><i class="bi bi-mic-fill"></i> Commencer</a>
+            <a class="btn-soft" href="../ateliers-activites.html#theme-01"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a>
+          </div>
+        </div>
+        <div class="col-lg-5">
+          <div class="hero-card">
+            <img src="../img/ateliers/prononciation-premiers-contacts.png" width="1536" height="1024" fetchpriority="high" decoding="async" alt="Étudiant pratiquant la prononciation française avec un microphone">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="nav-pills-panel container" aria-label="Navigation de l'activité">
+    <div class="d-flex flex-wrap gap-2 justify-content-between align-items-center">
+      <a class="btn-soft" href="../ateliers-activites.html#theme-01"><i class="bi bi-folder2-open"></i> Ateliers</a>
+      <a class="btn-soft" href="../bibliotheque-audio.html"><i class="bi bi-soundwave"></i> Bibliothèque audio</a>
+    </div>
+  </section>
+
+  <main id="atelier">
+    <div class="container">
+      <div class="practice-layout">
+        <section class="panel" aria-labelledby="practiceTitle">
+          <p class="eyebrow" id="practiceEyebrow">3 sections guidées · 1 défi final</p>
+          <h2 id="practiceTitle">Lisez une phrase courte</h2>
+          <p class="instructions">Cliquez sur un mot pour l’écouter avec la voix du navigateur. Ensuite, écoutez le modèle complet, enregistrez votre lecture et comparez calmement.</p>
+
+          <div class="model-player">
+            <button class="round-button" id="modelButton" type="button" aria-label="Écouter le modèle"><i class="bi bi-play-fill"></i></button>
+            <div class="player-copy"><strong>Voix modèle · français de France</strong><span>Audio généré avec ElevenLabs</span></div>
+            <audio id="modelAudio" preload="metadata"></audio>
+          </div>
+
+          <div class="stage-panel">
+            <div class="stage-panel-copy"><span id="stageCounter"></span><strong id="stageTitle"></strong></div>
+            <div class="stage-progress" id="stageProgress"></div>
+          </div>
+
+          <div class="reading-text" id="readingText" lang="fr" aria-label="Texte à lire"></div>
+          <div class="word-help" id="wordHelp" hidden></div>
+
+          <div class="record-zone">
+            <label class="microphone-picker">
+              <span><i class="bi bi-mic"></i> Microphone utilisé</span>
+              <select id="microphoneSelect" aria-label="Choisir le microphone"><option value="">Microphone par défaut</option></select>
+            </label>
+            <div class="level-meter">
+              <span>Niveau du microphone</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">En attente</b>
+            </div>
+            <button class="mic-button" id="recordBtn" type="button" aria-label="Commencer l'enregistrement"><i class="bi bi-mic-fill"></i></button>
+            <p class="record-status" id="micStatus" aria-live="polite">Prêt pour votre lecture.</p>
+            <p class="record-help">Le navigateur demandera l’autorisation uniquement lorsque vous cliquez sur le micro.</p>
+            <span class="timer" id="timer">00:00</span>
+            <div class="actions">
+              <button class="action-button stop" id="stopBtn" type="button" disabled><i class="bi bi-stop-fill"></i> Terminer</button>
+              <button class="action-button reset" id="retryBtn" type="button"><i class="bi bi-arrow-counterclockwise"></i> Recommencer</button>
+              <button class="action-button reset" id="nextBtn" type="button"><i class="bi bi-arrow-right"></i> Section suivante</button>
+            </div>
+            <audio id="recordingPlayback" class="student-audio" controls hidden></audio>
+            <div class="live-transcript" id="comparisonNote">Après l’enregistrement, écoutez votre audio juste après le modèle. Cherchez surtout la durée, les pauses et les sons indiqués à droite.</div>
+          </div>
+        </section>
+
+        <aside>
+          <section class="panel results" id="results">
+            <p class="eyebrow">Auto-évaluation</p>
+            <h2>Bilan de lecture</h2>
+            <div class="score-ring"><div><strong id="stageBadge">A1</strong><span>atelier</span></div></div>
+            <div class="metrics">
+              <div class="metric"><strong>1</strong><span>Écoute</span></div>
+              <div class="metric"><strong>2</strong><span>Lecture</span></div>
+              <div class="metric"><strong>3</strong><span>Comparaison</span></div>
+            </div>
+            <div class="feedback" id="feedback">Objectif : parler lentement, garder les voyelles françaises nettes et éviter de prononcer les consonnes finales muettes.</div>
+          </section>
+
+          <section class="panel mt-3">
+            <p class="eyebrow">Points d’attention</p>
+            <h3 class="h4">Avant de lire</h3>
+            <div class="tips" id="tips"></div>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/niveau1.js?v=20260626"></script>
+  <script src="../assets/pronunciation-a1.js?v=20260626-pron"></script>
+</body>
+</html>

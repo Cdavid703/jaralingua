@@ -1,118 +1,113 @@
-﻿# Français Niveau 1 — Thème 1
+# Français Niveau 1 — Thème 1
 
 ## Alphabet complet
 File: `alphabet-complet.mp3`
 
-Narrateur: Écoutez et répétez lentement. A. B. C. D. E. F. G. Première pause. H. I. J. K. L. M. N. Deuxième pause. O. P. Q. R. S. T. Troisième pause. U. V. W. X. Y. Z. Répétez à votre rythme.
+Narrateur: Écoutez et répétez lentement. ah. bé. cé. dé. euh. effe. gé. Pause. ache. i. ji. ka. elle. aime. haine. Pause. o. pé. cu. air. esse. té. Pause. u. vé. double vé. ixe. i grec. zède.
 
-## Lettres interactives
+## Lettre A
 File: `alphabet/lettre-a.mp3`
-Narrateur: A.
+Narrateur: ah.
 
 ## Lettre B
 File: `alphabet/lettre-b.mp3`
-Narrateur: B.
+Narrateur: bé.
 
 ## Lettre C
 File: `alphabet/lettre-c.mp3`
-Narrateur: C.
+Narrateur: cé.
 
 ## Lettre D
 File: `alphabet/lettre-d.mp3`
-Narrateur: D.
+Narrateur: dé.
 
 ## Lettre E
 File: `alphabet/lettre-e.mp3`
-Narrateur: E.
+Narrateur: euh.
 
 ## Lettre F
 File: `alphabet/lettre-f.mp3`
-Narrateur: F.
+Narrateur: effe.
 
 ## Lettre G
 File: `alphabet/lettre-g.mp3`
-Narrateur: G.
+Narrateur: gé.
 
 ## Lettre H
 File: `alphabet/lettre-h.mp3`
-Narrateur: H.
+Narrateur: ache.
 
 ## Lettre I
 File: `alphabet/lettre-i.mp3`
-Narrateur: I.
+Narrateur: i.
 
-## Lettre J interactive
+## Lettre J
 File: `alphabet/lettre-j.mp3`
-Narrateur: J.
+Narrateur: ji.
 
 ## Lettre K
 File: `alphabet/lettre-k.mp3`
-Narrateur: K.
+Narrateur: ka.
 
 ## Lettre L
 File: `alphabet/lettre-l.mp3`
-Narrateur: L.
+Narrateur: elle.
 
 ## Lettre M
 File: `alphabet/lettre-m.mp3`
-Narrateur: M.
+Narrateur: aime.
 
 ## Lettre N
 File: `alphabet/lettre-n.mp3`
-Narrateur: N.
+Narrateur: haine.
 
 ## Lettre O
 File: `alphabet/lettre-o.mp3`
-Narrateur: O.
+Narrateur: o.
 
 ## Lettre P
 File: `alphabet/lettre-p.mp3`
-Narrateur: P.
+Narrateur: pé.
 
 ## Lettre Q
 File: `alphabet/lettre-q.mp3`
-Narrateur: Q.
+Narrateur: cu.
 
 ## Lettre R
 File: `alphabet/lettre-r.mp3`
-Narrateur: R.
+Narrateur: air.
 
 ## Lettre S
 File: `alphabet/lettre-s.mp3`
-Narrateur: S.
+Narrateur: esse.
 
 ## Lettre T
 File: `alphabet/lettre-t.mp3`
-Narrateur: T.
+Narrateur: té.
 
 ## Lettre U
 File: `alphabet/lettre-u.mp3`
-Narrateur: U.
+Narrateur: u.
 
 ## Lettre V
 File: `alphabet/lettre-v.mp3`
-Narrateur: V.
+Narrateur: vé.
 
 ## Lettre W
 File: `alphabet/lettre-w.mp3`
-Narrateur: W.
+Narrateur: double vé.
 
 ## Lettre X
 File: `alphabet/lettre-x.mp3`
-Narrateur: X.
+Narrateur: ixe.
 
 ## Lettre Y
 File: `alphabet/lettre-y.mp3`
-Narrateur: Y.
+Narrateur: i grec.
 
 ## Lettre Z
 File: `alphabet/lettre-z.mp3`
-Narrateur: Z.
-
-## Lettre J
-File: `lettre-j.mp3`
-
-Narrateur: J. J comme Julie. J.
+Narrateur: zède.
 
 ## Son AN
 File: `son-an.mp3`
@@ -127,7 +122,7 @@ Narrateur: Écoutez la différence. Tu. Tout. Tu. Tout. Rue. Roue. Rue. Roue.
 ## Épellation Lina
 File: `epellation-lina.mp3`
 
-Narrateur: Le prénom Lina s’épelle : L, I, N, A. Lina. L, I, N, A.
+Narrateur: Le prénom Lina s’épelle : elle, i, haine, ah. Lina. elle, i, haine, ah.
 
 ## Nombre sept
 File: `nombres/sept.mp3`
@@ -157,10 +152,10 @@ Narrateur: Vingt.
 ## Première rencontre
 File: `dialogue-premiere-rencontre.mp3`
 
-Claire: Bonjour ! Je m’appelle Lina. Et vous ?
-Thomas: Bonjour ! Moi, c’est Thomas.
+Claire: Bonjour, je m’appelle Lina. Et vous ?
+Thomas: Bonjour, moi, c’est Thomas.
 Claire: Vous êtes français ?
-Thomas: Oui, je suis français. Et vous ?
-Claire: Je suis colombienne. Enchantée !
-Thomas: Enchanté !
-
+Thomas: Oui, je suis français, mais j’habite à Bogotá.
+Claire: Moi, je suis colombienne. J’ai vingt et un ans et j’apprends le français pour voyager et étudier.
+Thomas: Très bien. Après le cours, vous voulez prendre un café ?
+Claire: Oui, avec plaisir. Merci, Thomas.

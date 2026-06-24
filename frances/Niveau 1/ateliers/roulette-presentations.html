@@ -1,1 +1,268 @@
-<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>La roulette des présentations | Français Niveau 1</title><link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau1.css?v=20260625" rel="stylesheet"></head><body><nav class="navbar fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></div></nav><header class="hero lesson-hero"><div class="container"><span class="badge-course">Interaction orale</span><h1>La roulette des présentations</h1><p class="hero-text">Adaptez la Personal Information Roulette : choisissez deux étudiants et une mission de conversation A1.</p></div></header><main><section><div class="container"><div class="lesson-layout"><article class="content-card"><h2>Participants</h2><p>Écrivez un prénom par ligne.</p><textarea id="names" class="form-control" rows="9" placeholder="Ana&#10;Paul&#10;Sofia&#10;Lucas"></textarea><div class="d-flex flex-wrap gap-2 mt-3"><button id="sample" class="btn-soft" type="button">Utiliser un groupe exemple</button><button id="spin" class="btn-main" type="button"><i class="bi bi-arrow-repeat"></i> Tourner la roulette</button></div></article><aside class="lesson-aside"><article class="content-card text-center"><span class="skill-pill">Tour actuel</span><h2 id="pair">Deux étudiants</h2><p id="mission">La mission apparaîtra ici.</p></article><article class="content-card"><h2 class="h5">Questions utiles</h2><p>Comment tu t’appelles ?<br>Quel âge as-tu ?<br>Quelle est ta nationalité ?<br>Où habites-tu ?<br>Qu’est-ce que tu aimes ?</p></article></aside></div></div></section></main><script>const missions=["Présentez-vous et échangez vos nationalités.","Échangez vos âges, villes et numéros de téléphone.","Épelez vos prénoms et posez deux questions.","Trouvez deux goûts que vous avez en commun."];const names=document.getElementById('names');document.getElementById('sample').onclick=()=>names.value='Ana\nPaul\nSofia\nLucas\nChloé\nHugo';document.getElementById('spin').onclick=()=>{const list=names.value.split(/\n|,/).map(x=>x.trim()).filter(Boolean);if(list.length<2){document.getElementById('pair').textContent='Ajoutez au moins deux prénoms';return;}const a=list.splice(Math.floor(Math.random()*list.length),1)[0],b=list[Math.floor(Math.random()*list.length)];document.getElementById('pair').textContent=`${a} + ${b}`;document.getElementById('mission').textContent=missions[Math.floor(Math.random()*missions.length)];};</script></body></html>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>La roulette des présentations | Français Niveau 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../../assets/css/style.css?v=contrast-20260521b" />
+</head>
+<body class="english-basic-page">
+  <div class="global-course-switcher" aria-label="Navigation globale">
+    <details>
+      <summary><span>Navigation</span></summary>
+      <nav>
+        <a href="../../../index.html">Accueil</a>
+        <a href="../../index.html">Français</a>
+        <a href="../index.html">Français Niveau 1</a>
+        <a href="../themes-du-cours.html">Thèmes</a>
+        <a href="../ateliers-activites.html">Ateliers</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../../index.html" class="brand">
+        <img src="../../../assets/img/jaralingua-logo.png" alt="Logo JaraLingua" />
+      </a>
+      <ul class="nav-links">
+        <li><a href="../../../index.html">Accueil</a></li>
+        <li><a href="../../index.html">Français</a></li>
+        <li><a href="../index.html">Niveau 1</a></li>
+        <li><a href="../ateliers-activites.html">Ateliers</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('/frances/Niveau%201/img/ateliers/roulette-presentations-a1.png');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Atelier d’interaction orale</p>
+        <h1>La roulette des présentations</h1>
+        <p>
+          Faites tourner la roulette, choisissez deux étudiants, attribuez les rôles
+          Élève A et Élève B, puis pratiquez une première conversation A1.
+        </p>
+        <div class="lesson-meta">
+          <span>Expression orale</span>
+          <span>Travail en binômes</span>
+          <span>Sans répétition</span>
+          <span>Niveau A1</span>
+        </div>
+        <div class="hero-actions">
+          <a href="#roulette-activity" class="btn btn-primary">Commencer la roulette</a>
+          <a href="../ateliers-activites.html#theme-01" class="btn btn-secondary">Retour aux ateliers</a>
+        </div>
+      </div>
+
+      <div class="lesson-hero-image">
+        <img src="/frances/Niveau%201/img/ateliers/roulette-presentations-a1.png" alt="Étudiants jouant à la roulette des présentations" />
+      </div>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Objectif communicatif</span>
+        <p>
+          À la fin de l’activité, les étudiants peuvent saluer, demander le prénom,
+          épeler, demander l’âge, la ville, la nationalité et le numéro de téléphone
+          dans une interaction guidée.
+        </p>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="roulette-activity">
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">01</span>
+          <div>
+            <p class="topic-label">Consignes</p>
+            <h2>Comment fonctionne la roulette ?</h2>
+          </div>
+        </div>
+
+        <p class="lesson-text">
+          Le professeur charge la liste des étudiants. À chaque tour, la roulette
+          sélectionne deux personnes. Après leur participation, leurs noms sortent
+          de la liste active pour que tout le groupe puisse parler.
+        </p>
+
+        <div class="lesson-grid">
+          <div class="lesson-mini-card">
+            <h3>Élève A</h3>
+            <div class="phrase-list">
+              <div class="phrase-item featured-phrase">
+                <strong>Pose les questions</strong>
+                <span>Élève A commence la conversation et demande les informations personnelles.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="lesson-mini-card">
+            <h3>Élève B</h3>
+            <div class="phrase-list">
+              <div class="phrase-item featured-phrase">
+                <strong>Répond clairement</strong>
+                <span>Élève B répond avec des phrases complètes et une prononciation lente.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="teacher-tip">
+          <span>Astuce professeur</span>
+          <p>
+            Si le nombre d’étudiants est impair, gardez le dernier étudiant pour
+            une démonstration avec le professeur ou réinitialisez la roulette.
+          </p>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">02</span>
+          <div>
+            <p class="topic-label">Modèle de conversation</p>
+            <h2>Dialogue exemple</h2>
+          </div>
+        </div>
+
+        <div class="roulette-dialogue-card">
+          <div class="role-line student-a"><span>Élève A</span><p>Bonjour ! Comment tu t’appelles ?</p></div>
+          <div class="role-line student-b"><span>Élève B</span><p>Bonjour ! Je m’appelle Lina.</p></div>
+          <div class="role-line student-a"><span>Élève A</span><p>Tu peux épeler ton prénom, s’il te plaît ?</p></div>
+          <div class="role-line student-b"><span>Élève B</span><p>Oui : L-I-N-A.</p></div>
+          <div class="role-line student-a"><span>Élève A</span><p>Quel âge as-tu ?</p></div>
+          <div class="role-line student-b"><span>Élève B</span><p>J’ai vingt et un ans.</p></div>
+          <div class="role-line student-a"><span>Élève A</span><p>Quelle est ta nationalité ?</p></div>
+          <div class="role-line student-b"><span>Élève B</span><p>Je suis colombienne.</p></div>
+          <div class="role-line student-a"><span>Élève A</span><p>Où habites-tu ?</p></div>
+          <div class="role-line student-b"><span>Élève B</span><p>J’habite à Medellín.</p></div>
+          <div class="role-line student-a"><span>Élève A</span><p>Quel est ton numéro de téléphone ?</p></div>
+          <div class="role-line student-b"><span>Élève B</span><p>Mon numéro est le 312 456 7890.</p></div>
+          <div class="role-line student-a"><span>Élève A</span><p>Merci. Enchanté !</p></div>
+          <div class="role-line student-b"><span>Élève B</span><p>Enchantée. Au revoir !</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">03</span>
+          <div>
+            <p class="topic-label">Outil interactif</p>
+            <h2>Faire tourner la roulette</h2>
+          </div>
+        </div>
+
+        <div class="roulette-panel">
+          <div class="roulette-setup">
+            <div class="roulette-setup-text">
+              <h3>Charger les prénoms</h3>
+              <p>Écrivez ou collez les prénoms. Utilisez une ligne par étudiant.</p>
+            </div>
+
+            <textarea id="studentNamesInput" class="roulette-textarea" placeholder="Exemple :
+Ana
+Paul
+Sofia
+Lucas
+Chloé
+Hugo"></textarea>
+            <input type="file" id="studentRosterFile" accept=".xlsx,.csv,.txt,.tsv" hidden />
+            <p class="roster-import-status" id="rosterImportStatus" aria-live="polite"></p>
+
+            <div class="roulette-actions">
+              <button type="button" class="roulette-btn secondary" onclick="openRosterFilePicker()">Importer Excel/CSV</button>
+              <button type="button" class="roulette-btn primary" onclick="loadStudentNames()">Charger les noms</button>
+              <button type="button" class="roulette-btn secondary" onclick="useSampleNames()">Utiliser un groupe exemple</button>
+              <button type="button" class="roulette-btn danger" onclick="resetRoulette()">Réinitialiser</button>
+            </div>
+          </div>
+
+          <div class="roulette-play-area" id="roulettePlayArea">
+            <div class="roulette-wheel-zone">
+              <div class="roulette-pointer"></div>
+              <div class="roulette-wheel" id="rouletteWheel">
+                <div class="roulette-wheel-center">TOURNE</div>
+              </div>
+              <button type="button" class="roulette-spin-btn" id="spinBtn" onclick="spinRoulette()" disabled>
+                Faire tourner
+              </button>
+              <p class="roulette-status" id="rouletteStatus">Chargez au moins deux prénoms pour commencer.</p>
+            </div>
+
+            <div class="roulette-result-zone">
+              <div class="selected-pair-card" id="selectedPairCard">
+                <span class="result-label">Étudiants sélectionnés</span>
+                <div class="selected-role-grid">
+                  <div class="selected-role-card role-a">
+                    <small>Élève A</small>
+                    <strong id="studentAResult">—</strong>
+                    <p>Pose les questions.</p>
+                  </div>
+                  <div class="selected-role-card role-b">
+                    <small>Élève B</small>
+                    <strong id="studentBResult">—</strong>
+                    <p>Répond aux questions.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="students-left-card">
+                <div class="students-left-header">
+                  <h3>Étudiants restants</h3>
+                  <span id="studentsLeftCount">0</span>
+                </div>
+                <div class="student-chip-list" id="studentPoolList">
+                  <p class="empty-list-message">Aucun étudiant chargé.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="roulette-history-card">
+            <div class="roulette-history-header">
+              <h3>Historique de participation</h3>
+              <p>Chaque tour apparaît ici.</p>
+            </div>
+            <div class="partner-table-container">
+              <table class="partner-table">
+                <thead>
+                  <tr>
+                    <th>Tour</th>
+                    <th>Élève A</th>
+                    <th>Élève B</th>
+                  </tr>
+                </thead>
+                <tbody id="rouletteHistoryBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="lesson-next-section">
+      <div class="lesson-next-card">
+        <p class="eyebrow">Après l’activité</p>
+        <h2>Continuez avec l’écoute “Première rencontre”</h2>
+        <p>Les étudiants réutilisent les mêmes informations personnelles dans une compréhension orale courte.</p>
+        <div class="hero-actions">
+          <a href="quiz.html?activite=ecoute-premiere-rencontre" class="btn btn-primary">Aller à l’écoute</a>
+          <a href="../ateliers-activites.html#theme-01" class="btn btn-secondary">Retour aux ateliers</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 JaraLingua. Français pas à pas.</p>
+  </footer>
+
+  <script src="../../../assets/js/roster-import.js"></script>
+  <script src="../assets/french1-roulette.js?v=20260626"></script>
+  <script src="../assets/niveau1.js?v=20260626"></script>
+</body>
+</html>

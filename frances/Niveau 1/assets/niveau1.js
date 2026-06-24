@@ -1,6 +1,24 @@
 (function () {
   "use strict";
 
+  function loadScript(src, attributes = {}) {
+    const existing = [...document.scripts].find((script) => script.src && script.src.split("?")[0] === new URL(src, location.href).href.split("?")[0]);
+    if (existing) return Promise.resolve(existing);
+    return new Promise((resolve, reject) => {
+      const script = document.createElement("script");
+      script.src = src;
+      Object.entries(attributes).forEach(([name, value]) => script.setAttribute(name, value));
+      script.onload = () => resolve(script);
+      script.onerror = reject;
+      document.head.appendChild(script);
+    });
+  }
+
+  loadScript("/assets/js/google-auth-config.js")
+    .then(() => loadScript("https://accounts.google.com/gsi/client", { async: "", defer: "" }))
+    .then(() => loadScript("/assets/js/google-auth.js?v=20260626"))
+    .catch(() => {});
+
   document.querySelectorAll(".alphabet-grid .letter-card").forEach((card) => {
     const letter = card.querySelector("strong")?.textContent?.trim().toLowerCase();
     if (!letter) return;
@@ -8,7 +26,7 @@
     card.setAttribute("tabindex", "0");
     card.setAttribute("aria-label", `Écouter la lettre ${letter.toUpperCase()}`);
     card.setAttribute("aria-describedby", "audioAlphabet");
-    card.setAttribute("data-audio-src", `../audio/theme-1/alphabet/lettre-${letter}.mp3`);
+    card.setAttribute("data-audio-src", `../audio/theme-1/alphabet/lettre-${letter}.mp3?v=20260626-audio`);
     if (!card.querySelector("i")) card.insertAdjacentHTML("beforeend", '<i class="bi bi-volume-up-fill" aria-hidden="true"></i>');
     card.addEventListener("keydown", (event) => {
       if (event.key === "Enter" || event.key === " ") {

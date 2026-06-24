@@ -24,8 +24,47 @@ const readings=[
 readings.forEach(([k,t,th,text,rows])=>C[k]=A(t,th,"Compréhension écrite","Lisez le texte de moins de 100 mots, puis répondez.",from(rows),{reading:text}));
 C["conjugaison-er"]=A("Les verbes du premier groupe en contexte","Thème 2 · Verbes du premier groupe","Grammaire en contexte","Complétez vingt phrases A1 avec la forme correcte du présent.",from([
 ["Je ___ français tous les soirs.",["étudie","étudies","étudient"],0],["Tu ___ près de l’université.",["habite","habites","habitons"],1],["Lina ___ un café sans sucre.",["commande","commandes","commandez"],0],["Nous ___ au professeur.",["parlons","parlez","parlent"],0],["Vous ___ la radio le matin.",["écoutez","écoutons","écoutent"],0],["Mes amis ___ au football.",["joue","jouez","jouent"],2],["Paul et moi ___ à Lyon.",["habitons","habitez","habitent"],0],["Je ___ le dîner à dix-neuf heures.",["prépare","prépares","préparons"],0],["Tu ___ la bibliothèque à dix-huit heures.",["fermes","ferme","fermez"],0],["Le cours ___ à huit heures.",["commence","commences","commencent"],0],["Nous ___ notre projet vendredi.",["terminons","terminez","terminent"],0],["Vous ___ souvent en France.",["voyagez","voyageons","voyagent"],0],["Elles ___ dans un petit café.",["travaille","travaillez","travaillent"],2],["J’___ la musique française.",["aime","aimes","aimons"],0],["Tu ___ une question utile.",["poses","pose","posent"],0],["Ma sœur ___ avec ses amis.",["danse","danses","dansons"],0],["Nous ___ le vocabulaire ensemble.",["révisons","révisez","révisent"],0],["Vous ___ votre nom sur la fiche.",["notez","notons","notent"],0],["Les étudiants ___ les phrases.",["répète","répétez","répètent"],2],["Je ___ mes parents le dimanche.",["téléphone à","téléphones à","téléphonons à"],0]]));
+C["present-indicatif"]=A("Le présent : emplois, négation et questions","Thème 2 · Le présent de l’indicatif","Grammaire fondamentale","Répondez à vingt questions A1 sur les emplois du présent, la négation et l’interrogation.",from([
+["Quelle phrase exprime une habitude ?",["Je travaille chaque lundi.","Je vais travailler demain.","J’ai travaillé hier."],0],
+["Quelle phrase décrit une action actuelle ?",["Elle parle avec le professeur.","Elle parlera plus tard.","Elle a parlé hier."],0],
+["Quelle phrase exprime une vérité générale ?",["Paris est en France.","Paris va en France.","Paris a été demain."],0],
+["Choisissez la négation correcte : Je parle espagnol.",["Je ne parle pas espagnol.","Je pas parle espagnol.","Je ne pas parle espagnol."],0],
+["Complétez : Il ___ habite pas à Lyon.",["ne","n’","pas"],1],
+["Complétez : Nous ne ___ pas le dimanche.",["travaillons","travailler","travaillez"],0],
+["Quelle question utilise l’intonation ?",["Tu étudies le français ?","Est-ce que tu étudies le français ?","Étudies-tu le français ?"],0],
+["Complétez : ___ tu habites à Bogotá ?",["Est-ce que","Est que","Qu’est-ce"],0],
+["Quel mot demande un lieu ?",["Où","Quand","Pourquoi"],0],
+["Quel mot demande une raison ?",["Comment","Pourquoi","Combien"],1],
+["Choisissez la question correcte.",["Où est-ce que vous habitez ?","Où vous est-ce que habitez ?","Est-ce où vous habitez ?"],0],
+["Transformez : Elle aime le café.",["Elle n’aime pas le café.","Elle ne pas aime le café.","Elle n’pas aime le café."],0],
+["Quelle forme est la plus simple à l’oral A1 ?",["Vous habitez ici ?","Habitez-vous ici ?","Ici habitez-vous donc ?"],0],
+["Complétez : ___ est ta nationalité ?",["Quel","Quelle","Quels"],1],
+["Quelle phrase est affirmative ?",["Je ne suis pas étudiant.","Je suis étudiant.","Est-ce que je suis étudiant ?"],1],
+["Quelle phrase est négative ?",["Nous avons un cours.","Avons-nous un cours ?","Nous n’avons pas de cours."],2],
+["Choisissez l’ordre correct d’une négation.",["sujet + ne + verbe + pas","sujet + pas + ne + verbe","ne + pas + sujet + verbe"],0],
+["Complétez : Quand ___ le cours ?",["commence","commencent","commencer"],0],
+["Quelle question demande l’identité ?",["Comment tu t’appelles ?","Où tu habites ?","Quand tu travailles ?"],0],
+["Quelle phrase convient à une routine ?",["Le matin, je prépare un café.","Demain, je vais préparer un café.","Hier, j’ai préparé un café."],0]
+]));
+
 // Répartit les bonnes réponses entre A, B et C selon une séquence propre à
 // chaque activité, sans modifier la réponse linguistique correcte.
+Object.assign(C["premiere-rencontre"], {
+  transcript: "Thomas : Bonjour, je m’appelle Thomas. Et vous ?\n\nLina : Bonjour, je m’appelle Lina. Enchantée.\n\nThomas : Enchanté, Lina. Vous venez d’où ?\n\nLina : Je viens de Colombie. Et vous, vous êtes français ?\n\nThomas : Oui, je suis français, mais j’habite maintenant à Bogotá.\n\nLina : Très bien ! Moi, j’ai vingt et un ans et j’apprends le français pour voyager et étudier.\n\nThomas : C’est un beau projet. Après le cours, vous voulez prendre un café ?\n\nLina : Oui, avec plaisir. Merci, Thomas."
+});
+Object.assign(C["ecoute-verbes-er"], {
+  transcript: "Camille commence sa journée à sept heures. Elle prépare un café, écoute les informations et marche jusqu’au petit café où elle travaille. Le matin, elle prépare des boissons et parle avec les clients. À midi, elle déjeune avec Nora. Après le travail, Camille étudie le français pendant une heure. Le soir, elle dessine dans son carnet et prépare son sac pour le lendemain. Sa routine est simple, mais très organisée."
+});
+Object.assign(C["ecoute-verbes-essentiels"], {
+  transcript: "Aujourd’hui, Nora et Hugo sont à Lyon. Il fait beau et ils vont d’abord au marché. Nora a de l’eau et un appareil photo dans son sac. Hugo est content parce qu’il aime découvrir la ville. Après le déjeuner, ils font une promenade près de la rivière. Ils sont un peu fatigués, mais ils ont encore envie de visiter un quartier ancien. Cette journée leur permet de pratiquer être, avoir, aller et faire en contexte."
+});
+Object.assign(C["ecoute-ma-famille"], {
+  transcript: "Le dimanche, Chloé déjeune chez sa grand-mère. Sa mère s’appelle Sophie et son père est professeur. Chloé a un frère et beaucoup de cousins. Aujourd’hui, la tante Émilie apporte le dessert. Le cousin Paul a douze ans et raconte ses nouvelles à toute la famille. Ce repas est important parce que chacun parle de sa semaine, de ses projets et de ses activités. Chloé aime ces moments simples avec ses proches."
+});
+Object.assign(C["ecoute-portrait"], {
+  transcript: "Sofia a vingt-trois ans. Elle a les cheveux longs, noirs et bouclés. Ses yeux sont marron et elle porte souvent des lunettes rondes. Sofia est généreuse, créative et souriante. Ses amis l’apprécient parce qu’elle écoute les autres et aide quand quelqu’un a un problème. Elle aime la photographie et prend souvent des photos dans la rue. Pour ses camarades, Sofia est une personne calme, attentive et très agréable."
+});
+
 const answerLayouts={
   "premiere-rencontre":[1,2,0,1,2,0,2,1],
   "ecoute-verbes-er":[2,0,1,2,1,0,2,1],
@@ -37,7 +76,8 @@ const answerLayouts={
   "lecture-verbes-essentiels":[0,2,1,2,0,1],
   "lecture-famille":[2,1,0,1,2,0],
   "lecture-description":[1,0,2,1,0,2],
-  "conjugaison-er":[1,2,0,2,1,0,1,2,0,1,2,0,2,1,0,2,0,1,2,1]
+  "conjugaison-er":[1,2,0,2,1,0,1,2,0,1,2,0,2,1,0,2,0,1,2,1],
+  "present-indicatif":[1,2,0,2,1,0,1,2,0,1,2,0,2,1,0,2,0,1,2,1]
 };
 Object.entries(answerLayouts).forEach(([activityId,layout])=>{
   C[activityId].questions.forEach((question,index)=>{
