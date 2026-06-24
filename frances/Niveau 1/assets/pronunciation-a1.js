@@ -4,7 +4,13 @@
   const SETS = {
     "theme-1": {
       title: "Premiers contacts à voix haute",
-      audio: "../audio/prononciation/theme-1-premiers-contacts.mp3",
+      audio: "../audio/prononciation/stages/theme-1-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-1-stage-1.mp3",
+        "../audio/prononciation/stages/theme-1-stage-2.mp3",
+        "../audio/prononciation/stages/theme-1-stage-3.mp3",
+        "../audio/prononciation/stages/theme-1-defi.mp3"
+      ],
       back: "../ateliers-activites.html#theme-01",
       image: "../img/ateliers/prononciation-premiers-contacts.png",
       stages: [
@@ -21,7 +27,13 @@
     },
     "theme-2": {
       title: "Le présent de l’indicatif à voix haute",
-      audio: "../audio/prononciation/theme-2-verbes-er.mp3",
+      audio: "../audio/prononciation/stages/theme-2-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-2-stage-1.mp3",
+        "../audio/prononciation/stages/theme-2-stage-2.mp3",
+        "../audio/prononciation/stages/theme-2-stage-3.mp3",
+        "../audio/prononciation/stages/theme-2-defi.mp3"
+      ],
       back: "../ateliers-activites.html#theme-02",
       image: "../img/ateliers/prononciation-verbes-er.png",
       stages: [
@@ -38,7 +50,13 @@
     },
     "theme-3": {
       title: "Verbes essentiels à voix haute",
-      audio: "../audio/prononciation/theme-3-verbes-essentiels.mp3",
+      audio: "../audio/prononciation/stages/theme-3-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-3-stage-1.mp3",
+        "../audio/prononciation/stages/theme-3-stage-2.mp3",
+        "../audio/prononciation/stages/theme-3-stage-3.mp3",
+        "../audio/prononciation/stages/theme-3-defi.mp3"
+      ],
       back: "../ateliers-activites.html#theme-04",
       image: "../img/ateliers/prononciation-verbes-essentiels.png",
       stages: [
@@ -55,7 +73,13 @@
     },
     "theme-4": {
       title: "Famille et relations à voix haute",
-      audio: "../audio/prononciation/theme-4-famille.mp3",
+      audio: "../audio/prononciation/stages/theme-4-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-4-stage-1.mp3",
+        "../audio/prononciation/stages/theme-4-stage-2.mp3",
+        "../audio/prononciation/stages/theme-4-stage-3.mp3",
+        "../audio/prononciation/stages/theme-4-defi.mp3"
+      ],
       back: "../ateliers-activites.html#theme-05",
       image: "../img/ateliers/prononciation-famille.png",
       stages: [
@@ -72,7 +96,13 @@
     },
     "theme-5": {
       title: "Description et personnalité à voix haute",
-      audio: "../audio/prononciation/theme-5-description.mp3",
+      audio: "../audio/prononciation/stages/theme-5-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-5-stage-1.mp3",
+        "../audio/prononciation/stages/theme-5-stage-2.mp3",
+        "../audio/prononciation/stages/theme-5-stage-3.mp3",
+        "../audio/prononciation/stages/theme-5-defi.mp3"
+      ],
       back: "../ateliers-activites.html#theme-06",
       image: "../img/ateliers/prononciation-description.png",
       stages: [
@@ -114,10 +144,13 @@
     microphoneSelect: document.getElementById("microphoneSelect"),
     levelMeterBar: document.getElementById("levelMeterBar"),
     levelMeterValue: document.getElementById("levelMeterValue"),
-    comparisonNote: document.getElementById("comparisonNote")
+    comparisonNote: document.getElementById("comparisonNote"),
+    results: document.getElementById("results"),
+    metrics: document.getElementById("metrics")
   };
 
   let stageIndex = 0;
+  const completedStages = new Set();
   let stream = null;
   let recorder = null;
   let chunks = [];
@@ -128,10 +161,48 @@
   let analyser = null;
   let meterFrame = null;
 
+  function currentText() {
+    return set.stages[stageIndex];
+  }
+
+  function currentModelAudio() {
+    return set.audios?.[stageIndex] || set.audio;
+  }
+
+  function updateSelfAssessment() {
+    const total = set.stages.length;
+    const completed = completedStages.size;
+    const percent = total ? Math.round((completed / total) * 100) : 0;
+    els.results.classList.toggle("is-empty", completed === 0);
+    els.results.style.setProperty("--score-progress", `${percent}%`);
+    els.stageBadge.textContent = `${completed}/${total}`;
+    els.metrics.innerHTML = `
+      <div class="metric"><strong>${completed}</strong><span>Lectures enregistrées</span></div>
+      <div class="metric"><strong>${Math.min(completed, total - 1)}/${total - 1}</strong><span>Sections guidées</span></div>
+      <div class="metric"><strong>${completed === total ? "Oui" : "—"}</strong><span>Défi final</span></div>
+    `;
+    els.feedback.textContent = completed === 0
+      ? "Aucun progrès enregistré pour le moment. Le bilan commence seulement après une lecture terminée."
+      : completed === total
+        ? "Parcours complet : écoutez votre défi final après le modèle et notez les sons à reprendre."
+        : `Étape validée : continuez avec la section suivante. Progrès réel : ${completed} lecture${completed > 1 ? "s" : ""} enregistrée${completed > 1 ? "s" : ""}.`;
+  }
+
+  function renderStageProgress() {
+    els.stageProgress.innerHTML = set.stages.map((_, index) => {
+      const classes = ["stage-dot"];
+      if (index === stageIndex) classes.push("is-active");
+      if (completedStages.has(index)) classes.push("is-done");
+      return `<span class="${classes.join(" ")}">${index === set.stages.length - 1 ? "Défi" : index + 1}</span>`;
+    }).join("");
+  }
+
   function render() {
     const finalStage = stageIndex === set.stages.length - 1;
     els.title.textContent = set.title;
-    els.modelAudio.src = set.audio;
+    els.modelAudio.pause();
+    els.modelButton.querySelector("i").className = "bi bi-play-fill";
+    els.modelAudio.src = currentModelAudio();
     document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-06']").forEach((link) => {
       if (link.textContent.includes("Ateliers") || link.textContent.includes("Retour")) link.href = set.back;
     });
@@ -140,22 +211,17 @@
     if (heroImage) heroImage.src = set.image;
     els.stageCounter.textContent = finalStage ? "Défi final" : `Pratique guidée · ${stageIndex + 1} sur ${set.stages.length - 1}`;
     els.stageTitle.textContent = finalStage ? "Lisez maintenant le paragraphe complet" : `Section ${stageIndex + 1}`;
-    els.stageBadge.textContent = finalStage ? "Défi" : `S${stageIndex + 1}`;
-    els.stageProgress.innerHTML = set.stages.map((_, index) => {
-      const classes = ["stage-dot"];
-      if (index === stageIndex) classes.push("is-active");
-      return `<span class="${classes.join(" ")}">${index === set.stages.length - 1 ? "Défi" : index + 1}</span>`;
-    }).join("");
-    els.readingText.innerHTML = set.stages[stageIndex].split(/(\s+)/).map((part) => {
+    renderStageProgress();
+    els.readingText.innerHTML = currentText().split(/(\s+)/).map((part) => {
       if (/^\s+$/.test(part)) return part;
       const clean = part.replace(/[.,!?;:()[\]{}«»"]/g, "");
       return `<button type="button" class="reading-word" data-word="${clean}">${part}</button>`;
     }).join("");
     els.tips.innerHTML = set.tips.map(([icon, text]) => `<div class="tip"><i class="bi ${icon}"></i><p>${text}</p></div>`).join("");
-    els.feedback.textContent = finalStage
+    els.comparisonNote.textContent = finalStage
       ? "Défi final : écoutez le modèle complet, enregistrez-vous, puis comparez votre fluidité globale."
-      : "Objectif : répéter une phrase courte avec une articulation lente, claire et régulière.";
-    els.comparisonNote.textContent = "Après l’enregistrement, écoutez votre audio juste après le modèle. Cherchez surtout la durée, les pauses et les sons indiqués à droite.";
+      : "Objectif : répéter cette phrase courte avec une articulation lente, claire et régulière.";
+    updateSelfAssessment();
   }
 
   function speakWord(word) {
@@ -261,7 +327,7 @@
       startedAt = Date.now();
       timerHandle = setInterval(updateTimer, 250);
       setRecordingControls(true);
-      els.micStatus.textContent = `Enregistrement : « ${set.stages[stageIndex]} »`;
+      els.micStatus.textContent = `Enregistrement : « ${currentText()} »`;
     } catch (error) {
       const messages = {
         NotAllowedError: "Autorisation refusée. Ouvrez les paramètres du navigateur, autorisez le microphone pour JaraLingua et réessayez.",
@@ -290,6 +356,9 @@
     els.playback.hidden = false;
     els.micStatus.textContent = "Enregistrement prêt. Écoutez-vous, puis comparez avec le modèle.";
     els.comparisonNote.textContent = "Conseil : écoutez le modèle une fois, puis votre enregistrement. Si votre version est beaucoup plus rapide, relisez avec des pauses plus visibles.";
+    completedStages.add(stageIndex);
+    renderStageProgress();
+    updateSelfAssessment();
   }
 
   function stopRecording() {

@@ -61,24 +61,24 @@ Narratrice: Le samedi matin, Sofia se promène souvent dans son quartier avec so
 ## Prononciation thème 1
 File: `prononciation/theme-1-premiers-contacts.mp3`
 
-Narratrice: Bonjour, je m’appelle Lina. Je suis colombienne et j’habite à Bogotá. Enchantée !
+Narratrice: Bonjour, je m’appelle Lina. Je suis colombienne et j’habite à Bogotá. Enchantée ! Comment vous appelez-vous ?
 
 ## Prononciation thème 2
 File: `prononciation/theme-2-verbes-er.mp3`
 
-Narratrice: Je parle français, tu écoutes la radio et nous travaillons ensemble.
+Narratrice: Je parle français tous les jours. Tu écoutes la radio le matin. Nous travaillons ensemble.
 
 ## Prononciation thème 3
 File: `prononciation/theme-3-verbes-essentiels.mp3`
 
-Narratrice: Je suis étudiante, j’ai vingt ans, je vais en cours et je fais mes exercices.
+Narratrice: Je suis étudiante et j’ai vingt ans. Je vais en cours à huit heures. Je fais mes exercices le soir.
 
 ## Prononciation thème 4
 File: `prononciation/theme-4-famille.mp3`
 
-Narratrice: Voici ma famille : mes parents, mon frère, ma sœur et mes grands-parents.
+Narratrice: Voici ma famille. Mon frère s’appelle Lucas. Mes grands-parents habitent à Lyon.
 
 ## Prononciation thème 5
 File: `prononciation/theme-5-description.mp3`
 
-Narratrice: Elle est souriante et généreuse. Elle a les cheveux noirs et les yeux marron.
+Narratrice: Elle est souriante et généreuse. Elle a les cheveux noirs. Elle porte des lunettes rondes.
