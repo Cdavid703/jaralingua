@@ -388,9 +388,15 @@
         error.name = "NotSupportedError";
         throw error;
       }
-      recordStatus.textContent = "Requesting microphone permission?";
-      recordHelp.textContent = "Accept the browser permission prompt to start recording.";
-      const audioConstraints = { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 };
+      if (window.JaraMicPermissions) {
+        const canUseMicrophone = await window.JaraMicPermissions.ensureReady({ micButton, stopButton, recordStatus, recordHelp, unsupported, localUrl: LOCAL_URL, language: "en" });
+        if (!canUseMicrophone) return;
+        window.JaraMicPermissions.beforeRequest({ recordStatus, recordHelp, language: "en" });
+      } else {
+        recordStatus.textContent = "Requesting microphone permission…";
+        recordHelp.textContent = "Accept the browser permission prompt to start recording.";
+      }
+      const audioConstraints = window.JaraMicPermissions?.audioConstraints(microphoneSelect.value) || { echoCancellation: { ideal: true }, noiseSuppression: { ideal: true }, autoGainControl: { ideal: true }, channelCount: { ideal: 1 } };
       if (microphoneSelect.value) audioConstraints.deviceId = { exact: microphoneSelect.value };
       mediaStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints, video: false });
       startLevelMeter(mediaStream);
@@ -399,6 +405,7 @@
       await refreshMicrophones();
       const activeDeviceId = activeTrack?.getSettings?.().deviceId;
       if (activeDeviceId && [...microphoneSelect.options].some((option) => option.value === activeDeviceId)) microphoneSelect.value = activeDeviceId;
+      window.JaraMicPermissions?.markActive({ stream: mediaStream, microphoneSelect, recordHelp, language: "en" });
       chunks = [];
       discardRecording = false;
       const preferredType = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((type) => MediaRecorder.isTypeSupported(type)) || "";
@@ -427,6 +434,10 @@
       liveTranscript.textContent = "Read only the text shown above.";
     } catch (error) {
       stopTracks();
+      if (window.JaraMicPermissions?.handleError(error, { recordStatus, recordHelp, microphoneSelect, language: "en" })) {
+        setControls(false, false);
+        return;
+      }
       const messages = {
         NotAllowedError: "Microphone permission was denied. Open your browser settings, allow the microphone for JaraLingua, and try again.",
         SecurityError: "The microphone requires HTTPS or localhost. On production, make sure the page is served securely.",
