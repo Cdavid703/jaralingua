@@ -17,9 +17,9 @@
       Q("Quelle épellation correspond à LINA ?", ["L-I-N-A", "R-I-M-A", "L-E-N-E"], 0, "Lina s’épelle L-I-N-A.", "../audio/theme-1/epellation-lina.mp3?v=20260624-alphabet-nz-fix")
     ]),
     "ecoute-nombres-1-20": A("Écoute : nombres de 1 à 20", "Thème 1 · Premiers contacts", "Compréhension orale", "Écoutez chaque nombre, puis choisissez sa forme écrite.", [
-      Q("Quel nombre entendez-vous ?", ["sept", "seize", "dix-sept"], 0, "Vous avez entendu sept.", "../audio/theme-1/nombres/sept.mp3?v=20260626-audio"),
-      Q("Quel nombre entendez-vous ?", ["deux", "douze", "vingt"], 1, "Vous avez entendu douze.", "../audio/theme-1/nombres/douze.mp3?v=20260626-audio"),
-      Q("Quel nombre entendez-vous ?", ["cinq", "quinze", "seize"], 1, "Vous avez entendu quinze.", "../audio/theme-1/nombres/quinze.mp3?v=20260626-audio"),
+      Q("Quel nombre entendez-vous ?", ["sept", "seize", "dix-sept"], 0, "Vous avez entendu sept.", "../audio/theme-1/nombres/sept.mp3?v=20260624-numbers-fix"),
+      Q("Quel nombre entendez-vous ?", ["deux", "douze", "vingt"], 1, "Vous avez entendu douze.", "../audio/theme-1/nombres/douze.mp3?v=20260624-numbers-fix"),
+      Q("Quel nombre entendez-vous ?", ["cinq", "quinze", "seize"], 1, "Vous avez entendu quinze.", "../audio/theme-1/nombres/quinze.mp3?v=20260624-numbers-fix"),
       Q("Quel nombre entendez-vous ?", ["neuf", "dix-neuf", "onze"], 1, "Vous avez entendu dix-neuf.", "../audio/theme-1/nombres/dix-neuf.mp3?v=20260626-audio"),
       Q("Quel nombre entendez-vous ?", ["deux", "douze", "vingt"], 2, "Vous avez entendu vingt.", "../audio/theme-1/nombres/vingt.mp3?v=20260626-audio")
     ]),

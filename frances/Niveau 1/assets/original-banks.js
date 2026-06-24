@@ -9,7 +9,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« sept » = 7.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-007.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-007.mp3?v=20260624-numbers-fix"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -20,7 +20,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 1,
       "explanation": "« douze » = 12.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-012.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-012.mp3?v=20260624-numbers-fix"
     },
     {
       "question": "Écoute le nombre, puis choisis la bonne écriture.",
@@ -31,7 +31,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 0,
       "explanation": "« quinze » = 15.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-015.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-015.mp3?v=20260624-numbers-fix"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",
@@ -53,7 +53,7 @@ window.french1OriginalBanks = {
       ],
       "answer": 0,
       "explanation": "« onze » = 11.",
-      "audio": "../audio/theme-1/nombres-1-100/nombre-011.mp3"
+      "audio": "../audio/theme-1/nombres-1-100/nombre-011.mp3?v=20260624-numbers-fix"
     },
     {
       "question": "Écoute le nombre, puis choisis le bon chiffre.",

@@ -127,17 +127,22 @@ Narrateur: Le prénom Lina s’épelle : elle, i, N, a. Lina. elle, i, N, a.
 ## Nombre sept
 File: `nombres/sept.mp3`
 
-Narrateur: Sept.
+Narrateur: sept.
+
+## Nombre onze
+File: `nombres/onze.mp3`
+
+Narrateur: onze.
 
 ## Nombre douze
 File: `nombres/douze.mp3`
 
-Narrateur: Douze.
+Narrateur: douze.
 
 ## Nombre quinze
 File: `nombres/quinze.mp3`
 
-Narrateur: Quinze.
+Narrateur: quinze.
 
 ## Nombre dix-neuf
 File: `nombres/dix-neuf.mp3`
