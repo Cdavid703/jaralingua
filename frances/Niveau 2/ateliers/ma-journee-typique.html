@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ma journée typique | Français Niveau 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau2.css?v=20260624-n2-phase1" rel="stylesheet">
+</head>
+<body class="niveau-2">
+  <nav class="navbar fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></div></nav>
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%202/img/ateliers/production-ma-journee.png')"><div class="container"><span class="badge-course">Production guidée</span><h1>Ma journée typique</h1><p class="hero-text">Construisez un texte court et une présentation orale sur votre routine. L’objectif est d’utiliser les verbes pronominaux, les horaires et les connecteurs temporels.</p></div></header>
+  <main><section><div class="container"><div class="lesson-layout">
+    <form class="content-card builder-box" id="routineBuilder">
+      <p class="section-kicker">Atelier écrit/oral</p><h2>Construire mon texte</h2>
+      <div class="row g-3">
+        <label class="col-md-6">Heure du réveil<input name="reveil" placeholder="six heures trente"></label>
+        <label class="col-md-6">Heure du cours / travail<input name="cours" placeholder="neuf heures"></label>
+        <label class="col-md-6">Routine du matin<textarea name="matin" rows="3" placeholder="je me lève, je me douche, je m’habille..."></textarea></label>
+        <label class="col-md-6">Routine après les cours<textarea name="apres" rows="3" placeholder="je rentre chez moi, je fais mes devoirs..."></textarea></label>
+        <label class="col-md-6">Routine du soir<textarea name="soir" rows="3" placeholder="je dîne, je me repose, je me couche..."></textarea></label>
+        <label class="col-md-6">Une phrase négative<textarea name="negation" rows="3" placeholder="Je ne me couche jamais très tard."></textarea></label>
+      </div>
+      <button class="btn-main mt-3" type="submit"><i class="bi bi-magic"></i> Générer mon brouillon</button>
+      <div class="exception-box teacher-only"><strong>Critères :</strong> 70–90 mots, au moins trois verbes pronominaux, deux horaires, deux connecteurs temporels et une négation élargie.</div>
+    </form>
+    <aside class="lesson-aside">
+      <article class="content-card"><span class="skill-pill">Brouillon</span><div class="output-card mt-3" id="routineOutput">Complétez le formulaire pour générer une base. Ensuite, corrigez-la avec votre professeur.</div><button class="btn-soft mt-3" type="button" onclick="window.print()"><i class="bi bi-printer"></i> Imprimer / PDF</button></article>
+      <article class="content-card"><h2 class="h5">Avant de présenter</h2><ul class="mini-checklist"><li>Lisez lentement les groupes : je me / tu te / elle se.</li><li>Marquez une pause après les connecteurs.</li><li>Vérifiez que vos horaires sont cohérents.</li></ul></article>
+    </aside>
+  </div></div></section></main>
+  <script>
+    document.getElementById("routineBuilder").addEventListener("submit", (event) => {
+      event.preventDefault();
+      const d = Object.fromEntries(new FormData(event.currentTarget));
+      document.getElementById("routineOutput").textContent = `D’abord, je me réveille à ${d.reveil || "…"} et je commence ma journée. Le matin, ${d.matin || "je me prépare"}. Ensuite, je vais en cours ou au travail à ${d.cours || "…"} . Après les cours, ${d.apres || "je rentre chez moi et je fais mes devoirs"}. Le soir, ${d.soir || "je me repose et je me couche"}. ${d.negation || "Je ne me couche jamais très tard pendant la semaine."}`;
+    });
+  </script>
+  <script src="../assets/niveau2.js?v=20260624-n2-phase1"></script>
+</body>
+</html>

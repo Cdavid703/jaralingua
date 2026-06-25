@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atelier interactif | Français Niveau 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau2.css?v=20260624-n2-phase1" rel="stylesheet">
+</head>
+<body class="niveau-2">
+  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li></ul></div></div></nav>
+
+  <header class="hero lesson-hero" id="quizHero">
+    <div class="container"><div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html">Ateliers</a><span>›</span><span id="crumbTitle">Activité</span></div><span class="badge-course" id="quizType">Atelier</span><h1 id="quizTitle">Atelier interactif</h1><p class="hero-text" id="quizLead">Chargez une activité du thème 1.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-soft" href="../themes/routines-horaires.html">Revoir le cours</a><a class="btn-soft" href="../ateliers-activites.html#theme-01">Tous les ateliers</a></div></div>
+  </header>
+
+  <main><section><div class="container">
+    <div class="quiz-shell content-card">
+      <div class="d-flex justify-content-between flex-wrap gap-3 align-items-center mb-3"><div><p class="section-kicker mb-1" id="quizTheme">Thème 1</p><h2 class="mb-0" id="quizSubtitle">Questions</h2></div><strong class="grammar-pill" data-quiz-score>0 / 0</strong></div>
+      <div class="quiz-progress mb-4"><span data-quiz-progress></span></div>
+      <div data-quiz></div>
+    </div>
+  </div></section></main>
+
+  <footer class="footer"><div class="container"><a href="../ateliers-activites.html#theme-01">← Retour aux ateliers</a></div></footer>
+  <script src="../assets/quiz-catalog.js?v=20260624-n2-phase1"></script>
+  <script>
+    (function(){
+      const params = new URLSearchParams(location.search);
+      const key = params.get("activite") || "diagnostic-routine-a12";
+      const catalog = window.NIVEAU2_ACTIVITIES || {};
+      const activity = catalog[key] || catalog["diagnostic-routine-a12"];
+      const images = {
+        "diagnostic-routine-a12": "diagnostic-routine.png",
+        "verbes-pronominaux-present": "verbes-pronominaux.png",
+        "ecoute-journee-camille": "ecoute-journee-camille.png",
+        "a-quelle-heure-routine": "a-quelle-heure.png",
+        "routine-en-ordre": "routine-en-ordre.png"
+      };
+      document.title = `${activity.title} | Français Niveau 2`;
+      document.getElementById("quizHero").style.setProperty("--hero-image", `url('/frances/Niveau%202/img/ateliers/${images[key] || "diagnostic-routine.png"}')`);
+      document.getElementById("quizTitle").textContent = activity.title;
+      document.getElementById("quizLead").textContent = activity.lead;
+      document.getElementById("quizTheme").textContent = activity.theme;
+      document.getElementById("quizSubtitle").textContent = activity.type;
+      document.getElementById("quizType").textContent = activity.type;
+      document.getElementById("crumbTitle").textContent = activity.title;
+      window.quizData = activity.questions || [];
+      document.querySelector("[data-quiz-score]").textContent = `0 / ${window.quizData.length}`;
+    })();
+  </script>
+  <script src="../assets/quiz-engine.js?v=20260624-n2-phase1"></script>
+  <script src="../assets/niveau2.js?v=20260624-n2-phase1"></script>
+</body>
+</html>
