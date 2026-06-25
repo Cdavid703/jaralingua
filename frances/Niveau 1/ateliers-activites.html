@@ -62,6 +62,6 @@
   ];
   document.getElementById("folders").innerHTML=folders.map((folder)=>`<details class="unit-folder" id="${folder.id}"><summary><span class="folder-number">${folder.n}</span><span class="folder-copy"><h3>${folder.title}</h3><p>${folder.text}</p></span><strong class="folder-count">${folder.items.length} activité${folder.items.length>1?"s":""}</strong></summary><div class="activity-grid">${folder.items.map((activity)=>`<article class="activity-card"><div class="card-visual" style="--card-image:url('/frances/Niveau%201/${activityImages[activity[2]]}?v=${activityImageVersion}')"></div><div class="card-body"><span class="skill-pill">${activity[1]}</span><h3 class="h5">${activity[0]}</h3><a class="btn-main" href="${activity[2]}">Commencer</a></div></article>`).join("")}</div></details>`).join("");
   </script>
-  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script><script src="assets/niveau1.js?v=20260626"></script>
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script><script src="assets/niveau1.js?v=20260624-audit-nav"></script>
 </body>
 </html>
