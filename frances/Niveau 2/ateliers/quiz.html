@@ -17,6 +17,7 @@
     <div class="quiz-shell content-card">
       <div class="d-flex justify-content-between flex-wrap gap-3 align-items-center mb-3"><div><p class="section-kicker mb-1" id="quizTheme">Thème 1</p><h2 class="mb-0" id="quizSubtitle">Questions</h2></div><strong class="grammar-pill" data-quiz-score>0 / 0</strong></div>
       <div class="quiz-progress mb-4"><span data-quiz-progress></span></div>
+      <div id="activityAudioPanel" class="content-card mb-4" hidden></div>
       <div data-quiz></div>
     </div>
   </div></section></main>
@@ -46,6 +47,16 @@
       document.getElementById("crumbTitle").textContent = activity.title;
       window.quizData = activity.questions || [];
       document.querySelector("[data-quiz-score]").textContent = `0 / ${window.quizData.length}`;
+      const audioPanel = document.getElementById("activityAudioPanel");
+      if (activity.audio) {
+        audioPanel.hidden = false;
+        audioPanel.innerHTML = `
+          <p class="section-kicker">Audio complet</p>
+          <h2 class="h4">Écoutez avant de répondre</h2>
+          <p class="section-text">Lancez l’audio complet, prenez des notes si nécessaire, puis répondez aux questions. Vous pouvez réécouter une fois avant de corriger.</p>
+          <audio controls preload="metadata" src="${activity.audio}"></audio>
+        `;
+      }
     })();
   </script>
   <script src="../assets/quiz-engine.js?v=20260624-n2-phase1"></script>

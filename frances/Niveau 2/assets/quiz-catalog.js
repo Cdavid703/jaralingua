@@ -43,13 +43,13 @@
       "Écoute : la journée de Camille",
       "Thème 1 · Routines et horaires élargis",
       "Compréhension orale",
-      "Écoutez une journée typique et repérez les horaires, les actions et les connecteurs temporels.",
+      "Écoutez l’audio complet une ou deux fois. Ensuite, répondez aux questions sans relancer l’audio à chaque question.",
       [
-        Q("À quelle heure Camille se réveille-t-elle ?", ["À six heures trente", "À sept heures trente", "À huit heures"], 0, "Le début de l’audio indique : Camille se réveille à six heures trente.", `${audioBase}journee-camille.mp3?v=20260624-n2-t1`),
-        Q("Que fait-elle après la douche ?", ["Elle s’habille.", "Elle se couche.", "Elle sort du travail."], 0, "L’ordre entendu est : elle se douche, puis elle s’habille.", `${audioBase}journee-camille.mp3?v=20260624-n2-t1`),
-        Q("À quelle heure commence son cours ?", ["À huit heures", "À neuf heures", "À midi"], 1, "Camille arrive avant neuf heures et commence son cours à neuf heures.", `${audioBase}journee-camille.mp3?v=20260624-n2-t1`),
-        Q("Que fait-elle à midi ?", ["Elle déjeune avec une amie.", "Elle se réveille.", "Elle rentre chez elle."], 0, "À midi, elle déjeune avec une amie et parle de son emploi du temps.", `${audioBase}journee-camille.mp3?v=20260624-n2-t1`),
-        Q("Quelle négation entend-on ?", ["Elle ne se couche jamais très tard.", "Elle ne mange rien.", "Elle n’a plus de cahier."], 0, "L’audio contient une négation élargie avec jamais : elle ne se couche jamais très tard.", `${audioBase}journee-camille.mp3?v=20260624-n2-t1`),
+        Q("À quelle heure Camille se réveille-t-elle ?", ["À six heures trente", "À sept heures trente", "À huit heures"], 0, "Le début de l’audio indique : Camille se réveille à six heures trente."),
+        Q("Que fait-elle après la douche ?", ["Elle s’habille.", "Elle se couche.", "Elle sort du travail."], 0, "L’ordre entendu est : elle se douche, puis elle s’habille."),
+        Q("À quelle heure commence son cours ?", ["À huit heures", "À neuf heures", "À midi"], 1, "Camille arrive avant neuf heures et commence son cours à neuf heures."),
+        Q("Que fait-elle à midi ?", ["Elle déjeune avec une amie.", "Elle se réveille.", "Elle rentre chez elle."], 0, "À midi, elle déjeune avec une amie et parle de son emploi du temps."),
+        Q("Quelle négation entend-on ?", ["Elle ne se couche jamais très tard.", "Elle ne mange rien.", "Elle n’a plus de cahier."], 0, "L’audio contient une négation élargie avec jamais : elle ne se couche jamais très tard."),
         Q("Quel connecteur marque la fin de la routine ?", ["Enfin", "Parce que", "Chez"], 0, "Enfin annonce la dernière étape de la journée.")
       ],
       { audio: `${audioBase}journee-camille.mp3?v=20260624-n2-t1` }
