@@ -1825,10 +1825,6 @@
   }
 
   function renderDashboard() {
-    const existingDashboard = document.querySelector("[data-jaralingua-dashboard]");
-    if (existingDashboard) existingDashboard.remove();
-    return;
-
     injectStyles();
     let dashboard = document.querySelector("[data-jaralingua-dashboard]");
     if (!currentUser) {
