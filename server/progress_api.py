@@ -41,6 +41,53 @@ HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
 MAX_BODY_BYTES = 1024 * 1024
 
+FRENCH8_PRONUNCIATION_EVALUATIONS = {
+    "pronunciation01d": {
+        "id": "pronunciation01d",
+        "title": "Prononciation 01D - Conditionnel passé",
+        "weight": 5,
+        "type": "Prononciation",
+        "date": "2026-07-01",
+        "displayDate": "A définir",
+        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+    },
+    "pronunciation02d": {
+        "id": "pronunciation02d",
+        "title": "Prononciation 02D - Hypothèses irréelles",
+        "weight": 5,
+        "type": "Prononciation",
+        "date": "2026-07-01",
+        "displayDate": "A définir",
+        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+    },
+    "pronunciation03d": {
+        "id": "pronunciation03d",
+        "title": "Prononciation 03D - Subjonctif passé",
+        "weight": 5,
+        "type": "Prononciation",
+        "date": "2026-07-01",
+        "displayDate": "A définir",
+        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+    },
+    "pronunciation04d": {
+        "id": "pronunciation04d",
+        "title": "Prononciation 04D - Discours rapporté",
+        "weight": 5,
+        "type": "Prononciation",
+        "date": "2026-07-01",
+        "displayDate": "A définir",
+        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+    }
+}
+
+FRENCH8_BASE_EVALUATION_WEIGHTS = {
+    "diagnosticB2": 10,
+    "grammarWorkshop": 15,
+    "oralDebate": 15,
+    "writtenArgumentation": 20,
+    "finalProject": 20
+}
+
 data_lock = threading.Lock()
 token_cache = {}
 
@@ -520,6 +567,67 @@ def grade_payload_for(profile, grades_data, query):
     return response
 
 
+def ensure_french8_pronunciation_evaluation(grades_data, evaluation_id):
+    template = FRENCH8_PRONUNCIATION_EVALUATIONS.get(evaluation_id)
+    if not template:
+        return False
+    evaluations = grades_data.setdefault("evaluations", [])
+    existing = next((item for item in evaluations if isinstance(item, dict) and item.get("id") == evaluation_id), None)
+    if existing:
+        for key, value in template.items():
+            existing.setdefault(key, value)
+        return False
+    evaluations.append(dict(template))
+    return True
+
+
+def ensure_french8_pronunciation_evaluations(grades_data):
+    changed = False
+    for evaluation_id in FRENCH8_PRONUNCIATION_EVALUATIONS:
+        if ensure_french8_pronunciation_evaluation(grades_data, evaluation_id):
+            changed = True
+    return changed
+
+
+def normalize_french8_base_evaluation_weights(grades_data):
+    changed = False
+    evaluations = grades_data.setdefault("evaluations", [])
+    for evaluation in evaluations:
+        if not isinstance(evaluation, dict):
+            continue
+        evaluation_id = evaluation.get("id")
+        if evaluation_id not in FRENCH8_BASE_EVALUATION_WEIGHTS:
+            continue
+        expected_weight = FRENCH8_BASE_EVALUATION_WEIGHTS[evaluation_id]
+        if evaluation.get("weight") != expected_weight:
+            evaluation["weight"] = expected_weight
+            changed = True
+    return changed
+
+
+def ensure_french8_gradebook_structure(grades_data):
+    changed = ensure_french8_pronunciation_evaluations(grades_data)
+    if normalize_french8_base_evaluation_weights(grades_data):
+        changed = True
+    return changed
+
+
+def french8_pronunciation_grade_from_payload(payload):
+    evaluation_id = clean_text(payload.get("evaluationId"), 80)
+    if evaluation_id not in FRENCH8_PRONUNCIATION_EVALUATIONS:
+        raise ValueError("invalid_evaluation")
+    try:
+        score100 = float(payload.get("score100"))
+    except (TypeError, ValueError):
+        raise ValueError("invalid_score")
+    if score100 < 50:
+        raise ValueError("score_too_low")
+    if score100 > 100:
+        raise ValueError("invalid_score")
+    grade = round((score100 / 20.0) * 100) / 100
+    return evaluation_id, int(round(score100)), grade
+
+
 def default_final_exam_bundle():
     return {
         "state": {
@@ -957,9 +1065,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/french8/grades":
-            grades_data = read_grades_data(FRENCH8_GRADES_PATH)
-            query = urllib.parse.parse_qs(parsed.query)
-            json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                if ensure_french8_gradebook_structure(grades_data):
+                    write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                query = urllib.parse.parse_qs(parsed.query)
+                json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
         if parsed.path == "/api/french7/final-exam/state":
@@ -1227,6 +1338,30 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {"ok": True, "result": submission})
             return
 
+        if parsed.path == "/api/french8/pronunciation-grade":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    evaluation_id, score100, grade = french8_pronunciation_grade_from_payload(payload)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                ensure_french8_gradebook_structure(grades_data)
+                student.setdefault("grades", {})[evaluation_id] = grade
+                write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": evaluation_id,
+                    "score100": score100,
+                    "grade": grade,
+                    "updatedAt": now_iso()
+                })
+            return
+
         json_response(self, 404, {"error": "not_found"})
 
     def do_PUT(self):
@@ -1301,7 +1436,6 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 403, {"error": "forbidden"})
                     return
                 try:
-                    payload = read_json_body(self)
                     next_data = clean_gradebook_payload(payload, grades_data)
                 except ValueError as error:
                     json_response(self, 400, {"error": str(error)})

@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -84,40 +84,12 @@
   <script src="../../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../../assets/js/google-auth.js"></script>
+  <script src="../../../assets/js/french8-listening-controls.js?v=20260625-speed-transcript"></script>
+  <script src="../../../assets/js/french8-listening-activity-data.js?v=20260626-audio-sync"></script>
+  <script src="../../../assets/js/french8-listening-activity.js?v=20260626-audio-sync"></script>
   <script>
     const ACTIVITY = {"id":"01c","theme":"Thème 01","themeTitle":"Le conditionnel passé","title":"Bilan d'un projet municipal raté","file":"../audio/complete/n8-01c-projet-municipal-quebec-b2.mp3","image":"../img/ateliers/listening-01c-projet-municipal-v2.webp","page":"comprehension-orale-01c-projet-municipal.html","questions":[["Quel est le sujet principal du reportage ?",["Une inauguration réussie dans le quartier des Lilas.","Un projet municipal de rénovation qui a échoué.","Un débat national sur les transports publics."],1],["Quel reproche principal font les habitants ?",["La mairie a trop consulté les associations.","Le quartier a été rénové trop lentement mais correctement.","La municipalité n’a pas consulté les résidents avant les travaux."],2],["Que s’est-il passé avec le budget ?",["Il a doublé par rapport aux douze millions prévus.","Il a été réduit après une étude d’impact.","Il est resté proche de l’estimation initiale."],0],["Selon Philippe Renaud, qu’aurait-il fallu faire en amont ?",["Un vote national.","Une campagne touristique.","Une étude d’impact sérieuse."],2],["Quelle alternative Renaud préfère-t-il ?",["Une démolition totale plus rapide.","Une rénovation progressive.","L’abandon complet du quartier."],1],["Pourquoi Madame Duval est-elle citée ?",["Elle représente une habitante qui voulait être entendue.","Elle dirigeait officiellement le chantier.","Elle défend la décision du maire sans réserve."],0],["Que reconnaît le maire ?",["Les habitants ont refusé tout dialogue.","La mairie aurait dû mieux anticiper les contraintes techniques.","Le projet a coûté moins cher que prévu."],1],["Qu’est-ce qui a accéléré les choses selon le communiqué ?",["Les associations de quartier.","La météo favorable.","Les pressions politiques."],2],["Quelle mesure le maire promet-il ?",["Un audit indépendant.","Une nouvelle démolition immédiate.","Une consultation après dix ans."],0],["Quelle critique finale Léa suggère-t-elle ?",["Le budget n’était pas un vrai problème.","L’audit aurait pu être demandé plus tôt.","Les riverains ont été trop informés."],1]],"transcript":"Léa: Bonsoir. Ce soir dans notre édition, retour sur l'échec du projet de rénovation du quartier des Lilas à Montfort. Trois ans après le lancement des travaux, le bilan est accablant. Notre reporter Nicolas Ferrand est sur place. Nicolas, que s'est-il passé ?\n\nNicolas: Bonsoir Léa. Eh bien, c'est un véritable fiasco. Les habitants sont unanimes : la municipalité aurait dû consulter les résidents avant de lancer ce chantier pharaonique. Les travaux, estimés à douze millions d'euros, ont finalement coûté le double sans jamais aboutir.\n\nLéa: Comment les élus locaux réagissent-ils face à ces critiques ?\n\nNicolas: L'opposition est très virulente. Le conseiller municipal Philippe Renaud a déclaré que l'on aurait pu éviter ce gaspillage si une étude d'impact sérieuse avait été réalisée en amont. Il estime qu'il aurait fallu privilégier la rénovation progressive plutôt qu'une démolition totale.\n\nLéa: Et les riverains, que disent-ils ?\n\nNicolas: J'ai recueilli de nombreux témoignages. Madame Duval, qui habite ici depuis trente ans, m'a confié qu'elle aurait aimé être entendue dès le début. Elle dit que les associations de quartier auraient voulu participer aux décisions, mais qu'elles ont été systématiquement ignorées.\n\nLéa: Le maire a-t-il pris la parole aujourd'hui ?\n\nNicolas: Oui. Dans un communiqué, il reconnaît que l'on aurait dû mieux anticiper les contraintes techniques du terrain. Il ajoute que la mairie aurait préféré un calendrier plus réaliste, mais que les pressions politiques ont accéléré les choses. Il promet néanmoins un audit indépendant d'ici la fin du mois.\n\nLéa: Un audit qui arrive bien tard, diront certains. On aurait pu l'exiger dès les premiers dépassements de budget. Merci Nicolas pour ce reportage. Nous suivrons évidemment l'évolution de ce dossier dans les prochaines semaines."};
-    const answers = ACTIVITY.questions.map(function(q){ return q[2]; });
-    const audioVariants = {
-      france: ACTIVITY.file.replace("-quebec-b2.mp3", "-france-b2.mp3"),
-      quebec: ACTIVITY.file
-    };
-    function setAudioVariant(variant){
-      const player = document.getElementById("activityAudio");
-      const nextSource = audioVariants[variant] || audioVariants.quebec;
-      if (player && player.getAttribute("src") !== nextSource) {
-        player.pause();
-        player.setAttribute("src", nextSource);
-        player.load();
-      }
-      document.querySelectorAll("[data-audio-variant]").forEach(function(button){
-        const active = button.getAttribute("data-audio-variant") === variant;
-        button.classList.toggle("is-active", active);
-        button.setAttribute("aria-pressed", active ? "true" : "false");
-      });
-    }
-    function checkQuiz(){let score=0;let complete=true;answers.forEach(function(answer,index){const selected=document.querySelector('input[name="q'+index+'"]:checked');if(!selected)complete=false;if(selected&&Number(selected.value)===answer)score+=1;});const box=document.getElementById('resultBox');if(!complete){box.className='result-box incorrect';box.textContent='Répondez aux 10 questions avant de corriger.';return;}box.className=score>=8?'result-box correct':'result-box incorrect';box.textContent='Résultat : '+score+'/10. '+(score>=8?'Très bon travail : vous avez compris les idées principales et plusieurs détails.':'Réécoutez l’audio en prenant des notes sur les causes, les conséquences et les nuances.');}
-    function resetQuiz(){document.querySelectorAll('#quizForm input[type="radio"]').forEach(function(input){input.checked=false;});const box=document.getElementById('resultBox');box.className='result-box';box.textContent='';}
-    function readUser(){const keys=['jaralingua_google_user','jaralingua_microsoft_user'];for(const key of keys){try{const user=JSON.parse(sessionStorage.getItem(key)||'null');if(user&&(!user.exp||Date.now()/1000<=user.exp))return user;}catch(error){}}return null;}
-    function normalizeEmail(email){return String(email||'').trim().toLowerCase();}
-    function userId(user){return (user&&(user.sub||user.email))||'';}
-    function canSeeTranscript(){const user=readUser();if(!user)return false;if(normalizeEmail(user.email)==='cdavid.jaramillo@gmail.com')return true;try{const requests=JSON.parse(localStorage.getItem('jaralingua_role_requests')||'[]');const id=userId(user);return Array.isArray(requests)&&requests.some(function(request){return request.status==='approved'&&(request.role==='teacher'||request.role==='admin')&&(request.id===id||normalizeEmail(request.email)===normalizeEmail(user.email));});}catch(error){return false;}}
-    function updateTranscriptAccess(){document.body.classList.toggle('can-view-transcripts',canSeeTranscript());}
-    document.getElementById('checkBtn').addEventListener('click',checkQuiz);
-    document.querySelectorAll('[data-audio-variant]').forEach(function(button){button.addEventListener('click',function(){setAudioVariant(button.getAttribute('data-audio-variant'));});});
-    setAudioVariant('quebec');
-    document.getElementById('resetBtn').addEventListener('click',resetQuiz);
-    document.querySelector('[data-transcript-button]').addEventListener('click',function(){if(!canSeeTranscript())return;downloadTranscriptPdf(ACTIVITY.title,ACTIVITY.transcript,'transcription-niveau8-'+ACTIVITY.id+'.pdf');});
-    updateTranscriptAccess();window.addEventListener('storage',updateTranscriptAccess);window.addEventListener('focus',updateTranscriptAccess);let checks=0;const timer=setInterval(function(){updateTranscriptAccess();checks+=1;if(checks>12)clearInterval(timer);},800);
+    initFrench8ListeningActivity(ACTIVITY);
   </script>
   <script src="../../../assets/js/jaralingua-back-button.js"></script>
 </body>

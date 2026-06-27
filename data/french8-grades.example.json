@@ -30,14 +30,50 @@
       "title": "Atelier de grammaire avancee",
       "date": "2026-07-01",
       "displayDate": "A definir",
-      "weight": 20
+      "weight": 15
+    },
+    {
+      "id": "pronunciation01d",
+      "title": "Prononciation 01D - Conditionnel passe",
+      "type": "Prononciation",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 5,
+      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciation02d",
+      "title": "Prononciation 02D - Hypotheses irreelles",
+      "type": "Prononciation",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 5,
+      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciation03d",
+      "title": "Prononciation 03D - Subjonctif passe",
+      "type": "Prononciation",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 5,
+      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciation04d",
+      "title": "Prononciation 04D - Discours rapporte",
+      "type": "Prononciation",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 5,
+      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
     },
     {
       "id": "oralDebate",
       "title": "Debat oral argumentatif",
       "date": "2026-07-01",
       "displayDate": "A definir",
-      "weight": 20
+      "weight": 15
     },
     {
       "id": "writtenArgumentation",
@@ -51,7 +87,7 @@
       "title": "Projet final: dilemme contemporain",
       "date": "2026-07-01",
       "displayDate": "A definir",
-      "weight": 30
+      "weight": 20
     }
   ],
   "bonusEvent": null

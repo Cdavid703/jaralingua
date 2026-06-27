@@ -2,6 +2,20 @@
 html,body{max-width:100%;overflow-x:hidden}
 .activity-visual img{object-position:center 42%}
 .student-audio,#studentAudio{max-width:100%}
+.pronunciation-submit-panel{margin-top:1rem;padding:1rem;border-radius:14px;background:linear-gradient(135deg,#eef5ff,#fff7df);border:1px solid rgba(31,78,140,.12)}
+.pronunciation-submit-panel h3{margin:0 0 .55rem;color:var(--blue-dark,#15345d);font-size:1rem;font-weight:900}
+.pronunciation-submit-panel p{margin:.45rem 0;color:var(--muted,#5d6b82);line-height:1.5}
+.pronunciation-submit-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin:.75rem 0}
+.pronunciation-submit-metrics span{display:grid;gap:.1rem;padding:.7rem;border-radius:12px;background:#fff}
+.pronunciation-submit-metrics b{color:var(--blue-dark,#15345d);font-size:1.15rem}
+.pronunciation-submit-metrics small{color:var(--muted,#5d6b82);font-weight:800}
+.pronunciation-submit-actions{display:flex;flex-wrap:wrap;gap:.55rem}
+.pronunciation-submit-actions .action-button{justify-content:center}
+.action-button.submit-grade{background:var(--red,#d62839);color:#fff}
+.action-button.submit-grade:disabled{opacity:.55}
+.pronunciation-submit-status.success{color:var(--green,#23886f);font-weight:900}
+.pronunciation-submit-status.error{color:var(--red,#d62839);font-weight:900}
+.pronunciation-submit-status.pending{color:var(--blue-dark,#15345d);font-weight:900}
 
 @media(max-width:767.98px){
   .navbar .container{padding-inline:.85rem}
@@ -68,6 +82,8 @@ html,body{max-width:100%;overflow-x:hidden}
   .stage-history>div{grid-template-columns:repeat(2,minmax(0,1fr))}
   .final-summary>div{grid-template-columns:1fr}
   .feedback,.final-summary{font-size:.92rem}
+  .pronunciation-submit-metrics{grid-template-columns:1fr}
+  .pronunciation-submit-actions{display:grid;grid-template-columns:1fr}
   .tips{gap:.65rem}
   .tip p{font-size:.86rem}
 }

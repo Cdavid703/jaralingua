@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -84,40 +84,12 @@
   <script src="../../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../../assets/js/google-auth.js"></script>
+  <script src="../../../assets/js/french8-listening-controls.js?v=20260625-speed-transcript"></script>
+  <script src="../../../assets/js/french8-listening-activity-data.js?v=20260626-audio-sync"></script>
+  <script src="../../../assets/js/french8-listening-activity.js?v=20260626-audio-sync"></script>
   <script>
     const ACTIVITY = {"id":"02b","theme":"Thème 02","themeTitle":"Hypothèses irréelles dans le passé","title":"Les grands « et si » de l'histoire","file":"../audio/complete/n8-02b-et-si-histoire-quebec-b2.mp3","image":"../img/ateliers/listening-02b-et-si-histoire-v2.webp","page":"comprehension-orale-02b-et-si-histoire.html","questions":[["Quel est le thème du podcast ?",["Les biographies de chefs d’État.","Les dates importantes à mémoriser.","Les hypothèses qui réécrivent l’histoire."],2],["Si Napoléon avait gagné à Waterloo, que se serait-il passé selon Sophie ?",["Il aurait abandonné la politique européenne.","Il aurait consolidé son pouvoir en France.","Le congrès de Vienne aurait été plus important."],1],["Quel événement aurait pu changer si les coalitions avaient échoué ?",["Le redécoupage des frontières par le congrès de Vienne.","La signature de l’euro.","La chute de la Bastille."],0],["Quel scénario est associé à Louis XVI ?",["Il aurait pu rejoindre la zone euro.","Il aurait pu gagner à Waterloo.","Il aurait pu accepter des réformes fiscales."],2],["Si la Bastille n’était pas tombée, que dit Sophie ?",["Les idéaux républicains se seraient diffusés plus lentement.","La monarchie aurait disparu immédiatement.","La France aurait signé l’armistice plus tôt."],0],["Que propose Sophie pour 1940 ?",["Redessiner les frontières européennes.","Continuer la guerre depuis l’Afrique du Nord.","Dévaluer le franc face aux crises."],1],["Quel effet aurait eu une résistance française organisée dès le début ?",["Les frontières auraient été fixées par Turgot.","La France aurait quitté l’Afrique du Nord.","L’Allemagne aurait mobilisé davantage de troupes au sud."],2],["Si la France n’avait pas adopté l’euro, quel avantage possible est cité ?",["Elle aurait pu dévaluer sa monnaie face aux crises.","Elle aurait renforcé automatiquement son ancrage européen.","Elle aurait supprimé les débats monétaires."],0],["Quelle perte accompagne ce scénario sur l’euro ?",["La disparition de la monnaie française.","La perte de l’ancrage économique européen.","La fin des crises économiques."],1],["Quelle idée finale Thomas souligne-t-il ?",["La France d’aujourd’hui serait toujours identique.","Les hypothèses historiques ne changent jamais les sociétés.","Chaque embranchement aurait créé un monde très différent."],2]],"transcript":"Thomas: Bonsoir à tous et bienvenue dans « Hypothèses », le podcast qui réécrit l'histoire. Ce soir, nous accueillons Sophie Marchal, historienne spécialisée dans l'histoire contrefactuelle. Sophie, commençons par un grand classique : et si Napoléon avait gagné à Waterloo ?\n\nSophie: Merci Thomas. Alors, si Napoléon avait remporté cette bataille en juin mille huit cent quinze, il aurait consolidé son pouvoir en France et l'Europe aurait connu une configuration politique radicalement différente. Si les coalitions européennes avaient échoué à le renverser, le congrès de Vienne n'aurait jamais redessiné les frontières comme il l'a fait.\n\nThomas: Fascinant. Et si on remonte plus loin, que se serait-il passé si la Révolution française n'avait pas eu lieu ?\n\nSophie: Si Louis XVI avait accepté les réformes fiscales proposées par Turgot et Necker, la monarchie aurait peut-être survécu sous une forme constitutionnelle. Si la Bastille n'était pas tombée, les idéaux républicains se seraient sans doute diffusés plus lentement à travers l'Europe.\n\nThomas: Passons au vingtième siècle. Si la France n'avait pas signé l'armistice en mille neuf cent quarante ?\n\nSophie: Si le gouvernement français avait choisi de continuer la guerre depuis l'Afrique du Nord, la dynamique du conflit aurait changé. Si les forces françaises avaient maintenu une résistance organisée dès le début, l'Allemagne aurait dû mobiliser davantage de troupes au sud, ce qui aurait affaibli sa position sur le front est.\n\nThomas: Et un scénario plus récent : si la France avait adopté l'euro plus tard, ou jamais ?\n\nSophie: Si la France n'avait pas rejoint la zone euro, elle aurait conservé le franc et une politique monétaire autonome. Si elle avait gardé cette indépendance, elle aurait pu dévaluer sa monnaie face aux crises, mais elle aurait aussi perdu l'ancrage économique européen.\n\nThomas: On voit que chaque embranchement historique aurait généré un monde très différent. Si nos auditeurs avaient vécu dans ces réalités alternatives, ils ne reconnaîtraient probablement pas la France d'aujourd'hui. Merci Sophie pour cette exploration passionnante !"};
-    const answers = ACTIVITY.questions.map(function(q){ return q[2]; });
-    const audioVariants = {
-      france: ACTIVITY.file.replace("-quebec-b2.mp3", "-france-b2.mp3"),
-      quebec: ACTIVITY.file
-    };
-    function setAudioVariant(variant){
-      const player = document.getElementById("activityAudio");
-      const nextSource = audioVariants[variant] || audioVariants.quebec;
-      if (player && player.getAttribute("src") !== nextSource) {
-        player.pause();
-        player.setAttribute("src", nextSource);
-        player.load();
-      }
-      document.querySelectorAll("[data-audio-variant]").forEach(function(button){
-        const active = button.getAttribute("data-audio-variant") === variant;
-        button.classList.toggle("is-active", active);
-        button.setAttribute("aria-pressed", active ? "true" : "false");
-      });
-    }
-    function checkQuiz(){let score=0;let complete=true;answers.forEach(function(answer,index){const selected=document.querySelector('input[name="q'+index+'"]:checked');if(!selected)complete=false;if(selected&&Number(selected.value)===answer)score+=1;});const box=document.getElementById('resultBox');if(!complete){box.className='result-box incorrect';box.textContent='Répondez aux 10 questions avant de corriger.';return;}box.className=score>=8?'result-box correct':'result-box incorrect';box.textContent='Résultat : '+score+'/10. '+(score>=8?'Très bon travail : vous avez compris les idées principales et plusieurs détails.':'Réécoutez l’audio en prenant des notes sur les causes, les conséquences et les nuances.');}
-    function resetQuiz(){document.querySelectorAll('#quizForm input[type="radio"]').forEach(function(input){input.checked=false;});const box=document.getElementById('resultBox');box.className='result-box';box.textContent='';}
-    function readUser(){const keys=['jaralingua_google_user','jaralingua_microsoft_user'];for(const key of keys){try{const user=JSON.parse(sessionStorage.getItem(key)||'null');if(user&&(!user.exp||Date.now()/1000<=user.exp))return user;}catch(error){}}return null;}
-    function normalizeEmail(email){return String(email||'').trim().toLowerCase();}
-    function userId(user){return (user&&(user.sub||user.email))||'';}
-    function canSeeTranscript(){const user=readUser();if(!user)return false;if(normalizeEmail(user.email)==='cdavid.jaramillo@gmail.com')return true;try{const requests=JSON.parse(localStorage.getItem('jaralingua_role_requests')||'[]');const id=userId(user);return Array.isArray(requests)&&requests.some(function(request){return request.status==='approved'&&(request.role==='teacher'||request.role==='admin')&&(request.id===id||normalizeEmail(request.email)===normalizeEmail(user.email));});}catch(error){return false;}}
-    function updateTranscriptAccess(){document.body.classList.toggle('can-view-transcripts',canSeeTranscript());}
-    document.getElementById('checkBtn').addEventListener('click',checkQuiz);
-    document.querySelectorAll('[data-audio-variant]').forEach(function(button){button.addEventListener('click',function(){setAudioVariant(button.getAttribute('data-audio-variant'));});});
-    setAudioVariant('quebec');
-    document.getElementById('resetBtn').addEventListener('click',resetQuiz);
-    document.querySelector('[data-transcript-button]').addEventListener('click',function(){if(!canSeeTranscript())return;downloadTranscriptPdf(ACTIVITY.title,ACTIVITY.transcript,'transcription-niveau8-'+ACTIVITY.id+'.pdf');});
-    updateTranscriptAccess();window.addEventListener('storage',updateTranscriptAccess);window.addEventListener('focus',updateTranscriptAccess);let checks=0;const timer=setInterval(function(){updateTranscriptAccess();checks+=1;if(checks>12)clearInterval(timer);},800);
+    initFrench8ListeningActivity(ACTIVITY);
   </script>
   <script src="../../../assets/js/jaralingua-back-button.js"></script>
 </body>

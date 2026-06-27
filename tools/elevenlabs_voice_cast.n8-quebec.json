@@ -3,78 +3,78 @@
     "Caroline": {
       "voice_id": "bBRsDJSAcL1ubkrtJ3hM",
       "name": "JaraLingua QC Caroline",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "female"
     },
     "\u00c9milie": {
       "voice_id": "UJCi4DDncuo0VJDSIegj",
       "name": "JaraLingua QC Amelie",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "female"
     },
     "Nathalie": {
       "voice_id": "WW0JfNPk5DgcQdM0d6X6",
       "name": "JaraLingua QC Claudia",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "female"
     },
     "Pr\u00e9sentatrice": {
       "voice_id": "K7gx0ylJdff0yjM2uVQS",
       "name": "JaraLingua QC Jeanne",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "female"
     },
     "Invit\u00e9e": {
       "voice_id": "UJCi4DDncuo0VJDSIegj",
       "name": "JaraLingua QC Amelie",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "female"
     },
     "Marc": {
       "voice_id": "nXbV1oNjVZJeyUXiHwTn",
       "name": "JaraLingua QC Pascal",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "male"
     },
     "Jean-Fran\u00e7ois": {
       "voice_id": "j9RedbMRSNQ74PyikQwD",
       "name": "JaraLingua QC Louis",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "male"
     },
     "Philippe": {
       "voice_id": "XTyroWkQl32ZSd3rRVZ1",
       "name": "JaraLingua QC Patrick",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "male"
     },
     "Pr\u00e9sentateur": {
       "voice_id": "nXbV1oNjVZJeyUXiHwTn",
       "name": "JaraLingua QC Pascal",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "male"
     },
     "Invit\u00e9": {
       "voice_id": "j9RedbMRSNQ74PyikQwD",
       "name": "JaraLingua QC Louis",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "male"
     },
     "Journaliste": {
       "voice_id": "XTyroWkQl32ZSd3rRVZ1",
       "name": "JaraLingua QC Patrick",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "male"
     },
     "Reporter": {
       "voice_id": "K7gx0ylJdff0yjM2uVQS",
       "name": "JaraLingua QC Jeanne",
-      "profile": "french-france",
+      "profile": "french-quebec",
       "gender": "female"
     }
   },
   "pools": {
-    "french-france": {
+    "french-quebec": {
       "female": [
         { "voice_id": "bBRsDJSAcL1ubkrtJ3hM", "name": "JaraLingua QC Caroline" },
         { "voice_id": "UJCi4DDncuo0VJDSIegj", "name": "JaraLingua QC Amelie" },

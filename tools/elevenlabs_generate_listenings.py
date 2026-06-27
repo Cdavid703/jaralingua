@@ -93,6 +93,11 @@ LANGUAGE_PROFILES = {
         "voice_pool_key": "fr_fr",
         "label": "French from France",
     },
+    "french-quebec": {
+        "language_code": "fr",
+        "voice_pool_key": "fr_qc",
+        "label": "French from Quebec",
+    },
 }
 
 FEMALE_HINTS = {
@@ -318,6 +323,8 @@ def infer_language_profile(path: Path, explicit: str | None = None) -> str:
     if explicit:
         return explicit
     normalized = str(path).replace("\\", "/").lower()
+    if ("/frances/" in normalized or "frances/" in normalized) and "quebec" in normalized:
+        return "french-quebec"
     if "/frances/" in normalized or "frances/" in normalized:
         return "french-france"
     return "english-us"
@@ -852,11 +859,11 @@ def validate_french_voice_accents(plans: list[GenerationPlan], api_key: str, str
     payload = request_json("/voices", api_key)
     voices = {voice.get("voice_id"): voice for voice in payload.get("voices", [])}
     warnings: list[str] = []
-    forbidden = re.compile(r"qu[eé]bec|canadian|canada|fr-ca|québécois", re.IGNORECASE)
+    quebec_label = re.compile(r"qu[eé]bec|canadian|canada|fr-ca|québécois", re.IGNORECASE)
     france_positive = re.compile(r"france|paris|french", re.IGNORECASE)
 
     for plan in plans:
-        if plan.item.language_profile != "french-france":
+        if plan.item.language_profile not in {"french-france", "french-quebec"}:
             continue
         for speaker, choice in plan.speaker_to_voice.items():
             voice = voices.get(choice.voice_id)
@@ -864,7 +871,16 @@ def validate_french_voice_accents(plans: list[GenerationPlan], api_key: str, str
                 warnings.append(f"{plan.item.file_name}: voice {choice.voice_id} for {speaker} was not returned by /voices.")
                 continue
             blob = voice_label_blob(voice)
-            if forbidden.search(blob):
+            if plan.item.language_profile == "french-quebec":
+                if quebec_label.search(blob):
+                    continue
+                message = f"{plan.item.file_name}: {speaker} does not look labeled as Quebec/Canadian French ({choice.voice_id})."
+                if strict:
+                    raise RuntimeError(message)
+                warnings.append(message)
+                continue
+
+            if quebec_label.search(blob):
                 message = f"{plan.item.file_name}: {speaker} uses a French voice that looks Canadian/Quebec ({choice.voice_id})."
                 if strict:
                     raise RuntimeError(message)

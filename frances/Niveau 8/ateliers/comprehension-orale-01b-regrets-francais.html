@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -84,40 +84,12 @@
   <script src="../../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../../assets/js/google-auth.js"></script>
+  <script src="../../../assets/js/french8-listening-controls.js?v=20260625-speed-transcript"></script>
+  <script src="../../../assets/js/french8-listening-activity-data.js?v=20260626-audio-sync"></script>
+  <script src="../../../assets/js/french8-listening-activity.js?v=20260626-audio-sync"></script>
   <script>
     const ACTIVITY = {"id":"01b","theme":"Thème 01","themeTitle":"Le conditionnel passé","title":"Les regrets des Français","file":"../audio/complete/n8-01b-regrets-francais-quebec-b2.mp3","image":"../img/ateliers/listening-01b-regrets-francais-v2.webp","page":"comprehension-orale-01b-regrets-francais.html","questions":[["Quel est le regret le plus fréquent selon l’enquête ?",["Avoir choisi une mauvaise ville.","Avoir travaillé dans un domaine trop stable.","Ne pas avoir accordé assez de temps aux proches."],2],["Quelle proportion est associée à ce regret principal ?",["62 %.","Un tiers.","Moins de 30 %."],0],["Chez les quarante-cinquante ans, quel regret professionnel apparaît ?",["Avoir trop souvent changé d’entreprise.","Ne pas avoir choisi une autre voie dès le départ.","Avoir voyagé avant de travailler."],1],["Pourquoi les attentes familiales sont-elles importantes dans l’analyse ?",["Elles ont supprimé la pression économique.","Elles ont facilité l’accès aux postes de direction.","Elles ont parfois orienté les choix de carrière."],2],["Que disent plusieurs femmes interrogées ?",["Elles auraient préféré éviter les postes de direction.","Elles auraient voulu s’affirmer davantage professionnellement.","Elles auraient choisi uniquement des métiers familiaux."],1],["Que regrettent surtout les moins de trente ans ?",["Ne pas avoir voyagé avant la vie active.","Avoir refusé un emploi stable.","Avoir poursuivi trop longtemps leurs études."],0],["Quelle force a poussé les jeunes à chercher rapidement un emploi ?",["Le manque d’intérêt pour les langues.","La tradition familiale uniquement.","La pression économique."],2],["Qui exprime moins de regrets selon Thomas ?",["Les personnes qui ont évité tout risque.","Les personnes qui ont osé changer de cap.","Les personnes qui ont suivi les attentes familiales."],1],["Quelle réforme implicite les chercheurs auraient souhaitée ?",["Un système éducatif valorisant l’expérimentation.","Un système éducatif plus centré sur la conformité.","Un accès plus rapide aux emplois stables uniquement."],0],["Quel ton correspond le mieux à la chronique ?",["Un témoignage personnel sans données.","Un débat politique conflictuel.","Une analyse sociale basée sur une enquête."],2]],"transcript":"Claire: Bienvenue dans notre chronique « Société et vous ». Aujourd'hui, nous recevons Thomas Lefèvre, sociologue, pour parler d'une enquête fascinante sur les regrets des Français. Thomas, quels sont les résultats les plus marquants ?\n\nThomas: Merci Claire. L'enquête révèle que soixante-deux pour cent des personnes interrogées estiment qu'elles auraient dû accorder plus de temps à leurs proches. C'est le regret numéro un, toutes générations confondues.\n\nClaire: C'est frappant. Et sur le plan professionnel, quelles tendances se dégagent ?\n\nThomas: Beaucoup déclarent qu'ils auraient aimé poursuivre leurs études plus longtemps. Chez les quarante-cinquante ans, un tiers affirme qu'il aurait fallu choisir une autre voie dès le départ, plutôt que de suivre les attentes familiales.\n\nClaire: On pourrait dire que ces résultats reflètent une pression sociale très forte en France, non ?\n\nThomas: Exactement. Les femmes, en particulier, expriment qu'elles auraient voulu s'affirmer davantage dans leur carrière. Plusieurs témoignages montrent qu'elles auraient pu accéder à des postes de direction si les mentalités avaient évolué plus vite.\n\nClaire: Et du côté des jeunes générations, est-ce différent ?\n\nThomas: Curieusement, les moins de trente ans disent qu'ils auraient préféré voyager avant de s'engager dans la vie active. Ils auraient aimé découvrir d'autres cultures, apprendre des langues. Mais la pression économique les a poussés à chercher un emploi stable immédiatement.\n\nClaire: Y a-t-il des leçons à tirer de cette étude ?\n\nThomas: Oui. Ce qui ressort, c'est qu'on aurait dû encourager les Français à prendre des risques mesurés plus tôt dans la vie. Les personnes qui ont osé changer de cap expriment nettement moins de regrets. Il aurait fallu, selon les chercheurs, créer un système éducatif qui valorise l'expérimentation plutôt que la conformité.\n\nClaire: Un constat puissant. Merci beaucoup, Thomas, pour cette analyse éclairante. On se retrouve la semaine prochaine pour une nouvelle chronique."};
-    const answers = ACTIVITY.questions.map(function(q){ return q[2]; });
-    const audioVariants = {
-      france: ACTIVITY.file.replace("-quebec-b2.mp3", "-france-b2.mp3"),
-      quebec: ACTIVITY.file
-    };
-    function setAudioVariant(variant){
-      const player = document.getElementById("activityAudio");
-      const nextSource = audioVariants[variant] || audioVariants.quebec;
-      if (player && player.getAttribute("src") !== nextSource) {
-        player.pause();
-        player.setAttribute("src", nextSource);
-        player.load();
-      }
-      document.querySelectorAll("[data-audio-variant]").forEach(function(button){
-        const active = button.getAttribute("data-audio-variant") === variant;
-        button.classList.toggle("is-active", active);
-        button.setAttribute("aria-pressed", active ? "true" : "false");
-      });
-    }
-    function checkQuiz(){let score=0;let complete=true;answers.forEach(function(answer,index){const selected=document.querySelector('input[name="q'+index+'"]:checked');if(!selected)complete=false;if(selected&&Number(selected.value)===answer)score+=1;});const box=document.getElementById('resultBox');if(!complete){box.className='result-box incorrect';box.textContent='Répondez aux 10 questions avant de corriger.';return;}box.className=score>=8?'result-box correct':'result-box incorrect';box.textContent='Résultat : '+score+'/10. '+(score>=8?'Très bon travail : vous avez compris les idées principales et plusieurs détails.':'Réécoutez l’audio en prenant des notes sur les causes, les conséquences et les nuances.');}
-    function resetQuiz(){document.querySelectorAll('#quizForm input[type="radio"]').forEach(function(input){input.checked=false;});const box=document.getElementById('resultBox');box.className='result-box';box.textContent='';}
-    function readUser(){const keys=['jaralingua_google_user','jaralingua_microsoft_user'];for(const key of keys){try{const user=JSON.parse(sessionStorage.getItem(key)||'null');if(user&&(!user.exp||Date.now()/1000<=user.exp))return user;}catch(error){}}return null;}
-    function normalizeEmail(email){return String(email||'').trim().toLowerCase();}
-    function userId(user){return (user&&(user.sub||user.email))||'';}
-    function canSeeTranscript(){const user=readUser();if(!user)return false;if(normalizeEmail(user.email)==='cdavid.jaramillo@gmail.com')return true;try{const requests=JSON.parse(localStorage.getItem('jaralingua_role_requests')||'[]');const id=userId(user);return Array.isArray(requests)&&requests.some(function(request){return request.status==='approved'&&(request.role==='teacher'||request.role==='admin')&&(request.id===id||normalizeEmail(request.email)===normalizeEmail(user.email));});}catch(error){return false;}}
-    function updateTranscriptAccess(){document.body.classList.toggle('can-view-transcripts',canSeeTranscript());}
-    document.getElementById('checkBtn').addEventListener('click',checkQuiz);
-    document.querySelectorAll('[data-audio-variant]').forEach(function(button){button.addEventListener('click',function(){setAudioVariant(button.getAttribute('data-audio-variant'));});});
-    setAudioVariant('quebec');
-    document.getElementById('resetBtn').addEventListener('click',resetQuiz);
-    document.querySelector('[data-transcript-button]').addEventListener('click',function(){if(!canSeeTranscript())return;downloadTranscriptPdf(ACTIVITY.title,ACTIVITY.transcript,'transcription-niveau8-'+ACTIVITY.id+'.pdf');});
-    updateTranscriptAccess();window.addEventListener('storage',updateTranscriptAccess);window.addEventListener('focus',updateTranscriptAccess);let checks=0;const timer=setInterval(function(){updateTranscriptAccess();checks+=1;if(checks>12)clearInterval(timer);},800);
+    initFrench8ListeningActivity(ACTIVITY);
   </script>
   <script src="../../../assets/js/jaralingua-back-button.js"></script>
 </body>

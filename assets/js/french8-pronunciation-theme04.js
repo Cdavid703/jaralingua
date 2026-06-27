@@ -37,6 +37,10 @@
 
   const API_PATH = "/api/french8/pronunciation-assessment";
   const STORAGE_KEY = "jaralingua:french8:pronunciation-04d:v1";
+  const GRADE_SUBMISSION = {
+    evaluationId: "pronunciation04d",
+    title: "Prononciation 04D - Discours rapporté"
+  };
   const LOCAL_URL = "http://127.0.0.1:8020/frances/Niveau%208/ateliers/prononciation-04d-discours-rapporte.html";
   const readingText = document.getElementById("readingText");
   const micButton = document.getElementById("micButton");
@@ -113,6 +117,13 @@
   finalSummary.className = "final-summary";
   finalSummary.hidden = true;
   history.insertAdjacentElement("afterend", finalSummary);
+  const gradeSubmitter = window.JaraFrench8PronunciationGrade?.createPanel({
+    evaluationId: GRADE_SUBMISSION.evaluationId,
+    title: GRADE_SUBMISSION.title,
+    getFinalScore: () => stageScores[4],
+    resetAll: resetAllResults
+  });
+  if (gradeSubmitter) finalSummary.insertAdjacentElement("afterend", gradeSubmitter.panel);
 
   function currentStage() {
     return STAGES[currentStageIndex];
@@ -360,6 +371,7 @@
     retryButton.hidden = false;
     renderHistory();
     if (currentStage().final) renderFinalSummary();
+    gradeSubmitter?.update();
     stageProgress.children[currentStageIndex]?.classList.add("is-done");
     results.hidden = false;
     results.scrollIntoView({ behavior: "smooth", block: "nearest" });
@@ -534,6 +546,7 @@
     levelMeterBar.style.width = "0%";
     levelMeterValue.textContent = "En attente";
     setControls(false, false);
+    gradeSubmitter?.update();
     if (clearAudio) {
       studentAudio.hidden = true;
       studentAudio.removeAttribute("src");
@@ -544,16 +557,27 @@
 
   function advanceStage() {
     if (currentStage().final) {
-      currentStageIndex = 0;
-      stageScores.fill(null);
-      attemptHistory.forEach((attempts) => attempts.splice(0));
-      localStorage.removeItem(STORAGE_KEY);
+      resetAllResults();
+      return;
     } else {
       currentStageIndex += 1;
     }
     saveProgress();
     resetAttempt(true);
     updateStageUI();
+    gradeSubmitter?.update();
+    stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function resetAllResults() {
+    currentStageIndex = 0;
+    stageScores.fill(null);
+    attemptHistory.forEach((attempts) => attempts.splice(0));
+    localStorage.removeItem(STORAGE_KEY);
+    saveProgress();
+    resetAttempt(true);
+    updateStageUI();
+    gradeSubmitter?.update();
     stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
   }
 
