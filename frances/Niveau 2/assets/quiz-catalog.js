@@ -5,6 +5,7 @@
   const Q = (question, options, answer, explanation, audio = "") => ({ question, options, answer, explanation, audio });
 
   const audioBase = "../audio/theme-1/";
+  const audioBaseTheme2 = "../audio/theme-2/";
 
   window.NIVEAU2_ACTIVITIES = {
     "diagnostic-routine-a12": A(
@@ -83,6 +84,67 @@
         Q("Quel connecteur annonce la dernière action ?", ["Enfin", "D’abord", "Pendant"], 0, "Enfin signale souvent la fin d’une séquence."),
         Q("Quelle mini-routine est la plus naturelle ?", ["D’abord je me réveille, ensuite je me lève, puis je me douche.", "Enfin je me réveille, puis je dors, d’abord je sors.", "Parce que je me lève, chez je me douche."], 0, "La première phrase suit une progression logique et emploie bien les connecteurs.")
       ]
+    ),
+
+    "vocabulaire-vetements": A(
+      "Vocabulaire : les vêtements",
+      "Thème 2 · Mode, vêtements et achats",
+      "Vocabulaire",
+      "Identifiez les vêtements avec leur article. L’objectif est de mémoriser le genre du nom en même temps que le mot.",
+      [
+        Q("Quel mot correspond à « shirt » dans une tenue plutôt formelle ?", ["une chemise", "un pantalon", "des chaussures"], 0, "Une chemise est une pièce plus formelle qu’un t-shirt."),
+        Q("Quel vêtement est généralement au pluriel dans cette liste ?", ["des chaussures", "une robe", "un sac"], 0, "On porte deux chaussures; on utilise donc très souvent le pluriel."),
+        Q("Quel article va avec « robe » ?", ["une", "un", "des"], 0, "Robe est féminin singulier : une robe."),
+        Q("Quel article va avec « manteau » ?", ["un", "une", "des"], 0, "Manteau est masculin singulier : un manteau."),
+        Q("Quelle phrase est correcte ?", ["Je porte un jean bleu.", "Je porte une jean bleue.", "Je porte des jean bleu."], 0, "Jean est masculin singulier : un jean bleu."),
+        Q("Quel mot est un accessoire ?", ["un sac", "un pantalon", "une chemise"], 0, "Un sac complète la tenue; ce n’est pas un vêtement principal.")
+      ]
+    ),
+
+    "couleurs-accords-vetements": A(
+      "Les couleurs et les accords",
+      "Thème 2 · Mode, vêtements et achats",
+      "Grammaire",
+      "Choisissez la bonne forme de la couleur selon le genre et le nombre du vêtement.",
+      [
+        Q("Une chemise ___", ["blanche", "blanc", "blanches"], 0, "Chemise est féminin singulier : blanche."),
+        Q("Un pantalon ___", ["noir", "noire", "noirs"], 0, "Pantalon est masculin singulier : noir."),
+        Q("Des chaussures ___", ["noires", "noir", "noire"], 0, "Chaussures est féminin pluriel : noires."),
+        Q("Une veste ___", ["bleue", "bleu", "bleus"], 0, "Veste est féminin singulier : bleue."),
+        Q("Un manteau ___", ["gris", "grise", "grises"], 0, "Manteau est masculin singulier : gris."),
+        Q("Quelle phrase est correcte ?", ["Je porte une robe rouge.", "Je porte un robe rouge.", "Je porte une robe rouges."], 0, "Robe est féminin singulier; rouge a la même forme au masculin et au féminin singulier.")
+      ]
+    ),
+
+    "quelle-taille-couleur": A(
+      "Quelle taille ? Quelle couleur ?",
+      "Thème 2 · Mode, vêtements et achats",
+      "Questions",
+      "Pratiquez quel, quelle, quels, quelles et les questions utiles dans un magasin.",
+      [
+        Q("___ taille faites-vous ?", ["Quelle", "Quel", "Quels"], 0, "Taille est féminin singulier : quelle taille."),
+        Q("___ prix ?", ["Quel", "Quelle", "Quelles"], 0, "Prix est masculin singulier : quel prix."),
+        Q("___ chaussures voulez-vous essayer ?", ["Quelles", "Quel", "Quelle"], 0, "Chaussures est féminin pluriel : quelles chaussures."),
+        Q("___ vêtements préférez-vous ?", ["Quels", "Quelle", "Quel"], 0, "Vêtements est masculin pluriel : quels vêtements."),
+        Q("Quelle question demande le prix ?", ["Combien ça coûte ?", "Quelle taille faites-vous ?", "Vous avez du M ?"], 0, "Combien ça coûte ? sert à demander le prix."),
+        Q("Quelle phrase est polie en magasin ?", ["Je voudrais essayer cette veste, s’il vous plaît.", "Donne veste maintenant.", "Moi veste bleue."], 0, "Je voudrais + infinitif + s’il vous plaît est une formule polie et naturelle.")
+      ]
+    ),
+
+    "ecoute-magasin-vetements": A(
+      "Écoute : au magasin de vêtements",
+      "Thème 2 · Mode, vêtements et achats",
+      "Compréhension orale",
+      "Écoutez le dialogue complet une ou deux fois. Ensuite, répondez aux questions sans relancer l’audio à chaque question.",
+      [
+        Q("Que cherche la cliente ?", ["Une veste bleue", "Une robe rouge", "Des chaussures noires"], 0, "La cliente dit qu’elle cherche une veste bleue."),
+        Q("Quelle taille fait la cliente ?", ["M", "S", "L"], 0, "Elle répond : je fais du M."),
+        Q("Combien coûte la veste ?", ["Quarante-cinq euros", "Quinze euros", "Soixante euros"], 0, "Le vendeur indique que la veste coûte quarante-cinq euros."),
+        Q("Que veut aussi regarder la cliente ?", ["Une chemise blanche", "Un manteau gris", "Une jupe verte"], 0, "Elle demande ensuite s’il y a une chemise blanche."),
+        Q("Pourquoi ne prend-elle pas la robe rouge ?", ["Elle est trop chère.", "Elle est trop petite.", "Elle n’aime pas le rouge."], 0, "La cliente dit que la robe rouge est trop chère."),
+        Q("Comment paie la cliente ?", ["Par carte", "En espèces", "Elle ne paie pas"], 0, "À la fin, elle paie par carte.")
+      ],
+      { audio: `${audioBaseTheme2}magasin-vetements.mp3?v=20260626-n2-t2` }
     )
   };
 })();

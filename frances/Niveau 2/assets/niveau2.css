@@ -349,6 +349,14 @@ body.niveau-2 {
   border: 1px solid rgba(31,78,140,.12); box-shadow: 0 12px 28px rgba(20,40,80,.06);
 }
 .pronoun-card strong, .time-card strong, .idiom-card strong, .resource-card strong { color: var(--blue-dark); }
+.lexicon-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: 1rem; margin: 1.2rem 0; }
+.lexicon-card { display: grid; gap: .55rem; padding: .75rem; border: 1px solid rgba(31,78,140,.12); border-radius: 20px; background: #fff; box-shadow: 0 10px 24px rgba(20,40,80,.07); }
+.lexicon-card img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 15px; background: #eef5ff; }
+.lexicon-card strong { color: var(--blue-dark); font-weight: 900; }
+.lexicon-card span { color: var(--muted); font-size: .9rem; font-weight: 800; }
+.idiom-card { border-top: 6px solid var(--red); }
+.idiom-card p { margin: .45rem 0 0; color: var(--muted); line-height: 1.6; }
+.idiom-card b { color: var(--red-dark); }
 .pronoun-card .formula { display: inline-flex; flex-wrap: wrap; gap: .28rem; margin: .6rem 0; }
 .pronoun-card .formula span {
   padding: .26rem .55rem; border-radius: 999px; background: #eef5ff; color: var(--blue-dark); font-weight: 900;

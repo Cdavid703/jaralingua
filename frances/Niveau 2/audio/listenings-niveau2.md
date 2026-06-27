@@ -10,3 +10,15 @@ Camille se réveille à six heures trente. Elle se lève quelques minutes après
 - Repérer les verbes pronominaux.
 - Comprendre les connecteurs temporels.
 - Reconnaître la négation élargie `ne… jamais`.
+
+## Thème 2 — Au magasin de vêtements
+
+Vendeur : Bonjour, je peux vous aider ? Cliente : Bonjour, je cherche une veste bleue. Vendeur : Bien sûr. Quelle taille faites-vous ? Cliente : Je fais du M. Vous avez cette veste en taille M ? Vendeur : Oui, la voici. Vous voulez l’essayer ? Cliente : Oui, s’il vous plaît. Combien elle coûte ? Vendeur : Elle coûte quarante-cinq euros. Cliente : D’accord. Est-ce que vous avez aussi une chemise blanche ? Vendeur : Oui, nous avons une chemise blanche à vingt-neuf euros. Cliente : Très bien. La robe rouge est belle aussi, mais elle est trop chère. Je prends la veste bleue. Je paie par carte.
+
+### Objectifs d’écoute
+
+- Identifier le vêtement recherché.
+- Comprendre la taille demandée.
+- Repérer les prix.
+- Comprendre une comparaison simple : trop chère.
+- Identifier le mode de paiement.
