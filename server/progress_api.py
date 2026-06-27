@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 import json
+import base64
+import hashlib
+import hmac
 import os
 import re
 import secrets
@@ -33,6 +36,7 @@ BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DA
 BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
 BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
+LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
 BUNDLED_FRENCH7_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "frances", "Niveau 7", "audio", "examen-final-refuge-universitaire-b1.mp3")
@@ -190,6 +194,110 @@ def bearer_token(headers):
     if not value.lower().startswith("bearer "):
         return ""
     return value.split(" ", 1)[1].strip()
+
+
+def b64url_encode(value):
+    return base64.urlsafe_b64encode(value).decode("ascii").rstrip("=")
+
+
+def b64url_decode(value):
+    return base64.urlsafe_b64decode(value + "=" * (-len(value) % 4))
+
+
+def local_auth_secret():
+    configured = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET", "").strip()
+    if configured:
+        return configured.encode("utf-8")
+    if os.path.exists(LOCAL_AUTH_SECRET_PATH):
+        with open(LOCAL_AUTH_SECRET_PATH, "rb") as handle:
+            saved = handle.read().strip()
+            if saved:
+                return saved
+    os.makedirs(os.path.dirname(LOCAL_AUTH_SECRET_PATH), exist_ok=True)
+    secret = secrets.token_urlsafe(48).encode("utf-8")
+    with open(LOCAL_AUTH_SECRET_PATH, "wb") as handle:
+        handle.write(secret)
+        handle.write(b"\n")
+    try:
+        os.chmod(LOCAL_AUTH_SECRET_PATH, 0o600)
+    except OSError:
+        pass
+    return secret
+
+
+def sign_local_profile(profile):
+    payload = dict(profile)
+    payload["exp"] = int(time.time()) + 12 * 60 * 60
+    body = b64url_encode(json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
+    signature = hmac.new(local_auth_secret(), body.encode("ascii"), hashlib.sha256).digest()
+    return body + "." + b64url_encode(signature), payload["exp"]
+
+
+def validate_local_token(token):
+    try:
+        body, signature = token.split(".", 1)
+    except ValueError as error:
+        raise ValueError("Local token is malformed.") from error
+    expected = b64url_encode(hmac.new(local_auth_secret(), body.encode("ascii"), hashlib.sha256).digest())
+    if not hmac.compare_digest(signature, expected):
+        raise ValueError("Local token signature does not match.")
+    try:
+        profile = json.loads(b64url_decode(body).decode("utf-8"))
+    except (json.JSONDecodeError, UnicodeDecodeError) as error:
+        raise ValueError("Local token payload is invalid.") from error
+    if int(profile.get("exp", 0)) <= int(time.time()):
+        raise ValueError("Local token expired.")
+    if profile.get("provider") != "local-gradebook":
+        raise ValueError("Local token provider is invalid.")
+    email = normalize_email(profile.get("email"))
+    if not email:
+        raise ValueError("Local token has no email.")
+    return {
+        "sub": clean_text(profile.get("sub"), 160) or "local-gradebook:" + email,
+        "email": email,
+        "name": clean_text(profile.get("name"), 200) or email,
+        "picture": "",
+        "provider": "local-gradebook"
+    }
+
+
+def gradebook_path_for_login(path):
+    if path == "/api/french1/grades/login":
+        return ("french1", "Français Niveau 1", FRENCH1_GRADES_PATH)
+    if path == "/api/french2/grades/login":
+        return ("french2", "Français Niveau 2", FRENCH2_GRADES_PATH)
+    return None
+
+
+def local_gradebook_login(payload, grades_data, level_key, level_label):
+    email = normalize_email(payload.get("email"))
+    password = str(payload.get("password") or "")
+    if not email or not password:
+        raise ValueError("missing_credentials")
+    student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and email_matches_student(item, email)), None)
+    if not isinstance(student, dict):
+        raise ValueError("student_not_found")
+    expected_password = str(student.get("id", "")).strip() + "*"
+    if not expected_password or not hmac.compare_digest(password, expected_password):
+        raise ValueError("invalid_credentials")
+    profile = {
+        "provider": "local-gradebook",
+        "sub": "local-gradebook:" + level_key + ":" + email,
+        "email": email,
+        "name": clean_text(student.get("fullName"), 200) or email,
+        "level": level_label
+    }
+    token, exp = sign_local_profile(profile)
+    return {
+        "token": token,
+        "exp": exp,
+        "user": {
+            "provider": "local",
+            "email": profile["email"],
+            "name": profile["name"],
+            "level": level_label
+        }
+    }
 
 
 def validate_google_token(token):
@@ -1230,6 +1338,20 @@ class ProgressHandler(BaseHTTPRequestHandler):
 
     def do_POST(self):
         parsed = urllib.parse.urlparse(self.path)
+        local_login_target = gradebook_path_for_login(parsed.path)
+        if local_login_target:
+            payload = self.read_json_body()
+            if payload is None:
+                return
+            level_key, level_label, grades_path = local_login_target
+            with data_lock:
+                grades_data = read_grades_data(grades_path)
+            try:
+                json_response(self, 200, local_gradebook_login(payload, grades_data, level_key, level_label))
+            except ValueError as error:
+                json_response(self, 401, {"error": str(error)})
+            return
+
         profile = self.require_user()
         if not profile:
             return
@@ -1612,6 +1734,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
         try:
             if provider == "microsoft":
                 return validate_microsoft_token(token)
+            if provider == "local":
+                return validate_local_token(token)
             return validate_google_token(token)
         except ValueError as error:
             json_response(self, 401, {"error": "invalid_token", "message": str(error)})

@@ -11,6 +11,7 @@
     studentCsvName: "mes-notes-francais1.csv"
   }, window.JARALINGUA_GRADEBOOK_CONFIG || {});
   const API = CONFIG.api;
+  const LOCAL_KEY = "jaralingua_local_gradebook_user:" + CONFIG.rootId;
   const TEACHERS = CONFIG.teacherEmails.join(", ");
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
@@ -42,6 +43,8 @@
     if (googleUser) return Object.assign({ provider: "google" }, googleUser);
     const microsoftUser = storedUser(MICROSOFT_KEY);
     if (microsoftUser) return Object.assign({ provider: "microsoft" }, microsoftUser);
+    const localUser = storedUser(LOCAL_KEY);
+    if (localUser) return Object.assign({ provider: "local" }, localUser);
     return null;
   }
 
@@ -117,6 +120,39 @@
     }
   }
 
+  async function loginCourseAccess(event) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const status = document.getElementById("courseLoginStatus");
+    const button = form.querySelector("button[type='submit']");
+    const email = form.querySelector('[name="courseEmail"]').value.trim();
+    const password = form.querySelector('[name="coursePassword"]').value;
+    if (status) status.textContent = "Vérification du compte du cours…";
+    if (button) button.disabled = true;
+    try {
+      const response = await fetch(API.replace(/\/$/, "") + "/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || !result.token) throw new Error(result.error || "invalid_credentials");
+      sessionStorage.setItem(LOCAL_KEY, JSON.stringify({
+        provider: "local",
+        email: result.user?.email || email,
+        name: result.user?.name || email,
+        credential: result.token,
+        exp: result.exp
+      }));
+      sessionStorage.removeItem(GOOGLE_KEY);
+      sessionStorage.removeItem(MICROSOFT_KEY);
+      load();
+    } catch {
+      if (status) status.textContent = "Courriel ou mot de passe incorrect. Utilisez le courriel inscrit et le mot de passe ID*.";
+      if (button) button.disabled = false;
+    }
+  }
+
   function renderGoogleButton(attempt = 0) {
     const target = document.getElementById("googleLogin");
     const status = document.getElementById("googleStatus");
@@ -161,9 +197,19 @@
           </div>
           <button class="btn-main" id="msLogin" type="button"><i class="bi bi-microsoft"></i> Se connecter avec Microsoft</button>
         </div>
+        <form id="courseLoginForm" class="mt-4 text-start mx-auto" style="max-width:420px">
+          <p class="section-kicker mb-2">Accès du cours</p>
+          <label class="form-label fw-bold" for="courseEmail">Courriel inscrit</label>
+          <input class="form-control mb-2" id="courseEmail" name="courseEmail" type="email" autocomplete="username" required>
+          <label class="form-label fw-bold" for="coursePassword">Mot de passe</label>
+          <input class="form-control mb-3" id="coursePassword" name="coursePassword" type="password" autocomplete="current-password" placeholder="ID*" required>
+          <button class="btn-main w-100" type="submit"><i class="bi bi-key-fill"></i> Entrer avec le courriel du cours</button>
+          <p id="courseLoginStatus" class="mt-2 mb-0"><small>Pour les comptes qui ne peuvent pas utiliser Google ou Microsoft. Mot de passe : numéro ID + astérisque.</small></p>
+        </form>
         <p class="mt-3 mb-0"><small>Administrateur : compte Google autorisé · Professeures autorisées : ${esc(TEACHERS)}</small></p>
       </div>`;
     document.getElementById("msLogin").onclick = loginMicrosoft;
+    document.getElementById("courseLoginForm").onsubmit = loginCourseAccess;
     renderGoogleButton();
   }
 
