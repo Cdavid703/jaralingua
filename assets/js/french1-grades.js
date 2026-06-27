@@ -1,11 +1,21 @@
 (function () {
   const GOOGLE_KEY = "jaralingua_google_user";
   const MICROSOFT_KEY = "jaralingua_microsoft_user";
-  const API = "/api/french1/grades";
-  const TEACHER = "lcvelasqueza@correo.iue.edu.co";
+  const CONFIG = Object.assign({
+    api: "/api/french1/grades",
+    rootId: "french1GradesApp",
+    levelLabel: "Français Niveau 1",
+    gradebookTitle: "Carnet de notes — Niveau 1",
+    teacherEmails: ["lcvelasqueza@correo.iue.edu.co", "velasquez.luisac@gmail.com"],
+    adminCsvName: "francais-niveau1-administration.csv",
+    studentCsvName: "mes-notes-francais1.csv"
+  }, window.JARALINGUA_GRADEBOOK_CONFIG || {});
+  const API = CONFIG.api;
+  const TEACHERS = CONFIG.teacherEmails.join(", ");
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
-  const root = document.getElementById("french1GradesApp");
+  const root = document.getElementById(CONFIG.rootId);
+  if (!root) return;
   let client = null;
   let payload = null;
 
@@ -151,7 +161,7 @@
           </div>
           <button class="btn-main" id="msLogin" type="button"><i class="bi bi-microsoft"></i> Se connecter avec Microsoft</button>
         </div>
-        <p class="mt-3 mb-0"><small>Administrateur : compte Google autorisé · Professeure autorisée : ${TEACHER}</small></p>
+        <p class="mt-3 mb-0"><small>Administrateur : compte Google autorisé · Professeures autorisées : ${esc(TEACHERS)}</small></p>
       </div>`;
     document.getElementById("msLogin").onclick = loginMicrosoft;
     renderGoogleButton();
@@ -266,7 +276,7 @@
       const studentData = Object.assign({}, original);
       card.querySelectorAll("[data-f]").forEach((input) => { studentData[input.dataset.f] = input.value.trim(); });
       if (!studentData.id || !studentData.fullName) return;
-      studentData.level = studentData.level || "Français Niveau 1";
+      studentData.level = studentData.level || CONFIG.levelLabel;
       studentData.grades = {};
       card.querySelectorAll("[data-grade]").forEach((input) => {
         const value = input.value.trim();
@@ -317,7 +327,7 @@
 
   function staff() {
     const activeUser = user();
-    root.innerHTML = `<div class="d-flex flex-wrap justify-content-between gap-2 mb-4"><div><p class="section-kicker">Espace ${payload.role === "admin" ? "administrateur" : "enseignant"}</p><h2>Carnet de notes — Niveau 1</h2><p>${esc(activeUser.email)} · ${esc(activeUser.provider)}</p><p class="mb-0"><small>Professeure responsable : ${TEACHER}. L'administrateur conserve un accès complet de supervision.</small></p></div><div class="d-flex flex-wrap gap-2"><button class="btn-soft" id="addStudent" type="button">Ajouter un étudiant</button><button class="btn-soft" id="adminCsv" type="button">Téléchargement administratif</button><button class="btn-main" id="saveGrades" type="button">Enregistrer tout</button></div></div>${evaluationEditor()}<div class="d-flex flex-wrap justify-content-between align-items-end gap-2"><div><p class="section-kicker">Saisie des notes</p><h3 class="h4 mb-0">Étudiants</h3></div><p id="gradeStatus" class="mb-0 fw-bold"></p></div><div id="studentCards" class="mt-3"></div>`;
+    root.innerHTML = `<div class="d-flex flex-wrap justify-content-between gap-2 mb-4"><div><p class="section-kicker">Espace ${payload.role === "admin" ? "administrateur" : "enseignant"}</p><h2>${esc(CONFIG.gradebookTitle)}</h2><p>${esc(activeUser.email)} · ${esc(activeUser.provider)}</p><p class="mb-0"><small>Professeures responsables : ${esc(TEACHERS)}. L'administrateur conserve un accès complet de supervision.</small></p></div><div class="d-flex flex-wrap gap-2"><button class="btn-soft" id="addStudent" type="button">Ajouter un étudiant</button><button class="btn-soft" id="adminCsv" type="button">Téléchargement administratif</button><button class="btn-main" id="saveGrades" type="button">Enregistrer tout</button></div></div>${evaluationEditor()}<div class="d-flex flex-wrap justify-content-between align-items-end gap-2"><div><p class="section-kicker">Saisie des notes</p><h3 class="h4 mb-0">Étudiants</h3></div><p id="gradeStatus" class="mb-0 fw-bold"></p></div><div id="studentCards" class="mt-3"></div>`;
     drawStudents();
     const showDraftTotal = () => {
       const total = Array.from(root.querySelectorAll("[data-evaluation-card]")).reduce((sum, card) => {
@@ -339,12 +349,12 @@
     };
     document.getElementById("addStudent").onclick = () => {
       collectDraft();
-      payload.students.push({ id: String(Date.now()).slice(-8), fullName: "Nouvel étudiant", email: "", level: "Français Niveau 1", grades: {} });
+      payload.students.push({ id: String(Date.now()).slice(-8), fullName: "Nouvel étudiant", email: "", level: CONFIG.levelLabel, grades: {} });
       staff();
     };
     document.getElementById("adminCsv").onclick = () => {
       collectDraft();
-      download("francais-niveau1-administration.csv", [
+      download(CONFIG.adminCsvName, [
         ["ID", "Nom", "Courriel", ...payload.evaluations.map((evaluation) => `${evaluation.title} (${evaluation.weight}%)`), "Moyenne"],
         ...payload.students.map((student) => [student.id, student.fullName, student.email, ...payload.evaluations.map((evaluation) => student.grades?.[evaluation.id] ?? ""), average(student)])
       ]);
@@ -353,7 +363,7 @@
   }
 
   function drawStudents() {
-    document.getElementById("studentCards").innerHTML = payload.students.length ? payload.students.map((student, index) => `<article class="admin-student-card mb-3" data-student="${index}"><div class="d-flex flex-wrap justify-content-between gap-2 mb-2"><h4 class="h5 mb-0">${esc(student.fullName || "Étudiant")}</h4><label class="form-check text-danger fw-bold mb-0"><input class="form-check-input" type="checkbox" data-delete-student> Supprimer</label></div><div class="row g-2"><label class="col-md-2">ID<input class="form-control" data-f="id" value="${esc(student.id)}"></label><label class="col-md-3">Nom<input class="form-control" data-f="fullName" value="${esc(student.fullName)}"></label><label class="col-md-3">Courriel<input class="form-control" type="email" data-f="email" value="${esc(student.email)}"></label><label class="col-md-2">Niveau<input class="form-control" data-f="level" value="${esc(student.level || "Français Niveau 1")}"></label><div class="col-md-2 d-flex align-items-end"><button type="button" class="btn-soft w-100" data-export="${index}">Fiche CSV</button></div></div><div class="admin-grade-grid mt-3">${payload.evaluations.map((evaluation) => `<label class="admin-grade-row"><span>${esc(evaluation.title)} (${evaluation.weight}%)</span><input class="form-control" type="number" min="0" max="5" step="0.1" data-grade="${esc(evaluation.id)}" value="${student.grades?.[evaluation.id] ?? ""}"></label>`).join("")}</div></article>`).join("") : `<div class="locked-card"><i class="bi bi-person-plus-fill"></i><h3>Aucun étudiant enregistré</h3><p>Ajoutez le premier étudiant, puis enregistrez le carnet.</p></div>`;
+    document.getElementById("studentCards").innerHTML = payload.students.length ? payload.students.map((student, index) => `<article class="admin-student-card mb-3" data-student="${index}"><div class="d-flex flex-wrap justify-content-between gap-2 mb-2"><h4 class="h5 mb-0">${esc(student.fullName || "Étudiant")}</h4><label class="form-check text-danger fw-bold mb-0"><input class="form-check-input" type="checkbox" data-delete-student> Supprimer</label></div><div class="row g-2"><label class="col-md-2">ID<input class="form-control" data-f="id" value="${esc(student.id)}"></label><label class="col-md-3">Nom<input class="form-control" data-f="fullName" value="${esc(student.fullName)}"></label><label class="col-md-3">Courriel<input class="form-control" type="email" data-f="email" value="${esc(student.email)}"></label><label class="col-md-2">Niveau<input class="form-control" data-f="level" value="${esc(student.level || CONFIG.levelLabel)}"></label><div class="col-md-2 d-flex align-items-end"><button type="button" class="btn-soft w-100" data-export="${index}">Fiche CSV</button></div></div><div class="admin-grade-grid mt-3">${payload.evaluations.map((evaluation) => `<label class="admin-grade-row"><span>${esc(evaluation.title)} (${evaluation.weight}%)</span><input class="form-control" type="number" min="0" max="5" step="0.1" data-grade="${esc(evaluation.id)}" value="${student.grades?.[evaluation.id] ?? ""}"></label>`).join("")}</div></article>`).join("") : `<div class="locked-card"><i class="bi bi-person-plus-fill"></i><h3>Aucun étudiant enregistré</h3><p>Ajoutez le premier étudiant, puis enregistrez le carnet.</p></div>`;
     root.querySelectorAll("[data-export]").forEach((button) => {
       button.onclick = () => {
         const student = payload.students[Number(button.dataset.export)];
@@ -391,8 +401,8 @@
   function student() {
     const studentData = payload.student;
     if (!studentData) return locked("Votre compte est connecté, mais aucun étudiant ne correspond encore à ce courriel. La professeure peut l’ajouter dans son espace.");
-    root.innerHTML = `<p class="section-kicker">Mes résultats</p><h2>Français Niveau 1</h2><div class="metric-grid"><div class="metric-card"><span>Moyenne</span><strong>${average(studentData)}</strong></div><div class="metric-card"><span>Évaluations</span><strong>${payload.evaluations.length}</strong></div></div><div class="table-wrap mt-4"><table class="grades-table"><thead><tr><th>Évaluation</th><th>Poids</th><th>Note</th></tr></thead><tbody>${payload.evaluations.map((evaluation) => `<tr><td>${esc(evaluation.title)}</td><td>${evaluation.weight}%</td><td>${studentData.grades?.[evaluation.id] ?? "En attente"}</td></tr>`).join("")}</tbody></table></div><button class="btn-main mt-3" id="studentCsv">Télécharger ma fiche</button>`;
-    document.getElementById("studentCsv").onclick = () => download("mes-notes-francais1.csv", [
+    root.innerHTML = `<p class="section-kicker">Mes résultats</p><h2>${esc(CONFIG.levelLabel)}</h2><div class="metric-grid"><div class="metric-card"><span>Moyenne</span><strong>${average(studentData)}</strong></div><div class="metric-card"><span>Évaluations</span><strong>${payload.evaluations.length}</strong></div></div><div class="table-wrap mt-4"><table class="grades-table"><thead><tr><th>Évaluation</th><th>Poids</th><th>Note</th></tr></thead><tbody>${payload.evaluations.map((evaluation) => `<tr><td>${esc(evaluation.title)}</td><td>${evaluation.weight}%</td><td>${studentData.grades?.[evaluation.id] ?? "En attente"}</td></tr>`).join("")}</tbody></table></div><button class="btn-main mt-3" id="studentCsv">Télécharger ma fiche</button>`;
+    document.getElementById("studentCsv").onclick = () => download(CONFIG.studentCsvName, [
       ["Évaluation", "Poids", "Note"],
       ...payload.evaluations.map((evaluation) => [evaluation.title, evaluation.weight, studentData.grades?.[evaluation.id] ?? ""])
     ]);

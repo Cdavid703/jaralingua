@@ -1,0 +1,49 @@
+{
+  "adminEmails": [
+    "cdavid.jaramillo@gmail.com"
+  ],
+  "teacherEmails": [
+    "lcvelasqueza@correo.iue.edu.co",
+    "velasquez.luisac@gmail.com"
+  ],
+  "allowStudentIdClaim": false,
+  "students": [],
+  "evaluations": [
+    {
+      "id": "comprehension",
+      "title": "Compréhension orale et écrite",
+      "weight": 20,
+      "type": "Compréhension",
+      "description": "Comprendre une routine, des horaires, des annonces simples et de courts messages."
+    },
+    {
+      "id": "grammaire",
+      "title": "Grammaire en contexte",
+      "weight": 30,
+      "type": "Grammaire",
+      "description": "Présent, verbes pronominaux, négation élargie, questions et connecteurs."
+    },
+    {
+      "id": "production-ecrite",
+      "title": "Production écrite",
+      "weight": 20,
+      "type": "Écriture",
+      "description": "Rédiger une routine ou un message court avec cohérence."
+    },
+    {
+      "id": "interaction-orale",
+      "title": "Production orale et interaction",
+      "weight": 20,
+      "type": "Oral",
+      "description": "Décrire sa journée, poser des questions et répondre naturellement."
+    },
+    {
+      "id": "projet-final",
+      "title": "Projet final A1.2",
+      "weight": 10,
+      "type": "Projet",
+      "description": "Présenter “Ma vie quotidienne en français” avec texte et dialogue simulé."
+    }
+  ],
+  "bonusEvent": null
+}
