@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>JaraLingua · Français B1 · Niveau 7</title>
+    <link>https://www.jaralingua.com/frances/Niveau%207/</link>
+    <language>fr</language>
+    <description>Audios B1 de compréhension orale du cours Français Niveau 7, reliés aux activités de questions sur JaraLingua.</description>
+    <itunes:author>JaraLingua</itunes:author>
+    <itunes:explicit>false</itunes:explicit>
+    <item>
+      <title>Français B1 · Travailler au Québec ?</title>
+      <description>Français B1 · Niveau 7. Écoute pour travailler le conditionnel, la mobilité et le vocabulaire professionnel. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-conditionnel-quebec-b1.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/conditionnel-quebec-opportunites-b1.mp3" length="1109725" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-01-travailler-au-quebec</guid>
+    </item>
+    <item>
+      <title>Français B1 · Culture colombienne</title>
+      <description>Français B1 · Niveau 7. Écoute pour parler de culture colombienne, d’identité et de représentations. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-b1-niveau7.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/niveau7-culture-colombienne-pilote-b1.mp3" length="1009833" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-02-culture-colombienne</guid>
+    </item>
+    <item>
+      <title>Français B1 · Culture française</title>
+      <description>Français B1 · Niveau 7. Écoute pour identifier des références culturelles françaises et enrichir la comparaison. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-b1-niveau7.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/niveau7-culture-francaise-b1.mp3" length="913702" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-03-culture-francaise</guid>
+    </item>
+    <item>
+      <title>Français B1 · Comparaison France-Colombie</title>
+      <description>Français B1 · Niveau 7. Écoute pour comparer la France et la Colombie avec nuance. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-b1-niveau7.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/niveau7-comparaison-france-colombie-b1.mp3" length="907433" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-04-comparaison-france-colombie</guid>
+    </item>
+    <item>
+      <title>Français B1 · Mérite et travail public</title>
+      <description>Français B1 · Niveau 7. Écoute pour discuter du mérite, du travail et de la société. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-b1-niveau7.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/niveau7-merite-travail-public-colombie-b1.mp3" length="774104" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-05-merite-travail-public</guid>
+    </item>
+    <item>
+      <title>Français B1 · Colombiens, France et Canada</title>
+      <description>Français B1 · Niveau 7. Écoute sur la mobilité professionnelle vers la France et le Canada. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-b1-niveau7.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/niveau7-travail-colombiens-france-canada-b1.mp3" length="753624" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-06-colombiens-france-canada</guid>
+    </item>
+    <item>
+      <title>Français B1 · Culture française</title>
+      <description>Français B1 · Niveau 7. Écoute culturelle pour observer des habitudes et références françaises. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/ecoute-cultures-b1.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/culture-francaise-b1.mp3" length="643701" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-07-culture-francaise-b1</guid>
+    </item>
+    <item>
+      <title>Français B1 · Culture colombienne</title>
+      <description>Français B1 · Niveau 7. Écoute culturelle pour parler de la Colombie en français. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/ecoute-cultures-b1.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/culture-colombienne-b1.mp3" length="577663" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-08-culture-colombienne-b1</guid>
+    </item>
+    <item>
+      <title>Français B1 · Culture québécoise — Québec</title>
+      <description>Français B1 · Niveau 7. Écoute avec accent québécois pour découvrir la culture du Québec. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-culture-quebec-b1.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/culture-quebecoise-quebec-b1.mp3" length="2218989" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-09-culture-quebecoise-quebec</guid>
+    </item>
+    <item>
+      <title>Français B1 · Culture québécoise — France</title>
+      <description>Français B1 · Niveau 7. Écoute avec accent de France pour comparer deux versions d’un même contenu. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/comprehension-orale-culture-quebec-b1.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/culture-quebecoise-france-b1.mp3" length="1743351" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-10-culture-quebecoise-france</guid>
+    </item>
+    <item>
+      <title>Français B1 · Akari à Tokyo</title>
+      <description>Français B1 · Niveau 7. Récit pour travailler le conte, la narration et le passé simple. Activité : https://www.jaralingua.com/frances/Niveau%207/ateliers/chaperons-rouges-du-monde.html</description>
+      <enclosure url="https://www.jaralingua.com/frances/Niveau%207/audio/caperucita/akari-tokyo-recit.mp3" length="1627995" type="audio/mpeg"/>
+      <guid isPermaLink="false">jaralingua-fr-n7-11-akari-a-tokyo</guid>
+    </item>
+  </channel>
+</rss>
