@@ -88,7 +88,7 @@
       <span class="badge-course"><i class="bi bi-patch-check-fill"></i> A1.1 · Préparation institutionnelle</span>
       <h1>Simulacre d'examen final</h1>
       <p class="hero-lead">S'entraîner avec le format complet avant l'évaluation finale.</p>
-      <p class="hero-text">Ce simulacre vérifie les contenus travaillés jusqu’au thème 7 : présentation, nombres, présent, négation, questions, verbes essentiels, famille, description, professions, présent progressif, maison et localisation.</p>
+      <p class="hero-text">Ce simulacre vérifie les contenus travaillés jusqu’au thème 7 et le passé récent : présentation, nombres, présent, négation, questions, verbes essentiels, famille, description, professions, présent progressif, maison et localisation.</p>
       <div class="d-flex flex-wrap gap-3 mt-4"><a href="#access" class="btn-main"><i class="bi bi-play-circle-fill"></i> Commencer</a><a href="index.html" class="btn-soft"><i class="bi bi-house-fill"></i> Portail du niveau</a></div>
     </div></div>
   </header>
@@ -141,7 +141,7 @@
           <h2 class="section-title">Format du simulacre</h2>
           <div class="row g-3">
             <div class="col-md-6 col-xl-3"><span class="pill">I · 15 pts</span><h3 class="h5 mt-2">Vocabulaire</h3><p class="section-text mb-0">Lisez la phrase et choisissez le sens du mot en contexte.</p></div>
-            <div class="col-md-6 col-xl-3"><span class="pill">II · 15 pts</span><h3 class="h5 mt-2">Grammaire</h3><p class="section-text mb-0">Présent, négation, questions, verbes essentiels, possessifs, localisation et présent progressif.</p></div>
+            <div class="col-md-6 col-xl-3"><span class="pill">II · 15 pts</span><h3 class="h5 mt-2">Grammaire</h3><p class="section-text mb-0">Présent, négation, questions, verbes essentiels, possessifs, localisation, présent progressif et passé récent.</p></div>
             <div class="col-md-6 col-xl-3"><span class="pill">III · 10 pts</span><h3 class="h5 mt-2">Lecture</h3><p class="section-text mb-0">Lisez un texte A1 et répondez vrai/faux.</p></div>
             <div class="col-md-6 col-xl-3"><span class="pill">IV · 10 pts</span><h3 class="h5 mt-2">Écoute</h3><p class="section-text mb-0">Écoutez l'audio et choisissez la bonne réponse.</p></div>
           </div>
@@ -169,7 +169,6 @@
         <p class="section-kicker">II. Grammaire · 15 points</p>
         <h2 class="section-title">Construire des phrases simples</h2>
         <form id="grammarForm" class="row g-3"></form>
-        <div id="orderingArea" class="row g-3 mt-1"></div>
         <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn-main" type="button" data-check-section="grammar"><i class="bi bi-check2-circle"></i> Corriger la grammaire</button><button class="btn-soft" type="button" data-reset-section="grammar"><i class="bi bi-arrow-counterclockwise"></i> Réinitialiser</button></div>
         <div class="result-box" id="grammarResult"></div>
       </div></div>
@@ -264,15 +263,12 @@ Aujourd’hui, je suis dans ma chambre. Je suis en train d’écouter un audio e
       { block:"Bloc D · Négation", p:"La phrase négative correcte est :", o:["Je parle ne pas anglais.","Je ne parle pas anglais.","Je pas parle anglais."], a:1 },
       { block:"Bloc D · Question", p:"La question correcte est :", o:["Est-ce tu que habites ici ?","Tu est-ce habites ici ?","Est-ce que tu habites ici ?"], a:2 },
       { block:"Bloc E · Possessifs", p:"C’est ___ mère.", o:["ma","mon","mes"], a:0 },
-      { block:"Bloc F · Présent progressif", p:"Elle est en train ___ étudier.", o:["de la","d’","du"], a:1 }
-    ];
-
-    const orderingExercises = [
-      { title:"Présentation", chunks:["Je","m’appelle","Lina"], answer:["Je","m’appelle","Lina"] },
-      { title:"Phrase négative", chunks:["Elle","ne parle pas","anglais"], answer:["Elle","ne parle pas","anglais"] },
-      { title:"Question avec est-ce que", chunks:["Est-ce que","tu","habites","à Medellín ?"], answer:["Est-ce que","tu","habites","à Medellín ?"] },
-      { title:"Maison", chunks:["Dans ma chambre,","il y a","un bureau"], answer:["Dans ma chambre,","il y a","un bureau"] },
-      { title:"Action en cours", chunks:["Je","suis en train d’","étudier"], answer:["Je","suis en train d’","étudier"] }
+      { block:"Bloc E · Possessifs", p:"Ce sont ___ parents.", o:["ma","mon","mes"], a:2 },
+      { block:"Bloc F · Maison", p:"Dans la chambre, ___ un lit.", o:["il y a","elle est","je vais"], a:0 },
+      { block:"Bloc F · Localisation", p:"Le cahier est ___ le bureau.", o:["gentille","sur","professeur"], a:1 },
+      { block:"Bloc G · Présent progressif", p:"Elle est en train ___ étudier.", o:["de la","d’","du"], a:1 },
+      { block:"Bloc H · Passé récent", p:"Je ___ de terminer l’exercice.", o:["vais","viens","suis"], a:1 },
+      { block:"Bloc H · Passé récent", p:"Ils viennent ___ écouter l’audio.", o:["d’","de","du"], a:0 }
     ];
 
     const readingQuestions = [
@@ -317,9 +313,6 @@ Aujourd’hui, je suis dans ma chambre. Je suis en train d’écouter un audio e
     function renderReading(){
       document.getElementById("readingForm").innerHTML=readingQuestions.map((item,index)=>`<div class="col-md-6"><fieldset class="question-card" data-question="reading${index}"><legend>${index+1}. ${escapeHtml(item.p||item.q)}</legend><label class="choice"><input type="radio" name="reading${index}" value="true"><span>Vrai</span></label><label class="choice"><input type="radio" name="reading${index}" value="false"><span>Faux</span></label></fieldset></div>`).join("");
     }
-    function renderOrdering(){
-      document.getElementById("orderingArea").innerHTML=orderingExercises.map((exercise,index)=>`<div class="col-lg-6"><article class="question-card" data-order-exercise="${index}"><span class="pill mb-2">Organisation ${index+1}</span><h3 class="question-title">${escapeHtml(exercise.title)}</h3><div class="order-bank mb-2">${exercise.chunks.map((chunk,chunkIndex)=>`<button class="sentence-chip" type="button" data-order-pick="${index}" data-chunk-index="${chunkIndex}">${escapeHtml(chunk)}</button>`).join("")}</div><div class="order-answer" data-order-answer="${index}" aria-label="Réponse organisée"></div><button class="btn-soft mt-2" type="button" data-order-reset="${index}"><i class="bi bi-arrow-counterclockwise"></i> Recommencer</button></article></div>`).join("");
-    }
     function clearStates(scope){scope.querySelectorAll(".question-card").forEach(card=>card.classList.remove("correct","incorrect"))}
     function checkMcq(section, questions, prefix){
       let score=0;
@@ -331,11 +324,9 @@ Aujourd’hui, je suis dans ma chambre. Je suis en train d’écouter un audio e
       readingQuestions.forEach((item,index)=>{const card=document.querySelector(`[data-question="reading${index}"]`);const selected=document.querySelector(`input[name="reading${index}"]:checked`);card.classList.remove("correct","incorrect");if(selected&&((selected.value==="true")===item.a)){score++;card.classList.add("correct")}else{card.classList.add("incorrect")}});
       sectionScores.reading=score;showResult("reading",score,readingQuestions.length);
     }
-    function orderSelection(index){return Array.from(document.querySelector(`[data-order-answer="${index}"]`).children).map(button=>button.textContent)}
     function checkGrammar(){
       let score=0;
       grammarQuestions.forEach((item,index)=>{const card=document.querySelector(`[data-question="grammar${index}"]`);const selected=document.querySelector(`input[name="grammar${index}"]:checked`);card.classList.remove("correct","incorrect");if(selected&&Number(selected.value)===item.a){score++;card.classList.add("correct")}else{card.classList.add("incorrect")}});
-      orderingExercises.forEach((exercise,index)=>{const card=document.querySelector(`[data-order-exercise="${index}"]`);const chosen=orderSelection(index);const ok=chosen.length===exercise.answer.length&&chosen.every((value,i)=>value===exercise.answer[i]);card.classList.remove("correct","incorrect");if(ok){score++;card.classList.add("correct")}else{card.classList.add("incorrect")}});
       sectionScores.grammar=score;showResult("grammar",score,15);
     }
     function showResult(section,score,total){const box=document.getElementById(`${section}Result`);box.classList.add("show");box.textContent=`Résultat : ${score} / ${total}`;updateScore()}
@@ -345,12 +336,8 @@ Aujourd’hui, je suis dans ma chambre. Je suis en train d’écouter un audio e
       if(section==="vocab"){document.getElementById("vocabForm").reset();clearStates(document.getElementById("vocabForm"))}
       if(section==="reading"){document.getElementById("readingForm").reset();clearStates(document.getElementById("readingForm"))}
       if(section==="listening"){document.getElementById("listeningForm").reset();clearStates(document.getElementById("listeningForm"))}
-      if(section==="grammar"){document.getElementById("grammarForm").reset();clearStates(document.getElementById("grammarForm"));renderOrdering();wireOrdering()}
+      if(section==="grammar"){document.getElementById("grammarForm").reset();clearStates(document.getElementById("grammarForm"))}
       updateScore();
-    }
-    function wireOrdering(){
-      document.querySelectorAll("[data-order-pick]").forEach(button=>{button.onclick=()=>{const index=button.dataset.orderPick;const answer=document.querySelector(`[data-order-answer="${index}"]`);const chosen=document.createElement("button");chosen.type="button";chosen.className="sentence-chip";chosen.textContent=button.textContent;chosen.dataset.originalText=button.textContent;chosen.onclick=()=>{button.hidden=false;chosen.remove()};answer.appendChild(chosen);button.hidden=true}});
-      document.querySelectorAll("[data-order-reset]").forEach(button=>{button.onclick=()=>{const index=button.dataset.orderReset;document.querySelector(`[data-order-answer="${index}"]`).innerHTML="";document.querySelectorAll(`[data-order-pick="${index}"]`).forEach(item=>item.hidden=false)}});
     }
     function showExam(name, role){document.getElementById("examContent").hidden=false;document.getElementById("accessPanel").innerHTML=`<div class="d-flex align-items-start gap-3"><div class="access-icon"><i class="bi bi-unlock-fill"></i></div><div><p class="section-kicker">Accès validé${role?` · ${escapeHtml(role)}`:""}</p><h2 class="section-title">Bienvenue${name?`, ${escapeHtml(name)}`:""}</h2><p class="section-text mb-0">Le simulacre est ouvert. Les résultats restent des résultats de pratique et ne sont pas envoyés au carnet.</p></div></div>`}
     function showLocked(message){document.getElementById("examContent").hidden=true;document.getElementById("accessStatus").textContent=message;if(isLocalPreviewHost)document.getElementById("localPreviewBtn").hidden=false}
@@ -386,7 +373,7 @@ Aujourd’hui, je suis dans ma chambre. Je suis en train d’écouter un audio e
     document.querySelectorAll("[data-check-section]").forEach(button=>button.addEventListener("click",()=>{const section=button.dataset.checkSection;if(section==="vocab")checkMcq("vocab",vocabQuestions,"vocab");if(section==="listening")checkMcq("listening",listeningQuestions,"listening");if(section==="reading")checkReading();if(section==="grammar")checkGrammar()}));
     document.querySelectorAll("[data-reset-section]").forEach(button=>button.addEventListener("click",()=>resetSection(button.dataset.resetSection)));
     document.querySelectorAll("[data-audio-rate]").forEach(button=>button.addEventListener("click",()=>{const audio=document.getElementById("listeningAudio");audio.playbackRate=Number(button.dataset.audioRate);document.querySelectorAll("[data-audio-rate]").forEach(item=>item.classList.remove("active"));button.classList.add("active")}));
-    renderMcq("vocabForm",vocabQuestions,"vocab");renderMcq("grammarForm",grammarQuestions,"grammar");renderMcq("listeningForm",listeningQuestions,"listening");renderReading();renderOrdering();wireOrdering();verifyAccess();window.addEventListener("storage",verifyAccess);window.addEventListener("focus",verifyAccess);setInterval(()=>{if(document.getElementById("examContent").hidden&&activeUser())verifyAccess()},2500);
+    renderMcq("vocabForm",vocabQuestions,"vocab");renderMcq("grammarForm",grammarQuestions,"grammar");renderMcq("listeningForm",listeningQuestions,"listening");renderReading();verifyAccess();window.addEventListener("storage",verifyAccess);window.addEventListener("focus",verifyAccess);setInterval(()=>{if(document.getElementById("examContent").hidden&&activeUser())verifyAccess()},2500);
   </script>
 </body>
 </html>
