@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Projet final intégrateur de Français Niveau 1 A1.1 : portrait écrit et présentation orale.">
+  <title>Projet final : mon premier portrait | Français Niveau 1</title>
+  <link rel="icon" href="/favicon.ico">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../assets/niveau1.css?v=20260624-hero-bg" rel="stylesheet">
+  <style>
+    .project-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);gap:1.25rem;align-items:start}
+    .project-visual{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:28px;box-shadow:0 24px 55px rgba(21,52,93,.18)}
+    .checklist-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+    .check-card{background:#fff;border:1px solid #dce7f4;border-radius:20px;padding:1rem;box-shadow:0 12px 30px rgba(21,52,93,.08)}
+    .check-card strong{display:flex;align-items:center;gap:.5rem;color:var(--navy);font-size:1.05rem}.check-card strong i{color:var(--red)}.check-card p{margin:.45rem 0 0;color:var(--muted);font-weight:760;line-height:1.65}
+    .template-lines{display:grid;gap:.8rem}.template-line{background:#f8fbff;border:1px solid rgba(31,78,140,.12);border-radius:18px;padding:1rem}.template-line b{display:block;color:var(--red);margin-bottom:.35rem}.template-line span{color:var(--navy);font-weight:850}
+    .rubric-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:20px;box-shadow:0 14px 34px rgba(21,52,93,.08)}
+    .rubric-table th,.rubric-table td{padding:1rem;border-bottom:1px solid #dce7f4;background:#fff;vertical-align:top}.rubric-table th{background:#0b2d63;color:#fff}.rubric-table tr:last-child td{border-bottom:0}.rubric-table td:last-child,.rubric-table th:last-child{text-align:center;font-weight:950;color:var(--red)}
+    .writing-box{width:100%;min-height:280px;border:1px solid rgba(31,78,140,.2);border-radius:20px;padding:1rem;color:var(--navy);font-weight:700;line-height:1.7;resize:vertical;background:#fff}
+    .counter-pill{display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;background:#eef5ff;color:var(--navy);font-weight:950;padding:.45rem .8rem}
+    .audio-panel{display:grid;gap:1rem;background:linear-gradient(135deg,#eef5ff,#fff7e3);border-radius:22px;padding:1.1rem;border:1px solid rgba(31,78,140,.11)}
+    .download-row{display:flex;flex-wrap:wrap;gap:.75rem}.download-row button{border:0}
+    @media(max-width:900px){.project-grid{grid-template-columns:1fr}.project-visual{border-radius:20px}}
+  </style>
+</head>
+<body>
+  <nav class="navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a>
+      <div class="d-flex"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></div>
+    </div>
+  </nav>
+
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/ateliers/projet-final-portrait-a1.png')">
+    <div class="container">
+      <div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html">Ateliers</a><span>›</span><span>Projet final</span></div>
+      <span class="badge-course"><i class="bi bi-award-fill"></i> Projet final · A1.1</span>
+      <h1>Mon premier portrait en français</h1>
+      <p class="hero-text">Préparez un portrait écrit et une courte présentation orale qui réutilisent les contenus essentiels du Niveau 1.</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container">
+        <article class="content-card mb-4">
+          <div class="project-grid">
+            <div>
+              <p class="section-kicker">Objectif du projet</p>
+              <h2>Produire un portrait complet et compréhensible</h2>
+              <p class="section-text">Vous allez créer un profil personnel ou fictif. Le texte doit montrer que vous savez vous présenter, décrire une personne, parler de la famille, de la maison, des goûts, des transports et des projets immédiats.</p>
+              <div class="grammar-table">
+                <div><b>Production écrite</b><span>80 à 120 mots en français.</span></div>
+                <div><b>Production orale</b><span>Présentation de 1 à 2 minutes.</span></div>
+                <div><b>Document final</b><span>Texte organisé + présentation claire.</span></div>
+              </div>
+            </div>
+            <img class="project-visual" src="../img/ateliers/projet-final-presentation-orale.png" alt="Étudiante qui présente son projet final à l’oral" width="1280" height="720">
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Checklist obligatoire</p>
+          <h2>Votre portrait doit contenir ces éléments</h2>
+          <div class="checklist-grid mt-3">
+            <div class="check-card"><strong><i class="bi bi-person-badge"></i> Identité</strong><p>Prénom, âge, nationalité, ville, langues.</p></div>
+            <div class="check-card"><strong><i class="bi bi-people"></i> Famille</strong><p>Au moins deux personnes ou relations.</p></div>
+            <div class="check-card"><strong><i class="bi bi-person-lines-fill"></i> Description</strong><p>Apparence, personnalité, profession ou activité.</p></div>
+            <div class="check-card"><strong><i class="bi bi-house-door"></i> Maison</strong><p>Logement, chambre, objets ou environnement.</p></div>
+            <div class="check-card"><strong><i class="bi bi-cup-hot"></i> Alimentation</strong><p>Une préférence, une commande ou un achat simple.</p></div>
+            <div class="check-card"><strong><i class="bi bi-bus-front"></i> Transport</strong><p>Un trajet, une heure, un transport ou un lieu de la ville.</p></div>
+            <div class="check-card"><strong><i class="bi bi-calendar-event"></i> Projet proche</strong><p>Au moins une phrase avec <em>aller + infinitif</em>.</p></div>
+            <div class="check-card"><strong><i class="bi bi-arrow-counterclockwise"></i> Action récente</strong><p>Au moins une phrase avec <em>venir de + infinitif</em>.</p></div>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Modèle audio</p>
+          <h2>Écoutez le rythme avant de préparer votre présentation</h2>
+          <div class="audio-panel">
+            <p class="section-text mb-0">Ce modèle sert à comprendre le rythme et l’organisation d’un portrait A1. Ne le copiez pas mot pour mot : adaptez-le à votre propre profil.</p>
+            <audio controls preload="metadata" src="../audio/projet-final/projet-final-modele.mp3?v=20260628-projet-final"></audio>
+            <div class="download-row">
+              <button class="btn-soft" type="button" id="downloadModelTranscript"><i class="bi bi-file-earmark-pdf"></i> Télécharger la transcription du modèle</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Plan guidé</p>
+          <h2>Construisez votre texte par blocs</h2>
+          <div class="template-lines">
+            <div class="template-line"><b>1 · Identité</b><span>Je m’appelle... J’ai... ans. Je suis... et j’habite à...</span></div>
+            <div class="template-line"><b>2 · Famille</b><span>Dans ma famille, il y a... Mon / Ma / Mes...</span></div>
+            <div class="template-line"><b>3 · Description</b><span>Je suis... J’ai les cheveux... et les yeux... Je suis...</span></div>
+            <div class="template-line"><b>4 · Activité</b><span>Je suis étudiant(e). J’étudie... / Je travaille...</span></div>
+            <div class="template-line"><b>5 · Maison</b><span>J’habite dans... Dans ma chambre, il y a...</span></div>
+            <div class="template-line"><b>6 · Alimentation</b><span>Le matin, je prends... Au café, je voudrais...</span></div>
+            <div class="template-line"><b>7 · Transport et projet</b><span>Demain, je vais aller... en... à... heures.</span></div>
+            <div class="template-line"><b>8 · Passé récent et clôture</b><span>Je viens de... Voilà mon portrait. Merci beaucoup.</span></div>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Exemple complet</p>
+          <h2>Modèle écrit</h2>
+          <p class="section-text">Bonjour, je m’appelle Lina Torres. J’ai vingt ans. Je suis colombienne et j’habite à Medellín. Je parle espagnol et un peu français. Dans ma famille, il y a ma mère, mon frère et mes grands-parents. Ma mère est gentille et mon frère est très drôle. Je suis étudiante. Je suis de taille moyenne, j’ai les cheveux noirs et les yeux marron. J’habite dans un appartement. Dans ma chambre, il y a un lit, un bureau et une armoire. Le matin, je prends du café et du pain. Demain, je vais aller à l’université en bus à huit heures. Je viens d’acheter un ticket. Après le cours, je vais rentrer à pied. Voilà mon premier portrait en français. Merci beaucoup.</p>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Espace de préparation</p>
+          <h2>Rédigez votre version</h2>
+          <p class="section-text">Écrivez entre 80 et 120 mots. Le compteur est indicatif : le professeur évalue surtout la clarté, la cohérence et l’utilisation des contenus du niveau.</p>
+          <textarea class="writing-box" id="studentDraft" placeholder="Bonjour, je m’appelle..."></textarea>
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-3">
+            <span class="counter-pill"><i class="bi bi-pencil-square"></i> <span id="wordCount">0</span> mots</span>
+            <button class="btn-soft" type="button" id="copyDraft"><i class="bi bi-clipboard"></i> Copier mon texte</button>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Présentation orale</p>
+          <h2>Conseils pour parler clairement</h2>
+          <div class="project-grid">
+            <img class="project-visual" src="../img/ateliers/projet-final-presentation-orale.png" alt="Présentation orale du projet final" width="1280" height="720">
+            <div class="steps-visual">
+              <div class="step-line"><p><strong>Ne lisez pas trop vite :</strong> faites des pauses après chaque bloc.</p></div>
+              <div class="step-line"><p><strong>Prononcez les groupes :</strong> <em>je m’appelle / j’habite / je vais aller</em>.</p></div>
+              <div class="step-line"><p><strong>Regardez votre public :</strong> utilisez vos notes, mais ne cachez pas votre visage.</p></div>
+              <div class="step-line"><p><strong>Terminez clairement :</strong> <em>Voilà mon portrait. Merci beaucoup.</em></p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Grille d’évaluation</p>
+          <h2>Comment le projet peut être évalué</h2>
+          <div class="table-responsive">
+            <table class="rubric-table">
+              <thead><tr><th>Critère</th><th>Attendu</th><th>Points</th></tr></thead>
+              <tbody>
+                <tr><td>Identité et données personnelles</td><td>Présentation claire : nom, âge, nationalité, ville, langue(s).</td><td>10</td></tr>
+                <tr><td>Famille et relations</td><td>Deux personnes ou relations minimum avec possessifs.</td><td>10</td></tr>
+                <tr><td>Description physique et personnalité</td><td>Adjectifs corrects et portrait compréhensible.</td><td>10</td></tr>
+                <tr><td>Maison ou environnement</td><td>Logement, pièce ou objets avec <em>il y a</em> ou prépositions.</td><td>10</td></tr>
+                <tr><td>Alimentation ou achats</td><td>Préférence, commande ou achat avec articles adaptés.</td><td>10</td></tr>
+                <tr><td>Transport, heure et projets</td><td>Transport, heure, futur proche et passé récent.</td><td>15</td></tr>
+                <tr><td>Grammaire en contexte</td><td>Présent, négation, possessifs, futur proche, passé récent.</td><td>20</td></tr>
+                <tr><td>Prononciation et fluidité orale</td><td>Rythme clair, pauses, sons compréhensibles.</td><td>10</td></tr>
+                <tr><td>Organisation et clarté</td><td>Texte ordonné, cohérent et facile à suivre.</td><td>5</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="download-row mt-4">
+            <button class="btn-main" type="button" id="downloadStudentGuide"><i class="bi bi-download"></i> Télécharger le guide étudiant</button>
+            <button class="btn-soft" type="button" id="downloadRubric"><i class="bi bi-file-earmark-check"></i> Télécharger la grille d’évaluation</button>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <p class="section-kicker">Avant de remettre</p>
+          <h2>Vérification finale</h2>
+          <div class="phrase-list">
+            <div class="phrase-item"><span>Mon texte a entre 80 et 120 mots.</span><span class="skill-pill">longueur</span></div>
+            <div class="phrase-item"><span>J’ai utilisé au moins une phrase négative.</span><span class="skill-pill">ne... pas</span></div>
+            <div class="phrase-item"><span>J’ai utilisé <em>aller + infinitif</em>.</span><span class="skill-pill">futur proche</span></div>
+            <div class="phrase-item"><span>J’ai utilisé <em>venir de + infinitif</em>.</span><span class="skill-pill">passé récent</span></div>
+            <div class="phrase-item"><span>J’ai pratiqué ma présentation à voix haute.</span><span class="skill-pill">oral</span></div>
+          </div>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a class="btn-main" href="../ateliers-activites.html"><i class="bi bi-controller"></i> Retour aux ateliers</a>
+            <a class="btn-soft" href="../bibliotheque-audio.html"><i class="bi bi-headphones"></i> Bibliothèque audio</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><a href="../ateliers-activites.html">← Tous les ateliers</a></div></footer>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/js/transcript-pdf.js"></script>
+  <script src="../assets/niveau1.js?v=20260624-audit-nav"></script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+  <script>
+    const modelTranscript = `Bonjour, je m’appelle Lina Torres. J’ai vingt ans. Je suis colombienne et j’habite à Medellín. Je parle espagnol et un peu français. Dans ma famille, il y a ma mère, mon frère et mes grands-parents. Ma mère est gentille et mon frère est très drôle. Je suis étudiante. Je suis de taille moyenne, j’ai les cheveux noirs et les yeux marron. J’habite dans un appartement. Dans ma chambre, il y a un lit, un bureau et une armoire. Le matin, je prends du café et du pain. Demain, je vais aller à l’université en bus à huit heures. Je viens d’acheter un ticket. Après le cours, je vais rentrer à pied. Voilà mon premier portrait en français. Merci beaucoup.`;
+    const studentGuide = `Projet final : Mon premier portrait en français
+
+Produit final :
+- Texte écrit de 80 à 120 mots.
+- Présentation orale de 1 à 2 minutes.
+
+Votre portrait doit inclure :
+1. Identité : prénom, âge, nationalité, ville, langues.
+2. Famille : au moins deux personnes ou relations.
+3. Description : apparence, personnalité, profession ou activité.
+4. Maison : logement, chambre, objets ou environnement.
+5. Alimentation : préférence, commande ou achat simple.
+6. Transport : trajet, heure, transport ou lieu de la ville.
+7. Projet proche : une phrase avec aller + infinitif.
+8. Action récente : une phrase avec venir de + infinitif.
+
+Structure conseillée :
+Bonjour, je m’appelle...
+Dans ma famille, il y a...
+Je suis... J’ai...
+J’habite dans...
+Le matin, je prends...
+Demain, je vais...
+Je viens de...
+Voilà mon premier portrait en français. Merci beaucoup.`;
+    const rubric = `Grille d’évaluation — Mon premier portrait en français
+
+Identité et données personnelles : 10 points.
+Famille et relations : 10 points.
+Description physique et personnalité : 10 points.
+Maison ou environnement : 10 points.
+Alimentation ou achats : 10 points.
+Transport, heure et projets : 15 points.
+Grammaire en contexte : 20 points.
+Prononciation et fluidité orale : 10 points.
+Organisation et clarté : 5 points.
+
+Total : 100 points.`;
+    document.getElementById("downloadModelTranscript").addEventListener("click", () => downloadTranscriptPdf("Modèle : mon premier portrait en français", modelTranscript, "transcription-projet-final-portrait-a1.pdf"));
+    document.getElementById("downloadStudentGuide").addEventListener("click", () => downloadTranscriptPdf("Guide étudiant — Mon premier portrait en français", studentGuide, "guide-etudiant-projet-final-a1.pdf"));
+    document.getElementById("downloadRubric").addEventListener("click", () => downloadTranscriptPdf("Grille d’évaluation — Mon premier portrait en français", rubric, "grille-evaluation-projet-final-a1.pdf"));
+    const draft = document.getElementById("studentDraft");
+    const wordCount = document.getElementById("wordCount");
+    function countWords(value){ return (value.trim().match(/[A-Za-zÀ-ÖØ-öø-ÿ0-9’'-]+/g) || []).length; }
+    draft.addEventListener("input", () => { wordCount.textContent = countWords(draft.value); });
+    document.getElementById("copyDraft").addEventListener("click", async () => {
+      await navigator.clipboard.writeText(draft.value);
+      document.getElementById("copyDraft").innerHTML = '<i class="bi bi-check-circle"></i> Texte copié';
+      setTimeout(() => { document.getElementById("copyDraft").innerHTML = '<i class="bi bi-clipboard"></i> Copier mon texte'; }, 1800);
+    });
+  </script>
+</body>
+</html>

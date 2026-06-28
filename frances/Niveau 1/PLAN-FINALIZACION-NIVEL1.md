@@ -2,7 +2,7 @@
 
 Fuente base: `C:\Users\USER\Documents\Français\Niveau 1\Carta descriptiva nivel 1.docx`
 
-Estado de decisión: etapa 3 — dossier 09 implementado; falta proyecto final y ajuste final de evaluación.
+Estado de decisión: etapa 4 — dossier 09 y proyecto final implementados; falta ajuste final de evaluación.
 
 ## Principio de implementación
 
@@ -30,7 +30,7 @@ El portal actual del Nivel 1 contiene ocho dossiers:
 7. Maison et environnement
 8. Alimentation et achats
 
-Estos nueve dossiers cubren la secuencia temática de la carta descriptiva. Falta cerrar el proyecto final y la evaluación final alineada.
+Estos nueve dossiers cubren la secuencia temática de la carta descriptiva. El proyecto final ya está integrado; falta cerrar la evaluación final alineada.
 
 ## Mapa final propuesto
 
@@ -186,6 +186,11 @@ Página sugerida:
 
 - `ateliers/projet-final-portrait.html`
 
+Estado:
+
+- Implementado como sección independiente de cierre en `ateliers-activites.html`.
+- Incluye guía paso a paso, checklist, modelo escrito, audio modelo, transcripción descargable, espacio de redacción y grille d’évaluation.
+
 Objetivo:
 
 > Produire un portrait personnel ou inventé qui mobilise l’ensemble du niveau.
@@ -230,7 +235,7 @@ Requisito funcional:
 2. Crear dossier 07: Maison et environnement.
 3. Crear dossier 08: Alimentation et achats.
 4. Crear dossier 09: Transport, heure et projets immédiats. — Implementado.
-5. Crear proyecto final.
+5. Crear proyecto final. — Implementado.
 6. Ajustar evaluación.
 7. Auditoría final completa del Nivel 1.
 
