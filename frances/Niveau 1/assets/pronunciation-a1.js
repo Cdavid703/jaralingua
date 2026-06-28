@@ -26,7 +26,7 @@
       ]
     },
     "theme-2": {
-      title: "Le présent de l’indicatif à voix haute",
+      title: "Présent et verbes en -er à voix haute",
       audio: "../audio/prononciation/stages/theme-2-defi.mp3",
       audios: [
         "../audio/prononciation/stages/theme-2-stage-1.mp3",
