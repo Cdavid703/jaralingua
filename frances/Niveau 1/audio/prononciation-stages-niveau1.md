@@ -122,3 +122,23 @@ Narratrice: Il n’y a pas de balcon.
 File: `prononciation/stages/theme-7-defi.mp3`
 
 Narratrice: Dans ma chambre, il y a un lit près de la fenêtre. La lampe est sur la table de nuit. Il n’y a pas de balcon.
+
+## Prononciation thème 8 — étape 1
+File: `prononciation/stages/theme-8-stage-1.mp3`
+
+Narratrice: Je voudrais un café et un croissant.
+
+## Prononciation thème 8 — étape 2
+File: `prononciation/stages/theme-8-stage-2.mp3`
+
+Narratrice: Je prends de l’eau et de la salade.
+
+## Prononciation thème 8 — étape 3
+File: `prononciation/stages/theme-8-stage-3.mp3`
+
+Narratrice: Ça coûte six euros cinquante.
+
+## Prononciation thème 8 — défi final
+File: `prononciation/stages/theme-8-defi.mp3`
+
+Narratrice: Je voudrais un café et un croissant. Je prends de l’eau et de la salade. Ça coûte six euros cinquante.

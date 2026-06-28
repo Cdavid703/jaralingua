@@ -89,3 +89,21 @@ File: `theme-7/visite-appartement-clara.mp3`
 Narratrice: Clara habite dans un petit appartement près de l’université. Aujourd’hui, elle fait visiter son logement à son ami Hugo. Quand on entre, il y a un couloir court avec un miroir et une petite étagère. À gauche, il y a le salon. Le salon est clair parce qu’il y a une grande fenêtre. Devant la fenêtre, il y a une table basse et deux fauteuils. Le canapé est à côté de la bibliothèque. Sur la bibliothèque, Clara garde des livres, une plante verte et une lampe.
 Narratrice: À droite du salon, il y a la cuisine. Elle est petite, mais pratique. Il y a un réfrigérateur blanc, un évier, une table ronde et deux chaises. Il n’y a pas de four, mais il y a une plaque de cuisson. Clara prépare souvent le petit déjeuner dans cette cuisine.
 Narratrice: La chambre est au fond de l’appartement. Dans la chambre, il y a un lit, une armoire et un bureau. Le bureau est près de la fenêtre. Sur le bureau, il y a un ordinateur et un cahier de français. Il n’y a pas de balcon, mais l’appartement est agréable et bien organisé.
+
+## Au café de la place
+File: `theme-8/au-cafe-de-la-place.mp3`
+
+Narratrice: Il est dix heures trente. Lina et Mateo entrent au Café de la place pour prendre une petite pause.
+Serveuse: Bonjour, vous désirez ?
+Lina: Bonjour madame. Je voudrais un café crème et un croissant, s’il vous plaît.
+Serveuse: Très bien. Un café crème et un croissant. Et pour vous, monsieur ?
+Mateo: Pour moi, je prends un thé, un jus d’orange et une part de tarte aux pommes.
+Serveuse: D’accord. Nous n’avons plus de croissants aux amandes, mais nous avons des croissants nature.
+Lina: Un croissant nature, c’est parfait. Est-ce que vous avez aussi de l’eau ?
+Serveuse: Oui, bien sûr. Une carafe d’eau, c’est gratuit.
+Mateo: Merci. Et ça coûte combien, s’il vous plaît ?
+Serveuse: Le café crème coûte deux euros quatre-vingts, le croissant coûte deux euros, le thé coûte deux euros cinquante, le jus d’orange coûte deux euros et la tarte coûte trois euros. Avec la carafe d’eau, cela fait neuf euros quatre-vingts.
+Lina: Très bien. Je peux payer par carte ?
+Serveuse: Oui, sans problème.
+Mateo: Merci beaucoup.
+Serveuse: Merci à vous. Bonne journée !

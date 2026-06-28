@@ -44,6 +44,7 @@
   <script src="assets/original-banks.js?v=20260624-shtooka-nombres"></script>
   <script src="assets/expanded-catalog.js?v=20260627-theme6"></script>
   <script src="assets/theme7-catalog.js?v=20260628-theme7-ateliers"></script>
+  <script src="assets/theme8-catalog.js?v=20260628-theme8-ateliers"></script>
   <script>
     const audioKeys = [
       ["1","premiere-rencontre","img/ateliers/atelier-premiere-rencontre.png"],
@@ -51,10 +52,11 @@
       ["4","ecoute-verbes-essentiels","img/ateliers/ecoute-samedi-lyon.png"],
       ["5","ecoute-ma-famille","img/ateliers/ecoute-dejeuner-famille.png"],
       ["6","ecoute-portrait","img/ateliers/ecoute-portrait-sofia.png"],
-      ["7","ecoute-appartement-clara","img/ateliers/ecoute-appartement-clara.png"]
+      ["7","ecoute-appartement-clara","img/ateliers/ecoute-appartement-clara.png"],
+      ["8","ecoute-au-cafe","img/ateliers/ecoute-au-cafe.png"]
     ];
     const library = document.getElementById("audioLibrary");
-    const activityImageVersion = "20260628-theme7-ateliers";
+    const activityImageVersion = "20260628-theme8-ateliers";
     library.innerHTML = audioKeys.map(([number,key,image]) => {
       const item = window.quizCatalog[key];
       return `<article class="audio-card">

@@ -56,6 +56,7 @@
   <script src="../assets/original-banks.js?v=20260624-shtooka-nombres"></script>
   <script src="../assets/expanded-catalog.js?v=20260627-theme6"></script>
   <script src="../assets/theme7-catalog.js?v=20260628-theme7-ateliers"></script>
+  <script src="../assets/theme8-catalog.js?v=20260628-theme8-ateliers"></script>
   <script>
     (function(){
       const key = new URLSearchParams(location.search).get("activite") || "alphabet-sons";
@@ -103,7 +104,14 @@
         "il-y-a-negation":"atelier-il-y-a-negation.png",
         "prepositions-lieu":"atelier-prepositions-lieu.png",
         "lecture-annonce-logement":"lecture-annonce-logement.png",
-        "production-decris-chambre":"production-decris-chambre.png"
+        "production-decris-chambre":"production-decris-chambre.png",
+        "ecoute-au-cafe":"ecoute-au-cafe.png",
+        "aliments-essentiels":"atelier-aliments-essentiels.png",
+        "articles-partitifs":"atelier-partitifs.png",
+        "je-voudrais-commander":"atelier-je-voudrais.png",
+        "lecture-menu-simple":"lecture-menu-simple.png",
+        "prix-quantites":"atelier-prix-nombres.png",
+        "production-commande-cafe":"production-commande-cafe.png"
       };
       const original = window.french1OriginalBanks && window.french1OriginalBanks[key];
       const expanded = window.french1ExpandedActivities && window.french1ExpandedActivities[key];
@@ -126,7 +134,7 @@
       document.getElementById("quizTheme").textContent = item.theme;
       document.getElementById("quizDescription").textContent = item.description;
       document.getElementById("quizSkill").textContent = item.skill;
-      document.querySelector(".lesson-hero").style.setProperty("--hero-image", `url('/frances/Niveau%201/img/ateliers/${activityHeroImages[key] || "atelier-alphabet-sons.png"}?v=20260624-activity-images')`);
+      document.querySelector(".lesson-hero").style.setProperty("--hero-image", `url('/frances/Niveau%201/img/ateliers/${activityHeroImages[key] || "atelier-alphabet-sons.png"}?v=20260628-theme8-images')`);
 
       const material = document.getElementById("activityMaterial");
       if (key === "present-indicatif") {
@@ -179,6 +187,19 @@
             <div><b>Absence</b><span>Il n’y a pas de balcon.</span></div>
           </div>
           <a class="btn-soft" href="../themes/maison-environnement.html"><i class="bi bi-book"></i> Revoir le thème 07</a>
+        </article>`;
+      }
+      if (["aliments-essentiels","articles-partitifs","je-voudrais-commander","prix-quantites","production-commande-cafe"].includes(key)) {
+        material.innerHTML = `<article class="content-card activity-material">
+          <p class="section-kicker">Avant de répondre</p>
+          <h2 class="h4">Commander, acheter et parler des quantités</h2>
+          <p class="section-text">Pour parler d’alimentation, choisissez d’abord si vous nommez une unité précise ou une quantité indéfinie. Utilisez <strong>un / une / des</strong> pour compter, et <strong>du / de la / de l’ / des</strong> pour une quantité non précisée. Après une négation, utilisez généralement <strong>de</strong> ou <strong>d’</strong>.</p>
+          <div class="grammar-table">
+            <div><b>Commander</b><span>Je voudrais un café, s’il vous plaît.</span></div>
+            <div><b>Quantité</b><span>Je prends du pain et de l’eau.</span></div>
+            <div><b>Négation</b><span>Je ne prends pas de jus.</span></div>
+          </div>
+          <a class="btn-soft" href="../themes/alimentation-achats.html"><i class="bi bi-book"></i> Revoir le thème 08</a>
         </article>`;
       }
       if (item.audio) {

@@ -2,7 +2,7 @@
 
 Fuente base: `C:\Users\USER\Documents\Français\Niveau 1\Carta descriptiva nivel 1.docx`
 
-Estado de decisión: etapa 1 — estructura pedagógica final.
+Estado de decisión: etapa 2 — dossier 08 implementado; falta dossier 09, proyecto final y ajuste final de evaluación.
 
 ## Principio de implementación
 
@@ -19,7 +19,7 @@ Cada tema nuevo se agrega al portal público únicamente cuando tenga:
 
 ## Mapa actual
 
-El portal actual del Nivel 1 contiene seis dossiers:
+El portal actual del Nivel 1 contiene ocho dossiers:
 
 1. Premiers contacts
 2. Le présent de l’indicatif
@@ -27,8 +27,10 @@ El portal actual del Nivel 1 contiene seis dossiers:
 4. Être, avoir, aller et faire
 5. Famille et relations
 6. Description et personnalité
+7. Maison et environnement
+8. Alimentation et achats
 
-Estos seis dossiers cubren la parte inicial y media de la carta descriptiva, pero no cubren todavía todo el programa A1.1.
+Estos ocho dossiers cubren la mayor parte de la carta descriptiva. Falta cerrar transporte, hora, proyectos inmediatos, proyecto final y evaluación final alineada.
 
 ## Mapa final propuesto
 
@@ -43,7 +45,7 @@ La carta descriptiva plantea ocho unidades, pero el sitio ya separó “famille�
 | 05 | Famille et relations | Primera parte de V. Famille et description | Implementado |
 | 06 | Description, professions et présent progressif | Segunda parte de V + sesión 7 | Implementado |
 | 07 | Maison et environnement | VI. Maison et environnement | Tema visual y ateliers implementados |
-| 08 | Alimentation et achats | VII. Alimentation et achats | Pendiente |
+| 08 | Alimentation et achats | VII. Alimentation et achats | Implementado |
 | 09 | Transport, heure et projets immédiats | VIII. Transport, heure et projets immédiats | Pendiente |
 
 ## Dossier 06 — Implementado en etapa 2
@@ -65,7 +67,7 @@ Contenidos:
 - acuerdo de adjetivos;
 - presente progresivo: `être en train de + infinitif`.
 
-Actividades mínimas:
+Actividades implementadas:
 
 1. Accord des adjectifs — grammaire.
 2. Constructeur de portrait — production.
@@ -130,14 +132,14 @@ Página sugerida:
 
 Actividades mínimas:
 
-1. Les aliments essentiels — vocabulaire.
-2. Du, de la, de l’, des — grammaire.
-3. Je voudrais... — interaction.
-4. Au café — compréhension orale.
+1. Écoute : au café de la place — compréhension orale avec audio complet et transcription professeur.
+2. Les aliments essentiels — vocabulaire.
+3. Du, de la, de l’, des — grammaire.
+4. Je voudrais commander — interaction.
 5. Lire un menu simple — lecture.
-6. Combien ça coûte ? — prix et nombres.
-7. Jeu de rôle : commander au café — production orale.
-8. Défi de prononciation — enchaînement et politesse.
+6. Prix et quantités — prix et nombres.
+7. Jeu de rôle : commander au café — production guidée.
+8. Défi de prononciation — enchaînement, liaisons et politesse.
 
 ## Dossier 09 — Transport, heure et projets immédiats
 

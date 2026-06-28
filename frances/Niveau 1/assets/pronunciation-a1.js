@@ -139,6 +139,29 @@
         ["bi-link-45deg", "Dans « il y a », dites les trois mots comme un groupe très fluide : il-y-a."],
         ["bi-volume-mute", "Dans « lit », « près » et « balcon », les consonnes finales restent très légères ou muettes selon le mot."]
       ]
+    },
+    "theme-8": {
+      title: "Commander au café à voix haute",
+      audio: "../audio/prononciation/stages/theme-8-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-8-stage-1.mp3",
+        "../audio/prononciation/stages/theme-8-stage-2.mp3",
+        "../audio/prononciation/stages/theme-8-stage-3.mp3",
+        "../audio/prononciation/stages/theme-8-defi.mp3"
+      ],
+      back: "../ateliers-activites.html#theme-8",
+      image: "../img/ateliers/prononciation-alimentation.png",
+      stages: [
+        "Je voudrais un café et un croissant.",
+        "Je prends de l’eau et de la salade.",
+        "Ça coûte six euros cinquante.",
+        "Je voudrais un café et un croissant. Je prends de l’eau et de la salade. Ça coûte six euros cinquante."
+      ],
+      tips: [
+        ["bi-cup-hot", "Dans « voudrais », gardez le son /u/ de « vou » et ne prononcez pas le s final."],
+        ["bi-droplet", "Dans « de l’eau », faites une liaison fluide : de-l’eau, sans pause entre les deux mots."],
+        ["bi-currency-euro", "Dans « six euros », prononcez la liaison : si-z-euros. Dans « cinquante », la finale reste claire."]
+      ]
     }
   };
 
@@ -404,7 +427,7 @@
     els.modelAudio.pause();
     els.modelButton.querySelector("i").className = "bi bi-play-fill";
     els.modelAudio.src = currentModelAudio();
-    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6'], [href$='#theme-7']").forEach((link) => {
+    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6'], [href$='#theme-7'], [href$='#theme-8']").forEach((link) => {
       if (link.textContent.includes("Ateliers") || link.textContent.includes("Retour")) link.href = set.back;
     });
     document.querySelector(".hero").style.setProperty("--hero-image", `url('${set.image}')`);
