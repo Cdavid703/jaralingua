@@ -42,7 +42,7 @@ La carta descriptiva plantea ocho unidades, pero el sitio ya separó “famille�
 | 04 | Être, avoir, aller et faire | IV. Verbes essentiels | Implementado |
 | 05 | Famille et relations | Primera parte de V. Famille et description | Implementado |
 | 06 | Description, professions et présent progressif | Segunda parte de V + sesión 7 | Implementado |
-| 07 | Maison et environnement | VI. Maison et environnement | Pendiente |
+| 07 | Maison et environnement | VI. Maison et environnement | Tema visual implementado; ateliers pendientes |
 | 08 | Alimentation et achats | VII. Alimentation et achats | Pendiente |
 | 09 | Transport, heure et projets immédiats | VIII. Transport, heure et projets immédiats | Pendiente |
 
