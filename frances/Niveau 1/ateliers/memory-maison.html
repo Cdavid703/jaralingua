@@ -105,6 +105,7 @@
       </div>
       <div class="game-actions">
         <button class="game-command primary" type="button" onclick="newGame()"><i class="bi bi-shuffle"></i> Nouveau jeu</button>
+        <button class="game-command soft" type="button" onclick="replayLastPhrase()"><i class="bi bi-volume-up"></i> Répéter l’audio</button>
         <a class="game-command soft" href="../themes/maison-environnement.html"><i class="bi bi-book"></i> Revoir le thème</a>
         <a class="game-command soft" href="../ateliers-activites.html#theme-7"><i class="bi bi-arrow-left"></i> Tous les ateliers</a>
       </div>
@@ -317,6 +318,233 @@
     document.getElementById("teamName0").addEventListener("input", updateTeams);
     document.getElementById("teamName1").addEventListener("input", updateTeams);
     newGame();
+  </script>
+  <script>
+    (() => {
+      const imageBase = "/frances/Niveau%201/img/themes/maison-environnement/";
+      const audioBase = "/frances/Niveau%201/audio/theme-7/memory-maison/cards/";
+      const imageVersion = "20260628-maison-memory";
+      const cards = [
+        { id: "salon", label: "le salon", image: "piece-salon.png", audio: "le-salon.mp3" },
+        { id: "chambre", label: "la chambre", image: "piece-chambre.png", audio: "la-chambre.mp3" },
+        { id: "cuisine", label: "la cuisine", image: "piece-cuisine.png", audio: "la-cuisine.mp3" },
+        { id: "salle-bain", label: "la salle de bain", image: "piece-salle-de-bain.png", audio: "la-salle-de-bain.mp3" },
+        { id: "balcon", label: "le balcon et le jardin", image: "piece-balcon-jardin.png", audio: "le-balcon-et-le-jardin.mp3" },
+        { id: "lit", label: "le lit est dans la chambre", image: "scene-description-chambre.png", audio: "le-lit-est-dans-la-chambre.mp3" },
+        { id: "canape", label: "le canapé est dans le salon", image: "objet-canape.png", audio: "le-canape-est-dans-le-salon.mp3" },
+        { id: "refrigerateur", label: "le réfrigérateur est dans la cuisine", image: "objet-refrigerateur.png", audio: "le-refrigerateur-est-dans-la-cuisine.mp3" },
+        { id: "lampe", label: "la lampe est sur la table", image: "objet-lampe-table.png", audio: "la-lampe-est-sur-la-table.mp3" },
+        { id: "absence", label: "il n’y a pas de balcon", image: "scene-negation-balcon.png", audio: "il-ny-a-pas-de-balcon.mp3" },
+        { id: "presence", label: "il y a une table et des chaises", image: "scene-il-y-a.png", audio: "il-y-a-une-table-et-des-chaises.mp3" },
+        { id: "preposition", label: "le livre est sur le lit", image: "objet-livre-lit.png", audio: "le-livre-est-sur-le-lit.mp3" }
+      ];
+
+      let deck = [];
+      let selected = [];
+      let matchedPairs = 0;
+      let currentTeam = 0;
+      let scores = [0, 0];
+      let locked = false;
+      let pendingMatch = null;
+      let activeAudio = null;
+      let lastCard = null;
+      const board = document.getElementById("memoryBoard");
+
+      function teamName(index) {
+        return document.getElementById("teamName" + index).value.trim() || ("Équipe " + (index + 1));
+      }
+
+      function shuffle(items) {
+        for (let i = items.length - 1; i > 0; i -= 1) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [items[i], items[j]] = [items[j], items[i]];
+        }
+        return items;
+      }
+
+      function stopAudio() {
+        if (!activeAudio) return;
+        activeAudio.pause();
+        activeAudio.currentTime = 0;
+        activeAudio = null;
+      }
+
+      function playPhrase(card) {
+        if (!card || !card.audio) return;
+        lastCard = card;
+        stopAudio();
+        activeAudio = new Audio(audioBase + card.audio);
+        activeAudio.play().catch(() => {});
+      }
+
+      function cardFace(card) {
+        return `<span class="card-face card-front image-card"><img src="${imageBase + card.image}?v=${imageVersion}" alt="${card.label}"><strong>${card.label}</strong></span>`;
+      }
+
+      function setStatus(message) {
+        document.getElementById("gameStatus").textContent = message;
+      }
+
+      function updateTeams() {
+        document.querySelectorAll(".team-panel").forEach((panel, index) => panel.classList.toggle("active", index === currentTeam));
+        document.getElementById("turnName").textContent = teamName(currentTeam);
+      }
+
+      function buildDeck() {
+        deck = shuffle(cards.flatMap((card) => [
+          { ...card, uid: card.id + "-a", matched: false },
+          { ...card, uid: card.id + "-b", matched: false }
+        ]));
+        board.innerHTML = "";
+        deck.forEach((card, index) => {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "memory-card";
+          button.dataset.index = index;
+          button.setAttribute("aria-label", "Carte cachée " + (index + 1));
+          button.innerHTML = `<span class="card-face card-back"><i class="bi bi-question-lg"></i><strong>${index + 1}</strong></span>${cardFace(card)}`;
+          button.addEventListener("click", () => selectCard(index, button));
+          board.appendChild(button);
+        });
+      }
+
+      function selectCard(index, element) {
+        if (locked || deck[index].matched || element.classList.contains("is-flipped") || selected.length === 2) return;
+        element.classList.add("is-flipped");
+        element.setAttribute("aria-label", deck[index].label);
+        selected.push({ index, element });
+        playPhrase(deck[index]);
+        setStatus(teamName(currentTeam) + " a retourné la carte " + (index + 1) + " : " + deck[index].label + ".");
+        if (selected.length === 2) {
+          locked = true;
+          setTimeout(checkPair, 650);
+        }
+      }
+
+      function checkPair() {
+        const [first, second] = selected;
+        const firstCard = deck[first.index];
+        const secondCard = deck[second.index];
+        const isMatch = firstCard.id === secondCard.id && first.index !== second.index;
+        if (isMatch) {
+          deck[first.index].matched = true;
+          deck[second.index].matched = true;
+          first.element.classList.add("is-matched");
+          second.element.classList.add("is-matched");
+          pendingMatch = firstCard;
+          document.getElementById("gateImage").src = imageBase + pendingMatch.image + "?v=" + imageVersion;
+          document.getElementById("gateImage").alt = pendingMatch.label;
+          document.getElementById("gatePhrase").textContent = pendingMatch.label;
+          document.getElementById("readingGate").classList.add("show");
+          playPhrase(pendingMatch);
+          setStatus("Paire trouvée. Le système dit : « " + pendingMatch.label + " ». L’étudiant répète.");
+        } else {
+          setStatus("Ce n’est pas une paire. Le tour passe à " + teamName(1 - currentTeam) + ".");
+          setTimeout(() => {
+            first.element.classList.remove("is-flipped");
+            second.element.classList.remove("is-flipped");
+            selected = [];
+            currentTeam = 1 - currentTeam;
+            locked = false;
+            updateTeams();
+            setStatus(teamName(currentTeam) + " : choisissez la première carte.");
+          }, 1050);
+        }
+      }
+
+      function burstConfetti(count) {
+        const colors = ["#d21f35", "#123b8f", "#f4c95d", "#2f9e77", "#ffffff"];
+        for (let i = 0; i < count; i += 1) {
+          const piece = document.createElement("i");
+          piece.className = "confetti-piece";
+          piece.style.left = Math.random() * 100 + "vw";
+          piece.style.setProperty("--color", colors[i % colors.length]);
+          piece.style.setProperty("--duration", (2.2 + Math.random() * 2.3) + "s");
+          piece.style.setProperty("--rotation", (Math.random() * 360) + "deg");
+          piece.style.setProperty("--drift", ((Math.random() - 0.5) * 260) + "px");
+          piece.style.animationDelay = (Math.random() * 0.45) + "s";
+          document.body.appendChild(piece);
+          setTimeout(() => piece.remove(), 5200);
+        }
+      }
+
+      function showWinner() {
+        const one = teamName(0);
+        const two = teamName(1);
+        let title;
+        let message;
+        if (scores[0] === scores[1]) {
+          title = "Égalité";
+          message = one + " et " + two + " terminent avec " + scores[0] + " points.";
+        } else {
+          const winner = scores[0] > scores[1] ? 0 : 1;
+          title = teamName(winner) + " gagne";
+          message = "Score final : " + one + " " + scores[0] + " - " + scores[1] + " " + two + ".";
+        }
+        document.getElementById("winnerTitle").textContent = title;
+        document.getElementById("winnerMessage").textContent = message;
+        document.getElementById("winnerOverlay").classList.add("show");
+        burstConfetti(130);
+      }
+
+      window.confirmReading = function confirmReading() {
+        if (!pendingMatch) return;
+        scores[currentTeam] += 1;
+        matchedPairs += 1;
+        document.getElementById("score" + currentTeam).textContent = scores[currentTeam];
+        document.getElementById("readingGate").classList.remove("show");
+        burstConfetti(34);
+        selected = [];
+        pendingMatch = null;
+        locked = false;
+        setStatus(teamName(currentTeam) + " gagne un point et rejoue.");
+        if (matchedPairs === cards.length) setTimeout(showWinner, 700);
+      };
+
+      window.cancelPoint = function cancelPoint() {
+        if (!pendingMatch) return;
+        document.getElementById("readingGate").classList.remove("show");
+        selected.forEach(({ index, element }) => {
+          deck[index].matched = false;
+          element.classList.remove("is-matched", "is-flipped");
+        });
+        selected = [];
+        pendingMatch = null;
+        currentTeam = 1 - currentTeam;
+        locked = false;
+        updateTeams();
+        setStatus("Prononciation à refaire. Le tour passe à " + teamName(currentTeam) + ".");
+      };
+
+      window.replayLastPhrase = function replayLastPhrase() {
+        playPhrase(pendingMatch || lastCard);
+      };
+
+      window.newGame = function newGame() {
+        stopAudio();
+        selected = [];
+        matchedPairs = 0;
+        currentTeam = 0;
+        scores = [0, 0];
+        locked = false;
+        pendingMatch = null;
+        lastCard = null;
+        document.getElementById("score0").textContent = "0";
+        document.getElementById("score1").textContent = "0";
+        document.getElementById("readingGate").classList.remove("show");
+        document.getElementById("winnerOverlay").classList.remove("show");
+        buildDeck();
+        updateTeams();
+        setStatus(teamName(0) + " : choisissez la première carte.");
+      };
+
+      window.closeWinnerAndRestart = function closeWinnerAndRestart() {
+        window.newGame();
+        document.getElementById("game").scrollIntoView({ behavior: "smooth" });
+      };
+
+      window.newGame();
+    })();
   </script>
   <script src="../assets/niveau1.js?v=20260624-audit-nav"></script>
   <script src="../../../assets/js/google-auth-config.js"></script>
