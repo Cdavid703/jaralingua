@@ -6,11 +6,14 @@
   "allowStudentIdClaim": false,
   "students": [],
   "evaluations": [
-    {"id":"participation","title":"Participation et ateliers","weight":20,"type":"Suivi continu","description":"Participation, productions et ateliers du niveau."},
-    {"id":"ecoute","title":"Compréhension orale","weight":20,"type":"Écoute","description":"Cinq écoutes thématiques et questionnaires."},
-    {"id":"lecture","title":"Compréhension écrite","weight":20,"type":"Lecture","description":"Cinq lectures A1 et questionnaires."},
-    {"id":"prononciation","title":"Prononciation","weight":20,"type":"Oral","description":"Cinq défis de prononciation."},
-    {"id":"projetFinal","title":"Projet final A1.1","weight":20,"type":"Production","description":"Présentation personnelle, famille, habitudes et description."}
+    {"id":"finalExam","title":"Examen final A1.1","weight":20,"type":"Examen final","displayDate":"Séance d'examen","description":"Examen final verrouillé. La note est calculée automatiquement sur 5."},
+    {"id":"projetFinal","title":"Projet final A1.1","weight":20,"type":"Projet","description":"Présentation personnelle finale : identité, famille, description, maison et routine simple."},
+    {"id":"pronunciationTheme1","title":"Prononciation thème 1 - Premiers contacts","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 1","description":"Défi final de prononciation du thème 1. Envoi autorisé à partir de 50/100."},
+    {"id":"pronunciationTheme3","title":"Prononciation thème 3 - Verbes essentiels","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 3","description":"Défi final de prononciation du thème 3. Envoi autorisé à partir de 50/100."},
+    {"id":"pronunciationTheme5","title":"Prononciation thème 5 - Description et professions","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 5","description":"Défi final de prononciation du thème 5. Envoi autorisé à partir de 50/100."},
+    {"id":"pronunciationTheme7","title":"Prononciation thème 7 - Maison et localisation","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 7","description":"Défi final de prononciation du thème 7. Envoi autorisé à partir de 50/100."},
+    {"id":"evaluationLibre40","title":"Évaluation libre à définir","weight":40,"type":"À définir","description":"Espace réservé aux évaluations libres que le professeur définira ensuite."},
+    {"id":"evaluationApreciser15","title":"Évaluation à préciser","weight":15,"type":"À préciser","description":"Pourcentage restant à préciser afin que le carnet totalise 100%."}
   ],
   "bonusEvent": null
 }

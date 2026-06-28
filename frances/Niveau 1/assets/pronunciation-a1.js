@@ -192,7 +192,18 @@
   const key = params.get("theme") || "theme-1";
   const set = SETS[key] || SETS["theme-1"];
   const API_PATH = "/api/french8/pronunciation-assessment";
+  const GRADE_API_PATH = "/api/french1/pronunciation-grade";
   const STORAGE_KEY = `jaralingua:french1:pronunciation:${key}:v2`;
+  const GOOGLE_KEY = "jaralingua_google_user";
+  const MICROSOFT_KEY = "jaralingua_microsoft_user";
+  const LOCAL_KEY = "jaralingua_local_gradebook_user:french1GradesApp";
+  const EVALUABLE_PRONUNCIATION = {
+    "theme-1": { evaluationId: "pronunciationTheme1", label: "Thème 1 · Premiers contacts" },
+    "theme-3": { evaluationId: "pronunciationTheme3", label: "Thème 3 · Verbes essentiels" },
+    "theme-5": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Description et professions" },
+    "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et localisation" }
+  };
+  const gradeConfig = EVALUABLE_PRONUNCIATION[key] || null;
 
   const els = {
     title: document.getElementById("pronTitle"),
@@ -228,6 +239,139 @@
     scoreRing: document.getElementById("scoreRing")
   };
 
+  function storedUser(storageKey) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(storageKey) || "null");
+      if (!saved || !saved.credential || saved.exp <= Date.now() / 1000) {
+        sessionStorage.removeItem(storageKey);
+        return null;
+      }
+      return saved;
+    } catch (_error) {
+      sessionStorage.removeItem(storageKey);
+      return null;
+    }
+  }
+
+  function activeGradeUser() {
+    const google = storedUser(GOOGLE_KEY);
+    if (google) return Object.assign({ provider: "google" }, google);
+    const microsoft = storedUser(MICROSOFT_KEY);
+    if (microsoft) return Object.assign({ provider: "microsoft" }, microsoft);
+    const local = storedUser(LOCAL_KEY);
+    if (local) return Object.assign({ provider: "local" }, local);
+    return null;
+  }
+
+  function openLoginPanel() {
+    document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();
+  }
+
+  function gradeFromScore(score) {
+    return Math.round((Number(score || 0) / 20) * 100) / 100;
+  }
+
+  let gradeSubmitter = null;
+
+  function createGradeSubmitPanel() {
+    if (!gradeConfig) return null;
+    const panel = document.createElement("div");
+    panel.className = "pronunciation-submit-panel";
+    panel.innerHTML = `
+      <h3><i class="bi bi-send-check"></i> Envoi au professeur</h3>
+      <p data-pronunciation-submit-copy>Cette activité est évaluée. Terminez le défi final avec au moins 50/100 pour envoyer la note.</p>
+      <div class="pronunciation-submit-metrics">
+        <span><b data-pronunciation-score>--</b><small>Défi final</small></span>
+        <span><b data-pronunciation-grade>--</b><small>Note / 5</small></span>
+      </div>
+      <div class="pronunciation-submit-actions">
+        <button type="button" class="action-button submit-grade" data-pronunciation-submit disabled><i class="bi bi-send-fill"></i> Envoyer au professeur</button>
+      </div>
+      <p class="pronunciation-submit-status" data-pronunciation-submit-status aria-live="polite"></p>
+    `;
+    const scoreNode = panel.querySelector("[data-pronunciation-score]");
+    const gradeNode = panel.querySelector("[data-pronunciation-grade]");
+    const submitButton = panel.querySelector("[data-pronunciation-submit]");
+    const copyNode = panel.querySelector("[data-pronunciation-submit-copy]");
+    const statusNode = panel.querySelector("[data-pronunciation-submit-status]");
+
+    function finalAttempt() {
+      return stageScores[set.stages.length - 1] || null;
+    }
+
+    function setStatus(message, type) {
+      statusNode.textContent = message || "";
+      statusNode.className = "pronunciation-submit-status" + (type ? " " + type : "");
+    }
+
+    function update() {
+      const attempt = finalAttempt();
+      const score = Number(attempt && attempt.overall);
+      if (!Number.isFinite(score)) {
+        scoreNode.textContent = "--";
+        gradeNode.textContent = "--";
+        submitButton.disabled = true;
+        copyNode.textContent = `${gradeConfig.label} est évaluable. Le bouton s’active après le défi final.`;
+        return;
+      }
+      scoreNode.textContent = `${Math.round(score)}/100`;
+      gradeNode.textContent = `${gradeFromScore(score).toFixed(2)}/5`;
+      submitButton.disabled = score < 50;
+      copyNode.textContent = score < 50
+        ? "Le défi final doit atteindre au moins 50/100 pour être envoyé. Recommencez le défi final après avoir réécouté le modèle."
+        : "Votre défi final peut être envoyé. La note sera inscrite dans le carnet du Niveau 1.";
+    }
+
+    async function submitGrade() {
+      const attempt = finalAttempt();
+      const score = Number(attempt && attempt.overall);
+      if (!Number.isFinite(score) || score < 50) {
+        setStatus("Le score minimal pour envoyer est 50/100.", "error");
+        update();
+        return;
+      }
+      const user = activeGradeUser();
+      if (!user || !user.credential) {
+        setStatus("Connectez-vous avec votre compte enregistré avant d’envoyer.", "error");
+        openLoginPanel();
+        return;
+      }
+      submitButton.disabled = true;
+      setStatus("Envoi en cours...", "pending");
+      try {
+        const response = await fetch(GRADE_API_PATH, {
+          method: "POST",
+          headers: {
+            Authorization: "Bearer " + user.credential,
+            "X-Jaralingua-Auth-Provider": user.provider || "google",
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            evaluationId: gradeConfig.evaluationId,
+            score100: Math.round(score),
+            activityTitle: set.title,
+            details: attempt
+          })
+        });
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok) {
+          if (payload.error === "score_too_low") throw new Error("Le score minimal est 50/100.");
+          if (payload.error === "student_not_authorized") throw new Error("Votre compte n’est pas associé au carnet du Niveau 1.");
+          throw new Error("L’envoi n’a pas pu être terminé.");
+        }
+        setStatus("Envoyé. Note enregistrée : " + Number(payload.grade).toFixed(2) + "/5.", "success");
+      } catch (error) {
+        setStatus(error.message || "Impossible d’envoyer la note.", "error");
+      } finally {
+        update();
+      }
+    }
+
+    submitButton.addEventListener("click", submitGrade);
+    update();
+    return { panel, update };
+  }
+
   let savedProgress = null;
   try { savedProgress = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (_error) { savedProgress = null; }
 
@@ -245,6 +389,11 @@
   let analyser = null;
   let meterFrame = null;
   let analyzing = false;
+
+  gradeSubmitter = createGradeSubmitPanel();
+  if (gradeSubmitter) {
+    els.results.insertAdjacentElement("afterend", gradeSubmitter.panel);
+  }
 
   function currentText() {
     return set.stages[stageIndex];
@@ -442,6 +591,7 @@
     els.fluencyScore.textContent = `${score.fluency}%`;
     els.scoreRing.style.setProperty("--score", String(score.overall));
     renderHistory();
+    gradeSubmitter?.update();
   }
 
   function render() {
@@ -631,6 +781,7 @@
     renderReference(aligned.states);
     renderStageProgress();
     renderScore(attempt);
+    gradeSubmitter?.update();
     setRecordingControls(false, false);
 
     const displayWords = currentText().split(/\s+/).map(spokenWord).filter(Boolean);
@@ -823,6 +974,7 @@
     }
     saveProgress();
     render();
+    gradeSubmitter?.update();
   }
 
   els.modelButton.addEventListener("click", () => {

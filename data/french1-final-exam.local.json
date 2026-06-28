@@ -1,0 +1,427 @@
+{
+  "state": {
+    "isOpen": false,
+    "openedAt": null,
+    "closedAt": null,
+    "openedBy": null,
+    "updatedAt": null
+  },
+  "exam": {
+    "id": "french1-final-exam",
+    "title": "Examen final A1.1",
+    "totalPoints": 50,
+    "transcript": "Bonjour. Je m’appelle Camille. J’ai vingt-deux ans et je suis colombienne. J’habite à Envigado avec mon père, ma sœur et mon petit frère. Notre appartement est petit, mais confortable. Dans l’entrée, il y a une table. À droite, il y a le salon, et à gauche, il y a la cuisine. Ma chambre est près de la salle de bains.\n\nDans ma chambre, il y a un lit, une armoire, un bureau et deux chaises. Sur le bureau, il y a mon cahier de français, mon téléphone et une petite lampe. Mon père est technicien, ma sœur est infirmière et mon frère est étudiant. Moi, je travaille le matin et j’étudie le soir.\n\nAujourd’hui, je viens de rentrer à la maison. Maintenant, je suis en train de préparer mon examen de français. Je révise les nombres, les professions, la famille, la description physique et les pièces de la maison.",
+    "sections": [
+      {
+        "id": "vocabulaire",
+        "title": "I. Vocabulaire en contexte",
+        "subtitle": "Choisissez le sens le plus précis selon la phrase.",
+        "points": 15,
+        "instructions": "Lisez chaque phrase. Ne traduisez pas mot à mot : observez le contexte.",
+        "questions": [
+          {
+            "id": "v1",
+            "type": "mcq",
+            "prompt": "Camille dit : « J’ai vingt-deux ans. » Cette information indique...",
+            "options": ["sa profession", "son âge", "son adresse"],
+            "answer": 1,
+            "points": 1.5
+          },
+          {
+            "id": "v2",
+            "type": "mcq",
+            "prompt": "Elle habite avec son père, sa sœur et son petit frère. Ces mots appartiennent au thème...",
+            "options": ["la famille", "les transports", "les objets de classe"],
+            "answer": 0,
+            "points": 1.5
+          },
+          {
+            "id": "v3",
+            "type": "mcq",
+            "prompt": "Son appartement est petit, mais confortable. Le mot « confortable » décrit...",
+            "options": ["un nombre", "une profession", "une qualité du logement"],
+            "answer": 2,
+            "points": 1.5
+          },
+          {
+            "id": "v4",
+            "type": "mcq",
+            "prompt": "Dans l’entrée, il y a une table. « L’entrée » est...",
+            "options": ["une nationalité", "une pièce ou zone de la maison", "un adjectif physique"],
+            "answer": 1,
+            "points": 1.5
+          },
+          {
+            "id": "v5",
+            "type": "mcq",
+            "prompt": "La cuisine est à gauche. « À gauche » indique...",
+            "options": ["une personne", "une question", "une position"],
+            "answer": 2,
+            "points": 1.5
+          },
+          {
+            "id": "v6",
+            "type": "mcq",
+            "prompt": "Dans sa chambre, il y a une armoire. Une armoire est...",
+            "options": ["un meuble", "une salutation", "une profession"],
+            "answer": 0,
+            "points": 1.5
+          },
+          {
+            "id": "v7",
+            "type": "mcq",
+            "prompt": "Son père est technicien. « Technicien » est...",
+            "options": ["une pièce", "une profession", "une couleur"],
+            "answer": 1,
+            "points": 1.5
+          },
+          {
+            "id": "v8",
+            "type": "mcq",
+            "prompt": "Elle travaille le matin et elle étudie le soir. Ces expressions indiquent...",
+            "options": ["des moments de la journée", "des membres de la famille", "des meubles"],
+            "answer": 0,
+            "points": 1.5
+          },
+          {
+            "id": "v9",
+            "type": "mcq",
+            "prompt": "Elle vient de rentrer à la maison. Cette expression parle...",
+            "options": ["d’une action très ancienne", "d’une description physique", "d’une action qui vient juste de finir"],
+            "answer": 2,
+            "points": 1.5
+          },
+          {
+            "id": "v10",
+            "type": "mcq",
+            "prompt": "Elle est en train de préparer son examen. Cette expression indique...",
+            "options": ["une négation", "une action en cours", "une nationalité"],
+            "answer": 1,
+            "points": 1.5
+          }
+        ]
+      },
+      {
+        "id": "grammaire",
+        "title": "II. Grammaire et structures A1",
+        "subtitle": "Présent, négation, questions, verbes essentiels, possessifs, localisation, présent progressif et passé récent.",
+        "points": 15,
+        "instructions": "Choisissez la forme qui complète correctement chaque phrase.",
+        "questions": [
+          {
+            "id": "g1",
+            "type": "mcq",
+            "block": "Être",
+            "prompt": "Camille ___ colombienne.",
+            "options": ["suis", "es", "est"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g2",
+            "type": "mcq",
+            "block": "Avoir",
+            "prompt": "J’___ vingt-deux ans.",
+            "options": ["ai", "as", "a"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g3",
+            "type": "mcq",
+            "block": "S’appeler",
+            "prompt": "Elle ___ Camille.",
+            "options": ["m’appelle", "s’appelle", "t’appelles"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g4",
+            "type": "mcq",
+            "block": "Verbes en -ER",
+            "prompt": "Nous ___ le français le soir.",
+            "options": ["étudie", "étudies", "étudions"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g5",
+            "type": "mcq",
+            "block": "Habiter",
+            "prompt": "Camille ___ à Envigado.",
+            "options": ["habite", "habites", "habitons"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g6",
+            "type": "mcq",
+            "block": "Négation",
+            "prompt": "La phrase négative correcte est :",
+            "options": ["Je parle pas ne français.", "Je ne parle pas allemand.", "Je pas parle allemand."],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g7",
+            "type": "mcq",
+            "block": "Question avec est-ce que",
+            "prompt": "La question correcte est :",
+            "options": ["Est-ce tu habites ici ?", "Tu est-ce que habites ici ?", "Est-ce que tu habites ici ?"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g8",
+            "type": "mcq",
+            "block": "Question par inversion",
+            "prompt": "Choisissez la bonne question :",
+            "options": ["Parle-t-elle français ?", "Parle elle-t français ?", "Parle-elle-t français ?"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g9",
+            "type": "mcq",
+            "block": "Possessifs",
+            "prompt": "Camille parle de ___ sœur.",
+            "options": ["mon", "ma", "mes"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g10",
+            "type": "mcq",
+            "block": "Possessifs",
+            "prompt": "Camille parle de ___ parents.",
+            "options": ["ma", "mon", "mes"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g11",
+            "type": "mcq",
+            "block": "Il y a",
+            "prompt": "Dans la chambre, ___ un bureau.",
+            "options": ["elle est", "il y a", "je suis"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g12",
+            "type": "mcq",
+            "block": "Localisation",
+            "prompt": "La lampe est ___ le bureau.",
+            "options": ["sur", "gentille", "technicien"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g13",
+            "type": "mcq",
+            "block": "Présent progressif",
+            "prompt": "Elle est en train ___ préparer son examen.",
+            "options": ["du", "de la", "de"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g14",
+            "type": "mcq",
+            "block": "Passé récent",
+            "prompt": "Je ___ de rentrer à la maison.",
+            "options": ["viens", "vais", "suis"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g15",
+            "type": "mcq",
+            "block": "Passé récent",
+            "prompt": "Nous venons ___ terminer l’exercice.",
+            "options": ["du", "de", "des"],
+            "answer": 1,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": "lecture",
+        "title": "III. Compréhension écrite",
+        "subtitle": "Lisez le texte, puis répondez vrai ou faux.",
+        "points": 10,
+        "instructions": "Les réponses doivent venir du texte, pas de vos suppositions.",
+        "readingTitle": "Le profil de Nora",
+        "readingText": [
+          "Nora a vingt ans. Elle est colombienne et elle habite à Medellín avec sa mère, son père et son frère aîné. Sa mère est infirmière et son père est vendeur. Son frère travaille dans un café.",
+          "Nora est étudiante de français. Elle est petite, elle a les cheveux noirs et les yeux marron. Elle est sérieuse, mais elle est aussi très souriante avec ses amis.",
+          "Dans son appartement, il y a un salon lumineux, une cuisine, deux chambres et une salle de bains. Dans sa chambre, il y a un lit près de la fenêtre, une armoire blanche et un bureau. Sur le bureau, il y a un cahier, un stylo et une lampe. Ce soir, Nora est en train de réviser les verbes et elle vient de finir une activité de prononciation."
+        ],
+        "questions": [
+          {
+            "id": "r1",
+            "type": "truefalse",
+            "prompt": "Nora a vingt ans.",
+            "answer": true,
+            "points": 1
+          },
+          {
+            "id": "r2",
+            "type": "truefalse",
+            "prompt": "Nora habite à Bogotá.",
+            "answer": false,
+            "points": 1
+          },
+          {
+            "id": "r3",
+            "type": "truefalse",
+            "prompt": "La mère de Nora est infirmière.",
+            "answer": true,
+            "points": 1
+          },
+          {
+            "id": "r4",
+            "type": "truefalse",
+            "prompt": "Le frère de Nora travaille dans un café.",
+            "answer": true,
+            "points": 1
+          },
+          {
+            "id": "r5",
+            "type": "truefalse",
+            "prompt": "Nora est grande et blonde.",
+            "answer": false,
+            "points": 1
+          },
+          {
+            "id": "r6",
+            "type": "truefalse",
+            "prompt": "Nora est sérieuse et souriante.",
+            "answer": true,
+            "points": 1
+          },
+          {
+            "id": "r7",
+            "type": "truefalse",
+            "prompt": "Dans son appartement, il y a trois chambres.",
+            "answer": false,
+            "points": 1
+          },
+          {
+            "id": "r8",
+            "type": "truefalse",
+            "prompt": "Le lit est près de la fenêtre.",
+            "answer": true,
+            "points": 1
+          },
+          {
+            "id": "r9",
+            "type": "truefalse",
+            "prompt": "Sur le bureau, il y a un ordinateur rouge.",
+            "answer": false,
+            "points": 1
+          },
+          {
+            "id": "r10",
+            "type": "truefalse",
+            "prompt": "Nora vient de finir une activité de prononciation.",
+            "answer": true,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": "ecoute",
+        "title": "IV. Compréhension orale",
+        "subtitle": "Écoutez l’audio de l’examen final.",
+        "points": 10,
+        "instructions": "L’audio est réservé à l’examen final et ne figure pas dans la bibliothèque audio.",
+        "audioTitle": "Le quotidien de Camille",
+        "audioText": "Écoutez Camille et choisissez la bonne réponse.",
+        "audioSrc": "/api/french1/final-exam/audio",
+        "questions": [
+          {
+            "id": "l1",
+            "type": "mcq",
+            "prompt": "Camille a quel âge ?",
+            "options": ["Dix-neuf ans", "Vingt-deux ans", "Trente ans"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "l2",
+            "type": "mcq",
+            "prompt": "Où habite Camille ?",
+            "options": ["À Paris", "À Lyon", "À Envigado"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "l3",
+            "type": "mcq",
+            "prompt": "Avec qui habite-t-elle ?",
+            "options": ["Avec son père, sa sœur et son petit frère", "Avec ses grands-parents", "Avec deux amies"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l4",
+            "type": "mcq",
+            "prompt": "Comment est l’appartement ?",
+            "options": ["Très grand et froid", "Petit mais confortable", "Ancien et bruyant"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "l5",
+            "type": "mcq",
+            "prompt": "Où est sa chambre ?",
+            "options": ["Près du salon", "À côté de la cuisine", "Près de la salle de bains"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "l6",
+            "type": "mcq",
+            "prompt": "Qu’est-ce qu’il y a sur son bureau ?",
+            "options": ["Un cahier de français, un téléphone et une petite lampe", "Une télévision et trois livres", "Une plante et des lunettes"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l7",
+            "type": "mcq",
+            "prompt": "Quelle est la profession de sa sœur ?",
+            "options": ["Professeure", "Vendeuse", "Infirmière"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "l8",
+            "type": "mcq",
+            "prompt": "Quand Camille étudie-t-elle ?",
+            "options": ["Le matin", "Le soir", "Le week-end seulement"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "l9",
+            "type": "mcq",
+            "prompt": "Qu’est-ce que Camille vient de faire ?",
+            "options": ["Elle vient de rentrer à la maison", "Elle vient d’acheter une armoire", "Elle vient de dormir"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l10",
+            "type": "mcq",
+            "prompt": "Que révise Camille ?",
+            "options": ["Les transports et les billets", "Les nombres, les professions, la famille, la description physique et la maison", "Les restaurants et les menus"],
+            "answer": 1,
+            "points": 1
+          }
+        ]
+      }
+    ]
+  }
+}
