@@ -102,3 +102,23 @@ Narratrice: Elle porte des lunettes rondes.
 File: `prononciation/stages/theme-5-defi.mp3`
 
 Narratrice: Elle est souriante et généreuse. Elle a les cheveux noirs. Elle porte des lunettes rondes.
+
+## Prononciation thème 7 — étape 1
+File: `prononciation/stages/theme-7-stage-1.mp3`
+
+Narratrice: Dans ma chambre, il y a un lit près de la fenêtre.
+
+## Prononciation thème 7 — étape 2
+File: `prononciation/stages/theme-7-stage-2.mp3`
+
+Narratrice: La lampe est sur la table de nuit.
+
+## Prononciation thème 7 — étape 3
+File: `prononciation/stages/theme-7-stage-3.mp3`
+
+Narratrice: Il n’y a pas de balcon.
+
+## Prononciation thème 7 — défi final
+File: `prononciation/stages/theme-7-defi.mp3`
+
+Narratrice: Dans ma chambre, il y a un lit près de la fenêtre. La lampe est sur la table de nuit. Il n’y a pas de balcon.

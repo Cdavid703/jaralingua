@@ -42,7 +42,7 @@ La carta descriptiva plantea ocho unidades, pero el sitio ya separó “famille�
 | 04 | Être, avoir, aller et faire | IV. Verbes essentiels | Implementado |
 | 05 | Famille et relations | Primera parte de V. Famille et description | Implementado |
 | 06 | Description, professions et présent progressif | Segunda parte de V + sesión 7 | Implementado |
-| 07 | Maison et environnement | VI. Maison et environnement | Tema visual implementado; ateliers pendientes |
+| 07 | Maison et environnement | VI. Maison et environnement | Tema visual y ateliers implementados |
 | 08 | Alimentation et achats | VII. Alimentation et achats | Pendiente |
 | 09 | Transport, heure et projets immédiats | VIII. Transport, heure et projets immédiats | Pendiente |
 
@@ -96,15 +96,17 @@ Página sugerida:
 
 - `themes/maison-environnement.html`
 
-Actividades mínimas:
+Actividades implementadas:
 
-1. Les pièces de la maison — vocabulaire.
-2. Où est l’objet ? — prépositions de lieu.
-3. Il y a / il n’y a pas de — grammaire.
-4. Visite de l’appartement de Clara — compréhension orale.
-5. Une petite annonce immobilière — lecture.
-6. Décris ta chambre — production écrite/orale.
-7. Défi de prononciation — rythme et groupes courts.
+1. Écoute : l’appartement de Clara — compréhension orale avec audio complet et transcription professeur.
+2. Les pièces de la maison — vocabulaire.
+3. Les objets de la maison — vocabulaire.
+4. Il y a / il n’y a pas de — grammaire.
+5. Où est l’objet ? — prépositions de lieu.
+6. Une petite annonce immobilière — lecture.
+7. Décris ta chambre — production guidée.
+8. Concéntrese : maison — jeu de mémoire image ↔ mot/phrase.
+9. Défi de prononciation — rythme, groupes courts et correspondance stricte texte/audio.
 
 ## Dossier 08 — Alimentation et achats
 

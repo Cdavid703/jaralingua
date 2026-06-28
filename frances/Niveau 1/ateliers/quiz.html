@@ -55,6 +55,7 @@
   <script src="../assets/quiz-catalog.js?v=20260624-shtooka-nombres"></script>
   <script src="../assets/original-banks.js?v=20260624-shtooka-nombres"></script>
   <script src="../assets/expanded-catalog.js?v=20260627-theme6"></script>
+  <script src="../assets/theme7-catalog.js?v=20260628-theme7-ateliers"></script>
   <script>
     (function(){
       const key = new URLSearchParams(location.search).get("activite") || "alphabet-sons";
@@ -95,7 +96,14 @@
         "present-progressif":"atelier-present-progressif.png",
         "qui-est-ce-description":"qui-est-ce-portraits-a1.png",
         "ecoute-portrait":"ecoute-portrait-sofia.png",
-        "lecture-description":"lecture-amie-ines.png"
+        "lecture-description":"lecture-amie-ines.png",
+        "ecoute-appartement-clara":"ecoute-appartement-clara.png",
+        "pieces-maison":"atelier-pieces-maison.png",
+        "objets-maison":"atelier-objets-maison.png",
+        "il-y-a-negation":"atelier-il-y-a-negation.png",
+        "prepositions-lieu":"atelier-prepositions-lieu.png",
+        "lecture-annonce-logement":"lecture-annonce-logement.png",
+        "production-decris-chambre":"production-decris-chambre.png"
       };
       const original = window.french1OriginalBanks && window.french1OriginalBanks[key];
       const expanded = window.french1ExpandedActivities && window.french1ExpandedActivities[key];
@@ -158,6 +166,19 @@
             <div><b>Activité</b><span>Il explique la leçon.</span></div>
           </div>
           <a class="btn-soft" href="../themes/description-personnalite.html"><i class="bi bi-book"></i> Revoir le thème 06</a>
+        </article>`;
+      }
+      if (["pieces-maison","objets-maison","il-y-a-negation","prepositions-lieu","production-decris-chambre"].includes(key)) {
+        material.innerHTML = `<article class="content-card activity-material">
+          <p class="section-kicker">Avant de répondre</p>
+          <h2 class="h4">Décrire un logement avec précision</h2>
+          <p class="section-text">Observez la pièce, nommez les objets, puis situez-les avec une préposition. Pour parler de l’existence, utilisez <strong>il y a</strong>. Pour l’absence, utilisez <strong>il n’y a pas de</strong>.</p>
+          <div class="grammar-table">
+            <div><b>Pièce</b><span>Dans la chambre, il y a un lit.</span></div>
+            <div><b>Objet</b><span>La lampe est sur la table de nuit.</span></div>
+            <div><b>Absence</b><span>Il n’y a pas de balcon.</span></div>
+          </div>
+          <a class="btn-soft" href="../themes/maison-environnement.html"><i class="bi bi-book"></i> Revoir le thème 07</a>
         </article>`;
       }
       if (item.audio) {

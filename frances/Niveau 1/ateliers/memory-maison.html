@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Jeu de mémoire pour pratiquer le vocabulaire de la maison en Français Niveau 1.">
+  <title>Concéntrese : maison | Français Niveau 1</title>
+  <link rel="icon" href="/favicon.ico">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../assets/niveau1.css?v=20260624-hero-bg" rel="stylesheet">
+  <style>
+    .memory-page{--team-one:#d21f35;--team-two:#087f5b;--board:#0b2d63;overflow-x:hidden}
+    .game-shell{width:min(1500px,calc(100% - 32px));margin:34px auto 70px}
+    .game-intro{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:22px;align-items:stretch;margin-bottom:26px}
+    .game-intro .content-card{height:100%}
+    .game-visual{min-height:320px;border-radius:30px;background:linear-gradient(120deg,rgba(10,45,99,.42),rgba(210,31,53,.2)),url('/frances/Niveau%201/img/ateliers/memory-maison.png?v=20260628-theme7') center/cover;box-shadow:0 24px 60px rgba(12,35,71,.18)}
+    .game-toolbar{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:18px}
+    .team-panel{border:3px solid transparent;border-radius:20px;padding:16px 18px;background:#fff;box-shadow:0 12px 28px rgba(15,23,42,.1);display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;transition:.2s ease}
+    .team-panel.active{transform:translateY(-3px);box-shadow:0 18px 34px rgba(15,23,42,.18)}
+    .team-panel[data-team="0"].active{border-color:var(--team-one)}
+    .team-panel[data-team="1"].active{border-color:var(--team-two)}
+    .team-panel input{width:100%;border:0;background:transparent;color:#0b2d63;font:inherit;font-weight:900;font-size:1.15rem;outline:none}
+    .team-score{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;color:#fff;font-size:1.7rem;font-weight:950}
+    .team-panel[data-team="0"] .team-score{background:var(--team-one)}
+    .team-panel[data-team="1"] .team-score{background:var(--team-two)}
+    .turn-center{min-width:230px;border-radius:20px;padding:13px 18px;background:var(--board);color:#fff;text-align:center;display:grid;place-items:center;box-shadow:0 12px 28px rgba(7,31,79,.22)}
+    .turn-center span{display:block;color:#dbeafe;text-transform:uppercase;font-size:.75rem;font-weight:900}
+    .turn-center strong{font-size:1.15rem}
+    .game-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:18px}
+    .game-command{min-height:48px;border:0;border-radius:999px;padding:0 20px;background:#123b8f;color:#fff;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:8px;text-decoration:none}
+    .game-command.primary{background:linear-gradient(135deg,#d21f35,#a81228)}
+    .game-command.soft{background:#fff;color:#0b2d63;box-shadow:0 8px 20px rgba(15,23,42,.1)}
+    .game-command:hover{transform:translateY(-2px);color:#fff}
+    .game-command.soft:hover{color:#0b2d63}
+    .memory-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;padding:18px;border-radius:28px;background:linear-gradient(145deg,#071f4f,#123b8f);box-shadow:0 24px 55px rgba(7,31,79,.25);perspective:1200px}
+    .memory-card{position:relative;aspect-ratio:4/3;border:0;padding:0;background:transparent;cursor:pointer;transform-style:preserve-3d;transition:transform .48s cubic-bezier(.2,.75,.2,1);min-width:0}
+    .memory-card.is-flipped,.memory-card.is-matched{transform:rotateY(180deg)}
+    .memory-card.is-matched{cursor:default}
+    .card-face{position:absolute;inset:0;border-radius:15px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+    .card-back{display:grid;place-items:center;background:linear-gradient(145deg,#fff,#dbeafe);border:3px solid rgba(255,255,255,.88);color:#123b8f;box-shadow:0 7px 16px rgba(0,0,0,.18)}
+    .card-back strong{font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:950;line-height:1}
+    .card-back i{position:absolute;left:8px;top:6px;font-size:clamp(.8rem,1.4vw,1.1rem);opacity:.45}
+    .card-front{transform:rotateY(180deg);background:#fff;border:3px solid #fff;box-shadow:0 7px 16px rgba(0,0,0,.2)}
+    .card-front.image-card img{width:100%;height:100%;display:block;object-fit:cover}
+    .card-front.text-card{display:grid;place-items:center;padding:12px;background:linear-gradient(145deg,#fff,#fff7e6)}
+    .card-front.text-card strong{font-size:clamp(1rem,1.7vw,1.45rem);line-height:1.15;text-align:center;color:#0b2d63}
+    .card-front.image-card strong{position:absolute;left:5px;right:5px;bottom:5px;border-radius:10px;padding:6px;background:rgba(7,31,79,.88);color:#fff;font-size:clamp(.58rem,1vw,.78rem);line-height:1.1;text-align:center}
+    .memory-card.is-matched .card-front{border-color:#f4c95d;box-shadow:0 0 0 3px rgba(244,201,93,.45),0 0 24px rgba(244,201,93,.7)}
+    .game-status{min-height:48px;margin:14px 0 0;text-align:center;color:#334155;font-weight:850}
+    .reading-gate,.winner-overlay{position:fixed;inset:0;z-index:2000;display:none;place-items:center;padding:20px;background:rgba(3,12,32,.82);backdrop-filter:blur(8px)}
+    .reading-gate.show,.winner-overlay.show{display:grid}
+    .gate-card,.winner-card{width:min(560px,100%);border-radius:24px;background:#fff;padding:24px;text-align:center;box-shadow:0 28px 80px rgba(0,0,0,.38)}
+    .gate-image{width:min(350px,100%);aspect-ratio:4/3;object-fit:cover;border-radius:18px}
+    .gate-card h2,.winner-card h2{color:#071f4f;margin:16px 0 8px}
+    .gate-card p,.winner-card p{color:#475569;line-height:1.55}
+    .gate-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+    .winner-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#fff7e8)}
+    .winner-trophy{font-size:4rem;color:#d97706}
+    .winner-card h2{font-size:clamp(2rem,6vw,3.5rem)}
+    .confetti-piece{position:fixed;top:-30px;width:12px;height:20px;z-index:2100;pointer-events:none;animation:confetti-fall var(--duration) linear forwards;transform:rotate(var(--rotation));background:var(--color)}
+    @keyframes confetti-fall{to{transform:translate3d(var(--drift),110vh,0) rotate(900deg)}}
+    @media(max-width:1100px){.game-intro{grid-template-columns:1fr}.memory-board{grid-template-columns:repeat(5,minmax(0,1fr))}}
+    @media(max-width:760px){.game-toolbar{grid-template-columns:1fr 1fr}.turn-center{grid-column:1/-1;grid-row:1;min-width:0}.memory-board{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px}.game-shell{width:min(100% - 16px,1500px)}.team-panel{padding:10px}.team-score{width:44px;height:44px}.card-front.image-card strong{display:none}}
+  </style>
+</head>
+<body class="memory-page">
+  <nav class="navbar fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 1</span></a>
+      <div class="d-flex"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></div>
+    </div>
+  </nav>
+
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%201/img/ateliers/memory-maison.png?v=20260628-theme7')">
+    <div class="container">
+      <div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html">Ateliers</a><span>›</span><span>Concéntrese</span></div>
+      <span class="badge-course"><i class="bi bi-grid-3x3-gap-fill"></i> Thème 7 · Maison</span>
+      <h1>Concéntrese : maison</h1>
+      <p class="hero-text">Retournez les cartes, associez chaque image au mot ou à la phrase correcte, puis dites l’expression à voix haute pour gagner le point.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="game-shell" id="game">
+      <div class="game-intro">
+        <article class="content-card">
+          <p class="section-kicker">Objectif étudiant</p>
+          <h2 class="h4">Mémoriser le vocabulaire par association visuelle</h2>
+          <p class="section-text">Chaque paire contient une image et son expression. Quand une équipe trouve une paire, l’étudiant doit lire l’expression complète. Le professeur valide la prononciation avant d’attribuer le point.</p>
+          <div class="grammar-table">
+            <div><b>Pièces</b><span>le salon, la chambre, la cuisine</span></div>
+            <div><b>Objets</b><span>le lit, la lampe, le réfrigérateur</span></div>
+            <div><b>Position</b><span>sur, sous, dans, à côté de</span></div>
+          </div>
+        </article>
+        <div class="game-visual" role="img" aria-label="Plan visuel d’un logement pour pratiquer le vocabulaire de la maison"></div>
+      </div>
+
+      <div class="game-toolbar">
+        <div class="team-panel active" data-team="0"><input id="teamName0" value="Équipe 1" maxlength="20" aria-label="Nom de l’équipe 1"><strong class="team-score" id="score0">0</strong></div>
+        <div class="turn-center"><div><span>Tour actuel</span><strong id="turnName">Équipe 1</strong></div></div>
+        <div class="team-panel" data-team="1"><input id="teamName1" value="Équipe 2" maxlength="20" aria-label="Nom de l’équipe 2"><strong class="team-score" id="score1">0</strong></div>
+      </div>
+      <div class="game-actions">
+        <button class="game-command primary" type="button" onclick="newGame()"><i class="bi bi-shuffle"></i> Nouveau jeu</button>
+        <a class="game-command soft" href="../themes/maison-environnement.html"><i class="bi bi-book"></i> Revoir le thème</a>
+        <a class="game-command soft" href="../ateliers-activites.html#theme-7"><i class="bi bi-arrow-left"></i> Tous les ateliers</a>
+      </div>
+      <div class="memory-board" id="memoryBoard" aria-label="Cartes du jeu de mémoire"></div>
+      <p class="game-status" id="gameStatus" aria-live="polite">Équipe 1 : choisissez la première carte.</p>
+    </section>
+  </main>
+
+  <div class="reading-gate" id="readingGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <div class="gate-card">
+      <span class="section-kicker">Paire trouvée</span>
+      <img class="gate-image" id="gateImage" alt="">
+      <h2 id="gateTitle">Lisez l’expression à voix haute</h2>
+      <p><strong id="gatePhrase"></strong><br>L’étudiant lit l’expression complète. Le professeur confirme si la prononciation est acceptable.</p>
+      <div class="gate-actions">
+        <button class="game-command primary" type="button" onclick="confirmReading()"><i class="bi bi-check-circle"></i> Prononciation validée</button>
+        <button class="game-command soft" type="button" onclick="cancelPoint()"><i class="bi bi-arrow-counterclockwise"></i> À refaire</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="winner-overlay" id="winnerOverlay" role="dialog" aria-modal="true" aria-labelledby="winnerTitle">
+    <div class="winner-card">
+      <i class="bi bi-trophy-fill winner-trophy"></i>
+      <h2 id="winnerTitle">Partie terminée</h2>
+      <p id="winnerMessage"></p>
+      <button class="game-command primary" type="button" onclick="closeWinnerAndRestart()"><i class="bi bi-arrow-repeat"></i> Rejouer</button>
+    </div>
+  </div>
+
+  <footer class="footer"><div class="container"><a href="../ateliers-activites.html">← Tous les ateliers</a></div></footer>
+
+  <script>
+    const base = "/frances/Niveau%201/img/themes/maison-environnement/";
+    const pairs = [
+      { id: "salon", label: "le salon", image: "piece-salon.png" },
+      { id: "chambre", label: "la chambre", image: "piece-chambre.png" },
+      { id: "cuisine", label: "la cuisine", image: "piece-cuisine.png" },
+      { id: "salle-bain", label: "la salle de bain", image: "piece-salle-de-bain.png" },
+      { id: "balcon", label: "le balcon et le jardin", image: "piece-balcon-jardin.png" },
+      { id: "lit", label: "le lit est dans la chambre", image: "scene-description-chambre.png" },
+      { id: "canape", label: "le canapé est dans le salon", image: "piece-salon.png" },
+      { id: "refrigerateur", label: "le réfrigérateur est dans la cuisine", image: "piece-cuisine.png" },
+      { id: "lampe", label: "la lampe est sur la table", image: "scene-prepositions-chambre.png" },
+      { id: "absence", label: "il n’y a pas de balcon", image: "scene-negation-balcon.png" },
+      { id: "presence", label: "il y a une table et des chaises", image: "scene-il-y-a.png" },
+      { id: "preposition", label: "le livre est sur le lit", image: "scene-prepositions-chambre.png" }
+    ];
+
+    let deck = [], selected = [], matchedPairs = 0, currentTeam = 0, scores = [0, 0], locked = false, pendingMatch = null;
+    const board = document.getElementById("memoryBoard");
+
+    function teamName(index) {
+      return document.getElementById("teamName" + index).value.trim() || ("Équipe " + (index + 1));
+    }
+    function shuffle(items) {
+      for (let i = items.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+      }
+      return items;
+    }
+    function cardFace(card) {
+      if (card.kind === "image") {
+        return `<span class="card-face card-front image-card"><img src="${base + card.image}?v=20260628-theme7" alt="${card.label}"><strong>${card.label}</strong></span>`;
+      }
+      return `<span class="card-face card-front text-card"><strong>${card.label}</strong></span>`;
+    }
+    function buildDeck() {
+      deck = shuffle(pairs.flatMap((pair) => [
+        { ...pair, kind: "image", uid: pair.id + "-image", matched: false },
+        { ...pair, kind: "text", uid: pair.id + "-text", matched: false }
+      ]));
+      board.innerHTML = "";
+      deck.forEach((card, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "memory-card";
+        button.dataset.index = index;
+        button.setAttribute("aria-label", "Carte cachée " + (index + 1));
+        button.innerHTML = `<span class="card-face card-back"><i class="bi bi-question-lg"></i><strong>${index + 1}</strong></span>${cardFace(card)}`;
+        button.addEventListener("click", () => selectCard(index, button));
+        board.appendChild(button);
+      });
+    }
+    function selectCard(index, element) {
+      if (locked || deck[index].matched || element.classList.contains("is-flipped") || selected.length === 2) return;
+      element.classList.add("is-flipped");
+      element.setAttribute("aria-label", deck[index].label);
+      selected.push({ index, element });
+      setStatus(teamName(currentTeam) + " a retourné la carte " + (index + 1) + ".");
+      if (selected.length === 2) {
+        locked = true;
+        setTimeout(checkPair, 650);
+      }
+    }
+    function checkPair() {
+      const [first, second] = selected;
+      const firstCard = deck[first.index];
+      const secondCard = deck[second.index];
+      const isMatch = firstCard.id === secondCard.id && firstCard.kind !== secondCard.kind;
+      if (isMatch) {
+        deck[first.index].matched = true;
+        deck[second.index].matched = true;
+        first.element.classList.add("is-matched");
+        second.element.classList.add("is-matched");
+        pendingMatch = firstCard.kind === "image" ? firstCard : secondCard;
+        document.getElementById("gateImage").src = base + pendingMatch.image + "?v=20260628-theme7";
+        document.getElementById("gateImage").alt = pendingMatch.label;
+        document.getElementById("gatePhrase").textContent = pendingMatch.label;
+        document.getElementById("readingGate").classList.add("show");
+        setStatus("Paire trouvée. L’étudiant lit : « " + pendingMatch.label + " ».");
+      } else {
+        setStatus("Ce n’est pas une paire. Le tour passe à " + teamName(1 - currentTeam) + ".");
+        setTimeout(() => {
+          first.element.classList.remove("is-flipped");
+          second.element.classList.remove("is-flipped");
+          selected = [];
+          currentTeam = 1 - currentTeam;
+          locked = false;
+          updateTeams();
+          setStatus(teamName(currentTeam) + " : choisissez la première carte.");
+        }, 1050);
+      }
+    }
+    function confirmReading() {
+      if (!pendingMatch) return;
+      scores[currentTeam] += 1;
+      matchedPairs += 1;
+      document.getElementById("score" + currentTeam).textContent = scores[currentTeam];
+      document.getElementById("readingGate").classList.remove("show");
+      burstConfetti(34);
+      selected = [];
+      pendingMatch = null;
+      locked = false;
+      setStatus(teamName(currentTeam) + " gagne un point et rejoue.");
+      if (matchedPairs === pairs.length) setTimeout(showWinner, 700);
+    }
+    function cancelPoint() {
+      if (!pendingMatch) return;
+      document.getElementById("readingGate").classList.remove("show");
+      selected.forEach(({ index, element }) => {
+        deck[index].matched = false;
+        element.classList.remove("is-matched", "is-flipped");
+      });
+      selected = [];
+      pendingMatch = null;
+      currentTeam = 1 - currentTeam;
+      locked = false;
+      updateTeams();
+      setStatus("Prononciation à refaire. Le tour passe à " + teamName(currentTeam) + ".");
+    }
+    function updateTeams() {
+      document.querySelectorAll(".team-panel").forEach((panel, index) => panel.classList.toggle("active", index === currentTeam));
+      document.getElementById("turnName").textContent = teamName(currentTeam);
+    }
+    function setStatus(message) {
+      document.getElementById("gameStatus").textContent = message;
+    }
+    function showWinner() {
+      const one = teamName(0), two = teamName(1);
+      let title, message;
+      if (scores[0] === scores[1]) {
+        title = "Égalité";
+        message = one + " et " + two + " terminent avec " + scores[0] + " points.";
+      } else {
+        const winner = scores[0] > scores[1] ? 0 : 1;
+        title = teamName(winner) + " gagne";
+        message = "Score final : " + one + " " + scores[0] + " - " + scores[1] + " " + two + ".";
+      }
+      document.getElementById("winnerTitle").textContent = title;
+      document.getElementById("winnerMessage").textContent = message;
+      document.getElementById("winnerOverlay").classList.add("show");
+      burstConfetti(130);
+    }
+    function burstConfetti(count) {
+      const colors = ["#d21f35", "#123b8f", "#f4c95d", "#2f9e77", "#ffffff"];
+      for (let i = 0; i < count; i += 1) {
+        const piece = document.createElement("i");
+        piece.className = "confetti-piece";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.setProperty("--color", colors[i % colors.length]);
+        piece.style.setProperty("--duration", (2.2 + Math.random() * 2.3) + "s");
+        piece.style.setProperty("--rotation", (Math.random() * 360) + "deg");
+        piece.style.setProperty("--drift", ((Math.random() - .5) * 260) + "px");
+        piece.style.animationDelay = (Math.random() * .45) + "s";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 5200);
+      }
+    }
+    function newGame() {
+      selected = [];
+      matchedPairs = 0;
+      currentTeam = 0;
+      scores = [0, 0];
+      locked = false;
+      pendingMatch = null;
+      document.getElementById("score0").textContent = "0";
+      document.getElementById("score1").textContent = "0";
+      document.getElementById("readingGate").classList.remove("show");
+      document.getElementById("winnerOverlay").classList.remove("show");
+      buildDeck();
+      updateTeams();
+      setStatus(teamName(0) + " : choisissez la première carte.");
+    }
+    function closeWinnerAndRestart() {
+      newGame();
+      document.getElementById("game").scrollIntoView({ behavior: "smooth" });
+    }
+    document.getElementById("teamName0").addEventListener("input", updateTeams);
+    document.getElementById("teamName1").addEventListener("input", updateTeams);
+    newGame();
+  </script>
+  <script src="../assets/niveau1.js?v=20260624-audit-nav"></script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+</body>
+</html>

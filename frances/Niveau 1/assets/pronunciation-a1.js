@@ -116,6 +116,29 @@
         ["bi-volume-mute", "Dans « noirs » et « rondes », les consonnes finales restent très légères."],
         ["bi-emoji-smile", "Pour décrire une personne, gardez une intonation chaleureuse et claire."]
       ]
+    },
+    "theme-7": {
+      title: "Maison et environnement à voix haute",
+      audio: "../audio/prononciation/stages/theme-7-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-7-stage-1.mp3",
+        "../audio/prononciation/stages/theme-7-stage-2.mp3",
+        "../audio/prononciation/stages/theme-7-stage-3.mp3",
+        "../audio/prononciation/stages/theme-7-defi.mp3"
+      ],
+      back: "../ateliers-activites.html#theme-7",
+      image: "../img/ateliers/prononciation-maison.png",
+      stages: [
+        "Dans ma chambre, il y a un lit près de la fenêtre.",
+        "La lampe est sur la table de nuit.",
+        "Il n’y a pas de balcon.",
+        "Dans ma chambre, il y a un lit près de la fenêtre. La lampe est sur la table de nuit. Il n’y a pas de balcon."
+      ],
+      tips: [
+        ["bi-house-door", "Dans « chambre », gardez le son nasal de « an » et ne prononcez pas le b séparément."],
+        ["bi-link-45deg", "Dans « il y a », dites les trois mots comme un groupe très fluide : il-y-a."],
+        ["bi-volume-mute", "Dans « lit », « près » et « balcon », les consonnes finales restent très légères ou muettes selon le mot."]
+      ]
     }
   };
 
@@ -381,7 +404,7 @@
     els.modelAudio.pause();
     els.modelButton.querySelector("i").className = "bi bi-play-fill";
     els.modelAudio.src = currentModelAudio();
-    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6']").forEach((link) => {
+    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6'], [href$='#theme-7']").forEach((link) => {
       if (link.textContent.includes("Ateliers") || link.textContent.includes("Retour")) link.href = set.back;
     });
     document.querySelector(".hero").style.setProperty("--hero-image", `url('${set.image}')`);

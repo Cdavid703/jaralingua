@@ -82,3 +82,10 @@ Narratrice: Voici ma famille. Mon frère s’appelle Lucas. Mes grands-parents h
 File: `prononciation/theme-5-description.mp3`
 
 Narratrice: Elle est souriante et généreuse. Elle a les cheveux noirs. Elle porte des lunettes rondes.
+
+## La visite de l’appartement de Clara
+File: `theme-7/visite-appartement-clara.mp3`
+
+Narratrice: Clara habite dans un petit appartement près de l’université. Aujourd’hui, elle fait visiter son logement à son ami Hugo. Quand on entre, il y a un couloir court avec un miroir et une petite étagère. À gauche, il y a le salon. Le salon est clair parce qu’il y a une grande fenêtre. Devant la fenêtre, il y a une table basse et deux fauteuils. Le canapé est à côté de la bibliothèque. Sur la bibliothèque, Clara garde des livres, une plante verte et une lampe.
+Narratrice: À droite du salon, il y a la cuisine. Elle est petite, mais pratique. Il y a un réfrigérateur blanc, un évier, une table ronde et deux chaises. Il n’y a pas de four, mais il y a une plaque de cuisson. Clara prépare souvent le petit déjeuner dans cette cuisine.
+Narratrice: La chambre est au fond de l’appartement. Dans la chambre, il y a un lit, une armoire et un bureau. Le bureau est près de la fenêtre. Sur le bureau, il y a un ordinateur et un cahier de français. Il n’y a pas de balcon, mais l’appartement est agréable et bien organisé.
