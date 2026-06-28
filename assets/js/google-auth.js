@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const CONFIG_KEY = "JARALINGUA_GOOGLE_CLIENT_ID";
@@ -1450,7 +1450,7 @@
           ${authRoleChoiceMarkup(roleStatus)}
           <div class="auth-current-progress">
             <strong>${copy.currentPage}</strong>
-            <span>${escapeHtml(current.title)} · ${escapeHtml(statusCopy[current.status] || copy.inProgress)}</span>
+            <span>${escapeHtml(current.title)} Â· ${escapeHtml(statusCopy[current.status] || copy.inProgress)}</span>
             <div class="status-actions">
               ${statusButton("pending", current.status, copy.markPending)}
               ${statusButton("in-progress", current.status, copy.markInProgress)}
@@ -1847,107 +1847,6 @@
     document.querySelectorAll("[data-jaralingua-dashboard]").forEach(function (dashboard) {
       dashboard.remove();
     });
-    return;
-    injectStyles();
-    let dashboard = document.querySelector("[data-jaralingua-dashboard]");
-    if (!currentUser) {
-      if (dashboard) dashboard.hidden = true;
-      return;
-    }
-
-    if (!dashboard) {
-      dashboard = document.createElement("section");
-      dashboard.className = "jaralingua-student-dashboard";
-      dashboard.id = "jaralingua-student-panel";
-      dashboard.setAttribute("data-jaralingua-dashboard", "");
-      const main = document.querySelector("main");
-      if (main && main.children.length) {
-        main.insertBefore(dashboard, main.children[1] || main.firstChild);
-      } else if (main) {
-        main.appendChild(dashboard);
-      } else {
-        document.body.appendChild(dashboard);
-      }
-    }
-
-    const stats = progressStats();
-    const draftStats = activityDraftStats();
-    const current = stats.progress.pages[pageKey()] || currentPageRecord("in-progress");
-    const last = stats.progress.lastPage;
-    dashboard.hidden = false;
-    dashboard.innerHTML = `
-      <div class="student-dashboard-grid">
-        <div>
-          <div class="student-profile">
-            ${avatarMarkup(currentUser, "student-avatar")}
-            <div>
-              <h2>${copy.studentSpace}</h2>
-              <p>${escapeHtml(currentUser.name)} · ${escapeHtml(currentUser.email || "")}</p>
-              <div class="student-actions">
-                <a class="student-action primary" href="${last ? escapeAttribute(last.url) : "#"}" data-student-continue>${copy.continue}</a>
-              </div>
-            </div>
-          </div>
-          <div class="student-stats" id="jaralingua-progress-panel">
-            <div class="student-stat"><strong>${stats.pages.length}</strong><span>${copy.pages}</span></div>
-            <div class="student-stat"><strong>${stats.completed.length}</strong><span>${copy.completedPages}</span></div>
-          </div>
-        </div>
-        <div class="student-panels">
-          <div class="student-panel">
-            <h3>${copy.currentPage}</h3>
-            <p>${escapeHtml(current.title)} · ${escapeHtml(statusCopy[current.status] || copy.inProgress)}</p>
-            <div class="status-actions">
-              ${statusButton("pending", current.status, copy.markPending)}
-              ${statusButton("in-progress", current.status, copy.markInProgress)}
-              ${statusButton("completed", current.status, copy.markCompleted)}
-            </div>
-          </div>
-          <div class="student-panel">
-            <h3>${copy.activityAutosave}</h3>
-            <p>${copy.autosaveActive}</p>
-            <span class="activity-save-meter">${draftStats.count} ${copy.savedAnswers}</span>
-            <div class="student-actions">
-              <button class="activity-clear-action" type="button" data-clear-activity-progress>${copy.clearAnswers}</button>
-            </div>
-          </div>
-          ${adminPanelMarkup()}
-        </div>
-      </div>
-    `;
-
-    dashboard.querySelectorAll("[data-progress-status]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        setPageStatus(button.getAttribute("data-progress-status"));
-      });
-    });
-
-    const clearAnswersButton = dashboard.querySelector("[data-clear-activity-progress]");
-    if (clearAnswersButton) {
-      clearAnswersButton.addEventListener("click", function () {
-        clearSavedActivity(true);
-      });
-    }
-
-    dashboard.querySelectorAll("[data-request-role]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        requestRole(button.getAttribute("data-request-role"));
-      });
-    });
-
-    dashboard.querySelectorAll("[data-approve-role]").forEach(function (button) {
-      button.addEventListener("click", function () {
-        approveRoleRequest(button.getAttribute("data-request-id"), button.getAttribute("data-approve-role"));
-      });
-    });
-
-    const continueLink = dashboard.querySelector("[data-student-continue]");
-    if (continueLink && continueLink.getAttribute("href") === "#") {
-      continueLink.addEventListener("click", function (event) {
-        event.preventDefault();
-        showToast(copy.noLastPage);
-      });
-    }
   }
 
   function rolePanelMarkup(roleStatus) {
@@ -2010,7 +1909,7 @@
         return `
           <div class="role-request-item">
             <strong>${escapeHtml(request.name || request.email)}</strong>
-            <span>${escapeHtml(request.email || "")} · ${roleLabel(request.role)}</span>
+            <span>${escapeHtml(request.email || "")} Â· ${roleLabel(request.role)}</span>
             <div class="role-request-actions">
               <button class="role-action secondary" type="button" data-request-id="${escapeAttribute(request.id)}" data-approve-role="student">${copy.approveAsStudent}</button>
               <button class="role-action" type="button" data-request-id="${escapeAttribute(request.id)}" data-approve-role="teacher">${copy.approveAsTeacher}</button>
