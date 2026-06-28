@@ -41,14 +41,14 @@ La carta descriptiva plantea ocho unidades, pero el sitio ya separó “famille�
 | 03 | Les verbes du premier groupe | III. Verbes du premier groupe | Implementado |
 | 04 | Être, avoir, aller et faire | IV. Verbes essentiels | Implementado |
 | 05 | Famille et relations | Primera parte de V. Famille et description | Implementado |
-| 06 | Description, professions et présent progressif | Segunda parte de V + sesión 7 | Parcial |
+| 06 | Description, professions et présent progressif | Segunda parte de V + sesión 7 | Implementado |
 | 07 | Maison et environnement | VI. Maison et environnement | Pendiente |
 | 08 | Alimentation et achats | VII. Alimentation et achats | Pendiente |
 | 09 | Transport, heure et projets immédiats | VIII. Transport, heure et projets immédiats | Pendiente |
 
-## Dossier 06 — Ajuste necesario
+## Dossier 06 — Implementado en etapa 2
 
-El dossier actual “Description et personnalité” debe ampliarse a:
+El dossier “Description et personnalité” fue ampliado a:
 
 **Description, professions et présent progressif**
 

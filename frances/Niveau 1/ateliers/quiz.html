@@ -54,7 +54,7 @@
   <script src="../../../assets/js/transcript-pdf.js"></script>
   <script src="../assets/quiz-catalog.js?v=20260624-shtooka-nombres"></script>
   <script src="../assets/original-banks.js?v=20260624-shtooka-nombres"></script>
-  <script src="../assets/expanded-catalog.js?v=20260627-audio-sync"></script>
+  <script src="../assets/expanded-catalog.js?v=20260627-theme6"></script>
   <script>
     (function(){
       const key = new URLSearchParams(location.search).get("activite") || "alphabet-sons";
@@ -91,6 +91,8 @@
         "lecture-famille":"lecture-famille-lea.png",
         "accord-adjectifs":"atelier-accord-adjectifs.png",
         "portrait-guide":"atelier-portrait-guide.png",
+        "professions-activites":"atelier-professions-activites.png",
+        "present-progressif":"atelier-present-progressif.png",
         "qui-est-ce-description":"qui-est-ce-portraits-a1.png",
         "ecoute-portrait":"ecoute-portrait-sofia.png",
         "lecture-description":"lecture-amie-ines.png"
@@ -130,6 +132,32 @@
             <div><b>Question</b><span>Est-ce que tu habites à Medellín ?</span></div>
           </div>
           <a class="btn-soft" href="../themes/present-indicatif.html"><i class="bi bi-book"></i> Revoir l’explication complète</a>
+        </article>`;
+      }
+      if (key === "present-progressif") {
+        material.innerHTML = `<article class="content-card activity-material">
+          <p class="section-kicker">Avant de répondre</p>
+          <h2 class="h4">Une action qui se passe maintenant</h2>
+          <p class="section-text">Le présent progressif se forme avec <strong>être en train de + infinitif</strong>. Il sert à insister sur l’action en cours : <em>Elle est en train de lire</em>.</p>
+          <div class="grammar-table">
+            <div><b>Affirmatif</b><span>Je suis en train de travailler.</span></div>
+            <div><b>Négatif</b><span>Je ne suis pas en train de dormir.</span></div>
+            <div><b>Question</b><span>Est-ce que tu es en train d’écouter ?</span></div>
+          </div>
+          <a class="btn-soft" href="../themes/description-personnalite.html"><i class="bi bi-book"></i> Revoir l’explication complète</a>
+        </article>`;
+      }
+      if (key === "professions-activites") {
+        material.innerHTML = `<article class="content-card activity-material">
+          <p class="section-kicker">Avant de répondre</p>
+          <h2 class="h4">Profession + activité</h2>
+          <p class="section-text">Pour présenter un métier, utilisez souvent <strong>être + profession</strong> : <em>Elle est médecin</em>. Pour parler de l’action, utilisez un verbe : <em>Elle soigne les patients</em>.</p>
+          <div class="grammar-table">
+            <div><b>Profession</b><span>Il est professeur.</span></div>
+            <div><b>Lieu</b><span>Il travaille dans une école.</span></div>
+            <div><b>Activité</b><span>Il explique la leçon.</span></div>
+          </div>
+          <a class="btn-soft" href="../themes/description-personnalite.html"><i class="bi bi-book"></i> Revoir le thème 06</a>
         </article>`;
       }
       if (item.audio) {

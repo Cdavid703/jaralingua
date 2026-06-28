@@ -95,7 +95,7 @@
       ]
     },
     "theme-5": {
-      title: "Description et personnalité à voix haute",
+      title: "Description, professions et présent progressif à voix haute",
       audio: "../audio/prononciation/stages/theme-5-defi.mp3",
       audios: [
         "../audio/prononciation/stages/theme-5-stage-1.mp3",
@@ -103,7 +103,7 @@
         "../audio/prononciation/stages/theme-5-stage-3.mp3",
         "../audio/prononciation/stages/theme-5-defi.mp3"
       ],
-      back: "../ateliers-activites.html#theme-06",
+      back: "../ateliers-activites.html#theme-6",
       image: "../img/ateliers/prononciation-description.png",
       stages: [
         "Elle est souriante et généreuse.",
@@ -381,7 +381,7 @@
     els.modelAudio.pause();
     els.modelButton.querySelector("i").className = "bi bi-play-fill";
     els.modelAudio.src = currentModelAudio();
-    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-06']").forEach((link) => {
+    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6']").forEach((link) => {
       if (link.textContent.includes("Ateliers") || link.textContent.includes("Retour")) link.href = set.back;
     });
     document.querySelector(".hero").style.setProperty("--hero-image", `url('${set.image}')`);
