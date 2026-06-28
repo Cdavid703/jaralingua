@@ -1428,12 +1428,13 @@
   function panelMarkup() {
     if (currentUser) {
       const stats = progressStats();
+      const draftStats = activityDraftStats();
       const last = stats.progress.lastPage;
       const roleStatus = currentRoleStatus();
       const current = stats.progress.pages[pageKey()] || currentPageRecord("in-progress");
       return `
         <div class="auth-panel" data-auth-panel hidden>
-          <h2>${copy.account}</h2>
+          <h2>${copy.studentSpace}</h2>
           <div class="auth-user-card">
             ${avatarMarkup(currentUser)}
             <div>
@@ -1457,6 +1458,12 @@
             </div>
             <small>${copy.savedHere}</small>
           </div>
+          <div class="auth-current-progress">
+            <strong>${copy.activityAutosave}</strong>
+            <span>${draftStats.count} ${copy.savedAnswers}</span>
+            <button class="activity-clear-action" type="button" data-clear-activity-progress>${copy.clearAnswers}</button>
+          </div>
+          ${adminPanelMarkup()}
           <div class="auth-menu">
             <a href="${last ? escapeAttribute(last.url) : "#"}" data-auth-last>${copy.continue}</a>
             <a href="${rootHref("ingles/basico/notas.html")}">${copy.basicEnglishGrades}</a>
@@ -1534,6 +1541,18 @@
     root.querySelectorAll("[data-progress-status]").forEach(function (button) {
       button.addEventListener("click", function () {
         setPageStatus(button.getAttribute("data-progress-status"));
+      });
+    });
+
+    root.querySelectorAll("[data-clear-activity-progress]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        clearSavedActivity(true);
+      });
+    });
+
+    root.querySelectorAll("[data-approve-role]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        approveRoleRequest(button.getAttribute("data-request-id"), button.getAttribute("data-approve-role"));
       });
     });
 
@@ -1825,6 +1844,10 @@
   }
 
   function renderDashboard() {
+    document.querySelectorAll("[data-jaralingua-dashboard]").forEach(function (dashboard) {
+      dashboard.remove();
+    });
+    return;
     injectStyles();
     let dashboard = document.querySelector("[data-jaralingua-dashboard]");
     if (!currentUser) {
