@@ -162,6 +162,29 @@
         ["bi-droplet", "Dans « de l’eau », faites une liaison fluide : de-l’eau, sans pause entre les deux mots."],
         ["bi-currency-euro", "Dans « six euros », prononcez la liaison : si-z-euros. Dans « cinquante », la finale reste claire."]
       ]
+    },
+    "theme-9": {
+      title: "Transports, heure et projets à voix haute",
+      audio: "../audio/prononciation/stages/theme-9-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-9-stage-1.mp3",
+        "../audio/prononciation/stages/theme-9-stage-2.mp3",
+        "../audio/prononciation/stages/theme-9-stage-3.mp3",
+        "../audio/prononciation/stages/theme-9-defi.mp3"
+      ],
+      back: "../ateliers-activites.html#theme-9",
+      image: "../img/ateliers/prononciation-transports-futur-proche.png",
+      stages: [
+        "Je vais prendre le métro à huit heures.",
+        "Nous allons au centre-ville en bus.",
+        "Elle vient d’arriver à la station.",
+        "Je vais prendre le métro à huit heures. Nous allons au centre-ville en bus. Elle vient d’arriver à la station."
+      ],
+      tips: [
+        ["bi-train-front", "Dans « métro », gardez le son fermé de « é » et ne prononcez pas de consonne finale."],
+        ["bi-clock", "Dans « huit heures », faites la liaison naturelle : hui-t-heures."],
+        ["bi-link-45deg", "Dans « vient d’arriver », enchaînez doucement « d’ » avec « arriver »."]
+      ]
     }
   };
 
@@ -427,7 +450,7 @@
     els.modelAudio.pause();
     els.modelButton.querySelector("i").className = "bi bi-play-fill";
     els.modelAudio.src = currentModelAudio();
-    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6'], [href$='#theme-7'], [href$='#theme-8']").forEach((link) => {
+    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6'], [href$='#theme-7'], [href$='#theme-8'], [href$='#theme-9']").forEach((link) => {
       if (link.textContent.includes("Ateliers") || link.textContent.includes("Retour")) link.href = set.back;
     });
     document.querySelector(".hero").style.setProperty("--hero-image", `url('${set.image}')`);

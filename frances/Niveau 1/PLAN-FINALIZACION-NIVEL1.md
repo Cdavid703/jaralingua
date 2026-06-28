@@ -2,7 +2,7 @@
 
 Fuente base: `C:\Users\USER\Documents\Français\Niveau 1\Carta descriptiva nivel 1.docx`
 
-Estado de decisión: etapa 2 — dossier 08 implementado; falta dossier 09, proyecto final y ajuste final de evaluación.
+Estado de decisión: etapa 3 — dossier 09 implementado; falta proyecto final y ajuste final de evaluación.
 
 ## Principio de implementación
 
@@ -30,7 +30,7 @@ El portal actual del Nivel 1 contiene ocho dossiers:
 7. Maison et environnement
 8. Alimentation et achats
 
-Estos ocho dossiers cubren la mayor parte de la carta descriptiva. Falta cerrar transporte, hora, proyectos inmediatos, proyecto final y evaluación final alineada.
+Estos nueve dossiers cubren la secuencia temática de la carta descriptiva. Falta cerrar el proyecto final y la evaluación final alineada.
 
 ## Mapa final propuesto
 
@@ -46,7 +46,7 @@ La carta descriptiva plantea ocho unidades, pero el sitio ya separó “famille�
 | 06 | Description, professions et présent progressif | Segunda parte de V + sesión 7 | Implementado |
 | 07 | Maison et environnement | VI. Maison et environnement | Tema visual y ateliers implementados |
 | 08 | Alimentation et achats | VII. Alimentation et achats | Implementado |
-| 09 | Transport, heure et projets immédiats | VIII. Transport, heure et projets immédiats | Pendiente |
+| 09 | Transport, heure et projets immédiats | VIII. Transport, heure et projets immédiats | Implementado |
 
 ## Dossier 06 — Implementado en etapa 2
 
@@ -130,7 +130,7 @@ Página sugerida:
 
 - `themes/alimentation-achats.html`
 
-Actividades mínimas:
+Actividades implementadas:
 
 1. Écoute : au café de la place — compréhension orale avec audio complet et transcription professeur.
 2. Les aliments essentiels — vocabulaire.
@@ -162,17 +162,19 @@ Página sugerida:
 
 - `themes/transport-heure-projets.html`
 
-Actividades mínimas:
+Actividades implementadas:
 
 1. Les transports — vocabulaire.
-2. Quelle heure est-il ? — heure.
-3. Demander son chemin — interaction.
-4. Le futur proche — grammaire.
-5. Le passé récent — grammaire.
-6. À la station de métro — compréhension orale.
-7. Message avant le départ — lecture.
-8. Mon projet immédiat — production.
-9. Défi de prononciation — intonation des questions.
+2. Les lieux de la ville — vocabulaire.
+3. Quelle heure est-il ? — heure.
+4. Demander son chemin — interaction.
+5. Le futur proche — grammaire.
+6. Le passé récent — grammaire.
+7. Écoute : à la station de métro — compréhension orale avec audio complet et transcription professeur.
+8. Rendez-vous au centre-ville — lecture.
+9. Mon trajet demain — production guidée.
+10. Concéntrese : transports — jeu de mémoire image ↔ expression.
+11. Défi de prononciation — intonation des questions, liaison et rythme.
 
 ## Proyecto final
 
@@ -227,7 +229,7 @@ Requisito funcional:
 1. Ajustar dossier 06 sin crear ruptura visual.
 2. Crear dossier 07: Maison et environnement.
 3. Crear dossier 08: Alimentation et achats.
-4. Crear dossier 09: Transport, heure et projets immédiats.
+4. Crear dossier 09: Transport, heure et projets immédiats. — Implementado.
 5. Crear proyecto final.
 6. Ajustar evaluación.
 7. Auditoría final completa del Nivel 1.

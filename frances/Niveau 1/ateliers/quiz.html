@@ -57,6 +57,7 @@
   <script src="../assets/expanded-catalog.js?v=20260627-theme6"></script>
   <script src="../assets/theme7-catalog.js?v=20260628-theme7-ateliers"></script>
   <script src="../assets/theme8-catalog.js?v=20260628-theme8-ateliers"></script>
+  <script src="../assets/theme9-catalog.js?v=20260628-theme9-ateliers"></script>
   <script>
     (function(){
       const key = new URLSearchParams(location.search).get("activite") || "alphabet-sons";
@@ -111,7 +112,16 @@
         "je-voudrais-commander":"atelier-je-voudrais.png",
         "lecture-menu-simple":"lecture-menu-simple.png",
         "prix-quantites":"atelier-prix-nombres.png",
-        "production-commande-cafe":"production-commande-cafe.png"
+        "production-commande-cafe":"production-commande-cafe.png",
+        "transports-vocabulaire":"atelier-transports.png",
+        "lieux-ville":"atelier-lieux-ville.png",
+        "quelle-heure":"atelier-heure.png",
+        "demander-chemin":"atelier-demander-chemin.png",
+        "futur-proche":"atelier-futur-proche.png",
+        "passe-recent":"atelier-passe-recent.png",
+        "ecoute-station-metro":"ecoute-station-metro.png",
+        "lecture-rendez-vous-centre-ville":"lecture-rendez-vous-centre-ville.png",
+        "production-mon-trajet-demain":"production-mon-trajet-demain.png"
       };
       const original = window.french1OriginalBanks && window.french1OriginalBanks[key];
       const expanded = window.french1ExpandedActivities && window.french1ExpandedActivities[key];
@@ -200,6 +210,19 @@
             <div><b>Négation</b><span>Je ne prends pas de jus.</span></div>
           </div>
           <a class="btn-soft" href="../themes/alimentation-achats.html"><i class="bi bi-book"></i> Revoir le thème 08</a>
+        </article>`;
+      }
+      if (["transports-vocabulaire","lieux-ville","quelle-heure","demander-chemin","futur-proche","passe-recent","production-mon-trajet-demain"].includes(key)) {
+        material.innerHTML = `<article class="content-card activity-material">
+          <p class="section-kicker">Avant de répondre</p>
+          <h2 class="h4">Se déplacer, se repérer et annoncer un projet</h2>
+          <p class="section-text">Pour parler d’un déplacement, combinez un lieu, une heure et un transport. Pour un projet proche, utilisez <strong>aller + infinitif</strong>. Pour une action qui vient de se passer, utilisez <strong>venir de + infinitif</strong>.</p>
+          <div class="grammar-table">
+            <div><b>Transport</b><span>Je vais au centre-ville en bus.</span></div>
+            <div><b>Projet</b><span>Je vais prendre le métro.</span></div>
+            <div><b>Action récente</b><span>Je viens d’arriver à la station.</span></div>
+          </div>
+          <a class="btn-soft" href="../themes/transport-heure-projets.html"><i class="bi bi-book"></i> Revoir le thème 09</a>
         </article>`;
       }
       if (item.audio) {
