@@ -42,14 +42,14 @@
   <script src="../../assets/js/transcript-pdf.js"></script>
   <script src="assets/quiz-catalog.js?v=20260624-shtooka-nombres"></script>
   <script src="assets/original-banks.js?v=20260624-shtooka-nombres"></script>
-  <script src="assets/expanded-catalog.js?v=20260626-transcripts"></script>
+  <script src="assets/expanded-catalog.js?v=20260627-audio-sync"></script>
   <script>
     const audioKeys = [
       ["1","premiere-rencontre","img/ateliers/atelier-premiere-rencontre.png"],
-      ["2","ecoute-verbes-er","img/ateliers/ecoute-routine-camille.png"],
-      ["3","ecoute-verbes-essentiels","img/ateliers/ecoute-samedi-lyon.png"],
-      ["4","ecoute-ma-famille","img/ateliers/ecoute-dejeuner-famille.png"],
-      ["5","ecoute-portrait","img/ateliers/ecoute-portrait-sofia.png"]
+      ["3","ecoute-verbes-er","img/ateliers/ecoute-routine-camille.png"],
+      ["4","ecoute-verbes-essentiels","img/ateliers/ecoute-samedi-lyon.png"],
+      ["5","ecoute-ma-famille","img/ateliers/ecoute-dejeuner-famille.png"],
+      ["6","ecoute-portrait","img/ateliers/ecoute-portrait-sofia.png"]
     ];
     const library = document.getElementById("audioLibrary");
     const activityImageVersion = "20260624-activity-images";
@@ -87,7 +87,7 @@
       const user = readUser();
       if (!user) return false;
       const email = normalizeEmail(user.email);
-      if (email === "cdavid.jaramillo@gmail.com" || email === "lcvelasqueza@correo.iue.edu.co") return true;
+      if (email === "cdavid.jaramillo@gmail.com" || email === "lcvelasqueza@correo.iue.edu.co" || email === "velasquez.luisac@gmail.com") return true;
       try {
         const requests = JSON.parse(localStorage.getItem("jaralingua_role_requests") || "[]");
         const id = userId(user);

@@ -54,7 +54,7 @@
   <script src="../../../assets/js/transcript-pdf.js"></script>
   <script src="../assets/quiz-catalog.js?v=20260624-shtooka-nombres"></script>
   <script src="../assets/original-banks.js?v=20260624-shtooka-nombres"></script>
-  <script src="../assets/expanded-catalog.js?v=20260624-present-detail"></script>
+  <script src="../assets/expanded-catalog.js?v=20260627-audio-sync"></script>
   <script>
     (function(){
       const key = new URLSearchParams(location.search).get("activite") || "alphabet-sons";
@@ -170,7 +170,7 @@
         const user = readUser();
         if (!user) return false;
         const email = normalizeEmail(user.email);
-        if (email === "cdavid.jaramillo@gmail.com" || email === "lcvelasqueza@correo.iue.edu.co") return true;
+        if (email === "cdavid.jaramillo@gmail.com" || email === "lcvelasqueza@correo.iue.edu.co" || email === "velasquez.luisac@gmail.com") return true;
         try {
           const requests = JSON.parse(localStorage.getItem("jaralingua_role_requests") || "[]");
           const id = userId(user);
