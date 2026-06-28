@@ -101,7 +101,7 @@
           <div class="flex-grow-1">
             <p class="section-kicker">Accès sécurisé</p>
             <h2 class="section-title">Connectez-vous pour commencer</h2>
-            <p class="section-text" id="accessStatus">Utilisez le compte inscrit au cours. En local, un mode aperçu est disponible pour réviser la mise en page.</p>
+            <p class="section-text" id="accessStatus">Utilisez Google, Microsoft ou le courriel inscrit au cours. Le simulacre n'a pas besoin d'ouverture administrative : il doit être accessible dès que le compte est reconnu.</p>
             <div class="login-grid mb-3">
               <form id="courseLoginForm">
                 <label class="fw-bold mb-1" for="courseEmail">Courriel du cours</label>
@@ -111,8 +111,8 @@
                 <button class="btn-main w-100" type="submit"><i class="bi bi-key-fill"></i> Entrer avec le courriel du cours</button>
               </form>
               <div>
-                <p class="section-text mb-2">Si vous utilisez Google ou Microsoft, ouvrez le panneau de connexion JaraLingua puis revenez ici.</p>
-                <button class="btn-soft" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Ouvrir la connexion</button>
+                <p class="section-text mb-2">Connexion JaraLingua complète : Google, Microsoft et compte déjà associé au tableau de bord.</p>
+                <button class="btn-soft" type="button" data-open-login><i class="bi bi-google"></i> Google / Microsoft / compte JaraLingua</button>
                 <button class="btn-danger-soft mt-2" type="button" id="localPreviewBtn" hidden><i class="bi bi-eye-fill"></i> Aperçu local sans note</button>
               </div>
             </div>
@@ -213,7 +213,9 @@
 
   <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
+  <script>window.JARALINGUA_MICROSOFT_CLIENT_ID=window.JARALINGUA_MICROSOFT_CLIENT_ID||"4e729f8a-d101-4c5d-af68-609d749bc95a";</script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
   <script src="../../assets/js/transcript-pdf.js"></script>
   <script src="../../assets/js/google-auth.js?v=20260627-global-auth"></script>
   <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
@@ -223,7 +225,9 @@
     const MICROSOFT_KEY = "jaralingua_microsoft_user";
     const LOCAL_KEY = "jaralingua_local_gradebook_user:french1GradesApp";
     const ACCESS_API = "/api/french1/grades";
+    const STAFF_EMAILS = new Set(["cdavid.jaramillo@gmail.com","lcvelasqueza@correo.iue.edu.co","velasquez.luisac@gmail.com"]);
     const isLocalPreviewHost = ["127.0.0.1", "localhost"].includes(location.hostname);
+    let lastCredential = "";
     const transcriptText = `Bonjour, je m’appelle Lina. J’ai vingt ans et je suis colombienne. J’habite à Medellín avec ma mère et mon frère. Nous habitons dans un appartement près de l’université.
 
 Le matin, je me lève à six heures et demie. Je prends un café au lait et du pain avec du fromage. À sept heures quinze, je vais à l’université en bus. Le trajet dure environ vingt minutes.
@@ -301,6 +305,8 @@ Après le cours, je vais acheter un sandwich et une bouteille d’eau. L’aprè
     function storedUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.credential||saved.exp<=Date.now()/1000){sessionStorage.removeItem(key);return null}return saved}catch{sessionStorage.removeItem(key);return null}}
     function activeUser(){return storedUser(GOOGLE_KEY)||storedUser(MICROSOFT_KEY)||storedUser(LOCAL_KEY)}
     function providerFor(user){if(!user)return "google"; if(user.provider)return user.provider; if(sessionStorage.getItem(LOCAL_KEY))return "local"; if(sessionStorage.getItem(MICROSOFT_KEY))return "microsoft"; return "google"}
+    function normalizeEmail(value){return String(value||"").trim().toLowerCase()}
+    function isTrustedCourseStaff(user){return STAFF_EMAILS.has(normalizeEmail(user&&user.email))}
     function renderMcq(formId, questions, prefix){
       const form=document.getElementById(formId);
       form.innerHTML=questions.map((item,index)=>`<div class="col-md-6"><fieldset class="question-card" data-question="${prefix}${index}"><legend>${index+1}. ${escapeHtml(item.q)}</legend>${item.o.map((option,choiceIndex)=>`<label class="choice"><input type="radio" name="${prefix}${index}" value="${choiceIndex}"><span>${escapeHtml(option)}</span></label>`).join("")}</fieldset></div>`).join("");
@@ -343,16 +349,20 @@ Après le cours, je vais acheter un sandwich et une bouteille d’eau. L’aprè
       document.querySelectorAll("[data-order-pick]").forEach(button=>{button.onclick=()=>{const index=button.dataset.orderPick;const answer=document.querySelector(`[data-order-answer="${index}"]`);const chosen=document.createElement("button");chosen.type="button";chosen.className="sentence-chip";chosen.textContent=button.textContent;chosen.dataset.originalText=button.textContent;chosen.onclick=()=>{button.hidden=false;chosen.remove()};answer.appendChild(chosen);button.hidden=true}});
       document.querySelectorAll("[data-order-reset]").forEach(button=>{button.onclick=()=>{const index=button.dataset.orderReset;document.querySelector(`[data-order-answer="${index}"]`).innerHTML="";document.querySelectorAll(`[data-order-pick="${index}"]`).forEach(item=>item.hidden=false)}});
     }
-    function showExam(name){document.getElementById("examContent").hidden=false;document.getElementById("accessPanel").innerHTML=`<div class="d-flex align-items-start gap-3"><div class="access-icon"><i class="bi bi-unlock-fill"></i></div><div><p class="section-kicker">Accès validé</p><h2 class="section-title">Bienvenue${name?`, ${escapeHtml(name)}`:""}</h2><p class="section-text mb-0">Le simulacre est ouvert. Les résultats restent des résultats de pratique et ne sont pas envoyés au carnet.</p></div></div>`}
+    function showExam(name, role){document.getElementById("examContent").hidden=false;document.getElementById("accessPanel").innerHTML=`<div class="d-flex align-items-start gap-3"><div class="access-icon"><i class="bi bi-unlock-fill"></i></div><div><p class="section-kicker">Accès validé${role?` · ${escapeHtml(role)}`:""}</p><h2 class="section-title">Bienvenue${name?`, ${escapeHtml(name)}`:""}</h2><p class="section-text mb-0">Le simulacre est ouvert. Les résultats restent des résultats de pratique et ne sont pas envoyés au carnet.</p></div></div>`}
     function showLocked(message){document.getElementById("examContent").hidden=true;document.getElementById("accessStatus").textContent=message;if(isLocalPreviewHost)document.getElementById("localPreviewBtn").hidden=false}
     async function verifyAccess(){
       const current=activeUser();
-      if(!current){showLocked("Connectez-vous avec le courriel inscrit au cours. En local, vous pouvez utiliser l'aperçu sans note.");return}
+      const currentCredential=current&&current.credential?current.credential:"";
+      if(currentCredential&&currentCredential===lastCredential&&!document.getElementById("examContent").hidden) return;
+      if(!current){lastCredential="";showLocked("Connectez-vous avec Google, Microsoft ou le courriel inscrit au cours. En local, vous pouvez utiliser l'aperçu sans note.");return}
+      lastCredential=currentCredential;
+      if(isTrustedCourseStaff(current)){showExam(current.name||current.email, "administration / professorat");return}
       try{
         const response=await fetch(ACCESS_API,{headers:{Authorization:`Bearer ${current.credential}`,"X-Jaralingua-Auth-Provider":providerFor(current)}});
         const data=await response.json().catch(()=>({}));
         if(!response.ok||(!data.student&&!["admin","teacher"].includes(data.role))) throw new Error("not_authorized");
-        showExam((data.student&&data.student.fullName)||current.name||current.email);
+        showExam((data.student&&data.student.fullName)||current.name||current.email, data.role||"étudiant");
       }catch{showLocked("Ce compte n'est pas encore autorisé pour Français Niveau 1. Vérifiez le courriel ou utilisez le formulaire ID*.")}
     }
     document.getElementById("courseLoginForm").addEventListener("submit",async(event)=>{
@@ -364,16 +374,16 @@ Après le cours, je vais acheter un sandwich et une bouteille d’eau. L’aprè
         const result=await response.json().catch(()=>({}));
         if(!response.ok||!result.token)throw new Error("login");
         sessionStorage.setItem(LOCAL_KEY,JSON.stringify({provider:"local",email:result.user?.email||form.courseEmail.value.trim(),name:result.user?.name||form.courseEmail.value.trim(),credential:result.token,exp:result.exp}));
-        status.textContent="Compte validé.";verifyAccess();
+        status.textContent="Compte validé.";lastCredential="";verifyAccess();
       }catch{status.textContent="Courriel ou mot de passe incorrect. Utilisez le courriel inscrit et le mot de passe ID*.";button.disabled=false}
     });
-    document.querySelector("[data-open-login]").addEventListener("click",()=>{document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click()});
-    document.getElementById("localPreviewBtn").addEventListener("click",()=>showExam("aperçu local"));
+    document.querySelector("[data-open-login]").addEventListener("click",()=>{document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();setTimeout(verifyAccess,1200);setTimeout(verifyAccess,3000)});
+    document.getElementById("localPreviewBtn").addEventListener("click",()=>showExam("aperçu local","aperçu"));
     document.getElementById("downloadTranscript").addEventListener("click",()=>downloadTranscriptPdf("Transcription professeur — Simulacre A1.1",transcriptText,"transcription-simulacre-examen-final-a1.pdf"));
     document.querySelectorAll("[data-check-section]").forEach(button=>button.addEventListener("click",()=>{const section=button.dataset.checkSection;if(section==="vocab")checkMcq("vocab",vocabQuestions,"vocab");if(section==="listening")checkMcq("listening",listeningQuestions,"listening");if(section==="reading")checkReading();if(section==="grammar")checkGrammar()}));
     document.querySelectorAll("[data-reset-section]").forEach(button=>button.addEventListener("click",()=>resetSection(button.dataset.resetSection)));
     document.querySelectorAll("[data-audio-rate]").forEach(button=>button.addEventListener("click",()=>{const audio=document.getElementById("listeningAudio");audio.playbackRate=Number(button.dataset.audioRate);document.querySelectorAll("[data-audio-rate]").forEach(item=>item.classList.remove("active"));button.classList.add("active")}));
-    renderMcq("vocabForm",vocabQuestions,"vocab");renderMcq("grammarForm",grammarQuestions,"grammar");renderMcq("listeningForm",listeningQuestions,"listening");renderReading();renderOrdering();wireOrdering();verifyAccess();window.addEventListener("storage",verifyAccess);
+    renderMcq("vocabForm",vocabQuestions,"vocab");renderMcq("grammarForm",grammarQuestions,"grammar");renderMcq("listeningForm",listeningQuestions,"listening");renderReading();renderOrdering();wireOrdering();verifyAccess();window.addEventListener("storage",verifyAccess);window.addEventListener("focus",verifyAccess);setInterval(()=>{if(document.getElementById("examContent").hidden&&activeUser())verifyAccess()},2500);
   </script>
 </body>
 </html>
