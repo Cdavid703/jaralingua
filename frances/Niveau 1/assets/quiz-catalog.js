@@ -73,9 +73,9 @@
     if (number < 70) {
       const tens = {2:"vingt",3:"trente",4:"quarante",5:"cinquante",6:"soixante"};
       const ten = Math.floor(number/10), rest = number%10;
-      return tens[ten] + (rest===0 ? "" : rest===1 ? " et un" : `-${units[rest]}`);
+      return tens[ten] + (rest === 0 ? "" : rest === 1 ? " et un" : `-${units[rest]}`);
     }
-    if (number < 80) return number===71 ? "soixante et onze" : `soixante-${units[number-60]}`;
+    if (number < 80) return number === 71 ? "soixante et onze" : `soixante-${units[number - 60]}`;
     if (number === 80) return "quatre-vingts";
     return `quatre-vingt-${units[number-80]}`;
   }

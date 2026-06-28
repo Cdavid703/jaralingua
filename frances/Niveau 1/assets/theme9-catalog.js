@@ -92,7 +92,7 @@
         Q("Quel mot indique la direction opposée à droite ?", ["gauche", "tout droit", "près"], 0),
         Q("Quel mot indique continuer sans tourner ?", ["tout droit", "à gauche", "à droite"], 0),
         Q("Pour remercier, choisissez :", ["Merci beaucoup.", "Merci gare droite.", "Je merci bus."], 0),
-        Q("Quelle mini-interaction est cohérente ?", ["Où est la station ? — Elle est à gauche.", "Où est la station ? — Je suis colombienne.", "Où est la station ? — Il est midi."], 0)
+        Q("Quelle mini-interaction est cohérente ?", ["Où est la station  — Elle est à gauche.", "Où est la station  — Je suis colombienne.", "Où est la station  — Il est midi."], 0)
       ]
     ),
 

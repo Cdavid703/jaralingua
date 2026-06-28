@@ -36,24 +36,6 @@ a { color: inherit; }
 .nav-link { padding: .55rem .9rem !important; border-radius: 999px; color: var(--text); font-weight: 900; }
 .nav-link:hover, .nav-link.active { color: var(--blue); background: rgba(31,78,140,.08); }
 
-.global-course-switcher { position: fixed; right: 1rem; top: 5.25rem; z-index: 1200; font-family: Arial, sans-serif; }
-.global-course-switcher details { position: relative; }
-.global-course-switcher summary {
-  min-height: 42px; display: flex; align-items: center; gap: .5rem; padding: 0 1rem;
-  border-radius: 999px; list-style: none; cursor: pointer; background: var(--blue-dark);
-  color: #fff; font-weight: 900; box-shadow: 0 14px 32px rgba(15,23,42,.18);
-}
-.global-course-switcher summary::-webkit-details-marker { display: none; }
-.global-course-switcher summary::after { content: "⌄"; }
-.global-course-switcher details[open] summary::after { transform: rotate(180deg); }
-.global-course-switcher nav {
-  position: absolute; top: calc(100% + .5rem); right: 0; width: min(260px, calc(100vw - 2rem));
-  display: grid; gap: .35rem; padding: .65rem; border: 1px solid rgba(21,52,93,.12);
-  border-radius: 18px; background: #fff; box-shadow: 0 20px 45px rgba(15,23,42,.18);
-}
-.global-course-switcher a { min-height: 40px; display: flex; align-items: center; padding: 0 .85rem; border-radius: 12px; color: var(--blue-dark); text-decoration: none; font-weight: 900; }
-.global-course-switcher a:hover { background: #eef5ff; color: var(--red); }
-
 .hero {
   min-height: min(700px, 86vh); display: flex; align-items: center; position: relative; overflow: hidden;
   padding: 7rem 0 5rem; color: #fff;
@@ -306,7 +288,6 @@ section { padding: 4.5rem 0; }
   .hero-visual { min-height: 280px; margin-top: 2rem; }
 }
 @media (max-width: 575px) {
-  .global-course-switcher { top: auto; right: .75rem; bottom: .75rem; }
   .hero { min-height: auto; padding: 6rem 0 3.5rem; }
   .lesson-hero { min-height: auto; }
   .hero h1 { font-size: clamp(2.55rem,15vw,4rem); }

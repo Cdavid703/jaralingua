@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   function loadScript(src, attributes = {}) {
@@ -18,25 +18,6 @@
     .then(() => loadScript("https://accounts.google.com/gsi/client", { async: "", defer: "" }))
     .then(() => loadScript("/assets/js/google-auth.js?v=20260626"))
     .catch(() => {});
-
-  function ensureCourseSwitcher() {
-    if (document.querySelector(".global-course-switcher")) return;
-    const switcher = document.createElement("div");
-    switcher.className = "global-course-switcher";
-    switcher.setAttribute("aria-label", "Navigation globale");
-    switcher.innerHTML = `<details><summary><span>Navigation</span></summary><nav>
-      <a href="/index.html">Accueil</a>
-      <a href="/frances/index.html">Français</a>
-      <a href="/frances/Niveau%201/index.html" aria-current="page">Français Niveau 1</a>
-      <a href="/frances/Niveau%207/index.html">Français Niveau 7</a>
-      <a href="/frances/Niveau%208/index.html">Français Niveau 8</a>
-      <a href="/ingles/index.html">Anglais</a>
-      <a href="/ingles/basico/index.html">Anglais débutant</a>
-    </nav></details>`;
-    document.body.insertBefore(switcher, document.body.firstElementChild);
-  }
-
-  ensureCourseSwitcher();
 
   document.querySelectorAll(".alphabet-grid .letter-card").forEach((card) => {
     const letter = card.querySelector("strong")?.textContent?.trim().toLowerCase();

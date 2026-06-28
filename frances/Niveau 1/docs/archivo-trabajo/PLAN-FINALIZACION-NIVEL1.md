@@ -71,10 +71,10 @@ Actividades implementadas:
 
 1. Accord des adjectifs — grammaire.
 2. Constructeur de portrait — production.
-3. Qui est-ce ? Les professions — jeu.
+3. Qui est-ce  Les professions — jeu.
 4. Professions et activités — vocabulaire.
 5. Être en train de — grammaire en contexte.
-6. Qui est Sofia ? — compréhension orale.
+6. Qui est Sofia  — compréhension orale.
 7. Mon amie Inès — lecture.
 8. Défi de prononciation — prononciation.
 
@@ -104,7 +104,7 @@ Actividades implementadas:
 2. Les pièces de la maison — vocabulaire.
 3. Les objets de la maison — vocabulaire.
 4. Il y a / il n’y a pas de — grammaire.
-5. Où est l’objet ? — prépositions de lieu.
+5. Où est l’objet  — prépositions de lieu.
 6. Une petite annonce immobilière — lecture.
 7. Décris ta chambre — production guidée.
 8. Concéntrese : maison — jeu de mémoire image ↔ mot/phrase.
@@ -166,7 +166,7 @@ Actividades implementadas:
 
 1. Les transports — vocabulaire.
 2. Les lieux de la ville — vocabulaire.
-3. Quelle heure est-il ? — heure.
+3. Quelle heure est-il  — heure.
 4. Demander son chemin — interaction.
 5. Le futur proche — grammaire.
 6. Le passé récent — grammaire.

@@ -96,7 +96,7 @@ Narratrice : La chambre est au fond de l’appartement. Dans la chambre, il y a 
         Q("Complétez : Dans le salon, il y a ___ fauteuils.", ["des", "un", "une"], 0, "Au pluriel, on utilise « des »."),
         Q("Quelle phrase est naturelle ?", ["Il y a une fenêtre dans la cuisine.", "Il y a une cuisine dans la fenêtre.", "Il n’y a pas de il y a."], 0, "Une fenêtre peut être dans une cuisine."),
         Q("Que signifie « Il n’y a pas de garage » ?", ["Le logement n’a pas de garage.", "Le garage est très grand.", "Le garage est dans la cuisine."], 0, "La phrase indique une absence."),
-        Q("Quelle question demande l’existence d’un objet ?", ["Est-ce qu’il y a une terrasse ?", "Comment tu t’appelles ?", "Quelle est ta nationalité ?"], 0, "« Est-ce qu’il y a… ? » demande si quelque chose existe.")
+        Q("Quelle question demande l’existence d’un objet ?", ["Est-ce qu’il y a une terrasse ?", "Comment tu t’appelles ?", "Quelle est ta nationalité ?"], 0, "« Est-ce qu’il y a…  » demande si quelque chose existe.")
       ]
     ),
 
@@ -115,7 +115,7 @@ Narratrice : La chambre est au fond de l’appartement. Dans la chambre, il y a 
         Q("Complétez : La chaise est ___ la table et la fenêtre.", ["entre", "sous", "sur"], 0, "« Entre » se place avec deux repères."),
         Q("Complétez : Le tableau est ___ le mur.", ["sur", "dans", "sous"], 0, "Un tableau est accroché sur le mur."),
         Q("Quelle phrase est correcte ?", ["Le bureau est à côté de la fenêtre.", "Le bureau est à côté la fenêtre.", "Le bureau côté de fenêtre."], 0, "La locution complète est « à côté de »."),
-        Q("Quelle phrase répond à « Où est la lampe ? »", ["Elle est sur la table.", "Elle est bleue.", "Elle est étudiante."], 0, "La question « où » demande un lieu."),
+        Q("Quelle phrase répond à « Où est la lampe  »", ["Elle est sur la table.", "Elle est bleue.", "Elle est étudiante."], 0, "La question « où » demande un lieu."),
         Q("Quelle préposition indique l’arrière ?", ["derrière", "devant", "sur"], 0, "« Derrière » indique la position arrière."),
         Q("Quelle phrase est claire pour décrire une chambre ?", ["Le lit est entre la fenêtre et l’armoire.", "Le lit est maison cuisine.", "Le lit parle entre."], 0, "La phrase utilise une préposition et deux repères.")
       ]

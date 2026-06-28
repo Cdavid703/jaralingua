@@ -44,7 +44,7 @@ C["present-indicatif"]=A("Le présent : emplois, négation et questions","Thème
 ["Quelle phrase est négative ?",["Nous avons un cours.","Avons-nous un cours ?","Nous n’avons pas de cours."],2,"« N’avons pas » est la négation de « avons »."],
 ["Choisissez l’ordre correct d’une négation.",["sujet + ne + verbe + pas","sujet + pas + ne + verbe","ne + pas + sujet + verbe"],0,"L’ordre de base est : sujet + ne/n’ + verbe conjugué + pas."],
 ["Complétez : Quand ___ le cours ?",["commence","commencent","commencer"],0,"Le sujet « le cours » est singulier : le cours commence."],
-["Quelle question demande l’identité ?",["Comment tu t’appelles ?","Où tu habites ?","Quand tu travailles ?"],0,"Pour demander le nom ou l’identité, on utilise « Comment tu t’appelles ? »."],
+["Quelle question demande l’identité ?",["Comment tu t’appelles ?","Où tu habites ?","Quand tu travailles ?"],0,"Pour demander le nom ou l’identité, on utilise « Comment tu t’appelles  »."],
 ["Quelle phrase convient à une routine ?",["Le matin, je prépare un café.","Demain, je vais préparer un café.","Hier, j’ai préparé un café."],0,"« Le matin » peut présenter une habitude quotidienne : le présent convient pour une routine."]
 ]));
 C["negation-present"]=A("La négation au présent","Thème 2 · Le présent de l’indicatif","Grammaire","Transformez des phrases simples avec ne/n’ + verbe + pas.",from([

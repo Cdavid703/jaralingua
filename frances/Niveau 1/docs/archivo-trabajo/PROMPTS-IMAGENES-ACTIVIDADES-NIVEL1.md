@@ -386,7 +386,7 @@ Prompt:
 
 `Photorealistic editorial image for a guided portrait-building activity in French: adult learner arranging blank portrait cards and personality image cards on a desk, teacher helping structure a description, natural classroom lighting, modern language school, no text. 1920x1080 px, PNG, sRGB. No text, no letters, no numbers, no logo, no watermark, no UI, no captions, no posters with readable words, no distorted hands, no extra fingers, no blurry faces, no low resolution, no cartoonish flat graphic, no fake interface.`
 
-### 34. Qui est-ce ? Les professions
+### 34. Qui est-ce  Les professions
 
 Archivo:
 

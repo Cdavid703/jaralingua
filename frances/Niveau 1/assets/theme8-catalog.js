@@ -108,8 +108,8 @@ Serveuse : Merci à vous. Bonne journée !`
       "Construisez une commande polie dans un café ou une petite boutique.",
       [
         Q("Pour commander poliment, choisissez :", ["Je voudrais un café, s’il vous plaît.", "Donne café.", "Je suis café."], 0, "Je voudrais + nom est une forme polie."),
-        Q("Pour demander le prix, choisissez :", ["Ça coûte combien ?", "Tu t’appelles combien ?", "Où est le combien ?"], 0, "Ça coûte combien ? demande le prix."),
-        Q("Pour demander si un produit existe, choisissez :", ["Vous avez des croissants ?", "Vous êtes des croissants ?", "Vous allez croissant ?"], 0, "Vous avez... ? est naturel pour demander un produit."),
+        Q("Pour demander le prix, choisissez :", ["Ça coûte combien ?", "Tu t’appelles combien ?", "Où est le combien ?"], 0, "Ça coûte combien  demande le prix."),
+        Q("Pour demander si un produit existe, choisissez :", ["Vous avez des croissants ?", "Vous êtes des croissants ?", "Vous allez croissant ?"], 0, "Vous avez...  est naturel pour demander un produit."),
         Q("Pour répondre à la serveuse, choisissez :", ["Pour moi, un thé, s’il vous plaît.", "Moi thé donne vite.", "Je thé suis."], 0, "Pour moi + article + nom est une réponse courte polie."),
         Q("Quelle formule termine une commande ?", ["Merci beaucoup.", "Je ne suis pas une table.", "Le métro est grand."], 0, "Merci beaucoup est une formule de politesse."),
         Q("Complétez : Je voudrais ___ croissant.", ["un", "une", "des"], 0, "Croissant est masculin singulier : un croissant."),
@@ -156,7 +156,7 @@ Serveuse : Merci à vous. Bonne journée !`
         Q("Complétez : une ___ de tarte.", ["part", "verre", "kilo"], 0, "Une part de tarte est une portion."),
         Q("Complétez : un ___ de jus d’orange.", ["verre", "pain", "fruit"], 0, "On peut commander un verre de jus d’orange."),
         Q("Quelle quantité convient pour le pain ?", ["une baguette", "un verre", "une tasse"], 0, "Une baguette est une forme de pain."),
-        Q("Quelle question demande le prix total ?", ["Ça fait combien ?", "Tu fais quoi ?", "Tu habites où ?"], 0, "Ça fait combien ? demande le total."),
+        Q("Quelle question demande le prix total ?", ["Ça fait combien ?", "Tu fais quoi ?", "Tu habites où ?"], 0, "Ça fait combien  demande le total."),
         Q("Si le café coûte 2,80 € et le croissant 2,00 €, le total est :", ["4,80 €", "2,80 €", "8,20 €"], 0, "2,80 + 2,00 = 4,80."),
         Q("Quelle phrase est naturelle ?", ["Je voudrais deux croissants.", "Je voudrais deux eau.", "Je voudrais deux café sans article."], 0, "Avec un nom comptable pluriel : deux croissants."),
         Q("Quelle phrase est naturelle ?", ["Je voudrais un verre d’eau.", "Je voudrais un verre de croissant.", "Je voudrais un verre de table."], 0, "Un verre d’eau est une expression de quantité correcte.")
