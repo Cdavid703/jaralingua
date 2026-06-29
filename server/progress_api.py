@@ -825,6 +825,19 @@ def ensure_evaluation_template(grades_data, template):
 
 def ensure_french1_gradebook_structure(grades_data):
     changed = False
+    obsolete_ids = {"participation", "ecoute", "lecture", "prononciation"}
+    evaluations = grades_data.setdefault("evaluations", [])
+    filtered = [item for item in evaluations if not (isinstance(item, dict) and item.get("id") in obsolete_ids)]
+    if len(filtered) != len(evaluations):
+        grades_data["evaluations"] = filtered
+        changed = True
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict) or not isinstance(student.get("grades"), dict):
+            continue
+        for obsolete_id in obsolete_ids:
+            if obsolete_id in student["grades"]:
+                student["grades"].pop(obsolete_id, None)
+                changed = True
     for template in FRENCH1_CORE_EVALUATIONS.values():
         if ensure_evaluation_template(grades_data, template):
             changed = True
