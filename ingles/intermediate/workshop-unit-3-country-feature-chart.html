@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Country Feature Chart | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <style>
+    .country-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+    .country-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .country-card h3{color:var(--intermediate-navy);margin-top:0}
+    .country-card p{color:var(--intermediate-muted);line-height:1.55;margin:.35rem 0}
+    .chart-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;overflow:hidden}
+    .chart-table th,.chart-table td{border-bottom:1px solid var(--intermediate-border);padding:.75rem;text-align:left;color:#334155;vertical-align:top}
+    .chart-table th{background:#eef5ff;color:var(--intermediate-navy);font-weight:900}
+    textarea,input{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.55rem;font:inherit}
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Intermediate Course</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-intermediate/unit-3/workshop-country-feature-chart.png')"><div class="lesson-hero-content"><p class="eyebrow">Practice Lab - Unit 3 Workshop</p><h1>Country Feature Chart</h1><p>Compare countries using superlatives, geographic vocabulary, and real measurements. This prepares the Unit 3 oral task.</p><div class="lesson-meta"><span>Speaking</span><span>Comparatives</span><span>Superlatives</span><span>Data cards</span></div><div class="hero-actions"><a href="#cards" class="btn btn-primary">Open data cards</a><a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a></div></div><aside class="lesson-hero-image"><img src="../../assets/img/english-intermediate/unit-3/workshop-country-feature-chart.png" alt="Country comparison and world records" /></aside></section>
+    <section class="premium-lesson-container" id="cards">
+      <article class="premium-topic-card"><div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Input</p><h2>Country Data Cards</h2></div></div><p class="lesson-text">Choose one country. Use the facts as input, then add one extra fact from class knowledge or teacher support.</p><div class="country-grid" id="countryGrid"></div></article>
+      <article class="premium-topic-card"><div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Practice</p><h2>Build Your Comparison Chart</h2></div></div><table class="chart-table"><thead><tr><th>Feature</th><th>Country A</th><th>Country B</th><th>Comparison sentence</th></tr></thead><tbody><tr><td>Highest mountain</td><td><input placeholder="Name and height" /></td><td><input placeholder="Name and height" /></td><td><textarea rows="2" placeholder="Country A has the highest... / It is higher than..."></textarea></td></tr><tr><td>Longest river</td><td><input placeholder="Name and length" /></td><td><input placeholder="Name and length" /></td><td><textarea rows="2" placeholder="The longest river in... is..."></textarea></td></tr><tr><td>Most famous human wonder</td><td><input placeholder="Name and location" /></td><td><input placeholder="Name and location" /></td><td><textarea rows="2" placeholder="One of the most famous... is..."></textarea></td></tr><tr><td>Most surprising fact</td><td><input placeholder="Fact" /></td><td><input placeholder="Fact" /></td><td><textarea rows="2" placeholder="The most surprising fact is..."></textarea></td></tr></tbody></table></article>
+      <section class="lesson-next-section"><div class="lesson-next-card"><p class="eyebrow">Product</p><h2>Country competition debate</h2><p>In groups, present your chart and defend your country as the most interesting country to visit. Use at least four superlatives, two measurement questions, and one comparison with another country.</p><div class="hero-actions"><a href="amazing-wonder-presentation.html" class="btn btn-primary">Open presentation builder</a><a href="listening-unit-3-three-travelers-one-wonder.html" class="btn btn-secondary">Open listening model</a></div></div></section>
+    </section>
+  </main>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script>
+    const countries=[
+      ["Colombia","Highest point: Pico Cristobal Colon, about 5,730 m.","Longest river: Magdalena River, about 1,528 km.","Human wonder: Cartagena's Walled City.","Surprising fact: Colombia has coastlines on two oceans."],
+      ["United States","Highest point: Denali, about 6,190 m.","Longest river system: Missouri-Mississippi, about 6,275 km.","Natural wonder: Grand Canyon.","Surprising fact: It has deserts, glaciers, volcanoes, and tropical islands."],
+      ["China","Highest point: Mount Everest north side, 8,849 m.","Longest river: Yangtze River, about 6,300 km.","Human wonder: Great Wall of China.","Surprising fact: The Great Wall is over 21,000 km long."],
+      ["Egypt","Highest point: Mount Catherine, about 2,629 m.","Longest river: Nile River, about 6,650 km.","Human wonder: Pyramids of Giza.","Surprising fact: The pyramids are more than 4,500 years old."],
+      ["Peru","Highest point: Huascaran, about 6,768 m.","Longest river connection: Amazon headwaters.","Human wonder: Machu Picchu.","Surprising fact: Machu Picchu is about 2,430 m above sea level."],
+      ["United Arab Emirates","Highest point: Jebel Jais, about 1,934 m.","Famous coast: Persian Gulf coastline.","Human wonder: Burj Khalifa.","Surprising fact: Burj Khalifa is 828 m tall."]
+    ];
+    document.getElementById("countryGrid").innerHTML=countries.map((c)=>`<article class="country-card"><h3>${c[0]}</h3>${c.slice(1).map((fact)=>`<p>${fact}</p>`).join("")}</article>`).join("");
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+</body>
+</html>

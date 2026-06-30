@@ -63,6 +63,75 @@
     return typeof value === "number" ? value.toFixed(1) : "En attente";
   }
 
+  function formatDetailScore(value, suffix) {
+    const number = Number(value);
+    if (!Number.isFinite(number)) return "";
+    return Math.round(number * 100) / 100 + suffix;
+  }
+
+  function pronunciationReviewMarkup(student, evaluation, canEditFeedback) {
+    const details = student && student.gradeDetails && student.gradeDetails[evaluation.id];
+    if (!details) return "";
+    const isWritingActivity = evaluation.id === "writingActivity" && details.submissionText;
+    const summaryText = isWritingActivity ? "Voir production, audio et feedback" : "Voir transcription et revision";
+    const audioButton = details.audio && details.audio.file
+      ? `
+          <div class="pronunciation-audio-review">
+            <button class="btn-soft btn-sm" type="button" data-pronunciation-audio data-student-id="${escapeHtml(student.id)}" data-evaluation-id="${escapeHtml(evaluation.id)}">
+              <i class="bi bi-play-fill"></i> Ecouter l'audio
+            </button>
+            <audio controls hidden data-pronunciation-audio-player></audio>
+            <p class="mb-0" data-pronunciation-audio-status></p>
+          </div>
+        `
+      : "<p><strong>Audio:</strong> pas encore disponible pour cet envoi.</p>";
+    const submissionText = details.submissionText ? `<p><strong>Texte de l'etudiant:</strong> ${escapeHtml(details.submissionText)}</p>` : "";
+    const idiom = details.idiom ? `<p><strong>Expression idiomatique:</strong> ${escapeHtml(details.idiom)}</p>` : "";
+    const wordCount = details.wordCount ? `<p><strong>Mots:</strong> ${escapeHtml(details.wordCount)}</p>` : "";
+    const feedback = details.feedback ? `<p><strong>Feedback professeur:</strong> ${escapeHtml(details.feedback)}</p>` : "";
+    const feedbackEditor = canEditFeedback && isWritingActivity ? `
+      <div class="hypotheses-feedback-box">
+        <label>
+          <strong>Feedback professeur</strong>
+          <textarea class="form-control" rows="3" data-hypotheses-feedback-text>${escapeHtml(details.feedback || "")}</textarea>
+        </label>
+        <button class="btn-main btn-sm mt-2" type="button" data-hypotheses-feedback-save data-student-id="${escapeHtml(student.id)}">
+          <i class="bi bi-chat-left-text-fill"></i> Enregistrer le feedback
+        </button>
+        <p class="mb-0" data-hypotheses-feedback-status></p>
+      </div>
+    ` : "";
+    const transcript = details.transcript ? `<p><strong>Transcription automatique:</strong> ${escapeHtml(details.transcript)}</p>` : "";
+    const reference = details.referenceText ? `<p><strong>Texte attendu:</strong> ${escapeHtml(details.referenceText)}</p>` : "";
+    const missed = Array.isArray(details.missedWords) && details.missedWords.length
+      ? `<p><strong>Mots marques par le systeme:</strong> ${details.missedWords.map(escapeHtml).join(", ")}</p>`
+      : "";
+    const liaison = details.liaison && details.liaison.message ? `<p><strong>Liaisons:</strong> ${escapeHtml(details.liaison.message)}</p>` : "";
+    const autoScore = formatDetailScore(details.score100 || details.overall, "/100");
+    const autoGrade = formatDetailScore(details.grade, "/5");
+    const submitted = details.submittedAt ? `<p><strong>Envoi:</strong> ${escapeHtml(details.submittedAt)}</p>` : "";
+    return `
+      <details class="pronunciation-review">
+        <summary>${escapeHtml(summaryText)}</summary>
+        <div>
+          ${isWritingActivity ? "" : `<p><strong>Note automatique:</strong> ${escapeHtml([autoScore, autoGrade].filter(Boolean).join(" - ") || "En attente")}</p>`}
+          ${submitted}
+          ${audioButton}
+          ${submissionText}
+          ${idiom}
+          ${wordCount}
+          ${transcript}
+          ${reference}
+          ${missed}
+          ${liaison}
+          ${feedback}
+          ${feedbackEditor}
+          <p class="mb-0"><em>${isWritingActivity ? "Le professeur peut ecouter l'audio, lire le texte et laisser un feedback." : "Si la transcription n'est pas fidele a l'audio, le professeur peut corriger la note manuellement dans ce panel."}</em></p>
+        </div>
+      </details>
+    `;
+  }
+
   function gradeStatus(evaluation, student) {
     const grades = student.grades || {};
     const grade = grades[evaluation.id];
@@ -227,7 +296,7 @@
       const status = gradeStatus(evaluation, student);
       return `
         <tr>
-          <td>${escapeHtml(evaluation.title)}</td>
+          <td>${escapeHtml(evaluation.title)}${pronunciationReviewMarkup(student, evaluation, false)}</td>
           <td>${evaluation.weight}%</td>
           <td>${escapeHtml(displayDateForEvaluation(evaluation, student))}</td>
           <td>${escapeHtml(formatGrade(grades[evaluation.id]))}</td>
@@ -312,6 +381,7 @@
             <strong>${escapeHtml(formatGrade(grades[evaluation.id]))}</strong><br>
             <small>${escapeHtml(displayDateForEvaluation(evaluation, student))}</small><br>
             <span class="status-pill ${status.className}">${escapeHtml(status.label)}</span>
+            ${pronunciationReviewMarkup(student, evaluation, false)}
           </td>
         `;
       }).join("");
@@ -385,10 +455,13 @@
     return payload.evaluations.map(function (evaluation) {
       const value = typeof grades[evaluation.id] === "number" ? grades[evaluation.id] : "";
       return `
-        <label class="admin-grade-row">
-          <span>${escapeHtml(evaluation.title)}</span>
-          <input class="form-control" type="number" min="0" max="5" step="0.1" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="En attente">
-        </label>
+        <div>
+          <label class="admin-grade-row">
+            <span>${escapeHtml(evaluation.title)}</span>
+            <input class="form-control" type="number" min="0" max="5" step="0.1" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="En attente">
+          </label>
+          ${pronunciationReviewMarkup(student, evaluation, true)}
+        </div>
       `;
     }).join("");
   }
@@ -437,10 +510,10 @@
   }
 
   function adminStudentEditorMarkup(payload) {
-    if (payload.role !== "admin") return "";
+    if (payload.role !== "admin" && payload.role !== "teacher") return "";
     return `
       <div class="grades-panel mb-4" data-admin-student-tools>
-        <p class="section-kicker">Administration</p>
+        <p class="section-kicker">${payload.role === "admin" ? "Administration" : "Revision professeur"}</p>
         <h2 class="section-title">Modifier les etudiants et les notes</h2>
         <p class="section-text mb-3">Changez les noms, numeros ID, niveaux, courriels et notes. Les champs de note vides restent en attente.</p>
         <form data-edit-students-form>
@@ -863,6 +936,85 @@
     });
   }
 
+  function bindPronunciationAudio(root, user) {
+    root.querySelectorAll("[data-pronunciation-audio]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const wrapper = button.closest(".pronunciation-audio-review");
+        const player = wrapper && wrapper.querySelector("[data-pronunciation-audio-player]");
+        const status = wrapper && wrapper.querySelector("[data-pronunciation-audio-status]");
+        if (!player) return;
+        if (player.src) {
+          player.hidden = false;
+          player.play().catch(function () {});
+          return;
+        }
+        button.disabled = true;
+        if (status) status.textContent = "Chargement de l'audio...";
+        fetch("/api/french8/pronunciation-audio?studentId=" + encodeURIComponent(button.dataset.studentId || "") + "&evaluationId=" + encodeURIComponent(button.dataset.evaluationId || ""), {
+          headers: {
+            Authorization: "Bearer " + user.credential
+          }
+        })
+          .then(function (response) {
+            if (!response.ok) throw new Error("audio_not_available");
+            return response.blob();
+          })
+          .then(function (blob) {
+            const objectUrl = URL.createObjectURL(blob);
+            player.src = objectUrl;
+            player.hidden = false;
+            if (status) status.textContent = "";
+            return player.play().catch(function () {});
+          })
+          .catch(function () {
+            if (status) status.textContent = "Impossible de charger cet audio.";
+          })
+          .finally(function () {
+            button.disabled = false;
+          });
+      });
+    });
+  }
+
+  function bindHypothesesFeedback(root, user) {
+    root.querySelectorAll("[data-hypotheses-feedback-save]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        const box = button.closest(".hypotheses-feedback-box");
+        const card = button.closest("[data-student-editor-card]");
+        const textarea = box && box.querySelector("[data-hypotheses-feedback-text]");
+        const status = box && box.querySelector("[data-hypotheses-feedback-status]");
+        const gradeInput = card && card.querySelector('[data-student-grade="writingActivity"]');
+        button.disabled = true;
+        if (status) status.textContent = "Enregistrement du feedback...";
+        fetch("/api/french8/hypotheses-feedback", {
+          method: "PUT",
+          headers: {
+            Authorization: "Bearer " + user.credential,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            studentId: button.dataset.studentId || "",
+            feedback: textarea ? textarea.value : "",
+            grade: gradeInput ? gradeInput.value : ""
+          })
+        })
+          .then(function (response) {
+            if (!response.ok) throw new Error("feedback_failed");
+            return response.json();
+          })
+          .then(function () {
+            if (status) status.textContent = "Feedback enregistre.";
+          })
+          .catch(function () {
+            if (status) status.textContent = "Impossible d'enregistrer le feedback.";
+          })
+          .finally(function () {
+            button.disabled = false;
+          });
+      });
+    });
+  }
+
   function gradebookForSave(payload) {
     return {
       evaluations: payload.evaluations,
@@ -875,7 +1027,8 @@
           emailAliases: student.emailAliases || [],
           contact: student.contact || "",
           bookDate: student.bookDate || null,
-          grades: student.grades || {}
+          grades: student.grades || {},
+          gradeDetails: student.gradeDetails || {}
         };
       })
     };
@@ -931,7 +1084,8 @@
       emailAliases: original.emailAliases || [],
       contact: cardField(card, "contact"),
       bookDate: cardField(card, "bookDate") || null,
-      grades: gradesFromCard(card)
+      grades: gradesFromCard(card),
+      gradeDetails: original.gradeDetails || {}
     };
   }
 
@@ -949,7 +1103,8 @@
       emailAliases: [],
       contact: newStudentField(card, "contact"),
       bookDate: newStudentField(card, "bookDate") || null,
-      grades: gradesFromCard(card)
+      grades: gradesFromCard(card),
+      gradeDetails: {}
     };
   }
 
@@ -965,7 +1120,7 @@
   }
 
   function bindStudentEditor(root, payload, user) {
-    if (payload.role !== "admin") return;
+    if (payload.role !== "admin" && payload.role !== "teacher") return;
     const form = root.querySelector("[data-edit-students-form]");
     if (!form) return;
     const status = root.querySelector("[data-edit-students-status]");
@@ -1047,11 +1202,14 @@
     if (payload.role === "admin" || payload.role === "teacher") {
       root.innerHTML = renderStaffPanel(payload);
       bindStaffDownloads(root, payload);
+      bindPronunciationAudio(root, user);
+      bindHypothesesFeedback(root, user);
       bindStudentEditor(root, payload, user);
       return;
     }
     if (payload.student) {
       root.innerHTML = renderStudentPanel(payload.student, payload);
+      bindPronunciationAudio(root, user);
       return;
     }
     root.innerHTML = renderNoRecord(payload);
@@ -1097,6 +1255,7 @@
         renderPayload(root, user, payload);
       })
       .catch(function () {
+        lastSignature = "";
         root.innerHTML = renderError("No fue posible cargar las notas. Verifique su sesion o intente recargar la pagina.");
       });
   }

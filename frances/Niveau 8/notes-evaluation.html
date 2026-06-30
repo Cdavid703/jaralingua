@@ -457,6 +457,50 @@
       white-space: nowrap;
     }
 
+    .pronunciation-review {
+      margin-top: 0.45rem;
+      padding: 0.55rem 0.65rem;
+      border-radius: 8px;
+      background: #fffaf0;
+      border: 1px solid rgba(244, 201, 93, 0.55);
+      color: var(--blue-dark);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    .pronunciation-review summary {
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .pronunciation-review p {
+      margin: 0.45rem 0 0;
+    }
+
+    .pronunciation-audio-review {
+      display: grid;
+      gap: 0.45rem;
+      margin-top: 0.55rem;
+    }
+
+    .pronunciation-audio-review audio {
+      width: min(100%, 320px);
+      height: 38px;
+    }
+
+    .hypotheses-feedback-box {
+      display: grid;
+      gap: 0.45rem;
+      margin-top: 0.65rem;
+      padding-top: 0.65rem;
+      border-top: 1px solid rgba(21, 52, 93, 0.14);
+    }
+
+    .hypotheses-feedback-box textarea {
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
     .obligation-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -649,7 +693,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
-  <script src="../../assets/js/french8-grades.js?v=20260625-pronunciation-grades"></script>
+  <script src="../../assets/js/french8-grades.js?v=20260629-hypotheses-feedback"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
 </body>

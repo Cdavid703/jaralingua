@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How + Adjective Measurements | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <style>
+    .measure-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+    .measure-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .measure-card h3{color:var(--intermediate-navy);margin-top:0}
+    .measure-card p{color:var(--intermediate-muted);line-height:1.6}
+    .builder-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.6rem;align-items:center;border:1px solid var(--intermediate-border);border-radius:8px;background:#fff;padding:.8rem;margin:.7rem 0}
+    select{min-height:42px;border:1px solid var(--intermediate-border);border-radius:8px;padding:.4rem .55rem}
+    .builder-row.correct{background:#ecfdf5;border-color:#86efac}
+    .builder-row.incorrect{background:#fff1f2;border-color:#fecaca}
+    @media(max-width:700px){.builder-row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Intermediate Course</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-intermediate/unit-3/practice-how-adjective-measurements.png')"><div class="lesson-hero-content"><p class="eyebrow">Practice Lab - Unit 3 Grammar</p><h1>How + Adjective Measurements</h1><p>Practice questions and answers for height, length, depth, age, distance, size, and population.</p><div class="lesson-meta"><span>How tall?</span><span>How long?</span><span>How deep?</span><span>How old?</span></div><div class="hero-actions"><a href="#practice" class="btn btn-primary">Start practice</a><a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a></div></div><aside class="lesson-hero-image"><img src="../../assets/img/english-intermediate/unit-3/practice-how-adjective-measurements.png" alt="World wonders and measurement practice" /></aside></section>
+    <section class="premium-lesson-container" id="practice">
+      <article class="premium-topic-card"><div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Noticing</p><h2>Question Patterns</h2></div></div><div class="measure-grid"><div class="measure-card"><h3>Physical size</h3><p>How tall is the building? It is 828 meters tall.</p><p>How deep is the canyon? It is 1,800 meters deep.</p></div><div class="measure-card"><h3>Length and distance</h3><p>How long is the river? It is about 6,400 kilometers long.</p><p>How far is it from Medellin? It is about 80 kilometers away.</p></div><div class="measure-card"><h3>Age and area</h3><p>How old is the monument? It is more than 2,000 years old.</p><p>How big is the park? It covers about 150 square kilometers.</p></div></div></article>
+      <article class="premium-topic-card"><div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Practice</p><h2>Choose the Correct Question Word</h2></div></div><form id="measureForm"></form><div class="hero-actions"><button type="button" class="btn btn-primary" onclick="checkPractice()">Check answers</button><button type="button" class="btn btn-secondary" onclick="resetPractice()">Reset</button></div><p id="scoreText" class="lesson-text"></p></article>
+      <section class="lesson-next-section"><div class="lesson-next-card"><p class="eyebrow">Product</p><h2>Measurement interview</h2><p>Work with a partner. Ask five measurement questions about a country or wonder, write the answers, then report the most surprising fact.</p><div class="hero-actions"><a href="workshop-unit-3-country-feature-chart.html" class="btn btn-primary">Open country chart</a><a href="superlative-grammar-challenge.html" class="btn btn-secondary">Superlative challenge</a></div></div></section>
+    </section>
+  </main>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script>
+    const items=[
+      ["___ is Burj Khalifa?", "How tall", "It is 828 meters tall."],
+      ["___ is the Amazon River?", "How long", "It is about 6,400 kilometers long."],
+      ["___ is the Grand Canyon?", "How deep", "It is more than 1,800 meters deep in some places."],
+      ["___ are the Pyramids of Egypt?", "How old", "They are more than 4,500 years old."],
+      ["___ is Tayrona National Park?", "How big", "It covers about 150 square kilometers."],
+      ["___ is Cartagena from Medellin by plane?", "How far", "It is about one hour away by plane."],
+      ["___ is Mount Everest?", "How high", "It is 8,849 meters high."],
+      ["___ people live in Colombia?", "How many", "About 52 million people live there."],
+      ["___ water does a waterfall move?", "How much", "It depends on the season and the river."],
+      ["___ is the Great Wall of China?", "How long", "It is about 21,000 kilometers long."],
+      ["___ is the Eiffel Tower?", "How tall", "It is 330 meters tall."],
+      ["___ is Stonehenge?", "How old", "It is about 5,000 years old."]
+    ];
+    const options=["How tall","How high","How long","How deep","How old","How big","How far","How many","How much"];
+    const form=document.getElementById("measureForm");
+    form.innerHTML=items.map((item,index)=>`<div class="builder-row" data-index="${index}"><div><strong>${index+1}. ${item[0]}</strong><p>${item[2]}</p></div><select name="q${index}"><option value="">Choose</option>${options.map((option)=>`<option>${option}</option>`).join("")}</select></div>`).join("");
+    function checkPractice(){let score=0;document.querySelectorAll(".builder-row").forEach((row)=>{const index=Number(row.dataset.index);const selected=form[`q${index}`].value;row.classList.remove("correct","incorrect");if(selected===items[index][1]){score++;row.classList.add("correct");}else row.classList.add("incorrect");});document.getElementById("scoreText").textContent=`Score: ${score} / ${items.length}. Correct the red items before the partner interview.`;}
+    function resetPractice(){form.reset();document.querySelectorAll(".builder-row").forEach((row)=>row.classList.remove("correct","incorrect"));document.getElementById("scoreText").textContent="";}
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+</body>
+</html>

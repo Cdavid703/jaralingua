@@ -8,86 +8,106 @@
   "allowStudentIdClaim": false,
   "students": [
     {
-      "id": "0000000000",
-      "fullName": "Student Name",
+      "id": "23209116",
+      "fullName": "Javier Armando Malpica Vega",
       "level": "Niveau 8",
-      "email": "student@example.com",
-      "contact": "0000000000",
-      "bookDate": "2026-07-01",
+      "email": "23209116@uan.edu.mx",
+      "emailAliases": [],
+      "contact": "Alumno de Mexico de intercambio",
+      "bookDate": null,
       "grades": {}
     }
   ],
   "evaluations": [
     {
-      "id": "diagnosticB2",
-      "title": "Diagnostic B1+ / B2",
-      "date": "2026-07-01",
-      "displayDate": "A definir",
-      "weight": 10
-    },
-    {
-      "id": "grammarWorkshop",
-      "title": "Atelier de grammaire avancee",
-      "date": "2026-07-01",
-      "displayDate": "A definir",
-      "weight": 15
-    },
-    {
       "id": "pronunciation01d",
       "title": "Prononciation 01D - Conditionnel passe",
       "type": "Prononciation",
-      "date": "2026-07-01",
-      "displayDate": "A definir",
+      "date": "2026-06-29",
+      "displayDate": "Date limite : lundi 29 juin 2026 jusqu'a 23 h 59 (heure de Bogota)",
       "weight": 5,
-      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
+      "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     {
       "id": "pronunciation02d",
       "title": "Prononciation 02D - Hypotheses irreelles",
       "type": "Prononciation",
-      "date": "2026-07-01",
-      "displayDate": "A definir",
+      "date": "2026-07-05",
+      "displayDate": "Date limite : dimanche 5 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)",
       "weight": 5,
-      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
+      "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     {
       "id": "pronunciation03d",
       "title": "Prononciation 03D - Subjonctif passe",
       "type": "Prononciation",
-      "date": "2026-07-01",
-      "displayDate": "A definir",
+      "date": "2026-07-12",
+      "displayDate": "Date limite : dimanche 12 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)",
       "weight": 5,
-      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
+      "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     {
       "id": "pronunciation04d",
       "title": "Prononciation 04D - Discours rapporte",
       "type": "Prononciation",
-      "date": "2026-07-01",
-      "displayDate": "A definir",
+      "date": "2026-07-19",
+      "displayDate": "Date limite : dimanche 19 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)",
       "weight": 5,
-      "description": "Defi final de prononciation. Envoi autorise a partir de 50/100."
+      "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     {
-      "id": "oralDebate",
-      "title": "Debat oral argumentatif",
+      "id": "finalExam",
+      "title": "Examen final",
+      "type": "Examen",
       "date": "2026-07-01",
       "displayDate": "A definir",
-      "weight": 15
+      "weight": 20,
+      "description": "Examen final del curso."
     },
     {
-      "id": "writtenArgumentation",
-      "title": "Texte argumentatif B2",
+      "id": "courseProject",
+      "title": "Proyecto de curso",
+      "type": "Projet",
       "date": "2026-07-01",
       "displayDate": "A definir",
-      "weight": 20
+      "weight": 20,
+      "description": "Proyecto principal del curso."
     },
     {
-      "id": "finalProject",
-      "title": "Projet final: dilemme contemporain",
+      "id": "quiz",
+      "title": "Quiz",
+      "type": "Quiz",
       "date": "2026-07-01",
       "displayDate": "A definir",
-      "weight": 20
+      "weight": 10,
+      "description": "Quiz del curso."
+    },
+    {
+      "id": "debate1",
+      "title": "Debate 1",
+      "type": "Debat",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 10,
+      "description": "Primer debate calificable."
+    },
+    {
+      "id": "debate2",
+      "title": "Debate 2",
+      "type": "Debat",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 10,
+      "description": "Segundo debate calificable."
+    },
+    {
+      "id": "writingActivity",
+      "title": "Actividad de escritura",
+      "type": "Ecriture",
+      "date": "2026-07-01",
+      "displayDate": "A definir",
+      "weight": 10,
+      "description": "Actividad escrita calificable."
     }
   ],
   "bonusEvent": null

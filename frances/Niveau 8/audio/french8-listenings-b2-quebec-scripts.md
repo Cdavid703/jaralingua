@@ -1,4 +1,4 @@
-# Français Niveau 8 — Compréhensions orales B2 (Accent Québec)
+﻿# Français Niveau 8 — Compréhensions orales B2 (Accent Québec)
 
 
 ## Audio 01a - Un choix de carrière regretté (Québec)
@@ -10,7 +10,7 @@ Marc: Je comprends ce que tu ressens. Moi aussi, j'aurais aimé suivre une voie 
 
 Caroline: Le problème, c'est qu'on nous a toujours répété qu'il fallait un salaire sûr. On aurait voulu écouter notre instinct, mais la pression familiale était énorme.
 
-Marc: Exactement. Mon père m'a dit que j'aurais dû penser à ma retraite avant de rêver. Ã€ vingt-deux ans, tu imagines ? J'aurais pu au moins tenter l'expérience pendant deux ou trois ans.
+Marc: Exactement. Mon père m'a dit que j'aurais dû penser à ma retraite avant de rêver. À vingt-deux ans, tu imagines ? J'aurais pu au moins tenter l'expérience pendant deux ou trois ans.
 
 Caroline: Tu aurais pu, oui. Et moi, j'aurais dû faire un stage en cabinet d'architectes avant de tout abandonner. Il aurait fallu que quelqu'un me dise que les premières années sont toujours difficiles, quel que soit le domaine.
 
@@ -194,11 +194,11 @@ Marc: Un chroniqueur du Figaro a écrit qu'il est « regrettable que la subtilit
 
 Marc: Le public semble divisé également. Il est intéressant que le film ait généré autant de débats sur les réseaux sociaux.
 
-Émilie: C'est le signe d'une Å“uvre importante. Je suis ravie que le film ait provoqué une discussion nationale sur le harcèlement. Il est essentiel que le cinéma ait ce rôle de catalyseur social.
+Émilie: C'est le signe d'une œuvre importante. Je suis ravie que le film ait provoqué une discussion nationale sur le harcèlement. Il est essentiel que le cinéma ait ce rôle de catalyseur social.
 
 Marc: Pensez-vous que le film mérite les récompenses pour lesquelles il est nommé ?
 
-Émilie: Absolument. Il serait injuste que le jury n'ait pas reconnu le courage artistique de ce projet. Je souhaite que cette Å“uvre ait l'impact durable qu'elle mérite. Il est temps que le cinéma engagé ait retrouvé sa place dans les festivals internationaux.
+Émilie: Absolument. Il serait injuste que le jury n'ait pas reconnu le courage artistique de ce projet. Je souhaite que cette œuvre ait l'impact durable qu'elle mérite. Il est temps que le cinéma engagé ait retrouvé sa place dans les festivals internationaux.
 
 Marc: Merci, Émilie, pour cette critique passionnée et éclairante.
 
@@ -364,7 +364,7 @@ Jean-François: Un message fort. Merci, Caroline, pour cette analyse indispensab
 ## Audio 05c - Alerte aux infox : rapport annuel (Québec)
 File: `complete/n8-05c-infox-rapport-quebec-b2.mp3`
 
-Émilie: Bonsoir. Ã€ la une de votre flash info ce soir : la publication du rapport annuel de l'Observatoire de la désinformation. Les chiffres sont alarmants. Notre reporter Philippe est en studio. Philippe, que révèle ce rapport ?
+Émilie: Bonsoir. À la une de votre flash info ce soir : la publication du rapport annuel de l'Observatoire de la désinformation. Les chiffres sont alarmants. Notre reporter Philippe est en studio. Philippe, que révèle ce rapport ?
 
 Philippe: Bonsoir, Émilie. Ce que le rapport met en évidence, c'est une augmentation de quarante-cinq pour cent des contenus de désinformation en un an. C'est le domaine de la santé qui reste le plus touché, suivi par la politique et l'environnement.
 
@@ -566,7 +566,7 @@ Jean-François: Exactement. Le verlan est partout à Paris. « Meuf » pour « f
 
 Émilie: Et au travail, c'est pareil ? Les gens utilisent le registre familier aussi ?
 
-Jean-François: Ã‡a dépend du contexte. En réunion officielle, les gens passent au registre soutenu : « Nous souhaiterions examiner cette proposition dans les meilleurs délais » ou « Il conviendrait d'envisager une alternative ». Mais dès que la réunion se termine, c'est retour au familier : « Bon, c'est relou ce dossier, on se prend un café ? »
+Jean-François: Ça dépend du contexte. En réunion officielle, les gens passent au registre soutenu : « Nous souhaiterions examiner cette proposition dans les meilleurs délais » ou « Il conviendrait d'envisager une alternative ». Mais dès que la réunion se termine, c'est retour au familier : « Bon, c'est relou ce dossier, on se prend un café ? »
 
 Émilie: C'est fascinant, cette capacité à naviguer entre les registres. En français standard, on dirait « C'est ennuyeux, ce dossier, voulez-vous prendre un café ? »
 
@@ -598,7 +598,7 @@ Philippe: C'est un débat ancien. En registre familier, les jeunes Ivoiriens dis
 
 Nathalie: Le verlan et l'argot des banlieues françaises ont aussi enrichi la langue, non ?
 
-Philippe: Absolument. Des mots comme « kiffer » — aimer passionnément — sont passés du registre familier au registre courant. « Ã‡a me saoule » — en registre standard, « cela m'exaspère » — est compris partout. La langue absorbe et transforme ces apports.
+Philippe: Absolument. Des mots comme « kiffer » — aimer passionnément — sont passés du registre familier au registre courant. « Ça me saoule » — en registre standard, « cela m'exaspère » — est compris partout. La langue absorbe et transforme ces apports.
 
 Nathalie: Et le franglais ? « Un meeting », « le weekend », « checker ses mails » ?
 

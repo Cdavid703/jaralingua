@@ -1,4 +1,4 @@
-# Français Niveau 8 — Compréhensions orales B2 (Accent France)
+﻿# Français Niveau 8 — Compréhensions orales B2 (Accent France)
 
 
 ## Audio 01a - Un choix de carrière regretté (France)
@@ -82,13 +82,13 @@ Jade: Tu te souviens de l'époque où on hésitait à partir en Erasmus ? Si j'a
 
 Victor: Ah, je me dis la même chose ! Si j'avais su que le marché de l'emploi allait autant se transformer, j'aurais choisi l'informatique plutôt que la gestion. J'aurais eu dix fois plus d'opportunités.
 
-Jade: C'est dingue, non ? Si nous avions pris ces décisions autrement, nous ne serions même pas dans cette ville. Si j'avais déménagé à Barcelone, je n'aurais jamais rencontré Arnaud, et mes enfants n'existeraient pas. Ã‡a donne le vertige.
+Jade: C'est dingue, non ? Si nous avions pris ces décisions autrement, nous ne serions même pas dans cette ville. Si j'avais déménagé à Barcelone, je n'aurais jamais rencontré Arnaud, et mes enfants n'existeraient pas. Ça donne le vertige.
 
 Victor: Complètement. Et tiens, si j'avais écouté mon père, j'aurais repris l'entreprise familiale. Si j'avais fait ce choix, j'aurais probablement gagné ma vie plus confortablement, mais est-ce que j'aurais été heureux ? J'en doute.
 
 Jade: C'est toute la question. Si on avait pu voir l'avenir, on aurait fait des choix plus éclairés, mais on aurait aussi perdu la spontanéité de la vie. Tu imagines, si tout avait été calculé d'avance ?
 
-Victor: Ã‡a serait terrifiant. Mais regarde, si j'avais investi dans le Bitcoin en deux mille dix comme mon cousin me l'avait suggéré, j'aurais été millionnaire. Si j'avais pris ce risque, j'aurais pu me permettre de voyager pendant des années.
+Victor: Ça serait terrifiant. Mais regarde, si j'avais investi dans le Bitcoin en deux mille dix comme mon cousin me l'avait suggéré, j'aurais été millionnaire. Si j'avais pris ce risque, j'aurais pu me permettre de voyager pendant des années.
 
 Jade: Oh là là, ne me parle pas de ça ! Si j'avais su, moi aussi j'aurais mis toutes mes économies dedans. Mais bon, si on avait passé notre vie à spéculer, on serait devenus fous d'anxiété.
 
@@ -176,7 +176,7 @@ Victor: Merci Sophie. Alors, je suis impressionné que le réalisateur ait osé 
 
 Sophie: Pourtant, beaucoup de spectateurs sont choqués par certaines scènes. Pensez-vous que le réalisateur soit allé trop loin ?
 
-Victor: Je comprends les réactions, mais je ne crois pas que le réalisateur ait cherché à provoquer gratuitement. Bien que certaines séquences aient heurté la sensibilité du public, elles servent le propos du film. C'est dommage que tant de critiques n'aient retenu que les moments les plus durs sans considérer l'ensemble de l'Å“uvre.
+Victor: Je comprends les réactions, mais je ne crois pas que le réalisateur ait cherché à provoquer gratuitement. Bien que certaines séquences aient heurté la sensibilité du public, elles servent le propos du film. C'est dommage que tant de critiques n'aient retenu que les moments les plus durs sans considérer l'ensemble de l'œuvre.
 
 Sophie: Le film a aussi été critiqué pour son manque de diversité dans le casting. Qu'en pensez-vous ?
 
@@ -228,7 +228,7 @@ Claire: Exactement. Moi, j'ai écouté l'intégralité de son discours. Il a dé
 
 Martin: Le problème, c'est que son porte-parole a ensuite affirmé que le ministre n'avait fait aucune promesse. Il a dit que les propos avaient été sortis de leur contexte et que la presse avait déformé le message original.
 
-Claire: On m'a raconté qu'un journaliste lui avait demandé si la réforme serait appliquée dès la rentrée. Le ministre a répondu qu'il faudrait d'abord finaliser les consultations et qu'aucun calendrier n'avait été fixé. Pourtant, certains médias ont titré qu'il avait confirmé une mise en Å“uvre immédiate.
+Claire: On m'a raconté qu'un journaliste lui avait demandé si la réforme serait appliquée dès la rentrée. Le ministre a répondu qu'il faudrait d'abord finaliser les consultations et qu'aucun calendrier n'avait été fixé. Pourtant, certains médias ont titré qu'il avait confirmé une mise en œuvre immédiate.
 
 Martin: C'est typique. Il a également mentionné qu'il avait reçu des propositions de la part des enseignants. Il a dit qu'ils lui avaient exprimé leurs inquiétudes et qu'ils avaient demandé davantage de moyens pour accompagner le changement.
 
@@ -278,7 +278,7 @@ Victor: Les réactions sont contrastées. Le président français a affirmé que
 
 Sophie: Et les pays qui s'opposaient à ce mécanisme ?
 
-Victor: Le premier ministre hongrois a répondu qu'il n'avait jamais accepté le principe de quotas obligatoires. On lui a demandé s'il respecterait la décision, et il a répliqué que la souveraineté nationale restait sa priorité. Il a ajouté qu'il consulterait son parlement avant toute mise en Å“uvre.
+Victor: Le premier ministre hongrois a répondu qu'il n'avait jamais accepté le principe de quotas obligatoires. On lui a demandé s'il respecterait la décision, et il a répliqué que la souveraineté nationale restait sa priorité. Il a ajouté qu'il consulterait son parlement avant toute mise en œuvre.
 
 Sophie: Qu'en est-il du volet énergétique ?
 
@@ -472,7 +472,7 @@ Sophie: Merci Nicolas. C'est un cliché qu'il faut nuancer. Bien que l'abstentio
 
 Nicolas: Vous dites que l'engagement se transforme plutôt qu'il ne disparaît ?
 
-Sophie: Exactement. Malgré la méfiance envers les institutions politiques traditionnelles, les budgets participatifs connaissent un succès remarquable. Ã€ Paris, à Rennes, à Grenoble, des milliers de citoyens proposent et votent des projets pour leur quartier. Toutefois, ces dispositifs restent peu connus du grand public.
+Sophie: Exactement. Malgré la méfiance envers les institutions politiques traditionnelles, les budgets participatifs connaissent un succès remarquable. À Paris, à Rennes, à Grenoble, des milliers de citoyens proposent et votent des projets pour leur quartier. Toutefois, ces dispositifs restent peu connus du grand public.
 
 Nicolas: Quoique ces initiatives soient encourageantes, ne restent-elles pas marginales ?
 

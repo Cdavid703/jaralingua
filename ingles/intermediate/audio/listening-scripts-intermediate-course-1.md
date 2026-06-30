@@ -73,3 +73,55 @@ Maya: I like that. A good catch-up conversation should not be a competition abou
 Ethan: Exactly. Let us not wait years again. Next month, we can meet here and share one new goal.
 
 Maya: Deal. And next time, I want to hear how the race training is going.
+
+## Three Travelers, One Wonder
+File: `three-travelers-one-wonder.mp3`
+
+Narrator: Three travelers are recording short voice notes for a class project about wonders of the world.
+
+Emma: I am going to talk about the Grand Canyon in the United States. It is one of the most dramatic natural wonders I have ever seen. It is about four hundred forty-six kilometers long and, in some places, more than one thousand eight hundred meters deep. The most surprising thing is the color. In the morning, the rocks look orange and red. In the afternoon, they look purple and gold. I would recommend it because it shows how powerful nature can be.
+
+Daniel: My choice is Burj Khalifa in Dubai. It is the tallest building in the world. It is eight hundred twenty-eight meters tall, so when you stand near it, you feel extremely small. It is not the oldest wonder, but it is one of the most impressive modern human creations. I think it is special because it shows how architecture, technology, and ambition can work together.
+
+Sofia: I want to recommend Cano Cristales in Colombia. It is not the longest river in the world, but it is one of the most colorful. It is about one hundred kilometers long and people sometimes call it the river of five colors. The plants under the water create red, yellow, green, blue, and black tones. In my opinion, it is one of the most beautiful natural places in Colombia because it feels alive.
+
+Narrator: All three travelers chose different wonders, but they used the same strategy: facts, superlatives, measurements, and a clear recommendation.
+
+## Sunday Dinner Negotiation
+File: `sunday-dinner-negotiation.mp3`
+
+Narrator: The Rivera family is having Sunday dinner. Before they eat, they need to solve a small family problem.
+
+Ana: Dinner is almost ready, but I cannot do everything alone. Everyone has to help for twenty minutes.
+
+Leo: I already took out the trash. Why do I have to set the table too?
+
+Maya: Because I have to finish my history presentation before Monday. I want you to set the table while I make the salad.
+
+Carlos: And I want everyone to put their phones in the basket. We used to talk during dinner. Now everybody checks messages every two minutes.
+
+Leo: That is not fair. You won't let us use phones, but you answer work messages at the table.
+
+Carlos: You are right. I have one work message tonight, but I can answer it after dinner.
+
+Rosa: When your father was a teenager, we used to cook together on Sundays. We didn't use to have perfect dinners, but we listened to each other.
+
+Ana: I like that memory, but we need a realistic plan. Carlos, can you wash the dishes later?
+
+Carlos: Yes. I can do that, and I don't have to answer the message until eight.
+
+Maya: If Leo sets the table, I can make the salad quickly. After dinner, I need forty minutes for my presentation.
+
+Leo: Fine, but I want Maya to help me with my English homework tomorrow. And I want Dad to follow the phone rule too.
+
+Carlos: Fair. I won't let phones stay on the table, including mine. The basket rule is for everyone.
+
+Rosa: Good. A rule is easier to accept when adults follow it too.
+
+Ana: So the agreement is clear. Leo sets the table, Maya makes the salad, Carlos washes the dishes, and phones stay in the basket for the first thirty minutes.
+
+Leo: And tomorrow Maya helps me with English?
+
+Maya: Yes, after school. But you have to bring your notebook.
+
+Narrator: The Rivera family does not solve every problem forever, but they make one respectful agreement for tonight.

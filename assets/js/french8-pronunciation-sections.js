@@ -46,6 +46,11 @@
   const micButton = document.getElementById("micButton");
   const stopButton = document.getElementById("stopButton");
   const resetButton = document.getElementById("resetButton");
+  const resetChallengeButton = document.createElement("button");
+  resetChallengeButton.type = "button";
+  resetChallengeButton.className = "action-button reset reset-challenge";
+  resetChallengeButton.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Réinitialiser tout le défi';
+  resetButton.insertAdjacentElement("afterend", resetChallengeButton);
   const recordStatus = document.getElementById("recordStatus");
   const recordHelp = document.querySelector(".record-help");
   const liveTranscript = document.getElementById("liveTranscript");
@@ -69,6 +74,7 @@
   let timerHandle = null;
   let objectUrl = null;
   let discardRecording = false;
+  let finalAudioDataUrl = "";
   let analyzing = false;
   let audioContext = null;
   let analyser = null;
@@ -121,6 +127,7 @@
     evaluationId: GRADE_SUBMISSION.evaluationId,
     title: GRADE_SUBMISSION.title,
     getFinalScore: () => stageScores[4],
+    getFinalAudio: () => finalAudioDataUrl,
     resetAll: resetAllResults
   });
   if (gradeSubmitter) finalSummary.insertAdjacentElement("afterend", gradeSubmitter.panel);
@@ -290,6 +297,7 @@
     micButton.disabled = recording || busy;
     stopButton.disabled = !recording || busy;
     resetButton.disabled = busy;
+    resetChallengeButton.disabled = busy;
     microphoneSelect.disabled = recording || busy;
     micButton.querySelector("i").className = recording ? "bi bi-soundwave" : "bi bi-mic-fill";
   }
@@ -301,7 +309,16 @@
     return `Réécoutez le modèle et reprenez cette section par groupes de mots. Travaillez d’abord : ${focus || "les mots en rouge"}.`;
   }
 
-  function evaluate(transcript) {
+  function blobToDataUrl(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(String(reader.result || ""));
+      reader.onerror = () => reject(reader.error || new Error("Audio illisible."));
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  function evaluate(transcript, audioDataUrl) {
     const spoken = tokens(transcript);
     const referenceWords = tokens(currentStage().text);
     if (!spoken.length) throw new Error("Aucune parole n’a été reconnue.");
@@ -313,7 +330,28 @@
     const fluency = clamp(100 - Math.abs(wpm - 125) * 1.2);
     const overall = clamp(accuracy * .55 + completeness * .3 + fluency * .15);
     const previousAttempt = attemptHistory[currentStageIndex].at(-1) || null;
-    const attempt = { overall, accuracy, completeness, fluency, at: new Date().toISOString() };
+    const liaison = window.JaraFrench8LiaisonFeedback?.analyze({
+      evaluationId: GRADE_SUBMISSION.evaluationId,
+      referenceText: currentStage().text,
+      transcript
+    });
+    const displayWords = currentStage().text.split(/\s+/).map(spokenWord).filter(Boolean);
+    const missed = displayWords.filter((_, index) => aligned.states[index] !== "is-correct");
+    const attempt = {
+      overall,
+      accuracy,
+      completeness,
+      fluency,
+      wpm: Math.round(wpm),
+      transcript: String(transcript || "").trim(),
+      referenceText: currentStage().text,
+      stageLabel: currentStage().label,
+      final: currentStage().final === true,
+      missedWords: missed.slice(0, 20),
+      liaison,
+      at: new Date().toISOString()
+    };
+    if (currentStage().final) finalAudioDataUrl = audioDataUrl || "";
     attemptHistory[currentStageIndex].push(attempt);
     stageScores[currentStageIndex] = attempt;
     saveProgress();
@@ -323,17 +361,16 @@
     document.getElementById("fluencyScore").textContent = `${fluency}%`;
     document.getElementById("overallScore").textContent = overall;
     document.getElementById("scoreRing").style.setProperty("--score", overall);
-    const displayWords = currentStage().text.split(/\s+/).map(spokenWord).filter(Boolean);
-    const missed = displayWords.filter((_, index) => aligned.states[index] !== "is-correct");
     const feedback = document.getElementById("feedback");
+    const liaisonMessage = liaison?.message || "";
     if (currentStage().final) {
       const guided = stageScores.slice(0, 4).filter(Boolean);
       const guidedAverage = guided.length ? Math.round(guided.reduce((sum, item) => sum + item.overall, 0) / guided.length) : null;
-      feedback.textContent = `${feedbackFor(overall, missed, wpm)}${guidedAverage === null ? "" : ` Moyenne des sections : ${guidedAverage}/100. Défi final : ${overall}/100.`}`;
+      feedback.textContent = `${feedbackFor(overall, missed, wpm)}${guidedAverage === null ? "" : ` Moyenne des sections : ${guidedAverage}/100. Défi final : ${overall}/100.`}${liaisonMessage}`;
       nextButton.innerHTML = '<i class="bi bi-arrow-counterclockwise"></i> Recommencer tout l’atelier';
     } else {
       const comparison = previousAttempt ? ` ${overall > previousAttempt.overall ? "Vous avez gagné" : overall < previousAttempt.overall ? "Variation" : "Même résultat"}${overall === previousAttempt.overall ? "" : ` ${Math.abs(overall - previousAttempt.overall)} points`} par rapport à l’essai précédent.` : "";
-      feedback.textContent = feedbackFor(overall, missed, wpm) + comparison;
+      feedback.textContent = feedbackFor(overall, missed, wpm) + comparison + liaisonMessage;
       nextButton.innerHTML = currentStageIndex === 3 ? '<i class="bi bi-trophy"></i> Passer au défi final' : '<i class="bi bi-arrow-right"></i> Section suivante';
     }
     nextButton.hidden = false;
@@ -375,7 +412,8 @@
         throw new Error("Whisper recibió sonido, pero no identificó palabras francesas. Hable un poco más cerca.");
       }
       liveTranscript.textContent = transcript;
-      evaluate(transcript);
+      const audioDataUrl = currentStage().final ? await blobToDataUrl(blob) : "";
+      evaluate(transcript, audioDataUrl);
       recordStatus.textContent = `${currentStage().label} évaluée. Consultez votre résultat.`;
     } catch (error) {
       recordStatus.textContent = "L’analyse n’a pas pu être terminée.";
@@ -542,12 +580,19 @@
     currentStageIndex = 0;
     stageScores.fill(null);
     attemptHistory.forEach((attempts) => attempts.splice(0));
+    finalAudioDataUrl = "";
     localStorage.removeItem(STORAGE_KEY);
     saveProgress();
     resetAttempt(true);
     updateStageUI();
     gradeSubmitter?.update();
     stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  function confirmResetAllResults() {
+    if (!stageScores.some(Boolean) || window.confirm("Réinitialiser tout le défi depuis la section 1 ? Les résultats locaux de cette activité seront effacés.")) {
+      resetAllResults();
+    }
   }
 
   modelButton.addEventListener("click", async () => {
@@ -567,6 +612,7 @@
   micButton.addEventListener("click", start);
   stopButton.addEventListener("click", finish);
   resetButton.addEventListener("click", () => resetAttempt(true));
+  resetChallengeButton.addEventListener("click", confirmResetAllResults);
   nextButton.addEventListener("click", advanceStage);
   retryButton.addEventListener("click", () => resetAttempt(true));
   readingText.addEventListener("click", (event) => { const word = event.target.closest(".reading-word")?.dataset.spoken; if (word) speakWord(word); });
