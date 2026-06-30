@@ -464,6 +464,27 @@
         Q("D'où vient la personne qui cherche la gare ?", ["De la pharmacie", "De la boulangerie", "Du centre-ville"], 2, "La personne dit : moi, je viens du centre-ville.")
       ],
       { audio: "../audio/theme-7/cherche-la-gare.mp3?v=20260630-n2-theme7" }
+    ),
+
+    "verbes-deuxieme-troisieme-groupe": A(
+      "Verbes du 2e et du 3e groupe",
+      "Thème 8 · Consolidation grammaticale",
+      "Grammaire",
+      "Identifiez le groupe, préparez le radical et choisissez la forme correcte. L'objectif est de comprendre la logique avant de mémoriser les exceptions.",
+      [
+        Q("Quel verbe appartient clairement au deuxième groupe ?", ["finir", "partir", "venir"], 0, "Finir est du deuxième groupe : il forme le participe présent finissant et suit le modèle je finis, nous finissons."),
+        Q("Pourquoi « partir » n'est-il pas un verbe du deuxième groupe ?", ["Parce qu'il ne forme pas partirissant et suit un modèle irrégulier", "Parce qu'il finit en -er", "Parce qu'il n'a pas de présent"], 0, "Tous les verbes en -ir ne sont pas du deuxième groupe. Partir appartient au troisième groupe."),
+        Q("Complétez : nous ___ nos devoirs avant le dîner.", ["finissons", "finons", "finissent"], 0, "Au deuxième groupe, avec nous, on utilise -issons : nous finissons."),
+        Q("Complétez : elles ___ une veste bleue.", ["choisissent", "choisit", "choisissons"], 0, "Avec elles, le deuxième groupe prend -issent : elles choisissent."),
+        Q("Quelle forme de « prendre » est correcte ?", ["nous prenons", "nous prendons", "nous prennons"], 0, "Prendre change de radical : je prends, nous prenons, ils prennent."),
+        Q("Complétez : ils ___ le métro pour aller à la gare.", ["prennent", "prends", "prenons"], 0, "Avec ils, prendre devient ils prennent."),
+        Q("Quelle série correspond au verbe « venir » ?", ["je viens, nous venons, ils viennent", "je venis, nous venissons, ils venissent", "je viens, nous viennons, ils venent"], 0, "Venir est un verbe du troisième groupe avec changements de radical : viens, venons, viennent."),
+        Q("Complétez : je ___ mettre une veste parce qu'il fait froid.", ["dois", "doit", "devons"], 0, "Avec je, devoir devient je dois."),
+        Q("Quelle phrase est correcte ?", ["Je peux prendre mon temps pour choisir.", "Je pouvoir prendre mon temps pour choisir.", "Je peux prends mon temps pour choisir."], 0, "Après pouvoir conjugué, le deuxième verbe reste à l'infinitif : je peux prendre."),
+        Q("Quelle forme de « faire » est correcte avec vous ?", ["vous faites", "vous faisez", "vous font"], 0, "Faire est très irrégulier : vous faites, ils font."),
+        Q("Complétez : nous ___ au restaurant ce soir.", ["allons", "vont", "allez"], 0, "Avec nous, aller devient nous allons."),
+        Q("Quelle méthode est la plus solide pour préparer une conjugaison ?", ["Identifier le groupe, chercher le radical, puis choisir la terminaison", "Choisir une terminaison au hasard", "Conjuguer tous les verbes en -ir comme finir"], 0, "La méthode correcte est d'identifier le groupe et de vérifier si le radical change.")
+      ]
     )
   };
 })();

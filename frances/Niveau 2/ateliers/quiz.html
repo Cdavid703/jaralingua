@@ -67,19 +67,24 @@
         "pronoms-toniques-ville",
         "ecoute-cherche-la-gare"
       ]);
+      const theme8Activities = new Set([
+        "verbes-deuxieme-troisieme-groupe"
+      ]);
       const themeLinks = theme7Activities.has(key)
         ? { course: "../themes/ville-personnes-technologies.html", workshops: "../ateliers-activites.html#theme-07" }
-        : theme6Activities.has(key)
-          ? { course: "../themes/climat-saisons-loisirs.html", workshops: "../ateliers-activites.html#theme-06" }
-          : theme5Activities.has(key)
-            ? { course: "../themes/sante-de-base.html", workshops: "../ateliers-activites.html#theme-05" }
-            : theme4Activities.has(key)
-              ? { course: "../themes/alimentation-restaurant.html", workshops: "../ateliers-activites.html#theme-04" }
-              : theme3Activities.has(key)
-                ? { course: "../themes/logement-detaille.html", workshops: "../ateliers-activites.html#theme-03" }
-                : theme2Activities.has(key)
-                  ? { course: "../themes/mode-vetements-achats.html", workshops: "../ateliers-activites.html#theme-02" }
-                  : { course: "../themes/routines-horaires.html", workshops: "../ateliers-activites.html#theme-01" };
+        : theme8Activities.has(key)
+          ? { course: "../themes/verbes-deuxieme-troisieme-groupe.html", workshops: "../ateliers-activites.html#theme-08" }
+          : theme6Activities.has(key)
+            ? { course: "../themes/climat-saisons-loisirs.html", workshops: "../ateliers-activites.html#theme-06" }
+            : theme5Activities.has(key)
+              ? { course: "../themes/sante-de-base.html", workshops: "../ateliers-activites.html#theme-05" }
+              : theme4Activities.has(key)
+                ? { course: "../themes/alimentation-restaurant.html", workshops: "../ateliers-activites.html#theme-04" }
+                : theme3Activities.has(key)
+                  ? { course: "../themes/logement-detaille.html", workshops: "../ateliers-activites.html#theme-03" }
+                  : theme2Activities.has(key)
+                    ? { course: "../themes/mode-vetements-achats.html", workshops: "../ateliers-activites.html#theme-02" }
+                    : { course: "../themes/routines-horaires.html", workshops: "../ateliers-activites.html#theme-01" };
       const images = {
         "diagnostic-routine-a12": "diagnostic-routine.png?v=20260630-n2-theme1-visual-pro",
         "verbes-pronominaux-present": "verbes-pronominaux.png?v=20260630-n2-theme1-visual-pro",
@@ -109,12 +114,16 @@
         "directions-ville": "directions-ville.png?v=20260630-pro",
         "questions-ville-technologies": "questions-ville-technologies.png?v=20260630-pro",
         "pronoms-toniques-ville": "pronoms-toniques-ville.png?v=20260630-pro",
-        "ecoute-cherche-la-gare": "ecoute-cherche-la-gare.png?v=20260630-pro"
+        "ecoute-cherche-la-gare": "ecoute-cherche-la-gare.png?v=20260630-pro",
+        "verbes-deuxieme-troisieme-groupe": "../themes/theme-08-verbes-groupes.png?v=20260630-n2-verbes"
       };
       document.title = `${activity.title} | Français Niveau 2`;
       const heroImage = images[key] || "diagnostic-routine.png?v=20260630-n2-theme1-visual-pro";
       const versionedHeroImage = heroImage.includes("?") ? heroImage : `${heroImage}?v=20260626-real-banners`;
-      document.getElementById("quizHero").style.setProperty("--hero-image", `url('/frances/Niveau%202/img/ateliers/${versionedHeroImage}')`);
+      const heroImagePath = versionedHeroImage.startsWith("../themes/")
+        ? `/frances/Niveau%202/img/${versionedHeroImage.replace("../", "")}`
+        : `/frances/Niveau%202/img/ateliers/${versionedHeroImage}`;
+      document.getElementById("quizHero").style.setProperty("--hero-image", `url('${heroImagePath}')`);
       document.getElementById("quizTitle").textContent = activity.title;
       document.getElementById("quizLead").textContent = activity.lead;
       document.getElementById("quizTheme").textContent = activity.theme;

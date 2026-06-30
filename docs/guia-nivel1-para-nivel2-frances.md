@@ -15,6 +15,27 @@ El diseño debe mantener continuidad con Nivel 1:
 - Pronunciación implementada como práctica guiada con micrófono.
 - Evaluaciones conectadas al carnet de notas cuando correspondan.
 
+## 1.1. Hallazgo sobre verbos del segundo y tercer grupo
+
+Al revisar las cartas descriptivas locales:
+
+- `Carta descriptiva nivel 2.docx` menciona que el nivel profundiza el presente del indicativo e introduce verbos pronominales y artículos partitivos, pero no explica de forma detallada los verbos del segundo grupo ni del tercer grupo.
+- `Carta descriptiva nivel 3.docx` introduce el passé composé con participios irregulares frecuentes como `été`, `eu`, `fait`, `pris`, `vu`, `dit` y `pu`, pero tampoco desarrolla previamente una explicación sistemática del presente de los verbos del segundo y tercer grupo.
+
+Decisión pedagógica:
+
+- Nivel 2 debe incluir un tema final de consolidación gramatical sobre verbos del segundo y tercer grupo.
+- Este tema funciona como puente hacia Nivel 3, porque prepara verbos que luego aparecen en participios irregulares y en narraciones simples.
+- El tema no reemplaza las unidades comunicativas de la carta descriptiva; se agrega como cierre gramatical para evitar una laguna entre Nivel 2 y Nivel 3.
+
+Implementación mínima:
+
+- Página de curso: `themes/verbes-deuxieme-troisieme-groupe.html`.
+- Entrada en `themes-du-cours.html` como Tema 8 de consolidación.
+- Actividad en `ateliers-activites.html`, colapsada por defecto.
+- Quiz en `quiz-catalog.js` con identificación de grupo, preparación de radical, terminaciones, verbos frecuentes y excepciones.
+- Imagen profesional específica; no usar recursos abstractos ni placeholders.
+
 ## 2. Estructura mínima de cada tema
 
 Cada tema de Nivel 2 debe tener, como mínimo, estas piezas:
