@@ -1,10 +1,10 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Atelier interactif | Français Niveau 2</title>
   <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
-  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau2.css?v=20260624-n2-phase1" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau2.css?v=20260630-n2-final-qa" rel="stylesheet">
 </head>
 <body class="niveau-2">
   <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li></ul></div></div></nav>
@@ -23,7 +23,7 @@
   </div></section></main>
 
   <footer class="footer"><div class="container"><a id="footerWorkshopsLink" href="../ateliers-activites.html#theme-01">← Retour aux ateliers</a></div></footer>
-  <script src="../assets/quiz-catalog.js?v=20260624-n2-listening-full"></script>
+  <script src="../assets/quiz-catalog.js?v=20260630-n2-final-audit"></script>
   <script>
     (function(){
       const params = new URLSearchParams(location.search);
@@ -37,22 +37,82 @@
         "quelle-taille-couleur",
         "ecoute-magasin-vetements"
       ]);
-      const themeLinks = theme2Activities.has(key)
-        ? { course: "../themes/mode-vetements-achats.html", workshops: "../ateliers-activites.html#theme-02" }
-        : { course: "../themes/routines-horaires.html", workshops: "../ateliers-activites.html#theme-01" };
+      const theme3Activities = new Set([
+        "vocabulaire-logement",
+        "il-y-a-logement",
+        "prepositions-logement",
+        "ecoute-appartement-malik"
+      ]);
+      const theme4Activities = new Set([
+        "vocabulaire-aliments-boissons",
+        "articles-partitifs-restaurant",
+        "negation-alimentation",
+        "ecoute-restaurant"
+      ]);
+      const theme5Activities = new Set([
+        "vocabulaire-corps-symptomes",
+        "avoir-mal-a-sante",
+        "il-faut-sante",
+        "ecoute-pharmacie"
+      ]);
+      const theme6Activities = new Set([
+        "futur-proche-plans",
+        "comparatifs-saisons",
+        "ecoute-weekend-meteo"
+      ]);
+      const theme7Activities = new Set([
+        "vocabulaire-ville-lieux",
+        "directions-ville",
+        "questions-ville-technologies",
+        "pronoms-toniques-ville",
+        "ecoute-cherche-la-gare"
+      ]);
+      const themeLinks = theme7Activities.has(key)
+        ? { course: "../themes/ville-personnes-technologies.html", workshops: "../ateliers-activites.html#theme-07" }
+        : theme6Activities.has(key)
+          ? { course: "../themes/climat-saisons-loisirs.html", workshops: "../ateliers-activites.html#theme-06" }
+          : theme5Activities.has(key)
+            ? { course: "../themes/sante-de-base.html", workshops: "../ateliers-activites.html#theme-05" }
+            : theme4Activities.has(key)
+              ? { course: "../themes/alimentation-restaurant.html", workshops: "../ateliers-activites.html#theme-04" }
+              : theme3Activities.has(key)
+                ? { course: "../themes/logement-detaille.html", workshops: "../ateliers-activites.html#theme-03" }
+                : theme2Activities.has(key)
+                  ? { course: "../themes/mode-vetements-achats.html", workshops: "../ateliers-activites.html#theme-02" }
+                  : { course: "../themes/routines-horaires.html", workshops: "../ateliers-activites.html#theme-01" };
       const images = {
-        "diagnostic-routine-a12": "diagnostic-routine.png",
-        "verbes-pronominaux-present": "verbes-pronominaux.png",
-        "ecoute-journee-camille": "ecoute-journee-camille.png",
-        "a-quelle-heure-routine": "a-quelle-heure.png",
-        "routine-en-ordre": "routine-en-ordre.png",
-        "vocabulaire-vetements": "vocabulaire-vetements.png?v=20260626-real-banners",
-        "couleurs-accords-vetements": "accords-couleurs.png?v=20260626-real-banners",
-        "quelle-taille-couleur": "questions-taille-couleur.png?v=20260626-real-banners",
-        "ecoute-magasin-vetements": "ecoute-magasin-vetements.png?v=20260626-real-banners"
+        "diagnostic-routine-a12": "diagnostic-routine.png?v=20260630-n2-theme1-visual-pro",
+        "verbes-pronominaux-present": "verbes-pronominaux.png?v=20260630-n2-theme1-visual-pro",
+        "ecoute-journee-camille": "ecoute-journee-camille.png?v=20260630-n2-visual-pro",
+        "a-quelle-heure-routine": "a-quelle-heure.png?v=20260630-n2-theme1-visual-pro",
+        "routine-en-ordre": "routine-en-ordre.png?v=20260630-n2-theme1-visual-pro",
+        "vocabulaire-vetements": "vocabulaire-vetements.png?v=20260630-n2-theme2-visual-pro",
+        "couleurs-accords-vetements": "accords-couleurs.png?v=20260630-n2-theme2-visual-pro",
+        "quelle-taille-couleur": "questions-taille-couleur.png?v=20260630-n2-theme2-visual-pro",
+        "ecoute-magasin-vetements": "ecoute-magasin-vetements.png?v=20260630-n2-visual-pro",
+        "vocabulaire-logement": "vocabulaire-logement.png?v=20260629-pro",
+        "il-y-a-logement": "il-y-a-logement.png?v=20260629-pro",
+        "prepositions-logement": "prepositions-logement.png?v=20260629-pro",
+        "ecoute-appartement-malik": "ecoute-appartement-malik.png?v=20260629-pro",
+        "vocabulaire-aliments-boissons": "vocabulaire-aliments-boissons.png?v=20260630-pro",
+        "articles-partitifs-restaurant": "articles-partitifs-restaurant.png?v=20260630-pro",
+        "negation-alimentation": "negation-alimentation.png?v=20260630-pro",
+        "ecoute-restaurant": "ecoute-restaurant.png?v=20260630-pro",
+        "vocabulaire-corps-symptomes": "vocabulaire-corps-symptomes.png?v=20260630-pro",
+        "avoir-mal-a-sante": "avoir-mal-a.png?v=20260630-pro",
+        "il-faut-sante": "il-faut-sante.png?v=20260630-pro",
+        "ecoute-pharmacie": "ecoute-pharmacie.png?v=20260630-pro",
+        "futur-proche-plans": "futur-proche-plans.png?v=20260630-pro",
+        "comparatifs-saisons": "comparatifs-saisons.png?v=20260630-pro",
+        "ecoute-weekend-meteo": "ecoute-weekend-meteo.png?v=20260630-pro",
+        "vocabulaire-ville-lieux": "vocabulaire-ville-lieux.png?v=20260630-pro",
+        "directions-ville": "directions-ville.png?v=20260630-pro",
+        "questions-ville-technologies": "questions-ville-technologies.png?v=20260630-pro",
+        "pronoms-toniques-ville": "pronoms-toniques-ville.png?v=20260630-pro",
+        "ecoute-cherche-la-gare": "ecoute-cherche-la-gare.png?v=20260630-pro"
       };
       document.title = `${activity.title} | Français Niveau 2`;
-      const heroImage = images[key] || "diagnostic-routine.png";
+      const heroImage = images[key] || "diagnostic-routine.png?v=20260630-n2-theme1-visual-pro";
       const versionedHeroImage = heroImage.includes("?") ? heroImage : `${heroImage}?v=20260626-real-banners`;
       document.getElementById("quizHero").style.setProperty("--hero-image", `url('/frances/Niveau%202/img/ateliers/${versionedHeroImage}')`);
       document.getElementById("quizTitle").textContent = activity.title;
@@ -74,12 +134,32 @@
           <p class="section-kicker">Audio complet</p>
           <h2 class="h4">Écoutez avant de répondre</h2>
           <p class="section-text">Lancez l’audio complet, prenez des notes si nécessaire, puis répondez aux questions. Vous pouvez réécouter une fois avant de corriger.</p>
-          <audio controls preload="metadata" src="${activity.audio}"></audio>
+          <audio id="activityAudio" data-listening-audio controls preload="metadata" src="${activity.audio}"></audio>
         `;
+        window.JaraLinguaN2ListeningControls?.init();
+      } else if (activity.ttsText) {
+        audioPanel.hidden = false;
+        audioPanel.innerHTML = `
+          <p class="section-kicker">Ecoute guidee</p>
+          <h2 class="h4">Ecoutez avant de repondre</h2>
+          <p class="section-text">Cette premiere version utilise la synthese vocale du navigateur. Le texte correspond aux questions et pourra etre remplace par un MP3 final.</p>
+          <div class="d-flex flex-wrap gap-2 align-items-center"><button class="btn-main" type="button" data-speak-text><i class="bi bi-play-circle-fill"></i> Ecouter</button><button class="btn-soft" type="button" data-stop-speech>Arreter</button></div>
+          <details class="audio-transcript"><summary>Transcription professeur</summary><p>${activity.ttsText}</p></details>
+        `;
+        audioPanel.querySelector("[data-speak-text]").addEventListener("click", () => {
+          if (!("speechSynthesis" in window)) return;
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(activity.ttsText);
+          utterance.lang = activity.ttsLang || "fr-FR";
+          utterance.rate = 0.88;
+          window.speechSynthesis.speak(utterance);
+        });
+        audioPanel.querySelector("[data-stop-speech]").addEventListener("click", () => window.speechSynthesis?.cancel());
       }
     })();
   </script>
   <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../assets/listening-controls-a2.js?v=20260630-n2-audio-controls"></script>
   <script src="../assets/quiz-engine.js?v=20260624-n2-phase1"></script>
   <script src="../assets/niveau2.js?v=20260624-n2-phase1"></script>
   <script src="../../../assets/js/google-auth-config.js"></script>

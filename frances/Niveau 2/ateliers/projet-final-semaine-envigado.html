@@ -1,0 +1,256 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Projet final de Français Niveau 2 A1.2 : dossier écrit et présentation orale sur une semaine pratique à Envigado.">
+  <title>Projet final : Ma semaine pratique à Envigado | Français Niveau 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../assets/niveau2.css?v=20260630-n2-final-qa" rel="stylesheet">
+  <style>
+    .project-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:1.25rem;align-items:start}
+    .project-visual{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:var(--radius);box-shadow:0 24px 55px rgba(21,52,93,.18)}
+    .deliverable-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem}
+    .deliverable-card{height:100%;padding:1rem;border:1px solid rgba(31,78,140,.13);border-left:5px solid var(--blue);border-radius:20px;background:#fff;box-shadow:0 12px 30px rgba(21,52,93,.08)}
+    .deliverable-card strong{display:flex;align-items:center;gap:.5rem;color:var(--blue-dark);font-size:1.05rem}.deliverable-card strong i{color:var(--red)}
+    .deliverable-card p{margin:.45rem 0 0;color:var(--muted);font-weight:760;line-height:1.62}
+    .template-lines{display:grid;gap:.8rem}.template-line{background:#f8fbff;border:1px solid rgba(31,78,140,.12);border-radius:18px;padding:1rem}.template-line b{display:block;color:var(--red);margin-bottom:.35rem}.template-line span{color:var(--blue-dark);font-weight:850}
+    .project-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border-radius:20px;box-shadow:0 14px 34px rgba(21,52,93,.08)}
+    .project-table th,.project-table td{padding:1rem;border-bottom:1px solid #dce7f4;background:#fff;vertical-align:top}.project-table th{background:var(--blue-dark);color:#fff}.project-table tr:last-child td{border-bottom:0}.project-table td:last-child,.project-table th:last-child{text-align:center;font-weight:950;color:var(--red)}
+    .writing-box{width:100%;min-height:190px;border:1px solid rgba(31,78,140,.2);border-radius:20px;padding:1rem;color:var(--blue-dark);font-weight:700;line-height:1.7;resize:vertical;background:#fff}
+    .counter-pill{display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;background:#eef5ff;color:var(--blue-dark);font-weight:950;padding:.45rem .8rem}
+    .download-row{display:flex;flex-wrap:wrap;gap:.75rem}.download-row button{border:0}
+    @media(max-width:900px){.project-grid{grid-template-columns:1fr}.project-visual{border-radius:20px}}
+  </style>
+</head>
+<body class="niveau-2">
+  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link" href="../notes-evaluation.html">Notes</a></li></ul></div></div></nav>
+
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%202/img/ateliers/projet-final-semaine-envigado.png?v=20260629-projet')">
+    <div class="container">
+      <div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html">Ateliers</a><span>›</span><span>Projet final</span></div>
+      <span class="badge-course"><i class="bi bi-award-fill"></i> Projet final · A1.2</span>
+      <h1>Ma semaine pratique à Envigado</h1>
+      <p class="hero-lead">Créer un dossier de vie quotidienne et présenter une semaine simple, réaliste et utile en français.</p>
+      <p class="hero-text">Ce projet reprend la logique de la carta descriptiva du Niveau 2 : routines, achats, logement, alimentation, santé, climat, loisirs, ville et interactions pratiques.</p>
+      <div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#dossier"><i class="bi bi-folder2-open"></i> Préparer le dossier</a><a class="btn-soft" href="#oral">Préparer l'oral</a></div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container">
+        <article class="content-card mb-4">
+          <div class="project-grid">
+            <div>
+              <p class="section-kicker">Objectif du projet</p>
+              <h2>Transformer le niveau en situation réelle</h2>
+              <p class="section-text">Vous allez construire une semaine de vie quotidienne dans la ville. Le projet montre que vous pouvez décrire votre routine, votre logement et votre quartier, faire des achats, parler d'un repas, expliquer un petit problème pratique et présenter un plan proche.</p>
+              <div class="grammar-table">
+                <div><b>Dossier écrit</b><span>Trois parties courtes, préparées progressivement pendant le niveau.</span></div>
+                <div><b>Présentation orale</b><span>2 minutes 30 à 3 minutes, avec une interaction simple.</span></div>
+                <div><b>Support visuel</b><span>Optionnel : horaire, mini-plan du quartier ou trois diapositives.</span></div>
+              </div>
+            </div>
+            <img class="project-visual" src="../img/ateliers/projet-final-semaine-envigado.png?v=20260629-projet" alt="Dossier étudiant pour préparer une semaine pratique à Envigado" width="1536" height="864">
+          </div>
+        </article>
+
+        <article class="content-card mb-4" id="dossier">
+          <p class="section-kicker">Livrables écrits</p>
+          <h2>Un dossier en trois parties</h2>
+          <div class="deliverable-grid mt-3">
+            <div class="deliverable-card"><strong><i class="bi bi-calendar2-week"></i> Partie A · Ma routine et mes horaires</strong><p>90 à 110 mots. Routines quotidiennes, horaires, verbes pronominaux et connecteurs temporels.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-house-door"></i> Partie B · Ma maison et mon quartier</strong><p>90 à 110 mots. Logement, pièces, meubles, lieux proches, localisation et indications simples.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-bag-check"></i> Partie C · Mes activités pratiques</strong><p>120 à 150 mots. Trois mini-situations : boutique, restaurant, transport, santé ou invitation.</p></div>
+          </div>
+          <div class="exception-box mt-3"><strong>Projet fil rouge :</strong> les parties A et B peuvent commencer avec les thèmes déjà disponibles. La partie C se complète quand les thèmes alimentation, santé, climat, loisirs, ville et technologies sont travaillés.</div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Checklist linguistique</p>
+          <h2>Ce que le projet doit obligatoirement montrer</h2>
+          <div class="deliverable-grid mt-3">
+            <div class="deliverable-card"><strong><i class="bi bi-arrow-repeat"></i> Routines</strong><p>Au moins deux verbes pronominaux conjugués : <em>je me lève</em>, <em>je m'habille</em>, <em>je me couche</em>.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-cup-hot"></i> Alimentation</strong><p>Au moins deux articles partitifs : <em>du</em>, <em>de la</em>, <em>de l'</em>, <em>des</em>.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-slash-circle"></i> Négation élargie</strong><p>Au moins une phrase avec <em>ne... jamais</em>, <em>ne... rien</em> ou <em>ne... plus</em>.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-bar-chart"></i> Comparaison</strong><p>Une comparaison simple : <em>plus... que</em>, <em>moins... que</em> ou <em>aussi... que</em>.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-clock-history"></i> Passé récent</strong><p>Au moins une phrase avec <em>je viens de + infinitif</em>.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-calendar-event"></i> Futur proche</strong><p>Deux phrases avec <em>je vais + infinitif</em> pour parler du week-end ou d'un plan proche.</p></div>
+            <div class="deliverable-card"><strong><i class="bi bi-chat-left-quote"></i> Expressions idiomatiques</strong><p>Au moins trois expressions de la banque du Niveau 2, dont une dans la situation orale : <em>journée chargée</em>, <em>aller comme un gant</em>, <em>se sentir chez soi</em>, <em>j'ai faim</em>, <em>ça va mieux</em>, <em>ça te dit</em> ou <em>à deux pas</em>.</p></div>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Plan guidé</p>
+          <h2>Construisez votre dossier par blocs</h2>
+          <div class="template-lines">
+            <div class="template-line"><b>1 · Routine</b><span>Le lundi, je me lève à... Ensuite, je... Avant le cours, je...</span></div>
+            <div class="template-line"><b>2 · Horaires</b><span>Je commence à... Je rentre à... Pendant la soirée, je...</span></div>
+            <div class="template-line"><b>3 · Logement</b><span>J'habite dans... Dans mon logement, il y a... Il n'y a pas de...</span></div>
+            <div class="template-line"><b>4 · Quartier</b><span>Près de chez moi, il y a... Le supermarché est à côté de...</span></div>
+            <div class="template-line"><b>5 · Boutique</b><span>Je cherche... Quelle taille avez-vous ? Combien ça coûte ?</span></div>
+            <div class="template-line"><b>6 · Restaurant</b><span>Je voudrais... Je prends du... Je ne mange jamais de...</span></div>
+            <div class="template-line"><b>7 · Transport ou santé</b><span>Je viens d'acheter... / Il faut prendre... / Où est la pharmacie ?</span></div>
+            <div class="template-line"><b>8 · Week-end</b><span>Samedi, je vais... S'il fait beau, je vais...</span></div>
+            <div class="template-line"><b>9 · Expressions</b><span>Choisissez trois expressions du niveau et écrivez-les dans un contexte clair, pas comme une liste isolée.</span></div>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Exemple de démarrage</p>
+          <h2>Partie A · Modèle court</h2>
+          <p class="section-text">Cette semaine, j'ai une routine simple. Le lundi, je me lève à six heures et demie. Je me douche, je m'habille et je prends un café avec du pain. Ensuite, je vais à l'université en bus. Pendant la matinée, j'étudie le français et je parle avec mes camarades. Après le cours, je rentre chez moi et je fais mes devoirs. Le soir, je ne me couche jamais très tard parce que je suis fatigué. Le vendredi, je vais préparer mon week-end : je vais acheter une chemise et je vais aller au restaurant avec un ami.</p>
+        </article>
+
+        <article class="content-card mb-4" id="oral">
+          <p class="section-kicker">Présentation orale</p>
+          <h2>Structure recommandée</h2>
+          <div class="project-grid">
+            <img class="project-visual" src="../img/ateliers/projet-final-semaine-envigado.png?v=20260629-projet" alt="Support visuel pour la présentation orale du projet final" width="1536" height="864">
+            <div class="steps-visual">
+              <div class="step-line"><p><strong>1 · Ma semaine :</strong> présentez votre routine et deux horaires importants.</p></div>
+              <div class="step-line"><p><strong>2 · Mon lieu :</strong> décrivez votre logement, votre quartier et un trajet simple.</p></div>
+              <div class="step-line"><p><strong>3 · Ma situation pratique :</strong> jouez une scène courte : boutique, restaurant, transport, pharmacie ou invitation. La scène doit inclure au moins une expression idiomatique du niveau.</p></div>
+              <div class="step-line"><p><strong>4 · Mon plan :</strong> dites ce que vous allez faire le week-end et pourquoi.</p></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Espace de préparation</p>
+          <h2>Rédigez vos trois parties</h2>
+          <div class="row g-3">
+            <div class="col-lg-4"><label class="fw-bold text-primary mb-2" for="draftA">Partie A</label><textarea class="writing-box" id="draftA" placeholder="Ma routine et mes horaires..."></textarea></div>
+            <div class="col-lg-4"><label class="fw-bold text-primary mb-2" for="draftB">Partie B</label><textarea class="writing-box" id="draftB" placeholder="Ma maison et mon quartier..."></textarea></div>
+            <div class="col-lg-4"><label class="fw-bold text-primary mb-2" for="draftC">Partie C</label><textarea class="writing-box" id="draftC" placeholder="Mes activités pratiques..."></textarea></div>
+          </div>
+          <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mt-3">
+            <span class="counter-pill"><i class="bi bi-pencil-square"></i> <span id="wordCount">0</span> mots au total</span>
+            <button class="btn-soft" type="button" id="copyDraft"><i class="bi bi-clipboard"></i> Copier mon dossier</button>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Processus en classe</p>
+          <h2>Quand préparer chaque partie</h2>
+          <div class="table-responsive">
+            <table class="project-table">
+              <thead><tr><th>Moment</th><th>Travail conseillé</th><th>Produit</th></tr></thead>
+              <tbody>
+                <tr><td>Après le thème 1</td><td>Écrire la routine, les horaires et deux verbes pronominaux.</td><td>Partie A</td></tr>
+                <tr><td>Après le thème 3</td><td>Ajouter logement, meubles, localisation et quartier.</td><td>Partie B</td></tr>
+                <tr><td>Après les thèmes 4 à 7</td><td>Compléter restaurant, santé, climat, loisirs, ville et technologies, puis intégrer trois expressions idiomatiques dans des phrases naturelles.</td><td>Partie C</td></tr>
+                <tr><td>Avant l'évaluation</td><td>Faire une simulation orale avec notes, sans lecture complète, en réutilisant une expression du niveau.</td><td>Oral</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="content-card mb-4">
+          <p class="section-kicker">Grille d'évaluation</p>
+          <h2>Comment le projet peut être évalué</h2>
+          <div class="table-responsive">
+            <table class="project-table">
+              <thead><tr><th>Critère</th><th>Attendu</th><th>Points</th></tr></thead>
+              <tbody>
+                <tr><td>Dossier écrit</td><td>Trois parties complètes, cohérentes, avec vocabulaire du niveau.</td><td>25</td></tr>
+                <tr><td>Grammaire et expressions obligatoires</td><td>Pronominaux, partitifs, négation élargie, comparaison, passé récent, futur proche et trois expressions idiomatiques contextualisées.</td><td>25</td></tr>
+                <tr><td>Interaction pratique</td><td>Questions fonctionnelles et réponse claire dans une scène de la vie quotidienne.</td><td>15</td></tr>
+                <tr><td>Présentation orale</td><td>Rythme clair, prononciation compréhensible, durée respectée.</td><td>20</td></tr>
+                <tr><td>Organisation et autonomie</td><td>Support propre, ordre logique, effort de correction et préparation visible.</td><td>15</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="download-row mt-4">
+            <button class="btn-main" type="button" id="downloadStudentGuide"><i class="bi bi-download"></i> Télécharger le guide étudiant</button>
+            <button class="btn-soft" type="button" id="downloadRubric"><i class="bi bi-file-earmark-check"></i> Télécharger la grille</button>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <p class="section-kicker">Avant de remettre</p>
+          <h2>Vérification finale</h2>
+          <div class="phrase-list">
+            <div class="phrase-item"><span>Mon dossier a trois parties identifiées.</span><span class="skill-pill">structure</span></div>
+            <div class="phrase-item"><span>J'ai utilisé les contenus des thèmes du Niveau 2.</span><span class="skill-pill">A1.2</span></div>
+            <div class="phrase-item"><span>J'ai intégré au moins trois expressions idiomatiques de la banque dans des phrases naturelles.</span><span class="skill-pill">expressions</span></div>
+            <div class="phrase-item"><span>J'ai préparé une interaction courte.</span><span class="skill-pill">oral</span></div>
+            <div class="phrase-item"><span>J'ai pratiqué sans lire tout le texte.</span><span class="skill-pill">fluidité</span></div>
+          </div>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a class="btn-main" href="../ateliers-activites.html"><i class="bi bi-controller"></i> Retour aux ateliers</a>
+            <a class="btn-soft" href="../themes-du-cours.html"><i class="bi bi-journal-text"></i> Revoir les thèmes</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><a href="../ateliers-activites.html">← Tous les ateliers</a></div></footer>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/js/transcript-pdf.js"></script>
+  <script src="../assets/niveau2.js?v=20260629-n2-theme3"></script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+  <script>
+    const studentGuide = `Projet final Niveau 2 - Ma semaine pratique à Envigado
+
+Produit final :
+- Dossier écrit en trois parties.
+- Présentation orale de 2 minutes 30 à 3 minutes.
+- Support visuel optionnel : horaire, mini-plan du quartier ou trois diapositives.
+
+Partie A - Ma routine et mes horaires :
+90 à 110 mots. Inclure routines, horaires, verbes pronominaux et connecteurs temporels.
+
+Partie B - Ma maison et mon quartier :
+90 à 110 mots. Inclure logement, pièces, meubles, lieux proches et prépositions de lieu.
+
+Partie C - Mes activités pratiques :
+120 à 150 mots. Inclure trois mini-situations : boutique, restaurant, transport, santé ou invitation.
+Le dossier complet doit intégrer au moins trois expressions idiomatiques de la banque du Niveau 2. Une de ces expressions doit apparaître dans la situation orale.
+
+Exigences linguistiques :
+- Deux verbes pronominaux conjugués.
+- Deux articles partitifs.
+- Une négation élargie.
+- Une comparaison simple.
+- Une phrase avec passé récent.
+- Deux phrases avec futur proche.
+- Deux questions fonctionnelles.
+- Trois expressions idiomatiques contextualisées, pas écrites comme une liste isolée.
+
+À l'oral :
+Présentez votre semaine, votre logement, une situation pratique et un plan de week-end. La situation pratique doit inclure au moins une expression idiomatique. Les notes sont autorisées, mais pas la lecture complète.`;
+    const rubric = `Grille d'évaluation - Ma semaine pratique à Envigado
+
+Dossier écrit : 25 points.
+Grammaire et expressions obligatoires : 25 points.
+Interaction pratique : 15 points.
+Présentation orale : 20 points.
+Organisation et autonomie : 15 points.
+
+Total : 100 points.`;
+    const drafts = [...document.querySelectorAll(".writing-box")];
+    const wordCount = document.getElementById("wordCount");
+    function countWords(value){ return (value.trim().match(/[A-Za-zÀ-ÖØ-öø-ÿ0-9’'-]+/g) || []).length; }
+    function updateCount(){ wordCount.textContent = drafts.reduce((total, item) => total + countWords(item.value), 0); }
+    drafts.forEach((draft) => draft.addEventListener("input", updateCount));
+    document.getElementById("copyDraft").addEventListener("click", async () => {
+      const text = drafts.map((draft, index) => `Partie ${String.fromCharCode(65 + index)}\n${draft.value.trim()}`).join("\n\n");
+      await navigator.clipboard.writeText(text);
+      document.getElementById("copyDraft").innerHTML = '<i class="bi bi-check-circle"></i> Dossier copié';
+      setTimeout(() => { document.getElementById("copyDraft").innerHTML = '<i class="bi bi-clipboard"></i> Copier mon dossier'; }, 1800);
+    });
+    document.getElementById("downloadStudentGuide").addEventListener("click", () => downloadTranscriptPdf("Guide étudiant - Ma semaine pratique à Envigado", studentGuide, "guide-projet-final-niveau2.pdf"));
+    document.getElementById("downloadRubric").addEventListener("click", () => downloadTranscriptPdf("Grille d'évaluation - Ma semaine pratique à Envigado", rubric, "grille-projet-final-niveau2.pdf"));
+  </script>
+</body>
+</html>

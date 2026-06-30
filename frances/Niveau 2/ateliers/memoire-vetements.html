@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8">
@@ -9,7 +9,7 @@
   <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
   <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
-  <link href="../assets/niveau2.css?v=20260626-n2-theme2" rel="stylesheet">
+  <link href="../assets/niveau2.css?v=20260630-n2-final-qa" rel="stylesheet">
   <style>
     .memory-page{--team-one:#d62839;--team-two:#198754;--board:#15345d}
     .memory-hero{min-height:560px}
@@ -55,8 +55,8 @@
     <div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li></ul></div></div>
   </nav>
 
-  <header class="hero lesson-hero memory-hero" style="--hero-image:url('/frances/Niveau%202/img/ateliers/memoire-vetements.png?v=20260626-real-banners')">
-    <div class="container"><div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html#theme-02">Ateliers</a><span>›</span><span>Jeu de mémoire</span></div><span class="badge-course"><i class="bi bi-grid-3x3-gap-fill"></i> Thème 2 · Jeu oral</span><h1>Jeu de mémoire : vêtements et couleurs</h1><p class="hero-lead">Associer image, mot, couleur et prononciation en équipe.</p><p class="hero-text"><strong>Objectif pour l’étudiant :</strong> reconnaître les vêtements, associer image et phrase, écouter la prononciation puis répéter correctement pour gagner le point de son équipe.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#game"><i class="bi bi-play-circle"></i> Jouer</a><a class="btn-soft" href="../themes/mode-vetements-achats.html">Revoir le thème</a></div></div>
+  <header class="hero lesson-hero memory-hero" style="--hero-image:url('/frances/Niveau%202/img/ateliers/memoire-vetements.png?v=20260630-n2-theme2-visual-pro')">
+    <div class="container"><div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html#theme-02">Ateliers</a><span>›</span><span>Jeu de mémoire</span></div><span class="badge-course"><i class="bi bi-grid-3x3-gap-fill"></i> Thème 2 · Jeu oral</span><h1>Jeu de mémoire : vêtements et couleurs</h1><p class="hero-lead">Associer image, mot, couleur et prononciation en équipe.</p><p class="hero-text"><strong>Objectif pour l’étudiant :</strong> reconnaître les vêtements, associer image et phrase, écouter la prononciation puis répéter correctement pour gagner le point de son équipe. À la fin, chaque équipe réutilise une expression du thème : <strong>aller comme un gant</strong> ou <strong>ça coûte les yeux de la tête</strong>.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#game"><i class="bi bi-play-circle"></i> Jouer</a><a class="btn-soft" href="../themes/mode-vetements-achats.html">Revoir le thème</a></div></div>
   </header>
 
   <main>
@@ -69,6 +69,7 @@
       <div class="game-actions"><button class="game-command primary" type="button" onclick="newGame()"><i class="bi bi-shuffle"></i> Nouveau jeu</button><button class="game-command" type="button" onclick="replayLastPhrase()"><i class="bi bi-volume-up"></i> Répéter l’audio</button><button class="game-icon-btn" id="soundButton" type="button" onclick="toggleSound()" title="Activer ou couper le son" aria-label="Activer ou couper le son"><i class="bi bi-volume-up-fill"></i></button></div>
       <div class="memory-board" id="memoryBoard" aria-label="Cartes du jeu de mémoire vêtements"></div>
       <p class="game-status" id="gameStatus" aria-live="polite">Équipe 1 : choisissez la première carte.</p>
+      <div class="content-card mt-3"><p class="section-kicker">Clôture orale</p><p class="section-text mb-0">Après la dernière paire, chaque équipe choisit un vêtement du jeu et produit une phrase complète avec une expression du thème : <strong>Cette veste me va comme un gant</strong> ou <strong>Cette robe coûte les yeux de la tête</strong>. Le professeur valide la phrase, pas seulement le mot isolé.</p></div>
     </section>
   </main>
 

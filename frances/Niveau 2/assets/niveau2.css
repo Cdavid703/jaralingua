@@ -58,11 +58,8 @@ a { color: inherit; }
   min-height: min(700px, 86vh); display: flex; align-items: center; position: relative; overflow: hidden;
   padding: 7rem 0 5rem; color: #fff;
   background:
-    radial-gradient(circle at 14% 18%, rgba(255,255,255,.18), transparent 27%),
-    radial-gradient(circle at 88% 12%, rgba(244,201,93,.18), transparent 24%),
     linear-gradient(135deg, rgba(21,52,93,.82), rgba(31,78,140,.58) 48%, rgba(214,40,57,.42)), var(--hero-image, linear-gradient(135deg, #15345d, #1f4e8c 55%, #d62839)) center/cover no-repeat;
 }
-.hero::after { content: ""; position: absolute; right: -8rem; bottom: -14rem; width: 40rem; height: 40rem; border: 5rem solid rgba(255,255,255,.07); border-radius: 50%; }
 .hero .container { position: relative; z-index: 1; }
 .badge-course, .status-pill, .skill-pill, .grammar-pill {
   display: inline-flex; align-items: center; gap: .45rem; width: max-content; border-radius: 999px;
@@ -90,21 +87,7 @@ a { color: inherit; }
   position: absolute;
   inset: 0;
   z-index: 1;
-  background:
-    linear-gradient(135deg, rgba(21,52,93,.2), transparent 48%),
-    radial-gradient(circle at 85% 18%, rgba(255,255,255,.18), transparent 28%);
-  pointer-events: none;
-}
-.hero-card::after {
-  content: "";
-  position: absolute;
-  left: -4rem;
-  bottom: -4rem;
-  z-index: 2;
-  width: 12rem;
-  height: 12rem;
-  border: 2.2rem solid rgba(255,255,255,.12);
-  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(21,52,93,.2), transparent 48%);
   pointer-events: none;
 }
 .hero-card img {
@@ -118,9 +101,6 @@ a { color: inherit; }
 }
 .hero-visual { min-height: 380px; display: grid; place-items: center; position: relative; border: 1px solid rgba(255,255,255,.24); border-radius: 38px; background: rgba(255,255,255,.12); backdrop-filter: blur(14px); box-shadow: var(--shadow); }
 .hero-visual::before { content: "Bonjour !"; font: 900 clamp(2.2rem, 5vw, 4.5rem)/1 "Montserrat", sans-serif; transform: rotate(-5deg); }
-.hero-visual .orbit { position: absolute; display: grid; place-items: center; width: 74px; height: 74px; border-radius: 24px; background: #fff; color: var(--red); font-size: 2rem; box-shadow: 0 18px 35px rgba(15,23,42,.22); }
-.hero-visual .orbit.one { top: 2rem; right: 2rem; }
-.hero-visual .orbit.two { bottom: 2rem; left: 2rem; color: var(--blue); }
 
 .btn-main, .btn-soft {
   min-height: 48px; display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
@@ -156,7 +136,7 @@ section { padding: 4.5rem 0; }
   height: 100%; overflow: hidden; border: 0; border-radius: var(--radius); background: #fff; box-shadow: var(--shadow);
 }
 .card-visual { min-height: 205px; display: grid; place-items: center; position: relative; overflow: hidden; color: #fff; background: linear-gradient(180deg, rgba(21,52,93,.04), rgba(21,52,93,.3)), var(--card-image, linear-gradient(135deg, var(--blue-dark), var(--blue) 55%, var(--red))) center/cover no-repeat; }
-.card-visual::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.08), transparent 28%), radial-gradient(circle at 80% 90%, rgba(244,201,93,.1), transparent 32%); }
+.card-visual::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,255,255,.08), transparent 45%); }
 .card-visual i { position: relative; font-size: 4rem; filter: drop-shadow(0 12px 18px rgba(0,0,0,.18)); }
 .card-visual[style*="--card-image"] > i { display: none; }
 .card-visual.alt { background: linear-gradient(180deg, rgba(159,29,42,.03), rgba(159,29,42,.28)), var(--card-image, linear-gradient(135deg, #9f1d2a, #d62839 55%, #f4c95d)) center/cover no-repeat; }
@@ -276,8 +256,6 @@ section { padding: 4.5rem 0; }
 .challenge-card { padding: 1rem; border: 1px solid rgba(31,78,140,.14); border-radius: 18px; background: #f8fbff; }
 .challenge-card span { color: var(--red); font-weight: 900; font-size: .8rem; text-transform: uppercase; }
 .challenge-card p { margin: .45rem 0 .8rem; font-weight: 900; }
-.portrait-placeholder { width: 96px; height: 96px; margin: 0 auto .8rem; display: grid; place-items: center; border-radius: 50%; color: #fff; font-size: 2.5rem; font-weight: 900; background: linear-gradient(135deg,var(--blue),var(--red)); }
-.portrait-l { background: linear-gradient(135deg,#b45309,#f59e0b); }.portrait-n { background: linear-gradient(135deg,#7c3aed,#ec4899); }.portrait-h { background: linear-gradient(135deg,#0f766e,#22c55e); }
 .grades-card,.locked-card { padding: clamp(1.2rem,3vw,2rem); border-radius: 28px; background: #fff; box-shadow: var(--shadow); }
 .locked-card { text-align: center; }.locked-card>i { font-size: 3rem; color: var(--blue); }
 .metric-grid { display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem; }.metric-card { padding:1rem;border-radius:18px;background:#eef5ff;display:grid;gap:.3rem }.metric-card span{font-weight:900;color:var(--muted)}.metric-card strong{font-size:2rem;color:var(--blue-dark)}
@@ -307,6 +285,35 @@ section { padding: 4.5rem 0; }
 }
 @media (max-width: 575px) {
   .global-course-switcher { top: auto; right: .75rem; bottom: .75rem; }
+  body.niveau-2 .jaralingua-auth {
+    left: auto !important;
+    right: .75rem !important;
+    top: 5rem !important;
+    bottom: auto !important;
+  }
+  body.niveau-2 .jaralingua-auth .auth-trigger {
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    height: 48px;
+    padding: 0;
+    justify-content: center;
+  }
+  body.niveau-2 .jaralingua-auth .auth-trigger span:not(.auth-initial) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+  body.niveau-2 .jaralingua-auth .auth-panel {
+    left: auto;
+    right: 0;
+    top: 56px;
+    bottom: auto;
+    max-width: calc(100vw - 1.5rem);
+  }
   .hero { min-height: auto; padding: 6rem 0 3.5rem; }
   .lesson-hero { min-height: auto; }
   .hero h1 { font-size: clamp(2.55rem,15vw,4rem); }

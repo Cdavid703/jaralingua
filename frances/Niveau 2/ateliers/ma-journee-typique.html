@@ -1,14 +1,14 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="fr">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ma journée typique | Français Niveau 2</title>
   <link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
-  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau2.css?v=20260624-n2-phase1" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet"><link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet"><link href="../assets/niveau2.css?v=20260630-n2-final-qa" rel="stylesheet">
 </head>
 <body class="niveau-2">
   <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li></ul></div></div></nav>
-  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%202/img/ateliers/production-ma-journee.png')"><div class="container"><span class="badge-course">Production guidée</span><h1>Ma journée typique</h1><p class="hero-lead">Écrire puis présenter une routine claire et bien organisée.</p><p class="hero-text">Construisez un texte court et une présentation orale sur votre routine. L’objectif est d’utiliser les verbes pronominaux, les horaires et les connecteurs temporels.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#routineBuilder"><i class="bi bi-pencil-square"></i> Construire mon texte</a><a class="btn-soft" href="../themes/routines-horaires.html">Revoir le thème</a></div></div></header>
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%202/img/ateliers/production-ma-journee.png?v=20260630-n2-theme1-visual-pro')"><div class="container"><span class="badge-course">Production guidée</span><h1>Ma journée typique</h1><p class="hero-lead">Écrire puis présenter une routine claire et bien organisée.</p><p class="hero-text">Construisez un texte court et une présentation orale sur votre routine. L’objectif est d’utiliser les verbes pronominaux, les horaires, les connecteurs temporels et une expression idiomatique du thème.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#routineBuilder"><i class="bi bi-pencil-square"></i> Construire mon texte</a><a class="btn-soft" href="../themes/routines-horaires.html">Revoir le thème</a></div></div></header>
   <main><section><div class="container"><div class="lesson-layout">
     <form class="content-card builder-box" id="routineBuilder">
       <p class="section-kicker">Atelier écrit/oral</p><h2>Construire mon texte</h2>
@@ -19,20 +19,21 @@
         <label class="col-md-6">Routine après les cours<textarea name="apres" rows="3" placeholder="je rentre chez moi, je fais mes devoirs..."></textarea></label>
         <label class="col-md-6">Routine du soir<textarea name="soir" rows="3" placeholder="je dîne, je me repose, je me couche..."></textarea></label>
         <label class="col-md-6">Une phrase négative<textarea name="negation" rows="3" placeholder="Je ne me couche jamais très tard."></textarea></label>
+        <label class="col-md-6">Expression idiomatique<textarea name="expression" rows="3" placeholder="Aujourd'hui, j'ai une journée chargée. / Le dimanche, je prends mon temps."></textarea></label>
       </div>
       <button class="btn-main mt-3" type="submit"><i class="bi bi-magic"></i> Générer mon brouillon</button>
-      <div class="exception-box teacher-only"><strong>Critères :</strong> 70–90 mots, au moins trois verbes pronominaux, deux horaires, deux connecteurs temporels et une négation élargie.</div>
+      <div class="exception-box teacher-only"><strong>Critères :</strong> 70–90 mots, au moins trois verbes pronominaux, deux horaires, deux connecteurs temporels, une négation élargie et une expression idiomatique du thème.</div>
     </form>
     <aside class="lesson-aside">
       <article class="content-card"><span class="skill-pill">Brouillon</span><div class="output-card mt-3" id="routineOutput">Complétez le formulaire pour générer une base. Ensuite, corrigez-la avec votre professeur.</div><button class="btn-soft mt-3" type="button" onclick="window.print()"><i class="bi bi-printer"></i> Imprimer / PDF</button></article>
-      <article class="content-card"><h2 class="h5">Avant de présenter</h2><ul class="mini-checklist"><li>Lisez lentement les groupes : je me / tu te / elle se.</li><li>Marquez une pause après les connecteurs.</li><li>Vérifiez que vos horaires sont cohérents.</li></ul></article>
+      <article class="content-card"><h2 class="h5">Avant de présenter</h2><ul class="mini-checklist"><li>Lisez lentement les groupes : je me / tu te / elle se.</li><li>Marquez une pause après les connecteurs.</li><li>Vérifiez que vos horaires sont cohérents.</li><li>Utilisez clairement : <strong>avoir une journée chargée</strong>, <strong>prendre son temps</strong> ou <strong>être du matin</strong>.</li></ul></article>
     </aside>
   </div></div></section></main>
   <script>
     document.getElementById("routineBuilder").addEventListener("submit", (event) => {
       event.preventDefault();
       const d = Object.fromEntries(new FormData(event.currentTarget));
-      document.getElementById("routineOutput").textContent = `D’abord, je me réveille à ${d.reveil || "…"} et je commence ma journée. Le matin, ${d.matin || "je me prépare"}. Ensuite, je vais en cours ou au travail à ${d.cours || "…"} . Après les cours, ${d.apres || "je rentre chez moi et je fais mes devoirs"}. Le soir, ${d.soir || "je me repose et je me couche"}. ${d.negation || "Je ne me couche jamais très tard pendant la semaine."}`;
+      document.getElementById("routineOutput").textContent = `D’abord, je me réveille à ${d.reveil || "…"} et je commence ma journée. ${d.expression || "Aujourd'hui, j'ai une journée chargée."} Le matin, ${d.matin || "je me prépare"}. Ensuite, je vais en cours ou au travail à ${d.cours || "…"} . Après les cours, ${d.apres || "je rentre chez moi et je fais mes devoirs"}. Le soir, ${d.soir || "je me repose et je me couche"}. ${d.negation || "Je ne me couche jamais très tard pendant la semaine."}`;
     });
   </script>
   <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>

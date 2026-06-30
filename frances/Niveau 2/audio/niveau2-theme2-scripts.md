@@ -5,7 +5,7 @@ Ces fichiers correspondent au thème 2 : Mode, vêtements et achats. Les audios 
 ## Écoute thème 2 — Au magasin de vêtements
 File: `theme-2/magasin-vetements.mp3`
 
-Narratrice: Vendeur : Bonjour, je peux vous aider ? Cliente : Bonjour, je cherche une veste bleue. Vendeur : Bien sûr. Quelle taille faites-vous ? Cliente : Je fais du M. Vous avez cette veste en taille M ? Vendeur : Oui, la voici. Vous voulez l’essayer ? Cliente : Oui, s’il vous plaît. Combien elle coûte ? Vendeur : Elle coûte quarante-cinq euros. Cliente : D’accord. Est-ce que vous avez aussi une chemise blanche ? Vendeur : Oui, nous avons une chemise blanche à vingt-neuf euros. Cliente : Très bien. La robe rouge est belle aussi, mais elle est trop chère. Je prends la veste bleue. Je paie par carte.
+Narratrice: Vendeur : Bonjour, je peux vous aider ? Cliente : Bonjour, je cherche une veste bleue. Vendeur : Bien sûr. Quelle taille faites-vous ? Cliente : Je fais du M. Vous avez cette veste en taille M ? Vendeur : Oui, la voici. Vous voulez l’essayer ? Cliente : Oui, s’il vous plaît. Combien elle coûte ? Vendeur : Elle coûte quarante-cinq euros. Cliente : D’accord. Elle me va comme un gant. Est-ce que vous avez aussi une chemise blanche ? Vendeur : Oui, nous avons une chemise blanche à vingt-neuf euros. Cliente : Très bien. La robe rouge est belle aussi, mais elle coûte les yeux de la tête. Je prends la veste bleue. Je paie par carte.
 
 ## Prononciation thème 2 — étape 1
 File: `prononciation/theme-2/stage-1.mp3`

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import json
 import base64
+import binascii
 import hashlib
 import hmac
 import os
@@ -9,6 +10,7 @@ import secrets
 import tempfile
 import threading
 import time
+import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -28,12 +30,17 @@ FRENCH7_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib
 FRENCH1_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH1_GRADES_DATA", "/var/lib/jaralingua/french1-grades.json")
 FRENCH2_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH2_GRADES_DATA", "/var/lib/jaralingua/french2-grades.json")
 FRENCH8_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH8_GRADES_DATA", "/var/lib/jaralingua/french8-grades.json")
+FRENCH8_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_FRENCH8_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/french8-pronunciation-audio")
+FRENCH8_HYPOTHESES_ACTIVITY_ID = "writingActivity"
 FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "/var/lib/jaralingua/french7-final-exam.json")
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
 FRENCH7_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french7-final-exam-audio.mp3")
 FRENCH1_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH1_FINAL_EXAM_DATA", "/var/lib/jaralingua/french1-final-exam.json")
 FRENCH1_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH1_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french1-final-exam-submissions.json")
 FRENCH1_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH1_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french1-final-exam-audio.mp3")
+FRENCH2_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH2_FINAL_EXAM_DATA", "/var/lib/jaralingua/french2-final-exam.json")
+FRENCH2_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH2_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french2-final-exam-submissions.json")
+FRENCH2_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH2_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french2-final-exam-audio.mp3")
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
 BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/basic-integrated-task.json")
 BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
@@ -45,57 +52,145 @@ BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final
 BUNDLED_FRENCH7_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "frances", "Niveau 7", "audio", "examen-final-refuge-universitaire-b1.mp3")
 BUNDLED_FRENCH1_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french1-final-exam.local.json")
 BUNDLED_FRENCH1_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french1-final-exam-audio.mp3")
+BUNDLED_FRENCH2_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french2-final-exam.local.json")
+BUNDLED_FRENCH2_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french2-final-exam-audio.mp3")
 BUNDLED_BASIC_INTEGRATED_TASK_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task.local.json")
 BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task-real.local.mp3")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
-MAX_BODY_BYTES = 1024 * 1024
+MAX_BODY_BYTES = 6 * 1024 * 1024
+FRENCH8_PRONUNCIATION_DEADLINES = {
+    "pronunciation01d": {
+        "date": "2026-06-29",
+        "utc": "2026-06-30T05:00:00Z",
+        "epoch": 1782795600,
+        "label": "lundi 29 juin 2026 jusqu'a 23 h 59 (heure de Bogota)"
+    },
+    "pronunciation02d": {
+        "date": "2026-07-05",
+        "utc": "2026-07-06T05:00:00Z",
+        "epoch": 1783314000,
+        "label": "dimanche 5 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+    },
+    "pronunciation03d": {
+        "date": "2026-07-12",
+        "utc": "2026-07-13T05:00:00Z",
+        "epoch": 1783918800,
+        "label": "dimanche 12 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+    },
+    "pronunciation04d": {
+        "date": "2026-07-19",
+        "utc": "2026-07-20T05:00:00Z",
+        "epoch": 1784523600,
+        "label": "dimanche 19 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+    }
+}
 
 FRENCH8_PRONUNCIATION_EVALUATIONS = {
     "pronunciation01d": {
         "id": "pronunciation01d",
-        "title": "Prononciation 01D - Conditionnel passé",
+        "title": "Prononciation 01D - Conditionnel passe",
         "weight": 5,
         "type": "Prononciation",
-        "date": "2026-07-01",
-        "displayDate": "A définir",
-        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+        "date": FRENCH8_PRONUNCIATION_DEADLINES["pronunciation01d"]["date"],
+        "displayDate": "Date limite : " + FRENCH8_PRONUNCIATION_DEADLINES["pronunciation01d"]["label"],
+        "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     "pronunciation02d": {
         "id": "pronunciation02d",
-        "title": "Prononciation 02D - Hypothèses irréelles",
+        "title": "Prononciation 02D - Hypotheses irreelles",
         "weight": 5,
         "type": "Prononciation",
-        "date": "2026-07-01",
-        "displayDate": "A définir",
-        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+        "date": FRENCH8_PRONUNCIATION_DEADLINES["pronunciation02d"]["date"],
+        "displayDate": "Date limite : " + FRENCH8_PRONUNCIATION_DEADLINES["pronunciation02d"]["label"],
+        "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     "pronunciation03d": {
         "id": "pronunciation03d",
-        "title": "Prononciation 03D - Subjonctif passé",
+        "title": "Prononciation 03D - Subjonctif passe",
         "weight": 5,
         "type": "Prononciation",
-        "date": "2026-07-01",
-        "displayDate": "A définir",
-        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+        "date": FRENCH8_PRONUNCIATION_DEADLINES["pronunciation03d"]["date"],
+        "displayDate": "Date limite : " + FRENCH8_PRONUNCIATION_DEADLINES["pronunciation03d"]["label"],
+        "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     "pronunciation04d": {
         "id": "pronunciation04d",
-        "title": "Prononciation 04D - Discours rapporté",
+        "title": "Prononciation 04D - Discours rapporte",
         "weight": 5,
         "type": "Prononciation",
-        "date": "2026-07-01",
-        "displayDate": "A définir",
-        "description": "Défi final de prononciation. Envoi autorisé à partir de 50/100."
+        "date": FRENCH8_PRONUNCIATION_DEADLINES["pronunciation04d"]["date"],
+        "displayDate": "Date limite : " + FRENCH8_PRONUNCIATION_DEADLINES["pronunciation04d"]["label"],
+        "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     }
 }
 
-FRENCH8_BASE_EVALUATION_WEIGHTS = {
-    "diagnosticB2": 10,
-    "grammarWorkshop": 15,
-    "oralDebate": 15,
-    "writtenArgumentation": 20,
-    "finalProject": 20
+FRENCH8_BASE_EVALUATIONS = {
+    "finalExam": {
+        "id": "finalExam",
+        "title": "Examen final",
+        "weight": 20,
+        "type": "Examen",
+        "date": "2026-07-01",
+        "displayDate": "A definir",
+        "description": "Examen final del curso."
+    },
+    "courseProject": {
+        "id": "courseProject",
+        "title": "Proyecto de curso",
+        "weight": 20,
+        "type": "Projet",
+        "date": "2026-07-01",
+        "displayDate": "A definir",
+        "description": "Proyecto principal del curso."
+    },
+    "quiz": {
+        "id": "quiz",
+        "title": "Quiz",
+        "weight": 10,
+        "type": "Quiz",
+        "date": "2026-07-01",
+        "displayDate": "A definir",
+        "description": "Quiz del curso."
+    },
+    "debate1": {
+        "id": "debate1",
+        "title": "Debate 1",
+        "weight": 10,
+        "type": "Debat",
+        "date": "2026-07-01",
+        "displayDate": "A definir",
+        "description": "Primer debate calificable."
+    },
+    "debate2": {
+        "id": "debate2",
+        "title": "Debate 2",
+        "weight": 10,
+        "type": "Debat",
+        "date": "2026-07-01",
+        "displayDate": "A definir",
+        "description": "Segundo debate calificable."
+    },
+    "writingActivity": {
+        "id": "writingActivity",
+        "title": "Production ecrite et orale - Hypotheses irreelles",
+        "weight": 10,
+        "type": "Ecriture et oral",
+        "date": "2026-07-01",
+        "displayDate": "A definir",
+        "description": "Texte ecrit avec hypothese irreelle dans le passe, expression idiomatique obligatoire et audio pour feedback."
+    }
+}
+
+FRENCH8_EXCHANGE_STUDENT = {
+    "id": "23209116",
+    "fullName": "Javier Armando Malpica Vega",
+    "level": "Niveau 8",
+    "email": "23209116@uan.edu.mx",
+    "emailAliases": [],
+    "contact": "Alumno de Mexico de intercambio",
+    "bookDate": None,
+    "grades": {}
 }
 
 FRENCH1_PRONUNCIATION_EVALUATIONS = {
@@ -552,6 +647,12 @@ def clean_text(value, limit=200):
     return " ".join(str(value or "").strip().split())[:limit]
 
 
+def normalize_text(value):
+    text = unicodedata.normalize("NFD", str(value or "").lower())
+    text = "".join(char for char in text if unicodedata.category(char) != "Mn")
+    return re.sub(r"[^a-z0-9]+", " ", text).strip()
+
+
 def clean_email(value):
     email = normalize_email(value)
     if "@" not in email or len(email) > 200:
@@ -615,6 +716,18 @@ def clean_gradebook_payload(payload, existing):
             clean_evaluation["displayDate"] = clean_text(item.get("displayDate"), 80)
         clean_evaluations.append(clean_evaluation)
 
+    existing_by_id = {}
+    existing_by_email = {}
+    for student in existing.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        student_email = clean_email(student.get("email"))
+        if student_id:
+            existing_by_id[student_id] = student
+        if student_email:
+            existing_by_email[student_email] = student
+
     clean_students = []
     for item in students[:300]:
         if not isinstance(item, dict):
@@ -630,7 +743,8 @@ def clean_gradebook_payload(payload, existing):
                 grade = clean_grade(raw_grades.get(evaluation["id"]))
                 if grade is not None:
                     grades[evaluation["id"]] = grade
-        clean_students.append({
+        original = existing_by_id.get(student_id) or existing_by_email.get(clean_email(item.get("email"))) or {}
+        clean_student = {
             "id": student_id,
             "fullName": full_name,
             "level": clean_text(item.get("level") or "Basic English Course 1", 100),
@@ -639,7 +753,10 @@ def clean_gradebook_payload(payload, existing):
             "contact": clean_text(item.get("contact"), 100),
             "bookDate": clean_text(item.get("bookDate"), 40) or None,
             "grades": grades
-        })
+        }
+        if isinstance(original.get("gradeDetails"), dict):
+            clean_student["gradeDetails"] = original["gradeDetails"]
+        clean_students.append(clean_student)
 
     return {
         "adminEmails": existing.get("adminEmails", []),
@@ -669,7 +786,8 @@ def student_public_view(student):
         "id": student.get("id", ""),
         "level": student.get("level", ""),
         "bookDate": student.get("bookDate"),
-        "grades": student.get("grades", {})
+        "grades": student.get("grades", {}),
+        "gradeDetails": student.get("gradeDetails", {})
     }
 
 
@@ -682,7 +800,8 @@ def staff_student_view(student):
         "emailAliases": student.get("emailAliases", []),
         "contact": student.get("contact", ""),
         "bookDate": student.get("bookDate"),
-        "grades": student.get("grades", {})
+        "grades": student.get("grades", {}),
+        "gradeDetails": student.get("gradeDetails", {})
     }
 
 
@@ -773,22 +892,78 @@ def ensure_french8_pronunciation_evaluations(grades_data):
 def normalize_french8_base_evaluation_weights(grades_data):
     changed = False
     evaluations = grades_data.setdefault("evaluations", [])
-    for evaluation in evaluations:
-        if not isinstance(evaluation, dict):
-            continue
-        evaluation_id = evaluation.get("id")
-        if evaluation_id not in FRENCH8_BASE_EVALUATION_WEIGHTS:
-            continue
-        expected_weight = FRENCH8_BASE_EVALUATION_WEIGHTS[evaluation_id]
-        if evaluation.get("weight") != expected_weight:
-            evaluation["weight"] = expected_weight
+    if not isinstance(evaluations, list):
+        evaluations = []
+        grades_data["evaluations"] = evaluations
+        changed = True
+
+    existing_by_id = {
+        item.get("id"): item
+        for item in evaluations
+        if isinstance(item, dict) and item.get("id")
+    }
+    templates = list(FRENCH8_PRONUNCIATION_EVALUATIONS.values()) + list(FRENCH8_BASE_EVALUATIONS.values())
+    next_evaluations = []
+    for template in templates:
+        evaluation = dict(existing_by_id.get(template["id"], {}))
+        for key, value in template.items():
+            if evaluation.get(key) != value:
+                evaluation[key] = value
+                changed = True
+        next_evaluations.append(evaluation)
+
+    if evaluations != next_evaluations:
+        grades_data["evaluations"] = next_evaluations
+        changed = True
+    return changed
+
+
+def ensure_french8_exchange_student(grades_data):
+    students = grades_data.setdefault("students", [])
+    if not isinstance(students, list):
+        students = []
+        grades_data["students"] = students
+
+    target_email = normalize_email(FRENCH8_EXCHANGE_STUDENT["email"])
+    target_id = FRENCH8_EXCHANGE_STUDENT["id"]
+    student = next(
+        (
+            item for item in students
+            if isinstance(item, dict)
+            and (
+                str(item.get("id", "")).strip() == target_id
+                or email_matches_student(item, target_email)
+            )
+        ),
+        None
+    )
+    if not student:
+        students.append(dict(FRENCH8_EXCHANGE_STUDENT))
+        return True
+
+    changed = False
+    for key in ("id", "fullName", "level", "email", "contact"):
+        expected = FRENCH8_EXCHANGE_STUDENT[key]
+        if student.get(key) != expected:
+            student[key] = expected
             changed = True
+    if not isinstance(student.get("emailAliases"), list):
+        student["emailAliases"] = []
+        changed = True
+    if "bookDate" not in student:
+        student["bookDate"] = None
+        changed = True
+    if not isinstance(student.get("grades"), dict):
+        student["grades"] = {}
+        changed = True
     return changed
 
 
 def ensure_french8_gradebook_structure(grades_data):
     changed = ensure_french8_pronunciation_evaluations(grades_data)
     if normalize_french8_base_evaluation_weights(grades_data):
+        changed = True
+    if ensure_french8_exchange_student(grades_data):
         changed = True
     return changed
 
@@ -807,6 +982,165 @@ def french8_pronunciation_grade_from_payload(payload):
         raise ValueError("invalid_score")
     grade = round((score100 / 20.0) * 100) / 100
     return evaluation_id, int(round(score100)), grade
+
+
+def clean_text_list(value, item_limit=30, char_limit=80):
+    if not isinstance(value, list):
+        return []
+    items = []
+    for item in value[:item_limit]:
+        text = clean_text(item, char_limit)
+        if text:
+            items.append(text)
+    return items
+
+
+def clean_score_metric(value, minimum=0, maximum=100):
+    try:
+        metric = float(value)
+    except (TypeError, ValueError):
+        return None
+    if metric < minimum:
+        metric = minimum
+    if metric > maximum:
+        metric = maximum
+    return round(metric, 2)
+
+
+def clean_pronunciation_submission_details(payload, evaluation_id, score100, grade):
+    details = payload.get("details")
+    if not isinstance(details, dict):
+        details = {}
+    liaison = details.get("liaison")
+    clean_liaison = {}
+    if isinstance(liaison, dict):
+        clean_liaison = {
+            "checked": clean_text_list(liaison.get("checked"), 30, 120),
+            "confirmed": clean_text_list(liaison.get("confirmed"), 30, 120),
+            "missed": clean_text_list(liaison.get("missed"), 30, 120),
+            "message": clean_text(liaison.get("message"), 500)
+        }
+    clean_details = {
+        "evaluationId": evaluation_id,
+        "activityTitle": clean_text(payload.get("activityTitle"), 180),
+        "submittedAt": now_iso(),
+        "score100": score100,
+        "grade": grade,
+        "overall": clean_score_metric(details.get("overall")),
+        "accuracy": clean_score_metric(details.get("accuracy")),
+        "completeness": clean_score_metric(details.get("completeness")),
+        "fluency": clean_score_metric(details.get("fluency")),
+        "wpm": clean_score_metric(details.get("wpm"), 0, 300),
+        "stageLabel": clean_text(details.get("stageLabel"), 120),
+        "final": details.get("final") is True,
+        "transcript": clean_text(details.get("transcript"), 3000),
+        "referenceText": clean_text(details.get("referenceText"), 3000),
+        "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
+        "liaison": clean_liaison
+    }
+    return {key: value for key, value in clean_details.items() if value not in ("", None, [], {})}
+
+
+def safe_filename_token(value, limit=80):
+    token = re.sub(r"[^A-Za-z0-9_.-]+", "-", str(value or "").strip())[:limit].strip(".-")
+    return token or "item"
+
+
+def audio_extension_for_type(content_type):
+    content_type = str(content_type or "").split(";", 1)[0].strip().lower()
+    if content_type in ("audio/webm", "video/webm"):
+        return "webm"
+    if content_type in ("audio/mp4", "audio/x-m4a", "audio/m4a"):
+        return "m4a"
+    if content_type in ("audio/mpeg", "audio/mp3"):
+        return "mp3"
+    if content_type == "audio/wav":
+        return "wav"
+    if content_type == "audio/ogg":
+        return "ogg"
+    return ""
+
+
+def remove_french8_pronunciation_audio(audio_ref):
+    if not isinstance(audio_ref, dict):
+        return
+    filename = safe_filename_token(audio_ref.get("file"), 160)
+    if not filename:
+        return
+    path = os.path.abspath(os.path.join(FRENCH8_PRONUNCIATION_AUDIO_DIR, filename))
+    root = os.path.abspath(FRENCH8_PRONUNCIATION_AUDIO_DIR)
+    if not path.startswith(root + os.sep):
+        return
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+    except OSError:
+        pass
+
+
+def save_french8_pronunciation_audio(student, evaluation_id, payload):
+    details = payload.get("details")
+    if not isinstance(details, dict):
+        return None
+    data_url = details.get("audioDataUrl")
+    if not isinstance(data_url, str) or not data_url.startswith("data:"):
+        return None
+    match = re.match(r"^data:([^;,]+)(?:;[^,]*)?;base64,(.+)$", data_url, re.DOTALL)
+    if not match:
+        return None
+    content_type = match.group(1).strip().lower()
+    extension = audio_extension_for_type(content_type)
+    if not extension:
+        return None
+    try:
+        audio_bytes = base64.b64decode(match.group(2), validate=True)
+    except (ValueError, binascii.Error):
+        return None
+    if not audio_bytes or len(audio_bytes) > 4 * 1024 * 1024:
+        return None
+    os.makedirs(FRENCH8_PRONUNCIATION_AUDIO_DIR, exist_ok=True)
+    student_token = safe_filename_token(student.get("id") or student.get("email") or "student")
+    evaluation_token = safe_filename_token(evaluation_id)
+    filename = f"{student_token}-{evaluation_token}-{int(time.time())}-{secrets.token_hex(4)}.{extension}"
+    path = os.path.join(FRENCH8_PRONUNCIATION_AUDIO_DIR, filename)
+    with open(path, "wb") as handle:
+        handle.write(audio_bytes)
+    return {
+        "file": filename,
+        "contentType": content_type,
+        "bytes": len(audio_bytes),
+        "uploadedAt": now_iso()
+    }
+
+
+def normalized_activity_text(value):
+    return clean_text(value, 5000)
+
+
+def simple_word_count(value):
+    return len([word for word in re.split(r"\s+", str(value or "").strip()) if word])
+
+
+def text_contains_expression(text, expression):
+    normalized_text = normalize_text(text)
+    normalized_expression = normalize_text(expression)
+    return bool(normalized_expression and normalized_expression in normalized_text)
+
+
+def clean_french8_hypotheses_submission_details(payload, audio_ref):
+    text = normalized_activity_text(payload.get("text"))
+    idiom = clean_text(payload.get("idiom"), 140)
+    details = {
+        "evaluationId": FRENCH8_HYPOTHESES_ACTIVITY_ID,
+        "activityTitle": "Production ecrite et orale - Hypotheses irreelles",
+        "submittedAt": now_iso(),
+        "submissionText": text,
+        "idiom": idiom,
+        "wordCount": simple_word_count(text),
+        "promptVersion": clean_text(payload.get("promptVersion") or "20260629-hypotheses-final", 80),
+        "audio": audio_ref
+    }
+    return {key: value for key, value in details.items() if value not in ("", None, [], {})}
 
 
 def ensure_evaluation_template(grades_data, template):
@@ -963,6 +1297,58 @@ def read_french1_final_exam_submissions():
 
 def write_french1_final_exam_submissions(data):
     write_json_file(FRENCH1_FINAL_EXAM_SUBMISSIONS_PATH, data, ".french1-final-submissions-")
+
+
+def default_french2_final_exam_bundle():
+    return {
+        "state": {
+            "isOpen": False,
+            "openedAt": None,
+            "closedAt": None,
+            "openedBy": None,
+            "updatedAt": None
+        },
+        "exam": {
+            "id": "french2-final-exam",
+            "title": "Examen final A1.2",
+            "totalPoints": 50,
+            "transcript": "",
+            "sections": []
+        }
+    }
+
+
+def read_french2_final_exam_bundle():
+    source_path = FRENCH2_FINAL_EXAM_PATH if os.path.exists(FRENCH2_FINAL_EXAM_PATH) else BUNDLED_FRENCH2_FINAL_EXAM_PATH
+    data = read_json_file(source_path, default_french2_final_exam_bundle())
+    if not isinstance(data.get("state"), dict):
+        data["state"] = default_french2_final_exam_bundle()["state"]
+    if not isinstance(data.get("exam"), dict):
+        data["exam"] = default_french2_final_exam_bundle()["exam"]
+    data["state"].setdefault("isOpen", False)
+    data["state"].setdefault("openedAt", None)
+    data["state"].setdefault("closedAt", None)
+    data["state"].setdefault("openedBy", None)
+    data["state"].setdefault("updatedAt", None)
+    data["exam"].setdefault("sections", [])
+    data["exam"].setdefault("totalPoints", 50)
+    data["exam"].setdefault("transcript", "")
+    return data
+
+
+def write_french2_final_exam_bundle(data):
+    write_json_file(FRENCH2_FINAL_EXAM_PATH, data, ".french2-final-exam-")
+
+
+def read_french2_final_exam_submissions():
+    data = read_json_file(FRENCH2_FINAL_EXAM_SUBMISSIONS_PATH, {"submissions": {}})
+    if not isinstance(data.get("submissions"), dict):
+        data["submissions"] = {}
+    return data
+
+
+def write_french2_final_exam_submissions(data):
+    write_json_file(FRENCH2_FINAL_EXAM_SUBMISSIONS_PATH, data, ".french2-final-submissions-")
 
 
 def french1_final_exam_submission_public(submission):
@@ -1382,6 +1768,39 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/french8/pronunciation-audio":
+            query = urllib.parse.parse_qs(parsed.query)
+            student_id = clean_text((query.get("studentId") or [""])[0], 40)
+            evaluation_id = clean_text((query.get("evaluationId") or [""])[0], 80)
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                students = grades_data.get("students", [])
+                target = next(
+                    (
+                        item for item in students
+                        if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id
+                    ),
+                    None
+                )
+                role = grade_user_role(profile, grades_data)
+                current_student = matched_student_for_profile(profile, grades_data)
+                is_self = isinstance(current_student, dict) and clean_text(current_student.get("id"), 40) == student_id
+                if not isinstance(target, dict) or (role not in ("admin", "teacher") and not is_self):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                details = target.get("gradeDetails", {}).get(evaluation_id) if isinstance(target.get("gradeDetails"), dict) else None
+                audio_ref = details.get("audio") if isinstance(details, dict) else None
+                filename = safe_filename_token(audio_ref.get("file"), 160) if isinstance(audio_ref, dict) else ""
+                content_type = audio_ref.get("contentType", "audio/webm") if isinstance(audio_ref, dict) else "audio/webm"
+            path = os.path.abspath(os.path.join(FRENCH8_PRONUNCIATION_AUDIO_DIR, filename))
+            root = os.path.abspath(FRENCH8_PRONUNCIATION_AUDIO_DIR)
+            if not filename or not path.startswith(root + os.sep) or not os.path.exists(path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(path, "rb") as handle:
+                binary_response(self, 200, handle.read(), content_type)
+            return
+
         if parsed.path == "/api/french7/final-exam/state":
             with data_lock:
                 grades_data = read_grades_data(FRENCH7_GRADES_PATH)
@@ -1518,6 +1937,81 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 403, {"error": "forbidden"})
                     return
                 bundle = read_french1_final_exam_bundle()
+                transcript = clean_text(bundle.get("exam", {}).get("transcript"), 5000)
+                json_response(self, 200, {"transcript": transcript})
+            return
+
+        if parsed.path == "/api/french2/final-exam/state":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                bundle = read_french2_final_exam_bundle()
+                submissions = read_french2_final_exam_submissions()
+                raw_payload = final_exam_state_payload(profile, grades_data, bundle, submissions)
+                raw_payload["submitted"] = french1_final_exam_submission_public(raw_payload.get("submitted"))
+                json_response(self, 200, raw_payload)
+            return
+
+        if parsed.path == "/api/french2/final-exam":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_french2_final_exam_bundle()
+                submissions = read_french2_final_exam_submissions()
+                state = bundle.get("state", {})
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if submitted:
+                    json_response(self, 200, {"status": "submitted", "state": state, "result": french1_final_exam_submission_public(submitted)})
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+
+                json_response(self, 200, {
+                    "status": "open" if state.get("isOpen") is True else "staff-preview",
+                    "role": role,
+                    "state": state,
+                    "student": student_public_view(student) if isinstance(student, dict) else None,
+                    "exam": final_exam_public_payload(bundle)
+                })
+            return
+
+        if parsed.path == "/api/french2/final-exam/audio":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_french2_final_exam_bundle()
+                state = bundle.get("state", {})
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed"})
+                    return
+                audio_path = FRENCH2_FINAL_EXAM_AUDIO_PATH
+                if not os.path.exists(audio_path):
+                    audio_path = BUNDLED_FRENCH2_FINAL_EXAM_AUDIO_PATH
+            if not os.path.exists(audio_path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(audio_path, "rb") as handle:
+                binary_response(self, 200, handle.read(), "audio/mpeg")
+            return
+
+        if parsed.path == "/api/french2/final-exam/transcript":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                bundle = read_french2_final_exam_bundle()
                 transcript = clean_text(bundle.get("exam", {}).get("transcript"), 5000)
                 json_response(self, 200, {"transcript": transcript})
             return
@@ -1788,6 +2282,52 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {"ok": True, "result": french1_final_exam_submission_public(submission)})
             return
 
+        if parsed.path == "/api/french2/final-exam/submit":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+
+                bundle = read_french2_final_exam_bundle()
+                state = bundle.get("state", {})
+                if state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+
+                submissions = read_french2_final_exam_submissions()
+                student_id = clean_text(student.get("id"), 40)
+                existing = submissions.get("submissions", {}).get(student_id)
+                if existing:
+                    json_response(self, 409, {
+                        "error": "already_submitted",
+                        "result": french1_final_exam_submission_public(existing)
+                    })
+                    return
+
+                result = score_final_exam(bundle.get("exam", {}), payload.get("answers"))
+                submitted_at = now_iso()
+                submission = {
+                    "studentId": student_id,
+                    "studentName": student.get("fullName", ""),
+                    "email": normalize_email(profile.get("email")),
+                    "scorePoints": result["scorePoints"],
+                    "totalPoints": result["totalPoints"],
+                    "grade": result["grade"],
+                    "sectionScores": result["sectionScores"],
+                    "submittedAt": submitted_at,
+                    "answers": result["details"]
+                }
+                submissions.setdefault("submissions", {})[student_id] = submission
+
+                ensure_final_exam_evaluation(grades_data)
+                student.setdefault("grades", {})["finalExam"] = result["grade"]
+                write_french2_final_exam_submissions(submissions)
+                write_json_file(FRENCH2_GRADES_PATH, grades_data, ".french2-grades-")
+                json_response(self, 200, {"ok": True, "result": french1_final_exam_submission_public(submission)})
+            return
+
         if parsed.path == "/api/french1/pronunciation-grade":
             with data_lock:
                 grades_data = read_grades_data(FRENCH1_GRADES_PATH)
@@ -1815,8 +2355,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/french8/pronunciation-grade":
             with data_lock:
                 grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                changed = ensure_french8_gradebook_structure(grades_data)
                 student = matched_student_for_profile(profile, grades_data)
                 if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
                 try:
@@ -1824,8 +2367,27 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 except ValueError as error:
                     json_response(self, 400, {"error": str(error)})
                     return
-                ensure_french8_gradebook_structure(grades_data)
+                deadline = FRENCH8_PRONUNCIATION_DEADLINES.get(evaluation_id)
+                if deadline and time.time() >= deadline["epoch"]:
+                    json_response(self, 403, {
+                        "error": "deadline_closed",
+                        "deadlineAt": deadline["utc"],
+                        "deadlineLabel": deadline["label"]
+                    })
+                    return
                 student.setdefault("grades", {})[evaluation_id] = grade
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                previous_detail = student["gradeDetails"].get(evaluation_id)
+                audio_ref = save_french8_pronunciation_audio(student, evaluation_id, payload)
+                next_detail = clean_pronunciation_submission_details(payload, evaluation_id, score100, grade)
+                if audio_ref:
+                    if isinstance(previous_detail, dict):
+                        remove_french8_pronunciation_audio(previous_detail.get("audio"))
+                    next_detail["audio"] = audio_ref
+                elif isinstance(previous_detail, dict) and isinstance(previous_detail.get("audio"), dict):
+                    next_detail["audio"] = previous_detail["audio"]
+                student["gradeDetails"][evaluation_id] = next_detail
                 write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                 json_response(self, 200, {
                     "ok": True,
@@ -1833,6 +2395,50 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "score100": score100,
                     "grade": grade,
                     "updatedAt": now_iso()
+                })
+            return
+
+        if parsed.path == "/api/french8/hypotheses-submission":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                changed = ensure_french8_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                text = normalized_activity_text(payload.get("text"))
+                idiom = clean_text(payload.get("idiom"), 140)
+                if simple_word_count(text) < 120:
+                    json_response(self, 400, {"error": "text_too_short", "wordCount": simple_word_count(text)})
+                    return
+                if not idiom:
+                    json_response(self, 400, {"error": "missing_idiom"})
+                    return
+                if not text_contains_expression(text, idiom):
+                    json_response(self, 400, {"error": "idiom_not_found"})
+                    return
+                audio_payload = {"details": {"audioDataUrl": payload.get("audioDataUrl")}}
+                audio_ref = save_french8_pronunciation_audio(student, FRENCH8_HYPOTHESES_ACTIVITY_ID, audio_payload)
+                if not audio_ref:
+                    json_response(self, 400, {"error": "missing_audio"})
+                    return
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                previous_detail = student["gradeDetails"].get(FRENCH8_HYPOTHESES_ACTIVITY_ID)
+                if isinstance(previous_detail, dict):
+                    remove_french8_pronunciation_audio(previous_detail.get("audio"))
+                next_detail = clean_french8_hypotheses_submission_details(payload, audio_ref)
+                if isinstance(previous_detail, dict) and previous_detail.get("feedback"):
+                    next_detail["previousFeedback"] = previous_detail.get("feedback")
+                student["gradeDetails"][FRENCH8_HYPOTHESES_ACTIVITY_ID] = next_detail
+                write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": FRENCH8_HYPOTHESES_ACTIVITY_ID,
+                    "wordCount": next_detail.get("wordCount"),
+                    "submittedAt": next_detail.get("submittedAt")
                 })
             return
 
@@ -1921,7 +2527,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/french8/grades":
             with data_lock:
                 grades_data = read_grades_data(FRENCH8_GRADES_PATH)
-                if grade_user_role(profile, grades_data) != "admin":
+                if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
                     json_response(self, 403, {"error": "forbidden"})
                     return
                 try:
@@ -1929,8 +2535,43 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 except ValueError as error:
                     json_response(self, 400, {"error": str(error)})
                     return
+                ensure_french8_gradebook_structure(next_data)
                 write_json_file(FRENCH8_GRADES_PATH, next_data, ".french8-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+            return
+
+        if parsed.path == "/api/french8/hypotheses-feedback":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                student_id = clean_text(payload.get("studentId"), 40)
+                student = next(
+                    (
+                        item for item in grades_data.get("students", [])
+                        if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id
+                    ),
+                    None
+                )
+                if not isinstance(student, dict):
+                    json_response(self, 404, {"error": "student_not_found"})
+                    return
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                detail = student["gradeDetails"].setdefault(FRENCH8_HYPOTHESES_ACTIVITY_ID, {
+                    "evaluationId": FRENCH8_HYPOTHESES_ACTIVITY_ID,
+                    "activityTitle": "Production ecrite et orale - Hypotheses irreelles"
+                })
+                feedback = clean_text(payload.get("feedback"), 1600)
+                detail["feedback"] = feedback
+                detail["feedbackAt"] = now_iso()
+                detail["feedbackBy"] = normalize_email(profile.get("email"))
+                grade = clean_grade(payload.get("grade"))
+                if grade is not None:
+                    student.setdefault("grades", {})[FRENCH8_HYPOTHESES_ACTIVITY_ID] = grade
+                write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                json_response(self, 200, {"ok": True, "updatedAt": detail["feedbackAt"], "grade": grade})
             return
 
 
@@ -2046,6 +2687,29 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 else:
                     state["closedAt"] = timestamp
                 write_french1_final_exam_bundle(bundle)
+                json_response(self, 200, {"ok": True, "state": state})
+            return
+
+        if parsed.path == "/api/french2/final-exam/state":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                bundle = read_french2_final_exam_bundle()
+                state = bundle.setdefault("state", {})
+                desired_open = payload.get("isOpen") is True
+                timestamp = now_iso()
+                state["isOpen"] = desired_open
+                state["updatedAt"] = timestamp
+                if desired_open:
+                    state["openedAt"] = timestamp
+                    state["openedBy"] = normalize_email(profile.get("email"))
+                    state["closedAt"] = None
+                else:
+                    state["closedAt"] = timestamp
+                write_french2_final_exam_bundle(bundle)
                 json_response(self, 200, {"ok": True, "state": state})
             return
 

@@ -1,0 +1,558 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Examen final | Français Niveau 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--iue-orange:#f47b20;--iue-blue:#00395c;--iue-black:#050505;--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--green:#1f9d75;--yellow:#f3b33d;--soft:#f4f7fb;--text:#243044;--muted:#718096;--shadow:0 22px 55px rgba(20,40,80,.13);--radius:26px}
+    *{scroll-behavior:smooth}
+    body{margin:0;font-family:"Nunito",sans-serif;color:var(--text);background:var(--soft);overflow-x:hidden}
+    h1,h2,h3,h4,.navbar-brand{font-family:"Montserrat",sans-serif}
+    .institutional-band{background:var(--iue-black);overflow:hidden}
+    .institutional-band img{display:block;width:100%}
+    .navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 10px 32px rgba(21,52,93,.08)}
+    .navbar-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:800;color:var(--blue-dark)}
+    .brand-logo{height:42px}
+    .nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}
+    .nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
+    .hero{min-height:650px;display:flex;align-items:center;position:relative;overflow:hidden;padding:7.6rem 0 4.5rem;background:linear-gradient(90deg,rgba(3,19,35,.92) 0%,rgba(21,52,93,.78) 46%,rgba(21,52,93,.08) 100%),url("img/evaluation/simulacre-examen-final-a12.png?v=20260630-n2-final") center/cover no-repeat}
+    .hero:after{content:"";position:absolute;inset:auto 0 0;height:130px;background:linear-gradient(to bottom,transparent,var(--soft));pointer-events:none}
+    .hero-content{position:relative;z-index:1;max-width:790px;color:#fff}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);color:#fff;font-weight:900;backdrop-filter:blur(10px)}
+    .hero h1{margin:1.15rem 0 .8rem;font-size:clamp(2.55rem,6.4vw,5.45rem);font-weight:900;line-height:.98;letter-spacing:-.05em}
+    .hero-lead{font-size:clamp(1.15rem,2vw,1.5rem);font-weight:900;color:rgba(255,255,255,.92)}
+    .hero-text{max-width:700px;color:rgba(255,255,255,.84);font-size:1.08rem;line-height:1.7}
+    .btn-main,.btn-soft,.btn-danger-soft{min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;padding:.78rem 1.15rem;font-weight:900;text-decoration:none;cursor:pointer}
+    .btn-main{border:0;background:linear-gradient(135deg,var(--iue-orange),#ff9b2f);color:#111;box-shadow:0 16px 34px rgba(244,123,32,.24)}
+    .btn-main:hover{color:#111;filter:brightness(1.03)}
+    .btn-main:disabled,.btn-soft:disabled,.btn-danger-soft:disabled{opacity:.58;cursor:not-allowed}
+    .btn-soft{background:rgba(255,255,255,.95);color:var(--blue-dark);border:2px solid rgba(31,78,140,.12)}
+    .btn-danger-soft{background:#fff;color:var(--red);border:2px solid rgba(214,40,57,.18)}
+    section{padding:4.5rem 0}
+    .exam-shell{margin-top:-2.5rem;position:relative;z-index:2}
+    .access-panel,.admin-panel,.exam-section,.submitted-panel{border-radius:var(--radius);background:#fff;box-shadow:var(--shadow);border:1px solid rgba(21,52,93,.08);padding:clamp(1.2rem,2.5vw,2rem)}
+    .admin-panel{background:linear-gradient(135deg,#fff7ef,#fff);border-color:rgba(244,123,32,.22)}
+    .section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}
+    .section-title{color:var(--blue-dark);font-size:clamp(1.9rem,4vw,3.05rem);font-weight:900;letter-spacing:-.045em}
+    .section-text{color:var(--muted);font-size:1.06rem;line-height:1.7}
+    .access-icon{width:66px;height:66px;display:grid;place-items:center;border-radius:20px;background:rgba(244,123,32,.12);color:var(--iue-orange);font-size:2rem;flex:0 0 auto}
+    .login-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+    .form-control{border-radius:14px;border:1px solid rgba(31,78,140,.18);min-height:44px}
+    .identity-strip{display:flex;flex-wrap:wrap;gap:.7rem;margin:0 0 1rem}
+    .pill{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;padding:.42rem .7rem;background:rgba(31,78,140,.08);color:var(--blue-dark);font-weight:900;font-size:.84rem}
+    .pill.open{background:#e8f7ef;color:#11633b}.pill.closed{background:#fff0f1;color:#9f1d2a}
+    .section-card{border-radius:22px;background:#fff;box-shadow:var(--shadow);border:1px solid rgba(21,52,93,.08);padding:clamp(1.15rem,2.4vw,1.8rem);margin-bottom:1.2rem}
+    .reading-box,.audio-box{border-radius:20px;background:#f8fbff;border-left:6px solid var(--iue-orange);padding:1rem;color:var(--text);line-height:1.72;margin:1rem 0}
+    .reading-box h3,.audio-box h3{color:var(--blue-dark);font-weight:900}
+    .audio-box audio{width:100%;margin:.75rem 0 .4rem}
+    .question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .question-card{border-radius:18px;background:#f8fbff;border:1px solid rgba(31,78,140,.08);padding:1rem;height:100%}
+    .question-card legend{display:block;width:100%;margin:0 0 .75rem;color:var(--blue-dark);font-size:1rem;font-weight:900;line-height:1.45}
+    .choice{min-height:42px;display:flex;align-items:flex-start;gap:.55rem;margin:.45rem 0;padding:.65rem .75rem;border-radius:14px;background:#fff;border:1px solid rgba(31,78,140,.1);cursor:pointer;color:var(--text);font-weight:800;line-height:1.35}
+    .choice:hover{border-color:rgba(31,78,140,.32);background:#fdfefe}
+    .choice input{margin-top:.22rem;flex:0 0 auto}
+    .submit-zone{position:sticky;bottom:1rem;z-index:5;border-radius:24px;background:linear-gradient(135deg,var(--blue-dark),var(--iue-blue));color:#fff;box-shadow:0 24px 50px rgba(21,52,93,.25);padding:1rem 1.2rem;margin:1.5rem 0}
+    .submit-zone p{margin:0;color:rgba(255,255,255,.82)}
+    .status-message{border-radius:18px;padding:.9rem 1rem;font-weight:900}
+    .status-message.success{background:#e8f7ef;color:#11633b}
+    .status-message.error{background:#fff0f1;color:#9f1d2a}
+    .status-message.pending{background:#eef5ff;color:var(--blue-dark)}
+    .grade-number{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:var(--blue-dark);line-height:.95;letter-spacing:-.06em}
+    footer{background:var(--blue-dark);color:#fff;padding:3rem 0}
+    footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}
+    @media(max-width:900px){.hero{padding-top:7rem}.question-grid{grid-template-columns:1fr}.submit-zone{position:static}}
+    @media(max-width:575px){.btn-main,.btn-soft,.btn-danger-soft{width:100%}.access-icon{width:54px;height:54px;font-size:1.55rem}}
+  </style>
+</head>
+<body>
+  <div class="institutional-band" aria-label="Institution Universitaire de Envigado"><img src="img/institutionnel/iue-header.png" alt="Institution Universitaire de Envigado"></div>
+  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navigation Niveau 2"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link" href="bibliotheque-audio.html">Audio</a></li><li class="nav-item"><a class="nav-link" href="simulacre-examen-final.html">Simulacre</a></li><li class="nav-item"><a class="nav-link active" href="examen-final.html">Examen final</a></li><li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li></ul></div></div></nav>
+
+  <header class="hero" id="top">
+    <div class="container"><div class="hero-content">
+      <span class="badge-course"><i class="bi bi-shield-lock-fill"></i> A1.2 · Évaluation finale verrouillée</span>
+      <h1>Examen final</h1>
+      <p class="hero-lead">Compréhension, grammaire et vocabulaire A1 en contexte.</p>
+      <p class="hero-text">L’examen final est visible uniquement lorsque le professeur l’ouvre. Une seule soumission est enregistrée par étudiant et la note finale est calculée automatiquement sur 5.</p>
+      <div class="d-flex flex-wrap gap-3 mt-4"><a href="#access" class="btn-main"><i class="bi bi-play-circle-fill"></i> Accéder</a><a href="notes-evaluation.html" class="btn-soft"><i class="bi bi-bar-chart-fill"></i> Notes</a></div>
+    </div></div>
+  </header>
+
+  <section id="access" class="exam-shell">
+    <div class="container">
+      <div class="access-panel" id="accessPanel" aria-live="polite"></div>
+      <div class="admin-panel mt-3" id="adminPanel" hidden></div>
+    </div>
+  </section>
+
+  <main class="exam-shell" id="examRoot" hidden>
+    <div class="container">
+      <form id="examForm" novalidate></form>
+    </div>
+  </main>
+
+  <footer><div class="container"><div class="row align-items-center g-4"><div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Examen final · Français Niveau 2</h2><p class="mb-0 opacity-75">Évaluation A1.2 avec accès contrôlé par le professeur.</p></div><div class="col-lg-4 text-lg-end"><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Retour en haut <i class="bi bi-arrow-up"></i></a></div></div></div></footer>
+  <div class="institutional-band" aria-label="Coordonnées Institution Universitaire de Envigado"><img src="img/institutionnel/iue-footer.png" alt="Coordonnées Institution Universitaire de Envigado"></div>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script>window.JARALINGUA_MICROSOFT_CLIENT_ID=window.JARALINGUA_MICROSOFT_CLIENT_ID||"4e729f8a-d101-4c5d-af68-609d749bc95a";</script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
+  <script src="../../assets/js/transcript-pdf.js"></script>
+  <script src="assets/listening-controls-a2.js?v=20260630-n2-audio-controls"></script>
+  <script src="../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const GOOGLE_KEY = "jaralingua_google_user";
+      const MICROSOFT_KEY = "jaralingua_microsoft_user";
+      const LOCAL_KEY = "jaralingua_local_gradebook_user:french2GradesApp";
+      const API = {
+        login: "/api/french2/grades/login",
+        state: "/api/french2/final-exam/state",
+        exam: "/api/french2/final-exam",
+        audio: "/api/french2/final-exam/audio",
+        transcript: "/api/french2/final-exam/transcript",
+        submit: "/api/french2/final-exam/submit"
+      };
+      const els = {
+        access: document.getElementById("accessPanel"),
+        admin: document.getElementById("adminPanel"),
+        root: document.getElementById("examRoot"),
+        form: document.getElementById("examForm")
+      };
+      let currentRole = "student";
+      let currentExam = null;
+      let audioObjectUrl = null;
+      let loading = false;
+
+      function esc(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        })[character]);
+      }
+
+      function storedUser(key) {
+        try {
+          const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+          if (!saved || !saved.credential || saved.exp <= Date.now() / 1000) {
+            sessionStorage.removeItem(key);
+            return null;
+          }
+          return saved;
+        } catch (_error) {
+          sessionStorage.removeItem(key);
+          return null;
+        }
+      }
+
+      function activeUser() {
+        const google = storedUser(GOOGLE_KEY);
+        if (google) return Object.assign({ provider: "google" }, google);
+        const microsoft = storedUser(MICROSOFT_KEY);
+        if (microsoft) return Object.assign({ provider: "microsoft" }, microsoft);
+        const local = storedUser(LOCAL_KEY);
+        if (local) return Object.assign({ provider: "local" }, local);
+        return null;
+      }
+
+      function headers(extra = {}) {
+        const user = activeUser();
+        return Object.assign({
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.credential,
+          "X-Jaralingua-Auth-Provider": user.provider || "google"
+        }, extra);
+      }
+
+      async function request(url, options = {}) {
+        const response = await fetch(url, Object.assign({}, options, { headers: Object.assign({}, headers(), options.headers || {}) }));
+        const payload = await response.json().catch(() => ({}));
+        return { ok: response.ok, status: response.status, data: payload };
+      }
+
+      function openLoginPanel() {
+        document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();
+      }
+
+      function renderLogin(message) {
+        els.root.hidden = true;
+        els.admin.hidden = true;
+        els.access.innerHTML = `
+          <div class="d-flex flex-wrap align-items-start gap-3">
+            <div class="access-icon"><i class="bi bi-shield-lock-fill"></i></div>
+            <div class="flex-grow-1">
+              <p class="section-kicker">Connexion requise</p>
+              <h2 class="section-title">Identifiez-vous pour vérifier l’accès</h2>
+              <p class="section-text">${esc(message || "Connectez-vous avec Google, Microsoft ou le courriel inscrit au cours.")}</p>
+              <div class="login-grid">
+                <form id="courseLoginForm">
+                  <label class="fw-bold mb-1" for="courseEmail">Courriel du cours</label>
+                  <input class="form-control mb-2" id="courseEmail" name="courseEmail" type="email" autocomplete="username" required>
+                  <label class="fw-bold mb-1" for="coursePassword">Mot de passe</label>
+                  <input class="form-control mb-2" id="coursePassword" name="coursePassword" type="password" autocomplete="current-password" placeholder="ID*" required>
+                  <button class="btn-main w-100" type="submit"><i class="bi bi-key-fill"></i> Entrer avec le courriel du cours</button>
+                  <p id="courseLoginStatus" class="mt-2 mb-0 fw-bold"></p>
+                </form>
+                <div>
+                  <p class="section-text mb-3">Utilisez aussi le bouton flottant JaraLingua si votre compte est Google ou Microsoft.</p>
+                  <button class="btn-soft" type="button" data-open-login><i class="bi bi-google"></i> Google / Microsoft</button>
+                  <button class="btn-soft mt-2" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier mon accès</button>
+                </div>
+              </div>
+            </div>
+          </div>`;
+        els.access.querySelector("[data-open-login]").addEventListener("click", () => {
+          openLoginPanel();
+          setTimeout(loadState, 1400);
+          setTimeout(loadState, 3200);
+        });
+        els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
+        els.access.querySelector("#courseLoginForm").addEventListener("submit", loginCourse);
+      }
+
+      async function loginCourse(event) {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const status = document.getElementById("courseLoginStatus");
+        const button = form.querySelector("button[type='submit']");
+        status.textContent = "Vérification du compte du cours...";
+        button.disabled = true;
+        try {
+          const response = await fetch(API.login, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: form.courseEmail.value.trim(), password: form.coursePassword.value })
+          });
+          const result = await response.json().catch(() => ({}));
+          if (!response.ok || !result.token) throw new Error(result.error || "invalid_credentials");
+          sessionStorage.setItem(LOCAL_KEY, JSON.stringify({
+            provider: "local",
+            email: result.user?.email || form.courseEmail.value.trim(),
+            name: result.user?.name || form.courseEmail.value.trim(),
+            credential: result.token,
+            exp: result.exp
+          }));
+          sessionStorage.removeItem(GOOGLE_KEY);
+          sessionStorage.removeItem(MICROSOFT_KEY);
+          status.textContent = "Compte validé.";
+          await loadState();
+        } catch (_error) {
+          status.textContent = "Courriel ou mot de passe incorrect. Mot de passe : numéro ID + astérisque.";
+          button.disabled = false;
+        }
+      }
+
+      function renderLocked(message, payload) {
+        els.root.hidden = true;
+        els.access.innerHTML = `
+          <div class="d-flex flex-wrap align-items-start gap-3">
+            <div class="access-icon"><i class="bi bi-lock-fill"></i></div>
+            <div class="flex-grow-1">
+              <p class="section-kicker">Examen fermé</p>
+              <h2 class="section-title">L’examen final n’est pas encore ouvert</h2>
+              <p class="section-text">${esc(message || "Attendez que le professeur ouvre l’examen final pendant la séance.")}</p>
+              <div class="identity-strip">
+                <span class="pill closed"><i class="bi bi-lock-fill"></i> Fermé aux étudiants</span>
+                ${payload?.state?.updatedAt ? `<span class="pill"><i class="bi bi-clock-history"></i> Dernière mise à jour : ${esc(payload.state.updatedAt)}</span>` : ""}
+              </div>
+              <button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier à nouveau</button>
+            </div>
+          </div>`;
+        els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
+      }
+
+      function renderAdmin(payload) {
+        const role = payload?.role || "student";
+        if (!["admin", "teacher"].includes(role)) {
+          els.admin.hidden = true;
+          els.admin.innerHTML = "";
+          return;
+        }
+        const open = payload?.state?.isOpen === true;
+        els.admin.hidden = false;
+        els.admin.innerHTML = `
+          <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
+            <div>
+              <p class="section-kicker">Contrôle professeur</p>
+              <h2 class="h3 fw-bold text-primary-emphasis mb-2">Ouverture de l’examen final</h2>
+              <div class="identity-strip">
+                <span class="pill ${open ? "open" : "closed"}"><i class="bi ${open ? "bi-unlock-fill" : "bi-lock-fill"}"></i> ${open ? "Ouvert aux étudiants" : "Fermé aux étudiants"}</span>
+                ${payload?.state?.openedBy ? `<span class="pill"><i class="bi bi-person-check"></i> ${esc(payload.state.openedBy)}</span>` : ""}
+              </div>
+              <p class="section-text mb-0">Quand vous ouvrez l’examen, les étudiants autorisés peuvent le voir, écouter l’audio protégé et soumettre une seule fois. Pensez à le fermer à la fin de la séance.</p>
+              <p class="mt-3 mb-0 status-message pending" id="adminStatus" hidden></p>
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+              <button class="btn-main" type="button" data-set-open="true"><i class="bi bi-unlock-fill"></i> Ouvrir</button>
+              <button class="btn-danger-soft" type="button" data-set-open="false"><i class="bi bi-lock-fill"></i> Fermer</button>
+              <button class="btn-soft" type="button" data-download-transcript><i class="bi bi-file-earmark-arrow-down-fill"></i> Transcription professeur</button>
+            </div>
+          </div>`;
+        els.admin.querySelectorAll("[data-set-open]").forEach((button) => {
+          button.addEventListener("click", () => setExamState(button.getAttribute("data-set-open") === "true"));
+        });
+        els.admin.querySelector("[data-download-transcript]").addEventListener("click", downloadTranscript);
+      }
+
+      function setAdminStatus(message, type = "pending") {
+        const node = document.getElementById("adminStatus");
+        if (!node) return;
+        node.hidden = false;
+        node.className = "mt-3 mb-0 status-message " + type;
+        node.textContent = message;
+      }
+
+      async function setExamState(isOpen) {
+        setAdminStatus("Mise à jour de l’état de l’examen...");
+        try {
+          const result = await request(API.state, { method: "PUT", body: JSON.stringify({ isOpen }) });
+          if (!result.ok) throw new Error(result.data?.error || "state_error");
+          const message = isOpen
+            ? "L’examen final est maintenant ouvert. Les étudiants peuvent le voir et le réaliser. N’oubliez pas de le fermer à la fin de la séance."
+            : "L’examen final est fermé. Les étudiants ne peuvent plus l’ouvrir ni le soumettre.";
+          setAdminStatus(message, "success");
+          await loadState();
+          setAdminStatus(message, "success");
+        } catch (_error) {
+          setAdminStatus("Impossible de modifier l’état de l’examen. Vérifiez votre accès professeur.", "error");
+        }
+      }
+
+      async function downloadTranscript() {
+        setAdminStatus("Préparation de la transcription...");
+        try {
+          const result = await request(API.transcript);
+          if (!result.ok || !result.data?.transcript) throw new Error("transcript_unavailable");
+          const title = "Transcription professeur — Examen final A1.2";
+          if (window.downloadTranscriptPdf) {
+            window.downloadTranscriptPdf(title, result.data.transcript, "transcription-examen-final-a12.pdf");
+          } else {
+            const blob = new Blob([title + "\n\n" + result.data.transcript], { type: "text/plain;charset=utf-8" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = "transcription-examen-final-a12.txt";
+            link.click();
+            URL.revokeObjectURL(link.href);
+          }
+          setAdminStatus("Transcription téléchargée. Vérifiez qu’elle reste réservée au professeur.", "success");
+        } catch (_error) {
+          setAdminStatus("La transcription n’a pas pu être téléchargée.", "error");
+        }
+      }
+
+      function questionHtml(question, index) {
+        const block = question.block ? `<span class="pill mb-2">${esc(question.block)}</span>` : "";
+        if (question.type === "truefalse") {
+          return `<fieldset class="question-card" data-question="${esc(question.id)}">${block}<legend>${index + 1}. ${esc(question.prompt)}</legend>
+            <label class="choice"><input type="radio" name="${esc(question.id)}" value="true" required><span>Vrai</span></label>
+            <label class="choice"><input type="radio" name="${esc(question.id)}" value="false" required><span>Faux</span></label>
+          </fieldset>`;
+        }
+        return `<fieldset class="question-card" data-question="${esc(question.id)}">${block}<legend>${index + 1}. ${esc(question.prompt)}</legend>
+          ${(question.options || []).map((option, optionIndex) => `<label class="choice"><input type="radio" name="${esc(question.id)}" value="${optionIndex}" required><span>${esc(option)}</span></label>`).join("")}
+        </fieldset>`;
+      }
+
+      function renderSection(section) {
+        const reading = section.readingText?.length ? `<div class="reading-box"><h3>${esc(section.readingTitle || "Texte")}</h3>${section.readingText.map((paragraph) => `<p>${esc(paragraph)}</p>`).join("")}</div>` : "";
+        const audio = section.audioSrc ? `<div class="audio-box"><h3>${esc(section.audioTitle || "Audio")}</h3><p>${esc(section.audioText || "Écoutez l’audio et répondez.")}</p><audio id="finalExamAudio" data-listening-audio controls preload="metadata" aria-label="Audio protégé de l’examen final"></audio></div>` : "";
+        return `<section class="section-card" data-section="${esc(section.id)}">
+          <p class="section-kicker">${esc(section.title)} · ${esc(section.points)} points</p>
+          <h2 class="section-title">${esc(section.subtitle || section.title)}</h2>
+          <p class="section-text">${esc(section.instructions || "")}</p>
+          ${reading}
+          ${audio}
+          <div class="question-grid">${(section.questions || []).map(questionHtml).join("")}</div>
+        </section>`;
+      }
+
+      async function loadProtectedAudio() {
+        const audio = document.getElementById("finalExamAudio");
+        if (!audio) return;
+        try {
+          const response = await fetch(API.audio, { headers: headers({ "Content-Type": "application/octet-stream" }) });
+          if (!response.ok) throw new Error("audio_unavailable");
+          const blob = await response.blob();
+          if (audioObjectUrl) URL.revokeObjectURL(audioObjectUrl);
+          audioObjectUrl = URL.createObjectURL(blob);
+          audio.src = audioObjectUrl;
+          window.JaraLinguaN2ListeningControls?.enhanceAudio?.(audio);
+        } catch (_error) {
+          audio.insertAdjacentHTML("afterend", `<p class="status-message error mt-2">L’audio protégé n’a pas pu être chargé. Ne soumettez pas l’examen et prévenez le professeur.</p>`);
+        }
+      }
+
+      function renderExam(payload) {
+        currentRole = payload.role || currentRole;
+        currentExam = payload.exam;
+        const user = activeUser();
+        const isStaff = ["admin", "teacher"].includes(currentRole);
+        els.root.hidden = false;
+        els.access.innerHTML = `
+          <div class="d-flex flex-wrap align-items-start gap-3">
+            <div class="access-icon"><i class="bi bi-unlock-fill"></i></div>
+            <div class="flex-grow-1">
+              <p class="section-kicker">${isStaff ? "Aperçu professeur" : "Accès validé"}</p>
+              <h2 class="section-title">${esc(currentExam.title || "Examen final")}</h2>
+              <p class="section-text mb-0">${isStaff ? "Vous pouvez prévisualiser l’examen. Les comptes professeur ne soumettent pas de note." : "Répondez soigneusement. Une seule soumission sera enregistrée."}</p>
+              <div class="identity-strip mt-3">
+                <span class="pill open"><i class="bi bi-unlock-fill"></i> Examen ouvert</span>
+                <span class="pill"><i class="bi bi-person-circle"></i> ${esc(user?.name || user?.email || "Utilisateur")}</span>
+                <span class="pill"><i class="bi bi-award-fill"></i> ${esc(currentExam.totalPoints || 50)} points · note /5</span>
+              </div>
+            </div>
+          </div>`;
+        els.form.innerHTML = `
+          ${currentExam.sections.map(renderSection).join("")}
+          <div class="submit-zone">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+              <div>
+                <h2 class="h4 fw-bold mb-1">Soumission finale</h2>
+                <p>${isStaff ? "Aperçu professeur : la soumission est désactivée." : "Vérifiez toutes vos réponses avant d’envoyer. Après l’envoi, la note sera enregistrée dans Notes."}</p>
+                <p class="mt-2 mb-0" id="submitStatus" aria-live="polite"></p>
+              </div>
+              <button class="btn-main" type="submit" ${isStaff ? "disabled" : ""}><i class="bi bi-send-check-fill"></i> Envoyer l’examen final</button>
+            </div>
+          </div>`;
+        els.form.addEventListener("submit", submitExam, { once: true });
+        loadProtectedAudio();
+      }
+
+      function allQuestions() {
+        return (currentExam?.sections || []).flatMap((section) => section.questions || []);
+      }
+
+      function collectAnswers() {
+        const answers = {};
+        let missing = 0;
+        allQuestions().forEach((question) => {
+          const selected = els.form.querySelector(`input[name="${CSS.escape(question.id)}"]:checked`);
+          if (!selected) {
+            missing += 1;
+            return;
+          }
+          if (question.type === "truefalse") answers[question.id] = selected.value === "true";
+          else answers[question.id] = Number(selected.value);
+        });
+        return { answers, missing };
+      }
+
+      function setSubmitStatus(message, type = "pending") {
+        const node = document.getElementById("submitStatus");
+        if (!node) return;
+        node.className = "status-message " + type;
+        node.textContent = message;
+      }
+
+      async function submitExam(event) {
+        event.preventDefault();
+        const submitButton = els.form.querySelector("button[type='submit']");
+        const { answers, missing } = collectAnswers();
+        if (missing > 0) {
+          setSubmitStatus(`Il manque ${missing} réponse(s). Répondez à toutes les questions avant d’envoyer.`, "error");
+          els.form.addEventListener("submit", submitExam, { once: true });
+          return;
+        }
+        submitButton.disabled = true;
+        setSubmitStatus("Envoi de l’examen final en cours...", "pending");
+        try {
+          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers }) });
+          if (!result.ok) {
+            if (result.data?.error === "already_submitted" && result.data.result) return renderSubmitted(result.data.result);
+            if (result.data?.error === "exam_closed") throw new Error("L’examen est fermé. La soumission n’a pas été enregistrée.");
+            throw new Error("La soumission n’a pas pu être enregistrée.");
+          }
+          renderSubmitted(result.data.result);
+        } catch (error) {
+          setSubmitStatus(error.message || "Erreur d’envoi. Vos réponses restent sur cette page.", "error");
+          submitButton.disabled = false;
+          els.form.addEventListener("submit", submitExam, { once: true });
+        }
+      }
+
+      function renderSubmitted(result) {
+        els.root.hidden = false;
+        els.admin.hidden = true;
+        els.access.innerHTML = `
+          <div class="submitted-panel">
+            <p class="section-kicker">Examen soumis</p>
+            <h2 class="section-title">Votre examen final a été enregistré</h2>
+            <p class="section-text">La note finale a été calculée automatiquement et envoyée au carnet de notes. Les réponses correctes ne sont pas affichées dans l’examen final.</p>
+            <div class="row g-4 align-items-center">
+              <div class="col-md-5"><div class="grade-number">${Number(result.grade || 0).toFixed(2)}</div><p class="h5 fw-bold text-primary-emphasis mb-0">Note finale / 5</p></div>
+              <div class="col-md-7">
+                <div class="identity-strip">
+                  <span class="pill"><i class="bi bi-check-circle-fill"></i> ${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</span>
+                  <span class="pill"><i class="bi bi-clock-history"></i> ${esc(result.submittedAt || "")}</span>
+                </div>
+                <a class="btn-main" href="notes-evaluation.html"><i class="bi bi-bar-chart-fill"></i> Consulter mes notes</a>
+              </div>
+            </div>
+          </div>`;
+        els.form.innerHTML = "";
+      }
+
+      async function loadExam() {
+        const result = await request(API.exam);
+        if (!result.ok) {
+          if (result.data?.error === "exam_closed") return renderLocked("L’examen final est fermé. Le professeur doit l’ouvrir pendant la séance.", result.data);
+          if (result.data?.error === "not_authorized") return renderLogin("Votre compte n’est pas encore associé à Français Niveau 2.");
+          throw new Error(result.data?.error || "exam_error");
+        }
+        if (result.data.status === "submitted") {
+          renderSubmitted(result.data.result);
+          return;
+        }
+        renderExam(result.data);
+      }
+
+      async function loadState(options = {}) {
+        if (loading) return;
+        const user = activeUser();
+        if (!user) {
+          renderLogin("Connectez-vous pour savoir si l’examen est ouvert pour votre compte.");
+          return;
+        }
+        loading = true;
+        try {
+          els.access.innerHTML = `<div class="access-panel"><p class="section-kicker">Vérification</p><h2 class="section-title">Chargement de l’accès...</h2><p class="section-text">Connexion au service de l’examen final.</p></div>`;
+          const result = await request(API.state);
+          if (!result.ok) throw new Error(result.data?.error || "state_error");
+          currentRole = result.data.role || "student";
+          renderAdmin(result.data);
+          if (options.keepAdminMessage) {
+            const node = document.getElementById("adminStatus");
+            if (node && node.textContent) node.hidden = false;
+          }
+          if (result.data.submitted) {
+            renderSubmitted(result.data.submitted);
+            return;
+          }
+          if (["admin", "teacher"].includes(currentRole) || result.data.state?.isOpen === true) {
+            await loadExam();
+            return;
+          }
+          renderLocked("Le professeur n’a pas encore ouvert l’examen final.", result.data);
+        } catch (_error) {
+          renderLogin("Impossible de vérifier l’accès. Rechargez la page ou reconnectez-vous.");
+        } finally {
+          loading = false;
+        }
+      }
+
+      loadState();
+      window.addEventListener("focus", () => setTimeout(loadState, 250));
+    })();
+  </script>
+</body>
+</html>

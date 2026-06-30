@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Simulacre d'examen final A1.2 pour Français Niveau 2 : vocabulaire, grammaire, lecture, écoute et production orale guidée.">
+  <title>Simulacre d'examen final | Français Niveau 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="assets/niveau2.css?v=20260630-n2-final-qa" rel="stylesheet">
+  <style>
+    .sim-score-panel{display:grid;grid-template-columns:1.2fr repeat(4,minmax(120px,1fr));gap:.8rem;margin-top:-2rem;position:relative;z-index:4;padding:1rem;border-radius:24px;background:#fff;box-shadow:var(--shadow)}
+    .sim-score-tile{padding:1rem;border-radius:18px;background:#f8fbff;color:var(--blue-dark);font-weight:900}
+    .sim-score-tile strong{display:block;font-size:1.8rem;line-height:1;color:var(--blue)}
+    .sim-score-tile span{display:block;color:var(--muted);font-size:.84rem}
+    .exam-section{padding:clamp(1.25rem,3vw,2rem);border-radius:var(--radius);background:#fff;box-shadow:var(--shadow)}
+    .question-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1rem}
+    .sim-question{height:100%;padding:1rem;border:1px solid rgba(31,78,140,.12);border-radius:18px;background:#f8fbff}
+    .sim-question.correct{border-color:rgba(38,132,100,.55);background:#effaf5}
+    .sim-question.incorrect{border-color:rgba(207,38,56,.45);background:#fff3f5}
+    .sim-question legend{float:none;width:100%;margin-bottom:.75rem;color:var(--blue-dark);font-weight:900;line-height:1.45}
+    .sim-choice{display:flex;gap:.55rem;align-items:flex-start;margin:.45rem 0;padding:.7rem .8rem;border:1px solid rgba(31,78,140,.12);border-radius:14px;background:#fff;color:var(--text);font-weight:800;line-height:1.4;cursor:pointer}
+    .sim-choice input{margin-top:.22rem;flex:0 0 auto}
+    .sim-result{display:none;margin-top:1rem;padding:1rem;border-radius:18px;background:var(--blue-dark);color:#fff;font-weight:900}
+    .sim-result.show{display:block}
+    .sim-reading,.sim-audio-box,.sim-production{padding:1rem;border-left:6px solid var(--red);border-radius:20px;background:#f8fbff;line-height:1.75}
+    .sim-audio-box audio{width:100%;margin:.75rem 0}
+    .sim-id-strip{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.9rem}
+    .sim-pill{display:inline-flex;align-items:center;gap:.35rem;padding:.42rem .7rem;border-radius:999px;background:rgba(31,78,140,.08);color:var(--blue-dark);font-weight:900;font-size:.84rem}
+    .sim-tools{padding:1rem;border-radius:20px;background:#fff8dc;border:1px solid rgba(242,191,74,.38)}
+    .login-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+    .form-control{min-height:44px;border-radius:14px;border:1px solid rgba(31,78,140,.18)}
+    @media(max-width:991px){.sim-score-panel{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:575px){.sim-score-panel{grid-template-columns:1fr}.question-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="niveau-2">
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Français</a><a href="../Niveau%201/index.html">Français Niveau 1</a><a href="./index.html" aria-current="page">Français Niveau 2</a><a href="../Niveau%207/index.html">Français Niveau 7</a><a href="../Niveau%208/index.html">Français Niveau 8</a><a href="../../ingles/index.html">Anglais</a><a href="../../ingles/basico/index.html">Anglais débutant</a></nav></details></div>
+  <nav class="navbar navbar-expand-lg fixed-top" aria-label="Navigation Niveau 2"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link" href="bibliotheque-audio.html">Audio</a></li><li class="nav-item"><a class="nav-link active" href="simulacre-examen-final.html">Simulacre</a></li><li class="nav-item"><a class="nav-link" href="examen-final.html">Examen final</a></li><li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li></ul></div></div></nav>
+
+  <header class="hero lesson-hero" id="top" style="--hero-image:url('/frances/Niveau%202/img/evaluation/simulacre-examen-final-a12.png?v=20260630-n2-simulacre')">
+    <div class="container">
+      <span class="badge-course"><i class="bi bi-patch-check-fill"></i> A1.2 · Préparation finale</span>
+      <h1>Simulacre d'examen final</h1>
+      <p class="hero-lead">S'entraîner avec le format complet avant l'examen final de Niveau 2.</p>
+      <p class="hero-text">Ce simulacre vérifie les contenus travaillés dans le niveau : vêtements, logement, restaurant, santé, météo, ville, technologies simples, expressions idiomatiques et grammaire A1.2.</p>
+      <div class="d-flex flex-wrap gap-3 mt-4"><a href="#access" class="btn-main"><i class="bi bi-play-circle-fill"></i> Commencer</a><a href="index.html" class="btn-soft"><i class="bi bi-house-fill"></i> Portail du niveau</a></div>
+    </div>
+  </header>
+
+  <section id="access" class="pt-0">
+    <div class="container">
+      <div class="content-card" id="accessPanel">
+        <div class="d-flex flex-wrap align-items-start gap-3">
+          <div class="portal-icon position-static"><i class="bi bi-shield-check"></i></div>
+          <div class="flex-grow-1">
+            <p class="section-kicker">Accès au simulacre</p>
+            <h2 class="section-title">Connectez-vous pour commencer</h2>
+            <p class="section-text" id="accessStatus">Utilisez Google, Microsoft ou le courriel inscrit au cours. Le simulacre n'a pas besoin d'ouverture administrative : il doit être accessible dès que le compte est reconnu.</p>
+            <div class="login-grid mb-3">
+              <form id="courseLoginForm">
+                <label class="fw-bold mb-1" for="courseEmail">Courriel du cours</label>
+                <input class="form-control mb-2" id="courseEmail" name="courseEmail" type="email" autocomplete="username" required>
+                <label class="fw-bold mb-1" for="coursePassword">Mot de passe</label>
+                <input class="form-control mb-2" id="coursePassword" name="coursePassword" type="password" autocomplete="current-password" placeholder="ID*" required>
+                <button class="btn-main w-100" type="submit"><i class="bi bi-key-fill"></i> Entrer avec le courriel du cours</button>
+              </form>
+              <div>
+                <p class="section-text mb-2">Connexion JaraLingua complète : Google, Microsoft et compte déjà associé au carnet de notes.</p>
+                <button class="btn-soft" type="button" data-open-login><i class="bi bi-google"></i> Google / Microsoft</button>
+                <button class="btn-soft mt-2" type="button" id="localPreviewBtn" hidden><i class="bi bi-eye-fill"></i> Aperçu local sans note</button>
+              </div>
+            </div>
+            <p class="mb-0 fw-bold" id="courseLoginStatus"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <main id="examContent" hidden>
+    <div class="container">
+      <div class="sim-score-panel" aria-label="Score du simulacre">
+        <div class="sim-score-tile"><strong id="totalScore">0/50</strong><span>Score total</span></div>
+        <div class="sim-score-tile"><strong id="vocabScore">0/15</strong><span>Vocabulaire</span></div>
+        <div class="sim-score-tile"><strong id="grammarScore">0/15</strong><span>Grammaire</span></div>
+        <div class="sim-score-tile"><strong id="readingScore">0/10</strong><span>Compréhension écrite</span></div>
+        <div class="sim-score-tile"><strong id="listeningScore">0/10</strong><span>Compréhension orale</span></div>
+      </div>
+    </div>
+
+    <section id="instructions">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">Consignes</p>
+          <h2 class="section-title">Format du simulacre</h2>
+          <div class="row g-3">
+            <div class="col-md-6 col-xl-3"><span class="sim-pill">I · 15 pts</span><h3 class="h5 mt-2">Vocabulaire</h3><p class="section-text mb-0">Comprendre des mots et expressions en contexte A1.2.</p></div>
+            <div class="col-md-6 col-xl-3"><span class="sim-pill">II · 15 pts</span><h3 class="h5 mt-2">Grammaire</h3><p class="section-text mb-0">Articles partitifs, futur proche, comparatifs, pronoms toniques et structures utiles.</p></div>
+            <div class="col-md-6 col-xl-3"><span class="sim-pill">III · 10 pts</span><h3 class="h5 mt-2">Lecture</h3><p class="section-text mb-0">Lire une situation pratique et comprendre les détails importants.</p></div>
+            <div class="col-md-6 col-xl-3"><span class="sim-pill">IV · 10 pts</span><h3 class="h5 mt-2">Écoute</h3><p class="section-text mb-0">Écouter une journée pratique et répondre à des questions contextualisées.</p></div>
+          </div>
+          <div class="sim-tools mt-4">
+            <p class="section-kicker mb-1">Professeur</p>
+            <p class="mb-3">La transcription doit correspondre exactement à l'audio utilisé. Elle est disponible pour impression, correction ou adaptation.</p>
+            <button class="btn-soft" type="button" id="downloadTranscript"><i class="bi bi-file-earmark-pdf"></i> Télécharger la transcription</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="vocabulaire" class="pt-0">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">I. Vocabulaire A1.2 · 15 points</p>
+          <h2 class="section-title">Comprendre les mots en contexte</h2>
+          <form id="vocabForm" class="question-grid"></form>
+          <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn-main" type="button" data-check-section="vocab"><i class="bi bi-check2-circle"></i> Corriger le vocabulaire</button><button class="btn-soft" type="button" data-reset-section="vocab"><i class="bi bi-arrow-counterclockwise"></i> Réinitialiser</button></div>
+          <div class="sim-result" id="vocabResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="grammaire" class="bg-white">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">II. Grammaire en contexte · 15 points</p>
+          <h2 class="section-title">Choisir la structure correcte</h2>
+          <form id="grammarForm" class="question-grid"></form>
+          <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn-main" type="button" data-check-section="grammar"><i class="bi bi-check2-circle"></i> Corriger la grammaire</button><button class="btn-soft" type="button" data-reset-section="grammar"><i class="bi bi-arrow-counterclockwise"></i> Réinitialiser</button></div>
+          <div class="sim-result" id="grammarResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="lecture">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">III. Compréhension écrite · 10 points</p>
+          <h2 class="section-title">Lire une note d'organisation</h2>
+          <div class="sim-reading mb-4">
+            <h3>Message de Camille</h3>
+            <p>Salut Lina, demain nous allons préparer notre présentation de français. Le matin, je vais passer à la pharmacie parce que j'ai mal à la gorge, mais ce n'est pas grave. Après, je te retrouve devant le restaurant près du parc. Je vais prendre une soupe et de l'eau; toi, tu peux commander une salade si tu veux manger léger.</p>
+            <p>L'après-midi, nous visitons l'appartement de Malik. Il est plus grand que son studio, mais il coûte un peu plus cher. La cuisine est à droite du salon et la chambre est en face de la salle de bains. S'il pleut, nous prendrons le bus; sinon, la gare est à deux pas et nous irons à pied. N'oublie pas ta veste : aujourd'hui il fait beau, mais demain il y aura du vent.</p>
+          </div>
+          <form id="readingForm" class="question-grid"></form>
+          <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn-main" type="button" data-check-section="reading"><i class="bi bi-check2-circle"></i> Corriger la lecture</button><button class="btn-soft" type="button" data-reset-section="reading"><i class="bi bi-arrow-counterclockwise"></i> Réinitialiser</button></div>
+          <div class="sim-result" id="readingResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="ecoute" class="bg-white">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">IV. Compréhension orale · 10 points</p>
+          <h2 class="section-title">Écouter une journée pratique à Envigado</h2>
+          <div class="sim-audio-box mb-4">
+            <h3>Consigne</h3>
+            <p>Écoutez l'audio complet. Les questions suivent l'ordre général du document, mais certaines demandent de relier deux informations.</p>
+            <audio id="listeningAudio" data-listening-audio controls preload="metadata" aria-label="Audio du simulacre d'examen final A1.2">
+              <source src="audio/simulacre-examen-final/simulacre-examen-final-a12.mp3" type="audio/mpeg">
+            </audio>
+          </div>
+          <form id="listeningForm" class="question-grid"></form>
+          <div class="d-flex flex-wrap gap-2 mt-4"><button class="btn-main" type="button" data-check-section="listening"><i class="bi bi-check2-circle"></i> Corriger l'écoute</button><button class="btn-soft" type="button" data-reset-section="listening"><i class="bi bi-arrow-counterclockwise"></i> Réinitialiser</button></div>
+          <div class="sim-result" id="listeningResult"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="production">
+      <div class="container">
+        <div class="exam-section">
+          <p class="section-kicker">Préparation orale</p>
+          <h2 class="section-title">Mini production pour la classe</h2>
+          <div class="sim-production">
+            <p><strong>Consigne :</strong> en binôme, préparez une conversation de 8 à 10 échanges. Vous organisez une journée pratique : pharmacie, restaurant, météo, trajet et logement. Utilisez au moins une expression idiomatique du niveau, par exemple <em>ne pas être dans son assiette</em>, <em>à deux pas</em> ou <em>ça coûte les yeux de la tête</em>.</p>
+            <p><strong>Règle :</strong> vous pouvez utiliser vos notes, mais vous ne devez pas lire tout le temps. Présentez la conversation en classe.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="container"><div class="row align-items-center g-4"><div class="col-lg-8"><h2 class="h4 fw-bold mb-2">Simulacre d'examen final · Français Niveau 2</h2><p class="mb-0 opacity-75">Préparation A1.2 avec vocabulaire, grammaire, lecture, écoute et interaction orale.</p></div><div class="col-lg-4 text-lg-end"><a href="#top"><i class="bi bi-arrow-up"></i> Retour en haut</a></div></div></div></footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script>window.JARALINGUA_MICROSOFT_CLIENT_ID=window.JARALINGUA_MICROSOFT_CLIENT_ID||"4e729f8a-d101-4c5d-af68-609d749bc95a";</script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
+  <script src="../../assets/js/transcript-pdf.js"></script>
+  <script src="assets/listening-controls-a2.js?v=20260630-n2-audio-controls"></script>
+  <script src="../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+  <script>
+    const sectionScores = { vocab: 0, grammar: 0, reading: 0, listening: 0 };
+    const GOOGLE_KEY = "jaralingua_google_user";
+    const MICROSOFT_KEY = "jaralingua_microsoft_user";
+    const LOCAL_KEY = "jaralingua_local_gradebook_user:french2GradesApp";
+    const ACCESS_API = "/api/french2/grades";
+    const STAFF_EMAILS = new Set(["cdavid.jaramillo@gmail.com","lcvelasqueza@correo.iue.edu.co","velasquez.luisac@gmail.com"]);
+    const isLocalPreviewHost = ["127.0.0.1", "localhost"].includes(location.hostname);
+    let lastCredential = "";
+    const transcriptText = `Bonjour, je m'appelle Manon. Aujourd'hui, je prépare une journée pratique à Envigado avec mon amie Lina.
+
+Le matin, nous allons nous retrouver devant la pharmacie, à côté de l'arrêt de bus. Lina ne se sent pas très bien : elle a mal à la tête et elle n'est pas dans son assiette. Alors, nous allons entrer à la pharmacie pour demander un conseil simple.
+
+Après la pharmacie, nous allons chercher un petit restaurant près du parc. Je voudrais une soupe, un peu de riz et de l'eau. Lina préfère une salade avec du poulet, mais elle ne veut pas de dessert. Le serveur est très patient, et le menu n'est pas cher.
+
+À midi, il va faire chaud, mais l'après-midi, il y aura des nuages et un peu de vent. Nous allons donc porter des vêtements confortables. Moi, je vais mettre un pantalon bleu et une chemise blanche. Lina va porter une veste légère parce qu'elle a souvent froid.
+
+L'après-midi, nous allons visiter un appartement pour une amie. L'appartement est plus grand que son studio actuel. Il y a deux chambres, une cuisine claire, un salon et une salle de bains. La chambre principale est en face de la cuisine, et le bureau est près de la fenêtre.
+
+Ensuite, nous allons aller à la gare pour retrouver deux camarades. La gare est à deux pas du parc : il faut aller tout droit, tourner à gauche au feu, puis traverser la rue. Moi, j'utiliserai mon téléphone pour vérifier le plan, mais si la batterie est faible, nous demanderons notre chemin.
+
+Le soir, nous allons présenter notre journée en classe. Ce n'est pas un examen final, mais c'est un bon entraînement. Si nous parlons lentement, si nous utilisons les expressions du niveau et si nous écoutons bien les questions, ça va bien se passer.`;
+
+    const vocabQuestions = [
+      { p:"Dans la phrase « Lina n'est pas dans son assiette », l'expression signifie que Lina...", o:["ne se sent pas bien","a très faim","cherche une assiette"], a:0 },
+      { p:"Si la gare est « à deux pas », elle est...", o:["très proche","fermée aujourd'hui","plus chère que le bus"], a:0 },
+      { p:"Au restaurant, « Je voudrais une soupe » sert à...", o:["commander poliment","demander une direction","décrire un vêtement"], a:0 },
+      { p:"Une « veste légère » est utile quand...", o:["il y a un peu de vent","on a très chaud à la plage","on cherche une pharmacie"], a:0 },
+      { p:"Dans un logement, « la chambre est en face de la cuisine » indique...", o:["la localisation","le prix","la saison"], a:0 },
+      { p:"« Ça coûte les yeux de la tête » veut dire que c'est...", o:["très cher","très proche","très confortable"], a:0 },
+      { p:"À la pharmacie, on peut demander...", o:["un conseil pour un mal de tête","une table pour deux personnes","la taille d'une chemise"], a:0 },
+      { p:"« Il y aura des nuages » parle...", o:["de la météo","du logement","du menu"], a:0 },
+      { p:"Un pantalon bleu et une chemise blanche sont...", o:["des vêtements","des symptômes","des lieux en ville"], a:0 },
+      { p:"« Retrouver deux camarades » signifie...", o:["rencontrer des personnes prévues","acheter deux billets","visiter deux chambres"], a:0 },
+      { p:"Une salade avec du poulet contient...", o:["un aliment principal","un moyen de transport","une pièce de la maison"], a:0 },
+      { p:"« Traverser la rue » est une action liée...", o:["au déplacement en ville","à la commande au restaurant","à la douleur physique"], a:0 },
+      { p:"« Le serveur est très patient » décrit...", o:["une qualité de la personne","la température du jour","la taille du logement"], a:0 },
+      { p:"Un « studio actuel » est...", o:["le logement où la personne vit maintenant","un restaurant ouvert le soir","un téléphone avec batterie faible"], a:0 },
+      { p:"« Vérifier le plan » avec un téléphone sert à...", o:["s'orienter","se soigner","choisir un dessert"], a:0 }
+    ];
+
+    const grammarQuestions = [
+      { block:"Articles partitifs", p:"Je voudrais ___ soupe et ___ eau.", o:["de la / de l'","du / de la","des / du"], a:0 },
+      { block:"Quantité", p:"Lina prend ___ riz, mais pas beaucoup.", o:["un peu de","beaucoup des","une bouteille de"], a:0 },
+      { block:"Négation", p:"Elle ___ veut ___ dessert.", o:["ne / pas de","ne / pas du","pas / de"], a:0 },
+      { block:"Futur proche", p:"Demain, nous ___ visiter un appartement.", o:["allons","sommes","avons"], a:0 },
+      { block:"Futur proche", p:"Je ___ mettre une chemise blanche.", o:["vais","va","vont"], a:0 },
+      { block:"Comparatif", p:"L'appartement est ___ grand que le studio.", o:["plus","très","beaucoup"], a:0 },
+      { block:"Préposition", p:"La pharmacie est ___ côté de l'arrêt de bus.", o:["à","en","chez"], a:0 },
+      { block:"Localisation", p:"La chambre est ___ face de la cuisine.", o:["en","sur","dans"], a:0 },
+      { block:"Santé", p:"Lina a mal ___ la tête.", o:["à","au","aux"], a:0 },
+      { block:"Pronoms toniques", p:"___, je vais vérifier le plan; Lina, elle va demander son chemin.", o:["Moi","Me","Mon"], a:0 },
+      { block:"Question", p:"La question correcte est :", o:["Où est la gare ?","Où la gare est ?","Où gare est-elle ?"], a:0 },
+      { block:"Impératif", p:"Pour donner une direction polie : ___ tout droit.", o:["Allez","Allez-vous","Vous allez"], a:0 },
+      { block:"Météo", p:"Cet après-midi, il ___ des nuages.", o:["y aura","fera","sera"], a:0 },
+      { block:"Préférence", p:"Lina ___ une salade avec du poulet.", o:["préfère","préférons","préférez"], a:0 },
+      { block:"Condition simple", p:"Si la batterie est faible, nous ___ notre chemin.", o:["demanderons","demandons hier","demandé"], a:0 }
+    ];
+
+    const readingQuestions = [
+      { p:"Pourquoi Camille va-t-elle passer à la pharmacie ?", o:["Parce qu'elle a mal à la gorge.","Parce qu'elle veut acheter une veste.","Parce qu'elle cherche la gare."], a:0 },
+      { p:"Où Camille retrouve-t-elle Lina ?", o:["Devant le restaurant près du parc.","Dans l'appartement de Malik.","À l'arrêt de bus devant la gare."], a:0 },
+      { p:"Que va commander Camille ?", o:["Une soupe et de l'eau.","Une salade et un dessert.","Du poulet et du café."], a:0 },
+      { p:"Pourquoi l'appartement de Malik est-il important dans le message ?", o:["Il fait partie de l'organisation de l'après-midi.","Il est le lieu du restaurant.","Il explique le problème de santé."], a:0 },
+      { p:"Quel rapport y a-t-il entre la météo et le déplacement ?", o:["S'il pleut, elles prendront le bus.","S'il fait chaud, elles annuleront la présentation.","S'il y a du vent, elles resteront au restaurant."], a:0 },
+      { p:"Dans le message, « à deux pas » signifie que la gare est...", o:["proche du parc","loin de la pharmacie","en face de la cuisine"], a:0 },
+      { p:"Quelle information décrit l'intérieur de l'appartement ?", o:["La cuisine est à droite du salon.","Le restaurant est à droite de la gare.","La pharmacie est près de la fenêtre."], a:0 },
+      { p:"Pourquoi Lina doit-elle prendre sa veste ?", o:["Parce qu'il y aura du vent.","Parce que le restaurant est cher.","Parce que le studio est petit."], a:0 },
+      { p:"Quelle phrase résume le mieux le message ?", o:["Camille organise une journée avec santé, repas, logement et trajet.","Camille raconte seulement son menu préféré.","Camille décrit seulement des vêtements."], a:0 },
+      { p:"Le message prépare surtout...", o:["une présentation de français","un examen médical","un achat de téléphone"], a:0 }
+    ];
+
+    const listeningQuestions = [
+      { p:"Où Manon et Lina vont-elles se retrouver le matin ?", o:["Devant la pharmacie, à côté de l'arrêt de bus","À la gare, devant le train","Dans la cuisine d'un appartement"], a:0 },
+      { p:"Pourquoi vont-elles entrer à la pharmacie ?", o:["Lina a mal à la tête et ne se sent pas bien.","Manon veut acheter une veste blanche.","Elles cherchent un menu moins cher."], a:0 },
+      { p:"Que veut commander Manon au restaurant ?", o:["Une soupe, un peu de riz et de l'eau","Une salade avec du poulet et un dessert","Un café, une tarte et du jus"], a:0 },
+      { p:"Que refuse Lina au restaurant ?", o:["Le dessert","La salade","L'eau"], a:0 },
+      { p:"Pourquoi les vêtements confortables sont-ils importants ?", o:["Il va faire chaud puis il y aura des nuages et du vent.","Elles vont à une cérémonie très élégante.","Le serveur demande une tenue bleue."], a:0 },
+      { p:"Quel vêtement Manon va-t-elle porter ?", o:["Un pantalon bleu et une chemise blanche","Une robe rouge et des chaussures noires","Une veste légère et une écharpe"], a:0 },
+      { p:"Comment l'appartement comparé au studio est-il décrit ?", o:["Il est plus grand que le studio actuel.","Il est moins clair que le studio actuel.","Il est à deux pas du restaurant."], a:0 },
+      { p:"Où se trouve le bureau dans l'appartement ?", o:["Près de la fenêtre","En face de la pharmacie","À gauche du feu"], a:0 },
+      { p:"Quel chemin doivent-elles prendre pour aller à la gare ?", o:["Aller tout droit, tourner à gauche au feu, puis traverser la rue","Traverser le parc, entrer dans la pharmacie, puis monter","Tourner à droite au restaurant et attendre le bus"], a:0 },
+      { p:"Pourquoi le téléphone peut-il ne pas suffire ?", o:["La batterie peut être faible.","Le serveur peut être patient.","Le menu peut être moins cher."], a:0 }
+    ];
+
+    function distributeAnswers(questions, desiredPositions) {
+      questions.forEach((item, index) => {
+        const desired = desiredPositions[index % desiredPositions.length];
+        const current = item.a;
+        if (desired === current) return;
+        const correct = item.o[current];
+        const distractors = item.o.filter((_, optionIndex) => optionIndex !== current);
+        const nextOptions = [];
+        for (let optionIndex = 0; optionIndex < item.o.length; optionIndex += 1) {
+          nextOptions[optionIndex] = optionIndex === desired ? correct : distractors.shift();
+        }
+        item.o = nextOptions;
+        item.a = desired;
+      });
+    }
+    distributeAnswers(vocabQuestions, [1, 2, 0, 2, 1, 0, 1, 0, 2, 1, 2, 0, 2, 0, 1]);
+    distributeAnswers(grammarQuestions, [2, 0, 1, 0, 2, 1, 2, 0, 1, 0, 2, 1, 0, 1, 2]);
+    distributeAnswers(readingQuestions, [0, 2, 1, 2, 0, 1, 2, 1, 0, 2]);
+    distributeAnswers(listeningQuestions, [1, 0, 2, 1, 2, 0, 1, 2, 0, 1]);
+
+    function escapeHtml(value){return String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+    function storedUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.credential||saved.exp<=Date.now()/1000){sessionStorage.removeItem(key);return null}return saved}catch{sessionStorage.removeItem(key);return null}}
+    function activeUser(){return storedUser(GOOGLE_KEY)||storedUser(MICROSOFT_KEY)||storedUser(LOCAL_KEY)}
+    function providerFor(user){if(!user)return "google"; if(user.provider)return user.provider; if(sessionStorage.getItem(LOCAL_KEY))return "local"; if(sessionStorage.getItem(MICROSOFT_KEY))return "microsoft"; return "google"}
+    function normalizeEmail(value){return String(value||"").trim().toLowerCase()}
+    function isTrustedCourseStaff(user){return STAFF_EMAILS.has(normalizeEmail(user&&user.email))}
+    function renderMcq(formId, questions, prefix){
+      const form=document.getElementById(formId);
+      form.innerHTML=questions.map((item,index)=>`<fieldset class="sim-question" data-question="${prefix}${index}">${item.block?`<span class="sim-pill mb-2">${escapeHtml(item.block)}</span>`:""}<legend>${index+1}. ${escapeHtml(item.p)}</legend>${item.o.map((option,choiceIndex)=>`<label class="sim-choice"><input type="radio" name="${prefix}${index}" value="${choiceIndex}"><span>${escapeHtml(option)}</span></label>`).join("")}</fieldset>`).join("");
+    }
+    function clearStates(scope){scope.querySelectorAll(".sim-question").forEach(card=>card.classList.remove("correct","incorrect"))}
+    function checkMcq(section, questions, prefix){
+      let score=0;
+      questions.forEach((item,index)=>{const card=document.querySelector(`[data-question="${prefix}${index}"]`);const selected=document.querySelector(`input[name="${prefix}${index}"]:checked`);card.classList.remove("correct","incorrect");if(selected&&Number(selected.value)===item.a){score++;card.classList.add("correct")}else{card.classList.add("incorrect")}});
+      sectionScores[section]=score;showResult(section,score,questions.length);
+    }
+    function showResult(section,score,total){const box=document.getElementById(`${section}Result`);box.classList.add("show");box.textContent=`Résultat : ${score} / ${total}. Révisez les cartes marquées en rouge avant de refaire la section.`;updateScore()}
+    function updateScore(){const total=sectionScores.vocab+sectionScores.grammar+sectionScores.reading+sectionScores.listening;document.getElementById("totalScore").textContent=`${total}/50`;document.getElementById("vocabScore").textContent=`${sectionScores.vocab}/15`;document.getElementById("grammarScore").textContent=`${sectionScores.grammar}/15`;document.getElementById("readingScore").textContent=`${sectionScores.reading}/10`;document.getElementById("listeningScore").textContent=`${sectionScores.listening}/10`}
+    function resetSection(section){
+      const result=document.getElementById(`${section}Result`);if(result)result.classList.remove("show");sectionScores[section]=0;
+      const map={vocab:"vocabForm",grammar:"grammarForm",reading:"readingForm",listening:"listeningForm"};
+      const form=document.getElementById(map[section]);if(form){form.reset();clearStates(form)}
+      updateScore();
+    }
+    function showExam(name, role){document.getElementById("examContent").hidden=false;document.getElementById("accessPanel").innerHTML=`<div class="d-flex align-items-start gap-3"><div class="portal-icon position-static"><i class="bi bi-unlock-fill"></i></div><div><p class="section-kicker">Accès validé${role?` · ${escapeHtml(role)}`:""}</p><h2 class="section-title">Bienvenue${name?`, ${escapeHtml(name)}`:""}</h2><p class="section-text mb-0">Le simulacre est ouvert. Les résultats restent des résultats de pratique et ne sont pas envoyés au carnet.</p></div></div>`}
+    function showLocked(message){document.getElementById("examContent").hidden=true;document.getElementById("accessStatus").textContent=message;if(isLocalPreviewHost)document.getElementById("localPreviewBtn").hidden=false}
+    async function verifyAccess(){
+      const current=activeUser();
+      const currentCredential=current&&current.credential?current.credential:"";
+      if(currentCredential&&currentCredential===lastCredential&&!document.getElementById("examContent").hidden) return;
+      if(!current){lastCredential="";showLocked("Connectez-vous avec Google, Microsoft ou le courriel inscrit au cours. En local, vous pouvez utiliser l'aperçu sans note.");return}
+      lastCredential=currentCredential;
+      if(isTrustedCourseStaff(current)){showExam(current.name||current.email, "administration / professorat");return}
+      try{
+        const response=await fetch(ACCESS_API,{headers:{Authorization:`Bearer ${current.credential}`,"X-Jaralingua-Auth-Provider":providerFor(current)}});
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok||(!data.student&&!["admin","teacher"].includes(data.role))) throw new Error("not_authorized");
+        showExam((data.student&&data.student.fullName)||current.name||current.email, data.role||"étudiant");
+      }catch{showLocked("Ce compte n'est pas encore autorisé pour Français Niveau 2. Vérifiez le courriel ou utilisez le formulaire ID*.")}
+    }
+    document.getElementById("courseLoginForm").addEventListener("submit",async(event)=>{
+      event.preventDefault();
+      const status=document.getElementById("courseLoginStatus");const form=event.currentTarget;const button=form.querySelector("button[type='submit']");
+      status.textContent="Vérification du compte du cours...";button.disabled=true;
+      try{
+        const response=await fetch(ACCESS_API+"/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:form.courseEmail.value.trim(),password:form.coursePassword.value})});
+        const result=await response.json().catch(()=>({}));
+        if(!response.ok||!result.token)throw new Error("login");
+        sessionStorage.setItem(LOCAL_KEY,JSON.stringify({provider:"local",email:result.user?.email||form.courseEmail.value.trim(),name:result.user?.name||form.courseEmail.value.trim(),credential:result.token,exp:result.exp}));
+        status.textContent="Compte validé.";lastCredential="";verifyAccess();
+      }catch{status.textContent="Courriel ou mot de passe incorrect. Utilisez le courriel inscrit et le mot de passe ID*.";button.disabled=false}
+    });
+    document.querySelector("[data-open-login]").addEventListener("click",()=>{document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();setTimeout(verifyAccess,1200);setTimeout(verifyAccess,3000)});
+    document.getElementById("localPreviewBtn").addEventListener("click",()=>showExam("aperçu local","aperçu"));
+    document.getElementById("downloadTranscript").addEventListener("click",()=>downloadTranscriptPdf("Transcription professeur - Simulacre final A1.2",transcriptText,"transcription-simulacre-examen-final-a12.pdf"));
+    document.querySelectorAll("[data-check-section]").forEach(button=>button.addEventListener("click",()=>{const section=button.dataset.checkSection;if(section==="vocab")checkMcq("vocab",vocabQuestions,"vocab");if(section==="grammar")checkMcq("grammar",grammarQuestions,"grammar");if(section==="reading")checkMcq("reading",readingQuestions,"reading");if(section==="listening")checkMcq("listening",listeningQuestions,"listening")}));
+    document.querySelectorAll("[data-reset-section]").forEach(button=>button.addEventListener("click",()=>resetSection(button.dataset.resetSection)));
+    renderMcq("vocabForm",vocabQuestions,"vocab");renderMcq("grammarForm",grammarQuestions,"grammar");renderMcq("readingForm",readingQuestions,"reading");renderMcq("listeningForm",listeningQuestions,"listening");verifyAccess();window.addEventListener("storage",verifyAccess);window.addEventListener("focus",verifyAccess);setInterval(()=>{if(document.getElementById("examContent").hidden&&activeUser())verifyAccess()},2500);
+  </script>
+</body>
+</html>

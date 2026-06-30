@@ -1,0 +1,94 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Jeu de cartes audio et prononciation pour apprendre la météo et les saisons en Français Niveau 2.">
+  <title>Cartes météo et saisons | Français Niveau 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../assets/niveau2.css?v=20260630-n2-final-qa" rel="stylesheet">
+  <style>
+    main{padding:3rem 0 5rem}.card-lab{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:1.25rem;align-items:start}.training-card,.teacher-card{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:clamp(1.1rem,3vw,1.8rem)}.training-screen{display:grid;gap:1rem}.card-stage{position:relative;overflow:hidden;border-radius:20px;background:#eef5ff;border:1px solid rgba(31,78,140,.12)}.card-stage img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}.card-overlay{display:flex;justify-content:space-between;gap:.75rem;align-items:center;padding:.85rem 1rem;background:#fff}.phase-pill,.category-pill{display:inline-flex;width:max-content;align-items:center;gap:.35rem;border-radius:999px;padding:.42rem .7rem;font-weight:900;font-size:.82rem}.phase-pill{background:#eef5ff;color:var(--blue-dark)}.category-pill{background:#fff4d6;color:#765000}.phrase-box{min-height:70px;display:grid;place-items:center;padding:1rem;border-radius:18px;background:#f8fbff;border:1px solid rgba(31,78,140,.12);color:var(--blue-dark);font-size:clamp(1.45rem,4vw,2.5rem);font-weight:950;text-align:center}.phrase-box.is-hidden{color:transparent;text-shadow:0 0 18px rgba(21,52,93,.18)}.hint-box{padding:1rem;border-radius:16px;border-left:5px solid var(--yellow);background:#fff8dc;color:#5c4930;line-height:1.55}.controls{display:flex;flex-wrap:wrap;gap:.65rem}.controls button{min-height:48px;border:0;border-radius:999px;padding:.74rem 1rem;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}.primary-control{background:var(--red);color:#fff}.soft-control{background:#eef5ff;color:var(--blue-dark)}.dark-control{background:var(--blue-dark);color:#fff}.record-control{width:72px;height:72px;border-radius:50%!important;padding:0!important;font-size:1.6rem}.record-control.is-recording{animation:pulse 1.2s infinite}.mic-panel{display:grid;gap:.8rem;padding:1rem;border:2px dashed rgba(31,78,140,.2);border-radius:18px;background:#fbfdff}.microphone-picker{display:grid;gap:.35rem;color:var(--blue-dark);font-weight:900}.microphone-picker select{width:100%;border:1px solid rgba(31,78,140,.22);border-radius:10px;padding:.65rem;background:#fff}.pronunciation-result{padding:1rem;border-radius:16px;line-height:1.55}.pronunciation-result.ok{background:#e9f7ef;color:#11633c}.pronunciation-result.review{background:#fff0f3;color:#9f1d2a}.transcript-box{padding:1rem;border-radius:16px;background:#f8fbff;color:var(--muted);line-height:1.55}.score-chip{display:grid;place-items:center;width:112px;height:112px;border-radius:50%;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;font-size:1.9rem;font-weight:950}.final-panel{display:flex;gap:1rem;align-items:center;padding:1rem;border-radius:20px;background:#fff4d6}.permission-help{padding:1rem;border-radius:14px;background:#fff7df;border-left:5px solid var(--yellow);color:#5c4930}.permission-help[hidden],.final-panel[hidden],.pronunciation-result[hidden],button[hidden]{display:none!important}@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(214,40,57,.38)}50%{box-shadow:0 0 0 14px rgba(214,40,57,0)}}@media(max-width:900px){.card-lab{grid-template-columns:1fr}.hero{padding-top:7rem}.controls{display:grid}.controls button{width:100%}.record-control{width:100%!important;border-radius:999px!important}.final-panel{align-items:flex-start}}
+  </style>
+</head>
+<body class="niveau-2">
+  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 2</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link active" href="../ateliers-activites.html">Ateliers</a></li></ul></div></div></nav>
+
+  <header class="hero lesson-hero" style="--hero-image:url('/frances/Niveau%202/img/ateliers/cartes-meteo-saisons.png?v=20260630-pro')">
+    <div class="container"><div class="breadcrumb-row"><a href="../index.html">Accueil</a><span>›</span><a href="../ateliers-activites.html#theme-06">Ateliers</a><span>›</span><span>Cartes météo</span></div><span class="badge-course"><i class="bi bi-cloud-sun-fill"></i> Thème 6 · Vocabulaire oral</span><h1>Cartes météo et saisons</h1><p class="hero-lead">Écouter, reconnaître, prononcer et continuer sans blocage.</p><p class="hero-text"><strong>Objectif pour l'étudiant :</strong> apprendre la météo et les saisons avec images professionnelles, audio ElevenLabs, puis produire chaque phrase au micro. Le score final sert de diagnostic, pas de frein.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#jeu"><i class="bi bi-play-circle"></i> Commencer</a><a class="btn-soft" href="../themes/climat-saisons-loisirs.html">Revoir le cours</a></div></div>
+  </header>
+
+  <main id="jeu">
+    <div class="container">
+      <div class="card-lab">
+        <section class="training-card">
+          <div class="training-screen">
+            <div class="d-flex flex-wrap justify-content-between gap-2 align-items-center">
+              <span class="phase-pill" id="phaseLabel">Ronde 1</span>
+              <span class="phase-pill" id="cardProgress">1 / 14</span>
+            </div>
+            <div class="card-stage">
+              <img id="cardImage" src="../img/theme-6-meteo-saisons/il-fait-chaud.png" alt="">
+              <div class="card-overlay"><span class="category-pill" id="cardCategory">Météo</span><button class="soft-control" id="playAudioBtn" type="button"><i class="bi bi-volume-up-fill"></i> Audio</button></div>
+            </div>
+            <div class="phrase-box" id="cardPhrase" lang="fr"></div>
+            <div class="hint-box" id="cardHint"></div>
+            <p class="section-text mb-0" id="gameStatus" aria-live="polite"></p>
+            <div class="controls">
+              <button class="soft-control" id="prevCardBtn" type="button"><i class="bi bi-arrow-left"></i> Carte précédente</button>
+              <button class="dark-control" id="nextCardBtn" type="button">Carte suivante <i class="bi bi-arrow-right"></i></button>
+              <button class="primary-control" id="startPracticeBtn" type="button" hidden><i class="bi bi-mic-fill"></i> Passer à la ronde micro</button>
+            </div>
+            <div class="mic-panel">
+              <label class="microphone-picker"><span><i class="bi bi-mic"></i> Microphone utilisé</span><select id="microphoneSelect"><option value="">Microphone par défaut</option></select></label>
+              <div class="controls align-items-center">
+                <button class="primary-control record-control" id="recordBtn" type="button" hidden aria-label="Enregistrer"><i class="bi bi-mic-fill"></i></button>
+                <button class="dark-control" id="stopBtn" type="button" hidden disabled><i class="bi bi-stop-fill"></i> Terminer</button>
+                <button class="soft-control" id="skipBtn" type="button" hidden>Continuer <i class="bi bi-arrow-right-circle"></i></button>
+              </div>
+              <p class="mb-0 fw-bold text-primary" id="micStatus">Prêt pour la ronde micro.</p>
+              <p class="record-help mb-0" id="recordHelp">Le navigateur demandera l'autorisation seulement quand l'étudiant clique sur le micro.</p>
+              <div class="permission-help" id="micPermissionHelp" hidden></div>
+              <div class="pronunciation-result review" id="pronunciationResult" hidden></div>
+              <div class="transcript-box" id="transcriptBox">Après l'enregistrement, la phrase attendue et la transcription apparaissent ici.</div>
+            </div>
+            <div class="final-panel" id="finalPanel" hidden>
+              <div class="score-chip" id="finalScore">0%</div>
+              <div><h2 class="h4 text-primary fw-bold mb-1">Bilan final</h2><p class="mb-0" id="finalDetails"></p><button class="btn-main mt-3" id="restartBtn" type="button"><i class="bi bi-arrow-repeat"></i> Rejouer</button></div>
+            </div>
+          </div>
+        </section>
+        <aside class="teacher-card">
+          <p class="section-kicker">Consigne professeur</p>
+          <h2>Deroule pedagogique</h2>
+          <ol class="mini-checklist mt-3">
+            <li>Ronde 1 : montrer chaque carte, lancer l'audio professionnel, faire repeter toute la classe.</li>
+            <li>Ronde 2 : cacher le texte. Un étudiant regarde l'image, dit la phrase, puis enregistre sa production.</li>
+            <li>Le systeme affiche correct ou a retravailler. Meme si la reponse est faible, on continue.</li>
+            <li>Le professeur reprend les cartes faibles en fin d'activité, sans casser le rythme du jeu.</li>
+          </ol>
+          <div class="callout mt-3"><strong>Expression a reutiliser :</strong> <em>profiter du beau temps</em>. Exemple : <strong>Samedi, il fait beau; nous allons profiter du beau temps.</strong></div>
+          <div class="grammar-table">
+            <div><b>Important</b><span>Les images n'ont pas de texte : l'étudiant doit associer image, audio et production orale.</span></div>
+            <div><b>Evaluation</b><span>Le score est diagnostique. Il n'interrompt jamais le parcours.</span></div>
+          </div>
+          <audio id="cardAudio" preload="metadata"></audio>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer"><div class="container"><a href="../ateliers-activites.html#theme-06">← Retour aux ateliers du thème 6</a></div></footer>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../assets/meteo-saisons-cards.js?v=20260630-n2-theme6"></script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+</body>
+</html>
