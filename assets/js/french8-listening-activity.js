@@ -82,6 +82,7 @@
 
   function buildVariants(baseActivity) {
     var quebecQuestions = window.FRENCH8_LISTENING_QUEBEC_QUESTIONS || {};
+    var quebecTranscripts = window.FRENCH8_LISTENING_QUEBEC_TRANSCRIPTS || {};
     var franceFile = baseActivity.file.replace("-quebec-b2.mp3", "-france-b2.mp3");
     var quebecFile = baseActivity.file.replace("-france-b2.mp3", "-quebec-b2.mp3");
     return {
@@ -89,7 +90,7 @@
       quebec: Object.assign({}, baseActivity, {
         file: quebecFile,
         questions: quebecQuestions[baseActivity.id] || baseActivity.questions,
-        transcript: ""
+        transcript: quebecTranscripts[baseActivity.id] || ""
       })
     };
   }
