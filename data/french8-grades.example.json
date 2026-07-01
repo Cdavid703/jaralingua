@@ -56,6 +56,15 @@
       "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
     },
     {
+      "id": "pronunciation09d",
+      "title": "Prononciation 09D - Precision syntaxique B2",
+      "type": "Prononciation formative",
+      "date": "2026-07-26",
+      "displayDate": "Date limite : dimanche 26 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)",
+      "weight": 0,
+      "description": "Pratique avancee avec audio sauvegarde pour feedback professeur. Poids 0 : n'ajoute pas de pourcentage a la note finale."
+    },
+    {
       "id": "finalExam",
       "title": "Examen final",
       "type": "Examen",
@@ -66,12 +75,12 @@
     },
     {
       "id": "courseProject",
-      "title": "Proyecto de curso",
-      "type": "Projet",
+      "title": "Projet final - La ville intelligente",
+      "type": "Projet oral",
       "date": "2026-07-01",
-      "displayDate": "A definir",
+      "displayDate": "Evaluation manuelle en classe",
       "weight": 20,
-      "description": "Proyecto principal del curso."
+      "description": "Exposition orale de 3 a 5 minutes avec support audiovisuel. Evaluation manuelle par le professeur; aucune remise web."
     },
     {
       "id": "quiz",

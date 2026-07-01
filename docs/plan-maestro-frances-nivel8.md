@@ -73,9 +73,9 @@ Cada tema debe terminar con estos bloques minimos:
 
 ### Fase 4 - Proyecto y evaluacion
 
-1. Construir `Dossier B2 : un dilemme contemporain`.
+1. Construir `Projet final : La ville intelligente` como proyecto oral de 20%, presentado en clase y evaluado manualmente por el docente.
 2. Conectar el proyecto final con el panel de notas.
-3. Construir simulacro formativo sobre 50 puntos.
+3. Construir simulacro formativo sobre 50 puntos. Estado: creado en `frances/Niveau 8/simulacro-formativo.html`.
 4. Construir examen final cerrado por docente, sin respuestas expuestas en frontend.
 5. Auditar ponderaciones contra el panel de notas.
 
@@ -101,4 +101,4 @@ El primer sprint debe ser estructural y de bajo riesgo:
 4. Conectar Tema 05 en `themes-du-cours.html` y `ateliers-activites.html`.
 5. Ejecutar QA local: enlaces, HTTP 200, ausencia de mojibake, preguntas y controles.
 
-Este orden ya se ejecuto para los temas 03 a 08. El siguiente punto de arranque coherente es la arquitectura global de evaluacion: proyecto final, simulacro, examen final y cierre de notas.
+Este orden ya se ejecuto para los temas 03 a 08. El proyecto final queda orientado a la ciudad inteligente: lectura base, fuente externa opcional, opinion personal y exposicion de 3 a 5 minutos con material audiovisual. El simulacro formativo B2 queda creado sobre 50 puntos, sin envio web ni impacto en notas. El siguiente punto de arranque coherente es completar la arquitectura global de evaluacion: examen final y cierre de ponderaciones.

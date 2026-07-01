@@ -83,6 +83,12 @@ FRENCH8_PRONUNCIATION_DEADLINES = {
         "utc": "2026-07-20T05:00:00Z",
         "epoch": 1784523600,
         "label": "dimanche 19 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+    },
+    "pronunciation09d": {
+        "date": "2026-07-26",
+        "utc": "2026-07-27T05:00:00Z",
+        "epoch": 1785128400,
+        "label": "dimanche 26 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
     }
 }
 
@@ -122,6 +128,15 @@ FRENCH8_PRONUNCIATION_EVALUATIONS = {
         "date": FRENCH8_PRONUNCIATION_DEADLINES["pronunciation04d"]["date"],
         "displayDate": "Date limite : " + FRENCH8_PRONUNCIATION_DEADLINES["pronunciation04d"]["label"],
         "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
+    },
+    "pronunciation09d": {
+        "id": "pronunciation09d",
+        "title": "Prononciation 09D - Precision syntaxique B2",
+        "weight": 0,
+        "type": "Prononciation formative",
+        "date": FRENCH8_PRONUNCIATION_DEADLINES["pronunciation09d"]["date"],
+        "displayDate": "Date limite : " + FRENCH8_PRONUNCIATION_DEADLINES["pronunciation09d"]["label"],
+        "description": "Pratique avancee avec audio sauvegarde pour feedback professeur. Poids 0 : n'ajoute pas de pourcentage a la note finale."
     }
 }
 
@@ -137,12 +152,12 @@ FRENCH8_BASE_EVALUATIONS = {
     },
     "courseProject": {
         "id": "courseProject",
-        "title": "Proyecto de curso",
+        "title": "Projet final - La ville intelligente",
         "weight": 20,
-        "type": "Projet",
+        "type": "Projet oral",
         "date": "2026-07-01",
-        "displayDate": "A definir",
-        "description": "Proyecto principal del curso."
+        "displayDate": "Evaluation manuelle en classe",
+        "description": "Exposition orale de 3 a 5 minutes avec support audiovisuel. Evaluation manuelle par le professeur; aucune remise web."
     },
     "quiz": {
         "id": "quiz",

@@ -19,6 +19,10 @@
     pronunciation04d: {
       at: "2026-07-20T05:00:00Z",
       label: "dimanche 19 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+    },
+    pronunciation09d: {
+      at: "2026-07-27T05:00:00Z",
+      label: "dimanche 26 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
     }
   };
 

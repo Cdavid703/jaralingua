@@ -1,0 +1,163 @@
+﻿<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulacre formatif B2 - Français Niveau 8</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--yellow:#ffc857;--green:#23886f;--soft:#f4f8ff;--text:#1f2937;--muted:#5d6b82;--shadow:0 20px 45px rgba(15,23,42,.12)}
+    *{box-sizing:border-box;scroll-behavior:smooth}body{margin:0;font-family:"Inter","Segoe UI",system-ui,sans-serif;background:var(--soft);color:var(--text)}h1,h2,h3,.navbar-brand{font-family:"Montserrat","Segoe UI",sans-serif}.navbar{background:rgba(255,255,255,.94);box-shadow:0 10px 30px rgba(15,23,42,.08)}.navbar-brand{display:flex;align-items:center;gap:.7rem;font-weight:900;color:var(--blue-dark)!important}.brand-logo{height:42px}.nav-link{font-weight:800;color:var(--blue-dark)!important}.hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:7rem 0 4rem;color:#fff;background:linear-gradient(135deg,rgba(21,52,93,.94),rgba(31,78,140,.72),rgba(214,40,57,.46)),url('img/themes/theme-06-ia-ethique-numerique-hero.png') center/cover no-repeat}.badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.9);color:var(--blue-dark);font-weight:900}.hero h1{margin:1.2rem 0 1rem;font-weight:900;line-height:1;text-shadow:0 12px 34px rgba(0,0,0,.24);font-size:clamp(2.45rem,6vw,5.25rem)}.hero-text,.section-text{font-size:1.05rem;line-height:1.75;color:var(--muted)}.hero .hero-text{max-width:900px;color:rgba(255,255,255,.93)}.btn-main,.btn-soft{border-radius:999px;font-weight:900;padding:.82rem 1.1rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}.btn-main{border:0;background:linear-gradient(135deg,var(--red),#9f1d2a);color:#fff;box-shadow:0 16px 34px rgba(214,40,57,.22)}.btn-main:hover{color:#fff}.btn-soft{border:2px solid rgba(31,78,140,.18);background:#fff;color:var(--blue-dark)}.hero .btn-soft{border-color:rgba(255,255,255,.7);background:rgba(255,255,255,.12);color:#fff}.hero .btn-soft:hover{background:#fff;color:var(--blue-dark)}section{padding:4.5rem 0}.section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}.section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.05rem);font-weight:900}.quick-panel,.exam-card,.reading-box,.score-panel{background:#fff;border-radius:8px;box-shadow:var(--shadow);padding:clamp(1rem,3vw,1.6rem)}.quick-panel{margin-top:-1.4rem;position:relative;z-index:4}.score-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.8rem}.score-pill{border-radius:8px;background:#f8fbff;border:1px solid rgba(31,78,140,.12);padding:1rem}.score-pill span{display:block;color:var(--muted);font-weight:800}.score-pill strong{display:block;color:var(--blue-dark);font-size:1.55rem}.exam-grid{display:grid;gap:1rem}.question-card{border:1px solid rgba(31,78,140,.12);border-radius:8px;background:#fff;padding:1rem}.question-card legend{float:none;width:auto;color:var(--blue-dark);font-size:1rem;font-weight:900;margin-bottom:.7rem}.question-card label{display:flex;gap:.55rem;align-items:flex-start;padding:.55rem .65rem;border-radius:8px;cursor:pointer;line-height:1.45}.question-card label:hover{background:#f3f7ff}.question-card input{margin-top:.25rem}.answer-state{display:none;margin-top:.65rem;font-weight:900}.question-card.is-correct{border-color:rgba(35,136,111,.45);background:rgba(35,136,111,.05)}.question-card.is-correct .answer-state{display:block;color:var(--green)}.question-card.is-wrong{border-color:rgba(214,40,57,.4);background:rgba(214,40,57,.05)}.question-card.is-wrong .answer-state{display:block;color:var(--red)}.audio-box{background:#f8fbff;border:1px solid rgba(31,78,140,.12);border-radius:8px;padding:1rem}.audio-box audio{width:100%;margin-top:.8rem}.reading-box{border-left:7px solid var(--green)}.reading-box p{line-height:1.82}.writing-box textarea{width:100%;min-height:170px;border:1px solid rgba(31,78,140,.18);border-radius:8px;padding:1rem;line-height:1.6}.rubric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.8rem}.rubric-item{border:1px solid rgba(31,78,140,.12);border-radius:8px;padding:.9rem;background:#f8fbff}.rubric-item strong{display:block;color:var(--blue-dark)}.rubric-item span{display:block;color:var(--red);font-weight:900}.result-box{display:none;border-radius:8px;padding:1rem;margin-top:1rem;background:#fff8df;border-left:7px solid var(--yellow);font-weight:900;color:#6f5200}.result-box.show{display:block}.correction-panel{display:none}.show-corrections .correction-panel{display:block}.transcript{white-space:pre-wrap;background:#f8fbff;border:1px solid rgba(31,78,140,.12);border-radius:8px;padding:1rem;line-height:1.65;color:var(--muted)}footer{background:var(--blue-dark);color:#fff;padding:3rem 0}footer a{color:#fff;text-decoration:none;font-weight:900}.global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200}.global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:var(--blue-dark);color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}.global-course-switcher summary::-webkit-details-marker{display:none}.global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}.global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:var(--blue-dark);text-decoration:none;font-weight:900}.global-course-switcher a:hover{background:#eef5ff;color:var(--red)}@media(max-width:575px){.btn-main,.btn-soft{width:100%}.hero{padding-top:5.75rem;min-height:auto}.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}}
+  </style>
+</head>
+<body>
+  <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Français</a><a href="../Niveau%207/index.html">Français Niveau 7</a><a href="./index.html">Français Niveau 8</a><a href="../../ingles/index.html">Anglais</a></nav></details></div>
+  <nav class="navbar navbar-expand-lg fixed-top"><div class="container"><a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 8</span></a><button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link active" href="simulacro-formativo.html">Simulacre</a></li><li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li></ul></div></div></nav>
+
+  <header class="hero"><div class="container"><span class="badge-course"><i class="bi bi-clipboard2-check-fill"></i> Simulacre formatif · 50 points</span><h1>Simulacre B2 du Niveau 8</h1><p class="hero-text">Entraînement complet avant le bilan évaluatif : écoute, lecture, grammaire, vocabulaire et production argumentée. Ce simulacre ne s'envoie pas au professeur et ne modifie pas les notes du cours.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#simulacre"><i class="bi bi-play-circle"></i> Commencer</a><a class="btn-soft" href="#bareme"><i class="bi bi-list-check"></i> Voir le barème</a></div></div></header>
+
+  <section class="quick-panel container" id="bareme"><div class="score-grid"><div class="score-pill"><span>Compréhension orale</span><strong>10 pts</strong></div><div class="score-pill"><span>Compréhension écrite</span><strong>10 pts</strong></div><div class="score-pill"><span>Grammaire et lexique</span><strong>20 pts</strong></div><div class="score-pill"><span>Production guidée</span><strong>10 pts</strong></div></div></section>
+
+  <main id="simulacre">
+    <section><div class="container"><article class="exam-card"><p class="section-kicker">Mode d'emploi</p><h2 class="section-title">Un entraînement formatif, pas une remise web</h2><p class="section-text mb-0">Travaillez en conditions réelles : écoutez l'audio deux fois, lisez le texte sans traduction automatique, répondez aux questions, puis écrivez une réponse courte. La correction automatique donne une indication sur 40 points; la production se vérifie avec la grille de 10 points.</p></article></div></section>
+
+    <section class="bg-white"><div class="container"><div class="row g-4 align-items-start"><div class="col-lg-5"><p class="section-kicker">Partie 1 · 10 points</p><h2 class="section-title">Compréhension orale</h2><div class="audio-box"><strong>Audio : Nouvelle régulation européenne sur l'IA</strong><p class="section-text mb-0">Version France, déjà présente dans la bibliothèque audio du Niveau 8.</p><audio controls preload="metadata" src="audio/complete/n8-06c-regulation-ia-france-b2.mp3"></audio></div></div><div class="col-lg-7"><form class="exam-grid" data-section="listening"></form></div></div><div class="correction-panel mt-4"><h3 class="h5 fw-bold text-primary">Transcription de référence</h3><div class="transcript" id="transcriptBox"></div></div></div></section>
+
+    <section><div class="container"><div class="row g-4 align-items-start"><div class="col-lg-6"><p class="section-kicker">Partie 2 · 10 points</p><h2 class="section-title">Compréhension écrite</h2><article class="reading-box"><p>Dans plusieurs villes européennes, les capteurs installés sur les bus, les lampadaires et les poubelles promettent une gestion plus fine de l'espace public. Les responsables municipaux affirment que ces données permettent de réduire les embouteillages, d'économiser l'énergie et d'adapter les services aux besoins réels des habitants.</p><p>Pourtant, cette intelligence urbaine ne convainc pas tout le monde. Des associations mettent le doigt sur le problème principal : une ville efficace peut devenir une ville intrusive si les citoyens ignorent qui collecte leurs données et dans quel but. D'autres critiques rappellent que les quartiers populaires risquent de rester à l'écart si les investissements se concentrent dans les zones déjà favorisées.</p><p>La ville intelligente pourrait donc ouvrir des portes, à condition qu'elle soit démocratique. Les habitants devraient pouvoir comprendre les outils, contester certains usages et participer aux décisions. Sans transparence, le progrès technique reste fragile; avec une vraie participation, il peut améliorer la mobilité, la sécurité et la qualité de vie.</p></article></div><div class="col-lg-6"><form class="exam-grid" data-section="reading"></form></div></div></div></section>
+
+    <section class="bg-white"><div class="container"><p class="section-kicker">Partie 3 · 20 points</p><h2 class="section-title">Grammaire et lexique en contexte</h2><form class="exam-grid" data-section="grammar"></form></div></section>
+
+    <section><div class="container"><div class="writing-box exam-card"><p class="section-kicker">Partie 4 · 10 points</p><h2 class="section-title">Production guidée</h2><p class="section-text">Répondez en 90 à 120 mots : <strong>La technologie rend-elle une ville plus juste ?</strong> Utilisez au moins une structure du Niveau 8 et une expression idiomatique du banco, par exemple <em>mettre le doigt sur le problème</em> ou <em>ouvrir des portes</em>.</p><textarea id="productionText" placeholder="Je pense que... Cependant... À condition que..."></textarea><div class="rubric-grid mt-3"><div class="rubric-item"><strong>Position claire</strong><span>2 pts</span></div><div class="rubric-item"><strong>Arguments et exemples</strong><span>3 pts</span></div><div class="rubric-item"><strong>Structures du niveau 8</strong><span>3 pts</span></div><div class="rubric-item"><strong>Expression idiomatique et cohérence</strong><span>2 pts</span></div></div><label class="fw-bold text-primary mt-3 d-block" for="productionScore">Auto-évaluation de la production sur 10</label><input class="form-control" id="productionScore" type="number" min="0" max="10" step="1" value="0"></div></div></section>
+
+    <section class="bg-white"><div class="container"><div class="score-panel"><p class="section-kicker">Correction</p><h2 class="section-title">Score formatif</h2><div class="d-flex flex-wrap gap-3"><button class="btn-main" type="button" id="checkExam"><i class="bi bi-check2-circle"></i> Corriger le simulacre</button><button class="btn-soft" type="button" id="resetExam"><i class="bi bi-arrow-counterclockwise"></i> Recommencer</button></div><div class="result-box" id="resultBox"></div></div></div></section>
+  </main>
+
+  <footer><div class="container d-flex flex-wrap justify-content-between gap-3"><div><h2 class="h4 fw-bold">Simulacre formatif · Français Niveau 8</h2><p class="mb-0 opacity-75">Préparation B2 sur 50 points, sans remise web et sans modification des notes.</p></div><a href="ateliers-activites.html"><i class="bi bi-arrow-left"></i> Retour aux ateliers</a></div></footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+  <script>
+    const TRANSCRIPT = `Claire: Édition spéciale ce soir. Le Parlement européen a adopté aujourd'hui la version finale du règlement sur l'intelligence artificielle, un texte qualifié d'historique par les observateurs. Notre reporter Martin Vasseur est en direct de Bruxelles. Martin ?
+
+Martin: Bonsoir Claire. Après deux ans de négociations, l'AI Act européen est officiellement adopté. Ce texte a été élaboré afin que l'Europe devienne la première puissance mondiale à encadrer juridiquement l'intelligence artificielle. Étant donné que les États-Unis et la Chine n'ont pas de législation comparable, l'Union européenne fait figure de pionnière.
+
+Claire: Quels sont les points clés de cette régulation ?
+
+Martin: Le règlement classe les systèmes d'IA par niveaux de risque. Les applications à haut risque, comme la reconnaissance faciale ou le recrutement automatisé, devront respecter des normes strictes pour que la transparence et l'équité soient garanties. Les systèmes jugés inacceptables, comme le scoring social, sont purement interdits, puisque ces pratiques portent atteinte aux droits fondamentaux.
+
+Claire: Comment ont réagi les entreprises technologiques ?
+
+Martin: Les réactions sont partagées. Les grandes entreprises européennes soutiennent le texte, étant donné qu'il crée un cadre juridique clair et harmonisé. En revanche, certaines start-up craignent que les obligations de conformité soient si lourdes de sorte que l'innovation européenne soit freinée face aux géants américains et chinois.
+
+Claire: Et les associations de défense des droits ?
+
+Martin: Elles sont globalement satisfaites. Amnesty International a salué l'interdiction de la surveillance biométrique de masse. Toutefois, des voix s'élèvent pour que les sanctions soient réellement appliquées. Les amendes peuvent atteindre trente-cinq millions d'euros ou sept pour cent du chiffre d'affaires mondial, afin que les contrevenants soient réellement dissuadés.
+
+Claire: Ce règlement entre en vigueur progressivement, n'est-ce pas ?
+
+Martin: Exactement. Les interdictions les plus strictes s'appliquent dès six mois, de sorte que les pratiques les plus dangereuses cessent rapidement. Les autres dispositions entreront en vigueur d'ici deux ans, pour que les entreprises aient le temps de s'adapter.
+
+Claire: Un tournant majeur. Merci Martin pour ce décryptage depuis Bruxelles.`;
+
+    const QUESTIONS = {
+      listening: [
+        ["Pourquoi l'Union européenne est-elle présentée comme pionnière ?", ["Parce qu'elle encadre juridiquement l'IA avant les États-Unis et la Chine.", "Parce qu'elle interdit tous les outils numériques.", "Parce qu'elle remplace les entreprises privées par l'État."], 0],
+        ["Comment le règlement organise-t-il les systèmes d'IA ?", ["Par niveaux de risque.", "Par langue d'utilisation.", "Par taille d'écran."], 0],
+        ["Quelle application à haut risque est citée ?", ["Le recrutement automatisé.", "Le covoiturage entre voisins.", "La météo quotidienne."], 0],
+        ["Pourquoi certaines start-up sont-elles inquiètes ?", ["Elles craignent que les obligations de conformité freinent l'innovation.", "Elles refusent toute transparence sur leurs bénéfices.", "Elles veulent supprimer les droits fondamentaux."], 0],
+        ["Quel délai concerne les interdictions les plus strictes ?", ["Six mois.", "Dix ans.", "Un seul jour."], 0]
+      ],
+      reading: [
+        ["Quel avantage les responsables municipaux attribuent-ils aux capteurs ?", ["Une adaptation plus fine des services urbains.", "La disparition totale des débats publics.", "La gratuité immédiate de tous les transports."], 0],
+        ["Quelle inquiétude les associations expriment-elles ?", ["La collecte opaque des données citoyennes.", "La disparition des lampadaires.", "La baisse du nombre de bus."], 0],
+        ["Pourquoi les quartiers populaires sont-ils mentionnés ?", ["Ils peuvent être oubliés par les investissements technologiques.", "Ils refusent toujours les services publics.", "Ils possèdent déjà tous les équipements."], 0],
+        ["Que signifie ici l'expression ouvrir des portes ?", ["Créer des possibilités positives.", "Installer plus de portes automatiques.", "Fermer l'accès aux habitants."], 0],
+        ["Quelle condition rendrait la ville intelligente plus légitime ?", ["La participation démocratique des habitants.", "Le secret complet des décisions.", "La surveillance permanente des citoyens."], 0]
+      ],
+      grammar: [
+        ["Si la ville avait consulté les habitants, elle ___ évité cette polémique.", ["aurait", "aura", "avait"], 0],
+        ["Je regrette que les autorités ___ ces données sans explication claire.", ["aient collecté", "ont collecté", "collectent toujours"], 0],
+        ["La maire a déclaré que les capteurs ___ installés progressivement.", ["seraient", "seront", "sont"], 0],
+        ["___ m'inquiète, c'est l'absence de transparence.", ["Ce qui", "Ce que", "Ce dont"], 0],
+        ["Les citoyens demandent une charte afin que leurs droits ___ protégés.", ["soient", "sont", "seront"], 0],
+        ["Bien que le système ___ utile, il doit être contrôlé.", ["soit", "est", "sera"], 0],
+        ["Les images que la journaliste a ___ montrent une rue transformée.", ["prises", "pris", "prise"], 0],
+        ["La décision a été critiquée ___ elle manque de transparence.", ["parce qu'", "pour que", "bien qu'"], 0],
+        ["Dans un registre familier, dire que c'est relou signifie que c'est ___.", ["pénible", "magnifique", "officiel"], 0],
+        ["Le conseil municipal a promis de publier les données ___ les habitants puissent les vérifier.", ["pour que", "malgré", "puisque"], 0]
+      ]
+    };
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, function (char) {
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[char];
+      });
+    }
+
+    function renderQuestions() {
+      Object.keys(QUESTIONS).forEach(function (section) {
+        const root = document.querySelector('[data-section="' + section + '"]');
+        root.innerHTML = QUESTIONS[section].map(function (item, index) {
+          const name = section + "-" + index;
+          const options = item[1].map(function (option, optionIndex) {
+            return '<label><input type="radio" name="' + name + '" value="' + optionIndex + '"> <span>' + escapeHtml(option) + '</span></label>';
+          }).join("");
+          return '<fieldset class="question-card" data-question="' + name + '" data-answer="' + item[2] + '"><legend>' + (index + 1) + '. ' + escapeHtml(item[0]) + '</legend>' + options + '<div class="answer-state"></div></fieldset>';
+        }).join("");
+      });
+      document.getElementById("transcriptBox").textContent = TRANSCRIPT;
+    }
+
+    function checkExam() {
+      let autoScore = 0;
+      let maxAuto = 0;
+      document.querySelectorAll("[data-question]").forEach(function (card) {
+        const answer = Number(card.dataset.answer);
+        const checked = card.querySelector("input:checked");
+        const state = card.querySelector(".answer-state");
+        card.classList.remove("is-correct", "is-wrong");
+        maxAuto += 2;
+        if (checked && Number(checked.value) === answer) {
+          autoScore += 2;
+          card.classList.add("is-correct");
+          state.textContent = "Correct.";
+        } else {
+          card.classList.add("is-wrong");
+          const correctLabel = card.querySelector('input[value="' + answer + '"]').closest("label").textContent.trim();
+          state.textContent = "À revoir. Réponse attendue : " + correctLabel;
+        }
+      });
+      const productionScore = Math.max(0, Math.min(10, Number(document.getElementById("productionScore").value) || 0));
+      const total = autoScore + productionScore;
+      const box = document.getElementById("resultBox");
+      box.classList.add("show");
+      document.body.classList.add("show-corrections");
+      box.innerHTML = "Score indicatif : <strong>" + total + "/50</strong> · Questions autocorrigées : <strong>" + autoScore + "/" + maxAuto + "</strong> · Production guidée : <strong>" + productionScore + "/10</strong>.";
+      box.scrollIntoView({behavior:"smooth", block:"center"});
+    }
+
+    function resetExam() {
+      document.querySelectorAll("input[type='radio']").forEach(function (input) { input.checked = false; });
+      document.querySelectorAll(".question-card").forEach(function (card) {
+        card.classList.remove("is-correct", "is-wrong");
+        card.querySelector(".answer-state").textContent = "";
+      });
+      document.getElementById("productionText").value = "";
+      document.getElementById("productionScore").value = "0";
+      document.getElementById("resultBox").classList.remove("show");
+      document.body.classList.remove("show-corrections");
+    }
+
+    renderQuestions();
+    document.getElementById("checkExam").addEventListener("click", checkExam);
+    document.getElementById("resetExam").addEventListener("click", resetExam);
+  </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cohérence avancée - Français Niveau 7</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--soft:#f4f7fb;--text:#243044;--muted:#718096;--yellow:#f4c95d;--green:#2f9e77;--shadow:0 22px 55px rgba(20,40,80,.13);--radius:28px}
+    *{scroll-behavior:smooth}
+    body{margin:0;font-family:"Nunito",sans-serif;color:var(--text);background:var(--soft);overflow-x:hidden}
+    h1,h2,h3,h4,h5,.navbar-brand{font-family:"Montserrat",sans-serif}
+    .navbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 10px 32px rgba(21,52,93,.08)}
+    .navbar-brand{display:inline-flex;align-items:center;gap:.65rem;font-weight:800;color:var(--blue-dark)}
+    .brand-logo{height:42px}
+    .nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}
+    .nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
+    .global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200;font-family:Arial,Helvetica,sans-serif}
+    .global-course-switcher details{position:relative}
+    .global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:#15345d;color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}
+    .global-course-switcher summary::-webkit-details-marker{display:none}
+    .global-course-switcher summary:after{content:"v";font-size:.8rem}
+    .global-course-switcher details[open] summary:after{transform:rotate(180deg)}
+    .global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}
+    .global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:#15345d;text-decoration:none;font-weight:900}
+    .global-course-switcher a:hover{background:#eef5ff;color:#d62839}
+    .hero{min-height:min(680px,82vh);display:flex;align-items:center;padding:6.25rem 0 4rem;position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(21,52,93,.94),rgba(31,78,140,.78),rgba(214,40,57,.54)),url('../img/grammaire-connecteurs-avances.png') center/cover no-repeat}
+    .hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 14% 18%,rgba(255,255,255,.18),transparent 27%),radial-gradient(circle at 88% 12%,rgba(244,201,93,.16),transparent 24%);pointer-events:none}
+    .hero>.container{position:relative;z-index:1}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.86);border:1px solid rgba(31,78,140,.12);color:var(--blue-dark);font-weight:900;box-shadow:0 14px 30px rgba(31,78,140,.08)}
+    .hero h1{margin-top:1.2rem;font-weight:800;line-height:.98;color:#fff;text-shadow:0 12px 34px rgba(0,0,0,.22);font-size:clamp(2.55rem,6vw,5.2rem)}
+    .hero-lead{color:#fff;font-size:clamp(1.15rem,2vw,1.45rem);font-weight:900;margin:1.2rem 0 1rem;text-shadow:0 12px 34px rgba(0,0,0,.22)}
+    .hero-text,.section-text{color:var(--muted);font-size:1.08rem;line-height:1.75;max-width:880px}
+    .hero .hero-text{color:rgba(255,255,255,.9);text-shadow:0 12px 34px rgba(0,0,0,.22)}
+    .btn-main,.btn-soft{border-radius:999px;font-weight:900;padding:.88rem 1.18rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem}
+    .btn-main{border:0;background:linear-gradient(135deg,var(--blue),var(--blue-dark));color:#fff;box-shadow:0 16px 34px rgba(31,78,140,.24)}
+    .btn-main:hover{color:#fff}
+    .btn-soft{border:2px solid rgba(31,78,140,.2);background:rgba(255,255,255,.78);color:var(--blue-dark)}
+    .btn-soft:hover{border-color:var(--blue);background:var(--blue);color:#fff}
+    section{padding:4.5rem 0}
+    .section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.82rem}
+    .section-title{color:var(--blue-dark);font-size:clamp(2rem,4vw,3.15rem);font-weight:800}
+    .concept-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .concept-card,.panel,.warning-card,.practice-strip{border-radius:26px;background:#fff;box-shadow:var(--shadow)}
+    .concept-card{padding:1.35rem;height:100%;border-top:6px solid rgba(31,78,140,.22)}
+    .concept-card.red{border-top-color:rgba(214,40,57,.62)}
+    .concept-card.gold{border-top-color:var(--yellow)}
+    .concept-card.green{border-top-color:rgba(47,158,119,.58)}
+    .concept-card h3{font-size:1.18rem;font-weight:900;color:var(--blue-dark)}
+    .concept-card p{color:var(--muted);line-height:1.65;margin-bottom:.8rem}
+    .formula{border-radius:18px;background:rgba(31,78,140,.07);color:var(--blue-dark);font-weight:900;padding:.85rem 1rem;line-height:1.6}
+    .example{border-left:5px solid var(--yellow);background:#fff;border-radius:18px;padding:.9rem 1rem;color:var(--blue-dark);font-weight:800;line-height:1.6}
+    .panel{padding:clamp(1.25rem,3vw,2.2rem)}
+    .comparison-table{width:100%;border-collapse:separate;border-spacing:0 .75rem}
+    .comparison-table th{color:var(--blue-dark);font-weight:900;padding:.35rem .75rem}
+    .comparison-table td{background:#f8fbff;padding:.9rem .75rem;border-top:1px solid rgba(31,78,140,.08);border-bottom:1px solid rgba(31,78,140,.08);line-height:1.55}
+    .comparison-table td:first-child{border-left:1px solid rgba(31,78,140,.08);border-radius:16px 0 0 16px;font-weight:900;color:var(--blue-dark)}
+    .comparison-table td:last-child{border-right:1px solid rgba(31,78,140,.08);border-radius:0 16px 16px 0}
+    .warning-card{padding:1.25rem;border-left:7px solid var(--red)}
+    .warning-card h3{font-weight:900;color:var(--blue-dark);font-size:1.1rem}
+    .task-list{display:grid;gap:.8rem;margin:0;padding:0;list-style:none}
+    .task-list li{display:flex;gap:.65rem;line-height:1.65}
+    .task-list i{color:var(--red);margin-top:.18rem}
+    .practice-strip{padding:1.25rem}
+    footer{background:var(--blue-dark);color:#fff;padding:3rem 0}
+    footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}
+    .fade-in{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+    @media(max-width:991px){.concept-grid{grid-template-columns:1fr}.hero{padding-top:7rem}.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}}
+    @media(max-width:575px){.btn-main,.btn-soft{width:100%}.hero{padding-top:5.75rem;min-height:auto}.comparison-table{font-size:.94rem}}
+  </style>
+</head>
+<body data-back-fallback="../themes-du-cours.html#grammaire">
+  <div class="global-course-switcher" aria-label="Navigation globale">
+    <details>
+      <summary><span>Navigation</span></summary>
+      <nav>
+        <a href="../../../index.html">Accueil</a>
+        <a href="../../index.html">Français</a>
+        <a href="../index.html">Français Niveau 7</a>
+        <a href="../../../ingles/index.html">Anglais</a>
+      </nav>
+    </details>
+  </div>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 7</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Ouvrir la navigation"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="navMenu">
+        <ul class="navbar-nav ms-auto gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li class="nav-item"><a class="nav-link active" href="../themes-du-cours.html#grammaire">Grammaire</a></li>
+          <li class="nav-item"><a class="nav-link" href="../ateliers-activites.html">Ateliers</a></li>
+          <li class="nav-item"><a class="nav-link" href="#precision">Précision</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8 fade-in">
+          <span class="badge-course"><i class="bi bi-diagram-3"></i>Grammaire G4 · Cohérence</span>
+          <h1>Cohérence avancée et précision syntaxique</h1>
+          <p class="hero-lead">Relier les idées avec dont, ce dont, le gérondif et le participe présent.</p>
+          <p class="hero-text">Cette unité aide à passer d'une phrase correcte à une production plus fluide : on reprend une idée déjà mentionnée, on évite les répétitions et on exprime la manière, la cause ou la simultanéité avec précision.</p>
+          <div class="d-flex flex-wrap gap-3 mt-4">
+            <a href="#notions" class="btn-main"><i class="bi bi-compass"></i>Étudier les notions</a>
+            <a href="../ateliers/atelier-coherence-avancee-relatifs-gerondif.html" class="btn-soft"><i class="bi bi-ui-checks"></i>Faire l'atelier</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="notions">
+      <div class="container">
+        <div class="text-center mb-5 fade-in">
+          <p class="section-kicker">Quatre outils</p>
+          <h2 class="section-title">Dire plus avec moins de répétitions</h2>
+          <p class="section-text mx-auto">Ces structures servent à construire des phrases plus naturelles dans un débat, un compte rendu, une narration ou une présentation orale.</p>
+        </div>
+        <div class="concept-grid fade-in">
+          <article class="concept-card">
+            <h3>1. Dont</h3>
+            <p><strong>Dont</strong> remplace une idée introduite par <strong>de</strong> : parler de, avoir besoin de, être fier de, se souvenir de.</p>
+            <div class="formula">La question dont nous parlons est importante.</div>
+            <p class="mt-3 mb-0">On évite : <em>la question que nous parlons de</em>. Le <strong>de</strong> est déjà contenu dans <strong>dont</strong>.</p>
+          </article>
+          <article class="concept-card red">
+            <h3>2. Ce dont</h3>
+            <p><strong>Ce dont</strong> reprend une idée générale, pas seulement un nom précis. Il signifie souvent : <em>la chose dont</em>.</p>
+            <div class="formula">Ce dont les étudiants ont besoin, c'est d'un exemple clair.</div>
+            <p class="mt-3 mb-0">Il est très utile pour annoncer un problème, un besoin, une peur ou un objectif.</p>
+          </article>
+          <article class="concept-card gold">
+            <h3>3. Le gérondif</h3>
+            <p>Le gérondif se forme avec <strong>en + participe présent</strong>. Il exprime la manière, la simultanéité, la cause légère ou la condition.</p>
+            <div class="formula">En comparant les témoignages, on comprend mieux la situation.</div>
+            <p class="mt-3 mb-0">Le sujet doit rester le même : <em>En arrivant tôt, j'ai pu préparer la salle.</em></p>
+          </article>
+          <article class="concept-card green">
+            <h3>4. Le participe présent</h3>
+            <p>Le participe présent peut condenser une relative et donner un style plus écrit ou plus académique.</p>
+            <div class="formula">Les personnes souhaitant participer doivent s'inscrire.</div>
+            <p class="mt-3 mb-0">À l'oral, il faut l'utiliser avec mesure pour ne pas rendre la phrase trop lourde.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="precision" class="bg-white">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+          <div class="col-lg-5 fade-in">
+            <p class="section-kicker">Précision</p>
+            <h2 class="section-title">Choisir la bonne structure</h2>
+            <p class="section-text">Le choix dépend de la relation entre les idées. On ne choisit pas une structure parce qu'elle semble plus avancée, mais parce qu'elle rend la pensée plus claire.</p>
+            <div class="warning-card mt-4">
+              <h3><i class="bi bi-exclamation-triangle-fill"></i> Point de vigilance</h3>
+              <p class="mb-0">Avec le gérondif, le sujet de l'action doit rester cohérent. <em>En lisant l'article, le problème devient clair</em> est maladroit, parce que le problème ne lit pas l'article.</p>
+            </div>
+          </div>
+          <div class="col-lg-7 fade-in">
+            <div class="panel">
+              <table class="comparison-table">
+                <thead>
+                  <tr><th>Objectif</th><th>Structure conseillée</th><th>Exemple</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Remplacer de + nom</td><td>dont</td><td>Le thème dont il parle concerne la mobilité.</td></tr>
+                  <tr><td>Reprendre une idée entière</td><td>ce dont</td><td>Ce dont je suis sûr, c'est que le débat reste ouvert.</td></tr>
+                  <tr><td>Exprimer la manière</td><td>en + participe présent</td><td>Elle a convaincu le groupe en donnant des exemples précis.</td></tr>
+                  <tr><td>Réduire une relative</td><td>participe présent</td><td>Les élèves participant au projet présenteront leurs résultats.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="practice-strip fade-in">
+          <div class="row align-items-center g-4">
+            <div class="col-lg-8">
+              <p class="section-kicker mb-2">Production guidée</p>
+              <h2 class="h3 fw-bold text-primary mb-2">De la phrase simple au paragraphe cohérent</h2>
+              <ul class="task-list">
+                <li><i class="bi bi-check-circle-fill"></i><span>Identifiez une idée que vous répétez trop souvent.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>Remplacez une répétition par <strong>dont</strong> ou <strong>ce dont</strong>.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>Ajoutez une phrase avec <strong>en + participe présent</strong> pour expliquer la manière ou la cause.</span></li>
+                <li><i class="bi bi-check-circle-fill"></i><span>Relisez le paragraphe pour vérifier que le sujet reste logique.</span></li>
+              </ul>
+            </div>
+            <div class="col-lg-4 text-lg-end">
+              <a href="../ateliers/atelier-coherence-avancee-relatifs-gerondif.html" class="btn-main"><i class="bi bi-ui-checks"></i>Pratiquer maintenant</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="row align-items-center g-4">
+        <div class="col-lg-8">
+          <h2 class="h4 fw-bold mb-2">Cohérence avancée - Français Niveau 7</h2>
+          <p class="mb-0 opacity-75">Unité G4 ajoutée à la carte descriptive du niveau 7.</p>
+        </div>
+        <div class="col-lg-4 text-lg-end"><a href="../themes-du-cours.html#grammaire"><i class="bi bi-arrow-left"></i> Retour à la grammaire</a></div>
+      </div>
+    </div>
+  </footer>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script>
+    const fadeElements = document.querySelectorAll('.fade-in');
+    const observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: .12 });
+    fadeElements.forEach(function(element) { observer.observe(element); });
+  </script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js"></script>
+  <script src="../../../assets/js/jaralingua-back-button.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+</body>
+</html>

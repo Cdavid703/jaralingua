@@ -14,7 +14,9 @@ Estado general:
 - Temas 01 a 06: cerrados pedagogicamente; auditoria STT completa registrada en `docs/auditoria-stt-temas01-06-frances-nivel8.md`.
 - Tema 07: cerrado pedagogicamente y auditado por STT en `docs/auditoria-tecnica-tema07-frances-nivel8.md`.
 - Tema 08: cerrado pedagogicamente y auditado por STT en `docs/auditoria-tecnica-tema08-frances-nivel8.md`.
-- Proyecto final, simulacro y examen final: pendientes dentro de la arquitectura del Nivel 8.
+- Proyecto final sobre la ciudad inteligente: pagina pedagogica creada y conectada al panel como evaluacion oral manual de 20%.
+- Simulacro formativo B2: creado sobre 50 puntos, sin envio web ni impacto en notas.
+- Examen final: pendiente dentro de la arquitectura del Nivel 8.
 
 Nuevo estandar aplicado desde esta auditoria:
 
@@ -122,18 +124,18 @@ Accion recomendada:
 
 1. Mantener una escucha humana subjetiva opcional para ritmo, naturalidad y comodidad auditiva.
 2. Hacer QA visual final antes del despliegue, sin bloquear el cierre pedagogico.
-3. Pasar al proyecto final, simulacro, examen final y cierre de notas.
+3. Pasar al examen final y cierre de notas.
 
 ## Riesgos pedagogicos actuales
 
 - El curso ya tiene secuencia didactica visible en los temas 01-08; el riesgo principal pasa a ser el cierre evaluativo global.
 - Falta definir si todas las producciones 01E-08E seran formativas o entregables formales al docente.
-- Falta el proyecto final `Dossier B2 : un dilemme contemporain`, que debe organizar la produccion escrita y oral del nivel.
-- Falta simulacro formativo y examen final cerrado por docente.
+- Proyecto final `La ville intelligente` conectado como evaluacion oral manual de 20%: el estudiante no entrega por la pagina web, presenta en clase y el docente registra la nota en el panel.
+- Falta examen final cerrado por docente.
 
 ## Prioridad recomendada
 
 1. Hacer QA visual final de los temas 06-08 y portales.
-2. Construir proyecto final, simulacro y examen final.
-3. Conectar proyecto/evaluaciones con notas segun ponderaciones.
+2. Conectar proyecto/evaluaciones con notas segun ponderaciones.
+3. Construir examen final.
 4. Mantener escucha humana subjetiva como control opcional, no como bloqueo tecnico.
