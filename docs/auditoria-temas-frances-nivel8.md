@@ -11,9 +11,9 @@ Nivel 8 ya tiene una base auditiva fuerte: existen 48 audios completos en `franc
 Estado general:
 
 - Tema 01: cerrado pedagogicamente para uso en clase, con un pendiente tecnico opcional si se quiere que la produccion 01E se envie al docente o a notas.
-- Tema 02: cerrado pedagogicamente para uso en clase, con escucha humana final pendiente para cierre tecnico absoluto de audio.
-- Temas 03, 04 y 05: cerrados pedagogicamente, con pendiente tecnico de escucha humana final o STT confiable para confirmar audio real contra transcripcion.
-- Temas 06, 07 y 08: tienen audios completos, pero falta casi todo el bloque visible.
+- Temas 01 a 06: cerrados pedagogicamente; auditoria STT completa registrada en `docs/auditoria-stt-temas01-06-frances-nivel8.md`.
+- Tema 07: cerrado pedagogicamente y auditado por STT en `docs/auditoria-tecnica-tema07-frances-nivel8.md`.
+- Tema 08: cerrado pedagogicamente y auditado por STT en `docs/auditoria-tecnica-tema08-frances-nivel8.md`.
 - Proyecto final, simulacro y examen final: pendientes dentro de la arquitectura del Nivel 8.
 
 Nuevo estandar aplicado desde esta auditoria:
@@ -36,7 +36,7 @@ Filtro tecnico inicial de duracion de audios existentes:
 | 07 | 1/6 | 0/6 | 5/6 | 128.5s |
 | 08 | 0/6 | 0/6 | 6/6 | 137.3s |
 
-Conclusion tecnica: la base auditiva existe y el Tema 01 cumple el rango de duracion. A partir del Tema 02 conviene revisar los audios que salen del rango 90-120s, sobre todo cuando pasan claramente de 2 minutos. La revision final debe escuchar cada version Francia/Quebec y confirmar coincidencia absoluta con su transcripcion.
+Conclusion tecnica: la base auditiva existe. Los temas 01 a 08 ya fueron auditados con STT contra sus guiones canonicos; las diferencias restantes son menores y estan documentadas. Para cierre absoluto queda como opcional una escucha humana subjetiva de ritmo, naturalidad y comodidad auditiva.
 
 ## Checklist minimo por tema
 
@@ -58,13 +58,13 @@ Conclusion tecnica: la base auditiva existe y el Tema 01 cumple el rango de dura
 | Tema | Lo que existe hoy | Lo que falta segun la guia | Veredicto |
 | --- | --- | --- | --- |
 | 01. Regrets, reproches et bilans | Pagina principal, 3 comprensiones orales, lectura inferencial, pronunciacion 01D, gramatica 01G, ruleta oral 01R y produccion 01E. | Pendiente opcional: convertir 01E en entrega enviable al docente si se decide evaluarla formalmente. | Cerrado pedagogicamente. |
-| 02. Hypotheses irreelles dans le passe | Pagina principal, lectura inferencial, 3 comprensiones orales, pronunciacion 02D, gramatica 02G, ruleta 02R y produccion 02E. | Pendiente tecnico: escucha humana final o STT confiable para confirmar coincidencia palabra por palabra audio/transcripcion. | Cerrado pedagogicamente. |
-| 03. Jugement, emotion et anteriorite | Pagina principal, 03A-03C, 03D, 03G, 03R y 03E conectados. | Pendiente escucha humana final/STT para confirmar audio real contra transcripcion. | Cerrado pedagogicamente. |
-| 04. Discours rapporte avance | Pagina principal, 04A-04C, 04D, 04G, 04R y 04E conectados. | Pendiente escucha humana final/STT para confirmar audio real contra transcripcion. | Cerrado pedagogicamente. |
-| 05. Medias et desinformation | Pagina principal, lectura inferencial, 05A-05C, 05D, 05G, 05R y 05E conectados. | Pendiente escucha humana final/STT para confirmar audio real contra transcripcion. | Cerrado pedagogicamente. |
-| 06. Intelligence artificielle et ethique numerique | Audios completos 06A-06C en carpeta. | Pagina principal, comprensiones, pronunciacion 06D, gramatica causa/consecuencia/but, comite etico, lectura, produccion. | Bloque visible pendiente. |
-| 07. Justice sociale, egalite et citoyennete | Audios completos 07A-07C en carpeta. | Pagina principal, comprensiones, pronunciacion 07D, gramatica de concesion/oposicion, debate ciudadano, lectura, produccion. | Bloque visible pendiente. |
-| 08. Francophonie, registres et francais oral authentique | Audios completos 08A-08C en carpeta. | Pagina principal, comprensiones, pronunciacion 08D, transformador de registro, lectura sociolinguistica, actividad de analisis oral, produccion controlada. | Bloque visible pendiente. |
+| 02. Hypotheses irreelles dans le passe | Pagina principal, lectura inferencial, 3 comprensiones orales, pronunciacion 02D, gramatica 02G, ruleta 02R y produccion 02E. | Sin pendiente tecnico de transcripcion; STT aprobado. | Cerrado pedagogicamente y tecnicamente por STT. |
+| 03. Jugement, emotion et anteriorite | Pagina principal, 03A-03C, 03D, 03G, 03R y 03E conectados. | Sin pendiente tecnico de transcripcion; STT aprobado. | Cerrado pedagogicamente y tecnicamente por STT. |
+| 04. Discours rapporte avance | Pagina principal, 04A-04C, 04D, 04G, 04R y 04E conectados. | Sin pendiente tecnico de transcripcion; STT aprobado. | Cerrado pedagogicamente y tecnicamente por STT. |
+| 05. Medias et desinformation | Pagina principal, lectura inferencial, 05A-05C, 05D, 05G, 05R y 05E conectados. | Sin pendiente tecnico de transcripcion; 05A France tiene solo diferencias STT menores documentadas. | Cerrado pedagogicamente y tecnicamente por STT. |
+| 06. Intelligence artificielle et ethique numerique | Pagina principal, lectura, 06A-06C, 06D, 06G, 06R y 06E conectados. | Sin pendiente tecnico de transcripcion; STT aprobado. | Cerrado pedagogicamente y tecnicamente por STT. |
+| 07. Justice sociale, egalite et citoyennete | Pagina principal, lectura, 07A-07C, 07D, 07G, 07R y 07E conectados. | Sin pendiente tecnico de transcripcion; STT aprobado. | Cerrado pedagogicamente y tecnicamente por STT. |
+| 08. Francophonie, registres et francais oral authentique | Pagina principal, lectura sociolinguistica, 08A-08C, 08D, 08G, 08R y 08E conectados; expresiones idiomaticas integradas. | Sin pendiente tecnico de transcripcion; STT aprobado. | Cerrado pedagogicamente y tecnicamente por STT. |
 
 ## Auditoria de explicaciones detalladas
 
@@ -102,7 +102,7 @@ Auditoria de cierre:
 - Produccion: completa. 02E trabaja texto, expresion idiomatica y audio para feedback.
 - Enlaces: 02G, 02R y 02E quedaron estaticos en `ateliers-activites.html`.
 
-Veredicto: Tema 02 se puede cerrar pedagogicamente. Para cierre tecnico absoluto queda pendiente la escucha humana final o STT confiable para confirmar coincidencia palabra por palabra entre audio y transcripcion.
+Veredicto: Tema 02 se puede cerrar pedagogica y tecnicamente por STT. La auditoria queda registrada en `docs/auditoria-stt-temas01-06-frances-nivel8.md`.
 
 ### Temas 03 a 05
 
@@ -110,32 +110,30 @@ Los tres temas ya tienen entrada pedagogica suficiente: pagina principal, lectur
 
 Accion recomendada:
 
-1. Hacer escucha humana final o STT confiable para confirmar coincidencia exacta audio/transcripcion.
+1. Mantener escucha humana subjetiva solo como control opcional de ritmo y naturalidad; la coincidencia texto/audio ya fue validada por STT.
 2. Revisar visualmente en navegador los portales y actividades si se despliegan nuevos estilos.
 3. Mantener los temas cerrados como referencia para construir 06, 07 y 08.
 
 ### Temas 06 a 08
 
-Existen audios, pero el curso visible todavia no ensena ni practica estos bloques de forma suficiente. En terminos pedagogicos, estan en estado de banco de recursos, no de tema construido.
+Los tres temas ya pasaron de banco de recursos a secuencia pedagogica visible. Cada uno cuenta con pagina principal, lectura, comprensiones orales, pronunciacion, gramatica, conversacion y produccion. Los audios y transcripciones quedaron validados por STT, con reporte tecnico por tema.
 
 Accion recomendada:
 
-1. Construir pagina principal.
-2. Crear pronunciacion.
-3. Crear comprensiones orales.
-4. Crear lectura, actividad interactiva, debate y produccion.
+1. Mantener una escucha humana subjetiva opcional para ritmo, naturalidad y comodidad auditiva.
+2. Hacer QA visual final antes del despliegue, sin bloquear el cierre pedagogico.
+3. Pasar al proyecto final, simulacro, examen final y cierre de notas.
 
 ## Riesgos pedagogicos actuales
 
-- El curso parece mas completo de lo que esta, porque la biblioteca de audios existe, pero los temas 03-08 aun no tienen secuencia didactica completa.
-- Los estudiantes pueden entrar a pronunciacion 05 sin una explicacion principal del tema.
-- Falta lectura inferencial por tema, una exigencia fuerte de la guia.
-- Faltan producciones conectadas al proyecto final en los temas 05-08.
+- El curso ya tiene secuencia didactica visible en los temas 01-08; el riesgo principal pasa a ser el cierre evaluativo global.
+- Falta definir si todas las producciones 01E-08E seran formativas o entregables formales al docente.
 - Falta el proyecto final `Dossier B2 : un dilemme contemporain`, que debe organizar la produccion escrita y oral del nivel.
+- Falta simulacro formativo y examen final cerrado por docente.
 
 ## Prioridad recomendada
 
-1. Construir Tema 06 completo: pagina, 06A-06C, gramatica, conversacion, lectura y produccion.
-2. Construir Tema 07, luego 08.
-3. Hacer escucha humana final/STT de los temas cerrados.
-4. Construir proyecto final, simulacro y examen final.
+1. Hacer QA visual final de los temas 06-08 y portales.
+2. Construir proyecto final, simulacro y examen final.
+3. Conectar proyecto/evaluaciones con notas segun ponderaciones.
+4. Mantener escucha humana subjetiva como control opcional, no como bloqueo tecnico.

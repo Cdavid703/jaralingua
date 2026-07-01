@@ -394,7 +394,7 @@ Philippe: C'est exactement ce que conclut le rapport. Ce qui est en jeu, c'est l
 ## Audio 06a - L'IA au travail : menace ou outil ? (Québec)
 File: `complete/n8-06a-ia-travail-quebec-b2.mp3`
 
-Marc: Tu as entendu parler de la nouvelle politique de notre entreprise ? Ils veulent intégrer l'intelligence artificielle dans tous les départements d'ici six mois.
+Marc: T'as entendu parler de la nouvelle politique de notre entreprise ? Ils veulent intégrer l'intelligence artificielle dans tous les départements d'ici six mois.
 
 Nathalie: Oui, et franchement, ça m'inquiète. Puisque les machines peuvent déjà rédiger des rapports et analyser des données, je me demande ce qu'il restera pour nous.
 

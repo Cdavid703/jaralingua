@@ -12,7 +12,7 @@
       label: "Section 2",
       shortLabel: "2",
       audio: "../audio/pronunciation/theme-03/section-2.mp3",
-      text: "Je suis également contente qu’ils aient présenté des excuses publiques."
+      text: "Je suis également contente que les responsables aient présenté leurs excuses publiquement."
     },
     {
       label: "Section 3",
@@ -31,7 +31,7 @@
       shortLabel: "Défi",
       final: true,
       audio: "../audio/pronunciation/theme-03/n8-03d-subjonctif-passe-modele-france.mp3",
-      text: "Je suis soulagée que les responsables aient reconnu leur erreur. Je suis également contente qu’ils aient présenté des excuses publiques. Il est regrettable que certaines personnes aient réagi trop rapidement, sans avoir vérifié les faits. Bien que la situation ait provoqué de la colère, je doute qu’elle ait durablement changé les comportements."
+      text: "Je suis soulagée que les responsables aient reconnu leur erreur. Je suis également contente que les responsables aient présenté leurs excuses publiquement. Il est regrettable que certaines personnes aient réagi trop rapidement, sans avoir vérifié les faits. Bien que la situation ait provoqué de la colère, je doute qu’elle ait durablement changé les comportements."
     }
   ];
 

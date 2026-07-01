@@ -10,7 +10,7 @@ Objetivo: confirmar si las comprensiones orales 02A, 02B y 02C cumplen el estand
 
 El Tema 02 queda aprobado en auditoria textual y estructural. Las seis pistas de audio estan en un rango pedagogicamente aceptable para Nivel 8. Dos pistas historicas superan ligeramente los 2 minutos, pero no se bloquean porque el criterio aprobado permite revisar densidad y ritmo sin exigir recorte automatico.
 
-Pendiente no automatizado: escucha humana final o transcripcion STT confiable para certificar coincidencia palabra por palabra entre el audio real y el guion. En este entorno no hay Whisper, ffmpeg ni otro motor local de transcripcion disponible.
+Actualizacion 2026-07-01: la auditoria STT con ElevenLabs Scribe quedo registrada en `docs/auditoria-stt-temas01-06-frances-nivel8.md`. Tema 02 queda aprobado tecnicamente por coincidencia audio/transcripcion.
 
 ## Duracion de audios
 
@@ -62,4 +62,4 @@ Las tarjetas 02G, 02R y 02E quedaron estaticas dentro de `ateliers-activites.htm
 
 Tema 02 puede marcarse como cerrado pedagogicamente y aprobado en QA textual.
 
-Antes de desplegar como cierre tecnico absoluto, queda una verificacion auditiva final: escuchar cada archivo o transcribirlo con STT y comparar contra el guion palabra por palabra. Si esa escucha confirma el guion, Tema 02 queda cerrado tambien en audio.
+Tema 02 queda cerrado tambien en audio por STT. Correcciones aplicadas desde la auditoria: 02A France agrego el `Ah` audible en la transcripcion, y 02D se ajusto a femenino para concordar con la voz modelo Claire.

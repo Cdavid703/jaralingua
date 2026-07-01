@@ -4,7 +4,7 @@
 
 File: `pronunciation/theme-02/section-1.mp3`
 
-Claire: Si j’étais parti quelques minutes plus tôt, j’aurais pris ce train et je serais arrivé à l’heure.
+Claire: Si j’étais partie quelques minutes plus tôt, j’aurais pris ce train et je serais arrivée à l’heure.
 
 ## Prononciation 02D — Section 2
 
@@ -28,4 +28,4 @@ Claire: même si nous n’en comprenions pas immédiatement les conséquences.
 
 File: `pronunciation/theme-02/n8-02d-hypotheses-passe-modele-france.mp3`
 
-Claire: Si j’étais parti quelques minutes plus tôt, j’aurais pris ce train et je serais arrivé à l’heure. Pourtant, cet imprévu m’aurait peut-être conduit sur la route au moment de l’accident. Avec le recul, je me dis que certaines décisions auraient radicalement changé notre histoire, même si nous n’en comprenions pas immédiatement les conséquences.
+Claire: Si j’étais partie quelques minutes plus tôt, j’aurais pris ce train et je serais arrivée à l’heure. Pourtant, cet imprévu m’aurait peut-être conduit sur la route au moment de l’accident. Avec le recul, je me dis que certaines décisions auraient radicalement changé notre histoire, même si nous n’en comprenions pas immédiatement les conséquences.

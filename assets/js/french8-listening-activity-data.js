@@ -181,6 +181,354 @@
       ["Que recommande le rapport face aux deepfakes ?", ["Un investissement massif dans les outils de détection automatisée.", "Une interdiction de tous les téléphones.", "Une simple campagne d'affichage."], 0],
       ["Que demande l'Observatoire ?", ["Une législation européenne contraignante.", "Une baisse des responsabilités des plateformes.", "Une loi contre les bibliothèques."], 0],
       ["Quel enjeu démocratique est mis en avant ?", ["La capacité des citoyens à prendre des décisions éclairées.", "Le choix des couleurs des plateformes.", "La vitesse des connexions Internet."], 0]
-    ]
+    ],
+    "06a": [
+      ["Quelle nouvelle politique est annoncée au début ?", ["Intégrer l'intelligence artificielle dans tous les départements.", "Fermer tous les départements.", "Remplacer l'entreprise par un service public."], 0],
+      ["Pourquoi Nathalie est-elle inquiète ?", ["Les machines peuvent déjà rédiger des rapports et analyser des données.", "Les machines ne fonctionnent jamais.", "Les employés refusent toute discussion."], 0],
+      ["Comment Marc nuance-t-il la situation ?", ["Certains métiers vont évoluer, mais l'IA n'est pas une menace absolue.", "Tous les emplois disparaîtront le lendemain.", "L'IA ne changera rien."], 0],
+      ["Quel objectif financier Nathalie attribue-t-elle à la direction ?", ["Réduire les coûts de trente pour cent.", "Augmenter les salaires de trente pour cent.", "Financer uniquement la formation."], 0],
+      ["Quelle condition Marc juge-t-il nécessaire ?", ["Un accompagnement sérieux afin que personne ne soit laissé de côté.", "Une interdiction des ateliers.", "Une installation plus rapide du logiciel."], 0],
+      ["Quelle conséquence de l'installation brutale est mentionnée ?", ["La moitié de l'équipe ne sait pas comment utiliser le logiciel.", "Tout le monde maîtrise déjà l'outil.", "Le logiciel a été retiré."], 0],
+      ["Quel problème fondamental Marc identifie-t-il ?", ["Le manque de dialogue.", "Le manque de machines.", "Le manque de rapports automatiques."], 0],
+      ["Quel usage positif de l'IA Nathalie reconnaît-elle ?", ["Libérer du temps pour la créativité et la réflexion stratégique.", "Empêcher toute créativité.", "Supprimer les tâches complexes."], 0],
+      ["Selon Marc, comment faut-il utiliser cette technologie ?", ["De sorte qu'elle serve les humains, pas l'inverse.", "De sorte qu'elle décide seule.", "Afin que les syndicats disparaissent."], 0],
+      ["Quelle instance pourrait faire bouger les choses ?", ["La réunion syndicale prévue la semaine prochaine.", "Une conférence sportive.", "Une mairie étrangère."], 0]
+    ],
+    "06b": [
+      ["Quel est le sujet de l'émission Techno-éthique ?", ["La reconnaissance faciale.", "Les médias traditionnels.", "Le conditionnel passé."], 0],
+      ["Pourquoi le débat est-il vif selon Philippe ?", ["La technologie identifie un individu en quelques millisecondes.", "La technologie est déjà interdite partout.", "La technologie ne reconnaît aucune image."], 0],
+      ["Quel argument les forces de l'ordre avancent-elles ?", ["Renforcer la sécurité publique.", "Remplacer les juges.", "Supprimer les frontières."], 0],
+      ["Quelle menace justifie l'outil pour certains ?", ["Le terrorisme et la criminalité organisée.", "La baisse des ventes de journaux.", "Les examens scolaires."], 0],
+      ["Que dénoncent les associations de défense des droits ?", ["Une surveillance qui impose un débat démocratique.", "Une absence totale de caméras.", "Un excès de transparence."], 0],
+      ["Quel biais est cité dans les algorithmes ?", ["Des biais raciaux importants.", "Des biais uniquement musicaux.", "Des biais sans effet social."], 0],
+      ["Pourquoi le cadre juridique est-il jugé insuffisant ?", ["La législation n'a pas suivi le rythme de l'innovation.", "Les lois sont déjà trop nombreuses et identiques partout.", "Le Parlement a terminé toutes les négociations."], 0],
+      ["Que propose le Parlement européen ?", ["Encadrer l'utilisation de la reconnaissance faciale dans les espaces publics.", "Obliger chaque ville à l'utiliser.", "Supprimer tout débat public."], 0],
+      ["Quelle ville a interdit cette technologie ?", ["San Francisco.", "Montréal-Trudeau.", "Genève."], 0],
+      ["Quelle conclusion Philippe formule-t-il ?", ["Le débat concerne tout le monde et demande une réflexion collective.", "Le débat est inutile.", "Seuls les juristes doivent s'informer."], 0]
+    ],
+    "06c": [
+      ["Quel texte le Parlement européen a-t-il adopté ?", ["Un texte historique sur la régulation de l'IA.", "Une loi sur les filtres à eau.", "Une charte sur les voyages scolaires."], 0],
+      ["Pourquoi les législateurs veulent-ils un cadre juridique clair ?", ["Pour que les citoyens soient protégés.", "Pour que les entreprises n'aient aucune obligation.", "Pour que l'IA soit interdite dans tous les pays."], 0],
+      ["Comment le règlement classe-t-il les systèmes d'IA ?", ["Selon leur niveau de risque.", "Selon leur couleur.", "Selon la langue de l'utilisateur."], 0],
+      ["Quelle application est purement interdite dans l'audio ?", ["La notation sociale.", "La traduction automatique.", "La recherche documentaire."], 0],
+      ["Quels secteurs utilisent des systèmes à haut risque selon Émilie ?", ["La santé ou la justice.", "La musique et le tourisme.", "La restauration seulement."], 0],
+      ["Pourquoi les grandes entreprises critiquent-elles le texte ?", ["Les obligations de transparence augmentent leurs coûts de développement.", "Le texte ne contient aucune obligation.", "Le texte finance tous leurs projets."], 0],
+      ["Quelle crainte liée à l'innovation est exprimée ?", ["Que l'Europe perde en compétitivité face aux États-Unis et à la Chine.", "Que l'Europe devienne trop rapide.", "Que l'IA disparaisse immédiatement."], 0],
+      ["Quelle réserve les ONG expriment-elles ?", ["Des exceptions subsistent pour les forces de l'ordre.", "Les ONG refusent toute protection.", "Les ONG demandent le scoring social."], 0],
+      ["Pourquoi le texte peut-il servir de modèle ?", ["L'Europe est la première région à légiférer aussi largement sur l'IA.", "Il a été refusé partout.", "Il concerne uniquement le Canada."], 0],
+      ["Quels pays étudient des législations similaires ?", ["Le Canada et le Brésil.", "La Chine et le Sénégal.", "La France et l'Allemagne seulement."], 0]
+    ],
+    "07a": [
+      ["Quelle realite sociale est critiquee dans la version quebecoise ?", ["Les obstacles invisibles apres l'acces aux grandes ecoles.", "La disparition de toutes les bourses.", "Le manque de transports scolaires."], 0],
+      ["Pourquoi les programmes de discrimination positive sont-ils juges limites ?", ["Ils restent encourageants mais marginaux.", "Ils interdisent les concours.", "Ils suppriment les diplomes."], 0],
+      ["Quel obstacle demeure pour un etudiant boursier en grande ecole ?", ["Le reseau, les codes et le capital culturel.", "La meteo et les horaires de train.", "Le manque de salles de sport."], 0],
+      ["Quel chiffre sur les CV est mentionne ?", ["Un nom a consonance etrangere recoit environ 30 % de reponses en moins.", "Tous les CV recoivent exactement la meme reponse.", "Les CV anonymes sont toujours refuses."], 0],
+      ["Quelle expression idiomatique apparait dans l'audio ?", ["Briser le plafond de verre.", "Jouer avec le feu.", "Tourner la page."], 0],
+      ["Que pense le dialogue des plans gouvernementaux ?", ["Ils sont decevants et ne reduisent pas assez les ecarts.", "Ils ont resolu toute inegalite.", "Ils ne concernent que le sport."], 0],
+      ["Quelle attitude finale est defendue ?", ["Continuer a exiger des politiques concretes.", "Abandonner tout debat.", "Refuser toute aide locale."], 0],
+      ["Quel ton correspond le mieux a l'echange ?", ["Lucide mais pas fataliste.", "Publicitaire et euphorique.", "Purement humoristique."], 0],
+      ["Quel element social est presente comme decisif ?", ["Le capital culturel.", "La taille de la ville uniquement.", "La marque du telephone."], 0],
+      ["Quelle conclusion resume le mieux l'audio ?", ["Les reussites individuelles existent, mais elles ne suffisent pas a prouver l'egalite.", "L'egalite des chances est deja parfaite.", "Le systeme scolaire n'a aucun role."], 0]
+    ],
+    "07b": [
+      ["Quel paradoxe ouvre la version quebecoise ?", ["L'abstention augmente, mais les citoyens s'engagent autrement.", "Les citoyens ne s'engagent plus nulle part.", "Les partis politiques doublent leurs membres."], 0],
+      ["Quelles structures se multiplient selon l'audio ?", ["Les associations et collectifs citoyens.", "Les aeroports.", "Les grandes ecoles privees."], 0],
+      ["Quel exemple de participation locale est cite ?", ["Le budget participatif de Paris.", "Une course cycliste.", "Un salon gastronomique."], 0],
+      ["Quel bilan est donne de la Convention citoyenne pour le climat ?", ["Un enthousiasme initial mais un resultat mitige.", "Un echec sans aucune recommandation.", "Une loi appliquee integralement le lendemain."], 0],
+      ["Quelle expression idiomatique de difficulte est employee ?", ["Le chemin est seme d'embuches.", "L'ascenseur social est en panne.", "Sauver les meubles."], 0],
+      ["Que prouve la convention selon l'audio ?", ["Des citoyens ordinaires peuvent produire des recommandations solides.", "Seuls les experts peuvent parler de politique.", "Le debat local est impossible."], 0],
+      ["Quelle limite est soulignee ?", ["Les promesses politiques peuvent etre diluees ou abandonnees.", "Les citoyens refusent toutes les idees.", "Les recommandations sont toujours absurdes."], 0],
+      ["Quelle relation avec la democratie representative est defendue ?", ["La participation peut la completer.", "Elle doit la supprimer entierement.", "Elle ne sert qu'a divertir."], 0],
+      ["Quel domaine mobilise fortement les jeunes ?", ["Le climat, les discriminations et la justice sociale.", "La decoration interieure seulement.", "Les achats en ligne."], 0],
+      ["Quelle conclusion correspond le mieux ?", ["L'engagement change de forme et demande des garanties de suivi.", "L'engagement citoyen a disparu.", "Les reseaux sociaux suffisent toujours a changer la loi."], 0]
+    ],
+    "07c": [
+      ["Quelle methode l'Observatoire utilise-t-il ?", ["Le testing avec des candidatures fictives.", "Une dictee nationale.", "Un vote a main levee."], 0],
+      ["Combien de candidatures sont envoyees ?", ["Environ cinq mille.", "Dix seulement.", "Deux millions."], 0],
+      ["Quel ecart est cite pour un nom a consonance maghrebine ?", ["Environ 32 % de reponses en moins.", "Aucun ecart.", "Deux fois plus de reponses positives."], 0],
+      ["Quels autres biais sont mentionnes ?", ["Le genre et l'age.", "La couleur des stylos.", "La distance avec la mer."], 0],
+      ["Pourquoi les femmes peuvent-elles etre penalisees ?", ["Elles sont parfois penalisees pour des postes de management.", "Elles ne postulent jamais.", "Elles n'ont pas de diplomes dans l'audio."], 0],
+      ["Quelle reaction de certains employeurs est citee ?", ["Ils contestent la methode.", "Ils avouent toujours immediatement.", "Ils interdisent les entretiens."], 0],
+      ["Comment l'audio qualifie-t-il le testing ?", ["Une methode scientifiquement validee.", "Une impression personnelle.", "Une rumeur sans donnees."], 0],
+      ["Quelle institution peut intervenir ?", ["Le Defenseur des droits.", "Un club sportif.", "Une agence de voyage."], 0],
+      ["Quelle mesure plus dure est proposee ?", ["Des amendes plus lourdes.", "La suppression de tous les CV.", "Le refus de publier les resultats."], 0],
+      ["Quelle conclusion domine ?", ["Mesurer la discrimination aide a la combattre, meme si le progres est lent.", "La discrimination est impossible a mesurer.", "Les sanctions sont inutiles par principe."], 0]
+    ],
+    "08a": [
+      [
+            "Qu'observe Émilie chez les Parisiens ?",
+            [
+                  "Ils changent de registre selon la situation.",
+                  "Ils refusent toute expression familière.",
+                  "Ils parlent tous exactement comme les livres."
+            ],
+            0
+      ],
+      [
+            "Quel exemple familier signifie « restaurant » dans l'audio ?",
+            [
+                  "On va se faire un resto.",
+                  "Nous déjeunerons officiellement.",
+                  "Je souhaiterais commander."
+            ],
+            0
+      ],
+      [
+            "Quel mot en verlan est cité ?",
+            [
+                  "Meuf.",
+                  "Natel.",
+                  "Panosses."
+            ],
+            0
+      ],
+      [
+            "Où le changement de registre est-il illustré ?",
+            [
+                  "Dans le monde du travail, entre réunion et pause.",
+                  "Dans une compétition sportive.",
+                  "Dans une recette de cuisine."
+            ],
+            0
+      ],
+      [
+            "Quelle réduction orale est mentionnée ?",
+            [
+                  "J'sais pas.",
+                  "Je souhaiterais.",
+                  "Nous eûmes."
+            ],
+            0
+      ],
+      [
+            "Pourquoi « du coup » et « genre » sont-ils importants ?",
+            [
+                  "Ce sont des marqueurs oraux très fréquents.",
+                  "Ce sont des insultes.",
+                  "Ce sont des formes du passé simple."
+            ],
+            0
+      ],
+      [
+            "Que demande la compétence sociolinguistique ?",
+            [
+                  "Savoir quand utiliser chaque registre.",
+                  "Éliminer les accents régionaux.",
+                  "Traduire chaque mot en anglais."
+            ],
+            0
+      ],
+      [
+            "Quel mot est associé à quelque chose de pénible ?",
+            [
+                  "Relou.",
+                  "Meuf.",
+                  "Chanmé."
+            ],
+            0
+      ],
+      [
+            "Quel ton a l'échange ?",
+            [
+                  "Explicatif et comparatif.",
+                  "Policier et judiciaire.",
+                  "Publicitaire et commercial."
+            ],
+            0
+      ],
+      [
+            "Quelle idée finale est défendue ?",
+            [
+                  "Le registre est un choix social, pas seulement grammatical.",
+                  "Le français familier annule la communication.",
+                  "Le Québec ne connaît pas les registres."
+            ],
+            0
+      ]
+],
+    "08b": [
+      [
+            "Combien de locuteurs francophones sont évoqués ?",
+            [
+                  "Environ 320 millions.",
+                  "Environ 32 millions.",
+                  "Environ 3 millions."
+            ],
+            0
+      ],
+      [
+            "Quel débat oppose les puristes aux autres locuteurs ?",
+            [
+                  "La variation et l'adaptation de la langue.",
+                  "La fermeture des écoles.",
+                  "La disparition des dictionnaires."
+            ],
+            0
+      ],
+      [
+            "Quel exemple ivoirien est cité ?",
+            [
+                  "C'est dja.",
+                  "Pantoute.",
+                  "Natel."
+            ],
+            0
+      ],
+      [
+            "Quel mot québécois signifie « pas du tout » ?",
+            [
+                  "Pantoute.",
+                  "Kiffer.",
+                  "Meeting."
+            ],
+            0
+      ],
+      [
+            "Quels mots familiers venus de l'usage contemporain sont mentionnés ?",
+            [
+                  "Kiffer et ça me saoule.",
+                  "Septante et nonante.",
+                  "Avoir et être."
+            ],
+            0
+      ],
+      [
+            "Quel phénomène lié à l'anglais est discuté ?",
+            [
+                  "Le franglais : meeting, weekend, checker ses mails.",
+                  "Le latin juridique.",
+                  "Le passé simple."
+            ],
+            0
+      ],
+      [
+            "Quel équivalent officiel est proposé pour email ?",
+            [
+                  "Courriel.",
+                  "Natel.",
+                  "Char."
+            ],
+            0
+      ],
+      [
+            "Quelle position l'audio adopte-t-il face aux emprunts ?",
+            [
+                  "Ils montrent que la langue s'adapte, même si le débat continue.",
+                  "Ils prouvent que le français est terminé.",
+                  "Ils doivent tous être interdits immédiatement."
+            ],
+            0
+      ],
+      [
+            "Quel ton a le dialogue ?",
+            [
+                  "Nuancé et sociolinguistique.",
+                  "Moqueur envers tous les accents.",
+                  "Uniquement nostalgique."
+            ],
+            0
+      ],
+      [
+            "Quelle idée finale domine ?",
+            [
+                  "La francophonie bouge parce que ses locuteurs inventent et adaptent.",
+                  "La variation détruit toujours la langue.",
+                  "Le français doit rester figé."
+            ],
+            0
+      ]
+],
+    "08c": [
+      [
+            "Quel artiste est présenté dans la version québécoise ?",
+            [
+                  "Amine Kouachi.",
+                  "Karim Ziani uniquement.",
+                  "Nathalie Tremblay."
+            ],
+            0
+      ],
+      [
+            "Quel est le titre de son album ?",
+            [
+                  "Trilingue.",
+                  "La Panosse.",
+                  "Le Rapport."
+            ],
+            0
+      ],
+      [
+            "Quels trois français l'album fait-il dialoguer ?",
+            [
+                  "Le français de la cité, de l'école et du quotidien.",
+                  "Le français, l'espagnol et l'italien.",
+                  "Le passé, le présent et le futur."
+            ],
+            0
+      ],
+      [
+            "Quels mots relèvent de la cité dans l'audio ?",
+            [
+                  "Wesh, chanmé, on s'arrache.",
+                  "Courriel, natel, panosse.",
+                  "Bien que, quoique, malgré."
+            ],
+            0
+      ],
+      [
+            "Quel exemple représente le registre scolaire ?",
+            [
+                  "Nous devons prendre en considération les conséquences sociales.",
+                  "C'est trop relou.",
+                  "On s'arrache."
+            ],
+            0
+      ],
+      [
+            "Quels mots familiers sont cités ?",
+            [
+                  "Keufs, relou, vénère.",
+                  "Septante, nonante, huitante.",
+                  "Veuillez, agréer, considération."
+            ],
+            0
+      ],
+      [
+            "Comment les linguistes réagissent-ils ?",
+            [
+                  "Ils saluent l'usage maîtrisé des variations.",
+                  "Ils affirment que ce n'est pas du français.",
+                  "Ils refusent d'écouter l'album."
+            ],
+            0
+      ],
+      [
+            "Quelle critique populaire est rapportée ?",
+            [
+                  "Le verlan, ce n'est pas du français.",
+                  "Les alexandrins sont impossibles.",
+                  "Le français québécois n'existe pas."
+            ],
+            0
+      ],
+      [
+            "Quelle réponse implicite donne le portrait ?",
+            [
+                  "La variation peut être une ressource artistique.",
+                  "La langue doit rester uniforme.",
+                  "L'argot interdit la pensée."
+            ],
+            0
+      ],
+      [
+            "Quel ton domine ?",
+            [
+                  "Culturel et explicatif.",
+                  "Scientifique sans exemple.",
+                  "Commercial et touristique."
+            ],
+            0
+      ]
+]
   };
 })();

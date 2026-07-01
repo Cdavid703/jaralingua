@@ -10,7 +10,7 @@ Objetivo: confirmar si las comprensiones orales 01A, 01B y 01C cumplen el estand
 
 El Tema 01 queda aprobado en auditoria textual y estructural. Las seis pistas de audio estan dentro del rango 1:30-2:00 y las preguntas revisadas se apoyan en los guiones disponibles.
 
-Pendiente no automatizado: escucha humana final o transcripcion STT confiable para certificar coincidencia palabra por palabra entre el audio real y el guion. En este entorno no hay Whisper, ffmpeg ni otro motor local de transcripcion disponible.
+Actualizacion 2026-07-01: la auditoria STT con ElevenLabs Scribe quedo registrada en `docs/auditoria-stt-temas01-06-frances-nivel8.md`. Tema 01 queda aprobado tecnicamente por coincidencia audio/transcripcion; solo queda escucha humana subjetiva opcional para ritmo y naturalidad.
 
 ## Duracion de audios
 
@@ -52,4 +52,4 @@ No se detectaron preguntas con informacion externa, datos inventados ni respuest
 
 Tema 01 puede mantenerse como cerrado pedagogicamente y aprobado en QA textual.
 
-Antes de desplegar como cierre tecnico absoluto, queda una verificacion auditiva final: escuchar cada archivo o transcribirlo con STT y comparar contra el guion palabra por palabra. Si esa escucha confirma el guion, Tema 01 queda cerrado tambien en audio.
+Tema 01 queda cerrado tambien en audio por STT. La unica decision pendiente sigue siendo pedagogico-evaluativa: si 01E se mantiene formativa o se convierte en entrega formal al docente.

@@ -34,11 +34,12 @@ Tema auditado: `Medias et desinformation`.
 - El mapa de temas y el portal de ateliers usan esta imagen nueva para el bloque del Tema 05.
 - La imagen anterior de pronunciacion ya no funciona como hero principal del tema.
 
-## Pendiente honesto
+## Auditoria STT
 
-- No hay `ffprobe`, `mutagen` ni Whisper local para certificar duracion exacta o correspondencia palabra por palabra audio/transcripcion desde esta terminal.
-- Falta escucha humana final o STT para confirmar el audio real contra el guion.
+- Auditoria STT ElevenLabs Scribe registrada en `docs/auditoria-stt-temas01-06-frances-nivel8.md`.
+- Tema 05 queda aprobado tecnicamente por coincidencia audio/transcripcion.
+- Nota: 05A France queda en 97.81% por diferencias STT menores (`au/aux`, singular/plural y `CheckNews/Check News`), sin informacion extra ni pregunta fuera de guion.
 
 ## Veredicto
 
-Tema 05 queda cerrado pedagogicamente y conectado en el portal. Pendiente solo verificacion auditiva final de audio real contra transcripcion.
+Tema 05 queda cerrado pedagogicamente, conectado en el portal y aprobado tecnicamente por STT.

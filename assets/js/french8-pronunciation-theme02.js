@@ -6,7 +6,7 @@
       label: "Section 1",
       shortLabel: "1",
       audio: "../audio/pronunciation/theme-02/section-1.mp3",
-      text: "Si j’étais parti quelques minutes plus tôt, j’aurais pris ce train et je serais arrivé à l’heure."
+      text: "Si j’étais partie quelques minutes plus tôt, j’aurais pris ce train et je serais arrivée à l’heure."
     },
     {
       label: "Section 2",
@@ -31,7 +31,7 @@
       shortLabel: "Défi",
       final: true,
       audio: "../audio/pronunciation/theme-02/n8-02d-hypotheses-passe-modele-france.mp3",
-      text: "Si j’étais parti quelques minutes plus tôt, j’aurais pris ce train et je serais arrivé à l’heure. Pourtant, cet imprévu m’aurait peut-être conduit sur la route au moment de l’accident. Avec le recul, je me dis que certaines décisions auraient radicalement changé notre histoire, même si nous n’en comprenions pas immédiatement les conséquences."
+      text: "Si j’étais partie quelques minutes plus tôt, j’aurais pris ce train et je serais arrivée à l’heure. Pourtant, cet imprévu m’aurait peut-être conduit sur la route au moment de l’accident. Avec le recul, je me dis que certaines décisions auraient radicalement changé notre histoire, même si nous n’en comprenions pas immédiatement les conséquences."
     }
   ];
 

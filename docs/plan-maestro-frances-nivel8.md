@@ -25,14 +25,14 @@ Antes de cerrar una actividad, debe responder afirmativamente a estas preguntas:
 
 | Tema | Pagina principal | Audios completos | Comprensiones HTML | Pronunciacion | Gramatica/juego/produccion | Estado |
 | --- | --- | --- | --- | --- | --- | --- |
-| 01. Regrets, reproches et bilans | Existe | 6 archivos | 01A, 01B, 01C | 01D existe | 01G, 01R y 01E existen | Cerrado pedagogicamente; pendiente opcional: envio docente/notas para 01E |
-| 02. Hypotheses irreelles dans le passe | Existe | 6 archivos | 02A, 02B, 02C | 02D existe | 02G, 02R y 02E existen | Cerrado pedagogicamente; pendiente escucha humana final/STT |
-| 03. Jugement, emotion et anteriorite | Existe | 6 archivos | 03A, 03B, 03C | 03D existe | 03G, 03R y 03E existen | Cerrado pedagogicamente; pendiente escucha humana final/STT |
-| 04. Discours rapporte avance | Existe | 6 archivos | 04A, 04B, 04C | 04D existe | 04G, 04R y 04E existen | Cerrado pedagogicamente; pendiente escucha humana final/STT |
-| 05. Medias et desinformation | Existe | 6 archivos | 05A, 05B, 05C | 05D existe | 05G, 05R y 05E existen | Cerrado pedagogicamente; pendiente escucha humana final/STT |
-| 06. Intelligence artificielle et ethique numerique | Falta | 6 archivos | Faltan 06A, 06B, 06C | Falta | Falta todo el bloque pedagogico | Prioridad media-alta |
-| 07. Justice sociale, egalite et citoyennete | Falta | 6 archivos | Faltan 07A, 07B, 07C | Falta | Falta todo el bloque pedagogico | Prioridad media |
-| 08. Francophonie, registres et francais oral authentique | Falta | 6 archivos | Faltan 08A, 08B, 08C | Falta | Falta todo el bloque pedagogico | Prioridad media |
+| 01. Regrets, reproches et bilans | Existe | 6 archivos | 01A, 01B, 01C | 01D existe | 01G, 01R y 01E existen | Cerrado pedagogicamente; STT auditado; pendiente opcional: envio docente/notas para 01E |
+| 02. Hypotheses irreelles dans le passe | Existe | 6 archivos | 02A, 02B, 02C | 02D existe | 02G, 02R y 02E existen | Cerrado pedagogicamente; STT auditado |
+| 03. Jugement, emotion et anteriorite | Existe | 6 archivos | 03A, 03B, 03C | 03D existe | 03G, 03R y 03E existen | Cerrado pedagogicamente; STT auditado |
+| 04. Discours rapporte avance | Existe | 6 archivos | 04A, 04B, 04C | 04D existe | 04G, 04R y 04E existen | Cerrado pedagogicamente; STT auditado |
+| 05. Medias et desinformation | Existe | 6 archivos | 05A, 05B, 05C | 05D existe | 05G, 05R y 05E existen | Cerrado pedagogicamente; STT auditado |
+| 06. Intelligence artificielle et ethique numerique | Existe | 6 archivos + 06D | 06A, 06B, 06C | 06D con MP3 ElevenLabs | 06G, 06R y 06E existen | Cerrado pedagogicamente; STT auditado; pendiente opcional escucha humana subjetiva |
+| 07. Justice sociale, egalite et citoyennete | Existe | 6 archivos + 07D | 07A, 07B, 07C | 07D con MP3 ElevenLabs | 07G, 07R y 07E existen | Cerrado pedagogicamente; STT auditado; pendiente QA visual real opcional |
+| 08. Francophonie, registres et francais oral authentique | Existe | 6 archivos + 08D | 08A, 08B, 08C | 08D con MP3 ElevenLabs | 08G, 08R y 08E existen | Cerrado pedagogicamente; STT auditado |
 
 Hallazgo importante: la carpeta `frances/Niveau 8/audio/complete` ya contiene los 48 audios esperados: 8 temas x 3 actividades x 2 acentos. La brecha principal no es generar audio, sino construir paginas, controles, preguntas visibles, lecturas, juegos y producciones que usen esos audios con coherencia.
 
@@ -59,22 +59,22 @@ Cada tema debe terminar con estos bloques minimos:
 
 ### Fase 2 - Completar temas 3 a 5
 
-1. Tema 03: cerrado pedagogicamente; queda pendiente solo escucha humana final/STT.
-2. Tema 04: cerrado pedagogicamente; queda pendiente solo escucha humana final/STT.
-3. Tema 05: cerrado pedagogicamente; queda pendiente solo escucha humana final/STT.
-4. Siguiente bloque: iniciar Tema 06 con pagina principal, lectura, 06A-06C, gramatica, conversacion y produccion.
+1. Tema 03: cerrado pedagogicamente y validado por STT; queda solo escucha humana subjetiva opcional.
+2. Tema 04: cerrado pedagogicamente y validado por STT; queda solo escucha humana subjetiva opcional.
+3. Tema 05: cerrado pedagogicamente y validado por STT; queda solo escucha humana subjetiva opcional.
+4. Tema 06: construido con pagina principal, lectura, 06A-06C, gramatica, conversacion, produccion, imagenes especificas y 06D con MP3 ElevenLabs; STT validado, queda solo escucha humana subjetiva opcional.
 
 ### Fase 3 - Construir temas 6 a 8
 
 1. Tema 06: IA, etica digital, causa/consecuencia/but y comite etico.
-2. Tema 07: justicia social, igualdad, concesion/oposicion y debate ciudadano.
-3. Tema 08: registros, oralidad autentica, reducciones, verlan como comprension cultural y transformador de registro.
-4. Crear pronunciaciones 06D, 07D y 08D con audio modelo y secciones.
+2. Tema 07: construido con pagina principal, lectura, 07A-07C, gramatica, conversacion tipo table citoyenne, produccion, expresiones idiomaticas y 07D con MP3 ElevenLabs; STT validado, queda solo QA visual real opcional.
+3. Tema 08: construido con pagina principal, lectura sociolinguistica, 08A-08C, gramatica de registros, conversacion tipo studio, produccion, expresiones idiomaticas y 08D con MP3 ElevenLabs; STT validado.
+4. Los temas 06D, 07D y 08D ya tienen audio modelo, secciones y auditoria STT registrada.
 
 ### Fase 4 - Proyecto y evaluacion
 
 1. Construir `Dossier B2 : un dilemme contemporain`.
-2. Conectar el proyecto final con el carnet de notas.
+2. Conectar el proyecto final con el panel de notas.
 3. Construir simulacro formativo sobre 50 puntos.
 4. Construir examen final cerrado por docente, sin respuestas expuestas en frontend.
 5. Auditar ponderaciones contra el panel de notas.
@@ -101,4 +101,4 @@ El primer sprint debe ser estructural y de bajo riesgo:
 4. Conectar Tema 05 en `themes-du-cours.html` y `ateliers-activites.html`.
 5. Ejecutar QA local: enlaces, HTTP 200, ausencia de mojibake, preguntas y controles.
 
-Este orden evita construir primero actividades sueltas. Los temas 03, 04 y 05 ya quedaron como bloques completos; el siguiente punto de arranque coherente es Tema 06.
+Este orden ya se ejecuto para los temas 03 a 08. El siguiente punto de arranque coherente es la arquitectura global de evaluacion: proyecto final, simulacro, examen final y cierre de notas.

@@ -82,7 +82,7 @@ Jade: Tu te souviens de l'époque où on hésitait à partir en Erasmus ? Si j'a
 
 Victor: Ah, je me dis la même chose ! Si j'avais su que le marché de l'emploi allait autant se transformer, j'aurais choisi l'informatique plutôt que la gestion. J'aurais eu dix fois plus d'opportunités.
 
-Jade: C'est dingue, non ? Si nous avions pris ces décisions autrement, nous ne serions même pas dans cette ville. Si j'avais déménagé à Barcelone, je n'aurais jamais rencontré Arnaud, et mes enfants n'existeraient pas. Ça donne le vertige.
+Jade: C'est dingue, non ? Si nous avions pris ces décisions autrement, nous ne serions même pas dans cette ville. Si j'avais déménagé à Barcelone, je n'aurais jamais rencontré Arnaud, et mes enfants n'existeraient pas. Ah, ça donne le vertige.
 
 Victor: Complètement. Et tiens, si j'avais écouté mon père, j'aurais repris l'entreprise familiale. Si j'avais fait ce choix, j'aurais probablement gagné ma vie plus confortablement, mais est-ce que j'aurais été heureux ? J'en doute.
 

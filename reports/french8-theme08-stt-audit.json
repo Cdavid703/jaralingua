@@ -1,0 +1,372 @@
+[
+  {
+    "id": "08A France",
+    "kind": "listening",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\complete\\n8-08a-parler-parisien-france-b2.mp3",
+    "script": "frances\\Niveau 8\\audio\\french8-listenings-b2-france-scripts.md",
+    "transcription": "Victor, j'ai une question un peu délicate. Mon correspondant allemand arrive la semaine prochaine et il m'a dit qu'il voulait parler comme un vrai Parisien. Il a appris le français dans les manuels, mais il ne comprend rien quand il regarde des vidéos sur YouTube. Tu pourrais m'aider à lui préparer un petit guide ? Ah bah, c'est sûr que le français des manuels, c'est pas du tout ce qu'on parle dans la vraie vie. Genre, nous, on dit jamais « je ne sais pas ». On dit « j'sais pas » ou même « chais pas ». Et « il y a » devient « y a ». En fait, à l'oral, on raccourcit tout. C'est vrai. Et il y a aussi le verlan que les jeunes utilisent beaucoup, non ? Ouais, grave. Le verlan, c'est quand on inverse les syllabes. Par exemple, « femme » devient « meuf », « fou » devient « ouf », « louche », c'est « chelou », « lourd », c'est « relou » et « énervé », c'est « vénère ». Genre, tu peux dire : « C'est chelou, cette histoire » ou « Il est vénère, le prof aujourd'hui ». Et il y a des mots qui changent complètement de registre selon le contexte, n'est-ce pas ? En registre soutenu, on dirait « je suis extrêmement fatigué ». En langage courant, « je suis très fatigué » et en familier, « j'suis crevé » ou même « j'suis mort ». Exactement. Et du coup, il y a aussi des marqueurs oraux que les étrangers captent jamais. On utilise « en fait » tout le temps, « genre » pour donner un exemple ou hésiter, « du coup » pour marquer la conséquence et « bah » au début des phrases. Bah oui, c'est comme ça qu'on parle en fait. Tu pourrais lui montrer la différence entre les registres avec un même message ? Par exemple, en soutenu, « je souhaiterais que vous m'accordiez un instant ». En standard, « est-ce que vous avez un moment ? » Et en familier, « t'as deux minutes ? » Ouais, c'est ouf comme les trois versions disent la même chose, mais sonnent complètement différemment. En fait, c'est relou pour les étrangers parce qu'on leur apprend que le français est soutenu, mais dans la vie, bah personne parle comme ça. Je vais lui préparer une petite fiche. Au moins, il sera moins perdu quand il entendra des jeunes parler dans le métro. Bonne idée. Genre, dis-lui aussi que c'est chaud, ça veut dire que c'est compliqué, pas que la température est élevée. Du coup, il comprendra mieux les conversations, en fait.",
+    "expected_words": 377,
+    "actual_words": 378,
+    "distance": 4,
+    "similarity": 98.94,
+    "diffs": [
+      [
+        "sub",
+        "chuis",
+        "j'suis"
+      ],
+      [
+        "sub",
+        "chuis",
+        "j'suis"
+      ],
+      [
+        "sub",
+        "les",
+        "des"
+      ],
+      [
+        "ins",
+        "",
+        "est"
+      ]
+    ]
+  },
+  {
+    "id": "08A Quebec",
+    "kind": "listening",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\complete\\n8-08a-parler-parisien-quebec-b2.mp3",
+    "script": "frances\\Niveau 8\\audio\\french8-listenings-b2-quebec-scripts.md",
+    "transcription": "Dis-moi, Jean-François, toi qui as vécu trois ans à Paris, c'est vrai que les Parisiens ont un langage particulier ? Complètement. Au début, j'étais perdu. Les collègues me disaient des trucs comme : « C'est ouf, ce projet » ou « On va se faire un resto, ça te dit ? » Le registre familier est omniprésent dans la vie quotidienne. Ouf, c'est du verlan, non ? Le mot fou inversé. Exactement. Le verlan est partout à Paris. Meuf pour femme, relou pour lourd, chamé pour méchant, mais dans le sens de génial. Au début, j'avais l'impression d'apprendre une autre langue. Et au travail, c'est pareil ? Les gens utilisent le registre familier aussi ? À dépend du contexte. En réunion officielle, les gens passent au registre soutenu. « Nous souhaiterions examiner cette proposition dans les meilleurs délais » ou « Il conviendrait d'envisager une alternative. » Mais dès que la réunion se termine, c'est retour au familier. « Bon, c'est relou ce dossier. On se prend un café ? » C'est fascinant, cette capacité à naviguer entre les registres. En français standard, on dirait : « C'est ennuyeux ce dossier. Voulez-vous prendre un café ? » Voilà. Et il y a aussi les réductions orales. Les Parisiens disent « ch'sais pas » au lieu de « je ne sais pas », « t'as vu » au lieu de « tu as vu », « y a » au lieu de « il y a ». C'est le registre courant, pas soutenu, pas familier. Et les marqueurs oraux comme « genre », « en mode », « du coup » ? Ah, « du coup », c'est le marqueur parisien par excellence. « Du coup, on fait quoi ? » « Du coup, j'ai changé d'avis. » En registre soutenu, on dirait « par conséquent » ou « en conséquence ». Et « genre » est devenu un ponctuant. « Il m'a dit genre que c'était pas possible. » Donc, pour parler comme un vrai Parisien, il faut maîtriser ces trois registres et savoir passer de l'un à l'autre selon la situation ? C'est ça. C'est pas juste du vocabulaire, c'est une compétence sociale. Le bon registre au bon moment, c'est la clé.",
+    "expected_words": 318,
+    "actual_words": 314,
+    "distance": 7,
+    "similarity": 97.8,
+    "diffs": [
+      [
+        "sub",
+        "chanme",
+        "chame"
+      ],
+      [
+        "sub",
+        "ca",
+        "a"
+      ],
+      [
+        "del",
+        "emilie",
+        ""
+      ],
+      [
+        "del",
+        "jean",
+        ""
+      ],
+      [
+        "del",
+        "francois",
+        ""
+      ],
+      [
+        "sub",
+        "jesais",
+        "ch'sais"
+      ],
+      [
+        "del",
+        "emilie",
+        ""
+      ]
+    ]
+  },
+  {
+    "id": "08B France",
+    "kind": "listening",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\complete\\n8-08b-francophonie-mouvement-france-b2.mp3",
+    "script": "frances\\Niveau 8\\audio\\french8-listenings-b2-france-scripts.md",
+    "transcription": "Bienvenue dans Paroles francophones. Aujourd'hui, nous explorons les variétés du français à travers le monde avec Nicolas Beaumont, linguiste au CNRS. Nicolas, on dit souvent qu'il n'y a qu'un seul français. Est-ce vrai ? Merci Sophie, c'est un mythe tenace. En réalité, le français est une langue plurielle. Si on compare le français de Paris, celui de Bruxelles, de Genève, de Dakar ou de Montréal, on constate des différences fascinantes, tant dans le vocabulaire que dans la prononciation et même dans les registres utilisés. Commençons par la Belgique. Quelles sont les particularités du français belge ? Les Belges utilisent septante pour soixante-dix et nonante pour quatre-vingt-dix, ce qui est en fait beaucoup plus logique que le système français. Ils disent une fois en fin de phrase comme marqueur discursif, genre : viens ici une fois. En registre courant, ils emploient savoir là où les Français utilisent pouvoir. Tu sais me passer le sel ? Et la Suisse romande ? Les Suisses partagent septante et nonante avec les Belges, mais ils ajoutent huitante pour quatre-vingt. Ils utilisent aussi natel pour téléphone portable et panos pour serpillière. Du coup, un Parisien qui débarque en Suisse peut se trouver un peu perdu dans les conversations du quotidien. Qu'en est-il du français en Afrique, notamment au Sénégal ? Le français sénégalais est d'une richesse inouïe. Bah, il y a un mélange constant avec le wolof qui crée un parler urbain très vivant. Des expressions comme on est ensemble pour exprimer la solidarité ou ça va un peu pour dire que ça ne va pas trop sont des perles linguistiques. Le registre oscille entre soutenu dans les contextes officiels et familier dans la vie quotidienne. Et le Québec, c'est sans doute la variété qui surprend le plus les Français. Oui, le Québécois est ouf pour un Parisien qui l'entend pour la première fois. T'as des mots comme char pour voiture, blonde pour petite amie, magasiner pour faire du shopping. Et les sacres, ces jurons tirés du vocabulaire religieux, tabarnak, calice, crisse, c'est chelou pour un Français, mais complètement intégré là-bas. Je sais pas si votre correspondant allemand est prêt pour ça. C'est fascinant de voir comment une même langue peut s'exprimer de manière si différente. Merci Nicolas pour ce tour du monde francophone.",
+    "expected_words": 375,
+    "actual_words": 375,
+    "distance": 5,
+    "similarity": 98.67,
+    "diffs": [
+      [
+        "sub",
+        "vingts",
+        "vingt"
+      ],
+      [
+        "sub",
+        "panosse",
+        "panos"
+      ],
+      [
+        "sub",
+        "tabarnac",
+        "tabarnak"
+      ],
+      [
+        "sub",
+        "manieres",
+        "maniere"
+      ],
+      [
+        "sub",
+        "differentes",
+        "differente"
+      ]
+    ]
+  },
+  {
+    "id": "08B Quebec",
+    "kind": "listening",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\complete\\n8-08b-francophonie-mouvement-quebec-b2.mp3",
+    "script": "frances\\Niveau 8\\audio\\french8-listenings-b2-quebec-scripts.md",
+    "transcription": "Bienvenue dans Horizon francophone. Aujourd'hui, Philippe, vous êtes linguiste et vous étudiez l'évolution du français dans le monde. Le français est-il une langue en danger ou en pleine expansion ? Merci Nathalie. C'est une question complexe. En registre soutenu, on dirait que la langue française connaît une mutation profonde de ses usages et de sa démographie. Plus simplement, le français change et c'est normal. Combien de personnes parlent français aujourd'hui ? Environ trois cent vingt millions de locuteurs. Mais ce qui est fascinant, c'est la diversité des registres. Un étudiant à Dakar n'utilise pas le même français qu'un cadre à Paris ou un commerçant à Montréal. Le registre standard international coexiste avec des variantes locales très riches. Justement, certains puristes s'inquiètent de cette diversification. La langue se dégrade, disent-ils, en registre soutenu. C'est un débat ancien. En registre familier, les jeunes Ivoiriens disent « c'est d'jà » pour « c'est déjà fait ». Les Québécois utilisent « pantoute » pour « pas du tout ». Ce ne sont pas des erreurs, ce sont des créations linguistiques légitimes. Le verlan et l'argot des banlieues françaises ont aussi enrichi la langue, non ? Absolument. Des mots comme « kiffer », aimer passionnément, sont passés du registre familier au registre courant. « Âme-saule » en registre standard, « cela m'exaspère » est compris partout. La langue absorbe et transforme ses apports. Et le franglais, un meeting, le week-end, checker ses mails ? Les emprunts à l'anglais inquiètent les institutions. L'Académie française recommande courriel au lieu de mail en registre soutenu. Mais dans le registre courant, tout le monde dit mail. Il convient de distinguer l'enrichissement lexical de l'appauvrissement syntaxique. Donc la francophonie est en mouvement, pas en déclin. Exactement. La vitalité d'une langue se mesure à sa capacité d'adaptation. Le français n'est pas menacé, il est en pleine réinvention. Un message optimiste. Merci Philippe pour ce panorama éclairant.",
+    "expected_words": 301,
+    "actual_words": 301,
+    "distance": 9,
+    "similarity": 97.01,
+    "diffs": [
+      [
+        "sub",
+        "horizons",
+        "horizon"
+      ],
+      [
+        "sub",
+        "francophones",
+        "francophone"
+      ],
+      [
+        "sub",
+        "dja",
+        "d'ja"
+      ],
+      [
+        "del",
+        "ca",
+        ""
+      ],
+      [
+        "sub",
+        "me",
+        "ame"
+      ],
+      [
+        "sub",
+        "saoule",
+        "saule"
+      ],
+      [
+        "sub",
+        "ces",
+        "ses"
+      ],
+      [
+        "ins",
+        "",
+        "week"
+      ],
+      [
+        "sub",
+        "weekend",
+        "end"
+      ]
+    ]
+  },
+  {
+    "id": "08C France",
+    "kind": "listening",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\complete\\n8-08c-rappeur-langue-france-b2.mp3",
+    "script": "frances\\Niveau 8\\audio\\french8-listenings-b2-france-scripts.md",
+    "transcription": "Ce soir, dans notre rubrique culture, portrait d'un artiste qui bouscule les codes de la langue française. Le rappeur Karim Ziani, connu sous le nom de scène KZ, fait l'unanimité chez les critiques pour sa maîtrise exceptionnelle du français, de l'argot le plus cru au registre littéraire le plus sophistiqué. Notre reporter Martin Chevalier l'a rencontré. Martin ? Bonsoir Léa. J'ai passé un après-midi avec KZ dans son studio du dix-huitième arrondissement. Et le moins qu'on puisse dire, c'est que ce rappeur de trente-deux ans a un rapport passionnel à la langue. Quand on lui demande pourquoi il mélange les registres, il répond sans hésiter. En fait, il m'a expliqué que pour lui, y a pas de frontière entre le français correct et le français de la rue. Genre dans un même couplet, il peut passer d'une référence à Victor Hugo à du verlan pur. Il dit que c'est chelou de vouloir séparer les registres parce que dans la vraie vie, bah, on parle comme ça. Ce qui est remarquable, c'est sa technique d'écriture. Il utilise les registres comme un outil stylistique. Dans son dernier album, un morceau commence en alexandrin classique, registre soutenu, subjonctif, passé simple, puis bascule en langage familier avec des « j'suis », des « t'as vu » et du verlan comme « c'est ouf ce que la vie nous fait ». Le contraste est saisissant et crée un effet poétique puissant. KZ m'a confié que son inspiration venait de sa double culture. Fils d'un professeur de lettres et d'une mère algérienne, il a grandi entre Molière et le parler des cités. Du coup, il jongle naturellement entre « je souhaiterais exprimer mon désaccord » et « c'est relou, j'suis vénère ». Les linguistes s'intéressent de près à son travail. Une chercheuse de la Sorbonne a publié un article analysant comment il déconstruit la hiérarchie des registres. En fait, KZ prouve que le français populaire, le verlan, les marqueurs oraux comme genre et en fait, ce sont pas des formes dégradées de la langue, mais des créations linguistiques à part entière. Un artiste qui réconcilie les Français avec toutes les facettes de leur langue. Merci Martin pour ce portrait inspirant.",
+    "expected_words": 359,
+    "actual_words": 355,
+    "distance": 12,
+    "similarity": 96.66,
+    "diffs": [
+      [
+        "del",
+        "k",
+        ""
+      ],
+      [
+        "sub",
+        "zed",
+        "kz"
+      ],
+      [
+        "del",
+        "k",
+        ""
+      ],
+      [
+        "sub",
+        "zed",
+        "kz"
+      ],
+      [
+        "sub",
+        "alexandrins",
+        "alexandrin"
+      ],
+      [
+        "sub",
+        "classiques",
+        "classique"
+      ],
+      [
+        "sub",
+        "subjonctifs",
+        "subjonctif"
+      ],
+      [
+        "sub",
+        "chuis",
+        "j'suis"
+      ],
+      [
+        "del",
+        "k",
+        ""
+      ],
+      [
+        "sub",
+        "zed",
+        "kz"
+      ],
+      [
+        "del",
+        "k",
+        ""
+      ],
+      [
+        "sub",
+        "zed",
+        "kz"
+      ]
+    ]
+  },
+  {
+    "id": "08C Quebec",
+    "kind": "listening",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\complete\\n8-08c-rappeur-langue-quebec-b2.mp3",
+    "script": "frances\\Niveau 8\\audio\\french8-listenings-b2-quebec-scripts.md",
+    "transcription": "Bonsoir. Dans votre flash info culturelle ce soir, le portrait d'Amine Kouachi, rappeur lyonnais dont le dernier album mêle trois registres de langue. Notre reporter Caroline l'a rencontré. Caroline ? Bonsoir Marc. Amine Kouachi, 28 ans, est considéré comme l'un des artistes les plus innovants de la scène rap francophone. Son album Trilingue joue sur les registres de langue comme d'autres jouent avec les instruments de musique. Qu'entend-il par trilingue ? Il m'a expliqué, je cite : J'parle trois français. Y a le français de la cité, celui qu'on utilise entre nous. Wesh, c'est chanmé, on s'arrache. Y a le français de l'école, nous devons prendre en considération les enjeux socio-économiques. Et y a le français de tous les jours, celui du milieu. J'navigue entre les trois. Un mélange audacieux ? Très audacieux. Dans un même morceau, il passe du registre soutenu. Il conviendrait que la société reconsidère ses préjugés à l'égard des quartiers populaires, au verlan et à l'argot. Les keufs nous contrôlent, c'est relou, mais on lâche rien, on est vénère. En registre standard, cela signifie : la police nous contrôle fréquemment, c'est pénible, mais nous ne renonçons pas, nous sommes en colère. Comment le public réagit-il ? L'album rencontre un succès critique remarquable. Les linguistes saluent cette capacité à naviguer entre les registres. Un professeur de sociolinguistique a déclaré, en registre soutenu : Cet artiste démontre une maîtrise exceptionnelle des variations diphasiques du français contemporain. Plus simplement, il sait adapter sa langue à chaque situation. Et Amine, que répond-il aux puristes ? Il m'a dit, dans un registre familier typique : Les gens qui disent que le verlan, c'est pas du français, ils captent rien. C'est ouf de pas voir que la langue, elle bouge, elle vit. En mode, si tu veux toucher les gens, faut leur parler comme ils parlent. Un plaidoyer passionné pour une langue vivante et inclusive. Merci Caroline. Un portrait qui donne à réfléchir sur notre rapport à la langue.",
+    "expected_words": 322,
+    "actual_words": 319,
+    "distance": 6,
+    "similarity": 98.14,
+    "diffs": [
+      [
+        "sub",
+        "culturel",
+        "culturelle"
+      ],
+      [
+        "del",
+        "vingt",
+        ""
+      ],
+      [
+        "sub",
+        "huit",
+        "28"
+      ],
+      [
+        "del",
+        "marc",
+        ""
+      ],
+      [
+        "del",
+        "marc",
+        ""
+      ],
+      [
+        "sub",
+        "diaphasiques",
+        "diphasiques"
+      ]
+    ]
+  },
+  {
+    "id": "08D France final",
+    "kind": "pronunciation",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\pronunciation\\theme-08\\n8-08d-francais-oral-modele-france.mp3",
+    "script": "frances\\Niveau 8\\audio\\pronunciation-francais-oral-script.md",
+    "transcription": "À l'oral, je dis souvent : « J'sais pas, y a du bruit, t'as deux minutes ? » En registre soutenu, je dirais plutôt : « Pourriez-vous m'accorder un instant ? » Le verlan change le rythme. C'est ouf, c'est chelou, parfois c'est relou, mais le bon registre au bon moment, c'est la cleu pour rester clair",
+    "expected_words": 49,
+    "actual_words": 49,
+    "distance": 1,
+    "similarity": 97.96,
+    "diffs": [
+      [
+        "sub",
+        "cle",
+        "cleu"
+      ]
+    ]
+  },
+  {
+    "id": "08D France section-1",
+    "kind": "pronunciation",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\pronunciation\\theme-08\\section-1.mp3",
+    "script": "frances\\Niveau 8\\audio\\pronunciation-francais-oral-script.md",
+    "transcription": "À l'oral, je dis souvent : « Je sais pas, y a du bruit, t'as deux minutes ? »",
+    "expected_words": 13,
+    "actual_words": 13,
+    "distance": 0,
+    "similarity": 100.0,
+    "diffs": []
+  },
+  {
+    "id": "08D France section-2",
+    "kind": "pronunciation",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\pronunciation\\theme-08\\section-2.mp3",
+    "script": "frances\\Niveau 8\\audio\\pronunciation-francais-oral-script.md",
+    "transcription": "En registre soutenu, je dirais plutôt : « Pourriez-vous m'accorder un instant ?",
+    "expected_words": 11,
+    "actual_words": 11,
+    "distance": 0,
+    "similarity": 100.0,
+    "diffs": []
+  },
+  {
+    "id": "08D France section-3",
+    "kind": "pronunciation",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\pronunciation\\theme-08\\section-3.mp3",
+    "script": "frances\\Niveau 8\\audio\\pronunciation-francais-oral-script.md",
+    "transcription": "Le verlan change le rythme. C'est ouf, c'est chelou, parfois c'est relou",
+    "expected_words": 12,
+    "actual_words": 12,
+    "distance": 0,
+    "similarity": 100.0,
+    "diffs": []
+  },
+  {
+    "id": "08D France section-4",
+    "kind": "pronunciation",
+    "theme": 8,
+    "audio": "frances\\Niveau 8\\audio\\pronunciation\\theme-08\\section-4.mp3",
+    "script": "frances\\Niveau 8\\audio\\pronunciation-francais-oral-script.md",
+    "transcription": "Mais le bon registre au bon moment, c'est la clé pour rester clair",
+    "expected_words": 13,
+    "actual_words": 13,
+    "distance": 0,
+    "similarity": 100.0,
+    "diffs": []
+  }
+]

@@ -12,7 +12,7 @@ Je suis soulagée que les responsables aient reconnu leur erreur.
 
 File: `pronunciation/theme-03/section-2.mp3`
 
-Je suis également contente qu’ils aient présenté des excuses publiques.
+Je suis également contente que les responsables aient présenté leurs excuses publiquement.
 
 ## Section 3
 
@@ -30,4 +30,4 @@ Bien que la situation ait provoqué de la colère, je doute qu’elle ait durabl
 
 File: `pronunciation/theme-03/n8-03d-subjonctif-passe-modele-france.mp3`
 
-Je suis soulagée que les responsables aient reconnu leur erreur. Je suis également contente qu’ils aient présenté des excuses publiques. Il est regrettable que certaines personnes aient réagi trop rapidement, sans avoir vérifié les faits. Bien que la situation ait provoqué de la colère, je doute qu’elle ait durablement changé les comportements.
+Je suis soulagée que les responsables aient reconnu leur erreur. Je suis également contente que les responsables aient présenté leurs excuses publiquement. Il est regrettable que certaines personnes aient réagi trop rapidement, sans avoir vérifié les faits. Bien que la situation ait provoqué de la colère, je doute qu’elle ait durablement changé les comportements.
