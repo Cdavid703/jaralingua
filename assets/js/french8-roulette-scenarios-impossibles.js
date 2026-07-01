@@ -97,7 +97,8 @@
     remaining: [],
     drawn: [],
     spinning: false,
-    audioContext: null
+    audioContext: null,
+    initialized: false
   };
 
   const $ = (selector) => document.querySelector(selector);
@@ -278,10 +279,41 @@
     updateCounters();
   }
 
+  function handleControlClick(event) {
+    const spinButton = event.target.closest("#spinButton");
+    if (spinButton) {
+      event.preventDefault();
+      spinWheel();
+      return;
+    }
+    const resetButton = event.target.closest("#resetButton");
+    if (resetButton) {
+      event.preventDefault();
+      resetGame();
+    }
+  }
+
   function init() {
+    if (state.initialized) return;
+    state.initialized = true;
     state.remaining = makePool();
-    $("#spinButton")?.addEventListener("click", spinWheel);
-    $("#resetButton")?.addEventListener("click", resetGame);
+    const spinButton = $("#spinButton");
+    if (spinButton) {
+      spinButton.onclick = (event) => {
+        event.preventDefault();
+        spinWheel();
+      };
+      spinButton.addEventListener("click", spinWheel);
+    }
+    const resetButton = $("#resetButton");
+    if (resetButton) {
+      resetButton.onclick = (event) => {
+        event.preventDefault();
+        resetGame();
+      };
+      resetButton.addEventListener("click", resetGame);
+    }
+    document.addEventListener("click", handleControlClick);
     $("#soundToggle")?.addEventListener("change", () => {
       if (soundEnabled()) {
         getAudioContext();
@@ -291,5 +323,9 @@
     resetGame();
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init, { once: true });
+  } else {
+    init();
+  }
 })();
