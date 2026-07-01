@@ -124,23 +124,23 @@ Thomas: On voit que chaque embranchement historique aurait généré un monde tr
 
 File: `complete/n8-02c-accident-evite-france-b2.mp3`
 
-Claire: Édition spéciale ce soir. Un incident aérien majeur a été évité de justesse cet après-midi à l'aéroport de Lyon-Saint-Exupéry. Deux avions ont failli entrer en collision sur la piste principale. Notre reporter Martin Dubois est en direct depuis l'aéroport. Martin, que savons-nous à cette heure ?
+Claire: Édition spéciale ce soir. Un incident aérien majeur a été évité de justesse cet après-midi à l'aéroport de Lyon-Saint-Exupéry. Deux avions ont failli entrer en collision sur la piste principale. Notre reporter Thomas Lefèvre est en direct depuis l'aéroport. Thomas, que savons-nous à cette heure ?
 
-Martin: Bonsoir Claire. Les faits se sont produits vers quinze heures trente. Un Airbus A trois-vingt de la compagnie EuroFly s'apprêtait à décoller lorsqu'un Boeing sept-trois-sept a reçu l'autorisation d'atterrir sur la même piste. Si le contrôleur aérien n'avait pas détecté l'erreur à la dernière seconde, les deux appareils seraient entrés en collision frontale.
+Thomas: Bonsoir Claire. Les faits se sont produits vers quinze heures trente. Un Airbus A trois-vingt de la compagnie EuroFly s'apprêtait à décoller lorsqu'un Boeing sept-trois-sept a reçu l'autorisation d'atterrir sur la même piste. Si le contrôleur aérien n'avait pas détecté l'erreur à la dernière seconde, les deux appareils seraient entrés en collision frontale.
 
 Claire: C'est glaçant. Comment l'accident a-t-il pu être évité ?
 
-Martin: Si le pilote de l'Airbus n'avait pas réagi immédiatement en freinant et en quittant la piste par une voie de dégagement, la catastrophe aurait été inévitable. Selon les experts présents, si la visibilité avait été réduite ce jour-là, le pilote n'aurait pas vu le Boeing approcher et la tragédie se serait produite.
+Thomas: Si le pilote de l'Airbus n'avait pas réagi immédiatement en freinant et en quittant la piste par une voie de dégagement, la catastrophe aurait été inévitable. Selon les experts présents, si la visibilité avait été réduite ce jour-là, le pilote n'aurait pas vu le Boeing approcher et la tragédie se serait produite.
 
 Claire: Y a-t-il des indications sur les causes de cet incident ?
 
-Martin: Le bureau d'enquêtes a ouvert une investigation. Si le système d'alerte automatique avait fonctionné normalement, il aurait signalé le conflit de piste bien plus tôt. Les syndicats de contrôleurs dénoncent le sous-effectif chronique. Si la tour de contrôle avait disposé de suffisamment de personnel, cette erreur d'aiguillage ne se serait jamais produite.
+Thomas: Le bureau d'enquêtes a ouvert une investigation. Si le système d'alerte automatique avait fonctionné normalement, il aurait signalé le conflit de piste bien plus tôt. Les syndicats de contrôleurs dénoncent le sous-effectif chronique. Si la tour de contrôle avait disposé de suffisamment de personnel, cette erreur d'aiguillage ne se serait jamais produite.
 
 Claire: Qu'en disent les passagers ?
 
-Martin: Plusieurs voyageurs m'ont confié leur effroi. Un passager m'a dit que si l'avion n'avait pas freiné aussi brutalement, il n'aurait pas compris la gravité de la situation. Les trois cent vingt passagers des deux appareils ont été pris en charge par les équipes au sol.
+Thomas: Plusieurs voyageurs m'ont confié leur effroi. Un passager m'a dit que si l'avion n'avait pas freiné aussi brutalement, il n'aurait pas compris la gravité de la situation. Les trois cent vingt passagers des deux appareils ont été pris en charge par les équipes au sol.
 
-Claire: Si cet incident avait eu une issue différente, nous parlerions ce soir de l'une des pires catastrophes aériennes en France. Merci Martin. La direction générale de l'aviation civile a annoncé un audit de sécurité immédiat.
+Claire: Si cet incident avait eu une issue différente, nous parlerions ce soir de l'une des pires catastrophes aériennes en France. Merci Thomas. La direction générale de l'aviation civile a annoncé un audit de sécurité immédiat.
 
 
 ## Audio 03a - Réactions après un scandale (France)
