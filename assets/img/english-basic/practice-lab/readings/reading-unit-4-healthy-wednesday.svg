@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Healthy Wednesday reading illustration</title>
+  <desc id="desc">A cheerful weekly routine board with water, walking shoes, basketball, and homework.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#ecfeff"/>
+      <stop offset="1" stop-color="#fef9c3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  <rect x="135" y="100" width="930" height="470" rx="38" fill="#ffffff" stroke="#123b8f" stroke-width="8"/>
+  <text x="190" y="175" font-family="Arial, sans-serif" font-size="42" font-weight="700" fill="#123b8f">HEALTHY WEDNESDAY</text>
+  <rect x="190" y="220" width="180" height="240" rx="28" fill="#dbeafe"/>
+  <path d="M245 282h70l-15 120h-40z" fill="#38bdf8"/>
+  <rect x="250" y="255" width="60" height="28" rx="10" fill="#0ea5e9"/>
+  <rect x="425" y="220" width="180" height="240" rx="28" fill="#dcfce7"/>
+  <path d="M470 380c42 20 100 12 118-25 8 48-34 80-95 72-52-7-75-30-69-58 12 6 28 9 46 11z" fill="#334155"/>
+  <path d="M470 338c42 20 100 12 118-25 8 48-34 80-95 72-52-7-75-30-69-58 12 6 28 9 46 11z" fill="#64748b"/>
+  <rect x="660" y="220" width="180" height="240" rx="28" fill="#ffedd5"/>
+  <circle cx="750" cy="340" r="68" fill="#f97316"/>
+  <path d="M682 340h136M750 272v136M705 292c35 35 55 72 60 116M795 292c-35 35-55 72-60 116" stroke="#7c2d12" stroke-width="7" fill="none"/>
+  <rect x="895" y="220" width="120" height="240" rx="28" fill="#f3e8ff"/>
+  <rect x="920" y="270" width="70" height="105" rx="10" fill="#ffffff" stroke="#8b5cf6" stroke-width="6"/>
+  <rect x="935" y="300" width="40" height="8" rx="4" fill="#8b5cf6"/>
+  <rect x="935" y="325" width="40" height="8" rx="4" fill="#c4b5fd"/>
+  <rect x="935" y="350" width="40" height="8" rx="4" fill="#c4b5fd"/>
+  <rect x="190" y="500" width="825" height="24" rx="12" fill="#bfdbfe"/>
+</svg>
