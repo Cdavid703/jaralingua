@@ -19,7 +19,6 @@
     writing: document.getElementById("writingResponse"),
     words: document.getElementById("wordCount"),
     result: document.getElementById("submitResult"),
-    receipt: document.getElementById("printReceipt"),
     studentName: document.getElementById("studentName"),
     studentId: document.getElementById("studentId"),
     examDate: document.getElementById("examDate"),
@@ -174,7 +173,6 @@
     if (result && result.writing) els.writing.value = result.writing;
     updateWords();
     setStatus("Submitted. Listening score: <strong>" + esc(result && result.listeningPoints) + " / 25</strong>. The written response is waiting for teacher review.", "pending");
-    els.receipt.textContent = "SUBMITTED - RECEIPT " + esc(result && result.receiptId || "") + " - " + esc(result && result.submittedAt || "");
   }
 
   async function submitExam(event) {
@@ -205,7 +203,7 @@
     }
     setStatus(result.data && result.data.error === "writing_too_short" ? "Your written response is too short." : "The exam could not be submitted. Please keep this page open and tell the teacher.", "error");
     submitButton.disabled = false;
-    submitButton.innerHTML = '<i class="bi bi-send-check-fill"></i> Submit special retake';
+    submitButton.innerHTML = '<i class="bi bi-send-check-fill"></i> Submit special retake to the system';
   }
 
   async function loadStaffSubmissions() {
@@ -269,7 +267,6 @@
   document.querySelectorAll("[data-audio-speed]").forEach(function (button) {
     button.addEventListener("click", function () { setAudioSpeed(button.dataset.audioSpeed); });
   });
-  document.querySelectorAll("[data-print]").forEach(function (button) { button.addEventListener("click", function () { window.print(); }); });
   updateSpeedButtons();
   verify();
   setInterval(verify, 1000);
