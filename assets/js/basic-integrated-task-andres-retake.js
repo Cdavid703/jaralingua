@@ -33,6 +33,7 @@
   let payload = null;
   let audioUrl = "";
   let audioPlays = 0;
+  let currentSpeed = 1;
   let lastCredential = "";
   let verifying = false;
 
@@ -127,6 +128,24 @@
     if (audioUrl) URL.revokeObjectURL(audioUrl);
     audioUrl = URL.createObjectURL(blob);
     els.audio.src = audioUrl;
+    els.audio.playbackRate = currentSpeed;
+  }
+
+  function updateSpeedButtons() {
+    document.querySelectorAll("[data-audio-speed]").forEach(function (button) {
+      const isActive = Number(button.dataset.audioSpeed) === currentSpeed;
+      button.classList.toggle("btn-main", isActive);
+      button.classList.toggle("btn-soft", !isActive);
+      button.setAttribute("aria-pressed", isActive ? "true" : "false");
+    });
+  }
+
+  function setAudioSpeed(value) {
+    const nextSpeed = Number(value);
+    if (!Number.isFinite(nextSpeed) || nextSpeed <= 0) return;
+    currentSpeed = nextSpeed;
+    els.audio.playbackRate = currentSpeed;
+    updateSpeedButtons();
   }
 
   function collectAnswers() {
@@ -249,7 +268,11 @@
   els.play.addEventListener("click", function () { audioPlays += 1; els.audio.play(); });
   els.pause.addEventListener("click", function () { els.audio.pause(); });
   els.restart.addEventListener("click", function () { els.audio.currentTime = 0; audioPlays += 1; els.audio.play(); });
+  document.querySelectorAll("[data-audio-speed]").forEach(function (button) {
+    button.addEventListener("click", function () { setAudioSpeed(button.dataset.audioSpeed); });
+  });
   document.querySelectorAll("[data-print]").forEach(function (button) { button.addEventListener("click", function () { window.print(); }); });
+  updateSpeedButtons();
   verify();
   setInterval(verify, 1000);
 })();
