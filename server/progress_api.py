@@ -45,6 +45,8 @@ BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA
 BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/basic-integrated-task.json")
 BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
 BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
+BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake-submissions.json")
+BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -56,6 +58,7 @@ BUNDLED_FRENCH2_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french2-final
 BUNDLED_FRENCH2_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french2-final-exam-audio.mp3")
 BUNDLED_BASIC_INTEGRATED_TASK_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task.local.json")
 BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task-real.local.mp3")
+BUNDLED_BASIC_ANDRES_RETAKE_AUDIO_PATH = os.path.join(REPO_ROOT, "ingles", "basico", "audio", "integrated-task", "basic-integrated-task-andres-munoz-retake.mp3")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
 MAX_BODY_BYTES = 6 * 1024 * 1024
@@ -1588,6 +1591,123 @@ def write_basic_integrated_task_submissions(data):
     write_json_file(BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH, data, ".basic-integrated-submissions-")
 
 
+BASIC_ANDRES_RETAKE_STUDENT_ID = "005"
+BASIC_ANDRES_RETAKE_OPEN_EPOCH = 1782968400
+BASIC_ANDRES_RETAKE_CLOSE_EPOCH = 1783141200
+BASIC_ANDRES_RETAKE_WINDOW_LABEL = "Available July 2 and July 3, 2026, until 11:59 p.m. Bogotá time"
+
+
+def basic_andres_retake_exam():
+    return {
+        "id": "basic-course-1-integrated-task-andres-munoz-retake",
+        "title": "Basic Course 1 - Integrated Task Special Retake",
+        "totalPoints": 50,
+        "listeningPoints": 25,
+        "writingPoints": 25,
+        "maxAudioPlays": None,
+        "availabilityLabel": BASIC_ANDRES_RETAKE_WINDOW_LABEL,
+        "audioScript": (
+            "Hi, my name is Luis. I usually get up at six fifteen in the morning. "
+            "I take a shower and have eggs and coffee for breakfast. At seven thirty, "
+            "I take the bus to work. I work at a small restaurant near the park. "
+            "I start at eight o'clock and finish at four in the afternoon. After work, "
+            "I go home and rest for one hour. On Mondays and Thursdays, I study English "
+            "in the evening. On weekends, I run in the park and visit my mother. "
+            "I do not work on Sundays. At night, I watch TV with my sister and go to bed "
+            "at ten thirty. My routine is busy, but it is interesting."
+        ),
+        "questions": [
+            {"id": "r1", "prompt": "What time does Luis usually get up?", "options": ["5:15 a.m.", "6:15 a.m.", "7:30 a.m.", "8:00 a.m."], "answer": 1, "points": 2.5},
+            {"id": "r2", "prompt": "What does Luis have for breakfast?", "options": ["Fruit and tea", "Bread and milk", "Eggs and coffee", "Cereal and juice"], "answer": 2, "points": 2.5},
+            {"id": "r3", "prompt": "How does Luis go to work?", "options": ["By bus", "By car", "By bicycle", "On foot"], "answer": 0, "points": 2.5},
+            {"id": "r4", "prompt": "Where does Luis work?", "options": ["At a school", "At a small restaurant", "At a hospital", "At a supermarket"], "answer": 1, "points": 2.5},
+            {"id": "r5", "prompt": "What is near Luis's workplace?", "options": ["A bank", "A church", "A park", "A gym"], "answer": 2, "points": 2.5},
+            {"id": "r6", "prompt": "What time does Luis finish work?", "options": ["At two o'clock", "At three o'clock", "At four o'clock", "At five o'clock"], "answer": 2, "points": 2.5},
+            {"id": "r7", "prompt": "What does Luis do after work?", "options": ["He plays soccer.", "He goes home and rests.", "He cooks dinner at the restaurant.", "He visits his friends."], "answer": 1, "points": 2.5},
+            {"id": "r8", "prompt": "When does Luis study English?", "options": ["On Mondays and Thursdays", "On Tuesdays and Fridays", "Every morning", "Only on weekends"], "answer": 0, "points": 2.5},
+            {"id": "r9", "prompt": "What does Luis do on weekends?", "options": ["He watches horror shows.", "He works all day.", "He runs in the park and visits his mother.", "He studies at the library."], "answer": 2, "points": 2.5},
+            {"id": "r10", "prompt": "What is Luis's opinion about his routine?", "options": ["It is boring.", "It is relaxed.", "It is busy but interesting.", "It is very difficult."], "answer": 2, "points": 2.5}
+        ]
+    }
+
+
+def read_basic_andres_retake_submissions():
+    data = read_json_file(BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH, {"submissions": {}})
+    if not isinstance(data.get("submissions"), dict):
+        data["submissions"] = {}
+    return data
+
+
+def write_basic_andres_retake_submissions(data):
+    write_json_file(BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH, data, ".basic-andres-retake-submissions-")
+
+
+def basic_andres_retake_is_open():
+    current = int(time.time())
+    return BASIC_ANDRES_RETAKE_OPEN_EPOCH <= current < BASIC_ANDRES_RETAKE_CLOSE_EPOCH
+
+
+def basic_andres_retake_student_allowed(profile, grades_data):
+    student = matched_student_for_profile(profile, grades_data)
+    if not isinstance(student, dict):
+        return None
+    if clean_text(student.get("id"), 40) != BASIC_ANDRES_RETAKE_STUDENT_ID:
+        return None
+    return student
+
+
+def basic_andres_retake_public_submission(submission):
+    if not isinstance(submission, dict):
+        return None
+    keys = (
+        "receiptId", "studentId", "studentName", "email", "courseCode", "clientDate",
+        "submittedAt", "audioPlays", "listeningPoints", "writingPoints", "finalPoints",
+        "grade", "status", "writing", "answers", "teacherComments"
+    )
+    return {key: submission.get(key) for key in keys}
+
+
+def basic_andres_retake_payload(profile, grades_data, submissions):
+    role = grade_user_role(profile, grades_data)
+    student = basic_andres_retake_student_allowed(profile, grades_data)
+    is_staff = role in ("admin", "teacher")
+    is_open = basic_andres_retake_is_open()
+    if not is_staff and not isinstance(student, dict):
+        return None
+    if not is_staff and not is_open:
+        return {
+            "status": "closed",
+            "role": role,
+            "isOpen": False,
+            "availabilityLabel": BASIC_ANDRES_RETAKE_WINDOW_LABEL,
+            "student": basic_integrated_student_identity(student)
+        }
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else BASIC_ANDRES_RETAKE_STUDENT_ID
+    submitted = submissions.get("submissions", {}).get(student_id)
+    exam = basic_andres_retake_exam()
+    public_exam = {
+        "id": exam["id"],
+        "title": exam["title"],
+        "totalPoints": exam["totalPoints"],
+        "listeningPoints": exam["listeningPoints"],
+        "writingPoints": exam["writingPoints"],
+        "maxAudioPlays": exam["maxAudioPlays"],
+        "availabilityLabel": exam["availabilityLabel"],
+        "questions": [basic_integrated_public_question(item) for item in exam["questions"]]
+    }
+    if is_staff:
+        public_exam["audioScript"] = exam["audioScript"]
+    return {
+        "status": "submitted" if submitted else ("open" if is_open else "staff-preview"),
+        "role": role,
+        "isOpen": is_open,
+        "availabilityLabel": BASIC_ANDRES_RETAKE_WINDOW_LABEL,
+        "student": basic_integrated_student_identity(student) if isinstance(student, dict) else {"id": BASIC_ANDRES_RETAKE_STUDENT_ID, "fullName": "Andres Felipe Muñoz", "level": "Basic English Course 1"},
+        "exam": public_exam,
+        "submitted": basic_andres_retake_public_submission(submitted)
+    }
+
+
 def basic_integrated_student_identity(student):
     if not isinstance(student, dict):
         return None
@@ -2091,6 +2211,51 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 binary_response(self, 200, handle.read(), "audio/mpeg")
             return
 
+        if parsed.path == "/api/basic/integrated-task-andres-munoz-retake":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                submissions = read_basic_andres_retake_submissions()
+                payload = basic_andres_retake_payload(profile, grades_data, submissions)
+                if payload is None:
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                json_response(self, 200, payload)
+            return
+
+        if parsed.path == "/api/basic/integrated-task-andres-munoz-retake/audio":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = basic_andres_retake_student_allowed(profile, grades_data)
+                is_staff = role in ("admin", "teacher")
+                if not is_staff and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if not is_staff and not basic_andres_retake_is_open():
+                    json_response(self, 403, {"error": "exam_closed", "availabilityLabel": BASIC_ANDRES_RETAKE_WINDOW_LABEL})
+                    return
+                audio_path = BASIC_ANDRES_RETAKE_AUDIO_PATH
+                if not os.path.exists(audio_path):
+                    audio_path = BUNDLED_BASIC_ANDRES_RETAKE_AUDIO_PATH
+            if not os.path.exists(audio_path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(audio_path, "rb") as handle:
+                binary_response(self, 200, handle.read(), "audio/mpeg")
+            return
+
+        if parsed.path == "/api/basic/integrated-task-andres-munoz-retake/submissions":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                submissions = read_basic_andres_retake_submissions().get("submissions", {})
+                items = [basic_andres_retake_public_submission(item) for item in submissions.values() if isinstance(item, dict)]
+                json_response(self, 200, {"role": role, "submissions": items})
+            return
+
         if parsed.path == "/api/basic/integrated-task/submissions":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
@@ -2197,6 +2362,58 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if gradebook_changed:
                     write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
                 json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
+            return
+
+        if parsed.path == "/api/basic/integrated-task-andres-munoz-retake/submit":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                student = basic_andres_retake_student_allowed(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                if not basic_andres_retake_is_open():
+                    json_response(self, 403, {"error": "exam_closed", "availabilityLabel": BASIC_ANDRES_RETAKE_WINDOW_LABEL})
+                    return
+                submissions = read_basic_andres_retake_submissions()
+                student_id = clean_text(student.get("id"), 40)
+                existing = submissions.get("submissions", {}).get(student_id)
+                if existing:
+                    json_response(self, 409, {"error": "already_submitted", "result": basic_andres_retake_public_submission(existing)})
+                    return
+                writing = clean_basic_writing(payload.get("writing"))
+                if basic_word_count(writing) < 60:
+                    json_response(self, 400, {"error": "writing_too_short", "wordCount": basic_word_count(writing)})
+                    return
+                exam = basic_andres_retake_exam()
+                result = basic_integrated_score(exam, payload.get("answers"))
+                try:
+                    audio_plays = max(0, int(payload.get("audioPlays", 0)))
+                except (TypeError, ValueError):
+                    audio_plays = 0
+                submitted_at = now_iso()
+                submission = {
+                    "receiptId": "BIR-" + secrets.token_hex(5).upper(),
+                    "studentId": student_id,
+                    "studentName": clean_text(student.get("fullName"), 200),
+                    "email": normalize_email(profile.get("email")),
+                    "courseCode": clean_text(payload.get("courseCode"), 40),
+                    "clientDate": clean_text(payload.get("clientDate"), 30),
+                    "submittedAt": submitted_at,
+                    "audioPlays": audio_plays,
+                    "listeningPoints": result["score"],
+                    "writingPoints": None,
+                    "finalPoints": None,
+                    "grade": None,
+                    "status": "pending-writing-review",
+                    "writing": writing,
+                    "answers": result["details"],
+                    "rubric": None,
+                    "teacherComments": "",
+                    "source": "andres-munoz-special-retake"
+                }
+                submissions.setdefault("submissions", {})[student_id] = submission
+                write_basic_andres_retake_submissions(submissions)
+                json_response(self, 200, {"ok": True, "result": basic_andres_retake_public_submission(submission)})
             return
 
         if parsed.path == "/api/french7/final-exam/submit":
