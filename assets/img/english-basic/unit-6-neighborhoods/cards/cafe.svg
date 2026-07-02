@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
-  <title id="title">Cafe</title><desc id="desc">A cozy cafe storefront with a cup icon and outdoor table.</desc>
-  <rect width="640" height="480" fill="#fff3df"/><path d="M96 178h448v246H96z" fill="#f3b35f"/><path d="M127 92h386l56 88H72z" fill="#9b4f2a"/>
-  <path d="M76 180h488" stroke="#743316" stroke-width="14"/><rect x="140" y="224" width="126" height="140" rx="14" fill="#fff8ec"/><rect x="320" y="224" width="170" height="116" rx="20" fill="#533223"/>
-  <path d="M358 271h70c0 38-19 60-35 60s-35-22-35-60z" fill="#fff8ec"/><path d="M428 285h28c20 0 20 30 0 30h-25" fill="none" stroke="#fff8ec" stroke-width="13"/>
-  <g transform="translate(210 372)"><circle cx="0" cy="0" r="30" fill="#5c3924"/><circle cx="120" cy="0" r="30" fill="#5c3924"/><rect x="-8" y="-62" width="136" height="20" rx="10" fill="#5c3924"/><path d="M0-44v76M120-44v76" stroke="#5c3924" stroke-width="10" stroke-linecap="round"/></g>
-</svg>

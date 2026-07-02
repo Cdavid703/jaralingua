@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
-  <title id="title">Library</title><desc id="desc">A library building with columns and colorful books.</desc>
-  <rect width="640" height="480" fill="#eef2ff"/><path d="M106 178h428v234H106z" fill="#ede7d5"/><path d="M320 76l240 102H80z" fill="#30446f"/>
-  <rect x="140" y="208" width="54" height="160" rx="8" fill="#fffaf0"/><rect x="236" y="208" width="54" height="160" rx="8" fill="#fffaf0"/><rect x="350" y="208" width="54" height="160" rx="8" fill="#fffaf0"/><rect x="446" y="208" width="54" height="160" rx="8" fill="#fffaf0"/>
-  <rect x="96" y="392" width="448" height="32" rx="8" fill="#30446f"/>
-  <g transform="translate(237 272)"><rect x="0" y="0" width="26" height="78" rx="4" fill="#ef476f"/><rect x="32" y="0" width="26" height="78" rx="4" fill="#ffd166"/><rect x="64" y="0" width="26" height="78" rx="4" fill="#06d6a0"/><rect x="96" y="0" width="26" height="78" rx="4" fill="#118ab2"/></g>
-</svg>
