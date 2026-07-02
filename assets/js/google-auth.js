@@ -1,6 +1,7 @@
 ﻿(function () {
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+  const LOCAL_USER_KEY = "jaralingua_local_user";
   const CONFIG_KEY = "JARALINGUA_GOOGLE_CLIENT_ID";
   const MICROSOFT_CONFIG_KEY = "JARALINGUA_MICROSOFT_CLIENT_ID";
   const MICROSOFT_AUTHORITY_KEY = "JARALINGUA_MICROSOFT_AUTHORITY";
@@ -92,6 +93,13 @@
       googleScriptUnavailable: "No se pudo cargar el script de Google. Prueba sin bloqueadores o en una ventana incognito.",
       googleOriginRejected: "Google cargo, pero no permitio mostrar el boton. Autoriza este origen en Google Cloud: ",
       microsoftSignIn: "Continuar con Microsoft",
+      localSignIn: "Entrar con usuario del curso",
+      localEmail: "Correo o usuario",
+      localPassword: "Contraseña",
+      localSubmit: "Entrar",
+      localLoading: "Verificando usuario...",
+      localUnavailable: "Este acceso local solo está disponible en cursos autorizados.",
+      localInvalid: "Usuario o contraseña incorrectos.",
       microsoftLoading: "Cargando Microsoft...",
       microsoftUnavailable: "No se pudo cargar el acceso con Microsoft. Recarga la pagina e intenta de nuevo.",
       microsoftPopupBlocked: "Microsoft no pudo abrir la ventana de inicio. Permite ventanas emergentes e intenta de nuevo."
@@ -158,6 +166,13 @@
       googleScriptUnavailable: "Impossible de charger le script Google. Essayez sans bloqueurs ou dans une fenetre privee.",
       googleOriginRejected: "Google est charge, mais n'a pas autorise le bouton. Autorisez cette origine dans Google Cloud : ",
       microsoftSignIn: "Continuer avec Microsoft",
+      localSignIn: "Connexion avec utilisateur du cours",
+      localEmail: "Courriel ou utilisateur",
+      localPassword: "Mot de passe",
+      localSubmit: "Entrer",
+      localLoading: "Vérification de l'utilisateur...",
+      localUnavailable: "Cet accès local est disponible uniquement dans les cours autorisés.",
+      localInvalid: "Utilisateur ou mot de passe incorrect.",
       microsoftLoading: "Chargement de Microsoft...",
       microsoftUnavailable: "Impossible de charger la connexion Microsoft. Rechargez la page et reessayez.",
       microsoftPopupBlocked: "Microsoft n'a pas pu ouvrir la fenetre de connexion. Autorisez les fenetres contextuelles et reessayez."
@@ -224,6 +239,13 @@
       googleScriptUnavailable: "The Google script could not load. Try without blockers or in an incognito window.",
       googleOriginRejected: "Google loaded, but did not allow the button. Authorize this origin in Google Cloud: ",
       microsoftSignIn: "Continue with Microsoft",
+      localSignIn: "Sign in with course user",
+      localEmail: "Email or username",
+      localPassword: "Password",
+      localSubmit: "Sign in",
+      localLoading: "Verifying user...",
+      localUnavailable: "This local access is only available in authorized courses.",
+      localInvalid: "Incorrect username or password.",
       microsoftLoading: "Loading Microsoft...",
       microsoftUnavailable: "Microsoft sign-in could not load. Reload the page and try again.",
       microsoftPopupBlocked: "Microsoft could not open the sign-in window. Allow pop-ups and try again."
@@ -352,6 +374,8 @@
     if (googleUser && googleUser.credential) return googleUser;
     const microsoftUser = readStoredUser(MICROSOFT_USER_KEY, "microsoft");
     if (microsoftUser && microsoftUser.credential) return microsoftUser;
+    const localUser = readStoredUser(LOCAL_USER_KEY, "local");
+    if (localUser && localUser.credential) return localUser;
     return null;
   }
 
@@ -727,13 +751,15 @@
   }
 
   function saveUser(user) {
-    const provider = user && user.provider === "microsoft" ? "microsoft" : "google";
+    const provider = user && user.provider === "microsoft" ? "microsoft" : (user && user.provider === "local" ? "local" : "google");
     currentUser = Object.assign({}, user, { provider: provider });
     cloudProgressLoaded = false;
     pendingProgressSync = false;
     pendingActivitySync = {};
-    sessionStorage.removeItem(provider === "microsoft" ? GOOGLE_USER_KEY : MICROSOFT_USER_KEY);
-    sessionStorage.setItem(provider === "microsoft" ? MICROSOFT_USER_KEY : GOOGLE_USER_KEY, JSON.stringify(currentUser));
+    sessionStorage.removeItem(GOOGLE_USER_KEY);
+    sessionStorage.removeItem(MICROSOFT_USER_KEY);
+    sessionStorage.removeItem(LOCAL_USER_KEY);
+    sessionStorage.setItem(provider === "microsoft" ? MICROSOFT_USER_KEY : (provider === "local" ? LOCAL_USER_KEY : GOOGLE_USER_KEY), JSON.stringify(currentUser));
     trackPageVisit();
     renderWidget();
     renderDashboard();
@@ -749,6 +775,7 @@
     }
     sessionStorage.removeItem(GOOGLE_USER_KEY);
     sessionStorage.removeItem(MICROSOFT_USER_KEY);
+    sessionStorage.removeItem(LOCAL_USER_KEY);
     currentUser = null;
     buttonRendered = false;
     cloudProgressLoaded = false;
@@ -945,6 +972,31 @@
       .auth-microsoft-button:disabled {
         cursor: wait;
         opacity: 0.72;
+      }
+
+      .auth-local-form {
+        border-top: 1px solid rgba(31, 78, 140, 0.12);
+        display: grid;
+        gap: 0.55rem;
+        margin-top: 0.85rem;
+        padding-top: 0.85rem;
+      }
+
+      .auth-local-form strong {
+        color: #15345d;
+        font-weight: 900;
+      }
+
+      .auth-local-form input {
+        width: 100%;
+        border: 1px solid rgba(31, 78, 140, 0.18);
+        border-radius: 12px;
+        font: inherit;
+        padding: 0.7rem 0.8rem;
+      }
+
+      .auth-local-form button {
+        width: 100%;
       }
 
       .auth-microsoft-icon {
@@ -1425,6 +1477,27 @@
     `;
   }
 
+  function localLoginPath() {
+    const path = window.location.pathname || "";
+    if (path.indexOf("/ingles/basico/") !== -1 || /\/ingles\/basico$/i.test(path)) {
+      return "/api/basic/grades/login";
+    }
+    return "";
+  }
+
+  function localLoginMarkup() {
+    if (!localLoginPath()) return "";
+    return `
+      <form class="auth-local-form" data-local-login-form>
+        <strong>${copy.localSignIn}</strong>
+        <input type="email" name="email" autocomplete="username" placeholder="${escapeAttribute(copy.localEmail)}" required>
+        <input type="password" name="password" autocomplete="current-password" placeholder="${escapeAttribute(copy.localPassword)}" required>
+        <button class="auth-microsoft-button" type="submit">${copy.localSubmit}</button>
+        <div class="auth-microsoft-status" data-local-status hidden></div>
+      </form>
+    `;
+  }
+
   function panelMarkup() {
     if (currentUser) {
       const stats = progressStats();
@@ -1494,6 +1567,7 @@
         </div>
         <div class="auth-google-status" data-google-status hidden></div>
         <div class="auth-microsoft-status" data-microsoft-status hidden></div>
+        ${localLoginMarkup()}
         ${clientId() || microsoftClientId() ? "" : `<div class="auth-config-note">${copy.hint}</div>`}
         <div class="auth-download-note" data-auth-download-note hidden>${copy.loginNeeded}</div>
       </div>
@@ -1509,6 +1583,7 @@
     const closeButtons = root.querySelectorAll("[data-auth-close]");
     const signOutButton = root.querySelector("[data-auth-signout]");
     const microsoftButton = root.querySelector("[data-microsoft-login]");
+    const localForm = root.querySelector("[data-local-login-form]");
     const lastLink = root.querySelector("[data-auth-last]");
 
     toggle.addEventListener("click", function () {
@@ -1523,6 +1598,12 @@
     if (microsoftButton) {
       microsoftButton.addEventListener("click", function () {
         signInMicrosoft(microsoftButton);
+      });
+    }
+    if (localForm) {
+      localForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        signInLocal(localForm);
       });
     }
     if (lastLink && lastLink.getAttribute("href") === "#") {
@@ -1828,6 +1909,58 @@
       });
     }).catch(function () {
       setMicrosoftStatus(copy.microsoftPopupBlocked);
+    }).finally(function () {
+      button.disabled = false;
+    });
+  }
+
+  function setLocalStatus(message, isError) {
+    const status = document.querySelector("[data-local-status]");
+    if (!status) return;
+    status.hidden = !message;
+    status.textContent = message || "";
+    status.style.color = isError ? "#b42336" : "#177a52";
+  }
+
+  function signInLocal(form) {
+    const endpoint = localLoginPath();
+    if (!endpoint) {
+      setLocalStatus(copy.localUnavailable, true);
+      return;
+    }
+    const button = form.querySelector("button[type='submit']");
+    const email = form.elements.email && form.elements.email.value;
+    const password = form.elements.password && form.elements.password.value;
+    if (!email || !password) {
+      setLocalStatus(copy.localInvalid, true);
+      return;
+    }
+    button.disabled = true;
+    setLocalStatus(copy.localLoading, false);
+    fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password })
+    }).then(function (response) {
+      return response.json().catch(function () { return {}; }).then(function (data) {
+        if (!response.ok) throw data;
+        return data;
+      });
+    }).then(function (data) {
+      const user = data.user || {};
+      saveUser({
+        provider: "local",
+        sub: user.sub || user.email,
+        email: user.email,
+        name: user.name || user.email,
+        picture: "",
+        credential: data.token,
+        exp: data.exp
+      });
+      setLocalStatus("", false);
+      closePanel();
+    }).catch(function () {
+      setLocalStatus(copy.localInvalid, true);
     }).finally(function () {
       button.disabled = false;
     });

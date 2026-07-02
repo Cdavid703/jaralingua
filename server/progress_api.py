@@ -447,6 +447,8 @@ def validate_local_token(token):
 
 
 def gradebook_path_for_login(path):
+    if path == "/api/basic/grades/login":
+        return ("basic", "Basic English Course 1", BASIC_ENGLISH_GRADES_PATH)
     if path == "/api/french1/grades/login":
         return ("french1", "Français Niveau 1", FRENCH1_GRADES_PATH)
     if path == "/api/french2/grades/login":
@@ -462,7 +464,8 @@ def local_gradebook_login(payload, grades_data, level_key, level_label):
     student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and email_matches_student(item, email)), None)
     if not isinstance(student, dict):
         raise ValueError("student_not_found")
-    expected_password = str(student.get("id", "")).strip() + "*"
+    private_details = student.get("gradeDetails", {}) if isinstance(student.get("gradeDetails"), dict) else {}
+    expected_password = str(private_details.get("localPassword") or student.get("localPassword") or (str(student.get("id", "")).strip() + "*"))
     if not expected_password or not hmac.compare_digest(password, expected_password):
         raise ValueError("invalid_credentials")
     profile = {
@@ -799,13 +802,20 @@ def grade_user_role(profile, grades_data):
     return "student"
 
 
+def public_grade_details(student):
+    details = student.get("gradeDetails", {})
+    if not isinstance(details, dict):
+        return {}
+    return {key: value for key, value in details.items() if key not in ("localPassword", "password")}
+
+
 def student_public_view(student):
     return {
         "id": student.get("id", ""),
         "level": student.get("level", ""),
         "bookDate": student.get("bookDate"),
         "grades": student.get("grades", {}),
-        "gradeDetails": student.get("gradeDetails", {})
+        "gradeDetails": public_grade_details(student)
     }
 
 
@@ -819,7 +829,7 @@ def staff_student_view(student):
         "contact": student.get("contact", ""),
         "bookDate": student.get("bookDate"),
         "grades": student.get("grades", {}),
-        "gradeDetails": student.get("gradeDetails", {})
+        "gradeDetails": public_grade_details(student)
     }
 
 

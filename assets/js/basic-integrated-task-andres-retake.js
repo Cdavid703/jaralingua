@@ -47,7 +47,7 @@
   }
 
   function readUser() {
-    return readStored("jaralingua_google_user", "google") || readStored("jaralingua_microsoft_user", "microsoft");
+    return readStored("jaralingua_google_user", "google") || readStored("jaralingua_microsoft_user", "microsoft") || readStored("jaralingua_local_user", "local");
   }
 
   function esc(value) {

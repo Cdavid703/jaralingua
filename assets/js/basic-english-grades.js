@@ -1,6 +1,7 @@
 (function () {
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+  const LOCAL_USER_KEY = "jaralingua_local_user";
   const API_PATH = "/api/basic/grades";
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
   const MICROSOFT_CLIENT_ID = (window.JARALINGUA_MICROSOFT_CLIENT_ID || "4e729f8a-d101-4c5d-af68-609d749bc95a").trim();
@@ -32,6 +33,8 @@
     if (googleUser && googleUser.credential) return Object.assign({ provider: "google" }, googleUser);
     const microsoftUser = readStoredUser(MICROSOFT_USER_KEY);
     if (microsoftUser && microsoftUser.credential) return Object.assign({ provider: "microsoft" }, microsoftUser);
+    const localUser = readStoredUser(LOCAL_USER_KEY);
+    if (localUser && localUser.credential) return Object.assign({ provider: "local" }, localUser);
     return null;
   }
 

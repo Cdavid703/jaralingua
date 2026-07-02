@@ -7,7 +7,7 @@ let config=null,user=null,student=null,role="student",state=null,submission=null
 const playKey="basic_integrated_task_plays_"+mode,draftKeyBase="basic_integrated_task_draft_"+mode+"_";
 function esc(v){return String(v==null?"":v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}
 function readStored(key,provider){try{const v=JSON.parse(sessionStorage.getItem(key)||"null");if(!v||!v.credential)return null;if(v.exp&&Date.now()/1000>v.exp){sessionStorage.removeItem(key);return null}return Object.assign({provider},v)}catch(e){return null}}
-function readUser(){return readStored("jaralingua_google_user","google")||readStored("jaralingua_microsoft_user","microsoft")}
+function readUser(){return readStored("jaralingua_google_user","google")||readStored("jaralingua_microsoft_user","microsoft")||readStored("jaralingua_local_user","local")}
 function headers(){return user&&user.credential?{"Authorization":"Bearer "+user.credential,"X-Jaralingua-Auth-Provider":user.provider||"google","Content-Type":"application/json"}:{}}
 async function request(url,options){options=options||{};let signal=options.signal,timer=null;if(!signal&&options.timeout){const ac=new AbortController();signal=ac.signal;timer=setTimeout(function(){ac.abort()},options.timeout)}try{const response=await fetch(url,Object.assign({},options,{signal:signal,headers:Object.assign({},headers(),options.headers||{})}));let data={};try{data=await response.json()}catch(e){}return{ok:response.ok,status:response.status,data}}finally{if(timer)clearTimeout(timer)}}
 function openLogin(){const trigger=document.querySelector("[data-auth-toggle],[data-auth-nav-toggle]");if(trigger)trigger.click()}
