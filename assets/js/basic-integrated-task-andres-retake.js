@@ -25,7 +25,6 @@
     examDate: document.getElementById("examDate"),
     courseCode: document.getElementById("courseCode"),
     staffPanel: document.getElementById("staffPanel"),
-    staffTranscript: document.getElementById("staffTranscript"),
     staffSubmissions: document.getElementById("staffSubmissions")
   };
 
@@ -212,7 +211,6 @@
   async function loadStaffSubmissions() {
     if (!payload || ["admin", "teacher"].indexOf(payload.role) === -1) return;
     els.staffPanel.hidden = false;
-    els.staffTranscript.textContent = payload.exam.audioScript || "Transcript is unavailable.";
     const result = await request(API.submissions);
     if (!result.ok) return;
     const items = result.data.submissions || [];

@@ -1606,16 +1606,6 @@ def basic_andres_retake_exam():
         "writingPoints": 25,
         "maxAudioPlays": None,
         "availabilityLabel": BASIC_ANDRES_RETAKE_WINDOW_LABEL,
-        "audioScript": (
-            "Hi, my name is Luis. I usually get up at six fifteen in the morning. "
-            "I take a shower and have eggs and coffee for breakfast. At seven thirty, "
-            "I take the bus to work. I work at a small restaurant near the park. "
-            "I start at eight o'clock and finish at four in the afternoon. After work, "
-            "I go home and rest for one hour. On Mondays and Thursdays, I study English "
-            "in the evening. On weekends, I run in the park and visit my mother. "
-            "I do not work on Sundays. At night, I watch TV with my sister and go to bed "
-            "at ten thirty. My routine is busy, but it is interesting."
-        ),
         "questions": [
             {"id": "r1", "prompt": "What time does Luis usually get up?", "options": ["5:15 a.m.", "6:15 a.m.", "7:30 a.m.", "8:00 a.m."], "answer": 1, "points": 2.5},
             {"id": "r2", "prompt": "What does Luis have for breakfast?", "options": ["Fruit and tea", "Bread and milk", "Eggs and coffee", "Cereal and juice"], "answer": 2, "points": 2.5},
@@ -1695,8 +1685,6 @@ def basic_andres_retake_payload(profile, grades_data, submissions):
         "availabilityLabel": exam["availabilityLabel"],
         "questions": [basic_integrated_public_question(item) for item in exam["questions"]]
     }
-    if is_staff:
-        public_exam["audioScript"] = exam["audioScript"]
     return {
         "status": "submitted" if submitted else ("open" if is_open else "staff-preview"),
         "role": role,
