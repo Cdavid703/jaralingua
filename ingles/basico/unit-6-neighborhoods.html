@@ -8,6 +8,31 @@
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .unit6-path{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem;margin-top:1.1rem}
+    .unit6-path a{background:#fff;border:1px solid #dbeafe;border-radius:18px;padding:.9rem;text-decoration:none;color:#153b55;box-shadow:0 12px 24px rgba(15,23,42,.07)}
+    .unit6-path span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#dff7e8;color:#0f7b52;font-weight:950;margin-bottom:.45rem}
+    .unit6-path strong{display:block;font-size:.92rem}.unit6-path small{display:block;color:#64748b;line-height:1.35;margin-top:.25rem}
+    .unit6-vocab-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+    .unit6-place-card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;box-shadow:0 12px 26px rgba(15,23,42,.07)}
+    .unit6-place-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#eef7ff}
+    .unit6-place-card div{padding:.85rem}.unit6-place-card strong{display:block;color:#153b55;font-size:1.05rem}.unit6-place-card span{display:block;color:#64748b;font-size:.9rem;margin-top:.2rem}
+    .unit6-speak{border:0;border-radius:999px;background:#e0f2fe;color:#153b55;font-weight:900;padding:.42rem .7rem;margin-top:.55rem;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
+    .unit6-speak:hover{transform:translateY(-1px)}
+    .unit6-table{width:100%;border-collapse:separate;border-spacing:0;margin:1rem 0;border:1px solid #dbeafe;border-radius:18px;overflow:hidden;background:#fff}
+    .unit6-table th{background:#153b55;color:#fff;text-align:left}.unit6-table th,.unit6-table td{padding:.85rem;border-bottom:1px solid #e2e8f0}.unit6-table tr:last-child td{border-bottom:0}
+    .unit6-note-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .unit6-note{background:#f8fafc;border-left:5px solid #0f9f6e;border-radius:18px;padding:1rem;color:#334155}.unit6-note strong{display:block;color:#153b55;margin-bottom:.35rem}
+    .unit6-practice-list{display:grid;gap:.7rem;margin-top:1rem}.unit6-practice-list li{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:.8rem 1rem}
+    .unit6-map{position:relative;min-height:380px;border-radius:24px;background:linear-gradient(135deg,#dff7e8,#e0f2fe);overflow:hidden;border:1px solid #cbd5e1;box-shadow:0 18px 38px rgba(15,23,42,.08)}
+    .unit6-road{position:absolute;background:#f8fafc;border:8px solid #94a3b8}.unit6-road.main{left:-30px;right:-30px;top:170px;height:58px}.unit6-road.cross{top:-30px;bottom:-30px;left:290px;width:58px}
+    .unit6-map-place{position:absolute;display:grid;place-items:center;text-align:center;width:112px;min-height:72px;border-radius:18px;background:#fff;color:#153b55;font-weight:950;box-shadow:0 12px 26px rgba(15,23,42,.12);padding:.55rem}
+    .unit6-map-place i{font-size:1.35rem;color:#0f9f6e}.unit6-map-place small{display:block;font-weight:800;color:#64748b}
+    .unit6-model{background:#fff7e8;border:1px solid #fed7aa;border-radius:22px;padding:1.2rem;line-height:1.8;color:#334155;font-size:1.05rem}
+    .unit6-checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin-top:1rem}.unit6-checklist label{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:.8rem 1rem;color:#334155}
+    @media(max-width:1000px){.unit6-path,.unit6-vocab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.unit6-note-grid{grid-template-columns:1fr}.unit6-checklist{grid-template-columns:1fr}}
+    @media(max-width:620px){.unit6-path,.unit6-vocab-grid{grid-template-columns:1fr}.unit6-map-place{width:94px;font-size:.84rem}}
+  </style>
 </head>
 <body class="english-basic-page">
   <div class="global-course-switcher" aria-label="Navigation globale"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
@@ -50,29 +75,105 @@
     <section class="premium-lesson-container" id="lesson-content">
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Places</p><h2>Nice Places in a Neighborhood</h2></div></div>
-        <p class="lesson-text">Use <strong>there is</strong> and <strong>there are</strong> to describe what exists in a place.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Singular</h3><div class="phrase-list"><div class="phrase-item"><strong>There is a cafe.</strong><span>Use there is for one place.</span></div><div class="phrase-item"><strong>There is a library near my house.</strong><span>Use near for close places.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Plural</h3><div class="phrase-list"><div class="phrase-item"><strong>There are two parks.</strong><span>Use there are for more than one.</span></div><div class="phrase-item"><strong>There are many restaurants.</strong><span>Many means a lot.</span></div></div></div>
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Learning route</p><h2>What you will learn in Unit 6</h2></div></div>
+        <p class="lesson-text">Unit 6 connects your routines and free-time language with real places. You will describe your neighborhood, say what places exist, give simple times, and recommend favorite places in the city.</p>
+        <div class="unit6-path">
+          <a href="#places"><span>1</span><strong>Places in town</strong><small>park, cafe, library, bus stop...</small></a>
+          <a href="#there-is-are"><span>2</span><strong>There is / are</strong><small>one place vs many places</small></a>
+          <a href="#location-time"><span>3</span><strong>Location and time</strong><small>near, next to, at 5:00</small></a>
+          <a href="#favorite-places"><span>4</span><strong>Favorite places</strong><small>best, quiet, popular, safe</small></a>
+          <a href="#final-product"><span>5</span><strong>Your product</strong><small>map, blog entry, presentation</small></a>
         </div>
-        
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Time and Adjectives</p><h2>Favorite Places in the City</h2></div></div>
-        <p class="lesson-text">Use time expressions and adjectives to explain why places are important.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Time</h3><div class="phrase-list"><div class="phrase-item"><strong>What time is it?</strong><span>It is seven thirty.</span></div><div class="phrase-item"><strong>Let's have dinner at 8:00.</strong><span>Use let's for suggestions.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Adjectives</h3><div class="phrase-list"><div class="phrase-item"><strong>The best cafe</strong><span>Use best for your top choice.</span></div><div class="phrase-item"><strong>The biggest park</strong><span>Use biggest to compare size.</span></div></div></div>
+      <article class="premium-topic-card" id="places">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Vocabulary</p><h2>Places in a neighborhood</h2></div></div>
+        <p class="lesson-text">Study the places visually first. Click the listen button to hear the word with an American English browser voice, then repeat it aloud.</p>
+        <div class="unit6-vocab-grid">
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/park.svg" alt="Park"><div><strong>park</strong><span>There is a park.</span><button class="unit6-speak" type="button" data-say="park"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/cafe.svg" alt="Cafe"><div><strong>cafe</strong><span>There is a cafe.</span><button class="unit6-speak" type="button" data-say="cafe"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/restaurant.svg" alt="Restaurant"><div><strong>restaurant</strong><span>There is a restaurant.</span><button class="unit6-speak" type="button" data-say="restaurant"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/school.svg" alt="School"><div><strong>school</strong><span>There is a school.</span><button class="unit6-speak" type="button" data-say="school"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/library.svg" alt="Library"><div><strong>library</strong><span>There is a library.</span><button class="unit6-speak" type="button" data-say="library"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/gym.svg" alt="Gym"><div><strong>gym</strong><span>There is a gym.</span><button class="unit6-speak" type="button" data-say="gym"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/supermarket.svg" alt="Supermarket"><div><strong>supermarket</strong><span>There is a supermarket.</span><button class="unit6-speak" type="button" data-say="supermarket"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/hospital.svg" alt="Hospital"><div><strong>hospital</strong><span>There is a hospital.</span><button class="unit6-speak" type="button" data-say="hospital"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/bank.svg" alt="Bank"><div><strong>bank</strong><span>There is a bank.</span><button class="unit6-speak" type="button" data-say="bank"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/church.svg" alt="Church"><div><strong>church</strong><span>There is a church.</span><button class="unit6-speak" type="button" data-say="church"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/bus-stop.svg" alt="Bus stop"><div><strong>bus stop</strong><span>There is a bus stop.</span><button class="unit6-speak" type="button" data-say="bus stop"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/pharmacy.svg" alt="Pharmacy"><div><strong>pharmacy</strong><span>There is a pharmacy.</span><button class="unit6-speak" type="button" data-say="pharmacy"><i class="bi bi-volume-up"></i> Listen</button></div></div>
         </div>
-        <div class="teacher-tip"><span>Teacher's Tip</span><p>Start simple: <strong>There is a park. It is beautiful. I go there at 5:00.</strong></p></div>
+      </article>
+
+      <article class="premium-topic-card" id="there-is-are">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Grammar</p><h2>There is / There are</h2></div></div>
+        <p class="lesson-text">Use <strong>there is</strong> to say that one place exists. Use <strong>there are</strong> to say that two or more places exist.</p>
+        <table class="unit6-table">
+          <thead><tr><th>Use</th><th>Affirmative</th><th>Negative</th><th>Question</th></tr></thead>
+          <tbody>
+            <tr><td>One place</td><td>There is a park.</td><td>There isn't a park.</td><td>Is there a park?</td></tr>
+            <tr><td>Many places</td><td>There are two cafes.</td><td>There aren't two cafes.</td><td>Are there two cafes?</td></tr>
+            <tr><td>A lot</td><td>There are many restaurants.</td><td>There aren't many restaurants.</td><td>Are there many restaurants?</td></tr>
+          </tbody>
+        </table>
+        <div class="unit6-note-grid">
+          <div class="unit6-note"><strong>Correct</strong>There is a library near my house.</div>
+          <div class="unit6-note"><strong>Correct</strong>There are three supermarkets downtown.</div>
+          <div class="unit6-note"><strong>Careful</strong>Do not say: <em>There are a park</em>. Say: <strong>There is a park</strong>.</div>
+        </div>
+        <ol class="unit6-practice-list">
+          <li>There ___ a hospital near my house. <strong>Answer: is</strong></li>
+          <li>There ___ two cafes in my neighborhood. <strong>Answer: are</strong></li>
+          <li>There ___ many restaurants downtown. <strong>Answer: are</strong></li>
+          <li>___ there a bus stop near the school? <strong>Answer: Is</strong></li>
+        </ol>
+      </article>
+
+      <article class="premium-topic-card" id="location-time">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Location and time</p><h2>Where is it? What time do people go there?</h2></div></div>
+        <p class="lesson-text">After naming the place, add location and time. This helps your answer sound complete and useful.</p>
+        <div class="lesson-grid">
+          <div class="lesson-mini-card"><h3>Location words</h3><div class="phrase-list"><div class="phrase-item"><strong>near my house</strong><span>There is a pharmacy near my house.</span></div><div class="phrase-item"><strong>next to</strong><span>The library is next to the supermarket.</span></div><div class="phrase-item"><strong>in front of</strong><span>There is a bus stop in front of the school.</span></div><div class="phrase-item"><strong>downtown</strong><span>There are many restaurants downtown.</span></div></div></div>
+          <div class="lesson-mini-card"><h3>Time expressions</h3><div class="phrase-list"><div class="phrase-item"><strong>What time is it?</strong><span>It is seven thirty.</span></div><div class="phrase-item"><strong>at 8:00 a.m.</strong><span>The cafe opens at 8:00 a.m.</span></div><div class="phrase-item"><strong>at 5:00 p.m.</strong><span>People go to the park at 5:00 p.m.</span></div><div class="phrase-item"><strong>Let's...</strong><span>Let's have dinner at 8:00.</span></div></div></div>
+        </div>
+        <div class="unit6-map" aria-label="Example neighborhood map">
+          <span class="unit6-road main"></span><span class="unit6-road cross"></span>
+          <div class="unit6-map-place" style="left:8%;top:12%"><i class="bi bi-tree-fill"></i>Park<small>5:00 p.m.</small></div>
+          <div class="unit6-map-place" style="left:37%;top:11%"><i class="bi bi-cup-hot-fill"></i>Cafe<small>8:00 a.m.</small></div>
+          <div class="unit6-map-place" style="right:8%;top:13%"><i class="bi bi-book-fill"></i>Library<small>4:00 p.m.</small></div>
+          <div class="unit6-map-place" style="left:12%;bottom:10%"><i class="bi bi-basket-fill"></i>Supermarket<small>6:30 p.m.</small></div>
+          <div class="unit6-map-place" style="right:12%;bottom:10%"><i class="bi bi-bus-front-fill"></i>Bus stop<small>7:15 a.m.</small></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card" id="favorite-places">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">City recommendations</p><h2>Favorite Places in the City</h2></div></div>
+        <p class="lesson-text">Use adjectives to explain why a place is special. Start with one clear opinion and one reason.</p>
+        <div class="lesson-grid">
+          <div class="lesson-mini-card"><h3>Useful adjectives</h3><div class="phrase-list"><div class="phrase-item"><strong>quiet</strong><span>The library is quiet.</span></div><div class="phrase-item"><strong>popular</strong><span>The restaurant is popular.</span></div><div class="phrase-item"><strong>safe</strong><span>The park is safe.</span></div><div class="phrase-item"><strong>beautiful</strong><span>The city center is beautiful.</span></div></div></div>
+          <div class="lesson-mini-card"><h3>Recommendations</h3><div class="phrase-list"><div class="phrase-item"><strong>My favorite place is...</strong><span>My favorite place is the library.</span></div><div class="phrase-item"><strong>The best cafe is...</strong><span>The best cafe is near the park.</span></div><div class="phrase-item"><strong>The biggest park is...</strong><span>The biggest park is downtown.</span></div><div class="phrase-item"><strong>Let's go...</strong><span>Let's go to the restaurant at eight.</span></div></div></div>
+        </div>
+        <div class="teacher-tip"><span>Teacher's Tip</span><p>Start simple: <strong>There is a park. It is beautiful. I go there at 5:00.</strong> Then add one reason: <strong>I like it because it is quiet.</strong></p></div>
+      </article>
+
+      <article class="premium-topic-card" id="final-product">
+        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Model and final product</p><h2>Describe your neighborhood</h2></div></div>
+        <p class="lesson-text">Read this model. Notice the places, grammar, time expressions, and adjectives.</p>
+        <p class="unit6-model">My neighborhood is quiet and beautiful. There is a park near my house. There are two cafes and many small stores. My favorite place is the library because it is quiet. I go there at 4:00 p.m. after class. There is also a restaurant next to the park. It is popular. On Saturdays, I go there with my family. My neighborhood is small, but it is very nice.</p>
+        <div class="unit6-checklist">
+          <label><input type="checkbox" /> I included five places.</label>
+          <label><input type="checkbox" /> I used <strong>there is</strong> three times.</label>
+          <label><input type="checkbox" /> I used <strong>there are</strong> two times.</label>
+          <label><input type="checkbox" /> I included two times: at 4:00, at 8:00...</label>
+          <label><input type="checkbox" /> I used three adjectives.</label>
+          <label><input type="checkbox" /> I recommended one favorite place.</label>
+        </div>
       </article>
 
       <article class="premium-topic-card linked-practice-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
-        <p class="lesson-text">After studying this unit, go to Practice Lab for a grammar and conversation activity, then complete the listening comprehension task.</p>
-        <div class="hero-actions"><a href="practice-unit-6-neighborhoods.html" class="btn btn-primary">Open unit practice</a><a href="listening-unit-6-neighborhoods.html" class="btn btn-secondary">Open listening</a></div>
+        <div class="topic-heading"><span class="topic-number">07</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
+        <p class="lesson-text">After studying this unit, use the memory game to learn vocabulary, complete the reading and listening, and then build your own neighborhood or city map.</p>
+        <div class="hero-actions"><a href="game-unit-6-neighborhood-memory.html" class="btn btn-primary">Play memory game</a><a href="reading-unit-6-my-neighborhood-guide.html" class="btn btn-secondary">Open reading</a><a href="listening-unit-6-neighborhoods.html" class="btn btn-secondary">Open listening</a><a href="practice-unit-6-neighborhoods.html" class="btn btn-secondary">Open unit practice</a><a href="workshop-unit-6-city-map-presentation.html" class="btn btn-secondary">City map workshop</a></div>
       </article>
     </section>
   </main>
@@ -84,5 +185,20 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+  <script>
+    document.querySelectorAll("[data-say]").forEach(function(button){
+      button.addEventListener("click",function(){
+        if(!("speechSynthesis" in window)) return;
+        var utterance=new SpeechSynthesisUtterance(button.dataset.say);
+        utterance.lang="en-US";
+        utterance.rate=.86;
+        var voices=speechSynthesis.getVoices();
+        var voice=voices.find(function(item){return item.lang.toLowerCase()==="en-us"})||voices.find(function(item){return item.lang.toLowerCase().startsWith("en")});
+        if(voice) utterance.voice=voice;
+        speechSynthesis.cancel();
+        speechSynthesis.speak(utterance);
+      });
+    });
+  </script>
 </body>
 </html>

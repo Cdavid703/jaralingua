@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit 6 Memory Game: Places in Town | Basic English Course 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .memory-page{--team-one:#2563eb;--team-two:#0f9f6e;--board:#153b55;overflow-x:hidden}
+    .memory-hero{min-height:520px}
+    .game-shell{width:min(1420px,calc(100% - 32px));margin:34px auto 70px}
+    .game-toolbar{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:18px}
+    .team-panel{border:3px solid transparent;border-radius:20px;padding:16px 18px;background:#fff;box-shadow:0 12px 28px rgba(15,23,42,.1);display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;transition:.2s ease}
+    .team-panel.active{transform:translateY(-3px);box-shadow:0 18px 34px rgba(15,23,42,.18)}
+    .team-panel[data-team="0"].active{border-color:var(--team-one)}.team-panel[data-team="1"].active{border-color:var(--team-two)}
+    .team-panel input{width:100%;border:0;background:transparent;color:#153b55;font:inherit;font-weight:900;font-size:1.15rem;outline:none}
+    .team-score{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;color:#fff;font-size:1.7rem;font-weight:950}
+    .team-panel[data-team="0"] .team-score{background:var(--team-one)}.team-panel[data-team="1"] .team-score{background:var(--team-two)}
+    .turn-center{min-width:230px;border-radius:20px;padding:13px 18px;background:var(--board);color:#fff;text-align:center;display:grid;place-items:center;box-shadow:0 12px 28px rgba(21,59,85,.22)}
+    .turn-center span{display:block;color:#dbeafe;text-transform:uppercase;font-size:.75rem;font-weight:900}.turn-center strong{font-size:1.15rem}
+    .game-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:18px}
+    .game-icon-btn{width:48px;height:48px;border:0;border-radius:14px;background:#fff;color:#153b55;box-shadow:0 8px 20px rgba(15,23,42,.1);cursor:pointer;font-size:1.15rem}
+    .game-command{min-height:48px;border:0;border-radius:999px;padding:0 20px;background:#153b55;color:#fff;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;gap:8px}
+    .game-command.primary{background:#2563eb}.game-command.success{background:#0f9f6e}.game-command:hover,.game-icon-btn:hover{transform:translateY(-2px)}
+    .memory-board{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:11px;padding:18px;border-radius:26px;background:linear-gradient(145deg,#153b55,#2563eb);box-shadow:0 24px 55px rgba(21,59,85,.25);perspective:1200px}
+    .memory-card{position:relative;aspect-ratio:4/3;border:0;padding:0;background:transparent;cursor:pointer;transform-style:preserve-3d;transition:transform .48s cubic-bezier(.2,.75,.2,1);min-width:0}
+    .memory-card.is-flipped,.memory-card.is-matched{transform:rotateY(180deg)}.memory-card.is-matched{cursor:default}
+    .card-face{position:absolute;inset:0;border-radius:13px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+    .card-back{display:grid;place-items:center;background:linear-gradient(145deg,#fff,#dcfce7);border:3px solid rgba(255,255,255,.8);color:#153b55;box-shadow:0 7px 16px rgba(0,0,0,.18)}
+    .card-back strong{font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:950;line-height:1}
+    .card-back i{position:absolute;left:8px;top:6px;font-size:clamp(.7rem,1.2vw,1rem);opacity:.45}
+    .card-front{transform:rotateY(180deg);background:#fff;border:3px solid #fff;box-shadow:0 7px 16px rgba(0,0,0,.2)}
+    .card-front img{width:100%;height:100%;display:block;object-fit:cover}.card-front strong{position:absolute;left:4px;right:4px;bottom:4px;border-radius:8px;padding:5px;background:rgba(21,59,85,.9);color:#fff;font-size:clamp(.58rem,1vw,.78rem);line-height:1.1;text-align:center}
+    .memory-card.is-matched .card-front{border-color:#f4c95d;box-shadow:0 0 0 3px rgba(244,201,93,.45),0 0 24px rgba(244,201,93,.7)}
+    .game-status{min-height:48px;margin:14px 0 0;text-align:center;color:#334155;font-weight:850}
+    .teacher-panel{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin:0 0 22px}
+    .teacher-card{background:#fff;border-radius:22px;box-shadow:0 16px 34px rgba(15,23,42,.08);padding:18px}.teacher-card h2,.teacher-card h3{color:#153b55;margin-top:0}.teacher-card li{margin:.45rem 0}.sentence-bank{display:grid;gap:8px}.sentence-bank span{border-radius:14px;background:#eef7ff;color:#153b55;font-weight:900;padding:.65rem .8rem}
+    .reading-gate,.winner-overlay{position:fixed;inset:0;z-index:2000;display:none;place-items:center;padding:20px;background:rgba(3,12,32,.82);backdrop-filter:blur(8px)}
+    .reading-gate.show,.winner-overlay.show{display:grid}
+    .gate-card,.winner-card{width:min(560px,100%);border-radius:24px;background:#fff;padding:24px;text-align:center;box-shadow:0 28px 80px rgba(0,0,0,.38)}
+    .gate-image{width:min(330px,100%);aspect-ratio:4/3;object-fit:cover;border-radius:18px}.gate-card h2,.winner-card h2{color:#153b55;margin:16px 0 8px}.gate-card p,.winner-card p{color:#475569;line-height:1.55}.gate-sentence{font-size:1.35rem;color:#153b55}
+    .gate-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+    .winner-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#ecfeff)}.winner-trophy{font-size:4rem;color:#d97706}.winner-card h2{font-size:clamp(2rem,6vw,3.5rem)}
+    .confetti-piece{position:fixed;top:-30px;width:12px;height:20px;z-index:2100;pointer-events:none;animation:confetti-fall var(--duration) linear forwards;transform:rotate(var(--rotation));background:var(--color)}
+    @keyframes confetti-fall{to{transform:translate3d(var(--drift),110vh,0) rotate(900deg)}}
+    @media(max-width:1100px){.memory-board{grid-template-columns:repeat(4,minmax(0,1fr))}.teacher-panel{grid-template-columns:1fr}}
+    @media(max-width:760px){.game-toolbar{grid-template-columns:1fr 1fr}.turn-center{grid-column:1/-1;grid-row:1;min-width:0}.memory-board{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;padding:10px}.game-shell{width:min(100% - 16px,1420px)}.team-panel{padding:10px}.team-score{width:44px;height:44px}.card-front strong{display:none}}
+  </style>
+</head>
+<body class="english-basic-page memory-page">
+  <div class="global-course-switcher" aria-label="Global navigation"><details><summary><span>Navigation</span></summary><nav><a href="../../index.html">Home</a><a href="../index.html">English</a><a href="index.html">Basic English</a><a href="practice-lab.html">Practice Lab</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Basic Course</a></li><li><a href="unit-6-neighborhoods.html">Unit 6</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+  <main>
+    <section class="lesson-hero immersive-basic-hero memory-hero" style="--hero-image:url('../../assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png')">
+      <div class="lesson-hero-content"><p class="eyebrow">Practice Lab &middot; Unit 6</p><h1>Neighborhood Memory Challenge</h1><p>Two teams reveal place cards, find matching pairs, listen to the model, and say a complete <em>there is / there are</em> sentence before earning the point.</p><div class="lesson-meta"><span>16 pairs</span><span>32 cards</span><span>20% faster</span><span>There is / are</span></div><div class="hero-actions"><a href="#game" class="btn btn-primary">Play game</a><a href="unit-6-neighborhoods.html" class="btn btn-secondary">Review Unit 6</a><a href="practice-lab.html#unit-6-folder" class="btn btn-secondary">Practice Lab</a></div></div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png" alt="Neighborhood memory game" /></aside>
+    </section>
+
+    <section class="game-shell" id="game">
+      <div class="teacher-panel">
+        <article class="teacher-card"><h2>How to play</h2><ol><li>Team 1 chooses two hidden cards.</li><li>If the places match, the student listens and reads the full sentence aloud.</li><li>The teacher confirms pronunciation and grammar before awarding the point.</li><li>If the cards do not match, the turn passes to the other team.</li></ol></article>
+        <article class="teacher-card"><h3>Grammar target</h3><div class="sentence-bank"><span>There is a park in my neighborhood.</span><span>There is a pharmacy near my house.</span><span>There are many restaurants downtown.</span></div></article>
+      </div>
+      <div class="game-toolbar">
+        <div class="team-panel active" data-team="0"><input id="teamName0" value="Team 1" maxlength="20" aria-label="Team 1 name" /><strong class="team-score" id="score0">0</strong></div>
+        <div class="turn-center"><div><span>Current turn</span><strong id="turnName">Team 1</strong></div></div>
+        <div class="team-panel" data-team="1"><input id="teamName1" value="Team 2" maxlength="20" aria-label="Team 2 name" /><strong class="team-score" id="score1">0</strong></div>
+      </div>
+      <div class="game-actions"><button class="game-command primary" type="button" onclick="newGame()"><i class="bi bi-shuffle"></i> New game</button><button class="game-command" type="button" onclick="replayLastPhrase()"><i class="bi bi-volume-up"></i> Repeat model</button><button class="game-icon-btn" id="soundButton" type="button" onclick="toggleSound()" title="Mute or unmute sound" aria-label="Mute or unmute sound"><i class="bi bi-volume-up-fill"></i></button></div>
+      <div class="memory-board" id="memoryBoard" aria-label="Neighborhood memory cards"></div>
+      <p class="game-status" id="gameStatus" aria-live="polite">Team 1: choose the first card.</p>
+    </section>
+  </main>
+
+  <div class="reading-gate" id="readingGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle"><div class="gate-card"><span class="eyebrow">Match found</span><img class="gate-image" id="gateImage" alt="" /><h2 id="gateTitle">Say the sentence aloud</h2><p><strong id="gatePhrase"></strong></p><p class="gate-sentence" id="gateSentence"></p><p>Listen first. Then the student says the complete sentence clearly. The teacher confirms the grammar to award the point.</p><div class="gate-actions"><button class="game-command" type="button" onclick="playGatePhrase()"><i class="bi bi-volume-up"></i> Listen again</button><button class="game-command success" type="button" onclick="confirmReading()"><i class="bi bi-check-circle"></i> Student said it</button></div></div></div>
+  <div class="winner-overlay" id="winnerOverlay" role="dialog" aria-modal="true" aria-labelledby="winnerTitle"><div class="winner-card"><i class="bi bi-trophy-fill winner-trophy"></i><h2 id="winnerTitle">We have a winner!</h2><p id="winnerMessage"></p><button class="game-command primary" type="button" onclick="closeWinnerAndRestart()"><i class="bi bi-arrow-repeat"></i> Play again</button></div></div>
+
+  <script>
+    const activities=[
+      ['park','park','There is a park in my neighborhood.'],
+      ['cafe','cafe','There is a cafe near my house.'],
+      ['restaurant','restaurant','There is a restaurant downtown.'],
+      ['school','school','There is a school on my street.'],
+      ['library','library','There is a library next to the supermarket.'],
+      ['gym','gym','There is a gym near the park.'],
+      ['supermarket','supermarket','There is a supermarket in my neighborhood.'],
+      ['hospital','hospital','There is a hospital near the bus stop.'],
+      ['bank','bank','There is a bank in the city center.'],
+      ['church','church','There is a church near the park.'],
+      ['bus-stop','bus stop','There is a bus stop in front of the school.'],
+      ['pharmacy','pharmacy','There is a pharmacy next to the hospital.'],
+      ['movie-theater','movie theater','There is a movie theater downtown.'],
+      ['bakery','bakery','There is a bakery near the cafe.'],
+      ['shopping-mall','shopping mall','There is a shopping mall in the city.'],
+      ['police-station','police station','There is a police station near the bank.']
+    ];
+    let deck=[],selected=[],matchedPairs=0,currentTeam=0,scores=[0,0],locked=false,soundOn=true,lastText='',pendingMatch=null,activeAudio=null;
+    const board=document.getElementById('memoryBoard');
+    function teamName(index){return document.getElementById('teamName'+index).value.trim()||('Team '+(index+1))}
+    function shuffle(items){for(let i=items.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[items[i],items[j]]=[items[j],items[i]]}return items}
+    function buildDeck(){deck=shuffle(activities.flatMap(([slug,label,sentence])=>[0,1].map(copy=>({id:slug+'-'+copy,slug,label,sentence,matched:false}))));board.innerHTML='';deck.forEach((card,index)=>{const button=document.createElement('button');button.type='button';button.className='memory-card';button.dataset.index=index;button.setAttribute('aria-label','Hidden memory card '+(index+1));button.innerHTML='<span class="card-face card-back"><i class="bi bi-question-lg"></i><strong>'+(index+1)+'</strong></span><span class="card-face card-front"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/'+card.slug+'.svg" alt="'+card.label+'"><strong>'+card.label+'</strong></span>';button.addEventListener('click',()=>selectCard(index,button));board.appendChild(button)})}
+    function selectCard(index,element){if(locked||deck[index].matched||element.classList.contains('is-flipped')||selected.length===2)return;element.classList.add('is-flipped');element.setAttribute('aria-label',deck[index].label);selected.push({index,element});lastText=deck[index].label;playModel(deck[index].label,deck[index].slug);setStatus(teamName(currentTeam)+' revealed card '+(index+1)+': '+deck[index].label+'.');if(selected.length===2){locked=true;setTimeout(checkPair,650)}}
+    function checkPair(){const [first,second]=selected;const isMatch=deck[first.index].slug===deck[second.index].slug;if(isMatch){deck[first.index].matched=deck[second.index].matched=true;first.element.classList.add('is-matched');second.element.classList.add('is-matched');pendingMatch={slug:deck[first.index].slug,label:deck[first.index].label,sentence:deck[first.index].sentence};lastText=pendingMatch.sentence;document.getElementById('gateImage').src='../../assets/img/english-basic/unit-6-neighborhoods/cards/'+pendingMatch.slug+'.svg';document.getElementById('gateImage').alt=pendingMatch.label;document.getElementById('gatePhrase').textContent=pendingMatch.label;document.getElementById('gateSentence').textContent=pendingMatch.sentence;document.getElementById('readingGate').classList.add('show');playModel(pendingMatch.sentence,pendingMatch.slug);setStatus('Match! The student must say: '+pendingMatch.sentence)}else{setStatus('No match. Turn passes to '+teamName(1-currentTeam)+'.');setTimeout(()=>{first.element.classList.remove('is-flipped');second.element.classList.remove('is-flipped');selected=[];currentTeam=1-currentTeam;locked=false;updateTeams();setStatus(teamName(currentTeam)+': choose the first card.')},1050)}}
+    function confirmReading(){if(!pendingMatch)return;scores[currentTeam]++;matchedPairs++;document.getElementById('score'+currentTeam).textContent=scores[currentTeam];document.getElementById('readingGate').classList.remove('show');playEffect('match');burstConfetti(34);selected=[];pendingMatch=null;locked=false;setStatus(teamName(currentTeam)+' earns a point and plays again!');if(matchedPairs===activities.length)setTimeout(showWinner,700)}
+    function updateTeams(){document.querySelectorAll('.team-panel').forEach((panel,index)=>panel.classList.toggle('active',index===currentTeam));document.getElementById('turnName').textContent=teamName(currentTeam)}
+    function setStatus(message){document.getElementById('gameStatus').textContent=message}
+    function speakFallback(text){if('speechSynthesis' in window){const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=.86;utterance.pitch=1;const voices=speechSynthesis.getVoices();const englishVoice=voices.find(voice=>voice.lang.toLowerCase()==='en-us')||voices.find(voice=>voice.lang.toLowerCase().startsWith('en'));if(englishVoice)utterance.voice=englishVoice;speechSynthesis.cancel();speechSynthesis.speak(utterance)}}
+    function playModel(text,slug){lastText=text;if(!soundOn)return;stopAudio();if(slug){activeAudio=new Audio('audio/unit6/cards/'+slug+'.mp3');activeAudio.addEventListener('error',()=>speakFallback(text),{once:true});activeAudio.play().catch(()=>speakFallback(text));return}speakFallback(text)}
+    function playGatePhrase(){if(pendingMatch)playModel(pendingMatch.sentence,pendingMatch.slug)}function replayLastPhrase(){if(pendingMatch)playModel(pendingMatch.sentence,pendingMatch.slug);else if(lastText)playModel(lastText)}
+    function playEffect(name){if(!soundOn)return;fallbackChime(name==='victory')}
+    function stopAudio(){if(activeAudio){activeAudio.pause();activeAudio.currentTime=0}if('speechSynthesis' in window)speechSynthesis.cancel()}
+    function fallbackChime(victory){const context=new(window.AudioContext||window.webkitAudioContext)();const notes=victory?[523,659,784,1047]:[659,784,988];notes.forEach((frequency,index)=>{const oscillator=context.createOscillator(),gain=context.createGain();oscillator.frequency.value=frequency;oscillator.connect(gain);gain.connect(context.destination);gain.gain.setValueAtTime(.0001,context.currentTime+index*.12);gain.gain.exponentialRampToValueAtTime(.18,context.currentTime+index*.12+.02);gain.gain.exponentialRampToValueAtTime(.0001,context.currentTime+index*.12+.28);oscillator.start(context.currentTime+index*.12);oscillator.stop(context.currentTime+index*.12+.3)})}
+    function toggleSound(){soundOn=!soundOn;if(!soundOn)stopAudio();document.querySelector('#soundButton i').className=soundOn?'bi bi-volume-up-fill':'bi bi-volume-mute-fill';setStatus(soundOn?'Sound is on.':'Sound is muted.')}
+    function showWinner(){const one=teamName(0),two=teamName(1);let title,message;if(scores[0]===scores[1]){title='It is a tie!';message=one+' and '+two+' finish with '+scores[0]+' points each.'}else{const winner=scores[0]>scores[1]?0:1;title=teamName(winner)+' wins!';message='Final score: '+one+' '+scores[0]+' - '+scores[1]+' '+two+'. Great memory, pronunciation, and grammar!'}document.getElementById('winnerTitle').textContent=title;document.getElementById('winnerMessage').textContent=message;document.getElementById('winnerOverlay').classList.add('show');playEffect('victory');burstConfetti(130)}
+    function burstConfetti(count){const colors=['#2563eb','#0f9f6e','#f4c95d','#ef476f','#ffffff'];for(let i=0;i<count;i++){const piece=document.createElement('i');piece.className='confetti-piece';piece.style.left=Math.random()*100+'vw';piece.style.setProperty('--color',colors[i%colors.length]);piece.style.setProperty('--duration',(2.2+Math.random()*2.3)+'s');piece.style.setProperty('--rotation',(Math.random()*360)+'deg');piece.style.setProperty('--drift',((Math.random()-.5)*260)+'px');piece.style.animationDelay=(Math.random()*.45)+'s';document.body.appendChild(piece);setTimeout(()=>piece.remove(),5200)}}
+    function newGame(){stopAudio();selected=[];matchedPairs=0;currentTeam=0;scores=[0,0];locked=false;pendingMatch=null;lastText='';document.getElementById('score0').textContent='0';document.getElementById('score1').textContent='0';document.getElementById('readingGate').classList.remove('show');document.getElementById('winnerOverlay').classList.remove('show');buildDeck();updateTeams();setStatus(teamName(0)+': choose the first card.')}
+    function closeWinnerAndRestart(){newGame();document.getElementById('game').scrollIntoView({behavior:'smooth'})}
+    if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=function(){};
+    document.getElementById('teamName0').addEventListener('input',updateTeams);document.getElementById('teamName1').addEventListener('input',updateTeams);newGame();
+  </script>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260628-cours"></script>
+</body>
+</html>

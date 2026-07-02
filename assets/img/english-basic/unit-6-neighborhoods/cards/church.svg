@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">Church</title><desc id="desc">A small church with a bell tower, cross, and stained glass window.</desc>
+  <rect width="640" height="480" fill="#fff4e6"/><path d="M112 236l208-126 208 126v188H112z" fill="#d9b382"/><path d="M320 110v314" stroke="#bc8a5f" stroke-width="16"/>
+  <rect x="140" y="124" width="94" height="300" rx="12" fill="#b77946"/><path d="M187 62v68M158 94h58" stroke="#6b3f1d" stroke-width="14" stroke-linecap="round"/>
+  <circle cx="187" cy="185" r="32" fill="#f8fafc"/><path d="M187 165v40M167 185h40" stroke="#b77946" stroke-width="9" stroke-linecap="round"/>
+  <path d="M320 277c0-38 31-69 69-69s69 31 69 69v147H320z" fill="#7c2d12"/><circle cx="389" cy="253" r="30" fill="#89c2ff"/>
+</svg>

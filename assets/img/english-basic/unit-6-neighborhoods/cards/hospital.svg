@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" role="img" aria-labelledby="title desc">
+  <title id="title">Hospital</title><desc id="desc">A hospital building with a red medical cross and ambulance entrance.</desc>
+  <rect width="640" height="480" fill="#eaf7ff"/><rect x="118" y="110" width="404" height="310" rx="24" fill="#ffffff"/><rect x="158" y="176" width="92" height="72" rx="10" fill="#bde9ff"/><rect x="390" y="176" width="92" height="72" rx="10" fill="#bde9ff"/>
+  <rect x="278" y="298" width="84" height="122" rx="10" fill="#3b82f6"/><rect x="300" y="138" width="40" height="112" rx="8" fill="#e63946"/><rect x="264" y="174" width="112" height="40" rx="8" fill="#e63946"/>
+  <g transform="translate(70 350)"><rect x="0" y="0" width="150" height="54" rx="16" fill="#e63946"/><rect x="18" y="10" width="48" height="28" rx="6" fill="#fff"/><circle cx="38" cy="60" r="17" fill="#243b53"/><circle cx="118" cy="60" r="17" fill="#243b53"/></g>
+</svg>
