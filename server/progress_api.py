@@ -1557,7 +1557,7 @@ def ensure_final_exam_evaluation(grades_data):
 
 def default_basic_integrated_task_bundle():
     return {
-        "state": {"isOpen": False, "openedAt": None, "closedAt": None, "updatedAt": None, "openedBy": None},
+        "state": {"isOpen": False, "openedAt": None, "closedAt": None, "updatedAt": None, "openedBy": None, "reopenUntilEpoch": None, "reopenUntilLabel": "", "reopenStudentIds": [], "reopenResetPlays": False},
         "exam": {
             "id": "basic-course-1-integrated-task",
             "title": "BASIC COURSE 1 – INTEGRATED TASK (20%)",
@@ -1636,6 +1636,34 @@ def read_basic_andres_retake_submissions():
     if not isinstance(data.get("submissions"), dict):
         data["submissions"] = {}
     return data
+
+
+def basic_integrated_reopen_active(state):
+    if not isinstance(state, dict):
+        return False
+    try:
+        reopen_until = int(state.get("reopenUntilEpoch") or 0)
+    except (TypeError, ValueError):
+        reopen_until = 0
+    return reopen_until > 0 and int(time.time()) < reopen_until
+
+
+def basic_integrated_student_has_reopen(state, student_id):
+    if not student_id or not basic_integrated_reopen_active(state):
+        return False
+    allowed_ids = state.get("reopenStudentIds", [])
+    if not isinstance(allowed_ids, list):
+        return False
+    normalized = {clean_text(item, 40) for item in allowed_ids}
+    return "*" in normalized or clean_text(student_id, 40) in normalized
+
+
+def basic_integrated_can_take(role, state, student_id):
+    if role in ("admin", "teacher"):
+        return True
+    if isinstance(state, dict) and state.get("isOpen") is True:
+        return True
+    return basic_integrated_student_has_reopen(state, student_id)
 
 
 def write_basic_andres_retake_submissions(data):
@@ -1754,11 +1782,14 @@ def basic_integrated_state_payload(profile, grades_data, bundle, submissions):
     student = matched_student_for_profile(profile, grades_data)
     student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
     submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+    state = bundle.get("state", {})
     return {
         "role": role,
-        "state": bundle.get("state", {}),
+        "state": state,
         "student": basic_integrated_student_identity(student),
-        "submitted": basic_integrated_submission_public(submitted)
+        "submitted": basic_integrated_submission_public(submitted),
+        "canTake": basic_integrated_can_take(role, state, student_id),
+        "reopenActive": basic_integrated_student_has_reopen(state, student_id)
     }
 
 
@@ -2174,11 +2205,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if submitted:
                     json_response(self, 200, {"status": "submitted", "state": state, "result": basic_integrated_submission_public(submitted)})
                     return
-                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                if not basic_integrated_can_take(role, state, student_id):
                     json_response(self, 403, {"error": "exam_closed", "state": state})
                     return
                 json_response(self, 200, {
-                    "status": "open" if state.get("isOpen") is True else "staff-preview",
+                    "status": "open" if state.get("isOpen") is True else ("reopen-window" if basic_integrated_student_has_reopen(state, student_id) else "staff-preview"),
                     "role": role,
                     "state": state,
                     "student": basic_integrated_student_identity(student),
@@ -2196,7 +2227,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if role not in ("admin", "teacher") and not isinstance(student, dict):
                     json_response(self, 403, {"error": "not_authorized"})
                     return
-                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                if not basic_integrated_can_take(role, state, student_id):
                     json_response(self, 403, {"error": "exam_closed"})
                     return
                 audio_path = BASIC_INTEGRATED_TASK_AUDIO_PATH
@@ -2314,11 +2346,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 bundle = read_basic_integrated_task_bundle()
                 state = bundle.get("state", {})
-                if state.get("isOpen") is not True:
+                student_id = clean_text(student.get("id"), 40)
+                if not basic_integrated_can_take("student", state, student_id):
                     json_response(self, 403, {"error": "exam_closed", "state": state})
                     return
                 submissions = read_basic_integrated_task_submissions()
-                student_id = clean_text(student.get("id"), 40)
                 existing = submissions.get("submissions", {}).get(student_id)
                 if existing:
                     json_response(self, 409, {"error": "already_submitted", "result": basic_integrated_submission_public(existing)})

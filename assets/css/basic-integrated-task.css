@@ -26,3 +26,11 @@
 .status-tag.graded{background:#e9f7f0;color:var(--success)}
 .overview-link{color:var(--itm-purple);font-weight:900;text-decoration:none}
 .overview-link:hover{text-decoration:underline}
+.submitted-rubric{display:grid;grid-template-columns:repeat(5,1fr);gap:.5rem;margin-top:1rem}
+.submitted-rubric span,.submitted-comments,.submitted-writing{background:rgba(255,255,255,.66);border:1px solid rgba(37,26,69,.12);border-radius:14px;padding:.7rem}
+.submitted-comments,.submitted-writing{margin-top:.75rem}
+.submitted-comments strong{display:block;margin-bottom:.35rem;color:var(--itm-purple)}
+.submitted-comments p,.submitted-writing p{margin:.25rem 0 0;font-weight:700;white-space:pre-wrap}
+.submitted-writing summary{cursor:pointer;color:var(--itm-purple);font-weight:900}
+@media(max-width:850px){.submitted-rubric{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.submitted-rubric{grid-template-columns:1fr}}
