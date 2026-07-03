@@ -25,6 +25,7 @@
       color:#fff;
     }
     .unit4-hero .lesson-hero-content p,.unit4-hero .eyebrow{color:#fff}
+    .unit4-hero .lesson-hero-content .eyebrow{color:var(--u4-ink)!important;background:rgba(255,255,255,.94)}
     .unit4-page{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:2rem 0 4rem}
     .unit4-toolbar{position:sticky;top:.75rem;z-index:5;background:rgba(255,255,255,.96);border:1px solid var(--u4-border);border-radius:8px;box-shadow:0 16px 36px rgba(15,23,42,.12);padding:.85rem;margin:1rem 0 1.5rem}
     .unit4-toolbar h2{font-size:1rem;color:var(--u4-ink);margin:0 0 .7rem}
@@ -73,6 +74,9 @@
     .audio-model strong{color:var(--u4-ink)}
     .audio-model span{color:var(--u4-muted);font-size:.92rem;line-height:1.45}
     .audio-model audio{width:100%}
+    .audio-speed-controls{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center}
+    .speed-button{border:1px solid rgba(7,31,79,.16);border-radius:999px;background:#fff;color:var(--u4-ink);font-weight:900;padding:.42rem .68rem;cursor:pointer}
+    .speed-button.active{background:var(--u4-ink);color:#fff;border-color:var(--u4-ink)}
     .listening-preview{display:grid;gap:.75rem;background:#fffaf0;border:1px solid rgba(217,164,65,.35);border-radius:8px;padding:1rem}
     .listening-preview audio{width:100%}
     .final-planner{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem}
@@ -383,6 +387,30 @@
 
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
   <script>
+    document.querySelectorAll("audio").forEach((audio)=>{
+      audio.playbackRate=1;
+      if(audio.controlsList && audio.controlsList.add) audio.controlsList.add("noplaybackrate");
+      const controls=document.createElement("div");
+      controls.className="audio-speed-controls";
+      controls.setAttribute("aria-label","Audio speed");
+      [0.75,1,1.25].forEach((rate)=>{
+        const button=document.createElement("button");
+        button.type="button";
+        button.className=`speed-button${rate===1 ? " active" : ""}`;
+        button.textContent=`${rate}x`;
+        button.setAttribute("aria-pressed",rate===1 ? "true" : "false");
+        button.addEventListener("click",()=>{
+          audio.playbackRate=rate;
+          controls.querySelectorAll(".speed-button").forEach((item)=>{
+            const active=item===button;
+            item.classList.toggle("active",active);
+            item.setAttribute("aria-pressed",active ? "true" : "false");
+          });
+        });
+        controls.appendChild(button);
+      });
+      audio.insertAdjacentElement("afterend",controls);
+    });
     document.querySelectorAll("[data-open]").forEach((button)=>{
       button.addEventListener("click",()=>{
         const target=document.getElementById(button.dataset.open);
