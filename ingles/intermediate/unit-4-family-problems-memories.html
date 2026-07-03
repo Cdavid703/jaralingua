@@ -23,7 +23,10 @@
     .unit4-hero{
       background:linear-gradient(135deg,rgba(7,31,79,.94),rgba(217,164,65,.45)),url("../../assets/img/english-intermediate/unit-4/unit-4-family-problems-memories.png") center/cover no-repeat;
       color:#fff;
+      grid-template-columns:minmax(0,1fr);
     }
+    .unit4-hero .lesson-hero-content{width:min(100%,760px);max-width:100%;box-sizing:border-box}
+    .unit4-hero .lesson-hero-content h1,.unit4-hero .lesson-hero-content p{overflow-wrap:break-word;word-break:normal}
     .unit4-hero .lesson-hero-content p,.unit4-hero .eyebrow{color:#fff}
     .unit4-hero .lesson-hero-content .eyebrow{color:var(--u4-ink)!important;background:rgba(255,255,255,.94)}
     .unit4-page{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:2rem 0 4rem}
@@ -69,6 +72,12 @@
     .contrast-table{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}
     .contrast-card{border:1px solid var(--u4-border);border-radius:8px;background:#fff;padding:1rem}
     .contrast-card b{color:var(--u4-coral)}
+    .expression-list{display:grid;gap:.75rem}
+    .expression-item{display:grid;gap:.45rem;background:#fff;border:1px solid var(--u4-border);border-radius:8px;padding:1rem}
+    .expression-item strong{color:var(--u4-ink);font-size:1.02rem}
+    .expression-meta{display:flex;flex-wrap:wrap;gap:.45rem}
+    .expression-meta span{border-radius:999px;background:var(--u4-soft);color:var(--u4-ink);font-weight:900;font-size:.78rem;padding:.35rem .6rem}
+    .expression-item p{color:var(--u4-muted);line-height:1.6;margin:0}
     .audio-strip{display:grid;gap:.65rem;margin-top:.8rem}
     .audio-model{display:grid;gap:.55rem;background:#eefaf7;border:1px solid rgba(15,118,110,.2);border-radius:8px;padding:.8rem}
     .audio-model strong{color:var(--u4-ink)}
@@ -94,10 +103,15 @@
       .unit4-section summary{align-items:flex-start}
     }
     @media(max-width:680px){
+      .unit4-explanation-page{overflow-x:hidden}
+      .unit4-hero{padding-left:16px;padding-right:16px}
+      .unit4-hero .lesson-hero-content{width:100%!important;max-width:100%!important;padding:28px 20px;border-radius:24px}
+      .unit4-hero .lesson-hero-content h1{font-size:clamp(2rem,10vw,2.65rem);line-height:1.05}
       .unit4-explanation-page .navbar{align-items:center;gap:.55rem;padding:8px 10px}
       .unit4-explanation-page .brand img{height:38px}
-      .unit4-explanation-page .nav-links{flex-wrap:wrap;justify-content:center;gap:6px;overflow-x:visible;padding:2px 0}
-      .unit4-explanation-page .nav-links a{min-height:34px;padding:0 9px;font-size:.78rem}
+      .unit4-explanation-page .nav-links{flex-wrap:wrap!important;justify-content:center!important;gap:6px!important;overflow-x:visible!important;max-width:100%!important;padding:2px 0}
+      .unit4-explanation-page .nav-links li{flex:0 1 auto!important}
+      .unit4-explanation-page .nav-links a{min-height:34px;padding:0 9px;font-size:.78rem;white-space:normal!important;text-align:center}
       .unit4-page{width:min(100% - 20px,1180px);padding:1.25rem 0 3rem}
       .unit4-toolbar{padding:.75rem}
       .unit4-topic-buttons{gap:.45rem}
@@ -143,6 +157,7 @@
           <button class="topic-jump" type="button" data-open="wont-let">won't let</button>
           <button class="topic-jump" type="button" data-open="want-to">want someone to</button>
           <button class="topic-jump" type="button" data-open="used-to">used to</button>
+          <button class="topic-jump" type="button" data-open="expressions">phrasal verbs & idioms</button>
           <button class="topic-jump" type="button" data-open="mediation">mediation</button>
           <button class="topic-jump secondary" type="button" data-open="workshop-route">workshop route</button>
           <button class="toggle-button" type="button" id="openAll">Open all</button>
@@ -320,6 +335,57 @@
             <div class="grammar-card"><h3>Negative and yes/no form</h3><p>After <strong>didn't</strong> or <strong>did</strong>, use <strong>use to</strong>, not <strong>used to</strong>.</p><div class="example-line">They didn't use to order food often.</div><div class="example-line">Did they use to eat together every Sunday?</div></div>
             <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: They didn't used to cook together.</div><div class="ok-box">Correct: They didn't use to cook together.</div></div>
             <div class="grammar-card"><h3>More classroom models</h3><div class="example-line">My family used to visit my grandmother every Sunday.</div><div class="example-line">We didn't use to eat dinner so late.</div><div class="example-line">Did your family use to celebrate birthdays at home?</div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unit4-section" id="expressions">
+        <summary><div class="summary-copy"><span>Natural English</span><h2>Phrasal verbs and idioms for family negotiation</h2><p>Use these expressions to make demands, memories, and solutions sound more natural without losing clarity.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="explain-card">
+              <h3>Why this belongs in Unit 4</h3>
+              <p>Family conversations often need more than grammar. Students also need natural expressions for raising a problem, helping, reducing tension, agreeing on a solution, and repairing a conflict.</p>
+              <p>These expressions are not extra decoration. They connect directly with the unit product: a respectful family agreement and a memory reflection.</p>
+            </div>
+            <div class="grammar-card">
+              <h3>Register guide</h3>
+              <p>Most expressions below are informal or semi-formal. They are appropriate for family conversations, role-plays, mediation, and personal writing. For formal writing, students should use clearer academic verbs such as <strong>mention</strong>, <strong>resolve</strong>, <strong>contribute</strong>, or <strong>compromise</strong>.</p>
+            </div>
+          </div>
+
+          <div class="unit4-grid">
+            <div class="grammar-card">
+              <h3>Phrasal verbs</h3>
+              <div class="expression-list">
+                <div class="expression-item"><div class="expression-meta"><span>bring up</span><span>mention a problem</span></div><p><strong>Ana wants to bring up the phone rule.</strong> Use it when someone starts talking about a sensitive topic.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>work out</span><span>solve</span></div><p><strong>The family needs to work out a fair dinner plan.</strong> Use it for finding a solution after discussion.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>pitch in</span><span>help</span></div><p><strong>Everyone has to pitch in for twenty minutes.</strong> Use it when several people share a task.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>set aside</span><span>reserve</span></div><p><strong>They used to set aside one hour for Sunday dinner.</strong> Use it for protecting time, money, or attention for something important.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>calm down</span><span>become calmer</span></div><p><strong>Leo needs to calm down before he explains his point.</strong> Use it carefully: it can sound rude if said directly during an argument.</p></div>
+              </div>
+            </div>
+
+            <div class="grammar-card">
+              <h3>Idioms and fixed expressions</h3>
+              <div class="expression-list">
+                <div class="expression-item"><div class="expression-meta"><span>clear the air</span><span>reduce tension</span></div><p><strong>The family needs to clear the air before dinner.</strong> Use it when people talk honestly so a tense situation feels better.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>meet someone halfway</span><span>compromise</span></div><p><strong>Ana and Leo can meet each other halfway.</strong> Use it when both sides give a little to reach a fair agreement.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>patch things up</span><span>repair a relationship</span></div><p><strong>After the argument, they want to patch things up.</strong> Use it when people try to improve a relationship after conflict.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>on the same page</span><span>shared understanding</span></div><p><strong>Before they start cooking, everyone should be on the same page.</strong> This expression already belongs to the intermediate idiom bank and fits Unit 4 mediation.</p></div>
+                <div class="expression-item"><div class="expression-meta"><span>the ball is in your court</span><span>your turn to act</span></div><p><strong>I explained my responsibility. Now the ball is in your court.</strong> This expression already belongs to the intermediate idiom bank and works for family decisions.</p></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="unit4-grid">
+            <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: The family needs to work out the problem it.</div><div class="ok-box">Correct: The family needs to work out the problem. / The family needs to work it out.</div></div>
+            <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: Everyone has to pitch the dinner.</div><div class="ok-box">Correct: Everyone has to pitch in with dinner.</div></div>
+            <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: We need to meet halfway the problem.</div><div class="ok-box">Correct: We need to meet halfway. / We need to meet each other halfway.</div></div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="idioms.html" class="btn btn-secondary">Open idiom bank</a>
           </div>
         </div>
       </details>
