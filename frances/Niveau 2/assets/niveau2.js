@@ -24,8 +24,8 @@
     if (document.querySelector(".global-course-switcher")) return;
     const switcher = document.createElement("div");
     switcher.className = "global-course-switcher";
-    switcher.setAttribute("aria-label", "Navigation globale");
-    switcher.innerHTML = `<details><summary><span>Navigation</span></summary><nav>
+    switcher.setAttribute("aria-label", "Cours");
+    switcher.innerHTML = `<details><summary><span>Cours</span></summary><nav>
       <a href="/index.html">Accueil</a>
       <a href="/frances/index.html">Français</a>
       <a href="/frances/Niveau%201/index.html">Français Niveau 1</a>

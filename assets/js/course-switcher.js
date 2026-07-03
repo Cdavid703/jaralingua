@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260628";
+  const VERSION = "20260703";
   const COURSES = [
     { group: "JaraLingua", label: "Accueil général", href: "/index.html", match: /^\/(?:index\.html)?$/i },
     { group: "Français", label: "Portail français", href: "/frances/index.html", match: /^\/frances\/(?:index\.html)?$/i },
@@ -26,6 +26,20 @@
     const path = normalizedPath();
     const encoded = location.pathname.replace(/\\/g, "/");
     return course.match.test(path) || course.match.test(encoded);
+  }
+
+  function interfaceLanguage() {
+    const path = normalizedPath().toLowerCase();
+    if (path.startsWith("/ingles/")) return "en";
+    if (path.startsWith("/frances/")) return "fr";
+    return "es";
+  }
+
+  function courseButtonText() {
+    const lang = interfaceLanguage();
+    if (lang === "en") return "Courses";
+    if (lang === "fr") return "Cours";
+    return "Cursos";
   }
 
   function ensureStyles() {
@@ -215,7 +229,8 @@
     button.className = "jl-course-switcher-button";
     button.setAttribute("aria-expanded", "false");
     button.setAttribute("aria-controls", "jlCoursePanel");
-    button.textContent = "Cours";
+    button.setAttribute("aria-label", courseButtonText());
+    button.textContent = courseButtonText();
     return button;
   }
 
