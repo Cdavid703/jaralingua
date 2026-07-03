@@ -35,6 +35,13 @@
       "weight": 20,
       "type": "Speaking",
       "description": "MIDTERM ORAL TASK (20%)"
+    },
+    {
+      "id": "unit4SundayDinnerListening",
+      "title": "Unit 4 Listening - Sunday Dinner Negotiation",
+      "weight": 0,
+      "type": "Listening follow-up",
+      "description": "Seguimiento enviable al profesor. La nota aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
     }
   ],
   "bonusEvent": null

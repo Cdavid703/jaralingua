@@ -11,19 +11,29 @@
   <style>
     .unit4-listening-hero{background:linear-gradient(135deg,rgba(7,31,79,.92),rgba(217,164,65,.48)),url("../../assets/img/english-intermediate/unit-4/listening-sunday-dinner-negotiation.png") center/cover no-repeat;color:#fff}
     .unit4-listening-hero .lesson-hero-content p,.unit4-listening-hero .eyebrow{color:#fff}
+    .unit4-listening-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
     .unit4-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:1rem;align-items:start}
     .u4-panel{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1.15rem}
     .u4-panel h2,.u4-panel h3{color:var(--intermediate-navy);margin-top:0}
     .u4-panel p,.u4-panel li{color:var(--intermediate-muted);line-height:1.65}
-    .script-box{white-space:pre-wrap;background:#fffaf0;border:1px solid rgba(217,164,65,.3);border-radius:8px;padding:1rem;color:#24364d;line-height:1.7}
+    .audio-speed-controls{display:flex;flex-wrap:wrap;gap:.45rem;align-items:center;margin-top:.65rem}
+    .speed-button{border:1px solid rgba(7,31,79,.16);border-radius:999px;background:#fff;color:var(--intermediate-navy);font-weight:900;padding:.42rem .68rem;cursor:pointer}
+    .speed-button.active{background:var(--intermediate-navy);color:#fff;border-color:var(--intermediate-navy)}
+    .teacher-transcript-tools{display:grid;gap:.8rem}
+    .teacher-transcript-status{margin:0;color:var(--intermediate-muted);font-weight:800;line-height:1.55}
+    .script-box{display:none;white-space:pre-wrap;background:#fffaf0;border:1px solid rgba(217,164,65,.3);border-radius:8px;padding:1rem;color:#24364d;line-height:1.7}
+    .script-box.show{display:block}
     .quiz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
     .q-card{border:1px solid var(--intermediate-border);border-radius:8px;background:#fff;padding:1rem}
     .q-card h3{font-size:1rem;color:var(--intermediate-navy);margin:0 0 .65rem}
     .q-card label{display:block;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.58rem .65rem;margin:.45rem 0;color:#334155;font-weight:700;cursor:pointer}
-    .q-card.correct{background:#ecfdf5;border-color:#86efac}
     .q-card.incorrect{background:#fff1f2;border-color:#fecaca}
+    .q-card.incorrect h3::after{content:" - review";color:#b91c1c;font-size:.85rem}
+    .q-card.locked label{cursor:not-allowed;opacity:.75}
     .result-box{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;line-height:1.55}
     .result-box.show{display:block}
+    .result-box.error{background:#fff1f2;color:#7f1d1d}
+    .result-box.success{background:#ecfdf5;color:#064e3b}
     .note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem}
     .note-card{background:#f8fbff;border:1px solid var(--intermediate-border);border-radius:8px;padding:1rem}
     @media(max-width:900px){.unit4-grid,.quiz-grid{grid-template-columns:1fr}}
@@ -69,14 +79,18 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Comprehension</p><h2>Answer the 18 Questions</h2></div></div>
         <form id="quizForm" class="quiz-grid"></form>
-        <div class="hero-actions"><button type="button" class="btn btn-primary" onclick="checkAnswers()">Check answers</button><button type="button" class="btn btn-secondary" onclick="resetQuiz()">Try again</button></div>
+        <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Submit to teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
         <div id="resultBox" class="result-box"></div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Transcript</p><h2>Read After Your First Attempt</h2></div></div>
-        <p>Use the transcript to check missed details after listening and answering once. Then listen again and correct your notes.</p>
-        <div class="script-box" id="scriptBox"></div>
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Teacher only</p><h2>Transcript Access</h2></div></div>
+        <div class="teacher-transcript-tools">
+          <p>The transcript is reserved for the teacher. It opens only after teacher/admin sign-in.</p>
+          <div class="hero-actions"><button type="button" class="btn btn-secondary" id="loadTranscript">Teacher transcript</button></div>
+          <p class="teacher-transcript-status" id="transcriptStatus">Sign in with a teacher or administrator account to load the transcript.</p>
+          <div class="script-box" id="scriptBox" aria-live="polite"></div>
+        </div>
       </article>
 
       <article class="premium-topic-card">
@@ -95,66 +109,206 @@
 
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
   <script>
-    const listeningText = `Narrator: The Rivera family is having Sunday dinner. Before they eat, they need to solve a small family problem.
-
-Ana: Dinner is almost ready, but I cannot do everything alone. Everyone has to help for twenty minutes.
-
-Leo: I already took out the trash. Why do I have to set the table too?
-
-Maya: Because I have to finish my history presentation before Monday. I want you to set the table while I make the salad.
-
-Carlos: And I want everyone to put their phones in the basket. We used to talk during dinner. Now everybody checks messages every two minutes.
-
-Leo: That is not fair. You won't let us use phones, but you answer work messages at the table.
-
-Carlos: You are right. I have one work message tonight, but I can answer it after dinner.
-
-Rosa: When your father was a teenager, we used to cook together on Sundays. We didn't use to have perfect dinners, but we listened to each other.
-
-Ana: I like that memory, but we need a realistic plan. Carlos, can you wash the dishes later?
-
-Carlos: Yes. I can do that, and I don't have to answer the message until eight.
-
-Maya: If Leo sets the table, I can make the salad quickly. After dinner, I need forty minutes for my presentation.
-
-Leo: Fine, but I want Maya to help me with my English homework tomorrow. And I want Dad to follow the phone rule too.
-
-Carlos: Fair. I won't let phones stay on the table, including mine. The basket rule is for everyone.
-
-Rosa: Good. A rule is easier to accept when adults follow it too.
-
-Ana: So the agreement is clear. Leo sets the table, Maya makes the salad, Carlos washes the dishes, and phones stay in the basket for the first thirty minutes.
-
-Leo: And tomorrow Maya helps me with English?
-
-Maya: Yes, after school. But you have to bring your notebook.
-
-Narrator: The Rivera family does not solve every problem forever, but they make one respectful agreement for tonight.`;
+    const GOOGLE_USER_KEY = "jaralingua_google_user";
+    const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const SUBMIT_ENDPOINT = "/api/intermediate/unit4-sunday-dinner/submit";
+    const TRANSCRIPT_ENDPOINT = "/api/intermediate/unit4-sunday-dinner/transcript";
     const questions = [
-      ["Where is the family conversation happening?", ["At a school meeting", "Before Sunday dinner", "In a restaurant kitchen"], 1],
-      ["What does Ana say everyone has to do?", ["Leave the house", "Cook a separate meal", "Help for twenty minutes"], 2],
-      ["What has Leo already done?", ["Made the salad", "Washed the dishes", "Taken out the trash"], 2],
-      ["Why does Maya want Leo to set the table?", ["She has to finish a presentation", "She does not like dinner", "She is going to sleep"], 0],
-      ["What phone rule does Carlos suggest?", ["Phones on silent under the table", "Phones in the basket", "Phones only for Leo"], 1],
-      ["What does Leo's objection about the phone rule show?", ["He wants Rosa to cook alone", "He does not understand the rule", "He thinks adults should follow the same rule"], 2],
-      ["What does Carlos agree to do with his work message?", ["Answer it after dinner", "Ignore it for a week", "Ask Leo to answer it"], 0],
-      ["What does Rosa remember?", ["They used to eat in restaurants every day", "They used to cook together on Sundays", "They used to avoid family dinners"], 1],
-      ["What does Carlos agree to do later?", ["Make dessert", "Write Maya's presentation", "Wash the dishes"], 2],
-      ["How much time does Maya need after dinner?", ["Ten minutes", "Forty minutes", "Two hours"], 1],
-      ["What does Leo want Maya to do tomorrow?", ["Help him with English homework", "Buy him a phone", "Cook dinner alone"], 0],
-      ["Who has to follow the basket rule?", ["Only the teenagers", "Only Rosa", "Everyone, including Carlos"], 2],
-      ["What does Rosa suggest about fair rules?", ["Rules should only be for teenagers", "Rules are easier when adults follow them too", "Rules are never useful"], 1],
-      ["What is Leo's final responsibility tonight?", ["Set the table", "Answer work messages", "Finish Maya's presentation"], 0],
-      ["What is Maya's final responsibility tonight?", ["Wash the car", "Call the teacher", "Make the salad"], 2],
-      ["What is Carlos's final responsibility?", ["Wash the dishes", "Set the table", "Do Leo's homework"], 0],
-      ["Which sentence uses past habit correctly?", ["They used to cooked together", "They used to cook together", "They use to cooking together"], 1],
-      ["What is the main skill practiced in this listening?", ["Describing world records", "Ordering food at a market", "Negotiating a fair agreement respectfully"], 2]
+      ["Where is the family conversation happening?", ["At a school meeting", "Before Sunday dinner", "In a restaurant kitchen"]],
+      ["What does Ana say everyone has to do?", ["Leave the house", "Cook a separate meal", "Help for twenty minutes"]],
+      ["What has Leo already done?", ["Made the salad", "Washed the dishes", "Taken out the trash"]],
+      ["Why does Maya want Leo to set the table?", ["She has to finish a presentation", "She does not like dinner", "She is going to sleep"]],
+      ["What phone rule does Carlos suggest?", ["Phones on silent under the table", "Phones in the basket", "Phones only for Leo"]],
+      ["What does Leo's objection about the phone rule show?", ["He wants Rosa to cook alone", "He does not understand the rule", "He thinks adults should follow the same rule"]],
+      ["What does Carlos agree to do with his work message?", ["Answer it after dinner", "Ignore it for a week", "Ask Leo to answer it"]],
+      ["What does Rosa remember?", ["They used to eat in restaurants every day", "They used to cook together on Sundays", "They used to avoid family dinners"]],
+      ["What does Carlos agree to do later?", ["Make dessert", "Write Maya's presentation", "Wash the dishes"]],
+      ["How much time does Maya need after dinner?", ["Ten minutes", "Forty minutes", "Two hours"]],
+      ["What does Leo want Maya to do tomorrow?", ["Help him with English homework", "Buy him a phone", "Cook dinner alone"]],
+      ["Who has to follow the basket rule?", ["Only the teenagers", "Only Rosa", "Everyone, including Carlos"]],
+      ["What does Rosa suggest about fair rules?", ["Rules should only be for teenagers", "Rules are easier when adults follow them too", "Rules are never useful"]],
+      ["What is Leo's final responsibility tonight?", ["Set the table", "Answer work messages", "Finish Maya's presentation"]],
+      ["What is Maya's final responsibility tonight?", ["Wash the car", "Call the teacher", "Make the salad"]],
+      ["What is Carlos's final responsibility?", ["Wash the dishes", "Set the table", "Do Leo's homework"]],
+      ["Which sentence uses past habit correctly?", ["They used to cooked together", "They used to cook together", "They use to cooking together"]],
+      ["What is the main skill practiced in this listening?", ["Describing world records", "Ordering food at a market", "Negotiating a fair agreement respectfully"]]
     ];
-    document.getElementById("scriptBox").textContent = listeningText;
     const form = document.getElementById("quizForm");
-    form.innerHTML = questions.map((q,index)=>`<div class="q-card" data-index="${index}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
-    function checkAnswers(){let score=0;document.querySelectorAll(".q-card").forEach((card)=>{const index=Number(card.dataset.index);const selected=form[`q${index}`].value;card.classList.remove("correct","incorrect");if(selected===String(questions[index][2])){score++;card.classList.add("correct");}else card.classList.add("incorrect");});const box=document.getElementById("resultBox");box.className="result-box show";box.textContent=`Score: ${score} / ${questions.length}. Product task: complete your mediation notes and prepare a two-minute agreement report.`;}
-    function resetQuiz(){form.reset();document.querySelectorAll(".q-card").forEach((card)=>card.classList.remove("correct","incorrect"));document.getElementById("resultBox").className="result-box";}
+    const resultBox = document.getElementById("resultBox");
+    const submitButton = document.getElementById("submitQuiz");
+    const resetButton = document.getElementById("resetQuiz");
+    const transcriptButton = document.getElementById("loadTranscript");
+    const transcriptStatus = document.getElementById("transcriptStatus");
+    const scriptBox = document.getElementById("scriptBox");
+
+    function readStoredUser(key){
+      try{
+        const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+        if(!saved||!saved.exp||Date.now()/1000>saved.exp){
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return saved;
+      }catch(error){
+        sessionStorage.removeItem(key);
+        return null;
+      }
+    }
+
+    function readUser(){
+      const googleUser=readStoredUser(GOOGLE_USER_KEY);
+      if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);
+      const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);
+      if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);
+      return null;
+    }
+
+    function authHeaders(){
+      const user=readUser();
+      if(!user||!user.credential)return null;
+      return {
+        Authorization:"Bearer "+user.credential,
+        "X-Jaralingua-Auth-Provider":user.provider||"google",
+        "Content-Type":"application/json"
+      };
+    }
+
+    function openLoginPanel(){
+      const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+      if(trigger)trigger.click();
+    }
+
+    function showResult(message,type){
+      resultBox.className="result-box show "+(type||"");
+      resultBox.textContent=message;
+    }
+
+    function selectedAnswers(){
+      const answers=[];
+      for(let index=0;index<questions.length;index+=1){
+        const selected=form.querySelector(`input[name="q${index}"]:checked`);
+        if(!selected)return null;
+        answers.push(Number(selected.value));
+      }
+      return answers;
+    }
+
+    function lockQuiz(incorrectQuestions){
+      const incorrectSet=new Set(incorrectQuestions||[]);
+      document.querySelectorAll(".q-card").forEach((card)=>{
+        const number=Number(card.dataset.questionNumber);
+        card.classList.toggle("incorrect",incorrectSet.has(number));
+        card.classList.add("locked");
+        card.querySelectorAll("input").forEach((input)=>{input.disabled=true;});
+      });
+      submitButton.disabled=true;
+    }
+
+    function resetQuiz(){
+      form.reset();
+      document.querySelectorAll(".q-card").forEach((card)=>{
+        card.classList.remove("incorrect","locked");
+        card.querySelectorAll("input").forEach((input)=>{input.disabled=false;});
+      });
+      submitButton.disabled=false;
+      resultBox.className="result-box";
+      resultBox.textContent="";
+    }
+
+    function submitQuiz(){
+      const answers=selectedAnswers();
+      if(!answers){
+        showResult("Answer all 18 questions before submitting.", "error");
+        return;
+      }
+      const headers=authHeaders();
+      if(!headers){
+        showResult("Sign in first. Your listening follow-up must be linked to your student record before it can be sent to the teacher.", "error");
+        openLoginPanel();
+        return;
+      }
+      submitButton.disabled=true;
+      showResult("Sending your listening follow-up to the teacher...", "");
+      fetch(SUBMIT_ENDPOINT,{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify({answers:answers,activity:"Sunday Dinner Negotiation",clientDate:new Date().toISOString().slice(0,10)})
+      }).then((response)=>{
+        return response.json().then((data)=>({ok:response.ok,status:response.status,data:data}));
+      }).then(({ok,status,data})=>{
+        if(!ok){
+          submitButton.disabled=false;
+          if(status===403){
+            showResult("Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.", "error");
+            return;
+          }
+          showResult("The submission could not be saved. Please reload and try again.", "error");
+          return;
+        }
+        lockQuiz(data.incorrectQuestions||[]);
+        const wrong=(data.incorrectQuestions||[]).length;
+        const reviewText=wrong ? "Questions marked for review: "+data.incorrectQuestions.join(", ")+". Reset the full quiz if you want to change your answers." : "No questions were marked wrong.";
+        showResult(`Submitted to teacher. Reference grade: ${Number(data.grade).toFixed(2)} / 5.0. Score: ${data.score} / ${data.total}. ${reviewText} This follow-up appears in the grade grid with weight 0, so it does not affect the accumulated percentage.`, "success");
+      }).catch(()=>{
+        submitButton.disabled=false;
+        showResult("Network error. The activity was not submitted.", "error");
+      });
+    }
+
+    function loadTeacherTranscript(){
+      const headers=authHeaders();
+      if(!headers){
+        transcriptStatus.textContent="Sign in first with a teacher or administrator account.";
+        openLoginPanel();
+        return;
+      }
+      transcriptStatus.textContent="Checking teacher access...";
+      fetch(TRANSCRIPT_ENDPOINT,{headers:headers}).then((response)=>{
+        return response.json().then((data)=>({ok:response.ok,status:response.status,data:data}));
+      }).then(({ok,status,data})=>{
+        if(!ok){
+          transcriptStatus.textContent=status===403 ? "Transcript reserved for teacher/admin accounts." : "Transcript unavailable.";
+          scriptBox.classList.remove("show");
+          scriptBox.textContent="";
+          return;
+        }
+        scriptBox.textContent=data.transcript||"Transcript unavailable.";
+        scriptBox.classList.add("show");
+        transcriptStatus.textContent="Teacher transcript loaded.";
+      }).catch(()=>{
+        transcriptStatus.textContent="Transcript unavailable.";
+      });
+    }
+
+    document.querySelectorAll("audio").forEach((audio)=>{
+      audio.playbackRate=1;
+      if(audio.controlsList&&audio.controlsList.add)audio.controlsList.add("noplaybackrate");
+      const controls=document.createElement("div");
+      controls.className="audio-speed-controls";
+      controls.setAttribute("aria-label","Audio speed");
+      [0.75,1,1.25].forEach((rate)=>{
+        const button=document.createElement("button");
+        button.type="button";
+        button.className=`speed-button${rate===1?" active":""}`;
+        button.textContent=`${rate}x`;
+        button.setAttribute("aria-pressed",rate===1?"true":"false");
+        button.addEventListener("click",()=>{
+          audio.playbackRate=rate;
+          controls.querySelectorAll(".speed-button").forEach((item)=>{
+            const active=item===button;
+            item.classList.toggle("active",active);
+            item.setAttribute("aria-pressed",active?"true":"false");
+          });
+        });
+        controls.appendChild(button);
+      });
+      audio.insertAdjacentElement("afterend",controls);
+    });
+
+    form.innerHTML=questions.map((q,index)=>`<div class="q-card" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
+    submitButton.addEventListener("click",submitQuiz);
+    resetButton.addEventListener("click",resetQuiz);
+    transcriptButton.addEventListener("click",loadTeacherTranscript);
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

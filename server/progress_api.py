@@ -48,6 +48,7 @@ BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_T
 BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake-submissions.json")
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
+INTERMEDIATE_UNIT4_LISTENING_ID = "unit4SundayDinnerListening"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -143,6 +144,52 @@ FRENCH8_PRONUNCIATION_EVALUATIONS = {
     }
 }
 
+INTERMEDIATE_UNIT4_LISTENING_EVALUATION = {
+    "id": INTERMEDIATE_UNIT4_LISTENING_ID,
+    "title": "Unit 4 Listening - Sunday Dinner Negotiation",
+    "weight": 0,
+    "type": "Listening follow-up",
+    "description": "Seguimiento enviable al profesor. La nota aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
+}
+
+INTERMEDIATE_UNIT4_LISTENING_ANSWERS = [1, 2, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2, 0, 1, 2]
+
+INTERMEDIATE_UNIT4_LISTENING_TRANSCRIPT = """Narrator: The Rivera family is having Sunday dinner. Before they eat, they need to solve a small family problem.
+
+Ana: Dinner is almost ready, but I cannot do everything alone. Everyone has to help for twenty minutes.
+
+Leo: I already took out the trash. Why do I have to set the table too?
+
+Maya: Because I have to finish my history presentation before Monday. I want you to set the table while I make the salad.
+
+Carlos: And I want everyone to put their phones in the basket. We used to talk during dinner. Now everybody checks messages every two minutes.
+
+Leo: That is not fair. You won't let us use phones, but you answer work messages at the table.
+
+Carlos: You are right. I have one work message tonight, but I can answer it after dinner.
+
+Rosa: When your father was a teenager, we used to cook together on Sundays. We didn't use to have perfect dinners, but we listened to each other.
+
+Ana: I like that memory, but we need a realistic plan. Carlos, can you wash the dishes later?
+
+Carlos: Yes. I can do that, and I don't have to answer the message until eight.
+
+Maya: If Leo sets the table, I can make the salad quickly. After dinner, I need forty minutes for my presentation.
+
+Leo: Fine, but I want Maya to help me with my English homework tomorrow. And I want Dad to follow the phone rule too.
+
+Carlos: Fair. I won't let phones stay on the table, including mine. The basket rule is for everyone.
+
+Rosa: Good. A rule is easier to accept when adults follow it too.
+
+Ana: So the agreement is clear. Leo sets the table, Maya makes the salad, Carlos washes the dishes, and phones stay in the basket for the first thirty minutes.
+
+Leo: And tomorrow Maya helps me with English?
+
+Maya: Yes, after school. But you have to bring your notebook.
+
+Narrator: The Rivera family does not solve every problem forever, but they make one respectful agreement for tonight."""
+
 FRENCH8_BASE_EVALUATIONS = {
     "finalExam": {
         "id": "finalExam",
@@ -215,7 +262,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
     "pronunciationTheme1": {
         "id": "pronunciationTheme1",
         "title": "Prononciation thème 1 - Premiers contacts",
-        "weight": 1.25,
+        "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 1",
         "description": "Défi final de prononciation du thème 1. Envoi autorisé à partir de 50/100."
@@ -223,7 +270,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
     "pronunciationTheme3": {
         "id": "pronunciationTheme3",
         "title": "Prononciation thème 3 - Verbes essentiels",
-        "weight": 1.25,
+        "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 3",
         "description": "Défi final de prononciation du thème 3. Envoi autorisé à partir de 50/100."
@@ -231,7 +278,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
     "pronunciationTheme5": {
         "id": "pronunciationTheme5",
         "title": "Prononciation thème 5 - Description et professions",
-        "weight": 1.25,
+        "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 5",
         "description": "Défi final de prononciation du thème 5. Envoi autorisé à partir de 50/100."
@@ -239,10 +286,45 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
     "pronunciationTheme7": {
         "id": "pronunciationTheme7",
         "title": "Prononciation thème 7 - Maison et localisation",
-        "weight": 1.25,
+        "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 7",
         "description": "Défi final de prononciation du thème 7. Envoi autorisé à partir de 50/100."
+    }
+}
+
+FRENCH2_PRONUNCIATION_EVALUATIONS = {
+    "pronunciationTheme1": {
+        "id": "pronunciationTheme1",
+        "title": "Prononciation theme 1 - Routines quotidiennes",
+        "weight": 5,
+        "type": "Prononciation",
+        "displayDate": "Semaine du theme 1",
+        "description": "Defi final de prononciation du theme 1. Envoi autorise a partir de 50/100."
+    },
+    "pronunciationTheme3": {
+        "id": "pronunciationTheme3",
+        "title": "Prononciation theme 3 - Logement",
+        "weight": 5,
+        "type": "Prononciation",
+        "displayDate": "Semaine du theme 3",
+        "description": "Defi final de prononciation du theme 3. Envoi autorise a partir de 50/100."
+    },
+    "pronunciationTheme5": {
+        "id": "pronunciationTheme5",
+        "title": "Prononciation theme 5 - Sante",
+        "weight": 5,
+        "type": "Prononciation",
+        "displayDate": "Semaine du theme 5",
+        "description": "Defi final de prononciation du theme 5. Envoi autorise a partir de 50/100."
+    },
+    "pronunciationTheme7": {
+        "id": "pronunciationTheme7",
+        "title": "Prononciation theme 7 - Ville et directions",
+        "weight": 5,
+        "type": "Prononciation",
+        "displayDate": "Semaine du theme 7",
+        "description": "Defi final de prononciation du theme 7. Envoi autorise a partir de 50/100."
     }
 }
 
@@ -277,6 +359,8 @@ FRENCH1_CORE_EVALUATIONS = {
         "description": "Pourcentage restant à préciser afin que le carnet totalise 100%."
     }
 }
+
+FRENCH1_CORE_EVALUATIONS.pop("evaluationApreciser15", None)
 
 data_lock = threading.Lock()
 token_cache = {}
@@ -1187,7 +1271,7 @@ def ensure_evaluation_template(grades_data, template):
 
 def ensure_french1_gradebook_structure(grades_data):
     changed = False
-    obsolete_ids = {"participation", "ecoute", "lecture", "prononciation"}
+    obsolete_ids = {"participation", "ecoute", "lecture", "prononciation", "evaluationApreciser15"}
     evaluations = grades_data.setdefault("evaluations", [])
     filtered = [item for item in evaluations if not (isinstance(item, dict) and item.get("id") in obsolete_ids)]
     if len(filtered) != len(evaluations):
@@ -1209,9 +1293,66 @@ def ensure_french1_gradebook_structure(grades_data):
     return changed
 
 
-def french1_pronunciation_grade_from_payload(payload):
+def ensure_french2_gradebook_structure(grades_data):
+    changed = False
+    obsolete_ids = {"interaction-orale"}
+    evaluations = grades_data.setdefault("evaluations", [])
+    filtered = [item for item in evaluations if not (isinstance(item, dict) and item.get("id") in obsolete_ids)]
+    if len(filtered) != len(evaluations):
+        grades_data["evaluations"] = filtered
+        changed = True
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict) or not isinstance(student.get("grades"), dict):
+            continue
+        for obsolete_id in obsolete_ids:
+            if obsolete_id in student["grades"]:
+                student["grades"].pop(obsolete_id, None)
+                changed = True
+    for template in FRENCH2_PRONUNCIATION_EVALUATIONS.values():
+        if ensure_evaluation_template(grades_data, template):
+            changed = True
+    return changed
+
+
+def ensure_intermediate_gradebook_structure(grades_data):
+    return ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT4_LISTENING_EVALUATION)
+
+
+def score_intermediate_unit4_listening(payload):
+    raw_answers = payload.get("answers")
+    if not isinstance(raw_answers, list):
+        raise ValueError("invalid_answers")
+    if len(raw_answers) != len(INTERMEDIATE_UNIT4_LISTENING_ANSWERS):
+        raise ValueError("incomplete_answers")
+    answers = []
+    score = 0
+    incorrect = []
+    for index, correct in enumerate(INTERMEDIATE_UNIT4_LISTENING_ANSWERS):
+        try:
+            answer = int(raw_answers[index])
+        except (TypeError, ValueError):
+            raise ValueError("invalid_answers")
+        if answer < 0 or answer > 2:
+            raise ValueError("invalid_answers")
+        answers.append(answer)
+        if answer == correct:
+            score += 1
+        else:
+            incorrect.append(index + 1)
+    total = len(INTERMEDIATE_UNIT4_LISTENING_ANSWERS)
+    grade = round((score / total) * 5, 2)
+    return {
+        "answers": answers,
+        "score": score,
+        "total": total,
+        "grade": grade,
+        "incorrect": incorrect
+    }
+
+
+def pronunciation_grade_from_payload(payload, evaluations):
     evaluation_id = clean_text(payload.get("evaluationId"), 80)
-    if evaluation_id not in FRENCH1_PRONUNCIATION_EVALUATIONS:
+    if evaluation_id not in evaluations:
         raise ValueError("invalid_evaluation")
     try:
         score100 = float(payload.get("score100"))
@@ -1223,6 +1364,14 @@ def french1_pronunciation_grade_from_payload(payload):
         raise ValueError("invalid_score")
     grade = round((score100 / 20.0) * 100) / 100
     return evaluation_id, int(round(score100)), grade
+
+
+def french1_pronunciation_grade_from_payload(payload):
+    return pronunciation_grade_from_payload(payload, FRENCH1_PRONUNCIATION_EVALUATIONS)
+
+
+def french2_pronunciation_grade_from_payload(payload):
+    return pronunciation_grade_from_payload(payload, FRENCH2_PRONUNCIATION_EVALUATIONS)
 
 
 def default_final_exam_bundle():
@@ -1918,9 +2067,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/french2/grades":
-            grades_data = read_grades_data(FRENCH2_GRADES_PATH)
-            query = urllib.parse.parse_qs(parsed.query)
-            json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                if ensure_french2_gradebook_structure(grades_data):
+                    write_json_file(FRENCH2_GRADES_PATH, grades_data, ".french2-grades-")
+                query = urllib.parse.parse_qs(parsed.query)
+                json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
         if parsed.path == "/api/french8/grades":
@@ -2306,9 +2458,25 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/intermediate/grades":
-            grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
-            query = urllib.parse.parse_qs(parsed.query)
-            json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                if ensure_intermediate_gradebook_structure(grades_data):
+                    write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                query = urllib.parse.parse_qs(parsed.query)
+                json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
+        if parsed.path == "/api/intermediate/unit4-sunday-dinner/transcript":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                json_response(self, 200, {
+                    "title": "Sunday Dinner Negotiation",
+                    "transcript": INTERMEDIATE_UNIT4_LISTENING_TRANSCRIPT
+                })
             return
 
         json_response(self, 404, {"error": "not_found"})
@@ -2334,6 +2502,60 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
         payload = self.read_json_body()
         if payload is None:
+            return
+
+
+        if parsed.path == "/api/intermediate/unit4-sunday-dinner/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit4_listening(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                submitted_at = now_iso()
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT4_LISTENING_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT4_LISTENING_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT4_LISTENING_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "activity": "Sunday Dinner Negotiation"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT4_LISTENING_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "weight": 0
+                })
             return
 
 
@@ -2605,6 +2827,30 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 ensure_french1_gradebook_structure(grades_data)
                 student.setdefault("grades", {})[evaluation_id] = grade
                 write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": evaluation_id,
+                    "score100": score100,
+                    "grade": grade,
+                    "updatedAt": now_iso()
+                })
+            return
+
+        if parsed.path == "/api/french2/pronunciation-grade":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH2_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    evaluation_id, score100, grade = french2_pronunciation_grade_from_payload(payload)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                ensure_french2_gradebook_structure(grades_data)
+                student.setdefault("grades", {})[evaluation_id] = grade
+                write_json_file(FRENCH2_GRADES_PATH, grades_data, ".french2-grades-")
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": evaluation_id,
