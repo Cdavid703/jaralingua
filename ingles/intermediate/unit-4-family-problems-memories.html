@@ -9,89 +9,388 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
   <style>
-    .unit4-hero{background:linear-gradient(135deg,rgba(7,31,79,.92),rgba(217,164,65,.42)),url("../../assets/img/english-intermediate/unit-4/unit-4-family-problems-memories.png") center/cover no-repeat;color:#fff}
+    :root{
+      --u4-ink:#071f4f;
+      --u4-muted:#475569;
+      --u4-gold:#d9a441;
+      --u4-coral:#d9433f;
+      --u4-teal:#0f766e;
+      --u4-paper:#fff;
+      --u4-soft:#fff7e8;
+      --u4-coral-soft:#fff1ef;
+      --u4-border:#dce8f8;
+    }
+    .unit4-hero{
+      background:linear-gradient(135deg,rgba(7,31,79,.94),rgba(217,164,65,.45)),url("../../assets/img/english-intermediate/unit-4/unit-4-family-problems-memories.png") center/cover no-repeat;
+      color:#fff;
+    }
     .unit4-hero .lesson-hero-content p,.unit4-hero .eyebrow{color:#fff}
+    .unit4-page{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:2rem 0 4rem}
+    .unit4-toolbar{position:sticky;top:.75rem;z-index:5;background:rgba(255,255,255,.96);border:1px solid var(--u4-border);border-radius:8px;box-shadow:0 16px 36px rgba(15,23,42,.12);padding:.85rem;margin:1rem 0 1.5rem}
+    .unit4-toolbar h2{font-size:1rem;color:var(--u4-ink);margin:0 0 .7rem}
+    .unit4-topic-buttons{display:flex;flex-wrap:wrap;gap:.55rem}
+    .topic-jump,.toggle-button{border:0;border-radius:999px;background:var(--u4-ink);color:#fff;font-weight:900;padding:.65rem .9rem;cursor:pointer}
+    .topic-jump.secondary,.toggle-button{background:#eef5ff;color:var(--u4-ink);border:1px solid var(--u4-border)}
+    .unit4-section{background:var(--u4-paper);border:1px solid var(--u4-border);border-radius:8px;box-shadow:var(--intermediate-shadow);margin-bottom:1rem;overflow:hidden}
+    .unit4-section summary{list-style:none;cursor:pointer;padding:1.15rem 1.25rem;background:linear-gradient(135deg,#fff,#f8fbff);display:flex;gap:1rem;align-items:flex-start;justify-content:space-between}
+    .unit4-section summary::-webkit-details-marker{display:none}
+    .summary-copy{display:grid;gap:.25rem}
+    .summary-copy span{color:var(--u4-coral);font-weight:900;text-transform:uppercase;font-size:.78rem;letter-spacing:.08em}
+    .summary-copy h2{color:var(--u4-ink);margin:0;font-size:clamp(1.3rem,3vw,1.8rem)}
+    .summary-copy p{color:var(--u4-muted);margin:0;line-height:1.55}
+    .summary-icon{flex:0 0 auto;width:2.25rem;height:2.25rem;border-radius:50%;display:grid;place-items:center;background:var(--u4-soft);color:var(--u4-ink);font-weight:900}
+    details[open] .summary-icon{background:var(--u4-gold)}
+    .section-body{padding:1.25rem;display:grid;gap:1.2rem}
     .unit4-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
-    .unit4-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1.15rem}
-    .unit4-card h3{margin:.2rem 0;color:var(--intermediate-navy)}
-    .unit4-card p,.unit4-card li{color:var(--intermediate-muted);line-height:1.65}
-    .family-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.8rem}
-    .family-member{border:1px solid rgba(217,67,63,.22);border-radius:8px;background:#fff8f4;padding:.95rem}
-    .family-member strong{display:block;color:var(--intermediate-navy);margin-bottom:.35rem}
-    .language-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden}
-    .language-table th,.language-table td{border:1px solid var(--intermediate-border);padding:.85rem;text-align:left;vertical-align:top}
-    .language-table th{background:#fff7e8;color:var(--intermediate-navy)}
-    .language-table td{color:#334155;line-height:1.55}
-    .route-list{counter-reset:step;display:grid;gap:.8rem;padding:0;margin:0}
-    .route-list li{list-style:none;background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;padding:1rem;color:#334155;line-height:1.55}
-    .route-list li::before{counter-increment:step;content:counter(step);display:inline-grid;place-items:center;width:2rem;height:2rem;border-radius:50%;background:var(--intermediate-gold);color:#071f4f;font-weight:900;margin-right:.55rem}
+    .unit4-two-col{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.95fr);gap:1rem;align-items:start}
+    .explain-card,.grammar-card,.model-card,.product-card{background:#fff;border:1px solid var(--u4-border);border-radius:8px;padding:1rem}
+    .explain-card h3,.grammar-card h3,.model-card h3,.product-card h3{color:var(--u4-ink);margin:.1rem 0 .55rem}
+    .explain-card p,.grammar-card p,.model-card p,.product-card p,.explain-card li,.grammar-card li{color:var(--u4-muted);line-height:1.65}
+    .official-map{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden}
+    .official-map th,.official-map td{border:1px solid var(--u4-border);padding:.85rem;text-align:left;vertical-align:top;color:#334155;line-height:1.55}
+    .official-map th{background:var(--u4-soft);color:var(--u4-ink)}
+    .family-profile{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.8rem}
+    .family-member{border:1px solid rgba(217,67,63,.22);background:var(--u4-coral-soft);border-radius:8px;padding:1rem}
+    .family-member strong{display:block;color:var(--u4-ink);margin-bottom:.35rem}
+    .family-member span{display:block;color:#475569;line-height:1.55}
+    .visual-card{background:#fff;border:1px solid var(--u4-border);border-radius:8px;overflow:hidden}
+    .visual-card img{width:100%;height:220px;object-fit:cover;display:block}
+    .visual-card div{padding:1rem}
+    .visual-card h3{margin:.1rem 0 .4rem;color:var(--u4-ink)}
+    .visual-card p{margin:0;color:var(--u4-muted);line-height:1.55}
+    .formula{background:#071f4f;color:#fff;border-radius:8px;padding:.85rem;font-weight:900;line-height:1.55}
+    .example-list{display:grid;gap:.55rem;margin:.85rem 0}
+    .example-line{background:#f8fbff;border:1px solid var(--u4-border);border-radius:8px;padding:.75rem;color:#24364d;line-height:1.55}
+    .example-line strong{color:var(--u4-ink)}
+    .mistake-box{background:#fff1f2;border:1px solid #fecaca;border-radius:8px;padding:.85rem;color:#7f1d1d;line-height:1.6}
+    .ok-box{background:#ecfdf5;border:1px solid #86efac;border-radius:8px;padding:.85rem;color:#064e3b;line-height:1.6}
+    .contrast-table{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.8rem}
+    .contrast-card{border:1px solid var(--u4-border);border-radius:8px;background:#fff;padding:1rem}
+    .contrast-card b{color:var(--u4-coral)}
+    .audio-strip{display:grid;gap:.65rem;margin-top:.8rem}
+    .audio-model{display:grid;gap:.55rem;background:#eefaf7;border:1px solid rgba(15,118,110,.2);border-radius:8px;padding:.8rem}
+    .audio-model strong{color:var(--u4-ink)}
+    .audio-model span{color:var(--u4-muted);font-size:.92rem;line-height:1.45}
+    .audio-model audio{width:100%}
+    .listening-preview{display:grid;gap:.75rem;background:#fffaf0;border:1px solid rgba(217,164,65,.35);border-radius:8px;padding:1rem}
+    .listening-preview audio{width:100%}
+    .final-planner{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.8rem}
+    .planner-slot{background:#f8fbff;border:1px solid var(--u4-border);border-radius:8px;padding:1rem}
+    .planner-slot h3{color:var(--u4-ink);margin:.1rem 0 .45rem}
+    .planner-slot p{color:var(--u4-muted);line-height:1.55;margin:0}
+    @media(max-width:900px){
+      .unit4-explanation-page .jaralingua-auth,
+      .unit4-explanation-page [data-jaralingua-auth-nav]{display:none!important}
+      .unit4-two-col{grid-template-columns:1fr}
+      .unit4-toolbar{position:static}
+      .unit4-section summary{align-items:flex-start}
+    }
+    @media(max-width:680px){
+      .unit4-explanation-page .navbar{align-items:center;gap:.55rem;padding:8px 10px}
+      .unit4-explanation-page .brand img{height:38px}
+      .unit4-explanation-page .nav-links{flex-wrap:wrap;justify-content:center;gap:6px;overflow-x:visible;padding:2px 0}
+      .unit4-explanation-page .nav-links a{min-height:34px;padding:0 9px;font-size:.78rem}
+      .unit4-page{width:min(100% - 20px,1180px);padding:1.25rem 0 3rem}
+      .unit4-toolbar{padding:.75rem}
+      .unit4-topic-buttons{gap:.45rem}
+      .topic-jump,.toggle-button{padding:.58rem .72rem;font-size:.9rem}
+      .unit4-section summary{padding:1rem;gap:.7rem}
+      .summary-copy h2{font-size:1.22rem;line-height:1.15}
+      .summary-copy p{font-size:.95rem}
+      .summary-icon{width:2rem;height:2rem}
+      .section-body{padding:1rem;gap:1rem}
+      .unit4-grid,.family-profile,.contrast-table,.final-planner{grid-template-columns:1fr}
+      .visual-card img{height:auto;aspect-ratio:16/10;object-fit:cover}
+      .official-map{display:block;border:0;background:transparent}
+      .official-map thead{display:none}
+      .official-map tbody,.official-map tr,.official-map td{display:block;width:100%}
+      .official-map tr{background:#fff;border:1px solid var(--u4-border);border-radius:8px;margin-bottom:.8rem;overflow:hidden}
+      .official-map td{border:0;border-bottom:1px solid var(--u4-border);padding:.8rem}
+      .official-map td:last-child{border-bottom:0}
+      .official-map td::before{content:attr(data-label);display:block;color:var(--u4-coral);font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem}
+    }
   </style>
 </head>
-<body class="english-intermediate-page">
+<body class="english-intermediate-page unit4-explanation-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
   <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Intermediate Course</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
 
   <main>
     <section class="lesson-hero unit4-hero">
       <div class="lesson-hero-content">
-        <p class="eyebrow">Unit 4 - Family Problems and Memories</p>
-        <h1>Obligations, Limits and Family Memories</h1>
-        <p>Use a fictional family story to talk about responsibilities, permission, respectful disagreement, and past habits with <strong>have to</strong>, <strong>won't let</strong>, <strong>want someone to</strong>, and <strong>used to</strong>.</p>
-        <div class="lesson-meta"><span>Family demands</span><span>Used to</span><span>Mediation</span><span>Writing product</span></div>
-        <div class="hero-actions"><a href="#rivera-family" class="btn btn-primary">Meet the family</a><a href="practice-lab.html#unit-4-folder" class="btn btn-secondary">Open Unit 4 folder</a></div>
+        <p class="eyebrow">Unit 4 - Explanation Page</p>
+        <h1>Family Problems, Demands and Memories</h1>
+        <p>Learn how to describe family responsibilities, limits, expectations, past habits, and respectful solutions using <strong>have to</strong>, <strong>won't let</strong>, <strong>want someone to</strong>, and <strong>used to</strong>.</p>
+        <div class="lesson-meta"><span>Family demands</span><span>Obligation</span><span>Permission limits</span><span>Past habits</span><span>Mediation</span></div>
+        <div class="hero-actions"><a href="#unit4-start" class="btn btn-primary">Start explanation</a><a href="practice-lab.html#unit-4-folder" class="btn btn-secondary">Open Unit 4 folder</a></div>
       </div>
     </section>
 
-    <section class="premium-lesson-container">
-      <article class="premium-topic-card" id="rivera-family">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Input</p><h2>The Rivera Family Scenario</h2></div></div>
-        <p>The Rivera family is preparing a Sunday dinner. Everyone has a different responsibility, but the family also has homework, work calls, music practice, and old traditions. The goal is not to judge a real family. The goal is to practice useful English with a safe fictional situation.</p>
-        <div class="family-strip">
-          <div class="family-member"><strong>Ana</strong><span>She organizes dinner and wants everyone to help for twenty minutes.</span></div>
-          <div class="family-member"><strong>Carlos</strong><span>He wants phones away during dinner, but he has a late work message.</span></div>
-          <div class="family-member"><strong>Maya</strong><span>She has to finish a school presentation and wants Leo to set the table.</span></div>
-          <div class="family-member"><strong>Leo</strong><span>He wants more freedom and says the rules are not always fair.</span></div>
-          <div class="family-member"><strong>Rosa</strong><span>She remembers what family dinners used to be like.</span></div>
+    <section class="unit4-page" id="unit4-start">
+      <nav class="unit4-toolbar" aria-label="Unit 4 topic navigation">
+        <h2>Open a topic</h2>
+        <div class="unit4-topic-buttons">
+          <button class="topic-jump" type="button" data-open="official-guide">Official map</button>
+          <button class="topic-jump" type="button" data-open="scenario">Rivera family</button>
+          <button class="topic-jump" type="button" data-open="have-to">have to</button>
+          <button class="topic-jump" type="button" data-open="wont-let">won't let</button>
+          <button class="topic-jump" type="button" data-open="want-to">want someone to</button>
+          <button class="topic-jump" type="button" data-open="used-to">used to</button>
+          <button class="topic-jump" type="button" data-open="mediation">mediation</button>
+          <button class="topic-jump secondary" type="button" data-open="workshop-route">workshop route</button>
+          <button class="toggle-button" type="button" id="openAll">Open all</button>
+          <button class="toggle-button" type="button" id="closeAll">Close all</button>
         </div>
-      </article>
+      </nav>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Noticing</p><h2>Core Language</h2></div></div>
-        <table class="language-table">
-          <thead><tr><th>Function</th><th>Pattern</th><th>Model sentence</th></tr></thead>
-          <tbody>
-            <tr><td>Obligation</td><td>subject + have/has to + base verb</td><td>Maya has to finish her presentation before Monday.</td></tr>
-            <tr><td>No obligation</td><td>subject + don't/doesn't have to + base verb</td><td>Ana doesn't have to cook everything alone.</td></tr>
-            <tr><td>Permission or limits</td><td>subject + won't let + person + base verb</td><td>Carlos won't let Leo use his phone during dinner.</td></tr>
-            <tr><td>Request or expectation</td><td>subject + want(s) + person + to + base verb</td><td>Ana wants everyone to help for twenty minutes.</td></tr>
-            <tr><td>Past habit</td><td>subject + used to + base verb</td><td>They used to cook together on Sundays.</td></tr>
-          </tbody>
-        </table>
-      </article>
-
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Practice Route</p><h2>How Unit 4 Works</h2></div></div>
-        <ol class="route-list">
-          <li>Start with the grammar practice to build accurate sentences about obligations, permission, and requests.</li>
-          <li>Listen to the Sunday dinner negotiation and identify responsibilities, limits, feelings, and the final agreement.</li>
-          <li>Read The Memory Box to notice how <strong>used to</strong> contrasts past habits with present routines.</li>
-          <li>Practice pronunciation in short family-story sections before recording the final paragraph.</li>
-          <li>Complete a mediation role play and write a short family memory blog as the final product.</li>
-        </ol>
-      </article>
-
-      <section class="lesson-next-section">
-        <div class="lesson-next-card">
-          <p class="eyebrow">Unit 4 product</p>
-          <h2>Create a family agreement and memory blog</h2>
-          <p>Your final evidence is a mediated family agreement plus a short blog paragraph that compares what the family used to do with what they do now.</p>
-          <div class="hero-actions"><a href="practice-unit-4-family-demands.html" class="btn btn-primary">Start grammar practice</a><a href="listening-unit-4-sunday-dinner-negotiation.html" class="btn btn-secondary">Go to listening</a></div>
+      <details class="unit4-section" id="official-guide" open>
+        <summary><div class="summary-copy"><span>Course guide</span><h2>What Unit 4 is really about</h2><p>The official document has two connected lessons: family problems and demands, then family memories.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="explain-card">
+              <h3>Central idea</h3>
+              <p><strong>A family can talk about rules, responsibilities, and memories with language that stays clear, respectful, and specific.</strong></p>
+              <p>This unit does not ask students to expose private family problems. We use a fictional family so students can study the language safely: describe a problem, explain a demand, set a limit, remember a past habit, and propose a fair solution.</p>
+              <div class="audio-strip">
+                <div class="audio-model"><strong>Professional audio model</strong><span>Unit overview in American English.</span><audio controls preload="metadata" src="audio/unit-4-explanation/unit-4-intro.mp3"></audio></div>
+              </div>
+            </div>
+            <aside class="visual-card">
+              <img src="../../assets/img/english-intermediate/unit-4/unit-4-family-problems-memories.png" alt="Adult learners organizing fictional family cards and memories" />
+              <div><h3>Visual focus</h3><p>Family cards, responsibilities, and memories give students a safe context before the grammar explanation.</p></div>
+            </aside>
+          </div>
+          <table class="official-map">
+            <thead><tr><th>Official part</th><th>Learning outcome</th><th>Language</th><th>Safer classroom version</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Official part">Family problems and demands</td><td data-label="Learning outcome">Describe family problems and propose solutions.</td><td data-label="Language"><strong>have to</strong>, <strong>won't let</strong>, <strong>want someone to</strong></td><td data-label="Safer classroom version">Use fictional family demand cards and a respectful mediation task.</td></tr>
+              <tr><td data-label="Official part">Family memories</td><td data-label="Learning outcome">Discuss common family memories.</td><td data-label="Language"><strong>used to</strong>, past habits</td><td data-label="Safer classroom version">Use a fictional memory box and write a short memory blog.</td></tr>
+              <tr><td data-label="Official part">Integrated unit product</td><td data-label="Learning outcome">Connect present problems with past routines.</td><td data-label="Language">obligation, limits, expectations, memories, compromise</td><td data-label="Safer classroom version">Create a family agreement and a short memory reflection.</td></tr>
+            </tbody>
+          </table>
         </div>
-      </section>
+      </details>
+
+      <details class="unit4-section" id="scenario">
+        <summary><div class="summary-copy"><span>Input story</span><h2>The Rivera family scenario</h2><p>Students need a concrete family before grammar rules make sense.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="family-profile">
+            <div class="family-member"><strong>Ana</strong><span>She organizes dinner. She wants everyone to help for twenty minutes.</span></div>
+            <div class="family-member"><strong>Carlos</strong><span>He wants phones away during dinner, but he also has a work message.</span></div>
+            <div class="family-member"><strong>Maya</strong><span>She has to finish a presentation. She wants Leo to set the table.</span></div>
+            <div class="family-member"><strong>Leo</strong><span>He wants fair rules. He says adults should follow the phone rule too.</span></div>
+            <div class="family-member"><strong>Rosa</strong><span>She remembers that the family used to cook together on Sundays.</span></div>
+          </div>
+          <div class="unit4-grid">
+            <div class="model-card"><h3>Problem now</h3><p>Everyone is busy, but dinner still needs preparation. One person should not do all the work.</p></div>
+            <div class="model-card"><h3>Memory before</h3><p>The family used to protect one hour for Sunday dinner, even when the day was difficult.</p></div>
+            <div class="model-card"><h3>Solution goal</h3><p>The family needs a short, realistic agreement: shared tasks and one phone-free moment.</p></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unit4-section" id="have-to">
+        <summary><div class="summary-copy"><span>Grammar 1</span><h2>Obligation with have to</h2><p>Use have to when a person has a responsibility or necessary action.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="grammar-card">
+              <h3>Meaning</h3>
+              <p><strong>Have to</strong> means the action is necessary because of a rule, responsibility, plan, or situation.</p>
+              <div class="formula">subject + have/has to + base verb</div>
+              <div class="example-list">
+                <div class="example-line"><strong>Leo has to set the table.</strong> It is his responsibility tonight.</div>
+                <div class="example-line"><strong>Maya has to finish her presentation.</strong> It is necessary for school.</div>
+                <div class="example-line"><strong>Carlos has to wash the dishes.</strong> It is part of the agreement.</div>
+              </div>
+              <div class="audio-strip">
+                <div class="audio-model"><strong>Professional audio model</strong><span>Obligation with have to.</span><audio controls preload="metadata" src="audio/unit-4-explanation/have-to-model.mp3"></audio></div>
+              </div>
+            </div>
+            <aside class="visual-card">
+              <img src="../../assets/img/english-intermediate/unit-4/practice-family-demands.png" alt="Family responsibility and task cards on a classroom table" />
+              <div><h3>Use this image for</h3><p>Responsibilities, role cards, chore cards, and sentence building.</p></div>
+            </aside>
+          </div>
+          <div class="unit4-grid">
+            <div class="grammar-card"><h3>Negative form</h3><p><strong>Don't have to</strong> means there is no obligation. It does not mean prohibition.</p><div class="example-line">Ana doesn't have to cook everything alone.</div></div>
+            <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: Maya has to finishes her presentation.</div><div class="ok-box">Correct: Maya has to finish her presentation.</div></div>
+            <div class="grammar-card"><h3>More classroom models</h3><div class="example-line">Parents have to listen before they decide.</div><div class="example-line">Children have to explain their plans clearly.</div><div class="example-line">A family rule has to be fair for everyone.</div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unit4-section" id="wont-let">
+        <summary><div class="summary-copy"><span>Grammar 2</span><h2>Limits with won't let</h2><p>Use won't let to explain that someone does not allow an action.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="grammar-card">
+              <h3>Meaning</h3>
+              <p><strong>Won't let</strong> expresses a limit, rule, or permission that is not given. In this unit, we use it for respectful rules, not aggressive control.</p>
+              <div class="formula">person + won't let + someone + base verb</div>
+              <div class="example-list">
+                <div class="example-line"><strong>Carlos won't let Leo use his phone during dinner.</strong></div>
+                <div class="example-line"><strong>Ana won't let one person do all the work.</strong></div>
+                <div class="example-line"><strong>The family won't let phones interrupt the first thirty minutes.</strong></div>
+              </div>
+              <div class="audio-strip">
+                <div class="audio-model"><strong>Professional audio model</strong><span>Limits with won't let.</span><audio controls preload="metadata" src="audio/unit-4-explanation/wont-let-model.mp3"></audio></div>
+              </div>
+            </div>
+            <aside class="visual-card">
+              <img src="../../assets/img/english-intermediate/unit-4/listening-sunday-dinner-negotiation.png" alt="Family dinner conversation with a responsibility schedule" />
+              <div><h3>Use this image for</h3><p>Phone rule, dinner agreement, and respectful negotiation.</p></div>
+            </aside>
+          </div>
+          <div class="unit4-grid">
+            <div class="grammar-card"><h3>Important contrast</h3><p><strong>Won't let</strong> tells us who blocks or limits an action. <strong>Can't</strong> only says the action is not possible.</p></div>
+            <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: Carlos won't let Leo to use his phone.</div><div class="ok-box">Correct: Carlos won't let Leo use his phone.</div></div>
+            <div class="grammar-card"><h3>More classroom models</h3><div class="example-line">My parents won't let me stay out late on school nights.</div><div class="example-line">The teacher won't let students submit work without names.</div><div class="example-line">A mediator won't let one person interrupt all the time.</div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unit4-section" id="want-to">
+        <summary><div class="summary-copy"><span>Grammar 3</span><h2>Expectations with want someone to</h2><p>Use this structure when one person expects or asks another person to do something.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="grammar-card">
+              <h3>Meaning</h3>
+              <p><strong>Want someone to</strong> connects a person with the action we expect from them.</p>
+              <div class="formula">person + want(s) + someone + to + base verb</div>
+              <div class="example-list">
+                <div class="example-line"><strong>Ana wants everyone to help.</strong></div>
+                <div class="example-line"><strong>Maya wants Leo to set the table.</strong></div>
+                <div class="example-line"><strong>Leo wants Maya to help him with English homework.</strong></div>
+              </div>
+              <div class="audio-strip">
+                <div class="audio-model"><strong>Professional audio model</strong><span>Expectations with want someone to.</span><audio controls preload="metadata" src="audio/unit-4-explanation/want-someone-to-model.mp3"></audio></div>
+              </div>
+            </div>
+            <div class="explain-card">
+              <h3>Arrow thinking</h3>
+              <p>Think of this structure as an arrow:</p>
+              <div class="example-line"><strong>Ana</strong> wants <strong>Leo</strong> to <strong>set the table</strong>.</div>
+              <div class="example-line"><strong>Leo</strong> wants <strong>Maya</strong> to <strong>help him tomorrow</strong>.</div>
+              <p>The person after <strong>wants</strong> is the person who should do the action.</p>
+            </div>
+          </div>
+          <div class="unit4-grid">
+            <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: Ana wants that Leo helps.</div><div class="ok-box">Correct: Ana wants Leo to help.</div></div>
+            <div class="grammar-card"><h3>Polite upgrade</h3><p>In mediation, soften demands with phrases like <strong>Can you...?</strong>, <strong>Could you...?</strong>, or <strong>What if...?</strong></p></div>
+            <div class="grammar-card"><h3>More classroom models</h3><div class="example-line">Parents want their children to be responsible.</div><div class="example-line">Teenagers want adults to respect their time.</div><div class="example-line">The mediator wants both sides to explain one need.</div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unit4-section" id="used-to">
+        <summary><div class="summary-copy"><span>Grammar 4</span><h2>Past habits with used to</h2><p>Use used to to describe repeated past habits that are different now.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="grammar-card">
+              <h3>Meaning</h3>
+              <p><strong>Used to</strong> describes a repeated past action or past state. The important idea is contrast: things were like that before, but now they are different.</p>
+              <div class="formula">subject + used to + base verb</div>
+              <div class="example-list">
+                <div class="example-line"><strong>The Riveras used to cook together on Sundays.</strong></div>
+                <div class="example-line"><strong>Rosa used to tell stories before dinner.</strong></div>
+                <div class="example-line"><strong>They didn't use to order food very often.</strong></div>
+              </div>
+              <div class="audio-strip">
+                <div class="audio-model"><strong>Professional audio model</strong><span>Past habits with used to.</span><audio controls preload="metadata" src="audio/unit-4-explanation/used-to-model.mp3"></audio></div>
+              </div>
+            </div>
+            <aside class="visual-card">
+              <img src="../../assets/img/english-intermediate/unit-4/reading-the-memory-box.png" alt="Memory box with photos and cards on a table" />
+              <div><h3>Use this image for</h3><p>Past routines, family memories, and the memory blog.</p></div>
+            </aside>
+          </div>
+          <div class="contrast-table">
+            <div class="contrast-card"><b>Past</b><p>They used to cook together.</p></div>
+            <div class="contrast-card"><b>Present</b><p>Now everyone is busier.</p></div>
+            <div class="contrast-card"><b>Solution</b><p>They will protect thirty minutes for dinner.</p></div>
+          </div>
+          <div class="unit4-grid">
+            <div class="grammar-card"><h3>Negative and yes/no form</h3><p>After <strong>didn't</strong> or <strong>did</strong>, use <strong>use to</strong>, not <strong>used to</strong>.</p><div class="example-line">They didn't use to order food often.</div><div class="example-line">Did they use to eat together every Sunday?</div></div>
+            <div class="grammar-card"><h3>Common mistake</h3><div class="mistake-box">Incorrect: They didn't used to cook together.</div><div class="ok-box">Correct: They didn't use to cook together.</div></div>
+            <div class="grammar-card"><h3>More classroom models</h3><div class="example-line">My family used to visit my grandmother every Sunday.</div><div class="example-line">We didn't use to eat dinner so late.</div><div class="example-line">Did your family use to celebrate birthdays at home?</div></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unit4-section" id="mediation">
+        <summary><div class="summary-copy"><span>Communication</span><h2>Respectful mediation language</h2><p>Students need language for solutions before they debate or role-play.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="explain-card">
+              <h3>Conversation path</h3>
+              <ol>
+                <li><strong>Recognize:</strong> I understand your point.</li>
+                <li><strong>Explain:</strong> I have to finish my homework.</li>
+                <li><strong>Set a limit:</strong> We can't let one person do everything.</li>
+                <li><strong>Propose:</strong> What if everyone helps for twenty minutes?</li>
+                <li><strong>Agree:</strong> Let's agree on one rule everyone can follow.</li>
+              </ol>
+              <div class="audio-strip">
+                <div class="audio-model"><strong>Professional audio model</strong><span>Respectful mediation language.</span><audio controls preload="metadata" src="audio/unit-4-explanation/mediation-model.mp3"></audio></div>
+              </div>
+            </div>
+            <aside class="visual-card">
+              <img src="../../assets/img/english-intermediate/unit-4/workshop-family-conflict-mediation.png" alt="Students using role cards for a respectful mediation task" />
+              <div><h3>Use this image for</h3><p>Role cards, mediator notes, agreement checklist, and speaking task preparation.</p></div>
+            </aside>
+          </div>
+          <div class="listening-preview">
+            <h3>Listen to the full model conversation</h3>
+            <p>Use the full listening after studying the grammar. Listen for responsibilities, limits, expectations, memories, and the final agreement.</p>
+            <audio class="course-audio-player" controls preload="metadata" src="audio/sunday-dinner-negotiation.mp3"></audio>
+            <div class="hero-actions"><a href="listening-unit-4-sunday-dinner-negotiation.html" class="btn btn-primary">Open listening workshop</a><a href="workshop-unit-4-family-conflict-mediation.html" class="btn btn-secondary">Open mediation task</a></div>
+          </div>
+        </div>
+      </details>
+
+      <details class="unit4-section" id="workshop-route">
+        <summary><div class="summary-copy"><span>Next pages</span><h2>Where this explanation continues</h2><p>This teaching page explains the language. Production work belongs in separate workshops.</p></div><div class="summary-icon">+</div></summary>
+        <div class="section-body">
+          <div class="unit4-two-col">
+            <div class="product-card">
+              <h3>Workshop route</h3>
+              <p>After the explanation, students can move to separate pages for controlled grammar work, listening, reading, speaking, and writing. This page does not include embedded tasks or graded checks.</p>
+              <div class="final-planner">
+                <div class="planner-slot"><h3>Grammar workshop</h3><p>Controlled work with <strong>have to</strong>, <strong>won't let</strong>, and <strong>want someone to</strong>.</p></div>
+                <div class="planner-slot"><h3>Listening workshop</h3><p>The complete Rivera family negotiation with professional audio.</p></div>
+                <div class="planner-slot"><h3>Reading workshop</h3><p>The memory box text for <strong>used to</strong> and past routines.</p></div>
+                <div class="planner-slot"><h3>Speaking workshop</h3><p>Mediation language in a separate role-play environment.</p></div>
+                <div class="planner-slot"><h3>Writing workshop</h3><p>The family memory blog as a separate production task.</p></div>
+              </div>
+            </div>
+            <aside class="visual-card">
+              <img src="../../assets/img/english-intermediate/unit-4/workshop-famous-family-memory-blog.png" alt="Learners planning a family memory blog with photos and notes" />
+              <div><h3>Separate production</h3><p>Writing and speaking products stay outside this explanation page.</p></div>
+            </aside>
+          </div>
+          <div class="hero-actions">
+            <a href="practice-unit-4-family-demands.html" class="btn btn-primary">Open grammar workshop</a>
+            <a href="reading-unit-4-the-memory-box.html" class="btn btn-secondary">Read The Memory Box</a>
+            <a href="workshop-unit-4-famous-family-memory-blog.html" class="btn btn-secondary">Write the blog</a>
+          </div>
+        </div>
+      </details>
     </section>
   </main>
 
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script>
+    document.querySelectorAll("[data-open]").forEach((button)=>{
+      button.addEventListener("click",()=>{
+        const target=document.getElementById(button.dataset.open);
+        if(!target)return;
+        target.open=true;
+        target.scrollIntoView({behavior:"smooth",block:"start"});
+      });
+    });
+    document.getElementById("openAll").addEventListener("click",()=>document.querySelectorAll(".unit4-section").forEach((section)=>section.open=true));
+    document.getElementById("closeAll").addEventListener("click",()=>document.querySelectorAll(".unit4-section").forEach((section)=>section.open=false));
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
