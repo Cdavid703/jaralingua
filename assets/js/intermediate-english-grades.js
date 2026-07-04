@@ -601,19 +601,23 @@
       return String(b.detail.submittedAt || "").localeCompare(String(a.detail.submittedAt || ""));
     });
     if (!rows.length) {
-      return `<tr><td colspan="7">No follow-up submissions yet.</td></tr>`;
+      return `<tr><td colspan="8">No follow-up submissions yet.</td></tr>`;
     }
     return rows.map(function (item) {
       const detail = item.detail;
+      const gradeText = typeof detail.grade === "number" ? formatGrade(detail.grade) : "Submitted";
+      const scoreText = detail.score == null || detail.total == null ? (detail.wordCount ? detail.wordCount + " words" : "") : detail.score + " / " + detail.total;
+      const responseText = detail.blogText || detail.response || "";
       return `
         <tr>
           <td>${escapeHtml(item.student.fullName)}</td>
           <td>${escapeHtml(item.student.email || "")}</td>
           <td>${escapeHtml(detail.activity || item.id)}</td>
           <td>${escapeHtml(detail.activityType || "Follow-up")}</td>
-          <td>${escapeHtml(formatGrade(detail.grade))}</td>
-          <td>${escapeHtml((detail.score == null ? "" : detail.score) + " / " + (detail.total == null ? "" : detail.total))}</td>
+          <td>${escapeHtml(gradeText)}</td>
+          <td>${escapeHtml(scoreText)}</td>
           <td>${escapeHtml(detail.submittedAt || "")}</td>
+          <td>${responseText ? `<details><summary>Read response</summary><div style="white-space:pre-wrap;min-width:280px;max-width:520px;line-height:1.55;margin-top:.6rem;">${escapeHtml(responseText)}</div></details>` : ""}</td>
         </tr>
       `;
     }).join("");
@@ -627,7 +631,7 @@
         <p class="section-text mb-3">These activities are submitted to the teacher and give students a reference grade, but they are not gradebook columns and do not affect the accumulated percentage.</p>
         <div class="table-wrap">
           <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th><th>Activity</th><th>Type</th><th>Reference grade</th><th>Score</th><th>Submitted</th></tr></thead>
+            <thead><tr><th>Student</th><th>Email</th><th>Activity</th><th>Type</th><th>Reference grade</th><th>Score / words</th><th>Submitted</th><th>Response</th></tr></thead>
             <tbody>${followUpSubmissionRows(payload)}</tbody>
           </table>
         </div>

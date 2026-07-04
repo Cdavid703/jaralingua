@@ -11,11 +11,24 @@
   <style>
     .blog-hero{background:linear-gradient(135deg,rgba(7,31,79,.92),rgba(217,164,65,.45)),url("../../assets/img/english-intermediate/unit-4/workshop-famous-family-memory-blog.png") center/cover no-repeat;color:#fff}
     .blog-hero .lesson-hero-content p,.blog-hero .eyebrow{color:#fff}
+    .blog-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
     .blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-    .blog-card,.rubric-card,.model-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
-    .blog-card h3,.rubric-card h3,.model-card h3{color:var(--intermediate-navy);margin:.2rem 0 .55rem}
-    .blog-card p,.rubric-card p,.model-card p,.model-card li{color:var(--intermediate-muted);line-height:1.65}
+    .blog-card,.rubric-card,.model-card,.writer-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .blog-card h3,.rubric-card h3,.model-card h3,.writer-card h3{color:var(--intermediate-navy);margin:.2rem 0 .55rem}
+    .blog-card p,.rubric-card p,.model-card p,.model-card li,.writer-card p{color:var(--intermediate-muted);line-height:1.65}
     .model-text{background:#fffaf0;border:1px solid rgba(217,164,65,.35);border-radius:8px;padding:1rem;color:#334155;line-height:1.8}
+    .model-text span{display:block;margin:.35rem 0}
+    .model-text b{color:var(--intermediate-navy)}
+    .example-line{background:#f8fbff;border:1px solid var(--intermediate-border);border-radius:8px;padding:.75rem;color:#334155;line-height:1.55}
+    .writer-field{display:grid;gap:.35rem;margin-bottom:.85rem}
+    .writer-field label{color:var(--intermediate-navy);font-weight:900}
+    .writer-field input,.writer-field textarea{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.8rem;font:inherit;color:#1f2937;background:#fff}
+    .writer-field textarea{min-height:260px;resize:vertical;line-height:1.6}
+    .writer-status{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;line-height:1.55}
+    .writer-status.show{display:block}
+    .writer-status.error{background:#fff1f2;color:#7f1d1d}
+    .writer-status.success{background:#ecfdf5;color:#064e3b}
+    .counter-pill{display:inline-flex;border-radius:999px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;padding:.35rem .65rem}
   </style>
 </head>
 <body class="english-intermediate-page">
@@ -27,26 +40,58 @@
     <section class="premium-lesson-container" id="blog">
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Input</p><h2>Model Blog Paragraph</h2></div></div>
-        <div class="model-text">The Riveras used to spend every Sunday afternoon in the kitchen. Rosa used to tell short stories, and the children used to ask questions before dinner. Now everyone is busier, so the family cannot copy the old tradition exactly. Their new agreement is simple: one phone-free half hour, one shared task, and one story at dinner. The memory is useful because it helps them design a better present.</div>
+        <div class="model-text">
+          <span><b>Past habit:</b> The Riveras used to spend every Sunday afternoon in the kitchen.</span>
+          <span><b>Details:</b> Rosa used to tell short stories, and the children used to ask questions before dinner.</span>
+          <span><b>Present contrast:</b> Now everyone is busier, so the family cannot copy the old tradition exactly.</span>
+          <span><b>Agreement:</b> Their new agreement is simple: one phone-free half hour, one shared task, and one story at dinner.</span>
+          <span><b>Reflection:</b> The memory is useful because it helps them design a better present.</span>
+        </div>
       </article>
 
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Planning</p><h2>Build Your Blog</h2></div></div>
         <div class="blog-grid">
-          <div class="blog-card"><h3>Choose the family</h3><p>Use the Riveras, another fictional family, or a public/famous family. Do not expose private personal stories.</p></div>
-          <div class="blog-card"><h3>Past habit</h3><p>Write three sentences with <strong>used to</strong> or <strong>didn't use to</strong>.</p></div>
-          <div class="blog-card"><h3>Present contrast</h3><p>Explain what is different now using <strong>now</strong>, <strong>today</strong>, or <strong>these days</strong>.</p></div>
-          <div class="blog-card"><h3>Reflection</h3><p>Finish with one sentence explaining what the memory teaches.</p></div>
+          <div class="blog-card"><h3>1. Choose a safe family</h3><p>Use the Riveras, another fictional family, or a public/famous family. Do not expose private personal stories from your real family.</p><div class="example-line">The Morales family used to visit their grandmother every Saturday.</div></div>
+          <div class="blog-card"><h3>2. Name the old routine</h3><p>Start with one repeated habit. Use <strong>used to</strong> for something that happened before but is different now.</p><div class="example-line">They used to cook soup together and listen to old music.</div></div>
+          <div class="blog-card"><h3>3. Add two memory details</h3><p>Give small concrete details: place, people, food, objects, music, time, or a repeated question.</p><div class="example-line">The children used to write the menu on a small yellow card.</div></div>
+          <div class="blog-card"><h3>4. Explain the present contrast</h3><p>Show what changed. Use <strong>now</strong>, <strong>today</strong>, or <strong>these days</strong>.</p><div class="example-line">Now the children have homework, and the adults answer work messages.</div></div>
+          <div class="blog-card"><h3>5. Finish with an agreement</h3><p>The blog should not only feel nostalgic. It must end with a realistic decision for today.</p><div class="example-line">Today, they have to protect thirty minutes for dinner without phones.</div></div>
+          <div class="blog-card"><h3>6. Add a reflection</h3><p>Explain what the memory teaches. This final sentence gives the blog a purpose.</p><div class="example-line">The memory teaches them that a tradition can change and still matter.</div></div>
         </div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Product</p><h2>Blog Requirements</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Examples</p><h2>Useful Sentence Models</h2></div></div>
         <div class="blog-grid">
-          <div class="rubric-card"><h3>Length</h3><p>120 to 160 words.</p></div>
-          <div class="rubric-card"><h3>Language</h3><p>3 uses of <strong>used to</strong>, 2 present contrast sentences, and 1 obligation or agreement sentence.</p></div>
+          <div class="model-card"><h3>Opening</h3><ul><li>The family used to...</li><li>When the children were younger, they used to...</li><li>Every Sunday, they used to...</li></ul></div>
+          <div class="model-card"><h3>Past habit</h3><ul><li>They did not use to eat in separate rooms.</li><li>Rosa used to tell one story before dinner.</li><li>Carlos used to play music while Ana cooked.</li></ul></div>
+          <div class="model-card"><h3>Present contrast</h3><ul><li>Now everyone has a different schedule.</li><li>These days, phones interrupt the conversation.</li><li>Today, they cannot repeat the old routine exactly.</li></ul></div>
+          <div class="model-card"><h3>Agreement</h3><ul><li>They have to share one task.</li><li>They agreed to put phones away for thirty minutes.</li><li>The new rule has to be fair for adults and teenagers.</li></ul></div>
+          <div class="model-card"><h3>Reflection</h3><ul><li>The memory helps them choose a better habit.</li><li>The past was not perfect, but it gave them a useful idea.</li><li>A tradition can change without disappearing.</li></ul></div>
+          <div class="model-card"><h3>Common mistake</h3><p><strong>Incorrect:</strong> They used to cooked together.</p><p><strong>Correct:</strong> They used to cook together.</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Product</p><h2>Blog Requirements</h2></div></div>
+        <div class="blog-grid">
+          <div class="rubric-card"><h3>Length</h3><p>120 to 160 words is ideal. The submission system accepts 90 to 220 words.</p></div>
+          <div class="rubric-card"><h3>Language</h3><p>Use <strong>used to</strong> or <strong>didn't use to</strong>, present contrast language, and one obligation or agreement sentence.</p></div>
           <div class="rubric-card"><h3>Tone</h3><p>Respectful, fictional, and reflective. Avoid blaming real relatives.</p></div>
-          <div class="rubric-card"><h3>Feedback</h3><p>A partner checks clarity, grammar, and whether the final reflection makes sense.</p></div>
+          <div class="rubric-card"><h3>Class reading</h3><p>The teacher will be able to read submitted responses and may choose examples to discuss in class.</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Submit</p><h2>Send Your Blog to the Teacher</h2></div></div>
+        <div class="writer-card">
+          <p>This is a follow-up writing submission. It goes to the teacher, but it is not a gradebook column and it does not affect the accumulated percentage.</p>
+          <div class="writer-field"><label for="blogTitle">Blog title</label><input id="blogTitle" maxlength="120" placeholder="Example: A Sunday Tradition That Changed" /></div>
+          <div class="writer-field"><label for="blogText">Your family memory blog</label><textarea id="blogText" placeholder="Write 120 to 160 words. Use a fictional or public family, past habits with used to, present contrast, and a realistic agreement."></textarea></div>
+          <p><span class="counter-pill" id="wordCounter">0 words</span></p>
+          <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitBlog">Submit to teacher</button><button type="button" class="btn btn-secondary" id="clearBlog">Clear draft</button></div>
+          <div class="writer-status" id="writerStatus"></div>
         </div>
       </article>
 
@@ -54,6 +99,129 @@
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script>
+    const GOOGLE_USER_KEY = "jaralingua_google_user";
+    const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const SUBMIT_ENDPOINT = "/api/intermediate/unit4-memory-blog/submit";
+    const titleInput = document.getElementById("blogTitle");
+    const blogText = document.getElementById("blogText");
+    const wordCounter = document.getElementById("wordCounter");
+    const submitButton = document.getElementById("submitBlog");
+    const clearButton = document.getElementById("clearBlog");
+    const statusBox = document.getElementById("writerStatus");
+
+    function wordCount(value){
+      const matches=String(value||"").trim().match(/\b[\w'-]+\b/g);
+      return matches?matches.length:0;
+    }
+
+    function updateCounter(){
+      const count=wordCount(blogText.value);
+      wordCounter.textContent=count+" words";
+    }
+
+    function readStoredUser(key){
+      try{
+        const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+        if(!saved||!saved.exp||Date.now()/1000>saved.exp){
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return saved;
+      }catch(error){
+        sessionStorage.removeItem(key);
+        return null;
+      }
+    }
+
+    function readUser(){
+      const googleUser=readStoredUser(GOOGLE_USER_KEY);
+      if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);
+      const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);
+      if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);
+      return null;
+    }
+
+    function authHeaders(){
+      const user=readUser();
+      if(!user||!user.credential)return null;
+      return {
+        Authorization:"Bearer "+user.credential,
+        "X-Jaralingua-Auth-Provider":user.provider||"google",
+        "Content-Type":"application/json"
+      };
+    }
+
+    function openLoginPanel(){
+      const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+      if(trigger)trigger.click();
+    }
+
+    function showStatus(message,type){
+      statusBox.className="writer-status show "+(type||"");
+      statusBox.textContent=message;
+    }
+
+    function submitBlog(){
+      const count=wordCount(blogText.value);
+      if(count<90){
+        showStatus("Write at least 90 words before submitting. The ideal length is 120 to 160 words.", "error");
+        return;
+      }
+      if(count>220){
+        showStatus("The blog is too long for this workshop. Keep it under 220 words.", "error");
+        return;
+      }
+      const headers=authHeaders();
+      if(!headers){
+        showStatus("Sign in first. Your blog must be linked to your student record before it can be sent to the teacher.", "error");
+        openLoginPanel();
+        return;
+      }
+      submitButton.disabled=true;
+      showStatus("Sending your blog to the teacher...", "");
+      fetch(SUBMIT_ENDPOINT,{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify({title:titleInput.value,blogText:blogText.value,clientDate:new Date().toISOString().slice(0,10)})
+      }).then((response)=>{
+        return response.json().then((data)=>({ok:response.ok,status:response.status,data:data}));
+      }).then(({ok,status,data})=>{
+        submitButton.disabled=false;
+        if(!ok){
+          if(status===403){
+            showStatus("Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.", "error");
+            return;
+          }
+          if(data&&data.error==="text_too_short"){
+            showStatus("The blog is too short: "+data.wordCount+" words. Write at least 90 words.", "error");
+            return;
+          }
+          if(data&&data.error==="text_too_long"){
+            showStatus("The blog is too long: "+data.wordCount+" words. Keep it under 220 words.", "error");
+            return;
+          }
+          showStatus("The submission could not be saved. Please reload and try again.", "error");
+          return;
+        }
+        showStatus("Submitted to teacher. Word count: "+data.wordCount+". The teacher can now read your response in the follow-up submissions panel.", "success");
+      }).catch(()=>{
+        submitButton.disabled=false;
+        showStatus("Network error. The blog was not submitted.", "error");
+      });
+    }
+
+    blogText.addEventListener("input",updateCounter);
+    submitButton.addEventListener("click",submitBlog);
+    clearButton.addEventListener("click",()=>{
+      titleInput.value="";
+      blogText.value="";
+      updateCounter();
+      statusBox.className="writer-status";
+      statusBox.textContent="";
+    });
+    updateCounter();
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>

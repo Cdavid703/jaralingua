@@ -50,6 +50,7 @@ BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 INTERMEDIATE_UNIT4_LISTENING_ID = "unit4SundayDinnerListening"
 INTERMEDIATE_UNIT4_MEMORY_BOX_ID = "unit4MemoryBoxReading"
+INTERMEDIATE_UNIT4_MEMORY_BLOG_ID = "unit4FamilyMemoryBlog"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -2612,6 +2613,61 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "grade": result["grade"],
                     "incorrectQuestions": result["incorrect"],
                     "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit4-memory-blog/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                title = clean_text(payload.get("title"), 120)
+                blog_text = clean_basic_writing(payload.get("blogText"))
+                word_count = basic_word_count(blog_text)
+                if word_count < 90:
+                    json_response(self, 400, {"error": "text_too_short", "wordCount": word_count})
+                    return
+                if word_count > 220:
+                    json_response(self, 400, {"error": "text_too_long", "wordCount": word_count})
+                    return
+                used_to_count = len(re.findall(r"\bused\s+to\b|\bdidn['’]?t\s+use\s+to\b", blog_text, flags=re.IGNORECASE))
+                present_markers = len(re.findall(r"\bnow\b|\btoday\b|\bthese days\b", blog_text, flags=re.IGNORECASE))
+                submitted_at = now_iso()
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT4_MEMORY_BLOG_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT4_MEMORY_BLOG_ID] = {
+                    "submittedAt": submitted_at,
+                    "title": title or "Family Memory Blog",
+                    "blogText": blog_text,
+                    "wordCount": word_count,
+                    "usedToCount": used_to_count,
+                    "presentMarkerCount": present_markers,
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Family Memory Blog Workshop",
+                    "activityType": "Writing follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT4_MEMORY_BLOG_ID,
+                    "submittedAt": submitted_at,
+                    "wordCount": word_count,
+                    "usedToCount": used_to_count,
+                    "presentMarkerCount": present_markers,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
                     "weight": 0
