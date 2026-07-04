@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expression Sentence Wall | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <style>
+    .wall-hero{background:linear-gradient(135deg,rgba(7,31,79,.94),rgba(15,118,110,.78)),url("../../assets/img/english-intermediate/unit-4/idiom-phrasal-verb-sentence-wall.svg") center/cover no-repeat;color:#fff}
+    .wall-hero .lesson-hero-content p,.wall-hero .eyebrow{color:#fff}
+    .wall-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
+    .wall-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,390px);gap:1rem;align-items:start}
+    .wall-panel,.expression-card,.submission-card,.teacher-panel,.student-panel,.image-panel{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .wall-panel h3,.expression-card h3,.submission-card h3,.teacher-panel h3,.student-panel h3,.image-panel h3{color:var(--intermediate-navy);margin:.1rem 0 .5rem}
+    .wall-panel p,.expression-card p,.submission-card p,.teacher-panel p,.student-panel p,.image-panel p,.wall-panel li{color:var(--intermediate-muted);line-height:1.65}
+    .activity-image{width:100%;border-radius:8px;border:1px solid var(--intermediate-border);display:block;background:#f8fbff}
+    .expression-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+    .expression-card{display:grid;gap:.55rem}
+    .expression-card.active{border-color:#0f766e;box-shadow:0 18px 35px rgba(15,118,110,.18)}
+    .expression-meta{display:flex;gap:.45rem;flex-wrap:wrap}
+    .expression-tag,.active-tag{display:inline-flex;align-items:center;border-radius:999px;padding:.35rem .65rem;font-weight:900;font-size:.78rem}
+    .expression-tag{background:#eef5ff;color:var(--intermediate-navy)}
+    .active-tag{background:#ecfdf5;color:#065f46}
+    .translation{background:#fff7e7;border:1px solid rgba(217,164,65,.35);border-radius:8px;padding:.65rem;color:#6b4e16;font-weight:800}
+    .example-box{background:#f8fbff;border:1px solid var(--intermediate-border);border-radius:8px;padding:.7rem;color:#334155;line-height:1.55}
+    .teacher-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.55rem;margin-top:1rem}
+    .control-button{border:1px solid var(--intermediate-border);background:#fff;color:var(--intermediate-navy);border-radius:8px;padding:.7rem .8rem;font-weight:900;cursor:pointer;text-align:left}
+    .control-button:hover,.control-button.active{background:#071f4f;color:#fff;border-color:#071f4f}
+    .close-button{background:#fff7e7;border-color:#f0d08e;color:#6b4e16}
+    .status-box{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:850;line-height:1.55}
+    .status-box.show{display:block}
+    .status-box.error{background:#fff1f2;color:#7f1d1d}
+    .status-box.success{background:#ecfdf5;color:#064e3b}
+    .student-panel textarea{width:100%;min-height:120px;resize:vertical;border:1px solid var(--intermediate-border);border-radius:8px;padding:.85rem;font:inherit;color:#1f2937;line-height:1.6;background:#fff}
+    .student-panel label{display:block;color:var(--intermediate-navy);font-weight:900;margin:.85rem 0 .35rem}
+    .live-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+    .live-dot{display:inline-flex;align-items:center;gap:.45rem;color:#065f46;font-weight:900}
+    .live-dot::before{content:"";width:.65rem;height:.65rem;border-radius:50%;background:#10b981;box-shadow:0 0 0 .35rem rgba(16,185,129,.16)}
+    .submissions-list{display:grid;gap:.8rem;margin-top:1rem}
+    .submission-card{box-shadow:none;background:#f8fbff}
+    .submission-card p{font-size:1.02rem;color:#1f2937;margin:.2rem 0 .65rem}
+    .submission-meta{display:flex;gap:.45rem;flex-wrap:wrap;color:#64748b;font-size:.86rem;font-weight:800}
+    .empty-wall{background:#fffaf0;border:1px solid rgba(217,164,65,.35);border-radius:8px;padding:1rem;color:#6b4e16;font-weight:850}
+    .step-list{display:grid;gap:.55rem;margin:0;padding-left:1.2rem}
+    .step-list strong{color:var(--intermediate-navy)}
+    .locked-note{background:#f8fbff;border:1px dashed #b9c9d8;border-radius:8px;padding:.8rem;color:#526174}
+    @media (max-width:900px){
+      .wall-layout{grid-template-columns:1fr}
+      .teacher-controls{grid-template-columns:1fr}
+    }
+    @media (max-width:560px){
+      .wall-panel,.expression-card,.submission-card,.teacher-panel,.student-panel,.image-panel{padding:.85rem}
+      .lesson-meta{gap:.45rem}
+      .control-button{font-size:.95rem}
+    }
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Intermediate Course</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+  <main>
+    <section class="lesson-hero wall-hero"><div class="lesson-hero-content"><p class="eyebrow">Practice Lab - Unit 4 Live Workshop</p><h1>Expression Sentence Wall</h1><p>The teacher opens one idiom or phrasal verb. Students create one original sentence, send it through the platform, and the class reads the live wall together.</p><div class="lesson-meta"><span>Phrasal verbs</span><span>Idioms</span><span>Live interaction</span><span>Teacher-led</span></div><div class="hero-actions"><a href="#live-activity" class="btn btn-primary">Open live wall</a><a href="practice-lab.html#unit-4-folder" class="btn btn-secondary">Back to Unit 4 folder</a></div></div></section>
+
+    <section class="premium-lesson-container" id="live-activity">
+      <div class="wall-layout">
+        <div>
+          <article class="premium-topic-card">
+            <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Activity design</p><h2>How the Live Wall Works</h2></div></div>
+            <div class="wall-panel">
+              <ol class="step-list">
+                <li><strong>The teacher opens one expression.</strong> Only that idiom or phrasal verb is available for submissions.</li>
+                <li><strong>Students write one original sentence.</strong> The sentence must use the open expression and connect to Unit 4: family responsibilities, memories, negotiation, or conflict repair.</li>
+                <li><strong>The sentence appears on the wall.</strong> The wall refreshes automatically, so the teacher can read examples aloud in class.</li>
+                <li><strong>The class discusses clarity.</strong> The focus is communicative accuracy: meaning, context, and natural use.</li>
+              </ol>
+            </div>
+          </article>
+
+          <article class="premium-topic-card">
+            <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Expression bank</p><h2>Idioms and Phrasal Verbs for Unit 4</h2></div></div>
+            <div class="expression-grid" id="expressionGrid"></div>
+          </article>
+
+          <article class="premium-topic-card">
+            <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Live class product</p><h2>Student Sentence Wall</h2></div></div>
+            <div class="wall-panel">
+              <div class="live-header"><h3 id="wallTitle">Waiting for an expression</h3><span class="live-dot">Live refresh</span></div>
+              <p id="wallSubtitle">Sign in and wait for the teacher to open an expression.</p>
+              <div class="submissions-list" id="submissionsList"></div>
+            </div>
+          </article>
+        </div>
+
+        <aside>
+          <div class="image-panel">
+            <img class="activity-image" src="../../assets/img/english-intermediate/unit-4/idiom-phrasal-verb-sentence-wall.svg" alt="Live sentence wall with teacher controls and student submissions" />
+            <h3>Classroom purpose</h3>
+            <p>This activity turns idioms and phrasal verbs into visible class language. Students do not only recognize expressions; they build a usable sentence that the teacher can read, refine, and connect to the unit topic.</p>
+          </div>
+
+          <div class="teacher-panel" id="teacherPanel" hidden>
+            <h3>Teacher controls</h3>
+            <p>Open one button at a time. Students can submit only for the expression that is currently active.</p>
+            <div class="teacher-controls" id="teacherControls"></div>
+            <div class="status-box" id="teacherStatus"></div>
+          </div>
+
+          <div class="student-panel">
+            <h3>Submit your sentence</h3>
+            <p id="activeInstruction">Wait for the teacher to open an expression.</p>
+            <div class="locked-note" id="studentLock">Sign in with your registered Intermediate English account before sending your sentence.</div>
+            <label for="studentSentence">Your original sentence</label>
+            <textarea id="studentSentence" maxlength="280" placeholder="Example: Leo brought up the phone rule before dinner."></textarea>
+            <p class="expression-meta"><span class="expression-tag" id="wordCounter">0 words</span><span class="expression-tag" id="activeExpressionTag">No expression open</span></p>
+            <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitSentence">Send to live wall</button><button type="button" class="btn btn-secondary" id="clearSentence">Clear</button></div>
+            <div class="status-box" id="studentStatus"></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script>
+    const GOOGLE_USER_KEY="jaralingua_google_user";
+    const MICROSOFT_USER_KEY="jaralingua_microsoft_user";
+    const LOCAL_USER_KEY="jaralingua_local_user";
+    const API_STATE="/api/intermediate/unit4-expression-wall/state";
+    const API_ACTIVATE="/api/intermediate/unit4-expression-wall/activate";
+    const API_SUBMIT="/api/intermediate/unit4-expression-wall/submit";
+    const fallbackExpressions=[
+      {id:"bring-up",type:"Phrasal verb",label:"bring up",spanish:"mencionar / sacar un tema",meaning:"To introduce a topic in a conversation, especially a sensitive topic.",teacherPrompt:"Create one respectful sentence about a family member bringing up a responsibility, memory, or problem.",example:"Maya needs to bring up the phone rule before dinner."},
+      {id:"work-out",type:"Phrasal verb",label:"work out",spanish:"resolver / encontrar una solucion",meaning:"To solve a problem or make an agreement after discussion.",teacherPrompt:"Create one sentence about a family working out a fair plan.",example:"The Riveras worked out a fair plan for Sunday dinner."},
+      {id:"pitch-in",type:"Phrasal verb",label:"pitch in",spanish:"colaborar / ayudar entre todos",meaning:"To help with a shared task, especially when several people are involved.",teacherPrompt:"Create one sentence about someone pitching in with chores, dinner, or homework.",example:"Leo has to pitch in by setting the table."},
+      {id:"clear-the-air",type:"Idiom",label:"clear the air",spanish:"aclarar las cosas / bajar la tension",meaning:"To discuss a conflict honestly so people feel less tense.",teacherPrompt:"Create one sentence about a family clearing the air after a misunderstanding.",example:"Ana asked everyone to clear the air before dinner."},
+      {id:"meet-halfway",type:"Idiom",label:"meet someone halfway",spanish:"ceder un poco / llegar a un punto medio",meaning:"To compromise by accepting part of what another person wants.",teacherPrompt:"Create one sentence about two relatives meeting each other halfway.",example:"Carlos met Leo halfway and followed the phone rule too."},
+      {id:"patch-things-up",type:"Idiom",label:"patch things up",spanish:"arreglar las cosas / reconciliarse",meaning:"To repair a relationship after an argument or tense moment.",teacherPrompt:"Create one sentence about relatives patching things up after a disagreement.",example:"Maya and Leo patched things up after they made a homework plan."}
+    ];
+    let state={role:"guest",student:null,canSubmit:false,expressions:fallbackExpressions,activeExpressionId:null,activeExpression:null,submissions:[]};
+    let pollingTimer=null;
+    const expressionGrid=document.getElementById("expressionGrid");
+    const teacherPanel=document.getElementById("teacherPanel");
+    const teacherControls=document.getElementById("teacherControls");
+    const teacherStatus=document.getElementById("teacherStatus");
+    const studentStatus=document.getElementById("studentStatus");
+    const studentLock=document.getElementById("studentLock");
+    const activeInstruction=document.getElementById("activeInstruction");
+    const activeExpressionTag=document.getElementById("activeExpressionTag");
+    const studentSentence=document.getElementById("studentSentence");
+    const submitSentence=document.getElementById("submitSentence");
+    const clearSentence=document.getElementById("clearSentence");
+    const wordCounter=document.getElementById("wordCounter");
+    const wallTitle=document.getElementById("wallTitle");
+    const wallSubtitle=document.getElementById("wallSubtitle");
+    const submissionsList=document.getElementById("submissionsList");
+
+    function escapeHtml(value){
+      return String(value||"").replace(/[&<>"']/g,(char)=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[char]));
+    }
+
+    function readStoredUser(key,provider){
+      try{
+        const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+        if(!saved||!saved.exp||Date.now()/1000>saved.exp){
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return Object.assign({provider:provider},saved);
+      }catch(error){
+        sessionStorage.removeItem(key);
+        return null;
+      }
+    }
+
+    function readUser(){
+      return readStoredUser(GOOGLE_USER_KEY,"google")||readStoredUser(MICROSOFT_USER_KEY,"microsoft")||readStoredUser(LOCAL_USER_KEY,"local");
+    }
+
+    function authHeaders(){
+      const user=readUser();
+      if(!user||!user.credential)return null;
+      return {
+        Authorization:"Bearer "+user.credential,
+        "X-Jaralingua-Auth-Provider":user.provider||"google",
+        "Content-Type":"application/json"
+      };
+    }
+
+    function openLoginPanel(){
+      const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+      if(trigger)trigger.click();
+    }
+
+    function wordCount(value){
+      const matches=String(value||"").trim().match(/\b[\w'-]+\b/g);
+      return matches?matches.length:0;
+    }
+
+    function showStatus(node,message,type){
+      node.className="status-box show "+(type||"");
+      node.textContent=message;
+    }
+
+    function expressionById(id){
+      return (state.expressions||fallbackExpressions).find((item)=>item.id===id)||null;
+    }
+
+    function renderExpressions(){
+      const expressions=state.expressions&&state.expressions.length?state.expressions:fallbackExpressions;
+      expressionGrid.innerHTML=expressions.map((item)=>`
+        <article class="expression-card ${item.id===state.activeExpressionId?"active":""}">
+          <div class="expression-meta"><span class="expression-tag">${escapeHtml(item.type)}</span>${item.id===state.activeExpressionId?'<span class="active-tag">Open now</span>':""}</div>
+          <h3>${escapeHtml(item.label)}</h3>
+          <div class="translation">${escapeHtml(item.spanish)}</div>
+          <p>${escapeHtml(item.meaning)}</p>
+          <div class="example-box"><strong>Model:</strong> ${escapeHtml(item.example)}</div>
+        </article>
+      `).join("");
+    }
+
+    function renderTeacherControls(){
+      const isStaff=["admin","teacher"].includes(state.role);
+      teacherPanel.hidden=!isStaff;
+      if(!isStaff)return;
+      const expressions=state.expressions&&state.expressions.length?state.expressions:fallbackExpressions;
+      teacherControls.innerHTML=expressions.map((item)=>`<button type="button" class="control-button ${item.id===state.activeExpressionId?"active":""}" data-open-expression="${escapeHtml(item.id)}">${escapeHtml(item.label)}</button>`).join("")+
+        '<button type="button" class="control-button close-button" data-open-expression="">Close all</button>';
+      teacherControls.querySelectorAll("[data-open-expression]").forEach((button)=>{
+        button.addEventListener("click",()=>activateExpression(button.getAttribute("data-open-expression")));
+      });
+    }
+
+    function renderStudentPanel(){
+      const active=state.activeExpression||expressionById(state.activeExpressionId);
+      const signedIn=!!authHeaders();
+      const canSubmit=state.canSubmit&&active;
+      studentLock.textContent=signedIn ? (state.student?"Your account is connected to "+state.student.fullName+".":"This account is signed in, but it is not linked to an Intermediate English student record.") : "Sign in with your registered Intermediate English account before sending your sentence.";
+      if(active){
+        activeInstruction.textContent=active.teacherPrompt||("Create one original sentence with "+active.label+".");
+        activeExpressionTag.textContent="Open: "+active.label;
+        studentSentence.placeholder=active.example||"Write one original sentence with the open expression.";
+      }else{
+        activeInstruction.textContent="Wait for the teacher to open an expression.";
+        activeExpressionTag.textContent="No expression open";
+        studentSentence.placeholder="The teacher must open an expression before you send your sentence.";
+      }
+      submitSentence.disabled=!canSubmit;
+    }
+
+    function renderWall(){
+      const active=state.activeExpression||expressionById(state.activeExpressionId);
+      const submissions=Array.isArray(state.submissions)?state.submissions:[];
+      const activeSubmissions=active?submissions.filter((item)=>item.expressionId===active.id):submissions;
+      wallTitle.textContent=active?("Open expression: "+active.label):"Waiting for an expression";
+      wallSubtitle.textContent=active?("Students are building sentences with "+active.label+"."):"The teacher will open one expression at a time.";
+      if(!activeSubmissions.length){
+        submissionsList.innerHTML='<div class="empty-wall">No sentences yet. When students submit, their sentences will appear here automatically.</div>';
+        return;
+      }
+      submissionsList.innerHTML=activeSubmissions.slice().reverse().map((item)=>`
+        <article class="submission-card">
+          <h3>${escapeHtml(item.expressionLabel||"Expression")}</h3>
+          <p>${escapeHtml(item.sentence)}</p>
+          <div class="submission-meta"><span>${escapeHtml(item.studentName||"Student")}</span><span>${escapeHtml((item.submittedAt||"").replace("T"," ").replace("Z"," UTC"))}</span></div>
+        </article>
+      `).join("");
+    }
+
+    function renderAll(){
+      renderExpressions();
+      renderTeacherControls();
+      renderStudentPanel();
+      renderWall();
+      wordCounter.textContent=wordCount(studentSentence.value)+" words";
+    }
+
+    function request(url,options){
+      const headers=authHeaders();
+      if(!headers){
+        renderAll();
+        return Promise.resolve({ok:false,status:401,data:{error:"not_signed_in"}});
+      }
+      const config=Object.assign({},options||{});
+      config.headers=Object.assign({},headers,config.headers||{});
+      return fetch(url,config).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data})));
+    }
+
+    function loadState(silent){
+      return request(API_STATE).then((result)=>{
+        if(!result.ok){
+          if(!silent&&result.status===401){
+            showStatus(studentStatus,"Sign in first so the platform can load the live wall.", "error");
+          }
+          return;
+        }
+        state=result.data;
+        renderAll();
+      }).catch(()=>{
+        if(!silent)showStatus(studentStatus,"The live wall could not be loaded. Check the connection and reload.", "error");
+      });
+    }
+
+    function activateExpression(expressionId){
+      request(API_ACTIVATE,{method:"POST",body:JSON.stringify({expressionId:expressionId})}).then((result)=>{
+        if(!result.ok){
+          showStatus(teacherStatus,result.status===403?"Only teacher or admin accounts can open expressions.":"The expression could not be opened.", "error");
+          return;
+        }
+        state=result.data;
+        renderAll();
+        showStatus(teacherStatus,expressionId?"Expression opened for student submissions.":"All expressions are closed.", "success");
+      }).catch(()=>showStatus(teacherStatus,"Network error. The expression was not updated.", "error"));
+    }
+
+    function submitStudentSentence(){
+      const active=state.activeExpression||expressionById(state.activeExpressionId);
+      const sentence=studentSentence.value.trim();
+      const count=wordCount(sentence);
+      if(!active){
+        showStatus(studentStatus,"Wait for the teacher to open an expression.", "error");
+        return;
+      }
+      if(count<6){
+        showStatus(studentStatus,"Write a complete sentence of at least 6 words.", "error");
+        return;
+      }
+      if(count>35){
+        showStatus(studentStatus,"Keep the sentence under 35 words so it can be read quickly in class.", "error");
+        return;
+      }
+      submitSentence.disabled=true;
+      showStatus(studentStatus,"Sending your sentence to the live wall...", "");
+      request(API_SUBMIT,{method:"POST",body:JSON.stringify({expressionId:active.id,sentence:sentence,clientDate:new Date().toISOString().slice(0,10)})}).then((result)=>{
+        submitSentence.disabled=false;
+        if(!result.ok){
+          if(result.status===401){
+            showStatus(studentStatus,"Sign in first. Your sentence must be linked to your student record.", "error");
+            openLoginPanel();
+            return;
+          }
+          if(result.status===403){
+            const message=result.data&&result.data.error==="no_active_expression"?"The teacher closed this expression. Wait for the next one.":"This account is not linked to an Intermediate English student record.";
+            showStatus(studentStatus,message, "error");
+            return;
+          }
+          if(result.data&&result.data.error==="expression_missing"){
+            showStatus(studentStatus,"Use the open expression in your sentence: "+result.data.expression+".", "error");
+            return;
+          }
+          if(result.data&&result.data.error==="expression_not_active"){
+            showStatus(studentStatus,"The teacher changed the expression. Check the active expression and try again.", "error");
+            loadState(true);
+            return;
+          }
+          showStatus(studentStatus,"The sentence could not be saved. Please check it and try again.", "error");
+          return;
+        }
+        state=result.data;
+        studentSentence.value="";
+        renderAll();
+        showStatus(studentStatus,"Your sentence is on the live wall.", "success");
+      }).catch(()=>{
+        submitSentence.disabled=false;
+        showStatus(studentStatus,"Network error. Your sentence was not sent.", "error");
+      });
+    }
+
+    studentSentence.addEventListener("input",()=>{wordCounter.textContent=wordCount(studentSentence.value)+" words";});
+    submitSentence.addEventListener("click",submitStudentSentence);
+    clearSentence.addEventListener("click",()=>{studentSentence.value="";wordCounter.textContent="0 words";studentStatus.className="status-box";studentStatus.textContent="";});
+    renderAll();
+    loadState(false);
+    pollingTimer=setInterval(()=>loadState(true),3500);
+    window.addEventListener("beforeunload",()=>{if(pollingTimer)clearInterval(pollingTimer);});
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>

@@ -48,6 +48,7 @@ BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_T
 BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake-submissions.json")
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
+INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
 INTERMEDIATE_UNIT4_LISTENING_ID = "unit4SundayDinnerListening"
 INTERMEDIATE_UNIT4_MEMORY_BOX_ID = "unit4MemoryBoxReading"
 INTERMEDIATE_UNIT4_MEMORY_BLOG_ID = "unit4FamilyMemoryBlog"
@@ -156,6 +157,83 @@ INTERMEDIATE_UNIT4_LISTENING_EVALUATION = {
 
 INTERMEDIATE_UNIT4_LISTENING_ANSWERS = [1, 2, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2, 0, 1, 2]
 INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS = [1, 2, 1, 2, 0, 0, 1, 1, 2, 1, 2, 0, 2, 2]
+INTERMEDIATE_UNIT4_EXPRESSION_ITEMS = [
+    {
+        "id": "bring-up",
+        "type": "Phrasal verb",
+        "label": "bring up",
+        "spanish": "mencionar / sacar un tema",
+        "meaning": "To introduce a topic in a conversation, especially a sensitive topic.",
+        "teacherPrompt": "Create one respectful sentence about a family member bringing up a responsibility, memory, or problem.",
+        "example": "Maya needs to bring up the phone rule before dinner.",
+        "variants": ["bring up", "brings up", "brought up", "bringing up"]
+    },
+    {
+        "id": "work-out",
+        "type": "Phrasal verb",
+        "label": "work out",
+        "spanish": "resolver / encontrar una solución",
+        "meaning": "To solve a problem or make an agreement after discussion.",
+        "teacherPrompt": "Create one sentence about a family working out a fair plan.",
+        "example": "The Riveras worked out a fair plan for Sunday dinner.",
+        "variants": ["work out", "works out", "worked out", "working out"]
+    },
+    {
+        "id": "pitch-in",
+        "type": "Phrasal verb",
+        "label": "pitch in",
+        "spanish": "colaborar / ayudar entre todos",
+        "meaning": "To help with a shared task, especially when several people are involved.",
+        "teacherPrompt": "Create one sentence about someone pitching in with chores, dinner, or homework.",
+        "example": "Leo has to pitch in by setting the table.",
+        "variants": ["pitch in", "pitches in", "pitched in", "pitching in"]
+    },
+    {
+        "id": "clear-the-air",
+        "type": "Idiom",
+        "label": "clear the air",
+        "spanish": "aclarar las cosas / bajar la tensión",
+        "meaning": "To discuss a conflict honestly so people feel less tense.",
+        "teacherPrompt": "Create one sentence about a family clearing the air after a misunderstanding.",
+        "example": "Ana asked everyone to clear the air before dinner.",
+        "variants": ["clear the air", "clears the air", "cleared the air", "clearing the air"]
+    },
+    {
+        "id": "meet-halfway",
+        "type": "Idiom",
+        "label": "meet someone halfway",
+        "spanish": "ceder un poco / llegar a un punto medio",
+        "meaning": "To compromise by accepting part of what another person wants.",
+        "teacherPrompt": "Create one sentence about two relatives meeting each other halfway.",
+        "example": "Carlos met Leo halfway and followed the phone rule too.",
+        "variants": [
+            "meet someone halfway",
+            "meet each other halfway",
+            "meet him halfway",
+            "meet her halfway",
+            "meet them halfway",
+            "meet me halfway",
+            "meet us halfway",
+            "meet halfway",
+            "met halfway",
+            "met him halfway",
+            "met her halfway",
+            "met them halfway",
+            "met each other halfway",
+            "meeting halfway"
+        ]
+    },
+    {
+        "id": "patch-things-up",
+        "type": "Idiom",
+        "label": "patch things up",
+        "spanish": "arreglar las cosas / reconciliarse",
+        "meaning": "To repair a relationship after an argument or tense moment.",
+        "teacherPrompt": "Create one sentence about relatives patching things up after a disagreement.",
+        "example": "Maya and Leo patched things up after they made a homework plan.",
+        "variants": ["patch things up", "patches things up", "patched things up", "patching things up", "patch it up", "patched it up"]
+    }
+]
 
 INTERMEDIATE_UNIT4_LISTENING_TRANSCRIPT = """Narrator: The Rivera family is having Sunday dinner. Before they eat, they need to solve a small family problem.
 
@@ -1361,6 +1439,99 @@ def score_intermediate_fixed_answers(payload, answer_key):
     }
 
 
+def intermediate_unit4_expression_by_id(expression_id):
+    return next(
+        (item for item in INTERMEDIATE_UNIT4_EXPRESSION_ITEMS if item.get("id") == expression_id),
+        None
+    )
+
+
+def default_intermediate_unit4_expression_wall():
+    return {
+        "activeExpressionId": None,
+        "openedAt": None,
+        "openedBy": None,
+        "updatedAt": None,
+        "submissions": []
+    }
+
+
+def read_intermediate_unit4_expression_wall():
+    data = read_json_file(INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH, default_intermediate_unit4_expression_wall())
+    if not isinstance(data.get("submissions"), list):
+        data["submissions"] = []
+    data.setdefault("activeExpressionId", None)
+    data.setdefault("openedAt", None)
+    data.setdefault("openedBy", None)
+    data.setdefault("updatedAt", None)
+    if data.get("activeExpressionId") and not intermediate_unit4_expression_by_id(data.get("activeExpressionId")):
+        data["activeExpressionId"] = None
+    return data
+
+
+def write_intermediate_unit4_expression_wall(data):
+    write_json_file(INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH, data, ".intermediate-unit4-expression-wall-")
+
+
+def sentence_matches_intermediate_expression(sentence, expression):
+    normalized_sentence = normalize_text(sentence)
+    expression_id = expression.get("id") if isinstance(expression, dict) else ""
+    if expression_id == "bring-up" and re.search(r"\b(bring|brings|brought|bringing)\b(?:\s+\w+){0,6}\s+up\b", normalized_sentence):
+        return True
+    if expression_id == "work-out" and re.search(r"\b(work|works|worked|working)\b(?:\s+\w+){0,6}\s+out\b", normalized_sentence):
+        return True
+    if expression_id == "meet-halfway" and re.search(r"\b(meet|meets|met|meeting)\b(?:\s+\w+){0,8}\s+halfway\b", normalized_sentence):
+        return True
+    if expression_id == "patch-things-up" and re.search(r"\b(patch|patches|patched|patching)\b(?:\s+\w+){0,6}\s+up\b", normalized_sentence):
+        return True
+    variants = expression.get("variants") if isinstance(expression, dict) else []
+    if not isinstance(variants, list):
+        variants = []
+    return any(normalize_text(variant) in normalized_sentence for variant in variants)
+
+
+def public_intermediate_expression_submission(submission, is_staff):
+    public = {
+        "id": submission.get("id", ""),
+        "expressionId": submission.get("expressionId", ""),
+        "expressionLabel": submission.get("expressionLabel", ""),
+        "sentence": submission.get("sentence", ""),
+        "studentName": submission.get("studentName", "Student"),
+        "submittedAt": submission.get("submittedAt", "")
+    }
+    if is_staff:
+        public["studentId"] = submission.get("studentId", "")
+        public["studentEmail"] = submission.get("studentEmail", "")
+    return public
+
+
+def intermediate_unit4_expression_wall_payload(profile, grades_data, wall):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    is_staff = role in ("admin", "teacher")
+    active_expression = intermediate_unit4_expression_by_id(wall.get("activeExpressionId"))
+    submissions = []
+    for item in wall.get("submissions", []):
+        if isinstance(item, dict):
+            submissions.append(public_intermediate_expression_submission(item, is_staff))
+    submissions.sort(key=lambda item: item.get("submittedAt") or "")
+    return {
+        "role": role,
+        "student": {
+            "id": student.get("id", ""),
+            "fullName": student.get("fullName", "")
+        } if isinstance(student, dict) else None,
+        "canSubmit": isinstance(student, dict) and not is_staff,
+        "expressions": INTERMEDIATE_UNIT4_EXPRESSION_ITEMS,
+        "activeExpressionId": wall.get("activeExpressionId"),
+        "activeExpression": active_expression,
+        "openedAt": wall.get("openedAt"),
+        "openedBy": wall.get("openedBy"),
+        "updatedAt": wall.get("updatedAt"),
+        "submissions": submissions
+    }
+
+
 def pronunciation_grade_from_payload(payload, evaluations):
     evaluation_id = clean_text(payload.get("evaluationId"), 80)
     if evaluation_id not in evaluations:
@@ -2477,6 +2648,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/intermediate/unit4-expression-wall/state":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                wall = read_intermediate_unit4_expression_wall()
+                json_response(self, 200, intermediate_unit4_expression_wall_payload(profile, grades_data, wall))
+            return
+
         if parsed.path == "/api/intermediate/unit4-sunday-dinner/transcript":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
@@ -2515,6 +2693,85 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if payload is None:
             return
 
+        if parsed.path == "/api/intermediate/unit4-expression-wall/activate":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                expression_id = clean_text(payload.get("expressionId"), 80)
+                wall = read_intermediate_unit4_expression_wall()
+                timestamp = now_iso()
+                if expression_id:
+                    expression = intermediate_unit4_expression_by_id(expression_id)
+                    if not expression:
+                        json_response(self, 400, {"error": "invalid_expression"})
+                        return
+                    wall["activeExpressionId"] = expression_id
+                    wall["openedAt"] = timestamp
+                    wall["openedBy"] = profile.get("email", "")
+                else:
+                    wall["activeExpressionId"] = None
+                    wall["openedAt"] = None
+                    wall["openedBy"] = None
+                wall["updatedAt"] = timestamp
+                write_intermediate_unit4_expression_wall(wall)
+                json_response(self, 200, intermediate_unit4_expression_wall_payload(profile, grades_data, wall))
+            return
+
+        if parsed.path == "/api/intermediate/unit4-expression-wall/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                wall = read_intermediate_unit4_expression_wall()
+                active_expression_id = wall.get("activeExpressionId")
+                expression_id = clean_text(payload.get("expressionId"), 80)
+                if not active_expression_id:
+                    json_response(self, 403, {"error": "no_active_expression"})
+                    return
+                if expression_id != active_expression_id:
+                    json_response(self, 409, {"error": "expression_not_active", "activeExpressionId": active_expression_id})
+                    return
+                expression = intermediate_unit4_expression_by_id(active_expression_id)
+                if not expression:
+                    json_response(self, 400, {"error": "invalid_expression"})
+                    return
+                sentence = clean_text(payload.get("sentence"), 280)
+                word_count = basic_word_count(sentence)
+                if word_count < 6:
+                    json_response(self, 400, {"error": "sentence_too_short", "wordCount": word_count})
+                    return
+                if word_count > 35:
+                    json_response(self, 400, {"error": "sentence_too_long", "wordCount": word_count})
+                    return
+                if not sentence_matches_intermediate_expression(sentence, expression):
+                    json_response(self, 400, {"error": "expression_missing", "expression": expression.get("label", "")})
+                    return
+                submitted_at = now_iso()
+                submissions = wall.setdefault("submissions", [])
+                if not isinstance(submissions, list):
+                    submissions = []
+                    wall["submissions"] = submissions
+                submissions.append({
+                    "id": secrets.token_hex(8),
+                    "expressionId": expression.get("id", ""),
+                    "expressionLabel": expression.get("label", ""),
+                    "sentence": sentence,
+                    "wordCount": word_count,
+                    "studentId": student.get("id", ""),
+                    "studentName": student.get("fullName") or profile.get("name") or "Student",
+                    "studentEmail": normalize_email(student.get("email") or profile.get("email")),
+                    "submittedAt": submitted_at
+                })
+                wall["submissions"] = submissions[-500:]
+                wall["updatedAt"] = submitted_at
+                write_intermediate_unit4_expression_wall(wall)
+                json_response(self, 200, intermediate_unit4_expression_wall_payload(profile, grades_data, wall))
+            return
 
         if parsed.path == "/api/intermediate/unit4-sunday-dinner/submit":
             with data_lock:
