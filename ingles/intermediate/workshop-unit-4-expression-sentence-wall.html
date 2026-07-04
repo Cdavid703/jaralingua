@@ -24,6 +24,11 @@
     .expression-tag,.active-tag{display:inline-flex;align-items:center;border-radius:999px;padding:.35rem .65rem;font-weight:900;font-size:.78rem}
     .expression-tag{background:#eef5ff;color:var(--intermediate-navy)}
     .active-tag{background:#ecfdf5;color:#065f46}
+    .expression-title-row{display:flex;align-items:center;justify-content:space-between;gap:.75rem;flex-wrap:wrap}
+    .expression-title-row h3{margin:0}
+    .expression-audio-button{border:1px solid rgba(15,118,110,.28);background:#ecfdf5;color:#065f46;border-radius:999px;padding:.42rem .72rem;font-weight:900;cursor:pointer;line-height:1}
+    .expression-audio-button:hover,.expression-audio-button.playing{background:#0f766e;color:#fff;border-color:#0f766e}
+    .expression-audio-note{font-size:.78rem;color:#64748b;font-weight:800}
     .translation{background:#fff7e7;border:1px solid rgba(217,164,65,.35);border-radius:8px;padding:.65rem;color:#6b4e16;font-weight:800}
     .example-box{background:#f8fbff;border:1px solid var(--intermediate-border);border-radius:8px;padding:.7rem;color:#334155;line-height:1.55}
     .teacher-controls{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.55rem;margin-top:1rem}
@@ -130,6 +135,14 @@
     const API_STATE="/api/intermediate/unit4-expression-wall/state";
     const API_ACTIVATE="/api/intermediate/unit4-expression-wall/activate";
     const API_SUBMIT="/api/intermediate/unit4-expression-wall/submit";
+    const expressionAudioSources={
+      "bring-up":"audio/unit-4-expressions/bring-up.mp3",
+      "work-out":"audio/unit-4-expressions/work-out.mp3",
+      "pitch-in":"audio/unit-4-expressions/pitch-in.mp3",
+      "clear-the-air":"audio/unit-4-expressions/clear-the-air.mp3",
+      "meet-halfway":"audio/unit-4-expressions/meet-someone-halfway.mp3",
+      "patch-things-up":"audio/unit-4-expressions/patch-things-up.mp3"
+    };
     const fallbackExpressions=[
       {id:"bring-up",type:"Phrasal verb",label:"bring up",spanish:"mencionar / sacar un tema",meaning:"To introduce a topic in a conversation, especially a sensitive topic.",teacherPrompt:"Create one respectful sentence about a family member bringing up a responsibility, memory, or problem.",example:"Maya needs to bring up the phone rule before dinner."},
       {id:"work-out",type:"Phrasal verb",label:"work out",spanish:"resolver / encontrar una solucion",meaning:"To solve a problem or make an agreement after discussion.",teacherPrompt:"Create one sentence about a family working out a fair plan.",example:"The Riveras worked out a fair plan for Sunday dinner."},
@@ -140,6 +153,8 @@
     ];
     let state={role:"guest",student:null,canSubmit:false,expressions:fallbackExpressions,activeExpressionId:null,activeExpression:null,submissions:[]};
     let pollingTimer=null;
+    let expressionAudioPlayer=null;
+    let activeAudioButton=null;
     const expressionGrid=document.getElementById("expressionGrid");
     const teacherPanel=document.getElementById("teacherPanel");
     const teacherControls=document.getElementById("teacherControls");
@@ -203,28 +218,78 @@
       node.textContent=message;
     }
 
+    function fallbackExpressionById(id){
+      return fallbackExpressions.find((item)=>item.id===id)||null;
+    }
+
+    function normalizeExpression(item){
+      const fallback=fallbackExpressionById(item&&item.id);
+      return Object.assign({},item||{},fallback||{});
+    }
+
+    function currentExpressions(){
+      const source=state.expressions&&state.expressions.length?state.expressions:fallbackExpressions;
+      return source.map(normalizeExpression);
+    }
+
     function expressionById(id){
-      return (state.expressions||fallbackExpressions).find((item)=>item.id===id)||null;
+      return currentExpressions().find((item)=>item.id===id)||null;
+    }
+
+    function resetAudioButton(){
+      if(activeAudioButton){
+        activeAudioButton.classList.remove("playing");
+        activeAudioButton.textContent="Hear expression";
+      }
+      activeAudioButton=null;
+    }
+
+    function playExpressionAudio(expressionId,button){
+      const source=expressionAudioSources[expressionId];
+      if(!source)return;
+      if(!expressionAudioPlayer){
+        expressionAudioPlayer=new Audio();
+        expressionAudioPlayer.addEventListener("ended",resetAudioButton);
+        expressionAudioPlayer.addEventListener("pause",()=>{if(expressionAudioPlayer&&expressionAudioPlayer.ended)resetAudioButton();});
+      }
+      if(activeAudioButton===button&&!expressionAudioPlayer.paused){
+        expressionAudioPlayer.pause();
+        expressionAudioPlayer.currentTime=0;
+        resetAudioButton();
+        return;
+      }
+      resetAudioButton();
+      activeAudioButton=button;
+      button.classList.add("playing");
+      button.textContent="Playing";
+      expressionAudioPlayer.src=source;
+      expressionAudioPlayer.play().catch(()=>{
+        resetAudioButton();
+      });
     }
 
     function renderExpressions(){
-      const expressions=state.expressions&&state.expressions.length?state.expressions:fallbackExpressions;
+      const expressions=currentExpressions();
       expressionGrid.innerHTML=expressions.map((item)=>`
         <article class="expression-card ${item.id===state.activeExpressionId?"active":""}">
           <div class="expression-meta"><span class="expression-tag">${escapeHtml(item.type)}</span>${item.id===state.activeExpressionId?'<span class="active-tag">Open now</span>':""}</div>
-          <h3>${escapeHtml(item.label)}</h3>
+          <div class="expression-title-row"><h3>${escapeHtml(item.label)}</h3><button type="button" class="expression-audio-button" data-expression-audio="${escapeHtml(item.id)}" aria-label="Hear ${escapeHtml(item.label)} pronunciation">Hear expression</button></div>
+          <span class="expression-audio-note">Professional audio generated with ElevenLabs</span>
           <div class="translation">${escapeHtml(item.spanish)}</div>
           <p>${escapeHtml(item.meaning)}</p>
           <div class="example-box"><strong>Model:</strong> ${escapeHtml(item.example)}</div>
         </article>
       `).join("");
+      expressionGrid.querySelectorAll("[data-expression-audio]").forEach((button)=>{
+        button.addEventListener("click",()=>playExpressionAudio(button.getAttribute("data-expression-audio"),button));
+      });
     }
 
     function renderTeacherControls(){
       const isStaff=["admin","teacher"].includes(state.role);
       teacherPanel.hidden=!isStaff;
       if(!isStaff)return;
-      const expressions=state.expressions&&state.expressions.length?state.expressions:fallbackExpressions;
+      const expressions=currentExpressions();
       teacherControls.innerHTML=expressions.map((item)=>`<button type="button" class="control-button ${item.id===state.activeExpressionId?"active":""}" data-open-expression="${escapeHtml(item.id)}">${escapeHtml(item.label)}</button>`).join("")+
         '<button type="button" class="control-button close-button" data-open-expression="">Close all</button>';
       teacherControls.querySelectorAll("[data-open-expression]").forEach((button)=>{
