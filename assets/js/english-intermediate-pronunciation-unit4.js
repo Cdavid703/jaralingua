@@ -96,7 +96,13 @@
   history.insertAdjacentElement("afterend", finalSummary);
   const submitMount = document.createElement("div");
   submitMount.className = "pronunciation-submit-mount";
-  finalSummary.insertAdjacentElement("afterend", submitMount);
+  const pronunciationAside = document.querySelector(".pronunciation-layout aside");
+  const lastAsidePanel = pronunciationAside ? pronunciationAside.querySelector(".pronunciation-panel:last-child") : null;
+  if (lastAsidePanel) {
+    lastAsidePanel.insertAdjacentElement("afterend", submitMount);
+  } else {
+    finalSummary.insertAdjacentElement("afterend", submitMount);
+  }
 
   function currentStage() {
     return STAGES[currentStageIndex];
@@ -601,15 +607,15 @@
     const panel = document.createElement("div");
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
-      <h3><i class="bi bi-send-check"></i> Send to teacher</h3>
-      <p>This pronunciation follow-up gives you a reference score and sends your final recording to the teacher. Weight: 0. It does not affect the accumulated percentage.</p>
+      <h3><i class="bi bi-send-check"></i> Entregar al profesor / Send to teacher</h3>
+      <p>Este seguimiento de pronunciacion envia tu grabacion final al profesor. La calificacion es solo de referencia, tiene peso 0 y no afecta el porcentaje acumulado.</p>
       <div class="pronunciation-submit-metrics">
-        <span><b data-submit-score>--</b><small>Final challenge</small></span>
-        <span><b data-submit-grade>--</b><small>Reference grade / 5</small></span>
+        <span><b data-submit-score>--</b><small>Reto final</small></span>
+        <span><b data-submit-grade>--</b><small>Nota de referencia / 5</small></span>
       </div>
       <div class="pronunciation-submit-actions">
-        <button type="button" class="action-button reset" data-submit-reset><i class="bi bi-arrow-repeat"></i> Reset full challenge</button>
-        <button type="button" class="action-button submit-grade" data-submit-teacher disabled><i class="bi bi-send-fill"></i> Send activity to teacher</button>
+        <button type="button" class="action-button reset" data-submit-reset><i class="bi bi-arrow-repeat"></i> Reiniciar reto completo</button>
+        <button type="button" class="action-button submit-grade" data-submit-teacher disabled><i class="bi bi-send-fill"></i> Entregar al profesor</button>
       </div>
       <p class="pronunciation-submit-status" data-submit-status aria-live="polite"></p>
     `;
@@ -635,11 +641,17 @@
         scoreNode.textContent = "--";
         gradeNode.textContent = "--";
         submitButton.disabled = true;
+        if (statusNode.dataset.submitted !== "true") {
+          setStatus("Completa primero las 4 secciones y el reto final. Luego este boton se habilita para entregar al profesor.", "pending");
+        }
         return;
       }
       scoreNode.textContent = Math.round(score) + "/100";
       gradeNode.textContent = gradeFromScore(score).toFixed(2) + "/5";
       submitButton.disabled = false;
+      if (statusNode.dataset.submitted !== "true") {
+        setStatus("Reto final listo. Ya puedes entregar esta actividad al profesor.", "success");
+      }
     }
 
     async function submit() {
@@ -679,7 +691,8 @@
           if (payload.error === "missing_audio") throw new Error("Record the final challenge again before sending it.");
           throw new Error("The activity could not be submitted.");
         }
-        setStatus("Submitted to teacher. Reference grade: " + Number(payload.grade).toFixed(2) + "/5. Weight: 0.", "success");
+        statusNode.dataset.submitted = "true";
+        setStatus("Entregado al profesor. Nota de referencia: " + Number(payload.grade).toFixed(2) + "/5. Peso: 0.", "success");
       } catch (error) {
         setStatus(error.message || "The activity could not be submitted.", "error");
       } finally {
@@ -692,6 +705,7 @@
       saveProgress();
       resetAttempt(true);
       updateStageUI();
+      statusNode.dataset.submitted = "false";
       update();
       setStatus("Full pronunciation challenge reset. You can start again.", "pending");
       stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
