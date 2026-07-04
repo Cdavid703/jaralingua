@@ -606,8 +606,9 @@
     return rows.map(function (item) {
       const detail = item.detail;
       const gradeText = typeof detail.grade === "number" ? formatGrade(detail.grade) : "Submitted";
-      const scoreText = detail.score == null || detail.total == null ? (detail.wordCount ? detail.wordCount + " words" : "") : detail.score + " / " + detail.total;
-      const responseText = detail.blogText || detail.response || "";
+      const scoreText = detail.score == null || detail.total == null ? (detail.score100 != null ? detail.score100 + " / 100" : (detail.wordCount ? detail.wordCount + " words" : "")) : detail.score + " / " + detail.total;
+      const responseText = detail.blogText || detail.response || detail.transcript || "";
+      const audioButton = detail.audio ? `<button class="btn-soft btn-sm" type="button" data-followup-audio data-student-id="${escapeHtml(item.student.id)}" data-evaluation-id="${escapeHtml(item.id)}"><i class="bi bi-play-circle"></i> Load audio</button><div data-followup-audio-player="${escapeHtml(item.student.id)}-${escapeHtml(item.id)}" style="margin-top:.55rem;"></div>` : "";
       return `
         <tr>
           <td>${escapeHtml(item.student.fullName)}</td>
@@ -617,7 +618,7 @@
           <td>${escapeHtml(gradeText)}</td>
           <td>${escapeHtml(scoreText)}</td>
           <td>${escapeHtml(detail.submittedAt || "")}</td>
-          <td>${responseText ? `<details><summary>Read response</summary><div style="white-space:pre-wrap;min-width:280px;max-width:520px;line-height:1.55;margin-top:.6rem;">${escapeHtml(responseText)}</div></details>` : ""}</td>
+          <td>${responseText ? `<details><summary>Read response</summary><div style="white-space:pre-wrap;min-width:280px;max-width:520px;line-height:1.55;margin-top:.6rem;">${escapeHtml(responseText)}</div></details>` : ""}${audioButton}</td>
         </tr>
       `;
     }).join("");
@@ -627,8 +628,8 @@
     return `
       <div class="grades-panel mb-4">
         <p class="section-kicker">Follow-up only</p>
-        <h2 class="section-title">Non-gradebook submissions</h2>
-        <p class="section-text mb-3">These activities are submitted to the teacher and give students a reference grade, but they are not gradebook columns and do not affect the accumulated percentage.</p>
+        <h2 class="section-title">Follow-up submissions</h2>
+        <p class="section-text mb-3">These activities are submitted to the teacher and may give students a reference grade, but their weight is 0 and they do not affect the accumulated percentage.</p>
         <div class="table-wrap">
           <table class="grades-table">
             <thead><tr><th>Student</th><th>Email</th><th>Activity</th><th>Type</th><th>Reference grade</th><th>Score / words</th><th>Submitted</th><th>Response</th></tr></thead>
@@ -739,6 +740,40 @@
     }).then(function (response) {
       if (!response.ok) throw new Error("The API rejected the update: " + response.status);
       return response.json();
+    });
+  }
+
+  function loadFollowUpAudio(button, user) {
+    const studentId = button.getAttribute("data-student-id") || "";
+    const evaluationId = button.getAttribute("data-evaluation-id") || "";
+    const holder = document.querySelector('[data-followup-audio-player="' + studentId + "-" + evaluationId + '"]');
+    if (!holder || !user || !user.credential) return;
+    button.disabled = true;
+    button.innerHTML = '<i class="bi bi-hourglass-split"></i> Loading audio';
+    fetch("/api/intermediate/pronunciation-audio?studentId=" + encodeURIComponent(studentId) + "&evaluationId=" + encodeURIComponent(evaluationId), {
+      headers: {
+        Authorization: "Bearer " + user.credential,
+        "X-Jaralingua-Auth-Provider": user.provider || "google"
+      }
+    }).then(function (response) {
+      if (!response.ok) throw new Error("audio_unavailable");
+      return response.blob();
+    }).then(function (blob) {
+      const url = URL.createObjectURL(blob);
+      holder.innerHTML = '<audio controls style="width:100%;max-width:360px" src="' + escapeHtml(url) + '"></audio>';
+      button.innerHTML = '<i class="bi bi-check-circle"></i> Audio loaded';
+    }).catch(function () {
+      holder.innerHTML = '<span class="section-text text-danger">Audio unavailable.</span>';
+      button.innerHTML = '<i class="bi bi-play-circle"></i> Load audio';
+      button.disabled = false;
+    });
+  }
+
+  function wireFollowUpAudio(root, user) {
+    root.querySelectorAll("[data-followup-audio]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        loadFollowUpAudio(button, user);
+      });
     });
   }
 
@@ -1033,6 +1068,7 @@
       root.innerHTML = renderStaffPanel(payload, user);
       wireMicrosoftSignout(root);
       wireStudentFilter(root);
+      wireFollowUpAudio(root, user);
       wireExport(root, payload);
       wirePdfExport(root, payload);
       wireAdminTools(root, payload, user);

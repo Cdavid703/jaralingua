@@ -94,6 +94,19 @@
 .final-summary p { display: grid; margin: 0; padding: .65rem; border-radius: 10px; background: #fff; }
 .final-summary span { font-size: .7rem; color: var(--pron-muted); }
 .final-summary strong { color: var(--pron-navy); }
+.pronunciation-submit-panel { margin-top: 1rem; padding: 1rem; border-radius: 14px; background: #f8faff; border: 1px solid rgba(7, 31, 79, .12); }
+.pronunciation-submit-panel h3 { display: flex; align-items: center; gap: .45rem; margin: 0 0 .55rem; color: var(--pron-navy); font-size: 1.05rem; }
+.pronunciation-submit-panel p { color: var(--pron-muted); line-height: 1.5; margin: .35rem 0 .8rem; }
+.pronunciation-submit-metrics { display: grid; grid-template-columns: repeat(2, 1fr); gap: .55rem; margin: .75rem 0; }
+.pronunciation-submit-metrics span { display: grid; place-items: center; gap: .1rem; padding: .7rem; border-radius: 12px; background: #fff; border: 1px solid rgba(7, 31, 79, .1); text-align: center; }
+.pronunciation-submit-metrics b { color: var(--pron-navy); font-size: 1.2rem; }
+.pronunciation-submit-metrics small { color: var(--pron-muted); font-weight: 800; }
+.pronunciation-submit-actions { display: grid; gap: .55rem; }
+.submit-grade { width: 100%; background: var(--pron-green); color: #fff; }
+.pronunciation-submit-status { min-height: 1.4rem; font-weight: 900; }
+.pronunciation-submit-status.success { color: var(--pron-green); }
+.pronunciation-submit-status.error { color: var(--pron-red); }
+.pronunciation-submit-status.pending { color: var(--pron-navy); }
 .tips { display: grid; gap: .75rem; }
 .tip { display: flex; gap: .75rem; align-items: flex-start; }
 .tip i { width: 36px; height: 36px; flex: 0 0 36px; border-radius: 10px; display: grid; place-items: center; background: #eaf0ff; color: var(--pron-blue); }

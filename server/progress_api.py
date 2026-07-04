@@ -49,9 +49,11 @@ BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_R
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
+INTERMEDIATE_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_INTERMEDIATE_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/intermediate-pronunciation-audio")
 INTERMEDIATE_UNIT4_LISTENING_ID = "unit4SundayDinnerListening"
 INTERMEDIATE_UNIT4_MEMORY_BOX_ID = "unit4MemoryBoxReading"
 INTERMEDIATE_UNIT4_MEMORY_BLOG_ID = "unit4FamilyMemoryBlog"
+INTERMEDIATE_UNIT4_PRONUNCIATION_ID = "unit4FamilyStoriesPronunciation"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -153,6 +155,14 @@ INTERMEDIATE_UNIT4_LISTENING_EVALUATION = {
     "weight": 0,
     "type": "Listening follow-up",
     "description": "Seguimiento enviable al profesor. La nota aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
+}
+
+INTERMEDIATE_UNIT4_PRONUNCIATION_EVALUATION = {
+    "id": INTERMEDIATE_UNIT4_PRONUNCIATION_ID,
+    "title": "Unit 4 Pronunciation - Family Stories",
+    "weight": 0,
+    "type": "Pronunciation follow-up",
+    "description": "Seguimiento oral enviable al profesor. La calificacion aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
 }
 
 INTERMEDIATE_UNIT4_LISTENING_ANSWERS = [1, 2, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2, 0, 1, 2]
@@ -1306,6 +1316,58 @@ def save_french8_pronunciation_audio(student, evaluation_id, payload):
     }
 
 
+def remove_intermediate_pronunciation_audio(audio_ref):
+    if not isinstance(audio_ref, dict):
+        return
+    filename = safe_filename_token(audio_ref.get("file"), 160)
+    if not filename:
+        return
+    path = os.path.abspath(os.path.join(INTERMEDIATE_PRONUNCIATION_AUDIO_DIR, filename))
+    root = os.path.abspath(INTERMEDIATE_PRONUNCIATION_AUDIO_DIR)
+    if not path.startswith(root + os.sep):
+        return
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+    except OSError:
+        pass
+
+
+def save_intermediate_pronunciation_audio(student, evaluation_id, payload):
+    details = payload.get("details")
+    if not isinstance(details, dict):
+        return None
+    data_url = details.get("audioDataUrl")
+    if not isinstance(data_url, str) or not data_url.startswith("data:"):
+        return None
+    match = re.match(r"^data:([^;,]+)(?:;[^,]*)?;base64,(.+)$", data_url, re.DOTALL)
+    if not match:
+        return None
+    content_type = match.group(1).strip().lower()
+    extension = audio_extension_for_type(content_type)
+    if not extension:
+        return None
+    try:
+        audio_bytes = base64.b64decode(match.group(2), validate=True)
+    except (ValueError, binascii.Error):
+        return None
+    if not audio_bytes or len(audio_bytes) > 4 * 1024 * 1024:
+        return None
+    os.makedirs(INTERMEDIATE_PRONUNCIATION_AUDIO_DIR, exist_ok=True)
+    student_token = safe_filename_token(student.get("id") or student.get("email") or "student")
+    evaluation_token = safe_filename_token(evaluation_id)
+    filename = f"{student_token}-{evaluation_token}-{int(time.time())}-{secrets.token_hex(4)}.{extension}"
+    path = os.path.join(INTERMEDIATE_PRONUNCIATION_AUDIO_DIR, filename)
+    with open(path, "wb") as handle:
+        handle.write(audio_bytes)
+    return {
+        "file": filename,
+        "contentType": content_type,
+        "bytes": len(audio_bytes),
+        "uploadedAt": now_iso()
+    }
+
+
 def normalized_activity_text(value):
     return clean_text(value, 5000)
 
@@ -1396,7 +1458,10 @@ def ensure_french2_gradebook_structure(grades_data):
 
 
 def ensure_intermediate_gradebook_structure(grades_data):
-    return ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT4_LISTENING_EVALUATION)
+    changed = ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT4_LISTENING_EVALUATION)
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT4_PRONUNCIATION_EVALUATION):
+        changed = True
+    return changed
 
 
 def score_intermediate_unit4_listening(payload):
@@ -1405,6 +1470,17 @@ def score_intermediate_unit4_listening(payload):
 
 def score_intermediate_unit4_memory_box(payload):
     return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS)
+
+
+def intermediate_pronunciation_grade_from_payload(payload):
+    try:
+        score100 = float(payload.get("score100"))
+    except (TypeError, ValueError):
+        raise ValueError("invalid_score")
+    if score100 < 0 or score100 > 100:
+        raise ValueError("invalid_score")
+    grade = round((score100 / 20.0) * 100) / 100
+    return int(round(score100)), grade
 
 
 def score_intermediate_fixed_answers(payload, answer_key):
@@ -2648,6 +2724,39 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/intermediate/pronunciation-audio":
+            query = urllib.parse.parse_qs(parsed.query)
+            student_id = clean_text((query.get("studentId") or [""])[0], 40)
+            evaluation_id = clean_text((query.get("evaluationId") or [""])[0], 80)
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                students = grades_data.get("students", [])
+                target = next(
+                    (
+                        item for item in students
+                        if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id
+                    ),
+                    None
+                )
+                role = grade_user_role(profile, grades_data)
+                current_student = matched_student_for_profile(profile, grades_data)
+                is_self = isinstance(current_student, dict) and clean_text(current_student.get("id"), 40) == student_id
+                if not isinstance(target, dict) or (role not in ("admin", "teacher") and not is_self):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                details = target.get("gradeDetails", {}).get(evaluation_id) if isinstance(target.get("gradeDetails"), dict) else None
+                audio_ref = details.get("audio") if isinstance(details, dict) else None
+                filename = safe_filename_token(audio_ref.get("file"), 160) if isinstance(audio_ref, dict) else ""
+                content_type = audio_ref.get("contentType", "audio/webm") if isinstance(audio_ref, dict) else "audio/webm"
+            path = os.path.abspath(os.path.join(INTERMEDIATE_PRONUNCIATION_AUDIO_DIR, filename))
+            root = os.path.abspath(INTERMEDIATE_PRONUNCIATION_AUDIO_DIR)
+            if not filename or not path.startswith(root + os.sep) or not os.path.exists(path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(path, "rb") as handle:
+                binary_response(self, 200, handle.read(), content_type)
+            return
+
         if parsed.path == "/api/intermediate/unit4-expression-wall/state":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
@@ -2771,6 +2880,76 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 wall["updatedAt"] = submitted_at
                 write_intermediate_unit4_expression_wall(wall)
                 json_response(self, 200, intermediate_unit4_expression_wall_payload(profile, grades_data, wall))
+            return
+
+        if parsed.path == "/api/intermediate/unit4-pronunciation/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    score100, grade = intermediate_pronunciation_grade_from_payload(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                audio_ref = save_intermediate_pronunciation_audio(student, INTERMEDIATE_UNIT4_PRONUNCIATION_ID, payload)
+                if not audio_ref:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": "missing_audio"})
+                    return
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT4_PRONUNCIATION_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                if isinstance(previous, dict) and isinstance(previous.get("audio"), dict):
+                    remove_intermediate_pronunciation_audio(previous.get("audio"))
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                details = payload.get("details") if isinstance(payload.get("details"), dict) else {}
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT4_PRONUNCIATION_ID] = grade
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT4_PRONUNCIATION_ID] = {
+                    "submittedAt": submitted_at,
+                    "score100": score100,
+                    "grade": grade,
+                    "overall": clean_score_metric(details.get("overall")),
+                    "accuracy": clean_score_metric(details.get("accuracy")),
+                    "completeness": clean_score_metric(details.get("completeness")),
+                    "fluency": clean_score_metric(details.get("fluency")),
+                    "wpm": clean_score_metric(details.get("wpm"), 0, 300),
+                    "stageLabel": clean_text(details.get("stageLabel"), 120),
+                    "transcript": clean_text(details.get("transcript"), 3000),
+                    "referenceText": clean_text(details.get("referenceText"), 3000),
+                    "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
+                    "audio": audio_ref,
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Family Stories Pronunciation",
+                    "activityType": "Pronunciation follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT4_PRONUNCIATION_ID,
+                    "score100": score100,
+                    "grade": grade,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
             return
 
         if parsed.path == "/api/intermediate/unit4-sunday-dinner/submit":
