@@ -624,6 +624,8 @@
     const submitButton = panel.querySelector("[data-submit-teacher]");
     const resetButton = panel.querySelector("[data-submit-reset]");
     const statusNode = panel.querySelector("[data-submit-status]");
+    let submitState = "idle";
+    let submittedMessage = "";
 
     function setStatus(message, type) {
       statusNode.textContent = message || "";
@@ -638,18 +640,29 @@
       const attempt = finalAttempt();
       const score = Number(attempt && attempt.overall);
       if (!attempt || !Number.isFinite(score)) {
+        panel.classList.remove("is-submitted");
         scoreNode.textContent = "--";
         gradeNode.textContent = "--";
         submitButton.disabled = true;
-        if (statusNode.dataset.submitted !== "true") {
+        submitButton.innerHTML = '<i class="bi bi-send-fill"></i> Send to teacher';
+        if (submitState !== "submitted" && submitState !== "error") {
           setStatus("Complete the 4 sections and the final challenge first. Then this button will unlock so you can send the activity to the teacher.", "pending");
         }
         return;
       }
       scoreNode.textContent = Math.round(score) + "/100";
       gradeNode.textContent = gradeFromScore(score).toFixed(2) + "/5";
-      submitButton.disabled = false;
-      if (statusNode.dataset.submitted !== "true") {
+      if (submitState === "submitted") {
+        panel.classList.add("is-submitted");
+        submitButton.disabled = true;
+        submitButton.innerHTML = '<i class="bi bi-check-circle-fill"></i> Submitted to teacher';
+        setStatus(submittedMessage || "Submitted to teacher. Your teacher can now see this pronunciation follow-up.", "success");
+        return;
+      }
+      panel.classList.remove("is-submitted");
+      submitButton.disabled = submitState === "submitting";
+      submitButton.innerHTML = submitState === "submitting" ? '<i class="bi bi-hourglass-split"></i> Sending to teacher...' : '<i class="bi bi-send-fill"></i> Send to teacher';
+      if (submitState === "idle") {
         setStatus("Final challenge ready. You can now send this activity to the teacher.", "success");
       }
     }
@@ -669,7 +682,9 @@
         return;
       }
       submitButton.disabled = true;
+      submitState = "submitting";
       setStatus("Preparing your final recording and sending it to the teacher...", "pending");
+      update();
       try {
         const audioDataUrl = await blobToDataUrl(finalAudioBlob);
         const response = await fetch(SUBMIT_PATH, {
@@ -691,9 +706,12 @@
           if (payload.error === "missing_audio") throw new Error("Record the final challenge again before sending it.");
           throw new Error("The activity could not be submitted.");
         }
-        statusNode.dataset.submitted = "true";
-        setStatus("Submitted to teacher. Reference grade: " + Number(payload.grade).toFixed(2) + "/5. Weight: 0.", "success");
+        submitState = "submitted";
+        const referenceGrade = Number(payload.grade).toFixed(2);
+        submittedMessage = "Submitted to teacher. Your teacher can now see your final recording. Reference grade: " + referenceGrade + "/5. Weight: 0.";
+        setStatus(submittedMessage, "success");
       } catch (error) {
+        submitState = "error";
         setStatus(error.message || "The activity could not be submitted.", "error");
       } finally {
         update();
@@ -705,7 +723,8 @@
       saveProgress();
       resetAttempt(true);
       updateStageUI();
-      statusNode.dataset.submitted = "false";
+      submitState = "idle";
+      submittedMessage = "";
       update();
       setStatus("Full pronunciation challenge reset. You can start again.", "pending");
       stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
