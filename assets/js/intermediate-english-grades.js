@@ -583,6 +583,58 @@
     `;
   }
 
+  function followUpSubmissionRows(payload) {
+    const rows = [];
+    payload.students.forEach(function (student) {
+      const details = student.gradeDetails || {};
+      Object.keys(details).forEach(function (key) {
+        const detail = details[key];
+        if (!detail || detail.followUpOnly !== true) return;
+        rows.push({
+          student: student,
+          id: key,
+          detail: detail
+        });
+      });
+    });
+    rows.sort(function (a, b) {
+      return String(b.detail.submittedAt || "").localeCompare(String(a.detail.submittedAt || ""));
+    });
+    if (!rows.length) {
+      return `<tr><td colspan="7">No follow-up submissions yet.</td></tr>`;
+    }
+    return rows.map(function (item) {
+      const detail = item.detail;
+      return `
+        <tr>
+          <td>${escapeHtml(item.student.fullName)}</td>
+          <td>${escapeHtml(item.student.email || "")}</td>
+          <td>${escapeHtml(detail.activity || item.id)}</td>
+          <td>${escapeHtml(detail.activityType || "Follow-up")}</td>
+          <td>${escapeHtml(formatGrade(detail.grade))}</td>
+          <td>${escapeHtml((detail.score == null ? "" : detail.score) + " / " + (detail.total == null ? "" : detail.total))}</td>
+          <td>${escapeHtml(detail.submittedAt || "")}</td>
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function followUpSubmissionsMarkup(payload) {
+    return `
+      <div class="grades-panel mb-4">
+        <p class="section-kicker">Follow-up only</p>
+        <h2 class="section-title">Non-gradebook submissions</h2>
+        <p class="section-text mb-3">These activities are submitted to the teacher and give students a reference grade, but they are not gradebook columns and do not affect the accumulated percentage.</p>
+        <div class="table-wrap">
+          <table class="grades-table">
+            <thead><tr><th>Student</th><th>Email</th><th>Activity</th><th>Type</th><th>Reference grade</th><th>Score</th><th>Submitted</th></tr></thead>
+            <tbody>${followUpSubmissionRows(payload)}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
   function staffPdfToolsMarkup(payload) {
     if (payload.role !== "admin" || !window.JaraEnglishGradeReports) return "";
     const levels = window.JaraEnglishGradeReports.levels(payload);
@@ -636,6 +688,7 @@
         <div class="metric-card"><span>Course</span><strong>Intermediate English</strong></div>
       </div>
       ${staffControlsMarkup()}
+      ${followUpSubmissionsMarkup(payload)}
       ${staffPdfToolsMarkup(payload)}
       ${payload.role === "admin" ? adminToolsMarkup(payload) : ""}
       ${payload.role === "admin" ? adminStudentEditorMarkup(payload) : ""}

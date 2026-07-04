@@ -11,6 +11,7 @@
   <style>
     .unit4-reading-hero{background:linear-gradient(135deg,rgba(7,31,79,.9),rgba(217,67,63,.38)),url("../../assets/img/english-intermediate/unit-4/reading-the-memory-box.png") center/cover no-repeat;color:#fff}
     .unit4-reading-hero .lesson-hero-content p,.unit4-reading-hero .eyebrow{color:#fff}
+    .unit4-reading-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
     .reading-text-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:clamp(1.2rem,3vw,2rem)}
     .reading-text-card p{color:#334155;font-size:1.05rem;line-height:1.85;margin:0 0 1rem}
     .focus-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
@@ -19,10 +20,13 @@
     .focus-card p,.language-note p{color:var(--intermediate-muted);line-height:1.65}
     .quiz-list{display:grid;gap:.8rem}
     .quiz-item label{display:block;margin:.35rem 0;color:#334155;font-weight:700}
-    .quiz-item.correct{background:#ecfdf5;border-color:#86efac}
     .quiz-item.incorrect{background:#fff1f2;border-color:#fecaca}
+    .quiz-item.incorrect h3::after{content:" - review";color:#b91c1c;font-size:.85rem}
+    .quiz-item.locked label{cursor:not-allowed;opacity:.75}
     .result-box{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900}
     .result-box.show{display:block}
+    .result-box.error{background:#fff1f2;color:#7f1d1d}
+    .result-box.success{background:#ecfdf5;color:#064e3b}
   </style>
 </head>
 <body class="english-intermediate-page">
@@ -64,7 +68,7 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Reading Check</p><h2>Answer and Explain</h2></div></div>
         <form id="quizForm" class="quiz-list"></form>
-        <div class="hero-actions"><button type="button" class="btn btn-primary" onclick="checkAnswers()">Check answers</button><button type="button" class="btn btn-secondary" onclick="resetQuiz()">Try again</button></div>
+        <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Submit to teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
         <div id="resultBox" class="result-box"></div>
       </article>
 
@@ -74,26 +78,147 @@
 
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
   <script>
+    const GOOGLE_USER_KEY = "jaralingua_google_user";
+    const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const SUBMIT_ENDPOINT = "/api/intermediate/unit4-memory-box/submit";
     const questions = [
-      ["What does Rosa ask Leo to bring?", ["A new phone", "A blue memory box", "A school bag"], 1],
-      ["What is inside the box?", ["Only money and keys", "New electronic devices", "Photos, paper menus, birthday candles, and cards"], 2],
-      ["Why does Rosa show the box?", ["To cancel dinner", "To help the family remember and decide", "To make everyone feel guilty"], 1],
-      ["What did the family use to do on Sunday afternoons?", ["Watch separate movies", "Travel to another city", "Cook together"], 2],
-      ["What did Rosa use to do before dinner?", ["Tell one short story", "Check every phone", "Leave the house"], 0],
-      ["What does Rosa's reaction to Leo's comment show?", ["She knows memory can idealize the past", "She believes the past was perfect", "She wants the family to stop talking"], 0],
-      ["What did the family protect in the past?", ["A private restaurant table", "One hour for the family", "A rule only for children"], 1],
-      ["Which present responsibility belongs to Maya?", ["Client messages", "Presentations", "Clinic work"], 1],
-      ["Which present responsibility belongs to Ana?", ["English homework", "Playing old music", "More work at the clinic"], 2],
-      ["Which option best summarizes Rosa's memory rule?", ["No homework and no chores", "One phone-free half hour, one shared responsibility, and one story or question", "Everyone cooks for three hours every Sunday"], 1],
-      ["Why does Leo like the idea?", ["It removes every responsibility", "It gives him unlimited phone time", "It is short and clear"], 2],
-      ["Why is the agreement fairer than the old complaint?", ["Adults have to follow it too", "Only teenagers have rules", "Rosa does all the work"], 0],
-      ["What does Ana put inside the box?", ["A restaurant bill", "A broken phone", "The new agreement card"], 2],
-      ["What is the main message of the reading?", ["Return to the past exactly", "Never talk about memories", "Use the past to design a better present"], 2]
+      ["What does Rosa ask Leo to bring?", ["A new phone", "A blue memory box", "A school bag"]],
+      ["What is inside the box?", ["Only money and keys", "New electronic devices", "Photos, paper menus, birthday candles, and cards"]],
+      ["Why does Rosa show the box?", ["To cancel dinner", "To help the family remember and decide", "To make everyone feel guilty"]],
+      ["What did the family use to do on Sunday afternoons?", ["Watch separate movies", "Travel to another city", "Cook together"]],
+      ["What did Rosa use to do before dinner?", ["Tell one short story", "Check every phone", "Leave the house"]],
+      ["What does Rosa's reaction to Leo's comment show?", ["She knows memory can idealize the past", "She believes the past was perfect", "She wants the family to stop talking"]],
+      ["What did the family protect in the past?", ["A private restaurant table", "One hour for the family", "A rule only for children"]],
+      ["Which present responsibility belongs to Maya?", ["Client messages", "Presentations", "Clinic work"]],
+      ["Which present responsibility belongs to Ana?", ["English homework", "Playing old music", "More work at the clinic"]],
+      ["Which option best summarizes Rosa's memory rule?", ["No homework and no chores", "One phone-free half hour, one shared responsibility, and one story or question", "Everyone cooks for three hours every Sunday"]],
+      ["Why does Leo like the idea?", ["It removes every responsibility", "It gives him unlimited phone time", "It is short and clear"]],
+      ["Why is the agreement fairer than the old complaint?", ["Adults have to follow it too", "Only teenagers have rules", "Rosa does all the work"]],
+      ["What does Ana put inside the box?", ["A restaurant bill", "A broken phone", "The new agreement card"]],
+      ["What is the main message of the reading?", ["Return to the past exactly", "Never talk about memories", "Use the past to design a better present"]]
     ];
     const form = document.getElementById("quizForm");
-    form.innerHTML = questions.map((q,index)=>`<div class="quiz-item" data-index="${index}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
-    function checkAnswers(){let score=0;document.querySelectorAll(".quiz-item").forEach((item)=>{const index=Number(item.dataset.index);const selected=form[`q${index}`].value;item.classList.remove("correct","incorrect");if(selected===String(questions[index][2])){score++;item.classList.add("correct");}else item.classList.add("incorrect");});const box=document.getElementById("resultBox");box.className="result-box show";box.textContent=`Score: ${score} / ${questions.length}. Now write your fictional memory paragraph.`;}
-    function resetQuiz(){form.reset();document.querySelectorAll(".quiz-item").forEach((item)=>item.classList.remove("correct","incorrect"));document.getElementById("resultBox").className="result-box";}
+    const resultBox = document.getElementById("resultBox");
+    const submitButton = document.getElementById("submitQuiz");
+    const resetButton = document.getElementById("resetQuiz");
+
+    function readStoredUser(key){
+      try{
+        const saved=JSON.parse(sessionStorage.getItem(key)||"null");
+        if(!saved||!saved.exp||Date.now()/1000>saved.exp){
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return saved;
+      }catch(error){
+        sessionStorage.removeItem(key);
+        return null;
+      }
+    }
+
+    function readUser(){
+      const googleUser=readStoredUser(GOOGLE_USER_KEY);
+      if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);
+      const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);
+      if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);
+      return null;
+    }
+
+    function authHeaders(){
+      const user=readUser();
+      if(!user||!user.credential)return null;
+      return {
+        Authorization:"Bearer "+user.credential,
+        "X-Jaralingua-Auth-Provider":user.provider||"google",
+        "Content-Type":"application/json"
+      };
+    }
+
+    function openLoginPanel(){
+      const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+      if(trigger)trigger.click();
+    }
+
+    function showResult(message,type){
+      resultBox.className="result-box show "+(type||"");
+      resultBox.textContent=message;
+    }
+
+    function selectedAnswers(){
+      const answers=[];
+      for(let index=0;index<questions.length;index+=1){
+        const selected=form.querySelector(`input[name="q${index}"]:checked`);
+        if(!selected)return null;
+        answers.push(Number(selected.value));
+      }
+      return answers;
+    }
+
+    function lockQuiz(incorrectQuestions){
+      const incorrectSet=new Set(incorrectQuestions||[]);
+      document.querySelectorAll(".quiz-item").forEach((item)=>{
+        const number=Number(item.dataset.questionNumber);
+        item.classList.toggle("incorrect",incorrectSet.has(number));
+        item.classList.add("locked");
+        item.querySelectorAll("input").forEach((input)=>{input.disabled=true;});
+      });
+      submitButton.disabled=true;
+    }
+
+    function resetQuiz(){
+      form.reset();
+      document.querySelectorAll(".quiz-item").forEach((item)=>{
+        item.classList.remove("incorrect","locked");
+        item.querySelectorAll("input").forEach((input)=>{input.disabled=false;});
+      });
+      submitButton.disabled=false;
+      resultBox.className="result-box";
+      resultBox.textContent="";
+    }
+
+    function submitQuiz(){
+      const answers=selectedAnswers();
+      if(!answers){
+        showResult("Answer all 14 questions before submitting.", "error");
+        return;
+      }
+      const headers=authHeaders();
+      if(!headers){
+        showResult("Sign in first. Your reading follow-up must be linked to your student record before it can be sent to the teacher.", "error");
+        openLoginPanel();
+        return;
+      }
+      submitButton.disabled=true;
+      showResult("Sending your reading follow-up to the teacher...", "");
+      fetch(SUBMIT_ENDPOINT,{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify({answers:answers,activity:"The Memory Box",clientDate:new Date().toISOString().slice(0,10)})
+      }).then((response)=>{
+        return response.json().then((data)=>({ok:response.ok,status:response.status,data:data}));
+      }).then(({ok,status,data})=>{
+        if(!ok){
+          submitButton.disabled=false;
+          if(status===403){
+            showResult("Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.", "error");
+            return;
+          }
+          showResult("The submission could not be saved. Please reload and try again.", "error");
+          return;
+        }
+        lockQuiz(data.incorrectQuestions||[]);
+        const wrong=(data.incorrectQuestions||[]).length;
+        const reviewText=wrong ? "Questions marked for review: "+data.incorrectQuestions.join(", ")+". Reset the full quiz if you want to change your answers." : "No questions were marked wrong.";
+        showResult(`Submitted to teacher. Reference grade: ${Number(data.grade).toFixed(2)} / 5.0. Score: ${data.score} / ${data.total}. ${reviewText} This reading follow-up is not a gradebook column and does not affect the accumulated percentage.`, "success");
+      }).catch(()=>{
+        submitButton.disabled=false;
+        showResult("Network error. The activity was not submitted.", "error");
+      });
+    }
+
+    form.innerHTML=questions.map((q,index)=>`<div class="quiz-item" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
+    submitButton.addEventListener("click",submitQuiz);
+    resetButton.addEventListener("click",resetQuiz);
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

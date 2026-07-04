@@ -49,6 +49,7 @@ BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_R
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 INTERMEDIATE_UNIT4_LISTENING_ID = "unit4SundayDinnerListening"
+INTERMEDIATE_UNIT4_MEMORY_BOX_ID = "unit4MemoryBoxReading"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -153,6 +154,7 @@ INTERMEDIATE_UNIT4_LISTENING_EVALUATION = {
 }
 
 INTERMEDIATE_UNIT4_LISTENING_ANSWERS = [1, 2, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2, 0, 1, 2]
+INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS = [1, 2, 1, 2, 0, 0, 1, 1, 2, 1, 2, 0, 2, 2]
 
 INTERMEDIATE_UNIT4_LISTENING_TRANSCRIPT = """Narrator: The Rivera family is having Sunday dinner. Before they eat, they need to solve a small family problem.
 
@@ -1319,15 +1321,23 @@ def ensure_intermediate_gradebook_structure(grades_data):
 
 
 def score_intermediate_unit4_listening(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT4_LISTENING_ANSWERS)
+
+
+def score_intermediate_unit4_memory_box(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS)
+
+
+def score_intermediate_fixed_answers(payload, answer_key):
     raw_answers = payload.get("answers")
     if not isinstance(raw_answers, list):
         raise ValueError("invalid_answers")
-    if len(raw_answers) != len(INTERMEDIATE_UNIT4_LISTENING_ANSWERS):
+    if len(raw_answers) != len(answer_key):
         raise ValueError("incomplete_answers")
     answers = []
     score = 0
     incorrect = []
-    for index, correct in enumerate(INTERMEDIATE_UNIT4_LISTENING_ANSWERS):
+    for index, correct in enumerate(answer_key):
         try:
             answer = int(raw_answers[index])
         except (TypeError, ValueError):
@@ -1339,7 +1349,7 @@ def score_intermediate_unit4_listening(payload):
             score += 1
         else:
             incorrect.append(index + 1)
-    total = len(INTERMEDIATE_UNIT4_LISTENING_ANSWERS)
+    total = len(answer_key)
     grade = round((score / total) * 5, 2)
     return {
         "answers": answers,
@@ -2554,6 +2564,56 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "incorrectQuestions": result["incorrect"],
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit4-memory-box/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit4_memory_box(payload)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                submitted_at = now_iso()
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT4_MEMORY_BOX_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT4_MEMORY_BOX_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "The Memory Box",
+                    "activityType": "Reading follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT4_MEMORY_BOX_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
                     "weight": 0
                 })
             return
