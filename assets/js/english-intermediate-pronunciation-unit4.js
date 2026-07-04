@@ -607,15 +607,15 @@
     const panel = document.createElement("div");
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
-      <h3><i class="bi bi-send-check"></i> Entregar al profesor / Send to teacher</h3>
-      <p>Este seguimiento de pronunciacion envia tu grabacion final al profesor. La calificacion es solo de referencia, tiene peso 0 y no afecta el porcentaje acumulado.</p>
+      <h3><i class="bi bi-send-check"></i> Send to teacher</h3>
+      <p>This pronunciation follow-up sends your final recording to the teacher. The grade is only a reference, has weight 0, and does not affect the accumulated percentage.</p>
       <div class="pronunciation-submit-metrics">
-        <span><b data-submit-score>--</b><small>Reto final</small></span>
-        <span><b data-submit-grade>--</b><small>Nota de referencia / 5</small></span>
+        <span><b data-submit-score>--</b><small>Final challenge</small></span>
+        <span><b data-submit-grade>--</b><small>Reference grade / 5</small></span>
       </div>
       <div class="pronunciation-submit-actions">
-        <button type="button" class="action-button reset" data-submit-reset><i class="bi bi-arrow-repeat"></i> Reiniciar reto completo</button>
-        <button type="button" class="action-button submit-grade" data-submit-teacher disabled><i class="bi bi-send-fill"></i> Entregar al profesor</button>
+        <button type="button" class="action-button reset" data-submit-reset><i class="bi bi-arrow-repeat"></i> Reset full challenge</button>
+        <button type="button" class="action-button submit-grade" data-submit-teacher disabled><i class="bi bi-send-fill"></i> Send to teacher</button>
       </div>
       <p class="pronunciation-submit-status" data-submit-status aria-live="polite"></p>
     `;
@@ -642,7 +642,7 @@
         gradeNode.textContent = "--";
         submitButton.disabled = true;
         if (statusNode.dataset.submitted !== "true") {
-          setStatus("Completa primero las 4 secciones y el reto final. Luego este boton se habilita para entregar al profesor.", "pending");
+          setStatus("Complete the 4 sections and the final challenge first. Then this button will unlock so you can send the activity to the teacher.", "pending");
         }
         return;
       }
@@ -650,7 +650,7 @@
       gradeNode.textContent = gradeFromScore(score).toFixed(2) + "/5";
       submitButton.disabled = false;
       if (statusNode.dataset.submitted !== "true") {
-        setStatus("Reto final listo. Ya puedes entregar esta actividad al profesor.", "success");
+        setStatus("Final challenge ready. You can now send this activity to the teacher.", "success");
       }
     }
 
@@ -692,7 +692,7 @@
           throw new Error("The activity could not be submitted.");
         }
         statusNode.dataset.submitted = "true";
-        setStatus("Entregado al profesor. Nota de referencia: " + Number(payload.grade).toFixed(2) + "/5. Peso: 0.", "success");
+        setStatus("Submitted to teacher. Reference grade: " + Number(payload.grade).toFixed(2) + "/5. Weight: 0.", "success");
       } catch (error) {
         setStatus(error.message || "The activity could not be submitted.", "error");
       } finally {
