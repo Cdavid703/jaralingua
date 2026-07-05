@@ -3929,7 +3929,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "wordCount": word_count,
                     "groupSize": clean_text(payload.get("groupSize"), 140),
                     "mainDish": clean_text(payload.get("mainDish"), 160),
-                    "ingredients": clean_text(payload.get("ingredients"), 360),
+                    "ingredients": clean_text(payload.get("ingredients"), 500),
+                    "healthReason": clean_text(payload.get("healthReason"), 260),
                     "culturalConnection": clean_text(payload.get("culturalConnection"), 260)
                 })
                 write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")

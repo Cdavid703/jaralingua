@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Healthy Dinner Planner | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <style>
+    .dinner-hero{background:linear-gradient(135deg,rgba(7,31,79,.92),rgba(15,118,110,.52)),url("../../assets/img/english-intermediate/unit-5/workshop-healthy-dinner-planner.png") center/cover no-repeat;color:#fff;grid-template-columns:minmax(0,1fr);overflow:hidden}
+    .dinner-hero .lesson-hero-content{width:min(100%,650px);max-width:100%;box-sizing:border-box}
+    .dinner-hero .lesson-hero-content p,.dinner-hero .eyebrow{color:#fff}
+    .dinner-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
+    .planner-grid,.model-grid,.support-grid,.quality-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+    .planner-card,.writer-card,.model-card,.support-card,.quality-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .planner-card h3,.writer-card h3,.model-card h3,.support-card h3,.quality-card h3{color:var(--intermediate-navy);margin:.2rem 0 .55rem}
+    .planner-card p,.model-card p,.support-card p,.support-card li,.quality-card p{color:var(--intermediate-muted);line-height:1.65}
+    .plate-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin-top:.8rem}
+    .plate-part{border:1px solid rgba(7,31,79,.14);border-radius:8px;padding:.75rem;background:#f8fbff}
+    .plate-part strong{display:block;color:var(--intermediate-navy);margin-bottom:.25rem}
+    .support-details{border:1px solid rgba(7,31,79,.14);border-radius:8px;background:#fff;margin-top:1rem;overflow:hidden}
+    .support-details summary{cursor:pointer;list-style:none;padding:1rem;background:linear-gradient(135deg,#fff,#f8fbff);display:flex;justify-content:space-between;gap:1rem;align-items:center;color:var(--intermediate-navy);font-weight:900}
+    .support-details summary::-webkit-details-marker{display:none}
+    .support-details summary::after{content:"+";display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#0f766e;color:#fff;flex:0 0 auto}
+    .support-details[open] summary::after{content:"-"}
+    .support-details-body{padding:1rem}
+    .phrase-list,.checklist{display:grid;gap:.6rem;margin:.7rem 0 0;padding:0;list-style:none}
+    .phrase-list li,.checklist li{background:#f8fbff;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.7rem}
+    .phrase-list strong{color:var(--intermediate-navy)}
+    .checklist li{display:flex;gap:.55rem;align-items:flex-start}
+    .checklist li::before{content:"";display:block;width:10px;height:10px;border-radius:50%;background:#0f766e;margin-top:.45rem;flex:0 0 auto}
+    .writer-field{display:grid;gap:.35rem;margin-bottom:.85rem}
+    .writer-field label{color:var(--intermediate-navy);font-weight:900}
+    .writer-field input,.writer-field textarea{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.8rem;font:inherit;color:#1f2937;background:#fff;box-sizing:border-box}
+    .writer-field textarea{min-height:130px;resize:vertical;line-height:1.6}
+    .writer-field textarea.final-plan{min-height:190px}
+    .writer-status{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;line-height:1.55}
+    .writer-status.show{display:block}
+    .writer-status.error{background:#fff1f2;color:#7f1d1d}
+    .writer-status.success{background:#ecfdf5;color:#064e3b}
+    .counter-pill{display:inline-flex;border-radius:999px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;padding:.35rem .65rem}
+    .model-response{background:#fffaf0;border-left:5px solid #d9a441;border-radius:8px;padding:1rem;color:#24364d;line-height:1.7;font-weight:700}
+    .quality-card.complete{border-color:#86efac;background:#ecfdf5}
+    .quality-card.complete h3::after{content:" ready";font-size:.8rem;color:#047857}
+    @media(max-width:720px){.plate-map{grid-template-columns:1fr}}
+    @media(max-width:640px){
+      body.english-intermediate-page{overflow-x:hidden}
+      .english-intermediate-page .navbar{display:flex!important;flex-direction:column!important;align-items:center;gap:.55rem;padding:8px 10px;overflow:hidden}
+      .english-intermediate-page .brand img{height:38px}
+      .english-intermediate-page .nav-links{display:flex!important;width:100%!important;flex-wrap:wrap!important;justify-content:center!important;gap:6px!important;overflow-x:hidden!important;max-width:100%!important;padding:2px 0}
+      .english-intermediate-page .nav-links li{flex:0 1 auto!important;max-width:100%}
+      .english-intermediate-page .nav-links a{min-height:34px;padding:0 8px;font-size:.72rem;white-space:normal!important;text-align:center;overflow-wrap:anywhere}
+      .lesson-hero.dinner-hero{display:block!important;padding-left:16px;padding-right:16px;box-sizing:border-box}
+      .dinner-hero .lesson-hero-content{width:calc(100vw - 64px)!important;max-width:calc(100vw - 64px)!important;min-width:0!important;flex:0 1 auto!important;box-sizing:border-box;padding:26px 22px;overflow:hidden}
+      .dinner-hero h1{font-size:clamp(1.75rem,8vw,1.95rem);line-height:1.12}
+      .dinner-hero h1,.dinner-hero p,.lesson-meta span{max-width:100%;white-space:normal!important;overflow-wrap:break-word}
+      .dinner-hero .lesson-hero-content > p:not(.eyebrow){font-size:.76rem;line-height:1.55}
+      .dinner-hero .eyebrow{display:inline-block;max-width:100%;white-space:normal!important;overflow-wrap:break-word}
+      .dinner-hero .hero-actions{display:grid;grid-template-columns:1fr;gap:.65rem;width:100%}
+      .premium-lesson-container{width:min(100% - 20px,1180px)}
+      .hero-actions{align-items:stretch}
+      .hero-actions .btn,.hero-actions button{width:100%;justify-content:center}
+    }
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Intermediate Course</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+
+  <main>
+    <section class="lesson-hero dinner-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab - Unit 5 Speaking and Writing</p>
+        <h1>Healthy Dinner Planner</h1>
+        <p>Design a balanced dinner someone could actually serve. Include quantities, ingredients, health reasons, and one cultural connection.</p>
+        <div class="lesson-meta"><span>Speaking</span><span>Writing</span><span>Quantities</span><span>Food culture</span></div>
+        <div class="hero-actions"><a href="#planner" class="btn btn-primary">Start planner</a><a href="practice-lab.html#unit-5-folder" class="btn btn-secondary">Back to Unit 5 folder</a></div>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="planner">
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Purpose</p><h2>Plan a Dinner Someone Could Actually Serve</h2></div></div>
+        <div class="planner-grid">
+          <div class="planner-card"><h3>Audience</h3><p>Name the group and number of people. A plan for two people is different from a plan for six classmates.</p></div>
+          <div class="planner-card"><h3>Quantities</h3><p>Use exact phrases: two cups of rice, a bag of carrots, six pieces of chicken, a little oil, a few strawberries.</p></div>
+          <div class="planner-card"><h3>Reason</h3><p>Explain why the dinner is balanced, light, filling, affordable, colorful, or culturally meaningful.</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Dinner design</p><h2>Use the Plate Map</h2></div></div>
+        <div class="support-grid">
+          <div class="support-card">
+            <h3>Balanced plate</h3>
+            <p>The final dinner must include at least three food groups and one reason for each important choice.</p>
+            <div class="plate-map">
+              <div class="plate-part"><strong>Grains</strong><span>rice, pasta, arepa, quinoa, bread</span></div>
+              <div class="plate-part"><strong>Protein</strong><span>beans, chicken, eggs, fish, lentils</span></div>
+              <div class="plate-part"><strong>Vegetables</strong><span>lettuce, carrots, tomatoes, spinach</span></div>
+              <div class="plate-part"><strong>Fresh side</strong><span>avocado, fruit salad, yogurt, herbs</span></div>
+            </div>
+          </div>
+          <div class="support-card">
+            <h3>Quality checklist</h3>
+            <ul class="checklist">
+              <li>State who the dinner is for and how many people will eat.</li>
+              <li>Include at least five ingredients with natural quantity phrases.</li>
+              <li>Explain why the dinner is healthy or balanced.</li>
+              <li>Connect the menu to Colombian food, another culture, or a family habit.</li>
+              <li>Show that the meal is realistic: not too expensive, too heavy, or too vague.</li>
+            </ul>
+          </div>
+        </div>
+        <details class="support-details">
+          <summary>Open useful phrase bank</summary>
+          <div class="support-details-body">
+            <ul class="phrase-list">
+              <li><strong>Audience:</strong> This dinner is for six classmates at an international food fair.</li>
+              <li><strong>Ingredients:</strong> It is made with two cups of cooked rice, one bowl of beans, and some fresh vegetables.</li>
+              <li><strong>Health:</strong> It is balanced because it includes grains, protein, vegetables, and a light dessert.</li>
+              <li><strong>Quantity control:</strong> We use a little oil and a few pieces of fruit so the meal does not become too heavy.</li>
+              <li><strong>Culture:</strong> It is inspired by Colombian home food, but it is presented as a modern dinner bowl.</li>
+              <li><strong>Recommendation:</strong> I would serve this dinner because it is colorful, filling, affordable, and easy to share.</li>
+            </ul>
+          </div>
+        </details>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Model</p><h2>What a Strong Plan Sounds Like</h2></div></div>
+        <div class="model-grid">
+          <div class="model-card"><h3>Ingredient sentence</h3><p>Our dinner is made with two cups of rice, one can of beans, four pieces of chicken, some lettuce, and a little lime dressing.</p></div>
+          <div class="model-card"><h3>Health sentence</h3><p>It is balanced because it has grains, protein, vegetables, healthy fat, and a light dessert.</p></div>
+          <div class="model-card"><h3>Culture sentence</h3><p>It is inspired by Colombian home food, but we present it as a modern dinner bowl.</p></div>
+        </div>
+        <details class="support-details">
+          <summary>Open full model paragraph</summary>
+          <div class="support-details-body">
+            <p class="model-response">Our dinner is for six classmates at an international food fair. The main dish is a Colombian-inspired rice bowl made with three cups of cooked rice, two cans of beans, six pieces of grilled chicken, some lettuce, two avocados, a little lime dressing, and a few pieces of mango. It is balanced because it has grains, protein, vegetables, healthy fat, and a light fruit dessert. It is inspired by Colombian home food, but it is presented as a modern dinner bowl. I would serve this meal because it is colorful, filling, affordable, and easy to share.</p>
+          </div>
+        </details>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Plan builder</p><h2>Write and Send Your Dinner Plan</h2></div></div>
+        <div class="writer-card">
+          <div class="quality-grid" aria-label="Planner quality indicators">
+            <div class="quality-card" data-check="group"><h3>Audience</h3><p>Group and number of people.</p></div>
+            <div class="quality-card" data-check="ingredients"><h3>Quantities</h3><p>At least five ingredients with amounts.</p></div>
+            <div class="quality-card" data-check="health"><h3>Health reason</h3><p>Why the dinner is balanced.</p></div>
+            <div class="quality-card" data-check="culture"><h3>Culture</h3><p>Food, place, family, or cultural link.</p></div>
+          </div>
+          <div class="writer-field"><label for="groupSize">Group and number of people</label><input id="groupSize" maxlength="140" placeholder="Example: six classmates at an international food fair" /></div>
+          <div class="writer-field"><label for="mainDish">Main dish</label><input id="mainDish" maxlength="160" placeholder="Example: a Colombian-inspired rice bowl" /></div>
+          <div class="writer-field"><label for="ingredients">Key ingredients and quantities</label><textarea id="ingredients" maxlength="500" placeholder="Example: three cups of cooked rice, two cans of beans, six pieces of chicken, some lettuce, two avocados, a little lime dressing..."></textarea></div>
+          <div class="writer-field"><label for="healthReason">Health reason</label><input id="healthReason" maxlength="260" placeholder="Example: It is balanced because it includes grains, protein, vegetables, and healthy fat." /></div>
+          <div class="writer-field"><label for="culturalConnection">Cultural connection</label><input id="culturalConnection" maxlength="260" placeholder="Example: It is inspired by Colombian home food and compared with global rice bowls." /></div>
+          <div class="writer-field"><label for="response">Final dinner plan</label><textarea class="final-plan" id="response" placeholder="Write 90 to 240 words. Include group, dish, quantities, health reason, and cultural connection."></textarea></div>
+          <p><span class="counter-pill" id="wordCounter">0 words</span></p>
+          <div class="hero-actions"><button type="button" class="btn btn-secondary" id="outlinePlan">Create outline from notes</button><button type="button" class="btn btn-primary" id="submitPlan">Send to Teacher</button><button type="button" class="btn btn-secondary" id="clearPlan">Clear draft</button></div>
+          <div class="writer-status" id="writerStatus"></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script>
+    const GOOGLE_USER_KEY = "jaralingua_google_user";
+    const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const SUBMIT_ENDPOINT = "/api/intermediate/unit5-healthy-dinner/submit";
+    const fields = {groupSize:document.getElementById("groupSize"),mainDish:document.getElementById("mainDish"),ingredients:document.getElementById("ingredients"),healthReason:document.getElementById("healthReason"),culturalConnection:document.getElementById("culturalConnection"),response:document.getElementById("response")};
+    const wordCounter=document.getElementById("wordCounter");
+    const statusBox=document.getElementById("writerStatus");
+    const submitButton=document.getElementById("submitPlan");
+    function wordCount(value){const matches=String(value||"").trim().match(/\b[\w'-]+\b/g);return matches?matches.length:0;}
+    function countIngredients(){return String(fields.ingredients.value||"").split(/,|\n|;/).map((item)=>item.trim()).filter(Boolean).length;}
+    function updateQuality(){const checks={group:fields.groupSize.value.trim().length>=8,ingredients:countIngredients()>=5,health:fields.healthReason.value.trim().length>=18,culture:fields.culturalConnection.value.trim().length>=18};Object.keys(checks).forEach((key)=>{const card=document.querySelector(`[data-check="${key}"]`);if(card)card.classList.toggle("complete",checks[key]);});return checks;}
+    function updateCounter(){wordCounter.textContent=wordCount(fields.response.value)+" words";updateQuality();}
+    function readStoredUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp){sessionStorage.removeItem(key);return null;}return saved;}catch(error){sessionStorage.removeItem(key);return null;}}
+    function readUser(){const googleUser=readStoredUser(GOOGLE_USER_KEY);if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);return null;}
+    function authHeaders(){const user=readUser();if(!user||!user.credential)return null;return {Authorization:"Bearer "+user.credential,"X-Jaralingua-Auth-Provider":user.provider||"google","Content-Type":"application/json"};}
+    function openLoginPanel(){const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");if(trigger)trigger.click();}
+    function showStatus(message,type){statusBox.className="writer-status show "+(type||"");statusBox.textContent=message;}
+    function outlinePlan(){const group=fields.groupSize.value.trim()||"[group and number of people]";const dish=fields.mainDish.value.trim()||"[main dish]";const ingredients=fields.ingredients.value.trim()||"[ingredients with quantities]";const health=fields.healthReason.value.trim()||"[health reason]";const culture=fields.culturalConnection.value.trim()||"[cultural connection]";fields.response.value=`Our dinner is for ${group}. The main dish is ${dish}. It is made with ${ingredients}. ${health} ${culture}. I would serve this dinner because it is realistic, balanced, and clear for the group.`;updateCounter();showStatus("Outline created. Replace any bracketed part and improve the plan before sending it.","");}
+    function submitPlan(){const checks=updateQuality();if(!checks.group){showStatus("Add a clear group and number of people before sending it to the teacher.","error");fields.groupSize.focus();return;}if(!checks.ingredients){showStatus("Add at least five ingredients with quantity language before sending it to the teacher.","error");fields.ingredients.focus();return;}if(!checks.health){showStatus("Add a clear health reason before sending it to the teacher.","error");fields.healthReason.focus();return;}if(!checks.culture){showStatus("Add a cultural connection before sending it to the teacher.","error");fields.culturalConnection.focus();return;}const count=wordCount(fields.response.value);if(count<90){showStatus("Write at least 90 words before sending it to the teacher.","error");fields.response.focus();return;}if(count>260){showStatus("The plan is too long. Keep it under 260 words.","error");fields.response.focus();return;}if(fields.response.value.includes("[")){showStatus("Replace the bracketed outline parts before sending it to the teacher.","error");fields.response.focus();return;}const headers=authHeaders();if(!headers){showStatus("Sign in first. Your dinner plan must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showStatus("Sending your dinner plan to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({groupSize:fields.groupSize.value,mainDish:fields.mainDish.value,ingredients:fields.ingredients.value,healthReason:fields.healthReason.value,culturalConnection:fields.culturalConnection.value,response:fields.response.value,clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{submitButton.disabled=false;if(!ok){showStatus(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":(data&&data.error==="text_too_short"?"The plan is too short: "+data.wordCount+" words.":(data&&data.error==="text_too_long"?"The plan is too long: "+data.wordCount+" words.":"The submission could not be saved. Please reload and try again.")),"error");return;}showStatus("Sent to teacher. Word count: "+data.wordCount+". The teacher can now read your dinner plan. This follow-up appears in the grade grid with weight 0.","success");}).catch(()=>{submitButton.disabled=false;showStatus("Network error. The plan was not submitted.","error");});}
+    document.getElementById("outlinePlan").addEventListener("click",outlinePlan);
+    document.getElementById("submitPlan").addEventListener("click",submitPlan);
+    document.getElementById("clearPlan").addEventListener("click",()=>{Object.keys(fields).forEach((key)=>{fields[key].value="";});updateCounter();statusBox.className="writer-status";statusBox.textContent="";});
+    Object.keys(fields).forEach((key)=>fields[key].addEventListener("input",updateCounter));
+    updateCounter();
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
