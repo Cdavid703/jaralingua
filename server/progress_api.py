@@ -63,6 +63,7 @@ INTERMEDIATE_UNIT5_MARKET_BASKET_ID = "unit5MarketBasketChallenge"
 INTERMEDIATE_UNIT5_LISTENING_ID = "unit5MarketDinnerListening"
 INTERMEDIATE_UNIT5_READING_ID = "unit5DishHistoryReading"
 INTERMEDIATE_UNIT5_DINNER_PLAN_ID = "unit5HealthyDinnerPlanner"
+INTERMEDIATE_UNIT5_PRONUNCIATION_ID = "unit5FoodQuantitiesPronunciation"
 INTERMEDIATE_UNIT5_SNACK_REVIEW_ID = "unit5GlobalSnackReview"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -237,6 +238,14 @@ INTERMEDIATE_UNIT5_DINNER_PLAN_EVALUATION = {
     "weight": 0,
     "type": "Writing follow-up",
     "description": "Producto de planificacion enviable al profesor. La entrega queda visible con peso 0."
+}
+
+INTERMEDIATE_UNIT5_PRONUNCIATION_EVALUATION = {
+    "id": INTERMEDIATE_UNIT5_PRONUNCIATION_ID,
+    "title": "Unit 5 Pronunciation - Food Quantities",
+    "weight": 0,
+    "type": "Pronunciation follow-up",
+    "description": "Seguimiento oral enviable al profesor. La calificacion aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
 }
 
 INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION = {
@@ -1599,6 +1608,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_READING_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_DINNER_PLAN_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_PRONUNCIATION_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION):
         changed = True
@@ -3336,6 +3347,76 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": INTERMEDIATE_UNIT4_PRONUNCIATION_ID,
+                    "score100": score100,
+                    "grade": grade,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-pronunciation/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    score100, grade = intermediate_pronunciation_grade_from_payload(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                audio_ref = save_intermediate_pronunciation_audio(student, INTERMEDIATE_UNIT5_PRONUNCIATION_ID, payload)
+                if not audio_ref:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": "missing_audio"})
+                    return
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT5_PRONUNCIATION_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                if isinstance(previous, dict) and isinstance(previous.get("audio"), dict):
+                    remove_intermediate_pronunciation_audio(previous.get("audio"))
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                details = payload.get("details") if isinstance(payload.get("details"), dict) else {}
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT5_PRONUNCIATION_ID] = grade
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT5_PRONUNCIATION_ID] = {
+                    "submittedAt": submitted_at,
+                    "score100": score100,
+                    "grade": grade,
+                    "overall": clean_score_metric(details.get("overall")),
+                    "accuracy": clean_score_metric(details.get("accuracy")),
+                    "completeness": clean_score_metric(details.get("completeness")),
+                    "fluency": clean_score_metric(details.get("fluency")),
+                    "wpm": clean_score_metric(details.get("wpm"), 0, 300),
+                    "stageLabel": clean_text(details.get("stageLabel"), 120),
+                    "transcript": clean_text(details.get("transcript"), 3000),
+                    "referenceText": clean_text(details.get("referenceText"), 3000),
+                    "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
+                    "audio": audio_ref,
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Food Quantities Pronunciation",
+                    "activityType": "Pronunciation follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT5_PRONUNCIATION_ID,
                     "score100": score100,
                     "grade": grade,
                     "submittedAt": submitted_at,
