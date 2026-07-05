@@ -14,12 +14,12 @@
     .unit5-reading-hero .lesson-hero-content p,.unit5-reading-hero .eyebrow{color:#fff}
     .unit5-reading-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
     .reading-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.55fr);gap:1rem;align-items:start}
-    .story-card,.focus-card,.quiz-item,.product-card,.response-panel{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .story-card,.focus-card,.quiz-item,.product-card,.response-panel,.support-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
     .story-card{padding:clamp(1.2rem,3vw,2rem)}
-    .story-card h2,.focus-card h3,.quiz-item h3,.product-card h3,.response-panel h3{color:var(--intermediate-navy);margin-top:0}
+    .story-card h2,.focus-card h3,.quiz-item h3,.product-card h3,.response-panel h3,.support-card h3{color:var(--intermediate-navy);margin-top:0}
     .story-card p{color:#334155;font-size:1.05rem;line-height:1.85;margin:0 0 1rem}
-    .focus-grid,.product-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem}
-    .focus-card p,.product-card p,.response-panel p{color:var(--intermediate-muted);line-height:1.65}
+    .focus-grid,.product-grid,.support-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1rem}
+    .focus-card p,.product-card p,.response-panel p,.support-card p,.support-card li{color:var(--intermediate-muted);line-height:1.65}
     .quote-box{background:#eef8f7;border-left:5px solid #0f766e;border-radius:8px;padding:1rem;color:#24364d;line-height:1.7;font-weight:800}
     .reading-map{display:grid;gap:.7rem;margin-top:1rem}
     .map-row{display:grid;grid-template-columns:92px minmax(0,1fr);gap:.6rem;align-items:start;background:#f8fbff;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.75rem}
@@ -33,6 +33,20 @@
     .response-panel{margin-top:1rem}
     .response-panel label{display:block;font-weight:900;color:var(--intermediate-navy);margin:.6rem 0 .4rem}
     .response-panel textarea{width:100%;min-height:155px;border:1px solid var(--intermediate-border);border-radius:8px;padding:.85rem;font:inherit;color:#24364d;line-height:1.55;resize:vertical;box-sizing:border-box}
+    .glossary-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.7rem;margin:0;padding:0;list-style:none}
+    .glossary-list li{background:#f8fbff;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.75rem}
+    .glossary-list strong{display:block;color:var(--intermediate-navy);margin-bottom:.25rem}
+    .support-details{border:1px solid rgba(7,31,79,.14);border-radius:8px;background:#fff;margin-top:1rem;overflow:hidden}
+    .support-details summary{cursor:pointer;list-style:none;padding:1rem;background:linear-gradient(135deg,#fff,#f8fbff);display:flex;justify-content:space-between;gap:1rem;align-items:center;color:var(--intermediate-navy);font-weight:900}
+    .support-details summary::-webkit-details-marker{display:none}
+    .support-details summary::after{content:"+";display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#0f766e;color:#fff;flex:0 0 auto}
+    .support-details[open] summary::after{content:"-"}
+    .support-details-body{padding:1rem}
+    .checklist{display:grid;gap:.55rem;margin:.8rem 0 0;padding:0;list-style:none}
+    .checklist li{display:flex;gap:.55rem;align-items:flex-start;background:#f8fbff;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.65rem}
+    .checklist li::before{content:"";display:block;width:10px;height:10px;border-radius:50%;background:#0f766e;margin-top:.45rem;flex:0 0 auto}
+    .model-response{background:#fffaf0;border-left:5px solid #d9a441;border-radius:8px;padding:1rem;color:#24364d;line-height:1.7;font-weight:700}
+    .teacher-guide{background:#f8fbff;border:1px dashed rgba(7,31,79,.24)}
     .result-box{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;line-height:1.55}
     .result-box.show{display:block}
     .result-box.error{background:#fff1f2;color:#7f1d1d}
@@ -107,11 +121,47 @@
       </div>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Reading check</p><h2>Answer the 14 Questions</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Reading support</p><h2>Key Vocabulary and Meaning</h2></div></div>
+        <details class="support-details">
+          <summary>Open contextual glossary</summary>
+          <div class="support-details-body">
+            <ul class="glossary-list">
+              <li><strong>family plate</strong><span>A meal that represents a family's routine or memory. Example: Her grandmother calls it a family plate.</span></li>
+              <li><strong>weekday lunches</strong><span>Meals eaten from Monday to Friday. Example: The rice reminds her of weekday lunches after school.</span></li>
+              <li><strong>local market</strong><span>A place in the community where families buy fresh food. Example: The black beans come from a market.</span></li>
+              <li><strong>texture</strong><span>How food feels when you eat it. Example: Avocado gives the plate a softer texture.</span></li>
+              <li><strong>side dish</strong><span>A smaller food served with the main meal. Example: Some families serve a small arepa on the side.</span></li>
+              <li><strong>flexible</strong><span>Able to change depending on the family or situation. Example: The dish is flexible.</span></li>
+              <li><strong>identical</strong><span>Exactly the same. Example: Laura does not say the dishes are identical.</span></li>
+              <li><strong>meaningful</strong><span>Important because it has emotional or cultural value. Example: Simple ingredients can become meaningful.</span></li>
+              <li><strong>repeat</strong><span>To do something again and again. Example: Families repeat dishes for years.</span></li>
+              <li><strong>comfort food</strong><span>Food connected with warmth, memory, or emotional comfort. Example: Rice-and-bean dishes can be comfort foods.</span></li>
+            </ul>
+          </div>
+        </details>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Reading check</p><h2>Answer the 14 Questions</h2></div></div>
         <form id="quizForm" class="quiz-list"></form>
         <div class="response-panel">
           <h3>Reading response for the teacher</h3>
           <p>After the questions, write a short response that proves you understood the reading. This is part of the delivery.</p>
+          <div class="support-grid">
+            <div class="support-card">
+              <h3>Evidence checklist</h3>
+              <ul class="checklist">
+                <li>Use two ingredients with exact quantity language.</li>
+                <li>Explain one family memory or cultural meaning from the text.</li>
+                <li>Compare the dish respectfully with one food from another place or family.</li>
+                <li>Include countable or uncountable food language naturally.</li>
+              </ul>
+            </div>
+            <div class="support-card">
+              <h3>Strong response model</h3>
+              <p class="model-response">Laura's family plate includes two cups of cooked rice and a bowl of black beans. The dish matters because each ingredient connects her grandmother with school lunches, the local market, and family memories. It reminds me of other rice-and-bean meals because simple ingredients can become meaningful when families repeat them for years.</p>
+            </div>
+          </div>
           <label for="readingResponse">Your reading response</label>
           <textarea id="readingResponse" placeholder="Write 40 to 140 words. Mention two ingredients with quantities, explain why the dish matters to Laura's family, and compare it respectfully with one food from another culture or your own family."></textarea>
         </div>
@@ -120,12 +170,22 @@
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Product</p><h2>Reading Response Card</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Product</p><h2>Reading Response Card</h2></div></div>
         <div class="product-grid">
           <div class="product-card"><h3>Ingredient evidence</h3><p>Use exact quantity language from the reading, such as <strong>two cups of cooked rice</strong> or <strong>a little cilantro sauce</strong>.</p></div>
           <div class="product-card"><h3>Cultural meaning</h3><p>Explain the relationship between the dish, the market, family habits, and memories.</p></div>
           <div class="product-card"><h3>Comparison</h3><p>Compare respectfully. Do not write that two cultures are the same; write what idea they share.</p></div>
         </div>
+        <details class="support-details">
+          <summary>Teacher discussion guide</summary>
+          <div class="support-details-body">
+            <div class="support-grid">
+              <div class="support-card teacher-guide"><h3>Main idea</h3><p>Use the reading to discuss how food becomes traditional through repetition, people, place, and memory.</p></div>
+              <div class="support-card teacher-guide"><h3>Respectful comparison</h3><p>Guide students to compare shared ideas, not to claim that cultures or dishes are identical.</p></div>
+              <div class="support-card teacher-guide"><h3>Language focus</h3><p>Point to exact phrases from the text: two cups of cooked rice, a bowl of black beans, two ears of corn, a little cilantro sauce, a few small potatoes.</p></div>
+            </div>
+          </div>
+        </details>
       </article>
     </section>
   </main>
