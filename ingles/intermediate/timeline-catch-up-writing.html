@@ -220,6 +220,7 @@
             <div class="product-actions">
               <button type="button" class="btn btn-primary" onclick="buildTimelineDraft()">Build from my notes</button>
               <button type="button" class="btn btn-secondary" onclick="copyTimelineProduct()">Copy final product</button>
+              <button type="button" class="btn btn-primary" id="submitTimeline">Submit to teacher</button>
             </div>
             <p class="copy-status" id="copyStatus" aria-live="polite"></p>
           </div>
@@ -248,8 +249,12 @@
   </footer>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script>
+    const GOOGLE_USER_KEY = "jaralingua_google_user";
+    const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const SUBMIT_ENDPOINT = "/api/intermediate/unit2-timeline/submit";
     const eventGrid = document.getElementById("eventGrid");
     const copyStatus = document.getElementById("copyStatus");
+    const submitTimelineButton = document.getElementById("submitTimeline");
     const timeWords = ["First", "After that", "Later", "Since then", "Recently"];
 
     eventGrid.innerHTML = timeWords.map(function(label, index) {
@@ -286,6 +291,103 @@
         copyStatus.textContent = "Select the text manually if copying is not available.";
       });
     }
+
+    function wordCount(value) {
+      const matches = String(value || "").trim().match(/\b[\w'-]+\b/g);
+      return matches ? matches.length : 0;
+    }
+
+    function readStoredUser(key) {
+      try {
+        const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+        if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return saved;
+      } catch (error) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
+    }
+
+    function readUser() {
+      const googleUser = readStoredUser(GOOGLE_USER_KEY);
+      if (googleUser && googleUser.credential) return Object.assign({ provider: "google" }, googleUser);
+      const microsoftUser = readStoredUser(MICROSOFT_USER_KEY);
+      if (microsoftUser && microsoftUser.credential) return Object.assign({ provider: "microsoft" }, microsoftUser);
+      return null;
+    }
+
+    function authHeaders() {
+      const user = readUser();
+      if (!user || !user.credential) return null;
+      return {
+        Authorization: "Bearer " + user.credential,
+        "X-Jaralingua-Auth-Provider": user.provider || "google",
+        "Content-Type": "application/json"
+      };
+    }
+
+    function openLoginPanel() {
+      const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+      if (trigger) trigger.click();
+    }
+
+    function submitTimelineProduct() {
+      const finalScript = document.getElementById("finalScript").value.trim();
+      const count = wordCount(finalScript);
+      if (count < 60) {
+        copyStatus.textContent = "Write at least 60 words before submitting your timeline.";
+        return;
+      }
+      if (count > 240) {
+        copyStatus.textContent = "Keep the timeline under 240 words before submitting.";
+        return;
+      }
+      const headers = authHeaders();
+      if (!headers) {
+        copyStatus.textContent = "Sign in first. Your timeline must be linked to your student record before it can be sent to the teacher.";
+        openLoginPanel();
+        return;
+      }
+      const events = timeWords.map(function(label, index) {
+        const event = document.getElementById("event" + index).value.trim();
+        const detail = document.getElementById("detail" + index).value.trim();
+        return [label, event, detail].filter(Boolean).join(": ");
+      }).filter(Boolean);
+      const followUpQuestions = finalScript.match(/[^.?!]*\?/g) || [];
+      submitTimelineButton.disabled = true;
+      copyStatus.textContent = "Sending your timeline to the teacher...";
+      fetch(SUBMIT_ENDPOINT, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          finalScript: finalScript,
+          events: events,
+          followUpQuestions: followUpQuestions,
+          clientDate: new Date().toISOString().slice(0, 10)
+        })
+      }).then(function(response) {
+        return response.json().then(function(data) {
+          return { ok: response.ok, status: response.status, data: data };
+        });
+      }).then(function(result) {
+        submitTimelineButton.disabled = false;
+        if (!result.ok) {
+          copyStatus.textContent = result.status === 403
+            ? "Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook."
+            : "The timeline could not be submitted. Please reload and try again.";
+          return;
+        }
+        copyStatus.textContent = "Submitted to teacher. Word count: " + result.data.wordCount + ". The teacher can now read your timeline in the follow-up panel.";
+      }).catch(function() {
+        submitTimelineButton.disabled = false;
+        copyStatus.textContent = "Network error. The timeline was not submitted.";
+      });
+    }
+
+    submitTimelineButton.addEventListener("click", submitTimelineProduct);
   </script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>

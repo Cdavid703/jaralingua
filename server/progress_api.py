@@ -51,6 +51,9 @@ INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLI
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
 INTERMEDIATE_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_INTERMEDIATE_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/intermediate-pronunciation-audio")
 INTERMEDIATE_UNIT2_CATCHING_UP_ID = "unit2CatchingUpListening"
+INTERMEDIATE_UNIT2_TIMELINE_ID = "unit2TimelineCatchUpWriting"
+INTERMEDIATE_UNIT2_READING_ID = "unit2LetterNeverSentReading"
+INTERMEDIATE_UNIT2_GOAL_SUPPORT_ID = "unit2GoalSupportInterview"
 INTERMEDIATE_UNIT4_LISTENING_ID = "unit4SundayDinnerListening"
 INTERMEDIATE_UNIT4_MEMORY_BOX_ID = "unit4MemoryBoxReading"
 INTERMEDIATE_UNIT4_MEMORY_BLOG_ID = "unit4FamilyMemoryBlog"
@@ -158,6 +161,30 @@ INTERMEDIATE_UNIT2_CATCHING_UP_EVALUATION = {
     "description": "Seguimiento enviable al profesor. La nota aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
 }
 
+INTERMEDIATE_UNIT2_TIMELINE_EVALUATION = {
+    "id": INTERMEDIATE_UNIT2_TIMELINE_ID,
+    "title": "Unit 2 Writing - Timeline Catch-Up",
+    "weight": 0,
+    "type": "Writing follow-up",
+    "description": "Seguimiento enviable al profesor. La nota de referencia no afecta el promedio acumulado."
+}
+
+INTERMEDIATE_UNIT2_READING_EVALUATION = {
+    "id": INTERMEDIATE_UNIT2_READING_ID,
+    "title": "Unit 2 Reading - The Letter I Never Sent",
+    "weight": 0,
+    "type": "Reading follow-up",
+    "description": "Seguimiento de lectura enviable al profesor. La nota aparece como referencia y su peso es 0."
+}
+
+INTERMEDIATE_UNIT2_GOAL_SUPPORT_EVALUATION = {
+    "id": INTERMEDIATE_UNIT2_GOAL_SUPPORT_ID,
+    "title": "Unit 2 Speaking/Writing - Goal Support Interview",
+    "weight": 0,
+    "type": "Interview follow-up",
+    "description": "Producto de entrevista enviable al profesor. La entrega queda visible con peso 0."
+}
+
 INTERMEDIATE_UNIT4_LISTENING_EVALUATION = {
     "id": INTERMEDIATE_UNIT4_LISTENING_ID,
     "title": "Unit 4 Listening - Sunday Dinner Negotiation",
@@ -175,6 +202,7 @@ INTERMEDIATE_UNIT4_PRONUNCIATION_EVALUATION = {
 }
 
 INTERMEDIATE_UNIT2_CATCHING_UP_ANSWERS = [1, 2, 0, 1, 0, 2, 1, 0, 2, 1, 0, 2, 2, 1, 0, 2, 0, 1, 2, 1]
+INTERMEDIATE_UNIT2_READING_ANSWERS = [1, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2]
 INTERMEDIATE_UNIT4_LISTENING_ANSWERS = [1, 2, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2, 0, 1, 2]
 INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS = [1, 2, 1, 2, 0, 0, 1, 1, 2, 1, 2, 0, 2, 2]
 INTERMEDIATE_UNIT4_EXPRESSION_ITEMS = [
@@ -1469,6 +1497,12 @@ def ensure_french2_gradebook_structure(grades_data):
 
 def ensure_intermediate_gradebook_structure(grades_data):
     changed = ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_CATCHING_UP_EVALUATION)
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_TIMELINE_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_READING_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_GOAL_SUPPORT_EVALUATION):
+        changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT4_LISTENING_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT4_PRONUNCIATION_EVALUATION):
@@ -1478,6 +1512,10 @@ def ensure_intermediate_gradebook_structure(grades_data):
 
 def score_intermediate_unit2_catching_up(payload):
     return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT2_CATCHING_UP_ANSWERS)
+
+
+def score_intermediate_unit2_reading(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT2_READING_ANSWERS)
 
 
 def score_intermediate_unit4_listening(payload):
@@ -1529,6 +1567,38 @@ def score_intermediate_fixed_answers(payload, answer_key):
         "grade": grade,
         "incorrect": incorrect
     }
+
+
+def clean_intermediate_text_followup(payload, text_key, min_words, max_words):
+    text = clean_text(payload.get(text_key), 5000)
+    word_count = simple_word_count(text)
+    if word_count < min_words:
+        raise ValueError("text_too_short")
+    if word_count > max_words:
+        raise ValueError("text_too_long")
+    return text, word_count
+
+
+def save_intermediate_text_followup(student, evaluation_id, detail):
+    previous = student.get("gradeDetails", {}).get(evaluation_id) if isinstance(student.get("gradeDetails"), dict) else None
+    try:
+        attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+    except (TypeError, ValueError):
+        attempt_count = 1
+    submitted_at = now_iso()
+    if not isinstance(student.get("gradeDetails"), dict):
+        student["gradeDetails"] = {}
+    next_detail = dict(detail)
+    next_detail.update({
+        "submittedAt": submitted_at,
+        "attemptCount": attempt_count,
+        "status": "submitted",
+        "weight": 0,
+        "doesNotAffectAverage": True,
+        "followUpOnly": True
+    })
+    student["gradeDetails"][evaluation_id] = next_detail
+    return submitted_at, attempt_count
 
 
 def intermediate_unit4_expression_by_id(expression_id):
@@ -2964,6 +3034,137 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit2-timeline/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    final_script, word_count = clean_intermediate_text_followup(payload, "finalScript", 60, 240)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("finalScript"))})
+                    return
+                events = clean_text_list(payload.get("events"), 8, 220)
+                questions = clean_text_list(payload.get("followUpQuestions"), 6, 160)
+                submitted_at, attempt_count = save_intermediate_text_followup(student, INTERMEDIATE_UNIT2_TIMELINE_ID, {
+                    "activity": "Timeline Catch-Up Writing",
+                    "activityType": "Writing follow-up",
+                    "response": final_script,
+                    "wordCount": word_count,
+                    "events": events,
+                    "followUpQuestions": questions
+                })
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT2_TIMELINE_ID,
+                    "wordCount": word_count,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit2-goal-support/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    response, word_count = clean_intermediate_text_followup(payload, "response", 70, 260)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("response"))})
+                    return
+                submitted_at, attempt_count = save_intermediate_text_followup(student, INTERMEDIATE_UNIT2_GOAL_SUPPORT_ID, {
+                    "activity": "Goal Support Interview",
+                    "activityType": "Interview follow-up",
+                    "response": response,
+                    "wordCount": word_count,
+                    "partnerName": clean_text(payload.get("partnerName"), 100),
+                    "myGoal": clean_text(payload.get("myGoal"), 260),
+                    "partnerGoal": clean_text(payload.get("partnerGoal"), 260),
+                    "supportAction": clean_text(payload.get("supportAction"), 260)
+                })
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT2_GOAL_SUPPORT_ID,
+                    "wordCount": word_count,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit2-letter-never-sent/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit2_reading(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                submitted_at = now_iso()
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT2_READING_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT2_READING_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT2_READING_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "The Letter I Never Sent",
+                    "activityType": "Reading follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT2_READING_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
                     "weight": 0
                 })
             return
