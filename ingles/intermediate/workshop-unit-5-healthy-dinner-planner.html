@@ -13,10 +13,10 @@
     .dinner-hero .lesson-hero-content{width:min(100%,650px);max-width:100%;box-sizing:border-box}
     .dinner-hero .lesson-hero-content p,.dinner-hero .eyebrow{color:#fff}
     .dinner-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
-    .planner-grid,.model-grid,.support-grid,.quality-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
-    .planner-card,.writer-card,.model-card,.support-card,.quality-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
-    .planner-card h3,.writer-card h3,.model-card h3,.support-card h3,.quality-card h3{color:var(--intermediate-navy);margin:.2rem 0 .55rem}
-    .planner-card p,.model-card p,.support-card p,.support-card li,.quality-card p{color:var(--intermediate-muted);line-height:1.65}
+    .planner-grid,.model-grid,.support-grid,.quality-grid,.rubric-grid,.output-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1rem}
+    .planner-card,.writer-card,.model-card,.support-card,.quality-card,.rubric-card,.ticket-preview,.presentation-preview,.checker-panel{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .planner-card h3,.writer-card h3,.model-card h3,.support-card h3,.quality-card h3,.rubric-card h3,.ticket-preview h3,.presentation-preview h3,.checker-panel h3{color:var(--intermediate-navy);margin:.2rem 0 .55rem}
+    .planner-card p,.model-card p,.support-card p,.support-card li,.quality-card p,.rubric-card p,.ticket-preview p,.presentation-preview p,.checker-panel p{color:var(--intermediate-muted);line-height:1.65}
     .plate-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin-top:.8rem}
     .plate-part{border:1px solid rgba(7,31,79,.14);border-radius:8px;padding:.75rem;background:#f8fbff}
     .plate-part strong{display:block;color:var(--intermediate-navy);margin-bottom:.25rem}
@@ -44,6 +44,21 @@
     .model-response{background:#fffaf0;border-left:5px solid #d9a441;border-radius:8px;padding:1rem;color:#24364d;line-height:1.7;font-weight:700}
     .quality-card.complete{border-color:#86efac;background:#ecfdf5}
     .quality-card.complete h3::after{content:" ready";font-size:.8rem;color:#047857}
+    .rubric-card{position:relative;overflow:hidden}
+    .rubric-card::before{content:"";position:absolute;inset:0 auto 0 0;width:5px;background:#0f766e}
+    .rubric-card strong{display:inline-flex;margin-bottom:.45rem;color:#9a3412;text-transform:uppercase;font-size:.78rem;letter-spacing:.06em}
+    .checker-panel{margin:1rem 0;background:linear-gradient(135deg,#f8fffb,#eef9f7)}
+    .checker-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+    .checker-tag{border:1px solid rgba(7,31,79,.16);border-radius:999px;background:#fff;color:#475569;font-weight:800;padding:.42rem .7rem}
+    .checker-tag.complete{border-color:#14b8a6;background:#ecfdf5;color:#064e3b}
+    .output-grid{margin:1rem 0}
+    .ticket-preview{background:#fffaf0}
+    .ticket-grid{display:grid;gap:.6rem;margin-top:.75rem}
+    .ticket-line{border:1px solid rgba(217,164,65,.28);border-radius:8px;background:#fff;padding:.7rem}
+    .ticket-line strong{display:block;color:#9a3412;margin-bottom:.2rem}
+    .ticket-line span{color:#24364d;line-height:1.55}
+    .presentation-preview{background:#f8fbff}
+    .presentation-script{border-left:5px solid #0f766e;border-radius:8px;background:#fff;padding:1rem;color:#24364d;line-height:1.7;font-weight:700}
     @media(max-width:720px){.plate-map{grid-template-columns:1fr}}
     @media(max-width:640px){
       body.english-intermediate-page{overflow-x:hidden}
@@ -145,13 +160,28 @@
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Plan builder</p><h2>Write and Send Your Dinner Plan</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Teacher review rubric</p><h2>How the Dinner Plan Will Be Read</h2></div></div>
+        <div class="rubric-grid">
+          <div class="rubric-card"><strong>Quantity language</strong><h3>Ingredients are measurable</h3><p>The plan uses natural quantity phrases such as two cups of rice, one can of beans, some lettuce, a little oil, or a few pieces of fruit.</p></div>
+          <div class="rubric-card"><strong>Balanced meal</strong><h3>The dinner makes sense</h3><p>The meal includes more than one food group and explains why it is filling, light, healthy, affordable, or realistic for the group.</p></div>
+          <div class="rubric-card"><strong>Cultural connection</strong><h3>The menu has a reason</h3><p>The student connects the dinner to a family habit, Colombian food, another culture, a place, or a food memory without forcing the idea.</p></div>
+          <div class="rubric-card"><strong>Clarity</strong><h3>The product is easy to read</h3><p>The final paragraph is organized, specific, and ready for the teacher to read in class. It does not contain empty placeholders or vague food lists.</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Plan builder</p><h2>Write and Send Your Dinner Plan</h2></div></div>
         <div class="writer-card">
           <div class="quality-grid" aria-label="Planner quality indicators">
             <div class="quality-card" data-check="group"><h3>Audience</h3><p>Group and number of people.</p></div>
             <div class="quality-card" data-check="ingredients"><h3>Quantities</h3><p>At least five ingredients with amounts.</p></div>
             <div class="quality-card" data-check="health"><h3>Health reason</h3><p>Why the dinner is balanced.</p></div>
             <div class="quality-card" data-check="culture"><h3>Culture</h3><p>Food, place, family, or cultural link.</p></div>
+          </div>
+          <div class="checker-panel" aria-live="polite">
+            <h3>Quantity checker</h3>
+            <p id="quantityMessage">Add ingredient quantities so the dinner sounds real and teachable.</p>
+            <div class="checker-tags" id="quantityTags" aria-label="Quantity language detected"></div>
           </div>
           <div class="writer-field"><label for="groupSize">Group and number of people</label><input id="groupSize" maxlength="140" placeholder="Example: six classmates at an international food fair" /></div>
           <div class="writer-field"><label for="mainDish">Main dish</label><input id="mainDish" maxlength="160" placeholder="Example: a Colombian-inspired rice bowl" /></div>
@@ -160,6 +190,25 @@
           <div class="writer-field"><label for="culturalConnection">Cultural connection</label><input id="culturalConnection" maxlength="260" placeholder="Example: It is inspired by Colombian home food and compared with global rice bowls." /></div>
           <div class="writer-field"><label for="response">Final dinner plan</label><textarea class="final-plan" id="response" placeholder="Write 90 to 240 words. Include group, dish, quantities, health reason, and cultural connection."></textarea></div>
           <p><span class="counter-pill" id="wordCounter">0 words</span></p>
+          <div class="output-grid">
+            <section class="ticket-preview" aria-live="polite">
+              <h3>Dinner Ticket</h3>
+              <p>This preview turns the plan into the short product the teacher can read quickly.</p>
+              <div class="ticket-grid">
+                <div class="ticket-line"><strong>Audience</strong><span id="ticketAudience">Waiting for group and number of people.</span></div>
+                <div class="ticket-line"><strong>Main dish</strong><span id="ticketDish">Waiting for main dish.</span></div>
+                <div class="ticket-line"><strong>Ingredients</strong><span id="ticketIngredients">Waiting for ingredients with quantities.</span></div>
+                <div class="ticket-line"><strong>Health reason</strong><span id="ticketHealth">Waiting for health reason.</span></div>
+                <div class="ticket-line"><strong>Cultural connection</strong><span id="ticketCulture">Waiting for cultural connection.</span></div>
+                <div class="ticket-line"><strong>Final plan length</strong><span id="ticketWords">0 words.</span></div>
+              </div>
+            </section>
+            <section class="presentation-preview" aria-live="polite">
+              <h3>Presentation Mode</h3>
+              <p>Use this oral version when the teacher reads or asks groups to present their dinner.</p>
+              <p class="presentation-script" id="presentationScript">Complete the planner to generate a short presentation script.</p>
+            </section>
+          </div>
           <div class="hero-actions"><button type="button" class="btn btn-secondary" id="outlinePlan">Create outline from notes</button><button type="button" class="btn btn-primary" id="submitPlan">Send to Teacher</button><button type="button" class="btn btn-secondary" id="clearPlan">Clear draft</button></div>
           <div class="writer-status" id="writerStatus"></div>
         </div>
@@ -176,9 +225,30 @@
     const wordCounter=document.getElementById("wordCounter");
     const statusBox=document.getElementById("writerStatus");
     const submitButton=document.getElementById("submitPlan");
+    const quantityMessage=document.getElementById("quantityMessage");
+    const quantityTags=document.getElementById("quantityTags");
+    const ticketAudience=document.getElementById("ticketAudience");
+    const ticketDish=document.getElementById("ticketDish");
+    const ticketIngredients=document.getElementById("ticketIngredients");
+    const ticketHealth=document.getElementById("ticketHealth");
+    const ticketCulture=document.getElementById("ticketCulture");
+    const ticketWords=document.getElementById("ticketWords");
+    const presentationScript=document.getElementById("presentationScript");
+    const quantityChecks=[
+      {key:"numbers",label:"exact numbers",pattern:/\b(\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b/i},
+      {key:"measures",label:"cups, bowls, spoons",pattern:/\b(cup|cups|bowl|bowls|spoon|spoons|tablespoon|tablespoons|teaspoon|teaspoons)\b/i},
+      {key:"containers",label:"cans, bags, bottles",pattern:/\b(can|cans|bag|bags|bottle|bottles|package|packages)\b/i},
+      {key:"pieces",label:"pieces or slices",pattern:/\b(piece|pieces|slice|slices|serving|servings|ear|ears)\b/i},
+      {key:"soft",label:"some, a little, a few",pattern:/\b(some|a little|a few|a lot of|many|several)\b/i}
+    ];
     function wordCount(value){const matches=String(value||"").trim().match(/\b[\w'-]+\b/g);return matches?matches.length:0;}
     function countIngredients(){return String(fields.ingredients.value||"").split(/,|\n|;/).map((item)=>item.trim()).filter(Boolean).length;}
-    function updateQuality(){const checks={group:fields.groupSize.value.trim().length>=8,ingredients:countIngredients()>=5,health:fields.healthReason.value.trim().length>=18,culture:fields.culturalConnection.value.trim().length>=18};Object.keys(checks).forEach((key)=>{const card=document.querySelector(`[data-check="${key}"]`);if(card)card.classList.toggle("complete",checks[key]);});return checks;}
+    function compact(value,fallback){const text=String(value||"").trim();return text||fallback;}
+    function quantitySignals(){const text=(fields.ingredients.value+" "+fields.response.value).toLowerCase();const detected=quantityChecks.map((item)=>Object.assign({},item,{ok:item.pattern.test(text)}));return {items:detected,count:detected.filter((item)=>item.ok).length};}
+    function updateQuantityChecker(){const signals=quantitySignals();quantityTags.innerHTML=signals.items.map((item)=>`<span class="checker-tag ${item.ok?"complete":""}">${item.label}</span>`).join("");quantityMessage.textContent=signals.count>=3?"Good quantity control. The dinner now sounds concrete and realistic.":"Add clearer quantity language. Aim for exact numbers plus measurement words such as cups, cans, pieces, some, a little, or a few.";return signals;}
+    function updateTicket(){const count=wordCount(fields.response.value);ticketAudience.textContent=compact(fields.groupSize.value,"Waiting for group and number of people.");ticketDish.textContent=compact(fields.mainDish.value,"Waiting for main dish.");ticketIngredients.textContent=compact(fields.ingredients.value,"Waiting for ingredients with quantities.");ticketHealth.textContent=compact(fields.healthReason.value,"Waiting for health reason.");ticketCulture.textContent=compact(fields.culturalConnection.value,"Waiting for cultural connection.");ticketWords.textContent=count+" words.";}
+    function updatePresentation(){const group=compact(fields.groupSize.value,"our group");const dish=compact(fields.mainDish.value,"our main dish");const ingredients=compact(fields.ingredients.value,"clear ingredients with quantities");const health=compact(fields.healthReason.value,"it is balanced and realistic");const culture=compact(fields.culturalConnection.value,"it has a cultural connection");presentationScript.textContent=`Good afternoon. Our dinner is for ${group}. The main dish is ${dish}. It is made with ${ingredients}. ${health} ${culture} We would serve this dinner because it is clear, balanced, and easy to share.`;}
+    function updateQuality(){const signals=updateQuantityChecker();const checks={group:fields.groupSize.value.trim().length>=8,ingredients:countIngredients()>=5&&signals.count>=3,health:fields.healthReason.value.trim().length>=18,culture:fields.culturalConnection.value.trim().length>=18};Object.keys(checks).forEach((key)=>{const card=document.querySelector(`[data-check="${key}"]`);if(card)card.classList.toggle("complete",checks[key]);});updateTicket();updatePresentation();return checks;}
     function updateCounter(){wordCounter.textContent=wordCount(fields.response.value)+" words";updateQuality();}
     function readStoredUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp){sessionStorage.removeItem(key);return null;}return saved;}catch(error){sessionStorage.removeItem(key);return null;}}
     function readUser(){const googleUser=readStoredUser(GOOGLE_USER_KEY);if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);return null;}
@@ -186,7 +256,7 @@
     function openLoginPanel(){const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");if(trigger)trigger.click();}
     function showStatus(message,type){statusBox.className="writer-status show "+(type||"");statusBox.textContent=message;}
     function outlinePlan(){const group=fields.groupSize.value.trim()||"[group and number of people]";const dish=fields.mainDish.value.trim()||"[main dish]";const ingredients=fields.ingredients.value.trim()||"[ingredients with quantities]";const health=fields.healthReason.value.trim()||"[health reason]";const culture=fields.culturalConnection.value.trim()||"[cultural connection]";fields.response.value=`Our dinner is for ${group}. The main dish is ${dish}. It is made with ${ingredients}. ${health} ${culture}. I would serve this dinner because it is realistic, balanced, and clear for the group.`;updateCounter();showStatus("Outline created. Replace any bracketed part and improve the plan before sending it.","");}
-    function submitPlan(){const checks=updateQuality();if(!checks.group){showStatus("Add a clear group and number of people before sending it to the teacher.","error");fields.groupSize.focus();return;}if(!checks.ingredients){showStatus("Add at least five ingredients with quantity language before sending it to the teacher.","error");fields.ingredients.focus();return;}if(!checks.health){showStatus("Add a clear health reason before sending it to the teacher.","error");fields.healthReason.focus();return;}if(!checks.culture){showStatus("Add a cultural connection before sending it to the teacher.","error");fields.culturalConnection.focus();return;}const count=wordCount(fields.response.value);if(count<90){showStatus("Write at least 90 words before sending it to the teacher.","error");fields.response.focus();return;}if(count>260){showStatus("The plan is too long. Keep it under 260 words.","error");fields.response.focus();return;}if(fields.response.value.includes("[")){showStatus("Replace the bracketed outline parts before sending it to the teacher.","error");fields.response.focus();return;}const headers=authHeaders();if(!headers){showStatus("Sign in first. Your dinner plan must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showStatus("Sending your dinner plan to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({groupSize:fields.groupSize.value,mainDish:fields.mainDish.value,ingredients:fields.ingredients.value,healthReason:fields.healthReason.value,culturalConnection:fields.culturalConnection.value,response:fields.response.value,clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{submitButton.disabled=false;if(!ok){showStatus(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":(data&&data.error==="text_too_short"?"The plan is too short: "+data.wordCount+" words.":(data&&data.error==="text_too_long"?"The plan is too long: "+data.wordCount+" words.":"The submission could not be saved. Please reload and try again.")),"error");return;}showStatus("Sent to teacher. Word count: "+data.wordCount+". The teacher can now read your dinner plan. This follow-up appears in the grade grid with weight 0.","success");}).catch(()=>{submitButton.disabled=false;showStatus("Network error. The plan was not submitted.","error");});}
+    function submitPlan(){const checks=updateQuality();if(!checks.group){showStatus("Add a clear group and number of people before sending it to the teacher.","error");fields.groupSize.focus();return;}if(!checks.ingredients){showStatus("Add at least five ingredients and clearer quantity language before sending it to the teacher.","error");fields.ingredients.focus();return;}if(!checks.health){showStatus("Add a clear health reason before sending it to the teacher.","error");fields.healthReason.focus();return;}if(!checks.culture){showStatus("Add a cultural connection before sending it to the teacher.","error");fields.culturalConnection.focus();return;}const count=wordCount(fields.response.value);if(count<90){showStatus("Write at least 90 words before sending it to the teacher.","error");fields.response.focus();return;}if(count>260){showStatus("The plan is too long. Keep it under 260 words.","error");fields.response.focus();return;}if(fields.response.value.includes("[")){showStatus("Replace the bracketed outline parts before sending it to the teacher.","error");fields.response.focus();return;}const headers=authHeaders();if(!headers){showStatus("Sign in first. Your dinner plan must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showStatus("Sending your dinner plan to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({groupSize:fields.groupSize.value,mainDish:fields.mainDish.value,ingredients:fields.ingredients.value,healthReason:fields.healthReason.value,culturalConnection:fields.culturalConnection.value,response:fields.response.value,clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{submitButton.disabled=false;if(!ok){showStatus(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":(data&&data.error==="text_too_short"?"The plan is too short: "+data.wordCount+" words.":(data&&data.error==="text_too_long"?"The plan is too long: "+data.wordCount+" words.":"The submission could not be saved. Please reload and try again.")),"error");return;}showStatus("Sent to teacher. Word count: "+data.wordCount+". The teacher can now read your dinner plan. This follow-up appears in the grade grid with weight 0.","success");}).catch(()=>{submitButton.disabled=false;showStatus("Network error. The plan was not submitted.","error");});}
     document.getElementById("outlinePlan").addEventListener("click",outlinePlan);
     document.getElementById("submitPlan").addEventListener("click",submitPlan);
     document.getElementById("clearPlan").addEventListener("click",()=>{Object.keys(fields).forEach((key)=>{fields[key].value="";});updateCounter();statusBox.className="writer-status";statusBox.textContent="";});
