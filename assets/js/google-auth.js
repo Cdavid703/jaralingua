@@ -1523,7 +1523,7 @@
           ${authRoleChoiceMarkup(roleStatus)}
           <div class="auth-current-progress">
             <strong>${copy.currentPage}</strong>
-            <span>${escapeHtml(current.title)} Â· ${escapeHtml(statusCopy[current.status] || copy.inProgress)}</span>
+            <span>${escapeHtml(current.title)} · ${escapeHtml(statusCopy[current.status] || copy.inProgress)}</span>
             <div class="status-actions">
               ${statusButton("pending", current.status, copy.markPending)}
               ${statusButton("in-progress", current.status, copy.markInProgress)}
@@ -2042,7 +2042,7 @@
         return `
           <div class="role-request-item">
             <strong>${escapeHtml(request.name || request.email)}</strong>
-            <span>${escapeHtml(request.email || "")} Â· ${roleLabel(request.role)}</span>
+            <span>${escapeHtml(request.email || "")} · ${roleLabel(request.role)}</span>
             <div class="role-request-actions">
               <button class="role-action secondary" type="button" data-request-id="${escapeAttribute(request.id)}" data-approve-role="student">${copy.approveAsStudent}</button>
               <button class="role-action" type="button" data-request-id="${escapeAttribute(request.id)}" data-approve-role="teacher">${copy.approveAsTeacher}</button>
