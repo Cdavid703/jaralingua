@@ -150,8 +150,8 @@
           <div class="quiz-question-card" data-question="q19"><h3>19. What does Ethan say about listening to Maya's timeline?</h3><label><input type="radio" name="q19" value="A" /> It makes him feel confused about her choices</label><label><input type="radio" name="q19" value="B" /> It proves she should move back to Denver</label><label><input type="radio" name="q19" value="C" /> It helps him understand why each change mattered</label></div>
           <div class="quiz-question-card" data-question="q20"><h3>20. What is the best summary of the conversation?</h3><label><input type="radio" name="q20" value="A" /> Two friends argue about who made better decisions</label><label><input type="radio" name="q20" value="B" /> Two friends reconnect by sharing ordered life experiences</label><label><input type="radio" name="q20" value="C" /> Two classmates plan a trip without discussing the past</label></div>
           <div class="quiz-actions-row">
-            <button type="button" class="practice-submit-btn" onclick="checkAnswers()">Check Answers</button>
-            <button type="button" class="secondary-quiz-btn" onclick="resetQuiz()">Try Again</button>
+            <button type="button" class="practice-submit-btn" id="submitQuizBtn" onclick="submitListeningFollowUp()">Submit to teacher</button>
+            <button type="button" class="secondary-quiz-btn" onclick="resetQuiz()">Reset full quiz</button>
           </div>
         </form>
         <div id="result-box" class="quiz-result-box"></div>
@@ -196,28 +196,13 @@
   <script>
     const listeningText = "Maya: Ethan? Wow, I almost walked past you. It has been such a long time.\n\nEthan: Maya! I know. We have sent short messages, but we have not really talked for years. I am glad we finally chose a day to catch up.\n\nMaya: Me too. So, my timeline is a little messy, but I will try to put it in order. First, after graduation, I moved to Denver for a marketing internship. I was excited, but during the first month I felt really lonely.\n\nEthan: That sounds hard. What helped you adjust?\n\nMaya: After that, I joined a small design club after work. At first, I only went because I needed friends. Later, I realized I loved creative projects. Then, the company closed suddenly, and I had to move back home.\n\nEthan: What changed after the company closed?\n\nMaya: A lot. I helped my mom improve her online store. By the time we finished the new product photos and descriptions, her sales were better, and I felt more confident. Recently, I got a job at a community center. I interview neighbors about their stories and memories, so now marketing feels more human to me.\n\nEthan: That makes sense. Hearing the timeline helps me understand why each change mattered.\n\nMaya: What about you? What has happened in your life?\n\nEthan: First, my father got sick last year, so I postponed one college semester. I spent many long days at my family's restaurant. At first, I thought I was falling behind everyone else.\n\nMaya: I can imagine. Did that feeling change?\n\nEthan: Yes. Later, I managed deliveries, created a better schedule, and listened to customers more carefully. Eventually, I realized the semester was not just lost time. It taught me responsibility and organization.\n\nMaya: That is a big lesson.\n\nEthan: Since then, I returned to classes in January. I am studying business again, but I understand it differently now. Recently, I also started training for a ten-kilometer race because I wanted a goal outside work and school.\n\nMaya: I like that. A good catch-up conversation should not be a competition about who is more successful. It should help us understand the story behind each change.\n\nEthan: Exactly. Let us not wait years again. Next month, we can meet here and share one new goal.\n\nMaya: Deal. And next time, I want to hear how the race training is going.";
 
-    const quizData = {
-      q1: { answer: "B", correctText: "They want to catch up after not talking properly for years", feedback: "Ethan says they have sent short messages, but they have not really talked for years." },
-      q2: { answer: "C", correctText: "She moved to Denver for a marketing internship", feedback: "Maya starts her timeline with the move to Denver after graduation." },
-      q3: { answer: "A", correctText: "Excited but lonely", feedback: "She was excited, but during the first month she felt really lonely." },
-      q4: { answer: "B", correctText: "A small design club after work", feedback: "The club first helped her make friends, and later helped her discover creative projects." },
-      q5: { answer: "A", correctText: "It closed suddenly", feedback: "Maya says the company closed suddenly, so she had to move back home." },
-      q6: { answer: "C", correctText: "She helped her mother improve an online store", feedback: "She worked on product photos and descriptions for her mother's store." },
-      q7: { answer: "B", correctText: "His father got sick and the family needed help", feedback: "Ethan postponed one semester because his father got sick." },
-      q8: { answer: "A", correctText: "At his family's restaurant", feedback: "He spent many long days there while helping his family." },
-      q9: { answer: "C", correctText: "It taught him responsibility and organization", feedback: "Ethan says the semester was not just lost time because it taught him those skills." },
-      q10: { answer: "B", correctText: "In January", feedback: "He returned to classes in January." },
-      q11: { answer: "A", correctText: "Training for a ten-kilometer race", feedback: "The race gives him a goal outside work and school." },
-      q12: { answer: "C", correctText: "At a community center", feedback: "Maya recently got a job at a community center." },
-      q13: { answer: "C", correctText: "Their stories and neighborhood memories", feedback: "She interviews neighbors about stories and memories." },
-      q14: { answer: "B", correctText: "Unexpected changes can still teach useful lessons", feedback: "Both timelines include difficult changes that lead to learning." },
-      q15: { answer: "A", correctText: "Meet again next month and share one new goal", feedback: "Ethan suggests meeting next month and sharing one new goal." },
-      q16: { answer: "C", correctText: "What changed after the company closed?", feedback: "Ethan asks this exact follow-up question." },
-      q17: { answer: "A", correctText: "The speakers organize events in clear chronological order", feedback: "They use first, after that, later, then, by the time, recently, and since then." },
-      q18: { answer: "B", correctText: "A competition about who is more successful", feedback: "Maya directly says a catch-up conversation should not be a success competition." },
-      q19: { answer: "C", correctText: "It helps him understand why each change mattered", feedback: "Ethan says Maya's timeline helps him understand the meaning behind each change." },
-      q20: { answer: "B", correctText: "Two friends reconnect by sharing ordered life experiences", feedback: "This best captures the purpose and content of the listening." }
-    };
+    const GOOGLE_USER_KEY = "jaralingua_google_user";
+    const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const SUBMIT_ENDPOINT = "/api/intermediate/unit2-catching-up/submit";
+    const questionKeys = Array.from({ length: 20 }, function(_, index) {
+      return "q" + (index + 1);
+    });
+    const answerIndex = { A: 0, B: 1, C: 2 };
 
     function setAudioSpeed(rate) {
       document.getElementById("catchupAudio").playbackRate = rate;
@@ -225,85 +210,139 @@
 
     function clearQuestionFeedback() {
       document.querySelectorAll(".quiz-question-card").forEach(function(card) {
-        card.classList.remove("is-correct", "is-incorrect");
+        card.classList.remove("is-correct", "is-incorrect", "locked");
         card.querySelectorAll("label").forEach(function(label) {
           label.classList.remove("correct-option", "wrong-option");
+        });
+        card.querySelectorAll("input").forEach(function(input) {
+          input.disabled = false;
         });
       });
     }
 
-    function markQuestionFeedback(key, selected) {
-      const card = document.querySelector('[data-question="' + key + '"]');
-      if (!card) return;
-      const correctAnswer = quizData[key].answer;
-      card.classList.add(selected === correctAnswer ? "is-correct" : "is-incorrect");
-      card.querySelectorAll("label").forEach(function(label) {
-        const input = label.querySelector("input");
-        if (!input) return;
-        if (input.value === correctAnswer) label.classList.add("correct-option");
-        if (input.value === selected && selected !== correctAnswer) label.classList.add("wrong-option");
+    function markIncorrectQuestions(incorrectQuestions) {
+      const incorrectSet = new Set(incorrectQuestions || []);
+      document.querySelectorAll(".quiz-question-card").forEach(function(card) {
+        const number = Number(String(card.dataset.question || "").replace("q", ""));
+        card.classList.toggle("is-incorrect", incorrectSet.has(number));
+        card.classList.add("locked");
+        card.querySelectorAll("input").forEach(function(input) {
+          input.disabled = true;
+        });
       });
     }
 
-    function checkAnswers() {
-      let score = 0;
-      let complete = true;
-      const feedbackItems = [];
-      clearQuestionFeedback();
-
-      Object.keys(quizData).forEach(function(key, index) {
+    function selectedAnswers() {
+      const answers = [];
+      for (let index = 0; index < questionKeys.length; index += 1) {
+        const key = questionKeys[index];
         const selected = document.forms.quizForm[key].value;
-        if (!selected) {
-          complete = false;
+        if (!selected) return null;
+        answers.push(answerIndex[selected]);
+      }
+      return answers;
+    }
+
+    function readStoredUser(key) {
+      try {
+        const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+        if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return saved;
+      } catch (error) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
+    }
+
+    function readUser() {
+      const googleUser = readStoredUser(GOOGLE_USER_KEY);
+      if (googleUser && googleUser.credential) return Object.assign({ provider: "google" }, googleUser);
+      const microsoftUser = readStoredUser(MICROSOFT_USER_KEY);
+      if (microsoftUser && microsoftUser.credential) return Object.assign({ provider: "microsoft" }, microsoftUser);
+      return null;
+    }
+
+    function authHeaders() {
+      const user = readUser();
+      if (!user || !user.credential) return null;
+      return {
+        Authorization: "Bearer " + user.credential,
+        "X-Jaralingua-Auth-Provider": user.provider || "google",
+        "Content-Type": "application/json"
+      };
+    }
+
+    function openLoginPanel() {
+      const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+      if (trigger) trigger.click();
+    }
+
+    function submitListeningFollowUp() {
+      const answers = selectedAnswers();
+      const submitButton = document.getElementById("submitQuizBtn");
+      const resultBox = document.getElementById("result-box");
+      clearQuestionFeedback();
+      resultBox.style.display = "block";
+      if (!answers) {
+        resultBox.className = "quiz-result-box incorrect";
+        resultBox.textContent = "Please answer all 20 questions before submitting.";
+        return;
+      }
+      const headers = authHeaders();
+      if (!headers) {
+        resultBox.className = "quiz-result-box incorrect";
+        resultBox.textContent = "Sign in first. Your listening follow-up must be linked to your student record before it can be sent to the teacher.";
+        openLoginPanel();
+        return;
+      }
+      submitButton.disabled = true;
+      resultBox.className = "quiz-result-box";
+      resultBox.textContent = "Sending your listening follow-up to the teacher...";
+      fetch(SUBMIT_ENDPOINT, {
+        method: "POST",
+        headers: headers,
+        body: JSON.stringify({
+          answers: answers,
+          activity: "Catching Up After Years",
+          clientDate: new Date().toISOString().slice(0, 10)
+        })
+      }).then(function(response) {
+        return response.json().then(function(data) {
+          return { ok: response.ok, status: response.status, data: data };
+        });
+      }).then(function(result) {
+        if (!result.ok) {
+          submitButton.disabled = false;
+          resultBox.className = "quiz-result-box incorrect";
+          resultBox.textContent = result.status === 403
+            ? "Your signed-in account is not linked to an Intermediate English student record. Ask the teacher to review your email in the gradebook."
+            : "The submission could not be saved. Please reload and try again.";
           return;
         }
-        if (selected === quizData[key].answer) {
-          score++;
-        } else {
-          feedbackItems.push(
-            "<div class=\"quiz-feedback-item\"><strong>" +
-            (index + 1) +
-            ". Correct answer: " +
-            quizData[key].answer +
-            " - " +
-            quizData[key].correctText +
-            ".</strong><br />" +
-            quizData[key].feedback +
-            "</div>"
-          );
-        }
-        markQuestionFeedback(key, selected);
-      });
-
-      const resultBox = document.getElementById("result-box");
-      resultBox.style.display = "block";
-
-      if (!complete) {
-        resultBox.className = "quiz-result-box incorrect";
-        resultBox.innerHTML = "Please answer all questions before checking.";
-        return;
-      }
-
-      if (score === Object.keys(quizData).length) {
+        markIncorrectQuestions(result.data.incorrectQuestions || []);
+        const wrong = (result.data.incorrectQuestions || []).length;
+        const reviewText = wrong
+          ? "Questions marked for review: " + result.data.incorrectQuestions.join(", ") + ". Reset the full quiz if you want to change your answers."
+          : "No questions were marked wrong.";
         resultBox.className = "quiz-result-box correct";
-        resultBox.innerHTML = "Excellent. You got " + score + " out of " + Object.keys(quizData).length + " correct.";
-        return;
-      }
-
-      resultBox.className = "quiz-result-box incorrect";
-      resultBox.innerHTML =
-        "You got " +
-        score +
-        " out of " +
-        Object.keys(quizData).length +
-        " correct.<br /><br /><strong>Review your incorrect answers:</strong><div class=\"quiz-feedback-list\">" +
-        feedbackItems.join("") +
-        "</div>";
+        resultBox.textContent = "Submitted to teacher. Reference grade: " +
+          Number(result.data.grade).toFixed(2) + " / 5.0. Score: " +
+          result.data.score + " / " + result.data.total + ". " +
+          reviewText + " This follow-up appears in the grade grid with weight 0, so it does not affect the accumulated percentage.";
+      }).catch(function() {
+        submitButton.disabled = false;
+        resultBox.className = "quiz-result-box incorrect";
+        resultBox.textContent = "Network error. The activity was not submitted.";
+      });
     }
 
     function resetQuiz() {
       document.getElementById("quizForm").reset();
       clearQuestionFeedback();
+      document.getElementById("submitQuizBtn").disabled = false;
       const resultBox = document.getElementById("result-box");
       resultBox.style.display = "none";
       resultBox.className = "quiz-result-box";

@@ -646,6 +646,18 @@
 
       <div class="wall-grid" id="placeGrid"></div>
 
+      <div class="selection-panel" id="finalAnswerPanel">
+        <h3>Final answer card</h3>
+        <p>Select a question and a place. Then write a complete answer with a reason.</p>
+        <div class="sentence-box" id="answerStarter">Choose a wall question and a place card to build your answer.</div>
+        <textarea class="textarea-field" id="answerReason" placeholder="Add your reason: I chose this place because..."></textarea>
+        <div class="tool-actions">
+          <button type="button" class="btn btn-primary" id="copyAnswerBtn">Copy final answer</button>
+          <a href="amazing-wonder-presentation.html" class="btn btn-secondary">Use it in the presentation</a>
+        </div>
+        <p class="section-subtitle hidden" id="copyStatus" style="text-align:left;margin:0.8rem 0 0;">Final answer copied.</p>
+      </div>
+
     </section>
 
     <section class="wall-block">
@@ -803,6 +815,10 @@
     const wallFocus = document.getElementById("wallFocus");
     const questionList = document.getElementById("questionList");
     const placeGrid = document.getElementById("placeGrid");
+    const answerStarter = document.getElementById("answerStarter");
+    const answerReason = document.getElementById("answerReason");
+    const copyAnswerBtn = document.getElementById("copyAnswerBtn");
+    const copyStatus = document.getElementById("copyStatus");
 
     function stripHtml(value) {
       const span = document.createElement("span");
@@ -850,6 +866,7 @@
         button.addEventListener("click", () => {
           activeQuestion = question;
           renderQuestionsOnly();
+          renderFinalAnswer();
         });
         questionList.appendChild(button);
       });
@@ -874,11 +891,13 @@
         card.addEventListener("click", () => {
           activePlace = place;
           renderPlaceSelection();
+          renderFinalAnswer();
         });
         placeGrid.appendChild(card);
       });
 
       renderTabs();
+      renderFinalAnswer();
     }
 
     function renderQuestionsOnly() {
@@ -893,6 +912,33 @@
         card.classList.toggle("selected", activePlace && file === activePlace.file);
       });
     }
+
+    function answerTemplate() {
+      if (!activeQuestion || !activePlace) {
+        return "Choose a wall question and a place card to build your answer.";
+      }
+      const placeName = stripHtml(activePlace.name);
+      const question = activeQuestion.replace("Which one is ", "").replace("?", "");
+      return placeName + " is " + question + ".";
+    }
+
+    function renderFinalAnswer() {
+      answerStarter.textContent = answerTemplate();
+      copyStatus.classList.add("hidden");
+    }
+
+    copyAnswerBtn.addEventListener("click", () => {
+      const starter = answerTemplate();
+      const reason = answerReason.value.trim();
+      const text = starter + (reason ? " " + reason : "");
+      navigator.clipboard.writeText(text).then(() => {
+        copyStatus.textContent = "Final answer copied.";
+        copyStatus.classList.remove("hidden");
+      }).catch(() => {
+        copyStatus.textContent = "Select the final answer manually if copying is not available.";
+        copyStatus.classList.remove("hidden");
+      });
+    });
 
     renderWall();
   </script>

@@ -26,7 +26,17 @@
     .timeline-strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.75rem;margin-top:1rem}
     .timeline-step{background:#f8fbff;border:1px solid rgba(31,78,140,.12);border-radius:16px;padding:.9rem;text-align:center}
     .timeline-step strong{display:block;color:#d62839;margin-bottom:.3rem}
-    @media(max-width:800px){.timeline-grid,.timeline-strip{grid-template-columns:1fr}.dialogue-line{display:block}.speaker{display:block;margin-bottom:.15rem}}
+    .timeline-builder{display:grid;gap:1rem}
+    .event-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.85rem}
+    .event-card{background:#f8fbff;border:1px solid rgba(31,78,140,.12);border-radius:16px;padding:.9rem;display:grid;gap:.55rem}
+    .event-card label{color:#15345d;font-weight:900}
+    .event-card input,.event-card textarea,.final-script textarea{width:100%;border:1px solid rgba(31,78,140,.18);border-radius:12px;padding:.7rem;font:inherit;color:#24364d;background:#fff}
+    .event-card textarea,.final-script textarea{min-height:86px;resize:vertical}
+    .final-script{background:#eef5ff;border:1px solid rgba(31,78,140,.16);border-radius:18px;padding:1rem}
+    .product-actions{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:.9rem}
+    .copy-status{color:#1f6f54;font-weight:900;margin:.65rem 0 0}
+    @media(max-width:1000px){.event-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:800px){.timeline-grid,.timeline-strip,.event-grid{grid-template-columns:1fr}.dialogue-line{display:block}.speaker{display:block;margin-bottom:.15rem}}
   </style>
 </head>
 <body>
@@ -186,6 +196,36 @@
         </p>
       </article>
 
+      <article class="premium-topic-card">
+        <div class="topic-heading">
+          <span class="topic-number">05</span>
+          <div>
+            <p class="topic-label">Final Product</p>
+            <h2>Create Your Catch-Up Timeline Card</h2>
+          </div>
+        </div>
+        <p class="lesson-text">
+          Complete the five-event card, then write a short catch-up script. Your final
+          product should show order, feelings, results, and follow-up questions.
+        </p>
+        <div class="timeline-builder">
+          <div class="event-grid" id="eventGrid"></div>
+          <div class="final-script">
+            <h3>Final catch-up script</h3>
+            <p class="lesson-text">
+              Use your notes to write a 90-second story. Include at least five time
+              expressions and three follow-up questions for your partner.
+            </p>
+            <textarea id="finalScript" rows="7" placeholder="Hi! It has been a long time. First, ... After that, ... Since then, ... What about you?"></textarea>
+            <div class="product-actions">
+              <button type="button" class="btn btn-primary" onclick="buildTimelineDraft()">Build from my notes</button>
+              <button type="button" class="btn btn-secondary" onclick="copyTimelineProduct()">Copy final product</button>
+            </div>
+            <p class="copy-status" id="copyStatus" aria-live="polite"></p>
+          </div>
+        </div>
+      </article>
+
       <section class="lesson-next-section">
         <div class="lesson-next-card">
           <p class="eyebrow">Next step</p>
@@ -207,6 +247,46 @@
     <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
   <script src="../../assets/js/google-auth-config.js"></script>
+  <script>
+    const eventGrid = document.getElementById("eventGrid");
+    const copyStatus = document.getElementById("copyStatus");
+    const timeWords = ["First", "After that", "Later", "Since then", "Recently"];
+
+    eventGrid.innerHTML = timeWords.map(function(label, index) {
+      return [
+        '<article class="event-card">',
+        '<label for="event' + index + '">' + label + '</label>',
+        '<input id="event' + index + '" placeholder="Event, place or change" />',
+        '<textarea id="detail' + index + '" placeholder="Feeling, problem, result or lesson"></textarea>',
+        '</article>'
+      ].join("");
+    }).join("");
+
+    function buildTimelineDraft() {
+      const parts = timeWords.map(function(label, index) {
+        const event = document.getElementById("event" + index).value.trim();
+        const detail = document.getElementById("detail" + index).value.trim();
+        if (!event && !detail) return "";
+        return label + ", " + (event || "something important happened") + (detail ? ". " + detail : "") + ".";
+      }).filter(Boolean);
+      document.getElementById("finalScript").value = parts.join("\n") +
+        (parts.length ? "\n\nWhat has changed in your life recently? What was difficult at first? What helped you move forward?" : "");
+      copyStatus.textContent = "Draft built. Edit it before speaking.";
+    }
+
+    function copyTimelineProduct() {
+      const text = document.getElementById("finalScript").value.trim();
+      if (!text) {
+        copyStatus.textContent = "Write or build your final script first.";
+        return;
+      }
+      navigator.clipboard.writeText(text).then(function() {
+        copyStatus.textContent = "Final product copied.";
+      }).catch(function() {
+        copyStatus.textContent = "Select the text manually if copying is not available.";
+      });
+    }
+  </script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
