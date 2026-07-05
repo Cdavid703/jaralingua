@@ -111,6 +111,7 @@
   <script>
     const GOOGLE_USER_KEY = "jaralingua_google_user";
     const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const LOCAL_USER_KEY = "jaralingua_local_user";
     const SUBMIT_ENDPOINT = "/api/intermediate/unit4-sunday-dinner/submit";
     const TRANSCRIPT_ENDPOINT = "/api/intermediate/unit4-sunday-dinner/transcript";
     const questions = [
@@ -160,6 +161,8 @@
       if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);
       const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);
       if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);
+      const localUser=readStoredUser(LOCAL_USER_KEY);
+      if(localUser&&localUser.credential)return Object.assign({provider:"local"},localUser);
       return null;
     }
 
