@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market Basket Challenge | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <style>
+    :root{
+      --basket-navy:#071f4f;
+      --basket-teal:#0f766e;
+      --basket-gold:#d9a441;
+      --basket-coral:#dd6b4d;
+      --basket-ink:#102033;
+      --basket-muted:#536173;
+      --basket-line:#d9e4ef;
+      --basket-soft:#f3f8fb;
+      --basket-green:#047857;
+      --basket-red:#b42318;
+    }
+    .market-hero{
+      min-height:calc(100vh - 96px);
+      display:grid;
+      align-items:end;
+      background:
+        linear-gradient(90deg,rgba(7,31,79,.92) 0%,rgba(7,31,79,.72) 38%,rgba(15,118,110,.18) 100%),
+        url("../../assets/img/english-intermediate/unit-5/market-basket-challenge.png") center/cover no-repeat;
+      color:#fff;
+      padding:clamp(5rem,10vw,8rem) 1.25rem 2rem;
+    }
+    .market-hero .lesson-hero-content{
+      max-width:980px;
+      margin:0 auto;
+      width:100%;
+    }
+    .market-hero h1{
+      max-width:820px;
+      font-size:clamp(2.3rem,7vw,5rem);
+      line-height:.98;
+      margin:.45rem 0 1rem;
+      letter-spacing:0;
+    }
+    .market-hero p{
+      max-width:680px;
+      color:#f8fbff;
+      font-size:clamp(1.03rem,2vw,1.26rem);
+      line-height:1.55;
+    }
+    .market-hero .eyebrow{
+      display:inline-flex;
+      background:rgba(255,255,255,.94);
+      color:var(--basket-navy)!important;
+      border-radius:999px;
+      padding:.45rem .78rem;
+      font-weight:900;
+      letter-spacing:0;
+    }
+    .mission-bar{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:.75rem;
+      max-width:1100px;
+      margin:1.5rem auto 0;
+    }
+    .mission-tile{
+      background:rgba(255,255,255,.94);
+      color:var(--basket-navy);
+      border:1px solid rgba(255,255,255,.45);
+      border-radius:8px;
+      padding:.85rem;
+      min-height:86px;
+    }
+    .mission-tile b{
+      display:block;
+      font-size:1.45rem;
+      line-height:1;
+    }
+    .mission-tile span{
+      display:block;
+      color:#38506b;
+      font-weight:800;
+      margin-top:.3rem;
+    }
+    .challenge-shell{
+      width:min(1180px,calc(100% - 2rem));
+      margin:0 auto;
+      padding:2rem 0 4rem;
+    }
+    .game-panel{
+      background:#fff;
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      box-shadow:0 20px 46px rgba(7,31,79,.12);
+      margin-bottom:1.25rem;
+      overflow:hidden;
+    }
+    .panel-head{
+      display:flex;
+      justify-content:space-between;
+      gap:1rem;
+      align-items:flex-start;
+      padding:1.1rem;
+      background:linear-gradient(135deg,#ffffff,#eef8f7);
+      border-bottom:1px solid var(--basket-line);
+    }
+    .panel-kicker{
+      margin:0 0 .35rem;
+      color:var(--basket-coral);
+      text-transform:uppercase;
+      font-size:.78rem;
+      font-weight:900;
+      letter-spacing:.08em;
+    }
+    .panel-head h2{
+      color:var(--basket-navy);
+      margin:0;
+      font-size:clamp(1.4rem,3vw,2rem);
+      letter-spacing:0;
+    }
+    .panel-head p{
+      color:var(--basket-muted);
+      max-width:780px;
+      line-height:1.58;
+      margin:.45rem 0 0;
+    }
+    .progress-ring{
+      flex:0 0 auto;
+      width:96px;
+      height:96px;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      background:conic-gradient(var(--basket-gold) var(--progress,0deg),#e5edf5 0deg);
+      color:var(--basket-navy);
+      font-weight:1000;
+      position:relative;
+    }
+    .progress-ring::before{
+      content:"";
+      position:absolute;
+      inset:10px;
+      border-radius:50%;
+      background:#fff;
+    }
+    .progress-ring span{
+      position:relative;
+      z-index:1;
+    }
+    .panel-body{
+      padding:1.1rem;
+    }
+    .route-strip{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:.65rem;
+      margin-bottom:1rem;
+    }
+    .route-step{
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      padding:.72rem;
+      background:#f8fbfd;
+      color:var(--basket-muted);
+      font-weight:900;
+      min-height:76px;
+    }
+    .route-step strong{
+      display:block;
+      color:var(--basket-navy);
+      margin-bottom:.25rem;
+    }
+    .route-step.is-active{
+      border-color:rgba(217,164,65,.75);
+      background:#fff8e8;
+      color:#704b00;
+      box-shadow:0 12px 28px rgba(217,164,65,.16);
+    }
+    .route-step.is-done{
+      border-color:rgba(15,118,110,.34);
+      background:#ecfdf5;
+      color:#065f46;
+    }
+    .unlock-banner{
+      display:none;
+      margin-top:1rem;
+      border:1px solid rgba(15,118,110,.24);
+      background:#eef8f7;
+      color:var(--basket-navy);
+      border-radius:8px;
+      padding:1rem;
+      font-weight:900;
+      line-height:1.55;
+    }
+    .unlock-banner.show{
+      display:block;
+    }
+    .game-panel.is-locked{
+      opacity:.56;
+    }
+    .game-panel.is-locked .panel-body{
+      pointer-events:none;
+      filter:saturate(.55);
+    }
+    .game-panel.is-complete{
+      border-color:rgba(15,118,110,.34);
+    }
+    .live-preview{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+      gap:.7rem;
+      margin-top:1rem;
+    }
+    .live-cell{
+      border:1px solid rgba(7,31,79,.12);
+      background:#fff;
+      border-radius:8px;
+      padding:.85rem;
+      color:var(--basket-navy);
+    }
+    .live-cell b{
+      display:block;
+      font-size:1.55rem;
+      line-height:1;
+    }
+    .live-cell span{
+      color:var(--basket-muted);
+      font-weight:850;
+    }
+    .basket-preview{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+      gap:.8rem;
+      margin-bottom:1rem;
+    }
+    .basket-bin{
+      border:1px dashed rgba(15,118,110,.35);
+      background:#f8fffd;
+      border-radius:8px;
+      padding:.9rem;
+      min-height:104px;
+    }
+    .basket-bin h3{
+      margin:0 0 .55rem;
+      color:var(--basket-navy);
+      font-size:1rem;
+    }
+    .basket-chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.45rem;
+    }
+    .basket-chip{
+      border-radius:999px;
+      background:#eef5ff;
+      color:var(--basket-navy);
+      padding:.34rem .58rem;
+      font-weight:900;
+      font-size:.82rem;
+    }
+    .hint-box{
+      display:none;
+      border-radius:8px;
+      padding:.68rem;
+      background:#fff8e8;
+      border:1px solid #f2cf85;
+      color:#704b00;
+      font-weight:850;
+      line-height:1.45;
+    }
+    .hint-box.show{
+      display:block;
+    }
+    .food-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+      gap:.8rem;
+    }
+    .food-card{
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      padding:.9rem;
+      background:#fff;
+      display:grid;
+      gap:.7rem;
+      min-height:178px;
+      transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease;
+    }
+    .food-card:hover{
+      transform:translateY(-2px);
+      box-shadow:0 16px 32px rgba(7,31,79,.1);
+    }
+    .food-card.is-selected{
+      border-color:rgba(15,118,110,.5);
+      background:#f2fbf9;
+    }
+    .food-card.is-wrong{
+      border-color:#fecaca;
+      background:#fff7f7;
+    }
+    .food-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:.5rem;
+    }
+    .food-title h3{
+      color:var(--basket-navy);
+      margin:0;
+      font-size:1.15rem;
+    }
+    .food-tag{
+      border-radius:999px;
+      background:#eef5ff;
+      color:var(--basket-teal);
+      font-size:.78rem;
+      font-weight:900;
+      padding:.32rem .55rem;
+      white-space:nowrap;
+    }
+    .food-card p{
+      color:var(--basket-muted);
+      line-height:1.5;
+      margin:0;
+    }
+    .choice-row{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:.5rem;
+    }
+    .choice-btn,.mini-btn{
+      border:1px solid var(--basket-line);
+      background:#fff;
+      color:var(--basket-navy);
+      border-radius:8px;
+      padding:.68rem .7rem;
+      cursor:pointer;
+      font-weight:900;
+      transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease;
+    }
+    .choice-btn:hover,.mini-btn:hover{
+      border-color:var(--basket-teal);
+      transform:translateY(-1px);
+    }
+    .choice-btn.is-active,.mini-btn.is-active{
+      background:var(--basket-navy);
+      color:#fff;
+      border-color:var(--basket-navy);
+    }
+    .quantity-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+      gap:.8rem;
+    }
+    .quantity-card{
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      padding:.95rem;
+      background:#fff;
+      min-height:220px;
+    }
+    .quantity-card.is-wrong{
+      border-color:#fecaca;
+      background:#fff7f7;
+    }
+    .quantity-card.is-selected{
+      border-color:rgba(15,118,110,.35);
+      background:#f8fffd;
+    }
+    .quantity-card h3{
+      color:var(--basket-navy);
+      margin:0 0 .6rem;
+      font-size:1.05rem;
+      line-height:1.35;
+    }
+    .quantity-options{
+      display:grid;
+      gap:.45rem;
+    }
+    .quantity-options label{
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      padding:.62rem;
+      color:var(--basket-ink);
+      font-weight:800;
+      cursor:pointer;
+      line-height:1.35;
+      background:#fff;
+    }
+    .quantity-options label:has(input:checked){
+      background:#eef5ff;
+      border-color:var(--basket-teal);
+      color:var(--basket-navy);
+    }
+    .quantity-options input{
+      margin-right:.45rem;
+    }
+    .builder-grid{
+      display:grid;
+      grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);
+      gap:1rem;
+      align-items:start;
+    }
+    .market-card{
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      background:#fff;
+      padding:1rem;
+    }
+    .market-card h3{
+      color:var(--basket-navy);
+      margin:.1rem 0 .55rem;
+    }
+    .market-card p,.market-card li{
+      color:var(--basket-muted);
+      line-height:1.6;
+    }
+    .market-card ul{
+      margin:.4rem 0 0;
+      padding-left:1.15rem;
+    }
+    .team-selector{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:.55rem;
+      margin:.75rem 0 1rem;
+    }
+    .team-option{
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      background:#fff;
+      color:var(--basket-navy);
+      padding:.72rem;
+      font-weight:1000;
+      cursor:pointer;
+      min-height:58px;
+    }
+    .team-option[data-team="Team Teal"].is-active{background:#ecfdf5;border-color:#0f766e;color:#065f46}
+    .team-option[data-team="Team Gold"].is-active{background:#fff8e8;border-color:#d9a441;color:#704b00}
+    .team-option[data-team="Team Green"].is-active{background:#f0fdf4;border-color:#16a34a;color:#166534}
+    .mission-checklist{
+      display:grid;
+      gap:.5rem;
+      margin-top:1rem;
+    }
+    .check-item{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      align-items:center;
+      gap:.55rem;
+      border:1px solid var(--basket-line);
+      background:#f8fbff;
+      color:#526174;
+      border-radius:8px;
+      padding:.62rem .7rem;
+      font-weight:900;
+    }
+    .check-item::before{
+      content:"";
+      width:18px;
+      height:18px;
+      border-radius:50%;
+      border:2px solid #9fb1c4;
+      background:#fff;
+    }
+    .check-item.is-done{
+      background:#ecfdf5;
+      border-color:#86efac;
+      color:#065f46;
+    }
+    .check-item.is-done::before{
+      border-color:#047857;
+      background:#047857;
+      box-shadow:inset 0 0 0 4px #ecfdf5;
+    }
+    .basket-reveal{
+      display:none;
+      border:1px solid rgba(217,164,65,.45);
+      background:linear-gradient(135deg,#fff8e8,#eef8f7);
+      border-radius:8px;
+      padding:1rem;
+      margin:1rem 0;
+      color:var(--basket-navy);
+    }
+    .basket-reveal.show{
+      display:block;
+    }
+    .basket-reveal h3{
+      margin:.1rem 0 .45rem;
+      color:var(--basket-navy);
+    }
+    .basket-reveal p{
+      margin:0;
+      color:#38506b;
+      font-weight:850;
+      line-height:1.55;
+    }
+    .teacher-mode{
+      margin-top:1rem;
+      border:1px solid rgba(7,31,79,.12);
+      background:#f8fbff;
+      border-radius:8px;
+      padding:1rem;
+    }
+    .teacher-mode h3{
+      color:var(--basket-navy);
+      margin:.1rem 0 .5rem;
+    }
+    .teacher-mode-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+      gap:.6rem;
+      margin-top:.8rem;
+    }
+    .teacher-mode-card{
+      background:#fff;
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      padding:.7rem;
+      color:var(--basket-navy);
+      font-weight:900;
+    }
+    .teacher-mode-card b{
+      display:block;
+      font-size:1.4rem;
+      line-height:1;
+    }
+    .teacher-actions{
+      display:none;
+      flex-wrap:wrap;
+      gap:.55rem;
+      margin-top:.9rem;
+    }
+    .teacher-actions.show{
+      display:flex;
+    }
+    .team-leaderboard{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+      gap:.6rem;
+      margin-top:.8rem;
+    }
+    .team-board-card{
+      background:#fff;
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      padding:.8rem;
+      color:var(--basket-navy);
+    }
+    .team-board-card h4{
+      margin:.1rem 0 .45rem;
+      color:var(--basket-navy);
+    }
+    .team-board-card p{
+      margin:.22rem 0;
+      color:#38506b;
+      font-weight:850;
+      line-height:1.35;
+    }
+    .teacher-students{
+      display:none;
+      margin-top:.9rem;
+      border-top:1px solid var(--basket-line);
+      padding-top:.8rem;
+    }
+    .teacher-students.show{
+      display:block;
+    }
+    .student-live-row{
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:.65rem;
+      align-items:center;
+      border:1px solid var(--basket-line);
+      background:#fff;
+      border-radius:8px;
+      padding:.65rem;
+      margin-top:.45rem;
+      color:var(--basket-navy);
+      font-weight:850;
+    }
+    .student-live-row small{
+      display:block;
+      color:var(--basket-muted);
+      font-weight:800;
+      margin-top:.15rem;
+    }
+    .error-bank{
+      margin-top:1rem;
+      border-top:1px solid var(--basket-line);
+      padding-top:1rem;
+    }
+    .error-bank details{
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      margin-top:.55rem;
+      background:#f8fbff;
+      overflow:hidden;
+    }
+    .error-bank summary{
+      cursor:pointer;
+      color:var(--basket-navy);
+      font-weight:1000;
+      padding:.75rem .85rem;
+      list-style:none;
+    }
+    .error-bank summary::-webkit-details-marker{display:none}
+    .error-bank p{
+      margin:0;
+      padding:0 .85rem .85rem;
+    }
+    .audio-strip{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(185px,1fr));
+      gap:.6rem;
+      margin-top:1rem;
+    }
+    .audio-chip{
+      border:1px solid rgba(15,118,110,.25);
+      background:#ecfdf5;
+      color:#065f46;
+      border-radius:8px;
+      padding:.7rem;
+      font-weight:950;
+      cursor:pointer;
+      text-align:left;
+    }
+    .audio-chip.is-missing{
+      background:#f8fbff;
+      color:#526174;
+      border-color:var(--basket-line);
+    }
+    .writer-field{
+      display:grid;
+      gap:.35rem;
+      margin-bottom:.8rem;
+    }
+    .writer-field label{
+      color:var(--basket-navy);
+      font-weight:900;
+    }
+    .writer-field input,.writer-field textarea{
+      width:100%;
+      border:1px solid var(--basket-line);
+      border-radius:8px;
+      padding:.82rem;
+      font:inherit;
+      color:var(--basket-ink);
+      background:#fff;
+    }
+    .writer-field textarea{
+      min-height:124px;
+      resize:vertical;
+      line-height:1.55;
+    }
+    .game-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:.65rem;
+      margin-top:1rem;
+    }
+    .btn-market{
+      border:0;
+      border-radius:999px;
+      padding:.82rem 1rem;
+      font-weight:1000;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:.45rem;
+      min-height:44px;
+    }
+    .btn-market.primary{
+      background:var(--basket-navy);
+      color:#fff;
+    }
+    .btn-market.gold{
+      background:var(--basket-gold);
+      color:var(--basket-navy);
+    }
+    .btn-market.secondary{
+      background:#eef5ff;
+      color:var(--basket-navy);
+    }
+    .btn-market:disabled{
+      opacity:.55;
+      cursor:not-allowed;
+    }
+    .score-board{
+      display:none;
+      border-radius:8px;
+      padding:1rem;
+      margin-top:1rem;
+      font-weight:900;
+      line-height:1.55;
+    }
+    .score-board.show{
+      display:block;
+    }
+    .score-board.pending{
+      background:#fff8e8;
+      color:#7a4b00;
+      border:1px solid #f2cf85;
+    }
+    .score-board.error{
+      background:#fff1f2;
+      color:#7f1d1d;
+      border:1px solid #fecaca;
+    }
+    .score-board.success{
+      background:#ecfdf5;
+      color:#064e3b;
+      border:1px solid #86efac;
+    }
+    .teacher-note{
+      display:grid;
+      grid-template-columns:auto 1fr;
+      gap:.8rem;
+      align-items:start;
+      background:#eef8f7;
+      color:var(--basket-navy);
+      border:1px solid rgba(15,118,110,.22);
+      border-radius:8px;
+      padding:1rem;
+      margin-top:1rem;
+    }
+    .teacher-note b{
+      display:grid;
+      place-items:center;
+      width:38px;
+      height:38px;
+      border-radius:50%;
+      background:var(--basket-teal);
+      color:#fff;
+    }
+    .teacher-note p{
+      margin:0;
+      color:#20384f;
+      line-height:1.55;
+      font-weight:800;
+    }
+    .food-ticket{
+      display:none;
+      margin-top:1rem;
+      border:1px solid rgba(217,164,65,.5);
+      background:
+        linear-gradient(135deg,rgba(255,248,232,.95),rgba(238,248,247,.95)),
+        radial-gradient(circle at top right,rgba(217,164,65,.18),transparent 34%);
+      border-radius:8px;
+      padding:1rem;
+      color:var(--basket-navy);
+      box-shadow:0 18px 36px rgba(7,31,79,.1);
+    }
+    .food-ticket.show{
+      display:block;
+    }
+    .ticket-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:1rem;
+      border-bottom:1px dashed rgba(7,31,79,.25);
+      padding-bottom:.75rem;
+      margin-bottom:.85rem;
+    }
+    .ticket-head h3{
+      margin:.1rem 0 0;
+      color:var(--basket-navy);
+      font-size:1.35rem;
+    }
+    .ticket-grade{
+      background:var(--basket-navy);
+      color:#fff;
+      border-radius:8px;
+      padding:.65rem .8rem;
+      font-weight:1000;
+      white-space:nowrap;
+    }
+    .ticket-body{
+      display:grid;
+      gap:.55rem;
+      color:#233a50;
+      font-weight:850;
+      line-height:1.55;
+    }
+    .locked input,.locked button,.locked textarea{
+      pointer-events:none;
+    }
+    @media(max-width:820px){
+      .site-header .navbar{
+        align-items:center;
+        gap:.6rem;
+      }
+      .site-header .nav-links{
+        flex-wrap:wrap;
+        justify-content:center;
+        gap:.45rem .7rem;
+      }
+      .site-header .nav-links a{
+        font-size:.9rem;
+        line-height:1.15;
+      }
+      .market-hero{
+        min-height:auto;
+        padding:5.5rem 1rem 1.2rem;
+        align-items:end;
+      }
+      .mission-bar,.route-strip{
+        grid-template-columns:1fr 1fr;
+      }
+      .basket-preview{
+        grid-template-columns:1fr;
+      }
+      .panel-head{
+        flex-direction:column;
+      }
+      .builder-grid{
+        grid-template-columns:1fr;
+      }
+      .choice-row{
+        grid-template-columns:1fr;
+      }
+    }
+    @media(max-width:520px){
+      .mission-bar,.route-strip{
+        grid-template-columns:1fr;
+      }
+      .challenge-shell{
+        width:min(100% - 1rem,1180px);
+      }
+      .panel-body,.panel-head{
+        padding:.85rem;
+      }
+      .food-grid,.quantity-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Intermediate Course</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+
+  <main>
+    <section class="market-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab - Unit 5 Mission</p>
+        <h1>Market Basket Challenge</h1>
+        <p>Build a dinner basket for a food fair. Sort ingredients, choose natural quantity phrases, and send a short shopping mission to your teacher.</p>
+        <div class="lesson-meta"><span>Countable nouns</span><span>Uncountable nouns</span><span>Containers</span><span>Teacher follow-up</span></div>
+        <div class="hero-actions"><a href="#challenge" class="btn btn-primary">Start challenge</a><a href="practice-lab.html#unit-5-folder" class="btn btn-secondary">Back to Unit 5 folder</a></div>
+        <div class="mission-bar" aria-label="Mission summary">
+          <div class="mission-tile"><b>20</b><span>scored decisions</span></div>
+          <div class="mission-tile"><b>3</b><span>mission stages</span></div>
+          <div class="mission-tile"><b>0</b><span>grade weight</span></div>
+          <div class="mission-tile"><b>1</b><span>teacher submission</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="challenge-shell" id="challenge">
+      <article class="game-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Mission route</p>
+            <h2>From Market Basket to Dinner Plan</h2>
+            <p>The challenge follows the same route students need in real communication: notice the food type, choose the quantity language, then write a short useful product.</p>
+          </div>
+          <div class="progress-ring" id="progressRing"><span id="progressText">0%</span></div>
+        </div>
+        <div class="panel-body">
+          <div class="route-strip">
+            <div class="route-step is-active" data-route-step="0"><strong>1. Sort</strong>Choose countable or uncountable.</div>
+            <div class="route-step" data-route-step="1"><strong>2. Measure</strong>Select natural quantity phrases.</div>
+            <div class="route-step" data-route-step="2"><strong>3. Build</strong>Create a shopping list.</div>
+            <div class="route-step" data-route-step="3"><strong>4. Explain</strong>Write the dinner mission.</div>
+            <div class="route-step" data-route-step="4"><strong>5. Send</strong>Submit the follow-up.</div>
+          </div>
+          <div class="teacher-note">
+            <b>i</b>
+            <p>This is a follow-up activity. The reference grade appears for the student and teacher, but its weight is 0 and it does not affect the accumulated percentage.</p>
+          </div>
+          <div class="live-preview" aria-label="Teacher live challenge preview">
+            <div class="live-cell"><b id="liveSorted">0/12</b><span>basket items sorted</span></div>
+            <div class="live-cell"><b id="liveMeasured">0/8</b><span>quantity choices made</span></div>
+            <div class="live-cell"><b id="liveStage">Sort</b><span>current mission stage</span></div>
+            <div class="live-cell"><b id="liveScore">--</b><span>local scan before sending</span></div>
+          </div>
+          <div class="teacher-mode">
+            <h3>Class challenge board</h3>
+            <p>This board is ready for projection. As students work, the teacher can ask who is in each stage and read submitted Food Fair Tickets after delivery.</p>
+            <div class="teacher-mode-grid">
+              <div class="teacher-mode-card"><b id="boardSort">Open</b><span>Sort stage</span></div>
+              <div class="teacher-mode-card"><b id="boardMeasure">Locked</b><span>Quantity Lab</span></div>
+              <div class="teacher-mode-card"><b id="boardBuild">Locked</b><span>Mission Builder</span></div>
+              <div class="teacher-mode-card"><b id="boardTeam">No team</b><span>selected team</span></div>
+            </div>
+            <div class="teacher-actions" id="teacherActions">
+              <button type="button" class="btn-market primary" id="launchChallenge">Launch class challenge</button>
+              <button type="button" class="btn-market secondary" id="resetClassBoard">Reset class board</button>
+              <button type="button" class="btn-market secondary" id="refreshClassBoard">Refresh board</button>
+            </div>
+            <div class="score-board" id="liveStatus" aria-live="polite"></div>
+            <div class="team-leaderboard" id="teamLeaderboard" aria-label="Team leaderboard"></div>
+            <div class="teacher-students" id="teacherStudents"><h3>Live student progress</h3><div id="teacherStudentRows"></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="game-panel" id="sortPanel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Stage 1 - Sort the basket</p>
+            <h2>Decide How English Counts Each Food</h2>
+            <p>Choose the category that lets you speak naturally. Think about whether the food can be counted directly or needs a quantity phrase.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="basket-preview" aria-label="Selected basket preview">
+            <div class="basket-bin"><h3>Countable basket</h3><div class="basket-chips" id="countableBasket"><span class="basket-chip">Choose foods</span></div></div>
+            <div class="basket-bin"><h3>Uncountable basket</h3><div class="basket-chips" id="uncountableBasket"><span class="basket-chip">Choose foods</span></div></div>
+          </div>
+          <div class="basket-reveal" id="basketReveal"><h3>Basket unlocked</h3><p>Your basket is sorted. Now prove you can choose natural quantity phrases for a real shopping mission.</p></div>
+          <div class="unlock-banner" id="sortUnlock">Basket sorted. Quantity Lab unlocked.</div>
+          <div class="food-grid" id="foodGrid"></div>
+        </div>
+      </article>
+
+      <article class="game-panel is-locked" id="quantityPanel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Stage 2 - Quantity lab</p>
+            <h2>Choose the Phrase That Sounds Like Real English</h2>
+            <p>These choices prepare students for the listening, reading, dinner planner, and snack review in the rest of Unit 5.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="audio-strip" id="audioStrip" aria-label="Professional audio phrase models">
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/market-basket-challenge-intro.mp3">challenge intro</button>
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/a-cup-of-rice.mp3">a cup of rice</button>
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/a-little-oil.mp3">a little oil</button>
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/a-few-tomatoes.mp3">a few tomatoes</button>
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/a-bottle-of-water.mp3">a bottle of water</button>
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/three-cups-of-cooked-rice.mp3">three cups of cooked rice</button>
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/a-slice-of-bread.mp3">a slice of bread</button>
+            <button type="button" class="audio-chip" data-audio-src="audio/unit-5-market-basket/your-food-fair-mission-is-ready.mp3">mission ready</button>
+          </div>
+          <div class="unlock-banner" id="quantityUnlock">Quantity Lab complete. Shopping Mission unlocked.</div>
+          <form class="quantity-grid" id="quantityGrid"></form>
+        </div>
+      </article>
+
+      <article class="game-panel is-locked" id="builderPanel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Stage 3 - Final product</p>
+            <h2>Create the Shopping Mission</h2>
+            <p>The teacher will see your final text, your reference grade, your score, and the questions that need review.</p>
+          </div>
+        </div>
+        <div class="panel-body">
+          <div class="builder-grid">
+            <aside class="market-card">
+              <h3>What the final product needs</h3>
+              <ul>
+                <li>a dish or dinner idea</li>
+                <li>at least four clear quantity phrases</li>
+                <li>countable and uncountable food nouns</li>
+                <li>one reason why the basket works</li>
+              </ul>
+              <div class="error-bank">
+                <h3>Common error bank</h3>
+                <details><summary>three rices</summary><p>Use a container or measurement: three cups of rice. Rice is uncountable in this food context.</p></details>
+                <details><summary>many water</summary><p>Use much for uncountable questions, or a container phrase: a bottle of water.</p></details>
+                <details><summary>a few oil</summary><p>Use a little oil because oil is uncountable. A few is for countable plural nouns.</p></details>
+                <details><summary>a bread</summary><p>Use a slice of bread or a loaf of bread when you need to count the amount.</p></details>
+              </div>
+            </aside>
+            <div class="market-card">
+              <h3>Choose your team</h3>
+              <div class="team-selector" id="teamSelector" aria-label="Team selector">
+                <button type="button" class="team-option" data-team="Team Teal">Team Teal</button>
+                <button type="button" class="team-option" data-team="Team Gold">Team Gold</button>
+                <button type="button" class="team-option" data-team="Team Green">Team Green</button>
+              </div>
+              <div class="writer-field">
+                <label for="dishName">Dish or dinner idea</label>
+                <input id="dishName" maxlength="140" placeholder="Example: a colorful rice and bean dinner bowl" />
+              </div>
+              <div class="writer-field">
+                <label for="shoppingList">Shopping list with quantities</label>
+                <textarea id="shoppingList" placeholder="Example: three cups of cooked rice, two cans of beans, six tomatoes, a little oil, a bottle of water"></textarea>
+              </div>
+              <div class="writer-field">
+                <label for="response">Final mission note</label>
+                <textarea id="response" placeholder="Write 35 to 180 words. Explain what you need, what the dinner is made with, and why the choices make sense."></textarea>
+              </div>
+              <div class="mission-checklist" id="missionChecklist" aria-label="Smart mission checklist">
+                <div class="check-item" data-check="team">team selected</div>
+                <div class="check-item" data-check="dish">dish named</div>
+                <div class="check-item" data-check="quantities">four quantity phrases included</div>
+                <div class="check-item" data-check="countable">countable foods included</div>
+                <div class="check-item" data-check="uncountable">uncountable foods included</div>
+                <div class="check-item" data-check="reason">reason included</div>
+              </div>
+              <p><span class="food-tag" id="wordCounter">0 words</span></p>
+              <div class="game-actions">
+                <button type="button" class="btn-market gold" id="buildMission">Build mission from my notes</button>
+                <button type="button" class="btn-market primary" id="submitChallenge">Send to teacher</button>
+                <button type="button" class="btn-market secondary" id="scanChallenge">Scan mission</button>
+                <button type="button" class="btn-market secondary" id="resetChallenge">Reset full challenge and improve mission</button>
+              </div>
+              <div class="score-board" id="scoreBoard" aria-live="polite"></div>
+              <div class="food-ticket" id="foodTicket" aria-live="polite"></div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
+  <script>
+    const GOOGLE_USER_KEY = "jaralingua_google_user";
+    const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const SUBMIT_ENDPOINT = "/api/intermediate/unit5-market-basket/submit";
+    const LIVE_ENDPOINT = "/api/intermediate/unit5-market-basket/live";
+    const LAUNCH_ENDPOINT = "/api/intermediate/unit5-market-basket/launch";
+    const PROGRESS_ENDPOINT = "/api/intermediate/unit5-market-basket/progress";
+    const correctAnswers = [0,0,0,0,0,0,1,1,1,1,1,1,2,0,0,1,1,0,2,1];
+    const foodItems = [
+      {name:"tomatoes", tag:"vegetables", detail:"You can count individual tomatoes in a basket.", correct:0},
+      {name:"eggs", tag:"protein", detail:"You can count individual eggs directly.", correct:0},
+      {name:"apples", tag:"fruit", detail:"You can buy one apple or several apples.", correct:0},
+      {name:"carrots", tag:"vegetables", detail:"You can count the individual carrots.", correct:0},
+      {name:"avocados", tag:"fruit", detail:"You can count one avocado, two avocados, and more.", correct:0},
+      {name:"cans of beans", tag:"container", detail:"The container makes the amount countable.", correct:0},
+      {name:"rice", tag:"grain", detail:"Use a phrase such as some rice or three cups of rice.", correct:1},
+      {name:"water", tag:"drink", detail:"Use a container phrase such as a bottle of water.", correct:1},
+      {name:"cheese", tag:"dairy", detail:"Use a phrase such as some cheese or a slice of cheese.", correct:1},
+      {name:"oil", tag:"ingredient", detail:"Use a phrase such as a little oil or a bottle of oil.", correct:1},
+      {name:"bread", tag:"bakery", detail:"Use a phrase such as a slice of bread or a loaf of bread.", correct:1},
+      {name:"chicken", tag:"protein", detail:"As food, chicken usually needs a quantity phrase.", correct:1}
+    ];
+    const quantityItems = [
+      {prompt:"For six people, we need ___ rice.", options:["three rices","many rice","three cups of cooked rice"], correct:2},
+      {prompt:"Add ___ oil to the dressing.", options:["a little","a few","many"], correct:0},
+      {prompt:"Buy ___ tomatoes for the salad.", options:["a few","a little","much"], correct:0},
+      {prompt:"We do not need ___ sugar in the juice.", options:["many","any","a few"], correct:1},
+      {prompt:"How ___ water should we buy?", options:["many","much","few"], correct:1},
+      {prompt:"How ___ eggs do we need?", options:["many","much","little"], correct:0},
+      {prompt:"Put ___ bread on each plate.", options:["a bread","many bread","a slice of"], correct:2},
+      {prompt:"The recipe needs ___ beans.", options:["a little","a can of","much"], correct:1}
+    ];
+    const answers = Array(correctAnswers.length).fill(null);
+    const foodGrid = document.getElementById("foodGrid");
+    const quantityGrid = document.getElementById("quantityGrid");
+    const progressRing = document.getElementById("progressRing");
+    const progressText = document.getElementById("progressText");
+    const scoreBoard = document.getElementById("scoreBoard");
+    const fields = {
+      dishName: document.getElementById("dishName"),
+      shoppingList: document.getElementById("shoppingList"),
+      response: document.getElementById("response")
+    };
+    const wordCounter = document.getElementById("wordCounter");
+    const submitButton = document.getElementById("submitChallenge");
+    const countableBasket = document.getElementById("countableBasket");
+    const uncountableBasket = document.getElementById("uncountableBasket");
+    const quantityPanel = document.getElementById("quantityPanel");
+    const builderPanel = document.getElementById("builderPanel");
+    const sortPanel = document.getElementById("sortPanel");
+    const sortUnlock = document.getElementById("sortUnlock");
+    const quantityUnlock = document.getElementById("quantityUnlock");
+    const foodTicket = document.getElementById("foodTicket");
+    const liveSorted = document.getElementById("liveSorted");
+    const liveMeasured = document.getElementById("liveMeasured");
+    const liveStage = document.getElementById("liveStage");
+    const liveScore = document.getElementById("liveScore");
+    const audioStrip = document.getElementById("audioStrip");
+    const teamSelector = document.getElementById("teamSelector");
+    const basketReveal = document.getElementById("basketReveal");
+    const boardSort = document.getElementById("boardSort");
+    const boardMeasure = document.getElementById("boardMeasure");
+    const boardBuild = document.getElementById("boardBuild");
+    const boardTeam = document.getElementById("boardTeam");
+    const teacherActions = document.getElementById("teacherActions");
+    const teamLeaderboard = document.getElementById("teamLeaderboard");
+    const liveStatus = document.getElementById("liveStatus");
+    const teacherStudents = document.getElementById("teacherStudents");
+    const teacherStudentRows = document.getElementById("teacherStudentRows");
+    let selectedTeam = "";
+    let phraseAudio = null;
+    let progressTimer = null;
+
+    function escapeHtml(value){
+      return String(value || "").replace(/[&<>"']/g, function(char){
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char];
+      });
+    }
+    function wordCount(value){
+      const matches = String(value || "").trim().match(/\b[\w'-]+\b/g);
+      return matches ? matches.length : 0;
+    }
+    function updateCounter(){
+      wordCounter.textContent = wordCount(fields.response.value) + " words";
+    }
+    function selectedCount(){
+      return answers.filter(function(answer){ return answer !== null; }).length;
+    }
+    function updateProgress(){
+      const answered = selectedCount();
+      const percent = Math.round((answered / correctAnswers.length) * 100);
+      progressRing.style.setProperty("--progress", (percent * 3.6) + "deg");
+      progressText.textContent = percent + "%";
+      updateStageState();
+    }
+    function stageStatus(){
+      const sorted = answers.slice(0, foodItems.length).filter(function(answer){ return answer !== null; }).length;
+      const measured = answers.slice(foodItems.length).filter(function(answer){ return answer !== null; }).length;
+      const hasDish = fields.dishName.value.trim().length > 2;
+      const hasList = fields.shoppingList.value.trim().length > 12;
+      const words = wordCount(fields.response.value);
+      const checklist = checklistStatus();
+      return {sorted:sorted, measured:measured, hasDish:hasDish, hasList:hasList, words:words, checklist:checklist};
+    }
+    function checklistStatus(){
+      const combined = (fields.shoppingList.value + " " + fields.response.value).toLowerCase();
+      const dish = fields.dishName.value.trim().length > 2;
+      const quantityMatches = combined.match(/\b(\d+|one|two|three|four|five|six|some|any|a few|a little|a cup of|cups of|a bottle of|a can of|cans of|a slice of|slices of)\b/g) || [];
+      const countableWords = ["tomato","tomatoes","egg","eggs","apple","apples","carrot","carrots","avocado","avocados","can","cans"];
+      const uncountableWords = ["rice","water","cheese","oil","bread","chicken"];
+      const hasCountable = countableWords.some(function(word){ return combined.includes(word); });
+      const hasUncountable = uncountableWords.some(function(word){ return combined.includes(word); });
+      const hasReason = /\b(because|so|reason|balanced|healthy|filling|affordable|colorful|works|clear)\b/.test(combined);
+      return {
+        team: Boolean(selectedTeam),
+        dish: dish,
+        quantities: quantityMatches.length >= 4,
+        countable: hasCountable,
+        uncountable: hasUncountable,
+        reason: hasReason
+      };
+    }
+    function updateChecklist(){
+      const checklist = checklistStatus();
+      Object.keys(checklist).forEach(function(key){
+        const item = document.querySelector(`[data-check="${key}"]`);
+        if(item) item.classList.toggle("is-done", checklist[key]);
+      });
+      return checklist;
+    }
+    function setRouteState(activeIndex){
+      document.querySelectorAll("[data-route-step]").forEach(function(step,index){
+        step.classList.toggle("is-active", index === activeIndex);
+        step.classList.toggle("is-done", index < activeIndex);
+      });
+    }
+    function updateBasketPreview(){
+      const countable = [];
+      const uncountable = [];
+      foodItems.forEach(function(item,index){
+        if(answers[index] === 0) countable.push(item.name);
+        if(answers[index] === 1) uncountable.push(item.name);
+      });
+      countableBasket.innerHTML = countable.length ? countable.map(function(name){ return `<span class="basket-chip">${escapeHtml(name)}</span>`; }).join("") : '<span class="basket-chip">Choose foods</span>';
+      uncountableBasket.innerHTML = uncountable.length ? uncountable.map(function(name){ return `<span class="basket-chip">${escapeHtml(name)}</span>`; }).join("") : '<span class="basket-chip">Choose foods</span>';
+    }
+    function updateStageState(){
+      const status = stageStatus();
+      const sortDone = status.sorted === foodItems.length;
+      const quantityDone = status.measured === quantityItems.length;
+      const productReady = status.hasDish && status.hasList && status.words >= 35;
+      sortPanel.classList.toggle("is-complete", sortDone);
+      quantityPanel.classList.toggle("is-locked", !sortDone);
+      quantityPanel.classList.toggle("is-complete", quantityDone);
+      builderPanel.classList.toggle("is-locked", !quantityDone);
+      builderPanel.classList.toggle("is-complete", productReady);
+      basketReveal.classList.toggle("show", sortDone);
+      sortUnlock.classList.toggle("show", sortDone);
+      quantityUnlock.classList.toggle("show", quantityDone);
+      if(!sortDone) setRouteState(0);
+      else if(!quantityDone) setRouteState(1);
+      else if(!status.hasList) setRouteState(2);
+      else if(status.words < 35) setRouteState(3);
+      else setRouteState(4);
+      liveSorted.textContent = status.sorted + "/" + foodItems.length;
+      liveMeasured.textContent = status.measured + "/" + quantityItems.length;
+      liveStage.textContent = !sortDone ? "Sort" : (!quantityDone ? "Measure" : (productReady ? "Send" : "Build"));
+      liveScore.textContent = selectedCount() === correctAnswers.length ? localScore() + "/20" : "--";
+      boardSort.textContent = sortDone ? "Done" : "Open";
+      boardMeasure.textContent = sortDone ? (quantityDone ? "Done" : "Open") : "Locked";
+      boardBuild.textContent = quantityDone ? (productReady ? "Ready" : "Open") : "Locked";
+      boardTeam.textContent = selectedTeam || "No team";
+      updateChecklist();
+      updateBasketPreview();
+      scheduleLiveProgress();
+    }
+    function showStatus(message,type){
+      scoreBoard.className = "score-board show " + (type || "pending");
+      scoreBoard.textContent = message;
+    }
+    function showLiveStatus(message,type){
+      liveStatus.className = "score-board show " + (type || "pending");
+      liveStatus.textContent = message;
+    }
+    function readStoredUser(key){
+      try{
+        const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+        if(!saved || !saved.exp || Date.now()/1000 > saved.exp){
+          sessionStorage.removeItem(key);
+          return null;
+        }
+        return saved;
+      }catch(error){
+        sessionStorage.removeItem(key);
+        return null;
+      }
+    }
+    function readUser(){
+      const googleUser = readStoredUser(GOOGLE_USER_KEY);
+      if(googleUser && googleUser.credential) return Object.assign({provider:"google"}, googleUser);
+      const microsoftUser = readStoredUser(MICROSOFT_USER_KEY);
+      if(microsoftUser && microsoftUser.credential) return Object.assign({provider:"microsoft"}, microsoftUser);
+      return null;
+    }
+    function authHeaders(){
+      const user = readUser();
+      if(!user || !user.credential) return null;
+      return {
+        Authorization:"Bearer " + user.credential,
+        "X-Jaralingua-Auth-Provider":user.provider || "google",
+        "Content-Type":"application/json"
+      };
+    }
+    function openLoginPanel(){
+      const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+      if(trigger) trigger.click();
+    }
+    function stageNameForProgress(){
+      const status = stageStatus();
+      if(status.sorted < foodItems.length) return "Sort";
+      if(status.measured < quantityItems.length) return "Measure";
+      if(!(status.hasDish && status.hasList && status.words >= 35)) return "Build";
+      return "Send";
+    }
+    function scheduleLiveProgress(){
+      const headers = authHeaders();
+      if(!headers) return;
+      clearTimeout(progressTimer);
+      progressTimer = setTimeout(function(){
+        const status = stageStatus();
+        fetch(PROGRESS_ENDPOINT,{
+          method:"POST",
+          headers:headers,
+          body:JSON.stringify({
+            team:selectedTeam,
+            stage:stageNameForProgress(),
+            sorted:status.sorted,
+            measured:status.measured,
+            score:selectedCount() === correctAnswers.length ? localScore() : null,
+            checklistReady:Object.values(checklistStatus()).every(Boolean),
+            submitted:false
+          })
+        }).then(function(response){ return response.ok ? response.json() : null; })
+          .then(function(data){ if(data) renderLiveBoard(data); })
+          .catch(function(){});
+      },650);
+    }
+    function renderLiveBoard(data){
+      if(!data || typeof data !== "object") return;
+      if(data.isTeacher) teacherActions.classList.add("show");
+      const counts = data.stageCounts || {};
+      boardSort.textContent = data.isOpen ? (counts.Sort || 0) : boardSort.textContent;
+      boardMeasure.textContent = data.isOpen ? (counts.Measure || 0) : boardMeasure.textContent;
+      boardBuild.textContent = data.isOpen ? ((counts.Build || 0) + (counts.Send || 0)) : boardBuild.textContent;
+      const teams = Array.isArray(data.teams) ? data.teams : [];
+      teamLeaderboard.innerHTML = teams.map(function(team){
+        return `
+          <div class="team-board-card">
+            <h4>${escapeHtml(team.team)}</h4>
+            <p>${Number(team.students || 0)} active student(s)</p>
+            <p>${Number(team.submitted || 0)} mission(s) submitted</p>
+            <p>${team.averageGrade == null ? "No average yet" : "Average: " + Number(team.averageGrade).toFixed(2) + " / 5"}</p>
+            <p>${Number(team.checklistReady || 0)} checklist ready</p>
+          </div>
+        `;
+      }).join("");
+      if(data.isTeacher && Array.isArray(data.students)){
+        teacherStudents.classList.add("show");
+        teacherStudentRows.innerHTML = data.students.length ? data.students.map(function(student){
+          return `
+            <div class="student-live-row">
+              <div>${escapeHtml(student.studentName || "Student")}<small>${escapeHtml(student.email || "")} · ${escapeHtml(student.team || "No team")} · ${escapeHtml(student.stage || "Sort")}</small></div>
+              <div>${student.submitted ? "Submitted" : escapeHtml(String(student.score == null ? student.sorted + "/12" : student.score + "/20"))}</div>
+            </div>
+          `;
+        }).join("") : '<div class="student-live-row"><div>No student progress yet.<small>Launch the challenge and ask students to sign in.</small></div><div>0</div></div>';
+      }
+      if(data.isOpen){
+        showLiveStatus("Class challenge is open. Last update: " + (data.updatedAt || "waiting for students") + ".", "success");
+      }
+    }
+    function fetchLiveBoard(){
+      const headers = authHeaders();
+      if(!headers) return;
+      fetch(LIVE_ENDPOINT,{headers:headers})
+        .then(function(response){ return response.ok ? response.json() : null; })
+        .then(function(data){ if(data) renderLiveBoard(data); })
+        .catch(function(){});
+    }
+    function launchClassChallenge(reset){
+      const headers = authHeaders();
+      if(!headers){
+        showLiveStatus("Sign in as teacher before launching the class challenge.", "error");
+        openLoginPanel();
+        return;
+      }
+      showLiveStatus(reset ? "Resetting and launching class board..." : "Launching class challenge...", "pending");
+      fetch(LAUNCH_ENDPOINT,{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify({isOpen:true,reset:Boolean(reset)})
+      }).then(function(response){
+        return response.json().then(function(data){ return {ok:response.ok,status:response.status,data:data}; });
+      }).then(function(result){
+        if(!result.ok){
+          showLiveStatus(result.status === 403 ? "Teacher access is required to launch this board." : "The class challenge could not be launched.", "error");
+          return;
+        }
+        renderLiveBoard(result.data);
+      }).catch(function(){
+        showLiveStatus("Network error. The class board was not updated.", "error");
+      });
+    }
+    function renderFoods(){
+      foodGrid.innerHTML = foodItems.map(function(item,index){
+        return `
+          <div class="food-card" data-food-card="${index}">
+            <div class="food-title">
+              <h3>${escapeHtml(item.name)}</h3>
+              <span class="food-tag">${escapeHtml(item.tag)}</span>
+            </div>
+            <p>${escapeHtml(item.detail)}</p>
+            <div class="choice-row">
+              <button type="button" class="choice-btn" data-food-choice="${index}" data-value="0">Countable</button>
+              <button type="button" class="choice-btn" data-food-choice="${index}" data-value="1">Uncountable</button>
+            </div>
+            <div class="hint-box" data-hint="${index}">Hint: Ask yourself if you can count this food one by one, or if English needs a quantity phrase such as some, a cup of, a slice of, or a bottle of.</div>
+          </div>
+        `;
+      }).join("");
+    }
+    function renderQuantities(){
+      quantityGrid.innerHTML = quantityItems.map(function(item,index){
+        const answerIndex = foodItems.length + index;
+        return `
+          <div class="quantity-card" data-quantity-card="${answerIndex}">
+            <h3>${index + 13}. ${escapeHtml(item.prompt)}</h3>
+            <div class="quantity-options">
+              ${item.options.map(function(option,optionIndex){
+                return `<label><input type="radio" name="q${index}" value="${optionIndex}" data-quantity-choice="${answerIndex}"> ${escapeHtml(option)}</label>`;
+              }).join("")}
+            </div>
+            <div class="hint-box" data-hint="${answerIndex}">Hint: Match the quantity word to the noun type. Countable plural nouns can use a few or many; uncountable nouns often need much, a little, some, or a container phrase.</div>
+          </div>
+        `;
+      }).join("");
+    }
+    function localScore(){
+      return answers.reduce(function(total,answer,index){
+        return total + (answer === correctAnswers[index] ? 1 : 0);
+      },0);
+    }
+    function markIncorrect(incorrectQuestions){
+      document.querySelectorAll(".food-card,.quantity-card").forEach(function(card){
+        card.classList.remove("is-wrong");
+        const hint = card.querySelector(".hint-box");
+        if(hint) hint.classList.remove("show");
+      });
+      (incorrectQuestions || []).forEach(function(number){
+        const index = number - 1;
+        const selector = index < foodItems.length ? `[data-food-card="${index}"]` : `[data-quantity-card="${index}"]`;
+        const card = document.querySelector(selector);
+        if(card){
+          card.classList.add("is-wrong");
+          const hint = card.querySelector(".hint-box");
+          if(hint) hint.classList.add("show");
+        }
+      });
+    }
+    function scanChallenge(){
+      if(selectedCount() < correctAnswers.length){
+        showStatus("Finish all 20 decisions before scanning the mission. Completed: " + selectedCount() + " / " + correctAnswers.length + ".", "pending");
+        return false;
+      }
+      const count = wordCount(fields.response.value);
+      if(count < 35){
+        showStatus("Write at least 35 words in the final mission note before sending it.", "error");
+        return false;
+      }
+      if(count > 180){
+        showStatus("The mission note is too long. Keep it under 180 words.", "error");
+        return false;
+      }
+      const checklist = checklistStatus();
+      const missing = Object.keys(checklist).filter(function(key){ return !checklist[key]; });
+      if(missing.length){
+        showStatus("Complete the mission checklist before sending: " + missing.join(", ") + ".", "error");
+        return false;
+      }
+      showStatus("Mission ready. Your current local scan is " + localScore() + " / " + correctAnswers.length + ". Send it to the teacher when you are ready.", "success");
+      liveScore.textContent = localScore() + "/20";
+      return true;
+    }
+    function buildMission(){
+      const dish = fields.dishName.value.trim() || "a colorful rice and bean dinner bowl";
+      const list = fields.shoppingList.value.trim() || "three cups of cooked rice, two cans of beans, six tomatoes, a little oil, some cheese, and a bottle of water";
+      fields.dishName.value = dish;
+      fields.shoppingList.value = list;
+      fields.response.value = "For my food fair basket, I want to prepare " + dish + ". I need " + list + ". The countable foods help me plan exact portions, and the uncountable foods need clear quantity phrases. This basket works because it is filling, colorful, affordable, and easy to explain in English.";
+      updateCounter();
+      updateStageState();
+      showStatus("Mission note built. Edit it with your own details before sending it to the teacher.", "pending");
+    }
+    function lockChallenge(){
+      document.getElementById("challenge").classList.add("locked");
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitted to teacher";
+    }
+    function resetChallenge(){
+      answers.fill(null);
+      document.querySelectorAll(".choice-btn,.mini-btn").forEach(function(button){ button.classList.remove("is-active"); });
+      document.querySelectorAll(".food-card").forEach(function(card){ card.classList.remove("is-selected","is-wrong"); });
+      quantityGrid.reset();
+      document.querySelectorAll(".quantity-card").forEach(function(card){ card.classList.remove("is-selected","is-wrong"); });
+      fields.dishName.value = "";
+      fields.shoppingList.value = "";
+      fields.response.value = "";
+      document.getElementById("challenge").classList.remove("locked");
+      selectedTeam = "";
+      document.querySelectorAll(".team-option").forEach(function(button){ button.classList.remove("is-active"); });
+      submitButton.disabled = false;
+      submitButton.textContent = "Send to teacher";
+      scoreBoard.className = "score-board";
+      scoreBoard.textContent = "";
+      foodTicket.className = "food-ticket";
+      foodTicket.innerHTML = "";
+      updateCounter();
+      updateProgress();
+    }
+    function renderTicket(data){
+      foodTicket.className = "food-ticket show";
+      foodTicket.innerHTML = `
+        <div class="ticket-head">
+          <div><span class="panel-kicker">Food Fair Ticket</span><h3>${escapeHtml(fields.dishName.value || "Market Basket Mission")}</h3></div>
+          <div class="ticket-grade">${Number(data.grade).toFixed(2)} / 5</div>
+        </div>
+        <div class="ticket-body">
+          <div><strong>Team:</strong> ${escapeHtml(selectedTeam || "No team")}</div>
+          <div><strong>Shopping list:</strong> ${escapeHtml(fields.shoppingList.value || "No shopping list")}</div>
+          <div><strong>Mission note:</strong> ${escapeHtml(fields.response.value)}</div>
+          <div><strong>Teacher review:</strong> ${(data.reviewSummary || []).map(escapeHtml).join(" ") || "No review notes."}</div>
+          <div><strong>Status:</strong> Submitted to teacher. Weight: 0.</div>
+          <button type="button" class="audio-chip" data-ticket-audio="audio/unit-5-market-basket/your-food-fair-mission-is-ready.mp3">Listen to the closing line</button>
+        </div>
+      `;
+    }
+    function playPhraseAudio(button){
+      const src = button.dataset.audioSrc;
+      if(!src) return;
+      if(phraseAudio){
+        phraseAudio.pause();
+        phraseAudio = null;
+      }
+      phraseAudio = new Audio(src);
+      phraseAudio.play().then(function(){
+        button.classList.remove("is-missing");
+      }).catch(function(){
+        showStatus("Professional phrase audio is prepared for this activity, but the MP3 file is not available yet.", "pending");
+      });
+    }
+    function submitChallenge(){
+      if(!scanChallenge()) return;
+      const headers = authHeaders();
+      if(!headers){
+        showStatus("Sign in first. This challenge must be linked to your student record before it can be sent to the teacher.", "error");
+        openLoginPanel();
+        return;
+      }
+      submitButton.disabled = true;
+      showStatus("Sending your Market Basket Challenge to the teacher...", "pending");
+      fetch(SUBMIT_ENDPOINT,{
+        method:"POST",
+        headers:headers,
+        body:JSON.stringify({
+          answers:answers,
+          dishName:fields.dishName.value,
+          shoppingList:fields.shoppingList.value,
+          response:fields.response.value,
+          team:selectedTeam,
+          checklist:checklistStatus(),
+          activity:"Market Basket Challenge",
+          clientDate:new Date().toISOString().slice(0,10)
+        })
+      }).then(function(response){
+        return response.json().then(function(data){
+          return {ok:response.ok,status:response.status,data:data};
+        });
+      }).then(function(result){
+        if(!result.ok){
+          submitButton.disabled = false;
+          const data = result.data || {};
+          if(result.status === 403){
+            showStatus("Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.", "error");
+          }else if(data.error === "text_too_short"){
+            showStatus("The mission note is too short: " + (data.wordCount || 0) + " words.", "error");
+          }else if(data.error === "text_too_long"){
+            showStatus("The mission note is too long: " + (data.wordCount || 0) + " words.", "error");
+          }else{
+            showStatus("The submission could not be saved. Please reload and try again.", "error");
+          }
+          return;
+        }
+        const data = result.data;
+        markIncorrect(data.incorrectQuestions || []);
+        const wrong = (data.incorrectQuestions || []).length;
+        const reviewText = wrong ? "Questions marked for review: " + data.incorrectQuestions.join(", ") + ". Use the hint boxes before resetting the full challenge." : "No questions were marked wrong.";
+        showStatus("Submitted to teacher. Reference grade: " + Number(data.grade).toFixed(2) + " / 5.0. Score: " + data.score + " / " + data.total + ". " + reviewText + " This follow-up appears in the grade grid with weight 0.", "success");
+        renderTicket(data);
+        fetchLiveBoard();
+        lockChallenge();
+      }).catch(function(){
+        submitButton.disabled = false;
+        showStatus("Network error. The activity was not submitted.", "error");
+      });
+    }
+
+    renderFoods();
+    renderQuantities();
+    updateCounter();
+    updateProgress();
+    foodGrid.addEventListener("click",function(event){
+      const button = event.target.closest("[data-food-choice]");
+      if(!button) return;
+      const index = Number(button.dataset.foodChoice);
+      const value = Number(button.dataset.value);
+      answers[index] = value;
+      const card = document.querySelector(`[data-food-card="${index}"]`);
+      card.classList.add("is-selected");
+      card.classList.remove("is-wrong");
+      const hint = card.querySelector(".hint-box");
+      if(hint) hint.classList.remove("show");
+      card.querySelectorAll(".choice-btn").forEach(function(btn){ btn.classList.remove("is-active"); });
+      button.classList.add("is-active");
+      updateProgress();
+    });
+    quantityGrid.addEventListener("change",function(event){
+      const input = event.target.closest("[data-quantity-choice]");
+      if(!input) return;
+      const index = Number(input.dataset.quantityChoice);
+      answers[index] = Number(input.value);
+      const card = document.querySelector(`[data-quantity-card="${index}"]`);
+      if(card){
+        card.classList.add("is-selected");
+        card.classList.remove("is-wrong");
+        const hint = card.querySelector(".hint-box");
+        if(hint) hint.classList.remove("show");
+      }
+      updateProgress();
+    });
+    fields.response.addEventListener("input",function(){ updateCounter(); updateStageState(); });
+    fields.dishName.addEventListener("input",updateStageState);
+    fields.shoppingList.addEventListener("input",updateStageState);
+    teamSelector.addEventListener("click",function(event){
+      const button = event.target.closest("[data-team]");
+      if(!button) return;
+      selectedTeam = button.dataset.team;
+      document.querySelectorAll(".team-option").forEach(function(item){ item.classList.toggle("is-active", item === button); });
+      updateStageState();
+    });
+    audioStrip.addEventListener("click",function(event){
+      const button = event.target.closest("[data-audio-src]");
+      if(button) playPhraseAudio(button);
+    });
+    foodTicket.addEventListener("click",function(event){
+      const button = event.target.closest("[data-ticket-audio]");
+      if(button) playPhraseAudio({dataset:{audioSrc:button.dataset.ticketAudio},classList:button.classList});
+    });
+    document.getElementById("buildMission").addEventListener("click",buildMission);
+    document.getElementById("scanChallenge").addEventListener("click",scanChallenge);
+    document.getElementById("resetChallenge").addEventListener("click",resetChallenge);
+    document.getElementById("submitChallenge").addEventListener("click",submitChallenge);
+    document.getElementById("launchChallenge").addEventListener("click",function(){ launchClassChallenge(false); });
+    document.getElementById("resetClassBoard").addEventListener("click",function(){ launchClassChallenge(true); });
+    document.getElementById("refreshClassBoard").addEventListener("click",fetchLiveBoard);
+    fetchLiveBoard();
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>

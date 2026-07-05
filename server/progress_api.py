@@ -49,6 +49,7 @@ BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_R
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
+INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_DATA", "/var/lib/jaralingua/intermediate-unit5-market-basket-live.json")
 INTERMEDIATE_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_INTERMEDIATE_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/intermediate-pronunciation-audio")
 INTERMEDIATE_UNIT2_CATCHING_UP_ID = "unit2CatchingUpListening"
 INTERMEDIATE_UNIT2_TIMELINE_ID = "unit2TimelineCatchUpWriting"
@@ -58,6 +59,11 @@ INTERMEDIATE_UNIT4_LISTENING_ID = "unit4SundayDinnerListening"
 INTERMEDIATE_UNIT4_MEMORY_BOX_ID = "unit4MemoryBoxReading"
 INTERMEDIATE_UNIT4_MEMORY_BLOG_ID = "unit4FamilyMemoryBlog"
 INTERMEDIATE_UNIT4_PRONUNCIATION_ID = "unit4FamilyStoriesPronunciation"
+INTERMEDIATE_UNIT5_MARKET_BASKET_ID = "unit5MarketBasketChallenge"
+INTERMEDIATE_UNIT5_LISTENING_ID = "unit5MarketDinnerListening"
+INTERMEDIATE_UNIT5_READING_ID = "unit5DishHistoryReading"
+INTERMEDIATE_UNIT5_DINNER_PLAN_ID = "unit5HealthyDinnerPlanner"
+INTERMEDIATE_UNIT5_SNACK_REVIEW_ID = "unit5GlobalSnackReview"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -201,10 +207,53 @@ INTERMEDIATE_UNIT4_PRONUNCIATION_EVALUATION = {
     "description": "Seguimiento oral enviable al profesor. La calificacion aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
 }
 
+INTERMEDIATE_UNIT5_MARKET_BASKET_EVALUATION = {
+    "id": INTERMEDIATE_UNIT5_MARKET_BASKET_ID,
+    "title": "Unit 5 Grammar - Market Basket Challenge",
+    "weight": 0,
+    "type": "Grammar follow-up",
+    "description": "Reto de cantidades enviable al profesor. La nota aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
+}
+
+INTERMEDIATE_UNIT5_LISTENING_EVALUATION = {
+    "id": INTERMEDIATE_UNIT5_LISTENING_ID,
+    "title": "Unit 5 Listening - Market Dinner Plan",
+    "weight": 0,
+    "type": "Listening follow-up",
+    "description": "Seguimiento enviable al profesor. La nota aparece como referencia, pero su peso es 0 y no afecta el promedio acumulado."
+}
+
+INTERMEDIATE_UNIT5_READING_EVALUATION = {
+    "id": INTERMEDIATE_UNIT5_READING_ID,
+    "title": "Unit 5 Reading - A Dish with a History",
+    "weight": 0,
+    "type": "Reading follow-up",
+    "description": "Seguimiento de lectura enviable al profesor. La nota aparece como referencia y su peso es 0."
+}
+
+INTERMEDIATE_UNIT5_DINNER_PLAN_EVALUATION = {
+    "id": INTERMEDIATE_UNIT5_DINNER_PLAN_ID,
+    "title": "Unit 5 Writing - Healthy Dinner Planner",
+    "weight": 0,
+    "type": "Writing follow-up",
+    "description": "Producto de planificacion enviable al profesor. La entrega queda visible con peso 0."
+}
+
+INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION = {
+    "id": INTERMEDIATE_UNIT5_SNACK_REVIEW_ID,
+    "title": "Unit 5 Writing - Global Snack Review",
+    "weight": 0,
+    "type": "Writing follow-up",
+    "description": "Resena cultural enviable al profesor. La entrega queda visible con peso 0."
+}
+
 INTERMEDIATE_UNIT2_CATCHING_UP_ANSWERS = [1, 2, 0, 1, 0, 2, 1, 0, 2, 1, 0, 2, 2, 1, 0, 2, 0, 1, 2, 1]
 INTERMEDIATE_UNIT2_READING_ANSWERS = [1, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2]
 INTERMEDIATE_UNIT4_LISTENING_ANSWERS = [1, 2, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2, 0, 1, 2]
 INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS = [1, 2, 1, 2, 0, 0, 1, 1, 2, 1, 2, 0, 2, 2]
+INTERMEDIATE_UNIT5_MARKET_BASKET_ANSWERS = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 0, 2, 1]
+INTERMEDIATE_UNIT5_LISTENING_ANSWERS = [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+INTERMEDIATE_UNIT5_READING_ANSWERS = [0, 1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT4_EXPRESSION_ITEMS = [
     {
         "id": "bring-up",
@@ -318,6 +367,42 @@ Leo: And tomorrow Maya helps me with English?
 Maya: Yes, after school. But you have to bring your notebook.
 
 Narrator: The Rivera family does not solve every problem forever, but they make one respectful agreement for tonight."""
+
+INTERMEDIATE_UNIT5_LISTENING_TRANSCRIPT = """Narrator: Three classmates are planning a healthy dinner for a small international food fair. They have to choose ingredients, quantities, and one cultural connection.
+
+Sara: We need a dinner for six people. It should be healthy, but it should also feel Colombian.
+
+Mateo: What about a rice bowl with beans, avocado, vegetables, and grilled chicken? It is not exactly bandeja paisa, but it uses familiar ingredients in a lighter way.
+
+Nina: I like that. How much rice do we need?
+
+Mateo: For six people, we need about three cups of cooked rice. Rice is uncountable, so we say some rice or a cup of rice, not three rices.
+
+Sara: Good point. We also need two cans of beans, six small pieces of chicken, and a lot of vegetables.
+
+Nina: Do we have any lettuce?
+
+Sara: No, we do not have any lettuce yet, but we have some tomatoes, some corn, and two avocados.
+
+Mateo: Let's buy a head of lettuce, a bag of carrots, and a bottle of lime juice. The dressing can be made with lime, a little oil, salt, and cilantro.
+
+Nina: Should we add something sweet?
+
+Sara: Maybe a fruit salad. We can use some mango, a few strawberries, and a little yogurt. It gives color without too much sugar.
+
+Mateo: I want the presentation to explain culture too. We can say the bowl is inspired by Colombian home food, but it is arranged like a modern healthy bowl.
+
+Nina: And we can compare it with a global rice bowl. Many cultures use rice, beans, vegetables, and sauces, but the flavors change.
+
+Sara: Exactly. Our final menu has rice, beans, chicken, lettuce, tomato, corn, avocado, lime dressing, and fruit salad.
+
+Mateo: Wait. Do we need any bread?
+
+Nina: I do not think so. There is already rice. If we add bread, the meal may feel too heavy.
+
+Sara: So our dinner is balanced: some grains, some protein, a lot of vegetables, a little healthy fat, and a light dessert.
+
+Narrator: Their plan is not only a list of food. It includes quantities, countable and uncountable nouns, ingredients, health reasons, and a cultural comparison."""
 
 FRENCH8_BASE_EVALUATIONS = {
     "finalExam": {
@@ -1507,6 +1592,16 @@ def ensure_intermediate_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT4_PRONUNCIATION_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_MARKET_BASKET_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_LISTENING_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_READING_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_DINNER_PLAN_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION):
+        changed = True
     return changed
 
 
@@ -1524,6 +1619,36 @@ def score_intermediate_unit4_listening(payload):
 
 def score_intermediate_unit4_memory_box(payload):
     return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS)
+
+
+def score_intermediate_unit5_market_basket(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT5_MARKET_BASKET_ANSWERS)
+
+
+def intermediate_unit5_market_basket_review(result):
+    incorrect = result.get("incorrect", [])
+    sort_errors = len([item for item in incorrect if 1 <= item <= 12])
+    quantity_errors = len([item for item in incorrect if 13 <= item <= 20])
+    review_summary = []
+    if sort_errors:
+        review_summary.append(f"Review countable and uncountable food sorting: {sort_errors} item(s).")
+    if quantity_errors:
+        review_summary.append(f"Review quantity phrases, containers, much/many, a little/a few: {quantity_errors} item(s).")
+    if not review_summary:
+        review_summary.append("Grammar decisions were accurate in this attempt.")
+    return {
+        "sortErrors": sort_errors,
+        "quantityErrors": quantity_errors,
+        "reviewSummary": review_summary
+    }
+
+
+def score_intermediate_unit5_listening(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT5_LISTENING_ANSWERS)
+
+
+def score_intermediate_unit5_reading(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT5_READING_ANSWERS)
 
 
 def intermediate_pronunciation_grade_from_payload(payload):
@@ -1633,6 +1758,107 @@ def read_intermediate_unit4_expression_wall():
 
 def write_intermediate_unit4_expression_wall(data):
     write_json_file(INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH, data, ".intermediate-unit4-expression-wall-")
+
+
+def default_intermediate_unit5_market_basket_live():
+    return {
+        "isOpen": False,
+        "launchedAt": None,
+        "launchedBy": None,
+        "updatedAt": None,
+        "students": {}
+    }
+
+
+def read_intermediate_unit5_market_basket_live():
+    data = read_json_file(INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH, default_intermediate_unit5_market_basket_live())
+    if not isinstance(data.get("students"), dict):
+        data["students"] = {}
+    data.setdefault("isOpen", False)
+    data.setdefault("launchedAt", None)
+    data.setdefault("launchedBy", None)
+    data.setdefault("updatedAt", None)
+    return data
+
+
+def write_intermediate_unit5_market_basket_live(data):
+    write_json_file(INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH, data, ".intermediate-unit5-market-basket-live-")
+
+
+def clean_intermediate_unit5_team(value):
+    team = clean_text(value, 40)
+    return team if team in {"Team Teal", "Team Gold", "Team Green"} else ""
+
+
+def public_intermediate_unit5_market_basket_live(profile, grades_data, live):
+    role = grade_user_role(profile, grades_data)
+    is_staff = role in ("admin", "teacher")
+    teams = {
+        "Team Teal": {"team": "Team Teal", "students": 0, "submitted": 0, "scoreTotal": 0, "gradeTotal": 0.0, "checklistReady": 0},
+        "Team Gold": {"team": "Team Gold", "students": 0, "submitted": 0, "scoreTotal": 0, "gradeTotal": 0.0, "checklistReady": 0},
+        "Team Green": {"team": "Team Green", "students": 0, "submitted": 0, "scoreTotal": 0, "gradeTotal": 0.0, "checklistReady": 0}
+    }
+    stage_counts = {"Sort": 0, "Measure": 0, "Build": 0, "Send": 0}
+    students = []
+    for student_id, item in live.get("students", {}).items():
+        if not isinstance(item, dict):
+            continue
+        team = item.get("team") if item.get("team") in teams else ""
+        stage = item.get("stage") if item.get("stage") in stage_counts else "Sort"
+        stage_counts[stage] += 1
+        checklist_ready = bool(item.get("checklistReady"))
+        submitted = bool(item.get("submitted"))
+        if team:
+            teams[team]["students"] += 1
+            if submitted:
+                teams[team]["submitted"] += 1
+            if checklist_ready:
+                teams[team]["checklistReady"] += 1
+            try:
+                teams[team]["scoreTotal"] += int(item.get("score", 0))
+            except (TypeError, ValueError):
+                pass
+            try:
+                teams[team]["gradeTotal"] += float(item.get("grade", 0))
+            except (TypeError, ValueError):
+                pass
+        if is_staff:
+            students.append({
+                "studentId": student_id,
+                "studentName": item.get("studentName", "Student"),
+                "email": item.get("email", ""),
+                "team": team,
+                "stage": stage,
+                "sorted": item.get("sorted", 0),
+                "measured": item.get("measured", 0),
+                "score": item.get("score"),
+                "grade": item.get("grade"),
+                "submitted": submitted,
+                "checklistReady": checklist_ready,
+                "updatedAt": item.get("updatedAt", "")
+            })
+    team_payload = []
+    for item in teams.values():
+        average_grade = round(item["gradeTotal"] / item["submitted"], 2) if item["submitted"] else None
+        team_payload.append({
+            "team": item["team"],
+            "students": item["students"],
+            "submitted": item["submitted"],
+            "averageGrade": average_grade,
+            "checklistReady": item["checklistReady"]
+        })
+    students.sort(key=lambda item: item.get("updatedAt") or "", reverse=True)
+    return {
+        "role": role,
+        "isTeacher": is_staff,
+        "isOpen": bool(live.get("isOpen")),
+        "launchedAt": live.get("launchedAt"),
+        "launchedBy": live.get("launchedBy"),
+        "updatedAt": live.get("updatedAt"),
+        "stageCounts": stage_counts,
+        "teams": team_payload,
+        "students": students if is_staff else []
+    }
 
 
 def sentence_matches_intermediate_expression(sentence, expression):
@@ -2850,6 +3076,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, intermediate_unit4_expression_wall_payload(profile, grades_data, wall))
             return
 
+        if parsed.path == "/api/intermediate/unit5-market-basket/live":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                live = read_intermediate_unit5_market_basket_live()
+                json_response(self, 200, public_intermediate_unit5_market_basket_live(profile, grades_data, live))
+            return
+
         if parsed.path == "/api/intermediate/unit4-sunday-dinner/transcript":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
@@ -2860,6 +3093,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {
                     "title": "Sunday Dinner Negotiation",
                     "transcript": INTERMEDIATE_UNIT4_LISTENING_TRANSCRIPT
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-market-dinner/transcript":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                json_response(self, 200, {
+                    "title": "Market Dinner Plan",
+                    "transcript": INTERMEDIATE_UNIT5_LISTENING_TRANSCRIPT
                 })
             return
 
@@ -2966,6 +3212,67 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 wall["updatedAt"] = submitted_at
                 write_intermediate_unit4_expression_wall(wall)
                 json_response(self, 200, intermediate_unit4_expression_wall_payload(profile, grades_data, wall))
+            return
+
+        if parsed.path == "/api/intermediate/unit5-market-basket/launch":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                live = read_intermediate_unit5_market_basket_live()
+                timestamp = now_iso()
+                live["isOpen"] = bool(payload.get("isOpen", True))
+                if payload.get("reset"):
+                    live["students"] = {}
+                live["launchedAt"] = timestamp if live["isOpen"] else live.get("launchedAt")
+                live["launchedBy"] = profile.get("email", "") if live["isOpen"] else live.get("launchedBy")
+                live["updatedAt"] = timestamp
+                write_intermediate_unit5_market_basket_live(live)
+                json_response(self, 200, public_intermediate_unit5_market_basket_live(profile, grades_data, live))
+            return
+
+        if parsed.path == "/api/intermediate/unit5-market-basket/progress":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                live = read_intermediate_unit5_market_basket_live()
+                timestamp = now_iso()
+                stage = clean_text(payload.get("stage"), 24)
+                if stage not in {"Sort", "Measure", "Build", "Send"}:
+                    stage = "Sort"
+                student_id = clean_text(student.get("id"), 40)
+                try:
+                    sorted_count = max(0, min(12, int(payload.get("sorted", 0))))
+                except (TypeError, ValueError):
+                    sorted_count = 0
+                try:
+                    measured_count = max(0, min(8, int(payload.get("measured", 0))))
+                except (TypeError, ValueError):
+                    measured_count = 0
+                try:
+                    score_value = int(payload.get("score")) if payload.get("score") is not None else None
+                except (TypeError, ValueError):
+                    score_value = None
+                live.setdefault("students", {})[student_id] = {
+                    "studentName": clean_text(student.get("fullName"), 160) or "Student",
+                    "email": clean_text(student.get("email"), 180),
+                    "team": clean_intermediate_unit5_team(payload.get("team")),
+                    "stage": stage,
+                    "sorted": sorted_count,
+                    "measured": measured_count,
+                    "score": score_value,
+                    "checklistReady": bool(payload.get("checklistReady")),
+                    "submitted": bool(payload.get("submitted")),
+                    "updatedAt": timestamp
+                }
+                live["updatedAt"] = timestamp
+                write_intermediate_unit5_market_basket_live(live)
+                json_response(self, 200, public_intermediate_unit5_market_basket_live(profile, grades_data, live))
             return
 
         if parsed.path == "/api/intermediate/unit4-pronunciation/submit":
@@ -3376,6 +3683,292 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "wordCount": word_count,
                     "usedToCount": used_to_count,
                     "presentMarkerCount": present_markers,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-market-basket/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit5_market_basket(payload)
+                    response, word_count = clean_intermediate_text_followup(payload, "response", 35, 180)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("response"))})
+                    return
+                submitted_at = now_iso()
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT5_MARKET_BASKET_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                review = intermediate_unit5_market_basket_review(result)
+                checklist = payload.get("checklist") if isinstance(payload.get("checklist"), dict) else {}
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT5_MARKET_BASKET_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT5_MARKET_BASKET_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "response": response,
+                    "wordCount": word_count,
+                    "shoppingList": clean_text(payload.get("shoppingList"), 600),
+                    "dishName": clean_text(payload.get("dishName"), 140),
+                    "team": clean_text(payload.get("team"), 40),
+                    "missionChecklist": {
+                        "team": bool(checklist.get("team")),
+                        "dish": bool(checklist.get("dish")),
+                        "quantities": bool(checklist.get("quantities")),
+                        "countable": bool(checklist.get("countable")),
+                        "uncountable": bool(checklist.get("uncountable")),
+                        "reason": bool(checklist.get("reason"))
+                    },
+                    "reviewSummary": review["reviewSummary"],
+                    "sortErrors": review["sortErrors"],
+                    "quantityErrors": review["quantityErrors"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Market Basket Challenge",
+                    "activityType": "Grammar follow-up"
+                }
+                live = read_intermediate_unit5_market_basket_live()
+                student_id = clean_text(student.get("id"), 40)
+                live.setdefault("students", {})[student_id] = {
+                    "studentName": clean_text(student.get("fullName"), 160) or "Student",
+                    "email": clean_text(student.get("email"), 180),
+                    "team": clean_intermediate_unit5_team(payload.get("team")),
+                    "stage": "Send",
+                    "sorted": 12,
+                    "measured": 8,
+                    "score": result["score"],
+                    "grade": result["grade"],
+                    "checklistReady": True,
+                    "submitted": True,
+                    "updatedAt": submitted_at
+                }
+                live["updatedAt"] = submitted_at
+                write_intermediate_unit5_market_basket_live(live)
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT5_MARKET_BASKET_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "reviewSummary": review["reviewSummary"],
+                    "sortErrors": review["sortErrors"],
+                    "quantityErrors": review["quantityErrors"],
+                    "wordCount": word_count,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-market-dinner/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit5_listening(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                submitted_at = now_iso()
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT5_LISTENING_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT5_LISTENING_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT5_LISTENING_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Market Dinner Plan",
+                    "activityType": "Listening follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT5_LISTENING_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-dish-history/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit5_reading(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                submitted_at = now_iso()
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT5_READING_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT5_READING_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT5_READING_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "A Dish with a History",
+                    "activityType": "Reading follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT5_READING_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-healthy-dinner/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    response, word_count = clean_intermediate_text_followup(payload, "response", 90, 260)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("response"))})
+                    return
+                submitted_at, attempt_count = save_intermediate_text_followup(student, INTERMEDIATE_UNIT5_DINNER_PLAN_ID, {
+                    "activity": "Healthy Dinner Planner",
+                    "activityType": "Writing follow-up",
+                    "response": response,
+                    "wordCount": word_count,
+                    "groupSize": clean_text(payload.get("groupSize"), 140),
+                    "mainDish": clean_text(payload.get("mainDish"), 160),
+                    "ingredients": clean_text(payload.get("ingredients"), 360),
+                    "culturalConnection": clean_text(payload.get("culturalConnection"), 260)
+                })
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT5_DINNER_PLAN_ID,
+                    "wordCount": word_count,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-snack-review/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    response, word_count = clean_intermediate_text_followup(payload, "response", 90, 250)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("response"))})
+                    return
+                submitted_at, attempt_count = save_intermediate_text_followup(student, INTERMEDIATE_UNIT5_SNACK_REVIEW_ID, {
+                    "activity": "Global Snack Review",
+                    "activityType": "Writing follow-up",
+                    "response": response,
+                    "wordCount": word_count,
+                    "snackName": clean_text(payload.get("snackName"), 120),
+                    "origin": clean_text(payload.get("origin"), 180),
+                    "rating": clean_text(payload.get("rating"), 20),
+                    "ingredients": clean_text(payload.get("ingredients"), 320)
+                })
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT5_SNACK_REVIEW_ID,
+                    "wordCount": word_count,
+                    "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
                     "weight": 0

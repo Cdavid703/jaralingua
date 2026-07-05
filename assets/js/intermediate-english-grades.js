@@ -608,6 +608,12 @@
       const gradeText = typeof detail.grade === "number" ? formatGrade(detail.grade) : "Submitted";
       const scoreText = detail.score == null || detail.total == null ? (detail.score100 != null ? detail.score100 + " / 100" : (detail.wordCount ? detail.wordCount + " words" : "")) : detail.score + " / " + detail.total;
       const responseText = detail.blogText || detail.response || detail.transcript || "";
+      const followupNotes = [
+        detail.team ? "Team: " + detail.team : "",
+        detail.dishName ? "Dish: " + detail.dishName : "",
+        detail.shoppingList ? "Shopping list: " + detail.shoppingList : "",
+        Array.isArray(detail.reviewSummary) && detail.reviewSummary.length ? "Teacher review: " + detail.reviewSummary.join(" ") : ""
+      ].filter(Boolean).join("\n");
       const audioButton = detail.audio ? `<button class="btn-soft btn-sm" type="button" data-followup-audio data-student-id="${escapeHtml(item.student.id)}" data-evaluation-id="${escapeHtml(item.id)}"><i class="bi bi-play-circle"></i> Load audio</button><div data-followup-audio-player="${escapeHtml(item.student.id)}-${escapeHtml(item.id)}" style="margin-top:.55rem;"></div>` : "";
       return `
         <tr>
@@ -618,7 +624,7 @@
           <td>${escapeHtml(gradeText)}</td>
           <td>${escapeHtml(scoreText)}</td>
           <td>${escapeHtml(detail.submittedAt || "")}</td>
-          <td>${responseText ? `<details><summary>Read response</summary><div style="white-space:pre-wrap;min-width:280px;max-width:520px;line-height:1.55;margin-top:.6rem;">${escapeHtml(responseText)}</div></details>` : ""}${audioButton}</td>
+          <td>${responseText || followupNotes ? `<details><summary>Read response</summary><div style="white-space:pre-wrap;min-width:280px;max-width:520px;line-height:1.55;margin-top:.6rem;">${escapeHtml([followupNotes, responseText].filter(Boolean).join("\n\n"))}</div></details>` : ""}${audioButton}</td>
         </tr>
       `;
     }).join("");
