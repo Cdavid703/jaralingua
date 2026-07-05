@@ -13,10 +13,10 @@
     .snack-hero .lesson-hero-content{width:min(100%,670px);max-width:100%;box-sizing:border-box}
     .snack-hero .lesson-hero-content p,.snack-hero .eyebrow{color:#fff}
     .snack-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
-    .review-grid,.model-grid,.route-grid,.rubric-grid,.quality-grid,.preview-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
-    .review-card,.writer-card,.model-card,.route-card,.rubric-card,.quality-card,.preview-card,.checker-panel{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
-    .review-card h3,.writer-card h3,.model-card h3,.route-card h3,.rubric-card h3,.quality-card h3,.preview-card h3,.checker-panel h3{color:var(--intermediate-navy);margin:.2rem 0 .55rem}
-    .review-card p,.model-card p,.route-card p,.rubric-card p,.quality-card p,.preview-card p,.checker-panel p,.phrase-list li{color:var(--intermediate-muted);line-height:1.65}
+    .review-grid,.model-grid,.route-grid,.rubric-grid,.quality-grid,.preview-grid,.support-grid,.audio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+    .review-card,.writer-card,.model-card,.route-card,.rubric-card,.quality-card,.preview-card,.checker-panel,.support-card,.audio-card,.weak-card,.teacher-reading-card{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);padding:1rem}
+    .review-card h3,.writer-card h3,.model-card h3,.route-card h3,.rubric-card h3,.quality-card h3,.preview-card h3,.checker-panel h3,.support-card h3,.audio-card h3,.weak-card h3,.teacher-reading-card h3{color:var(--intermediate-navy);margin:.2rem 0 .55rem}
+    .review-card p,.model-card p,.route-card p,.rubric-card p,.quality-card p,.preview-card p,.checker-panel p,.phrase-list li,.support-card p,.support-card li,.audio-card p,.weak-card p,.teacher-reading-card p{color:var(--intermediate-muted);line-height:1.65}
     .route-card strong,.rubric-card strong{display:inline-flex;margin-bottom:.35rem;color:#9a3412;text-transform:uppercase;font-size:.76rem;letter-spacing:.06em}
     .support-details{border:1px solid rgba(7,31,79,.14);border-radius:8px;background:#fff;margin-top:1rem;overflow:hidden}
     .support-details summary{cursor:pointer;list-style:none;padding:1rem;background:linear-gradient(135deg,#fff,#f8fbff);display:flex;justify-content:space-between;gap:1rem;align-items:center;color:var(--intermediate-navy);font-weight:900}
@@ -28,6 +28,21 @@
     .phrase-list li{background:#f8fbff;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.7rem}
     .phrase-list strong{color:var(--intermediate-navy)}
     .model-response{background:#fffaf0;border-left:5px solid #d9a441;border-radius:8px;padding:1rem;color:#24364d;line-height:1.7;font-weight:700}
+    .word-board{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:.75rem}
+    .word-cluster{background:#fff;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.85rem}
+    .word-cluster h3{font-size:1rem;margin:.1rem 0 .65rem;color:var(--intermediate-navy)}
+    .chip-list{display:flex;flex-wrap:wrap;gap:.45rem}
+    .chip-list span{border-radius:999px;background:#eef8f7;border:1px solid rgba(15,118,110,.18);color:#0f4f4a;font-weight:900;padding:.35rem .58rem;font-size:.86rem}
+    .comparison-frame{display:grid;gap:.65rem}
+    .comparison-line{border-left:5px solid #d9a441;background:#fffaf0;border-radius:8px;padding:.8rem;color:#24364d;line-height:1.6;font-weight:800}
+    .weak-review-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem}
+    .weak-card{background:#fff7ed}
+    .weak-card strong{display:block;color:#9a3412;margin-bottom:.3rem}
+    .audio-card{background:linear-gradient(135deg,#f8fffb,#eef9f7)}
+    .audio-card audio{width:100%;margin:.5rem 0}
+    .speed-controls{display:flex;flex-wrap:wrap;gap:.4rem}
+    .speed-btn{border:1px solid rgba(7,31,79,.18);border-radius:999px;background:#fff;color:var(--intermediate-navy);font-weight:900;padding:.35rem .6rem;cursor:pointer}
+    .speed-btn.active{background:#0f766e;color:#fff;border-color:#0f766e}
     .writer-field{display:grid;gap:.35rem;margin-bottom:.85rem}
     .writer-field label{color:var(--intermediate-navy);font-weight:900}
     .writer-field input,.writer-field select,.writer-field textarea{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.8rem;font:inherit;color:#1f2937;background:#fff;box-sizing:border-box}
@@ -39,6 +54,10 @@
     .counter-pill{display:inline-flex;border-radius:999px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;padding:.35rem .65rem}
     .quality-card.complete{border-color:#86efac;background:#ecfdf5}
     .quality-card.complete h3::after{content:" ready";font-size:.8rem;color:#047857}
+    .quality-meter{background:#f8fbff;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:1rem;margin:1rem 0}
+    .meter-track{height:14px;border-radius:999px;background:#dfeaf7;overflow:hidden}
+    .meter-fill{height:100%;width:0;background:linear-gradient(90deg,#0f766e,#d9a441);transition:width .25s ease}
+    .meter-label{display:flex;justify-content:space-between;gap:1rem;color:var(--intermediate-navy);font-weight:900;margin-bottom:.5rem}
     .checker-panel{margin:1rem 0;background:linear-gradient(135deg,#f8fffb,#eef9f7)}
     .checker-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
     .checker-tag{border:1px solid rgba(7,31,79,.16);border-radius:999px;background:#fff;color:#475569;font-weight:800;padding:.42rem .7rem}
@@ -48,6 +67,7 @@
     .preview-line{border:1px solid rgba(217,164,65,.28);border-radius:8px;background:#fff;padding:.7rem;margin:.55rem 0}
     .preview-line strong{display:block;color:#9a3412;margin-bottom:.2rem}
     .preview-line span{color:#24364d;line-height:1.55}
+    .teacher-reading-card{background:#f8fbff;margin-top:1rem}
     @media(max-width:640px){
       body.english-intermediate-page{overflow-x:hidden}
       .english-intermediate-page .navbar{display:flex!important;flex-direction:column!important;align-items:center;gap:.55rem;padding:8px 10px;overflow:hidden}
@@ -91,7 +111,32 @@
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Review route</p><h2>Move from Description to Recommendation</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Language support</p><h2>Sensory Word Board and Cultural Frames</h2></div></div>
+        <details class="support-details" open>
+          <summary>Open sensory word board</summary>
+          <div class="support-details-body">
+            <div class="word-board" aria-label="Sensory vocabulary for snack reviews">
+              <div class="word-cluster"><h3>Taste</h3><div class="chip-list"><span>salty</span><span>sweet</span><span>spicy</span><span>sour</span><span>mild</span><span>rich</span></div></div>
+              <div class="word-cluster"><h3>Texture</h3><div class="chip-list"><span>crispy</span><span>crunchy</span><span>creamy</span><span>soft</span><span>juicy</span><span>dry</span></div></div>
+              <div class="word-cluster"><h3>Temperature</h3><div class="chip-list"><span>warm</span><span>hot</span><span>cold</span><span>fresh</span><span>room temperature</span></div></div>
+              <div class="word-cluster"><h3>Intensity</h3><div class="chip-list"><span>light</span><span>filling</span><span>heavy</span><span>not too sweet</span><span>a little spicy</span></div></div>
+            </div>
+          </div>
+        </details>
+        <details class="support-details">
+          <summary>Open cultural comparison helper</summary>
+          <div class="support-details-body">
+            <div class="support-grid">
+              <div class="support-card"><h3>Memory or place</h3><div class="comparison-frame"><div class="comparison-line">It reminds me of street food because people can eat it quickly and share it easily.</div><div class="comparison-line">It is connected to family food because people usually prepare it at home.</div></div></div>
+              <div class="support-card"><h3>Respectful comparison</h3><div class="comparison-frame"><div class="comparison-line">It is similar to another snack in my culture because both are practical and affordable.</div><div class="comparison-line">It is different from my usual snack because the texture is softer and the flavor is warmer.</div></div></div>
+              <div class="support-card"><h3>Safe culture language</h3><ul class="phrase-list"><li><strong>Use:</strong> In my experience, people often eat it...</li><li><strong>Use:</strong> It can show a local habit because...</li><li><strong>Avoid:</strong> Everyone from this country always eats...</li></ul></div>
+            </div>
+          </div>
+        </details>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Review route</p><h2>Move from Description to Recommendation</h2></div></div>
         <div class="route-grid">
           <div class="route-card"><strong>Step 1</strong><h3>Name it</h3><p>Identify the snack, country, region, family habit, restaurant, or food fair connection.</p></div>
           <div class="route-card"><strong>Step 2</strong><h3>Describe it</h3><p>Include ingredients, quantities, taste, texture, temperature, and how it is served.</p></div>
@@ -114,39 +159,63 @@
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Models</p><h2>What a Strong Review Sounds Like</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Models</p><h2>What a Strong Review Sounds Like</h2></div></div>
         <div class="model-grid">
           <div class="model-card"><h3>Ingredient sentence</h3><p>This snack is made with corn flour, cheese, and a little oil.</p></div>
           <div class="model-card"><h3>Opinion sentence</h3><p>I would give it 4 out of 5 because it is crispy outside, soft inside, and not too heavy.</p></div>
           <div class="model-card"><h3>Culture sentence</h3><p>It reminds me of street food because it is simple, warm, and easy to share.</p></div>
         </div>
         <details class="support-details">
+          <summary>Open professional audio models</summary>
+          <div class="support-details-body">
+            <div class="audio-grid">
+              <div class="audio-card"><h3>Ingredient sentence</h3><p>This snack is made with corn flour, cheese, and a little oil.</p><audio controls preload="metadata" src="audio/unit-5-snack-review/ingredient-sentence.mp3"></audio><div class="speed-controls" aria-label="Audio speed"><button type="button" class="speed-btn" data-speed="0.75">0.75</button><button type="button" class="speed-btn active" data-speed="1">1</button><button type="button" class="speed-btn" data-speed="1.25">1.25</button></div></div>
+              <div class="audio-card"><h3>Rating sentence</h3><p>I would give it 4 out of 5 because it is crispy outside, soft inside, and not too heavy.</p><audio controls preload="metadata" src="audio/unit-5-snack-review/rating-sentence.mp3"></audio><div class="speed-controls" aria-label="Audio speed"><button type="button" class="speed-btn" data-speed="0.75">0.75</button><button type="button" class="speed-btn active" data-speed="1">1</button><button type="button" class="speed-btn" data-speed="1.25">1.25</button></div></div>
+              <div class="audio-card"><h3>Cultural comparison</h3><p>It reminds me of street food because it is simple, warm, and easy to share.</p><audio controls preload="metadata" src="audio/unit-5-snack-review/culture-sentence.mp3"></audio><div class="speed-controls" aria-label="Audio speed"><button type="button" class="speed-btn" data-speed="0.75">0.75</button><button type="button" class="speed-btn active" data-speed="1">1</button><button type="button" class="speed-btn" data-speed="1.25">1.25</button></div></div>
+            </div>
+          </div>
+        </details>
+        <details class="support-details">
           <summary>Open full model review</summary>
           <div class="support-details-body">
             <p class="model-response">I reviewed a small cheese arepa connected to Colombian street food. It is made with corn flour, cheese, a little butter, and some fresh sauce. I give it 4 out of 5 because it is warm, salty, crispy on the outside, and soft inside. One small arepa is enough for a light snack, but two pieces can feel filling. Culturally, it reminds me of food people buy on the way to school, work, or a family visit. I would compare it with other simple snacks because it is affordable, practical, and easy to share. I recommend it for a class food fair because students can describe its ingredients, texture, quantity, and cultural meaning clearly.</p>
+            <div class="audio-card"><h3>Full model audio</h3><p>Professional audio generated with ElevenLabs for rhythm, pronunciation, and review flow.</p><audio controls preload="metadata" src="audio/unit-5-snack-review/full-model-review.mp3"></audio><div class="speed-controls" aria-label="Audio speed"><button type="button" class="speed-btn" data-speed="0.75">0.75</button><button type="button" class="speed-btn active" data-speed="1">1</button><button type="button" class="speed-btn" data-speed="1.25">1.25</button></div></div>
           </div>
         </details>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Teacher review rubric</p><h2>How the Review Will Be Read</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Quality check</p><h2>Avoid Weak Reviews</h2></div></div>
+        <div class="weak-review-grid">
+          <div class="weak-card"><strong>Weak</strong><p>It is delicious. I like it. It is good.</p></div>
+          <div class="weak-card"><strong>Stronger</strong><p>I give it 4 out of 5 because it is crispy outside, soft inside, and easy to share in a food fair.</p></div>
+          <div class="weak-card"><strong>Weak</strong><p>It is from another country and people eat it.</p></div>
+          <div class="weak-card"><strong>Stronger</strong><p>It reminds me of street food because people can buy one small serving, eat it warm, and keep walking.</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Teacher review rubric</p><h2>How the Review Will Be Read</h2></div></div>
         <div class="rubric-grid">
           <div class="rubric-card"><strong>Evidence</strong><h3>Specific food details</h3><p>The review mentions real ingredients, at least one quantity, and clear taste or texture evidence.</p></div>
-          <div class="rubric-card"><strong>Opinion</strong><h3>Rating with reasons</h3><p>The score is supported by concrete details, not only by “I like it” or “it is delicious.”</p></div>
+          <div class="rubric-card"><strong>Opinion</strong><h3>Rating with reasons</h3><p>The score is supported by concrete details, not only by "I like it" or "it is delicious."</p></div>
           <div class="rubric-card"><strong>Culture</strong><h3>Respectful connection</h3><p>The student explains a place, habit, memory, or comparison without stereotypes or empty generalizations.</p></div>
           <div class="rubric-card"><strong>Product</strong><h3>Class-ready review</h3><p>The final text is organized enough for the teacher to read aloud and discuss in class.</p></div>
         </div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Review builder</p><h2>Write and Send Your Snack Review</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">07</span><div><p class="topic-label">Review builder</p><h2>Write and Send Your Snack Review</h2></div></div>
         <div class="writer-card">
           <div class="quality-grid" aria-label="Review quality indicators">
             <div class="quality-card" data-check="snack"><h3>Snack</h3><p>Name and context are clear.</p></div>
             <div class="quality-card" data-check="ingredients"><h3>Ingredients</h3><p>Ingredients include quantity language.</p></div>
             <div class="quality-card" data-check="sensory"><h3>Sensory evidence</h3><p>Taste or texture adjectives are present.</p></div>
             <div class="quality-card" data-check="culture"><h3>Culture</h3><p>Comparison or cultural connection is respectful.</p></div>
+            <div class="quality-card" data-check="rating"><h3>Rating</h3><p>The score has a reason.</p></div>
+            <div class="quality-card" data-check="recommendation"><h3>Recommendation</h3><p>The review ends with a useful recommendation.</p></div>
           </div>
+          <div class="quality-meter" aria-live="polite"><div class="meter-label"><span>Review Quality Meter</span><span id="qualityMeterText">0 / 6 ready</span></div><div class="meter-track"><div class="meter-fill" id="qualityMeterFill"></div></div></div>
           <div class="checker-panel" aria-live="polite">
             <h3>Review evidence checker</h3>
             <p id="evidenceMessage">Add concrete evidence so the review can be discussed in class.</p>
@@ -169,6 +238,12 @@
               <div class="preview-line"><strong>Length</strong><span id="previewWords">0 words.</span></div>
             </section>
           </div>
+          <section class="teacher-reading-card" aria-live="polite">
+            <h3>Teacher Reading Card</h3>
+            <p>This compact card helps the teacher scan your product before reading it in class.</p>
+            <div class="preview-line"><strong>Best sentence detected</strong><span id="previewBestSentence">Waiting for a sentence with evidence.</span></div>
+            <div class="preview-line"><strong>Teacher focus</strong><span id="previewTeacherFocus">Waiting for review quality evidence.</span></div>
+          </section>
           <div class="hero-actions"><button type="button" class="btn btn-secondary" id="buildReview">Build review from notes</button><button type="button" class="btn btn-primary" id="submitReview">Send to Teacher</button><button type="button" class="btn btn-secondary" id="clearReview">Clear draft</button></div>
           <div class="writer-status" id="writerStatus"></div>
         </div>
@@ -192,19 +267,25 @@
     const previewRating=document.getElementById("previewRating");
     const previewEvidence=document.getElementById("previewEvidence");
     const previewWords=document.getElementById("previewWords");
+    const previewBestSentence=document.getElementById("previewBestSentence");
+    const previewTeacherFocus=document.getElementById("previewTeacherFocus");
+    const qualityMeterText=document.getElementById("qualityMeterText");
+    const qualityMeterFill=document.getElementById("qualityMeterFill");
     const evidenceChecks=[
       {key:"quantity",label:"quantity phrase",pattern:/\b(\d+|one|two|three|some|a little|a few|piece|pieces|slice|slices|cup|cups|small|serving)\b/i},
       {key:"taste",label:"taste adjective",pattern:/\b(salty|sweet|spicy|sour|fresh|warm|rich|mild|strong|delicious)\b/i},
       {key:"texture",label:"texture adjective",pattern:/\b(crispy|crunchy|creamy|soft|dry|juicy|light|filling|heavy)\b/i},
-      {key:"rating",label:"rating reason",pattern:/\b(out of 5|give it|rating|because|recommend)\b/i},
-      {key:"culture",label:"culture link",pattern:/\b(culture|cultural|street food|family|tradition|reminds me|compare|similar|country|region|place)\b/i}
+      {key:"rating",label:"rating reason",pattern:/\b(out of 5|give it|rating|because)\b/i},
+      {key:"culture",label:"culture link",pattern:/\b(culture|cultural|street food|family|tradition|reminds me|compare|similar|country|region|place)\b/i},
+      {key:"recommendation",label:"recommendation",pattern:/\b(recommend|would try|should try|good for|useful for|perfect for)\b/i}
     ];
     function wordCount(value){const matches=String(value||"").trim().match(/\b[\w'-]+\b/g);return matches?matches.length:0;}
     function compact(value,fallback){const text=String(value||"").trim();return text||fallback;}
+    function bestSentence(value){const sentences=String(value||"").replace(/([.!?])\s+/g,"$1|").split("|").map((item)=>item.trim()).filter(Boolean);const ranked=sentences.filter((item)=>/(because|made with|reminds|similar|crispy|soft|salty|sweet|spicy|recommend|out of 5)/i.test(item));return ranked.sort((a,b)=>wordCount(b)-wordCount(a))[0]||sentences[0]||"";}
     function evidenceSignals(){const text=(fields.ingredients.value+" "+fields.origin.value+" "+fields.response.value).toLowerCase();const detected=evidenceChecks.map((item)=>Object.assign({},item,{ok:item.pattern.test(text)}));return {items:detected,count:detected.filter((item)=>item.ok).length};}
-    function updateEvidence(){const signals=evidenceSignals();evidenceTags.innerHTML=signals.items.map((item)=>`<span class="checker-tag ${item.ok?"complete":""}">${item.label}</span>`).join("");evidenceMessage.textContent=signals.count>=4?"Strong review evidence. The teacher can discuss this product in class.":"Add more evidence: quantity, taste, texture, rating reason, and cultural connection.";return signals;}
-    function updatePreview(){const count=wordCount(fields.response.value);previewSnack.textContent=compact(fields.snackName.value,"Waiting for snack name.");previewOrigin.textContent=compact(fields.origin.value,"Waiting for cultural connection.");previewRating.textContent=fields.rating.value+" out of 5.";previewEvidence.textContent=compact(fields.ingredients.value,"Waiting for ingredients and sensory evidence.");previewWords.textContent=count+" words.";}
-    function updateQuality(){const signals=updateEvidence();const text=fields.response.value.toLowerCase();const checks={snack:fields.snackName.value.trim().length>=3&&fields.origin.value.trim().length>=8,ingredients:signals.items[0].ok&&fields.ingredients.value.trim().length>=12,sensory:signals.items[1].ok||signals.items[2].ok,culture:signals.items[4].ok&&/compare|similar|reminds|culture|tradition|family|street food|place|country|region/i.test(text+" "+fields.origin.value)};Object.keys(checks).forEach((key)=>{const card=document.querySelector(`[data-check="${key}"]`);if(card)card.classList.toggle("complete",checks[key]);});updatePreview();return checks;}
+    function updateEvidence(){const signals=evidenceSignals();evidenceTags.innerHTML=signals.items.map((item)=>`<span class="checker-tag ${item.ok?"complete":""}">${item.label}</span>`).join("");evidenceMessage.textContent=signals.count>=5?"Strong review evidence. The teacher can discuss this product in class.":"Add more evidence: quantity, taste, texture, rating reason, cultural connection, and recommendation.";return signals;}
+    function updatePreview(){const count=wordCount(fields.response.value);const best=bestSentence(fields.response.value);previewSnack.textContent=compact(fields.snackName.value,"Waiting for snack name.");previewOrigin.textContent=compact(fields.origin.value,"Waiting for cultural connection.");previewRating.textContent=fields.rating.value+" out of 5.";previewEvidence.textContent=compact(fields.ingredients.value,"Waiting for ingredients and sensory evidence.");previewWords.textContent=count+" words.";previewBestSentence.textContent=best||"Waiting for a sentence with evidence.";}
+    function updateQuality(){const signals=updateEvidence();const text=fields.response.value.toLowerCase();const signalMap=Object.fromEntries(signals.items.map((item)=>[item.key,item.ok]));const checks={snack:fields.snackName.value.trim().length>=3&&fields.origin.value.trim().length>=8,ingredients:signalMap.quantity&&fields.ingredients.value.trim().length>=12,sensory:signalMap.taste||signalMap.texture,culture:signalMap.culture&&/compare|similar|reminds|culture|tradition|family|street food|place|country|region/i.test(text+" "+fields.origin.value),rating:signalMap.rating&&/because/i.test(text),recommendation:signalMap.recommendation};Object.keys(checks).forEach((key)=>{const card=document.querySelector(`[data-check="${key}"]`);if(card)card.classList.toggle("complete",checks[key]);});const ready=Object.values(checks).filter(Boolean).length;qualityMeterText.textContent=ready+" / 6 ready";qualityMeterFill.style.width=Math.round((ready/6)*100)+"%";previewTeacherFocus.textContent=ready>=6?"Ready for teacher reading: evidence, rating, culture, and recommendation are present.":ready>=4?"Almost ready: improve the missing quality markers before sending.":"The teacher will need more concrete details before this can be read in class.";updatePreview();return checks;}
     function updateCounter(){wordCounter.textContent=wordCount(fields.response.value)+" words";updateQuality();}
     function readStoredUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp){sessionStorage.removeItem(key);return null;}return saved;}catch(error){sessionStorage.removeItem(key);return null;}}
     function readUser(){const googleUser=readStoredUser(GOOGLE_USER_KEY);if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);return null;}
@@ -212,10 +293,11 @@
     function openLoginPanel(){const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");if(trigger)trigger.click();}
     function showStatus(message,type){statusBox.className="writer-status show "+(type||"");statusBox.textContent=message;}
     function buildReview(){const snack=fields.snackName.value.trim()||"[snack name]";const origin=fields.origin.value.trim()||"[origin or cultural connection]";const rating=fields.rating.value;const ingredients=fields.ingredients.value.trim()||"[ingredients and quantity phrase]";fields.response.value=`I reviewed ${snack}, which is connected to ${origin}. It is made with ${ingredients}. I give it ${rating} out of 5 because it has a clear flavor and a texture that is easy to describe in English. One serving is practical for a class food fair because students can notice the ingredients, quantity, taste, and texture. Culturally, this snack is interesting because it can show how people eat, share, or remember a place. I would compare it with another simple snack from my culture because both are affordable, practical, and easy to serve. I recommend it because it gives us real food evidence and a respectful cultural connection.`;updateCounter();showStatus("Draft built. Replace any bracketed part and edit it before sending it.","");}
-    function submitReview(){const checks=updateQuality();if(!checks.snack){showStatus("Add a clear snack name and cultural connection before sending it to the teacher.","error");fields.snackName.focus();return;}if(!checks.ingredients){showStatus("Add ingredients with at least one quantity phrase before sending it to the teacher.","error");fields.ingredients.focus();return;}if(!checks.sensory){showStatus("Add taste or texture evidence before sending it to the teacher.","error");fields.response.focus();return;}if(!checks.culture){showStatus("Add a respectful cultural comparison before sending it to the teacher.","error");fields.response.focus();return;}const count=wordCount(fields.response.value);if(count<90){showStatus("Write at least 90 words before sending it to the teacher.","error");fields.response.focus();return;}if(count>250){showStatus("The review is too long. Keep it under 250 words.","error");fields.response.focus();return;}if(fields.response.value.includes("[")){showStatus("Replace the bracketed outline parts before sending it to the teacher.","error");fields.response.focus();return;}const headers=authHeaders();if(!headers){showStatus("Sign in first. Your review must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showStatus("Sending your snack review to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({snackName:fields.snackName.value,origin:fields.origin.value,rating:fields.rating.value,ingredients:fields.ingredients.value,response:fields.response.value,clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{submitButton.disabled=false;if(!ok){showStatus(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":(data&&data.error==="text_too_short"?"The review is too short: "+data.wordCount+" words.":(data&&data.error==="text_too_long"?"The review is too long: "+data.wordCount+" words.":"The submission could not be saved. Please reload and try again.")),"error");return;}showStatus("Sent to teacher. Word count: "+data.wordCount+". The teacher can now read your snack review. This follow-up appears in the grade grid with weight 0.","success");}).catch(()=>{submitButton.disabled=false;showStatus("Network error. The review was not submitted.","error");});}
+    function submitReview(){const checks=updateQuality();if(!checks.snack){showStatus("Add a clear snack name and cultural connection before sending it to the teacher.","error");fields.snackName.focus();return;}if(!checks.ingredients){showStatus("Add ingredients with at least one quantity phrase before sending it to the teacher.","error");fields.ingredients.focus();return;}if(!checks.sensory){showStatus("Add taste or texture evidence before sending it to the teacher.","error");fields.response.focus();return;}if(!checks.culture){showStatus("Add a respectful cultural comparison before sending it to the teacher.","error");fields.response.focus();return;}if(!checks.rating){showStatus("Explain the rating with a reason before sending it to the teacher.","error");fields.response.focus();return;}if(!checks.recommendation){showStatus("Add a final recommendation before sending it to the teacher.","error");fields.response.focus();return;}const count=wordCount(fields.response.value);if(count<90){showStatus("Write at least 90 words before sending it to the teacher.","error");fields.response.focus();return;}if(count>250){showStatus("The review is too long. Keep it under 250 words.","error");fields.response.focus();return;}if(fields.response.value.includes("[")){showStatus("Replace the bracketed outline parts before sending it to the teacher.","error");fields.response.focus();return;}const headers=authHeaders();if(!headers){showStatus("Sign in first. Your review must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showStatus("Sending your snack review to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({snackName:fields.snackName.value,origin:fields.origin.value,rating:fields.rating.value,ingredients:fields.ingredients.value,response:fields.response.value,clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{submitButton.disabled=false;if(!ok){showStatus(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":(data&&data.error==="text_too_short"?"The review is too short: "+data.wordCount+" words.":(data&&data.error==="text_too_long"?"The review is too long: "+data.wordCount+" words.":"The submission could not be saved. Please reload and try again.")),"error");return;}showStatus("Sent to teacher. Word count: "+data.wordCount+". The teacher can now read your snack review. This follow-up appears in the grade grid with weight 0.","success");}).catch(()=>{submitButton.disabled=false;showStatus("Network error. The review was not submitted.","error");});}
     document.getElementById("buildReview").addEventListener("click",buildReview);
     document.getElementById("submitReview").addEventListener("click",submitReview);
     document.getElementById("clearReview").addEventListener("click",()=>{Object.keys(fields).forEach((key)=>{if(key==="rating"){fields[key].value="5";}else{fields[key].value="";}});updateCounter();statusBox.className="writer-status";statusBox.textContent="";});
+    document.querySelectorAll(".speed-controls").forEach((group)=>{const audio=group.parentElement.querySelector("audio");group.querySelectorAll(".speed-btn").forEach((button)=>{button.addEventListener("click",()=>{if(audio)audio.playbackRate=Number(button.dataset.speed)||1;group.querySelectorAll(".speed-btn").forEach((item)=>item.classList.toggle("active",item===button));});});});
     Object.keys(fields).forEach((key)=>fields[key].addEventListener("input",updateCounter));
     fields.rating.addEventListener("change",updateCounter);
     updateCounter();
