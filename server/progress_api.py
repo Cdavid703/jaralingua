@@ -87,7 +87,7 @@ BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "data", "basi
 BUNDLED_BASIC_ANDRES_RETAKE_AUDIO_PATH = os.path.join(REPO_ROOT, "ingles", "basico", "audio", "integrated-task", "basic-integrated-task-andres-munoz-retake.mp3")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
-MAX_BODY_BYTES = 16 * 1024 * 1024
+MAX_BODY_BYTES = 32 * 1024 * 1024
 FRENCH8_PRONUNCIATION_DEADLINES = {
     "pronunciation01d": {
         "date": "2026-06-29",
@@ -736,7 +736,7 @@ def decode_basic_unit6_image_data_url(data_url):
         raise ValueError("image_invalid")
     if not image_bytes:
         raise ValueError("image_required")
-    if len(image_bytes) > 10_000_000:
+    if len(image_bytes) > 20_000_000:
         raise ValueError("image_too_large")
     return image_bytes, extension, content_type
 
