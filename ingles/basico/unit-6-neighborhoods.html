@@ -380,10 +380,85 @@
       line-height: 1.65;
     }
 
+    .unit6-translation {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 0.25rem 0.6rem;
+      background: #fff7e8;
+      color: #9a3412;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .unit6-teaching-flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .unit6-flow-step {
+      border-radius: 18px;
+      padding: 16px;
+      background: linear-gradient(135deg, #eef7ff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.13);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+    }
+
+    .unit6-flow-step span {
+      display: inline-grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: var(--unit6-blue);
+      color: #ffffff;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .unit6-flow-step strong {
+      display: block;
+      color: var(--unit6-ink);
+      margin-bottom: 6px;
+    }
+
+    .unit6-flow-step small {
+      color: #475569;
+      line-height: 1.55;
+    }
+
+    .unit6-map-task {
+      position: absolute;
+      left: 3%;
+      bottom: 4%;
+      max-width: min(92%, 540px);
+      border-radius: 18px;
+      padding: 0.8rem 1rem;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--unit6-ink);
+      box-shadow: 0 12px 28px rgba(7, 31, 79, 0.18);
+      font-weight: 850;
+      line-height: 1.45;
+    }
+
+    .unit6-model-levels {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .unit6-model-levels .unit6-model-card {
+      background: #f8fbff;
+      border-color: #dbeafe;
+    }
+
     @media (max-width: 980px) {
       .unit6-map,
       .unit6-grid-4,
-      .unit6-grid-3 {
+      .unit6-grid-3,
+      .unit6-teaching-flow,
+      .unit6-model-levels {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
@@ -401,7 +476,9 @@
       .unit6-map,
       .unit6-grid-4,
       .unit6-grid-3,
-      .unit6-checklist {
+      .unit6-checklist,
+      .unit6-teaching-flow,
+      .unit6-model-levels {
         grid-template-columns: 1fr;
       }
 
@@ -465,13 +542,12 @@
           <a class="unit6-route-item" href="#unit6-section-1"><span>01</span><strong>Introduction</strong><small>Neighborhoods and city life.</small></a>
           <a class="unit6-route-item" href="#unit6-section-2"><span>02</span><strong>Places in town</strong><small>Core and extra vocabulary.</small></a>
           <a class="unit6-route-item" href="#unit6-section-3"><span>03</span><strong>There is / are</strong><small>Describe what exists.</small></a>
-          <a class="unit6-route-item" href="#unit6-section-4"><span>04</span><strong>Location words</strong><small>Near, next to, across from.</small></a>
-          <a class="unit6-route-item" href="#unit6-section-5"><span>05</span><strong>Directions</strong><small>Go straight, turn left, turn right.</small></a>
-          <a class="unit6-route-item" href="#unit6-section-6"><span>06</span><strong>Time</strong><small>What time is it? It opens at...</small></a>
-          <a class="unit6-route-item" href="#unit6-section-7"><span>07</span><strong>Favorite places</strong><small>Adjectives and recommendations.</small></a>
-          <a class="unit6-route-item" href="#unit6-section-8"><span>08</span><strong>Expressions</strong><small>Phrasal verbs and idioms.</small></a>
-          <a class="unit6-route-item" href="#unit6-section-9"><span>09</span><strong>Idioms</strong><small>Natural place expressions.</small></a>
-          <a class="unit6-route-item" href="#unit6-section-10"><span>10</span><strong>Final products</strong><small>Speaking and writing models.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-4"><span>04</span><strong>Location + directions</strong><small>Where it is and how to get there.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-5"><span>05</span><strong>Time</strong><small>What time is it? It opens at...</small></a>
+          <a class="unit6-route-item" href="#unit6-section-6"><span>06</span><strong>Favorite places</strong><small>Adjectives and recommendations.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-7"><span>07</span><strong>Expressions</strong><small>Phrasal verbs and city expressions.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-8"><span>08</span><strong>Idioms</strong><small>Natural place expressions.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-9"><span>09</span><strong>Final products</strong><small>Speaking and writing models.</small></a>
         </div>
         <div class="unit6-section-controls" aria-label="Unit section controls">
           <button type="button" class="audio-btn play" onclick="setUnit6Sections(true)">Open all sections</button>
@@ -559,54 +635,68 @@
       <article class="unit6-module" id="unit6-section-4">
         <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp')">
           <span>04</span>
-          <h2>Location Words</h2>
-          <p>Before giving directions, learn how to explain where one place is in relation to another place.</p>
+          <h2>Location Words and Giving Directions</h2>
+          <p>These two skills go together: first say where a place is, then explain how to get there from a starting point.</p>
         </header>
         <div class="unit6-module-body">
-          <div class="unit6-grid-4">
-            <div class="unit6-language-card"><strong>near</strong><small>There is a pharmacy near my house.</small></div>
-            <div class="unit6-language-card"><strong>next to</strong><small>The library is next to the supermarket.</small></div>
-            <div class="unit6-language-card"><strong>in front of</strong><small>There is a bus stop in front of the school.</small></div>
-            <div class="unit6-language-card"><strong>across from</strong><small>The library is across from the park.</small></div>
-            <div class="unit6-language-card"><strong>behind</strong><small>The cafe is behind the bank.</small></div>
-            <div class="unit6-language-card"><strong>between</strong><small>The cafe is between the bank and the pharmacy.</small></div>
-            <div class="unit6-language-card"><strong>on the corner</strong><small>The restaurant is on the corner.</small></div>
-            <div class="unit6-language-card"><strong>downtown</strong><small>There are many restaurants downtown.</small></div>
+          <div class="unit6-note">
+            <strong>Pedagogical idea</strong>
+            <small><strong>Location</strong> answers “Where is it?” Example: The library is across from the park. <strong>Directions</strong> answer “How can I get there?” Example: Go straight for two blocks and turn right at the cafe.</small>
           </div>
+
+          <div class="unit6-grid-4">
+            <div class="unit6-language-card"><strong>near</strong><span class="unit6-translation">cerca de</span><small>There is a pharmacy near my house.</small></div>
+            <div class="unit6-language-card"><strong>next to</strong><span class="unit6-translation">al lado de / junto a</span><small>The library is next to the supermarket.</small></div>
+            <div class="unit6-language-card"><strong>in front of</strong><span class="unit6-translation">en frente de / delante de</span><small>There is a bus stop in front of the school.</small></div>
+            <div class="unit6-language-card"><strong>across from</strong><span class="unit6-translation">al frente de / cruzando la calle</span><small>The library is across from the park.</small></div>
+            <div class="unit6-language-card"><strong>behind</strong><span class="unit6-translation">detrás de</span><small>The cafe is behind the bank.</small></div>
+            <div class="unit6-language-card"><strong>between</strong><span class="unit6-translation">entre</span><small>The cafe is between the bank and the pharmacy.</small></div>
+            <div class="unit6-language-card"><strong>on the corner</strong><span class="unit6-translation">en la esquina</span><small>The restaurant is on the corner.</small></div>
+            <div class="unit6-language-card"><strong>downtown</strong><span class="unit6-translation">en el centro de la ciudad</span><small>There are many restaurants downtown.</small></div>
+          </div>
+
           <div class="unit6-image-card unit6-map-frame">
-            <img src="../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp" alt="Neighborhood map with city places" />
+            <img src="../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp" alt="Professional neighborhood map with city places for location and direction practice" />
             <span class="unit6-pin" style="left:50%;top:43%">park</span>
             <span class="unit6-pin" style="left:69%;top:19%">cafe</span>
             <span class="unit6-pin" style="left:78%;top:34%">bank</span>
             <span class="unit6-pin" style="left:70%;top:55%">supermarket</span>
             <span class="unit6-pin" style="left:10%;top:18%">hospital</span>
             <span class="unit6-pin" style="left:50%;top:76%">bus stop</span>
+            <div class="unit6-map-task">Look at the professional map: first describe locations, then give directions from the bus stop to another place.</div>
           </div>
-        </div>
-      </article>
 
-      <article class="unit6-module" id="unit6-section-5">
-        <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-asking-directions-v1.webp')">
-          <span>05</span>
-          <h2>Giving Directions</h2>
-          <p>Use short, clear instructions to help someone get to a place in the city.</p>
-        </header>
-        <div class="unit6-module-body">
+          <div class="unit6-teaching-flow">
+            <div class="unit6-flow-step"><span>1</span><strong>Start point</strong><small>Start at the bus stop. / Start at the park.</small></div>
+            <div class="unit6-flow-step"><span>2</span><strong>Movement</strong><small>Go straight. / Walk down Main Street. / Cross the street.</small></div>
+            <div class="unit6-flow-step"><span>3</span><strong>Reference point</strong><small>Turn right at the cafe. / Go past the supermarket.</small></div>
+            <div class="unit6-flow-step"><span>4</span><strong>Final location</strong><small>The bank is on your left. / It is across from the park.</small></div>
+          </div>
+
+          <table class="unit6-table">
+            <thead><tr><th>Function</th><th>English</th><th>Spanish meaning</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td>Ask</td><td>Excuse me, where is...?</td><td>Disculpa, ¿dónde está...?</td><td>Excuse me, where is the library?</td></tr>
+              <tr><td>Ask</td><td>How can I get to...?</td><td>¿Cómo puedo llegar a...?</td><td>How can I get to the supermarket?</td></tr>
+              <tr><td>Move</td><td>Go straight</td><td>Sigue derecho</td><td>Go straight for two blocks.</td></tr>
+              <tr><td>Turn</td><td>Turn left / right</td><td>Gira a la izquierda / derecha</td><td>Turn right at the cafe.</td></tr>
+              <tr><td>Continue</td><td>Go past...</td><td>Pasa por / sigue pasando...</td><td>Go past the supermarket.</td></tr>
+              <tr><td>Cross</td><td>Cross the street</td><td>Cruza la calle</td><td>Cross the street and turn left.</td></tr>
+              <tr><td>Finish</td><td>It is on your left / right</td><td>Está a tu izquierda / derecha</td><td>The bank is on your left.</td></tr>
+            </tbody>
+          </table>
+
+          <div class="unit6-model-levels">
+            <div class="unit6-model-card"><h3>Very basic</h3><p>Go straight. Turn right. The bank is on your left.</p></div>
+            <div class="unit6-model-card"><h3>Better</h3><p>Go straight for two blocks. Turn right at the supermarket. The bank is on your left.</p></div>
+            <div class="unit6-model-card"><h3>Complete</h3><p>Start at the bus stop. Go straight for two blocks, turn right at the supermarket, and walk past the cafe. The bank is on your left, across from the park.</p></div>
+          </div>
+
           <div class="unit6-audio-panel">
             <div><span class="unit6-mini-label">Audio 2</span><h3>Finding the library</h3><p>Listen to a model conversation with directions, location words, time, and one idiom.</p></div>
             <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-directions-conversation')">Listen</button></div>
           </div>
-          <div class="unit6-grid-2">
-            <div class="unit6-image-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-asking-directions-v1.webp" alt="Students asking for directions in the city" /></div>
-            <div class="unit6-grid-2">
-              <div class="unit6-language-card"><strong>Ask</strong><small>Excuse me, where is the library?</small></div>
-              <div class="unit6-language-card"><strong>Ask</strong><small>How can I get to the supermarket?</small></div>
-              <div class="unit6-language-card"><strong>Answer</strong><small>Go straight for two blocks.</small></div>
-              <div class="unit6-language-card"><strong>Answer</strong><small>Turn right at the cafe.</small></div>
-              <div class="unit6-language-card"><strong>Answer</strong><small>Cross the street.</small></div>
-              <div class="unit6-language-card"><strong>Answer</strong><small>It is on your left.</small></div>
-            </div>
-          </div>
+
           <div class="unit6-dialogue-card">
             <h3>Conversation script</h3>
             <p><strong>Ana:</strong> Excuse me, where is the library?</p>
@@ -618,12 +708,17 @@
             <p><strong>Ana:</strong> Great. Is there a bus stop near the library?</p>
             <p><strong>Daniel:</strong> Yes, there is. It is just around the corner.</p>
           </div>
+
+          <div class="unit6-grid-2">
+            <div class="unit6-error-card"><strong>Common mistake 1</strong><small><span class="bad">Incorrect:</span> Turn right in the cafe.<br><span class="good">Correct:</span> Turn right at the cafe.</small></div>
+            <div class="unit6-error-card"><strong>Common mistake 2</strong><small><span class="bad">Incorrect:</span> The bank is in your left.<br><span class="good">Correct:</span> The bank is on your left.</small></div>
+          </div>
         </div>
       </article>
 
-      <article class="unit6-module" id="unit6-section-6">
+      <article class="unit6-module" id="unit6-section-5">
         <header class="unit6-module-header">
-          <span>06</span>
+          <span>05</span>
           <h2>What Time Is It?</h2>
           <p>Use time to talk about opening hours, meeting points, routines, and city activities.</p>
         </header>
@@ -646,9 +741,9 @@
         </div>
       </article>
 
-      <article class="unit6-module" id="unit6-section-7">
+      <article class="unit6-module" id="unit6-section-6">
         <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-favorite-places-v1.webp')">
-          <span>07</span>
+          <span>06</span>
           <h2>Favorite Places in the City</h2>
           <p>Recommend a place by saying where it is, what it is like, what people do there, and why you like it.</p>
         </header>
@@ -675,9 +770,9 @@
         </div>
       </article>
 
-      <article class="unit6-module" id="unit6-section-8">
+      <article class="unit6-module" id="unit6-section-7">
         <header class="unit6-module-header">
-          <span>08</span>
+          <span>07</span>
           <h2>Phrasal Verbs and Useful City Expressions</h2>
           <p>Learn natural expressions for asking directions, moving around the city, and talking about favorite places.</p>
         </header>
@@ -687,22 +782,22 @@
             <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-city-expressions')">Listen</button></div>
           </div>
           <div class="unit6-grid-3">
-            <div class="unit6-expression"><strong>get to</strong><small>How can I get to the library?</small></div>
-            <div class="unit6-expression"><strong>go straight</strong><small>Go straight for two blocks.</small></div>
-            <div class="unit6-expression"><strong>turn left / right</strong><small>Turn right at the cafe.</small></div>
-            <div class="unit6-expression"><strong>go past</strong><small>Go past the supermarket.</small></div>
-            <div class="unit6-expression"><strong>walk down</strong><small>Walk down Main Street.</small></div>
-            <div class="unit6-expression"><strong>stop by</strong><small>I stop by the cafe after class.</small></div>
-            <div class="unit6-expression"><strong>check out</strong><small>Check out the new restaurant downtown.</small></div>
-            <div class="unit6-expression"><strong>meet up</strong><small>Let's meet up at the bus stop.</small></div>
-            <div class="unit6-expression"><strong>on your left / right</strong><small>The library is on your left.</small></div>
+            <div class="unit6-expression"><strong>get to</strong><span class="unit6-translation">llegar a</span><small>How can I get to the library?</small></div>
+            <div class="unit6-expression"><strong>go straight</strong><span class="unit6-translation">seguir derecho</span><small>Go straight for two blocks.</small></div>
+            <div class="unit6-expression"><strong>turn left / right</strong><span class="unit6-translation">girar a la izquierda / derecha</span><small>Turn right at the cafe.</small></div>
+            <div class="unit6-expression"><strong>go past</strong><span class="unit6-translation">pasar por / seguir más allá de</span><small>Go past the supermarket.</small></div>
+            <div class="unit6-expression"><strong>walk down</strong><span class="unit6-translation">caminar por / bajar por una calle</span><small>Walk down Main Street.</small></div>
+            <div class="unit6-expression"><strong>stop by</strong><span class="unit6-translation">pasar por un lugar brevemente</span><small>I stop by the cafe after class.</small></div>
+            <div class="unit6-expression"><strong>check out</strong><span class="unit6-translation">visitar / mirar / conocer</span><small>Check out the new restaurant downtown.</small></div>
+            <div class="unit6-expression"><strong>meet up</strong><span class="unit6-translation">reunirse / encontrarse</span><small>Let's meet up at the bus stop.</small></div>
+            <div class="unit6-expression"><strong>on your left / right</strong><span class="unit6-translation">a tu izquierda / derecha</span><small>The library is on your left.</small></div>
           </div>
         </div>
       </article>
 
-      <article class="unit6-module" id="unit6-section-9">
+      <article class="unit6-module" id="unit6-section-8">
         <header class="unit6-module-header">
-          <span>09</span>
+          <span>08</span>
           <h2>Idioms for Places and Directions</h2>
           <p>Use a small number of natural idioms. They also appear in the general Basic English idiom bank.</p>
         </header>
@@ -712,18 +807,18 @@
             <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-idioms')">Listen</button></div>
           </div>
           <div class="unit6-grid-4">
-            <div class="unit6-expression"><strong>just around the corner</strong><small>Very near. The cafe is just around the corner.</small></div>
-            <div class="unit6-expression"><strong>hit the road</strong><small>Leave or start a trip. It is late. Let's hit the road.</small></div>
-            <div class="unit6-expression"><strong>in the middle of nowhere</strong><small>Very far from places. The hotel is in the middle of nowhere.</small></div>
-            <div class="unit6-expression"><strong>a stone's throw away</strong><small>Very near. The library is a stone's throw away from the park.</small></div>
+            <div class="unit6-expression"><strong>just around the corner</strong><span class="unit6-translation">muy cerca / a la vuelta de la esquina</span><small>Very near. The cafe is just around the corner.</small></div>
+            <div class="unit6-expression"><strong>hit the road</strong><span class="unit6-translation">salir / arrancar camino</span><small>Leave or start a trip. It is late. Let's hit the road.</small></div>
+            <div class="unit6-expression"><strong>in the middle of nowhere</strong><span class="unit6-translation">en medio de la nada</span><small>Very far from places. The hotel is in the middle of nowhere.</small></div>
+            <div class="unit6-expression"><strong>a stone's throw away</strong><span class="unit6-translation">muy cerca</span><small>Very near. The library is a stone's throw away from the park.</small></div>
           </div>
           <div class="unit6-material-note"><strong>Important:</strong> idioms are not translated word by word. Students first learn the meaning, then repeat the example, and finally create a personal sentence.</div>
         </div>
       </article>
 
-      <article class="unit6-module" id="unit6-section-10">
+      <article class="unit6-module" id="unit6-section-9">
         <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-favorite-places-v1.webp')">
-          <span>10</span>
+          <span>09</span>
           <h2>Main Models and Final Products</h2>
           <p>The final models integrate places, there is / there are, directions, times, adjectives, expressions, and one idiom.</p>
         </header>
@@ -754,7 +849,7 @@
       </article>
 
       <article class="premium-topic-card linked-practice-card">
-        <div class="topic-heading"><span class="topic-number">11</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">10</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
         <p class="lesson-text">After studying the explanation, students can complete the Unit 6 speaking workshops, directions roulette, memory game, reading, listening, and pronunciation practice.</p>
         <div class="hero-actions"><a href="workshop-unit-6-directions-roulette.html" class="btn btn-primary">Directions roulette</a><a href="workshop-unit-6-fictional-neighborhood.html" class="btn btn-secondary">Fictional neighborhood</a><a href="game-unit-6-neighborhood-memory.html" class="btn btn-secondary">Play memory game</a><a href="pronunciation-unit-6-my-neighborhood.html" class="btn btn-secondary">Open pronunciation</a><a href="reading-unit-6-my-neighborhood-guide.html" class="btn btn-secondary">Open reading</a><a href="listening-unit-6-neighborhoods.html" class="btn btn-secondary">Open listening</a><a href="workshop-unit-6-city-map-presentation.html" class="btn btn-secondary">City map workshop</a></div>
         <div class="unit6-status" id="unit6AudioStatus" aria-live="polite"></div>

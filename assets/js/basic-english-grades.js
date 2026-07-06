@@ -69,6 +69,30 @@
     return typeof value === "number" ? value.toFixed(1) : "Pending";
   }
 
+  function evaluationDetail(student, evaluation) {
+    const details = student && student.gradeDetails && typeof student.gradeDetails === "object" ? student.gradeDetails : {};
+    return details[evaluation.id] && typeof details[evaluation.id] === "object" ? details[evaluation.id] : null;
+  }
+
+  function isSubmittedFollowUp(student, evaluation) {
+    const detail = evaluationDetail(student, evaluation);
+    return Number(evaluation.weight || 0) === 0 && detail && detail.status === "submitted";
+  }
+
+  function formatEvaluationResult(student, evaluation) {
+    const grades = student.grades || {};
+    if (typeof grades[evaluation.id] === "number") return grades[evaluation.id].toFixed(1);
+    if (isSubmittedFollowUp(student, evaluation)) return "Submitted";
+    return "Pending";
+  }
+
+  function evaluationStatus(student, evaluation) {
+    const grades = student.grades || {};
+    if (typeof grades[evaluation.id] === "number") return { label: "Recorded", className: "done" };
+    if (isSubmittedFollowUp(student, evaluation)) return { label: "Submitted", className: "done" };
+    return { label: "Pending", className: "pending" };
+  }
+
   function gradeSummary(student, evaluations) {
     let completedWeight = 0;
     let earned = 0;
@@ -333,16 +357,15 @@
   }
 
   function studentGradesRows(student, evaluations) {
-    const grades = student.grades || {};
     return evaluations.map(function (evaluation) {
-      const hasGrade = typeof grades[evaluation.id] === "number";
+      const status = evaluationStatus(student, evaluation);
       return `
         <tr>
           <td>${escapeHtml(evaluation.title)}</td>
           <td>${escapeHtml(evaluation.type || "Assessment")}</td>
           <td>${evaluation.weight}%</td>
-          <td>${escapeHtml(formatGrade(grades[evaluation.id]))}</td>
-          <td><span class="status-pill ${hasGrade ? "done" : "pending"}">${hasGrade ? "Recorded" : "Pending"}</span></td>
+          <td>${escapeHtml(formatEvaluationResult(student, evaluation))}</td>
+          <td><span class="status-pill ${status.className}">${status.label}</span></td>
         </tr>
       `;
     }).join("");
@@ -386,9 +409,8 @@
   function staffStudentRows(payload) {
     return payload.students.map(function (student) {
       const summary = gradeSummary(student, payload.evaluations);
-      const grades = student.grades || {};
       const gradeCells = payload.evaluations.map(function (evaluation) {
-        return `<td>${escapeHtml(formatGrade(grades[evaluation.id]))}</td>`;
+        return `<td>${escapeHtml(formatEvaluationResult(student, evaluation))}</td>`;
       }).join("");
       return `
         <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
@@ -678,10 +700,9 @@
       return `<th>${excelCell(evaluation.title + " (" + evaluation.weight + "%)")}</th>`;
     }).join("");
     const rows = payload.students.map(function (student) {
-      const grades = student.grades || {};
       const summary = gradeSummary(student, payload.evaluations);
       const gradeCells = payload.evaluations.map(function (evaluation) {
-        return `<td style="text-align:center;">${excelCell(formatGrade(grades[evaluation.id]))}</td>`;
+        return `<td style="text-align:center;">${excelCell(formatEvaluationResult(student, evaluation))}</td>`;
       }).join("");
       return `
         <tr>

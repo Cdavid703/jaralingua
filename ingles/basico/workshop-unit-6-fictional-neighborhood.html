@@ -3,26 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fictional Neighborhood Design Lab | Basic English Course 1</title>
+  <title>My Ideal Neighborhood AI Image Lab | Basic English Course 1</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <style>
-    .fictional-lab-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-    .fictional-lab-card{border-radius:20px;padding:18px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:0 12px 28px rgba(15,23,42,.07)}
-    .fictional-lab-card strong{display:block;color:#123b8f;margin-bottom:8px;font-size:1.04rem}
-    .fictional-lab-card p,.fictional-lab-card li{color:#475569;line-height:1.6}
-    .fictional-lab-card ul{margin:0;padding-left:1.1rem}
-    .fictional-process{display:grid;gap:12px;counter-reset:step}
-    .fictional-process li{list-style:none;border-radius:18px;background:#f8fbff;border:1px solid rgba(18,59,143,.1);padding:15px 16px;color:#475569}
-    .fictional-process li::before{counter-increment:step;content:counter(step);display:inline-grid;place-items:center;width:32px;height:32px;margin-right:10px;border-radius:10px;background:#123b8f;color:#fff;font-weight:900}
-    .fictional-sentence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
-    .fictional-sentence-grid span{border-radius:16px;padding:12px;background:#eef7ff;color:#153b55;font-weight:850}
-    .fictional-checklist{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-    .fictional-checklist div{border-radius:18px;padding:14px;background:#fff7e8;border:1px solid rgba(249,115,22,.18)}
-    .fictional-checklist strong{display:block;color:#c1121f;margin-bottom:6px}
-    @media(max-width:980px){.fictional-lab-grid,.fictional-sentence-grid,.fictional-checklist{grid-template-columns:1fr}}
+    .ai-lab-hero-note{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+    .ai-lab-hero-note span{border-radius:999px;background:rgba(255,255,255,.88);color:#123b8f;padding:10px 14px;font-weight:900;box-shadow:0 10px 24px rgba(15,23,42,.12)}
+    .ai-lab-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;align-items:start}
+    .ai-lab-card{border-radius:22px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:0 14px 32px rgba(15,23,42,.08);padding:20px}
+    .ai-lab-card h3{margin:.1rem 0 .55rem;color:#123b8f}
+    .ai-lab-card p,.ai-lab-card li{color:#475569;line-height:1.65}
+    .ai-lab-card ul{margin:.2rem 0 0;padding-left:1.1rem}
+    .ai-lab-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+    .ai-lab-pill{border:1px solid rgba(18,59,143,.16);background:#eef7ff;color:#153b55;border-radius:999px;padding:8px 11px;font-weight:850}
+    .ai-example-image{overflow:hidden;border-radius:24px;background:#eef2ff;border:1px solid rgba(18,59,143,.14)}
+    .ai-example-image img{display:block;width:100%;height:auto}
+    .ai-example-caption{padding:14px 16px;color:#475569}
+    .ai-example-caption strong{display:block;color:#123b8f;margin-bottom:4px}
+    .ai-process{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;counter-reset:step}
+    .ai-process div{border-radius:20px;background:#f8fbff;border:1px solid rgba(18,59,143,.1);padding:16px;color:#475569}
+    .ai-process div::before{counter-increment:step;content:counter(step);display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:#123b8f;color:#fff;font-weight:950;margin-bottom:10px}
+    .ai-builder{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .ai-field{display:flex;flex-direction:column;gap:7px}
+    .ai-field.full{grid-column:1/-1}
+    .ai-field label{font-weight:900;color:#0f172a}
+    .ai-field small{color:#64748b;line-height:1.45}
+    .ai-field input,.ai-field textarea,.ai-field select{width:100%;border:1px solid rgba(15,23,42,.16);border-radius:16px;padding:12px 13px;font:inherit;color:#0f172a;background:#fff}
+    .ai-field textarea{min-height:112px;resize:vertical}
+    .ai-checkbox-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+    .ai-checkbox-grid label{display:flex;gap:8px;align-items:center;border:1px solid rgba(15,23,42,.1);border-radius:14px;padding:9px 10px;background:#f8fafc;color:#334155;font-weight:800}
+    .ai-output{border-radius:20px;background:#0f172a;color:#e2e8f0;padding:18px;min-height:130px;white-space:pre-wrap;line-height:1.65}
+    .ai-output.light{background:#f8fbff;color:#334155;border:1px solid rgba(18,59,143,.12)}
+    .ai-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+    .ai-warning{border-radius:18px;background:#fff7e8;border:1px solid rgba(249,115,22,.22);padding:14px;color:#7c2d12;line-height:1.55}
+    .ai-status{border-radius:18px;background:#eef7ff;border:1px solid rgba(18,59,143,.15);padding:14px;color:#153b55;line-height:1.55;margin-top:12px}
+    .ai-status.error{background:#fff1f2;border-color:rgba(225,29,72,.22);color:#9f1239}
+    .ai-generated-result{display:none;margin-top:16px;border-radius:24px;overflow:hidden;background:#fff;border:1px solid rgba(15,23,42,.1);box-shadow:0 16px 38px rgba(15,23,42,.12)}
+    .ai-generated-result.is-visible{display:block}
+    .ai-generated-result img{display:block;width:100%;height:auto}
+    .ai-generated-result div{padding:14px 16px}
+    .ai-gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:14px}
+    .ai-gallery-card{border-radius:20px;overflow:hidden;background:#fff;border:1px solid rgba(15,23,42,.1);box-shadow:0 12px 28px rgba(15,23,42,.08)}
+    .ai-gallery-card img{width:100%;display:block;aspect-ratio:1/1;object-fit:cover}
+    .ai-gallery-card div{padding:12px 14px}
+    .ai-gallery-card strong{display:block;color:#123b8f}
+    .ai-gallery-card small{display:block;color:#64748b;margin-top:4px}
+    .ai-language-bank{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+    .ai-language-bank span{border-radius:16px;padding:12px;background:#eef7ff;color:#153b55;font-weight:850;line-height:1.45}
+    .ai-rubric{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .ai-rubric div{border-radius:18px;padding:15px;background:#fff7e8;border:1px solid rgba(249,115,22,.2);color:#7c2d12}
+    .ai-rubric strong{display:block;color:#c1121f;margin-bottom:6px}
+    .ai-quality-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+    .ai-checklist{display:grid;gap:9px}
+    .ai-checklist label{display:flex;gap:10px;align-items:flex-start;border:1px solid rgba(15,23,42,.1);background:#f8fafc;border-radius:14px;padding:10px 12px;color:#334155;font-weight:800}
+    .ai-validation-list{margin:0;padding-left:1.15rem;color:#475569;line-height:1.65}
+    .ai-validation-list li.ok{color:#166534;font-weight:850}
+    .ai-validation-list li.fail{color:#9f1239;font-weight:850}
+    .ai-teacher-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+    .ai-teacher-summary div{border-radius:18px;background:#f8fbff;border:1px solid rgba(18,59,143,.1);padding:14px}
+    .ai-teacher-summary span{display:block;color:#64748b;font-weight:800;font-size:.85rem}
+    .ai-teacher-summary strong{display:block;color:#123b8f;font-size:1.45rem}
+    .ai-gallery-card button{border:0;background:#123b8f;color:#fff;border-radius:999px;padding:8px 12px;font-weight:900;margin-top:10px;cursor:pointer}
+    .ai-modal{position:fixed;inset:0;background:rgba(15,23,42,.82);display:none;z-index:9999;padding:24px;overflow:auto}
+    .ai-modal.is-open{display:grid;place-items:center}
+    .ai-modal-card{width:min(1120px,100%);background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.35)}
+    .ai-modal-card img{width:100%;display:block;max-height:76vh;object-fit:contain;background:#0f172a}
+    .ai-modal-body{padding:18px}
+    .ai-modal-body h3{margin:0 0 8px;color:#123b8f}
+    .ai-modal-body p{color:#475569;line-height:1.55}
+    .ai-modal-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+    @media(max-width:980px){.ai-lab-grid,.ai-process,.ai-builder,.ai-checkbox-grid,.ai-gallery,.ai-language-bank,.ai-lab-hero-note,.ai-rubric,.ai-quality-panel,.ai-teacher-summary{grid-template-columns:1fr}.ai-lab-hero-note span{border-radius:18px}}
   </style>
 </head>
 <body class="english-basic-page">
@@ -43,77 +95,484 @@
     <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/practice-lab/unit-6/fictional-neighborhood-design-lab.png?v=20260706-unit6');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab Workshop</p>
-        <h1>Fictional Neighborhood Design Lab</h1>
-        <p>Students design a fictional neighborhood with a clear map, describe places, routines, opening times, and write a short visitor blog entry recommending it.</p>
-        <div class="lesson-meta"><span>Unit 6</span><span>Map design</span><span>There is / There are</span><span>Blog entry</span></div>
+        <h1>My Ideal Neighborhood AI Image Lab</h1>
+        <p>Students describe a fictional or ideal neighborhood in English, convert the description into a professional AI image prompt, generate one image, and present the result in class.</p>
+        <div class="lesson-meta"><span>Unit 6</span><span>Places in town</span><span>There is / There are</span><span>AI image prompt</span></div>
+        <div class="ai-lab-hero-note"><span>Write clearly</span><span>Generate once</span><span>Present live</span></div>
         <div class="hero-actions">
-          <a href="#workshop" class="btn btn-primary">Start workshop</a>
+          <a href="#ai-builder" class="btn btn-primary">Start activity</a>
           <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/unit-6/fictional-neighborhood-design-lab.png?v=20260706-unit6" alt="Students designing a fictional neighborhood map with place cards" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/unit-6/fictional-neighborhood-design-lab.png?v=20260706-unit6" alt="Students planning a neighborhood description with AI tools" /></aside>
     </section>
 
-    <section class="premium-lesson-container" id="workshop">
+    <section class="premium-lesson-container">
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Workshop Brief</p><h2>Mission and Setup</h2></div></div>
-        <p class="lesson-text">This activity works better if it is treated as a small project, not only as a drawing task. Students must create a useful neighborhood, justify why people visit it, and speak from their own map.</p>
-        <div class="workshop-brief-grid"><div class="workshop-brief-card"><span>Time</span><p>65-75 minutes</p></div><div class="workshop-brief-card"><span>Grouping</span><p>Teams of 3 or 4</p></div><div class="workshop-brief-card"><span>Main output</span><p>Map, oral tour, and short blog entry</p></div><div class="workshop-brief-card"><span>Language focus</span><p>Places, there is / there are, time, adjectives, and simple recommendations</p></div></div>
-        <div class="fictional-lab-grid">
-          <div class="fictional-lab-card"><strong>Required places</strong><ul><li>a park</li><li>a cafe or restaurant</li><li>a school or library</li><li>a supermarket or pharmacy</li><li>one free place chosen by the team</li></ul></div>
-          <div class="fictional-lab-card"><strong>Required details</strong><ul><li>opening time for two places</li><li>one favorite place</li><li>one quiet place</li><li>one busy place</li><li>one weekend activity</li></ul></div>
-          <div class="fictional-lab-card"><strong>Team roles</strong><ul><li>Map designer</li><li>Language checker</li><li>Time keeper</li><li>Presenter / blogger</li></ul></div>
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Activity Logic</p><h2>What students produce</h2></div></div>
+        <div class="ai-lab-grid">
+          <div class="ai-lab-card">
+            <h3>Final product</h3>
+            <p>Each team creates a short English description of an ideal or fictional neighborhood. The description must be detailed enough for an AI model to create a clear image. Then the team uses one generation attempt and presents the image orally.</p>
+            <ul>
+              <li>Target length: <strong>80-120 words</strong>.</li>
+              <li>Include at least <strong>six places</strong> in town.</li>
+              <li>Use <strong>there is / there are</strong>, location phrases, adjectives, and activities.</li>
+              <li>Explain one favorite place and one reason.</li>
+            </ul>
+          </div>
+          <div class="ai-lab-card">
+            <h3>Why this replaces drawing</h3>
+            <p>The important work is not artistic drawing. The important work is English precision. If the description is vague, the image will be weak. If the description is concrete, organized, and visual, the image will be useful for speaking practice.</p>
+            <div class="ai-lab-pill-row">
+              <span class="ai-lab-pill">specific places</span>
+              <span class="ai-lab-pill">clear positions</span>
+              <span class="ai-lab-pill">simple grammar</span>
+              <span class="ai-lab-pill">visual adjectives</span>
+            </div>
+          </div>
         </div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Task Cycle</p><h2>Activity Rounds</h2></div></div>
-        <p class="lesson-text">Follow the rounds in order. Each round produces evidence: a map decision, a sentence, or a speaking rehearsal. This avoids random drawings with little English production.</p>
-        <ol class="fictional-process"><li><strong>Choose the neighborhood identity.</strong> Decide if it is quiet, modern, green, busy, safe, artistic, or student-friendly.</li><li><strong>Build the map.</strong> Place at least five places and draw streets clearly enough for another team to understand the area.</li><li><strong>Write place sentences.</strong> Produce at least three <em>there is</em> sentences and two <em>there are</em> sentences.</li><li><strong>Add time and routines.</strong> Decide when people go to two places and what they do there.</li><li><strong>Prepare the visitor blog.</strong> Write a short recommendation from the point of view of a visitor.</li><li><strong>Give the oral tour.</strong> One student presents the map; classmates ask two questions.</li></ol>
-      </article>
-
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Student Worksheet</p><h2>Complete During the Activity</h2></div></div>
-        <p class="lesson-text">Students use this board to collect real information before speaking. It can be copied into notebooks or projected for the class.</p>
-        <div class="worksheet-board">
-          <div class="worksheet-actions"><h3>Fictional Neighborhood Design Lab Worksheet</h3><button type="button" class="practice-submit-btn" onclick="downloadWorksheetPdfFromPage()">Download worksheet PDF</button></div>
-          <table class="worksheet-table"><thead><tr><th>Place</th><th>There is / are sentence</th><th>Opening time</th><th>Activity</th><th>Adjective</th><th>Why visit?</th></tr></thead><tbody><tr><td>Place 1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 3</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 4</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 5</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Process</p><h2>Four clear rounds</h2></div></div>
+        <div class="ai-process">
+          <div><strong>Plan.</strong><br />Choose the name, style, places, and people in the neighborhood.</div>
+          <div><strong>Describe.</strong><br />Write an 80-120 word paragraph using Unit 6 language.</div>
+          <div><strong>Prompt.</strong><br />Transform the paragraph into a visual AI prompt with exact details.</div>
+          <div><strong>Present.</strong><br />Show the generated image and explain the neighborhood in English.</div>
         </div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Functional Language</p><h2>Language Bank and Final Product</h2></div></div>
-        <div class="fictional-sentence-grid"><span>There is a beautiful park near the cafe.</span><span>There are two quiet streets in our neighborhood.</span><span>The library opens at eight o'clock.</span><span>People go to the gym after class.</span><span>My favorite place is the cafe because it is friendly.</span><span>You can visit the park on weekends.</span></div>
-        <div class="deliverable-card"><h3>Final product model</h3><p>Welcome to Green Street. There is a big park and there are two cafes. The library opens at eight o'clock. People go to the park at five. My favorite place is the cafe because it is friendly and quiet. Visit Green Street on Saturday.</p></div>
-      </article>
-
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Oral Tour</p><h2>Presentation and visitor questions</h2></div></div>
-        <p class="lesson-text">Each team presents for 90 seconds. The presentation must not be read word by word; students can use the map and worksheet as support.</p>
-        <div class="fictional-lab-grid">
-          <div class="fictional-lab-card"><strong>Presenter 1</strong><p>Names the neighborhood and describes the map using <em>there is</em> and <em>there are</em>.</p></div>
-          <div class="fictional-lab-card"><strong>Presenter 2</strong><p>Explains times and routines: when people go, what people do, and where they go.</p></div>
-          <div class="fictional-lab-card"><strong>Visitors</strong><p>Ask: What is your favorite place? What time does it open? Where can I eat? Is there a quiet place?</p></div>
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Rubric</p><h2>What a strong submission needs</h2></div></div>
+        <div class="ai-rubric">
+          <div><strong>Description</strong><p>80-120 words, clear sentences, and enough visual detail for the image.</p></div>
+          <div><strong>Unit 6 language</strong><p>Places in town, there is / there are, location phrases, adjectives, and activities.</p></div>
+          <div><strong>Prompt quality</strong><p>Specific places, clean style instructions, and no text/logos/watermarks in the image.</p></div>
+          <div><strong>Speaking</strong><p>The team explains the image naturally and answers short questions from classmates.</p></div>
         </div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Teacher Check</p><h2>Simple rubric</h2></div></div>
-        <div class="fictional-checklist">
-          <div><strong>Map clarity</strong><p>Places are visible and logically organized.</p></div>
-          <div><strong>Grammar</strong><p>Uses there is / there are correctly.</p></div>
-          <div><strong>Unit vocabulary</strong><p>Uses places, times, and adjectives from Unit 6.</p></div>
-          <div><strong>Speaking</strong><p>Explains the neighborhood clearly without only reading.</p></div>
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Model</p><h2>Example description, prompt, and generated image</h2></div></div>
+        <div class="ai-lab-grid">
+          <div class="ai-lab-card">
+            <h3>Example description in English</h3>
+            <p id="exampleDescription">Welcome to Green Point. It is a quiet and green neighborhood for students. There is a big park in the center. There is a modern library next to the park. There are two small cafes across from the library. There is a supermarket near the bus stop, and there is a gym behind the supermarket. People walk in the park, read books in the library, and drink coffee in the cafes. My favorite place is the library because it is quiet and clean. The cafe opens at seven o'clock. I recommend Green Point because it is safe and friendly.</p>
+            <h3>Example AI prompt</h3>
+            <p id="examplePrompt">Create a clean professional 2D illustration of a fictional neighborhood called Green Point. It is a quiet, clean, safe, and friendly green neighborhood for students. Show a big park in the center, a modern library next to the park, two small cafes across from the library, a supermarket near a bus stop, and a gym behind the supermarket. Show people walking in the park, reading near the library, and drinking coffee at the cafes. Use a bright educational style, soft colors, clear streets, trees, sidewalks, and a friendly atmosphere. No text, no labels, no logos, no watermark.</p>
+          </div>
+          <figure class="ai-example-image">
+            <img src="../../assets/img/english-basic/practice-lab/unit-6/ideal-neighborhood-ai-example.png" alt="AI generated example of Green Point fictional neighborhood" />
+            <figcaption class="ai-example-caption"><strong>Generated from the example prompt</strong>This is the type of professional image students should aim for: clear places, visible streets, and enough details to support speaking.</figcaption>
+          </figure>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Language Support</p><h2>Useful sentence frames</h2></div></div>
+        <div class="ai-language-bank">
+          <span>There is a quiet park in the center.</span>
+          <span>There are two cafes across from the library.</span>
+          <span>The supermarket is next to the bus stop.</span>
+          <span>People can walk, read, study, and relax.</span>
+          <span>My favorite place is the library because it is clean.</span>
+          <span>I recommend this neighborhood because it is safe.</span>
+        </div>
+      </article>
+
+      <article class="premium-topic-card" id="ai-builder">
+        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Student Builder</p><h2>Create your description and prompt</h2></div></div>
+        <div class="ai-warning"><strong>One generation only:</strong> write carefully before clicking “Generate AI image”. The system saves the image and sends it to the teacher gallery for live class presentation.</div>
+        <form class="ai-builder" id="neighborhoodForm">
+          <div class="ai-field"><label for="groupName">Team name</label><input id="groupName" type="text" placeholder="Example: Team Blue" /></div>
+          <div class="ai-field"><label for="neighborhoodName">Neighborhood name</label><input id="neighborhoodName" type="text" placeholder="Example: Sunny Square" /></div>
+          <div class="ai-field"><label for="neighborhoodType">Type of neighborhood</label><select id="neighborhoodType"><option>quiet and green</option><option>modern and busy</option><option>safe and family-friendly</option><option>artistic and colorful</option><option>student-friendly</option><option>tourist-friendly</option></select></div>
+          <div class="ai-field"><label for="favoritePlace">Favorite place</label><input id="favoritePlace" type="text" placeholder="Example: the library" /></div>
+          <div class="ai-field full">
+            <label>Places to include</label>
+            <small>Choose at least six. These words come from Unit 6.</small>
+            <div class="ai-checkbox-grid" id="placeOptions">
+              <label><input type="checkbox" value="park" checked /> park</label>
+              <label><input type="checkbox" value="cafe" checked /> cafe</label>
+              <label><input type="checkbox" value="restaurant" checked /> restaurant</label>
+              <label><input type="checkbox" value="school" /> school</label>
+              <label><input type="checkbox" value="library" checked /> library</label>
+              <label><input type="checkbox" value="gym" /> gym</label>
+              <label><input type="checkbox" value="supermarket" checked /> supermarket</label>
+              <label><input type="checkbox" value="hospital" /> hospital</label>
+              <label><input type="checkbox" value="bank" /> bank</label>
+              <label><input type="checkbox" value="church" /> church</label>
+              <label><input type="checkbox" value="bus stop" checked /> bus stop</label>
+              <label><input type="checkbox" value="pharmacy" /> pharmacy</label>
+            </div>
+          </div>
+          <div class="ai-field full"><label for="locationDetails">Location details</label><textarea id="locationDetails" placeholder="Example: The park is in the center. The library is next to the park. The cafes are across from the library. The supermarket is near the bus stop."></textarea></div>
+          <div class="ai-field"><label for="activities">Activities</label><textarea id="activities" placeholder="Example: People walk in the park, study in the library, buy food, and drink coffee."></textarea></div>
+          <div class="ai-field"><label for="adjectives">Adjectives</label><textarea id="adjectives" placeholder="Example: quiet, clean, safe, modern, friendly"></textarea></div>
+          <div class="ai-field"><label for="openingTime">Opening time</label><input id="openingTime" type="text" placeholder="Example: The cafe opens at seven o'clock." /></div>
+          <div class="ai-field"><label for="reason">Reason to recommend it</label><input id="reason" type="text" placeholder="Example: it is safe, friendly, and beautiful" /></div>
+          <div class="ai-field full"><label for="studentDescription">Final English description</label><textarea id="studentDescription" placeholder="Click “Build description” or write your own 80-120 word description here."></textarea><small id="wordCount">0 words</small></div>
+          <div class="ai-field full"><label for="studentPrompt">AI image prompt</label><textarea id="studentPrompt" placeholder="Click “Build AI prompt” after your description is ready."></textarea></div>
+        </form>
+        <div class="ai-quality-panel">
+          <div class="ai-lab-card">
+            <h3>Quality check before generating</h3>
+            <ul class="ai-validation-list" id="validationList">
+              <li class="fail">Write 80-120 words.</li>
+              <li class="fail">Select at least six places.</li>
+              <li class="fail">Use there is / there are.</li>
+              <li class="fail">Use a location phrase: next to, across from, near, behind, in front of, or in the center.</li>
+              <li class="fail">Keep the no text / no logo instruction in the prompt.</li>
+            </ul>
+          </div>
+          <div class="ai-lab-card">
+            <h3>Required confirmation</h3>
+            <div class="ai-checklist" id="finalChecklist">
+              <label><input type="checkbox" data-final-check /> I included at least six places.</label>
+              <label><input type="checkbox" data-final-check /> I used there is / there are.</label>
+              <label><input type="checkbox" data-final-check /> I included location phrases.</label>
+              <label><input type="checkbox" data-final-check /> I checked spelling and punctuation.</label>
+              <label><input type="checkbox" data-final-check /> I understand this account has one image generation.</label>
+            </div>
+          </div>
+        </div>
+        <div class="ai-actions">
+          <button type="button" class="practice-submit-btn" id="buildDescriptionBtn">Build description</button>
+          <button type="button" class="btn btn-secondary" id="buildPromptBtn">Build AI prompt</button>
+          <button type="button" class="btn btn-secondary" id="copyPromptBtn">Copy prompt</button>
+          <button type="button" class="practice-submit-btn" id="generateImageBtn">Generate AI image</button>
+        </div>
+        <div class="ai-status" id="aiStatus">Log in with your course account before generating the final image.</div>
+        <section class="ai-generated-result" id="generatedResult" aria-live="polite">
+          <img id="generatedImage" alt="Generated neighborhood image" />
+          <div><strong id="generatedTitle"></strong><p id="generatedMeta"></p></div>
+        </section>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">07</span><div><p class="topic-label">Teacher Gallery</p><h2>Submitted AI neighborhoods</h2></div></div>
+        <p class="lesson-text">The teacher can project this gallery during the live activity. Students present the neighborhood, explain the image, and answer questions about places and directions.</p>
+        <div class="ai-teacher-summary">
+          <div><span>Submissions</span><strong id="galleryCount">0</strong></div>
+          <div><span>Latest team</span><strong id="latestTeam">-</strong></div>
+          <div><span>Teacher mode</span><strong id="teacherMode">-</strong></div>
+          <div><span>Gradebook</span><strong>0%</strong></div>
+        </div>
+        <div class="ai-actions"><button type="button" class="btn btn-secondary" id="refreshGalleryBtn">Refresh gallery</button></div>
+        <div class="ai-gallery" id="teacherGallery"></div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">08</span><div><p class="topic-label">Speaking Closure</p><h2>Presentation model and questions</h2></div></div>
+        <div class="ai-lab-card" style="margin-bottom:14px">
+          <h3>45-60 second model</h3>
+          <p>This is <strong>Green Point</strong>. It is a quiet and green neighborhood. There is a big park in the center, and there are two cafes across from the library. The supermarket is near the bus stop. People can walk, read, drink coffee, and relax. My favorite place is the library because it is clean and quiet. I recommend this neighborhood because it is safe and friendly.</p>
+        </div>
+        <div class="ai-lab-grid">
+          <div class="ai-lab-card"><h3>Team presentation</h3><ul><li>What is the name of your neighborhood?</li><li>What places are there?</li><li>Where is your favorite place?</li><li>What can people do there?</li><li>Why do you recommend it?</li></ul></div>
+          <div class="ai-lab-card"><h3>Class questions</h3><ul><li>Is there a quiet place?</li><li>Are there cafes or restaurants?</li><li>Where is the bus stop?</li><li>What time does the cafe open?</li><li>How can I get to the library?</li></ul></div>
         </div>
       </article>
     </section>
   </main>
+  <div class="ai-modal" id="imageModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="ai-modal-card">
+      <img id="modalImage" alt="Selected AI neighborhood" />
+      <div class="ai-modal-body">
+        <h3 id="modalTitle">Generated neighborhood</h3>
+        <p id="modalDescription"></p>
+        <div class="ai-modal-actions">
+          <button type="button" class="practice-submit-btn" id="closeModalBtn">Close</button>
+          <button type="button" class="btn btn-secondary" id="copyModalPromptBtn">Copy prompt</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/transcript-pdf.js"></script>
-  <script src="../../assets/js/worksheet-pdf.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+  <script>
+    (function(){
+      const API = {
+        gallery: "/api/basic/unit6-neighborhood-gallery",
+        generate: "/api/basic/unit6-neighborhood-image/generate"
+      };
+      const form = document.getElementById("neighborhoodForm");
+      const statusBox = document.getElementById("aiStatus");
+      const galleryRoot = document.getElementById("teacherGallery");
+      const descriptionEl = document.getElementById("studentDescription");
+      const promptEl = document.getElementById("studentPrompt");
+      const wordCountEl = document.getElementById("wordCount");
+      const generateBtn = document.getElementById("generateImageBtn");
+      const resultCard = document.getElementById("generatedResult");
+      const resultImg = document.getElementById("generatedImage");
+      const resultTitle = document.getElementById("generatedTitle");
+      const resultMeta = document.getElementById("generatedMeta");
+      const validationList = document.getElementById("validationList");
+      const checklistItems = Array.from(document.querySelectorAll("[data-final-check]"));
+      const galleryCount = document.getElementById("galleryCount");
+      const latestTeam = document.getElementById("latestTeam");
+      const teacherMode = document.getElementById("teacherMode");
+      const imageModal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalDescription = document.getElementById("modalDescription");
+      const copyModalPromptBtn = document.getElementById("copyModalPromptBtn");
+      let modalPrompt = "";
+      let generating = false;
+
+      function readStored(key, provider){
+        try{
+          const raw = localStorage.getItem(key);
+          if(!raw) return null;
+          const parsed = JSON.parse(raw);
+          return parsed && parsed.credential ? Object.assign({provider}, parsed) : null;
+        }catch(error){return null;}
+      }
+      function currentUser(){
+        return readStored("jaralingua_google_user","google") || readStored("jaralingua_microsoft_user","microsoft") || readStored("jaralingua_local_user","local");
+      }
+      function authHeaders(){
+        const user = currentUser();
+        return user && user.credential ? {
+          "Authorization": "Bearer " + user.credential,
+          "X-Jaralingua-Auth-Provider": user.provider || "google",
+          "Content-Type": "application/json"
+        } : {"Content-Type":"application/json"};
+      }
+      async function request(url, options){
+        const response = await fetch(url, Object.assign({headers: authHeaders(), cache: "no-store"}, options || {}));
+        let data = {};
+        try{data = await response.json();}catch(error){}
+        return {ok: response.ok, status: response.status, data};
+      }
+      function setStatus(message, isError){
+        statusBox.textContent = message;
+        statusBox.classList.toggle("error", !!isError);
+      }
+      function selectedPlaces(){
+        return Array.from(document.querySelectorAll("#placeOptions input:checked")).map(input => input.value);
+      }
+      function getValue(id){
+        return (document.getElementById(id).value || "").trim();
+      }
+      function sentenceList(items){
+        if(items.length === 0) return "there are different places";
+        if(items.length === 1) return "there is a " + items[0];
+        return "there are " + items.slice(0,-1).join(", ") + ", and " + items[items.length - 1];
+      }
+      function updateWordCount(){
+        const count = (descriptionEl.value.trim().match(/\b[\w'-]+\b/g) || []).length;
+        wordCountEl.textContent = count + " words";
+        updateValidation();
+        return count;
+      }
+      function validationState(){
+        const description = descriptionEl.value.trim().toLowerCase();
+        const prompt = promptEl.value.trim().toLowerCase();
+        const count = (descriptionEl.value.trim().match(/\b[\w'-]+\b/g) || []).length;
+        const locationPattern = /\b(next to|across from|near|behind|in front of|in the center|between|on the left|on the right)\b/;
+        return [
+          {ok: count >= 80 && count <= 120, text: "Write 80-120 words."},
+          {ok: selectedPlaces().length >= 6, text: "Select at least six places."},
+          {ok: /\bthere is\b|\bthere are\b/.test(description), text: "Use there is / there are."},
+          {ok: locationPattern.test(description), text: "Use a location phrase: next to, across from, near, behind, in front of, or in the center."},
+          {ok: prompt.includes("no text") && prompt.includes("no logo") && prompt.includes("no watermark"), text: "Keep the no text / no logo / no watermark instruction in the prompt."}
+        ];
+      }
+      function updateValidation(){
+        if(!validationList) return false;
+        const state = validationState();
+        validationList.innerHTML = state.map(item => `<li class="${item.ok ? "ok" : "fail"}">${item.text}</li>`).join("");
+        return state.every(item => item.ok);
+      }
+      function checklistReady(){
+        return checklistItems.every(item => item.checked);
+      }
+      function buildDescription(){
+        const name = getValue("neighborhoodName") || "Sunny Square";
+        const type = getValue("neighborhoodType") || "quiet and green";
+        const places = selectedPlaces();
+        const favorite = getValue("favoritePlace") || places[0] || "the park";
+        const locations = getValue("locationDetails") || "The park is in the center. The library is next to the park. The cafe is across from the library. The supermarket is near the bus stop.";
+        const activities = getValue("activities") || "People walk, study, buy food, drink coffee, and relax with friends.";
+        const adjectives = getValue("adjectives") || type + ", clean, safe, and friendly";
+        const opening = getValue("openingTime") || "The cafe opens at seven o'clock.";
+        const reason = getValue("reason") || "it is safe, friendly, and easy to visit";
+        descriptionEl.value = `Welcome to ${name}. It is a ${type} neighborhood. In ${name}, ${sentenceList(places)}. ${locations} ${activities} My favorite place is ${favorite} because it is ${adjectives}. ${opening} I recommend ${name} because ${reason}.`;
+        updateWordCount();
+        setStatus("Description built. Check that it has 80-120 words before generating the image.", false);
+      }
+      function buildPrompt(){
+        const description = descriptionEl.value.trim();
+        const name = getValue("neighborhoodName") || "the neighborhood";
+        const type = getValue("neighborhoodType") || "friendly";
+        const places = selectedPlaces();
+        const activities = getValue("activities") || "people walking, studying, shopping, and relaxing";
+        promptEl.value = `Create a clean professional 2D educational illustration of a fictional neighborhood called ${name}. The neighborhood is ${type}. Base the image on this English description: ${description} Show these places clearly: ${places.join(", ")}. Show ${activities}. Use a bright daytime atmosphere, soft colors, clean streets, sidewalks, trees, and a friendly classroom-ready style. Make the layout clear enough for students to describe locations and give directions. No text, no labels, no logos, no watermark, no readable signs.`;
+        updateValidation();
+        setStatus("AI prompt built. Review it before using the one generation attempt.", false);
+      }
+      async function copyText(value, successMessage){
+        if(!value.trim()){
+          setStatus("There is nothing to copy yet.", true);
+          return;
+        }
+        try{
+          await navigator.clipboard.writeText(value);
+          setStatus(successMessage || "Copied.", false);
+        }catch(error){
+          setStatus("The browser could not copy automatically. Select the text and copy it manually.", true);
+        }
+      }
+      function renderResult(item){
+        if(!item || !item.imageUrl) return;
+        resultImg.src = item.imageUrl;
+        resultTitle.textContent = item.neighborhoodName || item.groupName || "Generated neighborhood";
+        resultMeta.textContent = `${item.groupName || "Team"} · ${item.studentName || "Student"} · ${item.submittedAt || ""}`;
+        resultCard.classList.add("is-visible");
+      }
+      function renderGallery(items){
+        galleryCount.textContent = items && items.length ? String(items.length) : "0";
+        latestTeam.textContent = items && items[0] ? (items[0].groupName || "Team") : "-";
+        if(!items || !items.length){
+          galleryRoot.innerHTML = '<div class="ai-status">No AI neighborhoods submitted yet.</div>';
+          return;
+        }
+        galleryRoot.innerHTML = items.map(item => `
+          <article class="ai-gallery-card">
+            <img src="${item.imageUrl}" alt="${escapeHtml(item.neighborhoodName || "Generated neighborhood")}" loading="lazy" />
+            <div>
+              <strong>${escapeHtml(item.neighborhoodName || "Neighborhood")}</strong>
+              <small>${escapeHtml(item.groupName || "Team")} · ${escapeHtml(item.studentName || "Student")}</small>
+              <small>${escapeHtml(item.submittedAt || "")}</small>
+              <button type="button" data-open-image="${escapeHtml(item.id)}">Open large</button>
+            </div>
+          </article>
+        `).join("");
+        galleryRoot.querySelectorAll("[data-open-image]").forEach(button => {
+          button.addEventListener("click", function(){
+            const item = items.find(entry => entry.id === button.getAttribute("data-open-image"));
+            if(item) openModal(item);
+          });
+        });
+      }
+      function openModal(item){
+        modalImage.src = item.imageUrl;
+        modalTitle.textContent = item.neighborhoodName || "Generated neighborhood";
+        modalDescription.textContent = `${item.groupName || "Team"} · ${item.studentName || "Student"} · ${item.description || ""}`;
+        modalPrompt = item.prompt || "";
+        imageModal.classList.add("is-open");
+      }
+      function closeModal(){
+        imageModal.classList.remove("is-open");
+        modalImage.removeAttribute("src");
+        modalPrompt = "";
+      }
+      function escapeHtml(value){
+        return String(value || "").replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+      }
+      async function loadGallery(){
+        const user = currentUser();
+        if(!user){
+          renderGallery([]);
+          setStatus("Log in with Google, Microsoft, or the course account to generate and view saved submissions.", false);
+          return;
+        }
+        try{
+          const result = await request(API.gallery);
+          if(!result.ok) throw new Error(result.data && result.data.error || "gallery_failed");
+          teacherMode.textContent = ["admin","teacher"].includes(result.data.role) ? "Staff" : "Student";
+          renderGallery(result.data.submissions || []);
+          if(result.data.submissions && result.data.submissions[0]) renderResult(result.data.submissions[0]);
+          if(!result.data.generationAvailable){
+            setStatus("Gallery is available. AI generation needs OPENAI_API_KEY configured on the server.", true);
+          }else{
+            setStatus("Ready. Build the description and prompt before generating the final image.", false);
+          }
+        }catch(error){
+          renderGallery([]);
+          setStatus("Could not load the teacher gallery. Check login or connection.", true);
+        }
+      }
+      async function generateImage(){
+        if(generating) return;
+        if(!currentUser()){
+          setStatus("Please log in first. The generated image must be attached to a course account.", true);
+          const trigger = document.querySelector("[data-auth-toggle],[data-auth-nav-toggle]");
+          if(trigger) trigger.click();
+          return;
+        }
+        const count = updateWordCount();
+        if(!updateValidation()){
+          setStatus("Complete the quality checks before generating the image.", true);
+          return;
+        }
+        if(!checklistReady()){
+          setStatus("Mark the required confirmation checklist before generating the image.", true);
+          return;
+        }
+        if(count < 65 || count > 180){
+          setStatus("The description must be between 65 and 180 words for the system. Target 80-120 words for class.", true);
+          return;
+        }
+        generating = true;
+        generateBtn.disabled = true;
+        setStatus("Generating the AI image. Do not close the page.", false);
+        try{
+          const result = await request(API.generate, {
+            method: "POST",
+            body: JSON.stringify({
+              groupName: getValue("groupName"),
+              neighborhoodName: getValue("neighborhoodName"),
+              description: descriptionEl.value.trim(),
+              prompt: promptEl.value.trim()
+            })
+          });
+          if(!result.ok){
+            if(result.status === 409 && result.data.result){
+              renderResult(result.data.result);
+              await loadGallery();
+              setStatus("This account already generated one image. The saved result is shown here.", true);
+              return;
+            }
+            if(result.data && result.data.error === "openai_key_missing"){
+              setStatus("AI generation is not configured on the server yet. The teacher can still use the example image and the generated prompt.", true);
+              return;
+            }
+            throw new Error(result.data && result.data.error || "generate_failed");
+          }
+          renderResult(result.data.result);
+          renderGallery((result.data.gallery && result.data.gallery.submissions) || []);
+          setStatus("Image generated and sent to the teacher gallery.", false);
+        }catch(error){
+          setStatus("The image could not be generated. Review the prompt, login, and server connection.", true);
+        }finally{
+          generating = false;
+          generateBtn.disabled = false;
+        }
+      }
+      document.getElementById("buildDescriptionBtn").addEventListener("click", buildDescription);
+      document.getElementById("buildPromptBtn").addEventListener("click", buildPrompt);
+      document.getElementById("copyPromptBtn").addEventListener("click", () => copyText(promptEl.value, "Prompt copied."));
+      document.getElementById("generateImageBtn").addEventListener("click", generateImage);
+      document.getElementById("refreshGalleryBtn").addEventListener("click", loadGallery);
+      document.getElementById("closeModalBtn").addEventListener("click", closeModal);
+      copyModalPromptBtn.addEventListener("click", () => copyText(modalPrompt, "Prompt copied from gallery item."));
+      imageModal.addEventListener("click", function(event){ if(event.target === imageModal) closeModal(); });
+      document.addEventListener("keydown", function(event){ if(event.key === "Escape") closeModal(); });
+      descriptionEl.addEventListener("input", updateWordCount);
+      promptEl.addEventListener("input", updateValidation);
+      document.querySelectorAll("#placeOptions input").forEach(input => input.addEventListener("change", updateValidation));
+      form.addEventListener("submit", event => event.preventDefault());
+      updateWordCount();
+      window.addEventListener("storage", loadGallery);
+      setTimeout(loadGallery, 800);
+    })();
+  </script>
 </body>
 </html>

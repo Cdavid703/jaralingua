@@ -47,6 +47,9 @@ BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGR
 BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
 BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake-submissions.json")
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
+BASIC_UNIT6_NEIGHBORHOOD_GALLERY_PATH = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_GALLERY", "/var/lib/jaralingua/basic-unit6-neighborhood-gallery.json")
+BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR", "/var/lib/jaralingua/basic-unit6-neighborhood-images")
+OPENAI_IMAGES_MODEL = os.environ.get("JARALINGUA_OPENAI_IMAGES_MODEL", "gpt-image-2").strip() or "gpt-image-2"
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
 INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_DATA", "/var/lib/jaralingua/intermediate-unit5-market-basket-live.json")
@@ -65,6 +68,7 @@ INTERMEDIATE_UNIT5_READING_ID = "unit5DishHistoryReading"
 INTERMEDIATE_UNIT5_DINNER_PLAN_ID = "unit5HealthyDinnerPlanner"
 INTERMEDIATE_UNIT5_PRONUNCIATION_ID = "unit5FoodQuantitiesPronunciation"
 INTERMEDIATE_UNIT5_SNACK_REVIEW_ID = "unit5GlobalSnackReview"
+BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -254,6 +258,14 @@ INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION = {
     "weight": 0,
     "type": "Writing follow-up",
     "description": "Resena cultural enviable al profesor. La entrega queda visible con peso 0."
+}
+
+BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION = {
+    "id": BASIC_UNIT6_NEIGHBORHOOD_AI_ID,
+    "title": "Unit 6 Follow-up - My Ideal Neighborhood AI Image Lab",
+    "weight": 0,
+    "type": "AI image / Speaking follow-up",
+    "description": "Seguimiento enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
 }
 
 INTERMEDIATE_UNIT2_CATCHING_UP_ANSWERS = [1, 2, 0, 1, 0, 2, 1, 0, 2, 1, 0, 2, 2, 1, 0, 2, 0, 1, 2, 1]
@@ -665,6 +677,105 @@ def read_json_file(path, default):
         except json.JSONDecodeError:
             return default
     return data if isinstance(data, dict) else default
+
+
+def read_basic_unit6_neighborhood_gallery():
+    data = read_json_file(BASIC_UNIT6_NEIGHBORHOOD_GALLERY_PATH, {"submissions": []})
+    if not isinstance(data.get("submissions"), list):
+        data["submissions"] = []
+    return data
+
+
+def write_basic_unit6_neighborhood_gallery(data):
+    write_json_file(BASIC_UNIT6_NEIGHBORHOOD_GALLERY_PATH, data, ".basic-unit6-neighborhood-gallery-")
+
+
+def basic_unit6_image_path(image_id):
+    filename = safe_filename_token(image_id, 80) + ".png"
+    root = os.path.abspath(BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR)
+    path = os.path.abspath(os.path.join(root, filename))
+    if not path.startswith(root + os.sep):
+        return ""
+    return path
+
+
+def public_basic_unit6_neighborhood_item(item, include_owner=False):
+    public_item = {
+        "id": clean_text(item.get("id"), 80),
+        "groupName": clean_text(item.get("groupName"), 100),
+        "neighborhoodName": clean_text(item.get("neighborhoodName"), 100),
+        "description": clean_text(item.get("description"), 2400),
+        "prompt": clean_text(item.get("prompt"), 2400),
+        "imageUrl": clean_text(item.get("imageUrl"), 240),
+        "studentName": clean_text(item.get("studentName"), 160),
+        "submittedAt": clean_text(item.get("submittedAt"), 40)
+    }
+    if include_owner:
+        public_item["studentId"] = clean_text(item.get("studentId"), 40)
+        public_item["studentEmail"] = clean_email(item.get("studentEmail"))
+    return public_item
+
+
+def basic_unit6_neighborhood_gallery_payload(profile, grades_data, gallery):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    is_staff = role in ("admin", "teacher")
+    items = []
+    for item in gallery.get("submissions", []):
+        if not isinstance(item, dict):
+            continue
+        if is_staff or clean_text(item.get("studentId"), 40) == student_id:
+            items.append(public_basic_unit6_neighborhood_item(item, is_staff))
+    items.sort(key=lambda entry: entry.get("submittedAt") or "", reverse=True)
+    return {
+        "role": role,
+        "student": student_public_view(student) if isinstance(student, dict) else None,
+        "submissions": items[:80],
+        "generationAvailable": bool(os.environ.get("OPENAI_API_KEY", "").strip())
+    }
+
+
+def call_openai_image_generation(prompt):
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        raise ValueError("openai_key_missing")
+    request_body = json.dumps({
+        "model": OPENAI_IMAGES_MODEL,
+        "prompt": prompt,
+        "size": "1024x1024"
+    }).encode("utf-8")
+    request = urllib.request.Request(
+        "https://api.openai.com/v1/images/generations",
+        data=request_body,
+        headers={
+            "Authorization": "Bearer " + api_key,
+            "Content-Type": "application/json"
+        },
+        method="POST"
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=90) as response:
+            payload = json.loads(response.read().decode("utf-8"))
+    except urllib.error.HTTPError as error:
+        detail = ""
+        try:
+            detail = error.read().decode("utf-8")[:600]
+        except Exception:
+            detail = str(error)
+        raise ValueError("openai_image_error:" + detail)
+    except (urllib.error.URLError, TimeoutError) as error:
+        raise ValueError("openai_connection_error:" + str(error))
+
+    data = payload.get("data") if isinstance(payload, dict) else None
+    first = data[0] if isinstance(data, list) and data else None
+    b64_value = first.get("b64_json") if isinstance(first, dict) else ""
+    if not b64_value:
+        raise ValueError("openai_image_missing")
+    try:
+        return base64.b64decode(b64_value)
+    except (binascii.Error, ValueError):
+        raise ValueError("openai_image_invalid")
 
 
 def user_record(store, profile):
@@ -1614,6 +1725,10 @@ def ensure_intermediate_gradebook_structure(grades_data):
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION):
         changed = True
     return changed
+
+
+def ensure_basic_gradebook_structure(grades_data):
+    return ensure_evaluation_template(grades_data, BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION)
 
 
 def score_intermediate_unit2_catching_up(payload):
@@ -2605,6 +2720,17 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, 200, {"ok": True})
             return
 
+        if parsed.path == "/api/basic/unit6-neighborhood-image/file":
+            query = urllib.parse.parse_qs(parsed.query)
+            image_id = clean_text((query.get("id") or [""])[0], 80)
+            image_path = basic_unit6_image_path(image_id)
+            if not image_id or not image_path or not os.path.exists(image_path):
+                json_response(self, 404, {"error": "image_not_found"})
+                return
+            with open(image_path, "rb") as handle:
+                binary_response(self, 200, handle.read(), "image/png")
+            return
+
         profile = self.require_user()
         if not profile:
             return
@@ -3033,9 +3159,26 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/basic/grades":
-            grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
-            query = urllib.parse.parse_qs(parsed.query)
-            json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                if ensure_basic_gradebook_structure(grades_data):
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                query = urllib.parse.parse_qs(parsed.query)
+                json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
+        if parsed.path == "/api/basic/unit6-neighborhood-gallery":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                if ensure_basic_gradebook_structure(grades_data):
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                gallery = read_basic_unit6_neighborhood_gallery()
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                json_response(self, 200, basic_unit6_neighborhood_gallery_payload(profile, grades_data, gallery))
             return
 
         if parsed.path == "/api/intermediate/grades":
@@ -4062,6 +4205,144 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
                     "weight": 0
+                })
+            return
+
+
+        if parsed.path == "/api/basic/unit6-neighborhood-image/generate":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                if ensure_basic_gradebook_structure(grades_data):
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else "staff-" + safe_filename_token(profile.get("email"), 60)
+                gallery = read_basic_unit6_neighborhood_gallery()
+                existing = next(
+                    (
+                        item for item in gallery.get("submissions", [])
+                        if isinstance(item, dict) and clean_text(item.get("studentId"), 40) == student_id
+                    ),
+                    None
+                )
+                if existing and role not in ("admin", "teacher"):
+                    json_response(self, 409, {
+                        "error": "already_generated",
+                        "result": public_basic_unit6_neighborhood_item(existing)
+                    })
+                    return
+
+            group_name = clean_text(payload.get("groupName"), 100)
+            neighborhood_name = clean_text(payload.get("neighborhoodName"), 100)
+            description = clean_text(payload.get("description"), 2400)
+            prompt = clean_text(payload.get("prompt"), 2400)
+            word_count = simple_word_count(description)
+            if word_count < 65:
+                json_response(self, 400, {"error": "description_too_short", "wordCount": word_count})
+                return
+            if word_count > 180:
+                json_response(self, 400, {"error": "description_too_long", "wordCount": word_count})
+                return
+            if len(prompt) < 220:
+                json_response(self, 400, {"error": "prompt_too_short"})
+                return
+            if not group_name:
+                group_name = "Unit 6 Team"
+            if not neighborhood_name:
+                neighborhood_name = "Fictional Neighborhood"
+
+            try:
+                image_bytes = call_openai_image_generation(prompt)
+            except ValueError as error:
+                message = str(error)
+                if message == "openai_key_missing":
+                    json_response(self, 503, {"error": "openai_key_missing"})
+                    return
+                json_response(self, 502, {"error": "image_generation_failed", "message": message[:700]})
+                return
+
+            image_id = secrets.token_urlsafe(18)
+            image_path = basic_unit6_image_path(image_id)
+            if not image_path:
+                json_response(self, 500, {"error": "invalid_image_path"})
+                return
+            os.makedirs(os.path.dirname(image_path), exist_ok=True)
+            with open(image_path, "wb") as handle:
+                handle.write(image_bytes)
+            image_url = "/api/basic/unit6-neighborhood-image/file?id=" + urllib.parse.quote(image_id)
+
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else "staff-" + safe_filename_token(profile.get("email"), 60)
+                gallery = read_basic_unit6_neighborhood_gallery()
+                if role not in ("admin", "teacher"):
+                    duplicate = next(
+                        (
+                            item for item in gallery.get("submissions", [])
+                            if isinstance(item, dict) and clean_text(item.get("studentId"), 40) == student_id
+                        ),
+                        None
+                    )
+                    if duplicate:
+                        try:
+                            os.unlink(image_path)
+                        except OSError:
+                            pass
+                        json_response(self, 409, {
+                            "error": "already_generated",
+                            "result": public_basic_unit6_neighborhood_item(duplicate)
+                        })
+                        return
+                submitted_at = now_iso()
+                item = {
+                    "id": image_id,
+                    "groupName": group_name,
+                    "neighborhoodName": neighborhood_name,
+                    "description": description,
+                    "prompt": prompt,
+                    "imageUrl": image_url,
+                    "studentId": student_id,
+                    "studentName": clean_text(student.get("fullName"), 160) if isinstance(student, dict) else clean_text(profile.get("name"), 160),
+                    "studentEmail": clean_email(student.get("email")) if isinstance(student, dict) else clean_email(profile.get("email")),
+                    "submittedAt": submitted_at
+                }
+                submissions = gallery.setdefault("submissions", [])
+                submissions.append(item)
+                gallery["submissions"] = submissions[-300:]
+                gallery["updatedAt"] = submitted_at
+                write_basic_unit6_neighborhood_gallery(gallery)
+                if isinstance(student, dict):
+                    if not isinstance(student.get("gradeDetails"), dict):
+                        student["gradeDetails"] = {}
+                    student["gradeDetails"][BASIC_UNIT6_NEIGHBORHOOD_AI_ID] = {
+                        "evaluationId": BASIC_UNIT6_NEIGHBORHOOD_AI_ID,
+                        "activityTitle": BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION["title"],
+                        "submittedAt": submitted_at,
+                        "status": "submitted",
+                        "weight": 0,
+                        "doesNotAffectAverage": True,
+                        "followUpOnly": True,
+                        "groupName": group_name,
+                        "neighborhoodName": neighborhood_name,
+                        "description": description,
+                        "prompt": prompt,
+                        "imageUrl": image_url,
+                        "galleryId": image_id,
+                        "wordCount": word_count
+                    }
+                    gradebook_changed = True
+                if gradebook_changed:
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "result": public_basic_unit6_neighborhood_item(item, role in ("admin", "teacher")),
+                    "gallery": basic_unit6_neighborhood_gallery_payload(profile, grades_data, gallery)
                 })
             return
 

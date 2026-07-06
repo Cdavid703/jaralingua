@@ -40,6 +40,13 @@
       "weight": 20,
       "type": "Integrated task",
       "description": "Listening and integrated writing assessment. Writing is reviewed with the institutional rubric."
+    },
+    {
+      "id": "unit6NeighborhoodAiImageLab",
+      "title": "Unit 6 Follow-up - My Ideal Neighborhood AI Image Lab",
+      "weight": 0,
+      "type": "AI image / Speaking follow-up",
+      "description": "Submitted follow-up visible in the gradebook. Weight 0, so it does not affect the course average."
     }
   ],
   "bonusEvent": null
