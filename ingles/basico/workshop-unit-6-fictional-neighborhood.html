@@ -377,7 +377,7 @@
         const count = (descriptionEl.value.trim().match(/\b[\w'-]+\b/g) || []).length;
         const locationPattern = /\b(next to|across from|near|behind|in front of|in the center|between|on the left|on the right)\b/;
         return [
-          {ok: count >= 80 && count <= 120, text: "Write 80-120 words."},
+          {ok: count >= 65 && count <= 180, text: "Write 65-180 words. Target 80-120 words for class."},
           {ok: selectedPlaces().length >= 6, text: "Select at least six places."},
           {ok: /\bthere is\b|\bthere are\b/.test(description), text: "Use there is / there are."},
           {ok: locationPattern.test(description), text: "Use a location phrase: next to, across from, near, behind, in front of, or in the center."},
@@ -509,7 +509,8 @@
         }
         const count = updateWordCount();
         if(!updateValidation()){
-          setStatus("Complete the quality checks before generating the image.", true);
+          const missing = validationState().filter(item => !item.ok).map(item => item.text).join(" ");
+          setStatus("Complete the quality checks before generating the image: " + missing, true);
           return;
         }
         if(!checklistReady()){
