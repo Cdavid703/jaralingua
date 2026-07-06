@@ -215,7 +215,7 @@
           <div class="ai-field"><label for="reason">Reason to recommend it</label><input id="reason" type="text" placeholder="Example: it is safe, friendly, and beautiful" /></div>
           <div class="ai-field full"><label for="studentDescription">Final English description</label><textarea id="studentDescription" placeholder="Click “Build description” or write your own 80-120 word description here."></textarea><small id="wordCount">0 words</small></div>
           <div class="ai-field full"><label for="studentPrompt">AI image prompt</label><textarea id="studentPrompt" placeholder="Click “Build AI prompt” after your description is ready. Copy this prompt and use it in your AI image tool."></textarea></div>
-          <div class="ai-field full"><label for="uploadedImage">Upload generated image</label><input id="uploadedImage" type="file" accept="image/png,image/jpeg,image/webp" /><small>Accepted formats: PNG, JPG, or WEBP. Maximum size: 4.5 MB. You may replace your uploaded image before class.</small></div>
+          <div class="ai-field full"><label for="uploadedImage">Upload generated image</label><input id="uploadedImage" type="file" accept="image/png,image/jpeg,image/webp" /><small>Accepted formats: PNG, JPG, or WEBP. Maximum size: 10 MB. You may replace your uploaded image before class.</small></div>
         </form>
         <div class="ai-quality-panel">
           <div class="ai-lab-card">
@@ -405,7 +405,7 @@
             reject(new Error("image_type_invalid"));
             return;
           }
-          if(file.size > 4500000){
+          if(file.size > 10000000){
             reject(new Error("image_too_large"));
             return;
           }
@@ -573,7 +573,7 @@
               return;
             }
             if(result.data && result.data.error === "image_too_large"){
-              setStatus("The image is too large. Upload a PNG, JPG, or WEBP file under 4.5 MB.", true);
+              setStatus("The image is too large. Upload a PNG, JPG, or WEBP file under 10 MB.", true);
               return;
             }
             if(result.data && result.data.error === "image_type_invalid"){
@@ -587,7 +587,7 @@
           setStatus("Image uploaded and sent to the teacher gallery.", false);
         }catch(error){
           if(error && error.message === "image_too_large"){
-            setStatus("The image is too large. Upload a PNG, JPG, or WEBP file under 4.5 MB.", true);
+            setStatus("The image is too large. Upload a PNG, JPG, or WEBP file under 10 MB.", true);
           }else if(error && error.message === "image_type_invalid"){
             setStatus("The image type is not accepted. Upload PNG, JPG, or WEBP.", true);
           }else{
