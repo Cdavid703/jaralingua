@@ -426,18 +426,21 @@
         const opening = getValue("openingTime") || "The cafe opens at seven o'clock.";
         const reason = getValue("reason") || "it is safe, friendly, and easy to visit";
         descriptionEl.value = `Welcome to ${name}. It is a ${type} neighborhood. In ${name}, ${sentenceList(places)}. ${locations} ${activities} My favorite place is ${favorite} because it is ${adjectives}. ${opening} I recommend ${name} because ${reason}.`;
+        descriptionEl.dispatchEvent(new Event("input", {bubbles: true}));
+        buildPrompt(false);
         updateWordCount();
-        setStatus("Description built. Check that it has 65-180 words before building the prompt and uploading the image.", false);
+        setStatus("Description and AI prompt built. Copy the prompt, generate the image outside Jaralingua, then upload it here.", false);
       }
-      function buildPrompt(){
-        const description = descriptionEl.value.trim();
+      function buildPrompt(showStatus = true){
+        const description = descriptionEl.value.trim() || "A clear fictional neighborhood with useful places, location details, activities, and a friendly atmosphere.";
         const name = getValue("neighborhoodName") || "the neighborhood";
         const type = getValue("neighborhoodType") || "friendly";
         const places = selectedPlaces();
         const activities = getValue("activities") || "people walking, studying, shopping, and relaxing";
         promptEl.value = `Create a clean professional 2D educational illustration of a fictional neighborhood called ${name}. The neighborhood is ${type}. Base the image on this English description: ${description} Show these places clearly: ${places.join(", ")}. Show ${activities}. Use a bright daytime atmosphere, soft colors, clean streets, sidewalks, trees, and a friendly classroom-ready style. Make the layout clear enough for students to describe locations and give directions. No text, no labels, no logos, no watermark, no readable signs.`;
+        promptEl.dispatchEvent(new Event("input", {bubbles: true}));
         updateValidation();
-        setStatus("AI prompt built. Review it before using the one generation attempt.", false);
+        if(showStatus) setStatus("AI prompt built. Copy it and use it in your external AI image tool.", false);
       }
       async function copyText(value, successMessage){
         if(!value.trim()){
@@ -525,6 +528,9 @@
           if(trigger) trigger.click();
           return;
         }
+        if(!promptEl.value.trim()){
+          buildPrompt(false);
+        }
         const count = updateWordCount();
         if(!updateValidation()){
           const missing = validationState().filter(item => !item.ok).map(item => item.text).join(" ");
@@ -594,7 +600,10 @@
       }
       document.getElementById("buildDescriptionBtn").addEventListener("click", buildDescription);
       document.getElementById("buildPromptBtn").addEventListener("click", buildPrompt);
-      document.getElementById("copyPromptBtn").addEventListener("click", () => copyText(promptEl.value, "Prompt copied."));
+      document.getElementById("copyPromptBtn").addEventListener("click", () => {
+        if(!promptEl.value.trim()) buildPrompt(false);
+        copyText(promptEl.value, "Prompt copied.");
+      });
       document.getElementById("generateImageBtn").addEventListener("click", generateImage);
       document.getElementById("refreshGalleryBtn").addEventListener("click", loadGallery);
       document.getElementById("closeModalBtn").addEventListener("click", closeModal);
