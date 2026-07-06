@@ -8,6 +8,22 @@
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .fictional-lab-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .fictional-lab-card{border-radius:20px;padding:18px;background:#fff;border:1px solid rgba(15,23,42,.08);box-shadow:0 12px 28px rgba(15,23,42,.07)}
+    .fictional-lab-card strong{display:block;color:#123b8f;margin-bottom:8px;font-size:1.04rem}
+    .fictional-lab-card p,.fictional-lab-card li{color:#475569;line-height:1.6}
+    .fictional-lab-card ul{margin:0;padding-left:1.1rem}
+    .fictional-process{display:grid;gap:12px;counter-reset:step}
+    .fictional-process li{list-style:none;border-radius:18px;background:#f8fbff;border:1px solid rgba(18,59,143,.1);padding:15px 16px;color:#475569}
+    .fictional-process li::before{counter-increment:step;content:counter(step);display:inline-grid;place-items:center;width:32px;height:32px;margin-right:10px;border-radius:10px;background:#123b8f;color:#fff;font-weight:900}
+    .fictional-sentence-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:14px}
+    .fictional-sentence-grid span{border-radius:16px;padding:12px;background:#eef7ff;color:#153b55;font-weight:850}
+    .fictional-checklist{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .fictional-checklist div{border-radius:18px;padding:14px;background:#fff7e8;border:1px solid rgba(249,115,22,.18)}
+    .fictional-checklist strong{display:block;color:#c1121f;margin-bottom:6px}
+    @media(max-width:980px){.fictional-lab-grid,.fictional-sentence-grid,.fictional-checklist{grid-template-columns:1fr}}
+  </style>
 </head>
 <body class="english-basic-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
@@ -24,32 +40,36 @@
     </nav>
   </header>
   <main>
-    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png');">
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/practice-lab/unit-6/fictional-neighborhood-design-lab.png');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab Workshop</p>
         <h1>Fictional Neighborhood Design Lab</h1>
-        <p>Students design a fictional neighborhood, describe places and routines, then write a short blog entry recommending it.</p>
-        <div class="lesson-meta"><span>Unit 6</span><span>Map design, blog entry and routine description</span><span>Production task</span></div>
+        <p>Students design a fictional neighborhood with a clear map, describe places, routines, opening times, and write a short visitor blog entry recommending it.</p>
+        <div class="lesson-meta"><span>Unit 6</span><span>Map design</span><span>There is / There are</span><span>Blog entry</span></div>
         <div class="hero-actions">
           <a href="#workshop" class="btn btn-primary">Start workshop</a>
           <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png" alt="Fictional Neighborhood Design Lab" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/unit-6/fictional-neighborhood-design-lab.png" alt="Students designing a fictional neighborhood map with place cards" /></aside>
     </section>
 
     <section class="premium-lesson-container" id="workshop">
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Workshop Brief</p><h2>Mission and Setup</h2></div></div>
-        <p class="lesson-text">Students design a fictional neighborhood, describe places and routines, then write a short blog entry recommending it.</p>
-        <div class="workshop-brief-grid"><div class="workshop-brief-card"><span>Time</span><p>60 minutes</p></div><div class="workshop-brief-card"><span>Grouping</span><p>Design teams</p></div><div class="workshop-brief-card"><span>Main output</span><p>Neighborhood map plus blog entry</p></div><div class="workshop-brief-card"><span>Based on guide</span><p>Blog entry: fictional neighborhood; describe routines, places and times</p></div></div>
-        <ul class="workshop-material-list"><li>Blank map template</li><li>Place cards</li><li>Clock cards</li><li>Adjective bank</li></ul>
+        <p class="lesson-text">This activity works better if it is treated as a small project, not only as a drawing task. Students must create a useful neighborhood, justify why people visit it, and speak from their own map.</p>
+        <div class="workshop-brief-grid"><div class="workshop-brief-card"><span>Time</span><p>65-75 minutes</p></div><div class="workshop-brief-card"><span>Grouping</span><p>Teams of 3 or 4</p></div><div class="workshop-brief-card"><span>Main output</span><p>Map, oral tour, and short blog entry</p></div><div class="workshop-brief-card"><span>Language focus</span><p>Places, there is / there are, time, adjectives, and simple recommendations</p></div></div>
+        <div class="fictional-lab-grid">
+          <div class="fictional-lab-card"><strong>Required places</strong><ul><li>a park</li><li>a cafe or restaurant</li><li>a school or library</li><li>a supermarket or pharmacy</li><li>one free place chosen by the team</li></ul></div>
+          <div class="fictional-lab-card"><strong>Required details</strong><ul><li>opening time for two places</li><li>one favorite place</li><li>one quiet place</li><li>one busy place</li><li>one weekend activity</li></ul></div>
+          <div class="fictional-lab-card"><strong>Team roles</strong><ul><li>Map designer</li><li>Language checker</li><li>Time keeper</li><li>Presenter / blogger</li></ul></div>
+        </div>
       </article>
 
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Task Cycle</p><h2>Activity Rounds</h2></div></div>
-        <p class="lesson-text">Follow the rounds in order. The teacher can stop after any round for quick pronunciation or grammar feedback.</p>
-        <ol class="task-flow"><li><strong>Map design</strong><span>Teams draw or arrange six places: cafe, park, library, gym, restaurant and school.</span></li><li><strong>Time planning</strong><span>Teams decide what time people go to each place and what they do there.</span></li><li><strong>There is / there are check</strong><span>Teams write five sentences using there is and there are.</span></li><li><strong>Blog entry</strong><span>Students write a short paragraph inviting people to visit the neighborhood.</span></li><li><strong>Visitor questions</strong><span>Other teams ask about time, places and favorite spots.</span></li></ol>
+        <p class="lesson-text">Follow the rounds in order. Each round produces evidence: a map decision, a sentence, or a speaking rehearsal. This avoids random drawings with little English production.</p>
+        <ol class="fictional-process"><li><strong>Choose the neighborhood identity.</strong> Decide if it is quiet, modern, green, busy, safe, artistic, or student-friendly.</li><li><strong>Build the map.</strong> Place at least five places and draw streets clearly enough for another team to understand the area.</li><li><strong>Write place sentences.</strong> Produce at least three <em>there is</em> sentences and two <em>there are</em> sentences.</li><li><strong>Add time and routines.</strong> Decide when people go to two places and what they do there.</li><li><strong>Prepare the visitor blog.</strong> Write a short recommendation from the point of view of a visitor.</li><li><strong>Give the oral tour.</strong> One student presents the map; classmates ask two questions.</li></ol>
       </article>
 
       <article class="premium-topic-card">
@@ -57,14 +77,34 @@
         <p class="lesson-text">Students use this board to collect real information before speaking. It can be copied into notebooks or projected for the class.</p>
         <div class="worksheet-board">
           <div class="worksheet-actions"><h3>Fictional Neighborhood Design Lab Worksheet</h3><button type="button" class="practice-submit-btn" onclick="downloadWorksheetPdfFromPage()">Download worksheet PDF</button></div>
-          <table class="worksheet-table"><thead><tr><th>Place</th><th>There is/are sentence</th><th>Time</th><th>Activity</th><th>Adjective</th></tr></thead><tbody><tr><td>Place 1</td><td></td><td></td><td></td><td></td></tr><tr><td>Place 2</td><td></td><td></td><td></td><td></td></tr><tr><td>Place 3</td><td></td><td></td><td></td><td></td></tr><tr><td>Place 4</td><td></td><td></td><td></td><td></td></tr><tr><td>Place 5</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+          <table class="worksheet-table"><thead><tr><th>Place</th><th>There is / are sentence</th><th>Opening time</th><th>Activity</th><th>Adjective</th><th>Why visit?</th></tr></thead><tbody><tr><td>Place 1</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 2</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 3</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 4</td><td></td><td></td><td></td><td></td><td></td></tr><tr><td>Place 5</td><td></td><td></td><td></td><td></td><td></td></tr></tbody></table>
         </div>
       </article>
 
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Functional Language</p><h2>Language Bank and Final Product</h2></div></div>
-        <div class="language-bank-grid"><span>There is a cafe.</span><span>There are two parks.</span><span>What time is it?</span><span>Let's have dinner.</span><span>The park is beautiful.</span></div>
-        <div class="deliverable-card"><h3>Final product</h3><p>A map and blog entry: Welcome to Green Street. There is a big park. People run at six. The best cafe is near the library.</p></div>
+        <div class="fictional-sentence-grid"><span>There is a beautiful park near the cafe.</span><span>There are two quiet streets in our neighborhood.</span><span>The library opens at eight o'clock.</span><span>People go to the gym after class.</span><span>My favorite place is the cafe because it is friendly.</span><span>You can visit the park on weekends.</span></div>
+        <div class="deliverable-card"><h3>Final product model</h3><p>Welcome to Green Street. There is a big park and there are two cafes. The library opens at eight o'clock. People go to the park at five. My favorite place is the cafe because it is friendly and quiet. Visit Green Street on Saturday.</p></div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Oral Tour</p><h2>Presentation and visitor questions</h2></div></div>
+        <p class="lesson-text">Each team presents for 90 seconds. The presentation must not be read word by word; students can use the map and worksheet as support.</p>
+        <div class="fictional-lab-grid">
+          <div class="fictional-lab-card"><strong>Presenter 1</strong><p>Names the neighborhood and describes the map using <em>there is</em> and <em>there are</em>.</p></div>
+          <div class="fictional-lab-card"><strong>Presenter 2</strong><p>Explains times and routines: when people go, what people do, and where they go.</p></div>
+          <div class="fictional-lab-card"><strong>Visitors</strong><p>Ask: What is your favorite place? What time does it open? Where can I eat? Is there a quiet place?</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Teacher Check</p><h2>Simple rubric</h2></div></div>
+        <div class="fictional-checklist">
+          <div><strong>Map clarity</strong><p>Places are visible and logically organized.</p></div>
+          <div><strong>Grammar</strong><p>Uses there is / there are correctly.</p></div>
+          <div><strong>Unit vocabulary</strong><p>Uses places, times, and adjectives from Unit 6.</p></div>
+          <div><strong>Speaking</strong><p>Explains the neighborhood clearly without only reading.</p></div>
+        </div>
       </article>
     </section>
   </main>
