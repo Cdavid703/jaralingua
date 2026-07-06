@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Directions Map Roulette | Basic English Course 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .directions-roulette-page {
+      --directions-blue: #123b8f;
+      --directions-ink: #071f4f;
+      --directions-red: #c1121f;
+      --directions-soft: #f5f8ff;
+      --directions-green: #0f9f6e;
+    }
+
+    .directions-map-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .directions-map-card,
+    .directions-side-card,
+    .directions-support-card {
+      border-radius: 24px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .directions-map-frame {
+      background: #eaf1ff;
+      padding: 12px;
+    }
+
+    .directions-map-frame img {
+      width: 100%;
+      display: block;
+      border-radius: 18px;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+    }
+
+    .directions-map-caption,
+    .directions-side-card {
+      padding: 18px;
+    }
+
+    .directions-map-caption h3,
+    .directions-side-card h3,
+    .directions-support-card h3 {
+      color: var(--directions-ink);
+      margin-bottom: 8px;
+    }
+
+    .directions-map-caption p,
+    .directions-side-card p,
+    .directions-support-card p {
+      color: #475569;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .directions-map-buttons,
+    .directions-chip-grid,
+    .directions-language-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .directions-map-button,
+    .directions-destination-button {
+      border: 0;
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 900;
+      color: var(--directions-ink);
+      background: #eef4ff;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .directions-map-button:hover,
+    .directions-destination-button:hover {
+      transform: translateY(-1px);
+      background: #dbeafe;
+    }
+
+    .directions-map-button.is-active {
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--directions-blue), #2563eb);
+    }
+
+    .directions-key-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .directions-key-list span,
+    .directions-language-grid span {
+      border-radius: 14px;
+      padding: 9px 11px;
+      background: var(--directions-soft);
+      color: #334155;
+      font-weight: 800;
+      font-size: 0.92rem;
+    }
+
+    .directions-current-challenge {
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(135deg, #fff7e8, #ffffff);
+      border: 1px solid rgba(249, 115, 22, 0.2);
+      margin-top: 16px;
+    }
+
+    .directions-current-challenge small,
+    .directions-mini-label {
+      display: block;
+      color: var(--directions-red);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 900;
+      font-size: 0.76rem;
+      margin-bottom: 8px;
+    }
+
+    .directions-current-challenge strong {
+      display: block;
+      color: var(--directions-ink);
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .directions-support-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .directions-support-card {
+      padding: 18px;
+    }
+
+    .directions-destination-button {
+      text-align: left;
+    }
+
+    .directions-destination-button.is-used {
+      opacity: 0.45;
+      text-decoration: line-through;
+    }
+
+    .directions-rubric {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .directions-rubric div {
+      border-radius: 18px;
+      padding: 14px;
+      background: #f8fbff;
+      border: 1px solid rgba(18, 59, 143, 0.1);
+    }
+
+    .directions-rubric strong {
+      display: block;
+      color: var(--directions-blue);
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 980px) {
+      .directions-map-shell,
+      .directions-support-grid,
+      .directions-rubric {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .directions-key-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="english-basic-page directions-roulette-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/practice-lab/unit-6/directions/directions-map-01.png');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab - Unit 6</p>
+        <h1>Directions Map Roulette</h1>
+        <p>The teacher chooses a map, the roulette chooses a student, and the second roulette chooses a destination. The student gives clear spoken directions from the starting boy to the selected place.</p>
+        <div class="lesson-meta"><span>Speaking Game</span><span>Directions</span><span>Places in Town</span><span>Map Reading</span></div>
+        <div class="hero-actions">
+          <a href="#directions-activity" class="btn btn-primary">Start activity</a>
+          <a href="unit-6-neighborhoods.html" class="btn btn-secondary">Back to Unit 6</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/unit-6/directions/directions-map-01.png" alt="2D neighborhood map for practicing directions" /></aside>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice Goal</span>
+        <p>Students will give step-by-step directions using go straight, turn left, turn right, cross the street, go past, on your left, on your right, next to, and across from.</p>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="directions-activity">
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Teacher Setup</p><h2>How to run the activity</h2></div></div>
+        <p class="lesson-text">First, load the student names. Then choose Map 1 or Map 2. Spin the student roulette and then spin the destination roulette. The selected student looks at the active map and explains how to get from the boy to the destination.</p>
+        <div class="guesswho-rule-list">
+          <div class="guesswho-rule-card"><b>1</b><h3>Choose the map</h3><p>The teacher controls which image the class uses.</p></div>
+          <div class="guesswho-rule-card"><b>2</b><h3>Spin the student</h3><p>The roulette selects the participant for the round.</p></div>
+          <div class="guesswho-rule-card"><b>3</b><h3>Spin the destination</h3><p>The second roulette selects where the student must go.</p></div>
+          <div class="guesswho-rule-card"><b>4</b><h3>Give directions</h3><p>The student gives complete spoken directions and classmates verify the route.</p></div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Map Selection</p><h2>Teacher chooses the active map</h2></div></div>
+        <div class="directions-map-shell">
+          <div class="directions-map-card">
+            <div class="directions-map-frame"><img id="activeMapImage" src="../../assets/img/english-basic/practice-lab/unit-6/directions/directions-map-01.png" alt="Active 2D map for directions practice" /></div>
+            <div class="directions-map-caption">
+              <h3 id="activeMapTitle">Map 1 - Neighborhood route</h3>
+              <p id="activeMapDescription">Start at the boy near the bus stop. Some places are close, but several destinations require walking across the map with turns and crossings.</p>
+              <div class="directions-map-buttons">
+                <button class="directions-map-button is-active" id="mapButton1" type="button" onclick="selectMap('map1')">Use Map 1</button>
+                <button class="directions-map-button" id="mapButton2" type="button" onclick="selectMap('map2')">Use Map 2</button>
+              </div>
+            </div>
+          </div>
+          <aside class="directions-side-card">
+            <h3>Visible places in this map</h3>
+            <p>Use the icons as references. The image has no labels on purpose, so the teacher can control the vocabulary orally.</p>
+            <div class="directions-key-list" id="activeMapKey"></div>
+            <div class="directions-current-challenge">
+              <small>Current challenge</small>
+              <strong id="currentChallengePreview">Spin a destination to generate the route.</strong>
+              <p id="currentChallengeSupport">The student starts at the boy icon and gives directions to the selected place.</p>
+            </div>
+          </aside>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Language Support</p><h2>Useful expressions before spinning</h2></div></div>
+        <div class="directions-language-grid">
+          <span>Go straight.</span>
+          <span>Turn left.</span>
+          <span>Turn right.</span>
+          <span>Cross the street.</span>
+          <span>Go past the park.</span>
+          <span>Walk two blocks.</span>
+          <span>It is on your left.</span>
+          <span>It is on your right.</span>
+          <span>It is next to the cafe.</span>
+          <span>It is across from the library.</span>
+        </div>
+        <div class="teacher-tip">
+          <span>Model answer</span>
+          <p>Go straight for two blocks. Turn right. Cross the street. Go past the park. The library is on your left.</p>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Interactive Tool</p><h2>Spin the student and destination roulettes</h2></div></div>
+        <div class="guesswho-panel routine-roulette-panel">
+          <div class="guesswho-setup">
+            <div>
+              <h3>Load Student Names</h3>
+              <p>Type, paste, or import the student names from Excel. Write one name per line if you paste manually.</p>
+            </div>
+            <textarea id="studentNamesInput" class="guesswho-textarea" placeholder="Example:
+Alex
+Sarah
+David
+Emma
+Liam
+Maria"></textarea>
+            <input type="file" id="studentExcelInput" accept=".xlsx,.csv,.txt,.tsv" hidden />
+            <p class="roster-import-status" id="rosterImportStatus" aria-live="polite"></p>
+            <div class="guesswho-actions">
+              <button type="button" class="guesswho-btn secondary" onclick="openExcelPicker()"><i class="bi bi-upload"></i> Import Excel/CSV</button>
+              <button type="button" class="guesswho-btn primary" onclick="loadStudentNames()"><i class="bi bi-person-check"></i> Load Names</button>
+              <button type="button" class="guesswho-btn light" onclick="useSampleNames()"><i class="bi bi-people"></i> Use Sample Names</button>
+              <button type="button" class="guesswho-btn danger" onclick="resetActivity()"><i class="bi bi-arrow-counterclockwise"></i> Reset Activity</button>
+            </div>
+          </div>
+
+          <div class="guesswho-play-grid">
+            <div class="guesswho-wheel-card">
+              <div class="guesswho-wheel-header"><div><h3>Student Roulette</h3><p>Select the student who gives directions.</p></div><span class="guesswho-count-pill" id="studentsLeftCount">0</span></div>
+              <div class="guesswho-wheel-zone">
+                <div class="guesswho-pointer"></div>
+                <div class="guesswho-wheel routine-student-wheel" id="studentWheel"><div class="guesswho-wheel-center">STUDENT</div></div>
+                <button type="button" class="guesswho-btn primary" id="spinStudentBtn" onclick="spinStudentRoulette()" disabled><i class="bi bi-play-circle"></i> Spin Student</button>
+                <p class="guesswho-status" id="studentStatus">Load at least one student to start.</p>
+              </div>
+            </div>
+
+            <div class="guesswho-wheel-card">
+              <div class="guesswho-wheel-header"><div><h3>Destination Roulette</h3><p>Select the place in the active map.</p></div><span class="guesswho-count-pill" id="questionsLeftCount">0</span></div>
+              <div class="guesswho-wheel-zone">
+                <div class="guesswho-pointer"></div>
+                <div class="guesswho-wheel routine-question-wheel" id="questionWheel"><div class="guesswho-wheel-center">PLACE</div></div>
+                <button type="button" class="guesswho-btn secondary" id="spinQuestionBtn" onclick="spinQuestionRoulette()" disabled><i class="bi bi-geo-alt"></i> Spin Destination</button>
+                <p class="guesswho-status" id="questionStatus">Select a student first.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="guesswho-current-card routine-current-card">
+            <h3>Current Round</h3>
+            <p>The selected student must start from the boy icon and give clear spoken directions to the selected place.</p>
+            <div class="guesswho-current-grid">
+              <div class="guesswho-result-box"><small>Selected Student</small><strong id="currentStudentName">-</strong><p>Get ready to speak.</p></div>
+              <div class="guesswho-result-box guesswho-secret-box"><small>Selected Destination</small><strong id="currentQuestionText">-</strong><p id="currentMapRoundText">Use the active map.</p></div>
+            </div>
+            <div class="routine-answer-frame">
+              <small>Answer frame</small>
+              <strong id="answerFrameText">Start at the boy. Go straight. Turn left. The place is on your right.</strong>
+            </div>
+            <div class="guesswho-round-actions guesswho-round-actions-spaced">
+              <button type="button" class="guesswho-btn success" id="completeRoundBtn" onclick="completeRound()" disabled><i class="bi bi-check2-circle"></i> Complete Round</button>
+              <button type="button" class="guesswho-btn light" id="cancelRoundBtn" onclick="cancelCurrentRound()" disabled><i class="bi bi-x-circle"></i> Cancel Current Round</button>
+            </div>
+          </div>
+
+          <div class="guesswho-play-grid">
+            <div class="guesswho-list-card">
+              <div class="guesswho-list-header"><h3>Students Left</h3><span class="guesswho-count-pill" id="studentPoolPill">0</span></div>
+              <div class="guesswho-chip-list" id="studentPoolList"><p class="guesswho-empty-message">No students loaded yet.</p></div>
+            </div>
+            <div class="guesswho-list-card">
+              <div class="guesswho-list-header"><h3>Destinations Left</h3><span class="guesswho-count-pill" id="questionPoolPill">0</span></div>
+              <div class="guesswho-chip-list routine-question-chip-list" id="questionPoolList"></div>
+            </div>
+          </div>
+
+          <div class="guesswho-history-card">
+            <div class="guesswho-history-header"><div><h3>Participation History</h3><p>Completed rounds appear here.</p></div></div>
+            <div class="guesswho-table-container">
+              <table class="guesswho-table">
+                <thead><tr><th>Round</th><th>Map</th><th>Student</th><th>Destination</th><th>Support frame</th></tr></thead>
+                <tbody id="routineHistoryBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Manual Teacher Prompts</p><h2>Use without the destination roulette if needed</h2></div></div>
+        <p class="lesson-text">If the teacher wants to choose the destination directly, select a map above and click one of these prompts. The student roulette can still choose the participant.</p>
+        <div class="directions-chip-grid" id="manualDestinationButtons"></div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Teacher Rubric</p><h2>Fast oral feedback</h2></div></div>
+        <div class="directions-rubric">
+          <div><strong>Route clarity</strong><p>Can classmates follow the route without confusion?</p></div>
+          <div><strong>Direction verbs</strong><p>Does the student use go straight, turn left/right, cross, and go past?</p></div>
+          <div><strong>Location phrases</strong><p>Does the student finish with on your left/right, next to, or across from?</p></div>
+          <div><strong>Pronunciation</strong><p>Are places and direction words clear enough for A1 communication?</p></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
+  <script src="../../assets/js/roster-import.js"></script>
+  <script>
+    const maps = {
+      map1: {
+        label: "Map 1",
+        title: "Map 1 - Neighborhood route",
+        image: "../../assets/img/english-basic/practice-lab/unit-6/directions/directions-map-01.png",
+        description: "Start at the boy near the bus stop. Some places are close, but several destinations require walking across the map with turns and crossings.",
+        key: ["bus stop", "church", "park", "cafe", "school", "library", "supermarket", "hospital", "bank", "restaurant", "pharmacy", "gym"],
+        challenges: [
+          { id: "m1-library", text: "How do you get to the library?", frame: "Start at the boy near the bus stop. Walk along the street, turn at the corner, and go to the library." },
+          { id: "m1-school", text: "How do you get to the school?", frame: "Go straight for several blocks. Turn when you see the cafe. The school is near the top of the map." },
+          { id: "m1-hospital", text: "How do you get to the hospital?", frame: "Go straight, cross the street, and continue to the hospital. It is near the bank area." },
+          { id: "m1-bank", text: "How do you get to the bank?", frame: "Walk across the map. Turn right near the hospital. The bank is on the right side." },
+          { id: "m1-cafe", text: "How do you get to the cafe?", frame: "Go straight, cross the street, and turn toward the cafe. It is near the school." },
+          { id: "m1-restaurant", text: "How do you get to the restaurant?", frame: "Go straight from the boy, turn after the library area, and continue to the restaurant." },
+          { id: "m1-park", text: "How do you get to the park?", frame: "Go straight, turn left or right at the intersection, and stop at the park with trees." },
+          { id: "m1-supermarket", text: "How do you get to the supermarket?", frame: "Walk several blocks from the start. Cross the street and go to the supermarket near the bottom area." }
+        ]
+      },
+      map2: {
+        label: "Map 2",
+        title: "Map 2 - City route",
+        image: "../../assets/img/english-basic/practice-lab/unit-6/directions/directions-map-02.png",
+        description: "Start at the boy on the upper-right sidewalk. This map uses a different city layout and different places for longer routes.",
+        key: ["apartment building", "fire station", "police station", "bakery", "post office", "movie theater", "gym", "train station", "public pool", "grocery store", "city hall", "sports court"],
+        challenges: [
+          { id: "m2-fire-station", text: "How do you get to the fire station?", frame: "Start at the boy. Go left across the top street and continue until you see the fire station." },
+          { id: "m2-police-station", text: "How do you get to the police station?", frame: "Walk from the boy, turn left at the intersection, and go toward the police station." },
+          { id: "m2-bakery", text: "How do you get to the bakery?", frame: "Start at the boy. Walk left along the top street. The bakery is before the police station area." },
+          { id: "m2-post-office", text: "How do you get to the post office?", frame: "Go down from the starting point, turn left, and cross the street to the post office." },
+          { id: "m2-movie-theater", text: "How do you get to the movie theater?", frame: "Go left and down from the boy. Continue past the library or bookstore area to the movie theater." },
+          { id: "m2-train-station", text: "How do you get to the train station?", frame: "Walk down and left through the city blocks. The train station is near the lower middle of the map." },
+          { id: "m2-public-pool", text: "How do you get to the public pool?", frame: "Go down from the boy, cross the street, and continue to the pool on the right side." },
+          { id: "m2-sports-court", text: "How do you get to the sports court?", frame: "Go left and down for several blocks. The sports court is near the lower-left side of the map." }
+        ]
+      }
+    };
+
+    let activeMapId = "map1";
+    let questionList = maps[activeMapId].challenges.slice();
+
+    const gameState = {
+      originalNames: [],
+      studentPool: [],
+      questionPool: questionList.slice(),
+      currentStudent: null,
+      currentQuestion: null,
+      history: [],
+      studentRotation: 0,
+      questionRotation: 0,
+      spinning: false
+    };
+
+    const wheelColors = ["#f6d365", "#60a5fa", "#34d399", "#f97316", "#f9a8d4", "#a7f3d0", "#facc15", "#93c5fd", "#fb7185", "#c4b5fd"];
+    const soundState = { audioContext: null, tickTimer: null, active: false };
+
+    function getAudioContext() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+      if (!soundState.audioContext) soundState.audioContext = new AudioContextClass();
+      if (soundState.audioContext.state === "suspended") soundState.audioContext.resume().catch(function() {});
+      return soundState.audioContext;
+    }
+
+    function playTone(frequency, duration, volume, type) {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+      oscillator.type = type || "sine";
+      oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(volume || 0.06, ctx.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + duration + 0.02);
+    }
+
+    function startRouletteSound() {
+      if (soundState.active) return;
+      soundState.active = true;
+      playTone(392, 0.08, 0.06, "square");
+      soundState.tickTimer = window.setInterval(function() {
+        playTone(440 + Math.random() * 280, 0.045, 0.04, "square");
+      }, 95);
+    }
+
+    function stopRouletteSound(success) {
+      soundState.active = false;
+      if (soundState.tickTimer) window.clearInterval(soundState.tickTimer);
+      soundState.tickTimer = null;
+      if (!success) return;
+      playTone(659, 0.08, 0.08, "sine");
+      window.setTimeout(function() { playTone(784, 0.11, 0.075, "sine"); }, 90);
+      window.setTimeout(function() { playTone(988, 0.16, 0.07, "sine"); }, 185);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      window.JaraLinguaRosterImport.setup({
+        fileInputId: "studentExcelInput",
+        textAreaId: "studentNamesInput",
+        statusId: "rosterImportStatus",
+        onNamesLoaded: function() { loadStudentNames(); }
+      });
+      renderMap();
+      renderGame();
+    });
+
+    function selectMap(mapId) {
+      if (!maps[mapId] || gameState.spinning) return;
+      if ((gameState.currentStudent || gameState.currentQuestion) && !window.confirm("Changing the map will cancel the current round. Continue?")) return;
+      activeMapId = mapId;
+      questionList = maps[activeMapId].challenges.slice();
+      gameState.questionPool = questionList.slice();
+      gameState.currentStudent = null;
+      gameState.currentQuestion = null;
+      gameState.questionRotation = 0;
+      renderMap();
+      renderGame();
+    }
+
+    function renderMap() {
+      const map = maps[activeMapId];
+      document.getElementById("activeMapImage").src = map.image;
+      document.getElementById("activeMapTitle").textContent = map.title;
+      document.getElementById("activeMapDescription").textContent = map.description;
+      document.getElementById("mapButton1").classList.toggle("is-active", activeMapId === "map1");
+      document.getElementById("mapButton2").classList.toggle("is-active", activeMapId === "map2");
+      const key = document.getElementById("activeMapKey");
+      key.innerHTML = "";
+      map.key.forEach(function(place) {
+        const item = document.createElement("span");
+        item.textContent = place;
+        key.appendChild(item);
+      });
+      renderManualDestinationButtons();
+      updateChallengePreview();
+    }
+
+    function renderManualDestinationButtons() {
+      const container = document.getElementById("manualDestinationButtons");
+      container.innerHTML = "";
+      maps[activeMapId].challenges.forEach(function(challenge) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "directions-destination-button";
+        button.textContent = challenge.text;
+        button.onclick = function() { setManualChallenge(challenge.id); };
+        container.appendChild(button);
+      });
+    }
+
+    function setManualChallenge(challengeId) {
+      const challenge = maps[activeMapId].challenges.find(function(item) { return item.id === challengeId; });
+      if (!challenge) return;
+      gameState.currentQuestion = challenge;
+      renderGame();
+    }
+
+    function getUniqueNames(rawText) {
+      const names = rawText.split(/\n|,|;/).map(function(name) { return name.trim(); }).filter(function(name) { return name.length > 0; });
+      const seen = new Set();
+      const uniqueNames = [];
+      names.forEach(function(name) {
+        const key = name.toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueNames.push(name);
+        }
+      });
+      return uniqueNames;
+    }
+
+    function loadStudentNames() {
+      const names = getUniqueNames(document.getElementById("studentNamesInput").value);
+      if (names.length < 1) {
+        alert("Please enter at least one student name.");
+        return;
+      }
+      gameState.originalNames = names.slice();
+      gameState.studentPool = names.slice();
+      gameState.questionPool = maps[activeMapId].challenges.slice();
+      gameState.currentStudent = null;
+      gameState.currentQuestion = null;
+      gameState.history = [];
+      gameState.studentRotation = 0;
+      gameState.questionRotation = 0;
+      renderGame();
+    }
+
+    function useSampleNames() {
+      const sampleNames = ["Alex", "Sarah", "David", "Emma", "Liam", "Maria", "Sofia", "Daniel", "Camila", "Mateo"];
+      document.getElementById("studentNamesInput").value = sampleNames.join("\n");
+      loadStudentNames();
+    }
+
+    function openExcelPicker() {
+      document.getElementById("studentExcelInput").click();
+    }
+
+    function renderGame() {
+      renderWheel("studentWheel", gameState.studentPool, gameState.studentRotation, "STUDENT", 22);
+      renderWheel("questionWheel", gameState.questionPool.map(function(q) { return q.text.replace("How do you get to the ", "").replace("?", ""); }), gameState.questionRotation, "PLACE", 18);
+      renderPools();
+      renderCurrentRound();
+      renderHistory();
+      updateChallengePreview();
+      updateControls();
+    }
+
+    function renderWheel(wheelId, items, rotation, centerText, maxLength) {
+      const wheel = document.getElementById(wheelId);
+      wheel.innerHTML = '<div class="guesswho-wheel-center">' + centerText + '</div>';
+      const safeItems = items.length ? items : ["-"];
+      const slice = 360 / safeItems.length;
+      const gradient = safeItems.map(function(_, index) {
+        const start = index * slice;
+        const end = (index + 1) * slice;
+        return wheelColors[index % wheelColors.length] + " " + start + "deg " + end + "deg";
+      }).join(", ");
+      wheel.style.background = "conic-gradient(" + gradient + ")";
+      wheel.style.transform = "rotate(" + rotation + "deg)";
+      safeItems.slice(0, Math.min(safeItems.length, 24)).forEach(function(item, index) {
+        const angle = index * slice + slice / 2;
+        const label = document.createElement("span");
+        label.className = "guesswho-wheel-label";
+        label.textContent = shortenLabel(String(item), maxLength || 20);
+        label.style.transform = "rotate(" + angle + "deg) translateY(-116px) rotate(-" + angle + "deg)";
+        wheel.appendChild(label);
+      });
+    }
+
+    function shortenLabel(label, maxLength) {
+      return label.length > maxLength ? label.slice(0, maxLength - 1) + "..." : label;
+    }
+
+    function updateControls() {
+      const spinStudentBtn = document.getElementById("spinStudentBtn");
+      const spinQuestionBtn = document.getElementById("spinQuestionBtn");
+      const completeRoundBtn = document.getElementById("completeRoundBtn");
+      const cancelRoundBtn = document.getElementById("cancelRoundBtn");
+      const studentStatus = document.getElementById("studentStatus");
+      const questionStatus = document.getElementById("questionStatus");
+      const hasActiveRound = Boolean(gameState.currentStudent || gameState.currentQuestion);
+      const canStart = gameState.studentPool.length > 0 && gameState.questionPool.length > 0;
+
+      spinStudentBtn.disabled = gameState.spinning || !canStart || hasActiveRound;
+      spinQuestionBtn.disabled = gameState.spinning || !gameState.currentStudent || Boolean(gameState.currentQuestion);
+      completeRoundBtn.disabled = !gameState.currentStudent || !gameState.currentQuestion;
+      cancelRoundBtn.disabled = !gameState.currentStudent && !gameState.currentQuestion;
+
+      if (!canStart && gameState.originalNames.length > 0) {
+        studentStatus.textContent = "All students or all destinations have been used. Reset the activity to play again.";
+      } else if (gameState.studentPool.length < 1) {
+        studentStatus.textContent = "Load at least one student to start.";
+      } else if (hasActiveRound) {
+        studentStatus.textContent = "Finish or cancel the current round before spinning again.";
+      } else {
+        studentStatus.textContent = "Ready. Spin the student roulette.";
+      }
+
+      if (!gameState.currentStudent) {
+        questionStatus.textContent = "Select a student first.";
+      } else if (!gameState.currentQuestion) {
+        questionStatus.textContent = "Ready. Spin the destination roulette.";
+      } else {
+        questionStatus.textContent = "Destination selected. The student can give directions now.";
+      }
+    }
+
+    function renderPools() {
+      document.getElementById("studentsLeftCount").textContent = gameState.studentPool.length;
+      document.getElementById("studentPoolPill").textContent = gameState.studentPool.length;
+      document.getElementById("questionsLeftCount").textContent = gameState.questionPool.length;
+      document.getElementById("questionPoolPill").textContent = gameState.questionPool.length;
+      renderChipList("studentPoolList", gameState.studentPool, "guesswho-chip", "No students left in the active list.");
+      renderChipList("questionPoolList", gameState.questionPool.map(function(question, index) { return String(index + 1) + ". " + maps[activeMapId].label + " - " + question.text; }), "guesswho-chip routine-question-chip", "No destinations left in the active list.");
+    }
+
+    function renderChipList(containerId, items, chipClass, emptyMessage) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      if (items.length === 0) {
+        const message = document.createElement("p");
+        message.className = "guesswho-empty-message";
+        message.textContent = emptyMessage;
+        container.appendChild(message);
+        return;
+      }
+      items.forEach(function(item) {
+        const chip = document.createElement("span");
+        chip.className = chipClass;
+        chip.textContent = item;
+        container.appendChild(chip);
+      });
+    }
+
+    function renderCurrentRound() {
+      document.getElementById("currentStudentName").textContent = gameState.currentStudent || "-";
+      document.getElementById("currentQuestionText").textContent = gameState.currentQuestion ? maps[activeMapId].label + " - " + gameState.currentQuestion.text : "-";
+      document.getElementById("answerFrameText").textContent = gameState.currentQuestion ? gameState.currentQuestion.frame : "Start at the boy. Go straight. Turn left. The place is on your right.";
+      document.getElementById("currentMapRoundText").textContent = "Use " + maps[activeMapId].label + ". Start at the boy icon.";
+    }
+
+    function updateChallengePreview() {
+      const challenge = gameState.currentQuestion;
+      document.getElementById("currentChallengePreview").textContent = challenge ? maps[activeMapId].label + " - " + challenge.text : "Spin a destination to generate the route.";
+      document.getElementById("currentChallengeSupport").textContent = challenge ? challenge.frame : "The student starts at the boy icon and gives directions to the selected place.";
+    }
+
+    function renderHistory() {
+      const body = document.getElementById("routineHistoryBody");
+      body.innerHTML = "";
+      gameState.history.forEach(function(round) {
+        const row = document.createElement("tr");
+        [round.round, round.map, round.student, round.question, round.frame].forEach(function(value) {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        body.appendChild(row);
+      });
+    }
+
+    function spinStudentRoulette() {
+      if (gameState.spinning) return;
+      if (gameState.studentPool.length < 1 || gameState.questionPool.length < 1 || gameState.currentStudent || gameState.currentQuestion) return;
+      gameState.spinning = true;
+      startRouletteSound();
+      updateControls();
+      gameState.studentRotation += 1440 + Math.floor(Math.random() * 720);
+      document.getElementById("studentWheel").style.transform = "rotate(" + gameState.studentRotation + "deg)";
+      window.setTimeout(function() {
+        const index = Math.floor(Math.random() * gameState.studentPool.length);
+        gameState.currentStudent = gameState.studentPool[index];
+        stopRouletteSound(true);
+        gameState.spinning = false;
+        renderGame();
+      }, 2650);
+    }
+
+    function spinQuestionRoulette() {
+      if (gameState.spinning) return;
+      if (!gameState.currentStudent || gameState.currentQuestion || gameState.questionPool.length < 1) return;
+      gameState.spinning = true;
+      startRouletteSound();
+      updateControls();
+      gameState.questionRotation += 1440 + Math.floor(Math.random() * 720);
+      document.getElementById("questionWheel").style.transform = "rotate(" + gameState.questionRotation + "deg)";
+      window.setTimeout(function() {
+        const index = Math.floor(Math.random() * gameState.questionPool.length);
+        gameState.currentQuestion = gameState.questionPool[index];
+        stopRouletteSound(true);
+        gameState.spinning = false;
+        renderGame();
+      }, 2650);
+    }
+
+    function completeRound() {
+      if (!gameState.currentStudent || !gameState.currentQuestion) return;
+      const student = gameState.currentStudent;
+      const question = gameState.currentQuestion;
+      gameState.studentPool = gameState.studentPool.filter(function(name) { return name !== student; });
+      gameState.questionPool = gameState.questionPool.filter(function(item) { return item.id !== question.id; });
+      gameState.history.push({
+        round: gameState.history.length + 1,
+        map: maps[activeMapId].label,
+        student: student,
+        question: question.text,
+        frame: question.frame
+      });
+      gameState.currentStudent = null;
+      gameState.currentQuestion = null;
+      renderGame();
+    }
+
+    function cancelCurrentRound() {
+      stopRouletteSound(false);
+      gameState.currentStudent = null;
+      gameState.currentQuestion = null;
+      renderGame();
+    }
+
+    function resetActivity() {
+      stopRouletteSound(false);
+      gameState.originalNames = [];
+      gameState.studentPool = [];
+      gameState.questionPool = maps[activeMapId].challenges.slice();
+      gameState.currentStudent = null;
+      gameState.currentQuestion = null;
+      gameState.history = [];
+      gameState.studentRotation = 0;
+      gameState.questionRotation = 0;
+      gameState.spinning = false;
+      document.getElementById("studentNamesInput").value = "";
+      renderGame();
+    }
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
