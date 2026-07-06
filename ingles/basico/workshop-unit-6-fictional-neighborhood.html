@@ -327,7 +327,7 @@
 
       function readStored(key, provider){
         try{
-          const raw = localStorage.getItem(key);
+          const raw = sessionStorage.getItem(key) || localStorage.getItem(key);
           if(!raw) return null;
           const parsed = JSON.parse(raw);
           return parsed && parsed.credential ? Object.assign({provider}, parsed) : null;

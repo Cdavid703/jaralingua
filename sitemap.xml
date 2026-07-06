@@ -471,6 +471,12 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://www.jaralingua.com/ingles/basico/game-unit-6-neighborhood-memory.html</loc>
+    <lastmod>2026-07-06</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://www.jaralingua.com/ingles/basico/personal-information.html</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -485,6 +491,12 @@
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/phonetic-rules.html</loc>
     <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/pronunciation-unit-6-my-neighborhood.html</loc>
+    <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -537,12 +549,6 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://www.jaralingua.com/ingles/basico/practice-unit-6-neighborhoods.html</loc>
-    <lastmod>2026-05-19</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
     <loc>https://www.jaralingua.com/ingles/basico/reading-my-family.html</loc>
     <lastmod>2026-05-19</lastmod>
     <changefreq>weekly</changefreq>
@@ -557,6 +563,12 @@
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/reading-unit-2-the-blue-backpack-part-two.html</loc>
     <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/reading-unit-6-my-neighborhood-guide.html</loc>
+    <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -677,6 +689,12 @@
   <url>
     <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-5-tv-habits.html</loc>
     <lastmod>2026-05-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.jaralingua.com/ingles/basico/workshop-unit-6-directions-roulette.html</loc>
+    <lastmod>2026-07-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>

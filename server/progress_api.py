@@ -49,6 +49,11 @@ BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_R
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 BASIC_UNIT6_NEIGHBORHOOD_GALLERY_PATH = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_GALLERY", "/var/lib/jaralingua/basic-unit6-neighborhood-gallery.json")
 BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR", "/var/lib/jaralingua/basic-unit6-neighborhood-images")
+BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS = {
+    normalize.strip().lower()
+    for normalize in os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS", "cdavid.jaramillo@hotmail.com").split(",")
+    if normalize.strip()
+}
 OPENAI_IMAGES_MODEL = os.environ.get("JARALINGUA_OPENAI_IMAGES_MODEL", "gpt-image-2").strip() or "gpt-image-2"
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
@@ -716,20 +721,36 @@ def public_basic_unit6_neighborhood_item(item, include_owner=False):
     return public_item
 
 
+def is_basic_unit6_neighborhood_test_profile(profile):
+    return clean_email(profile.get("email")) in BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS
+
+
+def basic_unit6_neighborhood_owner_id(profile, role, student):
+    if isinstance(student, dict):
+        return clean_text(student.get("id"), 40)
+    email_token = safe_filename_token(profile.get("email"), 60)
+    if role in ("admin", "teacher"):
+        return "staff-" + email_token
+    if is_basic_unit6_neighborhood_test_profile(profile):
+        return "test-" + email_token
+    return ""
+
+
 def basic_unit6_neighborhood_gallery_payload(profile, grades_data, gallery):
     role = grade_user_role(profile, grades_data)
     student = matched_student_for_profile(profile, grades_data)
-    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    owner_id = basic_unit6_neighborhood_owner_id(profile, role, student)
     is_staff = role in ("admin", "teacher")
     items = []
     for item in gallery.get("submissions", []):
         if not isinstance(item, dict):
             continue
-        if is_staff or clean_text(item.get("studentId"), 40) == student_id:
+        if is_staff or (owner_id and clean_text(item.get("studentId"), 40) == owner_id):
             items.append(public_basic_unit6_neighborhood_item(item, is_staff))
     items.sort(key=lambda entry: entry.get("submittedAt") or "", reverse=True)
     return {
         "role": role,
+        "testAccount": is_basic_unit6_neighborhood_test_profile(profile),
         "student": student_public_view(student) if isinstance(student, dict) else None,
         "submissions": items[:80],
         "generationAvailable": bool(os.environ.get("OPENAI_API_KEY", "").strip())
@@ -4216,10 +4237,10 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
                 role = grade_user_role(profile, grades_data)
                 student = matched_student_for_profile(profile, grades_data)
-                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                if role not in ("admin", "teacher") and not isinstance(student, dict) and not is_basic_unit6_neighborhood_test_profile(profile):
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
-                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else "staff-" + safe_filename_token(profile.get("email"), 60)
+                student_id = basic_unit6_neighborhood_owner_id(profile, role, student)
                 gallery = read_basic_unit6_neighborhood_gallery()
                 existing = next(
                     (
@@ -4279,7 +4300,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 gradebook_changed = ensure_basic_gradebook_structure(grades_data)
                 role = grade_user_role(profile, grades_data)
                 student = matched_student_for_profile(profile, grades_data)
-                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else "staff-" + safe_filename_token(profile.get("email"), 60)
+                if role not in ("admin", "teacher") and not isinstance(student, dict) and not is_basic_unit6_neighborhood_test_profile(profile):
+                    try:
+                        os.unlink(image_path)
+                    except OSError:
+                        pass
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                student_id = basic_unit6_neighborhood_owner_id(profile, role, student)
                 gallery = read_basic_unit6_neighborhood_gallery()
                 if role not in ("admin", "teacher"):
                     duplicate = next(
