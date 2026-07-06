@@ -11,9 +11,9 @@
   "evaluations": [
     {
       "id": "comprehension",
-      "title": "Compréhension orale et écrite",
+      "title": "Comprehension orale et ecrite",
       "weight": 20,
-      "type": "Compréhension",
+      "type": "Comprehension",
       "description": "Comprendre une routine, des horaires, des annonces simples et de courts messages."
     },
     {
@@ -21,28 +21,53 @@
       "title": "Grammaire en contexte",
       "weight": 30,
       "type": "Grammaire",
-      "description": "Présent, verbes pronominaux, négation élargie, questions et connecteurs."
+      "description": "Present, verbes pronominaux, negation elargie, questions et connecteurs."
     },
     {
       "id": "production-ecrite",
-      "title": "Production écrite",
+      "title": "Production ecrite",
       "weight": 20,
-      "type": "Écriture",
-      "description": "Rédiger une routine ou un message court avec cohérence."
+      "type": "Ecriture",
+      "description": "Rediger une routine ou un message court avec coherence."
     },
     {
-      "id": "interaction-orale",
-      "title": "Production orale et interaction",
-      "weight": 20,
-      "type": "Oral",
-      "description": "Décrire sa journée, poser des questions et répondre naturellement."
+      "id": "pronunciationTheme1",
+      "title": "Prononciation theme 1 - Routines quotidiennes",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 1",
+      "description": "Defi final de prononciation du theme 1. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciationTheme3",
+      "title": "Prononciation theme 3 - Logement",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 3",
+      "description": "Defi final de prononciation du theme 3. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciationTheme5",
+      "title": "Prononciation theme 5 - Sante",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 5",
+      "description": "Defi final de prononciation du theme 5. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciationTheme7",
+      "title": "Prononciation theme 7 - Ville et directions",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 7",
+      "description": "Defi final de prononciation du theme 7. Envoi autorise a partir de 50/100."
     },
     {
       "id": "projet-final",
       "title": "Projet final A1.2",
       "weight": 10,
       "type": "Projet",
-      "description": "Présenter “Ma vie quotidienne en français” avec texte et dialogue simulé."
+      "description": "Presenter Ma vie quotidienne en francais avec texte et dialogue simule."
     }
   ],
   "bonusEvent": null

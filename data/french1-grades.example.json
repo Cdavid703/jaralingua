@@ -2,18 +2,67 @@
   "adminEmails": [
     "cdavid.jaramillo@gmail.com"
   ],
-  "teacherEmails": ["lcvelasqueza@correo.iue.edu.co", "velasquez.luisac@gmail.com"],
+  "teacherEmails": [
+    "lcvelasqueza@correo.iue.edu.co",
+    "velasquez.luisac@gmail.com"
+  ],
   "allowStudentIdClaim": false,
   "students": [],
   "evaluations": [
-    {"id":"finalExam","title":"Examen final A1.1","weight":20,"type":"Examen final","displayDate":"Séance d'examen","description":"Examen final verrouillé. La note est calculée automatiquement sur 5."},
-    {"id":"projetFinal","title":"Projet final A1.1","weight":20,"type":"Projet","description":"Présentation personnelle finale : identité, famille, description, maison et routine simple."},
-    {"id":"pronunciationTheme1","title":"Prononciation thème 1 - Premiers contacts","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 1","description":"Défi final de prononciation du thème 1. Envoi autorisé à partir de 50/100."},
-    {"id":"pronunciationTheme3","title":"Prononciation thème 3 - Verbes essentiels","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 3","description":"Défi final de prononciation du thème 3. Envoi autorisé à partir de 50/100."},
-    {"id":"pronunciationTheme5","title":"Prononciation thème 5 - Description et professions","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 5","description":"Défi final de prononciation du thème 5. Envoi autorisé à partir de 50/100."},
-    {"id":"pronunciationTheme7","title":"Prononciation thème 7 - Maison et localisation","weight":1.25,"type":"Prononciation","displayDate":"Semaine du thème 7","description":"Défi final de prononciation du thème 7. Envoi autorisé à partir de 50/100."},
-    {"id":"evaluationLibre40","title":"Évaluation libre à définir","weight":40,"type":"À définir","description":"Espace réservé aux évaluations libres que le professeur définira ensuite."},
-    {"id":"evaluationApreciser15","title":"Évaluation à préciser","weight":15,"type":"À préciser","description":"Pourcentage restant à préciser afin que le carnet totalise 100%."}
+    {
+      "id": "finalExam",
+      "title": "Examen final A1.1",
+      "weight": 20,
+      "type": "Examen final",
+      "displayDate": "Seance d'examen",
+      "description": "Examen final verrouille. La note est calculee automatiquement sur 5."
+    },
+    {
+      "id": "projetFinal",
+      "title": "Projet final A1.1",
+      "weight": 20,
+      "type": "Projet",
+      "description": "Presentation personnelle finale : identite, famille, description, maison et routine simple."
+    },
+    {
+      "id": "pronunciationTheme1",
+      "title": "Prononciation theme 1 - Premiers contacts",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 1",
+      "description": "Defi final de prononciation du theme 1. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciationTheme3",
+      "title": "Prononciation theme 3 - Verbes essentiels",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 3",
+      "description": "Defi final de prononciation du theme 3. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciationTheme5",
+      "title": "Prononciation theme 5 - Description et professions",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 5",
+      "description": "Defi final de prononciation du theme 5. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "pronunciationTheme7",
+      "title": "Prononciation theme 7 - Maison et localisation",
+      "weight": 5,
+      "type": "Prononciation",
+      "displayDate": "Semaine du theme 7",
+      "description": "Defi final de prononciation du theme 7. Envoi autorise a partir de 50/100."
+    },
+    {
+      "id": "evaluationLibre40",
+      "title": "Evaluation libre a definir",
+      "weight": 40,
+      "type": "A definir",
+      "description": "Espace reserve aux evaluations libres que le professeur definira ensuite."
+    }
   ],
   "bonusEvent": null
 }

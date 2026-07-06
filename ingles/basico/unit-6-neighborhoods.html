@@ -9,32 +9,419 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <style>
-    .unit6-path{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.8rem;margin-top:1.1rem}
-    .unit6-path a{background:#fff;border:1px solid #dbeafe;border-radius:18px;padding:.9rem;text-decoration:none;color:#153b55;box-shadow:0 12px 24px rgba(15,23,42,.07)}
-    .unit6-path span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#dff7e8;color:#0f7b52;font-weight:950;margin-bottom:.45rem}
-    .unit6-path strong{display:block;font-size:.92rem}.unit6-path small{display:block;color:#64748b;line-height:1.35;margin-top:.25rem}
-    .unit6-vocab-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
-    .unit6-place-card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;overflow:hidden;box-shadow:0 12px 26px rgba(15,23,42,.07)}
-    .unit6-place-card img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;background:#eef7ff}
-    .unit6-place-card div{padding:.85rem}.unit6-place-card strong{display:block;color:#153b55;font-size:1.05rem}.unit6-place-card span{display:block;color:#64748b;font-size:.9rem;margin-top:.2rem}
-    .unit6-speak{border:0;border-radius:999px;background:#e0f2fe;color:#153b55;font-weight:900;padding:.42rem .7rem;margin-top:.55rem;cursor:pointer;display:inline-flex;align-items:center;gap:.35rem}
-    .unit6-speak:hover{transform:translateY(-1px)}
-    .unit6-table{width:100%;border-collapse:separate;border-spacing:0;margin:1rem 0;border:1px solid #dbeafe;border-radius:18px;overflow:hidden;background:#fff}
-    .unit6-table th{background:#153b55;color:#fff;text-align:left}.unit6-table th,.unit6-table td{padding:.85rem;border-bottom:1px solid #e2e8f0}.unit6-table tr:last-child td{border-bottom:0}
-    .unit6-note-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-    .unit6-note{background:#f8fafc;border-left:5px solid #0f9f6e;border-radius:18px;padding:1rem;color:#334155}.unit6-note strong{display:block;color:#153b55;margin-bottom:.35rem}
-    .unit6-practice-list{display:grid;gap:.7rem;margin-top:1rem}.unit6-practice-list li{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:.8rem 1rem}
-    .unit6-map{position:relative;min-height:380px;border-radius:24px;background:linear-gradient(135deg,#dff7e8,#e0f2fe);overflow:hidden;border:1px solid #cbd5e1;box-shadow:0 18px 38px rgba(15,23,42,.08)}
-    .unit6-road{position:absolute;background:#f8fafc;border:8px solid #94a3b8}.unit6-road.main{left:-30px;right:-30px;top:170px;height:58px}.unit6-road.cross{top:-30px;bottom:-30px;left:290px;width:58px}
-    .unit6-map-place{position:absolute;display:grid;place-items:center;text-align:center;width:112px;min-height:72px;border-radius:18px;background:#fff;color:#153b55;font-weight:950;box-shadow:0 12px 26px rgba(15,23,42,.12);padding:.55rem}
-    .unit6-map-place i{font-size:1.35rem;color:#0f9f6e}.unit6-map-place small{display:block;font-weight:800;color:#64748b}
-    .unit6-model{background:#fff7e8;border:1px solid #fed7aa;border-radius:22px;padding:1.2rem;line-height:1.8;color:#334155;font-size:1.05rem}
-    .unit6-checklist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.7rem;margin-top:1rem}.unit6-checklist label{background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:.8rem 1rem;color:#334155}
-    @media(max-width:1000px){.unit6-path,.unit6-vocab-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.unit6-note-grid{grid-template-columns:1fr}.unit6-checklist{grid-template-columns:1fr}}
-    @media(max-width:620px){.unit6-path,.unit6-vocab-grid{grid-template-columns:1fr}.unit6-map-place{width:94px;font-size:.84rem}}
+    .unit6-page {
+      --unit6-blue: #123b8f;
+      --unit6-ink: #071f4f;
+      --unit6-red: #c1121f;
+      --unit6-green: #0f9f6e;
+      --unit6-soft: #f8fbff;
+      --unit6-warm: #fff7e8;
+    }
+
+    .unit6-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .unit6-route-item {
+      min-height: 122px;
+      border-radius: 20px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+      text-decoration: none;
+      color: var(--unit6-ink);
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .unit6-route-item span,
+    .unit6-mini-label {
+      color: var(--unit6-red);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+    }
+
+    .unit6-section-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .unit6-module {
+      border-radius: 30px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.1);
+      overflow: hidden;
+    }
+
+    .unit6-module + .unit6-module,
+    .unit6-module + .premium-topic-card {
+      margin-top: 28px;
+    }
+
+    .unit6-module-header {
+      padding: clamp(1.4rem, 3vw, 2.35rem);
+      background:
+        linear-gradient(135deg, rgba(18, 59, 143, 0.95), rgba(7, 31, 79, 0.9)),
+        var(--module-image, none) center/cover;
+      color: #ffffff;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .unit6-module-header:focus {
+      outline: 3px solid rgba(255, 255, 255, 0.75);
+      outline-offset: -8px;
+    }
+
+    .unit6-module-header > span:first-child {
+      display: inline-flex;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .unit6-module-header h2 {
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .unit6-module-header p {
+      max-width: 900px;
+      line-height: 1.7;
+      opacity: 0.92;
+      margin: 0;
+      padding-right: clamp(0px, 10vw, 150px);
+    }
+
+    .unit6-module-toggle {
+      position: absolute;
+      right: clamp(1rem, 3vw, 2rem);
+      top: clamp(1rem, 3vw, 2rem);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 9px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .unit6-module-toggle i {
+      transition: transform 0.2s ease;
+    }
+
+    .unit6-module.is-collapsed .unit6-module-toggle i {
+      transform: rotate(-90deg);
+    }
+
+    .unit6-module-body {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      display: grid;
+      gap: 20px;
+    }
+
+    .unit6-module.is-collapsed .unit6-module-body {
+      display: none;
+    }
+
+    .unit6-audio-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      border-radius: 22px;
+      padding: 18px;
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.12);
+    }
+
+    .unit6-audio-panel h3 {
+      color: var(--unit6-ink);
+      margin-bottom: 8px;
+      font-size: 1.14rem;
+    }
+
+    .unit6-audio-panel p {
+      color: #475569;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .unit6-audio-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+
+    .unit6-status {
+      min-height: 1.4rem;
+      color: #475569;
+      font-weight: 800;
+    }
+
+    .unit6-grid-2,
+    .unit6-grid-3,
+    .unit6-grid-4 {
+      display: grid;
+      gap: 14px;
+    }
+
+    .unit6-grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .unit6-grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .unit6-grid-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .unit6-place-card,
+    .unit6-language-card,
+    .unit6-note,
+    .unit6-expression,
+    .unit6-step-card,
+    .unit6-error-card {
+      border-radius: 18px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+      display: grid;
+      gap: 9px;
+      align-content: start;
+    }
+
+    .unit6-place-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .unit6-place-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      background: #eef7ff;
+    }
+
+    .unit6-place-card div {
+      padding: 14px;
+    }
+
+    .unit6-place-card strong,
+    .unit6-language-card strong,
+    .unit6-expression strong,
+    .unit6-step-card strong {
+      color: var(--unit6-ink);
+      font-size: 1.04rem;
+    }
+
+    .unit6-place-card small,
+    .unit6-language-card small,
+    .unit6-expression small,
+    .unit6-step-card small {
+      color: #64748b;
+      line-height: 1.55;
+    }
+
+    .unit6-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .unit6-table th {
+      background: var(--unit6-ink);
+      color: #ffffff;
+      text-align: left;
+    }
+
+    .unit6-table th,
+    .unit6-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+
+    .unit6-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .unit6-note {
+      background: #f8fafc;
+      border-left: 5px solid var(--unit6-green);
+      color: #334155;
+    }
+
+    .unit6-error-card {
+      background: #fff7ed;
+      border-left: 5px solid #f97316;
+    }
+
+    .unit6-error-card .bad {
+      color: #b91c1c;
+      font-weight: 900;
+    }
+
+    .unit6-error-card .good {
+      color: #047857;
+      font-weight: 900;
+    }
+
+    .unit6-image-card {
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 18px 38px rgba(15, 23, 42, 0.12);
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      background: #ffffff;
+    }
+
+    .unit6-image-card img {
+      display: block;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .unit6-map-frame {
+      position: relative;
+    }
+
+    .unit6-map-frame img {
+      aspect-ratio: 16 / 9;
+    }
+
+    .unit6-pin {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      border: 0;
+      border-radius: 999px;
+      padding: 0.42rem 0.7rem;
+      color: #ffffff;
+      background: rgba(7, 31, 79, 0.9);
+      box-shadow: 0 10px 22px rgba(7, 31, 79, 0.22);
+      font-weight: 900;
+      font-size: 0.8rem;
+      white-space: nowrap;
+    }
+
+    .unit6-formula {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 0.52rem 0.8rem;
+      background: #e0f2fe;
+      color: var(--unit6-ink);
+      font-weight: 900;
+      margin: 0.15rem;
+    }
+
+    .unit6-dialogue-card,
+    .unit6-model-card {
+      border-radius: 24px;
+      padding: clamp(1rem, 3vw, 1.6rem);
+      background: var(--unit6-warm);
+      border: 1px solid #fed7aa;
+      color: #334155;
+      line-height: 1.75;
+    }
+
+    .unit6-dialogue-card p,
+    .unit6-model-card p {
+      margin-bottom: 0.72rem;
+    }
+
+    .unit6-checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+      margin-top: 0.4rem;
+    }
+
+    .unit6-checklist label {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 0.8rem 1rem;
+      color: #334155;
+    }
+
+    .unit6-material-note {
+      border-radius: 20px;
+      background: #f8fafc;
+      border: 1px dashed rgba(18, 59, 143, 0.3);
+      color: #475569;
+      padding: 1rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 980px) {
+      .unit6-map,
+      .unit6-grid-4,
+      .unit6-grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .unit6-grid-2,
+      .unit6-audio-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .unit6-audio-tools {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .unit6-map,
+      .unit6-grid-4,
+      .unit6-grid-3,
+      .unit6-checklist {
+        grid-template-columns: 1fr;
+      }
+
+      .unit6-module-header p {
+        padding-right: 0;
+      }
+
+      .unit6-module-toggle {
+        position: static;
+        margin-top: 16px;
+      }
+
+      .unit6-pin {
+        font-size: 0.68rem;
+        padding: 0.35rem 0.5rem;
+      }
+    }
   </style>
 </head>
-<body class="english-basic-page">
+<body class="english-basic-page unit6-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
   <header class="site-header">
     <nav class="navbar">
@@ -49,156 +436,419 @@
     </nav>
   </header>
   <main>
-
-    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png');">
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Basic English Course 1</p>
         <h1>Unit 6: Neighborhoods</h1>
-        <p>By the end of this unit, you will be able to describe places in a neighborhood, tell the time, and talk about favorite places in the city.</p>
-        <div class="lesson-meta"><span>Sessions 15-16</span><span>There is/are</span><span>Time</span><span>City adjectives</span></div>
+        <p>Describe places in a neighborhood, ask for directions, give simple directions, tell the time, and recommend favorite places in the city.</p>
+        <div class="lesson-meta"><span>Sessions 15-16</span><span>There is / There are</span><span>Directions</span><span>Time</span><span>Idioms</span></div>
         <div class="hero-actions">
           <a href="#lesson-content" class="btn btn-primary">Start lesson</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png" alt="Unit 6: Neighborhoods" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp" alt="Professional neighborhood map for Unit 6" /></aside>
     </section>
-
 
     <section class="lesson-outcome">
       <div class="outcome-card">
         <span class="outcome-label">Learning Outcome</span>
-        <p>By the end of this unit, you will be able to describe places in a neighborhood, tell the time, and talk about favorite places in the city.</p>
+        <p>By the end of this unit, you will be able to describe places in a neighborhood, ask for and give simple directions, tell the time, and present your favorite place in the city.</p>
       </div>
     </section>
 
     <section class="premium-lesson-container" id="lesson-content">
-
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Learning route</p><h2>What you will learn in Unit 6</h2></div></div>
-        <p class="lesson-text">Unit 6 connects your routines and free-time language with real places. You will describe your neighborhood, say what places exist, give simple times, and recommend favorite places in the city.</p>
-        <div class="unit6-path">
-          <a href="#places"><span>1</span><strong>Places in town</strong><small>park, cafe, library, bus stop...</small></a>
-          <a href="#there-is-are"><span>2</span><strong>There is / are</strong><small>one place vs many places</small></a>
-          <a href="#location-time"><span>3</span><strong>Location and time</strong><small>near, next to, at 5:00</small></a>
-          <a href="#favorite-places"><span>4</span><strong>Favorite places</strong><small>best, quiet, popular, safe</small></a>
-          <a href="#final-product"><span>5</span><strong>Your product</strong><small>map, blog entry, presentation</small></a>
+        <p class="lesson-text">Unit 6 connects places, routines, time, and city recommendations. You will move from simple vocabulary to a complete spoken and written city guide.</p>
+        <div class="unit6-map">
+          <a class="unit6-route-item" href="#unit6-section-1"><span>01</span><strong>Introduction</strong><small>Neighborhoods and city life.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-2"><span>02</span><strong>Places in town</strong><small>Core and extra vocabulary.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-3"><span>03</span><strong>There is / are</strong><small>Describe what exists.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-4"><span>04</span><strong>Location words</strong><small>Near, next to, across from.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-5"><span>05</span><strong>Directions</strong><small>Go straight, turn left, turn right.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-6"><span>06</span><strong>Time</strong><small>What time is it? It opens at...</small></a>
+          <a class="unit6-route-item" href="#unit6-section-7"><span>07</span><strong>Favorite places</strong><small>Adjectives and recommendations.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-8"><span>08</span><strong>Expressions</strong><small>Phrasal verbs and idioms.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-9"><span>09</span><strong>Idioms</strong><small>Natural place expressions.</small></a>
+          <a class="unit6-route-item" href="#unit6-section-10"><span>10</span><strong>Final products</strong><small>Speaking and writing models.</small></a>
+        </div>
+        <div class="unit6-section-controls" aria-label="Unit section controls">
+          <button type="button" class="audio-btn play" onclick="setUnit6Sections(true)">Open all sections</button>
+          <button type="button" class="audio-btn" onclick="setUnit6Sections(false)">Close all sections</button>
         </div>
       </article>
 
-      <article class="premium-topic-card" id="places">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Vocabulary</p><h2>Places in a neighborhood</h2></div></div>
-        <p class="lesson-text">Study the places visually first. Click the listen button to hear the word with an American English browser voice, then repeat it aloud.</p>
-        <div class="unit6-vocab-grid">
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/park.webp" alt="Park"><div><strong>park</strong><span>There is a park.</span><button class="unit6-speak" type="button" data-say="park"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/cafe.webp" alt="Cafe"><div><strong>cafe</strong><span>There is a cafe.</span><button class="unit6-speak" type="button" data-say="cafe"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/restaurant.webp" alt="Restaurant"><div><strong>restaurant</strong><span>There is a restaurant.</span><button class="unit6-speak" type="button" data-say="restaurant"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/school.webp" alt="School"><div><strong>school</strong><span>There is a school.</span><button class="unit6-speak" type="button" data-say="school"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/library.webp" alt="Library"><div><strong>library</strong><span>There is a library.</span><button class="unit6-speak" type="button" data-say="library"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/gym.webp" alt="Gym"><div><strong>gym</strong><span>There is a gym.</span><button class="unit6-speak" type="button" data-say="gym"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/supermarket.webp" alt="Supermarket"><div><strong>supermarket</strong><span>There is a supermarket.</span><button class="unit6-speak" type="button" data-say="supermarket"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/hospital.webp" alt="Hospital"><div><strong>hospital</strong><span>There is a hospital.</span><button class="unit6-speak" type="button" data-say="hospital"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/bank.webp" alt="Bank"><div><strong>bank</strong><span>There is a bank.</span><button class="unit6-speak" type="button" data-say="bank"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/church.webp" alt="Church"><div><strong>church</strong><span>There is a church.</span><button class="unit6-speak" type="button" data-say="church"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/bus-stop.webp" alt="Bus stop"><div><strong>bus stop</strong><span>There is a bus stop.</span><button class="unit6-speak" type="button" data-say="bus stop"><i class="bi bi-volume-up"></i> Listen</button></div></div>
-          <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/pharmacy.webp" alt="Pharmacy"><div><strong>pharmacy</strong><span>There is a pharmacy.</span><button class="unit6-speak" type="button" data-say="pharmacy"><i class="bi bi-volume-up"></i> Listen</button></div></div>
+      <article class="unit6-module" id="unit6-section-1">
+        <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp')">
+          <span>01</span>
+          <h2>Unit 6 Introduction</h2>
+          <p>This unit prepares you to describe your neighborhood and help someone move through a simple city map.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-audio-panel">
+            <div><span class="unit6-mini-label">Audio 1</span><h3>Unit 6 overview</h3><p>Listen to the complete goal of the unit before studying the sections.</p></div>
+            <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-introduction')">Listen</button></div>
+          </div>
+          <div class="unit6-grid-3">
+            <div class="unit6-step-card"><strong>First</strong><small>Learn the names of places in a neighborhood: park, library, bank, supermarket, hospital, and bus stop.</small></div>
+            <div class="unit6-step-card"><strong>Then</strong><small>Use <em>there is</em> and <em>there are</em> to describe what places exist.</small></div>
+            <div class="unit6-step-card"><strong>Finally</strong><small>Give directions, say times, and recommend a favorite place in the city.</small></div>
+          </div>
+          <div class="unit6-material-note"><strong>Teacher source check:</strong> this section follows the Basic Course 1 pacing guide for Sessions 15 and 16: neighborhoods, nice places, time, favorite places in the city, sound practice, and city map presentation.</div>
         </div>
       </article>
 
-      <article class="premium-topic-card" id="there-is-are">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Grammar</p><h2>There is / There are</h2></div></div>
-        <p class="lesson-text">Use <strong>there is</strong> to say that one place exists. Use <strong>there are</strong> to say that two or more places exist.</p>
-        <table class="unit6-table">
-          <thead><tr><th>Use</th><th>Affirmative</th><th>Negative</th><th>Question</th></tr></thead>
-          <tbody>
-            <tr><td>One place</td><td>There is a park.</td><td>There isn't a park.</td><td>Is there a park?</td></tr>
-            <tr><td>Many places</td><td>There are two cafes.</td><td>There aren't two cafes.</td><td>Are there two cafes?</td></tr>
-            <tr><td>A lot</td><td>There are many restaurants.</td><td>There aren't many restaurants.</td><td>Are there many restaurants?</td></tr>
-          </tbody>
-        </table>
-        <div class="unit6-note-grid">
-          <div class="unit6-note"><strong>Correct</strong>There is a library near my house.</div>
-          <div class="unit6-note"><strong>Correct</strong>There are three supermarkets downtown.</div>
-          <div class="unit6-note"><strong>Careful</strong>Do not say: <em>There are a park</em>. Say: <strong>There is a park</strong>.</div>
-        </div>
-        <ol class="unit6-practice-list">
-          <li>There ___ a hospital near my house. <strong>Answer: is</strong></li>
-          <li>There ___ two cafes in my neighborhood. <strong>Answer: are</strong></li>
-          <li>There ___ many restaurants downtown. <strong>Answer: are</strong></li>
-          <li>___ there a bus stop near the school? <strong>Answer: Is</strong></li>
-        </ol>
-      </article>
-
-      <article class="premium-topic-card" id="location-time">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Location and time</p><h2>Where is it? What time do people go there?</h2></div></div>
-        <p class="lesson-text">After naming the place, add location and time. This helps your answer sound complete and useful.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Location words</h3><div class="phrase-list"><div class="phrase-item"><strong>near my house</strong><span>There is a pharmacy near my house.</span></div><div class="phrase-item"><strong>next to</strong><span>The library is next to the supermarket.</span></div><div class="phrase-item"><strong>in front of</strong><span>There is a bus stop in front of the school.</span></div><div class="phrase-item"><strong>downtown</strong><span>There are many restaurants downtown.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Time expressions</h3><div class="phrase-list"><div class="phrase-item"><strong>What time is it?</strong><span>It is seven thirty.</span></div><div class="phrase-item"><strong>at 8:00 a.m.</strong><span>The cafe opens at 8:00 a.m.</span></div><div class="phrase-item"><strong>at 5:00 p.m.</strong><span>People go to the park at 5:00 p.m.</span></div><div class="phrase-item"><strong>Let's...</strong><span>Let's have dinner at 8:00.</span></div></div></div>
-        </div>
-        <div class="unit6-map" aria-label="Example neighborhood map">
-          <span class="unit6-road main"></span><span class="unit6-road cross"></span>
-          <div class="unit6-map-place" style="left:8%;top:12%"><i class="bi bi-tree-fill"></i>Park<small>5:00 p.m.</small></div>
-          <div class="unit6-map-place" style="left:37%;top:11%"><i class="bi bi-cup-hot-fill"></i>Cafe<small>8:00 a.m.</small></div>
-          <div class="unit6-map-place" style="right:8%;top:13%"><i class="bi bi-book-fill"></i>Library<small>4:00 p.m.</small></div>
-          <div class="unit6-map-place" style="left:12%;bottom:10%"><i class="bi bi-basket-fill"></i>Supermarket<small>6:30 p.m.</small></div>
-          <div class="unit6-map-place" style="right:12%;bottom:10%"><i class="bi bi-bus-front-fill"></i>Bus stop<small>7:15 a.m.</small></div>
+      <article class="unit6-module" id="unit6-section-2">
+        <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png')">
+          <span>02</span>
+          <h2>Places in Town</h2>
+          <p>Study the basic places first. The extra places connect this lesson with the Unit 6 memory game.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-grid-4">
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/park.webp" alt="Park"><div><strong>park</strong><small>There is a park.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/cafe.webp" alt="Cafe"><div><strong>cafe</strong><small>There is a cafe.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/restaurant.webp" alt="Restaurant"><div><strong>restaurant</strong><small>There is a restaurant.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/school.webp" alt="School"><div><strong>school</strong><small>There is a school.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/library.webp" alt="Library"><div><strong>library</strong><small>There is a library.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/gym.webp" alt="Gym"><div><strong>gym</strong><small>There is a gym.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/supermarket.webp" alt="Supermarket"><div><strong>supermarket</strong><small>There is a supermarket.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/hospital.webp" alt="Hospital"><div><strong>hospital</strong><small>There is a hospital.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/bank.webp" alt="Bank"><div><strong>bank</strong><small>There is a bank.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/church.webp" alt="Church"><div><strong>church</strong><small>There is a church.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/bus-stop.webp" alt="Bus stop"><div><strong>bus stop</strong><small>There is a bus stop.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/pharmacy.webp" alt="Pharmacy"><div><strong>pharmacy</strong><small>There is a pharmacy.</small></div></div>
+          </div>
+          <div class="unit6-grid-4">
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/bakery.webp" alt="Bakery"><div><strong>bakery</strong><small>There is a bakery near the cafe.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/movie-theater.webp" alt="Movie theater"><div><strong>movie theater</strong><small>There is a movie theater downtown.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/shopping-mall.webp" alt="Shopping mall"><div><strong>shopping mall</strong><small>There is a shopping mall in the city.</small></div></div>
+            <div class="unit6-place-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/cards/police-station.webp" alt="Police station"><div><strong>police station</strong><small>There is a police station near the bank.</small></div></div>
+          </div>
         </div>
       </article>
 
-      <article class="premium-topic-card" id="favorite-places">
-        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">City recommendations</p><h2>Favorite Places in the City</h2></div></div>
-        <p class="lesson-text">Use adjectives to explain why a place is special. Start with one clear opinion and one reason.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Useful adjectives</h3><div class="phrase-list"><div class="phrase-item"><strong>quiet</strong><span>The library is quiet.</span></div><div class="phrase-item"><strong>popular</strong><span>The restaurant is popular.</span></div><div class="phrase-item"><strong>safe</strong><span>The park is safe.</span></div><div class="phrase-item"><strong>beautiful</strong><span>The city center is beautiful.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Recommendations</h3><div class="phrase-list"><div class="phrase-item"><strong>My favorite place is...</strong><span>My favorite place is the library.</span></div><div class="phrase-item"><strong>The best cafe is...</strong><span>The best cafe is near the park.</span></div><div class="phrase-item"><strong>The biggest park is...</strong><span>The biggest park is downtown.</span></div><div class="phrase-item"><strong>Let's go...</strong><span>Let's go to the restaurant at eight.</span></div></div></div>
+      <article class="unit6-module" id="unit6-section-3">
+        <header class="unit6-module-header">
+          <span>03</span>
+          <h2>There is / There are</h2>
+          <p>Use this structure to say that one place or many places exist in a neighborhood.</p>
+        </header>
+        <div class="unit6-module-body">
+          <table class="unit6-table">
+            <thead><tr><th>Use</th><th>Affirmative</th><th>Negative</th><th>Question</th><th>Short answer</th></tr></thead>
+            <tbody>
+              <tr><td>One place</td><td>There is a park.</td><td>There isn't a park.</td><td>Is there a park?</td><td>Yes, there is. / No, there isn't.</td></tr>
+              <tr><td>Many places</td><td>There are two cafes.</td><td>There aren't two cafes.</td><td>Are there two cafes?</td><td>Yes, there are. / No, there aren't.</td></tr>
+              <tr><td>A lot</td><td>There are many restaurants.</td><td>There aren't many restaurants.</td><td>Are there many restaurants?</td><td>Yes, there are. / No, there aren't.</td></tr>
+            </tbody>
+          </table>
+          <div class="unit6-grid-3">
+            <div class="unit6-note"><strong>Singular</strong><small>There is a library near my house.</small></div>
+            <div class="unit6-note"><strong>Plural</strong><small>There are three supermarkets downtown.</small></div>
+            <div class="unit6-note"><strong>Question</strong><small>Is there a bank near here?</small></div>
+          </div>
+          <div class="unit6-grid-2">
+            <div class="unit6-error-card"><strong>Common mistake 1</strong><small><span class="bad">Incorrect:</span> There are a park.<br><span class="good">Correct:</span> There is a park.</small></div>
+            <div class="unit6-error-card"><strong>Common mistake 2</strong><small><span class="bad">Incorrect:</span> There is two cafes.<br><span class="good">Correct:</span> There are two cafes.</small></div>
+          </div>
         </div>
-        <div class="teacher-tip"><span>Teacher's Tip</span><p>Start simple: <strong>There is a park. It is beautiful. I go there at 5:00.</strong> Then add one reason: <strong>I like it because it is quiet.</strong></p></div>
       </article>
 
-      <article class="premium-topic-card" id="final-product">
-        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Model and final product</p><h2>Describe your neighborhood</h2></div></div>
-        <p class="lesson-text">Read this model. Notice the places, grammar, time expressions, and adjectives.</p>
-        <p class="unit6-model">My neighborhood is quiet and beautiful. There is a park near my house. There are two cafes and many small stores. My favorite place is the library because it is quiet. I go there at 4:00 p.m. after class. There is also a restaurant next to the park. It is popular. On Saturdays, I go there with my family. My neighborhood is small, but it is very nice.</p>
-        <div class="unit6-checklist">
-          <label><input type="checkbox" /> I included five places.</label>
-          <label><input type="checkbox" /> I used <strong>there is</strong> three times.</label>
-          <label><input type="checkbox" /> I used <strong>there are</strong> two times.</label>
-          <label><input type="checkbox" /> I included two times: at 4:00, at 8:00...</label>
-          <label><input type="checkbox" /> I used three adjectives.</label>
-          <label><input type="checkbox" /> I recommended one favorite place.</label>
+      <article class="unit6-module" id="unit6-section-4">
+        <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp')">
+          <span>04</span>
+          <h2>Location Words</h2>
+          <p>Before giving directions, learn how to explain where one place is in relation to another place.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-grid-4">
+            <div class="unit6-language-card"><strong>near</strong><small>There is a pharmacy near my house.</small></div>
+            <div class="unit6-language-card"><strong>next to</strong><small>The library is next to the supermarket.</small></div>
+            <div class="unit6-language-card"><strong>in front of</strong><small>There is a bus stop in front of the school.</small></div>
+            <div class="unit6-language-card"><strong>across from</strong><small>The library is across from the park.</small></div>
+            <div class="unit6-language-card"><strong>behind</strong><small>The cafe is behind the bank.</small></div>
+            <div class="unit6-language-card"><strong>between</strong><small>The cafe is between the bank and the pharmacy.</small></div>
+            <div class="unit6-language-card"><strong>on the corner</strong><small>The restaurant is on the corner.</small></div>
+            <div class="unit6-language-card"><strong>downtown</strong><small>There are many restaurants downtown.</small></div>
+          </div>
+          <div class="unit6-image-card unit6-map-frame">
+            <img src="../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-directions-map-v1.webp" alt="Neighborhood map with city places" />
+            <span class="unit6-pin" style="left:50%;top:43%">park</span>
+            <span class="unit6-pin" style="left:69%;top:19%">cafe</span>
+            <span class="unit6-pin" style="left:78%;top:34%">bank</span>
+            <span class="unit6-pin" style="left:70%;top:55%">supermarket</span>
+            <span class="unit6-pin" style="left:10%;top:18%">hospital</span>
+            <span class="unit6-pin" style="left:50%;top:76%">bus stop</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit6-module" id="unit6-section-5">
+        <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-asking-directions-v1.webp')">
+          <span>05</span>
+          <h2>Giving Directions</h2>
+          <p>Use short, clear instructions to help someone get to a place in the city.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-audio-panel">
+            <div><span class="unit6-mini-label">Audio 2</span><h3>Finding the library</h3><p>Listen to a model conversation with directions, location words, time, and one idiom.</p></div>
+            <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-directions-conversation')">Listen</button></div>
+          </div>
+          <div class="unit6-grid-2">
+            <div class="unit6-image-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-asking-directions-v1.webp" alt="Students asking for directions in the city" /></div>
+            <div class="unit6-grid-2">
+              <div class="unit6-language-card"><strong>Ask</strong><small>Excuse me, where is the library?</small></div>
+              <div class="unit6-language-card"><strong>Ask</strong><small>How can I get to the supermarket?</small></div>
+              <div class="unit6-language-card"><strong>Answer</strong><small>Go straight for two blocks.</small></div>
+              <div class="unit6-language-card"><strong>Answer</strong><small>Turn right at the cafe.</small></div>
+              <div class="unit6-language-card"><strong>Answer</strong><small>Cross the street.</small></div>
+              <div class="unit6-language-card"><strong>Answer</strong><small>It is on your left.</small></div>
+            </div>
+          </div>
+          <div class="unit6-dialogue-card">
+            <h3>Conversation script</h3>
+            <p><strong>Ana:</strong> Excuse me, where is the library?</p>
+            <p><strong>Daniel:</strong> It is near the park. Go straight for two blocks and turn right at the cafe.</p>
+            <p><strong>Ana:</strong> Is it next to the supermarket?</p>
+            <p><strong>Daniel:</strong> Yes, it is. It is across from the park.</p>
+            <p><strong>Ana:</strong> What time does it open?</p>
+            <p><strong>Daniel:</strong> It opens at eight o'clock.</p>
+            <p><strong>Ana:</strong> Great. Is there a bus stop near the library?</p>
+            <p><strong>Daniel:</strong> Yes, there is. It is just around the corner.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit6-module" id="unit6-section-6">
+        <header class="unit6-module-header">
+          <span>06</span>
+          <h2>What Time Is It?</h2>
+          <p>Use time to talk about opening hours, meeting points, routines, and city activities.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-grid-3">
+            <div class="unit6-language-card"><strong>Current time</strong><small>What time is it?<br>It is seven o'clock.<br>It is seven thirty.</small></div>
+            <div class="unit6-language-card"><strong>Opening times</strong><small>What time does the cafe open?<br>It opens at 8:00 a.m.</small></div>
+            <div class="unit6-language-card"><strong>Activity times</strong><small>I go to the park at 5:00 p.m.<br>Let's meet at the bus stop at 7:15.</small></div>
+          </div>
+          <div>
+            <span class="unit6-formula">It is + time.</span>
+            <span class="unit6-formula">opens at + time.</span>
+            <span class="unit6-formula">go there at + time.</span>
+            <span class="unit6-formula">meet at + time.</span>
+          </div>
+          <div class="unit6-grid-2">
+            <div class="unit6-error-card"><strong>Common mistake</strong><small><span class="bad">Incorrect:</span> I go there in 5:00.<br><span class="good">Correct:</span> I go there at 5:00.</small></div>
+            <div class="unit6-error-card"><strong>Third person</strong><small><span class="bad">Incorrect:</span> The library open at 8:00.<br><span class="good">Correct:</span> The library opens at 8:00.</small></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit6-module" id="unit6-section-7">
+        <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-favorite-places-v1.webp')">
+          <span>07</span>
+          <h2>Favorite Places in the City</h2>
+          <p>Recommend a place by saying where it is, what it is like, what people do there, and why you like it.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-grid-2">
+            <div class="unit6-image-card"><img src="../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-favorite-places-v1.webp" alt="Students talking about favorite city places" /></div>
+            <div class="unit6-grid-2">
+              <div class="unit6-language-card"><strong>Step 1</strong><small>My favorite place is the library.</small></div>
+              <div class="unit6-language-card"><strong>Step 2</strong><small>It is next to the supermarket.</small></div>
+              <div class="unit6-language-card"><strong>Step 3</strong><small>It is quiet and modern.</small></div>
+              <div class="unit6-language-card"><strong>Step 4</strong><small>I recommend it because it is calm and friendly.</small></div>
+            </div>
+          </div>
+          <div class="unit6-grid-4">
+            <div class="unit6-expression"><strong>quiet</strong><small>The library is quiet.</small></div>
+            <div class="unit6-expression"><strong>popular</strong><small>The restaurant is popular.</small></div>
+            <div class="unit6-expression"><strong>safe</strong><small>The park is safe.</small></div>
+            <div class="unit6-expression"><strong>beautiful</strong><small>The city center is beautiful.</small></div>
+            <div class="unit6-expression"><strong>modern</strong><small>The shopping mall is modern.</small></div>
+            <div class="unit6-expression"><strong>clean</strong><small>The bus stop is clean.</small></div>
+            <div class="unit6-expression"><strong>friendly</strong><small>The cafe is friendly.</small></div>
+            <div class="unit6-expression"><strong>amazing</strong><small>There are amazing places downtown.</small></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit6-module" id="unit6-section-8">
+        <header class="unit6-module-header">
+          <span>08</span>
+          <h2>Phrasal Verbs and Useful City Expressions</h2>
+          <p>Learn natural expressions for asking directions, moving around the city, and talking about favorite places.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-audio-panel">
+            <div><span class="unit6-mini-label">Audio 3</span><h3>City expressions</h3><p>Listen and repeat the direction phrases and city expressions.</p></div>
+            <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-city-expressions')">Listen</button></div>
+          </div>
+          <div class="unit6-grid-3">
+            <div class="unit6-expression"><strong>get to</strong><small>How can I get to the library?</small></div>
+            <div class="unit6-expression"><strong>go straight</strong><small>Go straight for two blocks.</small></div>
+            <div class="unit6-expression"><strong>turn left / right</strong><small>Turn right at the cafe.</small></div>
+            <div class="unit6-expression"><strong>go past</strong><small>Go past the supermarket.</small></div>
+            <div class="unit6-expression"><strong>walk down</strong><small>Walk down Main Street.</small></div>
+            <div class="unit6-expression"><strong>stop by</strong><small>I stop by the cafe after class.</small></div>
+            <div class="unit6-expression"><strong>check out</strong><small>Check out the new restaurant downtown.</small></div>
+            <div class="unit6-expression"><strong>meet up</strong><small>Let's meet up at the bus stop.</small></div>
+            <div class="unit6-expression"><strong>on your left / right</strong><small>The library is on your left.</small></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit6-module" id="unit6-section-9">
+        <header class="unit6-module-header">
+          <span>09</span>
+          <h2>Idioms for Places and Directions</h2>
+          <p>Use a small number of natural idioms. They also appear in the general Basic English idiom bank.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-audio-panel">
+            <div><span class="unit6-mini-label">Audio 4</span><h3>Unit 6 idioms</h3><p>Listen to the idioms, meanings, and examples.</p></div>
+            <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-idioms')">Listen</button></div>
+          </div>
+          <div class="unit6-grid-4">
+            <div class="unit6-expression"><strong>just around the corner</strong><small>Very near. The cafe is just around the corner.</small></div>
+            <div class="unit6-expression"><strong>hit the road</strong><small>Leave or start a trip. It is late. Let's hit the road.</small></div>
+            <div class="unit6-expression"><strong>in the middle of nowhere</strong><small>Very far from places. The hotel is in the middle of nowhere.</small></div>
+            <div class="unit6-expression"><strong>a stone's throw away</strong><small>Very near. The library is a stone's throw away from the park.</small></div>
+          </div>
+          <div class="unit6-material-note"><strong>Important:</strong> idioms are not translated word by word. Students first learn the meaning, then repeat the example, and finally create a personal sentence.</div>
+        </div>
+      </article>
+
+      <article class="unit6-module" id="unit6-section-10">
+        <header class="unit6-module-header" style="--module-image:url('../../assets/img/english-basic/unit-6-neighborhoods/lesson/unit-6-favorite-places-v1.webp')">
+          <span>10</span>
+          <h2>Main Models and Final Products</h2>
+          <p>The final models integrate places, there is / there are, directions, times, adjectives, expressions, and one idiom.</p>
+        </header>
+        <div class="unit6-module-body">
+          <div class="unit6-audio-panel">
+            <div><span class="unit6-mini-label">Audio 5</span><h3>Final speaking model</h3><p>Listen to a complete A1 model before preparing your own city guide.</p></div>
+            <div class="unit6-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit6Audio('unit-6-final-speaking-model')">Listen</button></div>
+          </div>
+          <div class="unit6-model-card">
+            <h3>Final speaking model: My favorite place in the city</h3>
+            <p>My favorite place in my city is the library. There is a park across from it, and there are two cafes near it. To get there, go straight and turn right at the supermarket. The library is on your left. It opens at eight o'clock. I go there at four p.m. after class. It is quiet, clean, and modern. The cafe is just around the corner, so I sometimes stop by after studying.</p>
+          </div>
+          <div class="unit6-model-card">
+            <h3>Final writing model: Short city guide</h3>
+            <p>Welcome to my neighborhood. It is small, clean, and friendly. There is a park near my house, and there are two restaurants downtown. My favorite place is the library because it is quiet. To get there, go straight for two blocks and turn left at the bank. The library is across from the park. It opens at eight in the morning. I recommend it because students can study there after class.</p>
+          </div>
+          <div class="unit6-checklist">
+            <label><input type="checkbox" /> I named at least five places.</label>
+            <label><input type="checkbox" /> I used <strong>there is</strong> and <strong>there are</strong>.</label>
+            <label><input type="checkbox" /> I used three location words.</label>
+            <label><input type="checkbox" /> I gave two directions.</label>
+            <label><input type="checkbox" /> I included two time expressions.</label>
+            <label><input type="checkbox" /> I used three adjectives.</label>
+            <label><input type="checkbox" /> I used one idiom or natural expression.</label>
+            <label><input type="checkbox" /> I recommended one favorite place.</label>
+          </div>
         </div>
       </article>
 
       <article class="premium-topic-card linked-practice-card">
-        <div class="topic-heading"><span class="topic-number">07</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
-        <p class="lesson-text">After studying this unit, use the memory game to learn vocabulary, complete the reading and listening, and then build your own neighborhood or city map.</p>
+        <div class="topic-heading"><span class="topic-number">11</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
+        <p class="lesson-text">After studying the explanation, students can complete the Unit 6 memory game, reading, listening, pronunciation, sentence builder, and city map workshops.</p>
         <div class="hero-actions"><a href="game-unit-6-neighborhood-memory.html" class="btn btn-primary">Play memory game</a><a href="pronunciation-unit-6-my-neighborhood.html" class="btn btn-secondary">Open pronunciation</a><a href="reading-unit-6-my-neighborhood-guide.html" class="btn btn-secondary">Open reading</a><a href="listening-unit-6-neighborhoods.html" class="btn btn-secondary">Open listening</a><a href="practice-unit-6-neighborhoods.html" class="btn btn-secondary">Open unit practice</a><a href="workshop-unit-6-city-map-presentation.html" class="btn btn-secondary">City map workshop</a></div>
+        <div class="unit6-status" id="unit6AudioStatus" aria-live="polite"></div>
       </article>
     </section>
   </main>
 
   <footer class="site-footer">
-    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
+  <script>
+    let activeUnit6Audio = null;
+
+    function setUnit6AudioStatus(message) {
+      const status = document.getElementById("unit6AudioStatus");
+      if (status) status.textContent = message;
+    }
+
+    function playUnit6Audio(slug) {
+      if (activeUnit6Audio) {
+        activeUnit6Audio.pause();
+        activeUnit6Audio.currentTime = 0;
+      }
+      activeUnit6Audio = new Audio("audio/unit6/lesson/" + slug + ".mp3");
+      activeUnit6Audio.addEventListener("error", function() {
+        setUnit6AudioStatus("This professional audio is temporarily unavailable.");
+      }, { once: true });
+      activeUnit6Audio.addEventListener("ended", function() {
+        setUnit6AudioStatus("");
+      }, { once: true });
+      activeUnit6Audio.play().then(function() {
+        setUnit6AudioStatus("Playing professional American English audio.");
+      }).catch(function() {
+        setUnit6AudioStatus("Select the audio again to play it.");
+      });
+    }
+
+    function setUnit6ModuleOpen(module, isOpen) {
+      const header = module.querySelector(".unit6-module-header");
+      const toggle = module.querySelector(".unit6-module-toggle");
+      module.classList.toggle("is-collapsed", !isOpen);
+      if (header) header.setAttribute("aria-expanded", String(isOpen));
+      if (toggle) {
+        toggle.querySelector("span").textContent = isOpen ? "Close" : "Open";
+      }
+    }
+
+    function setUnit6Sections(open) {
+      document.querySelectorAll(".unit6-module").forEach(function(module) {
+        setUnit6ModuleOpen(module, open);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      const modules = document.querySelectorAll(".unit6-module");
+      modules.forEach(function(module, index) {
+        const header = module.querySelector(".unit6-module-header");
+        if (!header) return;
+
+        header.setAttribute("role", "button");
+        header.setAttribute("tabindex", "0");
+        header.setAttribute("aria-controls", "unit6-module-body-" + (index + 1));
+
+        const body = module.querySelector(".unit6-module-body");
+        if (body) body.id = "unit6-module-body-" + (index + 1);
+
+        const toggle = document.createElement("span");
+        toggle.className = "unit6-module-toggle";
+        toggle.innerHTML = '<i class="bi bi-chevron-down" aria-hidden="true"></i><span>Open</span>';
+        header.appendChild(toggle);
+
+        function toggleModule() {
+          setUnit6ModuleOpen(module, module.classList.contains("is-collapsed"));
+        }
+
+        header.addEventListener("click", function(event) {
+          if (event.target.closest("a, button")) return;
+          toggleModule();
+        });
+
+        header.addEventListener("keydown", function(event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleModule();
+          }
+        });
+
+        setUnit6ModuleOpen(module, index === 0);
+      });
+    });
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
-  <script>
-    document.querySelectorAll("[data-say]").forEach(function(button){
-      button.addEventListener("click",function(){
-        if(!("speechSynthesis" in window)) return;
-        var utterance=new SpeechSynthesisUtterance(button.dataset.say);
-        utterance.lang="en-US";
-        utterance.rate=.86;
-        var voices=speechSynthesis.getVoices();
-        var voice=voices.find(function(item){return item.lang.toLowerCase()==="en-us"})||voices.find(function(item){return item.lang.toLowerCase().startsWith("en")});
-        if(voice) utterance.voice=voice;
-        speechSynthesis.cancel();
-        speechSynthesis.speak(utterance);
-      });
-    });
-  </script>
 </body>
 </html>
