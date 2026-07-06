@@ -184,7 +184,7 @@
 
       <article class="premium-topic-card" id="ai-builder">
         <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Student Builder</p><h2>Create your description and prompt</h2></div></div>
-        <div class="ai-warning"><strong>One generation only:</strong> write carefully before clicking “Generate AI image”. The system saves the image and sends it to the teacher gallery for live class presentation.</div>
+        <div class="ai-warning"><strong>New workflow:</strong> Jaralingua helps you write the description and AI prompt. Generate the image outside Jaralingua, then upload the image here so the teacher can see it in the live gallery.</div>
         <form class="ai-builder" id="neighborhoodForm">
           <div class="ai-field"><label for="groupName">Team name</label><input id="groupName" type="text" placeholder="Example: Team Blue" /></div>
           <div class="ai-field"><label for="neighborhoodName">Neighborhood name</label><input id="neighborhoodName" type="text" placeholder="Example: Sunny Square" /></div>
@@ -214,13 +214,14 @@
           <div class="ai-field"><label for="openingTime">Opening time</label><input id="openingTime" type="text" placeholder="Example: The cafe opens at seven o'clock." /></div>
           <div class="ai-field"><label for="reason">Reason to recommend it</label><input id="reason" type="text" placeholder="Example: it is safe, friendly, and beautiful" /></div>
           <div class="ai-field full"><label for="studentDescription">Final English description</label><textarea id="studentDescription" placeholder="Click “Build description” or write your own 80-120 word description here."></textarea><small id="wordCount">0 words</small></div>
-          <div class="ai-field full"><label for="studentPrompt">AI image prompt</label><textarea id="studentPrompt" placeholder="Click “Build AI prompt” after your description is ready."></textarea></div>
+          <div class="ai-field full"><label for="studentPrompt">AI image prompt</label><textarea id="studentPrompt" placeholder="Click “Build AI prompt” after your description is ready. Copy this prompt and use it in your AI image tool."></textarea></div>
+          <div class="ai-field full"><label for="uploadedImage">Upload generated image</label><input id="uploadedImage" type="file" accept="image/png,image/jpeg,image/webp" /><small>Accepted formats: PNG, JPG, or WEBP. Maximum size: 4.5 MB. You may replace your uploaded image before class.</small></div>
         </form>
         <div class="ai-quality-panel">
           <div class="ai-lab-card">
-            <h3>Quality check before generating</h3>
+            <h3>Quality check before uploading</h3>
             <ul class="ai-validation-list" id="validationList">
-              <li class="fail">Write 80-120 words.</li>
+              <li class="fail">Write 65-180 words. Target 80-120 words for class.</li>
               <li class="fail">Select at least six places.</li>
               <li class="fail">Use there is / there are.</li>
               <li class="fail">Use a location phrase: next to, across from, near, behind, in front of, or in the center.</li>
@@ -234,7 +235,7 @@
               <label><input type="checkbox" data-final-check /> I used there is / there are.</label>
               <label><input type="checkbox" data-final-check /> I included location phrases.</label>
               <label><input type="checkbox" data-final-check /> I checked spelling and punctuation.</label>
-              <label><input type="checkbox" data-final-check /> I understand this account has one image generation.</label>
+              <label><input type="checkbox" data-final-check /> I generated the image outside Jaralingua and selected the file to upload.</label>
             </div>
           </div>
         </div>
@@ -242,9 +243,9 @@
           <button type="button" class="practice-submit-btn" id="buildDescriptionBtn">Build description</button>
           <button type="button" class="btn btn-secondary" id="buildPromptBtn">Build AI prompt</button>
           <button type="button" class="btn btn-secondary" id="copyPromptBtn">Copy prompt</button>
-          <button type="button" class="practice-submit-btn" id="generateImageBtn">Generate AI image</button>
+          <button type="button" class="practice-submit-btn" id="generateImageBtn">Upload image to teacher gallery</button>
         </div>
-        <div class="ai-status" id="aiStatus">Log in with your course account before generating the final image.</div>
+        <div class="ai-status" id="aiStatus">Log in with your course account before uploading the final image.</div>
         <section class="ai-generated-result" id="generatedResult" aria-live="polite">
           <img id="generatedImage" alt="Generated neighborhood image" />
           <div><strong id="generatedTitle"></strong><p id="generatedMeta"></p></div>
@@ -306,6 +307,7 @@
       const galleryRoot = document.getElementById("teacherGallery");
       const descriptionEl = document.getElementById("studentDescription");
       const promptEl = document.getElementById("studentPrompt");
+      const imageInput = document.getElementById("uploadedImage");
       const wordCountEl = document.getElementById("wordCount");
       const generateBtn = document.getElementById("generateImageBtn");
       const resultCard = document.getElementById("generatedResult");
@@ -393,6 +395,26 @@
       function checklistReady(){
         return checklistItems.every(item => item.checked);
       }
+      function readImageDataUrl(file){
+        return new Promise((resolve, reject) => {
+          if(!file){
+            reject(new Error("image_required"));
+            return;
+          }
+          if(!/^image\/(png|jpeg|webp)$/i.test(file.type || "")){
+            reject(new Error("image_type_invalid"));
+            return;
+          }
+          if(file.size > 4500000){
+            reject(new Error("image_too_large"));
+            return;
+          }
+          const reader = new FileReader();
+          reader.onload = () => resolve(String(reader.result || ""));
+          reader.onerror = () => reject(new Error("image_read_failed"));
+          reader.readAsDataURL(file);
+        });
+      }
       function buildDescription(){
         const name = getValue("neighborhoodName") || "Sunny Square";
         const type = getValue("neighborhoodType") || "quiet and green";
@@ -405,7 +427,7 @@
         const reason = getValue("reason") || "it is safe, friendly, and easy to visit";
         descriptionEl.value = `Welcome to ${name}. It is a ${type} neighborhood. In ${name}, ${sentenceList(places)}. ${locations} ${activities} My favorite place is ${favorite} because it is ${adjectives}. ${opening} I recommend ${name} because ${reason}.`;
         updateWordCount();
-        setStatus("Description built. Check that it has 80-120 words before generating the image.", false);
+        setStatus("Description built. Check that it has 65-180 words before building the prompt and uploading the image.", false);
       }
       function buildPrompt(){
         const description = descriptionEl.value.trim();
@@ -489,11 +511,7 @@
           teacherMode.textContent = ["admin","teacher"].includes(result.data.role) ? "Staff" : "Student";
           renderGallery(result.data.submissions || []);
           if(result.data.submissions && result.data.submissions[0]) renderResult(result.data.submissions[0]);
-          if(!result.data.generationAvailable){
-            setStatus("Gallery is available. AI generation needs OPENAI_API_KEY configured on the server.", true);
-          }else{
-            setStatus("Ready. Build the description and prompt before generating the final image.", false);
-          }
+          setStatus("Ready. Build the description and prompt, generate the image outside Jaralingua, then upload the file here.", false);
         }catch(error){
           renderGallery([]);
           setStatus("Could not load the teacher gallery. Check login or connection.", true);
@@ -502,7 +520,7 @@
       async function generateImage(){
         if(generating) return;
         if(!currentUser()){
-          setStatus("Please log in first. The generated image must be attached to a course account.", true);
+          setStatus("Please log in first. The uploaded image must be attached to a course account.", true);
           const trigger = document.querySelector("[data-auth-toggle],[data-auth-nav-toggle]");
           if(trigger) trigger.click();
           return;
@@ -510,11 +528,16 @@
         const count = updateWordCount();
         if(!updateValidation()){
           const missing = validationState().filter(item => !item.ok).map(item => item.text).join(" ");
-          setStatus("Complete the quality checks before generating the image: " + missing, true);
+          setStatus("Complete the quality checks before uploading the image: " + missing, true);
           return;
         }
         if(!checklistReady()){
-          setStatus("Mark the required confirmation checklist before generating the image.", true);
+          setStatus("Mark the required confirmation checklist before uploading the image.", true);
+          return;
+        }
+        const imageFile = imageInput && imageInput.files ? imageInput.files[0] : null;
+        if(!imageFile){
+          setStatus("Select the image file generated outside Jaralingua before uploading.", true);
           return;
         }
         if(count < 65 || count > 180){
@@ -523,35 +546,47 @@
         }
         generating = true;
         generateBtn.disabled = true;
-        setStatus("Generating the AI image. Do not close the page.", false);
+        setStatus("Uploading the image to the teacher gallery. Do not close the page.", false);
         try{
+          const imageDataUrl = await readImageDataUrl(imageFile);
           const result = await request(API.generate, {
             method: "POST",
             body: JSON.stringify({
               groupName: getValue("groupName"),
               neighborhoodName: getValue("neighborhoodName"),
               description: descriptionEl.value.trim(),
-              prompt: promptEl.value.trim()
+              prompt: promptEl.value.trim(),
+              imageDataUrl
             })
           });
           if(!result.ok){
             if(result.status === 409 && result.data.result){
               renderResult(result.data.result);
               await loadGallery();
-              setStatus("This account already generated one image. The saved result is shown here.", true);
+              setStatus("This account already uploaded an image. The saved result is shown here.", true);
               return;
             }
-            if(result.data && result.data.error === "openai_key_missing"){
-              setStatus("AI generation is not configured on the server yet. The teacher can still use the example image and the generated prompt.", true);
+            if(result.data && result.data.error === "image_too_large"){
+              setStatus("The image is too large. Upload a PNG, JPG, or WEBP file under 4.5 MB.", true);
+              return;
+            }
+            if(result.data && result.data.error === "image_type_invalid"){
+              setStatus("The image type is not accepted. Upload PNG, JPG, or WEBP.", true);
               return;
             }
             throw new Error(result.data && result.data.error || "generate_failed");
           }
           renderResult(result.data.result);
           renderGallery((result.data.gallery && result.data.gallery.submissions) || []);
-          setStatus("Image generated and sent to the teacher gallery.", false);
+          setStatus("Image uploaded and sent to the teacher gallery.", false);
         }catch(error){
-          setStatus("The image could not be generated. Review the prompt, login, and server connection.", true);
+          if(error && error.message === "image_too_large"){
+            setStatus("The image is too large. Upload a PNG, JPG, or WEBP file under 4.5 MB.", true);
+          }else if(error && error.message === "image_type_invalid"){
+            setStatus("The image type is not accepted. Upload PNG, JPG, or WEBP.", true);
+          }else{
+            setStatus("The image could not be uploaded. Review the file, login, and server connection.", true);
+          }
         }finally{
           generating = false;
           generateBtn.disabled = false;

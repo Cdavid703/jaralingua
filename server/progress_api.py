@@ -87,7 +87,7 @@ BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "data", "basi
 BUNDLED_BASIC_ANDRES_RETAKE_AUDIO_PATH = os.path.join(REPO_ROOT, "ingles", "basico", "audio", "integrated-task", "basic-integrated-task-andres-munoz-retake.mp3")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
-MAX_BODY_BYTES = 6 * 1024 * 1024
+MAX_BODY_BYTES = 10 * 1024 * 1024
 FRENCH8_PRONUNCIATION_DEADLINES = {
     "pronunciation01d": {
         "date": "2026-06-29",
@@ -695,13 +695,50 @@ def write_basic_unit6_neighborhood_gallery(data):
     write_json_file(BASIC_UNIT6_NEIGHBORHOOD_GALLERY_PATH, data, ".basic-unit6-neighborhood-gallery-")
 
 
-def basic_unit6_image_path(image_id):
-    filename = safe_filename_token(image_id, 80) + ".png"
+def basic_unit6_image_path(image_id, extension="png"):
+    extension = str(extension or "png").lower().strip().lstrip(".")
+    if extension not in {"png", "jpg", "jpeg", "webp"}:
+        extension = "png"
+    filename = safe_filename_token(image_id, 80) + "." + extension
     root = os.path.abspath(BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR)
     path = os.path.abspath(os.path.join(root, filename))
     if not path.startswith(root + os.sep):
         return ""
     return path
+
+
+def basic_unit6_image_file_for_id(image_id):
+    for extension, content_type in (
+        ("png", "image/png"),
+        ("jpg", "image/jpeg"),
+        ("jpeg", "image/jpeg"),
+        ("webp", "image/webp")
+    ):
+        path = basic_unit6_image_path(image_id, extension)
+        if path and os.path.exists(path):
+            return path, content_type
+    return "", ""
+
+
+def decode_basic_unit6_image_data_url(data_url):
+    if not isinstance(data_url, str):
+        raise ValueError("image_required")
+    match = re.match(r"^data:(image/(?:png|jpeg|jpg|webp));base64,(.+)$", data_url, re.DOTALL | re.IGNORECASE)
+    if not match:
+        raise ValueError("image_type_invalid")
+    content_type = match.group(1).lower()
+    if content_type == "image/jpg":
+        content_type = "image/jpeg"
+    extension = "jpg" if content_type == "image/jpeg" else content_type.split("/", 1)[1]
+    try:
+        image_bytes = base64.b64decode(match.group(2), validate=True)
+    except (binascii.Error, ValueError):
+        raise ValueError("image_invalid")
+    if not image_bytes:
+        raise ValueError("image_required")
+    if len(image_bytes) > 4_500_000:
+        raise ValueError("image_too_large")
+    return image_bytes, extension, content_type
 
 
 def public_basic_unit6_neighborhood_item(item, include_owner=False):
@@ -2744,12 +2781,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/basic/unit6-neighborhood-image/file":
             query = urllib.parse.parse_qs(parsed.query)
             image_id = clean_text((query.get("id") or [""])[0], 80)
-            image_path = basic_unit6_image_path(image_id)
+            image_path, content_type = basic_unit6_image_file_for_id(image_id)
             if not image_id or not image_path or not os.path.exists(image_path):
                 json_response(self, 404, {"error": "image_not_found"})
                 return
             with open(image_path, "rb") as handle:
-                binary_response(self, 200, handle.read(), "image/png")
+                binary_response(self, 200, handle.read(), content_type or "image/png")
             return
 
         profile = self.require_user()
@@ -4240,21 +4277,6 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if role not in ("admin", "teacher") and not isinstance(student, dict) and not is_basic_unit6_neighborhood_test_profile(profile):
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
-                student_id = basic_unit6_neighborhood_owner_id(profile, role, student)
-                gallery = read_basic_unit6_neighborhood_gallery()
-                existing = next(
-                    (
-                        item for item in gallery.get("submissions", [])
-                        if isinstance(item, dict) and clean_text(item.get("studentId"), 40) == student_id
-                    ),
-                    None
-                )
-                if existing and role not in ("admin", "teacher"):
-                    json_response(self, 409, {
-                        "error": "already_generated",
-                        "result": public_basic_unit6_neighborhood_item(existing)
-                    })
-                    return
 
             group_name = clean_text(payload.get("groupName"), 100)
             neighborhood_name = clean_text(payload.get("neighborhoodName"), 100)
@@ -4276,17 +4298,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 neighborhood_name = "Fictional Neighborhood"
 
             try:
-                image_bytes = call_openai_image_generation(prompt)
+                image_bytes, image_extension, image_content_type = decode_basic_unit6_image_data_url(payload.get("imageDataUrl"))
             except ValueError as error:
                 message = str(error)
-                if message == "openai_key_missing":
-                    json_response(self, 503, {"error": "openai_key_missing"})
-                    return
-                json_response(self, 502, {"error": "image_generation_failed", "message": message[:700]})
+                json_response(self, 400, {"error": message[:80]})
                 return
 
             image_id = secrets.token_urlsafe(18)
-            image_path = basic_unit6_image_path(image_id)
+            image_path = basic_unit6_image_path(image_id, image_extension)
             if not image_path:
                 json_response(self, 500, {"error": "invalid_image_path"})
                 return
@@ -4335,13 +4354,28 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "description": description,
                     "prompt": prompt,
                     "imageUrl": image_url,
+                    "imageContentType": image_content_type,
                     "studentId": student_id,
                     "studentName": clean_text(student.get("fullName"), 160) if isinstance(student, dict) else clean_text(profile.get("name"), 160),
                     "studentEmail": clean_email(student.get("email")) if isinstance(student, dict) else clean_email(profile.get("email")),
                     "submittedAt": submitted_at
                 }
                 submissions = gallery.setdefault("submissions", [])
-                submissions.append(item)
+                replaced = False
+                if role not in ("admin", "teacher"):
+                    for index, existing_item in enumerate(submissions):
+                        if isinstance(existing_item, dict) and clean_text(existing_item.get("studentId"), 40) == student_id:
+                            old_path, _old_content_type = basic_unit6_image_file_for_id(clean_text(existing_item.get("id"), 80))
+                            submissions[index] = item
+                            replaced = True
+                            if old_path and old_path != image_path:
+                                try:
+                                    os.unlink(old_path)
+                                except OSError:
+                                    pass
+                            break
+                if not replaced:
+                    submissions.append(item)
                 gallery["submissions"] = submissions[-300:]
                 gallery["updatedAt"] = submitted_at
                 write_basic_unit6_neighborhood_gallery(gallery)
