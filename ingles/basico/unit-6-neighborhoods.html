@@ -454,6 +454,88 @@
     }
 
     @media (max-width: 980px) {
+      .unit6-page {
+        overflow-x: hidden;
+      }
+
+      .unit6-page img,
+      .unit6-page table {
+        max-width: 100%;
+      }
+
+      .unit6-page .site-header {
+        position: relative;
+        z-index: 20;
+      }
+
+      .unit6-page .navbar {
+        align-items: flex-start;
+        gap: 0.85rem;
+      }
+
+      .unit6-page .nav-links {
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        gap: 0.45rem;
+      }
+
+      .unit6-page .nav-links a {
+        display: inline-flex;
+        min-height: 42px;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0.55rem 0.8rem;
+      }
+
+      .unit6-page .global-course-switcher {
+        max-width: calc(100vw - 1rem);
+      }
+
+      .unit6-page .immersive-basic-hero {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.15rem;
+        min-height: auto;
+        padding: clamp(1.1rem, 4vw, 2rem);
+      }
+
+      .unit6-page .lesson-hero-content {
+        max-width: 100%;
+      }
+
+      .unit6-page .lesson-hero-content h1 {
+        font-size: clamp(2rem, 8vw, 3.3rem);
+        line-height: 1.04;
+      }
+
+      .unit6-page .lesson-meta,
+      .unit6-page .hero-actions {
+        gap: 0.55rem;
+      }
+
+      .unit6-page .hero-actions .btn {
+        min-height: 44px;
+        justify-content: center;
+      }
+
+      .unit6-page .lesson-hero-image {
+        width: 100%;
+        max-width: 720px;
+        margin-inline: auto;
+      }
+
+      .unit6-page .premium-lesson-container,
+      .unit6-page .lesson-outcome {
+        width: min(100% - 1.25rem, 1120px);
+        margin-inline: auto;
+      }
+
+      .unit6-page .premium-topic-card {
+        border-radius: 24px;
+        padding-inline: clamp(1rem, 3vw, 1.35rem);
+      }
+
       .unit6-map,
       .unit6-grid-4,
       .unit6-grid-3,
@@ -470,9 +552,85 @@
       .unit6-audio-tools {
         justify-content: flex-start;
       }
+
+      .unit6-table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        white-space: normal;
+      }
+
+      .unit6-table th,
+      .unit6-table td {
+        min-width: 160px;
+      }
+
+      .unit6-map-task {
+        left: 16px;
+        right: 16px;
+        bottom: 16px;
+        max-width: none;
+      }
     }
 
     @media (max-width: 620px) {
+      .unit6-page .navbar {
+        padding-inline: 0.75rem;
+      }
+
+      .unit6-page .brand img {
+        max-width: 132px;
+        height: auto;
+      }
+
+      .unit6-page .nav-links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: 100%;
+      }
+
+      .unit6-page .nav-links a {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        font-size: 0.86rem;
+      }
+
+      .unit6-page .immersive-basic-hero {
+        margin-inline: 0.65rem;
+        border-radius: 24px;
+      }
+
+      .unit6-page .lesson-hero-content p {
+        font-size: 1rem;
+        line-height: 1.6;
+      }
+
+      .unit6-page .lesson-meta span {
+        font-size: 0.78rem;
+        padding: 0.45rem 0.6rem;
+      }
+
+      .unit6-page .hero-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 100%;
+      }
+
+      .unit6-page .hero-actions .btn {
+        width: 100%;
+      }
+
+      .unit6-page .topic-heading {
+        grid-template-columns: auto 1fr;
+        align-items: start;
+      }
+
+      .unit6-page .topic-heading h2 {
+        font-size: clamp(1.45rem, 7vw, 2rem);
+        line-height: 1.12;
+      }
+
       .unit6-map,
       .unit6-grid-4,
       .unit6-grid-3,
@@ -484,16 +642,134 @@
 
       .unit6-module-header p {
         padding-right: 0;
+        font-size: 0.98rem;
+      }
+
+      .unit6-module-header h2 {
+        font-size: clamp(1.55rem, 8vw, 2.15rem);
+      }
+
+      .unit6-module-header > span:first-child {
+        width: 42px;
+        height: 42px;
+        border-radius: 14px;
       }
 
       .unit6-module-toggle {
         position: static;
         margin-top: 16px;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .unit6-module-body {
+        padding: 1rem;
+        gap: 16px;
+      }
+
+      .unit6-audio-panel {
+        padding: 1rem;
+      }
+
+      .unit6-audio-tools,
+      .unit6-section-controls {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .unit6-audio-tools .audio-btn,
+      .unit6-section-controls .audio-btn {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .unit6-place-card {
+        grid-template-columns: 96px minmax(0, 1fr);
+        align-items: stretch;
+      }
+
+      .unit6-place-card img {
+        height: 100%;
+        min-height: 104px;
+        aspect-ratio: 1;
+      }
+
+      .unit6-place-card div {
+        display: grid;
+        align-content: center;
+        padding: 0.85rem;
+      }
+
+      .unit6-place-card strong,
+      .unit6-language-card strong,
+      .unit6-expression strong,
+      .unit6-step-card strong {
+        font-size: 1rem;
+      }
+
+      .unit6-language-card,
+      .unit6-note,
+      .unit6-expression,
+      .unit6-step-card,
+      .unit6-error-card,
+      .unit6-dialogue-card,
+      .unit6-model-card {
+        border-radius: 16px;
+        padding: 0.95rem;
+      }
+
+      .unit6-table {
+        font-size: 0.92rem;
+      }
+
+      .unit6-table th,
+      .unit6-table td {
+        padding: 0.72rem;
+        min-width: 145px;
+      }
+
+      .unit6-map-frame img {
+        aspect-ratio: 4 / 3;
+      }
+
+      .unit6-map-task {
+        position: static;
+        margin: 0.8rem;
+        box-shadow: none;
+        border: 1px solid rgba(18, 59, 143, 0.14);
       }
 
       .unit6-pin {
         font-size: 0.68rem;
         padding: 0.35rem 0.5rem;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .unit6-page .nav-links {
+        grid-template-columns: 1fr;
+      }
+
+      .unit6-page .premium-lesson-container,
+      .unit6-page .lesson-outcome {
+        width: min(100% - 0.8rem, 1120px);
+      }
+
+      .unit6-module {
+        border-radius: 22px;
+      }
+
+      .unit6-place-card {
+        grid-template-columns: 82px minmax(0, 1fr);
+      }
+
+      .unit6-place-card img {
+        min-height: 96px;
+      }
+
+      .unit6-pin {
+        font-size: 0.58rem;
+        padding: 0.26rem 0.38rem;
       }
     }
   </style>
