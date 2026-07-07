@@ -1,0 +1,509 @@
+body.english-basic-page,
+body.phonetic-page {
+  overflow-x: hidden;
+}
+
+body.english-basic-page *,
+body.english-basic-page *::before,
+body.english-basic-page *::after,
+body.phonetic-page *,
+body.phonetic-page *::before,
+body.phonetic-page *::after {
+  box-sizing: border-box;
+}
+
+body.english-basic-page img,
+body.english-basic-page video,
+body.english-basic-page iframe,
+body.english-basic-page audio,
+body.english-basic-page canvas,
+body.phonetic-page img,
+body.phonetic-page video,
+body.phonetic-page iframe,
+body.phonetic-page audio,
+body.phonetic-page canvas {
+  max-width: 100%;
+}
+
+body.english-basic-page table,
+body.phonetic-page table {
+  max-width: 100%;
+}
+
+body.english-basic-page input:not([type="checkbox"]):not([type="radio"]),
+body.english-basic-page select,
+body.english-basic-page textarea,
+body.phonetic-page input:not([type="checkbox"]):not([type="radio"]),
+body.phonetic-page select,
+body.phonetic-page textarea {
+  max-width: 100%;
+}
+
+body.english-basic-page .site-header,
+body.phonetic-page .site-header {
+  position: relative;
+  z-index: 20;
+}
+
+body.english-basic-page .premium-lesson-container,
+body.english-basic-page .lesson-outcome,
+body.english-basic-page .pronunciation-main,
+body.english-basic-page .game-shell,
+body.english-basic-page .quick-access-panel,
+body.phonetic-page main,
+body.phonetic-page .premium-lesson-container {
+  max-width: min(100% - 1.25rem, 1180px);
+  margin-inline: auto;
+}
+
+body.english-basic-page .premium-topic-card,
+body.english-basic-page .outcome-card,
+body.english-basic-page .reading-passage-card,
+body.english-basic-page .quiz-question-card,
+body.english-basic-page .worksheet-board,
+body.english-basic-page .deliverable-card,
+body.english-basic-page .teacher-card,
+body.english-basic-page .pronunciation-panel,
+body.english-basic-page .lesson-mini-card,
+body.english-basic-page .game-card,
+body.english-basic-page .practice-card,
+body.english-basic-page .guesswho-setup,
+body.english-basic-page .guesswho-panel,
+body.english-basic-page .guesswho-wheel-card,
+body.english-basic-page .guesswho-current-card,
+body.english-basic-page .guesswho-list-card,
+body.english-basic-page .guesswho-history-card,
+body.phonetic-page .phonetic-card,
+body.phonetic-page .sound-card {
+  max-width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+body.english-basic-page .lesson-grid,
+body.english-basic-page .language-bank-grid,
+body.english-basic-page .workshop-brief-grid,
+body.english-basic-page .listening-panel,
+body.english-basic-page .listening-audio-card,
+body.english-basic-page .teacher-panel,
+body.english-basic-page .pronunciation-layout,
+body.english-basic-page .guesswho-play-grid,
+body.english-basic-page .guesswho-current-grid,
+body.english-basic-page .guesswho-control-grid,
+body.english-basic-page .game-toolbar,
+body.english-basic-page .guesswho-setup,
+body.english-basic-page .activity-grid,
+body.english-basic-page .course-section-card,
+body.english-basic-page .course-grid,
+body.english-basic-page .practice-grid,
+body.english-basic-page .cards-grid,
+body.english-basic-page .feature-grid,
+body.english-basic-page .reading-grid,
+body.english-basic-page .audio-grid,
+body.english-basic-page .unit-grid,
+body.phonetic-page .phonetic-grid,
+body.phonetic-page .sound-grid {
+  min-width: 0;
+}
+
+body.english-basic-page .worksheet-board,
+body.english-basic-page .worksheet-table-wrap,
+body.english-basic-page .table-wrapper,
+body.english-basic-page .family-table-wrapper,
+body.english-basic-page .guesswho-table-container,
+body.english-basic-page .overview-scroll,
+body.phonetic-page .table-wrapper {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+body.english-basic-page .worksheet-table,
+body.english-basic-page .guesswho-table,
+body.english-basic-page .family-comparison-table {
+  width: max-content;
+  min-width: min(720px, 100%);
+}
+
+body.english-basic-page .course-audio-player,
+body.english-basic-page audio {
+  width: 100%;
+}
+
+body.english-basic-page .video-listening-frame,
+body.english-basic-page .youtube-growth-panel {
+  max-width: 100%;
+}
+
+@media (max-width: 980px) {
+  body.english-basic-page .navbar,
+  body.phonetic-page .navbar {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    max-width: 100%;
+  }
+
+  body.english-basic-page .nav-links,
+  body.phonetic-page .nav-links {
+    width: 100%;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.45rem;
+    overflow: visible;
+  }
+
+  body.english-basic-page .nav-links a,
+  body.phonetic-page .nav-links a {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.55rem 0.8rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  body.english-basic-page .global-course-switcher,
+  body.phonetic-page .global-course-switcher {
+    max-width: calc(100vw - 1rem);
+  }
+
+  body.english-basic-page .immersive-basic-hero,
+  body.phonetic-page .immersive-basic-hero {
+    display: grid;
+    grid-template-columns: 1fr !important;
+    gap: 1.15rem;
+    min-height: auto;
+    padding: clamp(1.1rem, 4vw, 2rem);
+  }
+
+  body.english-basic-page .lesson-hero-content,
+  body.phonetic-page .lesson-hero-content {
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.english-basic-page .lesson-hero-content h1,
+  body.phonetic-page .lesson-hero-content h1 {
+    font-size: clamp(2rem, 8vw, 3.3rem);
+    line-height: 1.04;
+  }
+
+  body.english-basic-page .lesson-meta,
+  body.english-basic-page .hero-actions,
+  body.phonetic-page .lesson-meta,
+  body.phonetic-page .hero-actions {
+    gap: 0.55rem;
+    max-width: 100%;
+  }
+
+  body.english-basic-page .hero-actions .btn,
+  body.phonetic-page .hero-actions .btn {
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  body.english-basic-page .lesson-hero-image,
+  body.phonetic-page .lesson-hero-image {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  body.english-basic-page .premium-topic-card,
+  body.phonetic-page .premium-topic-card {
+    border-radius: 24px;
+    padding-inline: clamp(1rem, 3vw, 1.35rem);
+  }
+
+  body.english-basic-page .topic-heading,
+  body.phonetic-page .topic-heading {
+    align-items: start;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  body.english-basic-page .lesson-grid,
+  body.english-basic-page .language-bank-grid,
+  body.english-basic-page .workshop-brief-grid,
+  body.english-basic-page .listening-panel,
+  body.english-basic-page .listening-audio-card,
+  body.english-basic-page .teacher-panel,
+  body.english-basic-page .pronunciation-layout,
+  body.english-basic-page .guesswho-play-grid,
+  body.english-basic-page .guesswho-current-grid,
+  body.english-basic-page .guesswho-control-grid,
+  body.english-basic-page .game-toolbar,
+  body.english-basic-page .activity-grid,
+  body.english-basic-page .feature-grid,
+  body.english-basic-page .reading-grid,
+  body.english-basic-page .audio-grid,
+  body.phonetic-page .phonetic-grid,
+  body.phonetic-page .sound-grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)) !important;
+  }
+
+  body.english-basic-page .worksheet-actions,
+  body.english-basic-page .audio-actions,
+  body.english-basic-page .game-actions,
+  body.english-basic-page .gate-actions,
+  body.english-basic-page .actions {
+    gap: 0.65rem;
+    flex-wrap: wrap;
+  }
+
+  body.english-basic-page .quiz-question-card label,
+  body.english-basic-page .guesswho-btn,
+  body.english-basic-page .game-command,
+  body.english-basic-page .practice-submit-btn,
+  body.english-basic-page .action-button,
+  body.phonetic-page button,
+  body.phonetic-page .btn {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 760px) {
+  body.english-basic-page .navbar,
+  body.phonetic-page .navbar {
+    padding-inline: 0.75rem;
+  }
+
+  body.english-basic-page .brand img,
+  body.phonetic-page .brand img {
+    max-width: 132px;
+    height: auto;
+  }
+
+  body.english-basic-page .nav-links,
+  body.phonetic-page .nav-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  body.english-basic-page .nav-links li,
+  body.phonetic-page .nav-links li {
+    min-width: 0;
+  }
+
+  body.english-basic-page .nav-links a,
+  body.phonetic-page .nav-links a {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.86rem;
+    overflow-wrap: anywhere;
+  }
+
+  body.english-basic-page .immersive-basic-hero,
+  body.phonetic-page .immersive-basic-hero {
+    margin-inline: 0.65rem;
+    width: auto;
+    max-width: calc(100% - 1.3rem);
+    border-radius: 24px;
+  }
+
+  body.english-basic-page .lesson-hero-content p,
+  body.phonetic-page .lesson-hero-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  body.english-basic-page .lesson-meta span,
+  body.phonetic-page .lesson-meta span {
+    font-size: 0.78rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  body.english-basic-page .hero-actions,
+  body.english-basic-page .worksheet-actions,
+  body.english-basic-page .audio-actions,
+  body.english-basic-page .game-actions,
+  body.english-basic-page .gate-actions,
+  body.english-basic-page .actions,
+  body.phonetic-page .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  body.english-basic-page .hero-actions .btn,
+  body.english-basic-page .worksheet-actions .practice-submit-btn,
+  body.english-basic-page .audio-actions .audio-btn,
+  body.english-basic-page .guesswho-btn,
+  body.english-basic-page .game-command,
+  body.english-basic-page .practice-submit-btn,
+  body.english-basic-page .action-button,
+  body.phonetic-page .hero-actions .btn,
+  body.phonetic-page button,
+  body.phonetic-page .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  body.english-basic-page .topic-heading,
+  body.phonetic-page .topic-heading {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+  }
+
+  body.english-basic-page .topic-heading h2,
+  body.phonetic-page .topic-heading h2 {
+    font-size: clamp(1.45rem, 7vw, 2rem);
+    line-height: 1.12;
+  }
+
+  body.english-basic-page .lesson-grid,
+  body.english-basic-page .language-bank-grid,
+  body.english-basic-page .workshop-brief-grid,
+  body.english-basic-page .listening-panel,
+  body.english-basic-page .listening-audio-card,
+  body.english-basic-page .teacher-panel,
+  body.english-basic-page .pronunciation-layout,
+  body.english-basic-page .guesswho-play-grid,
+  body.english-basic-page .guesswho-current-grid,
+  body.english-basic-page .guesswho-control-grid,
+  body.english-basic-page .game-toolbar,
+  body.english-basic-page .activity-grid,
+  body.english-basic-page .feature-grid,
+  body.english-basic-page .reading-grid,
+  body.english-basic-page .audio-grid,
+  body.english-basic-page .course-grid,
+  body.english-basic-page .practice-grid,
+  body.english-basic-page .cards-grid,
+  body.phonetic-page .phonetic-grid,
+  body.phonetic-page .sound-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.english-basic-page .premium-topic-card,
+  body.english-basic-page .outcome-card,
+  body.english-basic-page .reading-passage-card,
+  body.english-basic-page .quiz-question-card,
+  body.english-basic-page .worksheet-board,
+  body.english-basic-page .deliverable-card,
+  body.english-basic-page .teacher-card,
+  body.english-basic-page .pronunciation-panel,
+  body.english-basic-page .lesson-mini-card,
+  body.english-basic-page .guesswho-setup,
+  body.english-basic-page .guesswho-panel,
+  body.english-basic-page .guesswho-wheel-card,
+  body.english-basic-page .guesswho-current-card,
+  body.english-basic-page .guesswho-list-card,
+  body.english-basic-page .guesswho-history-card,
+  body.phonetic-page .phonetic-card,
+  body.phonetic-page .sound-card {
+    border-radius: 18px;
+  }
+
+  body.english-basic-page .guesswho-setup {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  body.english-basic-page .quiz-question-card {
+    padding: 1rem;
+  }
+
+  body.english-basic-page .quiz-question-card label {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    border-radius: 14px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  body.english-basic-page .worksheet-table,
+  body.english-basic-page .guesswho-table,
+  body.english-basic-page .family-comparison-table {
+    min-width: 640px;
+  }
+
+  body.english-basic-page .task-flow {
+    padding-left: 1.1rem;
+  }
+
+  body.english-basic-page .turn-center {
+    grid-row: auto !important;
+    grid-column: auto !important;
+    min-width: 0;
+  }
+
+  body.english-basic-page .team-panel {
+    padding: 0.85rem;
+  }
+
+  body.english-basic-page .memory-board {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  body.english-basic-page .memory-card {
+    aspect-ratio: 1 / 1;
+  }
+
+  body.english-basic-page .card-front strong {
+    display: none;
+  }
+
+  body.english-basic-page .gate-card,
+  body.english-basic-page .winner-card {
+    border-radius: 18px;
+    padding: 1rem;
+  }
+
+  body.english-basic-page .model-player,
+  body.english-basic-page .record-zone {
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 420px) {
+  body.english-basic-page .nav-links,
+  body.phonetic-page .nav-links {
+    grid-template-columns: 1fr;
+  }
+
+  body.english-basic-page .premium-lesson-container,
+  body.english-basic-page .lesson-outcome,
+  body.english-basic-page .pronunciation-main,
+  body.english-basic-page .game-shell,
+  body.english-basic-page .quick-access-panel,
+  body.phonetic-page main {
+    max-width: min(100% - 0.8rem, 1180px);
+  }
+
+  body.english-basic-page .lesson-hero-content h1,
+  body.phonetic-page .lesson-hero-content h1 {
+    font-size: clamp(1.75rem, 10vw, 2.25rem);
+  }
+
+  body.english-basic-page .premium-topic-card,
+  body.phonetic-page .premium-topic-card {
+    padding-inline: 0.9rem;
+  }
+
+  body.english-basic-page .memory-board {
+    gap: 5px;
+    padding: 7px;
+  }
+
+  body.english-basic-page .card-face {
+    border-radius: 10px;
+  }
+
+  body.english-basic-page .card-back strong {
+    font-size: 1.25rem;
+  }
+
+  body.english-basic-page .round-button,
+  body.english-basic-page .mic-button {
+    transform: scale(0.92);
+  }
+}
