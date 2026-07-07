@@ -96,8 +96,7 @@
   }
 
   function activeVariantFromMarkup() {
-    var activeButton = document.querySelector("[data-audio-variant].is-active");
-    return activeButton && activeButton.getAttribute("data-audio-variant") === "france" ? "france" : "quebec";
+    return "france";
   }
 
   window.initFrench8ListeningActivity = function initFrench8ListeningActivity(baseActivity) {
