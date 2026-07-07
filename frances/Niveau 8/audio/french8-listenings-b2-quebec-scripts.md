@@ -4,25 +4,23 @@
 ## Audio 01a - Un choix de carrière regretté (Québec)
 File: `complete/n8-01a-choix-carriere-quebec-b2.mp3`
 
-Caroline: Tu sais, Marc, ça fait dix ans que j'ai quitté l'architecture pour la finance. Et franchement, j'aurais dû y réfléchir davantage avant de prendre cette décision.
+Sophie: Tu sais, Martin, en repensant à mon parcours, je me dis que j'aurais dû accepter cette offre à Genève il y a cinq ans. C'était une opportunité exceptionnelle dans la recherche pharmaceutique.
 
-Marc: Je comprends ce que tu ressens. Moi aussi, j'aurais aimé suivre une voie plus créative. J'avais été accepté dans une école de design, mais j'ai choisi la stabilité.
+Martin: Je comprends ce que tu ressens. Moi aussi, j'aurais dû prendre plus de risques quand j'étais jeune. On m'avait proposé de cofonder une start-up, et j'ai refusé par prudence. Aujourd'hui, cette boîte vaut des millions.
 
-Caroline: Le problème, c'est qu'on nous a toujours répété qu'il fallait un salaire sûr. On aurait voulu écouter notre instinct, mais la pression familiale était énorme.
+Sophie: C'est exactement ça. On aurait voulu avoir cette lucidité à l'époque, mais on manquait de recul. J'aurais aimé avoir quelqu'un pour me guider, un mentor qui m'aurait poussée à sortir de ma zone de confort.
 
-Marc: Exactement. Mon père m'a dit que j'aurais dû penser à ma retraite avant de rêver. À vingt-deux ans, tu imagines ? J'aurais pu au moins tenter l'expérience pendant deux ou trois ans.
+Martin: Tu aurais pu en parler à Delphine, notre ancienne directrice. Elle avait un réseau incroyable. Mais bon, avec le recul, on idéalise toujours les chemins qu'on n'a pas pris, tu ne crois pas ?
 
-Caroline: Tu aurais pu, oui. Et moi, j'aurais dû faire un stage en cabinet d'architectes avant de tout abandonner. Il aurait fallu que quelqu'un me dise que les premières années sont toujours difficiles, quel que soit le domaine.
+Sophie: Peut-être, mais il aurait fallu au moins essayer. Le problème, c'est que j'ai privilégié la sécurité. Nous aurions préféré, ma famille et moi, rester à Paris plutôt que de déménager, et ce choix a conditionné toute la suite de ma carrière.
 
-Marc: On aurait préféré avoir des mentors honnêtes. Quelqu'un qui nous aurait dit : « Essayez, échouez, recommencez. » Au lieu de ça, on a eu des conseils basés sur la peur.
+Martin: Écoute, moi, j'aurais aimé reprendre des études en intelligence artificielle il y a trois ans. Les formations existaient déjà, mais je me suis trouvé des excuses. Aujourd'hui, tous les postes intéressants exigent ces compétences.
 
-Caroline: Nous aurions préféré un accompagnement plus nuancé. Aujourd'hui, je me retrouve dans un bureau à analyser des chiffres, alors que j'aurais aimé dessiner des espaces de vie.
+Sophie: On aurait voulu tout faire, tout tenter, mais la réalité nous rattrape. Tu penses qu'il est encore temps de changer de cap à notre âge ?
 
-Marc: Il aurait fallu qu'on ose, tout simplement. Mais bon, est-ce qu'il est trop tard pour changer ? J'aurais voulu croire que non, et je commence à penser que c'est encore possible.
+Martin: Absolument. J'aurais dû comprendre plus tôt que la carrière n'est pas un chemin linéaire. On peut toujours bifurquer. L'important, c'est de ne plus accumuler les regrets, tu ne crois pas ?
 
-Caroline: Tu as raison. On aurait dû agir plus tôt, mais ça ne veut pas dire qu'on ne peut plus rien faire. J'ai commencé à suivre des cours du soir en urbanisme, et ça me redonne de l'énergie.
-
-Marc: C'est encourageant. On aurait pu rester dans le regret, mais au moins maintenant, on agit.
+Sophie: Tu as raison. On aurait pu passer des années à ruminer. Autant agir maintenant, il n'est jamais vraiment trop tard pour un nouveau départ.
 
 
 ## Audio 01b - Les regrets des Français (Québec)

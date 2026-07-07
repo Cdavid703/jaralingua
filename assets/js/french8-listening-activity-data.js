@@ -8,18 +8,6 @@
   };
 
   window.FRENCH8_LISTENING_QUEBEC_QUESTIONS = {
-    "01a": [
-      ["Quel changement de carrière Caroline regrette-t-elle ?", ["Elle a quitté l'architecture pour la finance.", "Elle a quitté la finance pour l'architecture.", "Elle a refusé un poste en urbanisme."], 0],
-      ["Dans quelle école Marc avait-il été accepté ?", ["Une école de commerce.", "Une école de design.", "Une école d'ingénieurs."], 1],
-      ["Quelle pression a influencé leurs décisions ?", ["La pression familiale autour de la stabilité.", "La pression d'un concours national.", "La pression de leurs collègues de bureau."], 0],
-      ["Que le père de Marc lui disait-il à vingt-deux ans ?", ["Qu'il devait penser à sa retraite avant de rêver.", "Qu'il devait partir vivre à l'étranger.", "Qu'il devait abandonner tout projet créatif."], 0],
-      ["Qu'aurait dû faire Caroline avant d'abandonner l'architecture ?", ["Acheter un bureau.", "Faire un stage en cabinet d'architectes.", "Étudier la comptabilité."], 1],
-      ["Quel type de mentors auraient-ils préféré avoir ?", ["Des mentors honnêtes qui encouragent à essayer et recommencer.", "Des mentors qui imposent un salaire précis.", "Des mentors spécialisés uniquement en finance."], 0],
-      ["Que fait Caroline aujourd'hui dans son travail ?", ["Elle dessine des espaces de vie.", "Elle analyse des chiffres dans un bureau.", "Elle dirige une école de design."], 1],
-      ["Qu'est-ce qui redonne de l'énergie à Caroline ?", ["Ses cours du soir en urbanisme.", "Un nouveau poste à la retraite.", "Un stage en finance internationale."], 0],
-      ["Quelle idée Marc commence-t-il à accepter ?", ["Il est peut-être encore possible de changer.", "Il est forcément trop tard pour changer.", "Les regrets ne servent jamais à rien."], 0],
-      ["Quelle conclusion résume le mieux l'échange ?", ["Ils choisissent de rester dans le regret.", "Ils transforment le regret en action présente.", "Ils accusent uniquement leurs familles."], 1]
-    ],
     "01b": [
       ["Quel chiffre principal l'enquête révèle-t-elle ?", ["68 % auraient dû faire des choix professionnels différents.", "62 % regrettent surtout de ne pas avoir voyagé.", "40 % veulent changer de pays."], 0],
       ["Quel regret arrive en premier selon Philippe ?", ["La formation.", "Le logement.", "Le choix des amis."], 0],
