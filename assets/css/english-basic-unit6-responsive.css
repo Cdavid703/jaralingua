@@ -1,0 +1,362 @@
+@media (max-width: 980px) {
+  body.english-basic-page {
+    overflow-x: hidden;
+  }
+
+  body.english-basic-page img,
+  body.english-basic-page video,
+  body.english-basic-page audio,
+  body.english-basic-page table {
+    max-width: 100%;
+  }
+
+  body.english-basic-page .site-header {
+    position: relative;
+    z-index: 20;
+  }
+
+  body.english-basic-page .navbar {
+    align-items: flex-start;
+    gap: 0.85rem;
+  }
+
+  body.english-basic-page .nav-links {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.45rem;
+  }
+
+  body.english-basic-page .nav-links a {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    border-radius: 999px;
+    padding: 0.55rem 0.8rem;
+  }
+
+  body.english-basic-page .global-course-switcher {
+    max-width: calc(100vw - 1rem);
+  }
+
+  body.english-basic-page .immersive-basic-hero {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+    min-height: auto;
+    padding: clamp(1.1rem, 4vw, 2rem);
+  }
+
+  body.english-basic-page .lesson-hero-content {
+    max-width: 100%;
+  }
+
+  body.english-basic-page .lesson-hero-content h1 {
+    font-size: clamp(2rem, 8vw, 3.3rem);
+    line-height: 1.04;
+  }
+
+  body.english-basic-page .lesson-meta,
+  body.english-basic-page .hero-actions {
+    gap: 0.55rem;
+  }
+
+  body.english-basic-page .hero-actions .btn {
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  body.english-basic-page .lesson-hero-image {
+    width: 100%;
+    max-width: 720px;
+    margin-inline: auto;
+  }
+
+  body.english-basic-page .premium-lesson-container,
+  body.english-basic-page .lesson-outcome,
+  body.english-basic-page .pronunciation-main,
+  body.english-basic-page .game-shell {
+    width: min(100% - 1.25rem, 1120px);
+    margin-inline: auto;
+  }
+
+  body.english-basic-page .premium-topic-card {
+    border-radius: 24px;
+    padding-inline: clamp(1rem, 3vw, 1.35rem);
+  }
+
+  body.english-basic-page .topic-heading {
+    align-items: start;
+  }
+
+  body.english-basic-page .listening-panel,
+  body.english-basic-page .listening-audio-card,
+  body.english-basic-page .workshop-brief-grid,
+  body.english-basic-page .language-bank-grid,
+  body.english-basic-page .directions-map-shell,
+  body.english-basic-page .directions-support-grid,
+  body.english-basic-page .directions-rubric,
+  body.english-basic-page .teacher-panel,
+  body.english-basic-page .pronunciation-layout {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.english-basic-page .worksheet-board,
+  body.english-basic-page .guesswho-table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.english-basic-page .worksheet-table,
+  body.english-basic-page .guesswho-table {
+    min-width: 720px;
+  }
+
+  body.english-basic-page .worksheet-actions,
+  body.english-basic-page .audio-actions,
+  body.english-basic-page .directions-map-buttons,
+  body.english-basic-page .directions-chip-grid {
+    gap: 0.65rem;
+  }
+
+  body.english-basic-page .quiz-question-card label,
+  body.english-basic-page .directions-map-button,
+  body.english-basic-page .directions-destination-button,
+  body.english-basic-page .guesswho-btn,
+  body.english-basic-page .game-command,
+  body.english-basic-page .practice-submit-btn,
+  body.english-basic-page .action-button {
+    min-height: 44px;
+  }
+
+  body.english-basic-page .directions-map-frame {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  body.english-basic-page .directions-map-frame img {
+    min-width: min(820px, 100%);
+  }
+
+  body.english-basic-page .guesswho-play-grid,
+  body.english-basic-page .guesswho-current-grid,
+  body.english-basic-page .guesswho-control-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.english-basic-page .guesswho-wheel-card,
+  body.english-basic-page .guesswho-current-card,
+  body.english-basic-page .guesswho-list-card {
+    min-width: 0;
+  }
+}
+
+@media (max-width: 760px) {
+  body.english-basic-page .navbar {
+    padding-inline: 0.75rem;
+  }
+
+  body.english-basic-page .brand img {
+    max-width: 132px;
+    height: auto;
+  }
+
+  body.english-basic-page .nav-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  body.english-basic-page .nav-links a {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.86rem;
+  }
+
+  body.english-basic-page .immersive-basic-hero {
+    margin-inline: 0.65rem;
+    border-radius: 24px;
+  }
+
+  body.english-basic-page .lesson-hero-content p {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+
+  body.english-basic-page .lesson-meta span {
+    font-size: 0.78rem;
+    padding: 0.45rem 0.6rem;
+  }
+
+  body.english-basic-page .hero-actions,
+  body.english-basic-page .worksheet-actions,
+  body.english-basic-page .audio-actions,
+  body.english-basic-page .directions-map-buttons,
+  body.english-basic-page .directions-chip-grid,
+  body.english-basic-page .directions-language-grid,
+  body.english-basic-page .game-actions,
+  body.english-basic-page .gate-actions,
+  body.english-basic-page .actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  body.english-basic-page .hero-actions .btn,
+  body.english-basic-page .worksheet-actions .practice-submit-btn,
+  body.english-basic-page .audio-actions .audio-btn,
+  body.english-basic-page .directions-map-button,
+  body.english-basic-page .directions-destination-button,
+  body.english-basic-page .guesswho-btn,
+  body.english-basic-page .game-command,
+  body.english-basic-page .practice-submit-btn,
+  body.english-basic-page .action-button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+
+  body.english-basic-page .topic-heading {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+  }
+
+  body.english-basic-page .topic-heading h2 {
+    font-size: clamp(1.45rem, 7vw, 2rem);
+    line-height: 1.12;
+  }
+
+  body.english-basic-page .premium-topic-card,
+  body.english-basic-page .outcome-card,
+  body.english-basic-page .reading-passage-card,
+  body.english-basic-page .quiz-question-card,
+  body.english-basic-page .worksheet-board,
+  body.english-basic-page .deliverable-card,
+  body.english-basic-page .directions-map-card,
+  body.english-basic-page .directions-side-card,
+  body.english-basic-page .directions-support-card,
+  body.english-basic-page .teacher-card,
+  body.english-basic-page .pronunciation-panel {
+    border-radius: 18px;
+  }
+
+  body.english-basic-page .quiz-question-card {
+    padding: 1rem;
+  }
+
+  body.english-basic-page .quiz-question-card label {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    border-radius: 14px;
+    padding: 0.75rem 0.85rem;
+  }
+
+  body.english-basic-page .course-audio-player {
+    width: 100%;
+  }
+
+  body.english-basic-page .worksheet-table {
+    min-width: 680px;
+  }
+
+  body.english-basic-page .task-flow {
+    padding-left: 1.1rem;
+  }
+
+  body.english-basic-page .directions-key-list,
+  body.english-basic-page .directions-language-grid,
+  body.english-basic-page .directions-rubric,
+  body.english-basic-page .language-bank-grid,
+  body.english-basic-page .workshop-brief-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.english-basic-page .game-toolbar {
+    grid-template-columns: 1fr !important;
+  }
+
+  body.english-basic-page .turn-center {
+    grid-row: auto !important;
+    grid-column: auto !important;
+    min-width: 0;
+  }
+
+  body.english-basic-page .team-panel {
+    padding: 0.85rem;
+  }
+
+  body.english-basic-page .memory-board {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    padding: 10px;
+    border-radius: 18px;
+  }
+
+  body.english-basic-page .memory-card {
+    aspect-ratio: 1 / 1;
+  }
+
+  body.english-basic-page .card-front strong {
+    display: none;
+  }
+
+  body.english-basic-page .gate-card,
+  body.english-basic-page .winner-card {
+    border-radius: 18px;
+    padding: 1rem;
+  }
+
+  body.english-basic-page .pronunciation-layout {
+    gap: 1rem;
+  }
+
+  body.english-basic-page .model-player,
+  body.english-basic-page .record-zone {
+    border-radius: 18px;
+  }
+
+  body.english-basic-page .record-zone .actions {
+    margin-top: 0.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  body.english-basic-page .nav-links {
+    grid-template-columns: 1fr;
+  }
+
+  body.english-basic-page .premium-lesson-container,
+  body.english-basic-page .lesson-outcome,
+  body.english-basic-page .pronunciation-main,
+  body.english-basic-page .game-shell {
+    width: min(100% - 0.8rem, 1120px);
+  }
+
+  body.english-basic-page .lesson-hero-content h1 {
+    font-size: clamp(1.75rem, 10vw, 2.25rem);
+  }
+
+  body.english-basic-page .premium-topic-card {
+    padding-inline: 0.9rem;
+  }
+
+  body.english-basic-page .memory-board {
+    gap: 5px;
+    padding: 7px;
+  }
+
+  body.english-basic-page .card-face {
+    border-radius: 10px;
+  }
+
+  body.english-basic-page .card-back strong {
+    font-size: 1.25rem;
+  }
+
+  body.english-basic-page .round-button,
+  body.english-basic-page .mic-button {
+    transform: scale(0.92);
+  }
+}
