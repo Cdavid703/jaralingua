@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Quiz 10% - Ville intelligente | Francais Niveau 8</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root{--blue:#1f4e8c;--blue-dark:#15345d;--red:#d62839;--green:#23886f;--yellow:#ffc857;--soft:#f4f8ff;--text:#1f2937;--muted:#5d6b82;--shadow:0 22px 55px rgba(15,23,42,.13)}
+    *{box-sizing:border-box;scroll-behavior:smooth}
+    body{margin:0;font-family:"Inter","Segoe UI",system-ui,sans-serif;background:var(--soft);color:var(--text);overflow-x:hidden}
+    h1,h2,h3,.navbar-brand{font-family:"Montserrat","Segoe UI",sans-serif}
+    .navbar{background:rgba(255,255,255,.95);box-shadow:0 10px 30px rgba(15,23,42,.08);backdrop-filter:blur(16px)}
+    .navbar-brand{display:flex;align-items:center;gap:.7rem;font-weight:900;color:var(--blue-dark)!important}.brand-logo{height:42px}
+    .nav-link{font-weight:800;color:var(--blue-dark)!important;border-radius:999px;padding:.55rem .9rem!important}.nav-link:hover,.nav-link.active{background:#eef5ff;color:var(--red)!important}
+    .hero{min-height:min(690px,84vh);display:flex;align-items:center;padding:7rem 0 4rem;color:#fff;background:linear-gradient(90deg,rgba(8,23,42,.88),rgba(21,52,93,.7),rgba(21,52,93,.18)),url("img/ateliers/quiz-ville-intelligente-10.png") center/cover no-repeat;position:relative}
+    .hero:after{content:"";position:absolute;inset:auto 0 0;height:120px;background:linear-gradient(to bottom,transparent,var(--soft));pointer-events:none}.hero .container{position:relative;z-index:1}
+    .badge-course{display:inline-flex;align-items:center;gap:.55rem;max-width:100%;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.24);font-weight:900;line-height:1.25}
+    .hero h1{margin:1rem 0;font-size:clamp(2.5rem,6vw,5.5rem);font-weight:900;line-height:.98;text-shadow:0 12px 34px rgba(0,0,0,.24);letter-spacing:0}
+    .hero-text{max-width:780px;color:rgba(255,255,255,.9);font-size:1.08rem;line-height:1.7}
+    .btn-main,.btn-soft,.btn-danger-soft{min-height:46px;border-radius:999px;font-weight:900;padding:.78rem 1.12rem;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;cursor:pointer}
+    .btn-main{border:0;background:linear-gradient(135deg,var(--red),#9f1d2a);color:#fff;box-shadow:0 16px 34px rgba(214,40,57,.22)}.btn-main:hover{color:#fff}
+    .btn-soft{border:2px solid rgba(31,78,140,.16);background:#fff;color:var(--blue-dark)}.btn-danger-soft{border:2px solid rgba(214,40,57,.16);background:#fff;color:var(--red)}
+    .btn-main:disabled,.btn-soft:disabled,.btn-danger-soft:disabled{opacity:.56;cursor:not-allowed}
+    section{padding:3.8rem 0}.quiz-shell{margin-top:-2rem;position:relative;z-index:2}.panel,.question-card,.admin-panel,.access-panel,.result-panel{background:#fff;border-radius:8px;box-shadow:var(--shadow);border:1px solid rgba(31,78,140,.1);padding:clamp(1rem,2.5vw,1.7rem)}
+    .admin-panel{background:linear-gradient(135deg,#fff8ed,#fff);border-color:rgba(255,200,87,.38)}
+    .section-kicker{text-transform:uppercase;color:var(--red);font-weight:900;letter-spacing:.12em;font-size:.78rem;overflow-wrap:anywhere}.section-title{color:var(--blue-dark);font-size:clamp(1.8rem,3.8vw,2.9rem);font-weight:900;overflow-wrap:anywhere}.section-text{color:var(--muted);line-height:1.7;font-size:1.03rem;overflow-wrap:anywhere}
+    .identity-strip{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.85rem}.pill{display:inline-flex;align-items:center;gap:.35rem;max-width:100%;min-height:32px;border-radius:999px;padding:.32rem .75rem;background:#eef5ff;color:var(--blue-dark);font-weight:900;font-size:.84rem;line-height:1.25;white-space:normal;overflow-wrap:anywhere}.pill.open{background:#e9f8f2;color:#126047}.pill.closed{background:#fff0f3;color:#9f1d2a}
+    .section-card{margin-bottom:1.1rem}.reading-box,.audio-box{border-radius:8px;background:#f8fbff;border-left:6px solid var(--blue);padding:1rem;line-height:1.72;margin:1rem 0;color:var(--text)}.reading-box h3,.audio-box h3{color:var(--blue-dark);font-weight:900}.audio-box audio{width:100%;margin-top:.7rem}
+    .question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.question-card{min-width:0;box-shadow:none;background:#f8fbff;height:100%}.question-card.is-missing{border-color:rgba(214,40,57,.5);background:#fff8f8}.question-card legend{width:100%;margin:0 0 .7rem;color:var(--blue-dark);font-weight:900;font-size:1rem;line-height:1.45;overflow-wrap:anywhere}.question-card .block{display:inline-flex;margin-bottom:.55rem}
+    .choice{display:flex;align-items:flex-start;gap:.55rem;margin:.45rem 0;padding:.68rem .75rem;min-height:46px;border-radius:8px;background:#fff;border:1px solid rgba(31,78,140,.12);cursor:pointer;color:var(--text);font-weight:800;line-height:1.35;min-width:0}.choice:hover{border-color:rgba(31,78,140,.36)}.choice input{margin-top:.22rem;flex:0 0 auto}.choice span{min-width:0;overflow-wrap:anywhere}
+    .submit-zone{position:sticky;bottom:1rem;z-index:5;border-radius:8px;background:linear-gradient(135deg,var(--blue-dark),var(--blue));color:#fff;box-shadow:0 24px 50px rgba(21,52,93,.24);padding:1rem 1.2rem;margin:1.5rem 0}.submit-zone p{margin:0;color:rgba(255,255,255,.85)}.completion-meter{display:flex;flex-wrap:wrap;align-items:center;gap:.6rem;margin-top:.75rem;color:#fff;font-weight:900}.completion-track{flex:1 1 180px;height:10px;border-radius:999px;background:rgba(255,255,255,.22);overflow:hidden}.completion-bar{display:block;width:0;height:100%;border-radius:999px;background:var(--yellow);transition:width .2s ease}
+    .status-message{border-radius:8px;padding:.85rem 1rem;font-weight:900}.status-message.success{background:#e9f8f2;color:#126047}.status-message.error{background:#fff0f3;color:#9f1d2a}.status-message.pending{background:#eef5ff;color:var(--blue-dark)}
+    .score-number{font-size:clamp(3rem,8vw,5.8rem);font-weight:900;color:var(--blue-dark);line-height:.95}.global-course-switcher{position:fixed;right:1rem;top:5.25rem;z-index:1200;font-family:Arial,Helvetica,sans-serif}.global-course-switcher summary{list-style:none;min-height:42px;display:flex;align-items:center;gap:.5rem;padding:0 1rem;border-radius:999px;background:var(--blue-dark);color:#fff;font-weight:900;box-shadow:0 14px 32px rgba(15,23,42,.18);cursor:pointer}.global-course-switcher summary::-webkit-details-marker{display:none}.global-course-switcher nav{position:absolute;right:0;top:calc(100% + .5rem);width:min(250px,calc(100vw - 2rem));display:grid;gap:.35rem;padding:.65rem;border-radius:18px;background:#fff;border:1px solid rgba(21,52,93,.12);box-shadow:0 20px 45px rgba(15,23,42,.18)}.global-course-switcher a{display:flex;align-items:center;min-height:40px;padding:0 .85rem;border-radius:12px;color:var(--blue-dark);text-decoration:none;font-weight:900}.global-course-switcher a:hover{background:#eef5ff;color:var(--red)}
+    footer{background:var(--blue-dark);color:#fff;padding:3rem 0}footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.9}
+    @media(max-width:900px){.question-grid{grid-template-columns:1fr}.submit-zone{position:static}.submit-zone .btn-main{width:100%}.global-course-switcher{top:auto;right:.75rem;bottom:.75rem}.hero{min-height:auto;padding-top:6.5rem}}@media(max-width:575px){.hero{padding-bottom:3.25rem}.hero h1{font-size:clamp(2.15rem,12vw,3.2rem)}.badge-course{border-radius:18px}.btn-main,.btn-soft,.btn-danger-soft{width:100%}.panel,.question-card,.admin-panel,.access-panel,.result-panel{padding:1rem}.reading-box,.audio-box{border-left-width:4px;padding:.9rem}.global-course-switcher nav{bottom:calc(100% + .5rem);top:auto}}
+  </style>
+</head>
+<body>
+  <div class="global-course-switcher" aria-label="Cours"><details><summary><span>Cours</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Francais</a><a href="./index.html">Francais Niveau 8</a><a href="themes-du-cours.html">Themes</a><a href="ateliers-activites.html">Ateliers</a><a href="../../ingles/index.html">Anglais</a></nav></details></div>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Francais · Niveau 8</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Themes</a></li><li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link active" href="quiz-ville-intelligente.html">Quiz</a></li><li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li></ul></div>
+    </div>
+  </nav>
+  <header class="hero" id="top"><div class="container"><span class="badge-course"><i class="bi bi-shield-lock-fill"></i> Quiz 10% · Acces controle</span><h1>Quiz · Ville intelligente</h1><p class="hero-text">Evaluation des themes 01 et 02: conditionnel passe, passe compose avec COD, comprehension ecrite et comprehension orale. Le quiz s'ouvre uniquement quand le professeur l'active.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#access"><i class="bi bi-box-arrow-in-right"></i> Acceder</a><a class="btn-soft" href="ateliers-activites.html#theme-02"><i class="bi bi-arrow-left"></i> Retour ateliers</a></div></div></header>
+  <section id="access" class="quiz-shell"><div class="container"><div class="access-panel" id="accessPanel" aria-live="polite"></div><div class="admin-panel mt-3" id="adminPanel" hidden></div></div></section>
+  <main class="quiz-shell" id="quizRoot" hidden><div class="container"><form id="quizForm" novalidate></form></div></main>
+  <footer><div class="container d-flex flex-wrap justify-content-between gap-3"><span>Quiz 10% · Francais Niveau 8</span><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Retour en haut <i class="bi bi-arrow-up"></i></a></div></footer>
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260705-mojibake"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+  <script>
+    (() => {
+      "use strict";
+      const USER_KEY = "jaralingua_google_user";
+      const API = {
+        state: "/api/french8/quiz-ville-intelligente/state",
+        quiz: "/api/french8/quiz-ville-intelligente",
+        submit: "/api/french8/quiz-ville-intelligente/submit"
+      };
+      const els = {
+        access: document.getElementById("accessPanel"),
+        admin: document.getElementById("adminPanel"),
+        root: document.getElementById("quizRoot"),
+        form: document.getElementById("quizForm")
+      };
+      let currentQuiz = null;
+      let loading = false;
+      let audioObjectUrl = null;
+      let currentView = "init";
+      let pollTimer = null;
+
+      function esc(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+          "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+        })[character]);
+      }
+      function storedUser() {
+        try {
+          const saved = JSON.parse(sessionStorage.getItem(USER_KEY) || "null");
+          if (!saved || !saved.credential || saved.exp <= Date.now() / 1000) return null;
+          return saved;
+        } catch (_error) {
+          return null;
+        }
+      }
+      function userKeyPart() {
+        const user = storedUser();
+        return (user?.email || "guest").toLowerCase();
+      }
+      function quizVersion() {
+        return currentQuiz?.version || currentQuiz?.id || "quiz";
+      }
+      function draftKey() {
+        return "jaralingua:french8:quiz-ville-intelligente:draft:" + userKeyPart() + ":" + quizVersion();
+      }
+      function attemptKey() {
+        return "jaralingua:french8:quiz-ville-intelligente:attempt:" + userKeyPart() + ":" + quizVersion();
+      }
+      function attemptId() {
+        const key = attemptKey();
+        let value = sessionStorage.getItem(key);
+        if (!value) {
+          value = "f8q-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 12);
+          sessionStorage.setItem(key, value);
+        }
+        return value;
+      }
+      function headers() {
+        const user = storedUser();
+        return {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + user.credential,
+          "X-Jaralingua-Auth-Provider": "google"
+        };
+      }
+      async function request(url, options = {}, timeoutMs = 15000) {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), timeoutMs);
+        try {
+          const response = await fetch(url, Object.assign({}, options, {
+            signal: controller.signal,
+            headers: Object.assign({}, headers(), options.headers || {})
+          }));
+          const data = await response.json().catch(() => ({}));
+          return { ok: response.ok, status: response.status, data };
+        } finally {
+          clearTimeout(timer);
+        }
+      }
+      function openLoginPanel() {
+        document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();
+      }
+      function setView(name) {
+        currentView = name;
+      }
+      function updatePolling() {
+        if (pollTimer) {
+          clearInterval(pollTimer);
+          pollTimer = null;
+        }
+        if (currentView === "locked") {
+          pollTimer = setInterval(() => {
+            if (!loading) loadState({ silent: true });
+          }, 12000);
+        }
+      }
+      function renderLogin(message) {
+        setView("login");
+        updatePolling();
+        els.root.hidden = true;
+        els.admin.hidden = true;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-primary"><i class="bi bi-google"></i></div><div class="flex-grow-1"><p class="section-kicker">Connexion requise</p><h2 class="section-title">Connectez-vous pour verifier l'acces</h2><p class="section-text">${esc(message || "Utilisez le compte Google associe au cours.")}</p><div class="d-flex flex-wrap gap-2 mt-3"><button class="btn-main" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Connexion Google</button><button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Verifier</button></div></div></div>`;
+        els.access.querySelector("[data-open-login]").addEventListener("click", () => {
+          openLoginPanel();
+          setTimeout(loadState, 1400);
+          setTimeout(loadState, 3200);
+        });
+        els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
+      }
+      function renderLocked(message, payload) {
+        setView("locked");
+        updatePolling();
+        els.root.hidden = true;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-danger"><i class="bi bi-lock-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">Quiz ferme</p><h2 class="section-title">Le quiz n'est pas encore ouvert</h2><p class="section-text">${esc(message || "Vous ne pouvez pas faire le quiz tant que le professeur ne l'a pas active.")}</p><div class="identity-strip"><span class="pill closed"><i class="bi bi-lock-fill"></i> Ferme aux etudiants</span>${payload?.state?.updatedAt ? `<span class="pill"><i class="bi bi-clock-history"></i> Mise a jour: ${esc(payload.state.updatedAt)}</span>` : ""}</div><button class="btn-soft mt-3" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Verifier a nouveau</button></div></div>`;
+        els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
+      }
+      function renderAdmin(payload) {
+        const role = payload?.role || "student";
+        if (!["admin", "teacher"].includes(role)) {
+          els.admin.hidden = true;
+          els.admin.innerHTML = "";
+          return;
+        }
+        const open = payload?.state?.isOpen === true;
+        els.admin.hidden = false;
+        const stats = payload?.stats ? `<span class="pill"><i class="bi bi-check2-circle"></i> Envoyes: ${esc(payload.stats.submittedCount)} / ${esc(payload.stats.totalStudents)}</span><span class="pill"><i class="bi bi-hourglass-split"></i> En attente: ${esc(payload.stats.pendingCount)}</span>` : "";
+        els.admin.innerHTML = `<div class="d-flex flex-wrap justify-content-between align-items-start gap-3"><div><p class="section-kicker">Controle professeur</p><h2 class="h3 fw-bold text-primary mb-2">Ouverture du quiz 10%</h2><div class="identity-strip"><span class="pill ${open ? "open" : "closed"}"><i class="bi ${open ? "bi-unlock-fill" : "bi-lock-fill"}"></i> ${open ? "Ouvert aux etudiants" : "Ferme aux etudiants"}</span>${payload?.state?.openedBy ? `<span class="pill"><i class="bi bi-person-check"></i> ${esc(payload.state.openedBy)}</span>` : ""}${stats}</div><p class="section-text mb-0 mt-2">Quand le quiz est ouvert, les etudiants autorises peuvent le realiser une seule fois. La note est envoyee a Notes du cours dans l'evaluation Quiz 10%.</p><p class="mt-3 mb-0 status-message pending" id="adminStatus" hidden></p></div><div class="d-flex flex-wrap gap-2"><button class="btn-main" type="button" data-set-open="true"><i class="bi bi-unlock-fill"></i> Ouvrir</button><button class="btn-danger-soft" type="button" data-set-open="false"><i class="bi bi-lock-fill"></i> Fermer</button><button class="btn-soft" type="button" data-recheck-state><i class="bi bi-arrow-repeat"></i> Actualiser</button><a class="btn-soft" href="notes-evaluation.html"><i class="bi bi-bar-chart"></i> Notes</a></div></div>`;
+        els.admin.querySelectorAll("[data-set-open]").forEach((button) => button.addEventListener("click", () => setQuizState(button.dataset.setOpen === "true")));
+        els.admin.querySelector("[data-recheck-state]").addEventListener("click", () => loadState());
+      }
+      function setAdminStatus(message, type = "pending") {
+        const node = document.getElementById("adminStatus");
+        if (!node) return;
+        node.hidden = false;
+        node.className = "mt-3 mb-0 status-message " + type;
+        node.textContent = message;
+      }
+      async function setQuizState(isOpen) {
+        setAdminStatus("Mise a jour de l'etat du quiz...");
+        try {
+          const result = await request(API.state, { method: "PUT", body: JSON.stringify({ isOpen }) });
+          if (!result.ok) throw new Error("state_error");
+          await loadState();
+          setAdminStatus(isOpen ? "Quiz ouvert. Les etudiants peuvent commencer." : "Quiz ferme. Les etudiants ne peuvent plus commencer.", "success");
+        } catch (_error) {
+          setAdminStatus("Impossible de modifier l'etat du quiz.", "error");
+        }
+      }
+      function questionHtml(question, index) {
+        return `<fieldset class="question-card" data-question="${esc(question.id)}">${question.block ? `<span class="pill block">${esc(question.block)}</span>` : ""}<legend>${index + 1}. ${esc(question.prompt)}</legend>${(question.options || []).map((option, optionIndex) => `<label class="choice"><input type="radio" name="${esc(question.id)}" value="${optionIndex}" required><span>${esc(option)}</span></label>`).join("")}</fieldset>`;
+      }
+      function selectedAnswers() {
+        const answers = {};
+        allQuestions().forEach((question) => {
+          const selected = els.form.querySelector(`input[name="${CSS.escape(question.id)}"]:checked`);
+          if (selected) answers[question.id] = Number(selected.value);
+        });
+        return answers;
+      }
+      function saveDraft() {
+        if (!currentQuiz) return;
+        try {
+          sessionStorage.setItem(draftKey(), JSON.stringify({
+            updatedAt: new Date().toISOString(),
+            answers: selectedAnswers()
+          }));
+        } catch (_error) {}
+      }
+      function restoreDraft() {
+        if (!currentQuiz) return;
+        try {
+          const draft = JSON.parse(sessionStorage.getItem(draftKey()) || "null");
+          const answers = draft?.answers || {};
+          Object.keys(answers).forEach((questionId) => {
+            const input = els.form.querySelector(`input[name="${CSS.escape(questionId)}"][value="${CSS.escape(String(answers[questionId]))}"]`);
+            if (input) input.checked = true;
+          });
+        } catch (_error) {}
+      }
+      function clearDraft() {
+        try {
+          sessionStorage.removeItem(draftKey());
+          sessionStorage.removeItem(attemptKey());
+        } catch (_error) {}
+      }
+      function updateCompletion() {
+        const total = allQuestions().length;
+        const answered = Object.keys(selectedAnswers()).length;
+        const label = document.getElementById("completionLabel");
+        const bar = document.getElementById("completionBar");
+        if (label) label.textContent = `${answered} / ${total} reponses completees`;
+        if (bar) bar.style.width = total ? `${Math.round(answered / total * 100)}%` : "0%";
+        return { answered, total };
+      }
+      function clearMissingMarks() {
+        els.form.querySelectorAll(".question-card.is-missing").forEach((card) => card.classList.remove("is-missing"));
+      }
+      function markMissingQuestions() {
+        clearMissingMarks();
+        let firstMissing = null;
+        allQuestions().forEach((question) => {
+          const selected = els.form.querySelector(`input[name="${CSS.escape(question.id)}"]:checked`);
+          if (selected) return;
+          const card = els.form.querySelector(`[data-question="${CSS.escape(question.id)}"]`);
+          if (card) {
+            card.classList.add("is-missing");
+            if (!firstMissing) firstMissing = card;
+          }
+        });
+        if (firstMissing) firstMissing.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+      function renderSection(section) {
+        const reading = section.readingText?.length ? `<div class="reading-box"><h3>${esc(section.readingTitle || "Texte")}</h3>${section.readingText.map((paragraph) => `<p>${esc(paragraph)}</p>`).join("")}</div>` : "";
+        const audio = section.audioSrc ? `<div class="audio-box"><h3>${esc(section.audioTitle || "Audio")}</h3><p>${esc(section.audioText || "Ecoutez puis repondez.")}</p><audio id="quizAudio" controls preload="metadata" aria-label="Audio du quiz"></audio><p class="section-text mb-0 mt-2" id="audioStatus"></p></div>` : "";
+        return `<section class="section-card panel" data-section="${esc(section.id)}"><p class="section-kicker">${esc(section.title)} · ${esc(section.points)} points</p><h2 class="section-title">${esc(section.subtitle || section.title)}</h2><p class="section-text">${esc(section.instructions || "")}</p>${reading}${audio}<div class="question-grid">${(section.questions || []).map(questionHtml).join("")}</div></section>`;
+      }
+      async function loadProtectedAudio(audioSrc) {
+        const audio = document.getElementById("quizAudio");
+        const status = document.getElementById("audioStatus");
+        if (!audio || !audioSrc) return;
+        try {
+          const response = await fetch(audioSrc, { headers: headers() });
+          if (!response.ok) throw new Error("audio_unavailable");
+          const blob = await response.blob();
+          if (audioObjectUrl) URL.revokeObjectURL(audioObjectUrl);
+          audioObjectUrl = URL.createObjectURL(blob);
+          audio.src = audioObjectUrl;
+          if (status) status.textContent = "";
+        } catch (_error) {
+          if (status) status.textContent = "Audio indisponible pour le moment. Rechargez la page ou prevenez le professeur.";
+        }
+      }
+      function renderQuiz(payload) {
+        setView("quiz");
+        updatePolling();
+        currentQuiz = payload.exam;
+        const isStaff = ["admin", "teacher"].includes(payload.role);
+        els.root.hidden = false;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-success"><i class="bi bi-unlock-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">${isStaff ? "Apercu professeur" : "Acces valide"}</p><h2 class="section-title">${esc(currentQuiz.title || "Quiz")}</h2><p class="section-text mb-0">${isStaff ? "Vous pouvez previsualiser le quiz. Les comptes professeur ne soumettent pas de note." : "Repondez soigneusement. Une seule soumission sera enregistree."}</p><div class="identity-strip"><span class="pill open"><i class="bi bi-unlock-fill"></i> Quiz disponible</span><span class="pill"><i class="bi bi-award-fill"></i> ${esc(currentQuiz.totalPoints)} points · note /5</span><button class="btn-soft" type="button" data-recheck-state><i class="bi bi-arrow-repeat"></i> Verifier l'acces</button></div></div></div>`;
+        els.access.querySelector("[data-recheck-state]").addEventListener("click", () => loadState());
+        els.form.innerHTML = `${(currentQuiz.sections || []).map(renderSection).join("")}<div class="submit-zone"><div class="d-flex flex-wrap align-items-center justify-content-between gap-3"><div class="flex-grow-1"><h2 class="h4 fw-bold mb-1">Soumission finale</h2><p>${isStaff ? "Apercu professeur: la soumission est desactivee." : "Verifiez toutes vos reponses avant d'envoyer. Apres l'envoi, la note ira dans Notes du cours."}</p><div class="completion-meter" aria-live="polite"><span id="completionLabel">0 / 0 reponses completees</span><span class="completion-track" aria-hidden="true"><span class="completion-bar" id="completionBar"></span></span></div><p class="mt-2 mb-0" id="submitStatus" aria-live="polite"></p></div><button class="btn-main" type="submit" ${isStaff ? "disabled" : ""}><i class="bi bi-send-check-fill"></i> Envoyer le quiz</button></div></div>`;
+        els.form.addEventListener("submit", submitQuiz, { once: true });
+        restoreDraft();
+        updateCompletion();
+        els.form.querySelectorAll("input[type='radio']").forEach((input) => {
+          input.addEventListener("change", () => {
+            clearMissingMarks();
+            saveDraft();
+            updateCompletion();
+          });
+        });
+        const audioSection = (currentQuiz.sections || []).find((section) => section.audioSrc);
+        if (audioSection) loadProtectedAudio(audioSection.audioSrc);
+      }
+      function allQuestions() {
+        return (currentQuiz?.sections || []).flatMap((section) => section.questions || []);
+      }
+      function collectAnswers() {
+        const answers = {};
+        let missing = 0;
+        allQuestions().forEach((question) => {
+          const selected = els.form.querySelector(`input[name="${CSS.escape(question.id)}"]:checked`);
+          if (!selected) {
+            missing += 1;
+            return;
+          }
+          answers[question.id] = Number(selected.value);
+        });
+        return { answers, missing };
+      }
+      function setSubmitStatus(message, type = "pending") {
+        const node = document.getElementById("submitStatus");
+        if (!node) return;
+        node.className = "status-message " + type;
+        node.textContent = message;
+      }
+      async function submitQuiz(event) {
+        event.preventDefault();
+        const button = els.form.querySelector("button[type='submit']");
+        const { answers, missing } = collectAnswers();
+        if (missing > 0) {
+          setSubmitStatus(`Il manque ${missing} reponse(s). Repondez a toutes les questions avant d'envoyer.`, "error");
+          markMissingQuestions();
+          els.form.addEventListener("submit", submitQuiz, { once: true });
+          return;
+        }
+        clearMissingMarks();
+        if (!window.confirm("Apres l'envoi, vous ne pourrez plus modifier vos reponses. Voulez-vous envoyer le quiz maintenant ?")) {
+          els.form.addEventListener("submit", submitQuiz, { once: true });
+          return;
+        }
+        button.disabled = true;
+        button.innerHTML = '<i class="bi bi-hourglass-split"></i> Envoi...';
+        setSubmitStatus("Envoi du quiz en cours...", "pending");
+        try {
+          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers, attemptId: attemptId() }) }, 20000);
+          if (!result.ok) {
+            if (result.data?.error === "already_submitted" && result.data.result) return renderSubmitted(result.data.result);
+            if (result.data?.error === "quiz_closed") throw new Error("Le quiz est ferme. La soumission n'a pas ete enregistree.");
+            throw new Error("La soumission n'a pas pu etre enregistree.");
+          }
+          await verifySubmission(result.data.result);
+        } catch (error) {
+          setSubmitStatus(error.message || "Erreur d'envoi. Vos reponses restent sur cette page.", "error");
+          button.disabled = false;
+          button.innerHTML = '<i class="bi bi-send-check-fill"></i> Envoyer le quiz';
+          els.form.addEventListener("submit", submitQuiz, { once: true });
+        }
+      }
+      async function verifySubmission(result) {
+        setSubmitStatus("Verification de l'enregistrement dans Notes du cours...", "pending");
+        try {
+          const state = await request(API.state, {}, 12000);
+          if (state.ok && state.data?.submitted) {
+            clearDraft();
+            renderSubmitted(state.data.submitted, "Verification serveur confirmee.");
+            return;
+          }
+          renderSubmitted(result, "Quiz envoye, mais la verification automatique n'a pas retrouve l'enregistrement. Consultez Notes du cours ou demandez au professeur de verifier.");
+        } catch (_error) {
+          renderSubmitted(result, "Quiz envoye. La verification automatique n'a pas pu etre terminee, mais le serveur a retourne une note.");
+        }
+      }
+      function renderSubmitted(result, verificationMessage = "") {
+        setView("submitted");
+        updatePolling();
+        if (!currentQuiz && result?.quizVersion) {
+          currentQuiz = { id: "french8-quiz-ville-intelligente", version: result.quizVersion };
+        }
+        clearDraft();
+        els.root.hidden = true;
+        els.admin.hidden = true;
+        const sections = result.sectionScores || {};
+        els.access.innerHTML = `<div class="result-panel"><p class="section-kicker">Quiz soumis</p><h2 class="section-title">Votre quiz a ete enregistre</h2><p class="section-text">La note a ete calculee automatiquement et envoyee a Notes du cours. Les reponses correctes ne sont pas affichees ici.</p>${verificationMessage ? `<p class="status-message ${verificationMessage.includes("confirmee") ? "success" : "pending"}">${esc(verificationMessage)}</p>` : ""}<div class="row g-4 align-items-center"><div class="col-md-5"><div class="score-number">${Number(result.grade || 0).toFixed(2)}</div><p class="h5 fw-bold text-primary mb-0">Note finale / 5</p></div><div class="col-md-7"><div class="identity-strip"><span class="pill"><i class="bi bi-check-circle-fill"></i> ${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</span><span class="pill"><i class="bi bi-journal-text"></i> Grammaire: ${esc(sections.grammaire?.score ?? 0)} / ${esc(sections.grammaire?.total ?? 15)}</span><span class="pill"><i class="bi bi-book"></i> Lecture: ${esc(sections.lecture?.score ?? 0)} / ${esc(sections.lecture?.total ?? 6)}</span><span class="pill"><i class="bi bi-volume-up"></i> Ecoute: ${esc(sections.ecoute?.score ?? 0)} / ${esc(sections.ecoute?.total ?? 5)}</span><span class="pill"><i class="bi bi-clock-history"></i> ${esc(result.submittedAt || "")}</span></div><a class="btn-main mt-3" href="notes-evaluation.html"><i class="bi bi-bar-chart-fill"></i> Consulter mes notes</a></div></div></div>`;
+        els.form.innerHTML = "";
+      }
+      async function loadQuiz() {
+        const result = await request(API.quiz);
+        if (!result.ok) {
+          if (result.data?.error === "quiz_closed") return renderLocked("Le quiz n'est pas encore ouvert par le professeur.", result.data);
+          if (result.data?.error === "not_authorized") return renderLogin("Votre compte Google n'est pas encore associe a Francais Niveau 8.");
+          throw new Error(result.data?.error || "quiz_error");
+        }
+        if (result.data.status === "submitted") {
+          renderSubmitted(result.data.result);
+          return;
+        }
+        renderQuiz(result.data);
+      }
+      async function loadState(options = {}) {
+        if (loading) return;
+        const user = storedUser();
+        if (!user) {
+          renderLogin("Connectez-vous pour savoir si le quiz est ouvert pour votre compte.");
+          return;
+        }
+        loading = true;
+        try {
+          if (!options.silent) {
+            els.access.innerHTML = `<div class="access-panel"><p class="section-kicker">Verification</p><h2 class="section-title">Chargement de l'acces...</h2><p class="section-text">Connexion au service du quiz.</p></div>`;
+          }
+          const result = await request(API.state);
+          if (!result.ok) throw new Error(result.data?.error || "state_error");
+          renderAdmin(result.data);
+          if (result.data.submitted) {
+            renderSubmitted(result.data.submitted);
+            return;
+          }
+          if (["admin", "teacher"].includes(result.data.role) || result.data.state?.isOpen === true) {
+            await loadQuiz();
+            return;
+          }
+          renderLocked("Le professeur n'a pas encore ouvert le quiz.", result.data);
+        } catch (_error) {
+          renderLogin("Impossible de verifier l'acces. Rechargez la page ou reconnectez-vous.");
+        } finally {
+          loading = false;
+        }
+      }
+      loadState();
+      window.addEventListener("focus", () => setTimeout(loadState, 250));
+    })();
+  </script>
+</body>
+</html>

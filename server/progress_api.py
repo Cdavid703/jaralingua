@@ -32,6 +32,9 @@ FRENCH2_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH2_GRADES_DATA", "/var/lib
 FRENCH8_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH8_GRADES_DATA", "/var/lib/jaralingua/french8-grades.json")
 FRENCH8_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_FRENCH8_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/french8-pronunciation-audio")
 FRENCH8_HYPOTHESES_ACTIVITY_ID = "writingActivity"
+FRENCH8_QUIZ_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_DATA", "/var/lib/jaralingua/french8-quiz-ville-intelligente.json")
+FRENCH8_QUIZ_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_SUBMISSIONS", "/var/lib/jaralingua/french8-quiz-ville-intelligente-submissions.json")
+FRENCH8_QUIZ_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_AUDIO", "/var/lib/jaralingua/french8-quiz-ville-intelligente-audio.mp3")
 FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "/var/lib/jaralingua/french7-final-exam.json")
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
 FRENCH7_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french7-final-exam-audio.mp3")
@@ -82,6 +85,8 @@ BUNDLED_FRENCH1_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french1-final
 BUNDLED_FRENCH1_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french1-final-exam-audio.mp3")
 BUNDLED_FRENCH2_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french2-final-exam.local.json")
 BUNDLED_FRENCH2_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french2-final-exam-audio.mp3")
+BUNDLED_FRENCH8_QUIZ_PATH = os.path.join(REPO_ROOT, "data", "french8-quiz-ville-intelligente.local.json")
+BUNDLED_FRENCH8_QUIZ_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french8-quiz-ville-intelligente-energie-batiments.mp3")
 BUNDLED_BASIC_INTEGRATED_TASK_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task.local.json")
 BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task-real.local.mp3")
 BUNDLED_BASIC_ANDRES_RETAKE_AUDIO_PATH = os.path.join(REPO_ROOT, "ingles", "basico", "audio", "integrated-task", "basic-integrated-task-andres-munoz-retake.mp3")
@@ -451,12 +456,12 @@ FRENCH8_BASE_EVALUATIONS = {
     },
     "quiz": {
         "id": "quiz",
-        "title": "Quiz",
+        "title": "Quiz 10% - Ville intelligente",
         "weight": 10,
         "type": "Quiz",
-        "date": "2026-07-01",
-        "displayDate": "A definir",
-        "description": "Quiz del curso."
+        "date": "2026-07-06",
+        "displayDate": "Ouverture par le professeur",
+        "description": "Quiz ferme sur les themes 01 et 02: grammaire, lecture et ecoute autour de la ville intelligente."
     },
     "debate1": {
         "id": "debate1",
@@ -2282,6 +2287,94 @@ def write_french2_final_exam_submissions(data):
     write_json_file(FRENCH2_FINAL_EXAM_SUBMISSIONS_PATH, data, ".french2-final-submissions-")
 
 
+def default_french8_quiz_bundle():
+    return {
+        "state": {
+            "isOpen": False,
+            "openedAt": None,
+            "closedAt": None,
+            "openedBy": None,
+            "updatedAt": None
+        },
+        "exam": {
+            "id": "french8-quiz-ville-intelligente",
+            "title": "Quiz 10% - Ville intelligente",
+            "version": "local",
+            "totalPoints": 26,
+            "sections": []
+        }
+    }
+
+
+def read_french8_quiz_bundle():
+    source_path = FRENCH8_QUIZ_PATH if os.path.exists(FRENCH8_QUIZ_PATH) else BUNDLED_FRENCH8_QUIZ_PATH
+    data = read_json_file(source_path, default_french8_quiz_bundle())
+    if not isinstance(data.get("state"), dict):
+        data["state"] = default_french8_quiz_bundle()["state"]
+    if not isinstance(data.get("exam"), dict):
+        data["exam"] = default_french8_quiz_bundle()["exam"]
+    data["state"].setdefault("isOpen", False)
+    data["state"].setdefault("openedAt", None)
+    data["state"].setdefault("closedAt", None)
+    data["state"].setdefault("openedBy", None)
+    data["state"].setdefault("updatedAt", None)
+    data["exam"].setdefault("sections", [])
+    data["exam"].setdefault("totalPoints", 26)
+    data["exam"].setdefault("version", "local")
+    return data
+
+
+def write_french8_quiz_bundle(data):
+    write_json_file(FRENCH8_QUIZ_PATH, data, ".french8-quiz-")
+
+
+def read_french8_quiz_submissions():
+    data = read_json_file(FRENCH8_QUIZ_SUBMISSIONS_PATH, {"submissions": {}})
+    if not isinstance(data.get("submissions"), dict):
+        data["submissions"] = {}
+    return data
+
+
+def write_french8_quiz_submissions(data):
+    write_json_file(FRENCH8_QUIZ_SUBMISSIONS_PATH, data, ".french8-quiz-submissions-")
+
+
+def french8_quiz_submission_public(submission):
+    if not isinstance(submission, dict):
+        return None
+    return {
+        "studentId": submission.get("studentId"),
+        "studentName": submission.get("studentName"),
+        "scorePoints": submission.get("scorePoints"),
+        "totalPoints": submission.get("totalPoints"),
+        "grade": submission.get("grade"),
+        "sectionScores": submission.get("sectionScores"),
+        "submittedAt": submission.get("submittedAt"),
+        "quizVersion": submission.get("quizVersion")
+    }
+
+
+def french8_quiz_state_payload(profile, grades_data, bundle, submissions):
+    payload = final_exam_state_payload(profile, grades_data, bundle, submissions)
+    payload["submitted"] = french8_quiz_submission_public(payload.get("submitted"))
+    role = payload.get("role")
+    if role in ("admin", "teacher"):
+        students = [item for item in grades_data.get("students", []) if isinstance(item, dict)]
+        submitted_ids = {
+            clean_text(student_id, 40)
+            for student_id in submissions.get("submissions", {})
+            if clean_text(student_id, 40)
+        }
+        total_students = len(students)
+        submitted_count = sum(1 for student in students if clean_text(student.get("id"), 40) in submitted_ids)
+        payload["stats"] = {
+            "totalStudents": total_students,
+            "submittedCount": submitted_count,
+            "pendingCount": max(total_students - submitted_count, 0)
+        }
+    return payload
+
+
 def french1_final_exam_submission_public(submission):
     if not isinstance(submission, dict):
         return None
@@ -2847,6 +2940,75 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                 query = urllib.parse.parse_qs(parsed.query)
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
+        if parsed.path == "/api/french8/quiz-ville-intelligente/state":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                if ensure_french8_gradebook_structure(grades_data):
+                    write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                bundle = read_french8_quiz_bundle()
+                submissions = read_french8_quiz_submissions()
+                json_response(self, 200, french8_quiz_state_payload(profile, grades_data, bundle, submissions))
+            return
+
+        if parsed.path == "/api/french8/quiz-ville-intelligente":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                if ensure_french8_gradebook_structure(grades_data):
+                    write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_french8_quiz_bundle()
+                submissions = read_french8_quiz_submissions()
+                state = bundle.get("state", {})
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if submitted:
+                    json_response(self, 200, {
+                        "status": "submitted",
+                        "state": state,
+                        "result": french8_quiz_submission_public(submitted)
+                    })
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "quiz_closed", "state": state})
+                    return
+
+                json_response(self, 200, {
+                    "status": "open" if state.get("isOpen") is True else "staff-preview",
+                    "role": role,
+                    "state": state,
+                    "student": student_public_view(student) if isinstance(student, dict) else None,
+                    "exam": final_exam_public_payload(bundle)
+                })
+            return
+
+        if parsed.path == "/api/french8/quiz-ville-intelligente/audio":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_french8_quiz_bundle()
+                state = bundle.get("state", {})
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "quiz_closed"})
+                    return
+                audio_path = FRENCH8_QUIZ_AUDIO_PATH
+                if not os.path.exists(audio_path):
+                    audio_path = BUNDLED_FRENCH8_QUIZ_AUDIO_PATH
+            if not os.path.exists(audio_path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(audio_path, "rb") as handle:
+                binary_response(self, 200, handle.read(), "audio/mpeg")
             return
 
         if parsed.path == "/api/french8/pronunciation-audio":
@@ -4635,6 +4797,80 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {"ok": True, "result": french1_final_exam_submission_public(submission)})
             return
 
+        if parsed.path == "/api/french8/quiz-ville-intelligente/submit":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                if ensure_french8_gradebook_structure(grades_data):
+                    write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+
+                bundle = read_french8_quiz_bundle()
+                state = bundle.get("state", {})
+                if state.get("isOpen") is not True:
+                    json_response(self, 403, {"error": "quiz_closed", "state": state})
+                    return
+
+                submissions = read_french8_quiz_submissions()
+                student_id = clean_text(student.get("id"), 40)
+                attempt_id = clean_text(payload.get("attemptId"), 120)
+                existing = submissions.get("submissions", {}).get(student_id)
+                if existing:
+                    if attempt_id and clean_text(existing.get("attemptId"), 120) == attempt_id:
+                        json_response(self, 200, {
+                            "ok": True,
+                            "duplicate": True,
+                            "result": french8_quiz_submission_public(existing)
+                        })
+                    else:
+                        json_response(self, 409, {
+                            "error": "already_submitted",
+                            "result": french8_quiz_submission_public(existing)
+                        })
+                    return
+
+                exam = bundle.get("exam", {})
+                result = score_final_exam(exam, payload.get("answers"))
+                submitted_at = now_iso()
+                submission = {
+                    "studentId": student_id,
+                    "studentName": student.get("fullName", ""),
+                    "email": normalize_email(profile.get("email")),
+                    "scorePoints": result["scorePoints"],
+                    "totalPoints": result["totalPoints"],
+                    "grade": result["grade"],
+                    "sectionScores": result["sectionScores"],
+                    "submittedAt": submitted_at,
+                    "quizVersion": clean_text(exam.get("version"), 80),
+                    "attemptId": attempt_id,
+                    "answers": result["details"],
+                    "source": "french8-quiz-ville-intelligente"
+                }
+                submissions.setdefault("submissions", {})[student_id] = submission
+
+                student.setdefault("grades", {})["quiz"] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"]["quiz"] = {
+                    "evaluationId": "quiz",
+                    "status": "submitted",
+                    "submittedAt": submitted_at,
+                    "scorePoints": result["scorePoints"],
+                    "totalPoints": result["totalPoints"],
+                    "grade": result["grade"],
+                    "sectionScores": result["sectionScores"],
+                    "quizVersion": clean_text(exam.get("version"), 80),
+                    "attemptId": attempt_id,
+                    "source": "french8-quiz-ville-intelligente"
+                }
+
+                write_french8_quiz_submissions(submissions)
+                write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                json_response(self, 200, {"ok": True, "result": french8_quiz_submission_public(submission)})
+            return
+
         if parsed.path == "/api/french1/pronunciation-grade":
             with data_lock:
                 grades_data = read_grades_data(FRENCH1_GRADES_PATH)
@@ -5018,6 +5254,31 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 else:
                     state["closedAt"] = timestamp
                 write_french1_final_exam_bundle(bundle)
+                json_response(self, 200, {"ok": True, "state": state})
+            return
+
+        if parsed.path == "/api/french8/quiz-ville-intelligente/state":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                if ensure_french8_gradebook_structure(grades_data):
+                    write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                bundle = read_french8_quiz_bundle()
+                state = bundle.setdefault("state", {})
+                desired_open = payload.get("isOpen") is True
+                timestamp = now_iso()
+                state["isOpen"] = desired_open
+                state["updatedAt"] = timestamp
+                if desired_open:
+                    state["openedAt"] = timestamp
+                    state["openedBy"] = normalize_email(profile.get("email"))
+                    state["closedAt"] = None
+                else:
+                    state["closedAt"] = timestamp
+                write_french8_quiz_bundle(bundle)
                 json_response(self, 200, {"ok": True, "state": state})
             return
 

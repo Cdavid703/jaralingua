@@ -1,0 +1,277 @@
+{
+  "state": {
+    "isOpen": false,
+    "openedAt": null,
+    "closedAt": null,
+    "openedBy": null,
+    "updatedAt": null
+  },
+  "exam": {
+    "id": "french8-quiz-ville-intelligente",
+    "version": "2026-07-06-a",
+    "title": "Quiz 10% - Ville intelligente",
+    "totalPoints": 26,
+    "audioSrc": "/api/french8/quiz-ville-intelligente/audio",
+    "listeningTranscript": "Aujourd'hui, notre chronique urbaine s'interesse a l'energie dans les batiments publics. A Lyon, plusieurs ecoles et bibliotheques testent un systeme qui ajuste la lumiere, le chauffage et la ventilation selon la presence reelle des usagers. Le but n'est pas seulement de payer moins d'electricite. La ville veut aussi reperer les salles mal isolees et planifier les renovations prioritaires. Selon la mairie, le projet aurait permis d'eviter des depenses inutiles pendant l'hiver dernier. Mais une association demande plus de transparence: si les donnees restent difficiles a comprendre, les citoyens risquent de voir ces capteurs comme un outil de surveillance. Le vrai defi sera donc de faire des economies sans perdre la confiance du public.",
+    "sections": [
+      {
+        "id": "grammaire",
+        "title": "Grammaire",
+        "subtitle": "Conditionnel passe, passe compose, COD et verbes pronominaux",
+        "points": 15,
+        "instructions": "Completez chaque phrase avec la forme correcte. Une seule reponse est possible.",
+        "questions": [
+          {
+            "id": "g01",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Si la mairie avait explique le projet plus tot, elle ___ une partie des critiques.",
+            "options": ["aurait evitee", "aurait evite", "serait evitee"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g02",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Les capteurs ___ mieux fonctionne si les techniciens les avaient entretenus chaque mois.",
+            "options": ["seraient mieux fonctionnes", "auraient mieux fonctionnes", "auraient mieux fonctionne"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g03",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Avant d'installer les cameras intelligentes, nous ___ consulter les habitants.",
+            "options": ["aurions du", "serions dus", "aurions dus"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g04",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Si le budget avait ete plus clair, les citoyens ___ davantage confiance au projet.",
+            "options": ["seraient fait", "auraient faite", "auraient fait"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g05",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Pour eviter la polemique, la ville ___ installer moins de cameras dans les quartiers residentiels.",
+            "options": ["serait pu", "aurait pu", "aurait pouvoir"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g06",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe + COD",
+            "prompt": "Les donnees que le service ___ auraient du etre anonymisees avant la publication.",
+            "options": ["aurait collectees", "aurait collecte", "serait collectees"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g07",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Si les quartiers populaires avaient recu les premieres aides, les applications ___ comme plus justes.",
+            "options": ["auraient ete percu", "seraient percu", "auraient ete percues"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g08",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Face aux doutes du public, le conseil municipal ___ reporter le lancement.",
+            "options": ["aurait mieux fait de", "serait mieux fait de", "aurait mieux faire"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g09",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Si tu avais lu le rapport complet, tu ___ pourquoi les habitants etaient inquiets.",
+            "options": ["serais compris", "aurais compris", "aurais comprise"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g10",
+            "type": "multipleChoice",
+            "block": "Conditionnel passe",
+            "prompt": "Les responsables ___ plus prudents s'ils avaient ecoute les associations.",
+            "options": ["seraient etes", "auraient ete prudentes", "auraient ete"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g11",
+            "type": "multipleChoice",
+            "block": "Passe compose",
+            "prompt": "La ville ___ un nouveau systeme de feux intelligents pres de la gare.",
+            "options": ["a installe", "est installee", "a installee"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g12",
+            "type": "multipleChoice",
+            "block": "Passe compose + COD",
+            "prompt": "Les donnees que la ville ___ ont revele des embouteillages invisibles.",
+            "options": ["a collecte", "a collectees", "est collectee"],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g13",
+            "type": "multipleChoice",
+            "block": "Passe compose avec etre",
+            "prompt": "Les techniciens ___ dans le batiment pour verifier les compteurs.",
+            "options": ["sont entres", "ont entres", "sont entre"],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g14",
+            "type": "multipleChoice",
+            "block": "Passe compose: verbe a double construction",
+            "prompt": "Apres l'audit energetique, ils ___ les vieux compteurs du sous-sol.",
+            "options": ["sont sortis", "ont sorties", "ont sorti"],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g15",
+            "type": "multipleChoice",
+            "block": "Passe compose pronominal",
+            "prompt": "Les habitantes ___ sur la plateforme pour donner leur avis.",
+            "options": ["ont inscrites", "se sont inscrites", "se sont inscrit"],
+            "answer": 1,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": "lecture",
+        "title": "Comprehension ecrite",
+        "subtitle": "Article bref: mobilite intelligente et donnees de transport",
+        "points": 6,
+        "instructions": "Lisez l'article puis choisissez la reponse la plus precise.",
+        "readingTitle": "Des bus plus intelligents, mais pour qui ?",
+        "readingText": [
+          "En 2024, une ville moyenne du sud de la France lanca un programme de bus intelligents. Chaque vehicule transmit des informations sur sa position, le nombre approximatif de passagers et les retards observes aux heures de pointe. L'objectif etait simple: adapter les horaires aux besoins reels des habitants, surtout dans les quartiers mal desservis. Au debut, le projet fut bien accueilli, car plusieurs lignes arriverent plus regulierement pres des lycees et de l'hopital.",
+          "Pourtant, un debat apparut quelques mois plus tard. Les associations de quartier demanderent comment les donnees etaient conservees et qui pouvait les consulter. Pendant une reunion publique, plusieurs habitants dirent qu'ils acceptaient l'innovation, mais pas une decision impossible a verifier. La mairie repondit que les informations etaient anonymes, mais le rapport public resta difficile a lire. Selon une chercheuse locale, la ville aurait pu publier des exemples plus clairs pour eviter la mefiance. Le programme montra donc une chose essentielle: une ville intelligente n'est pas seulement une ville qui collecte des donnees. C'est une ville qui explique ses choix et qui donne aux citoyens les moyens de les comprendre."
+        ],
+        "questions": [
+          {
+            "id": "r01",
+            "type": "multipleChoice",
+            "prompt": "Quel etait l'objectif principal du programme de bus intelligents ?",
+            "options": ["Adapter les horaires aux besoins reels des habitants.", "Remplacer les conducteurs par des vehicules autonomes.", "Supprimer les lignes peu utilisees sans consulter les quartiers."],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "r02",
+            "type": "multipleChoice",
+            "prompt": "Pourquoi certaines associations ont-elles commence a douter du projet ?",
+            "options": ["Parce que les bus etaient devenus plus lents.", "Parce que le projet ne concernait que les touristes.", "Parce que la conservation et l'acces aux donnees restaient peu clairs."],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "r03",
+            "type": "multipleChoice",
+            "prompt": "Que suggere la phrase: la ville aurait pu publier des exemples plus clairs ?",
+            "options": ["La ville n'avait collecte aucune donnee utile.", "La communication de la mairie aurait pu etre plus transparente.", "Les citoyens avaient deja parfaitement compris le rapport."],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "r04",
+            "type": "multipleChoice",
+            "prompt": "Quel evenement est exprime au passe simple dans le texte ?",
+            "options": ["Le lancement du programme par la ville.", "La conclusion generale sur la ville intelligente.", "La possibilite de publier des exemples clairs."],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "r05",
+            "type": "multipleChoice",
+            "prompt": "Pourquoi le projet n'est-il pas presente comme totalement parfait ?",
+            "options": ["Parce que les bus ne sont jamais arrives pres de l'hopital.", "Parce que les habitants ont refuse toute amelioration des horaires.", "Parce que l'efficacite technique n'a pas suffi a creer la confiance."],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "r06",
+            "type": "multipleChoice",
+            "prompt": "Quelle idee resume le mieux la fin du texte ?",
+            "options": ["Une ville intelligente doit collecter le plus de donnees possible.", "Une ville intelligente doit rendre ses decisions comprehensibles.", "Une ville intelligente doit eviter tous les projets de transport."],
+            "answer": 1,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": "ecoute",
+        "title": "Comprehension orale",
+        "subtitle": "Chronique: energie intelligente dans les batiments publics",
+        "points": 5,
+        "instructions": "Ecoutez la chronique informative. Repondez sans chercher une phrase identique: choisissez l'idee la plus juste.",
+        "audioTitle": "Chronique urbaine: economiser sans surveiller",
+        "audioText": "Audio informatif court, genere avec ElevenLabs. Le sujet est different de la lecture: la gestion intelligente de l'energie dans les batiments publics.",
+        "audioSrc": "/api/french8/quiz-ville-intelligente/audio",
+        "questions": [
+          {
+            "id": "l01",
+            "type": "multipleChoice",
+            "prompt": "Quel est le sujet principal de la chronique ?",
+            "options": ["La gestion de l'energie dans les batiments publics.", "La circulation des bus pres des ecoles.", "La construction de nouveaux logements prives."],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l02",
+            "type": "multipleChoice",
+            "prompt": "Que fait le systeme installe dans les ecoles et bibliotheques ?",
+            "options": ["Il ferme les batiments quand il y a trop d'usagers.", "Il remplace les professeurs par des assistants numeriques.", "Il ajuste lumiere, chauffage et ventilation selon la presence."],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "l03",
+            "type": "multipleChoice",
+            "prompt": "Pourquoi la ville veut-elle analyser ces donnees ?",
+            "options": ["Pour vendre les informations a des entreprises.", "Pour reperer les salles mal isolees et mieux planifier les renovations.", "Pour empecher les habitants d'entrer dans les bibliotheques."],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "l04",
+            "type": "multipleChoice",
+            "prompt": "Quelle inquietude l'association exprime-t-elle ?",
+            "options": ["Les capteurs pourraient etre percus comme un outil de surveillance.", "Les ecoles risquent de manquer totalement d'electricite.", "Les bibliotheques vont devenir uniquement virtuelles."],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l05",
+            "type": "multipleChoice",
+            "prompt": "Quelle conclusion correspond le mieux a la chronique ?",
+            "options": ["Une ville intelligente doit choisir entre economie et confiance.", "Les capteurs reglent automatiquement tous les problemes publics.", "Les economies d'energie doivent etre accompagnees de transparence."],
+            "answer": 2,
+            "points": 1
+          }
+        ]
+      }
+    ]
+  }
+}
