@@ -284,23 +284,19 @@
         </form>
         <div class="ai-quality-panel">
           <div class="ai-lab-card">
-            <h3>Quality check before uploading</h3>
+            <h3>Optional writing guide</h3>
             <ul class="ai-validation-list" id="validationList">
-              <li class="fail">Write 65-180 words. Target 80-120 words for class.</li>
-              <li class="fail">Select at least six places.</li>
-              <li class="fail">Use there is / there are.</li>
-              <li class="fail">Use a location phrase: next to, across from, near, behind, in front of, or in the center.</li>
-              <li class="fail">Keep the no text / no logo instruction in the prompt.</li>
+              <li class="ok">Try to write 80-120 words, but this will not block your upload.</li>
+              <li class="ok">Include places, location phrases, and there is / there are when possible.</li>
+              <li class="ok">Upload your generated image when it is ready.</li>
             </ul>
           </div>
           <div class="ai-lab-card">
-            <h3>Required confirmation</h3>
+            <h3>Optional reminder</h3>
             <div class="ai-checklist" id="finalChecklist">
-              <label><input type="checkbox" data-final-check /> I included at least six places.</label>
-              <label><input type="checkbox" data-final-check /> I used there is / there are.</label>
-              <label><input type="checkbox" data-final-check /> I included location phrases.</label>
-              <label><input type="checkbox" data-final-check /> I checked spelling and punctuation.</label>
-              <label><input type="checkbox" data-final-check /> I generated the image outside Jaralingua and selected the file to upload.</label>
+              <label><input type="checkbox" data-final-check /> I checked my description.</label>
+              <label><input type="checkbox" data-final-check /> I selected my generated image.</label>
+              <label><input type="checkbox" data-final-check /> I am ready to send it to the teacher gallery.</label>
             </div>
           </div>
         </div>
@@ -439,16 +435,11 @@
         return count;
       }
       function validationState(){
-        const description = descriptionEl.value.trim().toLowerCase();
-        const prompt = promptEl.value.trim().toLowerCase();
         const count = (descriptionEl.value.trim().match(/\b[\w'-]+\b/g) || []).length;
-        const locationPattern = /\b(next to|across from|near|behind|in front of|in the center|between|on the left|on the right)\b/;
         return [
-          {ok: count >= 65 && count <= 180, text: "Write 65-180 words. Target 80-120 words for class."},
-          {ok: selectedPlaces().length >= 6, text: "Select at least six places."},
-          {ok: /\bthere is\b|\bthere are\b/.test(description), text: "Use there is / there are."},
-          {ok: locationPattern.test(description), text: "Use a location phrase: next to, across from, near, behind, in front of, or in the center."},
-          {ok: prompt.includes("no text") && prompt.includes("no logo") && prompt.includes("no watermark"), text: "Keep the no text / no logo / no watermark instruction in the prompt."}
+          {ok: true, text: count ? `${count} words written. This guide does not block your upload.` : "Write your description when possible. This guide does not block your upload."},
+          {ok: true, text: `${selectedPlaces().length} places selected. You can still upload your image.`},
+          {ok: true, text: "You may upload the generated image when the file is ready."}
         ];
       }
       function updateValidation(){
@@ -458,7 +449,7 @@
         return state.every(item => item.ok);
       }
       function checklistReady(){
-        return checklistItems.every(item => item.checked);
+        return true;
       }
       function readImageDataUrl(file){
         return new Promise((resolve, reject) => {
@@ -596,23 +587,11 @@
         if(!promptEl.value.trim()){
           buildPrompt(false);
         }
-        const count = updateWordCount();
-        if(!updateValidation()){
-          const missing = validationState().filter(item => !item.ok).map(item => item.text).join(" ");
-          setStatus("Complete the quality checks before uploading the image: " + missing, true);
-          return;
-        }
-        if(!checklistReady()){
-          setStatus("Mark the required confirmation checklist before uploading the image.", true);
-          return;
-        }
+        updateWordCount();
+        updateValidation();
         const imageFile = imageInput && imageInput.files ? imageInput.files[0] : null;
         if(!imageFile){
           setStatus("Select the image file generated outside Jaralingua before uploading.", true);
-          return;
-        }
-        if(count < 65 || count > 180){
-          setStatus("The description must be between 65 and 180 words for the system. Target 80-120 words for class.", true);
           return;
         }
         generating = true;

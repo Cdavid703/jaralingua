@@ -4282,16 +4282,6 @@ class ProgressHandler(BaseHTTPRequestHandler):
             neighborhood_name = clean_text(payload.get("neighborhoodName"), 100)
             description = clean_text(payload.get("description"), 2400)
             prompt = clean_text(payload.get("prompt"), 2400)
-            word_count = simple_word_count(description)
-            if word_count < 65:
-                json_response(self, 400, {"error": "description_too_short", "wordCount": word_count})
-                return
-            if word_count > 180:
-                json_response(self, 400, {"error": "description_too_long", "wordCount": word_count})
-                return
-            if len(prompt) < 220:
-                json_response(self, 400, {"error": "prompt_too_short"})
-                return
             if not group_name:
                 group_name = "Unit 6 Team"
             if not neighborhood_name:
@@ -4328,24 +4318,6 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 student_id = basic_unit6_neighborhood_owner_id(profile, role, student)
                 gallery = read_basic_unit6_neighborhood_gallery()
-                if role not in ("admin", "teacher"):
-                    duplicate = next(
-                        (
-                            item for item in gallery.get("submissions", [])
-                            if isinstance(item, dict) and clean_text(item.get("studentId"), 40) == student_id
-                        ),
-                        None
-                    )
-                    if duplicate:
-                        try:
-                            os.unlink(image_path)
-                        except OSError:
-                            pass
-                        json_response(self, 409, {
-                            "error": "already_generated",
-                            "result": public_basic_unit6_neighborhood_item(duplicate)
-                        })
-                        return
                 submitted_at = now_iso()
                 item = {
                     "id": image_id,
