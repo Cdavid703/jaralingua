@@ -74,7 +74,69 @@
     .ai-modal-body h3{margin:0 0 8px;color:#123b8f}
     .ai-modal-body p{color:#475569;line-height:1.55}
     .ai-modal-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    @media(max-width:980px){.ai-lab-grid,.ai-process,.ai-builder,.ai-checkbox-grid,.ai-gallery,.ai-language-bank,.ai-lab-hero-note,.ai-rubric,.ai-quality-panel,.ai-teacher-summary{grid-template-columns:1fr}.ai-lab-hero-note span{border-radius:18px}}
+    @media(max-width:980px){
+      body.english-basic-page{overflow-x:hidden}
+      body.english-basic-page img{max-width:100%}
+      body.english-basic-page .site-header{position:relative;z-index:20}
+      body.english-basic-page .navbar{align-items:flex-start;gap:.85rem}
+      body.english-basic-page .nav-links{width:100%;flex-wrap:wrap;justify-content:flex-start;gap:.45rem}
+      body.english-basic-page .nav-links a{display:inline-flex;min-height:42px;align-items:center;border-radius:999px;padding:.55rem .8rem}
+      body.english-basic-page .global-course-switcher{max-width:calc(100vw - 1rem)}
+      body.english-basic-page .immersive-basic-hero{display:grid;grid-template-columns:1fr;gap:1.15rem;min-height:auto;padding:clamp(1.1rem,4vw,2rem)}
+      body.english-basic-page .lesson-hero-content{max-width:100%}
+      body.english-basic-page .lesson-hero-content h1{font-size:clamp(2rem,8vw,3.3rem);line-height:1.04}
+      body.english-basic-page .lesson-meta,body.english-basic-page .hero-actions{gap:.55rem}
+      body.english-basic-page .hero-actions .btn{min-height:44px;justify-content:center}
+      body.english-basic-page .lesson-hero-image{width:100%;max-width:720px;margin-inline:auto}
+      body.english-basic-page .premium-lesson-container{width:min(100% - 1.25rem,1120px);margin-inline:auto}
+      body.english-basic-page .premium-topic-card{border-radius:24px;padding-inline:clamp(1rem,3vw,1.35rem)}
+      .ai-lab-grid,.ai-builder,.ai-quality-panel{grid-template-columns:1fr}
+      .ai-process,.ai-checkbox-grid,.ai-gallery,.ai-language-bank,.ai-lab-hero-note,.ai-rubric,.ai-teacher-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .ai-lab-hero-note span{border-radius:18px}
+      .ai-actions{gap:.65rem}
+      .ai-actions .btn,.ai-actions .practice-submit-btn{min-height:44px}
+      .ai-modal{padding:14px}
+      .ai-modal-card{border-radius:20px}
+      .ai-modal-card img{max-height:64vh}
+    }
+    @media(max-width:620px){
+      body.english-basic-page .navbar{padding-inline:.75rem}
+      body.english-basic-page .brand img{max-width:132px;height:auto}
+      body.english-basic-page .nav-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+      body.english-basic-page .nav-links a{width:100%;justify-content:center;text-align:center;font-size:.86rem}
+      body.english-basic-page .immersive-basic-hero{margin-inline:.65rem;border-radius:24px}
+      body.english-basic-page .lesson-hero-content p{font-size:1rem;line-height:1.6}
+      body.english-basic-page .lesson-meta span{font-size:.78rem;padding:.45rem .6rem}
+      body.english-basic-page .hero-actions{display:grid;grid-template-columns:1fr;width:100%}
+      body.english-basic-page .hero-actions .btn{width:100%}
+      body.english-basic-page .topic-heading{grid-template-columns:auto 1fr;align-items:start}
+      body.english-basic-page .topic-heading h2{font-size:clamp(1.45rem,7vw,2rem);line-height:1.12}
+      .ai-lab-hero-note,.ai-process,.ai-checkbox-grid,.ai-gallery,.ai-language-bank,.ai-rubric,.ai-quality-panel,.ai-teacher-summary{grid-template-columns:1fr}
+      .ai-lab-card,.ai-warning,.ai-status{border-radius:18px;padding:1rem}
+      .ai-builder{gap:12px}
+      .ai-field input,.ai-field textarea,.ai-field select{border-radius:14px;padding:11px 12px}
+      .ai-field textarea{min-height:126px}
+      .ai-checkbox-grid label,.ai-checklist label{min-height:44px;align-items:center}
+      .ai-actions{display:grid;grid-template-columns:1fr}
+      .ai-actions .btn,.ai-actions .practice-submit-btn{width:100%;justify-content:center}
+      .ai-example-image,.ai-generated-result,.ai-gallery-card{border-radius:18px}
+      .ai-gallery-card img{aspect-ratio:4/3}
+      .ai-teacher-summary strong{font-size:1.25rem}
+      .ai-modal{padding:10px;align-items:start}
+      .ai-modal-card{margin-top:10px;border-radius:18px}
+      .ai-modal-card img{max-height:58vh}
+      .ai-modal-actions{display:grid;grid-template-columns:1fr}
+      .ai-modal-actions .btn,.ai-modal-actions .practice-submit-btn{width:100%;justify-content:center}
+    }
+    @media(max-width:420px){
+      body.english-basic-page .nav-links{grid-template-columns:1fr}
+      body.english-basic-page .premium-lesson-container{width:min(100% - .8rem,1120px)}
+      body.english-basic-page .premium-topic-card{border-radius:20px}
+      .ai-lab-card,.ai-warning,.ai-status{padding:.9rem}
+      .ai-language-bank span{padding:.85rem}
+      .ai-process div{padding:.9rem}
+      .ai-checklist label{font-size:.92rem}
+    }
   </style>
 </head>
 <body class="english-basic-page">
@@ -96,9 +158,9 @@
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab Workshop</p>
         <h1>My Ideal Neighborhood AI Image Lab</h1>
-        <p>Students describe a fictional or ideal neighborhood in English, convert the description into a professional AI image prompt, generate one image, and present the result in class.</p>
+        <p>Students describe a fictional or ideal neighborhood in English, convert the description into a professional AI image prompt, generate the image outside Jaralingua, upload it, and present the result in class.</p>
         <div class="lesson-meta"><span>Unit 6</span><span>Places in town</span><span>There is / There are</span><span>AI image prompt</span></div>
-        <div class="ai-lab-hero-note"><span>Write clearly</span><span>Generate once</span><span>Present live</span></div>
+        <div class="ai-lab-hero-note"><span>Write clearly</span><span>Upload image</span><span>Present live</span></div>
         <div class="hero-actions">
           <a href="#ai-builder" class="btn btn-primary">Start activity</a>
           <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
@@ -113,7 +175,7 @@
         <div class="ai-lab-grid">
           <div class="ai-lab-card">
             <h3>Final product</h3>
-            <p>Each team creates a short English description of an ideal or fictional neighborhood. The description must be detailed enough for an AI model to create a clear image. Then the team uses one generation attempt and presents the image orally.</p>
+            <p>Each team creates a short English description of an ideal or fictional neighborhood. The description must be detailed enough for an AI model to create a clear image. Then the team generates the image outside Jaralingua, uploads it here, and presents it orally.</p>
             <ul>
               <li>Target length: <strong>80-120 words</strong>.</li>
               <li>Include at least <strong>six places</strong> in town.</li>
