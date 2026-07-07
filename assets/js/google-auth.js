@@ -2384,7 +2384,86 @@
     return String(value).replace(/"/g, '\\"');
   }
 
+  function initIntermediateIdClaimRetry() {
+    if (window.__jaralinguaIntermediateIdClaimRetry || typeof window.fetch !== "function") return;
+    window.__jaralinguaIntermediateIdClaimRetry = true;
+    const originalFetch = window.fetch.bind(window);
+    const claimKey = "jaralingua_intermediate_student_id_claim";
+
+    function urlText(input) {
+      if (typeof input === "string") return input;
+      if (input && typeof input.url === "string") return input.url;
+      return "";
+    }
+
+    function isIntermediateSubmit(input, init) {
+      const method = String((init && init.method) || (input && input.method) || "GET").toUpperCase();
+      const url = urlText(input);
+      return method === "POST" && /\/api\/intermediate\/.+\/submit(?:$|\?)/.test(url);
+    }
+
+    function parseJsonBody(init) {
+      if (!init || typeof init.body !== "string") return null;
+      try {
+        const payload = JSON.parse(init.body);
+        return payload && typeof payload === "object" && !Array.isArray(payload) ? payload : null;
+      } catch (_error) {
+        return null;
+      }
+    }
+
+    function withClaim(init, claim) {
+      const payload = parseJsonBody(init);
+      if (!payload || !claim) return init;
+      const headers = new Headers(init.headers || {});
+      if (!headers.has("Content-Type")) headers.set("Content-Type", "application/json");
+      return Object.assign({}, init, {
+        headers,
+        body: JSON.stringify(Object.assign({}, payload, { studentIdClaim: claim }))
+      });
+    }
+
+    function savedClaim() {
+      return String(sessionStorage.getItem(claimKey) || "").replace(/\D+/g, "");
+    }
+
+    async function unauthorizedStudent(response) {
+      if (!response || response.status !== 403) return false;
+      try {
+        const payload = await response.clone().json();
+        return payload && payload.error === "student_not_authorized";
+      } catch (_error) {
+        return false;
+      }
+    }
+
+    window.fetch = async function jaralinguaFetchWithIntermediateClaim(input, init) {
+      if (!isIntermediateSubmit(input, init)) {
+        return originalFetch(input, init);
+      }
+      let requestInit = init || {};
+      const existingPayload = parseJsonBody(requestInit);
+      const remembered = savedClaim();
+      if (existingPayload && remembered && !existingPayload.studentIdClaim && !existingPayload.studentId) {
+        requestInit = withClaim(requestInit, remembered);
+      }
+      const firstResponse = await originalFetch(input, requestInit);
+      if (!(await unauthorizedStudent(firstResponse))) return firstResponse;
+      const alreadyClaimed = parseJsonBody(requestInit);
+      if (alreadyClaimed && (alreadyClaimed.studentIdClaim || alreadyClaimed.studentId)) {
+        sessionStorage.removeItem(claimKey);
+        return firstResponse;
+      }
+      const activeEmail = (currentUser && currentUser.email) ? "\nSigned in as: " + currentUser.email : "";
+      const claim = String(window.prompt("We could not find your email in the Intermediate English gradebook." + activeEmail + "\n\nPlease type your ID/document number to link this delivery to your student record.\n\nNo encontramos tu correo en la grilla de Ingles Intermedio. Escribe tu documento/ID para validar tu entrega:", "") || "").replace(/\D+/g, "");
+      if (!claim) return firstResponse;
+      sessionStorage.setItem(claimKey, claim);
+      return originalFetch(input, withClaim(init || {}, claim));
+    };
+  }
+
   window.addEventListener("load", function () {
+    initIntermediateIdClaimRetry();
     initGoogle();
     if (currentUser) {
       trackPageVisit();

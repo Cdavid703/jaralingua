@@ -1323,11 +1323,35 @@ def matched_student_for_profile(profile, grades_data):
     )
     if direct_match:
         return direct_match
-    return next(
+    name_match = next(
         (item for item in students if isinstance(item, dict) and name_matches_student(item, profile)),
         None
     )
-
+    if name_match:
+        return name_match
+    claimed_id = "".join(ch for ch in str(profile.get("_studentIdClaim", "")) if ch.isdigit())
+    if not claimed_id or not email:
+        return None
+    claimed_student = next(
+        (
+            item for item in students
+            if isinstance(item, dict) and "".join(ch for ch in str(item.get("id", "")) if ch.isdigit()) == claimed_id
+        ),
+        None
+    )
+    if not isinstance(claimed_student, dict):
+        return None
+    current_email = normalize_email(claimed_student.get("email"))
+    if not current_email:
+        claimed_student["email"] = email
+    elif current_email != email:
+        aliases = claimed_student.get("emailAliases")
+        if not isinstance(aliases, list):
+            aliases = []
+        if email not in {normalize_email(item) for item in aliases}:
+            aliases.append(email)
+            claimed_student["emailAliases"] = aliases
+    return claimed_student
 
 def grade_payload_for(profile, grades_data, query):
     role = grade_user_role(profile, grades_data)
@@ -3643,6 +3667,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
         payload = self.read_json_body()
         if payload is None:
             return
+        if parsed.path.startswith("/api/intermediate/") and isinstance(payload, dict):
+            profile = dict(profile)
+            profile["_studentIdClaim"] = payload.get("studentIdClaim") or payload.get("studentId") or payload.get("idClaim") or ""
 
         if parsed.path == "/api/intermediate/unit4-expression-wall/activate":
             with data_lock:
