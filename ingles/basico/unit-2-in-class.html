@@ -9,8 +9,432 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .unit2-page {
+      --unit2-blue: #123b8f;
+      --unit2-ink: #071f4f;
+      --unit2-red: #c1121f;
+      --unit2-soft: #f8fbff;
+      --unit2-warm: #fff7e8;
+      --unit2-green: #0f9f6e;
+    }
+
+    .unit2-map,
+    .unit2-outcomes,
+    .unit2-language-flow,
+    .unit2-grid-2,
+    .unit2-grid-3,
+    .unit2-grid-4,
+    .unit2-resource-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .unit2-map {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .unit2-outcomes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .unit2-language-flow {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .unit2-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .unit2-grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .unit2-grid-4,
+    .unit2-resource-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+    .unit2-map a,
+    .unit2-outcome,
+    .unit2-flow-step,
+    .unit2-card,
+    .unit2-rule-card,
+    .unit2-example-card,
+    .unit2-note,
+    .unit2-dialogue-card,
+    .unit2-speaking-part,
+    .unit2-resource-card {
+      border-radius: 20px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      color: #475569;
+      line-height: 1.62;
+    }
+
+    .unit2-map a,
+    .unit2-resource-card a {
+      text-decoration: none;
+      color: var(--unit2-ink);
+    }
+
+    .unit2-map a {
+      min-height: 118px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .unit2-map span,
+    .unit2-mini-label,
+    .unit2-resource-card span,
+    .unit2-flow-step span {
+      color: var(--unit2-red);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+    }
+
+    .unit2-outcome {
+      font-weight: 800;
+    }
+
+    .unit2-outcome i {
+      color: var(--unit2-green);
+      margin-right: 8px;
+    }
+
+    .unit2-flow-step {
+      min-height: 110px;
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+      display: grid;
+      gap: 7px;
+      align-content: start;
+    }
+
+    .unit2-flow-step strong,
+    .unit2-card strong,
+    .unit2-rule-card h3,
+    .unit2-example-card h3,
+    .unit2-dialogue-card h3,
+    .unit2-speaking-part strong,
+    .unit2-resource-card strong {
+      color: var(--unit2-ink);
+    }
+
+    .unit2-section-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .unit2-module {
+      border-radius: 30px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.1);
+      overflow: hidden;
+    }
+
+    .unit2-module + .unit2-module,
+    .unit2-module + .unit2-subtle-link-panel {
+      margin-top: 28px;
+    }
+
+    .unit2-module-header {
+      padding: clamp(1.4rem, 3vw, 2.35rem);
+      background:
+        linear-gradient(135deg, rgba(18, 59, 143, 0.96), rgba(7, 31, 79, 0.9)),
+        var(--module-image, none) center/cover;
+      color: #ffffff;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .unit2-module-header:focus {
+      outline: 3px solid rgba(255, 255, 255, 0.75);
+      outline-offset: -8px;
+    }
+
+    .unit2-module-header > span:first-child {
+      display: inline-flex;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .unit2-module-header h2 {
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .unit2-module-header p {
+      max-width: 920px;
+      line-height: 1.7;
+      opacity: 0.94;
+      margin: 0;
+      padding-right: clamp(0px, 10vw, 150px);
+    }
+
+    .unit2-module-toggle {
+      position: absolute;
+      right: clamp(1rem, 3vw, 2rem);
+      top: clamp(1rem, 3vw, 2rem);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 9px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .unit2-module-toggle i { transition: transform 0.2s ease; }
+    .unit2-module.is-collapsed .unit2-module-toggle i { transform: rotate(-90deg); }
+
+    .unit2-module-body {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      display: grid;
+      gap: 20px;
+    }
+
+    .unit2-module.is-collapsed .unit2-module-body { display: none; }
+
+    .unit2-rule-card { background: linear-gradient(135deg, #f8fbff, #ffffff); }
+
+    .unit2-note {
+      background: linear-gradient(135deg, #fff7e8, #ffffff);
+      border-color: rgba(193, 18, 31, 0.16);
+    }
+
+    .unit2-formula {
+      display: block;
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #eef4ff;
+      color: var(--unit2-blue);
+      font-weight: 900;
+    }
+
+    .unit2-word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .unit2-word-bank span {
+      border-radius: 999px;
+      background: #eef4ff;
+      color: var(--unit2-blue);
+      border: 1px solid rgba(18, 59, 143, 0.14);
+      padding: 0.45rem 0.7rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .unit2-table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .unit2-table {
+      width: 100%;
+      min-width: 720px;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .unit2-table th,
+    .unit2-table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .unit2-table th {
+      background: #eef4ff;
+      color: var(--unit2-ink);
+      font-weight: 900;
+    }
+
+    .unit2-table tr:last-child td { border-bottom: 0; }
+
+    .unit2-visual-explainer {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: stretch;
+      border-radius: 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+    }
+
+    .unit2-visual-explainer img {
+      width: 100%;
+      min-height: 260px;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .unit2-visual-copy {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .unit2-visual-copy h3 {
+      color: var(--unit2-ink);
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      margin: 0;
+    }
+
+    .unit2-audio-panel {
+      display: grid;
+      gap: 10px;
+      border-radius: 20px;
+      padding: 16px;
+      background: #071f4f;
+      color: #ffffff;
+    }
+
+    .unit2-audio-panel h3,
+    .unit2-audio-panel p { margin: 0; }
+    .unit2-audio-panel p { opacity: 0.88; line-height: 1.65; }
+
+    .unit2-audio-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .unit2-audio-status {
+      min-height: 1.2rem;
+      color: #bfdbfe;
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .unit2-correction {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .unit2-wrong,
+    .unit2-right {
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-weight: 900;
+    }
+
+    .unit2-wrong {
+      background: #fff1f2;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+    }
+
+    .unit2-right {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #bbf7d0;
+    }
+
+    .unit2-dialogue-lines {
+      display: grid;
+      gap: 10px;
+    }
+
+    .unit2-dialogue-lines p {
+      margin: 0;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #f8fafc;
+    }
+
+    .unit2-subtle-link-panel {
+      border-radius: 24px;
+      padding: clamp(1.2rem, 3vw, 1.8rem);
+      background: linear-gradient(135deg, #fff7e8, #ffffff);
+      border: 1px solid rgba(193, 18, 31, 0.14);
+      display: grid;
+      gap: 12px;
+      color: #475569;
+    }
+
+    .unit2-subtle-link-panel h2 {
+      margin: 0;
+      color: var(--unit2-ink);
+    }
+
+    @media (max-width: 1100px) {
+      .unit2-map,
+      .unit2-language-flow {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .unit2-grid-4,
+      .unit2-resource-grid,
+      .unit2-outcomes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .unit2-grid-3,
+      .unit2-visual-explainer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .unit2-module-header p { padding-right: 0; }
+    }
+
+    @media (max-width: 760px) {
+      .unit2-map,
+      .unit2-outcomes,
+      .unit2-language-flow,
+      .unit2-grid-2,
+      .unit2-grid-3,
+      .unit2-grid-4,
+      .unit2-resource-grid,
+      .unit2-visual-explainer,
+      .unit2-correction {
+        grid-template-columns: 1fr;
+      }
+
+      .unit2-module-header { padding-top: 4.2rem; }
+      .unit2-module-toggle { left: 1rem; right: auto; }
+      .unit2-module-body { padding: 1rem; }
+      .unit2-audio-tools,
+      .unit2-section-controls { display: grid; }
+      .unit2-audio-tools .audio-btn,
+      .unit2-section-controls .audio-btn { width: 100%; }
+    }
+  </style>
 </head>
-<body class="english-basic-page">
+<body class="english-basic-page unit2-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
   <header class="site-header">
     <nav class="navbar">
@@ -24,17 +448,16 @@
       </ul>
     </nav>
   </header>
-  <main>
 
+  <main>
     <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-2-in-class-banner.png');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Basic English Course 1</p>
         <h1>Unit 2: In Class</h1>
-        <p>Learn how to talk about people, places, objects, possession, location prepositions, demonstratives, and basic WH questions for classroom games and speaking activities.</p>
-        <div class="lesson-meta"><span>Sessions 4-6</span><span>In / on / at</span><span>This / that</span><span>These / those</span><span>WH questions</span><span>Verb to be</span></div>
+        <p>Learn how to describe your classroom, identify objects, say where things are, and ask who owns them using the verb to be, location words, demonstratives, and classroom language.</p>
+        <div class="lesson-meta"><span>Sessions 4-6</span><span>Classroom objects</span><span>Location</span><span>Demonstratives</span><span>Possession</span><span>Verb to be</span></div>
         <div class="hero-actions">
-          <a href="#lesson-content" class="btn btn-primary">Start lesson</a>
-          <a href="verb-to-be.html" class="btn btn-primary">Verb to be</a>
+          <a href="#lesson-content" class="btn btn-primary">Start unit</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
         </div>
       </div>
@@ -43,103 +466,367 @@
 
     <section class="lesson-outcome">
       <div class="outcome-card">
-        <span class="outcome-label">Learning Outcome</span>
-        <p>By the end of this unit, you will be able to ask and answer where people and things are, use in, on, and at for common places, identify objects with this, that, these, and those, and build short present-tense sentences with the verb to be.</p>
+        <span class="outcome-label">Unit Route</span>
+        <p>Unit 2 helps students survive linguistically in the classroom: name objects, locate people and things, point to near and far items, ask who owns something, and understand basic classroom instructions.</p>
+        <h2>What you will learn</h2>
+        <div class="unit2-outcomes" aria-label="Unit 2 learning outcomes">
+          <div class="unit2-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can name classroom objects.</div>
+          <div class="unit2-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can say where people and things are.</div>
+          <div class="unit2-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can use <strong>in</strong>, <strong>on</strong>, and <strong>at</strong>.</div>
+          <div class="unit2-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can use <strong>this</strong>, <strong>that</strong>, <strong>these</strong>, and <strong>those</strong>.</div>
+          <div class="unit2-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can ask <strong>where</strong>, <strong>what</strong>, <strong>who</strong>, and <strong>whose</strong> questions.</div>
+          <div class="unit2-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can use <strong>to be</strong> for classroom situations.</div>
+        </div>
+        <div class="unit2-language-flow" aria-label="Unit 2 language map">
+          <div class="unit2-flow-step"><span>Object</span><strong>notebook</strong><small>Name the item.</small></div>
+          <div class="unit2-flow-step"><span>Be</span><strong>is / are</strong><small>Connect subject and information.</small></div>
+          <div class="unit2-flow-step"><span>Location</span><strong>on the desk</strong><small>Say where it is.</small></div>
+          <div class="unit2-flow-step"><span>Pointing</span><strong>this / those</strong><small>Show near or far.</small></div>
+          <div class="unit2-flow-step"><span>Owner</span><strong>my / Ana's</strong><small>Say possession.</small></div>
+          <div class="unit2-flow-step"><span>Question</span><strong>Where is...?</strong><small>Ask for information.</small></div>
+        </div>
+        <div class="unit2-map">
+          <a href="#unit2-section-1"><span>01</span><strong>Classroom Objects</strong><small>People and things in class.</small></a>
+          <a href="#unit2-section-2"><span>02</span><strong>To Be in Class</strong><small>Identify and locate things.</small></a>
+          <a href="#unit2-section-3"><span>03</span><strong>In / On / At</strong><small>Basic location meaning.</small></a>
+          <a href="#unit2-section-4"><span>04</span><strong>More Location Words</strong><small>Under, next to, near...</small></a>
+          <a href="#unit2-section-5"><span>05</span><strong>Demonstratives</strong><small>This, that, these, those.</small></a>
+          <a href="#unit2-section-6"><span>06</span><strong>Possession</strong><small>My, your, Ana's, whose.</small></a>
+          <a href="#unit2-section-7"><span>07</span><strong>WH Questions</strong><small>Where, what, who, whose.</small></a>
+          <a href="#unit2-section-8"><span>08</span><strong>Classroom Language</strong><small>Useful instructions and requests.</small></a>
+          <a href="#unit2-section-9"><span>09</span><strong>Complete Model</strong><small>Put the unit together.</small></a>
+          <a href="#unit2-continue"><span>10</span><strong>Continue</strong><small>Resources after explanation.</small></a>
+        </div>
+        <div class="unit2-section-controls" aria-label="Unit section controls">
+          <button type="button" class="audio-btn play" onclick="setUnit2Sections(true)">Open all sections</button>
+          <button type="button" class="audio-btn" onclick="setUnit2Sections(false)">Close all sections</button>
+        </div>
       </div>
     </section>
 
     <section class="premium-lesson-container" id="lesson-content">
-
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Places and Location</p><h2>Where People and Things Are</h2></div></div>
-        <p class="lesson-text">Use place vocabulary with the verb <strong>to be</strong> to say where a person or object is. In beginner English, the most useful structure is: <strong>person or thing + am / is / are + place</strong>.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>People</h3><div class="phrase-list"><div class="phrase-item"><strong>Daniel is in the church.</strong><span>One person: use <strong>is</strong>.</span></div><div class="phrase-item"><strong>Sofia is in the park.</strong><span>Use <strong>in</strong> for many enclosed or general places.</span></div><div class="phrase-item"><strong>They are in class.</strong><span>More than one person: use <strong>are</strong>.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Things</h3><div class="phrase-list"><div class="phrase-item"><strong>The notebook is on the desk.</strong><span>Use <strong>on</strong> when something touches a surface.</span></div><div class="phrase-item"><strong>The keys are in the bag.</strong><span>Use <strong>in</strong> when something is inside a place or container.</span></div><div class="phrase-item"><strong>The computer is in the lab.</strong><span>Use <strong>in</strong> for rooms: in the lab, in the classroom.</span></div></div></div>
+      <article class="unit2-module" id="unit2-section-1">
+        <header class="unit2-module-header" style="--module-image: url('../../assets/img/english-basic/unit-2-in-class/classroom-overview-v1.png');">
+          <span>01</span>
+          <h2>Classroom Objects and People</h2>
+          <p>Students first need the names of common people and objects in class. These words become the subjects of Unit 2 sentences.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-visual-explainer">
+            <img src="../../assets/img/english-basic/unit-2-in-class/classroom-overview-v1.png" alt="Adult English class with teacher, students, desks, board, and classroom objects" />
+            <div class="unit2-visual-copy">
+              <h3>Real context: the classroom</h3>
+              <p>Unit 2 language happens in a real classroom. Students identify people, name objects, and describe where those objects are.</p>
+              <span class="unit2-formula">This is my classroom. The teacher is near the board.</span>
+            </div>
+          </div>
+          <div class="unit2-grid-3">
+            <div class="unit2-rule-card">
+              <h3>People</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>teacher</strong><span>The person who teaches the class.</span></div>
+                <div class="phrase-item"><strong>student</strong><span>A person who studies.</span></div>
+                <div class="phrase-item"><strong>classmate</strong><span>A student in the same class.</span></div>
+              </div>
+            </div>
+            <div class="unit2-rule-card">
+              <h3>Objects</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>pen / pencil / marker</strong><span>Things for writing.</span></div>
+                <div class="phrase-item"><strong>notebook / book</strong><span>Things for reading and taking notes.</span></div>
+                <div class="phrase-item"><strong>backpack / keys / phone</strong><span>Personal items in class.</span></div>
+              </div>
+            </div>
+            <div class="unit2-rule-card">
+              <h3>Places in class</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>desk / chair</strong><span>Furniture for students.</span></div>
+                <div class="phrase-item"><strong>board / door / window</strong><span>Parts of the classroom.</span></div>
+                <div class="phrase-item"><strong>bag / backpack</strong><span>Containers for personal items.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="unit2-word-bank" aria-label="Unit 2 classroom vocabulary">
+            <span>pen</span><span>pencil</span><span>notebook</span><span>book</span><span>backpack</span><span>cellphone</span><span>laptop</span><span>keys</span><span>earbuds</span><span>marker</span><span>eraser</span><span>chair</span><span>desk</span><span>board</span><span>door</span><span>window</span>
+          </div>
         </div>
-        <div class="teacher-tip"><span>Teacher's Tip</span><p>For Unit 2 games, students can answer with short sentences first: <strong>She is in the library.</strong> Then they can expand: <strong>She is in the library with her notebook.</strong></p></div>
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Location Prepositions</p><h2>Using In, On, and At</h2></div></div>
-        <p class="lesson-text">Use <strong>in</strong>, <strong>on</strong>, and <strong>at</strong> to connect a person or thing with a place. These words are small, but they change the meaning of the sentence.</p>
-        <div class="unit2-reference-grid">
-          <div class="lesson-mini-card"><h3>In</h3><p>Use <strong>in</strong> when the person or object is inside a place, inside an area, or surrounded by that place.</p><div class="phrase-list"><div class="phrase-item"><strong>Daniel is in the church.</strong><span>He is inside the church building.</span></div><div class="phrase-item"><strong>Emma is in the library.</strong><span>She is inside the library.</span></div><div class="phrase-item"><strong>Sofia is in the park.</strong><span>The park is a general area around her.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>On</h3><p>Use <strong>on</strong> when something is on a surface, on a line/path, or on top of a natural place.</p><div class="phrase-list"><div class="phrase-item"><strong>Laura is on the mountain.</strong><span>She is on the mountain surface or trail.</span></div><div class="phrase-item"><strong>The notebook is on the desk.</strong><span>The notebook touches the desk surface.</span></div><div class="phrase-item"><strong>The poster is on the wall.</strong><span>The poster touches the wall surface.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>At</h3><p>Use <strong>at</strong> when the place is treated as a point on a map, a destination, an institution, an event, or a regular activity location. It does not always mean the person is outside the building.</p><div class="phrase-list"><div class="phrase-item"><strong>Mateo is at school.</strong><span>School is his institution or daily activity location.</span></div><div class="phrase-item"><strong>Carlos is at the supermarket.</strong><span>The supermarket is the destination or service point.</span></div><div class="phrase-item"><strong>Lucas is at the hospital.</strong><span>He may be inside the building; the speaker is naming the general location.</span></div></div></div>
+      <article class="unit2-module" id="unit2-section-2">
+        <header class="unit2-module-header" style="--module-image: url('../../assets/img/english-basic/course-overview/verb-to-be-banner.png');">
+          <span>02</span>
+          <h2>Verb To Be in the Classroom</h2>
+          <p>In Unit 2, the verb <strong>to be</strong> helps students identify objects, locate people and things, and build classroom questions.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-grid-3">
+            <div class="unit2-rule-card">
+              <h3>Identification</h3>
+              <p>Use <strong>be</strong> to say what something is.</p>
+              <span class="unit2-formula">This is a pencil.</span>
+              <span class="unit2-formula">That is the teacher.</span>
+              <span class="unit2-formula">These are notebooks.</span>
+            </div>
+            <div class="unit2-rule-card">
+              <h3>Location</h3>
+              <p>Use <strong>be</strong> before location information.</p>
+              <span class="unit2-formula">The book is on the desk.</span>
+              <span class="unit2-formula">The keys are in the bag.</span>
+              <span class="unit2-formula">The students are in class.</span>
+            </div>
+            <div class="unit2-rule-card">
+              <h3>Possession</h3>
+              <p>Use <strong>be</strong> to connect an object and an owner.</p>
+              <span class="unit2-formula">This is my notebook.</span>
+              <span class="unit2-formula">Those are Ana's keys.</span>
+              <span class="unit2-formula">This pencil is mine.</span>
+            </div>
+          </div>
+          <div class="unit2-grid-2">
+            <div class="unit2-example-card">
+              <h3>Questions</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>Where is the backpack?</strong><span>It is under the chair.</span></div>
+                <div class="phrase-item"><strong>Are these your earbuds?</strong><span>Yes, they are. / No, they are not.</span></div>
+                <div class="phrase-item"><strong>Whose pencil is this?</strong><span>It is Laura's pencil.</span></div>
+              </div>
+            </div>
+            <div class="unit2-example-card">
+              <h3>Negatives</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>The phone is not on the desk.</strong><span>Use <strong>is not</strong> for one object.</span></div>
+                <div class="phrase-item"><strong>These are not my keys.</strong><span>Use <strong>are not</strong> for plural objects.</span></div>
+                <div class="phrase-item"><strong>We are not in the lab.</strong><span>Use <strong>are not</strong> with we.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="unit2-audio-panel">
+            <h3>Audio model: to be in the classroom</h3>
+            <p>Listen to a short professional model that uses <strong>is</strong> and <strong>are</strong> with classroom people and places.</p>
+            <div class="unit2-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit2Audio('audio/pronunciation/unit-2/section-1.mp3')">Listen</button></div>
+            <div class="unit2-audio-status" aria-live="polite"></div>
+          </div>
         </div>
-        <div class="grammar-table-wrap">
-          <table class="grammar-table">
-            <thead><tr><th>Use</th><th>Basic idea</th><th>Good examples</th><th>Why?</th></tr></thead>
-            <tbody>
-              <tr><td>In</td><td>Inside or within an area</td><td>in the church, in the library, in the restaurant, in the park</td><td>The person is inside the place or inside its general area.</td></tr>
-              <tr><td>On</td><td>Surface, path, line, or top of a place</td><td>on the mountain, on the desk, on the wall, on the bus</td><td>The person or object is touching a surface, route, or transport surface.</td></tr>
-              <tr><td>At</td><td>Point, destination, event, institution, or service location</td><td>at school, at the supermarket, at the beach, at the hospital, at the bus station, at the door</td><td>The speaker treats the place as a point or purpose. It may still be physically inside.</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="teacher-tip"><span>Simple Classroom Rule</span><p>Ask this: Is the person clearly inside a room, container, or area? Use <strong>in</strong>. Is the person or object touching a surface, route, or top? Use <strong>on</strong>. Is the place a point, destination, service, event, or institution? Use <strong>at</strong>. Some places can use more than one preposition depending on meaning: <strong>in the hospital</strong> can mean inside the building or admitted as a patient; <strong>at the hospital</strong> names the hospital as the current location.</p></div>
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Demonstratives</p><h2>This, That, These, and Those</h2></div></div>
-        <p class="lesson-text">Demonstratives help students point to objects or people. Choose the word according to <strong>distance</strong> and <strong>number</strong>.</p>
-        <div class="unit2-reference-grid">
-          <div class="lesson-mini-card"><h3>This</h3><p>Use <strong>this</strong> for one person or thing near you.</p><div class="phrase-list"><div class="phrase-item"><strong>This is my pencil.</strong><span>The pencil is near me.</span></div><div class="phrase-item"><strong>Is this your phone?</strong><span>Question with one near object.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>That</h3><p>Use <strong>that</strong> for one person or thing far from you.</p><div class="phrase-list"><div class="phrase-item"><strong>That is Daniel.</strong><span>Daniel is not close to me.</span></div><div class="phrase-item"><strong>What is that?</strong><span>Ask about one far object.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>These</h3><p>Use <strong>these</strong> for two or more people or things near you.</p><div class="phrase-list"><div class="phrase-item"><strong>These are my earbuds.</strong><span>The earbuds are near me.</span></div><div class="phrase-item"><strong>Are these your keys?</strong><span>Question with plural near objects.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Those</h3><p>Use <strong>those</strong> for two or more people or things far from you.</p><div class="phrase-list"><div class="phrase-item"><strong>Those are your notebooks.</strong><span>The notebooks are far from me.</span></div><div class="phrase-item"><strong>What are those?</strong><span>Ask about plural far objects.</span></div></div></div>
+      <article class="unit2-module" id="unit2-section-3">
+        <header class="unit2-module-header" style="--module-image: url('../../assets/img/english-basic/unit-2-in-class/location-prepositions-v1.png');">
+          <span>03</span>
+          <h2>Location: In, On, and At</h2>
+          <p>These prepositions help students connect people and objects with places. They are small words, but they control meaning.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-visual-explainer">
+            <img src="../../assets/img/english-basic/unit-2-in-class/location-prepositions-v1.png" alt="Classroom objects placed under, on, in, and next to desks for location explanation" />
+            <div class="unit2-visual-copy">
+              <h3>Real context: where things are</h3>
+              <p>Students need location words to say where their backpack, notebook, phone, keys, and classmates are in the classroom.</p>
+              <span class="unit2-formula">The backpack is under the chair. The notebook is on the desk.</span>
+            </div>
+          </div>
+          <div class="unit2-grid-3">
+            <div class="unit2-rule-card"><h3>In</h3><p>Use <strong>in</strong> when something is inside a place, container, or general area.</p><span class="unit2-formula">in the classroom</span><span class="unit2-formula">in the backpack</span><span class="unit2-formula">in the bag</span></div>
+            <div class="unit2-rule-card"><h3>On</h3><p>Use <strong>on</strong> when something touches a surface.</p><span class="unit2-formula">on the desk</span><span class="unit2-formula">on the chair</span><span class="unit2-formula">on the board</span></div>
+            <div class="unit2-rule-card"><h3>At</h3><p>Use <strong>at</strong> for a point, institution, activity location, or specific place.</p><span class="unit2-formula">at school</span><span class="unit2-formula">at the door</span><span class="unit2-formula">at the teacher's desk</span></div>
+          </div>
+          <div class="unit2-table-wrap">
+            <table class="unit2-table">
+              <thead><tr><th>Preposition</th><th>Basic idea</th><th>Classroom examples</th><th>Spanish idea</th></tr></thead>
+              <tbody>
+                <tr><td>in</td><td>inside or within an area</td><td>in the classroom, in the bag, in the backpack</td><td>dentro de / en un área</td></tr>
+                <tr><td>on</td><td>touching a surface</td><td>on the desk, on the board, on the chair</td><td>sobre / en una superficie</td></tr>
+                <tr><td>at</td><td>point, institution, or specific location</td><td>at school, at the door, at the board</td><td>en un punto o lugar específico</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="teacher-tip"><span>Common Pattern</span><p><strong>This / that + is</strong> for one. <strong>These / those + are</strong> for two or more. In Spanish, students often forget to change <strong>is</strong> to <strong>are</strong>; practice the pair together.</p></div>
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">WH Questions</p><h2>Ask for Information</h2></div></div>
-        <p class="lesson-text">WH questions begin with a question word. In Unit 2, students mainly need <strong>where</strong>, <strong>what</strong>, <strong>who</strong>, and <strong>whose</strong>. The verb <strong>to be</strong> usually comes immediately after the question word or after the subject.</p>
-        <div class="grammar-table-wrap">
-          <table class="grammar-table">
-            <thead><tr><th>Question word</th><th>Use it for</th><th>Structure</th><th>Example</th></tr></thead>
-            <tbody>
-              <tr><td>Where</td><td>Location</td><td>Where + is / are + subject?</td><td>Where is Laura? She is on the mountain.</td></tr>
-              <tr><td>What</td><td>Things or actions</td><td>What + is / are + this / that / these / those?</td><td>What are those? They are notebooks.</td></tr>
-              <tr><td>Who</td><td>People</td><td>Who + is / are + subject?</td><td>Who is that? That is Carlos.</td></tr>
-              <tr><td>Whose</td><td>Possession or owner</td><td>Whose + noun + is this/that? / Whose + noun + are these/those?</td><td>Whose bag is this? It is Ana's bag.</td></tr>
-            </tbody>
-          </table>
+      <article class="unit2-module" id="unit2-section-4">
+        <header class="unit2-module-header">
+          <span>04</span>
+          <h2>More Location Words for the Classroom</h2>
+          <p>Unit 2 also needs simple location words that help students describe real objects around them.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-grid-3">
+            <div class="unit2-card"><span class="unit2-mini-label">under</span><strong>The backpack is under the chair.</strong><p>Below something.</p></div>
+            <div class="unit2-card"><span class="unit2-mini-label">next to</span><strong>The chair is next to the desk.</strong><p>Beside something.</p></div>
+            <div class="unit2-card"><span class="unit2-mini-label">near</span><strong>The teacher is near the board.</strong><p>Close to something.</p></div>
+            <div class="unit2-card"><span class="unit2-mini-label">behind</span><strong>The bag is behind the chair.</strong><p>At the back of something.</p></div>
+            <div class="unit2-card"><span class="unit2-mini-label">in front of</span><strong>The board is in front of the students.</strong><p>At the front.</p></div>
+            <div class="unit2-card"><span class="unit2-mini-label">between</span><strong>The desk is between two chairs.</strong><p>In the middle of two things.</p></div>
+          </div>
+          <div class="unit2-audio-panel">
+            <h3>Audio model: under and next to</h3>
+            <p>Listen to a short model using <strong>under</strong> and <strong>next to</strong> with classroom objects.</p>
+            <div class="unit2-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit2Audio('audio/pronunciation/unit-2/section-2.mp3')">Listen</button></div>
+            <div class="unit2-audio-status" aria-live="polite"></div>
+          </div>
         </div>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Short Answers</h3><div class="phrase-list"><div class="phrase-item"><strong>Where is Mateo?</strong><span>At school.</span></div><div class="phrase-item"><strong>What is this?</strong><span>A pencil.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Complete Answers</h3><div class="phrase-list"><div class="phrase-item"><strong>Where is Mateo?</strong><span>Mateo is at school.</span></div><div class="phrase-item"><strong>What is this?</strong><span>This is a pencil.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Whose Questions</h3><p>Use <strong>whose</strong> when you want to know the owner of a person, object, or group of objects. It means <strong>de quien</strong>.</p><div class="phrase-list"><div class="phrase-item"><strong>Whose pencil is this?</strong><span>It is Laura's pencil. / It is hers.</span></div><div class="phrase-item"><strong>Whose keys are these?</strong><span>They are Carlos's keys. / They are his.</span></div><div class="phrase-item"><strong>Whose backpack is that?</strong><span>It is my backpack.</span></div></div></div>
-        </div>
-        <div class="teacher-tip"><span>Whose vs. Who</span><p><strong>Who</strong> asks for a person: <strong>Who is that?</strong> <strong>Whose</strong> asks for an owner: <strong>Whose phone is this?</strong> Do not say <strong>Who phone is this?</strong></p></div>
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Possession</p><h2>What Is in Your Bag?</h2></div></div>
-        <p class="lesson-text">The Mystery Object Guessing Game belongs here because it practices demonstratives, object vocabulary, possession, and WH questions. In English, possession often feels different from Spanish because the owner usually comes before the object.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Ask About Ownership</h3><div class="phrase-list"><div class="phrase-item"><strong>Is this your cellphone?</strong><span>Yes, it is. / No, it is not.</span></div><div class="phrase-item"><strong>Are these your earbuds?</strong><span>Yes, they are. / No, they are not.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Report Ownership</h3><div class="phrase-list"><div class="phrase-item"><strong>This is Ana's notebook.</strong><span>One object.</span></div><div class="phrase-item"><strong>Those are Laura's keys.</strong><span>Plural objects far from the speaker.</span></div></div></div>
+      <article class="unit2-module" id="unit2-section-5">
+        <header class="unit2-module-header" style="--module-image: url('../../assets/img/english-basic/unit-2-in-class/demonstratives-v1.png');">
+          <span>05</span>
+          <h2>This, That, These, and Those</h2>
+          <p>Demonstratives help students point to people and objects. The correct word depends on distance and number.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-visual-explainer">
+            <img src="../../assets/img/english-basic/unit-2-in-class/demonstratives-v1.png" alt="Near and far classroom objects for explaining this, that, these, and those" />
+            <div class="unit2-visual-copy">
+              <h3>Real context: near and far</h3>
+              <p>When an object is close to the speaker, use <strong>this</strong> or <strong>these</strong>. When it is far, use <strong>that</strong> or <strong>those</strong>.</p>
+              <span class="unit2-formula">this / that + is · these / those + are</span>
+            </div>
+          </div>
+          <div class="unit2-table-wrap">
+            <table class="unit2-table">
+              <thead><tr><th>Distance</th><th>Singular</th><th>Plural</th><th>Examples</th></tr></thead>
+              <tbody>
+                <tr><td>near</td><td>this</td><td>these</td><td>This is my pen. / These are my keys.</td></tr>
+                <tr><td>far</td><td>that</td><td>those</td><td>That is your backpack. / Those are your books.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="unit2-grid-4">
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">one + near</span><strong>This is my pencil.</strong><small>Use <strong>is</strong>.</small></div>
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">one + far</span><strong>That is the board.</strong><small>Use <strong>is</strong>.</small></div>
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">plural + near</span><strong>These are my earbuds.</strong><small>Use <strong>are</strong>.</small></div>
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">plural + far</span><strong>Those are the notebooks.</strong><small>Use <strong>are</strong>.</small></div>
+          </div>
+          <div class="unit2-audio-panel">
+            <h3>Audio model: those and this</h3>
+            <p>Listen to a model that contrasts far plural objects and a near singular object.</p>
+            <div class="unit2-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit2Audio('audio/pronunciation/unit-2/section-3.mp3')">Listen</button></div>
+            <div class="unit2-audio-status" aria-live="polite"></div>
+          </div>
         </div>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>With a name</h3><p>Use this when you point to an object and ask who owns it.</p><div class="phrase-list"><div class="phrase-item"><strong>Is this Maria's marker?</strong><span>Owner first: Maria's + marker.</span></div><div class="phrase-item"><strong>Is this Daniel's backpack?</strong><span>This sounds very natural in English.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Object first</h3><p>Use this when the object is already clear and you only want to confirm the owner.</p><div class="phrase-list"><div class="phrase-item"><strong>Is this marker Maria's?</strong><span>Maria's at the end means de Maria.</span></div><div class="phrase-item"><strong>Are these pencils Daniel's?</strong><span>Use are for plural objects.</span></div></div></div>
-        </div>
-        <div class="teacher-tip"><span>Spanish Speaker Tip</span><p>Spanish says <strong>el marcador de Maria</strong>. English can say <strong>Maria's marker</strong> or <strong>this marker is Maria's</strong>. Both are correct. The difference is focus: <strong>Maria's marker</strong> focuses on the owner before the object; <strong>this marker is Maria's</strong> focuses on the object first.</p></div>
-        <div class="teacher-tip"><span>Practice Link</span><p>Before playing Mystery Object Guessing Game, review: <strong>this / these</strong> for objects in the student's hand, and <strong>that / those</strong> for objects across the room.</p></div>
       </article>
 
-      <article class="premium-topic-card" id="verb-to-be">
-        <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Full Grammar Page</p><h2>Verb To Be</h2></div></div>
-        <p class="lesson-text">The verb <strong>to be</strong> is important enough to study on its own page. Open the complete explanation for the present, past, questions, negatives, short answers, and contractions.</p>
-        <div class="hero-actions"><a href="verb-to-be.html" class="btn btn-primary">Open Verb To Be page</a><a href="practice-unit-2-in-class.html" class="btn btn-secondary">Practice Unit 2</a></div>
+      <article class="unit2-module" id="unit2-section-6">
+        <header class="unit2-module-header" style="--module-image: url('../../assets/img/english-basic/unit-2-in-class/classroom-objects-v1.png');">
+          <span>06</span>
+          <h2>Possession and Whose</h2>
+          <p>Students need possession language to say which object belongs to which person.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-visual-explainer">
+            <img src="../../assets/img/english-basic/unit-2-in-class/classroom-objects-v1.png" alt="Classroom objects on a student desk for possession vocabulary" />
+            <div class="unit2-visual-copy">
+              <h3>Real context: whose object is it?</h3>
+              <p>In class, students often need to identify an object and its owner: a notebook, a phone, keys, earbuds, a pencil, or a backpack.</p>
+              <span class="unit2-formula">Whose notebook is this? It is Ana's notebook.</span>
+            </div>
+          </div>
+          <div class="unit2-grid-3">
+            <div class="unit2-rule-card"><h3>Possessive adjectives</h3><div class="phrase-list"><div class="phrase-item"><strong>my notebook</strong><span>It belongs to me.</span></div><div class="phrase-item"><strong>your pencil</strong><span>It belongs to you.</span></div><div class="phrase-item"><strong>his / her phone</strong><span>It belongs to him / her.</span></div></div></div>
+            <div class="unit2-rule-card"><h3>Owner + 's</h3><div class="phrase-list"><div class="phrase-item"><strong>Ana's notebook</strong><span>el cuaderno de Ana</span></div><div class="phrase-item"><strong>Daniel's backpack</strong><span>la mochila de Daniel</span></div><div class="phrase-item"><strong>Laura's keys</strong><span>las llaves de Laura</span></div></div></div>
+            <div class="unit2-rule-card"><h3>Possessive pronouns</h3><p>Use these when the object is already clear.</p><span class="unit2-formula">mine / yours / his / hers</span><span class="unit2-formula">This pencil is mine.</span></div>
+          </div>
+          <div class="unit2-grid-2">
+            <div class="unit2-example-card"><h3>With <em>whose</em></h3><div class="phrase-list"><div class="phrase-item"><strong>Whose bag is this?</strong><span>It is my bag.</span></div><div class="phrase-item"><strong>Whose keys are these?</strong><span>They are Carlos's keys.</span></div></div></div>
+            <div class="unit2-example-card"><h3>Who vs. Whose</h3><div class="phrase-list"><div class="phrase-item"><strong>Who is that?</strong><span>Ask for a person.</span></div><div class="phrase-item"><strong>Whose phone is this?</strong><span>Ask for an owner.</span></div></div></div>
+          </div>
+        </div>
       </article>
 
-      <article class="premium-topic-card linked-practice-card">
-        <div class="topic-heading"><span class="topic-number">07</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
-        <p class="lesson-text">After studying this unit, use the sentence builder, Mystery Object Guessing Game, and the new Location Card Roulette to practice the same grammar in speaking tasks.</p>
-        <div class="hero-actions"><a href="practice-unit-2-in-class.html" class="btn btn-primary">Open unit practice</a><a href="practice-unit-2-verb-to-be-present.html" class="btn btn-primary">Verb To Be quiz</a><a href="workshop-unit-2-bag-exchange.html" class="btn btn-primary">Mystery Object Guessing Game</a><a href="workshop-unit-2-scattergories-schedule.html" class="btn btn-primary">Location Card Roulette</a><a href="listening-unit-2-in-class.html" class="btn btn-secondary">Open listening</a><a href="listening-unit-2-the-blue-backpack.html" class="btn btn-secondary">New listening story</a></div>
+      <article class="unit2-module" id="unit2-section-7">
+        <header class="unit2-module-header">
+          <span>07</span>
+          <h2>WH Questions for Class</h2>
+          <p>Unit 2 questions help students ask about objects, people, location, and possession.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-table-wrap">
+            <table class="unit2-table">
+              <thead><tr><th>Question word</th><th>Use it for</th><th>Structure</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>What</td><td>things</td><td>What + is/are + subject?</td><td>What is this? It is a marker.</td></tr>
+                <tr><td>Where</td><td>location</td><td>Where + is/are + subject?</td><td>Where are the keys? They are in the bag.</td></tr>
+                <tr><td>Who</td><td>people</td><td>Who + is/are + subject?</td><td>Who is that? That is the teacher.</td></tr>
+                <tr><td>Whose</td><td>owner</td><td>Whose + noun + is/are + this/these?</td><td>Whose pencil is this? It is Ana's.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="unit2-grid-2">
+            <div class="unit2-correction"><div class="unit2-wrong">These is my keys. ✕</div><div class="unit2-right">These are my keys. ✓</div></div>
+            <div class="unit2-correction"><div class="unit2-wrong">The book is in the desk. ✕</div><div class="unit2-right">The book is on the desk. ✓</div></div>
+            <div class="unit2-correction"><div class="unit2-wrong">Where are the backpack? ✕</div><div class="unit2-right">Where is the backpack? ✓</div></div>
+            <div class="unit2-correction"><div class="unit2-wrong">Who pencil is this? ✕</div><div class="unit2-right">Whose pencil is this? ✓</div></div>
+          </div>
+          <div class="unit2-note"><strong>Study note:</strong> the corrections show sentence patterns students must notice before speaking or writing classroom descriptions.</div>
+        </div>
+      </article>
+
+      <article class="unit2-module" id="unit2-section-8">
+        <header class="unit2-module-header">
+          <span>08</span>
+          <h2>Classroom Language</h2>
+          <p>Classroom language gives students the phrases they need to participate in class from the beginning of the course.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-grid-3">
+            <div class="unit2-rule-card"><h3>Teacher instructions</h3><div class="phrase-list"><div class="phrase-item"><strong>Open your book.</strong><span>Start using the book.</span></div><div class="phrase-item"><strong>Close your notebook.</strong><span>Stop using the notebook.</span></div><div class="phrase-item"><strong>Look at the board.</strong><span>Direct attention to the board.</span></div></div></div>
+            <div class="unit2-rule-card"><h3>Class participation</h3><div class="phrase-list"><div class="phrase-item"><strong>Listen, please.</strong><span>Pay attention.</span></div><div class="phrase-item"><strong>Repeat, please.</strong><span>Say it again.</span></div><div class="phrase-item"><strong>Work with a partner.</strong><span>Collaborate with another student.</span></div></div></div>
+            <div class="unit2-rule-card"><h3>Student requests</h3><div class="phrase-list"><div class="phrase-item"><strong>Can you repeat, please?</strong><span>Ask for repetition.</span></div><div class="phrase-item"><strong>I don't understand.</strong><span>Say you need help.</span></div><div class="phrase-item"><strong>How do you say ___ in English?</strong><span>Ask for a word.</span></div></div></div>
+          </div>
+          <div class="unit2-audio-panel">
+            <h3>Audio model: classroom readiness</h3>
+            <p>Listen to a short sentence that closes a classroom description.</p>
+            <div class="unit2-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit2Audio('audio/pronunciation/unit-2/section-4.mp3')">Listen</button></div>
+            <div class="unit2-audio-status" aria-live="polite"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit2-module" id="unit2-section-9">
+        <header class="unit2-module-header">
+          <span>09</span>
+          <h2>Complete Classroom Model</h2>
+          <p>This final model puts the complete explanation together: classroom objects, to be, location, demonstratives, possession, and classroom description.</p>
+        </header>
+        <div class="unit2-module-body">
+          <div class="unit2-dialogue-card">
+            <h3>Complete model</h3>
+            <div class="unit2-dialogue-lines">
+              <p>This is my classroom.</p>
+              <p>The teacher is near the board, and my classmates are at their desks.</p>
+              <p>My blue backpack is under the chair, next to a red notebook.</p>
+              <p>Those books are on the shelf, but this pencil is mine.</p>
+              <p>We are ready for our English lesson today.</p>
+            </div>
+          </div>
+          <div class="unit2-grid-4">
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">Object</span><strong>backpack</strong><small>Name the item.</small></div>
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">Location</span><strong>under the chair</strong><small>Say where it is.</small></div>
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">Demonstrative</span><strong>those books</strong><small>Point to far plural objects.</small></div>
+            <div class="unit2-speaking-part"><span class="unit2-mini-label">Possession</span><strong>this pencil is mine</strong><small>Identify the owner.</small></div>
+          </div>
+          <div class="unit2-audio-panel">
+            <h3>Audio model: complete classroom description</h3>
+            <p>This professional American English model gives students natural rhythm for a short classroom description.</p>
+            <div class="unit2-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit2Audio('audio/pronunciation/unit-2/in-my-classroom-model-us.mp3')">Listen</button></div>
+            <div class="unit2-audio-status" aria-live="polite"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit2-subtle-link-panel" id="unit2-continue">
+        <h2>Continue after the explanation</h2>
+        <p>These links are not part of the explanation itself. They are the next resources students can open after studying the unit.</p>
+        <div class="hero-actions">
+          <a href="reading-unit-2-the-blue-backpack-part-two.html" class="btn btn-secondary">Reading</a>
+          <a href="listening-unit-2-in-class.html" class="btn btn-secondary">Listening</a>
+          <a href="listening-unit-2-the-blue-backpack.html" class="btn btn-secondary">Story listening</a>
+          <a href="pronunciation-unit-2-in-my-classroom.html" class="btn btn-secondary">Pronunciation</a>
+          <a href="practice-unit-2-in-class.html" class="btn btn-secondary">Practice</a>
+          <a href="practice-unit-2-verb-to-be-present.html" class="btn btn-secondary">Verb To Be practice</a>
+          <a href="workshop-unit-2-bag-exchange.html" class="btn btn-secondary">Mystery object game</a>
+          <a href="workshop-unit-2-scattergories-schedule.html" class="btn btn-secondary">Location roulette</a>
+          <a href="course-overview.html" class="btn btn-secondary">Back to Course Overview</a>
+        </div>
       </article>
     </section>
   </main>
@@ -147,9 +834,83 @@
   <footer class="site-footer">
     <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
+
+  <script>
+    let activeUnit2Audio = null;
+
+    function setUnit2AudioStatus(message) {
+      document.querySelectorAll(".unit2-audio-status").forEach(function(status) {
+        status.textContent = message || "";
+      });
+    }
+
+    function playUnit2Audio(source) {
+      if (!source) return;
+      if (activeUnit2Audio) {
+        activeUnit2Audio.pause();
+        activeUnit2Audio.currentTime = 0;
+      }
+      activeUnit2Audio = new Audio(source);
+      activeUnit2Audio.addEventListener("error", function() {
+        setUnit2AudioStatus("This professional audio is temporarily unavailable.");
+      });
+      activeUnit2Audio.play().then(function() {
+        setUnit2AudioStatus("Playing professional American English audio.");
+      }).catch(function() {
+        setUnit2AudioStatus("Select the audio again to play it.");
+      });
+    }
+
+    function toggleUnit2Module(module, forceOpen) {
+      const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : module.classList.contains("is-collapsed");
+      module.classList.toggle("is-collapsed", !shouldOpen);
+      const header = module.querySelector(".unit2-module-header");
+      const toggle = module.querySelector(".unit2-module-toggle");
+      if (header) header.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+      if (toggle) {
+        const toggleText = toggle.querySelector("span");
+        if (toggleText) toggleText.textContent = shouldOpen ? "Close" : "Open";
+      }
+    }
+
+    function setUnit2Sections(open) {
+      document.querySelectorAll(".unit2-module").forEach(function(module) {
+        toggleUnit2Module(module, open);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll(".unit2-module").forEach(function(module, index) {
+        const header = module.querySelector(".unit2-module-header");
+        const body = module.querySelector(".unit2-module-body");
+        if (!header || !body) return;
+        const bodyId = "unit2-module-body-" + (index + 1);
+        body.id = bodyId;
+        header.setAttribute("tabindex", "0");
+        header.setAttribute("role", "button");
+        header.setAttribute("aria-controls", bodyId);
+        header.setAttribute("aria-expanded", "true");
+        const toggle = document.createElement("span");
+        toggle.className = "unit2-module-toggle";
+        toggle.innerHTML = '<i class="bi bi-chevron-down" aria-hidden="true"></i><span>Open</span>';
+        header.appendChild(toggle);
+        header.addEventListener("click", function(event) {
+          if (event.target.closest("a, button")) return;
+          toggleUnit2Module(module);
+        });
+        header.addEventListener("keydown", function(event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleUnit2Module(module);
+          }
+        });
+        toggleUnit2Module(module, index === 0);
+      });
+    });
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="../../assets/js/google-auth.js"></script>
+  <script src="../../assets/js/google-auth.js?v=20260707-basic-claims"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
