@@ -74,22 +74,22 @@
     return details[evaluation.id] && typeof details[evaluation.id] === "object" ? details[evaluation.id] : null;
   }
 
-  function isSubmittedFollowUp(student, evaluation) {
+  function isSubmittedActivity(student, evaluation) {
     const detail = evaluationDetail(student, evaluation);
-    return Number(evaluation.weight || 0) === 0 && detail && detail.status === "submitted";
+    return detail && ["submitted", "pending-writing", "pending-writing-review"].includes(String(detail.status || ""));
   }
 
   function formatEvaluationResult(student, evaluation) {
     const grades = student.grades || {};
     if (typeof grades[evaluation.id] === "number") return grades[evaluation.id].toFixed(1);
-    if (isSubmittedFollowUp(student, evaluation)) return "Submitted";
+    if (isSubmittedActivity(student, evaluation)) return "Submitted";
     return "Pending";
   }
 
   function evaluationStatus(student, evaluation) {
     const grades = student.grades || {};
     if (typeof grades[evaluation.id] === "number") return { label: "Recorded", className: "done" };
-    if (isSubmittedFollowUp(student, evaluation)) return { label: "Submitted", className: "done" };
+    if (isSubmittedActivity(student, evaluation)) return { label: "Submitted", className: "done" };
     return { label: "Pending", className: "pending" };
   }
 

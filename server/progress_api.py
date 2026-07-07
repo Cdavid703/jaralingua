@@ -2789,6 +2789,46 @@ def basic_integrated_state_payload(profile, grades_data, bundle, submissions):
     }
 
 
+def apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
+    if not isinstance(grades_data, dict) or not isinstance(submissions, dict):
+        return False
+    changed = False
+    submission_items = submissions.get("submissions", {})
+    if not isinstance(submission_items, dict):
+        return False
+    students = grades_data.get("students", [])
+    if not isinstance(students, list):
+        return False
+    for student in students:
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        submission = submission_items.get(student_id)
+        if not isinstance(submission, dict):
+            continue
+        grades = student.get("grades", {})
+        if isinstance(grades, dict) and isinstance(grades.get("integratedTask20"), (int, float)):
+            continue
+        details = student.setdefault("gradeDetails", {})
+        if not isinstance(details, dict):
+            details = {}
+            student["gradeDetails"] = details
+        next_detail = {
+            "evaluationId": "integratedTask20",
+            "activityTitle": "BASIC COURSE 1 – INTEGRATED TASK (20%)",
+            "status": clean_text(submission.get("status") or "submitted", 80),
+            "submittedAt": clean_text(submission.get("submittedAt"), 80),
+            "receiptId": clean_text(submission.get("receiptId"), 80),
+            "listeningPoints": clean_exam_number(submission.get("listeningPoints")),
+            "pendingTeacherReview": submission.get("status") != "graded",
+            "weight": 20
+        }
+        if details.get("integratedTask20") != next_detail:
+            details["integratedTask20"] = next_detail
+            changed = True
+    return changed
+
+
 def basic_integrated_score(exam, answers):
     if not isinstance(answers, dict):
         answers = {}
@@ -3381,7 +3421,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/basic/grades":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
-                if ensure_basic_gradebook_structure(grades_data):
+                gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+                submissions = read_basic_integrated_task_submissions()
+                if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
+                    gradebook_changed = True
+                if gradebook_changed:
                     write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
                 query = urllib.parse.parse_qs(parsed.query)
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
@@ -4595,6 +4639,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 }
                 submissions.setdefault("submissions", {})[student_id] = submission
                 gradebook_changed = ensure_basic_integrated_task_evaluation(grades_data)
+                if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
+                    gradebook_changed = True
                 write_basic_integrated_task_submissions(submissions)
                 if gradebook_changed:
                     write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
@@ -5199,6 +5245,22 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 submission["gradedBy"] = normalize_email(profile.get("email"))
                 ensure_basic_integrated_task_evaluation(grades_data)
                 student.setdefault("grades", {})["integratedTask20"] = grade
+                details = student.setdefault("gradeDetails", {})
+                if isinstance(details, dict):
+                    details["integratedTask20"] = {
+                        "evaluationId": "integratedTask20",
+                        "activityTitle": "BASIC COURSE 1 – INTEGRATED TASK (20%)",
+                        "status": "graded",
+                        "submittedAt": clean_text(submission.get("submittedAt"), 80),
+                        "gradedAt": clean_text(submission.get("gradedAt"), 80),
+                        "receiptId": clean_text(submission.get("receiptId"), 80),
+                        "listeningPoints": clean_exam_number(submission.get("listeningPoints")),
+                        "writingPoints": clean_exam_number(writing_points),
+                        "finalPoints": clean_exam_number(final_points),
+                        "grade": grade,
+                        "pendingTeacherReview": False,
+                        "weight": 20
+                    }
                 write_basic_integrated_task_submissions(submissions)
                 write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
                 json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
