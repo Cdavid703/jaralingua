@@ -2587,9 +2587,11 @@ def write_basic_integrated_task_bundle(data):
 
 
 def read_basic_integrated_task_submissions():
-    data = read_json_file(BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH, {"submissions": {}})
+    data = read_json_file(BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH, {"submissions": {}, "events": []})
     if not isinstance(data.get("submissions"), dict):
         data["submissions"] = {}
+    if not isinstance(data.get("events"), list):
+        data["events"] = []
     return data
 
 
@@ -2773,6 +2775,36 @@ def basic_integrated_submission_public(submission):
     return {key: submission.get(key) for key in keys}
 
 
+def basic_integrated_append_event(submissions, event_type, profile=None, student_id="", detail=None):
+    if not isinstance(submissions, dict):
+        return
+    events = submissions.setdefault("events", [])
+    if not isinstance(events, list):
+        events = []
+        submissions["events"] = events
+    actor = normalize_email((profile or {}).get("email"))
+    events.append({
+        "type": clean_text(event_type, 80),
+        "studentId": clean_text(student_id, 40),
+        "actor": actor,
+        "detail": clean_text(detail, 500),
+        "at": now_iso()
+    })
+    submissions["events"] = events[-500:]
+
+
+def basic_integrated_event_public(event):
+    if not isinstance(event, dict):
+        return None
+    return {
+        "type": clean_text(event.get("type"), 80),
+        "studentId": clean_text(event.get("studentId"), 40),
+        "actor": clean_text(event.get("actor"), 180),
+        "detail": clean_text(event.get("detail"), 500),
+        "at": clean_text(event.get("at"), 80)
+    }
+
+
 def basic_integrated_state_payload(profile, grades_data, bundle, submissions):
     role = grade_user_role(profile, grades_data)
     student = matched_student_for_profile(profile, grades_data)
@@ -2786,6 +2818,59 @@ def basic_integrated_state_payload(profile, grades_data, bundle, submissions):
         "submitted": basic_integrated_submission_public(submitted),
         "canTake": basic_integrated_can_take(role, state, student_id),
         "reopenActive": basic_integrated_student_has_reopen(state, student_id)
+    }
+
+
+def basic_integrated_health_payload(grades_data, bundle, submissions):
+    state = bundle.get("state", {})
+    submission_items = submissions.get("submissions", {})
+    if not isinstance(submission_items, dict):
+        submission_items = {}
+    students = []
+    counts = {"total": 0, "submitted": 0, "pendingWriting": 0, "graded": 0, "notSubmitted": 0, "reopenActive": 0}
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        submission = submission_items.get(student_id)
+        grade = (student.get("grades") or {}).get("integratedTask20") if isinstance(student.get("grades"), dict) else None
+        detail = (student.get("gradeDetails") or {}).get("integratedTask20") if isinstance(student.get("gradeDetails"), dict) else None
+        status = "not-submitted"
+        if isinstance(submission, dict):
+            status = "graded" if submission.get("status") == "graded" else "pending-writing"
+        elif isinstance(grade, (int, float)):
+            status = "graded"
+        reopen_active = basic_integrated_student_has_reopen(state, student_id)
+        counts["total"] += 1
+        if status == "graded":
+            counts["graded"] += 1
+            counts["submitted"] += 1
+        elif status == "pending-writing":
+            counts["pendingWriting"] += 1
+            counts["submitted"] += 1
+        else:
+            counts["notSubmitted"] += 1
+        if reopen_active:
+            counts["reopenActive"] += 1
+        students.append({
+            "id": student_id,
+            "fullName": clean_text(student.get("fullName"), 200),
+            "email": normalize_email(student.get("email")),
+            "status": status,
+            "grade": grade if isinstance(grade, (int, float)) else None,
+            "detail": detail if isinstance(detail, dict) else None,
+            "submission": basic_integrated_submission_public(submission) if isinstance(submission, dict) else None,
+            "canTake": basic_integrated_can_take("student", state, student_id),
+            "reopenActive": reopen_active
+        })
+    events = [basic_integrated_event_public(item) for item in submissions.get("events", [])[-80:] if isinstance(item, dict)]
+    events = [item for item in events if item]
+    events.reverse()
+    return {
+        "state": state,
+        "counts": counts,
+        "students": students,
+        "events": events
     }
 
 
@@ -3412,10 +3497,17 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if role not in ("admin", "teacher"):
                     json_response(self, 403, {"error": "forbidden"})
                     return
-                submissions = read_basic_integrated_task_submissions().get("submissions", {})
+                if ensure_basic_gradebook_structure(grades_data):
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                bundle = read_basic_integrated_task_bundle()
+                submissions_data = read_basic_integrated_task_submissions()
+                if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions_data):
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                submissions = submissions_data.get("submissions", {})
                 items = [basic_integrated_submission_public(item) for item in submissions.values() if isinstance(item, dict)]
                 items.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
-                json_response(self, 200, {"role": role, "submissions": items})
+                health = basic_integrated_health_payload(grades_data, bundle, submissions_data)
+                json_response(self, 200, {"role": role, "submissions": items, "health": health})
             return
 
         if parsed.path == "/api/basic/grades":
@@ -4641,6 +4733,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 gradebook_changed = ensure_basic_integrated_task_evaluation(grades_data)
                 if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
                     gradebook_changed = True
+                basic_integrated_append_event(submissions, "submitted", profile, student_id, "Student submitted the Integrated Task")
                 write_basic_integrated_task_submissions(submissions)
                 if gradebook_changed:
                     write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
@@ -5207,7 +5300,77 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 else:
                     state["closedAt"] = timestamp
                 write_basic_integrated_task_bundle(bundle)
+                submissions = read_basic_integrated_task_submissions()
+                basic_integrated_append_event(submissions, "exam-opened" if desired_open else "exam-closed", profile, "", "Global exam availability changed")
+                write_basic_integrated_task_submissions(submissions)
                 json_response(self, 200, {"ok": True, "state": state})
+            return
+
+        if parsed.path == "/api/basic/integrated-task/student-action":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                student_id = clean_text(payload.get("studentId"), 40)
+                action = clean_text(payload.get("action"), 80)
+                student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+                if not isinstance(student, dict):
+                    json_response(self, 404, {"error": "student_not_found"})
+                    return
+                bundle = read_basic_integrated_task_bundle()
+                state = bundle.setdefault("state", {})
+                submissions = read_basic_integrated_task_submissions()
+                changed_grades = False
+                changed_bundle = False
+                detail = ""
+                if action in ("reset", "reset-and-reopen"):
+                    submissions.setdefault("submissions", {}).pop(student_id, None)
+                    if isinstance(student.get("grades"), dict):
+                        student["grades"].pop("integratedTask20", None)
+                    if isinstance(student.get("gradeDetails"), dict):
+                        student["gradeDetails"].pop("integratedTask20", None)
+                    changed_grades = True
+                    detail = "Submission and Integrated Task grade state reset"
+                    basic_integrated_append_event(submissions, "student-reset", profile, student_id, detail)
+                if action in ("reopen", "reset-and-reopen"):
+                    try:
+                        hours = max(1, min(168, int(payload.get("hours", 48))))
+                    except (TypeError, ValueError):
+                        hours = 48
+                    allowed_ids = state.setdefault("reopenStudentIds", [])
+                    if not isinstance(allowed_ids, list):
+                        allowed_ids = []
+                    if student_id not in {clean_text(item, 40) for item in allowed_ids}:
+                        allowed_ids.append(student_id)
+                    state["reopenStudentIds"] = allowed_ids
+                    state["reopenUntilEpoch"] = int(time.time()) + hours * 3600
+                    state["reopenUntilLabel"] = "Available only for selected students for " + str(hours) + " hours from " + now_iso()
+                    state["reopenResetPlays"] = True
+                    state["updatedAt"] = now_iso()
+                    state["openedBy"] = normalize_email(profile.get("email"))
+                    changed_bundle = True
+                    detail = "Student reopened for " + str(hours) + " hours"
+                    basic_integrated_append_event(submissions, "student-reopened", profile, student_id, detail)
+                if action == "close-reopen":
+                    allowed_ids = state.get("reopenStudentIds", [])
+                    if isinstance(allowed_ids, list):
+                        state["reopenStudentIds"] = [item for item in allowed_ids if clean_text(item, 40) != student_id]
+                    state["updatedAt"] = now_iso()
+                    changed_bundle = True
+                    detail = "Student removed from individual reopen list"
+                    basic_integrated_append_event(submissions, "student-reopen-closed", profile, student_id, detail)
+                if action not in ("reset", "reopen", "reset-and-reopen", "close-reopen"):
+                    json_response(self, 400, {"error": "invalid_action"})
+                    return
+                write_basic_integrated_task_submissions(submissions)
+                if changed_grades:
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                if changed_bundle:
+                    write_basic_integrated_task_bundle(bundle)
+                health = basic_integrated_health_payload(grades_data, bundle, submissions)
+                json_response(self, 200, {"ok": True, "health": health, "detail": detail})
             return
 
         if parsed.path == "/api/basic/integrated-task/submissions/grade":
@@ -5261,6 +5424,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         "pendingTeacherReview": False,
                         "weight": 20
                     }
+                basic_integrated_append_event(submissions, "graded", profile, student_id, "Teacher saved rubric and final grade")
                 write_basic_integrated_task_submissions(submissions)
                 write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
                 json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
