@@ -4282,6 +4282,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
             neighborhood_name = clean_text(payload.get("neighborhoodName"), 100)
             description = clean_text(payload.get("description"), 2400)
             prompt = clean_text(payload.get("prompt"), 2400)
+            word_count = simple_word_count(description)
             if not group_name:
                 group_name = "Unit 6 Team"
             if not neighborhood_name:
