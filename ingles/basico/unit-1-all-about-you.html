@@ -10,297 +10,1069 @@
 
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .unit1-page {
+      --unit1-blue: #123b8f;
+      --unit1-ink: #071f4f;
+      --unit1-red: #c1121f;
+      --unit1-soft: #f8fbff;
+      --unit1-warm: #fff7e8;
+      --unit1-green: #0f9f6e;
+    }
+
+    .unit1-map {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .unit1-map a,
+    .unit1-resource-card {
+      min-height: 118px;
+      border-radius: 20px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+      text-decoration: none;
+      color: var(--unit1-ink);
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .unit1-map a span,
+    .unit1-mini-label,
+    .unit1-resource-card span {
+      color: var(--unit1-red);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 0.76rem;
+    }
+
+    .unit1-section-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .unit1-module {
+      border-radius: 30px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.07);
+      box-shadow: 0 20px 48px rgba(15, 23, 42, 0.1);
+      overflow: hidden;
+    }
+
+    .unit1-module + .unit1-module,
+    .unit1-module + .premium-topic-card {
+      margin-top: 28px;
+    }
+
+    .unit1-module-header {
+      padding: clamp(1.4rem, 3vw, 2.35rem);
+      background:
+        linear-gradient(135deg, rgba(18, 59, 143, 0.96), rgba(7, 31, 79, 0.9)),
+        var(--module-image, none) center/cover;
+      color: #ffffff;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .unit1-module-header:focus {
+      outline: 3px solid rgba(255, 255, 255, 0.75);
+      outline-offset: -8px;
+    }
+
+    .unit1-module-header > span:first-child {
+      display: inline-flex;
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.16);
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .unit1-module-header h2 {
+      font-size: clamp(1.85rem, 4vw, 3rem);
+      line-height: 1.05;
+      margin-bottom: 12px;
+    }
+
+    .unit1-module-header p {
+      max-width: 900px;
+      line-height: 1.7;
+      opacity: 0.94;
+      margin: 0;
+      padding-right: clamp(0px, 10vw, 150px);
+    }
+
+    .unit1-module-toggle {
+      position: absolute;
+      right: clamp(1rem, 3vw, 2rem);
+      top: clamp(1rem, 3vw, 2rem);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      background: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border-radius: 999px;
+      padding: 9px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 900;
+      font-size: 0.82rem;
+    }
+
+    .unit1-module-toggle i {
+      transition: transform 0.2s ease;
+    }
+
+    .unit1-module.is-collapsed .unit1-module-toggle i {
+      transform: rotate(-90deg);
+    }
+
+    .unit1-module-body {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      display: grid;
+      gap: 20px;
+    }
+
+    .unit1-module.is-collapsed .unit1-module-body {
+      display: none;
+    }
+
+    .unit1-grid-2,
+    .unit1-grid-3,
+    .unit1-grid-4,
+    .unit1-resource-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .unit1-grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .unit1-grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .unit1-grid-4,
+    .unit1-resource-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .unit1-card,
+    .unit1-rule-card,
+    .unit1-example-card,
+    .unit1-note,
+    .unit1-dialogue-card,
+    .unit1-speaking-part {
+      border-radius: 20px;
+      padding: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      color: #475569;
+      line-height: 1.65;
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+    }
+
+    .unit1-rule-card {
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
+    }
+
+    .unit1-note {
+      background: linear-gradient(135deg, #fff7e8, #ffffff);
+      border-color: rgba(193, 18, 31, 0.16);
+    }
+
+    .unit1-card strong,
+    .unit1-rule-card h3,
+    .unit1-example-card h3,
+    .unit1-dialogue-card h3,
+    .unit1-resource-card strong {
+      color: var(--unit1-ink);
+    }
+
+    .unit1-formula {
+      display: block;
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #eef4ff;
+      color: var(--unit1-blue);
+      font-weight: 900;
+    }
+
+    .unit1-word-bank {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .unit1-word-bank span {
+      border-radius: 999px;
+      background: #eef4ff;
+      color: var(--unit1-blue);
+      border: 1px solid rgba(18, 59, 143, 0.14);
+      padding: 0.45rem 0.7rem;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+
+    .unit1-table-wrap {
+      max-width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .unit1-table {
+      width: 100%;
+      min-width: 680px;
+      border-collapse: separate;
+      border-spacing: 0;
+      border: 1px solid #dbeafe;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #ffffff;
+    }
+
+    .unit1-table th,
+    .unit1-table td {
+      padding: 13px 14px;
+      border-bottom: 1px solid #e2e8f0;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .unit1-table th {
+      background: #eef4ff;
+      color: var(--unit1-ink);
+      font-weight: 900;
+    }
+
+    .unit1-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .unit1-dialogue-lines {
+      display: grid;
+      gap: 10px;
+    }
+
+    .unit1-dialogue-lines p {
+      margin: 0;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: #f8fafc;
+    }
+
+    .unit1-resource-card {
+      min-height: 150px;
+    }
+
+    .unit1-resource-card a {
+      align-self: end;
+      color: var(--unit1-blue);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .unit1-outcomes {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .unit1-outcome {
+      border-radius: 18px;
+      padding: 14px 16px;
+      background: #ffffff;
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      box-shadow: 0 10px 22px rgba(15, 23, 42, 0.05);
+      color: #334155;
+      font-weight: 800;
+    }
+
+    .unit1-outcome i {
+      color: var(--unit1-green);
+      margin-right: 8px;
+    }
+
+    .unit1-language-flow {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .unit1-flow-step {
+      min-height: 110px;
+      border-radius: 18px;
+      padding: 14px;
+      background: linear-gradient(135deg, #eef4ff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.12);
+      display: grid;
+      align-content: start;
+      gap: 7px;
+    }
+
+    .unit1-flow-step span {
+      color: var(--unit1-red);
+      font-weight: 900;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .unit1-flow-step strong {
+      color: var(--unit1-ink);
+    }
+
+    .unit1-visual-explainer {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: stretch;
+      border-radius: 24px;
+      padding: 16px;
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.06);
+    }
+
+    .unit1-visual-explainer img {
+      width: 100%;
+      min-height: 260px;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 20px;
+      display: block;
+    }
+
+    .unit1-visual-copy {
+      display: grid;
+      gap: 12px;
+      align-content: center;
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .unit1-visual-copy h3 {
+      color: var(--unit1-ink);
+      font-size: clamp(1.35rem, 3vw, 2rem);
+      margin: 0;
+    }
+
+    .unit1-audio-panel {
+      display: grid;
+      gap: 10px;
+      border-radius: 20px;
+      padding: 16px;
+      background: #071f4f;
+      color: #ffffff;
+    }
+
+    .unit1-audio-panel h3,
+    .unit1-audio-panel p {
+      margin: 0;
+    }
+
+    .unit1-audio-panel p {
+      opacity: 0.88;
+      line-height: 1.65;
+    }
+
+    .unit1-audio-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .unit1-audio-status {
+      min-height: 1.2rem;
+      color: #bfdbfe;
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .unit1-mini-table {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .unit1-correction {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      align-items: stretch;
+    }
+
+    .unit1-wrong,
+    .unit1-right {
+      border-radius: 16px;
+      padding: 13px 14px;
+      font-weight: 900;
+    }
+
+    .unit1-wrong {
+      background: #fff1f2;
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+    }
+
+    .unit1-right {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1px solid #bbf7d0;
+    }
+
+    .unit1-subtle-link-panel {
+      border-radius: 24px;
+      padding: clamp(1.2rem, 3vw, 1.8rem);
+      background: linear-gradient(135deg, #fff7e8, #ffffff);
+      border: 1px solid rgba(193, 18, 31, 0.14);
+      display: grid;
+      gap: 12px;
+      color: #475569;
+    }
+
+    .unit1-subtle-link-panel h2 {
+      margin: 0;
+      color: var(--unit1-ink);
+    }
+
+    @media (max-width: 980px) {
+      .unit1-map,
+      .unit1-grid-4,
+      .unit1-resource-grid,
+      .unit1-outcomes,
+      .unit1-language-flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .unit1-grid-3,
+      .unit1-visual-explainer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .unit1-module-header p {
+        padding-right: 0;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .unit1-map,
+      .unit1-grid-2,
+      .unit1-grid-3,
+      .unit1-grid-4,
+      .unit1-resource-grid,
+      .unit1-outcomes,
+      .unit1-language-flow,
+      .unit1-visual-explainer,
+      .unit1-mini-table,
+      .unit1-correction {
+        grid-template-columns: 1fr;
+      }
+
+      .unit1-module-header {
+        padding-top: 4.2rem;
+      }
+
+      .unit1-module-toggle {
+        left: 1rem;
+        right: auto;
+      }
+
+      .unit1-module-body {
+        padding: 1rem;
+      }
+    }
+  </style>
 </head>
-<body class="english-basic-page">
+<body class="english-basic-page unit1-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
   <header class="site-header">
     <nav class="navbar">
-      <a href="../../index.html" class="brand">
-        <img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" />
-      </a>
-
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
       <ul class="nav-links">
         <li><a href="../../index.html">Home</a></li>
         <li><a href="../index.html">English</a></li>
         <li><a href="index.html">Basic Course</a></li>
         <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
       </ul>
     </nav>
   </header>
 
   <main>
-
-    <!-- LESSON HERO -->
     <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-1-all-about-you-banner.jpg');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Basic English Course 1</p>
-
         <h1>Unit 1: All About You</h1>
-
-        <p>
-          Learn how to introduce yourself, start a conversation, ask how someone is doing,
-          and say goodbye in a natural and polite way.
-        </p>
-
-        <div class="lesson-meta">
-          <span>Session 1</span>
-          <span>Functional Language</span>
-          <span>Beginner Level</span>
-        </div>
-
+        <p>Learn how to greet people, introduce yourself, use the verb to be, spell names and emails, give numbers, and ask for basic personal information.</p>
+        <div class="lesson-meta"><span>Sessions 1-3</span><span>American English</span><span>Personal information</span><span>Verb to be</span></div>
         <div class="hero-actions">
-          <a href="#lesson-content" class="btn btn-primary">Start lesson</a>
+          <a href="#lesson-content" class="btn btn-primary">Start unit</a>
           <a href="spelling-tool.html" class="btn btn-secondary">Spelling Tool</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
         </div>
       </div>
-
-      <div class="lesson-hero-image">
-        <img src="../../assets/img/english-basic/course-overview/unit-1-all-about-you-banner.jpg" alt="Unit 1: All About You" />
-      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-1-all-about-you-banner.jpg" alt="Unit 1: All About You" /></aside>
     </section>
 
-    <!-- LEARNING OUTCOME -->
     <section class="lesson-outcome">
       <div class="outcome-card">
-        <span class="outcome-label">Learning Outcome</span>
-        <p>
-          By the end of this lesson, you will be able to introduce yourself to a group of people,
-          ask how they are doing, and say goodbye appropriately.
-        </p>
+        <span class="outcome-label">Unit Route</span>
+        <p>Unit 1 is the foundation of the course. Students first learn social language, then identity sentences with <strong>to be</strong>, then spelling, numbers, and personal information questions. All the subtopics work together so students can introduce themselves clearly.</p>
+        <h2>What you will learn</h2>
+        <div class="unit1-outcomes" aria-label="Unit 1 learning outcomes">
+          <div class="unit1-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can greet people politely.</div>
+          <div class="unit1-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can say my name and age.</div>
+          <div class="unit1-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can use <strong>am</strong>, <strong>is</strong>, and <strong>are</strong>.</div>
+          <div class="unit1-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can spell names and emails.</div>
+          <div class="unit1-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can say phone and ID numbers.</div>
+          <div class="unit1-outcome"><i class="bi bi-check-circle-fill" aria-hidden="true"></i>I can ask basic personal information questions.</div>
+        </div>
+        <div class="unit1-language-flow" aria-label="Unit 1 language map">
+          <div class="unit1-flow-step"><span>Start</span><strong>Greeting</strong><small>Hello. / Good morning.</small></div>
+          <div class="unit1-flow-step"><span>Name</span><strong>Identity</strong><small>My name is Ana.</small></div>
+          <div class="unit1-flow-step"><span>Grammar</span><strong>To be</strong><small>I am a student.</small></div>
+          <div class="unit1-flow-step"><span>Origin</span><strong>From</strong><small>I am from Colombia.</small></div>
+          <div class="unit1-flow-step"><span>Exact info</span><strong>Spelling</strong><small>A-N-A.</small></div>
+          <div class="unit1-flow-step"><span>Contact</span><strong>Numbers</strong><small>300 555 2841.</small></div>
+          <div class="unit1-flow-step"><span>End</span><strong>Closing</strong><small>Nice to meet you.</small></div>
+        </div>
+        <div class="unit1-map">
+          <a href="#unit1-section-1"><span>01</span><strong>Greetings</strong><small>Start and end a conversation politely.</small></a>
+          <a href="#unit1-section-2"><span>02</span><strong>Verb To Be</strong><small>am, is, are for identity, age, city, and feelings.</small></a>
+          <a href="#unit1-section-3"><span>03</span><strong>Personal Info</strong><small>Name, age, city, phone number, email.</small></a>
+          <a href="#unit1-section-4"><span>04</span><strong>Alphabet</strong><small>Spell names, last names, and emails.</small></a>
+          <a href="#unit1-section-5"><span>05</span><strong>Numbers</strong><small>Cardinal numbers for age, phone, ID, and quantity.</small></a>
+          <a href="#unit1-section-6"><span>06</span><strong>Questions</strong><small>What, where, how old, what is your...?</small></a>
+          <a href="#unit1-section-7"><span>07</span><strong>Model Dialogue</strong><small>Registration and first-day conversation.</small></a>
+          <a href="#unit1-section-8"><span>08</span><strong>Complete Model</strong><small>Put the full explanation together.</small></a>
+        </div>
+        <div class="unit1-section-controls" aria-label="Unit section controls">
+          <button type="button" class="audio-btn play" onclick="setUnit1Sections(true)">Open all sections</button>
+          <button type="button" class="audio-btn" onclick="setUnit1Sections(false)">Close all sections</button>
+        </div>
       </div>
     </section>
 
-    <!-- LESSON CONTENT -->
     <section class="premium-lesson-container" id="lesson-content">
-
-      <!-- TOPIC 1 -->
-      <article class="premium-topic-card">
-        <div class="topic-heading">
-          <span class="topic-number">01</span>
-          <div>
-            <p class="topic-label">Greetings</p>
-            <h2>Starting a Conversation</h2>
+      <article class="unit1-module" id="unit1-section-1">
+        <header class="unit1-module-header" style="--module-image: url('../../assets/img/english-basic/course-overview/unit-1-all-about-you-banner.jpg');">
+          <span>01</span>
+          <h2>Greetings, Polite Answers, and Farewells</h2>
+          <p>Students learn the social frame of a first conversation: say hello, ask how the other person is, respond politely, and close the interaction.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-visual-explainer">
+            <img src="../../assets/img/english-basic/unit-1-all-about-you/first-day-registration-v1.png" alt="Teacher welcoming an adult English student on the first day of class" />
+            <div class="unit1-visual-copy">
+              <h3>Real context: first contact</h3>
+              <p>Students use Unit 1 language when they arrive to class, meet a teacher, register their information, or introduce themselves to a new classmate. The language must be short, polite, and clear.</p>
+              <span class="unit1-formula">Greeting + name + polite answer + farewell</span>
+            </div>
           </div>
-        </div>
-
-        <p class="lesson-text">
-          Every conversation begins with a greeting. In English, the greeting you choose depends
-          on the time of day and who you are talking to. We use formal greetings for work,
-          teachers, or people we do not know well. We use informal greetings with friends and family.
-        </p>
-
-        <div class="lesson-grid">
-          <div class="lesson-mini-card">
-            <h3>Formal Greetings</h3>
-
-            <div class="phrase-list">
-              <div class="phrase-item">
-                <strong>Good morning</strong>
-                <span>Use from 5:00 AM to 12:00 PM.</span>
+          <div class="unit1-grid-2">
+            <div class="unit1-rule-card">
+              <h3>Formal and neutral greetings</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>Good morning.</strong><span>Use before noon.</span></div>
+                <div class="phrase-item"><strong>Good afternoon.</strong><span>Use after noon.</span></div>
+                <div class="phrase-item"><strong>Good evening.</strong><span>Use when you arrive at night.</span></div>
+                <div class="phrase-item"><strong>Hello.</strong><span>Safe in almost every situation.</span></div>
               </div>
-
-              <div class="phrase-item">
-                <strong>Good afternoon</strong>
-                <span>Use from 12:00 PM to 5:00 PM.</span>
-              </div>
-
-              <div class="phrase-item">
-                <strong>Good evening</strong>
-                <span>Use from 5:00 PM onwards.</span>
+            </div>
+            <div class="unit1-example-card">
+              <h3>Informal and classroom language</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>Hi.</strong><span>Friendly and common.</span></div>
+                <div class="phrase-item"><strong>How are you?</strong><span>Ask politely after greeting.</span></div>
+                <div class="phrase-item"><strong>I am fine, thank you. And you?</strong><span>A complete beginner answer.</span></div>
+                <div class="phrase-item"><strong>Goodbye. / Bye.</strong><span>Use when you leave.</span></div>
               </div>
             </div>
           </div>
-
-          <div class="lesson-mini-card">
-            <h3>Informal Greetings</h3>
-
-            <div class="phrase-list">
-              <div class="phrase-item">
-                <strong>Hello</strong>
-                <span>Standard greeting, safe for any situation.</span>
-              </div>
-
-              <div class="phrase-item">
-                <strong>Hi</strong>
-                <span>Friendly and casual.</span>
-              </div>
-
-              <div class="phrase-item">
-                <strong>Hey</strong>
-                <span>Very casual, use only with close friends.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="teacher-tip">
-          <span>Teacher's Tip</span>
-          <p>
-            “Good night” is not a greeting. We only say “Good night” when we are saying goodbye
-            at night or going to sleep. When you arrive somewhere at night, say “Good evening”.
-          </p>
-        </div>
-      </article>
-
-      <!-- TOPIC 2 -->
-      <article class="premium-topic-card">
-        <div class="topic-heading">
-          <span class="topic-number">02</span>
-          <div>
-            <p class="topic-label">Polite Conversation</p>
-            <h2>Asking and Answering</h2>
-          </div>
-        </div>
-
-        <p class="lesson-text">
-          After saying hello, it is polite to ask the other person how they feel.
-          This shows you are interested in talking to them.
-        </p>
-
-        <div class="lesson-grid">
-          <div class="lesson-mini-card">
-            <h3>The Question</h3>
-
-            <div class="phrase-item featured-phrase">
-              <strong>How are you?</strong>
-              <span>This is the most common way to ask.</span>
-            </div>
-          </div>
-
-          <div class="lesson-mini-card">
-            <h3>The Answer</h3>
-
-            <div class="phrase-item featured-phrase">
-              <strong>I am fine, thank you. And you?</strong>
-              <span>Always remember to ask them back.</span>
-            </div>
+          <div class="unit1-note"><strong>Important:</strong> <em>Good night</em> is usually a farewell, not a greeting. When you arrive somewhere at night, say <strong>Good evening</strong>.</div>
+          <div class="unit1-mini-table">
+            <div class="unit1-rule-card"><h3>Formal / neutral</h3><p><strong>Good morning.</strong> / <strong>Hello.</strong> / <strong>Nice to meet you.</strong></p><p>Use these with teachers, new classmates, and people you do not know well.</p></div>
+            <div class="unit1-example-card"><h3>Informal</h3><p><strong>Hi.</strong> / <strong>Bye.</strong> / <strong>See you later.</strong></p><p>Use these with friends, close classmates, and relaxed conversations.</p></div>
           </div>
         </div>
       </article>
 
-      <!-- TOPIC 3 -->
-      <article class="premium-topic-card">
-        <div class="topic-heading">
-          <span class="topic-number">03</span>
-          <div>
-            <p class="topic-label">Farewells</p>
-            <h2>Ending the Conversation</h2>
+      <article class="unit1-module" id="unit1-section-2">
+        <header class="unit1-module-header" style="--module-image: url('../../assets/img/english-basic/course-overview/verb-to-be-banner.png');">
+          <span>02</span>
+          <h2>The Verb To Be Inside Unit 1</h2>
+          <p>The verb <strong>to be</strong> is not an isolated grammar page here. It is the engine students need to say who they are, where they are from, how old they are, and how they feel.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-grid-3">
+            <div class="unit1-rule-card">
+              <h3>I am</h3>
+              <p>Use <strong>I am</strong> to talk about yourself.</p>
+              <span class="unit1-formula">I am David.</span>
+              <span class="unit1-formula">I am twenty years old.</span>
+              <span class="unit1-formula">I am from Colombia.</span>
+            </div>
+            <div class="unit1-rule-card">
+              <h3>He / She / It is</h3>
+              <p>Use <strong>is</strong> for one person, one thing, or one place.</p>
+              <span class="unit1-formula">She is Ana.</span>
+              <span class="unit1-formula">He is from Medellín.</span>
+              <span class="unit1-formula">It is my email.</span>
+            </div>
+            <div class="unit1-rule-card">
+              <h3>You / We / They are</h3>
+              <p>Use <strong>are</strong> with you and plural subjects.</p>
+              <span class="unit1-formula">You are my classmate.</span>
+              <span class="unit1-formula">We are students.</span>
+              <span class="unit1-formula">They are in class.</span>
+            </div>
           </div>
-        </div>
 
-        <p class="lesson-text">
-          When the conversation is over, you need a polite way to leave. Just like greetings,
-          you can use simple phrases to end the interaction on a positive note.
-        </p>
+          <div class="unit1-table-wrap">
+            <table class="unit1-table">
+              <thead><tr><th>Function</th><th>Structure</th><th>Example</th><th>Spanish idea</th></tr></thead>
+              <tbody>
+                <tr><td>Name / identity</td><td>Subject + be + name</td><td>My name is Laura. / I am Laura.</td><td>ser / llamarse</td></tr>
+                <tr><td>Age</td><td>Subject + be + age</td><td>I am twenty-one years old.</td><td>tener años, but in English use <strong>be</strong></td></tr>
+                <tr><td>Origin</td><td>Subject + be + from + place</td><td>She is from Envigado.</td><td>ser de</td></tr>
+                <tr><td>Feeling</td><td>Subject + be + adjective</td><td>I am fine. He is happy.</td><td>estar</td></tr>
+              </tbody>
+            </table>
+          </div>
 
-        <div class="lesson-grid single-card-grid">
-          <div class="lesson-mini-card">
-            <h3>Common Farewells</h3>
+          <div class="unit1-grid-3">
+            <div class="unit1-rule-card">
+              <h3>Affirmative form</h3>
+              <p>Use the subject first, then the correct form of <strong>be</strong>.</p>
+              <span class="unit1-formula">I am Ana.</span>
+              <span class="unit1-formula">She is my teacher.</span>
+              <span class="unit1-formula">They are classmates.</span>
+            </div>
+            <div class="unit1-rule-card">
+              <h3>Contractions</h3>
+              <p>Contractions sound natural in speaking and informal writing.</p>
+              <span class="unit1-formula">I am → I'm</span>
+              <span class="unit1-formula">You are → You're</span>
+              <span class="unit1-formula">He is / She is → He's / She's</span>
+            </div>
+            <div class="unit1-rule-card">
+              <h3>Negative form</h3>
+              <p>Use <strong>not</strong> after the verb <strong>be</strong>.</p>
+              <span class="unit1-formula">I am not from Bogotá.</span>
+              <span class="unit1-formula">She is not my classmate.</span>
+              <span class="unit1-formula">They are not in class.</span>
+            </div>
+          </div>
 
-            <div class="phrase-list">
-              <div class="phrase-item">
-                <strong>Goodbye / Bye</strong>
-                <span>Standard way to say farewell.</span>
-              </div>
-
-              <div class="phrase-item">
-                <strong>Have a great day</strong>
-                <span>A polite and friendly wish for the other person.</span>
+          <div class="unit1-grid-2">
+            <div class="unit1-example-card">
+              <h3>Yes / No questions</h3>
+              <p>Move <strong>am / is / are</strong> before the subject.</p>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>Are you a student?</strong><span>Yes, I am. / No, I am not.</span></div>
+                <div class="phrase-item"><strong>Is she from Colombia?</strong><span>Yes, she is. / No, she is not.</span></div>
+                <div class="phrase-item"><strong>Are they classmates?</strong><span>Yes, they are. / No, they are not.</span></div>
               </div>
             </div>
+            <div class="unit1-example-card">
+              <h3>Information questions</h3>
+              <p>Use a question word first, then <strong>be</strong>, then the subject.</p>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>What is your name?</strong><span>My name is Laura.</span></div>
+                <div class="phrase-item"><strong>Where are you from?</strong><span>I am from Colombia.</span></div>
+                <div class="phrase-item"><strong>How old are you?</strong><span>I am twenty-one years old.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="teacher-tip"><span>Common Mistake</span><p>In English we say <strong>I am 21 years old</strong>, not <strong>I have 21 years</strong>. Age uses the verb <strong>to be</strong>.</p></div>
+          <div class="unit1-audio-panel">
+            <h3>Audio model: introducing myself</h3>
+            <p>Listen to a professional American English model. This audio connects the verb <strong>to be</strong> with name, age, city, and a short introduction.</p>
+            <div class="unit1-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/pronunciation/unit-1/introducing-myself-model-us.mp3')">Listen</button></div>
+            <div class="unit1-audio-status" aria-live="polite"></div>
           </div>
         </div>
       </article>
 
-      <!-- CONVERSATION -->
-      <article class="premium-topic-card">
-        <div class="topic-heading">
-          <span class="topic-number">04</span>
-          <div>
-            <p class="topic-label">Conversation Practice</p>
-            <h2>Let's See It in Action</h2>
+      <article class="unit1-module" id="unit1-section-3">
+        <header class="unit1-module-header" style="--module-image: url('../../assets/img/english-basic/course-overview/personal-information-banner.jpg');">
+          <span>03</span>
+          <h2>Personal Information</h2>
+          <p>Students learn how to give basic information in complete, short sentences. This prepares them for registration forms, first-day conversations, and short oral introductions.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-visual-explainer">
+            <img src="../../assets/img/english-basic/unit-1-all-about-you/personal-info-numbers-v1.png" alt="Adult English student giving personal information in class" />
+            <div class="unit1-visual-copy">
+              <h3>Real context: forms and introductions</h3>
+              <p>Personal information is not only grammar. Students need it to complete forms, speak to a teacher, introduce themselves, and confirm contact information clearly.</p>
+              <span class="unit1-formula">My name is + age + city + phone number + email</span>
+            </div>
           </div>
+          <div class="unit1-grid-2">
+            <div class="unit1-example-card">
+              <h3>Information to give</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>My name is Daniel.</strong><span>Name.</span></div>
+                <div class="phrase-item"><strong>My last name is Rivera.</strong><span>Last name.</span></div>
+                <div class="phrase-item"><strong>I am twenty-two years old.</strong><span>Age.</span></div>
+                <div class="phrase-item"><strong>I am from Medellín.</strong><span>City or origin.</span></div>
+                <div class="phrase-item"><strong>My phone number is 300 555 2841.</strong><span>Contact information.</span></div>
+                <div class="phrase-item"><strong>My email is daniel.rivera@example.com.</strong><span>Email address.</span></div>
+              </div>
+            </div>
+            <div class="unit1-rule-card">
+              <h3>Classroom model</h3>
+              <p>Hello. My name is Daniel Rivera. I am twenty-two years old. I am from Medellín, but I live in Envigado. My phone number is 300 555 2841. My email is daniel.rivera@example.com. Nice to meet you.</p>
+              <span class="unit1-formula">Greeting + name + age + city + contact + closing</span>
+            </div>
+          </div>
+          <div class="unit1-grid-4">
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">First name</span><strong>nombre</strong><small>My first name is Ana.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Last name</span><strong>apellido</strong><small>My last name is Gómez.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Full name</span><strong>nombre completo</strong><small>My full name is Ana Gómez Pérez.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Nickname</span><strong>apodo</strong><small>My nickname is Ani.</small></div>
+          </div>
+          <div class="unit1-note"><strong>Colombian context:</strong> many students have two first names and two last names. In English, <strong>first name</strong> usually means the given name, and <strong>last name</strong> usually means the family name used in the form.</div>
         </div>
+      </article>
 
-        <p class="lesson-text">
-          Read the following conversation between two new classmates. Notice how they use greetings,
-          ask about each other, and say goodbye.
-        </p>
-
-        <div class="premium-chat">
-          <div class="chat-row left">
-            <div class="chat-bubble-premium">
-              <span>Alex</span>
-              <p>Good morning! Hello, my name is Alex.</p>
+      <article class="unit1-module" id="unit1-section-4">
+        <header class="unit1-module-header" style="--module-image: url('../../assets/img/english-basic/course-overview/spelling-tool-banner.jpg');">
+          <span>04</span>
+          <h2>Alphabet, Spelling, and Emails</h2>
+          <p>Students need the alphabet immediately because personal information often includes names, last names, emails, usernames, and document numbers.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-visual-explainer">
+            <img src="../../assets/img/english-basic/unit-1-all-about-you/alphabet-spelling-v1.png" alt="Adult English learner practicing alphabet and spelling with a teacher" />
+            <div class="unit1-visual-copy">
+              <h3>Real context: exact information</h3>
+              <p>Spelling is necessary when the listener needs the exact letters of a name, last name, username, or email address. In Unit 1, spelling supports personal information.</p>
+              <span class="unit1-formula">How do you spell your last name? → R-I-V-E-R-A</span>
             </div>
           </div>
-
-          <div class="chat-row right">
-            <div class="chat-bubble-premium">
-              <span>Maria</span>
-              <p>Hi Alex! I am Maria. How are you?</p>
+          <div class="unit1-grid-3">
+            <div class="unit1-card"><span class="unit1-mini-label">Names</span><strong>How do you spell your name?</strong><p>Use this when the listener needs exact letters.</p><span class="unit1-formula">A-L-E-X</span></div>
+            <div class="unit1-card"><span class="unit1-mini-label">Last names</span><strong>Could you spell your last name?</strong><p>This sounds polite in registration contexts.</p><span class="unit1-formula">R-I-V-E-R-A</span></div>
+            <div class="unit1-card"><span class="unit1-mini-label">Emails</span><strong>Symbols matter</strong><p>Students must recognize at, dot, underscore, and hyphen.</p><span class="unit1-formula">name dot last at email dot com</span></div>
+          </div>
+          <div class="unit1-word-bank" aria-label="Spelling vocabulary">
+            <span>letter</span><span>spell</span><span>capital letter</span><span>lowercase</span><span>at</span><span>dot</span><span>underscore</span><span>hyphen</span><span>email</span><span>username</span>
+          </div>
+          <div class="unit1-grid-2">
+            <div class="unit1-rule-card">
+              <h3>Email and username symbols</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>@ = at</strong><span>ana at email dot com</span></div>
+                <div class="phrase-item"><strong>. = dot</strong><span>gmail dot com</span></div>
+                <div class="phrase-item"><strong>- = hyphen / dash</strong><span>ana hyphen gomez</span></div>
+                <div class="phrase-item"><strong>_ = underscore</strong><span>ana underscore gomez</span></div>
+              </div>
+            </div>
+            <div class="unit1-example-card">
+              <h3>Difficult letters for Spanish speakers</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>A / E / I</strong><span>These vowels are often confused.</span></div>
+                <div class="phrase-item"><strong>B / V</strong><span>English separates these sounds more clearly.</span></div>
+                <div class="phrase-item"><strong>G / J</strong><span>The letter names are different from Spanish.</span></div>
+                <div class="phrase-item"><strong>Y / I</strong><span>Y is a letter name; I is also a pronoun.</span></div>
+              </div>
             </div>
           </div>
-
-          <div class="chat-row left">
-            <div class="chat-bubble-premium">
-              <span>Alex</span>
-              <p>I am fine, thank you. And you?</p>
+          <div class="unit1-audio-panel">
+            <h3>Audio model: letters and email symbols</h3>
+            <p>Use these short professional clips to hear individual letters and symbols. They support pronunciation and exact spelling.</p>
+            <div class="unit1-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/a.mp3')">A</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/e.mp3')">E</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/i.mp3')">I</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/g.mp3')">G</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/j.mp3')">J</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/at.mp3')">at</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/dot.mp3')">dot</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/underscore.mp3')">underscore</button>
             </div>
-          </div>
-
-          <div class="chat-row right">
-            <div class="chat-bubble-premium">
-              <span>Maria</span>
-              <p>I am doing great! Nice to meet you.</p>
-            </div>
-          </div>
-
-          <div class="chat-row left">
-            <div class="chat-bubble-premium">
-              <span>Alex</span>
-              <p>Nice to meet you too, Maria. I have to go to class. Goodbye!</p>
-            </div>
-          </div>
-
-          <div class="chat-row right">
-            <div class="chat-bubble-premium">
-              <span>Maria</span>
-              <p>Bye! Have a great day!</p>
-            </div>
+            <div class="unit1-audio-status" aria-live="polite"></div>
           </div>
         </div>
       </article>
 
-    </section>
+      <article class="unit1-module" id="unit1-section-5">
+        <header class="unit1-module-header" style="--module-image: url('../../assets/img/english-basic/course-overview/cardinal-ordinal-numbers-banner.png');">
+          <span>05</span>
+          <h2>Numbers for Personal Information</h2>
+          <p>In Unit 1, numbers are primarily functional: age, phone numbers, document numbers, classroom quantity, and basic forms.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-grid-2">
+            <div class="unit1-rule-card">
+              <h3>Cardinal numbers</h3>
+              <p>Use cardinal numbers to count and give exact information.</p>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>I am twenty-one.</strong><span>Age.</span></div>
+                <div class="phrase-item"><strong>My phone number is 300 555 2841.</strong><span>Contact.</span></div>
+                <div class="phrase-item"><strong>There are ten students.</strong><span>Quantity.</span></div>
+              </div>
+            </div>
+            <div class="unit1-example-card">
+              <h3>Ordinal numbers preview</h3>
+              <p>Ordinal numbers are not the main focus of Unit 1, but students see them in course language and dates.</p>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>Unit 1</strong><span>Say: unit one. Use a cardinal number.</span></div>
+                <div class="phrase-item"><strong>the first class</strong><span>Use an ordinal number for order.</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="unit1-grid-3">
+            <div class="unit1-card"><span class="unit1-mini-label">Age</span><strong>I am twenty-one years old.</strong><p>Use <strong>be</strong>, not <strong>have</strong>, for age.</p></div>
+            <div class="unit1-card"><span class="unit1-mini-label">Phone</span><strong>three zero zero / five five five / two eight four one</strong><p>For phone numbers, say digits clearly, often in groups.</p></div>
+            <div class="unit1-card"><span class="unit1-mini-label">ID</span><strong>My ID number is 45 459 231.</strong><p>Document numbers must be slow and exact.</p></div>
+          </div>
+          <div class="unit1-grid-2">
+            <div class="unit1-rule-card">
+              <h3>Common number contrasts</h3>
+              <div class="phrase-list">
+                <div class="phrase-item"><strong>thirteen / thirty</strong><span>13 vs 30</span></div>
+                <div class="phrase-item"><strong>fourteen / forty</strong><span>14 vs 40</span></div>
+                <div class="phrase-item"><strong>fifteen / fifty</strong><span>15 vs 50</span></div>
+              </div>
+            </div>
+            <div class="unit1-example-card">
+              <h3>Zero in contact information</h3>
+              <p>For phone numbers, people often say <strong>zero</strong>. In casual speech, some speakers also say <strong>oh</strong>, but <strong>zero</strong> is clearer for beginners.</p>
+              <span class="unit1-formula">300 = three zero zero</span>
+            </div>
+          </div>
+          <div class="unit1-audio-panel">
+            <h3>Audio model: numbers for contact information</h3>
+            <p>Listen to individual number words used in phones, IDs, and basic forms.</p>
+            <div class="unit1-audio-tools">
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/zero.mp3')">zero</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/one.mp3')">one</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/two.mp3')">two</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/three.mp3')">three</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/four.mp3')">four</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/five.mp3')">five</button>
+              <button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/alphabet/eight.mp3')">eight</button>
+            </div>
+            <div class="unit1-audio-status" aria-live="polite"></div>
+          </div>
+        </div>
+      </article>
 
-    <!-- NEXT STEPS -->
-    <section class="lesson-next-section">
-      <div class="lesson-next-card">
-        <p class="eyebrow">Next step</p>
-        <h2>Continue learning</h2>
-        <p>
-          When you finish this lesson, continue with the next section to practice personal details
-          and basic questions in English.
-        </p>
+      <article class="unit1-module" id="unit1-section-6">
+        <header class="unit1-module-header">
+          <span>06</span>
+          <h2>Personal Information Questions</h2>
+          <p>Students now combine greetings, to be, spelling, and numbers into useful questions for real interaction.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-table-wrap">
+            <table class="unit1-table">
+              <thead><tr><th>Question</th><th>Answer model</th><th>Language focus</th></tr></thead>
+              <tbody>
+                <tr><td>What is your name?</td><td>My name is Sara.</td><td>name + be</td></tr>
+                <tr><td>What is your last name?</td><td>My last name is Gómez.</td><td>last name + be</td></tr>
+                <tr><td>How do you spell your last name?</td><td>G-Ó-M-E-Z.</td><td>alphabet</td></tr>
+                <tr><td>How old are you?</td><td>I am twenty-two years old.</td><td>age + be</td></tr>
+                <tr><td>Where are you from?</td><td>I am from Colombia.</td><td>from + place</td></tr>
+                <tr><td>What is your phone number?</td><td>My phone number is 300 555 2841.</td><td>numbers</td></tr>
+                <tr><td>What is your email?</td><td>My email is sara@example.com.</td><td>email spelling</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="unit1-note"><strong>Recommended study sequence:</strong> first understand the answers, then the questions, then the spelling. If students try to learn everything at once, the interaction becomes heavy for A1.</div>
+          <div class="unit1-grid-2">
+            <div class="unit1-correction"><div class="unit1-wrong">I have 20 years. ✕</div><div class="unit1-right">I am 20 years old. ✓</div></div>
+            <div class="unit1-correction"><div class="unit1-wrong">My name Ana. ✕</div><div class="unit1-right">My name is Ana. ✓</div></div>
+            <div class="unit1-correction"><div class="unit1-wrong">I am from in Medellín. ✕</div><div class="unit1-right">I am from Medellín. ✓</div></div>
+            <div class="unit1-correction"><div class="unit1-wrong">How old you are? ✕</div><div class="unit1-right">How old are you? ✓</div></div>
+          </div>
+          <div class="unit1-note"><strong>Pedagogical focus:</strong> these corrections are not a test. They show the sentence patterns students must notice before speaking or writing personal information.</div>
+        </div>
+      </article>
 
+      <article class="unit1-module" id="unit1-section-7">
+        <header class="unit1-module-header" style="--module-image: url('../../assets/img/english-basic/practice-lab/listening-first-day-class-banner.jpg');">
+          <span>07</span>
+          <h2>Integrated Model Dialogue</h2>
+          <p>This model shows the complete Unit 1 package in action: greeting, name, age, city, spelling, and polite closing.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-dialogue-card">
+            <h3>First day registration</h3>
+            <div class="unit1-dialogue-lines">
+              <p><strong>Sara:</strong> Good morning. Welcome to English class. What is your name?</p>
+              <p><strong>Alex:</strong> Good morning. My name is Alex Rivera.</p>
+              <p><strong>Sara:</strong> Nice to meet you, Alex. How do you spell your last name?</p>
+              <p><strong>Alex:</strong> R-I-V-E-R-A.</p>
+              <p><strong>Sara:</strong> Thank you. How old are you?</p>
+              <p><strong>Alex:</strong> I am twenty-one years old.</p>
+              <p><strong>Sara:</strong> Where are you from?</p>
+              <p><strong>Alex:</strong> I am from Medellín, but I live in Envigado.</p>
+              <p><strong>Sara:</strong> Great. Have a nice class.</p>
+              <p><strong>Alex:</strong> Thank you. Have a great day.</p>
+            </div>
+          </div>
+          <div class="unit1-grid-4">
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Step 1</span><strong>Greet</strong><small>Good morning.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Step 2</span><strong>Identify</strong><small>My name is Alex.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Step 3</span><strong>Spell</strong><small>R-I-V-E-R-A.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Step 4</span><strong>Close</strong><small>Have a great day.</small></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit1-module" id="unit1-section-8">
+        <header class="unit1-module-header">
+          <span>08</span>
+          <h2>Complete Self-Introduction Model</h2>
+          <p>This final model puts the complete explanation together: greeting, name, age, origin, spelling, contact information, and closing.</p>
+        </header>
+        <div class="unit1-module-body">
+          <div class="unit1-dialogue-card">
+            <h3>Complete model</h3>
+            <div class="unit1-dialogue-lines">
+              <p>Hello. My name is Laura Gómez Pérez.</p>
+              <p>My first name is Laura, and my last name is Gómez.</p>
+              <p>I am twenty-one years old.</p>
+              <p>I am from Colombia, and I live in Medellín.</p>
+              <p>My phone number is 300 555 2841.</p>
+              <p>My email is laura dot gomez at email dot com.</p>
+              <p>Nice to meet you. Have a great day.</p>
+            </div>
+          </div>
+          <div class="unit1-grid-4">
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Greeting</span><strong>Hello.</strong><small>Start politely.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Identity</span><strong>My name is...</strong><small>Use <em>is</em>.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Age</span><strong>I am...</strong><small>Use <em>am</em>.</small></div>
+            <div class="unit1-speaking-part"><span class="unit1-mini-label">Contact</span><strong>My phone number is...</strong><small>Say digits clearly.</small></div>
+          </div>
+          <div class="unit1-audio-panel">
+            <h3>Audio model: complete self-introduction</h3>
+            <p>This professional American English audio gives students a natural rhythm for a short self-introduction.</p>
+            <div class="unit1-audio-tools"><button type="button" class="audio-btn play" onclick="playUnit1Audio('audio/pronunciation/unit-1/introducing-myself-model-us.mp3')">Listen</button></div>
+            <div class="unit1-audio-status" aria-live="polite"></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit1-subtle-link-panel">
+        <h2>Continue after the explanation</h2>
+        <p>These links are not part of the explanation itself. They are the next resources students can open after studying the unit.</p>
         <div class="hero-actions">
-          <a href="personal-information.html" class="btn btn-primary">Go to Personal Information</a>
-          <a href="spelling-tool.html" class="btn btn-primary">Practice Spelling</a>
+          <a href="reading-nice-to-meet-you.html" class="btn btn-secondary">Reading</a>
+          <a href="listening-first-day-class.html" class="btn btn-secondary">Listening</a>
+          <a href="pronunciation-unit-1-introducing-myself.html" class="btn btn-secondary">Pronunciation</a>
+          <a href="practice-unit-1-all-about-you.html" class="btn btn-secondary">Practice</a>
+          <a href="spelling-tool.html" class="btn btn-secondary">Spelling Tool</a>
+          <a href="verb-to-be.html" class="btn btn-secondary">Full Verb To Be page</a>
+          <a href="cardinal-ordinal-numbers.html" class="btn btn-secondary">Numbers page</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to Course Overview</a>
         </div>
-      </div>
+      </article>
     </section>
-
   </main>
 
   <footer class="site-footer">
-    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
+
+  <script>
+    let activeUnit1Audio = null;
+
+    function setUnit1AudioStatus(message) {
+      document.querySelectorAll(".unit1-audio-status").forEach(function(status) {
+        status.textContent = message || "";
+      });
+    }
+
+    function playUnit1Audio(source) {
+      if (!source) return;
+      if (activeUnit1Audio) {
+        activeUnit1Audio.pause();
+        activeUnit1Audio.currentTime = 0;
+      }
+      activeUnit1Audio = new Audio(source);
+      activeUnit1Audio.addEventListener("error", function() {
+        setUnit1AudioStatus("This professional audio is temporarily unavailable.");
+      });
+      activeUnit1Audio.play().then(function() {
+        setUnit1AudioStatus("Playing professional American English audio.");
+      }).catch(function() {
+        setUnit1AudioStatus("Select the audio again to play it.");
+      });
+    }
+
+    function toggleUnit1Module(module, forceOpen) {
+      const shouldOpen = typeof forceOpen === "boolean" ? forceOpen : module.classList.contains("is-collapsed");
+      module.classList.toggle("is-collapsed", !shouldOpen);
+      const header = module.querySelector(".unit1-module-header");
+      const toggle = module.querySelector(".unit1-module-toggle");
+      if (header) header.setAttribute("aria-expanded", shouldOpen ? "true" : "false");
+      if (toggle) {
+        const toggleText = toggle.querySelector("span");
+        if (toggleText) toggleText.textContent = shouldOpen ? "Close" : "Open";
+      }
+    }
+
+    function setUnit1Sections(open) {
+      document.querySelectorAll(".unit1-module").forEach(function(module) {
+        toggleUnit1Module(module, open);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+      document.querySelectorAll(".unit1-module").forEach(function(module, index) {
+        const header = module.querySelector(".unit1-module-header");
+        const body = module.querySelector(".unit1-module-body");
+        if (!header || !body) return;
+        const bodyId = "unit1-module-body-" + (index + 1);
+        body.id = bodyId;
+        header.setAttribute("tabindex", "0");
+        header.setAttribute("role", "button");
+        header.setAttribute("aria-controls", bodyId);
+        header.setAttribute("aria-expanded", "true");
+        const toggle = document.createElement("span");
+        toggle.className = "unit1-module-toggle";
+        toggle.innerHTML = '<i class="bi bi-chevron-down" aria-hidden="true"></i><span>Open</span>';
+        header.appendChild(toggle);
+        header.addEventListener("click", function(event) {
+          if (event.target.closest("a, button")) return;
+          toggleUnit1Module(module);
+        });
+        header.addEventListener("keydown", function(event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            toggleUnit1Module(module);
+          }
+        });
+        toggleUnit1Module(module, index === 0);
+      });
+    });
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="../../assets/js/google-auth.js"></script>
+  <script src="../../assets/js/google-auth.js?v=20260707-basic-claims"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
