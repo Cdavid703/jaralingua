@@ -1,7 +1,7 @@
-﻿# Français Niveau 8 — Compréhensions orales B2 (Accent Québec)
+# Fran?ais Niveau 8 ? Compr?hensions orales B2 (Accent Qu?bec)
 
+## Audio 01a - Un choix de carrière regretté (Qu?bec)
 
-## Audio 01a - Un choix de carrière regretté (Québec)
 File: `complete/n8-01a-choix-carriere-quebec-b2.mp3`
 
 Sophie: Tu sais, Martin, en repensant à mon parcours, je me dis que j'aurais dû accepter cette offre à Genève il y a cinq ans. C'était une opportunité exceptionnelle dans la recherche pharmaceutique.
@@ -22,452 +22,408 @@ Martin: Absolument. J'aurais dû comprendre plus tôt que la carrière n'est pas
 
 Sophie: Tu as raison. On aurait pu passer des années à ruminer. Autant agir maintenant, il n'est jamais vraiment trop tard pour un nouveau départ.
 
+## Audio 01b - Les regrets des Français (Qu?bec)
 
-## Audio 01b - Les regrets des Français (Québec)
 File: `complete/n8-01b-regrets-francais-quebec-b2.mp3`
 
-Émilie: Bienvenue dans notre chronique « Regards croisés ». Aujourd'hui, nous recevons Philippe, sociologue, pour parler d'une enquête fascinante sur les regrets des Français. Philippe, quels sont les résultats principaux ?
+Claire: Bienvenue dans notre chronique « Société et vous ». Aujourd'hui, nous recevons Thomas Lefèvre, sociologue, pour parler d'une enquête fascinante sur les regrets des Français. Thomas, quels sont les résultats les plus marquants ?
 
-Philippe: Merci, Émilie. L'enquête révèle que soixante-huit pour cent des personnes interrogées estiment qu'elles auraient dû faire des choix différents dans leur vie professionnelle. C'est un chiffre considérable.
+Thomas: Merci Claire. L'enquête révèle que soixante-deux pour cent des personnes interrogées estiment qu'elles auraient dû accorder plus de temps à leurs proches. C'est le regret numéro un, toutes générations confondues.
 
-Émilie: C'est énorme, en effet. Et quels types de regrets reviennent le plus souvent ?
+Claire: C'est frappant. Et sur le plan professionnel, quelles tendances se dégagent ?
 
-Philippe: Le premier, c'est la formation. Beaucoup disent qu'ils auraient aimé poursuivre des études plus longues ou choisir une autre filière. Ils pensent qu'il aurait fallu que le système éducatif les oriente mieux.
+Thomas: Beaucoup déclarent qu'ils auraient aimé poursuivre leurs études plus longtemps. Chez les quarante-cinquante ans, un tiers affirme qu'il aurait fallu choisir une autre voie dès le départ, plutôt que de suivre les attentes familiales.
 
-Émilie: On aurait voulu être mieux guidés, en somme. Et au-delà des études ?
+Claire: On pourrait dire que ces résultats reflètent une pression sociale très forte en France, non ?
 
-Philippe: Les relations arrivent en deuxième position. Plusieurs répondants reconnaissent qu'ils auraient dû consacrer plus de temps à leur famille. Un participant a déclaré : « J'aurais pu être plus présent pour mes enfants, mais le travail prenait toute la place. »
+Thomas: Exactement. Les femmes, en particulier, expriment qu'elles auraient voulu s'affirmer davantage dans leur carrière. Plusieurs témoignages montrent qu'elles auraient pu accéder à des postes de direction si les mentalités avaient évolué plus vite.
 
-Émilie: C'est un constat qu'on entend souvent. Et qu'en est-il des regrets liés aux choix financiers ?
+Claire: Et du côté des jeunes générations, est-ce différent ?
 
-Philippe: Environ quarante pour cent auraient préféré épargner davantage ou investir différemment. Certains disent qu'ils auraient voulu acheter un logement plus tôt, quand les prix étaient accessibles. Ils sentent qu'il aurait fallu mieux anticiper l'évolution du marché.
+Thomas: Curieusement, les moins de trente ans disent qu'ils auraient préféré voyager avant de s'engager dans la vie active. Ils auraient aimé découvrir d'autres cultures, apprendre des langues. Mais la pression économique les a poussés à chercher un emploi stable immédiatement.
 
-Émilie: On aurait aimé avoir une boule de cristal, en quelque sorte. Mais est-ce que le regret peut être constructif ?
+Claire: Y a-t-il des leçons à tirer de cette étude ?
 
-Philippe: Absolument. Les psychologues affirment que le regret, quand il est analysé, peut devenir un levier de changement. On aurait préféré ne pas faire certaines erreurs, mais elles nous enseignent énormément. L'essentiel, c'est de transformer le « j'aurais dû » en action concrète.
+Thomas: Oui. Ce qui ressort, c'est qu'on aurait dû encourager les Français à prendre des risques mesurés plus tôt dans la vie. Les personnes qui ont osé changer de cap expriment nettement moins de regrets. Il aurait fallu, selon les chercheurs, créer un système éducatif qui valorise l'expérimentation plutôt que la conformité.
 
-Émilie: Un message d'espoir pour conclure. Merci, Philippe, pour cette analyse éclairante.
+Claire: Un constat puissant. Merci beaucoup, Thomas, pour cette analyse éclairante. On se retrouve la semaine prochaine pour une nouvelle chronique.
 
+## Audio 01c - Bilan d'un projet municipal raté (Qu?bec)
 
-## Audio 01c - Bilan d'un projet municipal raté (Québec)
 File: `complete/n8-01c-projet-municipal-quebec-b2.mp3`
 
-Nathalie: Bonsoir et bienvenue dans votre flash info. Ce soir, retour sur le projet de réaménagement du quartier Sainte-Catherine, abandonné après trois ans de travaux. Notre reporter Jean-François est sur place. Jean-François, que s'est-il passé ?
+Léa: Bonsoir. Ce soir dans notre édition, retour sur l'échec du projet de rénovation du quartier des Lilas à Montfort. Trois ans après le lancement des travaux, le bilan est accablant. Notre reporter Nicolas Ferrand est sur place. Nicolas, que s'est-il passé ?
 
-Jean-François: Bonsoir, Nathalie. Le constat est accablant. Le projet de parc urbain, estimé à douze millions d'euros, n'a jamais été achevé. Les riverains sont furieux. Selon l'association de quartier, la mairie aurait dû consulter les habitants avant de lancer les travaux.
+Nicolas: Bonsoir Léa. Eh bien, c'est un véritable fiasco. Les habitants sont unanimes : la municipalité aurait dû consulter les résidents avant de lancer ce chantier pharaonique. Les travaux, estimés à douze millions d'euros, ont finalement coûté le double sans jamais aboutir.
 
-Nathalie: Des erreurs de planification, donc ?
+Léa: Comment les élus locaux réagissent-ils face à ces critiques ?
 
-Jean-François: Exactement. Les experts mandatés pour l'audit affirment qu'il aurait fallu réaliser une étude de sol approfondie. Le terrain était instable, et les fondations ont cédé dès le deuxième hiver. On aurait pu éviter ce désastre avec une analyse préalable sérieuse.
+Nicolas: L'opposition est très virulente. Le conseiller municipal Philippe Renaud a déclaré que l'on aurait pu éviter ce gaspillage si une étude d'impact sérieuse avait été réalisée en amont. Il estime qu'il aurait fallu privilégier la rénovation progressive plutôt qu'une démolition totale.
 
-Nathalie: Et du côté du budget ?
+Léa: Et les riverains, que disent-ils ?
 
-Jean-François: Le dépassement est considérable. La municipalité aurait voulu limiter les coûts, mais les imprévus se sont accumulés. L'opposition dénonce une gestion catastrophique. Le conseiller municipal Dupont a déclaré, je cite : « On aurait dû surveiller les dépenses dès le premier trimestre. Nous aurions préféré investir cet argent dans la rénovation des écoles. »
+Nicolas: J'ai recueilli de nombreux témoignages. Madame Duval, qui habite ici depuis trente ans, m'a confié qu'elle aurait aimé être entendue dès le début. Elle dit que les associations de quartier auraient voulu participer aux décisions, mais qu'elles ont été systématiquement ignorées.
 
-Nathalie: Les habitants partagent-ils cette frustration ?
+Léa: Le maire a-t-il pris la parole aujourd'hui ?
 
-Jean-François: Totalement. Madame Tremblay, résidente depuis trente ans, m'a confié : « Ils auraient dû nous écouter. On leur avait dit que ce terrain posait problème. Il aurait fallu choisir un autre emplacement. » Un autre habitant a ajouté qu'il aurait aimé voir cet argent consacré au transport en commun.
+Nicolas: Oui. Dans un communiqué, il reconnaît que l'on aurait dû mieux anticiper les contraintes techniques du terrain. Il ajoute que la mairie aurait préféré un calendrier plus réaliste, mais que les pressions politiques ont accéléré les choses. Il promet néanmoins un audit indépendant d'ici la fin du mois.
 
-Nathalie: Quelles suites sont envisagées ?
+Léa: Un audit qui arrive bien tard, diront certains. On aurait pu l'exiger dès les premiers dépassements de budget. Merci Nicolas pour ce reportage. Nous suivrons évidemment l'évolution de ce dossier dans les prochaines semaines.
 
-Jean-François: Le maire a promis un audit complet. Il a reconnu qu'on aurait pu mieux anticiper les difficultés. Une commission d'enquête sera mise en place la semaine prochaine pour déterminer les responsabilités.
+## Audio 02a - Si j'avais su… (Qu?bec)
 
-Nathalie: Merci, Jean-François. Nous suivrons ce dossier de près.
-
-
-## Audio 02a - Si j'avais su… (Québec)
 File: `complete/n8-02a-si-javais-su-quebec-b2.mp3`
 
-Philippe: Tu te rappelles quand on hésitait entre partir à Vancouver ou rester à Montréal après le diplôme ?
+Jade: Tu te souviens de l'époque où on hésitait à partir en Erasmus ? Si j'avais accepté la bourse pour Barcelone, j'aurais probablement appris l'espagnol couramment. Ma vie professionnelle serait complètement différente aujourd'hui.
 
-Émilie: Comment oublier ? Si j'avais accepté le poste à Vancouver, j'aurais probablement fait carrière dans le cinéma documentaire. Ma vie aurait pris une direction complètement différente.
+Victor: Ah, je me dis la même chose ! Si j'avais su que le marché de l'emploi allait autant se transformer, j'aurais choisi l'informatique plutôt que la gestion. J'aurais eu dix fois plus d'opportunités.
 
-Philippe: C'est fou comme un seul choix peut tout changer. Moi, si j'avais pris ce semestre d'échange au Japon, j'aurais appris le japonais, et j'aurais sans doute travaillé dans le commerce international.
+Jade: C'est dingue, non ? Si nous avions pris ces décisions autrement, nous ne serions même pas dans cette ville. Si j'avais déménagé à Barcelone, je n'aurais jamais rencontré Arnaud, et mes enfants n'existeraient pas. Ah, ça donne le vertige.
 
-Émilie: Et si on avait monté notre projet de webmagazine ensemble, on aurait peut-être lancé quelque chose d'innovant. Si nous avions trouvé un investisseur à l'époque, nous aurions pu créer notre propre média.
+Victor: Complètement. Et tiens, si j'avais écouté mon père, j'aurais repris l'entreprise familiale. Si j'avais fait ce choix, j'aurais probablement gagné ma vie plus confortablement, mais est-ce que j'aurais été heureux ? J'en doute.
 
-Philippe: Si j'avais eu plus confiance en moi, j'aurais osé présenter le projet à ce concours de start-ups. Mais j'avais tellement peur de l'échec que je n'ai même pas essayé.
+Jade: C'est toute la question. Si on avait pu voir l'avenir, on aurait fait des choix plus éclairés, mais on aurait aussi perdu la spontanéité de la vie. Tu imagines, si tout avait été calculé d'avance ?
 
-Émilie: Je comprends. Si on nous avait appris à accepter l'échec comme une étape normale, on aurait tenté beaucoup plus de choses. Si j'avais su que l'échec n'était pas définitif, j'aurais pris bien plus de risques.
+Victor: Ça serait terrifiant. Mais regarde, si j'avais investi dans le Bitcoin en deux mille dix comme mon cousin me l'avait suggéré, j'aurais été millionnaire. Si j'avais pris ce risque, j'aurais pu me permettre de voyager pendant des années.
 
-Philippe: Tu sais ce qui est paradoxal ? Si j'avais fait tous ces choix différents, je n'aurais probablement pas rencontré ma femme. Si j'étais parti au Japon, je n'aurais jamais assisté à cette conférence où on s'est croisés.
+Jade: Oh là là, ne me parle pas de ça ! Si j'avais su, moi aussi j'aurais mis toutes mes économies dedans. Mais bon, si on avait passé notre vie à spéculer, on serait devenus fous d'anxiété.
 
-Émilie: C'est vrai, la vie est imprévisible. Si j'avais déménagé à Vancouver, je n'aurais pas connu mes meilleurs amis ici. Si j'avais suivi un autre chemin, j'aurais gagné certaines choses, mais j'en aurais perdu d'autres.
+Victor: Tu as raison. Finalement, si nous avions vécu dans le regret permanent, nous n'aurions jamais apprécié ce que nous avons construit. Il faut accepter que chaque choix ferme une porte et en ouvre une autre.
 
-Philippe: Finalement, si on avait pu voir l'avenir, on aurait peut-être fait exactement les mêmes choix. L'important, c'est de continuer à avancer, même avec des doutes.
+Jade: Exactement. Si j'avais compris ça plus tôt, j'aurais perdu beaucoup moins de temps à me torturer l'esprit.
 
-Émilie: Si quelqu'un m'avait dit ça à vingt ans, j'aurais ri. Mais aujourd'hui, je suis entièrement d'accord.
+## Audio 02b - Les grands « et si » de l'histoire (Qu?bec)
 
-
-## Audio 02b - Les grands « et si » de l'histoire (Québec)
 File: `complete/n8-02b-et-si-histoire-quebec-b2.mp3`
 
-Marc: Bienvenue dans « Contre-courant », la chronique qui explore l'histoire autrement. Aujourd'hui, Caroline, vous êtes historienne spécialiste de l'uchronie. Expliquez-nous ce concept.
+Thomas: Bonsoir à tous et bienvenue dans « Hypothèses », le podcast qui réécrit l'histoire. Ce soir, nous accueillons Sophie Marchal, historienne spécialisée dans l'histoire contrefactuelle. Sophie, commençons par un grand classique : et si Napoléon avait gagné à Waterloo ?
 
-Caroline: Avec plaisir, Marc. L'uchronie, c'est l'exercice intellectuel de réécrire l'histoire en modifiant un événement clé. Par exemple, si Napoléon avait remporté la bataille de Waterloo, la carte de l'Europe aurait été redessinée. La France aurait maintenu son hégémonie pendant des décennies.
+Sophie: Merci Thomas. Alors, si Napoléon avait remporté cette bataille en juin mille huit cent quinze, il aurait consolidé son pouvoir en France et l'Europe aurait connu une configuration politique radicalement différente. Si les coalitions européennes avaient échoué à le renverser, le congrès de Vienne n'aurait jamais redessiné les frontières comme il l'a fait.
 
-Marc: Fascinant. Et si la Révolution française n'avait pas eu lieu ?
+Thomas: Fascinant. Et si on remonte plus loin, que se serait-il passé si la Révolution française n'avait pas eu lieu ?
 
-Caroline: Si la monarchie avait réussi à se réformer à temps, elle aurait probablement survécu. Les idées des Lumières se seraient diffusées plus lentement, et si les philosophes n'avaient pas trouvé un écho populaire, le mouvement démocratique aurait pris un tout autre visage.
+Sophie: Si Louis XVI avait accepté les réformes fiscales proposées par Turgot et Necker, la monarchie aurait peut-être survécu sous une forme constitutionnelle. Si la Bastille n'était pas tombée, les idéaux républicains se seraient sans doute diffusés plus lentement à travers l'Europe.
 
-Marc: Prenons un exemple plus récent. Si l'Union soviétique ne s'était pas effondrée en 1991 ?
+Thomas: Passons au vingtième siècle. Si la France n'avait pas signé l'armistice en mille neuf cent quarante ?
 
-Caroline: Excellente question. Si Gorbatchev avait réussi ses réformes sans perdre le contrôle, le bloc de l'Est aurait évolué différemment. Si le mur de Berlin n'était pas tombé, l'Allemagne serait peut-être restée divisée, et l'Union européenne telle que nous la connaissons n'aurait jamais existé.
+Sophie: Si le gouvernement français avait choisi de continuer la guerre depuis l'Afrique du Nord, la dynamique du conflit aurait changé. Si les forces françaises avaient maintenu une résistance organisée dès le début, l'Allemagne aurait dû mobiliser davantage de troupes au sud, ce qui aurait affaibli sa position sur le front est.
 
-Marc: C'est vertigineux. Et dans le domaine scientifique ?
+Thomas: Et un scénario plus récent : si la France avait adopté l'euro plus tard, ou jamais ?
 
-Caroline: Si Fleming n'avait pas découvert la pénicilline par hasard, des millions de personnes seraient mortes d'infections banales. Si la recherche médicale avait pris du retard, la Seconde Guerre mondiale aurait été encore plus meurtrière.
+Sophie: Si la France n'avait pas rejoint la zone euro, elle aurait conservé le franc et une politique monétaire autonome. Si elle avait gardé cette indépendance, elle aurait pu dévaluer sa monnaie face aux crises, mais elle aurait aussi perdu l'ancrage économique européen.
 
-Marc: On peut aussi se demander : si Internet n'avait pas été inventé ?
+Thomas: On voit que chaque embranchement historique aurait généré un monde très différent. Si nos auditeurs avaient vécu dans ces réalités alternatives, ils ne reconnaîtraient probablement pas la France d'aujourd'hui. Merci Sophie pour cette exploration passionnante !
 
-Caroline: Si les chercheurs du CERN n'avaient pas développé le World Wide Web, la communication mondiale aurait stagné. Si cette technologie n'avait pas émergé, nos sociétés auraient conservé des structures beaucoup plus cloisonnées.
+## Audio 02c - Accident évité de justesse (Qu?bec)
 
-Marc: Ces réflexions montrent à quel point chaque événement historique est un tournant. Merci, Caroline, pour ce voyage passionnant dans les futurs qui n'ont jamais existé.
-
-
-## Audio 02c - Accident évité de justesse (Québec)
 File: `complete/n8-02c-accident-evite-quebec-b2.mp3`
 
-Caroline: Bonsoir. En titre de votre flash info ce soir : un incident aérien grave évité de justesse à l'aéroport Montréal-Trudeau. Notre reporter Philippe est en direct. Philippe, que savons-nous à cette heure ?
+Claire: Édition spéciale ce soir. Un incident aérien majeur a été évité de justesse cet après-midi à l'aéroport de Lyon-Saint-Exupéry. Deux avions ont failli entrer en collision sur la piste principale. Notre reporter Thomas Lefèvre est en direct depuis l'aéroport. Thomas, que savons-nous à cette heure ?
 
-Philippe: Bonsoir, Caroline. Les faits se sont produits hier à quatorze heures trente. Un avion de ligne transportant cent quatre-vingts passagers a failli entrer en collision avec un appareil de maintenance sur la piste. Les enquêteurs affirment que si le contrôleur aérien n'avait pas réagi en une fraction de seconde, la catastrophe aurait été inévitable.
+Thomas: Bonsoir Claire. Les faits se sont produits vers quinze heures trente. Un Airbus A trois-vingt de la compagnie EuroFly s'apprêtait à décoller lorsqu'un Boeing sept-trois-sept a reçu l'autorisation d'atterrir sur la même piste. Si le contrôleur aérien n'avait pas détecté l'erreur à la dernière seconde, les deux appareils seraient entrés en collision frontale.
 
-Caroline: Comment cet incident a-t-il pu se produire ?
+Claire: C'est glaçant. Comment l'accident a-t-il pu être évité ?
 
-Philippe: Selon les premières analyses, si le système de communication n'avait pas connu une défaillance technique, le véhicule de maintenance aurait reçu l'ordre de quitter la piste à temps. Si les protocoles de sécurité avaient été respectés à la lettre, cet appareil ne se serait jamais trouvé là.
+Thomas: Si le pilote de l'Airbus n'avait pas réagi immédiatement en freinant et en quittant la piste par une voie de dégagement, la catastrophe aurait été inévitable. Selon les experts présents, si la visibilité avait été réduite ce jour-là, le pilote n'aurait pas vu le Boeing approcher et la tragédie se serait produite.
 
-Caroline: Le pilote a-t-il témoigné ?
+Claire: Y a-t-il des indications sur les causes de cet incident ?
 
-Philippe: Oui. Le commandant de bord a déclaré : « Si je n'avais pas aperçu le véhicule au dernier moment, je n'aurais pas pu interrompre le décollage. Si nous avions atteint la vitesse de rotation, l'accident aurait été inévitable. » Il a ajouté que si la visibilité avait été réduite par le brouillard, il n'aurait rien vu du tout.
+Thomas: Le bureau d'enquêtes a ouvert une investigation. Si le système d'alerte automatique avait fonctionné normalement, il aurait signalé le conflit de piste bien plus tôt. Les syndicats de contrôleurs dénoncent le sous-effectif chronique. Si la tour de contrôle avait disposé de suffisamment de personnel, cette erreur d'aiguillage ne se serait jamais produite.
 
-Caroline: Quelles mesures sont envisagées ?
+Claire: Qu'en disent les passagers ?
 
-Philippe: La direction de l'aéroport reconnaît que si elle avait modernisé le système de communication plus tôt, cet incident ne se serait probablement pas produit. Le syndicat des contrôleurs aériens exige un audit immédiat. Un représentant a souligné que si les effectifs n'avaient pas été réduits l'an dernier, la surveillance aurait été plus efficace.
+Thomas: Plusieurs voyageurs m'ont confié leur effroi. Un passager m'a dit que si l'avion n'avait pas freiné aussi brutalement, il n'aurait pas compris la gravité de la situation. Les trois cent vingt passagers des deux appareils ont été pris en charge par les équipes au sol.
 
-Caroline: Des conséquences judiciaires sont-elles attendues ?
+Claire: Si cet incident avait eu une issue différente, nous parlerions ce soir de l'une des pires catastrophes aériennes en France. Merci Thomas. La direction générale de l'aviation civile a annoncé un audit de sécurité immédiat.
 
-Philippe: Le bureau d'enquête a ouvert une procédure. Si l'enquête confirme une négligence, des poursuites pourraient être engagées. Nous suivrons l'évolution de ce dossier.
+## Audio 03a - Réactions après un scandale (Qu?bec)
 
-Caroline: Merci, Philippe. Un incident qui rappelle l'importance cruciale de la sécurité aérienne.
-
-
-## Audio 03a - Réactions après un scandale (Québec)
 File: `complete/n8-03a-scandale-reactions-quebec-b2.mp3`
 
-Jean-François: Tu as suivi l'affaire du ministre Delcourt ? C'est incroyable qu'il ait détourné des fonds publics pendant trois ans sans que personne s'en soit aperçu.
+Léa: Tu as suivi l'affaire Bertrand ? Je suis stupéfaite qu'il ait détourné autant de fonds publics pendant toutes ces années. C'est absolument scandaleux.
 
-Nathalie: Oui, c'est scandaleux. Je suis furieuse qu'il ait trahi la confiance des citoyens de cette manière. C'est inadmissible qu'un élu ait pu agir en toute impunité aussi longtemps.
+Nicolas: Oui, c'est hallucinant. Je suis surpris que personne n'ait donné l'alerte plus tôt. Il y avait forcément des gens autour de lui qui savaient. C'est dommage que les lanceurs d'alerte n'aient pas été mieux protégés dans cette affaire.
 
-Jean-François: Ce qui me choque, c'est que la commission d'enquête ait mis autant de temps à réagir. Il est regrettable que les alertes des lanceurs d'alerte n'aient pas été prises au sérieux dès le début.
+Léa: Exactement. Et je doute que les mesures annoncées par le gouvernement aient véritablement changé quoi que ce soit. On promet toujours plus de transparence, mais dans les faits, rien ne bouge. Il est regrettable que cette situation ait perduré si longtemps sans aucun contrôle.
 
-Nathalie: Absolument. Je doute que les contrôles internes aient fonctionné correctement. Il est inacceptable que les mécanismes de surveillance aient échoué à ce point. Certains pensent même que d'autres élus aient été impliqués.
+Nicolas: Ce qui me choque, c'est que les médias n'aient pas enquêté avant. Je trouve inadmissible qu'on ait laissé faire pendant une décennie entière. Bien qu'une commission d'enquête ait été créée l'an dernier, ses conclusions ont été enterrées.
 
-Jean-François: C'est possible. Il est surprenant que l'opposition n'ait pas dénoncé ces irrégularités plus tôt. Bien que plusieurs journalistes aient publié des articles d'investigation, le dossier est resté enterré pendant des mois.
+Léa: C'est vrai. Je suis indignée que le rapport ait été classé confidentiel. Le public avait le droit de savoir. Et puis, je suis déçue que ses collègues de parti aient gardé le silence aussi longtemps. Bien que certains aient exprimé des réserves en privé, aucun n'a eu le courage de dénoncer publiquement.
 
-Nathalie: Ce qui m'attriste, c'est que cette affaire ait renforcé la méfiance envers la classe politique. Je crains que beaucoup de jeunes aient perdu toute confiance dans les institutions démocratiques.
+Nicolas: Tu sais, il est scandaleux que l'argent public ait été utilisé pour financer un train de vie aussi extravagant. Des villas, des voyages, des comptes offshore… et pendant ce temps, on demandait aux citoyens de se serrer la ceinture.
 
-Jean-François: Tu as raison. Il est dommage que ce scandale ait éclaté juste avant les élections régionales. Je regrette que le débat public se soit concentré sur cette affaire au lieu des vrais enjeux sociaux.
+Léa: Je suis consternée que la justice n'ait pas agi plus vite. On savait depuis deux mille vingt-deux. Il est inacceptable qu'on ait attendu qu'un journal étranger publie l'enquête pour que ça éclate enfin.
 
-Nathalie: En même temps, il est essentiel que la justice ait été saisie rapidement. Je suis soulagée que le parquet ait ouvert une enquête préliminaire sans délai. Il faut que les responsables rendent des comptes.
+Nicolas: Espérons que cette affaire serve de leçon. Je doute cependant que les pratiques aient fondamentalement changé dans les cercles du pouvoir. Mais au moins, le débat est lancé.
 
-Jean-François: Je suis d'accord. Bien que le processus judiciaire soit long, il est fondamental que la vérité ait été révélée. C'est la seule façon de restaurer un minimum de confiance.
+Léa: Oui, bien que le chemin ait été long, c'est un premier pas vers plus de responsabilité politique.
 
-Nathalie: Espérons que cette affaire ait au moins servi de leçon pour renforcer les contrôles à l'avenir.
+## Audio 03b - Critique culturelle : un film controversé (Qu?bec)
 
-
-## Audio 03b - Critique culturelle : un film controversé (Québec)
 File: `complete/n8-03b-film-controverse-quebec-b2.mp3`
 
-Marc: Bienvenue dans « Écran large ». Aujourd'hui, nous débattons du dernier film de la réalisatrice Agnès Morel, qui divise la critique. Émilie, vous êtes critique de cinéma. Quelle est votre analyse ?
+Sophie: Bienvenue dans « Regard critique ». Ce soir, nous parlons du film « Les Ombres du silence » qui divise la critique et le public. Victor Lemoine, vous êtes critique de cinéma. Qu'avez-vous pensé de ce film ?
 
-Émilie: Merci, Marc. C'est un film qui dérange, et je suis contente qu'Agnès Morel ait osé aborder un sujet aussi délicat. Il est rare qu'un cinéaste ait traité la question du harcèlement institutionnel avec autant de franchise.
+Victor: Merci Sophie. Alors, je suis impressionné que le réalisateur ait osé aborder un sujet aussi délicat avec autant de franchise. C'est rare qu'un cinéaste français ait pris de tels risques narratifs ces dernières années. Le film traite de la complicité passive face à l'injustice, et c'est un thème universel.
 
-Marc: Pourtant, certains critiques regrettent que la réalisatrice ait choisi un traitement aussi brutal. Qu'en pensez-vous ?
+Sophie: Pourtant, beaucoup de spectateurs sont choqués par certaines scènes. Pensez-vous que le réalisateur soit allé trop loin ?
 
-Émilie: Je comprends cette réaction, mais je doute que le film ait pu transmettre son message autrement. Il est nécessaire que le spectateur ait ressenti ce malaise pour comprendre la réalité des victimes. C'est justement parce que le film dérange qu'il est puissant.
+Victor: Je comprends les réactions, mais je ne crois pas que le réalisateur ait cherché à provoquer gratuitement. Bien que certaines séquences aient heurté la sensibilité du public, elles servent le propos du film. C'est dommage que tant de critiques n'aient retenu que les moments les plus durs sans considérer l'ensemble de l'œuvre.
 
-Marc: Un chroniqueur du Figaro a écrit qu'il est « regrettable que la subtilité ait été sacrifiée au profit du choc émotionnel ». Vous partagez cet avis ?
+Sophie: Le film a aussi été critiqué pour son manque de diversité dans le casting. Qu'en pensez-vous ?
 
-Émilie: Pas du tout. Je suis surprise que ce critique n'ait pas perçu la complexité narrative du film. Bien que certaines scènes aient pu paraître excessives, chaque séquence sert la construction psychologique des personnages.
+Victor: Il est regrettable que la production n'ait pas fait l'effort d'un casting plus représentatif. Je suis surpris que cette question n'ait pas été soulevée dès le début du projet. Cela dit, je doute que cela ait été intentionnel, c'est plutôt le reflet d'un système qui peine à évoluer.
 
-Marc: Le public semble divisé également. Il est intéressant que le film ait généré autant de débats sur les réseaux sociaux.
+Sophie: La performance de l'actrice principale, Mathilde Varenne, a quand même été saluée unanimement.
 
-Émilie: C'est le signe d'une œuvre importante. Je suis ravie que le film ait provoqué une discussion nationale sur le harcèlement. Il est essentiel que le cinéma ait ce rôle de catalyseur social.
+Victor: Absolument. C'est formidable qu'elle ait livré une interprétation aussi nuancée. Bien que son rôle ait été extrêmement exigeant sur le plan émotionnel, elle a su apporter une profondeur remarquable au personnage. Je serais étonné qu'elle n'ait pas une nomination aux César cette année.
 
-Marc: Pensez-vous que le film mérite les récompenses pour lesquelles il est nommé ?
+Sophie: Pour conclure, recommanderiez-vous ce film à nos auditeurs ?
 
-Émilie: Absolument. Il serait injuste que le jury n'ait pas reconnu le courage artistique de ce projet. Je souhaite que cette œuvre ait l'impact durable qu'elle mérite. Il est temps que le cinéma engagé ait retrouvé sa place dans les festivals internationaux.
+Victor: Oui, sans hésiter. Il est essentiel que le cinéma ait cette capacité à nous bousculer. C'est un film courageux, imparfait, mais nécessaire.
 
-Marc: Merci, Émilie, pour cette critique passionnée et éclairante.
+Sophie: Merci Victor pour cette analyse. Nous invitons nos auditeurs à se forger leur propre opinion en salle.
 
+## Audio 03c - Rapport sur une crise sanitaire (Qu?bec)
 
-## Audio 03c - Rapport sur une crise sanitaire (Québec)
 File: `complete/n8-03c-crise-sanitaire-quebec-b2.mp3`
 
-Philippe: Bonsoir. Ce soir dans votre flash info, un rapport accablant sur la crise sanitaire liée à la contamination de produits laitiers dans la région de Lanaudière. Notre reporter Nathalie est sur place. Nathalie, que contient ce rapport ?
+Jade: Bonsoir. Nous ouvrons ce journal avec une alerte sanitaire majeure. L'Agence régionale de santé a confirmé que des lots de fromage contaminés par la bactérie Listeria ont été distribués dans plusieurs supermarchés du sud-est de la France. Notre reporter Thomas Girard est en direct de Valence. Thomas ?
 
-Nathalie: Bonsoir, Philippe. Le rapport de l'Agence de sécurité alimentaire vient d'être rendu public, et les conclusions sont sévères. Les inspecteurs déplorent que l'usine de transformation ait négligé les normes d'hygiène pendant plusieurs mois. Il est inacceptable que des produits contaminés aient été distribués dans plus de deux cents points de vente.
+Thomas: Bonsoir Jade. La situation est préoccupante. Quarante-sept cas d'intoxication alimentaire ont été recensés, dont huit hospitalisations. Il est regrettable que le rappel des produits n'ait pas été lancé plus tôt. Les premiers signalements remontaient à dix jours, et les autorités ont tardé à réagir.
 
-Philippe: Combien de personnes ont été touchées ?
+Jade: Comment expliquer un tel retard dans la gestion de cette crise ?
 
-Nathalie: Selon les autorités sanitaires, trois cent cinquante cas d'intoxication ont été recensés, dont quarante hospitalisations. Les médecins sont consternés que les symptômes n'aient pas été identifiés plus tôt comme liés à cette source de contamination. Il est regrettable que le système d'alerte sanitaire ait mis trois semaines à fonctionner.
+Thomas: Les associations de consommateurs sont très critiques. Elles estiment qu'il est inadmissible que les contrôles sanitaires n'aient pas détecté la contamination lors des inspections de routine. Je suis surpris que le fabricant n'ait pas lui-même identifié le problème dans ses propres analyses. Bien que des protocoles de sécurité aient été mis en place, leur application laisse à désirer.
 
-Philippe: Le rapport pointe-t-il des responsables ?
+Jade: Le fabricant a-t-il réagi officiellement ?
 
-Nathalie: Oui. Les enquêteurs jugent inadmissible que la direction de l'usine ait ignoré les avertissements de ses propres employés. Plusieurs ouvriers avaient signalé des anomalies. Il est scandaleux que ces signalements n'aient pas été transmis aux autorités compétentes.
+Thomas: Oui. Dans un communiqué, la fromagerie Delmont reconnaît la contamination mais conteste sa responsabilité directe. C'est dommage que la direction n'ait pas présenté d'excuses aux victimes. Les familles touchées sont furieuses. Un père de famille m'a confié qu'il trouvait scandaleux que l'entreprise ait continué la distribution alors que des doutes existaient déjà.
 
-Philippe: Quelle est la réaction des consommateurs ?
+Jade: Quelles mesures ont été prises ?
 
-Nathalie: L'indignation est palpable. Les associations de consommateurs sont furieuses que les contrôles aient été aussi insuffisants. Une porte-parole a déclaré : « Il est inadmissible que la santé publique ait été mise en danger par pure négligence. Nous exigeons que les responsables soient poursuivis. »
+Thomas: Le préfet a ordonné le retrait immédiat de tous les produits concernés. Il est essentiel que chaque consommateur ait vérifié son réfrigérateur. Les autorités recommandent de ne consommer aucun produit de la marque portant les numéros de lot affichés sur notre site. Je doute que cette crise n'ait pas de conséquences durables sur la confiance des consommateurs envers la filière.
 
-Philippe: Des mesures ont-elles été annoncées ?
+Jade: Merci Thomas. Nous actualiserons ce dossier tout au long de la soirée.
 
-Nathalie: Le ministre de la Santé a exprimé son souhait que cette crise ait servi de signal d'alarme. Il a annoncé un renforcement des inspections et doute que l'industrie puisse continuer à s'autoréguler. Une nouvelle législation est attendue d'ici la fin de l'année.
+## Audio 04a - Ce qu'a vraiment dit le ministre (Qu?bec)
 
-Philippe: Merci, Nathalie. Un dossier que nous continuerons à suivre attentivement.
-
-
-## Audio 04a - Ce qu'a vraiment dit le ministre (Québec)
 File: `complete/n8-04a-dit-ministre-quebec-b2.mp3`
 
-Émilie: Tu as vu la conférence de presse du ministre de l'Éducation hier ? Les médias rapportent des versions complètement différentes.
+Claire: Tu as vu la conférence de presse du ministre de l'Éducation hier soir ? Les médias rapportent des versions complètement différentes.
 
-Jean-François: Oui, c'est le chaos. Le Monde a écrit que le ministre avait annoncé une réforme majeure du baccalauréat. Mais lui, il a dit qu'il envisageait simplement des ajustements.
+Martin: Oui, c'est hallucinant. Le Figaro a écrit qu'il avait annoncé une réforme du baccalauréat, alors que Libération a rapporté qu'il avait simplement évoqué des pistes de réflexion. Il a dit qu'il souhaitait moderniser les épreuves, mais il n'a jamais parlé de suppression.
 
-Émilie: Exactement. Il a affirmé qu'il n'avait jamais parlé de suppression des épreuves écrites. Il a précisé qu'il avait voulu dire que le contrôle continu prendrait plus d'importance, pas qu'il remplacerait les examens.
+Claire: Exactement. Moi, j'ai écouté l'intégralité de son discours. Il a déclaré que le système actuel ne répondait plus aux attentes des élèves. Il a précisé qu'il avait déjà consulté les syndicats et que les discussions avaient été productives.
 
-Jean-François: Le syndicat des enseignants a réagi immédiatement. Leur porte-parole a déclaré que cette réforme menaçait l'égalité républicaine. Il a ajouté que le ministre leur avait promis, il y a six mois, qu'il ne toucherait pas au système actuel.
+Martin: Le problème, c'est que son porte-parole a ensuite affirmé que le ministre n'avait fait aucune promesse. Il a dit que les propos avaient été sortis de leur contexte et que la presse avait déformé le message original.
 
-Émilie: Et le ministre a répondu qu'il n'avait fait aucune promesse de ce genre. Il a expliqué qu'il avait simplement dit qu'il prendrait le temps de la concertation.
+Claire: On m'a raconté qu'un journaliste lui avait demandé si la réforme serait appliquée dès la rentrée. Le ministre a répondu qu'il faudrait d'abord finaliser les consultations et qu'aucun calendrier n'avait été fixé. Pourtant, certains médias ont titré qu'il avait confirmé une mise en œuvre immédiate.
 
-Jean-François: On m'a demandé si je croyais à cette version. Franchement, j'ai du mal. Une source au ministère m'a confié que les discussions internes étaient beaucoup plus avancées que ce qu'on voulait bien admettre.
+Martin: C'est typique. Il a également mentionné qu'il avait reçu des propositions de la part des enseignants. Il a dit qu'ils lui avaient exprimé leurs inquiétudes et qu'ils avaient demandé davantage de moyens pour accompagner le changement.
 
-Émilie: Un collègue de la rédaction m'a raconté que le cabinet du ministre avait tenté de faire retirer certaines citations des dépêches de presse. Apparemment, ils ont demandé aux journalistes s'ils accepteraient de reformuler leurs articles.
+Claire: Et sur la question du numérique ? Il a promis qu'il investirait deux milliards d'euros dans l'équipement des lycées. Elle a ajouté, la secrétaire d'État, qu'elle superviserait personnellement la mise en place du programme. On lui a demandé si les tablettes remplaceraient les manuels, et elle a répondu que les deux coexisteraient.
 
-Jean-François: C'est grave. Le directeur de l'AFP a rappelé que ses journalistes avaient rapporté fidèlement les propos tenus. Il a souligné qu'il ne modifierait pas une seule ligne et que la liberté de la presse n'était pas négociable.
+Martin: Au final, il a conclu qu'il ne voulait pas brusquer les choses et qu'il avait toujours privilégié le dialogue. Reste à savoir ce qu'il a vraiment voulu dire entre les lignes.
 
-Émilie: Le problème, c'est que le public ne sait plus qui croire. On m'a demandé si les médias déformaient la réalité. J'ai répondu que chaque média avait interprété les propos selon son angle éditorial, mais que les faits restaient les faits.
+Claire: Comme d'habitude, on nous a dit ce qu'on voulait bien nous dire. Il faudra attendre les actes.
 
-Jean-François: Il a dit qu'il clarifierait sa position la semaine prochaine. On verra bien.
+## Audio 04b - Rumeurs et vérités au bureau (Qu?bec)
 
-
-## Audio 04b - Rumeurs et vérités au bureau (Québec)
 File: `complete/n8-04b-rumeurs-bureau-quebec-b2.mp3`
 
-Nathalie: Bienvenue dans « Vie pro », la chronique qui décrypte le monde du travail. Aujourd'hui, on parle des rumeurs en entreprise avec Marc, consultant en communication interne. Marc, pourquoi les rumeurs circulent-elles aussi vite au bureau ?
+Léa: Bienvenue dans « Vie professionnelle », le podcast qui décrypte les dynamiques de bureau. Aujourd'hui, nous parlons des rumeurs en entreprise avec Nicolas Berger, consultant en communication interne. Nicolas, pourquoi les rumeurs circulent-elles aussi vite au travail ?
 
-Marc: Merci, Nathalie. C'est un phénomène universel. Dès qu'il y a un manque d'information officielle, les employés comblent le vide. Par exemple, la semaine dernière, une assistante m'a raconté que son directeur avait annoncé des licenciements lors d'une réunion confidentielle. Or, il avait simplement dit qu'il faudrait optimiser les ressources.
+Nicolas: Merci Léa. Le problème fondamental, c'est le manque de communication officielle. Quand la direction ne dit rien, les employés comblent le vide. Par exemple, un collègue m'a raconté que son manager avait annoncé des licenciements lors d'une réunion informelle. En réalité, il avait dit qu'il y aurait une restructuration, ce qui n'est pas du tout la même chose.
 
-Nathalie: Donc les propos sont déformés au fil de la transmission ?
+Léa: Et les rumeurs se déforment de bouche à oreille ?
 
-Marc: Exactement. Le directeur avait expliqué qu'il souhaitait réorganiser deux services. Le lendemain, tout le monde disait qu'il avait déclaré que la moitié des postes seraient supprimés. On lui a demandé s'il comptait réduire les effectifs, et il a répondu qu'il n'avait jamais évoqué cette possibilité.
+Nicolas: Exactement. Dans cette même entreprise, une assistante a rapporté que le directeur avait confirmé la fermeture du site de Lyon. Or, il avait simplement mentionné qu'il étudiait toutes les options et qu'il n'avait pas encore pris de décision. On lui avait demandé si des postes seraient supprimés, et il avait répondu que rien n'était exclu, ce qui a été interprété comme une confirmation.
 
-Nathalie: Comment les managers peuvent-ils gérer ces situations ?
+Léa: Comment peut-on lutter contre ce phénomène ?
 
-Marc: La clé, c'est la transparence. Un DRH m'a confié que sa plus grande erreur avait été de tarder à communiquer. Il a reconnu qu'il aurait dû informer les équipes plus tôt. Il avait promis qu'il donnerait des précisions avant la fin du mois, mais les rumeurs avaient déjà fait le tour de l'entreprise.
+Nicolas: La transparence est essentielle. J'ai conseillé à plusieurs dirigeants de communiquer régulièrement, même quand il n'y a rien de nouveau. Un PDG m'a confié qu'il avait sous-estimé l'impact des silences prolongés. Il a reconnu qu'il aurait dû informer ses équipes plus tôt. Sa DRH lui avait pourtant recommandé d'organiser des réunions hebdomadaires.
 
-Nathalie: On m'a demandé si le télétravail avait amplifié le problème.
+Léa: Le discours rapporté joue un rôle central dans la propagation, n'est-ce pas ?
 
-Marc: C'est une excellente question. Plusieurs études ont montré que la distance avait renforcé l'isolement informationnel. Un chercheur a affirmé que les employés en télétravail se sentaient exclus des décisions. Il a précisé qu'ils avaient tendance à interpréter le silence comme une mauvaise nouvelle.
+Nicolas: Absolument. Un employé dit qu'il a entendu dire que le patron avait annoncé telle chose. Puis un autre rapporte qu'on lui avait affirmé que l'entreprise allait être rachetée. On m'a souvent demandé si ces chaînes de transmission étaient inévitables. Je réponds toujours que la rumeur prospère là où l'information officielle fait défaut.
 
-Nathalie: Quels conseils donneriez-vous aux salariés ?
+Léa: Un dernier conseil pour nos auditeurs ?
 
-Marc: Je leur dirais qu'il faut toujours vérifier la source d'une information. On m'a rapporté des cas où des employés avaient démissionné sur la base de rumeurs infondées. C'est pourquoi je recommande de demander directement à son supérieur s'il y a du vrai dans ce qui se dit.
+Nicolas: Vérifiez toujours la source. Si quelqu'un vous dit que le directeur a promis qu'il ferait ceci ou cela, allez directement à la source. La communication directe reste le meilleur antidote aux rumeurs.
 
-Nathalie: Un conseil précieux. Merci, Marc, pour ces éclairages.
+## Audio 04c - Sommet international : déclarations (Qu?bec)
 
-
-## Audio 04c - Sommet international : déclarations (Québec)
 File: `complete/n8-04c-sommet-declarations-quebec-b2.mp3`
 
-Caroline: Bonsoir. En ouverture de votre flash info, le sommet sur le climat à Genève. De nombreuses déclarations ont marqué cette première journée. Notre reporter Marc est sur place. Marc, quels sont les faits marquants ?
+Sophie: Bonsoir. Nous ouvrons cette édition avec le sommet européen de Bruxelles qui s'est achevé aujourd'hui après trois jours de négociations intenses sur la politique migratoire et la transition énergétique. Notre reporter Victor Dumont est sur place. Victor, quelles sont les déclarations marquantes ?
 
-Marc: Bonsoir, Caroline. La journée a été riche en prises de position. Le président français a ouvert le sommet en déclarant que le temps de l'inaction était révolu. Il a affirmé que les pays industrialisés avaient une responsabilité historique et qu'ils devaient assumer leurs engagements financiers.
+Victor: Bonsoir Sophie. La présidente de la Commission européenne a déclaré que les États membres avaient trouvé un compromis historique sur la répartition des demandeurs d'asile. Elle a précisé que chaque pays s'était engagé à respecter un quota proportionnel à sa population et à son PIB.
 
-Caroline: Comment les autres délégations ont-elles réagi ?
+Sophie: Comment ont réagi les différents chefs d'État ?
 
-Marc: La chancelière allemande a répondu que son pays avait déjà réduit ses émissions de trente pour cent. Elle a ajouté qu'elle souhaitait que l'Europe devienne le premier continent neutre en carbone et qu'elle ferait tout pour atteindre cet objectif avant 2050.
+Victor: Les réactions sont contrastées. Le président français a affirmé que la France avait toujours défendu la solidarité européenne et qu'elle appliquerait les décisions prises collectivement. La chancelière allemande a déclaré quant à elle que l'Allemagne avait déjà fait des efforts considérables et qu'elle attendait la même chose de ses partenaires.
 
-Caroline: Et les pays en développement ?
+Sophie: Et les pays qui s'opposaient à ce mécanisme ?
 
-Marc: Le représentant du Sénégal a pris la parole pour rappeler que son continent avait subi les conséquences du changement climatique sans en être responsable. Il a demandé si les pays riches tiendraient enfin leurs promesses. Il a souligné qu'on leur avait promis cent milliards de dollars par an, mais que cet engagement n'avait jamais été respecté.
+Victor: Le premier ministre hongrois a répondu qu'il n'avait jamais accepté le principe de quotas obligatoires. On lui a demandé s'il respecterait la décision, et il a répliqué que la souveraineté nationale restait sa priorité. Il a ajouté qu'il consulterait son parlement avant toute mise en œuvre.
 
-Caroline: Des tensions, donc ?
+Sophie: Qu'en est-il du volet énergétique ?
 
-Marc: Oui, notamment avec la délégation chinoise. Le ministre de l'Environnement a déclaré que son pays avait investi massivement dans les énergies renouvelables. Cependant, plusieurs ONG ont rétorqué que la Chine avait continué à construire des centrales à charbon. On leur a demandé si elles exagéraient, et elles ont répondu que les données étaient vérifiables.
+Victor: La présidence a annoncé que les vingt-sept avaient convenu de réduire les émissions de carbone de cinquante-cinq pour cent d'ici deux mille trente-cinq. Le commissaire à l'énergie a expliqué qu'il avait présenté un plan de financement et qu'il avait obtenu l'accord de la majorité des délégations. Il a promis qu'il publierait les détails techniques dans les semaines à venir.
 
-Caroline: Le secrétaire général de l'ONU s'est-il exprimé ?
+Sophie: Des annonces ambitieuses. Mais plusieurs observateurs nous ont confié qu'ils doutaient de la capacité des États à tenir ces engagements. Merci Victor pour ce compte rendu. Nous analyserons ces déclarations en détail dans notre émission spéciale à vingt-deux heures.
 
-Marc: Oui. Il a conclu la journée en déclarant que l'humanité se trouvait à un carrefour décisif. Il a averti que si les gouvernements ne prenaient pas de mesures immédiates, les générations futures paieraient un prix terrible.
+## Audio 05a - Démêler le vrai du faux (Qu?bec)
 
-Caroline: Merci, Marc. Le sommet se poursuit demain avec les négociations sur les accords contraignants.
-
-
-## Audio 05a - Démêler le vrai du faux (Québec)
 File: `complete/n8-05a-vrai-faux-quebec-b2.mp3`
 
-Nathalie: Tu as vu cet article qui circule sur les réseaux ? Celui qui prétend que les vaccins contiennent des métaux lourds dangereux ?
+Jade: Tu as vu cette vidéo virale sur les réseaux ? Celle qui prétend que l'eau du robinet à Paris est toxique. C'est partagé partout, mais ce qui m'inquiète, c'est que personne ne vérifie la source avant de relayer.
 
-Philippe: Oui, et c'est exactement ce type de désinformation qui me préoccupe. Ce qui est inquiétant, c'est que des millions de personnes partagent ces contenus sans vérifier la source.
+Thomas: Oui, je l'ai vue. Ce qui est frappant, c'est le montage professionnel de la vidéo. On dirait un vrai reportage. Mais ce que les gens ne réalisent pas, c'est que l'auteur n'est pas du tout un scientifique, c'est un influenceur qui vend des filtres à eau.
 
-Nathalie: Ce que je ne comprends pas, c'est pourquoi les gens croient si facilement ces théories. C'est la méfiance envers les institutions qui alimente ce phénomène, tu ne crois pas ?
+Jade: C'est exactement ça le problème. Ce dont on manque cruellement aujourd'hui, c'est d'esprit critique face aux contenus en ligne. Les gens partagent sans réfléchir. Ce qui les convainc, c'est l'émotion, pas les faits vérifiables.
 
-Philippe: Absolument. Ce qui pousse les gens à croire les infox, c'est le sentiment d'être exclus du savoir officiel. C'est l'algorithme des réseaux sociaux qui renforce cette bulle informationnelle.
+Thomas: Tu as raison. Ce que j'ai fait, c'est vérifier les données citées dans la vidéo. Il prétend que l'eau contient des niveaux dangereux de plomb. Or, ce que montrent les analyses officielles, c'est que les taux sont largement en dessous des seuils autorisés.
 
-Nathalie: C'est vrai. Ce sont les algorithmes qui décident ce que nous voyons, pas nous. Ce qui me frappe, c'est que les contenus les plus extrêmes génèrent le plus d'engagement.
+Jade: C'est la désinformation typique. Ce qui rend ces contenus si dangereux, c'est qu'ils mélangent des éléments vrais avec des conclusions fausses. Il cite de vraies études, mais ce qu'il en tire est complètement biaisé.
 
-Philippe: Exactement. C'est l'émotion qui fait cliquer, pas la raison. Ce que les plateformes privilégient, c'est le contenu provocateur, parce que c'est lui qui retient l'attention.
+Thomas: Ce dont les utilisateurs ont besoin, c'est d'outils de vérification accessibles. Des sites comme « Les Décodeurs » ou « CheckNews » font un travail remarquable, mais ce que la majorité des internautes consulte, ce sont les réseaux sociaux, pas les médias traditionnels.
 
-Nathalie: Et c'est nous, les utilisateurs, qui alimentons ce système en partageant sans réfléchir. Ce qu'il faudrait, c'est une véritable éducation aux médias dès l'école primaire.
+Jade: Et ce qui aggrave le phénomène, c'est l'algorithme. Ce que l'algorithme privilégie, c'est le contenu sensationnel, pas le contenu vérifié. Plus une vidéo fait peur, plus elle est recommandée.
 
-Philippe: Je suis d'accord. Ce qui manque cruellement, c'est un esprit critique formé dès le plus jeune âge. C'est la capacité à distinguer un fait d'une opinion qui devrait être enseignée en priorité.
+Thomas: C'est un cercle vicieux. Ce qu'il faudrait, c'est intégrer l'éducation aux médias dès le collège. Ce dont les jeunes ont besoin, c'est d'apprendre à croiser les sources, à identifier les biais et à distinguer un fait d'une opinion.
 
-Nathalie: Ce que j'ai remarqué aussi, c'est que même des personnes instruites tombent dans le piège. C'est le format visuel — les vidéos courtes, les infographies trompeuses — qui les rend crédibles.
+Jade: Absolument. C'est notre responsabilité collective. Ce que je refuse, c'est de laisser la désinformation gagner du terrain sans réagir.
 
-Philippe: Ce qui est rassurant, quand même, c'est qu'il existe des initiatives sérieuses de fact-checking. Ce sont ces organismes indépendants qui font un travail essentiel pour la démocratie.
+## Audio 05b - Les médias face aux algorithmes (Qu?bec)
 
-Nathalie: Oui, c'est vrai. Ce qu'on peut faire à notre échelle, c'est vérifier avant de partager. C'est un petit geste, mais c'est lui qui peut freiner la désinformation.
-
-
-## Audio 05b - Les médias face aux algorithmes (Québec)
 File: `complete/n8-05b-medias-algorithmes-quebec-b2.mp3`
 
-Jean-François: Bienvenue dans « Décryptage ». Aujourd'hui, nous recevons Caroline, chercheuse en sciences de l'information, pour parler de la relation entre médias traditionnels et algorithmes. Caroline, quel est le problème fondamental ?
+Martin: Bonsoir et bienvenue dans « Décryptages ». Ce soir, nous abordons un sujet brûlant : les bulles informationnelles. Notre invitée est Claire Fontaine, chercheuse en sciences de l'information. Claire, qu'est-ce qu'une bulle de filtre exactement ?
 
-Caroline: Merci, Jean-François. Ce qui a profondément changé le paysage médiatique, c'est l'arrivée des algorithmes de recommandation. C'est la logique du clic qui gouverne désormais la diffusion de l'information, et non plus le travail éditorial des journalistes.
+Claire: Merci Martin. Ce qu'on appelle une bulle de filtre, c'est un environnement numérique personnalisé dans lequel l'utilisateur ne voit que du contenu qui correspond à ses préférences. Ce qui crée ces bulles, ce sont les algorithmes de recommandation utilisés par les plateformes comme Facebook, YouTube ou TikTok.
 
-Jean-François: Concrètement, qu'est-ce que cela signifie pour les rédactions ?
+Martin: Et c'est un phénomène récent ?
 
-Caroline: Ce que les rédactions constatent, c'est que leurs articles les plus rigoureux sont souvent les moins visibles en ligne. C'est le contenu sensationnel qui attire les lecteurs, pas l'enquête de fond. Ce qui frustre les journalistes, c'est de voir un travail de plusieurs mois éclipsé par un titre racoleur.
+Claire: Le concept date de deux mille onze, mais ce qui a changé, c'est l'ampleur du phénomène. Ce dont on se rend compte aujourd'hui, c'est que ces algorithmes façonnent véritablement notre vision du monde. Ce que vous voyez sur votre fil d'actualité est radicalement différent de ce que voit votre voisin.
 
-Jean-François: C'est donc la qualité journalistique qui est menacée ?
+Martin: Quelles sont les conséquences concrètes sur le débat démocratique ?
 
-Caroline: Exactement. Ce qui est en jeu, c'est la survie même du journalisme d'investigation. Ce sont les revenus publicitaires qui dictent les choix éditoriaux de nombreux médias en ligne. C'est cette dépendance financière qui pousse certaines rédactions à privilégier la quantité.
+Claire: C'est la polarisation qui inquiète le plus les chercheurs. Ce qui se passe, c'est que les citoyens vivent dans des réalités parallèles. Ce que croit un camp est rejeté par l'autre, et vice versa. Ce dont souffre la démocratie, c'est de l'absence d'un socle commun de faits partagés.
 
-Jean-François: Certains accusent les journalistes eux-mêmes. Qu'en pensez-vous ?
+Martin: Les médias traditionnels sont-ils aussi touchés ?
 
-Caroline: Ce qu'il faut comprendre, c'est que les journalistes sont pris dans un système qu'ils n'ont pas créé. Ce qui les empêche de résister, c'est la pression économique constante. C'est la précarisation du métier qui affaiblit leur capacité à produire du contenu exigeant.
+Claire: Absolument. Ce qui est paradoxal, c'est que les médias sérieux ont dû s'adapter aux règles des plateformes pour survivre. Ce que cela implique, c'est qu'ils privilégient parfois les titres accrocheurs au détriment de la nuance. C'est un dilemme terrible.
 
-Jean-François: Quelles solutions envisagez-vous ?
+Martin: Existe-t-il des solutions ?
 
-Caroline: Ce que je recommande, c'est un financement public renforcé pour les médias indépendants. C'est l'indépendance financière qui garantit l'indépendance éditoriale. Ce qui fonctionne dans les pays nordiques, c'est un modèle mixte alliant abonnements, subventions et dons.
+Claire: Ce dont nous avons besoin, c'est d'une régulation européenne ambitieuse. Le Digital Services Act est un premier pas, mais ce qu'il faudrait, c'est obliger les plateformes à rendre leurs algorithmes transparents. C'est la transparence qui permettra aux citoyens de reprendre le contrôle.
 
-Jean-François: C'est donc une question de modèle économique autant que de déontologie ?
+Martin: Et à titre individuel, que peut-on faire ?
 
-Caroline: Précisément. Ce qu'il faut retenir, c'est que la démocratie a besoin d'une presse libre et bien financée. C'est l'affaire de tous les citoyens, pas seulement des journalistes.
+Claire: Ce que je recommande, c'est de diversifier ses sources, de suivre des médias avec lesquels on n'est pas nécessairement d'accord. C'est inconfortable, mais c'est essentiel pour sortir de sa bulle.
 
-Jean-François: Un message fort. Merci, Caroline, pour cette analyse indispensable.
+Martin: Un message salutaire. Merci Claire pour cet éclairage indispensable.
 
+## Audio 05c - Alerte aux infox : rapport annuel (Qu?bec)
 
-## Audio 05c - Alerte aux infox : rapport annuel (Québec)
 File: `complete/n8-05c-infox-rapport-quebec-b2.mp3`
 
-Émilie: Bonsoir. À la une de votre flash info ce soir : la publication du rapport annuel de l'Observatoire de la désinformation. Les chiffres sont alarmants. Notre reporter Philippe est en studio. Philippe, que révèle ce rapport ?
+Nicolas: Bonsoir. L'Observatoire européen de la désinformation a publié aujourd'hui son rapport annuel, et les chiffres sont alarmants. Notre reporter Léa Renault est en direct de Strasbourg où le rapport a été présenté. Léa ?
 
-Philippe: Bonsoir, Émilie. Ce que le rapport met en évidence, c'est une augmentation de quarante-cinq pour cent des contenus de désinformation en un an. C'est le domaine de la santé qui reste le plus touché, suivi par la politique et l'environnement.
+Léa: Bonsoir Nicolas. Les conclusions sont sans appel. Ce que révèle ce rapport, c'est une augmentation de trente-huit pour cent des campagnes de désinformation en Europe par rapport à l'année précédente. Ce qui préoccupe particulièrement les experts, c'est l'utilisation croissante de l'intelligence artificielle pour générer de faux contenus.
 
-Émilie: Quels sont les mécanismes identifiés ?
+Nicolas: Quels sont les domaines les plus touchés ?
 
-Philippe: Ce qui ressort de l'analyse, c'est que les infox se propagent six fois plus vite que les informations vérifiées. C'est la viralité émotionnelle qui explique cette vitesse. Ce sont les contenus qui suscitent la peur ou la colère qui obtiennent le plus de partages.
+Léa: C'est la santé qui reste le domaine le plus ciblé, suivie de la politique et du climat. Ce dont s'inquiètent les autorités, c'est de la sophistication croissante des deepfakes. Ce que les chercheurs ont démontré, c'est que soixante-trois pour cent des internautes ne parviennent plus à distinguer une vidéo authentique d'une vidéo générée par intelligence artificielle.
 
-Émilie: Le rapport pointe-t-il des responsables ?
+Nicolas: Comment les institutions européennes comptent-elles réagir ?
 
-Philippe: Ce que les chercheurs dénoncent, c'est l'inaction des grandes plateformes numériques. C'est leur modèle économique qui favorise la désinformation, puisque c'est l'engagement maximal qui génère des revenus publicitaires. Ce qui est nouveau cette année, c'est l'utilisation massive de l'intelligence artificielle pour créer des faux contenus.
+Léa: Le commissaire européen au numérique a présenté un plan d'action en six points. Ce qu'il propose, c'est un renforcement des obligations de transparence des plateformes. Ce qui est nouveau, c'est l'introduction d'amendes pouvant atteindre six pour cent du chiffre d'affaires mondial pour les entreprises qui ne modèrent pas les contenus manipulés.
 
-Émilie: Les deepfakes, notamment ?
+Nicolas: Les plateformes ont-elles réagi ?
 
-Philippe: Exactement. Ce qui préoccupe particulièrement les experts, c'est la sophistication croissante des vidéos truquées. C'est cette technologie qui rend la vérification de plus en plus complexe. Ce que le rapport recommande, c'est un investissement massif dans les outils de détection automatisée.
+Léa: Un porte-parole de Meta a déclaré que l'entreprise investissait déjà massivement dans la détection automatisée. Mais ce que critiquent les associations, c'est le manque de volonté réelle des géants du numérique. Ce dont elles se plaignent, c'est que les signalements des utilisateurs restent souvent sans suite.
 
-Émilie: Des mesures politiques sont-elles proposées ?
+Nicolas: Ce sont des enjeux majeurs pour nos démocraties. Ce qui ressort de ce rapport, c'est que la lutte contre la désinformation exige une mobilisation à tous les niveaux : institutions, médias et citoyens. Merci Léa pour ce compte rendu depuis Strasbourg.
 
-Philippe: Oui. Ce que l'Observatoire demande, c'est une législation européenne contraignante. C'est la responsabilité des plateformes qui doit être engagée juridiquement. Ce qui est proposé, c'est un système d'amendes proportionnelles au chiffre d'affaires des entreprises concernées.
+## Audio 06a - L'IA au travail : menace ou outil ? (Qu?bec)
 
-Émilie: C'est donc un enjeu démocratique majeur.
-
-Philippe: C'est exactement ce que conclut le rapport. Ce qui est en jeu, c'est la capacité des citoyens à prendre des décisions éclairées dans une démocratie saine.
-
-Émilie: Merci, Philippe, pour ce résumé essentiel.
-
-
-## Audio 06a - L'IA au travail : menace ou outil ? (Québec)
 File: `complete/n8-06a-ia-travail-quebec-b2.mp3`
 
-Marc: T'as entendu parler de la nouvelle politique de notre entreprise ? Ils veulent intégrer l'intelligence artificielle dans tous les départements d'ici six mois.
+Sophie: Victor, je voulais te parler de la nouvelle directive de la direction. Ils veulent intégrer un assistant IA dans notre service, étant donné que la charge de travail a considérablement augmenté ces derniers mois. Qu'est-ce que tu en penses ?
 
-Nathalie: Oui, et franchement, ça m'inquiète. Puisque les machines peuvent déjà rédiger des rapports et analyser des données, je me demande ce qu'il restera pour nous.
+Victor: Honnêtement, ça m'inquiète. Je comprends la logique, puisque les délais sont de plus en plus serrés, mais j'ai peur que l'IA finisse par remplacer certains postes. La direction a accéléré ce projet pour que les équipes soient plus productives, mais à quel prix ?
 
-Marc: Je comprends ta préoccupation. Étant donné que l'IA progresse à une vitesse fulgurante, certains métiers vont inévitablement évoluer. Mais je ne pense pas que ce soit une menace absolue.
+Sophie: Je vois les choses différemment. L'outil a été conçu afin que les employés se concentrent sur les tâches à forte valeur ajoutée. Les rapports automatisés nous libéreraient du temps, de sorte que nous pourrions enfin nous consacrer à l'analyse stratégique.
 
-Nathalie: Peut-être, mais la direction a accéléré le processus pour que les coûts soient réduits de trente pour cent. Puisque leur objectif principal est la rentabilité, les employés passent au second plan.
+Victor: Peut-être, mais étant donné que les précédentes vagues d'automatisation ont supprimé des emplois dans l'industrie, on est en droit de s'inquiéter. La robotisation des usines a été introduite pour que la production soit plus efficace, et résultat : des milliers de licenciements.
 
-Marc: C'est vrai que la transition est brutale. Étant donné que beaucoup de collègues n'ont aucune formation en outils numériques avancés, il faudrait un accompagnement sérieux afin que personne ne soit laissé de côté.
+Sophie: Tu compares des situations très différentes. Ici, l'IA est déployée afin que les collaborateurs soient accompagnés, pas remplacés. La direction a investi dans la formation pour que chaque employé puisse maîtriser ces nouveaux outils.
 
-Nathalie: Exactement. L'entreprise devrait investir dans la formation pour que les employés puissent s'adapter progressivement. Au lieu de ça, ils ont installé le logiciel du jour au lendemain, de sorte que la moitié de l'équipe ne sait même pas comment l'utiliser.
+Victor: La formation, parlons-en. Puisque la moitié de l'équipe a plus de cinquante ans, l'adaptation ne sera pas simple. La fracture numérique existe, et l'entreprise devrait en tenir compte de telle sorte que personne ne soit laissé de côté.
 
-Marc: Le problème fondamental, c'est le manque de dialogue. Puisque la direction n'a consulté personne, les gens se sentent menacés. Il faudrait organiser des ateliers afin que chacun comprenne comment l'IA peut compléter son travail plutôt que le remplacer.
+Sophie: C'est un point valable. Mais étant donné que le marché évolue à une vitesse folle, ne pas adopter l'IA nous mettrait en danger. Nos concurrents l'utilisent déjà, à tel point que leurs délais de livraison sont deux fois plus courts que les nôtres.
 
-Nathalie: Tu as raison. Étant donné que l'IA excelle dans les tâches répétitives, elle pourrait nous libérer du temps pour que nous nous concentrions sur la créativité et la réflexion stratégique.
+Victor: D'accord, je l'admets. Mais il faut des garde-fous. On devrait exiger une charte éthique pour que les données des employés soient protégées et pour que l'humain reste au centre des décisions.
 
-Marc: Voilà. L'enjeu, c'est d'utiliser cette technologie de sorte qu'elle serve les humains, pas l'inverse. Puisque le changement est inévitable, autant l'accompagner intelligemment.
+Sophie: Tout à fait d'accord. Puisque nous sommes représentants du personnel, proposons cette charte au prochain comité. L'IA peut être un allié formidable, à condition de bien encadrer son usage.
 
-Nathalie: D'accord. Mais il faut que la direction s'engage concrètement pour que cette transition soit équitable. Étant donné que notre syndicat a prévu une réunion la semaine prochaine, j'espère que les choses bougeront enfin.
+## Audio 06b - Éthique et reconnaissance faciale (Qu?bec)
 
-
-## Audio 06b - Éthique et reconnaissance faciale (Québec)
 File: `complete/n8-06b-reconnaissance-faciale-quebec-b2.mp3`
 
-Caroline: Bienvenue dans « Techno-éthique ». Aujourd'hui, nous abordons un sujet brûlant avec Philippe, juriste spécialisé en droit numérique : la reconnaissance faciale. Philippe, pourquoi ce débat est-il si vif ?
+Thomas: Bonsoir à tous. Ce soir dans « Enjeux numériques », nous abordons la reconnaissance faciale avec Jade Morel, juriste spécialisée en droit du numérique. Jade, pourquoi ce sujet est-il si controversé ?
 
-Philippe: Merci, Caroline. Puisque cette technologie est désormais capable d'identifier un individu en quelques millisecondes, elle soulève des questions fondamentales sur nos libertés. Étant donné que les gouvernements et les entreprises l'adoptent massivement, il est urgent d'en débattre.
+Jade: Merci Thomas. La reconnaissance faciale est controversée puisque cette technologie touche directement aux libertés fondamentales. Les gouvernements la déploient pour que la sécurité publique soit renforcée, mais étant donné que les risques d'abus sont considérables, le débat est légitime.
 
-Caroline: Quels sont les arguments des partisans de cette technologie ?
+Thomas: Quels sont les arguments en faveur de son utilisation ?
 
-Philippe: Les forces de l'ordre défendent la reconnaissance faciale pour que la sécurité publique soit renforcée. Étant donné que le terrorisme et la criminalité organisée restent des menaces réelles, certains estiment que cet outil est indispensable afin que les suspects soient identifiés rapidement.
+Jade: Les partisans avancent que la reconnaissance faciale a été développée afin que les forces de l'ordre identifient plus rapidement les suspects. Dans certains pays, elle est utilisée de telle sorte que les aéroports fluidifient le passage aux frontières. La Chine l'a déployée à tel point que la quasi-totalité de l'espace public est sous vidéosurveillance intelligente.
 
-Caroline: Et les opposants ?
+Thomas: Et les risques ?
 
-Philippe: Les associations de défense des droits dénoncent cette surveillance de sorte qu'un débat démocratique s'impose. Puisque les études montrent des biais raciaux importants dans ces algorithmes — les personnes noires sont identifiées de manière erronée dix fois plus souvent —, cette technologie risque d'aggraver les discriminations.
+Jade: Ils sont multiples. Étant donné que les algorithmes sont entraînés sur des bases de données biaisées, les erreurs d'identification touchent de manière disproportionnée les minorités ethniques. Plusieurs études montrent des taux d'erreur allant jusqu'à trente-cinq pour cent pour les femmes noires, de sorte que la discrimination est systémique.
 
-Caroline: Le cadre juridique est-il suffisant ?
+Thomas: L'Europe a-t-elle pris position ?
 
-Philippe: Absolument pas. Étant donné que la législation n'a pas suivi le rythme de l'innovation, il existe un vide juridique préoccupant. Le Parlement européen a proposé un règlement pour que l'utilisation de la reconnaissance faciale soit encadrée dans les espaces publics, mais les négociations traînent.
+Jade: Oui. Le Parlement européen a voté des restrictions strictes pour que les citoyens soient protégés contre la surveillance de masse. Puisque le droit à la vie privée est un pilier fondamental de l'Union, la Commission a proposé d'interdire la reconnaissance faciale en temps réel dans les espaces publics, sauf exceptions encadrées.
 
-Caroline: Des villes ont pourtant pris des mesures, non ?
+Thomas: Et la France, où en est-elle ?
 
-Philippe: Oui. San Francisco a interdit cette technologie afin que les libertés individuelles soient préservées. Puisque d'autres villes ont suivi cet exemple, un mouvement de résistance se dessine. L'enjeu est de réguler cette technologie de sorte qu'elle respecte les droits fondamentaux.
+Jade: La CNIL a émis des réserves importantes. Elle recommande un moratoire afin que le cadre juridique soit clarifié avant tout déploiement à grande échelle. Étant donné que les Jeux olympiques de Paris ont relancé le débat, le gouvernement a autorisé des expérimentations, mais de telle sorte que les données soient anonymisées et supprimées après l'événement.
 
-Caroline: Un équilibre délicat entre sécurité et liberté. Merci, Philippe, pour cette analyse rigoureuse.
+Thomas: Un sujet qui continuera de nous interpeller. Merci Jade pour cet éclairage juridique essentiel.
 
-Philippe: Merci, Caroline. Puisque ce débat nous concerne tous, j'encourage chacun à s'informer et à participer à la réflexion collective.
+## Audio 06c - Nouvelle régulation européenne sur l'IA (Qu?bec)
 
-
-## Audio 06c - Nouvelle régulation européenne sur l'IA (Québec)
 File: `complete/n8-06c-regulation-ia-quebec-b2.mp3`
 
-Jean-François: Bonsoir. En tête de votre flash info : le Parlement européen a adopté aujourd'hui un texte historique sur la régulation de l'intelligence artificielle. Notre reporter Émilie nous en détaille les grandes lignes. Émilie ?
+Claire: Édition spéciale ce soir. Le Parlement européen a adopté aujourd'hui la version finale du règlement sur l'intelligence artificielle, un texte qualifié d'historique par les observateurs. Notre reporter Martin Vasseur est en direct de Bruxelles. Martin ?
 
-Émilie: Bonsoir, Jean-François. Après trois ans de négociations, le texte a été adopté à une large majorité. Étant donné que l'IA transforme tous les secteurs de l'économie, les législateurs ont jugé indispensable d'établir un cadre juridique clair pour que les citoyens soient protégés.
+Martin: Bonsoir Claire. Après deux ans de négociations, l'AI Act européen est officiellement adopté. Ce texte a été élaboré afin que l'Europe devienne la première puissance mondiale à encadrer juridiquement l'intelligence artificielle. Étant donné que les États-Unis et la Chine n'ont pas de législation comparable, l'Union européenne fait figure de pionnière.
 
-Jean-François: Quelles sont les mesures principales ?
+Claire: Quels sont les points clés de cette régulation ?
 
-Émilie: Le règlement classe les systèmes d'IA selon leur niveau de risque. Puisque certaines applications — comme la notation sociale ou la surveillance biométrique de masse — menacent directement les libertés fondamentales, elles sont purement et simplement interdites. Les systèmes à haut risque, utilisés dans la santé ou la justice, devront être certifiés afin que leur fiabilité soit garantie.
+Martin: Le règlement classe les systèmes d'IA par niveaux de risque. Les applications à haut risque, comme la reconnaissance faciale ou le recrutement automatisé, devront respecter des normes strictes pour que la transparence et l'équité soient garanties. Les systèmes jugés inacceptables, comme le scoring social, sont purement interdits, puisque ces pratiques portent atteinte aux droits fondamentaux.
 
-Jean-François: Comment réagit l'industrie technologique ?
+Claire: Comment ont réagi les entreprises technologiques ?
 
-Émilie: Les réactions sont mitigées. Les grandes entreprises critiquent le texte, étant donné que les obligations de transparence augmentent considérablement leurs coûts de développement. Elles craignent que ces contraintes freinent l'innovation de sorte que l'Europe perde en compétitivité face aux États-Unis et à la Chine.
+Martin: Les réactions sont partagées. Les grandes entreprises européennes soutiennent le texte, étant donné qu'il crée un cadre juridique clair et harmonisé. En revanche, certaines start-up craignent que les obligations de conformité soient si lourdes de sorte que l'innovation européenne soit freinée face aux géants américains et chinois.
 
-Jean-François: Et les associations de défense des droits ?
+Claire: Et les associations de défense des droits ?
 
-Émilie: Elles saluent le texte, mais avec des réserves. Puisque de nombreuses exceptions subsistent pour les forces de l'ordre, certaines ONG estiment que la protection est insuffisante. Une juriste a déclaré que des failles persistaient pour que la surveillance étatique reste possible dans certains cas.
+Martin: Elles sont globalement satisfaites. Amnesty International a salué l'interdiction de la surveillance biométrique de masse. Toutefois, des voix s'élèvent pour que les sanctions soient réellement appliquées. Les amendes peuvent atteindre trente-cinq millions d'euros ou sept pour cent du chiffre d'affaires mondial, afin que les contrevenants soient réellement dissuadés.
 
-Jean-François: Ce texte fait-il école à l'international ?
+Claire: Ce règlement entre en vigueur progressivement, n'est-ce pas ?
 
-Émilie: Oui. Étant donné que l'Europe est la première région au monde à légiférer aussi largement sur l'IA, ce règlement pourrait servir de modèle. Le Canada et le Brésil étudient déjà des législations similaires afin que leurs citoyens bénéficient de protections comparables.
+Martin: Exactement. Les interdictions les plus strictes s'appliquent dès six mois, de sorte que les pratiques les plus dangereuses cessent rapidement. Les autres dispositions entreront en vigueur d'ici deux ans, pour que les entreprises aient le temps de s'adapter.
 
-Jean-François: Merci, Émilie. Une avancée législative majeure que nous continuerons à suivre.
+Claire: Un tournant majeur. Merci Martin pour ce décryptage depuis Bruxelles.
 
+## Audio 07a - Égalité des chances : réalité ou illusion ? (Qu?bec)
 
-## Audio 07a - Égalité des chances : réalité ou illusion ? (Québec)
 File: `complete/n8-07a-egalite-chances-quebec-b2.mp3`
 
 Philippe: Tu crois vraiment que l'égalité des chances existe en France ? Moi, j'ai de sérieux doutes.
@@ -490,8 +446,8 @@ Philippe: Malgré tout, je ne veux pas être complètement pessimiste. Bien que 
 
 Caroline: Tu as raison. Quoique la situation soit préoccupante, abandonner le combat serait pire. Malgré les obstacles, il faut continuer à exiger des politiques concrètes.
 
+## Audio 07b - Engagement citoyen et participation locale (Qu?bec)
 
-## Audio 07b - Engagement citoyen et participation locale (Québec)
 File: `complete/n8-07b-engagement-citoyen-quebec-b2.mp3`
 
 Émilie: Bienvenue dans « Agora ». Aujourd'hui, nous parlons d'engagement citoyen avec Marc, politologue et spécialiste de la démocratie participative. Marc, la participation citoyenne est-elle en crise ?
@@ -520,8 +476,8 @@ Marc: Absolument. Bien que le chemin soit semé d'embûches, l'engagement citoye
 
 Émilie: Un message d'espoir. Merci, Marc.
 
+## Audio 07c - Discrimination à l'embauche : le testing (Qu?bec)
 
-## Audio 07c - Discrimination à l'embauche : le testing (Québec)
 File: `complete/n8-07c-discrimination-embauche-quebec-b2.mp3`
 
 Nathalie: Bonsoir. Ce soir dans votre flash info, les résultats d'une vaste opération de testing sur la discrimination à l'embauche. Notre reporter Jean-François nous livre les conclusions. Jean-François ?
@@ -550,8 +506,8 @@ Jean-François: Bien que la prise de conscience progresse, les mentalités évol
 
 Nathalie: Merci, Jean-François.
 
+## Audio 08a - Parler comme un Parisien (Qu?bec)
 
-## Audio 08a - Parler comme un Parisien (Québec)
 File: `complete/n8-08a-parler-parisien-quebec-b2.mp3`
 
 Émilie: Dis-moi, Jean-François, toi qui as vécu trois ans à Paris, c'est vrai que les Parisiens ont un langage particulier ?
@@ -578,8 +534,8 @@ Jean-François: Ah, « du coup » ! C'est le marqueur parisien par excellence. �
 
 Jean-François: C'est ça. C'est pas juste du vocabulaire, c'est une compétence sociale. Le bon registre au bon moment, c'est la clé.
 
+## Audio 08b - La francophonie en mouvement (Qu?bec)
 
-## Audio 08b - La francophonie en mouvement (Québec)
 File: `complete/n8-08b-francophonie-mouvement-quebec-b2.mp3`
 
 Nathalie: Bienvenue dans « Horizons francophones ». Aujourd'hui, Philippe, vous êtes linguiste et vous étudiez l'évolution du français dans le monde. Le français est-il une langue en danger ou en pleine expansion ?
@@ -608,8 +564,8 @@ Philippe: Exactement. La vitalité d'une langue se mesure à sa capacité d'adap
 
 Nathalie: Un message optimiste. Merci, Philippe, pour ce panorama éclairant.
 
+## Audio 08c - Portrait : un rappeur et la langue (Qu?bec)
 
-## Audio 08c - Portrait : un rappeur et la langue (Québec)
 File: `complete/n8-08c-rappeur-langue-quebec-b2.mp3`
 
 Marc: Bonsoir. Dans votre flash info culturel ce soir, le portrait d'Amine Kouachi, rappeur lyonnais dont le dernier album mêle trois registres de langue. Notre reporter Caroline l'a rencontré. Caroline ?
