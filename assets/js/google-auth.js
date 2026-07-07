@@ -2384,11 +2384,22 @@
     return String(value).replace(/"/g, '\\"');
   }
 
-  function initIntermediateIdClaimRetry() {
-    if (window.__jaralinguaIntermediateIdClaimRetry || typeof window.fetch !== "function") return;
-    window.__jaralinguaIntermediateIdClaimRetry = true;
+  function initStudentIdClaimRetry() {
+    if (window.__jaralinguaStudentIdClaimRetry || typeof window.fetch !== "function") return;
+    window.__jaralinguaStudentIdClaimRetry = true;
     const originalFetch = window.fetch.bind(window);
-    const claimKey = "jaralingua_intermediate_student_id_claim";
+    const courseConfig = {
+      basic: {
+        claimKey: "jaralingua_basic_student_id_claim",
+        label: "Basic English",
+        spanishLabel: "Inglés Básico"
+      },
+      intermediate: {
+        claimKey: "jaralingua_intermediate_student_id_claim",
+        label: "Intermediate English",
+        spanishLabel: "Inglés Intermedio"
+      }
+    };
 
     function urlText(input) {
       if (typeof input === "string") return input;
@@ -2396,10 +2407,17 @@
       return "";
     }
 
-    function isIntermediateSubmit(input, init) {
+    function courseForRequest(input, init) {
       const method = String((init && init.method) || (input && input.method) || "GET").toUpperCase();
       const url = urlText(input);
-      return method === "POST" && /\/api\/intermediate\/.+\/submit(?:$|\?)/.test(url);
+      if (/\/api\/intermediate\//.test(url) && method === "POST" && /\/submit(?:$|\?)/.test(url)) {
+        return "intermediate";
+      }
+      if (/\/api\/basic\//.test(url)) {
+        if (method === "POST" && /\/(?:submit|generate)(?:$|\?)/.test(url)) return "basic";
+        if (method === "GET" && /\/api\/basic\/(?:integrated-task|integrated-task\/audio|integrated-task-andres-munoz-retake|integrated-task-andres-munoz-retake\/audio|unit6-neighborhood-gallery)(?:$|\?)/.test(url)) return "basic";
+      }
+      return "";
     }
 
     function parseJsonBody(init) {
@@ -2413,18 +2431,20 @@
     }
 
     function withClaim(init, claim) {
+      const headers = new Headers((init && init.headers) || {});
+      if (claim) headers.set("X-Jaralingua-Student-Id-Claim", claim);
       const payload = parseJsonBody(init);
-      if (!payload || !claim) return init;
-      const headers = new Headers(init.headers || {});
+      if (!payload || !claim) return Object.assign({}, init || {}, { headers });
       if (!headers.has("Content-Type")) headers.set("Content-Type", "application/json");
-      return Object.assign({}, init, {
+      return Object.assign({}, init || {}, {
         headers,
         body: JSON.stringify(Object.assign({}, payload, { studentIdClaim: claim }))
       });
     }
 
-    function savedClaim() {
-      return String(sessionStorage.getItem(claimKey) || "").replace(/\D+/g, "");
+    function savedClaim(course) {
+      const config = courseConfig[course];
+      return String(sessionStorage.getItem(config.claimKey) || "").replace(/\D+/g, "");
     }
 
     async function unauthorizedStudent(response) {
@@ -2437,33 +2457,46 @@
       }
     }
 
-    window.fetch = async function jaralinguaFetchWithIntermediateClaim(input, init) {
-      if (!isIntermediateSubmit(input, init)) {
+    function promptForClaim(course) {
+      const config = courseConfig[course];
+      const activeEmail = (currentUser && currentUser.email) ? "\nSigned in as: " + currentUser.email : "";
+      const claim = String(window.prompt(
+        "We could not find your email in the " + config.label + " gradebook." + activeEmail +
+        "\n\nPlease type your ID/document number to link this delivery to your student record." +
+        "\n\nNo encontramos tu correo en la grilla de " + config.spanishLabel + ". Escribe tu documento/ID para validar tu entrega:",
+        ""
+      ) || "").replace(/\D+/g, "");
+      if (claim) sessionStorage.setItem(config.claimKey, claim);
+      return claim;
+    }
+
+    window.fetch = async function jaralinguaFetchWithStudentClaim(input, init) {
+      const course = courseForRequest(input, init);
+      if (!course) {
         return originalFetch(input, init);
       }
       let requestInit = init || {};
       const existingPayload = parseJsonBody(requestInit);
-      const remembered = savedClaim();
-      if (existingPayload && remembered && !existingPayload.studentIdClaim && !existingPayload.studentId) {
+      const remembered = savedClaim(course);
+      if (remembered && (!existingPayload || (!existingPayload.studentIdClaim && !existingPayload.studentId))) {
         requestInit = withClaim(requestInit, remembered);
       }
       const firstResponse = await originalFetch(input, requestInit);
       if (!(await unauthorizedStudent(firstResponse))) return firstResponse;
       const alreadyClaimed = parseJsonBody(requestInit);
-      if (alreadyClaimed && (alreadyClaimed.studentIdClaim || alreadyClaimed.studentId)) {
-        sessionStorage.removeItem(claimKey);
+      const sentHeaderClaim = String(new Headers((requestInit && requestInit.headers) || {}).get("X-Jaralingua-Student-Id-Claim") || "").replace(/\D+/g, "");
+      if ((alreadyClaimed && (alreadyClaimed.studentIdClaim || alreadyClaimed.studentId)) || sentHeaderClaim) {
+        sessionStorage.removeItem(courseConfig[course].claimKey);
         return firstResponse;
       }
-      const activeEmail = (currentUser && currentUser.email) ? "\nSigned in as: " + currentUser.email : "";
-      const claim = String(window.prompt("We could not find your email in the Intermediate English gradebook." + activeEmail + "\n\nPlease type your ID/document number to link this delivery to your student record.\n\nNo encontramos tu correo en la grilla de Ingles Intermedio. Escribe tu documento/ID para validar tu entrega:", "") || "").replace(/\D+/g, "");
+      const claim = promptForClaim(course);
       if (!claim) return firstResponse;
-      sessionStorage.setItem(claimKey, claim);
       return originalFetch(input, withClaim(init || {}, claim));
     };
   }
 
   window.addEventListener("load", function () {
-    initIntermediateIdClaimRetry();
+    initStudentIdClaimRetry();
     initGoogle();
     if (currentUser) {
       trackPageVisit();

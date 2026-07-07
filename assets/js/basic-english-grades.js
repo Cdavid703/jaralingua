@@ -3,6 +3,7 @@
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const LOCAL_USER_KEY = "jaralingua_local_user";
   const API_PATH = "/api/basic/grades";
+  const STUDENT_ID_CLAIM_KEY = "jaralingua_basic_student_id_claim";
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
   const MICROSOFT_CLIENT_ID = (window.JARALINGUA_MICROSOFT_CLIENT_ID || "4e729f8a-d101-4c5d-af68-609d749bc95a").trim();
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
@@ -135,6 +136,26 @@
   function openGooglePanel() {
     const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
     if (trigger) trigger.click();
+  }
+
+  function savedStudentIdClaim() {
+    return String(sessionStorage.getItem(STUDENT_ID_CLAIM_KEY) || "").replace(/\D+/g, "");
+  }
+
+  function clearStudentIdClaim() {
+    sessionStorage.removeItem(STUDENT_ID_CLAIM_KEY);
+  }
+
+  function promptStudentIdClaim(user) {
+    const activeEmail = user && user.email ? "\nSigned in as: " + user.email : "";
+    const claim = String(window.prompt(
+      "We could not find your email in the Basic English gradebook." + activeEmail +
+      "\n\nPlease type your ID/document number to link this account to your student record." +
+      "\n\nNo encontramos tu correo en la grilla de Inglés Básico. Escribe tu documento/ID para validar tu acceso:",
+      ""
+    ) || "").replace(/\D+/g, "");
+    if (claim) sessionStorage.setItem(STUDENT_ID_CLAIM_KEY, claim);
+    return claim;
   }
 
   function storeGoogleSession(response) {
@@ -925,14 +946,36 @@
   }
 
   function fetchGrades(user) {
+    const claim = savedStudentIdClaim();
+    const headers = {
+      Authorization: "Bearer " + user.credential,
+      "X-Jaralingua-Auth-Provider": user.provider || "google"
+    };
+    if (claim) headers["X-Jaralingua-Student-Id-Claim"] = claim;
     return fetch(API_PATH, {
-      headers: {
-        Authorization: "Bearer " + user.credential,
-        "X-Jaralingua-Auth-Provider": user.provider || "google"
-      }
+      headers: headers
     }).then(function (response) {
       if (!response.ok) throw new Error("The API rejected the request: " + response.status);
       return response.json();
+    });
+  }
+
+  function fetchGradesWithClaimFallback(user) {
+    return fetchGrades(user).then(function (payload) {
+      if (payload.student || payload.role === "admin" || payload.role === "teacher" || payload.allowStudentIdClaim !== true) {
+        return payload;
+      }
+      if (savedStudentIdClaim()) {
+        clearStudentIdClaim();
+      }
+      const claim = promptStudentIdClaim(user);
+      if (!claim) return payload;
+      return fetchGrades(user).then(function (retryPayload) {
+        if (!retryPayload.student && retryPayload.role !== "admin" && retryPayload.role !== "teacher") {
+          clearStudentIdClaim();
+        }
+        return retryPayload;
+      });
     });
   }
 
@@ -967,7 +1010,7 @@
     }
 
     root.innerHTML = renderLoading();
-    fetchGrades(user)
+    fetchGradesWithClaimFallback(user)
       .then(function (payload) {
         renderPayload(root, payload, user);
       })

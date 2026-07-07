@@ -1390,7 +1390,10 @@ def grade_payload_for(profile, grades_data, query):
     clean_id = "".join(ch for ch in requested_id if ch.isdigit())
     if clean_id and grades_data.get("allowStudentIdClaim") is True:
         id_match = next(
-            (item for item in students if isinstance(item, dict) and str(item.get("id", "")) == clean_id),
+            (
+                item for item in students
+                if isinstance(item, dict) and "".join(ch for ch in str(item.get("id", "")) if ch.isdigit()) == clean_id
+            ),
             None
         )
         if id_match:
@@ -1815,7 +1818,11 @@ def ensure_intermediate_gradebook_structure(grades_data):
 
 
 def ensure_basic_gradebook_structure(grades_data):
-    return ensure_evaluation_template(grades_data, BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION)
+    changed = ensure_evaluation_template(grades_data, BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION)
+    if grades_data.get("allowStudentIdClaim") is not True:
+        grades_data["allowStudentIdClaim"] = True
+        changed = True
+    return changed
 
 
 def score_intermediate_unit2_catching_up(payload):
@@ -2837,6 +2844,7 @@ def basic_integrated_state_payload(profile, grades_data, bundle, submissions):
     state = bundle.get("state", {})
     return {
         "role": role,
+        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
         "state": state,
         "student": basic_integrated_student_identity(student),
         "submitted": basic_integrated_submission_public(submitted),
@@ -3010,7 +3018,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "https://www.jaralingua.com")
-        self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Jaralingua-Auth-Provider")
+        self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Jaralingua-Auth-Provider, X-Jaralingua-Student-Id-Claim")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS")
         self.end_headers()
 
@@ -3412,6 +3420,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/basic/integrated-task/state":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                if ensure_basic_gradebook_structure(grades_data):
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
                 bundle = read_basic_integrated_task_bundle()
                 submissions = read_basic_integrated_task_submissions()
                 json_response(self, 200, basic_integrated_state_payload(profile, grades_data, bundle, submissions))
@@ -3420,6 +3430,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/basic/integrated-task":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                if ensure_basic_gradebook_structure(grades_data):
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
                 role = grade_user_role(profile, grades_data)
                 student = matched_student_for_profile(profile, grades_data)
                 bundle = read_basic_integrated_task_bundle()
@@ -3667,7 +3679,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         payload = self.read_json_body()
         if payload is None:
             return
-        if parsed.path.startswith("/api/intermediate/") and isinstance(payload, dict):
+        if (parsed.path.startswith("/api/intermediate/") or parsed.path.startswith("/api/basic/")) and isinstance(payload, dict):
             profile = dict(profile)
             profile["_studentIdClaim"] = payload.get("studentIdClaim") or payload.get("studentId") or payload.get("idClaim") or ""
 
@@ -5610,10 +5622,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
         provider = normalize_email(self.headers.get("X-Jaralingua-Auth-Provider"))
         try:
             if provider == "microsoft":
-                return validate_microsoft_token(token)
-            if provider == "local":
-                return validate_local_token(token)
-            return validate_google_token(token)
+                profile = validate_microsoft_token(token)
+            elif provider == "local":
+                profile = validate_local_token(token)
+            else:
+                profile = validate_google_token(token)
+            student_id_claim = "".join(ch for ch in str(self.headers.get("X-Jaralingua-Student-Id-Claim", "")) if ch.isdigit())
+            if student_id_claim:
+                profile["_studentIdClaim"] = student_id_claim
+            return profile
         except ValueError as error:
             json_response(self, 401, {"error": "invalid_token", "message": str(error)})
             return None

@@ -5,7 +5,7 @@
   "teacherEmails": [
     "teacher@example.com"
   ],
-  "allowStudentIdClaim": false,
+  "allowStudentIdClaim": true,
   "students": [
     {
       "id": "001",
