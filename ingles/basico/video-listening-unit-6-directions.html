@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Video Listening Unit 6: Asking for Directions | Basic English Course 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-unit6-responsive.css?v=20260707-unit6-responsive" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .directions-video-page .topic-heading{padding:16px;border-radius:18px;background:#f8fbff;border:1px solid rgba(18,59,143,.12)}
+    .directions-video-page .topic-label{color:#9f1239!important;text-shadow:none!important}
+    .directions-video-page .topic-heading h2,.directions-video-page .youtube-growth-panel h3{color:#071f4f!important;text-shadow:none!important}
+    .directions-video-page .lesson-text{max-width:980px}
+    .video-listening-frame{position:relative;width:100%;aspect-ratio:16/9;border-radius:22px;overflow:hidden;box-shadow:0 18px 42px rgba(15,23,42,.18);background:#071f4f}
+    .video-listening-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video-pending{position:absolute;inset:0;display:grid;place-items:center;text-align:center;background:#071f4f}
+    .video-pending img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.58}
+    .video-pending::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,31,79,.18),rgba(7,31,79,.9))}
+    .video-pending-content{position:relative;z-index:1;max-width:620px;padding:24px;color:#fff}
+    .video-pending-content i{font-size:3rem;color:#fff}
+    .video-pending-content h3{color:#fff;margin:10px 0 6px}
+    .video-pending-content p{margin:0;color:rgba(255,255,255,.92)}
+    .pending-action{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;padding:0 20px;border-radius:999px;background:#334155;color:#fff;font-weight:900}
+    .directions-chip-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
+    .directions-chip{border:1px solid rgba(18,59,143,.14);background:#fff;border-radius:16px;padding:13px 14px;font-weight:900;color:#071f4f;box-shadow:0 10px 22px rgba(15,23,42,.06)}
+    .directions-chip small{display:block;margin-top:4px;color:#64748b;font-weight:700}
+    .directions-focus-panel{margin-top:22px;border-radius:22px;background:linear-gradient(135deg,#071f4f,#123b8f);color:#fff;padding:20px;box-shadow:0 16px 34px rgba(7,31,79,.2)}
+    .directions-focus-panel h3{margin:0 0 8px;color:#fff}
+    .directions-focus-panel p{margin:0 0 16px;color:rgba(255,255,255,.9);line-height:1.6}
+    .directions-focus-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    .directions-focus-list span{border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.1);border-radius:999px;padding:10px 12px;font-weight:900;text-align:center}
+    .map-check-panel{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:22px;align-items:center}
+    .map-check-visual{border-radius:24px;overflow:hidden;border:1px solid rgba(18,59,143,.14);box-shadow:0 18px 42px rgba(15,23,42,.14);background:#fff}
+    .map-check-visual img{display:block;width:100%;height:auto}
+    .map-check-steps{display:grid;gap:12px}
+    .map-check-step{border-radius:18px;background:#fff;border:1px solid rgba(18,59,143,.12);box-shadow:0 12px 24px rgba(15,23,42,.06);padding:16px;color:#334155}
+    .map-check-step strong{display:block;color:#071f4f;margin-bottom:5px}
+    .directions-script-panel{border-left:6px solid var(--red);border-radius:20px;background:#fff7e8;padding:18px;color:#7c4a03;line-height:1.65}
+    .teacher-only-transcript[hidden]{display:none!important}
+    .quiz-question-card label{transition:border-color .2s ease,background .2s ease}
+    .quiz-question-card label:hover{background:#eef4ff;border-color:rgba(18,59,143,.22)}
+    .short-response-panel{margin-top:22px;border-radius:22px;background:#f8fbff;border:1px solid rgba(18,59,143,.14);padding:20px;box-shadow:0 12px 24px rgba(15,23,42,.06)}
+    .short-response-panel h3{margin:0 0 8px;color:#071f4f}
+    .short-response-panel p{margin:0 0 14px;color:#334155;line-height:1.65}
+    .short-response-panel textarea{width:100%;min-height:110px;border-radius:16px;border:1px solid rgba(18,59,143,.18);padding:14px;font:inherit;line-height:1.55;resize:vertical;background:#fff}
+    .model-answer{display:none;margin-top:14px;border-radius:16px;background:#ecfdf5;border:1px solid rgba(22,163,74,.22);color:#14532d;padding:14px;line-height:1.6}
+    .directions-speaking-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:18px}
+    .directions-speaking-card{border-radius:20px;background:#fff;border:1px solid rgba(18,59,143,.12);box-shadow:0 12px 24px rgba(15,23,42,.06);padding:18px}
+    .directions-speaking-card h3{margin-top:0;color:#071f4f}
+    .directions-speaking-card p{margin-bottom:0;color:#334155;line-height:1.65}
+    @media (max-width:900px){
+      .directions-chip-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .directions-focus-list{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .map-check-panel{grid-template-columns:1fr}
+      .directions-speaking-grid{grid-template-columns:1fr}
+      .video-listening-frame{border-radius:18px}
+    }
+    @media (max-width:560px){
+      .directions-chip-grid{grid-template-columns:1fr}
+      .directions-focus-list{grid-template-columns:1fr}
+      .video-pending-content{padding:18px}
+      .video-pending-content i{font-size:2.4rem}
+      .pending-action{width:100%;min-height:46px}
+      .directions-video-page .hero-actions{align-items:stretch}
+      .directions-video-page .hero-actions .btn{width:100%;justify-content:center}
+    }
+  </style>
+</head>
+<body class="english-basic-page directions-video-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-basic/practice-lab/unit-6/video-listening-directions-banner.png')">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 6</p>
+        <h1>Video Listening: Asking for Directions</h1>
+        <p>Watch a short city conversation with two speakers. Practice places in town, location words, and simple directions like <strong>go straight</strong>, <strong>turn left</strong>, and <strong>next to</strong>.</p>
+        <div class="lesson-meta"><span>Video listening</span><span>Directions</span><span>Places in town</span><span>10 questions</span></div>
+        <div class="hero-actions">
+          <a href="#video-activity" class="btn btn-primary">Start activity</a>
+          <a href="unit-6-neighborhoods.html" class="btn btn-secondary">Review Unit 6</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/unit-6/video-listening-directions-banner.png" alt="Two students asking for directions in a city with a map" /></aside>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice Goal</span>
+        <p>Understand a short video conversation about asking for directions and identify specific places, turns, and locations in a city.</p>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="video-activity">
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Before You Watch</p><h2>Vocabulary for the Video</h2></div></div>
+        <p class="lesson-text">Read these words before watching. They are the places and direction phrases you need to understand the conversation.</p>
+        <div class="directions-chip-grid" aria-label="Directions vocabulary">
+          <div class="directions-chip">library<small>biblioteca</small></div>
+          <div class="directions-chip">bank<small>banco</small></div>
+          <div class="directions-chip">school<small>escuela</small></div>
+          <div class="directions-chip">cafe<small>cafeteria</small></div>
+          <div class="directions-chip">bus stop<small>parada de bus</small></div>
+          <div class="directions-chip">supermarket<small>supermercado</small></div>
+          <div class="directions-chip">go straight<small>siga derecho</small></div>
+          <div class="directions-chip">turn left<small>gire a la izquierda</small></div>
+          <div class="directions-chip">next to<small>al lado de</small></div>
+          <div class="directions-chip">across from<small>al frente de</small></div>
+          <div class="directions-chip">in front of<small>en frente de</small></div>
+          <div class="directions-chip">block<small>cuadra</small></div>
+        </div>
+        <div class="directions-focus-panel">
+          <h3>Listen for direction words</h3>
+          <p>When you watch the video, do not try to understand every word. First, listen for the phrases that tell Emma where to go.</p>
+          <div class="directions-focus-list" aria-label="Direction words to listen for">
+            <span>go straight ahead</span>
+            <span>for two blocks</span>
+            <span>turn left</span>
+            <span>at the bank</span>
+            <span>next to the school</span>
+            <span>across from the library</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Video Practice</p><h2>Conversation: Excuse me, where is the library?</h2></div></div>
+        <p class="lesson-text">Watch once to understand the general situation. Watch again to notice the order of the directions and the places near the library.</p>
+        <div class="listening-panel">
+          <div class="listening-audio-card">
+            <div><span class="listening-label">YouTube Video</span><h3>Asking for Directions</h3><p>Two speakers: Emma asks for help, and Daniel gives directions.</p></div>
+            <div class="audio-actions teacher-only-transcript" hidden><button type="button" class="audio-btn play" onclick="downloadTeacherTranscript()">Download teacher script PDF</button></div>
+          </div>
+          <div class="video-listening-frame" id="videoFrame">
+            <div class="video-pending" id="videoPending">
+              <img src="../../assets/img/english-basic/practice-lab/unit-6/video-listening-directions-banner.png" alt="" />
+              <div class="video-pending-content"><i class="bi bi-play-circle" aria-hidden="true"></i><h3>Video link pending</h3><p>The activity, script, and questions are ready. The YouTube video will appear here when its link is added.</p></div>
+            </div>
+          </div>
+          <div class="youtube-growth-panel" aria-label="YouTube channel actions">
+            <div><span class="listening-label">Support the channel</span><h3>Watch on YouTube</h3><p>Play the video here for class, or open it on YouTube later to like, comment, subscribe, and support the channel.</p></div>
+            <div class="youtube-growth-actions"><span class="pending-action"><i class="bi bi-youtube"></i> Video link pending</span><a class="btn btn-secondary" href="https://www.youtube.com/@JaraLingua?sub_confirmation=1" target="_blank" rel="noopener noreferrer"><i class="bi bi-bell"></i> Subscribe</a><a class="btn btn-secondary" href="https://www.youtube.com/@JaraLingua/videos" target="_blank" rel="noopener noreferrer"><i class="bi bi-collection-play"></i> More videos</a></div>
+          </div>
+        </div>
+        <div class="directions-script-panel teacher-only-transcript" hidden><strong>Teacher use:</strong> The script is available as a PDF for recording, accommodations, and feedback after the listening activity.</div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Map Check</p><h2>Trace Emma's Route</h2></div></div>
+        <p class="lesson-text">Use the map to connect the listening with the real movement in the city. Follow the red route and check the places mentioned in the video.</p>
+        <div class="map-check-panel">
+          <div class="map-check-visual"><img src="../../assets/img/english-basic/practice-lab/unit-6/directions-video-map-check.svg" alt="2D city map showing the route from the start point to the library through the bank" /></div>
+          <div class="map-check-steps">
+            <div class="map-check-step"><strong>1. Start</strong>Emma starts on Maple Ave.</div>
+            <div class="map-check-step"><strong>2. Go straight</strong>She goes straight ahead for two blocks.</div>
+            <div class="map-check-step"><strong>3. Turn left</strong>She turns left at the bank.</div>
+            <div class="map-check-step"><strong>4. Arrive</strong>The library is next to the school. The cafe is across from the library.</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Comprehension Check</p><h2>Answer the Questions</h2></div></div>
+        <p class="lesson-text">Choose the best answer. Listen for the place Emma wants, the street name, the turn, and the location of nearby places.</p>
+        <form id="quizForm" class="listening-quiz">
+          <div class="quiz-question-card"><h3>1. What place is Emma looking for?</h3><label><input type="radio" name="q1" value="A" /> The bank</label><label><input type="radio" name="q1" value="B" /> The library</label><label><input type="radio" name="q1" value="C" /> The supermarket</label></div>
+          <div class="quiz-question-card"><h3>2. The library is on...</h3><label><input type="radio" name="q2" value="A" /> Main Street</label><label><input type="radio" name="q2" value="B" /> School Street</label><label><input type="radio" name="q2" value="C" /> Green Street</label></div>
+          <div class="quiz-question-card"><h3>3. Emma needs to go straight ahead for...</h3><label><input type="radio" name="q3" value="A" /> one block</label><label><input type="radio" name="q3" value="B" /> two blocks</label><label><input type="radio" name="q3" value="C" /> three blocks</label></div>
+          <div class="quiz-question-card"><h3>4. Where does Emma turn left?</h3><label><input type="radio" name="q4" value="A" /> At the school</label><label><input type="radio" name="q4" value="B" /> At the bank</label><label><input type="radio" name="q4" value="C" /> At the cafe</label></div>
+          <div class="quiz-question-card"><h3>5. The library is...</h3><label><input type="radio" name="q5" value="A" /> next to the school</label><label><input type="radio" name="q5" value="B" /> behind the supermarket</label><label><input type="radio" name="q5" value="C" /> in front of the bank</label></div>
+          <div class="quiz-question-card"><h3>6. Is there a cafe near the library?</h3><label><input type="radio" name="q6" value="A" /> Yes, there is.</label><label><input type="radio" name="q6" value="B" /> No, there isn't.</label><label><input type="radio" name="q6" value="C" /> The video does not say.</label></div>
+          <div class="quiz-question-card"><h3>7. The cafe is...</h3><label><input type="radio" name="q7" value="A" /> next to the bank</label><label><input type="radio" name="q7" value="B" /> across from the library</label><label><input type="radio" name="q7" value="C" /> behind the bus stop</label></div>
+          <div class="quiz-question-card"><h3>8. Where is the bus stop?</h3><label><input type="radio" name="q8" value="A" /> In front of the supermarket</label><label><input type="radio" name="q8" value="B" /> Next to the library</label><label><input type="radio" name="q8" value="C" /> Across from the school</label></div>
+          <div class="quiz-question-card"><h3>9. True or false: The bus stop is far from the cafe.</h3><label><input type="radio" name="q9" value="A" /> True</label><label><input type="radio" name="q9" value="B" /> False</label><label><input type="radio" name="q9" value="C" /> Not mentioned</label></div>
+          <div class="quiz-question-card"><h3>10. What is the correct order?</h3><label><input type="radio" name="q10" value="A" /> Turn left, go straight, walk one block.</label><label><input type="radio" name="q10" value="B" /> Go straight, turn left, walk one block.</label><label><input type="radio" name="q10" value="C" /> Walk one block, turn right, go straight.</label></div>
+          <button type="button" class="practice-submit-btn" onclick="checkAnswers()">Check Answers</button>
+        </form>
+        <div id="result-box" class="quiz-result-box" aria-live="polite"></div>
+        <div class="short-response-panel">
+          <h3>Short answer</h3>
+          <p>In your own words, how does Emma get to the library? Write 2 or 3 short sentences.</p>
+          <textarea id="routeResponse" aria-label="Write how Emma gets to the library" placeholder="Example: She goes straight for two blocks. She turns left at the bank. The library is next to the school."></textarea>
+          <button type="button" class="practice-submit-btn" onclick="showModelRoute()">Show model answer</button>
+          <div id="modelRoute" class="model-answer"><strong>Model answer:</strong> She goes straight ahead for two blocks. She turns left at the bank. Then she walks one block. The library is next to the school.</div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">After You Watch</p><h2>Mini Speaking Practice</h2></div></div>
+        <p class="lesson-text">Use the same model with a partner. One student asks for a place; the other gives simple directions.</p>
+        <div class="directions-speaking-grid">
+          <div class="directions-speaking-card"><h3>Student A</h3><p>Ask for a place: <strong>Excuse me. Where is the library?</strong> You can change the place: bank, cafe, supermarket, school, or bus stop.</p></div>
+          <div class="directions-speaking-card"><h3>Student B</h3><p>Give directions: <strong>Go straight ahead for two blocks. Turn left at the bank. The library is next to the school.</strong></p></div>
+          <div class="directions-speaking-card"><h3>Variation 1</h3><p>Student A asks: <strong>Where is the cafe?</strong> Student B answers using <strong>across from</strong> and <strong>library</strong>.</p></div>
+          <div class="directions-speaking-card"><h3>Variation 2</h3><p>Student A asks: <strong>Where is the bus stop?</strong> Student B answers using <strong>in front of</strong> and <strong>supermarket</strong>.</p></div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    const youtubeVideoId = "";
+    const dialogueText = `Emma: Excuse me. Can you help me?
+Daniel: Sure. What do you need?
+Emma: I am looking for the library. Is it near here?
+Daniel: Yes, it is. The library is on Green Street.
+Emma: Great. How do I get there?
+Daniel: Go straight ahead for two blocks. Then turn left at the bank.
+Emma: Turn left at the bank?
+Daniel: Yes. After that, walk one block. The library is next to the school.
+Emma: Is there a cafe near the library?
+Daniel: Yes, there is. There is a small cafe across from the library.
+Emma: Perfect. And where is the bus stop?
+Daniel: The bus stop is in front of the supermarket. It is not far from the cafe.
+Emma: Thank you. So, I go straight for two blocks, turn left at the bank, and the library is next to the school.
+Daniel: Exactly. You got it.
+Emma: Thanks a lot!
+Daniel: You're welcome. Have a nice day.`;
+    const answerDetails = {
+      q1:["B","Emma is looking for the library."],
+      q2:["C","The library is on Green Street."],
+      q3:["B","She needs to go straight ahead for two blocks."],
+      q4:["B","She turns left at the bank."],
+      q5:["A","The library is next to the school."],
+      q6:["A","Yes, there is a small cafe near the library."],
+      q7:["B","The cafe is across from the library."],
+      q8:["A","The bus stop is in front of the supermarket."],
+      q9:["B","The bus stop is not far from the cafe."],
+      q10:["B","The order is: go straight, turn left, walk one block."]
+    };
+    function checkAnswers(){let score=0;let complete=true;Object.keys(answerDetails).forEach(function(key){const selected=document.forms.quizForm[key].value;if(!selected)complete=false;if(selected===answerDetails[key][0])score++});const box=document.getElementById("result-box");box.style.display="block";if(!complete){box.className="quiz-result-box incorrect";box.textContent="Please answer all 10 questions before checking.";return}if(score===10){box.className="quiz-result-box correct";box.textContent="Excellent! You got 10 out of 10 correct.";return}box.className="quiz-result-box incorrect";box.innerHTML="You got "+score+" out of 10 correct.<br><br><strong>Correct Answers:</strong><br>"+Object.keys(answerDetails).map(function(key,index){return(index+1)+": "+answerDetails[key][0]+" - "+answerDetails[key][1]}).join("<br>")}
+    function showModelRoute(){const model=document.getElementById("modelRoute");if(model)model.style.display="block"}
+    function configureYouTube(){if(!youtubeVideoId)return;const frame=document.getElementById("videoFrame");frame.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(youtubeVideoId)+'" title="Conversation: Asking for Directions" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';const action=document.querySelector(".pending-action");if(action){const link=document.createElement("a");link.className="btn btn-primary";link.href="https://www.youtube.com/watch?v="+encodeURIComponent(youtubeVideoId);link.target="_blank";link.rel="noopener noreferrer";link.innerHTML='<i class="bi bi-youtube"></i> Watch on YouTube';action.replaceWith(link)}}
+    function readTeacherUser(){try{const saved=JSON.parse(sessionStorage.getItem("jaralingua_google_user")||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp)return null;return saved}catch(error){return null}}
+    function readTeacherRoleRequests(){try{const saved=JSON.parse(localStorage.getItem("jaralingua_role_requests")||"[]");return Array.isArray(saved)?saved:[]}catch(error){return[]}}
+    function normalizeTeacherEmail(value){return String(value||"").trim().toLowerCase()}
+    function canDownloadTeacherTranscript(){const user=readTeacherUser();if(!user)return false;if(normalizeTeacherEmail(user.email)==="cdavid.jaramillo@gmail.com"||normalizeTeacherEmail(user.email)==="cdavid.jaramillo@hotmail.com")return true;const id=user.sub||user.email||"";return readTeacherRoleRequests().some(function(request){const sameUser=request.id===id||normalizeTeacherEmail(request.email)===normalizeTeacherEmail(user.email);return sameUser&&request.role==="teacher"&&request.status==="approved"})}
+    function updateTeacherTranscriptAccess(){document.querySelectorAll(".teacher-only-transcript").forEach(function(element){element.hidden=!canDownloadTeacherTranscript()})}
+    function downloadTeacherTranscript(){if(!canDownloadTeacherTranscript()){alert("This script is only available for approved teacher accounts.");updateTeacherTranscriptAccess();return}downloadTranscriptPdf("Asking for Directions",dialogueText,"unit-6-asking-for-directions-video-script.pdf")}
+    document.addEventListener("DOMContentLoaded",function(){configureYouTube();updateTeacherTranscriptAccess()});
+    window.addEventListener("storage",updateTeacherTranscriptAccess);window.addEventListener("focus",updateTeacherTranscriptAccess);setInterval(updateTeacherTranscriptAccess,1500);
+  </script>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script src="../../assets/js/transcript-pdf.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
