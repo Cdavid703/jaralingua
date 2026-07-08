@@ -2943,6 +2943,12 @@ def french8_imposteur_action(payload):
             write_french8_imposteur_store(store)
             return 200, {"ok": True, "state": french8_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
 
+        if action == "close-room":
+            french8_imposteur_require_teacher(room, payload)
+            rooms.pop(room_code, None)
+            write_french8_imposteur_store(store)
+            return 200, {"ok": True, "closed": True}
+
         if action == "leave":
             player = french8_imposteur_find_player(room, payload.get("playerToken"))
             if not player:

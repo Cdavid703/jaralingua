@@ -45,6 +45,11 @@
     } catch (_error) {}
   }
 
+  function stopPolling() {
+    if (pollTimer) window.clearInterval(pollTimer);
+    pollTimer = null;
+  }
+
   function cleanRoomCode(value) {
     return String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
   }
@@ -135,6 +140,21 @@
     panel.hidden = true;
     panel.innerHTML = '<div class="qr-copy"><div><p class="section-kicker mb-1">Accès par QR</p><h3>Scanner pour entrer</h3><p>Les étudiants scannent ce code, écrivent leur prénom et rejoignent directement cette salle.</p></div><div class="qr-code-box" id="roomQrCode" aria-label="Code QR de la salle"></div></div><a class="qr-link" id="roomQrLink" href="#" target="_blank" rel="noopener">Ouvrir le lien étudiant</a><button type="button" class="btn-soft w-100" id="copyRoomLinkBtn"><i class="bi bi-link-45deg"></i> Copier le lien étudiant</button>';
     roomCode.insertAdjacentElement("afterend", panel);
+  }
+
+  function ensureRoomLifecycleButtons() {
+    var resetButton = $("#resetBtn");
+    if (resetButton) {
+      resetButton.className = "btn-soft";
+      resetButton.innerHTML = '<i class="bi bi-arrow-counterclockwise"></i> Réinitialiser la salle';
+    }
+    if ($("#closeRoomBtn") || !resetButton) return;
+    var closeButton = document.createElement("button");
+    closeButton.type = "button";
+    closeButton.className = "btn-danger-soft";
+    closeButton.id = "closeRoomBtn";
+    closeButton.innerHTML = '<i class="bi bi-x-circle"></i> Fermer / quitter la salle';
+    resetButton.insertAdjacentElement("afterend", closeButton);
   }
 
   function studentRoomUrl(roomCode) {
@@ -450,12 +470,41 @@
   function applyStoredFields() {
     var roomInput = $("#roomCode");
     var teacherRoomInput = $("#teacherRoomCode");
-    if (roomInput && localState.roomCode) roomInput.value = localState.roomCode;
-    if (teacherRoomInput && localState.roomCode) teacherRoomInput.value = localState.roomCode;
+    if (roomInput) roomInput.value = localState.roomCode || "";
+    if (teacherRoomInput) teacherRoomInput.value = localState.roomCode || "";
+  }
+
+  function clearRoomUrl() {
+    try {
+      var url = new URL(window.location.href);
+      var changed = false;
+      if (url.searchParams.has("room")) {
+        url.searchParams.delete("room");
+        changed = true;
+      }
+      if (url.searchParams.has("r")) {
+        url.searchParams.delete("r");
+        changed = true;
+      }
+      if (changed && window.history && window.history.replaceState) {
+        window.history.replaceState(null, "", url.pathname + url.search + url.hash);
+      }
+    } catch (_error) {}
+  }
+
+  function clearCurrentRoom(message, type) {
+    stopPolling();
+    localState = {};
+    lastPayload = null;
+    saveLocalState();
+    clearRoomUrl();
+    renderEmpty();
+    applyStoredFields();
+    showMessage(message || "Salle quittée. Tu peux créer ou rejoindre une autre salle.", type || "success");
   }
 
   function startPolling() {
-    if (pollTimer) window.clearInterval(pollTimer);
+    stopPolling();
     pollTimer = window.setInterval(refreshState, POLL_MS);
   }
 
@@ -503,6 +552,7 @@
     setHtml("#resultPanel", "");
     renderRoomQr(null);
     updateTeacherButtons(null);
+    applyStoredFields();
   }
 
   function render(payload) {
@@ -626,6 +676,7 @@
     document.body.classList.toggle("is-teacher", isTeacher);
     var room = payload && payload.room ? payload.room : {};
     var status = room.status || "waiting";
+    var hasRoom = Boolean(cleanRoomCode(room.code || localState.roomCode));
     var canDistribute = isTeacher && status === "waiting" && Number(room.playerCount || 0) >= Number(room.minPlayers || 4);
     var canForce = isTeacher && status === "briefing";
     var canVote = isTeacher && (status === "discussion" || status === "briefing");
@@ -634,7 +685,8 @@
     setDisabled("#forceDiscussionBtn", !canForce);
     setDisabled("#openVoteBtn", !canVote);
     setDisabled("#revealBtn", !canReveal);
-    setDisabled("#resetBtn", !isTeacher || status === "waiting");
+    setDisabled("#resetBtn", !isTeacher || !hasRoom);
+    setDisabled("#closeRoomBtn", !hasRoom);
   }
 
   function setDisabled(selector, disabled) {
@@ -683,7 +735,11 @@
       var result = await request(action, { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
       lastPayload = result.state;
       render(lastPayload);
-      showMessage(action === "open-vote" ? "Vote ouvert pour tous les étudiants." : "Action professeur appliquée.", "success");
+      var actionMessage = {
+        "open-vote": "Vote ouvert pour tous les étudiants.",
+        reset: "Salle réinitialisée. Les joueurs restent, les rôles et les votes repartent à zéro."
+      }[action] || "Action professeur appliquée.";
+      showMessage(actionMessage, "success");
       var sound = {
         distribute: "rolesDistributed",
         "open-vote": "suspectFound",
@@ -693,6 +749,32 @@
     } catch (error) {
       showMessage(messageForError(error), "error");
     }
+  }
+
+  async function closeOrLeaveRoom() {
+    if (!localState.roomCode) {
+      clearCurrentRoom();
+      return;
+    }
+    if (localState.teacherToken) {
+      try {
+        await request("close-room", { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
+        clearCurrentRoom("Salle fermée. Tu peux créer une nouvelle salle.", "success");
+      } catch (error) {
+        if (error && error.message === "room_not_found") {
+          clearCurrentRoom("Salle introuvable. L'écran a été remis à zéro.", "success");
+          return;
+        }
+        showMessage(messageForError(error), "error");
+      }
+      return;
+    }
+    if (localState.playerToken) {
+      try {
+        await request("leave", { roomCode: localState.roomCode, playerToken: localState.playerToken });
+      } catch (_error) {}
+    }
+    clearCurrentRoom("Tu as quitté la salle. Tu peux en rejoindre une autre.", "success");
   }
 
   async function confirmRole() {
@@ -737,6 +819,7 @@
     $("#openVoteBtn") && $("#openVoteBtn").addEventListener("click", function () { teacherAction("open-vote"); });
     $("#revealBtn") && $("#revealBtn").addEventListener("click", function () { teacherAction("reveal"); });
     $("#resetBtn") && $("#resetBtn").addEventListener("click", function () { teacherAction("reset"); });
+    $("#closeRoomBtn") && $("#closeRoomBtn").addEventListener("click", closeOrLeaveRoom);
     $("#soundToggle") && $("#soundToggle").addEventListener("change", function (event) {
       soundEnabled = Boolean(event.target.checked);
       saveSoundPreference();
@@ -762,6 +845,7 @@
     applyStoredFields();
     ensureSoundToggle();
     ensureQrPanel();
+    ensureRoomLifecycleButtons();
     bindEvents();
     syncSoundToggle();
     preloadSfx();
