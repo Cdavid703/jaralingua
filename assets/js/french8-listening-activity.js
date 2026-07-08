@@ -71,8 +71,9 @@
 
   function renderQuestions(form, activity) {
     form.innerHTML = activity.questions.map(function (question, index) {
+      var skill = question[4] ? '<span class="question-skill">' + escapeHtml(question[4]) + "</span>" : "";
       return '<fieldset class="question-card" data-question="' + index + '">' +
-        "<legend>" + escapeHtml(index + 1 + ". " + question[0]) + "</legend>" +
+        "<legend>" + escapeHtml(index + 1 + ". " + question[0]) + skill + "</legend>" +
         question[1].map(function (option, optionIndex) {
           return '<label><input type="radio" name="q' + index + '" value="' + optionIndex + '"> <span>' +
             escapeHtml(option) + "</span></label>";
@@ -165,7 +166,9 @@
         if (card && selected) card.classList.add(isCorrect ? "is-correct" : "is-incorrect");
         if (card && !selected) card.classList.add("is-missing");
         if (feedback && selected) {
-          feedback.textContent = (isCorrect ? "Correct. " : "À revoir. ") + (question[3] || "Réécoutez le passage correspondant et vérifiez l'information exacte.");
+          var explanation = question[3] || "Réécoutez le passage correspondant et vérifiez l'information exacte.";
+          var reviewHint = question[5] || "Réécoutez le passage correspondant avant de corriger votre réponse.";
+          feedback.textContent = isCorrect ? "Correct. " + explanation : "À revoir. " + reviewHint + " " + explanation;
         }
       });
       if (!complete) {
