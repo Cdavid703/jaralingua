@@ -76,6 +76,7 @@
           return '<label><input type="radio" name="q' + index + '" value="' + optionIndex + '"> <span>' +
             escapeHtml(option) + "</span></label>";
         }).join("") +
+        '<div class="question-feedback" id="feedback-q' + index + '" aria-live="polite"></div>' +
         "</fieldset>";
     }).join("");
   }
@@ -90,7 +91,7 @@
       quebec: Object.assign({}, baseActivity, {
         file: quebecFile,
         questions: quebecQuestions[baseActivity.id] || baseActivity.questions,
-        transcript: quebecTranscripts[baseActivity.id] || ""
+        transcript: quebecTranscripts[baseActivity.id] || baseActivity.transcript || ""
       })
     };
   }
@@ -111,6 +112,12 @@
     function resetQuiz() {
       Array.prototype.forEach.call(form.querySelectorAll('input[type="radio"]'), function (input) {
         input.checked = false;
+      });
+      Array.prototype.forEach.call(form.querySelectorAll(".question-card"), function (card) {
+        card.classList.remove("is-correct", "is-incorrect", "is-missing");
+      });
+      Array.prototype.forEach.call(form.querySelectorAll(".question-feedback"), function (feedback) {
+        feedback.textContent = "";
       });
       resultBox.className = "result-box";
       resultBox.textContent = "";
@@ -142,9 +149,20 @@
       var score = 0;
       var complete = true;
       answers.forEach(function (answer, index) {
+        var question = currentActivity.questions[index] || [];
+        var card = form.querySelector('[data-question="' + index + '"]');
+        var feedback = form.querySelector("#feedback-q" + index);
         var selected = document.querySelector('input[name="q' + index + '"]:checked');
+        var isCorrect = selected && Number(selected.value) === answer;
+        if (card) card.classList.remove("is-correct", "is-incorrect", "is-missing");
+        if (feedback) feedback.textContent = "";
         if (!selected) complete = false;
-        if (selected && Number(selected.value) === answer) score += 1;
+        if (isCorrect) score += 1;
+        if (card && selected) card.classList.add(isCorrect ? "is-correct" : "is-incorrect");
+        if (card && !selected) card.classList.add("is-missing");
+        if (feedback && selected) {
+          feedback.textContent = (isCorrect ? "Correct. " : "À revoir. ") + (question[3] || "Réécoutez le passage correspondant et vérifiez l'information exacte.");
+        }
       });
       if (!complete) {
         resultBox.className = "result-box incorrect";

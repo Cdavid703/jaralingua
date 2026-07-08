@@ -1,6 +1,6 @@
-# Fran?ais Niveau 8 ? Compr?hensions orales B2 (Accent Qu?bec)
+# Français Niveau 8 · Compréhensions orales B2 (Accent Québec)
 
-## Audio 01a - Un choix de carrière regretté (Qu?bec)
+## Audio 01a - Un choix de carrière regretté (Québec)
 
 File: `complete/n8-01a-choix-carriere-quebec-b2.mp3`
 
@@ -22,7 +22,7 @@ Martin: Absolument. J'aurais dû comprendre plus tôt que la carrière n'est pas
 
 Sophie: Tu as raison. On aurait pu passer des années à ruminer. Autant agir maintenant, il n'est jamais vraiment trop tard pour un nouveau départ.
 
-## Audio 01b - Les regrets des Français (Qu?bec)
+## Audio 01b - Les regrets des Français (Québec)
 
 File: `complete/n8-01b-regrets-francais-quebec-b2.mp3`
 
@@ -48,7 +48,7 @@ Thomas: Oui. Ce qui ressort, c'est qu'on aurait dû encourager les Français à 
 
 Claire: Un constat puissant. Merci beaucoup, Thomas, pour cette analyse éclairante. On se retrouve la semaine prochaine pour une nouvelle chronique.
 
-## Audio 01c - Bilan d'un projet municipal raté (Qu?bec)
+## Audio 01c - Bilan d'un projet municipal raté (Québec)
 
 File: `complete/n8-01c-projet-municipal-quebec-b2.mp3`
 
@@ -70,7 +70,7 @@ Nicolas: Oui. Dans un communiqué, il reconnaît que l'on aurait dû mieux antic
 
 Léa: Un audit qui arrive bien tard, diront certains. On aurait pu l'exiger dès les premiers dépassements de budget. Merci Nicolas pour ce reportage. Nous suivrons évidemment l'évolution de ce dossier dans les prochaines semaines.
 
-## Audio 02a - Si j'avais su… (Qu?bec)
+## Audio 02a - Si j'avais su… (Québec)
 
 File: `complete/n8-02a-si-javais-su-quebec-b2.mp3`
 
@@ -92,7 +92,7 @@ Victor: Tu as raison. Finalement, si nous avions vécu dans le regret permanent,
 
 Jade: Exactement. Si j'avais compris ça plus tôt, j'aurais perdu beaucoup moins de temps à me torturer l'esprit.
 
-## Audio 02b - Les grands « et si » de l'histoire (Qu?bec)
+## Audio 02b - Les grands « et si » de l'histoire (Québec)
 
 File: `complete/n8-02b-et-si-histoire-quebec-b2.mp3`
 
@@ -114,7 +114,7 @@ Sophie: Si la France n'avait pas rejoint la zone euro, elle aurait conservé le 
 
 Thomas: On voit que chaque embranchement historique aurait généré un monde très différent. Si nos auditeurs avaient vécu dans ces réalités alternatives, ils ne reconnaîtraient probablement pas la France d'aujourd'hui. Merci Sophie pour cette exploration passionnante !
 
-## Audio 02c - Accident évité de justesse (Qu?bec)
+## Audio 02c - Accident évité de justesse (Québec)
 
 File: `complete/n8-02c-accident-evite-quebec-b2.mp3`
 
@@ -136,7 +136,7 @@ Thomas: Plusieurs voyageurs m'ont confié leur effroi. Un passager m'a dit que s
 
 Claire: Si cet incident avait eu une issue différente, nous parlerions ce soir de l'une des pires catastrophes aériennes en France. Merci Thomas. La direction générale de l'aviation civile a annoncé un audit de sécurité immédiat.
 
-## Audio 03a - Réactions après un scandale (Qu?bec)
+## Audio 03a - Réactions après un scandale (Québec)
 
 File: `complete/n8-03a-scandale-reactions-quebec-b2.mp3`
 
@@ -158,7 +158,7 @@ Nicolas: Espérons que cette affaire serve de leçon. Je doute cependant que les
 
 Léa: Oui, bien que le chemin ait été long, c'est un premier pas vers plus de responsabilité politique.
 
-## Audio 03b - Critique culturelle : un film controversé (Qu?bec)
+## Audio 03b - Critique culturelle : un film controversé (Québec)
 
 File: `complete/n8-03b-film-controverse-quebec-b2.mp3`
 
@@ -184,7 +184,7 @@ Victor: Oui, sans hésiter. Il est essentiel que le cinéma ait cette capacité 
 
 Sophie: Merci Victor pour cette analyse. Nous invitons nos auditeurs à se forger leur propre opinion en salle.
 
-## Audio 03c - Rapport sur une crise sanitaire (Qu?bec)
+## Audio 03c - Rapport sur une crise sanitaire (Québec)
 
 File: `complete/n8-03c-crise-sanitaire-quebec-b2.mp3`
 
@@ -206,7 +206,7 @@ Thomas: Le préfet a ordonné le retrait immédiat de tous les produits concern�
 
 Jade: Merci Thomas. Nous actualiserons ce dossier tout au long de la soirée.
 
-## Audio 04a - Ce qu'a vraiment dit le ministre (Qu?bec)
+## Audio 04a - Ce qu'a vraiment dit le ministre (Québec)
 
 File: `complete/n8-04a-dit-ministre-quebec-b2.mp3`
 
@@ -228,7 +228,7 @@ Martin: Au final, il a conclu qu'il ne voulait pas brusquer les choses et qu'il 
 
 Claire: Comme d'habitude, on nous a dit ce qu'on voulait bien nous dire. Il faudra attendre les actes.
 
-## Audio 04b - Rumeurs et vérités au bureau (Qu?bec)
+## Audio 04b - Rumeurs et vérités au bureau (Québec)
 
 File: `complete/n8-04b-rumeurs-bureau-quebec-b2.mp3`
 
@@ -252,7 +252,7 @@ Léa: Un dernier conseil pour nos auditeurs ?
 
 Nicolas: Vérifiez toujours la source. Si quelqu'un vous dit que le directeur a promis qu'il ferait ceci ou cela, allez directement à la source. La communication directe reste le meilleur antidote aux rumeurs.
 
-## Audio 04c - Sommet international : déclarations (Qu?bec)
+## Audio 04c - Sommet international : déclarations (Québec)
 
 File: `complete/n8-04c-sommet-declarations-quebec-b2.mp3`
 
@@ -274,7 +274,7 @@ Victor: La présidence a annoncé que les vingt-sept avaient convenu de réduire
 
 Sophie: Des annonces ambitieuses. Mais plusieurs observateurs nous ont confié qu'ils doutaient de la capacité des États à tenir ces engagements. Merci Victor pour ce compte rendu. Nous analyserons ces déclarations en détail dans notre émission spéciale à vingt-deux heures.
 
-## Audio 05a - Démêler le vrai du faux (Qu?bec)
+## Audio 05a - Démêler le vrai du faux (Québec)
 
 File: `complete/n8-05a-vrai-faux-quebec-b2.mp3`
 
@@ -296,7 +296,7 @@ Thomas: C'est un cercle vicieux. Ce qu'il faudrait, c'est intégrer l'éducation
 
 Jade: Absolument. C'est notre responsabilité collective. Ce que je refuse, c'est de laisser la désinformation gagner du terrain sans réagir.
 
-## Audio 05b - Les médias face aux algorithmes (Qu?bec)
+## Audio 05b - Les médias face aux algorithmes (Québec)
 
 File: `complete/n8-05b-medias-algorithmes-quebec-b2.mp3`
 
@@ -326,7 +326,7 @@ Claire: Ce que je recommande, c'est de diversifier ses sources, de suivre des m�
 
 Martin: Un message salutaire. Merci Claire pour cet éclairage indispensable.
 
-## Audio 05c - Alerte aux infox : rapport annuel (Qu?bec)
+## Audio 05c - Alerte aux infox : rapport annuel (Québec)
 
 File: `complete/n8-05c-infox-rapport-quebec-b2.mp3`
 
@@ -348,7 +348,7 @@ Léa: Un porte-parole de Meta a déclaré que l'entreprise investissait déjà m
 
 Nicolas: Ce sont des enjeux majeurs pour nos démocraties. Ce qui ressort de ce rapport, c'est que la lutte contre la désinformation exige une mobilisation à tous les niveaux : institutions, médias et citoyens. Merci Léa pour ce compte rendu depuis Strasbourg.
 
-## Audio 06a - L'IA au travail : menace ou outil ? (Qu?bec)
+## Audio 06a - L'IA au travail : menace ou outil ? (Québec)
 
 File: `complete/n8-06a-ia-travail-quebec-b2.mp3`
 
@@ -370,7 +370,7 @@ Victor: D'accord, je l'admets. Mais il faut des garde-fous. On devrait exiger un
 
 Sophie: Tout à fait d'accord. Puisque nous sommes représentants du personnel, proposons cette charte au prochain comité. L'IA peut être un allié formidable, à condition de bien encadrer son usage.
 
-## Audio 06b - Éthique et reconnaissance faciale (Qu?bec)
+## Audio 06b - Éthique et reconnaissance faciale (Québec)
 
 File: `complete/n8-06b-reconnaissance-faciale-quebec-b2.mp3`
 
@@ -396,7 +396,7 @@ Jade: La CNIL a émis des réserves importantes. Elle recommande un moratoire af
 
 Thomas: Un sujet qui continuera de nous interpeller. Merci Jade pour cet éclairage juridique essentiel.
 
-## Audio 06c - Nouvelle régulation européenne sur l'IA (Qu?bec)
+## Audio 06c - Nouvelle régulation européenne sur l'IA (Québec)
 
 File: `complete/n8-06c-regulation-ia-quebec-b2.mp3`
 
@@ -422,7 +422,7 @@ Martin: Exactement. Les interdictions les plus strictes s'appliquent dès six mo
 
 Claire: Un tournant majeur. Merci Martin pour ce décryptage depuis Bruxelles.
 
-## Audio 07a - Égalité des chances : réalité ou illusion ? (Qu?bec)
+## Audio 07a - Égalité des chances : réalité ou illusion ? (Québec)
 
 File: `complete/n8-07a-egalite-chances-quebec-b2.mp3`
 
@@ -446,7 +446,7 @@ Philippe: Malgré tout, je ne veux pas être complètement pessimiste. Bien que 
 
 Caroline: Tu as raison. Quoique la situation soit préoccupante, abandonner le combat serait pire. Malgré les obstacles, il faut continuer à exiger des politiques concrètes.
 
-## Audio 07b - Engagement citoyen et participation locale (Qu?bec)
+## Audio 07b - Engagement citoyen et participation locale (Québec)
 
 File: `complete/n8-07b-engagement-citoyen-quebec-b2.mp3`
 
@@ -476,7 +476,7 @@ Marc: Absolument. Bien que le chemin soit semé d'embûches, l'engagement citoye
 
 Émilie: Un message d'espoir. Merci, Marc.
 
-## Audio 07c - Discrimination à l'embauche : le testing (Qu?bec)
+## Audio 07c - Discrimination à l'embauche : le testing (Québec)
 
 File: `complete/n8-07c-discrimination-embauche-quebec-b2.mp3`
 
@@ -506,7 +506,7 @@ Jean-François: Bien que la prise de conscience progresse, les mentalités évol
 
 Nathalie: Merci, Jean-François.
 
-## Audio 08a - Parler comme un Parisien (Qu?bec)
+## Audio 08a - Parler comme un Parisien (Québec)
 
 File: `complete/n8-08a-parler-parisien-quebec-b2.mp3`
 
@@ -534,7 +534,7 @@ Jean-François: Ah, « du coup » ! C'est le marqueur parisien par excellence. �
 
 Jean-François: C'est ça. C'est pas juste du vocabulaire, c'est une compétence sociale. Le bon registre au bon moment, c'est la clé.
 
-## Audio 08b - La francophonie en mouvement (Qu?bec)
+## Audio 08b - La francophonie en mouvement (Québec)
 
 File: `complete/n8-08b-francophonie-mouvement-quebec-b2.mp3`
 
@@ -564,7 +564,7 @@ Philippe: Exactement. La vitalité d'une langue se mesure à sa capacité d'adap
 
 Nathalie: Un message optimiste. Merci, Philippe, pour ce panorama éclairant.
 
-## Audio 08c - Portrait : un rappeur et la langue (Qu?bec)
+## Audio 08c - Portrait : un rappeur et la langue (Québec)
 
 File: `complete/n8-08c-rappeur-langue-quebec-b2.mp3`
 
