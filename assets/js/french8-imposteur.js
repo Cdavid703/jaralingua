@@ -25,6 +25,13 @@
   var sfxCache = {};
   var pollTimer = null;
   var lastPayload = null;
+  var authPollTimer = null;
+  var GOOGLE_USER_KEY = "jaralingua_google_user";
+  var MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+  var LOCAL_USER_KEY = "jaralingua_local_user";
+  var ROLE_REQUESTS_KEY = "jaralingua_role_requests";
+  var ADMIN_EMAILS = ["cdavid.jaramillo@gmail.com"];
+  var authState = { user: null, roleStatus: null, isLoggedIn: false, isTeacher: false, canJoin: false };
 
   function $(selector) {
     return document.querySelector(selector);
@@ -52,6 +59,134 @@
 
   function cleanRoomCode(value) {
     return String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+  }
+
+  function normalizeEmail(value) {
+    return String(value || "").trim().toLowerCase();
+  }
+
+  function readStoredAuthUser(key, provider) {
+    try {
+      var saved = JSON.parse(sessionStorage.getItem(key) || "null");
+      if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
+      return Object.assign({ provider: provider }, saved);
+    } catch (_error) {
+      sessionStorage.removeItem(key);
+      return null;
+    }
+  }
+
+  function currentAuthUser() {
+    var googleUser = readStoredAuthUser(GOOGLE_USER_KEY, "google");
+    if (googleUser && googleUser.credential) return googleUser;
+    var microsoftUser = readStoredAuthUser(MICROSOFT_USER_KEY, "microsoft");
+    if (microsoftUser && microsoftUser.credential) return microsoftUser;
+    var localUser = readStoredAuthUser(LOCAL_USER_KEY, "local");
+    if (localUser && localUser.credential) return localUser;
+    return null;
+  }
+
+  function authUserId(user) {
+    return (user && (user.sub || user.email)) || "";
+  }
+
+  function readRoleRequests() {
+    try {
+      var saved = JSON.parse(localStorage.getItem(ROLE_REQUESTS_KEY) || "[]");
+      return Array.isArray(saved) ? saved : [];
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function currentRoleStatus(user) {
+    if (!user) return null;
+    if (ADMIN_EMAILS.indexOf(normalizeEmail(user.email)) !== -1) {
+      return { role: "admin", status: "approved" };
+    }
+    var id = authUserId(user);
+    return readRoleRequests().filter(function (request) {
+      return request && (request.id === id || normalizeEmail(request.email) === normalizeEmail(user.email));
+    })[0] || null;
+  }
+
+  function readAuthAccess() {
+    var user = currentAuthUser();
+    var roleStatus = currentRoleStatus(user);
+    var approvedRole = roleStatus && roleStatus.status === "approved" ? roleStatus.role : "";
+    return {
+      user: user,
+      roleStatus: roleStatus,
+      isLoggedIn: Boolean(user),
+      isTeacher: Boolean(user && (approvedRole === "teacher" || approvedRole === "admin")),
+      canJoin: Boolean(user)
+    };
+  }
+
+  function isTeacherAccess() {
+    authState = readAuthAccess();
+    return Boolean(authState.isTeacher);
+  }
+
+  function hasStudentAccess() {
+    authState = readAuthAccess();
+    return Boolean(authState.canJoin);
+  }
+
+  function openAuthPanel() {
+    var navToggle = document.querySelector("[data-auth-nav-toggle]");
+    var toggle = document.querySelector("[data-auth-toggle]");
+    var trigger = navToggle || toggle;
+    if (trigger) {
+      trigger.click();
+      return;
+    }
+    showMessage("Utilise le bouton de connexion pour entrer avec ton compte.", "info");
+  }
+
+  function syncAuthUi() {
+    authState = readAuthAccess();
+    document.body.classList.toggle("teacher-mode", authState.isTeacher);
+    document.body.classList.toggle("student-only", !authState.isTeacher);
+
+    var teacherPanel = $("#teacherPanel");
+    if (teacherPanel) teacherPanel.hidden = !authState.isTeacher;
+
+    var gate = $("#studentAuthGate");
+    if (gate) gate.hidden = authState.canJoin;
+
+    var joinForm = $("#joinForm");
+    if (joinForm) joinForm.hidden = !authState.canJoin;
+
+    var roomInput = $("#roomCode");
+    if (roomInput) roomInput.disabled = !authState.canJoin;
+
+    var playerInput = $("#playerName");
+    if (playerInput) {
+      playerInput.disabled = !authState.canJoin;
+      if (authState.user && !playerInput.value.trim()) {
+        playerInput.value = authState.user.name || authState.user.email || "";
+      }
+    }
+
+    var joinSubmit = $("#joinSubmitBtn");
+    if (joinSubmit) joinSubmit.disabled = !authState.canJoin;
+
+    if (!authState.isTeacher && localState.teacherToken) {
+      delete localState.teacherToken;
+      saveLocalState();
+    }
+
+    updateTeacherButtons(lastPayload);
+    renderRoomQr(lastPayload);
+  }
+
+  function startAuthPolling() {
+    if (authPollTimer) window.clearInterval(authPollTimer);
+    authPollTimer = window.setInterval(syncAuthUi, 1200);
   }
 
   function applyRoomFromUrl() {
@@ -160,7 +295,7 @@
   function studentRoomUrl(roomCode) {
     var code = cleanRoomCode(roomCode);
     var origin = window.location.origin && window.location.origin !== "null" ? window.location.origin : "";
-    if (origin) return origin + "/i.html?r=" + encodeURIComponent(code);
+    if (origin) return origin.replace(/\/+$/, "") + "/i.html?r=" + encodeURIComponent(code);
     var url = new URL(window.location.href);
     url.searchParams.set("room", code);
     url.hash = "jeu";
@@ -171,7 +306,7 @@
     var panel = $("#roomQrPanel");
     var qrCode = $("#roomQrCode");
     var link = $("#roomQrLink");
-    var isTeacher = Boolean(payload && payload.teacher && payload.teacher.ok);
+    var isTeacher = isTeacherAccess() && Boolean(payload && payload.teacher && payload.teacher.ok);
     var room = payload && payload.room ? payload.room : {};
     var roomCode = cleanRoomCode(room.code || localState.roomCode);
     if (!panel || !qrCode || !link) return;
@@ -553,6 +688,7 @@
     renderRoomQr(null);
     updateTeacherButtons(null);
     applyStoredFields();
+    syncAuthUi();
   }
 
   function render(payload) {
@@ -570,6 +706,7 @@
     renderRoomQr(payload);
     updateTeacherButtons(payload);
     applyStoredFields();
+    syncAuthUi();
   }
 
   function renderPlayers(players, status) {
@@ -672,7 +809,7 @@
   }
 
   function updateTeacherButtons(payload) {
-    var isTeacher = Boolean(payload && payload.teacher && payload.teacher.ok);
+    var isTeacher = isTeacherAccess() && Boolean(payload && payload.teacher && payload.teacher.ok);
     document.body.classList.toggle("is-teacher", isTeacher);
     var room = payload && payload.room ? payload.room : {};
     var status = room.status || "waiting";
@@ -681,12 +818,13 @@
     var canForce = isTeacher && status === "briefing";
     var canVote = isTeacher && (status === "discussion" || status === "briefing");
     var canReveal = isTeacher && (status === "voting" || status === "discussion");
+    setDisabled("#createRoomBtn", !authState.isTeacher);
     setDisabled("#distributeBtn", !canDistribute);
     setDisabled("#forceDiscussionBtn", !canForce);
     setDisabled("#openVoteBtn", !canVote);
     setDisabled("#revealBtn", !canReveal);
     setDisabled("#resetBtn", !isTeacher || !hasRoom);
-    setDisabled("#closeRoomBtn", !hasRoom);
+    setDisabled("#closeRoomBtn", !hasRoom || (Boolean(localState.teacherToken) && !authState.isTeacher));
   }
 
   function setDisabled(selector, disabled) {
@@ -695,6 +833,11 @@
   }
 
   async function handleCreateRoom() {
+    if (!isTeacherAccess()) {
+      showMessage("Connecte-toi avec un compte professeur approuvé pour créer une salle.", "error");
+      openAuthPanel();
+      return;
+    }
     try {
       var result = await request("create");
       localState.roomCode = result.roomCode;
@@ -713,6 +856,11 @@
 
   async function handleJoin(event) {
     event.preventDefault();
+    if (!hasStudentAccess()) {
+      showMessage("Connecte-toi avant d'entrer dans la salle. Le code QR a déjà préparé le code de salle.", "error");
+      openAuthPanel();
+      return;
+    }
     var roomCode = ($("#roomCode") && $("#roomCode").value || "").trim().toUpperCase();
     var name = ($("#playerName") && $("#playerName").value || "").trim();
     try {
@@ -730,6 +878,11 @@
   }
 
   async function teacherAction(action) {
+    if (!isTeacherAccess()) {
+      showMessage("Cette commande est réservée au professeur connecté.", "error");
+      openAuthPanel();
+      return;
+    }
     if (!localState.roomCode || !localState.teacherToken) return;
     try {
       var result = await request(action, { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
@@ -757,6 +910,11 @@
       return;
     }
     if (localState.teacherToken) {
+      if (!isTeacherAccess()) {
+        showMessage("Seul le professeur connecté peut fermer cette salle.", "error");
+        openAuthPanel();
+        return;
+      }
       try {
         await request("close-room", { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
         clearCurrentRoom("Salle fermée. Tu peux créer une nouvelle salle.", "success");
@@ -826,6 +984,7 @@
       if (soundEnabled) playSfx("roleConfirmed");
     });
     $("#copyRoomLinkBtn") && $("#copyRoomLinkBtn").addEventListener("click", copyStudentLink);
+    $("#openAuthFromGame") && $("#openAuthFromGame").addEventListener("click", openAuthPanel);
     $("#copyCodeBtn") && $("#copyCodeBtn").addEventListener("click", function () {
       if (!localState.roomCode || !navigator.clipboard) return;
       navigator.clipboard.writeText(localState.roomCode).then(function () {
@@ -838,6 +997,8 @@
     document.addEventListener("submit", function (event) {
       if (event.target && event.target.id === "voteForm") submitVote(event);
     });
+    window.addEventListener("focus", syncAuthUi);
+    window.addEventListener("storage", syncAuthUi);
   }
 
   document.addEventListener("DOMContentLoaded", function () {
@@ -850,6 +1011,8 @@
     syncSoundToggle();
     preloadSfx();
     renderEmpty();
+    syncAuthUi();
+    startAuthPolling();
     if (localState.roomCode) {
       refreshState();
       startPolling();

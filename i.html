@@ -18,6 +18,7 @@
   <main>
     <h1>Entrer dans la salle</h1>
     <p>Redirection vers le jeu en cours.</p>
+    <p id="roomHint"></p>
     <a id="joinLink" href="/frances/Niveau%208/ateliers/jeu-imposteur-ville-intelligente.html#jeu">Ouvrir le jeu</a>
   </main>
   <script>
@@ -31,8 +32,12 @@
       if (roomCode) target += "?room=" + encodeURIComponent(roomCode);
       target += "#jeu";
       var link = document.getElementById("joinLink");
+      var hint = document.getElementById("roomHint");
+      if (hint && roomCode) hint.textContent = "Code salle : " + roomCode;
       if (link) link.href = target;
-      window.location.replace(target);
+      window.setTimeout(function () {
+        window.location.href = target;
+      }, 120);
     })();
   </script>
 </body>
