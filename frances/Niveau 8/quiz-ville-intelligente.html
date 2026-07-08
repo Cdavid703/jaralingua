@@ -78,6 +78,7 @@
       let audioObjectUrl = null;
       let currentView = "init";
       let pollTimer = null;
+      let submitting = false;
 
       function esc(value) {
         return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -299,7 +300,7 @@
         els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-success"><i class="bi bi-unlock-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">${isStaff ? "Apercu professeur" : "Acces valide"}</p><h2 class="section-title">${esc(currentQuiz.title || "Quiz")}</h2><p class="section-text mb-0">${isStaff ? "Vous pouvez previsualiser le quiz. Les comptes professeur ne soumettent pas de note." : "Repondez soigneusement. Une seule soumission sera enregistree."}</p><div class="identity-strip"><span class="pill open"><i class="bi bi-unlock-fill"></i> Quiz disponible</span><span class="pill"><i class="bi bi-award-fill"></i> ${esc(currentQuiz.totalPoints)} points · note /5</span><button class="btn-soft" type="button" data-recheck-state><i class="bi bi-arrow-repeat"></i> Verifier l'acces</button></div></div></div>`;
         els.access.querySelector("[data-recheck-state]").addEventListener("click", () => loadState());
         els.form.innerHTML = `${(currentQuiz.sections || []).map(renderSection).join("")}<div class="submit-zone"><div class="d-flex flex-wrap align-items-center justify-content-between gap-3"><div class="flex-grow-1"><h2 class="h4 fw-bold mb-1">Soumission finale</h2><p>${isStaff ? "Apercu professeur: la soumission est desactivee." : "Verifiez toutes vos reponses avant d'envoyer. Apres l'envoi, la note ira dans Notes du cours."}</p><div class="completion-meter" aria-live="polite"><span id="completionLabel">0 / 0 reponses completees</span><span class="completion-track" aria-hidden="true"><span class="completion-bar" id="completionBar"></span></span></div><p class="mt-2 mb-0" id="submitStatus" aria-live="polite"></p></div><button class="btn-main" type="submit" ${isStaff ? "disabled" : ""}><i class="bi bi-send-check-fill"></i> Envoyer le quiz</button></div></div>`;
-        els.form.addEventListener("submit", submitQuiz, { once: true });
+        els.form.onsubmit = submitQuiz;
         restoreDraft();
         updateCompletion();
         els.form.querySelectorAll("input[type='radio']").forEach((input) => {
@@ -336,20 +337,21 @@
       }
       async function submitQuiz(event) {
         event.preventDefault();
+        if (submitting) return;
         const button = els.form.querySelector("button[type='submit']");
         const { answers, missing } = collectAnswers();
         if (missing > 0) {
           setSubmitStatus(`Il manque ${missing} reponse(s). Repondez a toutes les questions avant d'envoyer.`, "error");
           markMissingQuestions();
-          els.form.addEventListener("submit", submitQuiz, { once: true });
           return;
         }
         clearMissingMarks();
         if (!window.confirm("Apres l'envoi, vous ne pourrez plus modifier vos reponses. Voulez-vous envoyer le quiz maintenant ?")) {
-          els.form.addEventListener("submit", submitQuiz, { once: true });
           return;
         }
+        submitting = true;
         button.disabled = true;
+        button.setAttribute("aria-busy", "true");
         button.innerHTML = '<i class="bi bi-hourglass-split"></i> Envoi...';
         setSubmitStatus("Envoi du quiz en cours...", "pending");
         try {
@@ -361,10 +363,14 @@
           }
           await verifySubmission(result.data.result);
         } catch (error) {
-          setSubmitStatus(error.message || "Erreur d'envoi. Vos reponses restent sur cette page.", "error");
+          const message = error && error.name === "AbortError"
+            ? "Delai depasse. Vos reponses restent sur cette page; verifiez la connexion puis renvoyez."
+            : (error.message || "Erreur d'envoi. Vos reponses restent sur cette page.");
+          setSubmitStatus(message, "error");
+          submitting = false;
           button.disabled = false;
+          button.removeAttribute("aria-busy");
           button.innerHTML = '<i class="bi bi-send-check-fill"></i> Envoyer le quiz';
-          els.form.addEventListener("submit", submitQuiz, { once: true });
         }
       }
       async function verifySubmission(result) {
@@ -384,6 +390,7 @@
       function renderSubmitted(result, verificationMessage = "") {
         setView("submitted");
         updatePolling();
+        submitting = false;
         if (!currentQuiz && result?.quizVersion) {
           currentQuiz = { id: "french8-quiz-ville-intelligente", version: result.quizVersion };
         }

@@ -2385,6 +2385,41 @@ def french8_quiz_submission_public(submission):
     }
 
 
+def apply_french8_quiz_submission_to_gradebook(student, submission):
+    if not isinstance(student, dict) or not isinstance(submission, dict):
+        return False
+    changed = False
+    grade = submission.get("grade")
+    if isinstance(grade, (int, float)):
+        grades = student.setdefault("grades", {})
+        if not isinstance(grades, dict):
+            grades = {}
+            student["grades"] = grades
+            changed = True
+        if grades.get("quiz") != grade:
+            grades["quiz"] = grade
+            changed = True
+    if not isinstance(student.get("gradeDetails"), dict):
+        student["gradeDetails"] = {}
+        changed = True
+    detail = {
+        "evaluationId": "quiz",
+        "status": "submitted",
+        "submittedAt": submission.get("submittedAt"),
+        "scorePoints": submission.get("scorePoints"),
+        "totalPoints": submission.get("totalPoints"),
+        "grade": submission.get("grade"),
+        "sectionScores": submission.get("sectionScores"),
+        "quizVersion": clean_text(submission.get("quizVersion"), 80),
+        "attemptId": clean_text(submission.get("attemptId"), 120),
+        "source": "french8-quiz-ville-intelligente"
+    }
+    if student["gradeDetails"].get("quiz") != detail:
+        student["gradeDetails"]["quiz"] = detail
+        changed = True
+    return changed
+
+
 def french8_quiz_state_payload(profile, grades_data, bundle, submissions):
     payload = final_exam_state_payload(profile, grades_data, bundle, submissions)
     payload["submitted"] = french8_quiz_submission_public(payload.get("submitted"))
@@ -3106,6 +3141,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                 bundle = read_french8_quiz_bundle()
                 submissions = read_french8_quiz_submissions()
+                student = matched_student_for_profile(profile, grades_data)
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                existing = submissions.get("submissions", {}).get(student_id) if student_id else None
+                if apply_french8_quiz_submission_to_gradebook(student, existing):
+                    write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                 json_response(self, 200, french8_quiz_state_payload(profile, grades_data, bundle, submissions))
             return
 
@@ -3121,6 +3161,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 state = bundle.get("state", {})
                 student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
                 submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+                if apply_french8_quiz_submission_to_gradebook(student, submitted):
+                    write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
 
                 if role not in ("admin", "teacher") and not isinstance(student, dict):
                     json_response(self, 403, {"error": "not_authorized"})
@@ -4996,6 +5038,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 attempt_id = clean_text(payload.get("attemptId"), 120)
                 existing = submissions.get("submissions", {}).get(student_id)
                 if existing:
+                    if apply_french8_quiz_submission_to_gradebook(student, existing):
+                        write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                     if attempt_id and clean_text(existing.get("attemptId"), 120) == attempt_id:
                         json_response(self, 200, {
                             "ok": True,
