@@ -7,11 +7,11 @@
       tip: "Commence par: Avec le recul, j'aurais... / Je n'aurais peut-être pas dû...",
       questions: [
         "Quelle décision aurais-tu prise différemment cette année ?",
-        "Qu'aurais-tu dû commencer plus tôt dans ta vie personnelle ou académique ?",
+        "Dans un projet récent, qu'aurait-il fallu commencer plus tôt ?",
         "Qu'est-ce que tu aurais aimé apprendre avant aujourd'hui ?",
-        "À quel moment aurais-tu dû demander de l'aide ?",
+        "Dans une activité de classe, à quel moment aurait-il fallu demander de l'aide ?",
         "De quelle opportunité aurais-tu pu mieux profiter ?",
-        "Qu'aurais-tu aimé dire à quelqu'un, mais tu ne l'as pas dit ?"
+        "Dans une situation de communication, qu'aurait-il fallu dire plus clairement ?"
       ]
     },
     {
@@ -24,8 +24,8 @@
         "Dans un travail de groupe, qu'aurais-tu pu faire pour mieux collaborer ?",
         "Quelle habitude académique aurais-tu dû changer plus tôt ?",
         "Avant une présentation, qu'aurais-tu dû préparer avec plus d'attention ?",
-        "Quelle compétence aurais-tu aimé développer plus tôt ?",
-        "Dans ton parcours, quelle décision aurait pu t'aider davantage ?"
+        "Quelle compétence aurait été utile pour réussir un projet plus efficacement ?",
+        "Dans un parcours académique, quelle décision aurait pu aider un étudiant davantage ?"
       ]
     },
     {
@@ -34,10 +34,10 @@
       icon: "bi-chat-dots-fill",
       tip: "Pour rester diplomatique: J'aurais peut-être pu... / On aurait pu...",
       questions: [
-        "À qui aurais-tu dû parler plus clairement dans le passé ?",
-        "Dans quelle situation aurais-tu pu écouter davantage ?",
+        "Dans une réunion, à qui aurait-il fallu expliquer l'objectif plus clairement ?",
+        "Dans quelle situation de groupe aurait-il fallu écouter davantage ?",
         "Quel malentendu aurais-tu pu éviter avec une meilleure communication ?",
-        "Quand aurais-tu dû être plus patient avec quelqu'un ?",
+        "Quand une équipe aurait-elle dû être plus patiente avant de décider ?",
         "Quelle critique aurais-tu pu formuler de manière plus diplomatique ?",
         "Quelle conversation aurais-tu dû avoir plus tôt ?"
       ]
@@ -49,11 +49,11 @@
       tip: "Structure utile: Si j'avais..., j'aurais... parce que...",
       questions: [
         "Quelle décision rapide aurais-tu dû réfléchir plus longtemps ?",
-        "Quel risque aurais-tu dû mieux calculer ?",
+        "Dans l'organisation d'une activité, quel risque aurait-il fallu mieux calculer ?",
         "Quelle conséquence aurais-tu pu éviter avec plus de préparation ?",
-        "À quel moment aurais-tu mieux fait d'attendre avant d'agir ?",
+        "À quel moment un groupe aurait-il mieux fait d'attendre avant d'agir ?",
         "Quelle décision aurait changé ton année si tu l'avais prise plus tôt ?",
-        "Qu'est-ce que tu n'aurais pas dû laisser pour la dernière minute ?"
+        "Qu'est-ce qu'une équipe n'aurait pas dû laisser pour la dernière minute ?"
       ]
     },
     {
@@ -63,11 +63,11 @@
       tip: "N'oublie pas: si + plus-que-parfait, conditionnel passé.",
       questions: [
         "Si tu avais su ce que tu sais aujourd'hui, qu'aurais-tu fait autrement ?",
-        "Si tu avais eu plus de temps cette année, qu'aurais-tu amélioré ?",
-        "Si tu avais reçu un bon conseil plus tôt, qu'aurais-tu changé ?",
+        "Si une équipe avait eu plus de temps, qu'aurait-elle amélioré dans son projet ?",
+        "Si un étudiant avait reçu un bon conseil plus tôt, qu'aurait-il changé ?",
         "Si tu avais mieux compris une situation, comment aurais-tu réagi ?",
-        "Si tu avais été plus sûr de toi, qu'aurais-tu osé faire ?",
-        "Si tu avais connu les conséquences, quelle décision n'aurais-tu pas prise ?"
+        "Si le groupe avait mieux compris la consigne, qu'aurait-il fait différemment ?",
+        "Si les conséquences avaient été plus claires, quelle décision n'aurait-on pas prise ?"
       ]
     },
     {
@@ -76,12 +76,12 @@
       icon: "bi-compass-fill",
       tip: "Formule une alternative: À ma place, j'aurais... / La prochaine fois, je...",
       questions: [
-        "Si tu pouvais conseiller ton toi du passé, que lui aurais-tu dit ?",
-        "À ta place il y a un an, quelle décision aurais-tu recommandée ?",
+        "Si tu pouvais conseiller un étudiant au début du cours, que lui aurais-tu dit ?",
+        "À la place d'un responsable de groupe, quelle décision aurais-tu recommandée ?",
         "Si un ami vivait la même situation que toi, que lui aurais-tu conseillé ?",
-        "Avec ton expérience actuelle, qu'aurais-tu fait à la place de ton ancien toi ?",
-        "Quelle alternative aurais-tu proposée à toi-même dans un moment difficile ?",
-        "Quelle erreur personnelle aurais-tu transformée en apprentissage ?"
+        "Avec ton expérience actuelle, qu'aurais-tu fait à la place d'un étudiant mal organisé ?",
+        "Quelle alternative aurais-tu proposée dans un projet qui avançait mal ?",
+        "Quelle erreur dans une présentation aurais-tu transformée en apprentissage ?"
       ]
     }
   ];
@@ -91,8 +91,13 @@
     remaining: [],
     drawn: [],
     spinning: false,
-    audioContext: null
+    audioContext: null,
+    students: [],
+    remainingStudents: [],
+    drawnStudents: []
   };
+
+  const STORAGE_KEY = "french8-roulette-regrets-students";
 
   const $ = (selector) => document.querySelector(selector);
 
@@ -187,6 +192,108 @@
     }
   }
 
+  function parseStudentNames(value) {
+    return [...new Set(String(value || "")
+      .split(/[\n;,]+/)
+      .map((name) => name.trim().replace(/\s+/g, " "))
+      .filter(Boolean))];
+  }
+
+  function persistStudents() {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state.students));
+    } catch (_error) {
+      // Local storage is optional; the activity still works without persistence.
+    }
+  }
+
+  function loadPersistedStudents() {
+    try {
+      const parsed = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || "[]");
+      if (Array.isArray(parsed)) {
+        state.students = parseStudentNames(parsed.join("\n"));
+        state.remainingStudents = [...state.students];
+      }
+    } catch (_error) {
+      state.students = [];
+      state.remainingStudents = [];
+    }
+  }
+
+  function updateStudentPanel() {
+    const textarea = $("#studentNamesInput");
+    const picked = $("#pickedStudentName");
+    const status = $("#studentListStatus");
+    const pickButton = $("#pickStudentButton");
+    if (textarea && textarea.value.trim() === "") textarea.value = state.students.join("\n");
+    if (picked && !state.drawnStudents.length) picked.textContent = state.students.length ? "Liste chargée. Cliquez sur Tirer étudiant." : "Aucun nom chargé.";
+    if (status) {
+      const total = state.students.length;
+      const remaining = state.remainingStudents.length;
+      status.textContent = total
+        ? `${total} étudiant${total > 1 ? "s" : ""} chargé${total > 1 ? "s" : ""}. ${remaining} encore disponible${remaining > 1 ? "s" : ""} avant répétition.`
+        : "0 étudiant chargé.";
+    }
+    if (pickButton) pickButton.disabled = state.students.length === 0;
+  }
+
+  function saveStudentsFromInput() {
+    const names = parseStudentNames($("#studentNamesInput")?.value || "");
+    state.students = names;
+    state.remainingStudents = [...names];
+    state.drawnStudents = [];
+    persistStudents();
+    const picked = $("#pickedStudentName");
+    if (picked) picked.textContent = names.length ? "Liste chargée. Cliquez sur Tirer étudiant." : "Aucun nom chargé.";
+    updateStudentPanel();
+  }
+
+  function pickStudent() {
+    const picked = $("#pickedStudentName");
+    if (!state.students.length) {
+      if (picked) picked.textContent = "Chargez d'abord une liste de noms.";
+      updateStudentPanel();
+      return;
+    }
+    if (!state.remainingStudents.length) {
+      state.remainingStudents = [...state.students];
+      state.drawnStudents = [];
+    }
+    const index = Math.floor(Math.random() * state.remainingStudents.length);
+    const selected = state.remainingStudents.splice(index, 1)[0];
+    state.drawnStudents.unshift(selected);
+    if (picked) picked.textContent = selected;
+    updateStudentPanel();
+  }
+
+  function resetStudents() {
+    if (state.students.length && !window.confirm("Voulez-vous effacer la liste des étudiants chargée dans ce navigateur ?")) return;
+    state.students = [];
+    state.remainingStudents = [];
+    state.drawnStudents = [];
+    try {
+      window.localStorage.removeItem(STORAGE_KEY);
+    } catch (_error) {}
+    const textarea = $("#studentNamesInput");
+    const picked = $("#pickedStudentName");
+    if (textarea) textarea.value = "";
+    if (picked) picked.textContent = "Aucun nom chargé.";
+    updateStudentPanel();
+  }
+
+  function handleStudentFile(event) {
+    const file = event.target.files && event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const textarea = $("#studentNamesInput");
+      if (textarea) textarea.value = String(reader.result || "");
+      saveStudentsFromInput();
+    };
+    reader.readAsText(file, "utf-8");
+    event.target.value = "";
+  }
+
   function renderHistory() {
     const history = $("#questionHistory");
     const emptyState = $("#emptyState");
@@ -247,7 +354,10 @@
     }, durationMs + 80);
   }
 
-  function resetGame() {
+  function resetGame(confirmReset = false) {
+    if (confirmReset && state.drawn.length > 0 && !window.confirm("Voulez-vous vraiment recommencer toute la roulette ? Les questions déjà sorties seront effacées.")) {
+      return;
+    }
     state.remaining = makePool();
     state.drawn = [];
     state.spinning = false;
@@ -261,7 +371,7 @@
     const question = $("#currentQuestion");
     const tip = $("#currentTip");
     if (category) category.innerHTML = '<i class="bi bi-stars"></i> En attente de la première question';
-    if (question) question.textContent = "Le professeur choisit un étudiant, puis la roulette choisit la question.";
+    if (question) question.textContent = "Chargez les noms, tirez un étudiant, puis tournez la roulette pour choisir la question.";
     if (tip) tip.textContent = "Chaque réponse doit contenir un conditionnel passé, une explication et une alternative.";
     renderHistory();
     updateCounters();
@@ -269,15 +379,21 @@
 
   function init() {
     state.remaining = makePool();
+    loadPersistedStudents();
     $("#spinButton")?.addEventListener("click", spinWheel);
-    $("#resetButton")?.addEventListener("click", resetGame);
+    $("#resetButton")?.addEventListener("click", () => resetGame(true));
+    $("#saveStudentsButton")?.addEventListener("click", saveStudentsFromInput);
+    $("#pickStudentButton")?.addEventListener("click", pickStudent);
+    $("#resetStudentsButton")?.addEventListener("click", resetStudents);
+    $("#studentFileInput")?.addEventListener("change", handleStudentFile);
     $("#soundToggle")?.addEventListener("change", () => {
       if (soundEnabled()) {
         getAudioContext();
         beep(660, 0.06, "sine", 0.035);
       }
     });
-    resetGame();
+    resetGame(false);
+    updateStudentPanel();
   }
 
   document.addEventListener("DOMContentLoaded", init);
