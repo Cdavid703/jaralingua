@@ -6,6 +6,10 @@
   var STORAGE_KEY = "french8-imposteur-live-state";
   var SOUND_STORAGE_KEY = "french8-imposteur-sound-enabled";
   var POLL_MS = 1800;
+  var QR_VERSION = 3;
+  var QR_SIZE = 29;
+  var QR_DATA_CODEWORDS = 55;
+  var QR_ECC_CODEWORDS = 15;
   var SFX_BASE = "../audio/sfx/imposteur/";
   var SFX = {
     roomCreated: "room-created.mp3",
@@ -38,6 +42,24 @@
   function saveLocalState() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
+    } catch (_error) {}
+  }
+
+  function cleanRoomCode(value) {
+    return String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+  }
+
+  function applyRoomFromUrl() {
+    try {
+      var params = new URLSearchParams(window.location.search || "");
+      var roomCode = cleanRoomCode(params.get("room") || params.get("r"));
+      if (!roomCode) return;
+      if (localState.roomCode !== roomCode) {
+        localState = { roomCode: roomCode };
+      } else {
+        localState.roomCode = roomCode;
+      }
+      saveLocalState();
     } catch (_error) {}
   }
 
@@ -101,6 +123,248 @@
     label.setAttribute("for", "soundToggle");
     label.innerHTML = '<span><i class="bi bi-volume-up-fill"></i> Effets sonores</span><input type="checkbox" id="soundToggle" checked>';
     statusHint.insertAdjacentElement("afterend", label);
+  }
+
+  function ensureQrPanel() {
+    if ($("#roomQrPanel")) return;
+    var roomCode = $(".room-code");
+    if (!roomCode) return;
+    var panel = document.createElement("div");
+    panel.className = "qr-panel";
+    panel.id = "roomQrPanel";
+    panel.hidden = true;
+    panel.innerHTML = '<div class="qr-copy"><div><p class="section-kicker mb-1">Accès par QR</p><h3>Scanner pour entrer</h3><p>Les étudiants scannent ce code, écrivent leur prénom et rejoignent directement cette salle.</p></div><div class="qr-code-box" id="roomQrCode" aria-label="Code QR de la salle"></div></div><a class="qr-link" id="roomQrLink" href="#" target="_blank" rel="noopener">Ouvrir le lien étudiant</a><button type="button" class="btn-soft w-100" id="copyRoomLinkBtn"><i class="bi bi-link-45deg"></i> Copier le lien étudiant</button>';
+    roomCode.insertAdjacentElement("afterend", panel);
+  }
+
+  function studentRoomUrl(roomCode) {
+    var code = cleanRoomCode(roomCode);
+    var origin = window.location.origin && window.location.origin !== "null" ? window.location.origin : "";
+    if (origin) return origin + "/i.html?r=" + encodeURIComponent(code);
+    var url = new URL(window.location.href);
+    url.searchParams.set("room", code);
+    url.hash = "jeu";
+    return url.toString();
+  }
+
+  function renderRoomQr(payload) {
+    var panel = $("#roomQrPanel");
+    var qrCode = $("#roomQrCode");
+    var link = $("#roomQrLink");
+    var isTeacher = Boolean(payload && payload.teacher && payload.teacher.ok);
+    var room = payload && payload.room ? payload.room : {};
+    var roomCode = cleanRoomCode(room.code || localState.roomCode);
+    if (!panel || !qrCode || !link) return;
+    if (!isTeacher || !roomCode) {
+      panel.hidden = true;
+      qrCode.innerHTML = "";
+      link.removeAttribute("href");
+      return;
+    }
+    var url = studentRoomUrl(roomCode);
+    panel.hidden = false;
+    qrCode.innerHTML = createQrSvg(url);
+    link.href = url;
+  }
+
+  function copyStudentLink() {
+    if (!localState.roomCode || !navigator.clipboard) return;
+    navigator.clipboard.writeText(studentRoomUrl(localState.roomCode)).then(function () {
+      showMessage("Lien étudiant copié.", "success");
+    });
+  }
+
+  function createQrSvg(text) {
+    try {
+      var modules = makeQrModules(String(text || ""));
+      var border = 4;
+      var viewSize = QR_SIZE + border * 2;
+      var path = "";
+      for (var y = 0; y < QR_SIZE; y += 1) {
+        for (var x = 0; x < QR_SIZE; x += 1) {
+          if (modules[y][x]) path += "M" + (x + border) + "," + (y + border) + "h1v1h-1z";
+        }
+      }
+      return '<svg class="qr-svg" viewBox="0 0 ' + viewSize + " " + viewSize + '" role="img" aria-label="Code QR de la salle" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="#fff"/><path d="' + path + '" fill="#111827" shape-rendering="crispEdges"/></svg>';
+    } catch (_error) {
+      return '<p class="qr-error">Code QR indisponible. Copie le lien étudiant.</p>';
+    }
+  }
+
+  function makeQrModules(text) {
+    var modules = emptyMatrix(false);
+    var reserved = emptyMatrix(false);
+    function setFunction(x, y, dark) {
+      if (x < 0 || y < 0 || x >= QR_SIZE || y >= QR_SIZE) return;
+      modules[y][x] = Boolean(dark);
+      reserved[y][x] = true;
+    }
+
+    drawFinder(setFunction, 0, 0);
+    drawFinder(setFunction, QR_SIZE - 7, 0);
+    drawFinder(setFunction, 0, QR_SIZE - 7);
+    drawAlignment(setFunction, 22, 22);
+    drawTiming(setFunction);
+    drawFormatBits(setFunction, 0);
+
+    var data = qrDataCodewords(text);
+    var ecc = reedSolomonRemainder(data, reedSolomonDivisor(QR_ECC_CODEWORDS));
+    var bits = codewordsToBits(data.concat(ecc));
+    var bitIndex = 0;
+    var upward = true;
+    for (var right = QR_SIZE - 1; right >= 1; right -= 2) {
+      if (right === 6) right -= 1;
+      for (var vert = 0; vert < QR_SIZE; vert += 1) {
+        var y = upward ? QR_SIZE - 1 - vert : vert;
+        for (var j = 0; j < 2; j += 1) {
+          var x = right - j;
+          if (reserved[y][x]) continue;
+          var dark = bitIndex < bits.length ? bits[bitIndex] === 1 : false;
+          bitIndex += 1;
+          if ((x + y) % 2 === 0) dark = !dark;
+          modules[y][x] = dark;
+        }
+      }
+      upward = !upward;
+    }
+    drawFormatBits(setFunction, 0);
+    return modules;
+  }
+
+  function emptyMatrix(value) {
+    var matrix = [];
+    for (var y = 0; y < QR_SIZE; y += 1) {
+      matrix.push(new Array(QR_SIZE).fill(value));
+    }
+    return matrix;
+  }
+
+  function drawFinder(setFunction, left, top) {
+    for (var y = -1; y <= 7; y += 1) {
+      for (var x = -1; x <= 7; x += 1) {
+        var xx = left + x;
+        var yy = top + y;
+        var dark = x >= 0 && x <= 6 && y >= 0 && y <= 6 &&
+          (x === 0 || x === 6 || y === 0 || y === 6 || (x >= 2 && x <= 4 && y >= 2 && y <= 4));
+        setFunction(xx, yy, dark);
+      }
+    }
+  }
+
+  function drawAlignment(setFunction, centerX, centerY) {
+    for (var y = -2; y <= 2; y += 1) {
+      for (var x = -2; x <= 2; x += 1) {
+        var distance = Math.max(Math.abs(x), Math.abs(y));
+        setFunction(centerX + x, centerY + y, distance === 2 || distance === 0);
+      }
+    }
+  }
+
+  function drawTiming(setFunction) {
+    for (var i = 8; i < QR_SIZE - 8; i += 1) {
+      setFunction(6, i, i % 2 === 0);
+      setFunction(i, 6, i % 2 === 0);
+    }
+  }
+
+  function drawFormatBits(setFunction, mask) {
+    var bits = qrFormatBits(mask);
+    function bit(index) {
+      return ((bits >>> index) & 1) !== 0;
+    }
+    for (var i = 0; i <= 5; i += 1) setFunction(8, i, bit(i));
+    setFunction(8, 7, bit(6));
+    setFunction(8, 8, bit(7));
+    setFunction(7, 8, bit(8));
+    for (var j = 9; j < 15; j += 1) setFunction(14 - j, 8, bit(j));
+    for (var k = 0; k < 8; k += 1) setFunction(QR_SIZE - 1 - k, 8, bit(k));
+    for (var m = 8; m < 15; m += 1) setFunction(8, QR_SIZE - 15 + m, bit(m));
+    setFunction(8, QR_SIZE - 8, true);
+  }
+
+  function qrFormatBits(mask) {
+    var data = (1 << 3) | mask;
+    var rem = data;
+    for (var i = 0; i < 10; i += 1) {
+      rem = (rem << 1) ^ (((rem >>> 9) & 1) ? 0x537 : 0);
+    }
+    return ((data << 10) | rem) ^ 0x5412;
+  }
+
+  function qrDataCodewords(text) {
+    var bytes = utf8Bytes(text);
+    var bits = [];
+    pushBits(bits, 0x4, 4);
+    pushBits(bits, bytes.length, 8);
+    bytes.forEach(function (byte) { pushBits(bits, byte, 8); });
+    var capacityBits = QR_DATA_CODEWORDS * 8;
+    if (bits.length > capacityBits) throw new Error("qr_data_too_long");
+    pushBits(bits, 0, Math.min(4, capacityBits - bits.length));
+    while (bits.length % 8 !== 0) bits.push(0);
+    var data = [];
+    for (var i = 0; i < bits.length; i += 8) {
+      var value = 0;
+      for (var j = 0; j < 8; j += 1) value = (value << 1) | bits[i + j];
+      data.push(value);
+    }
+    var pad = 0xec;
+    while (data.length < QR_DATA_CODEWORDS) {
+      data.push(pad);
+      pad = pad === 0xec ? 0x11 : 0xec;
+    }
+    return data;
+  }
+
+  function pushBits(bits, value, length) {
+    for (var i = length - 1; i >= 0; i -= 1) bits.push((value >>> i) & 1);
+  }
+
+  function utf8Bytes(text) {
+    if (typeof TextEncoder !== "undefined") return Array.prototype.slice.call(new TextEncoder().encode(text));
+    return unescape(encodeURIComponent(text)).split("").map(function (char) { return char.charCodeAt(0); });
+  }
+
+  function codewordsToBits(codewords) {
+    var bits = [];
+    codewords.forEach(function (codeword) { pushBits(bits, codeword, 8); });
+    return bits;
+  }
+
+  function reedSolomonDivisor(degree) {
+    var result = new Array(degree).fill(0);
+    result[degree - 1] = 1;
+    var root = 1;
+    for (var i = 0; i < degree; i += 1) {
+      for (var j = 0; j < result.length; j += 1) {
+        result[j] = gfMultiply(result[j], root);
+        if (j + 1 < result.length) result[j] ^= result[j + 1];
+      }
+      root = gfMultiply(root, 2);
+    }
+    return result;
+  }
+
+  function reedSolomonRemainder(data, divisor) {
+    var result = new Array(divisor.length).fill(0);
+    data.forEach(function (byte) {
+      var factor = byte ^ result.shift();
+      result.push(0);
+      divisor.forEach(function (coefficient, index) {
+        result[index] ^= gfMultiply(coefficient, factor);
+      });
+    });
+    return result;
+  }
+
+  function gfMultiply(x, y) {
+    var z = 0;
+    while (y !== 0) {
+      if ((y & 1) !== 0) z ^= x;
+      x <<= 1;
+      if ((x & 0x100) !== 0) x ^= 0x11d;
+      y >>>= 1;
+    }
+    return z;
   }
 
   function setText(selector, value) {
@@ -237,6 +501,7 @@
     setHtml("#roleCard", waitingRoleMarkup());
     setHtml("#votePanel", "");
     setHtml("#resultPanel", "");
+    renderRoomQr(null);
     updateTeacherButtons(null);
   }
 
@@ -252,6 +517,7 @@
     renderRole(payload);
     renderVote(payload);
     renderResult(payload);
+    renderRoomQr(payload);
     updateTeacherButtons(payload);
     applyStoredFields();
   }
@@ -476,6 +742,7 @@
       saveSoundPreference();
       if (soundEnabled) playSfx("roleConfirmed");
     });
+    $("#copyRoomLinkBtn") && $("#copyRoomLinkBtn").addEventListener("click", copyStudentLink);
     $("#copyCodeBtn") && $("#copyCodeBtn").addEventListener("click", function () {
       if (!localState.roomCode || !navigator.clipboard) return;
       navigator.clipboard.writeText(localState.roomCode).then(function () {
@@ -491,8 +758,10 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    applyRoomFromUrl();
     applyStoredFields();
     ensureSoundToggle();
+    ensureQrPanel();
     bindEvents();
     syncSoundToggle();
     preloadSfx();
