@@ -135,6 +135,12 @@
     return Boolean(toggle && toggle.checked);
   }
 
+  function getStudentName() {
+    const input = $("#studentName");
+    const value = input ? input.value.trim().replace(/\s+/g, " ") : "";
+    return value || "Étudiant désigné";
+  }
+
   function beep(frequency, duration, type = "sine", gainValue = 0.05) {
     if (!soundEnabled()) return;
     const audio = getAudioContext();
@@ -204,6 +210,7 @@
         <span>${String(state.drawn.length - index).padStart(2, "0")}</span>
         <div>
           <b>${item.categoryName}</b>
+          <small>${item.speaker || "Étudiant désigné"}</small>
           <p>${item.question}</p>
         </div>
       </li>
@@ -213,11 +220,13 @@
 
   function showScenario(item) {
     const category = $("#currentCategory");
+    const student = $("#currentStudent");
     const question = $("#currentQuestion");
     const mission = $("#currentMission");
     const grammar = $("#currentGrammar");
     const result = $("#resultPanel");
     if (category) category.innerHTML = `<i class="bi ${item.icon}"></i> ${item.categoryName}`;
+    if (student) student.innerHTML = `<i class="bi bi-person-fill"></i> ${item.speaker || "Étudiant désigné"}`;
     if (question) question.textContent = item.question;
     if (mission) mission.textContent = item.mission;
     if (grammar) grammar.textContent = item.grammar;
@@ -235,6 +244,7 @@
     updateCounters();
     const selectedIndex = Math.floor(Math.random() * state.remaining.length);
     const selected = state.remaining[selectedIndex];
+    selected.speaker = getStudentName();
     const wheel = $("#rouletteWheel");
     const durationMs = 4200;
     const currentModulo = ((state.currentRotation % 360) + 360) % 360;
@@ -268,10 +278,12 @@
       wheel.style.transform = "rotate(0deg)";
     }
     const category = $("#currentCategory");
+    const student = $("#currentStudent");
     const question = $("#currentQuestion");
     const mission = $("#currentMission");
     const grammar = $("#currentGrammar");
     if (category) category.innerHTML = '<i class="bi bi-stars"></i> En attente du premier scénario';
+    if (student) student.innerHTML = '<i class="bi bi-person-fill"></i> Étudiant désigné';
     if (question) question.textContent = "Le professeur choisit un étudiant, puis la roulette donne une situation passée.";
     if (mission) mission.textContent = "L'étudiant construit une réponse orale avec si + plus-que-parfait et conditionnel passé.";
     if (grammar) grammar.textContent = "La réponse doit être claire, complète et grammaticalement justifiée.";
