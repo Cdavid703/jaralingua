@@ -4,9 +4,21 @@
   var API = "/api/french8/imposteur";
   var STATE_API = "/api/french8/imposteur/state";
   var STORAGE_KEY = "french8-imposteur-live-state";
+  var SOUND_STORAGE_KEY = "french8-imposteur-sound-enabled";
   var POLL_MS = 1800;
+  var SFX_BASE = "../audio/sfx/imposteur/";
+  var SFX = {
+    roomCreated: "room-created.mp3",
+    rolesDistributed: "roles-distributed.mp3",
+    roleConfirmed: "role-confirmed.mp3",
+    suspectFound: "suspect-found.mp3",
+    voteSubmitted: "vote-submitted.mp3",
+    resultRevealed: "result-revealed.mp3"
+  };
 
   var localState = loadLocalState();
+  var soundEnabled = loadSoundPreference();
+  var sfxCache = {};
   var pollTimer = null;
   var lastPayload = null;
 
@@ -27,6 +39,68 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
     } catch (_error) {}
+  }
+
+  function loadSoundPreference() {
+    try {
+      return localStorage.getItem(SOUND_STORAGE_KEY) !== "0";
+    } catch (_error) {
+      return true;
+    }
+  }
+
+  function saveSoundPreference() {
+    try {
+      localStorage.setItem(SOUND_STORAGE_KEY, soundEnabled ? "1" : "0");
+    } catch (_error) {}
+  }
+
+  function sfxAudio(name) {
+    if (!SFX[name]) return null;
+    if (!sfxCache[name]) {
+      var audio = new Audio(SFX_BASE + SFX[name]);
+      audio.preload = "auto";
+      audio.volume = 0.52;
+      sfxCache[name] = audio;
+    }
+    return sfxCache[name];
+  }
+
+  function preloadSfx() {
+    Object.keys(SFX).forEach(function (name) {
+      var audio = sfxAudio(name);
+      if (audio) audio.load();
+    });
+  }
+
+  function playSfx(name) {
+    if (!soundEnabled) return;
+    var audio = sfxAudio(name);
+    if (!audio) return;
+    try {
+      audio.pause();
+      audio.currentTime = 0;
+      var playPromise = audio.play();
+      if (playPromise && typeof playPromise.catch === "function") {
+        playPromise.catch(function () {});
+      }
+    } catch (_error) {}
+  }
+
+  function syncSoundToggle() {
+    var toggle = $("#soundToggle");
+    if (toggle) toggle.checked = soundEnabled;
+  }
+
+  function ensureSoundToggle() {
+    if ($("#soundToggle")) return;
+    var statusHint = $("#statusHint");
+    if (!statusHint) return;
+    var label = document.createElement("label");
+    label.className = "sound-toggle";
+    label.setAttribute("for", "soundToggle");
+    label.innerHTML = '<span><i class="bi bi-volume-up-fill"></i> Effets sonores</span><input type="checkbox" id="soundToggle" checked>';
+    statusHint.insertAdjacentElement("afterend", label);
   }
 
   function setText(selector, value) {
@@ -313,6 +387,7 @@
       lastPayload = result.state;
       render(lastPayload);
       startPolling();
+      playSfx("roomCreated");
     } catch (error) {
       showMessage(messageForError(error), "error");
     }
@@ -343,6 +418,12 @@
       lastPayload = result.state;
       render(lastPayload);
       showMessage(action === "open-vote" ? "Vote ouvert pour tous les étudiants." : "Action professeur appliquée.", "success");
+      var sound = {
+        distribute: "rolesDistributed",
+        "open-vote": "suspectFound",
+        reveal: "resultRevealed"
+      }[action];
+      if (sound) playSfx(sound);
     } catch (error) {
       showMessage(messageForError(error), "error");
     }
@@ -354,6 +435,7 @@
       lastPayload = result.state;
       render(lastPayload);
       showMessage("Rôle confirmé.", "success");
+      playSfx("roleConfirmed");
     } catch (error) {
       showMessage(messageForError(error), "error");
     }
@@ -375,6 +457,7 @@
       lastPayload = result.state;
       render(lastPayload);
       showMessage("Vote enregistré.", "success");
+      playSfx("voteSubmitted");
     } catch (error) {
       showMessage(messageForError(error), "error");
     }
@@ -388,6 +471,11 @@
     $("#openVoteBtn") && $("#openVoteBtn").addEventListener("click", function () { teacherAction("open-vote"); });
     $("#revealBtn") && $("#revealBtn").addEventListener("click", function () { teacherAction("reveal"); });
     $("#resetBtn") && $("#resetBtn").addEventListener("click", function () { teacherAction("reset"); });
+    $("#soundToggle") && $("#soundToggle").addEventListener("change", function (event) {
+      soundEnabled = Boolean(event.target.checked);
+      saveSoundPreference();
+      if (soundEnabled) playSfx("roleConfirmed");
+    });
     $("#copyCodeBtn") && $("#copyCodeBtn").addEventListener("click", function () {
       if (!localState.roomCode || !navigator.clipboard) return;
       navigator.clipboard.writeText(localState.roomCode).then(function () {
@@ -404,7 +492,10 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     applyStoredFields();
+    ensureSoundToggle();
     bindEvents();
+    syncSoundToggle();
+    preloadSfx();
     renderEmpty();
     if (localState.roomCode) {
       refreshState();
