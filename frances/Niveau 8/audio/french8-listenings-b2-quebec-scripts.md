@@ -164,7 +164,6 @@ Nicolas: Espérons que cette affaire serve de leçon. Je doute cependant que les
 
 Léa: Oui, bien que le chemin ait été long, c'est un premier pas vers plus de responsabilité politique.
 
-
 ## Audio 03b - Critique culturelle : un film controversé (Québec)
 
 File: `complete/n8-03b-film-controverse-quebec-b2.mp3`
