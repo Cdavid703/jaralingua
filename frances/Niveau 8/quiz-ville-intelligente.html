@@ -58,6 +58,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260705-mojibake"></script>
+  <script src="../../assets/js/french8-listening-controls.js?v=20260708-speed-controls"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
   <script>
     (() => {
@@ -327,6 +328,7 @@
             updateCompletion();
           });
         });
+        window.JaraLinguaFrench8AudioControls?.enhanceAll(els.form);
         const audioSection = (currentQuiz.sections || []).find((section) => section.audioSrc);
         if (audioSection) loadProtectedAudio(audioSection.audioSrc);
       }

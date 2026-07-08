@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   var STORAGE_KEY = "jaralingua_french8_audio_library_v1";
@@ -152,9 +152,10 @@
     var tools = document.createElement("div");
     tools.className = "audio-study-tools";
     tools.innerHTML =
-      '<label class="speed-control"><span>Vitesse</span><select aria-label="Vitesse de lecture">' +
-      '<option value="0.75">0,75×</option><option value="0.9">0,9×</option>' +
-      '<option value="1" selected>1×</option><option value="1.25">1,25×</option></select></label>' +
+      '<div class="speed-control" role="group" aria-label="Vitesse de lecture"><span>Vitesse</span>' +
+      '<button type="button" class="library-speed-btn" data-speed="0.75" aria-pressed="false">0.75x</button>' +
+      '<button type="button" class="library-speed-btn active" data-speed="1" aria-pressed="true">1x</button>' +
+      '<button type="button" class="library-speed-btn" data-speed="1.25" aria-pressed="false">1.25x</button></div>' +
       '<button type="button" class="library-tool-button" data-favorite aria-pressed="false"></button>' +
       '<span class="listening-status" data-listening-status></span>' +
       (WORKSHOPS[id]
@@ -177,8 +178,16 @@
     var audio = card.querySelector("audio");
     var tools = buildTools(card, id);
 
-    tools.querySelector("select").addEventListener("change", function () {
-      audio.playbackRate = Number(this.value);
+    tools.querySelectorAll("[data-speed]").forEach(function (speedButton) {
+      speedButton.addEventListener("click", function () {
+        var speed = Number(speedButton.dataset.speed) || 1;
+        audio.playbackRate = speed;
+        tools.querySelectorAll("[data-speed]").forEach(function (candidate) {
+          var active = candidate === speedButton;
+          candidate.classList.toggle("active", active);
+          candidate.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+      });
     });
     tools.querySelector("[data-favorite]").addEventListener("click", function () {
       state[id].favorite = !state[id].favorite;

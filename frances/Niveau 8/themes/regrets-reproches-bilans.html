@@ -51,6 +51,7 @@
     function setThemeModules(open){document.querySelectorAll(".module").forEach((module)=>toggleThemeModule(module,open));}
     document.addEventListener("DOMContentLoaded",()=>{document.querySelectorAll(".module").forEach((module,index)=>{const header=module.querySelector(".module-header"),body=module.querySelector(".module-body");if(!header||!body)return;const bodyId="theme01-module-body-"+(index+1);body.id=bodyId;header.setAttribute("tabindex","0");header.setAttribute("role","button");header.setAttribute("aria-controls",bodyId);header.setAttribute("aria-expanded","true");const toggle=document.createElement("span");toggle.className="module-toggle";toggle.innerHTML='<i class="bi bi-chevron-down" aria-hidden="true"></i><span>Ouvrir</span>';header.appendChild(toggle);header.addEventListener("click",(event)=>{if(event.target.closest("a,button"))return;toggleThemeModule(module);});header.addEventListener("keydown",(event)=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();toggleThemeModule(module);}});toggleThemeModule(module,index===0);});});
   </script>
+  <script src="../../../assets/js/french8-listening-controls.js?v=20260708-speed-controls"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
