@@ -1,4 +1,4 @@
-# Français Niveau 8 · Compréhensions orales B2 (Accent Québec)
+# Français Niveau 8 — Compréhensions orales B2 (Accent Québec)
 
 ## Audio 01a - Un choix de carrière regretté (Québec)
 
@@ -21,6 +21,7 @@ Sophie: On aurait voulu tout faire, tout tenter, mais la réalité nous rattrape
 Martin: Absolument. J'aurais dû comprendre plus tôt que la carrière n'est pas un chemin linéaire. On peut toujours bifurquer. L'important, c'est de ne plus accumuler les regrets, tu ne crois pas ?
 
 Sophie: Tu as raison. On aurait pu passer des années à ruminer. Autant agir maintenant, il n'est jamais vraiment trop tard pour un nouveau départ.
+
 
 ## Audio 01b - Les regrets des Français (Québec)
 
@@ -48,6 +49,7 @@ Thomas: Oui. Ce qui ressort, c'est qu'on aurait dû encourager les Français à 
 
 Claire: Un constat puissant. Merci beaucoup, Thomas, pour cette analyse éclairante. On se retrouve la semaine prochaine pour une nouvelle chronique.
 
+
 ## Audio 01c - Bilan d'un projet municipal raté (Québec)
 
 File: `complete/n8-01c-projet-municipal-quebec-b2.mp3`
@@ -69,6 +71,7 @@ Léa: Le maire a-t-il pris la parole aujourd'hui ?
 Nicolas: Oui. Dans un communiqué, il reconnaît que l'on aurait dû mieux anticiper les contraintes techniques du terrain. Il ajoute que la mairie aurait préféré un calendrier plus réaliste, mais que les pressions politiques ont accéléré les choses. Il promet néanmoins un audit indépendant d'ici la fin du mois.
 
 Léa: Un audit qui arrive bien tard, diront certains. On aurait pu l'exiger dès les premiers dépassements de budget. Merci Nicolas pour ce reportage. Nous suivrons évidemment l'évolution de ce dossier dans les prochaines semaines.
+
 
 ## Audio 02a - Si j'avais su… (Québec)
 
@@ -92,6 +95,7 @@ Victor: Tu as raison. Finalement, si nous avions vécu dans le regret permanent,
 
 Jade: Exactement. Si j'avais compris ça plus tôt, j'aurais perdu beaucoup moins de temps à me torturer l'esprit.
 
+
 ## Audio 02b - Les grands « et si » de l'histoire (Québec)
 
 File: `complete/n8-02b-et-si-histoire-quebec-b2.mp3`
@@ -113,6 +117,7 @@ Thomas: Et un scénario plus récent : si la France avait adopté l'euro plus ta
 Sophie: Si la France n'avait pas rejoint la zone euro, elle aurait conservé le franc et une politique monétaire autonome. Si elle avait gardé cette indépendance, elle aurait pu dévaluer sa monnaie face aux crises, mais elle aurait aussi perdu l'ancrage économique européen.
 
 Thomas: On voit que chaque embranchement historique aurait généré un monde très différent. Si nos auditeurs avaient vécu dans ces réalités alternatives, ils ne reconnaîtraient probablement pas la France d'aujourd'hui. Merci Sophie pour cette exploration passionnante !
+
 
 ## Audio 02c - Accident évité de justesse (Québec)
 
@@ -136,6 +141,7 @@ Thomas: Plusieurs voyageurs m'ont confié leur effroi. Un passager m'a dit que s
 
 Claire: Si cet incident avait eu une issue différente, nous parlerions ce soir de l'une des pires catastrophes aériennes en France. Merci Thomas. La direction générale de l'aviation civile a annoncé un audit de sécurité immédiat.
 
+
 ## Audio 03a - Réactions après un scandale (Québec)
 
 File: `complete/n8-03a-scandale-reactions-quebec-b2.mp3`
@@ -157,6 +163,7 @@ Léa: Je suis consternée que la justice n'ait pas agi plus vite. On savait depu
 Nicolas: Espérons que cette affaire serve de leçon. Je doute cependant que les pratiques aient fondamentalement changé dans les cercles du pouvoir. Mais au moins, le débat est lancé.
 
 Léa: Oui, bien que le chemin ait été long, c'est un premier pas vers plus de responsabilité politique.
+
 
 ## Audio 03b - Critique culturelle : un film controversé (Québec)
 
@@ -184,6 +191,7 @@ Victor: Oui, sans hésiter. Il est essentiel que le cinéma ait cette capacité 
 
 Sophie: Merci Victor pour cette analyse. Nous invitons nos auditeurs à se forger leur propre opinion en salle.
 
+
 ## Audio 03c - Rapport sur une crise sanitaire (Québec)
 
 File: `complete/n8-03c-crise-sanitaire-quebec-b2.mp3`
@@ -206,6 +214,7 @@ Thomas: Le préfet a ordonné le retrait immédiat de tous les produits concern�
 
 Jade: Merci Thomas. Nous actualiserons ce dossier tout au long de la soirée.
 
+
 ## Audio 04a - Ce qu'a vraiment dit le ministre (Québec)
 
 File: `complete/n8-04a-dit-ministre-quebec-b2.mp3`
@@ -227,6 +236,7 @@ Claire: Et sur la question du numérique ? Il a promis qu'il investirait deux mi
 Martin: Au final, il a conclu qu'il ne voulait pas brusquer les choses et qu'il avait toujours privilégié le dialogue. Reste à savoir ce qu'il a vraiment voulu dire entre les lignes.
 
 Claire: Comme d'habitude, on nous a dit ce qu'on voulait bien nous dire. Il faudra attendre les actes.
+
 
 ## Audio 04b - Rumeurs et vérités au bureau (Québec)
 
@@ -252,6 +262,7 @@ Léa: Un dernier conseil pour nos auditeurs ?
 
 Nicolas: Vérifiez toujours la source. Si quelqu'un vous dit que le directeur a promis qu'il ferait ceci ou cela, allez directement à la source. La communication directe reste le meilleur antidote aux rumeurs.
 
+
 ## Audio 04c - Sommet international : déclarations (Québec)
 
 File: `complete/n8-04c-sommet-declarations-quebec-b2.mp3`
@@ -274,6 +285,7 @@ Victor: La présidence a annoncé que les vingt-sept avaient convenu de réduire
 
 Sophie: Des annonces ambitieuses. Mais plusieurs observateurs nous ont confié qu'ils doutaient de la capacité des États à tenir ces engagements. Merci Victor pour ce compte rendu. Nous analyserons ces déclarations en détail dans notre émission spéciale à vingt-deux heures.
 
+
 ## Audio 05a - Démêler le vrai du faux (Québec)
 
 File: `complete/n8-05a-vrai-faux-quebec-b2.mp3`
@@ -295,6 +307,7 @@ Jade: Et ce qui aggrave le phénomène, c'est l'algorithme. Ce que l'algorithme 
 Thomas: C'est un cercle vicieux. Ce qu'il faudrait, c'est intégrer l'éducation aux médias dès le collège. Ce dont les jeunes ont besoin, c'est d'apprendre à croiser les sources, à identifier les biais et à distinguer un fait d'une opinion.
 
 Jade: Absolument. C'est notre responsabilité collective. Ce que je refuse, c'est de laisser la désinformation gagner du terrain sans réagir.
+
 
 ## Audio 05b - Les médias face aux algorithmes (Québec)
 
@@ -326,6 +339,7 @@ Claire: Ce que je recommande, c'est de diversifier ses sources, de suivre des m�
 
 Martin: Un message salutaire. Merci Claire pour cet éclairage indispensable.
 
+
 ## Audio 05c - Alerte aux infox : rapport annuel (Québec)
 
 File: `complete/n8-05c-infox-rapport-quebec-b2.mp3`
@@ -348,6 +362,7 @@ Léa: Un porte-parole de Meta a déclaré que l'entreprise investissait déjà m
 
 Nicolas: Ce sont des enjeux majeurs pour nos démocraties. Ce qui ressort de ce rapport, c'est que la lutte contre la désinformation exige une mobilisation à tous les niveaux : institutions, médias et citoyens. Merci Léa pour ce compte rendu depuis Strasbourg.
 
+
 ## Audio 06a - L'IA au travail : menace ou outil ? (Québec)
 
 File: `complete/n8-06a-ia-travail-quebec-b2.mp3`
@@ -369,6 +384,7 @@ Sophie: C'est un point valable. Mais étant donné que le marché évolue à une
 Victor: D'accord, je l'admets. Mais il faut des garde-fous. On devrait exiger une charte éthique pour que les données des employés soient protégées et pour que l'humain reste au centre des décisions.
 
 Sophie: Tout à fait d'accord. Puisque nous sommes représentants du personnel, proposons cette charte au prochain comité. L'IA peut être un allié formidable, à condition de bien encadrer son usage.
+
 
 ## Audio 06b - Éthique et reconnaissance faciale (Québec)
 
@@ -396,6 +412,7 @@ Jade: La CNIL a émis des réserves importantes. Elle recommande un moratoire af
 
 Thomas: Un sujet qui continuera de nous interpeller. Merci Jade pour cet éclairage juridique essentiel.
 
+
 ## Audio 06c - Nouvelle régulation européenne sur l'IA (Québec)
 
 File: `complete/n8-06c-regulation-ia-quebec-b2.mp3`
@@ -422,170 +439,144 @@ Martin: Exactement. Les interdictions les plus strictes s'appliquent dès six mo
 
 Claire: Un tournant majeur. Merci Martin pour ce décryptage depuis Bruxelles.
 
+
 ## Audio 07a - Égalité des chances : réalité ou illusion ? (Québec)
 
 File: `complete/n8-07a-egalite-chances-quebec-b2.mp3`
 
-Philippe: Tu crois vraiment que l'égalité des chances existe en France ? Moi, j'ai de sérieux doutes.
+Léa: Martin, tu as lu le rapport de l'INSEE sur la mobilité sociale ? Les chiffres sont édifiants. Bien que le système éducatif français prône l'égalité des chances, la reproduction sociale reste massive. Les enfants de cadres ont toujours cinq fois plus de chances d'accéder aux grandes écoles.
 
-Caroline: Bien que le principe soit inscrit dans la Constitution, la réalité est bien différente. Même si l'école est gratuite et obligatoire, les inégalités se reproduisent d'une génération à l'autre.
+Martin: Oui, j'ai vu ça. Même si des bourses existent et que des dispositifs d'accompagnement ont été mis en place, les inégalités persistent. Malgré les efforts des gouvernements successifs, l'ascenseur social reste en panne pour une grande partie de la population.
 
-Philippe: Exactement. Malgré les dispositifs d'aide sociale, un enfant né dans un quartier défavorisé a statistiquement beaucoup moins de chances de réussir qu'un enfant de cadre supérieur.
+Léa: C'est frustrant. Bien que la France ait investi des milliards dans l'éducation prioritaire, les résultats sont décevants. En dépit de la multiplication des ZEP et des programmes de tutorat, les écarts de réussite entre quartiers favorisés et défavorisés ne se réduisent pas.
 
-Caroline: C'est vrai. Quoique certains programmes de discrimination positive aient montré des résultats encourageants, ils restent marginaux. Bien que Sciences Po ait ouvert des voies d'accès prioritaires, le nombre de bénéficiaires demeure limité.
+Martin: Toutefois, il faut reconnaître que certaines initiatives fonctionnent. Les cordées de la réussite, par exemple, ont permis à des milliers de lycéens de milieux modestes d'accéder à des études supérieures. Néanmoins, ces programmes restent insuffisants face à l'ampleur du problème.
 
-Philippe: Et même si un étudiant boursier accède à une grande école, il fait face à des obstacles invisibles. Malgré ses compétences, il n'a pas le même réseau, pas les mêmes codes sociaux.
+Léa: Je suis d'accord. Quoique ces dispositifs soient louables, ils ne touchent qu'une infime minorité. Malgré la bonne volonté de certains enseignants, le déterminisme social est un mur difficile à franchir. L'adresse postale reste le premier facteur de réussite scolaire.
 
-Caroline: Bien que ce soit difficile à quantifier, le capital culturel joue un rôle déterminant. Même si deux candidats ont le même diplôme, celui qui maîtrise les codes implicites sera favorisé lors d'un entretien d'embauche.
+Martin: C'est vrai. Cependant, je refuse le fatalisme. Bien que les statistiques soient accablantes, il existe des parcours inspirants. Mon propre frère, fils d'ouvrier, est devenu ingénieur. Même si son parcours a été semé d'embûches, il a réussi grâce à des professeurs qui ont cru en lui.
 
-Philippe: Malgré les lois contre la discrimination, le testing montre qu'un CV avec un prénom à consonance étrangère reçoit trente pour cent de réponses en moins. Quoique les entreprises affirment recruter sur les compétences, les biais inconscients persistent.
+Léa: Son cas est admirable, néanmoins il reste l'exception qui confirme la règle. En dépit de ces réussites individuelles, le système dans son ensemble produit de la reproduction sociale. Bien que personne ne veuille l'admettre, la méritocratie française est en grande partie un mythe.
 
-Caroline: Même si le gouvernement multiplie les plans de lutte contre les inégalités, les résultats sont décevants. Bien que des milliards soient investis dans les zones d'éducation prioritaire, l'écart de réussite ne se réduit pas significativement.
+Martin: Malgré tout, je pense qu'il ne faut pas baisser les bras. Il faut repenser le modèle en profondeur, quoique cela prenne une génération entière.
 
-Philippe: Malgré tout, je ne veux pas être complètement pessimiste. Bien que le chemin soit encore long, certaines initiatives locales donnent de l'espoir. Même si le système est imparfait, il y a des individus qui brisent le plafond de verre.
-
-Caroline: Tu as raison. Quoique la situation soit préoccupante, abandonner le combat serait pire. Malgré les obstacles, il faut continuer à exiger des politiques concrètes.
 
 ## Audio 07b - Engagement citoyen et participation locale (Québec)
 
 File: `complete/n8-07b-engagement-citoyen-quebec-b2.mp3`
 
-Émilie: Bienvenue dans « Agora ». Aujourd'hui, nous parlons d'engagement citoyen avec Marc, politologue et spécialiste de la démocratie participative. Marc, la participation citoyenne est-elle en crise ?
+Nicolas: Bonsoir et bienvenue dans « Citoyens en action ». Ce soir, nous parlons de l'engagement citoyen avec Sophie Dumas, politologue et auteure de l'essai « Démocratie de proximité ». Sophie, les Français sont souvent décrits comme désengagés. Est-ce vraiment le cas ?
 
-Marc: Merci, Émilie. Bien que le taux d'abstention atteigne des records historiques, il serait simpliste de conclure que les citoyens se désintéressent de la politique. Même si les gens ne votent plus autant, ils s'engagent différemment.
+Sophie: Merci Nicolas. C'est un cliché qu'il faut nuancer. Bien que l'abstention aux élections nationales atteigne des niveaux records, les formes d'engagement citoyen se sont en réalité diversifiées. Même si les gens ne votent plus autant, ils s'investissent dans des associations, des collectifs citoyens, des initiatives locales.
 
-Émilie: Que voulez-vous dire ?
+Nicolas: Vous dites que l'engagement se transforme plutôt qu'il ne disparaît ?
 
-Marc: Malgré la désaffection pour les urnes, on observe une explosion des initiatives citoyennes locales. Bien que les partis politiques traditionnels perdent des adhérents, les associations et les collectifs se multiplient. Quoique ces mouvements soient parfois éphémères, ils traduisent un besoin réel de participation.
+Sophie: Exactement. Malgré la méfiance envers les institutions politiques traditionnelles, les budgets participatifs connaissent un succès remarquable. À Paris, à Rennes, à Grenoble, des milliers de citoyens proposent et votent des projets pour leur quartier. Toutefois, ces dispositifs restent peu connus du grand public.
 
-Émilie: Pouvez-vous donner des exemples concrets ?
+Nicolas: Quoique ces initiatives soient encourageantes, ne restent-elles pas marginales ?
 
-Marc: Bien sûr. Même si le budget participatif de Paris a été critiqué pour ses limites, il a permis à des milliers de citoyens de proposer et de voter des projets. Malgré un financement modeste, certaines initiatives ont transformé des quartiers entiers — jardins partagés, pistes cyclables, espaces culturels.
+Sophie: C'est une critique légitime. En dépit de leur succès local, ces expériences peinent à changer l'échelle nationale. Néanmoins, elles montrent que les citoyens veulent participer, mais différemment. Bien que le modèle représentatif classique soit en crise, de nouvelles formes de démocratie émergent.
 
-Émilie: Les conventions citoyennes fonctionnent-elles mieux ?
+Nicolas: Et les jeunes générations, sont-elles vraiment apolitiques ?
 
-Marc: Bien que la Convention citoyenne pour le climat ait suscité un enthousiasme initial, le bilan est mitigé. Même si cent cinquante citoyens tirés au sort ont formulé des propositions ambitieuses, malgré la promesse présidentielle de les reprendre « sans filtre », la plupart ont été édulcorées ou abandonnées.
+Sophie: Pas du tout. Même si les moins de trente ans boudent les urnes, ils se mobilisent massivement pour le climat, contre les discriminations, pour la justice sociale. Malgré les critiques qui leur sont adressées, ils inventent des modes d'action inédits : pétitions en ligne, occupations pacifiques, campagnes virales sur les réseaux.
 
-Émilie: C'est décourageant, non ?
+Nicolas: Cependant, ces mobilisations débouchent-elles sur du concret ?
 
-Marc: Quoique le résultat soit décevant, l'expérience a prouvé que des citoyens ordinaires peuvent produire des recommandations pertinentes. Même si les politiques n'ont pas tenu leurs promesses, le modèle reste inspirant. Bien que la démocratie participative ne remplace pas la démocratie représentative, elle la complète utilement.
+Sophie: Bien que les résultats soient parfois lents à se matérialiser, certaines victoires sont indéniables. Néanmoins, il reste un fossé entre l'engagement numérique et l'impact politique réel. Malgré l'énergie déployée, le passage de la protestation à la proposition reste le grand défi de cette génération.
 
-Émilie: Malgré les déceptions, il faut donc persévérer ?
+Nicolas: Un défi passionnant. Merci Sophie pour cette réflexion stimulante sur la démocratie de demain.
 
-Marc: Absolument. Bien que le chemin soit semé d'embûches, l'engagement citoyen est le pilier d'une démocratie vivante.
-
-Émilie: Un message d'espoir. Merci, Marc.
 
 ## Audio 07c - Discrimination à l'embauche : le testing (Québec)
 
 File: `complete/n8-07c-discrimination-embauche-quebec-b2.mp3`
 
-Nathalie: Bonsoir. Ce soir dans votre flash info, les résultats d'une vaste opération de testing sur la discrimination à l'embauche. Notre reporter Jean-François nous livre les conclusions. Jean-François ?
+Jade: Bonsoir. La discrimination à l'embauche reste un fléau en France. Une nouvelle étude par testing vient de confirmer l'ampleur du phénomène. Notre reporter Thomas Bernard est à la DARES, où les résultats ont été présentés ce matin. Thomas ?
 
-Jean-François: Bonsoir, Nathalie. L'étude, menée par l'Observatoire des discriminations, a envoyé cinq mille candidatures fictives à des entreprises dans toute la France. Bien que toutes les candidatures présentent des compétences identiques, les résultats révèlent des écarts considérables.
+Thomas: Bonsoir Jade. Les résultats de cette étude sont accablants. Bien que la loi interdise formellement toute discrimination à l'embauche, les chercheurs ont constaté que les candidats portant un prénom à consonance maghrébine reçoivent en moyenne quarante pour cent de réponses en moins que les candidats au profil strictement identique mais portant un prénom à consonance française.
 
-Nathalie: Quels sont les chiffres marquants ?
+Jade: Comment l'étude a-t-elle été menée ?
 
-Jean-François: Malgré des qualifications équivalentes, un candidat portant un prénom à consonance maghrébine reçoit trente-deux pour cent de réponses en moins qu'un candidat au prénom d'origine française. Même si la loi interdit formellement toute discrimination, les pratiques persistent à grande échelle.
+Thomas: L'équipe de recherche a envoyé cinq mille candidatures fictives à des offres d'emploi réelles. Même si les CV étaient rigoureusement identiques en termes de compétences et d'expérience, le taux de convocation à un entretien variait considérablement selon l'origine supposée du candidat. Malgré les campagnes de sensibilisation menées par le gouvernement, les biais persistent.
 
-Nathalie: L'étude porte-t-elle uniquement sur l'origine ethnique ?
+Jade: Le phénomène touche-t-il tous les secteurs ?
 
-Jean-François: Non. Bien que l'origine soit le critère le plus discriminant, l'étude révèle également des biais liés au genre et à l'âge. Quoique les femmes soient mieux diplômées en moyenne, elles restent pénalisées pour les postes de direction. Malgré l'expérience accumulée, les candidats de plus de cinquante ans sont largement ignorés.
+Thomas: Quoique certains secteurs comme le numérique affichent des écarts plus faibles, la discrimination reste généralisée. En dépit des chartes de diversité signées par de grandes entreprises, le testing révèle que les pratiques réelles contredisent souvent les discours officiels. Néanmoins, le secteur public se distingue avec des écarts nettement moindres.
 
-Nathalie: Comment les entreprises réagissent-elles ?
+Jade: Comment les autorités comptent-elles réagir ?
 
-Jean-François: Même si plusieurs fédérations patronales reconnaissent le problème, elles contestent la méthodologie de l'étude. Bien que le testing soit une méthode scientifiquement validée, certains employeurs estiment qu'elle ne reflète pas la complexité du recrutement. Malgré ces critiques, les chercheurs maintiennent leurs conclusions.
+Thomas: La ministre du Travail a annoncé un renforcement des contrôles. Toutefois, les associations pointent le faible nombre de condamnations. Bien que des plaintes soient régulièrement déposées, les procédures sont longues et aboutissent rarement. Cependant, la ministre a promis la création d'une cellule dédiée au sein de l'inspection du travail. Même si cette mesure est saluée, les associations estiment qu'elle reste insuffisante sans une véritable politique de sanctions dissuasives.
 
-Nathalie: Des sanctions sont-elles prévues ?
+Jade: Malgré les avancées législatives, le chemin vers l'égalité réelle reste long. Merci Thomas pour ce reportage.
 
-Jean-François: Le Défenseur des droits a annoncé des poursuites contre les entreprises les plus discriminantes. Quoique les amendes actuelles soient jugées insuffisantes, une proposition de loi vise à les alourdir considérablement. Même si ces mesures ne suffiront pas à éliminer le problème, elles envoient un signal clair.
-
-Nathalie: Malgré ces avancées, le chemin reste long ?
-
-Jean-François: Bien que la prise de conscience progresse, les mentalités évoluent lentement. Malgré tout, cette étude constitue un outil précieux pour mesurer et combattre les discriminations.
-
-Nathalie: Merci, Jean-François.
 
 ## Audio 08a - Parler comme un Parisien (Québec)
 
 File: `complete/n8-08a-parler-parisien-quebec-b2.mp3`
 
-Émilie: Dis-moi, Jean-François, toi qui as vécu trois ans à Paris, c'est vrai que les Parisiens ont un langage particulier ?
+Claire: Victor, j'ai une question un peu délicate. Mon correspondant allemand arrive la semaine prochaine et il m'a dit qu'il voulait « parler comme un vrai Parisien ». Il a appris le français dans les manuels, mais il ne comprend rien quand il regarde des vidéos sur YouTube. Tu pourrais m'aider à lui préparer un petit guide ?
 
-Jean-François: Complètement ! Au début, j'étais perdu. Les collègues me disaient des trucs comme « c'est ouf ce projet » ou « on va se faire un resto, ça te dit ? ». Le registre familier est omniprésent dans la vie quotidienne.
+Victor: Ah, bah c'est sûr que le français des manuels, c'est pas du tout ce qu'on parle dans la vraie vie ! Genre, nous on dit jamais « je ne sais pas », on dit « j'sais pas » ou même « chais pas ». Et « il y a » devient « y'a ». En fait, à l'oral, on raccourcit tout.
 
-Émilie: « Ouf », c'est du verlan, non ? Le mot « fou » inversé ?
+Claire: C'est vrai. Et il y a aussi le verlan que les jeunes utilisent beaucoup, non ?
 
-Jean-François: Exactement. Le verlan est partout à Paris. « Meuf » pour « femme », « relou » pour « lourd », « chanmé » pour « méchant » — mais dans le sens de « génial ». Au début, j'avais l'impression d'apprendre une autre langue.
+Victor: Ouais, grave. Le verlan, c'est quand on inverse les syllabes. Par exemple, « femme » devient « meuf », « fou » devient « ouf », « louche » c'est « chelou », « lourd » c'est « relou », et « énervé » c'est « vénère ». Genre, tu peux dire « c'est chelou cette histoire » ou « il est vénère le prof aujourd'hui ».
 
-Émilie: Et au travail, c'est pareil ? Les gens utilisent le registre familier aussi ?
+Claire: Et il y a des mots qui changent complètement de registre selon le contexte, n'est-ce pas ? En registre soutenu, on dirait « je suis extrêmement fatigué », en langage courant « je suis très fatigué », et en familier « chuis crevé » ou même « chuis mort ».
 
-Jean-François: Ça dépend du contexte. En réunion officielle, les gens passent au registre soutenu : « Nous souhaiterions examiner cette proposition dans les meilleurs délais » ou « Il conviendrait d'envisager une alternative ». Mais dès que la réunion se termine, c'est retour au familier : « Bon, c'est relou ce dossier, on se prend un café ? »
+Victor: Exactement. Et du coup, y'a aussi les marqueurs oraux que les étrangers captent jamais. On utilise « en fait » tout le temps, « genre » pour donner un exemple ou hésiter, « du coup » pour marquer la conséquence, et « bah » au début des phrases. Bah oui, c'est comme ça qu'on parle, en fait.
 
-Émilie: C'est fascinant, cette capacité à naviguer entre les registres. En français standard, on dirait « C'est ennuyeux, ce dossier, voulez-vous prendre un café ? »
+Claire: Tu pourrais lui montrer la différence entre les registres avec un même message ? Par exemple, en soutenu : « Je souhaiterais que vous m'accordiez un instant ». En standard : « Est-ce que vous avez un moment ? ». Et en familier : « T'as deux minutes ? ».
 
-Jean-François: Voilà. Et il y a aussi les réductions orales. Les Parisiens disent « j'sais pas » au lieu de « je ne sais pas », « t'as vu » au lieu de « tu as vu », « y'a » au lieu de « il y a ». C'est le registre courant, pas soutenu, pas familier.
+Victor: Ouais, c'est ouf comme les trois versions disent la même chose mais sonnent complètement différemment. En fait, c'est relou pour les étrangers parce qu'on leur apprend que le français soutenu, mais dans la vie, bah personne parle comme ça.
 
-Émilie: Et les marqueurs oraux comme « genre », « en mode », « du coup » ?
+Claire: Je vais lui préparer une petite fiche. Au moins, il sera moins perdu quand il entendra des jeunes parler dans le métro.
 
-Jean-François: Ah, « du coup » ! C'est le marqueur parisien par excellence. « Du coup, on fait quoi ? », « Du coup, j'ai changé d'avis. » En registre soutenu, on dirait « par conséquent » ou « en conséquence ». Et « genre » est devenu un ponctuant : « Il m'a dit, genre, que c'était pas possible. »
+Victor: Bonne idée. Genre, dis-lui aussi que « c'est chaud » ça veut dire que c'est compliqué, pas que la température est élevée. Du coup, il comprendra mieux les conversations, en fait !
 
-Émilie: Donc pour parler comme un vrai Parisien, il faut maîtriser ces trois registres et savoir passer de l'un à l'autre selon la situation ?
-
-Jean-François: C'est ça. C'est pas juste du vocabulaire, c'est une compétence sociale. Le bon registre au bon moment, c'est la clé.
 
 ## Audio 08b - La francophonie en mouvement (Québec)
 
 File: `complete/n8-08b-francophonie-mouvement-quebec-b2.mp3`
 
-Nathalie: Bienvenue dans « Horizons francophones ». Aujourd'hui, Philippe, vous êtes linguiste et vous étudiez l'évolution du français dans le monde. Le français est-il une langue en danger ou en pleine expansion ?
+Sophie: Bienvenue dans « Paroles francophones ». Aujourd'hui, nous explorons les variétés du français à travers le monde avec Nicolas Beaumont, linguiste au CNRS. Nicolas, on dit souvent qu'il n'y a qu'un seul français. Est-ce vrai ?
 
-Philippe: Merci, Nathalie. C'est une question complexe. En registre soutenu, on dirait que « la langue française connaît une mutation profonde de ses usages et de sa démographie ». Plus simplement, le français change, et c'est normal.
+Nicolas: Merci Sophie. C'est un mythe tenace. En réalité, le français est une langue plurielle. Si on compare le français de Paris, celui de Bruxelles, de Genève, de Dakar ou de Montréal, on constate des différences fascinantes, tant dans le vocabulaire que dans la prononciation et même dans les registres utilisés.
 
-Nathalie: Combien de personnes parlent français aujourd'hui ?
+Sophie: Commençons par la Belgique. Quelles sont les particularités du français belge ?
 
-Philippe: Environ trois cent vingt millions de locuteurs. Mais ce qui est fascinant, c'est la diversité des registres. Un étudiant à Dakar n'utilise pas le même français qu'un cadre à Paris ou un commerçant à Montréal. Le registre standard international coexiste avec des variantes locales très riches.
+Nicolas: Les Belges utilisent « septante » pour soixante-dix et « nonante » pour quatre-vingt-dix, ce qui est, en fait, beaucoup plus logique que le système français. Ils disent « une fois » en fin de phrase comme marqueur discursif, genre « viens ici une fois ». En registre courant, ils emploient « savoir » là où les Français utilisent « pouvoir » : « tu sais me passer le sel ? ».
 
-Nathalie: Justement, certains puristes s'inquiètent de cette diversification. « La langue se dégrade », disent-ils en registre soutenu.
+Sophie: Et la Suisse romande ?
 
-Philippe: C'est un débat ancien. En registre familier, les jeunes Ivoiriens disent « c'est dja » pour « c'est déjà fait », les Québécois utilisent « pantoute » pour « pas du tout ». Ce ne sont pas des erreurs, ce sont des créations linguistiques légitimes.
+Nicolas: Les Suisses partagent « septante » et « nonante » avec les Belges, mais ils ajoutent « huitante » pour quatre-vingts. Ils utilisent aussi « natel » pour téléphone portable et « panosse » pour serpillière. Du coup, un Parisien qui débarque en Suisse peut se trouver un peu perdu dans les conversations du quotidien.
 
-Nathalie: Le verlan et l'argot des banlieues françaises ont aussi enrichi la langue, non ?
+Sophie: Qu'en est-il du français en Afrique, notamment au Sénégal ?
 
-Philippe: Absolument. Des mots comme « kiffer » — aimer passionnément — sont passés du registre familier au registre courant. « Ça me saoule » — en registre standard, « cela m'exaspère » — est compris partout. La langue absorbe et transforme ces apports.
+Nicolas: Le français sénégalais est d'une richesse inouïe. Bah, y'a un mélange constant avec le wolof qui crée un parler urbain très vivant. Des expressions comme « on est ensemble » pour exprimer la solidarité, ou « ça va un peu » pour dire que ça ne va pas trop, sont des perles linguistiques. Le registre oscille entre soutenu dans les contextes officiels et familier dans la vie quotidienne.
 
-Nathalie: Et le franglais ? « Un meeting », « le weekend », « checker ses mails » ?
+Sophie: Et le Québec ? C'est sans doute la variété qui surprend le plus les Français ?
 
-Philippe: Les emprunts à l'anglais inquiètent les institutions. L'Académie française recommande « courriel » au lieu de « mail » en registre soutenu. Mais dans le registre courant, tout le monde dit « mail ». Il convient de distinguer l'enrichissement lexical de l'appauvrissement syntaxique.
+Nicolas: Oui, le québécois est ouf pour un Parisien qui l'entend pour la première fois ! T'as des mots comme « char » pour voiture, « blonde » pour petite amie, « magasiner » pour faire du shopping. Et les sacres, ces jurons tirés du vocabulaire religieux — tabarnac, câlice, crisse — c'est chelou pour un Français mais complètement intégré là-bas. J'sais pas si votre correspondant allemand est prêt pour ça !
 
-Nathalie: Donc la francophonie est en mouvement, pas en déclin ?
+Sophie: C'est fascinant de voir comment une même langue peut s'exprimer de manières si différentes. Merci Nicolas pour ce tour du monde francophone.
 
-Philippe: Exactement. La vitalité d'une langue se mesure à sa capacité d'adaptation. Le français n'est pas menacé ; il est en pleine réinvention.
-
-Nathalie: Un message optimiste. Merci, Philippe, pour ce panorama éclairant.
 
 ## Audio 08c - Portrait : un rappeur et la langue (Québec)
 
 File: `complete/n8-08c-rappeur-langue-quebec-b2.mp3`
 
-Marc: Bonsoir. Dans votre flash info culturel ce soir, le portrait d'Amine Kouachi, rappeur lyonnais dont le dernier album mêle trois registres de langue. Notre reporter Caroline l'a rencontré. Caroline ?
+Léa: Ce soir dans notre rubrique culture, portrait d'un artiste qui bouscule les codes de la langue française. Le rappeur Karim Ziani, connu sous le nom de scène K-Zed, fait l'unanimité chez les critiques pour sa maîtrise exceptionnelle du français, de l'argot le plus cru au registre littéraire le plus sophistiqué. Notre reporter Martin Chevalier l'a rencontré. Martin ?
 
-Caroline: Bonsoir, Marc. Amine Kouachi, vingt-huit ans, est considéré comme l'un des artistes les plus innovants de la scène rap francophone. Son album « Trilingue » joue sur les registres de langue comme d'autres jouent avec les instruments de musique.
+Martin: Bonsoir Léa. J'ai passé un après-midi avec K-Zed dans son studio du dix-huitième arrondissement. Et le moins qu'on puisse dire, c'est que ce rappeur de trente-deux ans a un rapport passionnel à la langue. Quand on lui demande pourquoi il mélange les registres, il répond sans hésiter.
 
-Marc: Qu'entend-il par « trilingue » ?
+Martin: En fait, il m'a expliqué que pour lui, y'a pas de frontière entre le français « correct » et le français de la rue. Genre, dans un même couplet, il peut passer d'une référence à Victor Hugo à du verlan pur. Il dit que c'est chelou de vouloir séparer les registres, parce que dans la vraie vie, bah, on parle comme ça.
 
-Caroline: Il m'a expliqué, je cite : « J'parle trois français. Y'a le français de la cité, celui qu'on utilise entre nous — "wesh, c'est chanmé, on s'arrache". Y'a le français de l'école — "nous devons prendre en considération les enjeux socio-économiques". Et y'a le français de tous les jours, celui du milieu. J'navigue entre les trois. »
+Martin: Ce qui est remarquable, c'est sa technique d'écriture. Il utilise les registres comme un outil stylistique. Dans son dernier album, un morceau commence en alexandrins classiques — registre soutenu, subjonctifs, passé simple — puis bascule en langage familier avec des « chuis », des « t'as vu » et du verlan, comme « c'est ouf ce que la vie nous fait ». Le contraste est saisissant et crée un effet poétique puissant.
 
-Marc: Un mélange audacieux ?
+Martin: K-Zed m'a confié que son inspiration venait de sa double culture. Fils d'un professeur de lettres et d'une mère algérienne, il a grandi entre Molière et le parler des cités. Du coup, il jongle naturellement entre « je souhaiterais exprimer mon désaccord » et « c'est relou, j'suis vénère ».
 
-Caroline: Très audacieux. Dans un même morceau, il passe du registre soutenu — « Il conviendrait que la société reconsidère ses préjugés à l'égard des quartiers populaires » — au verlan et à l'argot — « Les keufs nous contrôlent, c'est relou, mais on lâche rien, on est vénère ». En registre standard, cela signifie : « La police nous contrôle fréquemment, c'est pénible, mais nous ne renonçons pas, nous sommes en colère. »
+Martin: Les linguistes s'intéressent de près à son travail. Une chercheuse de la Sorbonne a publié un article analysant comment il déconstruit la hiérarchie des registres. En fait, K-Zed prouve que le français populaire, le verlan, les marqueurs oraux comme « genre » et « en fait », ce sont pas des formes dégradées de la langue, mais des créations linguistiques à part entière.
 
-Marc: Comment le public réagit-il ?
-
-Caroline: L'album rencontre un succès critique remarquable. Les linguistes saluent cette capacité à naviguer entre les registres. Un professeur de sociolinguistique a déclaré, en registre soutenu : « Cet artiste démontre une maîtrise exceptionnelle des variations diaphasiques du français contemporain. » Plus simplement, il sait adapter sa langue à chaque situation.
-
-Marc: Et Amine, que répond-il aux puristes ?
-
-Caroline: Il m'a dit, dans un registre familier typique : « Les gens qui disent que le verlan, c'est pas du français, ils captent rien. C'est ouf de pas voir que la langue, elle bouge, elle vit. En mode, si tu veux toucher les gens, faut leur parler comme ils parlent. » Un plaidoyer passionné pour une langue vivante et inclusive.
-
-Marc: Merci, Caroline. Un portrait qui donne à réfléchir sur notre rapport à la langue.
+Léa: Un artiste qui réconcilie les Français avec toutes les facettes de leur langue. Merci Martin pour ce portrait inspirant.

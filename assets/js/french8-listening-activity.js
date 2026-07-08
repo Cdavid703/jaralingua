@@ -5,6 +5,7 @@
     france: "../audio/french8-listenings-b2-france-scripts.md",
     quebec: "../audio/french8-listenings-b2-quebec-scripts.md"
   };
+  var AUDIO_CACHE_TAG = "20260708-qc-voices";
 
   function escapeHtml(value) {
     return String(value || "")
@@ -86,10 +87,13 @@
     var quebecTranscripts = window.FRENCH8_LISTENING_QUEBEC_TRANSCRIPTS || {};
     var franceFile = baseActivity.file.replace("-quebec-b2.mp3", "-france-b2.mp3");
     var quebecFile = baseActivity.file.replace("-france-b2.mp3", "-quebec-b2.mp3");
+    function cacheAudio(file) {
+      return String(file || "").replace(/\?.*$/, "") + "?v=" + AUDIO_CACHE_TAG;
+    }
     return {
-      france: Object.assign({}, baseActivity, { file: franceFile }),
+      france: Object.assign({}, baseActivity, { file: cacheAudio(franceFile) }),
       quebec: Object.assign({}, baseActivity, {
-        file: quebecFile,
+        file: cacheAudio(quebecFile),
         questions: quebecQuestions[baseActivity.id] || baseActivity.questions,
         transcript: quebecTranscripts[baseActivity.id] || baseActivity.transcript || ""
       })

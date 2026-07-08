@@ -244,7 +244,7 @@ Reglas obligatorias:
 - Audio profesional, no lectura robotica plana.
 - Transcripcion docente alineada exactamente con el audio. La transcripcion no puede ser una version aproximada, resumida o corregida del guion: debe coincidir palabra por palabra con lo que se escucha.
 - Controles con barra de progreso, duracion, tiempo actual y velocidad.
-- Botones minimos de velocidad: lento, normal y rapido.
+- Botones minimos de velocidad en toda implementacion HTML con audio: `0.75x`, `1x`, `1.25x`. Este patron aplica a comprensiones orales, biblioteca de audio, simulacros, modelos de pronunciacion y cualquier actividad que incluya un `<audio>`. El boton `1x` debe cargar activo por defecto y el cambio debe actualizar `audio.playbackRate`.
 - Preguntas distribuidas a lo largo de todo el audio.
 - Preguntas coordinadas con el audio real y su transcripcion exacta. Ninguna pregunta puede depender de informacion que no aparezca en el audio.
 - No mostrar transcripcion completa al estudiante durante una evaluacion de escucha.

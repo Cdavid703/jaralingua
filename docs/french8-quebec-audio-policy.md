@@ -40,6 +40,18 @@ Le script :
 - force les pages de compréhension orale à ouvrir France par défaut ;
 - génère les MP3 Québec avec les deux voix validées.
 
+## Lot complete 2026-07-08
+
+Activites regenerees avec les voix validees et cache tag `20260708-qc-voices` :
+
+- `07a` Egalite des chances
+- `07b` Engagement citoyen
+- `07c` Discrimination a l'embauche
+- `08a` Parler parisien
+- `08b` Francophonie en mouvement
+- `08c` Rappeur et langue
+- `09a` Precision syntaxique
+
 ## Interdiction
 
 Ne pas écrire un script Québec différent pour une compréhension orale standard. Si le contenu doit changer pour des raisons culturelles, il faut créer une autre activité, pas une variante d'accent.
