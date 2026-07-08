@@ -2438,6 +2438,18 @@ def french8_quiz_state_payload(profile, grades_data, bundle, submissions):
             "submittedCount": submitted_count,
             "pendingCount": max(total_students - submitted_count, 0)
         }
+        payload["submissions"] = []
+        for student in students:
+            student_id = clean_text(student.get("id"), 40)
+            submission = submissions.get("submissions", {}).get(student_id)
+            public_submission = french8_quiz_submission_public(submission)
+            payload["submissions"].append({
+                "studentId": student_id,
+                "studentName": clean_text(student.get("fullName"), 160),
+                "email": normalize_email(student.get("email")),
+                "status": "submitted" if public_submission else "pending",
+                "result": public_submission
+            })
     return payload
 
 
