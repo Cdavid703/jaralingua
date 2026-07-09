@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -9,8 +9,70 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .unit3-page{background:#f6f8fc;color:#0f172a}
+    .unit3-page .lesson-text{line-height:1.72}
+    .unit3-route-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-top:18px}
+    .unit3-route-item{display:grid;gap:6px;min-height:108px;padding:16px;border-radius:20px;background:#fff;border:1px solid rgba(18,59,143,.12);box-shadow:0 12px 24px rgba(15,23,42,.06);text-decoration:none;color:#0f172a}
+    .unit3-route-item span{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;background:#123b8f;color:#fff;font-weight:950}
+    .unit3-route-item strong{color:#071f4f;font-size:1rem}
+    .unit3-route-item small{color:#64748b;line-height:1.35}
+    .unit3-section-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .unit3-module{border-radius:28px;overflow:hidden;background:#fff;box-shadow:0 18px 44px rgba(15,23,42,.08);border:1px solid rgba(18,59,143,.1);margin-bottom:26px}
+    .unit3-module-header{position:relative;min-height:210px;padding:34px;display:grid;align-content:end;color:#fff;background:linear-gradient(135deg,rgba(7,31,79,.95),rgba(18,59,143,.78)),var(--module-image,linear-gradient(135deg,#071f4f,#123b8f));background-size:cover;background-position:center}
+    .unit3-module-header span{width:44px;height:44px;border-radius:16px;background:#e11d48;color:#fff;display:grid;place-items:center;font-weight:950;margin-bottom:12px}
+    .unit3-module-header h2{margin:0;color:#fff;font-size:clamp(1.55rem,3vw,2.45rem)}
+    .unit3-module-header p{max-width:820px;margin:.55rem 0 0;color:rgba(255,255,255,.92);line-height:1.6}
+    .unit3-module-body{padding:28px;display:grid;gap:22px}
+    .unit3-visual-explainer{display:grid;grid-template-columns:minmax(260px,.95fr) minmax(0,1.05fr);gap:22px;align-items:center}
+    .unit3-visual-explainer img{width:100%;border-radius:24px;box-shadow:0 18px 40px rgba(15,23,42,.16);object-fit:cover}
+    .unit3-visual-copy{display:grid;gap:12px}
+    .unit3-visual-copy h3,.unit3-rule-card h3,.unit3-example-card h3,.unit3-model-card h3{margin:0;color:#071f4f}
+    .unit3-grid-2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .unit3-grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .unit3-grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+    .unit3-rule-card,.unit3-example-card,.unit3-model-card,.unit3-mini-card{border-radius:22px;background:#f8fbff;border:1px solid rgba(18,59,143,.12);padding:18px;box-shadow:0 12px 24px rgba(15,23,42,.05)}
+    .unit3-example-card{background:#fff}
+    .unit3-formula{display:block;margin-top:10px;padding:12px 14px;border-radius:14px;background:#eef4ff;color:#071f4f;font-weight:900;line-height:1.45}
+    .unit3-mini-label{display:inline-flex;width:max-content;margin-bottom:8px;border-radius:999px;background:#fee2e2;color:#9f1239;padding:5px 10px;font-size:.78rem;font-weight:950;text-transform:uppercase;letter-spacing:.04em}
+    .unit3-table-wrap{overflow-x:auto;border-radius:20px;border:1px solid rgba(18,59,143,.12)}
+    .unit3-table{width:100%;border-collapse:collapse;background:#fff;min-width:720px}
+    .unit3-table th{background:#071f4f;color:#fff;text-align:left;padding:14px;font-size:.9rem}
+    .unit3-table td{padding:13px 14px;border-bottom:1px solid rgba(15,23,42,.08);vertical-align:top;line-height:1.45}
+    .unit3-note{border-left:6px solid #e11d48;border-radius:18px;background:#fff7e8;color:#7c4a03;padding:16px;line-height:1.62}
+    .unit3-correction{display:grid;gap:8px}
+    .unit3-wrong,.unit3-right{border-radius:14px;padding:12px 14px;font-weight:900}
+    .unit3-wrong{background:#fee2e2;color:#991b1b}
+    .unit3-right{background:#dcfce7;color:#166534}
+    .unit3-family-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .unit3-family-card{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-radius:16px;background:#fff;border:1px solid rgba(18,59,143,.12);padding:12px 14px}
+    .unit3-family-card strong{color:#071f4f}
+    .unit3-family-card small{display:block;color:#64748b;margin-top:2px}
+    .unit3-audio-btn{border:0;border-radius:999px;background:#123b8f;color:#fff;font-weight:900;padding:8px 11px;cursor:pointer}
+    .unit3-audio-btn:hover{background:#0b2a66}
+    .unit3-word-bank{display:flex;flex-wrap:wrap;gap:10px}
+    .unit3-word-bank span{border-radius:999px;background:#fff;border:1px solid rgba(18,59,143,.14);color:#071f4f;padding:9px 12px;font-weight:900}
+    .unit3-model-text{border-radius:22px;background:#071f4f;color:#fff;padding:20px;line-height:1.8}
+    .unit3-model-text p{margin:0;color:#fff}
+    .unit3-checklist{display:grid;gap:10px}
+    .unit3-checklist label{display:flex;gap:10px;align-items:flex-start;border-radius:14px;background:#fff;border:1px solid rgba(18,59,143,.12);padding:12px;color:#334155}
+    @media(max-width:1000px){
+      .unit3-route-grid,.unit3-grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .unit3-grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .unit3-visual-explainer{grid-template-columns:1fr}
+      .unit3-family-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+    }
+    @media(max-width:620px){
+      .unit3-route-grid,.unit3-grid-2,.unit3-grid-3,.unit3-grid-4,.unit3-family-grid{grid-template-columns:1fr}
+      .unit3-module-header{min-height:180px;padding:24px}
+      .unit3-module-body{padding:18px}
+      .unit3-section-controls .audio-btn{width:100%;justify-content:center}
+      .unit3-family-card{grid-template-columns:1fr}
+      .unit3-audio-btn{width:100%;min-height:42px}
+    }
+  </style>
 </head>
-<body class="english-basic-page">
+<body class="english-basic-page unit3-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
   <header class="site-header">
     <nav class="navbar">
@@ -24,154 +86,325 @@
       </ul>
     </nav>
   </header>
-  <main>
 
-    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png');">
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png');">
       <div class="lesson-hero-content">
-        <p class="eyebrow">Basic English Course 1</p>
+        <p class="eyebrow">Basic English Course 1 &middot; Unit 3</p>
         <h1>Unit 3: Favorite People</h1>
-        <p>By the end of this unit, you will be able to describe famous people, classmates, and family members using simple be-verb sentences and yes/no questions.</p>
-        <div class="lesson-meta"><span>Sessions 7-9</span><span>Descriptions</span><span>Yes/no questions</span><span>Family</span></div>
+        <p>Describe famous people, classmates, friends, and family members using simple identity, description, possession, and yes/no question patterns.</p>
+        <div class="lesson-meta"><span>Sessions 7-9</span><span>People</span><span>Descriptions</span><span>Family</span><span>Yes/no questions</span></div>
         <div class="hero-actions">
           <a href="#lesson-content" class="btn btn-primary">Start lesson</a>
+          <a href="practice-lab.html#unit-3-folder" class="btn btn-secondary">Unit 3 Practice Lab</a>
           <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png" alt="Unit 3: Favorite People" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png" alt="Unit 3 Favorite People" /></aside>
     </section>
-
 
     <section class="lesson-outcome">
       <div class="outcome-card">
         <span class="outcome-label">Learning Outcome</span>
-        <p>By the end of this unit, you will be able to describe famous people, classmates, and family members using simple be-verb sentences and yes/no questions.</p>
+        <p>By the end of this unit, you can introduce and describe a favorite person, ask yes/no questions about people, and talk about a family photo with basic but accurate English.</p>
       </div>
     </section>
 
     <section class="premium-lesson-container" id="lesson-content">
-
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Descriptions</p><h2>National and Foreign Celebrities</h2></div></div>
-        <p class="lesson-text">Use simple vocabulary to say who people are and what they do.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Identity</h3><div class="phrase-list"><div class="phrase-item"><strong>He is an actor.</strong><span>Use he for a man or boy.</span></div><div class="phrase-item"><strong>She is a famous singer.</strong><span>Use she for a woman or girl.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Groups</h3><div class="phrase-list"><div class="phrase-item"><strong>They are soccer players.</strong><span>Use they for two or more people.</span></div><div class="phrase-item"><strong>They are from Colombia.</strong><span>Use from for origin.</span></div></div></div>
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Learning route</p><h2>What you will learn in Unit 3</h2></div></div>
+        <p class="lesson-text">Unit 3 moves from simple identity sentences to complete descriptions of people. The same language supports the Guess Who game, family photo listening, reading, pronunciation, and speaking activities.</p>
+        <div class="unit3-route-grid">
+          <a class="unit3-route-item" href="#unit3-section-1"><span>01</span><strong>People and identity</strong><small>He, she, they, jobs, origin.</small></a>
+          <a class="unit3-route-item" href="#unit3-section-2"><span>02</span><strong>Descriptions</strong><small>Appearance and personality.</small></a>
+          <a class="unit3-route-item" href="#unit3-section-3"><span>03</span><strong>To be review</strong><small>Affirmative, negative, question.</small></a>
+          <a class="unit3-route-item" href="#unit3-section-4"><span>04</span><strong>Yes/no questions</strong><small>Ask and answer about people.</small></a>
+          <a class="unit3-route-item" href="#unit3-section-5"><span>05</span><strong>Possessives</strong><small>My, his, her, their.</small></a>
+          <a class="unit3-route-item" href="#unit3-section-6"><span>06</span><strong>Family vocabulary</strong><small>Core family words with audio.</small></a>
+          <a class="unit3-route-item" href="#unit3-section-7"><span>07</span><strong>Family photo</strong><small>This is..., these are...</small></a>
+          <a class="unit3-route-item" href="#unit3-section-8"><span>08</span><strong>Likes and favorite people</strong><small>Simple third-person meaning.</small></a>
+          <a class="unit3-route-item" href="#unit3-section-9"><span>09</span><strong>Final model</strong><small>Describe your favorite person.</small></a>
+          <a class="unit3-route-item" href="#unit3-continue"><span>10</span><strong>Continue</strong><small>Practice Lab connections.</small></a>
         </div>
-        
+        <div class="unit3-section-controls" aria-label="Unit 3 section controls">
+          <button type="button" class="audio-btn play" onclick="setUnit3Sections(true)">Open all sections</button>
+          <button type="button" class="audio-btn" onclick="setUnit3Sections(false)">Close all sections</button>
+        </div>
       </article>
 
-      <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Questions</p><h2>People We Know</h2></div></div>
-        <p class="lesson-text">Ask and answer yes/no questions with the verb <strong>to be</strong>.</p>
-        <div class="lesson-grid">
-          <div class="lesson-mini-card"><h3>Questions</h3><div class="phrase-list"><div class="phrase-item"><strong>Are you busy?</strong><span>Yes, I am. / No, I am not.</span></div><div class="phrase-item"><strong>Is he your classmate?</strong><span>Yes, he is. / No, he is not.</span></div></div></div>
-          <div class="lesson-mini-card"><h3>Negative Sentences</h3><div class="phrase-list"><div class="phrase-item"><strong>I am not late.</strong><span>Use not after am.</span></div><div class="phrase-item"><strong>It is not hard work.</strong><span>Contraction: it isn't hard work.</span></div></div></div>
+      <article class="unit3-module" id="unit3-section-1">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/practice-lab/guess-who-game-banner.png');">
+          <span>01</span>
+          <h2>People and Identity</h2>
+          <p>Start with the most basic information: who the person is, where the person is from, and what the person does.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-visual-explainer">
+            <img src="../../assets/img/english-basic/practice-lab/guess-who-game-banner.png" alt="People description game banner" />
+            <div class="unit3-visual-copy">
+              <h3>Real context: identify one person</h3>
+              <p>In this unit, students describe famous people, classmates, suspects, and family members. The first step is simple identity language.</p>
+              <span class="unit3-formula">She is a singer. He is my classmate. They are from Colombia.</span>
+            </div>
+          </div>
+          <div class="unit3-grid-3">
+            <div class="unit3-rule-card"><h3>He</h3><p>Use <strong>he</strong> for one male person.</p><span class="unit3-formula">He is my brother.</span><span class="unit3-formula">He is an actor.</span></div>
+            <div class="unit3-rule-card"><h3>She</h3><p>Use <strong>she</strong> for one female person.</p><span class="unit3-formula">She is my aunt.</span><span class="unit3-formula">She is a singer.</span></div>
+            <div class="unit3-rule-card"><h3>They</h3><p>Use <strong>they</strong> for two or more people.</p><span class="unit3-formula">They are my parents.</span><span class="unit3-formula">They are soccer players.</span></div>
+          </div>
+          <div class="unit3-table-wrap">
+            <table class="unit3-table">
+              <thead><tr><th>Meaning</th><th>Pattern</th><th>Example</th><th>Spanish idea</th></tr></thead>
+              <tbody>
+                <tr><td>Identity</td><td>Subject + be + name/relationship</td><td>She is Sofia. / He is my cousin.</td><td>qui&eacute;n es</td></tr>
+                <tr><td>Job or role</td><td>Subject + be + a/an + job</td><td>He is an actor. / She is a student.</td><td>qu&eacute; hace / rol</td></tr>
+                <tr><td>Origin</td><td>Subject + be + from + place</td><td>They are from Medell&iacute;n.</td><td>de d&oacute;nde es</td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-        <div class="teacher-tip"><span>Teacher's Tip</span><p>In short answers, do not repeat everything every time: <strong>Yes, she is</strong> is enough.</p></div>
       </article>
 
-      <article class="premium-topic-card" id="talking-about-your-family">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Favorite People + Family</p><h2>Talking About Your Family</h2></div></div>
-        <p class="lesson-text">Favorite people are often famous people, classmates, friends, and family members. Use the accordions below to study family vocabulary, pronouns, possessives, and simple questions for a family photo conversation.</p>
+      <article class="unit3-module" id="unit3-section-2">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/practice-lab/eyewitness-testimony/eyewitness-burglary-scene.png');">
+          <span>02</span>
+          <h2>Describing People</h2>
+          <p>Students need description language for Guess Who, family photos, favorite people, and eyewitness-style speaking tasks.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-grid-3">
+            <div class="unit3-rule-card"><h3>Be + adjective</h3><p>Use <strong>is/are</strong> before adjectives.</p><span class="unit3-formula">She is friendly.</span><span class="unit3-formula">He is tall.</span><span class="unit3-formula">They are young.</span></div>
+            <div class="unit3-rule-card"><h3>Have/has + feature</h3><p>Use <strong>has</strong> for he/she and <strong>have</strong> for they.</p><span class="unit3-formula">She has long hair.</span><span class="unit3-formula">He has glasses.</span><span class="unit3-formula">They have brown eyes.</span></div>
+            <div class="unit3-rule-card"><h3>Adjective + noun</h3><p>In English, the adjective usually goes before the noun.</p><span class="unit3-formula">short hair</span><span class="unit3-formula">a black jacket</span><span class="unit3-formula">a red backpack</span></div>
+          </div>
+          <div class="unit3-word-bank" aria-label="Unit 3 description vocabulary">
+            <span>tall</span><span>short</span><span>slim</span><span>strong</span><span>friendly</span><span>serious</span><span>funny</span><span>smart</span><span>young</span><span>old</span><span>long hair</span><span>curly hair</span><span>glasses</span><span>beard</span>
+          </div>
+          <div class="unit3-grid-2">
+            <div class="unit3-correction"><div class="unit3-wrong">She has friendly. &times;</div><div class="unit3-right">She is friendly. &#10003;</div></div>
+            <div class="unit3-correction"><div class="unit3-wrong">He is glasses. &times;</div><div class="unit3-right">He has glasses. &#10003;</div></div>
+          </div>
+        </div>
+      </article>
 
-        <div class="family-accordion-list">
-          <details class="family-accordion" open>
-            <summary><span>01</span> Family Vocabulary With Audio</summary>
-            <p class="lesson-text">Listen to each word, then use it in a short sentence: <strong>This is my mother.</strong> / <strong>He is my cousin.</strong> / <strong>They are my grandparents.</strong></p>
-            <div class="family-vocab-grid">
-              <div class="family-vocab-card"><strong>mother</strong><span>mama / madre</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('mother')">Listen</button></div>
-              <div class="family-vocab-card"><strong>mom</strong><span>mama</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('mom')">Listen</button></div>
-              <div class="family-vocab-card"><strong>father</strong><span>padre</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('father')">Listen</button></div>
-              <div class="family-vocab-card"><strong>dad</strong><span>papa</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('dad')">Listen</button></div>
-              <div class="family-vocab-card"><strong>parents</strong><span>padres</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('parents')">Listen</button></div>
-              <div class="family-vocab-card"><strong>brother</strong><span>hermano</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('brother')">Listen</button></div>
-              <div class="family-vocab-card"><strong>sister</strong><span>hermana</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('sister')">Listen</button></div>
-              <div class="family-vocab-card"><strong>siblings</strong><span>hermanos/as</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('siblings')">Listen</button></div>
-              <div class="family-vocab-card"><strong>son</strong><span>hijo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('son')">Listen</button></div>
-              <div class="family-vocab-card"><strong>daughter</strong><span>hija</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('daughter')">Listen</button></div>
-              <div class="family-vocab-card"><strong>child</strong><span>hijo/a, nino/a</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('child')">Listen</button></div>
-              <div class="family-vocab-card"><strong>children</strong><span>hijos/as</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('children')">Listen</button></div>
-              <div class="family-vocab-card"><strong>grandmother</strong><span>abuela</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandmother')">Listen</button></div>
-              <div class="family-vocab-card"><strong>grandma</strong><span>abuelita / abuela</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandma')">Listen</button></div>
-              <div class="family-vocab-card"><strong>grandfather</strong><span>abuelo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandfather')">Listen</button></div>
-              <div class="family-vocab-card"><strong>grandpa</strong><span>abuelito / abuelo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandpa')">Listen</button></div>
-              <div class="family-vocab-card"><strong>grandparents</strong><span>abuelos</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('grandparents')">Listen</button></div>
-              <div class="family-vocab-card"><strong>aunt</strong><span>tia</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('aunt')">Listen</button></div>
-              <div class="family-vocab-card"><strong>uncle</strong><span>tio</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('uncle')">Listen</button></div>
-              <div class="family-vocab-card"><strong>cousin</strong><span>primo/a</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('cousin')">Listen</button></div>
-              <div class="family-vocab-card"><strong>niece</strong><span>sobrina</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('niece')">Listen</button></div>
-              <div class="family-vocab-card"><strong>nephew</strong><span>sobrino</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('nephew')">Listen</button></div>
-              <div class="family-vocab-card"><strong>wife</strong><span>esposa</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('wife')">Listen</button></div>
-              <div class="family-vocab-card"><strong>husband</strong><span>esposo</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('husband')">Listen</button></div>
-              <div class="family-vocab-card"><strong>partner</strong><span>pareja</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('partner')">Listen</button></div>
-              <div class="family-vocab-card"><strong>stepmother</strong><span>madrastra</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepmother')">Listen</button></div>
-              <div class="family-vocab-card"><strong>stepfather</strong><span>padrastro</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepfather')">Listen</button></div>
-              <div class="family-vocab-card"><strong>stepsister</strong><span>hermanastra</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepsister')">Listen</button></div>
-              <div class="family-vocab-card"><strong>stepbrother</strong><span>hermanastro</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('stepbrother')">Listen</button></div>
-              <div class="family-vocab-card"><strong>mother-in-law</strong><span>suegra</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('mother-in-law')">Listen</button></div>
-              <div class="family-vocab-card"><strong>father-in-law</strong><span>suegro</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('father-in-law')">Listen</button></div>
-              <div class="family-vocab-card"><strong>family photo</strong><span>foto familiar</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('family photo')">Listen</button></div>
-              <div class="family-vocab-card"><strong>family member</strong><span>miembro de la familia</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('family member')">Listen</button></div>
-              <div class="family-vocab-card"><strong>relatives</strong><span>familiares / parientes</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('relatives')">Listen</button></div>
-              <div class="family-vocab-card"><strong>pet</strong><span>mascota</span><button type="button" class="audio-word-btn" onclick="speakFamilyVocabulary('pet')">Listen</button></div>
-            </div>
-          </details>
+      <article class="unit3-module" id="unit3-section-3">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/course-overview/unit-3-favorite-people-banner.png');">
+          <span>03</span>
+          <h2>Verb To Be Review for Descriptions</h2>
+          <p>Unit 3 still depends on the verb <strong>to be</strong>. Students use it to identify people and describe them.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-table-wrap">
+            <table class="unit3-table">
+              <thead><tr><th>Subject</th><th>Affirmative</th><th>Negative</th><th>Question</th><th>Short answer</th></tr></thead>
+              <tbody>
+                <tr><td>I</td><td>I am a student.</td><td>I am not famous.</td><td>Am I late?</td><td>Yes, I am. / No, I am not.</td></tr>
+                <tr><td>He / She</td><td>She is my sister.</td><td>He is not old.</td><td>Is she your cousin?</td><td>Yes, she is. / No, she is not.</td></tr>
+                <tr><td>They</td><td>They are my friends.</td><td>They are not actors.</td><td>Are they your parents?</td><td>Yes, they are. / No, they are not.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="unit3-note"><strong>Core idea:</strong> use <strong>be</strong> for identity and adjectives. Use <strong>has/have</strong> for physical features like hair, glasses, or clothes.</div>
+        </div>
+      </article>
 
-          <details class="family-accordion">
-            <summary><span>02</span> Pronouns and Possessives</summary>
-            <p class="lesson-text">When you describe favorite people in your family, choose the correct subject pronoun and possessive word.</p>
-            <div class="family-table-wrapper">
-              <table class="family-comparison-table">
-                <thead><tr><th>Subject</th><th>Possessive</th><th>Use</th><th>Example</th></tr></thead>
-                <tbody>
-                  <tr><td><strong>He</strong></td><td><strong>His</strong></td><td>One male person</td><td>He is my brother. His name is Daniel.</td></tr>
-                  <tr><td><strong>She</strong></td><td><strong>Her</strong></td><td>One female person</td><td>She is my aunt. Her name is Laura.</td></tr>
-                  <tr><td><strong>They</strong></td><td><strong>Their</strong></td><td>Two or more people</td><td>They are my parents. Their names are Ana and Luis.</td></tr>
-                  <tr><td><strong>It</strong></td><td><strong>Its</strong></td><td>A pet or thing</td><td>It is my dog. Its name is Toby.</td></tr>
-                </tbody>
-              </table>
-            </div>
-          </details>
+      <article class="unit3-module" id="unit3-section-4">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/practice-lab/guess-who-example-questions.png');">
+          <span>04</span>
+          <h2>Yes/No Questions About People</h2>
+          <p>Yes/no questions help students play Guess Who, check family relationships, and confirm descriptions.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-grid-3">
+            <div class="unit3-rule-card"><h3>With <em>be</em></h3><span class="unit3-formula">Is she your sister?</span><span class="unit3-formula">Are they your classmates?</span><p>Move <strong>is/are</strong> before the subject.</p></div>
+            <div class="unit3-rule-card"><h3>With adjectives</h3><span class="unit3-formula">Is he tall?</span><span class="unit3-formula">Are they friendly?</span><p>Use this for physical or personality descriptions.</p></div>
+            <div class="unit3-rule-card"><h3>Short answers</h3><span class="unit3-formula">Yes, she is.</span><span class="unit3-formula">No, they are not.</span><p>Do not repeat the full sentence every time.</p></div>
+          </div>
+          <div class="unit3-grid-2">
+            <div class="unit3-example-card"><h3>Guess Who pattern</h3><p>Ask about one person and eliminate options.</p><span class="unit3-formula">Is he wearing glasses?</span><span class="unit3-formula">Is she friendly?</span><span class="unit3-formula">Is he your favorite actor?</span></div>
+            <div class="unit3-example-card"><h3>Family photo pattern</h3><p>Ask about people in a photo.</p><span class="unit3-formula">Is she your mother?</span><span class="unit3-formula">Are they your grandparents?</span><span class="unit3-formula">Is he your cousin?</span></div>
+          </div>
+        </div>
+      </article>
 
-          <details class="family-accordion">
-            <summary><span>03</span> Simple Family Structures</summary>
-            <div class="lesson-grid">
-              <div class="lesson-mini-card"><h3>Introduce One Person</h3><div class="phrase-list"><div class="phrase-item featured-phrase"><strong>This is my sister.</strong><span>Say the relationship.</span></div><div class="phrase-item featured-phrase"><strong>Her name is Sofia.</strong><span>Use her for a female person.</span></div><div class="phrase-item featured-phrase"><strong>She is nineteen.</strong><span>Use is for one person.</span></div></div></div>
-              <div class="lesson-mini-card"><h3>Introduce Two People</h3><div class="phrase-list"><div class="phrase-item featured-phrase"><strong>These are my grandparents.</strong><span>Use these are for two or more people.</span></div><div class="phrase-item featured-phrase"><strong>Their names are Grace and Paul.</strong><span>Use their for two names.</span></div><div class="phrase-item featured-phrase"><strong>They are happy.</strong><span>Use are with they.</span></div></div></div>
-            </div>
-          </details>
+      <article class="unit3-module" id="unit3-section-5">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/practice-lab/reading-my-family-banner.jpg');">
+          <span>05</span>
+          <h2>Possessives: My, His, Her, Their</h2>
+          <p>Possessives connect a person with a name, family member, object, or relationship.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-table-wrap">
+            <table class="unit3-table">
+              <thead><tr><th>Subject</th><th>Possessive</th><th>Use</th><th>Example</th></tr></thead>
+              <tbody>
+                <tr><td>I</td><td>my</td><td>Something connected to me</td><td>This is my brother.</td></tr>
+                <tr><td>You</td><td>your</td><td>Something connected to you</td><td>Is this your cousin?</td></tr>
+                <tr><td>He</td><td>his</td><td>Something connected to a male person</td><td>His name is Daniel.</td></tr>
+                <tr><td>She</td><td>her</td><td>Something connected to a female person</td><td>Her name is Laura.</td></tr>
+                <tr><td>They</td><td>their</td><td>Something connected to two or more people</td><td>Their names are Ana and Luis.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="unit3-grid-2">
+            <div class="unit3-correction"><div class="unit3-wrong">She name is Sofia. &times;</div><div class="unit3-right">Her name is Sofia. &#10003;</div></div>
+            <div class="unit3-correction"><div class="unit3-wrong">They names are Ana and Luis. &times;</div><div class="unit3-right">Their names are Ana and Luis. &#10003;</div></div>
+          </div>
+        </div>
+      </article>
 
-          <details class="family-accordion">
-            <summary><span>04</span> Questions for a Family Photo</summary>
-            <div class="family-question-panel">
-              <h3>Useful Questions</h3>
-              <div class="family-question-grid">
-                <div class="family-question-card"><span>01</span><p>Who is the person in the photo?</p></div>
-                <div class="family-question-card"><span>02</span><p>Is he your father, brother, or cousin?</p></div>
-                <div class="family-question-card"><span>03</span><p>Is she your mother, sister, or aunt?</p></div>
-                <div class="family-question-card"><span>04</span><p>Are they your parents or grandparents?</p></div>
+      <article class="unit3-module" id="unit3-section-6">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/course-overview/family-overview-banner.jpg');">
+          <span>06</span>
+          <h2>Family Vocabulary With Audio</h2>
+          <p>Students need family vocabulary to talk about favorite people and family photos.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-grid-2">
+            <div class="unit3-example-card">
+              <h3>Immediate family</h3>
+              <div class="unit3-family-grid">
+                <div class="unit3-family-card"><div><strong>mother</strong><small>madre</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('mother')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>father</strong><small>padre</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('father')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>parents</strong><small>padres</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('parents')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>brother</strong><small>hermano</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('brother')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>sister</strong><small>hermana</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('sister')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>siblings</strong><small>hermanos/as</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('siblings')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>son</strong><small>hijo</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('son')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>daughter</strong><small>hija</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('daughter')">Listen</button></div>
               </div>
             </div>
-          </details>
+            <div class="unit3-example-card">
+              <h3>Extended family</h3>
+              <div class="unit3-family-grid">
+                <div class="unit3-family-card"><div><strong>grandmother</strong><small>abuela</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('grandmother')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>grandfather</strong><small>abuelo</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('grandfather')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>grandparents</strong><small>abuelos</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('grandparents')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>aunt</strong><small>t&iacute;a</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('aunt')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>uncle</strong><small>t&iacute;o</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('uncle')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>cousin</strong><small>primo/a</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('cousin')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>niece</strong><small>sobrina</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('niece')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>nephew</strong><small>sobrino</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('nephew')">Listen</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="unit3-grid-2">
+            <div class="unit3-example-card">
+              <h3>Partner and household</h3>
+              <div class="unit3-family-grid">
+                <div class="unit3-family-card"><div><strong>wife</strong><small>esposa</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('wife')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>husband</strong><small>esposo</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('husband')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>partner</strong><small>pareja</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('partner')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>pet</strong><small>mascota</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('pet')">Listen</button></div>
+              </div>
+            </div>
+            <div class="unit3-example-card">
+              <h3>Blended family</h3>
+              <div class="unit3-family-grid">
+                <div class="unit3-family-card"><div><strong>stepmother</strong><small>madrastra</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('stepmother')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>stepfather</strong><small>padrastro</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('stepfather')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>stepsister</strong><small>hermanastra</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('stepsister')">Listen</button></div>
+                <div class="unit3-family-card"><div><strong>stepbrother</strong><small>hermanastro</small></div><button class="unit3-audio-btn" onclick="speakFamilyVocabulary('stepbrother')">Listen</button></div>
+              </div>
+            </div>
+          </div>
+          <div class="unit3-note"><strong>Teaching note:</strong> the page uses grouped vocabulary so students do not face one long list. The audio buttons remain available for pronunciation support.</div>
         </div>
       </article>
 
-      <article class="premium-topic-card linked-practice-card">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
-        <p class="lesson-text">After studying this unit, go to Practice Lab for a grammar and conversation activity, then complete the listening comprehension tasks.</p>
-        <div class="hero-actions"><a href="practice-unit-3-favorite-people.html" class="btn btn-primary">Open unit practice</a><a href="#talking-about-your-family" class="btn btn-secondary">Review family vocabulary</a><a href="listening-unit-3-family-photo-table.html" class="btn btn-secondary">Open family listening</a></div>
+      <article class="unit3-module" id="unit3-section-7">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/practice-lab/unit-3-at-the-family-photo-table.png');">
+          <span>07</span>
+          <h2>Talking About a Family Photo</h2>
+          <p>Family-photo language connects vocabulary, pronouns, possessives, and yes/no questions.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-visual-explainer">
+            <img src="../../assets/img/english-basic/practice-lab/readings/reading-unit-3-family-photo-pro-v2.webp" alt="Professional family photo reading illustration" />
+            <div class="unit3-visual-copy">
+              <h3>Photo description model</h3>
+              <p>Students should describe people from left to right or from the main person outward. This creates order and avoids random sentences.</p>
+              <span class="unit3-formula">This is my mother. Her name is Ana. She is friendly.</span>
+              <span class="unit3-formula">These are my grandparents. Their names are Rosa and Luis.</span>
+            </div>
+          </div>
+          <div class="unit3-grid-3">
+            <div class="unit3-rule-card"><h3>One person near me</h3><span class="unit3-formula">This is my sister.</span><span class="unit3-formula">She is twenty.</span></div>
+            <div class="unit3-rule-card"><h3>One person far from me</h3><span class="unit3-formula">That is my uncle.</span><span class="unit3-formula">He is funny.</span></div>
+            <div class="unit3-rule-card"><h3>Two or more people</h3><span class="unit3-formula">These are my parents.</span><span class="unit3-formula">They are kind.</span></div>
+          </div>
+          <div class="unit3-grid-2">
+            <div class="unit3-example-card"><h3>Useful questions</h3><span class="unit3-formula">Who is the person in the photo?</span><span class="unit3-formula">Is she your mother?</span><span class="unit3-formula">Are they your grandparents?</span></div>
+            <div class="unit3-example-card"><h3>Useful answers</h3><span class="unit3-formula">Yes, she is. She is my mother.</span><span class="unit3-formula">No, he is not. He is my uncle.</span><span class="unit3-formula">Yes, they are. They are my parents.</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="unit3-module" id="unit3-section-8">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/practice-lab/pronunciation-unit-3-my-favorite-person-v1.webp');">
+          <span>08</span>
+          <h2>Likes and Favorite People</h2>
+          <p>Students can add one or two simple likes to make a favorite-person description more personal.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-grid-3">
+            <div class="unit3-rule-card"><h3>I like</h3><p>Use base verb after <strong>I like</strong>.</p><span class="unit3-formula">I like music.</span><span class="unit3-formula">I like my sister.</span></div>
+            <div class="unit3-rule-card"><h3>He likes / She likes</h3><p>Add <strong>-s</strong> with he and she.</p><span class="unit3-formula">He likes soccer.</span><span class="unit3-formula">She likes reading.</span></div>
+            <div class="unit3-rule-card"><h3>Favorite person</h3><p>Explain who the person is and why the person is important.</p><span class="unit3-formula">My favorite person is my mother because she is kind.</span></div>
+          </div>
+          <div class="unit3-note"><strong>Keep it basic:</strong> Unit 3 does not need long present-simple grammar yet. Use <strong>likes</strong> only to enrich short descriptions.</div>
+        </div>
+      </article>
+
+      <article class="unit3-module" id="unit3-section-9">
+        <header class="unit3-module-header" style="--module-image:url('../../assets/img/english-basic/practice-lab/pronunciation-unit-3-my-favorite-person-v1.webp');">
+          <span>09</span>
+          <h2>Main Model and Final Product</h2>
+          <p>The final model integrates identity, family vocabulary, possessives, adjectives, and one simple reason.</p>
+        </header>
+        <div class="unit3-module-body">
+          <div class="unit3-grid-2">
+            <div class="unit3-model-card">
+              <h3>Final speaking model: My favorite person</h3>
+              <div class="unit3-model-text"><p>My favorite person is my sister. Her name is Sofia. She is twenty years old. She is friendly, smart, and funny. She has long hair and brown eyes. She likes music and movies. She is important to me because she helps me and listens to me.</p></div>
+            </div>
+            <div class="unit3-model-card">
+              <h3>What the model includes</h3>
+              <div class="unit3-checklist">
+                <label><input type="checkbox" /> I introduce the person.</label>
+                <label><input type="checkbox" /> I use <strong>his</strong> or <strong>her</strong>.</label>
+                <label><input type="checkbox" /> I describe personality or appearance.</label>
+                <label><input type="checkbox" /> I give one reason.</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="premium-topic-card linked-practice-card" id="unit3-continue">
+        <div class="topic-heading"><span class="topic-number">10</span><div><p class="topic-label">Practice Connection</p><h2>Move from explanation to practice</h2></div></div>
+        <p class="lesson-text">After studying the explanation, complete the Unit 3 activities. Each one practices a different part of describing people and family members.</p>
+        <div class="hero-actions">
+          <a href="practice-unit-3-favorite-people.html" class="btn btn-primary">Guess Who game</a>
+          <a href="practice-unit-3-eyewitness-testimony.html" class="btn btn-secondary">Eyewitness testimony</a>
+          <a href="workshop-unit-3-celebrity-survey.html" class="btn btn-secondary">Celebrity survey</a>
+          <a href="talking-about-others-family.html" class="btn btn-secondary">Family practice</a>
+          <a href="reading-my-family.html" class="btn btn-secondary">Reading</a>
+          <a href="workshop-unit-3-family-photo.html" class="btn btn-secondary">Family photo workshop</a>
+          <a href="listening-unit-3-favorite-people.html" class="btn btn-secondary">Favorite person listening</a>
+          <a href="listening-unit-3-family-photo-table.html" class="btn btn-secondary">Family photo listening</a>
+          <a href="pronunciation-unit-3-my-favorite-person.html" class="btn btn-secondary">Pronunciation</a>
+        </div>
       </article>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
-  </footer>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
   <script>
     let activeFamilyVocabularyAudio = null;
-
     function familyAudioSlug(text) {
-      return text
+      return String(text || "")
         .normalize("NFKD")
         .replace(/[^\x00-\x7F]/g, "")
         .toLowerCase()
@@ -180,7 +413,6 @@
         .slice(0, 90)
         .replace(/-+$/g, "");
     }
-
     function speakFamilyVocabulary(word) {
       if (activeFamilyVocabularyAudio) {
         activeFamilyVocabularyAudio.pause();
@@ -191,11 +423,21 @@
         alert("Pronunciation audio is not available yet.");
       });
     }
-  </script>  <script src="../../assets/js/google-auth-config.js"></script>
+    function setUnit3Sections(open) {
+      document.querySelectorAll(".unit3-module").forEach(function(section) {
+        section.style.display = open ? "" : "none";
+      });
+      document.querySelectorAll(".unit3-route-item").forEach(function(link) {
+        link.style.opacity = open ? "1" : ".7";
+      });
+    }
+    document.querySelectorAll('.unit3-route-item[href^="#unit3-section"]').forEach(function(link) {
+      link.addEventListener("click", function() { setUnit3Sections(true); });
+    });
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
-
-
