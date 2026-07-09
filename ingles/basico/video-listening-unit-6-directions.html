@@ -25,6 +25,12 @@
     .video-pending-content h3{color:#fff;margin:10px 0 6px}
     .video-pending-content p{margin:0;color:rgba(255,255,255,.92)}
     .pending-action{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;padding:0 20px;border-radius:999px;background:#334155;color:#fff;font-weight:900}
+    .youtube-speed-panel{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin-top:14px;padding:14px;border-radius:18px;background:#f8fbff;border:1px solid rgba(18,59,143,.12)}
+    .youtube-speed-panel span{color:#071f4f;font-weight:900;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem}
+    .youtube-speed-btn{min-height:42px;border:0;border-radius:999px;padding:0 16px;background:#e8f0ff;color:#071f4f;font-weight:900;cursor:pointer;transition:transform .2s ease,background .2s ease,color .2s ease}
+    .youtube-speed-btn:hover{transform:translateY(-1px);background:#dbeafe}
+    .youtube-speed-btn.is-active{background:#123b8f;color:#fff}
+    .youtube-speed-status{width:100%;text-align:center;color:#64748b;font-size:.88rem;font-weight:800}
     .directions-chip-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:18px}
     .directions-chip{border:1px solid rgba(18,59,143,.14);background:#fff;border-radius:16px;padding:13px 14px;font-weight:900;color:#071f4f;box-shadow:0 10px 22px rgba(15,23,42,.06)}
     .directions-chip small{display:block;margin-top:4px;color:#64748b;font-weight:700}
@@ -65,6 +71,9 @@
       .video-pending-content{padding:18px}
       .video-pending-content i{font-size:2.4rem}
       .pending-action{width:100%;min-height:46px}
+      .youtube-speed-panel{display:grid;grid-template-columns:1fr;align-items:stretch}
+      .youtube-speed-panel span,.youtube-speed-status{text-align:center}
+      .youtube-speed-btn{width:100%}
       .directions-video-page .hero-actions{align-items:stretch}
       .directions-video-page .hero-actions .btn{width:100%;justify-content:center}
     }
@@ -153,6 +162,13 @@
               <div class="video-pending-content"><i class="bi bi-play-circle" aria-hidden="true"></i><h3>Video link pending</h3><p>The activity, script, and questions are ready. The YouTube video will appear here when its link is added.</p></div>
             </div>
           </div>
+          <div class="youtube-speed-panel" id="youtubeSpeedPanel" role="group" aria-label="Video speed controls">
+            <span>Video speed</span>
+            <button type="button" class="youtube-speed-btn" data-youtube-speed="0.75" aria-pressed="false">0.75x</button>
+            <button type="button" class="youtube-speed-btn is-active" data-youtube-speed="1" aria-pressed="true">1x</button>
+            <button type="button" class="youtube-speed-btn" data-youtube-speed="1.25" aria-pressed="false">1.25x</button>
+            <small class="youtube-speed-status" id="youtubeSpeedStatus">Video controls will activate when the YouTube player is ready.</small>
+          </div>
           <div class="youtube-growth-panel" aria-label="YouTube channel actions">
             <div><span class="listening-label">Support the channel</span><h3>Watch on YouTube</h3><p>Play the video here for class, or open it on YouTube later to like, comment, subscribe, and support the channel.</p></div>
             <div class="youtube-growth-actions"><span class="pending-action"><i class="bi bi-youtube"></i> Video link pending</span><a class="btn btn-secondary" href="https://www.youtube.com/@JaraLingua?sub_confirmation=1" target="_blank" rel="noopener noreferrer"><i class="bi bi-bell"></i> Subscribe</a><a class="btn btn-secondary" href="https://www.youtube.com/@JaraLingua/videos" target="_blank" rel="noopener noreferrer"><i class="bi bi-collection-play"></i> More videos</a></div>
@@ -216,6 +232,9 @@
 
   <script>
     const youtubeVideoId = "4307m3oxBfI";
+    let youtubePlayer = null;
+    let pendingYouTubeSpeed = 1;
+    let youtubeApiRequested = false;
     const dialogueText = `Emma: Excuse me. Can you help me?
 Daniel: Sure. What do you need?
 Emma: I am looking for the library. Is it near here?
@@ -246,7 +265,13 @@ Daniel: You're welcome. Have a nice day.`;
     };
     function checkAnswers(){let score=0;let complete=true;Object.keys(answerDetails).forEach(function(key){const selected=document.forms.quizForm[key].value;if(!selected)complete=false;if(selected===answerDetails[key][0])score++});const box=document.getElementById("result-box");box.style.display="block";if(!complete){box.className="quiz-result-box incorrect";box.textContent="Please answer all 10 questions before checking.";return}if(score===10){box.className="quiz-result-box correct";box.textContent="Excellent! You got 10 out of 10 correct.";return}box.className="quiz-result-box incorrect";box.innerHTML="You got "+score+" out of 10 correct.<br><br><strong>Correct Answers:</strong><br>"+Object.keys(answerDetails).map(function(key,index){return(index+1)+": "+answerDetails[key][0]+" - "+answerDetails[key][1]}).join("<br>")}
     function showModelRoute(){const model=document.getElementById("modelRoute");if(model)model.style.display="block"}
-    function configureYouTube(){if(!youtubeVideoId)return;const frame=document.getElementById("videoFrame");frame.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(youtubeVideoId)+'" title="Conversation: Asking for Directions" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';const action=document.querySelector(".pending-action");if(action){const link=document.createElement("a");link.className="btn btn-primary";link.href="https://www.youtube.com/watch?v="+encodeURIComponent(youtubeVideoId);link.target="_blank";link.rel="noopener noreferrer";link.innerHTML='<i class="bi bi-youtube"></i> Watch on YouTube';action.replaceWith(link)}}
+    function updateYouTubeSpeedButtons(speed){document.querySelectorAll("[data-youtube-speed]").forEach(function(button){const active=Number(button.dataset.youtubeSpeed)===Number(speed);button.classList.toggle("is-active",active);button.setAttribute("aria-pressed",active?"true":"false")})}
+    function setYouTubeSpeed(speed){const next=Number(speed);if(![0.75,1,1.25].includes(next))return;pendingYouTubeSpeed=next;updateYouTubeSpeedButtons(next);const status=document.getElementById("youtubeSpeedStatus");try{if(youtubePlayer&&typeof youtubePlayer.setPlaybackRate==="function"){youtubePlayer.setPlaybackRate(next);setTimeout(function(){try{const actual=Number(youtubePlayer.getPlaybackRate&&youtubePlayer.getPlaybackRate())||next;pendingYouTubeSpeed=actual;updateYouTubeSpeedButtons(actual);if(status)status.textContent="Video speed set to "+actual+"x."}catch(error){}},250)}else if(status){status.textContent="Video player is loading. Speed will apply when ready."}}catch(error){if(status)status.textContent="This browser did not allow changing YouTube speed yet. Try again after pressing play."}}
+    function bindYouTubeSpeedButtons(){document.querySelectorAll("[data-youtube-speed]").forEach(function(button){button.addEventListener("click",function(){setYouTubeSpeed(button.dataset.youtubeSpeed)})})}
+    function loadYouTubeIframeApi(){if(youtubeApiRequested||window.YT&&window.YT.Player)return;youtubeApiRequested=true;const tag=document.createElement("script");tag.src="https://www.youtube.com/iframe_api";document.head.appendChild(tag)}
+    function createYouTubePlayer(){if(!youtubeVideoId||!window.YT||!YT.Player)return;const frame=document.getElementById("videoFrame");if(!frame)return;frame.innerHTML='<div id="youtubePlayer"></div>';youtubePlayer=new YT.Player("youtubePlayer",{videoId:youtubeVideoId,playerVars:{rel:0,modestbranding:1,playsinline:1},events:{onReady:function(event){try{event.target.setPlaybackRate(pendingYouTubeSpeed)}catch(error){}const status=document.getElementById("youtubeSpeedStatus");if(status)status.textContent="Video controls ready. Choose 0.75x, 1x, or 1.25x.";updateYouTubeSpeedButtons(pendingYouTubeSpeed)},onPlaybackRateChange:function(event){pendingYouTubeSpeed=Number(event.data)||1;updateYouTubeSpeedButtons(pendingYouTubeSpeed)}}})}
+    function configureYouTube(){bindYouTubeSpeedButtons();if(!youtubeVideoId)return;const action=document.querySelector(".pending-action");if(action){const link=document.createElement("a");link.className="btn btn-primary";link.href="https://www.youtube.com/watch?v="+encodeURIComponent(youtubeVideoId);link.target="_blank";link.rel="noopener noreferrer";link.innerHTML='<i class="bi bi-youtube"></i> Watch on YouTube';action.replaceWith(link)}if(window.YT&&window.YT.Player)createYouTubePlayer();else loadYouTubeIframeApi()}
+    window.onYouTubeIframeAPIReady=function(){createYouTubePlayer()};
     function readTeacherUser(){try{const saved=JSON.parse(sessionStorage.getItem("jaralingua_google_user")||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp)return null;return saved}catch(error){return null}}
     function readTeacherRoleRequests(){try{const saved=JSON.parse(localStorage.getItem("jaralingua_role_requests")||"[]");return Array.isArray(saved)?saved:[]}catch(error){return[]}}
     function normalizeTeacherEmail(value){return String(value||"").trim().toLowerCase()}
