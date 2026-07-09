@@ -25,9 +25,20 @@
     .free-time-video-page .premium-topic-card .topic-heading h2,.free-time-video-page .youtube-growth-panel h3{color:#071f4f!important;text-shadow:none!important}
     .free-time-video-page .listening-panel .listening-label{background:#eef4ff;color:#071f4f}
     .pending-action{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:48px;padding:0 20px;border-radius:999px;background:#334155;color:#fff;font-weight:900}
+    .youtube-speed-panel{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px;margin-top:14px;padding:14px;border-radius:18px;background:#f8fbff;border:1px solid rgba(18,59,143,.12)}
+    .youtube-speed-panel span{color:#071f4f;font-weight:900;text-transform:uppercase;letter-spacing:.08em;font-size:.78rem}
+    .youtube-speed-btn{min-height:42px;border:0;border-radius:999px;padding:0 16px;background:#e8f0ff;color:#071f4f;font-weight:900;cursor:pointer;transition:transform .2s ease,background .2s ease,color .2s ease}
+    .youtube-speed-btn:hover{transform:translateY(-1px);background:#dbeafe}
+    .youtube-speed-btn.is-active{background:#123b8f;color:#fff}
+    .youtube-speed-status{width:100%;text-align:center;color:#64748b;font-size:.88rem;font-weight:800}
     .teacher-only-transcript[hidden]{display:none!important}
     .quiz-question-card label{transition:border-color .2s ease,background .2s ease}
     .quiz-question-card label:hover{background:#eef4ff;border-color:rgba(18,59,143,.22)}
+    @media (max-width:560px){
+      .youtube-speed-panel{display:grid;grid-template-columns:1fr;align-items:stretch}
+      .youtube-speed-panel span,.youtube-speed-status{text-align:center}
+      .youtube-speed-btn{width:100%}
+    }
   </style>
 </head>
 <body class="english-basic-page free-time-video-page">
@@ -59,6 +70,13 @@
               <img src="../../assets/img/english-basic/practice-lab/unit-5/free-time-activities-video-banner.png" alt="" />
               <div class="video-pending-content"><i class="bi bi-play-circle" aria-hidden="true"></i><h3>Video link pending</h3><p>The activity and questions are ready. The YouTube video will appear here when its link is added.</p></div>
             </div>
+          </div>
+          <div class="youtube-speed-panel" id="youtubeSpeedPanel" role="group" aria-label="Video speed controls">
+            <span>Video speed</span>
+            <button type="button" class="youtube-speed-btn" data-youtube-speed="0.75" aria-pressed="false">0.75x</button>
+            <button type="button" class="youtube-speed-btn is-active" data-youtube-speed="1" aria-pressed="true">1x</button>
+            <button type="button" class="youtube-speed-btn" data-youtube-speed="1.25" aria-pressed="false">1.25x</button>
+            <small class="youtube-speed-status" id="youtubeSpeedStatus">Video controls will activate when the YouTube player is ready.</small>
           </div>
           <div class="youtube-growth-panel" aria-label="YouTube channel actions">
             <div><span class="listening-label">Support the channel</span><h3>Watch on YouTube</h3><p>Play the video here for the activity, or open it on YouTube to like, comment, subscribe, and support the channel.</p></div>
@@ -95,6 +113,9 @@
   </main>
   <script>
     const youtubeVideoId = "SkHhKM0yQWs";
+    let youtubePlayer = null;
+    let pendingYouTubeSpeed = 1;
+    let youtubeApiRequested = false;
     const dialogueText = `Sofia: Hi, Daniel. What do you do in your free time?
 Daniel: Hi, Sofia. In my free time, I usually play soccer with my friends. I also like watching movies at home. What about you?
 Sofia: I always listen to music after class. I sometimes go out with my sister.
@@ -117,11 +138,17 @@ Sofia: Yes, exactly. We have different free time habits.`;
 
     function checkAnswers(){let score=0;let complete=true;Object.keys(answerDetails).forEach(function(key){const selected=document.forms.quizForm[key].value;if(!selected)complete=false;if(selected===answerDetails[key][0])score++});const box=document.getElementById("result-box");box.style.display="block";if(!complete){box.className="quiz-result-box incorrect";box.textContent="Please answer all 15 questions before checking.";return}if(score===15){box.className="quiz-result-box correct";box.textContent="Excellent! You got 15 out of 15 correct.";return}box.className="quiz-result-box incorrect";box.innerHTML="You got "+score+" out of 15 correct.<br><br><strong>Correct Answers:</strong><br>"+Object.keys(answerDetails).map(function(key,index){return(index+1)+": "+answerDetails[key][0]+" - "+answerDetails[key][1]}).join("<br>")}
 
-    function configureYouTube(){if(!youtubeVideoId)return;const frame=document.getElementById("videoFrame");frame.innerHTML='<iframe src="https://www.youtube.com/embed/'+encodeURIComponent(youtubeVideoId)+'" title="Conversation: Free Time Activities" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';const action=document.querySelector(".pending-action");if(action){const link=document.createElement("a");link.className="btn btn-primary";link.href="https://www.youtube.com/watch?v="+encodeURIComponent(youtubeVideoId);link.target="_blank";link.rel="noopener noreferrer";link.innerHTML='<i class="bi bi-youtube"></i> Watch on YouTube';action.replaceWith(link)}}
+    function updateYouTubeSpeedButtons(speed){document.querySelectorAll("[data-youtube-speed]").forEach(function(button){const active=Number(button.dataset.youtubeSpeed)===Number(speed);button.classList.toggle("is-active",active);button.setAttribute("aria-pressed",active?"true":"false")})}
+    function setYouTubeSpeed(speed){const next=Number(speed);if(![0.75,1,1.25].includes(next))return;pendingYouTubeSpeed=next;updateYouTubeSpeedButtons(next);const status=document.getElementById("youtubeSpeedStatus");try{if(youtubePlayer&&typeof youtubePlayer.setPlaybackRate==="function"){youtubePlayer.setPlaybackRate(next);setTimeout(function(){try{const actual=Number(youtubePlayer.getPlaybackRate&&youtubePlayer.getPlaybackRate())||next;pendingYouTubeSpeed=actual;updateYouTubeSpeedButtons(actual);if(status)status.textContent="Video speed set to "+actual+"x."}catch(error){}},250)}else if(status){status.textContent="Video player is loading. Speed will apply when ready."}}catch(error){if(status)status.textContent="This browser did not allow changing YouTube speed yet. Try again after pressing play."}}
+    function bindYouTubeSpeedButtons(){document.querySelectorAll("[data-youtube-speed]").forEach(function(button){button.addEventListener("click",function(){setYouTubeSpeed(button.dataset.youtubeSpeed)})})}
+    function loadYouTubeIframeApi(){if(youtubeApiRequested||window.YT&&window.YT.Player)return;youtubeApiRequested=true;const tag=document.createElement("script");tag.src="https://www.youtube.com/iframe_api";document.head.appendChild(tag)}
+    function createYouTubePlayer(){if(!youtubeVideoId||!window.YT||!YT.Player)return;const frame=document.getElementById("videoFrame");if(!frame)return;frame.innerHTML='<div id="youtubePlayer"></div>';youtubePlayer=new YT.Player("youtubePlayer",{videoId:youtubeVideoId,playerVars:{rel:0,modestbranding:1,playsinline:1},events:{onReady:function(event){try{event.target.setPlaybackRate(pendingYouTubeSpeed)}catch(error){}const status=document.getElementById("youtubeSpeedStatus");if(status)status.textContent="Video controls ready. Choose 0.75x, 1x, or 1.25x.";updateYouTubeSpeedButtons(pendingYouTubeSpeed)},onPlaybackRateChange:function(event){pendingYouTubeSpeed=Number(event.data)||1;updateYouTubeSpeedButtons(pendingYouTubeSpeed)}}})}
+    function configureYouTube(){bindYouTubeSpeedButtons();if(!youtubeVideoId)return;const action=document.querySelector(".pending-action");if(action){const link=document.createElement("a");link.className="btn btn-primary";link.href="https://www.youtube.com/watch?v="+encodeURIComponent(youtubeVideoId);link.target="_blank";link.rel="noopener noreferrer";link.innerHTML='<i class="bi bi-youtube"></i> Watch on YouTube';action.replaceWith(link)}if(window.YT&&window.YT.Player)createYouTubePlayer();else loadYouTubeIframeApi()}
+    window.onYouTubeIframeAPIReady=function(){createYouTubePlayer()};
     function readTeacherUser(){try{const saved=JSON.parse(sessionStorage.getItem("jaralingua_google_user")||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp)return null;return saved}catch(error){return null}}
     function readTeacherRoleRequests(){try{const saved=JSON.parse(localStorage.getItem("jaralingua_role_requests")||"[]");return Array.isArray(saved)?saved:[]}catch(error){return[]}}
     function normalizeTeacherEmail(value){return String(value||"").trim().toLowerCase()}
-    function canDownloadTeacherTranscript(){const user=readTeacherUser();if(!user)return false;if(normalizeTeacherEmail(user.email)==="cdavid.jaramillo@gmail.com")return true;const id=user.sub||user.email||"";return readTeacherRoleRequests().some(function(request){const sameUser=request.id===id||normalizeTeacherEmail(request.email)===normalizeTeacherEmail(user.email);return sameUser&&request.role==="teacher"&&request.status==="approved"})}
+    function canDownloadTeacherTranscript(){const user=readTeacherUser();if(!user)return false;if(normalizeTeacherEmail(user.email)==="cdavid.jaramillo@gmail.com"||normalizeTeacherEmail(user.email)==="cdavid.jaramillo@hotmail.com")return true;const id=user.sub||user.email||"";return readTeacherRoleRequests().some(function(request){const sameUser=request.id===id||normalizeTeacherEmail(request.email)===normalizeTeacherEmail(user.email);return sameUser&&request.role==="teacher"&&request.status==="approved"})}
     function updateTeacherTranscriptAccess(){document.querySelectorAll(".teacher-only-transcript").forEach(function(element){element.hidden=!canDownloadTeacherTranscript()})}
     function downloadTeacherTranscript(){if(!canDownloadTeacherTranscript()){alert("This transcript is only available for approved teacher accounts.");updateTeacherTranscriptAccess();return}downloadTranscriptPdf("Free Time Activities",dialogueText,"unit-5-free-time-activities-transcript.pdf")}
     document.addEventListener("DOMContentLoaded",function(){configureYouTube();updateTeacherTranscriptAccess()});
