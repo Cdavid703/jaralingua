@@ -193,8 +193,31 @@
     }
 
     @media (max-width: 720px) {
+      .directions-map-frame {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .directions-map-frame img {
+        width: 760px;
+        max-width: none;
+      }
+
       .directions-key-list {
         grid-template-columns: 1fr;
+      }
+
+      .directions-map-buttons,
+      .directions-chip-grid,
+      .directions-language-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .directions-map-button,
+      .directions-destination-button {
+        width: 100%;
+        text-align: center;
       }
     }
   </style>

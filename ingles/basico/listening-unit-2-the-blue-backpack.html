@@ -59,11 +59,6 @@
             </div>
           </div>
           <audio id="blueBackpackAudio" class="course-audio-player" controls preload="metadata" src="audio/unit-2-the-blue-backpack-listening.mp3"></audio>
-          <div class="audio-actions audio-speed-actions" aria-label="Audio speed controls">
-            <button type="button" class="audio-btn" onclick="setAudioSpeed(0.75)">0.75x</button>
-            <button type="button" class="audio-btn play" onclick="setAudioSpeed(1)">1x</button>
-            <button type="button" class="audio-btn" onclick="setAudioSpeed(1.25)">1.25x</button>
-          </div>
         </div>
       </article>
 
@@ -87,9 +82,6 @@
 
   <script>
     const listeningText = "Narrator: Good morning. Leo is new in English class. He sits next to Ana and opens his black backpack.\nLeo: Excuse me, Ana. There is a blue backpack under my desk. Is this your backpack?\nAna: No, it isn't. My backpack is on the chair. Maybe it is Sofia's.\nTeacher: Good question, Leo. Class, whose backpack is this?\nDaniel: I think it is Sofia's backpack. Her notebook is inside, and her red marker is in the front pocket.\nSofia: Yes, it is mine. Thank you. I am at the door because I am late today.\nTeacher: That's okay, Sofia. Please sit down. Leo, can you write your name and phone number on this class card?\nLeo: Yes. My name is Leo Rivera. I am fourteen, and my phone number is 555-0182.\nNarrator: The teacher points to the board. The students repeat: this, that, mine, yours, and Sofia's.\nNarrator: The class starts, and everyone opens Unit Two.";
-    function setAudioSpeed(rate) {
-      document.getElementById("blueBackpackAudio").playbackRate = rate;
-    }
     function checkAnswers() {
       const answers = {q1: "A", q2: "B", q3: "B", q4: "C", q5: "A", q6: "C", q7: "B", q8: "C"};
       let score = 0;
@@ -119,6 +111,7 @@
     <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
   <script src="../../assets/js/transcript-pdf.js"></script>
+  <script src="../../assets/js/english-basic-audio-speed.js?v=20260709-speed"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>

@@ -10,6 +10,31 @@
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-unit6-responsive.css?v=20260707-unit6-responsive" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .city-prep-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .city-prep-card{border-radius:20px;background:#f8fbff;border:1px solid rgba(18,59,143,.12);padding:16px;box-shadow:0 10px 24px rgba(15,23,42,.06)}
+    .city-prep-card h3{margin:.1rem 0 .55rem;color:#123b8f}
+    .city-prep-card p{margin:.35rem 0;color:#475569;line-height:1.55}
+    .city-prep-card textarea{width:100%;min-height:112px;border:1px solid rgba(15,23,42,.16);border-radius:16px;padding:12px;font:inherit;resize:vertical;background:#fff;color:#0f172a}
+    .city-role-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .city-role-card{border-radius:20px;background:#fff7e8;border:1px solid rgba(249,115,22,.22);padding:16px;color:#7c2d12}
+    .city-role-card h3{margin:.1rem 0 .55rem;color:#c1121f}
+    .city-role-card ul{margin:.2rem 0 0;padding-left:1.15rem;line-height:1.65}
+    .city-model-dialogue{border-radius:22px;background:#0f172a;color:#e2e8f0;padding:18px;line-height:1.7}
+    .city-model-dialogue strong{color:#93c5fd}
+    .city-success-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:14px}
+    .city-success-grid div{border-radius:18px;background:#eef7ff;border:1px solid rgba(18,59,143,.12);padding:14px;color:#153b55;line-height:1.45}
+    .city-success-grid strong{display:block;color:#123b8f;margin-bottom:4px}
+    @media(max-width:980px){
+      .city-prep-grid,.city-success-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+      .city-role-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .city-prep-grid,.city-success-grid{grid-template-columns:1fr}
+      .city-prep-card,.city-role-card,.city-model-dialogue{border-radius:18px;padding:1rem}
+      .city-prep-card textarea{min-height:130px}
+    }
+  </style>
 </head>
 <body class="english-basic-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
@@ -44,8 +69,8 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Workshop Brief</p><h2>Mission and Setup</h2></div></div>
         <p class="lesson-text">Students create a simple city map, recommend favorite places with adjectives, and role-play a tourist information desk.</p>
-        <div class="workshop-brief-grid"><div class="workshop-brief-card"><span>Time</span><p>55 minutes</p></div><div class="workshop-brief-card"><span>Grouping</span><p>City guide teams</p></div><div class="workshop-brief-card"><span>Main output</span><p>City map and tourist desk performance</p></div><div class="workshop-brief-card"><span>Based on guide</span><p>Presentation using a city map; best places in your city</p></div></div>
-        <ul class="workshop-material-list"><li>City map template</li><li>Adjective cards</li><li>Tourist question cards</li><li>Clock cards</li></ul>
+        <div class="workshop-brief-grid"><div class="workshop-brief-card"><span>Time</span><p>55 minutes</p></div><div class="workshop-brief-card"><span>Grouping</span><p>City guide teams</p></div><div class="workshop-brief-card"><span>Main output</span><p>City-guide pitch and tourist desk role-play</p></div><div class="workshop-brief-card"><span>Based on guide</span><p>Presentation using a city map; best places in your city</p></div></div>
+        <ul class="workshop-material-list"><li>Projected city map or board drawing</li><li>Three favorite places per team</li><li>Tourist questions</li><li>Time expressions</li></ul>
       </article>
 
       <article class="premium-topic-card">
@@ -55,24 +80,39 @@
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Student Worksheet</p><h2>Complete During the Activity</h2></div></div>
-        <p class="lesson-text">Students use this board to collect real information before speaking. It can be copied into notebooks or projected for the class.</p>
-        <div class="worksheet-board">
-          <div class="worksheet-actions"><h3>Best Places City Map Presentation Worksheet</h3><button type="button" class="practice-submit-btn" onclick="downloadWorksheetPdfFromPage()">Download worksheet PDF</button></div>
-          <table class="worksheet-table"><thead><tr><th>Place</th><th>Adjective</th><th>Best time</th><th>Activity</th><th>Tourist question</th></tr></thead><tbody><tr><td>Place 1</td><td></td><td></td><td></td><td></td></tr><tr><td>Place 2</td><td></td><td></td><td></td><td></td></tr><tr><td>Place 3</td><td></td><td></td><td></td><td></td></tr><tr><td>Place 4</td><td></td><td></td><td></td><td></td></tr></tbody></table>
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Speaking Prep</p><h2>Plan the three places you will recommend</h2></div></div>
+        <p class="lesson-text">Students do not need to download or print anything. They prepare short notes on screen or in their notebooks, then use the notes to speak naturally.</p>
+        <div class="city-prep-grid">
+          <div class="city-prep-card"><h3>Place 1</h3><p>What is it? Where is it? Why is it important?</p><textarea placeholder="Example: The library is next to the park. It is quiet and modern. Students can study there in the afternoon."></textarea></div>
+          <div class="city-prep-card"><h3>Place 2</h3><p>Add one adjective, one activity, and one time expression.</p><textarea placeholder="Example: The cafe is across from the supermarket. It is friendly. People drink coffee there at seven o'clock."></textarea></div>
+          <div class="city-prep-card"><h3>Place 3</h3><p>Prepare one tourist question and one recommendation.</p><textarea placeholder="Example: Where can I relax? You can go to the park because it is clean and safe."></textarea></div>
         </div>
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Functional Language</p><h2>Language Bank and Final Product</h2></div></div>
-        <div class="language-bank-grid"><span>The best cafe is...</span><span>The biggest park is...</span><span>There are amazing places.</span><span>People go there at...</span><span>What is your favorite place in the city?</span></div>
-        <div class="deliverable-card"><h3>Final product</h3><p>A city-guide pitch plus tourist desk role-play with at least three place descriptions and two time expressions.</p></div>
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Functional Language</p><h2>Language bank, model, and final product</h2></div></div>
+        <div class="language-bank-grid"><span>The best place is...</span><span>There is a/an...</span><span>There are two...</span><span>It is next to...</span><span>It is across from...</span><span>People go there at...</span><span>You can...</span><span>I recommend it because...</span></div>
+        <div class="city-role-grid">
+          <div class="city-role-card"><h3>Tourist questions</h3><ul><li>Excuse me, where is the library?</li><li>What is the best place to relax?</li><li>What time does the cafe open?</li><li>How can I get to the park?</li><li>Is there a supermarket near here?</li></ul></div>
+          <div class="city-role-card"><h3>Guide answers</h3><ul><li>Go straight for two blocks.</li><li>Turn left at the bank.</li><li>The library is next to the park.</li><li>The cafe opens at seven o'clock.</li><li>I recommend the park because it is safe.</li></ul></div>
+        </div>
+        <div class="city-model-dialogue">
+          <p><strong>Tourist:</strong> Excuse me, what is the best place to study in your city?</p>
+          <p><strong>Guide:</strong> The best place is the library. It is next to the park and across from the cafe. It is quiet and modern. Students can study there in the afternoon.</p>
+          <p><strong>Tourist:</strong> How can I get there?</p>
+          <p><strong>Guide:</strong> Go straight for two blocks and turn right at the supermarket. The library is on your left.</p>
+        </div>
+        <div class="city-success-grid">
+          <div><strong>Places</strong>Describe at least three city places.</div>
+          <div><strong>Location</strong>Use next to, across from, near, or on your left/right.</div>
+          <div><strong>Time</strong>Include at least two time expressions.</div>
+          <div><strong>Interaction</strong>Ask and answer at least two tourist questions.</div>
+        </div>
+        <div class="deliverable-card"><h3>Final product</h3><p>A 60-90 second city-guide pitch plus a short tourist desk role-play. The team must recommend three places, explain where they are, say when people go there, and answer tourist questions.</p></div>
       </article>
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/transcript-pdf.js"></script>
-  <script src="../../assets/js/worksheet-pdf.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js"></script>

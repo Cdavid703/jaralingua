@@ -35,3 +35,6 @@
 @media(max-width:850px){.submitted-rubric{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.submitted-rubric{grid-template-columns:1fr}}
 .exam-health{display:grid;gap:1rem;margin-bottom:1rem}.table-actions{display:flex;gap:.35rem;flex-wrap:wrap}.btn-main.small,.btn-soft.small,.btn-danger.small{padding:.45rem .65rem;font-size:.78rem;box-shadow:none}.status-tag.pending{background:#fff8df;color:#795a00}.event-log{border:1px solid #e4deec;border-radius:16px;padding:.85rem;background:#faf9fc}.event-log summary{cursor:pointer;font-weight:900;color:var(--itm-purple)}.submitted-receipt{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem;margin-bottom:.8rem;padding:.85rem;border-radius:16px;background:rgba(255,255,255,.7);border:1px solid rgba(37,26,69,.14)}.submitted-receipt strong{grid-column:1/-1;color:var(--itm-purple)}.submitted-receipt span{font-weight:800}@media(max-width:650px){.submitted-receipt{grid-template-columns:1fr}.table-actions{display:grid}.table-actions .btn-soft,.table-actions .btn-danger{width:100%}}
+/* Audio speed controls for integrated-task listening cards */
+.audio-speed-row{grid-column:1/-1;align-items:center;margin-top:.1rem}
+.audio-speed-row .section-kicker{margin:0;align-self:center}

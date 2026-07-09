@@ -455,7 +455,7 @@
       timerHandle = setInterval(updateTimer, 250);
       mediaRecorder.start(250);
       setControls(true, false);
-      recordStatus.textContent = `Recording ? ${currentStage().label}`;
+      recordStatus.textContent = `Recording - ${currentStage().label}`;
       liveTranscript.textContent = "Read only the text shown above.";
     } catch (error) {
       stopTracks();
@@ -573,6 +573,6 @@
   } else if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) {
     unsupported.hidden = false;
     micButton.disabled = true;
-    recordStatus.textContent = "Recording vocal indisponible";
+    recordStatus.textContent = "Voice recording unavailable";
   }
 })();

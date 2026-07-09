@@ -34,10 +34,10 @@
     .ai-field small{color:#64748b;line-height:1.45}
     .ai-field input,.ai-field textarea,.ai-field select{width:100%;border:1px solid rgba(15,23,42,.16);border-radius:16px;padding:12px 13px;font:inherit;color:#0f172a;background:#fff}
     .ai-field textarea{min-height:112px;resize:vertical}
-    .ai-checkbox-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-    .ai-checkbox-grid label{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:center;min-width:0;min-height:48px;border:1px solid rgba(15,23,42,.1);border-radius:14px;padding:9px 10px;background:#f8fafc;color:#334155;font-weight:800;line-height:1.25}
+    .ai-checkbox-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+    .ai-checkbox-grid label{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:center;min-width:0;min-height:48px;border:1px solid rgba(15,23,42,.1);border-radius:14px;padding:9px 10px;background:#f8fafc;color:#334155;font-weight:800;line-height:1.25;writing-mode:horizontal-tb;text-orientation:mixed}
     .ai-checkbox-grid input{width:20px;max-width:20px;height:20px;flex:0 0 20px;margin:0;padding:0}
-    .ai-checkbox-grid span{min-width:0;white-space:normal;word-break:normal;overflow-wrap:normal}
+    .ai-checkbox-grid span{display:block;min-width:0;white-space:normal;word-break:normal;overflow-wrap:break-word;hyphens:none;writing-mode:horizontal-tb;text-orientation:mixed}
     .ai-output{border-radius:20px;background:#0f172a;color:#e2e8f0;padding:18px;min-height:130px;white-space:pre-wrap;line-height:1.65}
     .ai-output.light{background:#f8fbff;color:#334155;border:1px solid rgba(18,59,143,.12)}
     .ai-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
@@ -96,7 +96,7 @@
       body.english-basic-page .premium-topic-card{border-radius:24px;padding-inline:clamp(1rem,3vw,1.35rem)}
       .ai-lab-grid,.ai-builder,.ai-quality-panel{grid-template-columns:1fr}
       .ai-process,.ai-gallery,.ai-language-bank,.ai-lab-hero-note,.ai-rubric,.ai-teacher-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .ai-checkbox-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+      .ai-checkbox-grid{grid-template-columns:repeat(auto-fit,minmax(145px,1fr))}
       .ai-lab-hero-note span{border-radius:18px}
       .ai-actions{gap:.65rem}
       .ai-actions .btn,.ai-actions .practice-submit-btn{min-height:44px}
@@ -116,7 +116,8 @@
       body.english-basic-page .hero-actions .btn{width:100%}
       body.english-basic-page .topic-heading{grid-template-columns:auto 1fr;align-items:start}
       body.english-basic-page .topic-heading h2{font-size:clamp(1.45rem,7vw,2rem);line-height:1.12}
-      .ai-lab-hero-note,.ai-process,.ai-checkbox-grid,.ai-gallery,.ai-language-bank,.ai-rubric,.ai-quality-panel,.ai-teacher-summary{grid-template-columns:1fr}
+      .ai-lab-hero-note,.ai-process,.ai-gallery,.ai-language-bank,.ai-rubric,.ai-quality-panel,.ai-teacher-summary{grid-template-columns:1fr}
+      .ai-checkbox-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
       .ai-lab-card,.ai-warning,.ai-status{border-radius:18px;padding:1rem}
       .ai-builder{gap:12px}
       .ai-field input,.ai-field textarea,.ai-field select{border-radius:14px;padding:11px 12px}
@@ -141,6 +142,7 @@
       .ai-language-bank span{padding:.85rem}
       .ai-process div{padding:.9rem}
       .ai-checklist label{font-size:.92rem}
+      .ai-checkbox-grid{grid-template-columns:1fr}
     }
   </style>
 </head>
@@ -322,7 +324,7 @@
           <div><span>Submissions</span><strong id="galleryCount">0</strong></div>
           <div><span>Latest team</span><strong id="latestTeam">-</strong></div>
           <div><span>Teacher mode</span><strong id="teacherMode">-</strong></div>
-          <div><span>Gradebook</span><strong>0%</strong></div>
+          <div><span>Gradebook</span><strong>Non-graded</strong></div>
         </div>
         <div class="ai-actions"><button type="button" class="btn btn-secondary" id="refreshGalleryBtn">Refresh gallery</button></div>
         <div class="ai-gallery" id="teacherGallery"></div>
