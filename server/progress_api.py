@@ -35,6 +35,7 @@ FRENCH8_HYPOTHESES_ACTIVITY_ID = "writingActivity"
 FRENCH8_QUIZ_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_DATA", "/var/lib/jaralingua/french8-quiz-ville-intelligente.json")
 FRENCH8_QUIZ_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_SUBMISSIONS", "/var/lib/jaralingua/french8-quiz-ville-intelligente-submissions.json")
 FRENCH8_QUIZ_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_AUDIO", "/var/lib/jaralingua/french8-quiz-ville-intelligente-audio.mp3")
+FRENCH8_QUIZ_EVENTS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_EVENTS", "/var/lib/jaralingua/french8-quiz-ville-intelligente-events.jsonl")
 FRENCH8_IMPOSTEUR_PATH = os.environ.get("JARALINGUA_FRENCH8_IMPOSTEUR_DATA", "/var/lib/jaralingua/french8-imposteur-games.json")
 FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "/var/lib/jaralingua/french7-final-exam.json")
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
@@ -2371,9 +2372,104 @@ def write_french8_quiz_submissions(data):
     write_json_file(FRENCH8_QUIZ_SUBMISSIONS_PATH, data, ".french8-quiz-submissions-")
 
 
+def french8_quiz_receipt_code(student_id, submitted_at, attempt_id):
+    submitted_date = clean_text(submitted_at, 40)[:10].replace("-", "")
+    if not submitted_date:
+        submitted_date = time.strftime("%Y%m%d", time.gmtime())
+    source = "|".join([
+        clean_text(student_id, 80),
+        clean_text(submitted_at, 80),
+        clean_text(attempt_id, 160)
+    ])
+    digest = hashlib.sha256(source.encode("utf-8")).hexdigest().upper()
+    return "F8Q-" + submitted_date + "-" + digest[:8]
+
+
+def french8_quiz_submission_receipt(submission):
+    if not isinstance(submission, dict):
+        return ""
+    receipt = clean_text(submission.get("receiptCode"), 80)
+    if receipt:
+        return receipt
+    return french8_quiz_receipt_code(
+        submission.get("studentId"),
+        submission.get("submittedAt"),
+        submission.get("attemptId")
+    )
+
+
+def write_french8_quiz_event(event_type, profile=None, student=None, extra=None):
+    event = {
+        "at": now_iso(),
+        "event": clean_text(event_type, 80),
+        "email": normalize_email(profile.get("email")) if isinstance(profile, dict) else "",
+        "studentId": clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    }
+    if isinstance(extra, dict):
+        for key, value in extra.items():
+            event[clean_text(key, 60)] = clean_text(value, 500) if isinstance(value, str) else value
+    try:
+        os.makedirs(os.path.dirname(FRENCH8_QUIZ_EVENTS_PATH), exist_ok=True)
+        with open(FRENCH8_QUIZ_EVENTS_PATH, "a", encoding="utf-8") as handle:
+            handle.write(json.dumps(event, ensure_ascii=False, sort_keys=True) + "\n")
+    except Exception:
+        pass
+
+
+def french8_quiz_integrity_payload(bundle, submissions, grades_data):
+    exam = bundle.get("exam", {}) if isinstance(bundle, dict) else {}
+    sections = [section for section in exam.get("sections", []) if isinstance(section, dict)]
+    question_count = 0
+    computed_points = 0
+    issues = []
+    for section in sections:
+        section_id = clean_text(section.get("id"), 80)
+        questions = [item for item in section.get("questions", []) if isinstance(item, dict)]
+        if not questions:
+            issues.append("Section sans questions: " + (section_id or "sans id"))
+        for question in questions:
+            question_count += 1
+            question_id = clean_text(question.get("id"), 80)
+            try:
+                computed_points += float(question.get("points", 1))
+            except (TypeError, ValueError):
+                computed_points += 1
+            options = question.get("options")
+            if not isinstance(options, list) or len(options) != 3:
+                issues.append("Options inattendues: " + (question_id or "question sans id"))
+            answer = question.get("answer")
+            if not isinstance(answer, int) or not isinstance(options, list) or answer < 0 or answer >= len(options):
+                issues.append("Reponse correcte invalide: " + (question_id or "question sans id"))
+    configured_points = exam.get("totalPoints", 0)
+    try:
+        configured_number = float(configured_points)
+    except (TypeError, ValueError):
+        configured_number = 0
+    if abs(configured_number - computed_points) > 0.001:
+        issues.append("Total de points incoherent")
+    audio_path = FRENCH8_QUIZ_AUDIO_PATH if os.path.exists(FRENCH8_QUIZ_AUDIO_PATH) else BUNDLED_FRENCH8_QUIZ_AUDIO_PATH
+    students = [item for item in grades_data.get("students", []) if isinstance(item, dict)] if isinstance(grades_data, dict) else []
+    submitted_ids = set(submissions.get("submissions", {}).keys()) if isinstance(submissions, dict) else set()
+    return {
+        "version": clean_text(exam.get("version"), 80),
+        "sections": len(sections),
+        "questions": question_count,
+        "configuredPoints": configured_points,
+        "computedPoints": round(computed_points, 2),
+        "audioAvailable": os.path.exists(audio_path),
+        "audioPath": os.path.basename(audio_path),
+        "submittedCount": len(submitted_ids),
+        "studentCount": len(students),
+        "pendingCount": max(len(students) - len(submitted_ids), 0),
+        "issues": issues[:12],
+        "ok": len(issues) == 0 and question_count > 0 and os.path.exists(audio_path)
+    }
+
+
 def french8_quiz_submission_public(submission):
     if not isinstance(submission, dict):
         return None
+    receipt_code = french8_quiz_submission_receipt(submission)
     return {
         "studentId": submission.get("studentId"),
         "studentName": submission.get("studentName"),
@@ -2382,7 +2478,8 @@ def french8_quiz_submission_public(submission):
         "grade": submission.get("grade"),
         "sectionScores": submission.get("sectionScores"),
         "submittedAt": submission.get("submittedAt"),
-        "quizVersion": submission.get("quizVersion")
+        "quizVersion": submission.get("quizVersion"),
+        "receiptCode": receipt_code
     }
 
 
@@ -2413,6 +2510,7 @@ def apply_french8_quiz_submission_to_gradebook(student, submission):
         "sectionScores": submission.get("sectionScores"),
         "quizVersion": clean_text(submission.get("quizVersion"), 80),
         "attemptId": clean_text(submission.get("attemptId"), 120),
+        "receiptCode": french8_quiz_submission_receipt(submission),
         "source": "french8-quiz-ville-intelligente"
     }
     if student["gradeDetails"].get("quiz") != detail:
@@ -2451,6 +2549,7 @@ def french8_quiz_state_payload(profile, grades_data, bundle, submissions):
                 "status": "submitted" if public_submission else "pending",
                 "result": public_submission
             })
+        payload["integrity"] = french8_quiz_integrity_payload(bundle, submissions, grades_data)
     return payload
 
 
@@ -5569,12 +5668,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                 student = matched_student_for_profile(profile, grades_data)
                 if not isinstance(student, dict):
+                    write_french8_quiz_event("submit_not_authorized", profile, None, {"reason": "student_not_authorized"})
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
 
                 bundle = read_french8_quiz_bundle()
                 state = bundle.get("state", {})
                 if state.get("isOpen") is not True:
+                    write_french8_quiz_event("submit_quiz_closed", profile, student, {"stateUpdatedAt": state.get("updatedAt")})
                     json_response(self, 403, {"error": "quiz_closed", "state": state})
                     return
 
@@ -5586,12 +5687,20 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     if apply_french8_quiz_submission_to_gradebook(student, existing):
                         write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                     if attempt_id and clean_text(existing.get("attemptId"), 120) == attempt_id:
+                        write_french8_quiz_event("submit_duplicate_same_attempt", profile, student, {
+                            "attemptId": attempt_id,
+                            "receiptCode": french8_quiz_submission_receipt(existing)
+                        })
                         json_response(self, 200, {
                             "ok": True,
                             "duplicate": True,
                             "result": french8_quiz_submission_public(existing)
                         })
                     else:
+                        write_french8_quiz_event("submit_duplicate_blocked", profile, student, {
+                            "attemptId": attempt_id,
+                            "receiptCode": french8_quiz_submission_receipt(existing)
+                        })
                         json_response(self, 409, {
                             "error": "already_submitted",
                             "result": french8_quiz_submission_public(existing)
@@ -5601,6 +5710,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 exam = bundle.get("exam", {})
                 result = score_final_exam(exam, payload.get("answers"))
                 submitted_at = now_iso()
+                receipt_code = french8_quiz_receipt_code(student_id, submitted_at, attempt_id)
                 submission = {
                     "studentId": student_id,
                     "studentName": student.get("fullName", ""),
@@ -5612,6 +5722,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "submittedAt": submitted_at,
                     "quizVersion": clean_text(exam.get("version"), 80),
                     "attemptId": attempt_id,
+                    "receiptCode": receipt_code,
                     "answers": result["details"],
                     "source": "french8-quiz-ville-intelligente"
                 }
@@ -5630,11 +5741,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "sectionScores": result["sectionScores"],
                     "quizVersion": clean_text(exam.get("version"), 80),
                     "attemptId": attempt_id,
+                    "receiptCode": receipt_code,
                     "source": "french8-quiz-ville-intelligente"
                 }
 
                 write_french8_quiz_submissions(submissions)
                 write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                write_french8_quiz_event("submit_recorded", profile, student, {
+                    "attemptId": attempt_id,
+                    "receiptCode": receipt_code,
+                    "grade": result["grade"],
+                    "scorePoints": result["scorePoints"],
+                    "totalPoints": result["totalPoints"]
+                })
                 json_response(self, 200, {"ok": True, "result": french8_quiz_submission_public(submission)})
             return
 
@@ -6133,6 +6252,10 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 else:
                     state["closedAt"] = timestamp
                 write_french8_quiz_bundle(bundle)
+                write_french8_quiz_event("state_opened" if desired_open else "state_closed", profile, None, {
+                    "updatedAt": timestamp,
+                    "openedBy": normalize_email(profile.get("email"))
+                })
                 json_response(self, 200, {"ok": True, "state": state})
             return
 
