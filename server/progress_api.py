@@ -453,7 +453,7 @@ FRENCH8_BASE_EVALUATIONS = {
         "type": "Projet oral",
         "date": "2026-07-01",
         "displayDate": "Evaluation manuelle en classe",
-        "description": "Exposition orale de 3 a 5 minutes avec support audiovisuel. Evaluation manuelle par le professeur; aucune remise web."
+        "description": "Exposition orale de 3 à 5 minutes avec support audiovisuel. Évaluation manuelle par le professeur; aucune remise web."
     },
     "quiz": {
         "id": "quiz",
@@ -462,7 +462,7 @@ FRENCH8_BASE_EVALUATIONS = {
         "type": "Quiz",
         "date": "2026-07-06",
         "displayDate": "Ouverture par le professeur",
-        "description": "Quiz ferme sur les themes 01 et 02: grammaire, lecture et ecoute autour de la ville intelligente."
+        "description": "Quiz fermé sur les thèmes 01 et 02 : grammaire, lecture et écoute autour de la ville intelligente."
     },
     "debate1": {
         "id": "debate1",
@@ -3022,6 +3022,7 @@ def final_exam_public_payload(bundle):
     return {
         "id": clean_text(exam.get("id") or "french7-final-exam", 80),
         "title": clean_text(exam.get("title") or "Examen final", 200),
+        "version": clean_text(exam.get("version"), 80),
         "totalPoints": exam.get("totalPoints", 50),
         "sections": sections
     }

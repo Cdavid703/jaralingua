@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quiz 10% - Ville intelligente | Francais Niveau 8</title>
+  <title>Quiz 10% - Ville intelligente | Français Niveau 8</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
   <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -42,18 +42,18 @@
   </style>
 </head>
 <body>
-  <div class="global-course-switcher" aria-label="Cours"><details><summary><span>Cours</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Francais</a><a href="./index.html">Francais Niveau 8</a><a href="themes-du-cours.html">Themes</a><a href="ateliers-activites.html">Ateliers</a><a href="../../ingles/index.html">Anglais</a></nav></details></div>
+  <div class="global-course-switcher" aria-label="Cours"><details><summary><span>Cours</span></summary><nav><a href="../../index.html">Accueil</a><a href="../index.html">Français</a><a href="./index.html">Français Niveau 8</a><a href="themes-du-cours.html">Thèmes</a><a href="ateliers-activites.html">Ateliers</a><a href="../../ingles/index.html">Anglais</a></nav></details></div>
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Francais · Niveau 8</span></a>
+      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 8</span></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-controls="menuPrincipal" aria-expanded="false" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button>
-      <div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Themes</a></li><li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link active" href="quiz-ville-intelligente.html">Quiz</a></li><li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li></ul></div>
+      <div class="collapse navbar-collapse" id="menuPrincipal"><ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1"><li class="nav-item"><a class="nav-link" href="index.html">Accueil</a></li><li class="nav-item"><a class="nav-link" href="themes-du-cours.html">Thèmes</a></li><li class="nav-item"><a class="nav-link" href="ateliers-activites.html">Ateliers</a></li><li class="nav-item"><a class="nav-link active" href="quiz-ville-intelligente.html">Quiz</a></li><li class="nav-item"><a class="nav-link" href="notes-evaluation.html">Notes</a></li></ul></div>
     </div>
   </nav>
-  <header class="hero" id="top"><div class="container"><span class="badge-course"><i class="bi bi-shield-lock-fill"></i> Quiz 10% · Acces controle</span><h1>Quiz · Ville intelligente</h1><p class="hero-text">Evaluation des themes 01 et 02: conditionnel passe, passe compose avec COD, comprehension ecrite et comprehension orale. Le quiz s'ouvre uniquement quand le professeur l'active.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#access"><i class="bi bi-box-arrow-in-right"></i> Acceder</a><a class="btn-soft" href="ateliers-activites.html#theme-02"><i class="bi bi-arrow-left"></i> Retour ateliers</a></div></div></header>
+  <header class="hero" id="top"><div class="container"><span class="badge-course"><i class="bi bi-shield-lock-fill"></i> Quiz 10% · Accès contrôlé</span><h1>Quiz · Ville intelligente</h1><p class="hero-text">Évaluation des thèmes 01 et 02 : conditionnel passé, passé composé avec COD, compréhension écrite et compréhension orale. Le quiz s'ouvre uniquement quand le professeur l'active.</p><div class="d-flex flex-wrap gap-3 mt-4"><a class="btn-main" href="#access"><i class="bi bi-box-arrow-in-right"></i> Accéder</a><a class="btn-soft" href="ateliers-activites.html#theme-02"><i class="bi bi-arrow-left"></i> Retour ateliers</a></div></div></header>
   <section id="access" class="quiz-shell"><div class="container"><div class="access-panel" id="accessPanel" aria-live="polite"></div><div class="admin-panel mt-3" id="adminPanel" hidden></div></div></section>
   <main class="quiz-shell" id="quizRoot" hidden><div class="container"><form id="quizForm" novalidate></form></div></main>
-  <footer><div class="container d-flex flex-wrap justify-content-between gap-3"><span>Quiz 10% · Francais Niveau 8</span><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Retour en haut <i class="bi bi-arrow-up"></i></a></div></footer>
+  <footer><div class="container d-flex flex-wrap justify-content-between gap-3"><span>Quiz 10% · Français Niveau 8</span><a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Retour en haut <i class="bi bi-arrow-up"></i></a></div></footer>
   <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -63,7 +63,11 @@
   <script>
     (() => {
       "use strict";
-      const USER_KEY = "jaralingua_google_user";
+      const USER_KEYS = [
+        { key: "jaralingua_google_user", provider: "google" },
+        { key: "jaralingua_microsoft_user", provider: "microsoft" },
+        { key: "jaralingua_local_user", provider: "local" }
+      ];
       const API = {
         state: "/api/french8/quiz-ville-intelligente/state",
         quiz: "/api/french8/quiz-ville-intelligente",
@@ -87,14 +91,25 @@
           "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
         })[character]);
       }
-      function storedUser() {
+      function storedUserFrom(entry) {
         try {
-          const saved = JSON.parse(sessionStorage.getItem(USER_KEY) || "null");
-          if (!saved || !saved.credential || saved.exp <= Date.now() / 1000) return null;
-          return saved;
+          const saved = JSON.parse(sessionStorage.getItem(entry.key) || "null");
+          if (!saved || !saved.credential) return null;
+          if (saved.exp && saved.exp <= Date.now() / 1000) {
+            sessionStorage.removeItem(entry.key);
+            return null;
+          }
+          return Object.assign({ provider: entry.provider }, saved);
         } catch (_error) {
           return null;
         }
+      }
+      function storedUser() {
+        for (const entry of USER_KEYS) {
+          const user = storedUserFrom(entry);
+          if (user) return user;
+        }
+        return null;
       }
       function userKeyPart() {
         const user = storedUser();
@@ -120,10 +135,11 @@
       }
       function headers() {
         const user = storedUser();
+        if (!user || !user.credential) throw new Error("auth_required");
         return {
           "Content-Type": "application/json",
           Authorization: "Bearer " + user.credential,
-          "X-Jaralingua-Auth-Provider": "google"
+          "X-Jaralingua-Auth-Provider": user.provider || "google"
         };
       }
       async function request(url, options = {}, timeoutMs = 15000) {
@@ -162,7 +178,7 @@
         updatePolling();
         els.root.hidden = true;
         els.admin.hidden = true;
-        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-primary"><i class="bi bi-google"></i></div><div class="flex-grow-1"><p class="section-kicker">Connexion requise</p><h2 class="section-title">Connectez-vous pour verifier l'acces</h2><p class="section-text">${esc(message || "Utilisez le compte Google associe au cours.")}</p><div class="d-flex flex-wrap gap-2 mt-3"><button class="btn-main" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Connexion Google</button><button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Verifier</button></div></div></div>`;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-primary"><i class="bi bi-person-check-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">Connexion requise</p><h2 class="section-title">Connectez-vous pour vérifier l'accès</h2><p class="section-text">${esc(message || "Utilisez le compte Google, Microsoft ou le compte du cours associé à Français Niveau 8.")}</p><div class="d-flex flex-wrap gap-2 mt-3"><button class="btn-main" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Ouvrir la connexion</button><button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier</button></div></div></div>`;
         els.access.querySelector("[data-open-login]").addEventListener("click", () => {
           openLoginPanel();
           setTimeout(loadState, 1400);
@@ -174,7 +190,7 @@
         setView("locked");
         updatePolling();
         els.root.hidden = true;
-        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-danger"><i class="bi bi-lock-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">Quiz ferme</p><h2 class="section-title">Le quiz n'est pas encore ouvert</h2><p class="section-text">${esc(message || "Vous ne pouvez pas faire le quiz tant que le professeur ne l'a pas active.")}</p><div class="identity-strip"><span class="pill closed"><i class="bi bi-lock-fill"></i> Ferme aux etudiants</span>${payload?.state?.updatedAt ? `<span class="pill"><i class="bi bi-clock-history"></i> Mise a jour: ${esc(payload.state.updatedAt)}</span>` : ""}</div><button class="btn-soft mt-3" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Verifier a nouveau</button></div></div>`;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-danger"><i class="bi bi-lock-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">Quiz fermé</p><h2 class="section-title">Le quiz n'est pas encore ouvert</h2><p class="section-text">${esc(message || "Vous ne pouvez pas faire le quiz tant que le professeur ne l'a pas activé.")}</p><div class="identity-strip"><span class="pill closed"><i class="bi bi-lock-fill"></i> Fermé aux étudiants</span>${payload?.state?.updatedAt ? `<span class="pill"><i class="bi bi-clock-history"></i> Mise à jour : ${esc(payload.state.updatedAt)}</span>` : ""}</div><button class="btn-soft mt-3" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier à nouveau</button></div></div>`;
         els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
       }
       function adminSubmissionTable(payload) {
@@ -183,7 +199,7 @@
         return `<div class="submission-table-wrap"><table class="submission-table"><thead><tr><th>Etudiant</th><th>Etat</th><th>Note</th><th>Envoi</th></tr></thead><tbody>${rows.map((item) => {
           const result = item.result || {};
           const submitted = item.status === "submitted";
-          return `<tr class="${submitted ? "" : "pending-row"}"><td>${esc(item.studentName || "Etudiant")}<br><small>${esc(item.email || item.studentId || "")}</small></td><td>${submitted ? '<span class="pill open"><i class="bi bi-check-circle-fill"></i> Envoye</span>' : '<span class="pill closed"><i class="bi bi-hourglass-split"></i> En attente</span>'}</td><td>${submitted ? `${Number(result.grade || 0).toFixed(2)} / 5<br><small>${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</small>` : "En attente"}</td><td>${esc(result.submittedAt || "-")}</td></tr>`;
+          return `<tr class="${submitted ? "" : "pending-row"}"><td>${esc(item.studentName || "Étudiant")}<br><small>${esc(item.email || item.studentId || "")}</small></td><td>${submitted ? '<span class="pill open"><i class="bi bi-check-circle-fill"></i> Envoyé</span>' : '<span class="pill closed"><i class="bi bi-hourglass-split"></i> En attente</span>'}</td><td>${submitted ? `${Number(result.grade || 0).toFixed(2)} / 5<br><small>${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</small>` : "En attente"}</td><td>${esc(result.submittedAt || "-")}</td></tr>`;
         }).join("")}</tbody></table></div>`;
       }
       function renderAdmin(payload) {
@@ -195,8 +211,8 @@
         }
         const open = payload?.state?.isOpen === true;
         els.admin.hidden = false;
-        const stats = payload?.stats ? `<span class="pill"><i class="bi bi-check2-circle"></i> Envoyes: ${esc(payload.stats.submittedCount)} / ${esc(payload.stats.totalStudents)}</span><span class="pill"><i class="bi bi-hourglass-split"></i> En attente: ${esc(payload.stats.pendingCount)}</span>` : "";
-        els.admin.innerHTML = `<div class="d-flex flex-wrap justify-content-between align-items-start gap-3"><div><p class="section-kicker">Controle professeur</p><h2 class="h3 fw-bold text-primary mb-2">Ouverture du quiz 10%</h2><div class="identity-strip"><span class="pill ${open ? "open" : "closed"}"><i class="bi ${open ? "bi-unlock-fill" : "bi-lock-fill"}"></i> ${open ? "Ouvert aux etudiants" : "Ferme aux etudiants"}</span>${payload?.state?.openedBy ? `<span class="pill"><i class="bi bi-person-check"></i> ${esc(payload.state.openedBy)}</span>` : ""}${stats}</div><p class="section-text mb-0 mt-2">Quand le quiz est ouvert, les etudiants autorises peuvent le realiser une seule fois. La note est envoyee a Notes du cours dans l'evaluation Quiz 10%.</p><p class="mt-3 mb-0 status-message pending" id="adminStatus" hidden></p></div><div class="d-flex flex-wrap gap-2"><button class="btn-main" type="button" data-set-open="true"><i class="bi bi-unlock-fill"></i> Ouvrir</button><button class="btn-danger-soft" type="button" data-set-open="false"><i class="bi bi-lock-fill"></i> Fermer</button><button class="btn-soft" type="button" data-recheck-state><i class="bi bi-arrow-repeat"></i> Actualiser</button><a class="btn-soft" href="notes-evaluation.html"><i class="bi bi-bar-chart"></i> Notes</a></div></div>${adminSubmissionTable(payload)}`;
+        const stats = payload?.stats ? `<span class="pill"><i class="bi bi-check2-circle"></i> Envoyés : ${esc(payload.stats.submittedCount)} / ${esc(payload.stats.totalStudents)}</span><span class="pill"><i class="bi bi-hourglass-split"></i> En attente : ${esc(payload.stats.pendingCount)}</span>` : "";
+        els.admin.innerHTML = `<div class="d-flex flex-wrap justify-content-between align-items-start gap-3"><div><p class="section-kicker">Contrôle professeur</p><h2 class="h3 fw-bold text-primary mb-2">Ouverture du quiz 10%</h2><div class="identity-strip"><span class="pill ${open ? "open" : "closed"}"><i class="bi ${open ? "bi-unlock-fill" : "bi-lock-fill"}"></i> ${open ? "Ouvert aux étudiants" : "Fermé aux étudiants"}</span>${payload?.state?.openedBy ? `<span class="pill"><i class="bi bi-person-check"></i> ${esc(payload.state.openedBy)}</span>` : ""}${stats}</div><p class="section-text mb-0 mt-2">Quand le quiz est ouvert, les étudiants autorisés peuvent le réaliser une seule fois. La note est envoyée à Notes du cours dans l'évaluation Quiz 10%.</p><p class="mt-3 mb-0 status-message pending" id="adminStatus" hidden></p></div><div class="d-flex flex-wrap gap-2"><button class="btn-main" type="button" data-set-open="true"><i class="bi bi-unlock-fill"></i> Ouvrir</button><button class="btn-danger-soft" type="button" data-set-open="false"><i class="bi bi-lock-fill"></i> Fermer</button><button class="btn-soft" type="button" data-recheck-state><i class="bi bi-arrow-repeat"></i> Actualiser</button><a class="btn-soft" href="notes-evaluation.html"><i class="bi bi-bar-chart"></i> Notes</a></div></div>${adminSubmissionTable(payload)}`;
         els.admin.querySelectorAll("[data-set-open]").forEach((button) => button.addEventListener("click", () => setQuizState(button.dataset.setOpen === "true")));
         els.admin.querySelector("[data-recheck-state]").addEventListener("click", () => loadState());
       }
@@ -208,14 +224,14 @@
         node.textContent = message;
       }
       async function setQuizState(isOpen) {
-        setAdminStatus("Mise a jour de l'etat du quiz...");
+        setAdminStatus("Mise à jour de l'état du quiz...");
         try {
           const result = await request(API.state, { method: "PUT", body: JSON.stringify({ isOpen }) });
           if (!result.ok) throw new Error("state_error");
           await loadState();
-          setAdminStatus(isOpen ? "Quiz ouvert. Les etudiants peuvent commencer." : "Quiz ferme. Les etudiants ne peuvent plus commencer.", "success");
+          setAdminStatus(isOpen ? "Quiz ouvert. Les étudiants peuvent commencer." : "Quiz fermé. Les étudiants ne peuvent plus commencer.", "success");
         } catch (_error) {
-          setAdminStatus("Impossible de modifier l'etat du quiz.", "error");
+          setAdminStatus("Impossible de modifier l'état du quiz.", "error");
         }
       }
       function questionHtml(question, index) {
@@ -266,7 +282,7 @@
         const answered = Object.keys(selectedAnswers()).length;
         const label = document.getElementById("completionLabel");
         const bar = document.getElementById("completionBar");
-        if (label) label.textContent = `${answered} / ${total} reponses completees`;
+        if (label) label.textContent = `${answered} / ${total} réponses complétées`;
         if (bar) bar.style.width = total ? `${Math.round(answered / total * 100)}%` : "0%";
         return { answered, total };
       }
@@ -289,7 +305,7 @@
       }
       function renderSection(section) {
         const reading = section.readingText?.length ? `<div class="reading-box"><h3>${esc(section.readingTitle || "Texte")}</h3>${section.readingText.map((paragraph) => `<p>${esc(paragraph)}</p>`).join("")}</div>` : "";
-        const audio = section.audioSrc ? `<div class="audio-box"><h3>${esc(section.audioTitle || "Audio")}</h3><p>${esc(section.audioText || "Ecoutez puis repondez.")}</p><audio id="quizAudio" controls preload="metadata" aria-label="Audio du quiz"></audio><p class="section-text mb-0 mt-2" id="audioStatus"></p></div>` : "";
+        const audio = section.audioSrc ? `<div class="audio-box"><h3>${esc(section.audioTitle || "Audio")}</h3><p>${esc(section.audioText || "Écoutez puis répondez.")}</p><audio id="quizAudio" controls preload="metadata" aria-label="Audio du quiz"></audio><p class="section-text mb-0 mt-2" id="audioStatus"></p></div>` : "";
         return `<section class="section-card panel" data-section="${esc(section.id)}"><p class="section-kicker">${esc(section.title)} · ${esc(section.points)} points</p><h2 class="section-title">${esc(section.subtitle || section.title)}</h2><p class="section-text">${esc(section.instructions || "")}</p>${reading}${audio}<div class="question-grid">${(section.questions || []).map(questionHtml).join("")}</div></section>`;
       }
       async function loadProtectedAudio(audioSrc) {
@@ -305,7 +321,7 @@
           audio.src = audioObjectUrl;
           if (status) status.textContent = "";
         } catch (_error) {
-          if (status) status.textContent = "Audio indisponible pour le moment. Rechargez la page ou prevenez le professeur.";
+          if (status) status.textContent = "Audio indisponible pour le moment. Rechargez la page ou prévenez le professeur.";
         }
       }
       function renderQuiz(payload) {
@@ -314,13 +330,13 @@
         currentQuiz = payload.exam;
         const isStaff = ["admin", "teacher"].includes(payload.role);
         els.root.hidden = false;
-        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-success"><i class="bi bi-unlock-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">${isStaff ? "Apercu professeur" : "Acces valide"}</p><h2 class="section-title">${esc(currentQuiz.title || "Quiz")}</h2><p class="section-text mb-0">${isStaff ? "Vous pouvez previsualiser le quiz. Les comptes professeur ne soumettent pas de note." : "Repondez soigneusement. Une seule soumission sera enregistree."}</p><div class="identity-strip"><span class="pill open"><i class="bi bi-unlock-fill"></i> Quiz disponible</span><span class="pill"><i class="bi bi-award-fill"></i> ${esc(currentQuiz.totalPoints)} points · note /5</span><button class="btn-soft" type="button" data-recheck-state><i class="bi bi-arrow-repeat"></i> Verifier l'acces</button></div></div></div>`;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="fs-1 text-success"><i class="bi bi-unlock-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">${isStaff ? "Aperçu professeur" : "Accès valide"}</p><h2 class="section-title">${esc(currentQuiz.title || "Quiz")}</h2><p class="section-text mb-0">${isStaff ? "Vous pouvez prévisualiser le quiz. Les comptes professeur ne soumettent pas de note." : "Répondez soigneusement. Une seule soumission sera enregistrée."}</p><div class="identity-strip"><span class="pill open"><i class="bi bi-unlock-fill"></i> Quiz disponible</span><span class="pill"><i class="bi bi-award-fill"></i> ${esc(currentQuiz.totalPoints)} points · note /5</span><button class="btn-soft" type="button" data-recheck-state><i class="bi bi-arrow-repeat"></i> Vérifier l'accès</button></div></div></div>`;
         els.access.querySelector("[data-recheck-state]").addEventListener("click", () => loadState());
-        els.form.innerHTML = `<section class="section-card panel"><p class="section-kicker">Avant de commencer</p><h2 class="section-title">Consignes d'envoi</h2><p class="section-text mb-0">${isStaff ? "Vous etes en apercu professeur. Les comptes professeur ne peuvent pas envoyer de note." : "Ce quiz ne peut etre envoye qu'une seule fois. Ne fermez pas la page pendant l'envoi et attendez le message final de confirmation avant de quitter."}</p></section>${(currentQuiz.sections || []).map(renderSection).join("")}<div class="submit-zone"><div class="d-flex flex-wrap align-items-center justify-content-between gap-3"><div class="flex-grow-1"><h2 class="h4 fw-bold mb-1">Soumission finale</h2><p>${isStaff ? "Apercu professeur: la soumission est desactivee." : "Verifiez toutes vos reponses avant d'envoyer. Apres l'envoi, la note ira dans Notes du cours."}</p><div class="completion-meter" aria-live="polite"><span id="completionLabel">0 / 0 reponses completees</span><span class="completion-track" aria-hidden="true"><span class="completion-bar" id="completionBar"></span></span></div><p class="mt-2 mb-0" id="submitStatus" aria-live="polite"></p></div><button class="btn-main" type="submit" ${isStaff ? "disabled" : ""}><i class="bi bi-send-check-fill"></i> Envoyer le quiz</button></div></div>`;
+        els.form.innerHTML = `<section class="section-card panel"><p class="section-kicker">Avant de commencer</p><h2 class="section-title">Consignes d'envoi</h2><p class="section-text mb-0">${isStaff ? "Vous êtes en aperçu professeur. Les comptes professeur ne peuvent pas envoyer de note." : "Ce quiz ne peut être envoyé qu'une seule fois. Ne fermez pas la page pendant l'envoi et attendez le message final de confirmation avant de quitter."}</p></section>${(currentQuiz.sections || []).map(renderSection).join("")}<div class="submit-zone"><div class="d-flex flex-wrap align-items-center justify-content-between gap-3"><div class="flex-grow-1"><h2 class="h4 fw-bold mb-1">Soumission finale</h2><p>${isStaff ? "Aperçu professeur : la soumission est désactivée." : "Vérifiez toutes vos réponses avant d'envoyer. Après l'envoi, la note ira dans Notes du cours."}</p><div class="completion-meter" aria-live="polite"><span id="completionLabel">0 / 0 réponses complétées</span><span class="completion-track" aria-hidden="true"><span class="completion-bar" id="completionBar"></span></span></div><p class="mt-2 mb-0" id="submitStatus" aria-live="polite"></p></div><button class="btn-main" type="submit" ${isStaff ? "disabled" : ""}><i class="bi bi-send-check-fill"></i> Envoyer le quiz</button></div></div>`;
         els.form.onsubmit = submitQuiz;
         const restoredDraft = restoreDraft();
         updateCompletion();
-        if (restoredDraft && !isStaff) setSubmitStatus("Brouillon recupere automatiquement. Verifiez vos reponses avant l'envoi final.", "success");
+        if (restoredDraft && !isStaff) setSubmitStatus("Brouillon récupéré automatiquement. Vérifiez vos réponses avant l'envoi final.", "success");
         els.form.querySelectorAll("input[type='radio']").forEach((input) => {
           input.addEventListener("change", () => {
             clearMissingMarks();
@@ -360,12 +376,12 @@
         const button = els.form.querySelector("button[type='submit']");
         const { answers, missing } = collectAnswers();
         if (missing > 0) {
-          setSubmitStatus(`Il manque ${missing} reponse(s). Repondez a toutes les questions avant d'envoyer.`, "error");
+          setSubmitStatus(`Il manque ${missing} réponse(s). Répondez à toutes les questions avant d'envoyer.`, "error");
           markMissingQuestions();
           return;
         }
         clearMissingMarks();
-        if (!window.confirm("Apres l'envoi, vous ne pourrez plus modifier vos reponses. Voulez-vous envoyer le quiz maintenant ?")) {
+        if (!window.confirm("Après l'envoi, vous ne pourrez plus modifier vos réponses. Voulez-vous envoyer le quiz maintenant ?")) {
           return;
         }
         submitting = true;
@@ -377,14 +393,14 @@
           const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers, attemptId: attemptId() }) }, 20000);
           if (!result.ok) {
             if (result.data?.error === "already_submitted" && result.data.result) return renderSubmitted(result.data.result);
-            if (result.data?.error === "quiz_closed") throw new Error("Le quiz est ferme. La soumission n'a pas ete enregistree.");
-            throw new Error("La soumission n'a pas pu etre enregistree.");
+            if (result.data?.error === "quiz_closed") throw new Error("Le quiz est fermé. La soumission n'a pas été enregistrée.");
+            throw new Error("La soumission n'a pas pu être enregistrée.");
           }
           await verifySubmission(result.data.result);
         } catch (error) {
           const message = error && error.name === "AbortError"
-            ? "Delai depasse. Vos reponses restent sur cette page; verifiez la connexion puis renvoyez."
-            : (error.message || "Erreur d'envoi. Vos reponses restent sur cette page.");
+            ? "Délai dépassé. Vos réponses restent sur cette page ; vérifiez la connexion puis renvoyez."
+            : (error.message || "Erreur d'envoi. Vos réponses restent sur cette page.");
           setSubmitStatus(message, "error");
           submitting = false;
           button.disabled = false;
@@ -393,17 +409,17 @@
         }
       }
       async function verifySubmission(result) {
-        setSubmitStatus("Verification de l'enregistrement dans Notes du cours...", "pending");
+        setSubmitStatus("Vérification de l'enregistrement dans Notes du cours...", "pending");
         try {
           const state = await request(API.state, {}, 12000);
           if (state.ok && state.data?.submitted) {
             clearDraft();
-            renderSubmitted(state.data.submitted, "Verification serveur confirmee.");
+            renderSubmitted(state.data.submitted, "Vérification serveur confirmée.");
             return;
           }
-          renderSubmitted(result, "Quiz envoye, mais la verification automatique n'a pas retrouve l'enregistrement. Consultez Notes du cours ou demandez au professeur de verifier.");
+          renderSubmitted(result, "Quiz envoyé, mais la vérification automatique n'a pas retrouvé l'enregistrement. Consultez Notes du cours ou demandez au professeur de vérifier.");
         } catch (_error) {
-          renderSubmitted(result, "Quiz envoye. La verification automatique n'a pas pu etre terminee, mais le serveur a retourne une note.");
+          renderSubmitted(result, "Quiz envoyé. La vérification automatique n'a pas pu être terminée, mais le serveur a retourné une note.");
         }
       }
       function renderSubmitted(result, verificationMessage = "") {
@@ -417,14 +433,14 @@
         els.root.hidden = true;
         els.admin.hidden = true;
         const sections = result.sectionScores || {};
-        els.access.innerHTML = `<div class="result-panel"><p class="section-kicker">Quiz soumis</p><h2 class="section-title">Votre quiz a ete enregistre</h2><p class="section-text">La note a ete calculee automatiquement et envoyee a Notes du cours. Les reponses correctes ne sont pas affichees ici.</p>${verificationMessage ? `<p class="status-message ${verificationMessage.includes("confirmee") ? "success" : "pending"}">${esc(verificationMessage)}</p>` : ""}<div class="row g-4 align-items-center"><div class="col-md-5"><div class="score-number">${Number(result.grade || 0).toFixed(2)}</div><p class="h5 fw-bold text-primary mb-0">Note finale / 5</p></div><div class="col-md-7"><div class="identity-strip"><span class="pill open"><i class="bi bi-send-check-fill"></i> Envoye definitivement</span><span class="pill"><i class="bi bi-check-circle-fill"></i> ${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</span><span class="pill"><i class="bi bi-journal-text"></i> Grammaire: ${esc(sections.grammaire?.score ?? 0)} / ${esc(sections.grammaire?.total ?? 15)}</span><span class="pill"><i class="bi bi-book"></i> Lecture: ${esc(sections.lecture?.score ?? 0)} / ${esc(sections.lecture?.total ?? 6)}</span><span class="pill"><i class="bi bi-volume-up"></i> Ecoute: ${esc(sections.ecoute?.score ?? 0)} / ${esc(sections.ecoute?.total ?? 5)}</span><span class="pill"><i class="bi bi-clock-history"></i> ${esc(result.submittedAt || "")}</span></div><a class="btn-main mt-3" href="notes-evaluation.html"><i class="bi bi-bar-chart-fill"></i> Consulter mes notes</a></div></div></div>`;
+        els.access.innerHTML = `<div class="result-panel"><p class="section-kicker">Quiz soumis</p><h2 class="section-title">Votre quiz a été enregistré</h2><p class="section-text">La note a été calculée automatiquement et envoyée à Notes du cours. Les réponses correctes ne sont pas affichées ici.</p>${verificationMessage ? `<p class="status-message ${verificationMessage.includes("confirmée") ? "success" : "pending"}">${esc(verificationMessage)}</p>` : ""}<div class="row g-4 align-items-center"><div class="col-md-5"><div class="score-number">${Number(result.grade || 0).toFixed(2)}</div><p class="h5 fw-bold text-primary mb-0">Note finale / 5</p></div><div class="col-md-7"><div class="identity-strip"><span class="pill open"><i class="bi bi-send-check-fill"></i> Envoyé définitivement</span><span class="pill"><i class="bi bi-check-circle-fill"></i> ${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</span><span class="pill"><i class="bi bi-journal-text"></i> Grammaire : ${esc(sections.grammaire?.score ?? 0)} / ${esc(sections.grammaire?.total ?? 15)}</span><span class="pill"><i class="bi bi-book"></i> Lecture : ${esc(sections.lecture?.score ?? 0)} / ${esc(sections.lecture?.total ?? 6)}</span><span class="pill"><i class="bi bi-volume-up"></i> Écoute : ${esc(sections.ecoute?.score ?? 0)} / ${esc(sections.ecoute?.total ?? 5)}</span><span class="pill"><i class="bi bi-clock-history"></i> ${esc(result.submittedAt || "")}</span></div><a class="btn-main mt-3" href="notes-evaluation.html"><i class="bi bi-bar-chart-fill"></i> Consulter mes notes</a></div></div></div>`;
         els.form.innerHTML = "";
       }
       async function loadQuiz() {
         const result = await request(API.quiz);
         if (!result.ok) {
           if (result.data?.error === "quiz_closed") return renderLocked("Le quiz n'est pas encore ouvert par le professeur.", result.data);
-          if (result.data?.error === "not_authorized") return renderLogin("Votre compte Google n'est pas encore associe a Francais Niveau 8.");
+          if (result.data?.error === "not_authorized") return renderLogin("Votre compte n'est pas encore associé à Français Niveau 8.");
           throw new Error(result.data?.error || "quiz_error");
         }
         if (result.data.status === "submitted") {
@@ -443,7 +459,7 @@
         loading = true;
         try {
           if (!options.silent) {
-            els.access.innerHTML = `<div class="access-panel"><p class="section-kicker">Verification</p><h2 class="section-title">Chargement de l'acces...</h2><p class="section-text">Connexion au service du quiz.</p></div>`;
+            els.access.innerHTML = `<div class="access-panel"><p class="section-kicker">Vérification</p><h2 class="section-title">Chargement de l'accès...</h2><p class="section-text">Connexion au service du quiz.</p></div>`;
           }
           const result = await request(API.state);
           if (!result.ok) throw new Error(result.data?.error || "state_error");
@@ -458,7 +474,7 @@
           }
           renderLocked("Le professeur n'a pas encore ouvert le quiz.", result.data);
         } catch (_error) {
-          renderLogin("Impossible de verifier l'acces. Rechargez la page ou reconnectez-vous.");
+          renderLogin("Impossible de vérifier l'accès. Rechargez la page ou reconnectez-vous.");
         } finally {
           loading = false;
         }
