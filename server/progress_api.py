@@ -2989,7 +2989,7 @@ def final_exam_public_question(question):
         "prompt": clean_text(question.get("prompt"), 1000),
         "points": question.get("points", 1)
     }
-    for optional in ("block", "title"):
+    for optional in ("title",):
         if question.get(optional):
             public[optional] = clean_text(question.get(optional), 300)
     if isinstance(question.get("options"), list):
