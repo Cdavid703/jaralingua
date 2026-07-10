@@ -103,10 +103,10 @@ FRENCH8_PRONUNCIATION_DEADLINES = {
         "label": "lundi 29 juin 2026 jusqu'a 23 h 59 (heure de Bogota)"
     },
     "pronunciation02d": {
-        "date": "2026-07-05",
-        "utc": "2026-07-06T05:00:00Z",
-        "epoch": 1783314000,
-        "label": "dimanche 5 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+        "date": "2026-07-12",
+        "utc": "2026-07-13T05:00:00Z",
+        "epoch": 1783918800,
+        "label": "dimanche 12 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
     },
     "pronunciation03d": {
         "date": "2026-07-12",
