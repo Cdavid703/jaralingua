@@ -1,5 +1,9 @@
 (function () {
-  const USER_KEY = "jaralingua_google_user";
+  const USER_KEYS = [
+    { key: "jaralingua_google_user", provider: "google" },
+    { key: "jaralingua_microsoft_user", provider: "microsoft" },
+    { key: "jaralingua_local_user", provider: "local" }
+  ];
   const API_PATH = "/api/french8/grades";
   const IUE_HEADER_SRC = "../Niveau%207/img/institutionnel/iue-header.png";
   const IUE_FOOTER_SRC = "../Niveau%207/img/institutionnel/iue-footer.png";
@@ -11,14 +15,34 @@
     return String(value || "").trim().toLowerCase();
   }
 
-  function readUser() {
+  function readStoredUser(entry) {
     try {
-      const saved = JSON.parse(sessionStorage.getItem(USER_KEY) || "null");
-      if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) return null;
-      return saved;
+      const saved = JSON.parse(sessionStorage.getItem(entry.key) || "null");
+      if (!saved || !saved.credential) return null;
+      if (saved.exp && Date.now() / 1000 > saved.exp) {
+        sessionStorage.removeItem(entry.key);
+        return null;
+      }
+      return Object.assign({ provider: entry.provider }, saved);
     } catch (error) {
+      sessionStorage.removeItem(entry.key);
       return null;
     }
+  }
+
+  function readUser() {
+    for (const entry of USER_KEYS) {
+      const user = readStoredUser(entry);
+      if (user) return user;
+    }
+    return null;
+  }
+
+  function authHeaders(user, extra) {
+    return Object.assign({
+      Authorization: "Bearer " + user.credential,
+      "X-Jaralingua-Auth-Provider": user.provider || "google"
+    }, extra || {});
   }
 
   function escapeHtml(value) {
@@ -246,7 +270,7 @@
         <i class="bi bi-person-check-fill"></i>
         <h2 class="section-title">Aucun dossier associe</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          Votre compte Google ne correspond pas encore a un dossier du cours. Contactez l'administrateur pour l'association.
+          Votre compte ne correspond pas encore a un dossier du cours. Contactez l'administrateur pour l'association.
         </p>
         ${form}
       </div>
@@ -951,9 +975,7 @@
         button.disabled = true;
         if (status) status.textContent = "Chargement de l'audio...";
         fetch("/api/french8/pronunciation-audio?studentId=" + encodeURIComponent(button.dataset.studentId || "") + "&evaluationId=" + encodeURIComponent(button.dataset.evaluationId || ""), {
-          headers: {
-            Authorization: "Bearer " + user.credential
-          }
+          headers: authHeaders(user)
         })
           .then(function (response) {
             if (!response.ok) throw new Error("audio_not_available");
@@ -988,10 +1010,7 @@
         if (status) status.textContent = "Enregistrement du feedback...";
         fetch("/api/french8/hypotheses-feedback", {
           method: "PUT",
-          headers: {
-            Authorization: "Bearer " + user.credential,
-            "Content-Type": "application/json"
-          },
+          headers: authHeaders(user, { "Content-Type": "application/json" }),
           body: JSON.stringify({
             studentId: button.dataset.studentId || "",
             feedback: textarea ? textarea.value : "",
@@ -1037,10 +1056,7 @@
   function saveGradebook(user, payload) {
     return fetch(API_PATH, {
       method: "PUT",
-      headers: {
-        Authorization: "Bearer " + user.credential,
-        "Content-Type": "application/json"
-      },
+      headers: authHeaders(user, { "Content-Type": "application/json" }),
       body: JSON.stringify(gradebookForSave(payload))
     }).then(function (response) {
       if (!response.ok) throw new Error("La API rechazo la actualizacion: " + response.status);
@@ -1189,9 +1205,7 @@
   function fetchGrades(user, studentId) {
     const url = studentId ? API_PATH + "?studentId=" + encodeURIComponent(studentId) : API_PATH;
     return fetch(url, {
-      headers: {
-        Authorization: "Bearer " + user.credential
-      }
+      headers: authHeaders(user)
     }).then(function (response) {
       if (!response.ok) throw new Error("La API rechazo la solicitud: " + response.status);
       return response.json();
@@ -1238,7 +1252,12 @@
     const root = document.getElementById("french8GradesApp");
     if (!root) return;
     const user = readUser();
-    const signature = user ? normalizeEmail(user.email) + ":" + user.exp : "guest";
+    const signature = user ? [
+      user.provider || "google",
+      normalizeEmail(user.email),
+      user.exp || "session",
+      String(user.credential || "").slice(-18)
+    ].join(":") : "guest";
     if (signature === lastSignature) return;
     lastSignature = signature;
 

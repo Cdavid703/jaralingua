@@ -396,6 +396,9 @@
             if (result.data?.error === "quiz_closed") throw new Error("Le quiz est fermé. La soumission n'a pas été enregistrée.");
             throw new Error("La soumission n'a pas pu être enregistrée.");
           }
+          if (!result.data?.result) {
+            throw new Error("Le serveur a répondu sans confirmation complète. Vérifiez Notes du cours avant de renvoyer.");
+          }
           await verifySubmission(result.data.result);
         } catch (error) {
           const message = error && error.name === "AbortError"
@@ -405,7 +408,7 @@
           submitting = false;
           button.disabled = false;
           button.removeAttribute("aria-busy");
-          button.innerHTML = '<i class="bi bi-send-check-fill"></i> Envoyer le quiz';
+          button.innerHTML = '<i class="bi bi-send-check-fill"></i> Envoyer';
         }
       }
       async function verifySubmission(result) {
