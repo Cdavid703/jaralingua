@@ -2765,14 +2765,38 @@ def french8_imposteur_find_player(room, player_token):
     return None
 
 
+def french8_imposteur_current_round(room):
+    try:
+        return int(room.get("round") or 1)
+    except (TypeError, ValueError):
+        return 1
+
+
+def french8_imposteur_vote_suspect_id(vote_value, room):
+    if isinstance(vote_value, dict):
+        vote_round = vote_value.get("round")
+        if vote_round is not None:
+            try:
+                if int(vote_round) != french8_imposteur_current_round(room):
+                    return ""
+            except (TypeError, ValueError):
+                return ""
+        return clean_text(vote_value.get("suspectId"), 40)
+    if french8_imposteur_current_round(room) <= 1:
+        return clean_text(vote_value, 40)
+    return ""
+
+
 def french8_imposteur_player_public(player, room, revealed=False):
     player_id = clean_text(player.get("id"), 40)
     votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    vote_suspect_id = french8_imposteur_vote_suspect_id(votes.get(player_id), room)
     public = {
         "id": player_id,
         "name": clean_imposteur_name(player.get("name")),
         "ready": bool(player.get("readyAt")),
-        "hasVoted": player_id in votes
+        "hasVoted": bool(vote_suspect_id),
+        "voteSuspectId": vote_suspect_id
     }
     if revealed:
         public["role"] = "impostor" if player_id in set(room.get("impostorIds") or []) else "citizen"
@@ -2784,8 +2808,8 @@ def french8_imposteur_vote_summary(room):
     names = {clean_text(player.get("id"), 40): clean_imposteur_name(player.get("name")) for player in players}
     counts = {}
     votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
-    for suspect_id in votes.values():
-        suspect_id = clean_text(suspect_id, 40)
+    for vote_value in votes.values():
+        suspect_id = french8_imposteur_vote_suspect_id(vote_value, room)
         if suspect_id:
             counts[suspect_id] = counts.get(suspect_id, 0) + 1
     return [
@@ -2805,20 +2829,22 @@ def french8_imposteur_room_payload(room, player_token="", teacher_token=""):
     )
     ready_count = sum(1 for player in players if player.get("readyAt"))
     votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    current_round = french8_imposteur_current_round(room)
+    vote_count = sum(1 for vote_value in votes.values() if french8_imposteur_vote_suspect_id(vote_value, room))
     card = french8_imposteur_card_public(room.get("card"))
     impostor_ids = {clean_text(item, 40) for item in room.get("impostorIds", []) if clean_text(item, 40)}
     payload = {
         "room": {
             "code": clean_imposteur_room_code(room.get("code")),
             "status": status,
-            "round": int(room.get("round") or 1),
+            "round": current_round,
             "playerCount": len(players),
             "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS,
             "maxPlayers": FRENCH8_IMPOSTEUR_MAX_PLAYERS,
             "impostorCount": len(impostor_ids) if impostor_ids else (2 if len(players) > 8 else 1),
             "readyCount": ready_count,
             "allReady": bool(players) and ready_count == len(players),
-            "voteCount": len(votes),
+            "voteCount": vote_count,
             "createdAt": room.get("createdAt"),
             "updatedAt": room.get("updatedAt")
         },
@@ -3018,7 +3044,11 @@ def french8_imposteur_action(payload):
             if not isinstance(votes, dict):
                 votes = {}
                 room["votes"] = votes
-            votes[voter_id] = suspect_id
+            votes[voter_id] = {
+                "suspectId": suspect_id,
+                "round": french8_imposteur_current_round(room),
+                "votedAt": timestamp
+            }
             player["votedAt"] = timestamp
             french8_imposteur_touch(room)
             write_french8_imposteur_store(store)
@@ -3062,7 +3092,11 @@ def french8_imposteur_action(payload):
             room["players"] = [item for item in players if clean_text(item.get("id"), 40) != player_id]
             votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
             votes.pop(player_id, None)
-            room["votes"] = {voter: suspect for voter, suspect in votes.items() if clean_text(suspect, 40) != player_id}
+            room["votes"] = {
+                voter: vote_value
+                for voter, vote_value in votes.items()
+                if french8_imposteur_vote_suspect_id(vote_value, room) != player_id
+            }
             room["impostorIds"] = [item for item in room.get("impostorIds", []) if clean_text(item, 40) != player_id]
             french8_imposteur_touch(room)
             write_french8_imposteur_store(store)
@@ -3412,6 +3446,8 @@ def intermediate_unit4_impostor_room_payload(room, player_token="", teacher_toke
     )
     ready_count = sum(1 for player in players if player.get("readyAt"))
     votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    current_round = french8_imposteur_current_round(room)
+    vote_count = sum(1 for vote_value in votes.values() if french8_imposteur_vote_suspect_id(vote_value, room))
     card = intermediate_unit4_impostor_card_public(room.get("card"))
     deck_key = clean_intermediate_impostor_deck(room.get("deck"))
     deck_config = intermediate_impostor_deck_config(deck_key)
@@ -3420,7 +3456,7 @@ def intermediate_unit4_impostor_room_payload(room, player_token="", teacher_toke
         "room": {
             "code": clean_imposteur_room_code(room.get("code")),
             "status": status,
-            "round": int(room.get("round") or 1),
+            "round": current_round,
             "deck": deck_key,
             "deckLabel": deck_config.get("label"),
             "deckShortLabel": deck_config.get("shortLabel"),
@@ -3430,7 +3466,7 @@ def intermediate_unit4_impostor_room_payload(room, player_token="", teacher_toke
             "impostorCount": len(impostor_ids) if impostor_ids else (2 if len(players) > 8 else 1),
             "readyCount": ready_count,
             "allReady": bool(players) and ready_count == len(players),
-            "voteCount": len(votes),
+            "voteCount": vote_count,
             "createdAt": room.get("createdAt"),
             "updatedAt": room.get("updatedAt")
         },
@@ -3632,7 +3668,11 @@ def intermediate_unit4_impostor_action(payload):
             if not isinstance(votes, dict):
                 votes = {}
                 room["votes"] = votes
-            votes[voter_id] = suspect_id
+            votes[voter_id] = {
+                "suspectId": suspect_id,
+                "round": french8_imposteur_current_round(room),
+                "votedAt": timestamp
+            }
             player["votedAt"] = timestamp
             french8_imposteur_touch(room)
             write_intermediate_unit4_impostor_store(store)
@@ -3677,7 +3717,11 @@ def intermediate_unit4_impostor_action(payload):
             room["players"] = [item for item in players if clean_text(item.get("id"), 40) != player_id]
             votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
             votes.pop(player_id, None)
-            room["votes"] = {voter: suspect for voter, suspect in votes.items() if clean_text(suspect, 40) != player_id}
+            room["votes"] = {
+                voter: vote_value
+                for voter, vote_value in votes.items()
+                if french8_imposteur_vote_suspect_id(vote_value, room) != player_id
+            }
             room["impostorIds"] = [item for item in room.get("impostorIds", []) if clean_text(item, 40) != player_id]
             french8_imposteur_touch(room)
             write_intermediate_unit4_impostor_store(store)

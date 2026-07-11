@@ -22,6 +22,10 @@
     .btn-soft:hover{background:#eef5ff;color:var(--intermediate-navy)}
     .btn-danger-soft{background:#fff1f2;color:#7f1d1d;border:1px solid #fecaca}
     .btn-danger-soft:hover{background:#ffe4e6;color:#7f1d1d}
+    .btn-main:active,.btn-soft:active,.btn-danger-soft:active,.btn:active,.vocab-unit-btn:active{transform:translateY(1px) scale(.99)}
+    .is-working{position:relative;filter:saturate(.85);pointer-events:none}
+    .is-working::after{content:"";width:.85rem;height:.85rem;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
     .w-100{width:100%}.mt-2{margin-top:.5rem}.mb-1{margin-bottom:.25rem}
     button:disabled{opacity:.45;cursor:not-allowed}
     .game-panel,.support-card,.private-card,.vote-box,.result-box-final{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);overflow:hidden}
@@ -202,7 +206,7 @@
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260711-reset-all-active"></script>
+  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260711-vote-round-feedback"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

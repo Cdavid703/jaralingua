@@ -647,6 +647,22 @@
     node.hidden = !text;
   }
 
+  async function withButtonWorking(button, workingText, task) {
+    if (!button) return task();
+    var originalHtml = button.innerHTML;
+    var originalDisabled = button.disabled;
+    button.disabled = true;
+    button.classList.add("is-working");
+    if (workingText) button.innerHTML = workingText;
+    try {
+      return await task();
+    } finally {
+      button.classList.remove("is-working");
+      button.disabled = originalDisabled;
+      button.innerHTML = originalHtml;
+    }
+  }
+
   function applyStoredFields() {
     var roomInput = $("#roomCode");
     var teacherRoomInput = $("#teacherRoomCode");
@@ -785,6 +801,14 @@
       setHtml("#roleCard", waitingRoleMarkup());
       return;
     }
+    if (room.status === "waiting") {
+      setHtml("#roleCard", '<article class="private-card waiting">' +
+        '<img src="../../assets/img/english-intermediate/unit-4/impostor/role-impostor.png" alt="Private role card waiting">' +
+        '<div><p class="section-kicker">Connected</p><h3>You are in the room</h3>' +
+        '<p>Your name is registered for this round. Wait for the teacher to distribute the secret roles.</p>' +
+        '<p class="ready-note"><i class="bi bi-check2-circle"></i> Room joined successfully.</p></div></article>');
+      return;
+    }
     if (player.role === "impostor" && room.status !== "waiting") {
       setHtml("#roleCard", '<article class="private-card impostor">' +
         '<img src="../../assets/img/english-intermediate/unit-4/impostor/role-impostor.png" alt="Private impostor role card">' +
@@ -839,17 +863,19 @@
       setHtml("#votePanel", "");
       return;
     }
-    if (player.hasVoted) {
-      setHtml("#votePanel", '<section class="vote-box"><img src="../../assets/img/english-intermediate/unit-4/impostor/vote.png" alt="Vote submitted"><div><h3>Vote submitted</h3><p>Your vote is recorded. Wait for the teacher to reveal the result.</p></div></section>');
-      return;
-    }
     var options = (payload.players || []).filter(function (item) { return item.id !== player.id; }).map(function (item) {
-      return '<label><input type="radio" name="suspect" value="' + escapeHtml(item.id) + '"><span>' + escapeHtml(item.name) + '</span></label>';
+      var checked = player.voteSuspectId === item.id ? " checked" : "";
+      return '<label><input type="radio" name="suspect" value="' + escapeHtml(item.id) + '"' + checked + '><span>' + escapeHtml(item.name) + '</span></label>';
     }).join("");
+    var savedNote = player.hasVoted
+      ? '<p class="ready-note"><i class="bi bi-check2-circle"></i> Your vote is saved. You may change it until the teacher reveals the result.</p>'
+      : "";
+    var buttonLabel = player.hasVoted ? "Update my vote" : "Submit my vote";
     setHtml("#votePanel", '<section class="vote-box active"><img src="../../assets/img/english-intermediate/unit-4/impostor/vote.png" alt="Impostor vote">' +
       '<div><p class="section-kicker">Secret vote</p><h3>Who is the impostor?</h3>' +
-      '<p>Choose the person who seemed not to know the hidden phrasal verb or idiom.</p><form id="voteForm" class="vote-options">' + options +
-      '<button type="submit" class="btn-main"><i class="bi bi-send-check-fill"></i> Submit my vote</button></form></div></section>');
+      '<p>Choose the person who seemed not to know the hidden phrasal verb or idiom.</p>' + savedNote +
+      '<form id="voteForm" class="vote-options">' + options +
+      '<button type="submit" class="btn-main"><i class="bi bi-send-check-fill"></i> ' + buttonLabel + '</button></form></div></section>');
   }
 
   function renderResult(payload) {
@@ -897,20 +923,23 @@
       openAuthPanel();
       return;
     }
-    try {
-      var result = await request("create");
-      localState.roomCode = result.roomCode;
-      localState.teacherToken = result.teacherToken;
-      delete localState.playerToken;
-      saveLocalState();
-      showMessage("Room created. Share the code with students.", "success");
-      lastPayload = result.state;
-      render(lastPayload);
-      startPolling();
-      playSfx("roomCreated");
-    } catch (error) {
-      showMessage(messageForError(error), "error");
-    }
+    return withButtonWorking($("#createRoomBtn"), '<i class="bi bi-hourglass-split"></i> Creating...', async function () {
+      try {
+        showMessage("Creating room...", "info");
+        var result = await request("create");
+        localState.roomCode = result.roomCode;
+        localState.teacherToken = result.teacherToken;
+        delete localState.playerToken;
+        saveLocalState();
+        showMessage("Room created. Share the code with students.", "success");
+        lastPayload = result.state;
+        render(lastPayload);
+        startPolling();
+        playSfx("roomCreated");
+      } catch (error) {
+        showMessage(messageForError(error), "error");
+      }
+    });
   }
 
   async function handleJoin(event) {
@@ -922,47 +951,53 @@
     }
     var roomCode = ($("#roomCode") && $("#roomCode").value || "").trim().toUpperCase();
     var name = ($("#playerName") && $("#playerName").value || "").trim();
-    try {
-      var result = await request("join", { roomCode: roomCode, name: name, playerToken: localState.playerToken });
-      localState.roomCode = result.roomCode;
-      localState.playerToken = result.playerToken;
-      saveLocalState();
-      showMessage("You are in the room. Wait for the teacher to distribute roles.", "success");
-      lastPayload = result.state;
-      render(lastPayload);
-      startPolling();
-    } catch (error) {
-      showMessage(messageForError(error), "error");
-    }
+    var button = (event.submitter || $("#joinSubmitBtn"));
+    return withButtonWorking(button, '<i class="bi bi-hourglass-split"></i> Joining...', async function () {
+      try {
+        showMessage("Joining the room...", "info");
+        var result = await request("join", { roomCode: roomCode, name: name, playerToken: localState.playerToken });
+        localState.roomCode = result.roomCode;
+        localState.playerToken = result.playerToken;
+        saveLocalState();
+        showMessage("You are in the room. Wait for the teacher to distribute roles.", "success");
+        lastPayload = result.state;
+        render(lastPayload);
+        startPolling();
+      } catch (error) {
+        showMessage(messageForError(error), "error");
+      }
+    });
   }
 
-  async function teacherAction(action) {
+  async function teacherAction(action, button) {
     if (!isTeacherAccess()) {
       showMessage("This command is reserved for the signed-in teacher.", "error");
       openAuthPanel();
       return;
     }
     if (!localState.roomCode || !localState.teacherToken) return;
-    try {
-      var requestPayload = { roomCode: localState.roomCode, teacherToken: localState.teacherToken };
-      if (action === "distribute") requestPayload.deck = selectedVocabDeck();
-      var result = await request(action, requestPayload);
-      lastPayload = result.state;
-      render(lastPayload);
-      var actionMessage = {
-        "open-vote": "Vote opened for all students.",
-        reset: "Room reset. Players stay connected, but roles and votes start again."
-      }[action] || (action === "distribute" ? "Roles distributed with " + VOCAB_DECK_LABELS[selectedVocabDeck()] + "." : "Teacher action applied.");
-      showMessage(actionMessage, "success");
-      var sound = {
-        distribute: "rolesDistributed",
-        "open-vote": "suspectFound",
-        reveal: "resultRevealed"
-      }[action];
-      if (sound) playSfx(sound);
-    } catch (error) {
-      showMessage(messageForError(error), "error");
-    }
+    return withButtonWorking(button, '<i class="bi bi-hourglass-split"></i> Working...', async function () {
+      try {
+        var requestPayload = { roomCode: localState.roomCode, teacherToken: localState.teacherToken };
+        if (action === "distribute") requestPayload.deck = selectedVocabDeck();
+        var result = await request(action, requestPayload);
+        lastPayload = result.state;
+        render(lastPayload);
+        var actionMessage = {
+          "open-vote": "Vote opened for all students.",
+          reset: "Room reset. Players stay connected, but roles and votes start again."
+        }[action] || (action === "distribute" ? "Roles distributed with " + VOCAB_DECK_LABELS[selectedVocabDeck()] + "." : "Teacher action applied.");
+        showMessage(actionMessage, "success");
+        var sound = {
+          distribute: "rolesDistributed",
+          "open-vote": "suspectFound",
+          reveal: "resultRevealed"
+        }[action];
+        if (sound) playSfx(sound);
+      } catch (error) {
+        showMessage(messageForError(error), "error");
+      }
+    });
   }
 
   async function closeOrLeaveRoom() {
@@ -1012,16 +1047,19 @@
     }
   }
 
-  async function confirmRole() {
-    try {
-      var result = await request("confirm", { roomCode: localState.roomCode, playerToken: localState.playerToken });
-      lastPayload = result.state;
-      render(lastPayload);
-      showMessage("Role confirmed.", "success");
-      playSfx("roleConfirmed");
-    } catch (error) {
-      showMessage(messageForError(error), "error");
-    }
+  async function confirmRole(button) {
+    return withButtonWorking(button, '<i class="bi bi-hourglass-split"></i> Confirming...', async function () {
+      try {
+        showMessage("Confirming your role...", "info");
+        var result = await request("confirm", { roomCode: localState.roomCode, playerToken: localState.playerToken });
+        lastPayload = result.state;
+        render(lastPayload);
+        showMessage("Role confirmed. The teacher can see that you received it.", "success");
+        playSfx("roleConfirmed");
+      } catch (error) {
+        showMessage(messageForError(error), "error");
+      }
+    });
   }
 
   async function submitVote(event) {
@@ -1031,29 +1069,33 @@
       showMessage("Choose a suspect before submitting your vote.", "error");
       return;
     }
-    try {
-      var result = await request("vote", {
-        roomCode: localState.roomCode,
-        playerToken: localState.playerToken,
-        suspectId: selected.value
-      });
-      lastPayload = result.state;
-      render(lastPayload);
-      showMessage("Vote recorded.", "success");
-      playSfx("voteSubmitted");
-    } catch (error) {
-      showMessage(messageForError(error), "error");
-    }
+    var button = event.submitter || (event.target && event.target.querySelector("button[type='submit']"));
+    return withButtonWorking(button, '<i class="bi bi-hourglass-split"></i> Sending...', async function () {
+      try {
+        showMessage("Sending your vote...", "info");
+        var result = await request("vote", {
+          roomCode: localState.roomCode,
+          playerToken: localState.playerToken,
+          suspectId: selected.value
+        });
+        lastPayload = result.state;
+        render(lastPayload);
+        showMessage("Vote recorded. You can still change it while the vote is open.", "success");
+        playSfx("voteSubmitted");
+      } catch (error) {
+        showMessage(messageForError(error), "error");
+      }
+    });
   }
 
   function bindEvents() {
     $("#createRoomBtn") && $("#createRoomBtn").addEventListener("click", handleCreateRoom);
     $("#joinForm") && $("#joinForm").addEventListener("submit", handleJoin);
-    $("#distributeBtn") && $("#distributeBtn").addEventListener("click", function () { teacherAction("distribute"); });
-    $("#forceDiscussionBtn") && $("#forceDiscussionBtn").addEventListener("click", function () { teacherAction("force-discussion"); });
-    $("#openVoteBtn") && $("#openVoteBtn").addEventListener("click", function () { teacherAction("open-vote"); });
-    $("#revealBtn") && $("#revealBtn").addEventListener("click", function () { teacherAction("reveal"); });
-    $("#resetBtn") && $("#resetBtn").addEventListener("click", function () { teacherAction("reset"); });
+    $("#distributeBtn") && $("#distributeBtn").addEventListener("click", function (event) { teacherAction("distribute", event.currentTarget); });
+    $("#forceDiscussionBtn") && $("#forceDiscussionBtn").addEventListener("click", function (event) { teacherAction("force-discussion", event.currentTarget); });
+    $("#openVoteBtn") && $("#openVoteBtn").addEventListener("click", function (event) { teacherAction("open-vote", event.currentTarget); });
+    $("#revealBtn") && $("#revealBtn").addEventListener("click", function (event) { teacherAction("reveal", event.currentTarget); });
+    $("#resetBtn") && $("#resetBtn").addEventListener("click", function (event) { teacherAction("reset", event.currentTarget); });
     $("#closeRoomBtn") && $("#closeRoomBtn").addEventListener("click", closeOrLeaveRoom);
     $("#resetAllRoomsBtn") && $("#resetAllRoomsBtn").addEventListener("click", resetAllRooms);
     $("#soundToggle") && $("#soundToggle").addEventListener("change", function (event) {
@@ -1070,7 +1112,7 @@
       });
     });
     document.addEventListener("click", function (event) {
-      if (event.target && event.target.id === "confirmRoleBtn") confirmRole();
+      if (event.target && event.target.id === "confirmRoleBtn") confirmRole(event.target);
       var deckButton = event.target && event.target.closest ? event.target.closest("[data-vocab-deck]") : null;
       if (deckButton) chooseVocabDeck(deckButton.getAttribute("data-vocab-deck"));
     });
