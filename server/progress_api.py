@@ -1078,17 +1078,26 @@ def normalize_email(value):
     return str(value or "").strip().lower()
 
 
+def normalize_login(value):
+    return str(value or "").strip().lower()
+
+
 def normalize_name(value):
     return " ".join(str(value or "").strip().lower().split())
 
 
 def email_matches_student(student, email):
-    if normalize_email(student.get("email")) == email:
+    login = normalize_login(email)
+    if normalize_email(student.get("email")) == login:
         return True
     aliases = student.get("emailAliases", [])
-    if not isinstance(aliases, list):
-        return False
-    return email in {normalize_email(item) for item in aliases}
+    if isinstance(aliases, list) and login in {normalize_email(item) for item in aliases}:
+        return True
+    return login in {
+        normalize_login(student.get("username")),
+        normalize_login(student.get("login")),
+        normalize_login(student.get("localUsername")),
+    }
 
 
 def name_matches_student(student, profile):

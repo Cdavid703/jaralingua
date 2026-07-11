@@ -1493,7 +1493,7 @@
     return `
       <form class="auth-local-form" data-local-login-form>
         <strong>${copy.localSignIn}</strong>
-        <input type="email" name="email" autocomplete="username" placeholder="${escapeAttribute(copy.localEmail)}" required>
+        <input type="text" name="email" autocomplete="username" placeholder="${escapeAttribute(copy.localEmail)}" required>
         <input type="password" name="password" autocomplete="current-password" placeholder="${escapeAttribute(copy.localPassword)}" required>
         <button class="auth-microsoft-button" type="submit">${copy.localSubmit}</button>
         <div class="auth-microsoft-status" data-local-status hidden></div>
