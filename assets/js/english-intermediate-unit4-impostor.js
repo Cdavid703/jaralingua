@@ -150,7 +150,7 @@
     return Boolean(authState.canJoin);
   }
 
-  function openAuthPanel() {
+  function openAuthPanel(attempt) {
     var navToggle = document.querySelector("[data-auth-nav-toggle]");
     var toggle = document.querySelector("[data-auth-toggle]");
     var trigger = navToggle || toggle;
@@ -158,7 +158,14 @@
       trigger.click();
       return;
     }
-    showMessage("Use the sign-in button to enter with your student account.", "info");
+    if ((attempt || 0) < 10) {
+      showMessage("Loading sign-in panel. Please wait a moment.", "info");
+      window.setTimeout(function () {
+        openAuthPanel((attempt || 0) + 1);
+      }, 300);
+      return;
+    }
+    showMessage("The sign-in panel did not load. Reload the page and tap Sign in again.", "error");
   }
 
   function syncAuthUi() {
