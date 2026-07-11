@@ -304,13 +304,22 @@
       resetButton.className = "btn-soft";
       resetButton.innerHTML = '<i class="bi bi-arrow-counterclockwise"></i> Reset room';
     }
-    if ($("#closeRoomBtn") || !resetButton) return;
-    var closeButton = document.createElement("button");
-    closeButton.type = "button";
-    closeButton.className = "btn-danger-soft";
-    closeButton.id = "closeRoomBtn";
-    closeButton.innerHTML = '<i class="bi bi-x-circle"></i> Close / leave room';
-    resetButton.insertAdjacentElement("afterend", closeButton);
+    if (!$("#closeRoomBtn")) {
+      var closeButton = document.createElement("button");
+      closeButton.type = "button";
+      closeButton.className = "btn-danger-soft";
+      closeButton.id = "closeRoomBtn";
+      closeButton.innerHTML = '<i class="bi bi-x-circle"></i> Close / leave room';
+      resetButton.insertAdjacentElement("afterend", closeButton);
+    }
+    if (!$("#resetAllRoomsBtn")) {
+      var resetAllButton = document.createElement("button");
+      resetAllButton.type = "button";
+      resetAllButton.className = "btn-danger-soft";
+      resetAllButton.id = "resetAllRoomsBtn";
+      resetAllButton.innerHTML = '<i class="bi bi-exclamation-triangle"></i> Reset all rooms';
+      $("#closeRoomBtn").insertAdjacentElement("afterend", resetAllButton);
+    }
   }
 
   function studentRoomUrl(roomCode) {
@@ -874,6 +883,7 @@
     setDisabled("#revealBtn", !canReveal);
     setDisabled("#resetBtn", !isTeacher || !hasRoom);
     setDisabled("#closeRoomBtn", !hasRoom || (Boolean(localState.teacherToken) && !authState.isTeacher));
+    setDisabled("#resetAllRoomsBtn", !authState.isTeacher || !localState.teacherToken);
   }
 
   function setDisabled(selector, disabled) {
@@ -986,6 +996,22 @@
     clearCurrentRoom("You left the room. You can join another one.", "success");
   }
 
+  async function resetAllRooms() {
+    if (!isTeacherAccess() || !localState.teacherToken) {
+      showMessage("Only the signed-in teacher with an active room can reset all rooms.", "error");
+      openAuthPanel();
+      return;
+    }
+    var confirmed = window.confirm("Reset all Vocabulary Impostor rooms? Students in old rooms will be released and must join the new room again.");
+    if (!confirmed) return;
+    try {
+      var result = await request("reset-all", { teacherToken: localState.teacherToken });
+      clearCurrentRoom("All impostor rooms were reset. Cleared rooms: " + Number(result.clearedRooms || 0) + ". Create one new room and share only that code.", "success");
+    } catch (error) {
+      showMessage(messageForError(error), "error");
+    }
+  }
+
   async function confirmRole() {
     try {
       var result = await request("confirm", { roomCode: localState.roomCode, playerToken: localState.playerToken });
@@ -1029,6 +1055,7 @@
     $("#revealBtn") && $("#revealBtn").addEventListener("click", function () { teacherAction("reveal"); });
     $("#resetBtn") && $("#resetBtn").addEventListener("click", function () { teacherAction("reset"); });
     $("#closeRoomBtn") && $("#closeRoomBtn").addEventListener("click", closeOrLeaveRoom);
+    $("#resetAllRoomsBtn") && $("#resetAllRoomsBtn").addEventListener("click", resetAllRooms);
     $("#soundToggle") && $("#soundToggle").addEventListener("change", function (event) {
       soundEnabled = Boolean(event.target.checked);
       saveSoundPreference();
