@@ -20,18 +20,20 @@
       --u5-gold-soft:#fff7e8;
       --u5-border:#dce8f8;
     }
-    .unit5-hero{background:linear-gradient(135deg,rgba(7,31,79,.94),rgba(15,118,110,.52)),url("../../assets/img/english-intermediate/unit-5/unit-5-food-quantities-culture.png") center/cover no-repeat;color:#fff;grid-template-columns:minmax(0,1fr)}
-    .unit5-hero .lesson-hero-content{width:min(100%,780px);max-width:100%;box-sizing:border-box}
+    .unit5-explanation-page{max-width:100%;overflow-x:hidden}
+    .unit5-hero{width:min(1180px,100%);box-sizing:border-box;overflow:hidden;background:linear-gradient(135deg,rgba(7,31,79,.94),rgba(15,118,110,.52)),url("../../assets/img/english-intermediate/unit-5/unit-5-food-quantities-culture.png") center/cover no-repeat;color:#fff;grid-template-columns:minmax(0,1fr)}
+    .unit5-hero .lesson-hero-content{width:100%;max-width:780px;min-width:0;box-sizing:border-box}
+    .unit5-hero .lesson-hero-content *{max-width:100%;min-width:0}
     .unit5-hero .lesson-hero-content h1,.unit5-hero .lesson-hero-content p{overflow-wrap:break-word}
     .unit5-hero .lesson-hero-content p,.unit5-hero .eyebrow{color:#fff}
     .unit5-hero .lesson-hero-content .eyebrow{color:var(--u5-ink)!important;background:rgba(255,255,255,.94)}
     .unit5-page{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:2rem 0 4rem}
-    .unit5-toolbar{position:sticky;top:.75rem;z-index:5;background:rgba(255,255,255,.96);border:1px solid var(--u5-border);border-radius:8px;box-shadow:0 16px 36px rgba(15,23,42,.12);padding:.85rem;margin:1rem 0 1.5rem}
+    .unit5-toolbar{position:relative;top:auto;z-index:1;background:rgba(255,255,255,.96);border:1px solid var(--u5-border);border-radius:8px;box-shadow:0 12px 26px rgba(15,23,42,.1);padding:.85rem;margin:1rem 0 1.5rem}
     .unit5-toolbar h2{font-size:1rem;color:var(--u5-ink);margin:0 0 .7rem}
-    .unit5-topic-buttons{display:flex;flex-wrap:wrap;gap:.55rem}
-    .topic-jump,.toggle-button{border:0;border-radius:999px;background:var(--u5-ink);color:#fff;font-weight:900;padding:.65rem .9rem;cursor:pointer}
+    .unit5-topic-buttons{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:.55rem}
+    .topic-jump,.toggle-button{border:0;border-radius:999px;background:var(--u5-ink);color:#fff;font-weight:900;min-height:42px;padding:.58rem .8rem;cursor:pointer;line-height:1.15;text-align:center;white-space:normal}
     .topic-jump.secondary,.toggle-button{background:#eef5ff;color:var(--u5-ink);border:1px solid var(--u5-border)}
-    .unit5-section{background:var(--u5-paper);border:1px solid var(--u5-border);border-radius:8px;box-shadow:var(--intermediate-shadow);margin-bottom:1rem;overflow:hidden}
+    .unit5-section{background:var(--u5-paper);border:1px solid var(--u5-border);border-radius:8px;box-shadow:var(--intermediate-shadow);margin-bottom:1rem;overflow:hidden;scroll-margin-top:1rem}
     .unit5-section summary{list-style:none;cursor:pointer;padding:1.15rem 1.25rem;background:linear-gradient(135deg,#fff,#f8fbff);display:flex;gap:1rem;align-items:flex-start;justify-content:space-between}
     .unit5-section summary::-webkit-details-marker{display:none}
     .summary-copy{display:grid;gap:.25rem}
@@ -88,25 +90,33 @@
     @media(max-width:1180px){
       .unit5-two-col{grid-template-columns:1fr}
       .visual-card img{height:auto;aspect-ratio:16/10;object-fit:cover}
+      .unit5-toolbar{margin:.75rem 0 1rem}
+      .unit5-topic-buttons{grid-template-columns:repeat(2,minmax(0,1fr))}
     }
     @media(max-width:900px){
       .unit5-toolbar{position:static}
       .unit5-section summary{align-items:flex-start}
     }
     @media(max-width:680px){
-      .unit5-explanation-page{overflow-x:hidden}
-      .unit5-hero{padding-left:16px;padding-right:16px}
-      .unit5-hero .lesson-hero-content{width:100%!important;max-width:100%!important;padding:28px 20px;border-radius:24px}
-      .unit5-hero .lesson-hero-content h1{font-size:clamp(2rem,10vw,2.65rem);line-height:1.05}
-      .unit5-explanation-page .navbar{align-items:center;gap:.55rem;padding:8px 10px}
+      .unit5-hero{display:block;width:100vw;max-width:100vw;margin:0;padding:36px 12px 40px}
+      .unit5-hero .lesson-hero-content{width:calc(100vw - 24px)!important;max-width:calc(100vw - 24px)!important;margin:0 auto;padding:26px 20px;border-radius:24px;overflow:hidden}
+      .unit5-hero .lesson-hero-content h1{font-size:clamp(1.85rem,8.6vw,2.35rem);line-height:1.08;overflow-wrap:anywhere;word-break:normal}
+      .unit5-hero .lesson-hero-content p{font-size:.98rem;line-height:1.55}
+      .unit5-hero .lesson-meta{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;width:100%}
+      .unit5-hero .lesson-meta span{justify-content:center;text-align:center;white-space:normal;line-height:1.15;padding:8px 10px}
+      .unit5-explanation-page .navbar{flex-direction:column;align-items:center;gap:.55rem;width:100%;max-width:100vw;padding:8px 10px;overflow:hidden;box-sizing:border-box}
       .unit5-explanation-page .brand img{height:38px}
-      .unit5-explanation-page .nav-links{flex-wrap:wrap!important;justify-content:center!important;gap:6px!important;overflow-x:visible!important;max-width:100%!important;padding:2px 0}
-      .unit5-explanation-page .nav-links li{flex:0 1 auto!important}
-      .unit5-explanation-page .nav-links a{min-height:34px;padding:0 9px;font-size:.78rem;white-space:normal!important;text-align:center}
+      .unit5-explanation-page .nav-links{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:6px!important;overflow-x:hidden!important;max-width:100%!important;padding:2px 0;box-sizing:border-box}
+      .unit5-explanation-page .nav-links li{min-width:0!important}
+      .unit5-explanation-page .nav-links a{display:flex;align-items:center;justify-content:center;min-height:34px;width:100%;padding:0 8px;font-size:.76rem;white-space:normal!important;text-align:center;line-height:1.15}
+      .unit5-explanation-page .global-course-switcher{position:static;display:flex;justify-content:center;width:100%;max-width:100%;margin:.35rem 0 .2rem;padding:0 12px;box-sizing:border-box}
+      .unit5-explanation-page .global-course-switcher summary{min-height:40px}
+      .unit5-explanation-page .global-course-switcher nav{right:auto;left:50%;top:calc(100% + .5rem);bottom:auto;transform:translateX(-50%);width:min(260px,calc(100vw - 24px))}
+      .unit5-explanation-page .jaralingua-auth{display:none!important}
       .unit5-page{width:min(100% - 20px,1180px);padding:1.25rem 0 3rem}
       .unit5-toolbar{padding:.75rem}
       .unit5-topic-buttons{gap:.45rem}
-      .topic-jump,.toggle-button{padding:.58rem .72rem;font-size:.9rem}
+      .topic-jump,.toggle-button{min-height:38px;padding:.5rem .58rem;font-size:.82rem}
       .unit5-section summary{padding:1rem;gap:.7rem}
       .summary-copy h2{font-size:1.22rem;line-height:1.15}
       .summary-copy p{font-size:.95rem}
@@ -120,6 +130,9 @@
       .official-map td{border:0;border-bottom:1px solid var(--u5-border);padding:.8rem}
       .official-map td:last-child{border-bottom:0}
       .official-map td::before{content:attr(data-label);display:block;color:var(--u5-teal);font-size:.72rem;font-weight:900;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.25rem}
+    }
+    @media(max-width:420px){
+      .unit5-topic-buttons{grid-template-columns:1fr}
     }
   </style>
 </head>
