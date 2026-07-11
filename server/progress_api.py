@@ -931,6 +931,8 @@ def validate_local_token(token):
 def gradebook_path_for_login(path):
     if path == "/api/basic/grades/login":
         return ("basic", "Basic English Course 1", BASIC_ENGLISH_GRADES_PATH)
+    if path == "/api/intermediate/grades/login":
+        return ("intermediate", "Intermediate English Course 1", INTERMEDIATE_ENGLISH_GRADES_PATH)
     if path == "/api/french1/grades/login":
         return ("french1", "Français Niveau 1", FRENCH1_GRADES_PATH)
     if path == "/api/french2/grades/login":
