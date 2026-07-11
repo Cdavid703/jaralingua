@@ -66,8 +66,26 @@
     .game-command.primary{background:var(--team-one)}
     .game-command.success{background:var(--team-two)}
     .game-command.gold{background:var(--food-gold);color:#3d2a00}
+    .game-command.neutral{background:#e8eef8;color:var(--food-navy)}
+    .game-command.danger{background:var(--food-coral)}
+    .game-command:disabled{opacity:.5;cursor:not-allowed;transform:none}
     .game-icon-btn{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--food-navy);box-shadow:0 8px 20px rgba(15,23,42,.1);font-size:1.15rem}
     .game-command:hover,.game-icon-btn:hover{transform:translateY(-2px)}
+    .turn-timer{display:inline-flex;margin-top:6px;border-radius:999px;background:rgba(255,255,255,.14);padding:.25rem .6rem;color:#fff;font-style:normal;font-size:.86rem;font-weight:950}
+    .control-panel{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:0 0 18px}
+    .control-card{background:#fff;border:1px solid rgba(7,31,79,.08);border-radius:20px;box-shadow:0 12px 26px rgba(7,31,79,.08);padding:16px}
+    .control-card:last-child{grid-column:1/-1}
+    .control-card h3{margin:0 0 10px;color:var(--food-navy)}
+    .control-card p{margin:.25rem 0 .8rem;color:var(--food-muted);font-weight:800;line-height:1.45}
+    .control-row{display:grid;grid-template-columns:120px 1fr;gap:10px;align-items:center;margin:.7rem 0}
+    .control-row strong{color:var(--food-navy);font-weight:950}
+    .segmented-control,.teacher-controls{display:flex;flex-wrap:wrap;gap:8px}
+    .mode-btn,.timer-btn{border:2px solid #d9e4f4;background:#fff;color:var(--food-navy);border-radius:999px;padding:.55rem .8rem;font:inherit;font-size:.9rem;font-weight:950;cursor:pointer}
+    .mode-btn.active,.timer-btn.active{background:var(--food-navy);border-color:var(--food-navy);color:#fff}
+    .teacher-controls .game-command{min-height:42px;padding:0 14px;font-size:.9rem}
+    .review-list{display:flex;flex-wrap:wrap;gap:8px;min-height:40px}
+    .review-chip{border-radius:999px;background:#fff3e5;color:#8a4b00;border:1px solid #ffd29a;font-weight:950;padding:.48rem .7rem}
+    .review-empty{color:var(--food-muted);font-weight:850}
     .memory-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px;padding:18px;border-radius:26px;background:linear-gradient(145deg,#153b55,#0f766e);box-shadow:0 24px 55px rgba(21,59,85,.25);perspective:1200px}
     .memory-card{position:relative;aspect-ratio:4/3;border:0;padding:0;background:transparent;cursor:pointer;transform-style:preserve-3d;transition:transform .48s cubic-bezier(.2,.75,.2,1);min-width:0}
     .memory-card.is-flipped,.memory-card.is-matched{transform:rotateY(180deg)}
@@ -90,14 +108,21 @@
     .gate-word{font-size:clamp(2rem,8vw,3.5rem);color:var(--food-navy);font-weight:1000;text-transform:capitalize;margin:.2rem 0}
     .gate-tag{display:inline-flex;border-radius:999px;background:#eef5ff;color:var(--food-blue);font-size:.85rem;font-weight:950;padding:.35rem .65rem}
     .gate-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+    .classification-box{margin:16px 0 4px;padding:14px;border-radius:18px;background:#f8fbff;border:1px solid #dce8f7}
+    .classification-box strong{display:block;color:var(--food-navy);margin-bottom:10px}
+    .classification-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+    .basket-choice{border:2px solid #d9e4f4;background:#fff;border-radius:16px;padding:.7rem .55rem;color:var(--food-navy);font:inherit;font-weight:950;cursor:pointer}
+    .basket-choice.correct{border-color:#0f9f6e;background:#e9fbf4;color:#065f46}
+    .basket-choice.wrong{border-color:#d9433f;background:#fff0f0;color:#9f1239}
+    .classification-feedback{min-height:44px;margin:10px 0 0!important;color:var(--food-muted);font-weight:850}
     .winner-trophy{font-size:4rem;color:#d97706}
     .winner-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#ecfeff)}
     .winner-card h2{font-size:clamp(2rem,6vw,3.5rem)}
     .confetti-piece{position:fixed;top:-30px;width:12px;height:20px;z-index:2100;pointer-events:none;animation:confetti-fall var(--duration) linear forwards;transform:rotate(var(--rotation));background:var(--color)}
     @keyframes confetti-fall{to{transform:translate3d(var(--drift),110vh,0) rotate(900deg)}}
-    @media(max-width:1100px){.teacher-panel{grid-template-columns:1fr}}
+    @media(max-width:1100px){.teacher-panel,.control-panel{grid-template-columns:1fr}}
     @media(max-width:900px){.memory-board{grid-template-columns:repeat(4,minmax(0,1fr))}.food-memory-hero{min-height:auto}}
-    @media(max-width:760px){.game-toolbar{grid-template-columns:1fr 1fr}.turn-center{grid-column:1/-1;grid-row:1;min-width:0}.memory-board{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:10px}.game-shell{width:min(100% - 16px,1420px)}.team-panel{padding:10px}.team-score{width:44px;height:44px}.card-front strong{font-size:.68rem}.food-emoji{font-size:2.4rem}}
+    @media(max-width:760px){.game-toolbar{grid-template-columns:1fr 1fr}.turn-center{grid-column:1/-1;grid-row:1;min-width:0}.memory-board{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:10px}.game-shell{width:min(100% - 16px,1420px)}.team-panel{padding:10px}.team-score{width:44px;height:44px}.card-front strong{font-size:.68rem}.food-emoji{font-size:2.4rem}.control-row{grid-template-columns:1fr}.classification-options{grid-template-columns:1fr}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
 </head>
@@ -120,8 +145,8 @@
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab · Unit 5</p>
         <h1>Food Vocabulary Memory Game</h1>
-        <p>Two teams reveal food cards, find matching pairs, listen to the model pronunciation, and say the food word clearly before earning the point.</p>
-        <div class="lesson-meta"><span>12 pairs</span><span>24 cards</span><span>Team game</span><span>Vocabulary</span><span>Pronunciation</span></div>
+        <p>Two teams reveal food cards, find matching pairs, listen to the model audio, and classify each food before earning the point.</p>
+        <div class="lesson-meta"><span>12 pairs</span><span>24 cards</span><span>Team game</span><span>Vocabulary</span><span>Countable / uncountable</span></div>
         <div class="hero-actions"><a href="#game" class="btn btn-primary">Play game</a><a href="unit-5-food-quantities-culture.html" class="btn btn-secondary">Review Unit 5</a><a href="practice-lab.html#unit-5-folder" class="btn btn-secondary">Practice Lab</a></div>
       </div>
       <aside class="lesson-hero-image"><img src="../../assets/img/english-intermediate/unit-5/food-vocabulary-memory-game.svg" alt="Food vocabulary memory game board" /></aside>
@@ -134,8 +159,8 @@
           <ol>
             <li>Team 1 chooses two hidden cards.</li>
             <li>If the foods match, the student listens to the model audio.</li>
-            <li>The student repeats only the food word clearly.</li>
-            <li>The teacher confirms the pronunciation to award the point.</li>
+            <li>The team chooses the correct grammar basket: countable, uncountable, plural, or serving.</li>
+            <li>The student repeats the word or sentence, and the teacher confirms the point.</li>
             <li>If the cards do not match, the turn passes to the other team.</li>
           </ol>
         </article>
@@ -148,7 +173,7 @@
 
       <div class="game-toolbar">
         <div class="team-panel active" data-team="0"><input id="teamName0" value="Team 1" maxlength="20" aria-label="Team 1 name" /><strong class="team-score" id="score0">0</strong></div>
-        <div class="turn-center"><div><span>Current turn</span><strong id="turnName">Team 1</strong></div></div>
+        <div class="turn-center"><div><span>Current turn</span><strong id="turnName">Team 1</strong><em class="turn-timer" id="turnTimer">No timer</em></div></div>
         <div class="team-panel" data-team="1"><input id="teamName1" value="Team 2" maxlength="20" aria-label="Team 2 name" /><strong class="team-score" id="score1">0</strong></div>
       </div>
 
@@ -156,6 +181,44 @@
         <button class="game-command primary" type="button" id="newGameBtn">Shuffle new game</button>
         <button class="game-command gold" type="button" id="repeatBtn">Listen again</button>
         <button class="game-icon-btn" id="soundButton" type="button" title="Mute or unmute sound" aria-label="Mute or unmute sound">🔊</button>
+      </div>
+      <div class="control-panel" aria-label="Teacher game controls">
+        <article class="control-card">
+          <h3>Audio and timer</h3>
+          <p>Choose quick vocabulary audio or short model sentences with quantifiers.</p>
+          <div class="control-row">
+            <strong>Audio</strong>
+            <div class="segmented-control" role="group" aria-label="Audio mode">
+              <button class="mode-btn active" type="button" data-audio-mode="word">Word only</button>
+              <button class="mode-btn" type="button" data-audio-mode="sentence">Sentence</button>
+            </div>
+          </div>
+          <div class="control-row">
+            <strong>Timer</strong>
+            <div class="segmented-control" role="group" aria-label="Turn timer">
+              <button class="timer-btn active" type="button" data-timer="0">No timer</button>
+              <button class="timer-btn" type="button" data-timer="20">20 sec</button>
+              <button class="timer-btn" type="button" data-timer="30">30 sec</button>
+            </div>
+          </div>
+        </article>
+        <article class="control-card">
+          <h3>Teacher controls</h3>
+          <p>Use these only when you need to manage the class flow.</p>
+          <div class="teacher-controls">
+            <button class="game-command success" type="button" id="teacherAwardBtn" disabled>Award point</button>
+            <button class="game-command danger" type="button" id="teacherSkipBtn" disabled>Skip point</button>
+            <button class="game-command neutral" type="button" id="teacherTurnBtn">Change turn</button>
+            <button class="game-command neutral" type="button" id="teacherUndoBtn" disabled>Undo point</button>
+            <button class="game-command gold" type="button" id="revealAllBtn">Reveal all</button>
+            <button class="game-command neutral" type="button" id="hideAllBtn">Hide all</button>
+          </div>
+        </article>
+        <article class="control-card">
+          <h3>Review words</h3>
+          <p>Words missed in the grammar basket stay here so the teacher can recycle them later.</p>
+          <div class="review-list" id="reviewList"><span class="review-empty">No review words yet.</span></div>
+        </article>
       </div>
       <div class="memory-board" id="memoryBoard" aria-label="Food vocabulary memory cards"></div>
       <p class="game-status" id="gameStatus" aria-live="polite">Team 1: choose the first card.</p>
@@ -168,10 +231,15 @@
       <div class="gate-food" id="gateEmoji" aria-hidden="true">🥒</div>
       <h2 id="gateTitle">Say the word aloud</h2>
       <div class="gate-word" id="gateWord">cucumber</div>
-      <p>Listen first. Then the student repeats only the food word. The teacher confirms pronunciation to award the point.</p>
+      <p>Listen first. Then choose the correct grammar basket. The teacher confirms the point when the team is ready.</p>
+      <div class="classification-box">
+        <strong>Which basket does it go in?</strong>
+        <div class="classification-options" id="classificationOptions"></div>
+        <p class="classification-feedback" id="classificationFeedback">Choose a basket before the point is awarded.</p>
+      </div>
       <div class="gate-actions">
         <button class="game-command gold" type="button" id="gateListenBtn">Listen again</button>
-        <button class="game-command success" type="button" id="confirmBtn">Student said it</button>
+        <button class="game-command success" type="button" id="confirmBtn" disabled>Student said it</button>
       </div>
     </div>
   </div>
@@ -203,6 +271,35 @@
       {slug:"flour", label:"flour", emoji:"🌾", category:"Uncountable ingredient"}
     ];
 
+    const foodLearningDetails = {
+      cucumber:{grammarKey:"countable", basket:"Countable basket", sentence:"I bought one cucumber for the salad.", rule:"You can count individual cucumbers: one cucumber, two cucumbers."},
+      onion:{grammarKey:"countable", basket:"Countable basket", sentence:"Please add one onion to the soup.", rule:"You can count individual onions: one onion, two onions."},
+      potato:{grammarKey:"countable", basket:"Countable basket", sentence:"We need a few potatoes for dinner.", rule:"A potato is an individual item, so use many or a few."},
+      pepper:{grammarKey:"countable", basket:"Countable basket", sentence:"Slice one pepper for the bowl.", rule:"A pepper is one separate vegetable, so it is countable here."},
+      mushroom:{grammarKey:"countable", basket:"Countable basket", sentence:"Add a few mushrooms to the sauce.", rule:"Mushrooms are individual items: one mushroom, a few mushrooms."},
+      pineapple:{grammarKey:"countable", basket:"Countable basket", sentence:"There are two pineapples on the table.", rule:"A pineapple can be counted as one whole fruit."},
+      grapes:{grammarKey:"plural", basket:"Usually plural basket", sentence:"There are some grapes for dessert.", rule:"Grapes usually appears in plural form when we talk about the fruit."},
+      watermelon:{grammarKey:"serving", basket:"Serving / piece basket", sentence:"Would you like some watermelon?", rule:"In this activity, watermelon is food you usually serve as some watermelon, a slice, or a piece."},
+      cereal:{grammarKey:"uncountable", basket:"Uncountable basket", sentence:"There isn't much cereal left.", rule:"Cereal is measured as an amount, so use much or a little."},
+      soup:{grammarKey:"uncountable", basket:"Uncountable basket", sentence:"There is some soup for everyone.", rule:"Soup is a liquid food, so we measure an amount instead of counting one soup."},
+      butter:{grammarKey:"uncountable", basket:"Uncountable basket", sentence:"Add a little butter to the pan.", rule:"Butter is measured as an amount, so use a little or much."},
+      flour:{grammarKey:"uncountable", basket:"Uncountable basket", sentence:"How much flour do we need?", rule:"Flour is a powder, so we measure it and use much or a little."}
+    };
+    foods.forEach(function(food){
+      const details = foodLearningDetails[food.slug];
+      Object.assign(food,details,{
+        wordAudio:"audio/unit-5-food-memory/" + food.slug + "-word.mp3",
+        sentenceAudio:"audio/unit-5-food-memory/" + food.slug + "-sentence.mp3"
+      });
+    });
+
+    const classificationChoices = [
+      {key:"countable", label:"Countable basket", hint:"Use many, a few, one, or two."},
+      {key:"uncountable", label:"Uncountable basket", hint:"Use much, a little, or some."},
+      {key:"plural", label:"Usually plural basket", hint:"The food word normally appears in plural form."},
+      {key:"serving", label:"Serving / piece basket", hint:"Use some, a piece, or a slice."}
+    ];
+
     let deck = [];
     let selected = [];
     let matchedPairs = 0;
@@ -211,8 +308,17 @@
     let locked = false;
     let soundOn = true;
     let lastText = "";
+    let lastAudioItem = null;
     let pendingMatch = null;
+    let classificationComplete = false;
     let audioContext = null;
+    let currentAudio = null;
+    let audioMode = "word";
+    let timerSeconds = 0;
+    let timeLeft = 0;
+    let timerInterval = null;
+    let pointHistory = [];
+    const reviewWords = new Map();
 
     const board = document.getElementById("memoryBoard");
     const status = document.getElementById("gameStatus");
@@ -231,10 +337,107 @@
       document.querySelectorAll(".team-panel").forEach(function(panel,index){panel.classList.toggle("active",index === currentTeam);});
       document.getElementById("turnName").textContent = teamName(currentTeam);
     }
+    function updateTeacherButtons(){
+      document.getElementById("teacherAwardBtn").disabled = !pendingMatch;
+      document.getElementById("teacherSkipBtn").disabled = !pendingMatch;
+      document.getElementById("teacherUndoBtn").disabled = pointHistory.length === 0;
+    }
+    function updateReviewList(){
+      const reviewList = document.getElementById("reviewList");
+      if(reviewWords.size === 0){
+        reviewList.innerHTML = '<span class="review-empty">No review words yet.</span>';
+        return;
+      }
+      reviewList.innerHTML = Array.from(reviewWords.values()).map(function(item){
+        return '<span class="review-chip">' + item.emoji + ' ' + escapeHtml(item.label) + '</span>';
+      }).join("");
+    }
+    function addReviewWord(card){
+      if(!card) return;
+      reviewWords.set(card.slug,{label:card.label,emoji:card.emoji});
+      updateReviewList();
+    }
+    function updateTimerDisplay(){
+      const timer = document.getElementById("turnTimer");
+      timer.textContent = timerSeconds > 0 ? timeLeft + " sec" : "No timer";
+    }
+    function stopTurnTimer(){
+      if(timerInterval) clearInterval(timerInterval);
+      timerInterval = null;
+      updateTimerDisplay();
+    }
+    function startTurnTimer(){
+      stopTurnTimer();
+      if(timerSeconds <= 0 || pendingMatch || winnerOverlay.classList.contains("show")) return;
+      timeLeft = timerSeconds;
+      updateTimerDisplay();
+      timerInterval = setInterval(function(){
+        if(locked || pendingMatch) return;
+        timeLeft -= 1;
+        updateTimerDisplay();
+        if(timeLeft <= 0){
+          clearInterval(timerInterval);
+          timerInterval = null;
+          selected.forEach(function(item){item.element.classList.remove("is-flipped");});
+          selected = [];
+          currentTeam = 1 - currentTeam;
+          updateTeams();
+          setStatus("Time is up. Turn passes to " + teamName(currentTeam) + ".");
+          startTurnTimer();
+        }
+      },1000);
+    }
+    function setTimer(seconds){
+      timerSeconds = Number(seconds) || 0;
+      document.querySelectorAll(".timer-btn").forEach(function(button){button.classList.toggle("active",Number(button.dataset.timer) === timerSeconds);});
+      if(timerSeconds > 0){
+        setStatus("Timer set to " + timerSeconds + " seconds per turn.");
+        startTurnTimer();
+      } else {
+        setStatus("Timer is off.");
+        stopTurnTimer();
+      }
+    }
+    function setAudioMode(mode){
+      audioMode = mode === "sentence" ? "sentence" : "word";
+      document.querySelectorAll(".mode-btn").forEach(function(button){button.classList.toggle("active",button.dataset.audioMode === audioMode);});
+      setStatus(audioMode === "sentence" ? "Audio mode: short sentences with quantifiers." : "Audio mode: word only.");
+    }
     function renderVocabBank(){
       document.getElementById("vocabBank").innerHTML = foods.map(function(food){
         return "<span>" + food.emoji + " " + escapeHtml(food.label) + "</span>";
       }).join("");
+    }
+    function renderClassificationOptions(card){
+      classificationComplete = false;
+      document.getElementById("confirmBtn").disabled = true;
+      document.getElementById("classificationFeedback").textContent = "Choose a basket before the point is awarded.";
+      document.getElementById("classificationOptions").innerHTML = classificationChoices.map(function(choice){
+        return '<button class="basket-choice" type="button" data-basket="' + choice.key + '"><span>' + escapeHtml(choice.label) + '</span></button>';
+      }).join("");
+      document.querySelectorAll(".basket-choice").forEach(function(button){
+        button.addEventListener("click",function(){chooseClassification(button.dataset.basket,card);});
+      });
+    }
+    function chooseClassification(choiceKey,card){
+      if(!pendingMatch || !card) return;
+      const feedback = document.getElementById("classificationFeedback");
+      document.querySelectorAll(".basket-choice").forEach(function(button){button.classList.remove("correct","wrong");});
+      const selectedButton = document.querySelector('.basket-choice[data-basket="' + choiceKey + '"]');
+      if(choiceKey === card.grammarKey){
+        classificationComplete = true;
+        if(selectedButton) selectedButton.classList.add("correct");
+        document.getElementById("confirmBtn").disabled = false;
+        feedback.textContent = "Yes. " + card.rule;
+        setStatus("Correct basket for " + card.label + ". Teacher can award the point.");
+      } else {
+        classificationComplete = false;
+        if(selectedButton) selectedButton.classList.add("wrong");
+        addReviewWord(card);
+        feedback.textContent = "Not yet. " + card.label + " goes in the " + card.basket + " because " + card.rule;
+        setStatus("Try again: " + card.label + " is not in that basket.");
+      }
+      updateTeacherButtons();
     }
     function buildDeck(){
       deck = shuffle(foods.flatMap(function(food){return [0,1].map(function(copy){return {...food, id: food.slug + "-" + copy, matched:false};});}));
@@ -256,7 +459,8 @@
       element.setAttribute("aria-label",deck[index].label);
       selected.push({index,element});
       lastText = deck[index].label;
-      playModel(deck[index].label);
+      lastAudioItem = deck[index];
+      playModel(deck[index]);
       setStatus(teamName(currentTeam) + " revealed card " + (index + 1) + ": " + deck[index].label + ".");
       if(selected.length === 2){
         locked = true;
@@ -274,12 +478,16 @@
         second.element.classList.add("is-matched");
         pendingMatch = deck[first.index];
         lastText = pendingMatch.label;
+        lastAudioItem = pendingMatch;
+        stopTurnTimer();
         document.getElementById("gateEmoji").textContent = pendingMatch.emoji;
         document.getElementById("gateWord").textContent = pendingMatch.label;
         document.getElementById("gateCategory").textContent = pendingMatch.category;
+        renderClassificationOptions(pendingMatch);
         readingGate.classList.add("show");
-        playModel(pendingMatch.label);
-        setStatus("Match! The student must say: " + pendingMatch.label + ".");
+        updateTeacherButtons();
+        playModel(pendingMatch);
+        setStatus("Match! Choose the correct basket for " + pendingMatch.label + ".");
       } else {
         setStatus("No match. Turn passes to " + teamName(1 - currentTeam) + ".");
         setTimeout(function(){
@@ -290,31 +498,90 @@
           locked = false;
           updateTeams();
           setStatus(teamName(currentTeam) + ": choose the first card.");
+          startTurnTimer();
         },1050);
       }
     }
-    function confirmReading(){
+    function confirmReading(forceTeacherOverride){
       if(!pendingMatch) return;
+      if(!classificationComplete && forceTeacherOverride !== true){
+        setStatus("Choose the correct grammar basket before awarding the point.");
+        document.getElementById("classificationFeedback").textContent = "Pick the correct basket first, or use Teacher controls to override.";
+        return;
+      }
       scores[currentTeam] += 1;
       matchedPairs += 1;
+      pointHistory.push(currentTeam);
       document.getElementById("score" + currentTeam).textContent = scores[currentTeam];
       readingGate.classList.remove("show");
       playEffect("match");
       burstConfetti(34);
       selected = [];
       pendingMatch = null;
+      classificationComplete = false;
       locked = false;
+      updateTeacherButtons();
       setStatus(teamName(currentTeam) + " earns a point and plays again!");
       if(matchedPairs === foods.length) setTimeout(showWinner,700);
+      else startTurnTimer();
+    }
+    function skipMatchedPoint(){
+      if(!pendingMatch) return;
+      matchedPairs += 1;
+      readingGate.classList.remove("show");
+      selected = [];
+      pendingMatch = null;
+      classificationComplete = false;
+      locked = false;
+      currentTeam = 1 - currentTeam;
+      updateTeams();
+      updateTeacherButtons();
+      setStatus("Point skipped. Turn passes to " + teamName(currentTeam) + ".");
+      if(matchedPairs === foods.length) setTimeout(showWinner,700);
+      else startTurnTimer();
+    }
+    function undoLastPoint(){
+      const lastTeam = pointHistory.pop();
+      if(lastTeam === undefined) return;
+      scores[lastTeam] = Math.max(0,scores[lastTeam] - 1);
+      document.getElementById("score" + lastTeam).textContent = scores[lastTeam];
+      updateTeacherButtons();
+      setStatus("Last awarded point removed from " + teamName(lastTeam) + ".");
+    }
+    function changeTurn(){
+      if(pendingMatch){
+        setStatus("Finish or skip the matched pair before changing turns.");
+        return;
+      }
+      selected.forEach(function(item){item.element.classList.remove("is-flipped");});
+      selected = [];
+      currentTeam = 1 - currentTeam;
+      locked = false;
+      updateTeams();
+      setStatus("Turn changed to " + teamName(currentTeam) + ".");
+      startTurnTimer();
+    }
+    function revealAllCards(){
+      board.querySelectorAll(".memory-card").forEach(function(card){card.classList.add("is-flipped");});
+      setStatus("All cards are revealed for teacher support.");
+    }
+    function hideUnmatchedCards(){
+      if(pendingMatch){
+        setStatus("Finish or skip the matched pair before hiding cards.");
+        return;
+      }
+      board.querySelectorAll(".memory-card:not(.is-matched)").forEach(function(card){card.classList.remove("is-flipped");});
+      selected = [];
+      locked = false;
+      setStatus(teamName(currentTeam) + ": choose the first card.");
+      startTurnTimer();
     }
     function preferredEnglishVoice(){
       if(!("speechSynthesis" in window)) return null;
       const voices = speechSynthesis.getVoices();
       return voices.find(function(voice){return voice.lang.toLowerCase() === "en-us";}) || voices.find(function(voice){return voice.lang.toLowerCase().startsWith("en");}) || null;
     }
-    function playModel(text){
-      lastText = text;
-      if(!soundOn) return;
+    function fallbackSpeech(text){
       if(!("speechSynthesis" in window)){
         setStatus("Audio is not available in this browser. Students can still read and say the word.");
         return;
@@ -328,8 +595,31 @@
       if(voice) utterance.voice = voice;
       speechSynthesis.speak(utterance);
     }
+    function playModel(item,forcedMode){
+      const isCard = typeof item === "object" && item !== null;
+      const mode = forcedMode || audioMode;
+      const text = isCard && mode === "sentence" ? item.sentence : isCard ? item.label : String(item || "");
+      const source = isCard && mode === "sentence" ? item.sentenceAudio : isCard ? item.wordAudio : "";
+      if(!text) return;
+      lastText = text;
+      if(isCard) lastAudioItem = item;
+      if(!soundOn) return;
+      if("speechSynthesis" in window) speechSynthesis.cancel();
+      if(currentAudio){
+        currentAudio.pause();
+        currentAudio.currentTime = 0;
+      }
+      if(source){
+        currentAudio = new Audio(source);
+        currentAudio.playbackRate = mode === "sentence" ? .98 : .92;
+        currentAudio.play().catch(function(){fallbackSpeech(text);});
+      } else {
+        fallbackSpeech(text);
+      }
+    }
     function replayLastPhrase(){
-      if(pendingMatch) playModel(pendingMatch.label);
+      if(pendingMatch) playModel(pendingMatch);
+      else if(lastAudioItem) playModel(lastAudioItem);
       else if(lastText) playModel(lastText);
       else setStatus("Reveal a card first, then use Listen again.");
     }
@@ -359,10 +649,12 @@
     function toggleSound(){
       soundOn = !soundOn;
       if(!soundOn && "speechSynthesis" in window) speechSynthesis.cancel();
+      if(!soundOn && currentAudio) currentAudio.pause();
       document.getElementById("soundButton").textContent = soundOn ? "🔊" : "🔇";
       setStatus(soundOn ? "Sound is on." : "Sound is muted.");
     }
     function showWinner(){
+      stopTurnTimer();
       const one = teamName(0);
       const two = teamName(1);
       let title;
@@ -398,20 +690,27 @@
     }
     function newGame(){
       if("speechSynthesis" in window) speechSynthesis.cancel();
+      if(currentAudio) currentAudio.pause();
+      stopTurnTimer();
       selected = [];
       matchedPairs = 0;
       currentTeam = 0;
       scores = [0,0];
       locked = false;
       pendingMatch = null;
+      classificationComplete = false;
       lastText = "";
+      lastAudioItem = null;
+      pointHistory = [];
       document.getElementById("score0").textContent = "0";
       document.getElementById("score1").textContent = "0";
       readingGate.classList.remove("show");
       winnerOverlay.classList.remove("show");
       buildDeck();
       updateTeams();
+      updateTeacherButtons();
       setStatus(teamName(0) + ": choose the first card.");
+      startTurnTimer();
     }
     function closeWinnerAndRestart(){
       newGame();
@@ -427,6 +726,18 @@
     document.getElementById("soundButton").addEventListener("click",toggleSound);
     document.getElementById("gateListenBtn").addEventListener("click",replayLastPhrase);
     document.getElementById("confirmBtn").addEventListener("click",confirmReading);
+    document.getElementById("teacherAwardBtn").addEventListener("click",function(){confirmReading(true);});
+    document.getElementById("teacherSkipBtn").addEventListener("click",skipMatchedPoint);
+    document.getElementById("teacherTurnBtn").addEventListener("click",changeTurn);
+    document.getElementById("teacherUndoBtn").addEventListener("click",undoLastPoint);
+    document.getElementById("revealAllBtn").addEventListener("click",revealAllCards);
+    document.getElementById("hideAllBtn").addEventListener("click",hideUnmatchedCards);
+    document.querySelectorAll(".mode-btn").forEach(function(button){
+      button.addEventListener("click",function(){setAudioMode(button.dataset.audioMode);});
+    });
+    document.querySelectorAll(".timer-btn").forEach(function(button){
+      button.addEventListener("click",function(){setTimer(button.dataset.timer);});
+    });
     document.getElementById("playAgainBtn").addEventListener("click",closeWinnerAndRestart);
     newGame();
   </script>
