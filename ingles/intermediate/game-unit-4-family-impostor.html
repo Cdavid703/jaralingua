@@ -40,6 +40,11 @@
     .status-card strong{display:block;color:var(--intermediate-navy);font-size:1.25rem}
     .teacher-actions,.join-form{display:grid;gap:.65rem}
     .teacher-actions{grid-template-columns:1fr}
+    .vocabulary-finish-box{display:grid;gap:.65rem;margin:.2rem 0;padding:.85rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
+    .vocabulary-finish-box p{margin:0;color:var(--intermediate-muted);font-weight:800;line-height:1.45}
+    .vocab-button-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+    .vocab-unit-btn{border-radius:999px;padding:.62rem .7rem;text-align:center;text-decoration:none;background:#fff;color:var(--intermediate-navy);border:1px solid var(--intermediate-border);font-weight:900}
+    .vocab-unit-btn:hover{background:#eef5ff;color:#0f766e}
     .join-form input{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.82rem 1rem;font-weight:800;color:var(--intermediate-navy);background:#fff}
     .join-row{display:grid;grid-template-columns:minmax(120px,.8fr) minmax(160px,1.1fr) minmax(120px,.55fr);gap:.55rem}
     .players-list{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
@@ -113,7 +118,7 @@
       .impostor-hero .lesson-meta{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;width:100%}
       .impostor-hero .lesson-meta span{justify-content:center;text-align:center;white-space:normal;line-height:1.15;padding:8px 10px}
       .room-code{align-items:flex-start;flex-direction:column}
-      .status-grid,.mini-grid{grid-template-columns:1fr}
+      .status-grid,.mini-grid,.vocab-button-grid{grid-template-columns:1fr}
       .players-list li{align-items:flex-start;flex-direction:column}
       .vote-options{grid-template-columns:1fr}
       .qr-copy{grid-template-columns:1fr}
@@ -155,6 +160,16 @@
                 <button type="button" class="btn btn-secondary" id="distributeBtn"><i class="bi bi-shuffle"></i> Distribute roles</button>
                 <button type="button" class="btn btn-secondary" id="forceDiscussionBtn"><i class="bi bi-forward-fill"></i> Start discussion anyway</button>
                 <button type="button" class="btn btn-primary" id="openVoteBtn"><i class="bi bi-person-check-fill"></i> We have a suspect</button>
+                <div class="vocabulary-finish-box" aria-label="Final vocabulary check before revealing the impostor">
+                  <p class="section-kicker mb-1">Before the reveal</p>
+                  <h3 style="margin:.1rem 0;color:var(--intermediate-navy)">Final vocabulary check</h3>
+                  <p>Open a unit vocabulary review before revealing the impostor result.</p>
+                  <div class="vocab-button-grid">
+                    <a class="vocab-unit-btn" href="wishes-hopes-dreams.html" target="_blank" rel="noopener">Unit 2 vocab</a>
+                    <a class="vocab-unit-btn" href="human-natural-wonders-world-records.html" target="_blank" rel="noopener">Unit 3 vocab</a>
+                    <a class="vocab-unit-btn" href="unit-4-family-problems-memories.html" target="_blank" rel="noopener">Unit 4 vocab</a>
+                  </div>
+                </div>
                 <button type="button" class="btn btn-secondary" id="revealBtn"><i class="bi bi-eye-fill"></i> Reveal result</button>
                 <button type="button" class="btn btn-secondary" id="resetBtn"><i class="bi bi-arrow-counterclockwise"></i> Reset room</button>
               </div>
