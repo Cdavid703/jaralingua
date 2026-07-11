@@ -74,7 +74,7 @@
         <p class="eyebrow">Practice Lab - Unit 5 Listening</p>
         <h1>Market Dinner Plan</h1>
         <p>Listen to three classmates plan a healthy dinner with quantities, ingredients, and a cultural connection.</p>
-        <div class="lesson-meta"><span>Unit 5</span><span>16 questions</span><span>Quantities</span><span>Food culture</span></div>
+        <div class="lesson-meta"><span>Unit 5</span><span>10 questions</span><span>Quantities</span><span>Food culture</span></div>
         <div class="hero-actions"><a href="#listening" class="btn btn-primary">Start listening</a><a href="practice-lab.html#unit-5-folder" class="btn btn-secondary">Back to Unit 5 folder</a></div>
       </div>
     </section>
@@ -113,13 +113,8 @@
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Comprehension</p><h2>Answer the 16 Questions</h2></div></div>
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Comprehension</p><h2>Answer the 10 Questions</h2></div></div>
         <form id="quizForm" class="quiz-grid"></form>
-        <div class="evidence-box">
-          <label for="listeningNote">Listening evidence note for the teacher</label>
-          <textarea id="listeningNote" placeholder="Write 35 to 130 words. Mention the final menu, at least four quantity phrases, one health reason, and the cultural comparison."></textarea>
-          <p class="evidence-help">This note is part of the delivery. The teacher will read it with your quiz result; the automatic grade is only a reference and has weight 0.</p>
-        </div>
         <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Send to Teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
         <div id="resultBox" class="result-box"></div>
       </article>
@@ -163,13 +158,7 @@
       ["Which items do they decide to buy?", ["A head of lettuce, a bag of carrots, and a bottle of lime juice", "Two cans of beans, tomatoes, and corn", "A bag of rice, six avocados, and bread"]],
       ["What ingredients are used for the dressing?", ["Lime, oil, salt, and cilantro", "Yogurt, mango, strawberries, and sugar", "Beans, corn, avocado, and chicken"]],
       ["What light dessert do they choose?", ["Fruit salad", "Rice pudding", "Avocado toast"]],
-      ["Which fruit quantity is mentioned?", ["a few strawberries", "a little strawberries", "three strawberries juice"]],
-      ["What does Mateo want the presentation to include?", ["A cultural explanation", "A detailed price comparison", "A cooking competition score"]],
-      ["What global comparison do they make?", ["Many cultures use rice, beans, vegetables, and sauces", "Only Colombia serves rice with vegetables", "Global rice bowls never include sauces"]],
-      ["Why do they decide not to add bread?", ["The meal already has rice and may become too heavy", "They cannot find bread at the market", "The dressing already includes bread"]],
-      ["Which item is part of the final menu?", ["Lime dressing", "A cheese sandwich", "A fried dessert"]],
-      ["Which sentence best describes the final meal?", ["Balanced with grains, protein, vegetables, healthy fat, and light dessert", "Focused mainly on meat, bread, and sauce", "A dessert menu with fruit and yogurt only"]],
-      ["What is the main listening skill in this activity?", ["Identifying quantities, ingredients, reasons, and cultural comparison", "Recognizing family disagreement and phone rules", "Comparing world records and measurements"]]
+      ["Which fruit quantity is mentioned?", ["a few strawberries", "a little strawberries", "three strawberries juice"]]
     ];
     const form = document.getElementById("quizForm");
     const resultBox = document.getElementById("resultBox");
@@ -178,7 +167,6 @@
     const transcriptButton = document.getElementById("loadTranscript");
     const transcriptStatus = document.getElementById("transcriptStatus");
     const scriptBox = document.getElementById("scriptBox");
-    const listeningNote = document.getElementById("listeningNote");
     function setSpeed(value){audio.playbackRate=Number(value);document.querySelectorAll(".speed-button").forEach((button)=>button.classList.toggle("active",button.dataset.speed===String(value)));}
     document.querySelectorAll(".speed-button").forEach((button)=>button.addEventListener("click",()=>setSpeed(button.dataset.speed)));
     function readStoredUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp){sessionStorage.removeItem(key);return null;}return saved;}catch(error){sessionStorage.removeItem(key);return null;}}
@@ -189,8 +177,8 @@
     function wordCount(text){return (text||"").trim().split(/\s+/).filter(Boolean).length;}
     function selectedAnswers(){const answers=[];for(let index=0;index<questions.length;index+=1){const selected=form.querySelector(`input[name="q${index}"]:checked`);if(!selected)return null;answers.push(Number(selected.value));}return answers;}
     function lockQuiz(incorrectQuestions){const incorrectSet=new Set(incorrectQuestions||[]);document.querySelectorAll(".q-card").forEach((card)=>{const number=Number(card.dataset.questionNumber);card.classList.toggle("incorrect",incorrectSet.has(number));card.classList.add("locked");card.querySelectorAll("input").forEach((input)=>{input.disabled=true;});});submitButton.disabled=true;}
-    function resetQuiz(){form.reset();listeningNote.value="";listeningNote.disabled=false;document.querySelectorAll(".q-card").forEach((card)=>{card.classList.remove("incorrect","locked");card.querySelectorAll("input").forEach((input)=>{input.disabled=false;});});submitButton.disabled=false;resultBox.className="result-box";resultBox.textContent="";}
-    function submitQuiz(){const answers=selectedAnswers();if(!answers){showResult("Answer all 16 questions before submitting.","error");return;}const note=listeningNote.value.trim();const words=wordCount(note);if(words<35){showResult("Write at least 35 words in the listening evidence note before sending it to the teacher.","error");listeningNote.focus();return;}if(words>130){showResult("Keep the listening evidence note under 130 words before sending it to the teacher.","error");listeningNote.focus();return;}const headers=authHeaders();if(!headers){showResult("Sign in first. Your listening follow-up must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showResult("Sending your listening follow-up to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({answers:answers,listeningNote:note,activity:"Market Dinner Plan",clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{if(!ok){submitButton.disabled=false;const sizeMessage=data&&data.error==="text_too_short"?"The listening evidence note is too short: "+data.wordCount+" words.":(data&&data.error==="text_too_long"?"The listening evidence note is too long: "+data.wordCount+" words.":null);showResult(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":(sizeMessage||"The submission could not be saved. Please reload and try again."),"error");return;}lockQuiz(data.incorrectQuestions||[]);listeningNote.disabled=true;const wrong=(data.incorrectQuestions||[]).length;const reviewText=wrong?"Questions marked for review: "+data.incorrectQuestions.join(", ")+". Reset the full quiz if you want to change your answers.":"No questions were marked wrong.";showResult(`Sent to teacher. Reference grade: ${Number(data.grade).toFixed(2)} / 5.0. Score: ${data.score} / ${data.total}. ${reviewText} This follow-up appears in the grade grid with weight 0.`, "success");}).catch(()=>{submitButton.disabled=false;showResult("Network error. The activity was not submitted.","error");});}
+    function resetQuiz(){form.reset();document.querySelectorAll(".q-card").forEach((card)=>{card.classList.remove("incorrect","locked");card.querySelectorAll("input").forEach((input)=>{input.disabled=false;});});submitButton.disabled=false;resultBox.className="result-box";resultBox.textContent="";}
+    function submitQuiz(){const answers=selectedAnswers();if(!answers){showResult("Answer all 10 questions before submitting.","error");return;}const headers=authHeaders();if(!headers){showResult("Sign in first. Your listening follow-up must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showResult("Sending your listening follow-up to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({answers:answers,activity:"Market Dinner Plan",clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{if(!ok){submitButton.disabled=false;showResult(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":"The submission could not be saved. Please reload and try again.","error");return;}lockQuiz(data.incorrectQuestions||[]);const wrong=(data.incorrectQuestions||[]).length;const reviewText=wrong?"Questions marked for review: "+data.incorrectQuestions.join(", ")+". Reset the full quiz if you want to change your answers.":"No questions were marked wrong.";showResult(`Sent to teacher. Reference grade: ${Number(data.grade).toFixed(2)} / 5.0. Score: ${data.score} / ${data.total}. ${reviewText} This follow-up appears in the grade grid with weight 0.`, "success");}).catch(()=>{submitButton.disabled=false;showResult("Network error. The activity was not submitted.","error");});}
     function loadTranscript(){const headers=authHeaders();if(!headers){transcriptStatus.textContent="Sign in with a teacher or administrator account first.";openLoginPanel();return;}transcriptButton.disabled=true;transcriptStatus.textContent="Checking teacher access...";fetch(TRANSCRIPT_ENDPOINT,{headers:headers}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{transcriptButton.disabled=false;if(!ok){transcriptStatus.textContent=status===403?"This transcript is only available for approved teacher or administrator accounts.":"Transcript could not be loaded.";return;}scriptBox.textContent=data.transcript||"";scriptBox.classList.add("show");transcriptStatus.textContent="Teacher transcript loaded.";}).catch(()=>{transcriptButton.disabled=false;transcriptStatus.textContent="Network error. Transcript could not be loaded.";});}
     form.innerHTML=questions.map((q,index)=>`<div class="q-card" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
     submitButton.addEventListener("click",submitQuiz);

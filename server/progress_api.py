@@ -286,7 +286,7 @@ INTERMEDIATE_UNIT2_READING_ANSWERS = [1, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2]
 INTERMEDIATE_UNIT4_LISTENING_ANSWERS = [1, 2, 2, 0, 1, 2, 0, 1, 2, 1, 0, 2, 1, 0, 2, 0, 1, 2]
 INTERMEDIATE_UNIT4_MEMORY_BOX_ANSWERS = [1, 2, 1, 2, 0, 0, 1, 1, 2, 1, 2, 0, 2, 2]
 INTERMEDIATE_UNIT5_MARKET_BASKET_ANSWERS = [0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 2, 0, 0, 1, 1, 0, 2, 1]
-INTERMEDIATE_UNIT5_LISTENING_ANSWERS = [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+INTERMEDIATE_UNIT5_LISTENING_ANSWERS = [1, 0, 0, 1, 0, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT5_READING_ANSWERS = [0, 1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT4_EXPRESSION_ITEMS = [
     {
@@ -402,7 +402,7 @@ Maya: Yes, after school. But you have to bring your notebook.
 
 Narrator: The Rivera family does not solve every problem forever, but they make one respectful agreement for tonight."""
 
-INTERMEDIATE_UNIT5_LISTENING_TRANSCRIPT = """Narrator: Three classmates are planning a healthy dinner for a small international food fair. They have to choose ingredients, quantities, and one cultural connection.
+INTERMEDIATE_UNIT5_LISTENING_TRANSCRIPT = """Narrator: Three classmates are planning a healthy dinner for six people at a small international food fair. They have to choose ingredients, quantities, and one cultural connection.
 
 Sara: We need a dinner for six people. It should be healthy, but it should also feel Colombian.
 
@@ -424,19 +424,7 @@ Nina: Should we add something sweet?
 
 Sara: Maybe a fruit salad. We can use some mango, a few strawberries, and a little yogurt. It gives color without too much sugar.
 
-Mateo: I want the presentation to explain culture too. We can say the bowl is inspired by Colombian home food, but it is arranged like a modern healthy bowl.
-
-Nina: And we can compare it with a global rice bowl. Many cultures use rice, beans, vegetables, and sauces, but the flavors change.
-
-Sara: Exactly. Our final menu has rice, beans, chicken, lettuce, tomato, corn, avocado, lime dressing, and fruit salad.
-
-Mateo: Wait. Do we need any bread?
-
-Nina: I do not think so. There is already rice. If we add bread, the meal may feel too heavy.
-
-Sara: So our dinner is balanced: some grains, some protein, a lot of vegetables, a little healthy fat, and a light dessert.
-
-Narrator: Their plan is not only a list of food. It includes quantities, countable and uncountable nouns, ingredients, health reasons, and a cultural comparison."""
+Narrator: Their shorter plan includes quantities, countable and uncountable nouns, healthy ingredients, and a simple cultural connection."""
 
 FRENCH8_BASE_EVALUATIONS = {
     "finalExam": {
@@ -5500,12 +5488,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 try:
                     result = score_intermediate_unit5_listening(payload)
-                    listening_note, word_count = clean_intermediate_text_followup(payload, "listeningNote", 35, 130)
                 except ValueError as error:
                     if changed:
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
-                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("listeningNote"))})
+                    json_response(self, 400, {"error": str(error)})
                     return
+                listening_note = ""
+                word_count = 0
                 submitted_at = now_iso()
                 previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT5_LISTENING_ID) if isinstance(student.get("gradeDetails"), dict) else None
                 try:

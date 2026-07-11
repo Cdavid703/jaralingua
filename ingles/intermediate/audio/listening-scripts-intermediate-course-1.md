@@ -129,7 +129,7 @@ Narrator: The Rivera family does not solve every problem forever, but they make 
 ## Market Dinner Plan
 File: `unit-5-market-dinner-plan.mp3`
 
-Narrator: Three classmates are planning a healthy dinner for a small international food fair. They have to choose ingredients, quantities, and one cultural connection.
+Narrator: Three classmates are planning a healthy dinner for six people at a small international food fair. They have to choose ingredients, quantities, and one cultural connection.
 
 Sara: We need a dinner for six people. It should be healthy, but it should also feel Colombian.
 
@@ -151,16 +151,4 @@ Nina: Should we add something sweet?
 
 Sara: Maybe a fruit salad. We can use some mango, a few strawberries, and a little yogurt. It gives color without too much sugar.
 
-Mateo: I want the presentation to explain culture too. We can say the bowl is inspired by Colombian home food, but it is arranged like a modern healthy bowl.
-
-Nina: And we can compare it with a global rice bowl. Many cultures use rice, beans, vegetables, and sauces, but the flavors change.
-
-Sara: Exactly. Our final menu has rice, beans, chicken, lettuce, tomato, corn, avocado, lime dressing, and fruit salad.
-
-Mateo: Wait. Do we need any bread?
-
-Nina: I do not think so. There is already rice. If we add bread, the meal may feel too heavy.
-
-Sara: So our dinner is balanced: some grains, some protein, a lot of vegetables, a little healthy fat, and a light dessert.
-
-Narrator: Their plan is not only a list of food. It includes quantities, countable and uncountable nouns, ingredients, health reasons, and a cultural comparison.
+Narrator: Their shorter plan includes quantities, countable and uncountable nouns, healthy ingredients, and a simple cultural connection.
