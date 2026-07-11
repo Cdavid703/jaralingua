@@ -164,8 +164,9 @@
           </div>
           <label for="readingResponse">Your reading response</label>
           <textarea id="readingResponse" placeholder="Write 40 to 140 words. Mention two ingredients with quantities, explain why the dish matters to Laura's family, and compare it respectfully with one food from another culture or your own family."></textarea>
+          <p><strong>Submission note:</strong> your teacher can read this follow-up. The reference grade appears in the grade grid with weight 0 and does not affect the accumulated percentage.</p>
         </div>
-        <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Send to Teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
+        <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Submit to teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
         <div id="resultBox" class="result-box"></div>
       </article>
 
@@ -194,22 +195,23 @@
   <script>
     const GOOGLE_USER_KEY = "jaralingua_google_user";
     const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const LOCAL_USER_KEY = "jaralingua_local_user";
     const SUBMIT_ENDPOINT = "/api/intermediate/unit5-dish-history/submit";
     const questions = [
-      ["Where does Laura visit her grandmother?", ["In Bogota", "In Denver", "In Tokyo"]],
-      ["What does the plate represent for Laura's family?", ["A quick weekday meal with no special memory", "A family routine and memory", "A restaurant-style dish prepared for tourists"]],
+      ["Where does Laura visit her grandmother?", ["In Bogota", "In a coastal town in Colombia", "In a restaurant near her English class"]],
+      ["What does the plate represent for Laura's family?", ["A quick weekday meal with no special memory", "A family routine and memory", "A famous national recipe that never changes"]],
       ["Which ingredient is added at the end for freshness and texture?", ["Avocado", "Rice", "Beef"]],
-      ["Why does Laura write quantities in her notebook?", ["Because she wants to compare prices at the market", "Because she wants to copy the recipe without its story", "Because she wants to explain the dish in English class"]],
-      ["Which quantity phrase appears in the reading?", ["three soups", "a little cilantro sauce", "many beefs"]],
-      ["What market detail does the reading mention?", ["Her grandmother has bought food there for many years", "The family buys every ingredient in a different city", "The market appears only as decoration in the notebook"]],
+      ["Why does Laura write quantities in her notebook?", ["Because she wants to compare market prices later", "Because she wants to remove the family story from the recipe", "Because she wants to explain the dish in English class"]],
+      ["Which quantity phrase appears in the reading?", ["two bowls of cilantro", "a little cilantro sauce", "several pieces of rice"]],
+      ["What market detail does the reading mention?", ["Her grandmother has bought food there for many years", "The family buys every ingredient in a different city", "The market is only mentioned as a place on the map"]],
       ["Which ingredient reminds the family of Laura's grandfather?", ["Corn", "Avocado", "Cilantro"]],
-      ["How can the dish change from house to house?", ["Every family must use the exact same ingredients", "Some families change the protein, amount of rice, or side dish", "The dish cannot include beans"]],
+      ["How can the dish change from house to house?", ["Every family must use the exact same ingredients", "Some families change the protein, amount of rice, or side dish", "Families change only the table decoration, not the food"]],
       ["Which foods are used for cultural comparison?", ["Pizza, sushi, and tacos", "Gallo pinto, red beans and rice, and rice bowls", "Cake, ice cream, and cookies"]],
       ["What is Laura careful not to say?", ["That the compared dishes are identical", "That family food can have meaning", "That rice and beans exist in many places"]],
-      ["Which sentence uses uncountable food correctly?", ["two cups of cooked rice", "two rices cooked", "a few rice"]],
-      ["What does the final sentence suggest?", ["Food can carry time, people, and meaning", "Grammar is impossible with food", "Traditional dishes should never change"]],
-      ["What is the best title interpretation?", ["The dish has family and cultural meaning", "The dish is difficult because it is expensive", "The dish has no ingredients"]],
-      ["What should a reading response include?", ["Ingredient evidence, cultural meaning, and comparison", "A copied recipe without explanation", "A list of ingredients without cultural meaning"]]
+      ["Which sentence uses uncountable food correctly?", ["two cups of cooked rice", "two cooked rices", "a few rice portions without a container"]],
+      ["What does the final sentence suggest?", ["Food can carry time, people, and meaning", "Ingredients are more important than family memory", "Traditional dishes should never change"]],
+      ["What is the best title interpretation?", ["The dish has family and cultural meaning", "The dish is difficult because it uses many ingredients", "The dish is mainly about cooking speed"]],
+      ["What should a reading response include?", ["Ingredient evidence, cultural meaning, and comparison", "A copied recipe with no explanation of meaning", "Only a personal opinion about taste"]]
     ];
     const form = document.getElementById("quizForm");
     const resultBox = document.getElementById("resultBox");
@@ -217,7 +219,7 @@
     const resetButton = document.getElementById("resetQuiz");
     const readingResponse = document.getElementById("readingResponse");
     function readStoredUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp){sessionStorage.removeItem(key);return null;}return saved;}catch(error){sessionStorage.removeItem(key);return null;}}
-    function readUser(){const googleUser=readStoredUser(GOOGLE_USER_KEY);if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);return null;}
+    function readUser(){const googleUser=readStoredUser(GOOGLE_USER_KEY);if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);const localUser=readStoredUser(LOCAL_USER_KEY);if(localUser&&localUser.credential)return Object.assign({provider:"local"},localUser);return null;}
     function authHeaders(){const user=readUser();if(!user||!user.credential)return null;return {Authorization:"Bearer "+user.credential,"X-Jaralingua-Auth-Provider":user.provider||"google","Content-Type":"application/json"};}
     function openLoginPanel(){const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");if(trigger)trigger.click();}
     function showResult(message,type){resultBox.className="result-box show "+(type||"");resultBox.textContent=message;}
