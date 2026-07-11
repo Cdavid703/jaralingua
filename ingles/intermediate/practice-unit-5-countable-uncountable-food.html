@@ -58,27 +58,41 @@
     .route-step strong{display:block;color:var(--market-navy);font-size:1.08rem;margin-bottom:.25rem}
     .route-step.is-active{border-color:rgba(217,164,65,.75);background:#fff8e8;color:#704b00;box-shadow:0 12px 28px rgba(217,164,65,.16)}
     .route-step.is-done{border-color:#86efac;background:#ecfdf5;color:#065f46}
+    .mission-brief{display:grid;grid-template-columns:54px minmax(0,1fr) auto;gap:.8rem;align-items:center;margin-top:1rem;border:1px solid #bfdbfe;background:linear-gradient(135deg,#eff6ff,#fff8e8);border-radius:16px;padding:.9rem;color:var(--market-navy)}
+    .mission-icon{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:var(--market-navy);color:#fff;font-weight:1000;font-size:1.15rem}
+    .mission-brief strong{display:block;font-size:1.02rem}
+    .mission-brief span{display:block;color:#38506b;font-weight:850;line-height:1.42;margin-top:.15rem}
     .live-preview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;margin-top:1rem}
     .live-cell{border:1px solid rgba(7,31,79,.12);background:#fff;border-radius:14px;padding:.9rem;color:var(--market-navy)}
     .live-cell b{display:block;font-size:1.55rem;line-height:1}
     .live-cell span{color:var(--market-muted);font-weight:850}
     .instruction-card{display:flex;gap:.8rem;align-items:flex-start;border:1px solid #bfdbfe;background:#eff6ff;color:#17365d;border-radius:14px;padding:.9rem;margin-bottom:1rem;font-weight:800;line-height:1.55}
     .instruction-card b{flex:0 0 auto;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:var(--market-navy);color:#fff}
-    .feedback-box{min-height:66px;display:flex;align-items:center;gap:.7rem;border:1px solid var(--market-line);background:#f8fbfd;color:#38506b;border-radius:14px;padding:.9rem 1rem;margin-bottom:1rem;font-weight:900;line-height:1.45}
+    .feedback-box{min-height:66px;display:flex;align-items:flex-start;gap:.7rem;border:1px solid var(--market-line);background:#f8fbfd;color:#38506b;border-radius:14px;padding:.9rem 1rem;margin-bottom:1rem;font-weight:900;line-height:1.45}
     .feedback-box::before{content:"i";display:grid;place-items:center;flex:0 0 auto;width:32px;height:32px;border-radius:50%;background:#dbeafe;color:var(--market-navy)}
     .feedback-box.error{border-color:#fecaca;background:#fff1f2;color:#7f1d1d}
-    .feedback-box.error::before{content:"×";background:#fee2e2;color:var(--market-red)}
+    .feedback-box.error::before{content:"x";background:#fee2e2;color:var(--market-red)}
     .feedback-box.success{border-color:#86efac;background:#ecfdf5;color:#065f46}
-    .feedback-box.success::before{content:"✓";background:#d1fae5;color:var(--market-green)}
+    .feedback-box.success::before{content:"ok";font-size:.72rem;background:#d1fae5;color:var(--market-green)}
+    .feedback-content{display:grid;gap:.45rem;width:100%}
+    .feedback-title{color:inherit;font-weight:1000}
+    .feedback-examples{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}
+    .feedback-chip{border:1px solid rgba(7,31,79,.12);background:rgba(255,255,255,.7);border-radius:12px;padding:.5rem;color:#17365d;font-weight:900}
+    .feedback-chip b{display:block;color:var(--market-navy);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:.12rem}
+    .feedback-box.error .feedback-chip:first-child{border-color:#fecaca;color:#7f1d1d}
+    .feedback-box.success .feedback-chip:last-child{border-color:#86efac;color:#065f46}
     .sort-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:1rem;align-items:start}
     .food-tray{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.7rem;padding:.9rem;background:linear-gradient(145deg,#edf6fb,#fff8e8);border:1px solid var(--market-line);border-radius:18px;min-height:300px}
-    .food-card{border:1px solid var(--market-line);border-radius:14px;padding:.5rem;background:#fff;display:grid;grid-template-rows:92px auto;gap:.45rem;min-height:136px;cursor:grab;box-shadow:0 8px 18px rgba(7,31,79,.08);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,opacity .18s ease}
+    .food-card{border:1px solid var(--market-line);border-radius:14px;padding:.5rem;background:#fff;display:grid;grid-template-rows:92px auto auto;gap:.45rem;min-height:166px;cursor:grab;box-shadow:0 8px 18px rgba(7,31,79,.08);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,opacity .18s ease}
     .food-card:hover,.food-card:focus-visible{transform:translateY(-3px);border-color:var(--market-teal);box-shadow:0 14px 26px rgba(7,31,79,.15);outline:none}
     .food-card.is-selected{border:3px solid var(--market-gold);padding:calc(.5rem - 2px);box-shadow:0 0 0 4px rgba(217,164,65,.18)}
     .food-card.is-wrong{animation:shake .32s ease;border-color:#ef4444;background:#fff1f2}
     .food-card.is-dragging{opacity:.45;cursor:grabbing}
     .food-card img{width:100%;height:92px;object-fit:cover;border-radius:10px;background:#fbf8ef}
     .food-card strong{color:var(--market-navy);font-size:.9rem;text-align:center;line-height:1.2;text-transform:capitalize}
+    .food-example{display:flex;align-items:center;justify-content:center;min-height:28px;border-radius:999px;background:#f8fbfd;color:#38506b;font-size:.78rem;font-weight:900;text-align:center;padding:.25rem .45rem}
+    .food-audio{border:0;border-radius:999px;background:#eef5ff;color:var(--market-navy);font:inherit;font-size:.76rem;font-weight:950;min-height:30px;padding:.25rem .45rem;cursor:pointer}
+    .food-audio:focus-visible,.food-audio:hover{outline:none;background:#dbeafe}
     .basket-zone{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
     .basket{position:relative;overflow:hidden;min-height:330px;border:2px solid rgba(7,31,79,.16);border-radius:34px 34px 20px 20px;padding:5rem .85rem 1.1rem;background:linear-gradient(180deg,#fff 0 18%,#e8fbf7 18% 100%);box-shadow:inset 0 -12px 0 rgba(7,31,79,.06),0 16px 34px rgba(7,31,79,.08);transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}
     .basket::before{content:"";position:absolute;left:18%;right:18%;top:1rem;height:76px;border:12px solid var(--market-teal);border-bottom:0;border-radius:54px 54px 0 0;box-shadow:inset 0 4px 0 rgba(255,255,255,.45),0 6px 0 rgba(7,31,79,.08);opacity:.95}
@@ -87,12 +101,13 @@
     .basket[data-category="uncountable"]::before{border-color:var(--market-gold)}
     .basket[data-category="uncountable"]::after{background:linear-gradient(90deg,rgba(255,255,255,.45) 0 10px,transparent 10px 22px),linear-gradient(0deg,rgba(255,255,255,.34) 0 8px,transparent 8px 21px),linear-gradient(145deg,rgba(255,255,255,.62),rgba(217,164,65,.26));background-size:22px 100%,100% 21px,100% 100%}
     .basket.is-over{transform:scale(1.025);border-color:var(--market-teal);background:#dcfce7;box-shadow:inset 0 -12px 0 rgba(5,150,105,.12),0 18px 38px rgba(5,150,105,.16)}
+    .basket.is-correct{animation:basketGlow .62s ease;border-color:#22c55e;box-shadow:inset 0 -12px 0 rgba(5,150,105,.16),0 20px 42px rgba(5,150,105,.22)}
     .basket.is-wrong{animation:shake .32s ease;border-color:#ef4444;background:#fee2e2}
     .basket-head{position:relative;z-index:1;text-align:center;margin-bottom:.65rem}
     .basket-head h3{display:inline-block;margin:0;color:var(--market-navy);font-size:clamp(1rem,2vw,1.25rem);background:rgba(255,255,255,.88);border:1px solid rgba(7,31,79,.12);border-radius:999px;padding:.24rem .8rem;box-shadow:0 6px 12px rgba(7,31,79,.07)}
     .basket-head p{margin:.35rem auto 0;max-width:19rem;color:var(--market-muted);font-size:.82rem;font-weight:850;line-height:1.35;background:rgba(255,255,255,.7);border-radius:12px;padding:.35rem .45rem}
     .basket-items{position:relative;z-index:1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
-    .basket .food-card{min-height:100px;grid-template-rows:62px auto;cursor:default;padding:.38rem;animation:dropIn .28s ease}
+    .basket .food-card{min-height:128px;grid-template-rows:62px auto auto;cursor:default;padding:.38rem;animation:dropIn .28s ease}
     .basket .food-card img{height:62px}
     .basket .food-card:hover{transform:none;box-shadow:0 8px 18px rgba(7,31,79,.08)}
     .unlock-banner{display:none;margin-top:1rem;border:1px solid #86efac;background:#ecfdf5;color:#065f46;border-radius:14px;padding:1rem;font-weight:900;line-height:1.55}
@@ -116,15 +131,17 @@
     .measure-note{display:none;margin-top:.65rem;color:#065f46;font-weight:850;line-height:1.4;font-size:.88rem}
     .quantity-card.is-correct .measure-note{display:block}
     .audio-button{border:0;background:#eef5ff;color:var(--market-navy);border-radius:999px;padding:.45rem .65rem;font-weight:900;cursor:pointer;margin-top:.55rem;align-self:flex-start}
-    .completion-card{display:none;margin-top:1rem;border:1px solid #86efac;background:linear-gradient(135deg,#ecfdf5,#fff8e8);border-radius:18px;padding:1.2rem;color:var(--market-navy);text-align:center}
+    .audio-button:hover,.audio-button:focus-visible{background:#dbeafe;outline:none}
+    .completion-card{display:none;margin-top:1rem;border:1px solid #86efac;background:linear-gradient(135deg,#ecfdf5,#fff8e8);border-radius:18px;padding:1.2rem;color:var(--market-navy);text-align:center;box-shadow:0 16px 36px rgba(4,120,87,.12)}
     .completion-card.show{display:block;animation:dropIn .35s ease}
-    .completion-card .trophy{font-size:3rem;line-height:1}
+    .completion-card .certificate-seal{display:grid;place-items:center;width:74px;height:74px;margin:0 auto .5rem;border-radius:50%;background:var(--market-navy);color:#fff;font-size:1.35rem;font-weight:1000;box-shadow:0 10px 22px rgba(7,31,79,.22)}
     .completion-card h2{margin:.45rem 0 .35rem;color:var(--market-navy)}
     .completion-card p{margin:0;color:#38506b;font-weight:850}
     .game-actions{display:flex;justify-content:center;margin-top:1rem}
     .btn-market{border:0;border-radius:999px;padding:.82rem 1rem;font-weight:1000;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;min-height:44px}
     .btn-market.secondary{background:#eef5ff;color:var(--market-navy)}
     @keyframes shake{25%{transform:translateX(-7px)}50%{transform:translateX(7px)}75%{transform:translateX(-4px)}}
+    @keyframes basketGlow{0%{transform:scale(1)}35%{transform:scale(1.035)}100%{transform:scale(1)}}
     @keyframes dropIn{from{opacity:0;transform:translateY(-10px) scale(.96)}to{opacity:1;transform:none}}
     @media(max-width:900px){
       .sort-layout{grid-template-columns:1fr}
@@ -134,6 +151,9 @@
     @media(max-width:680px){
       .market-hero{min-height:auto;padding:5.5rem 1rem 1.2rem}
       .mission-bar,.live-preview{grid-template-columns:1fr}
+      .mission-brief{grid-template-columns:44px minmax(0,1fr)}
+      .mission-brief .audio-button{grid-column:1/-1;justify-self:start}
+      .mission-icon{width:44px;height:44px}
       .panel-head{flex-direction:column}
       .food-tray{grid-template-columns:repeat(3,minmax(0,1fr))}
       .basket-zone{grid-template-columns:1fr}
@@ -145,6 +165,7 @@
       .challenge-shell{width:min(100% - 1rem,1180px)}
       .panel-body,.panel-head{padding:.85rem}
       .route-strip{grid-template-columns:1fr}
+      .feedback-examples{grid-template-columns:1fr}
       .food-tray{grid-template-columns:repeat(2,minmax(0,1fr))}
       .quantity-card{grid-template-columns:1fr}
       .quantity-visual,.quantity-visual img{height:170px;min-height:170px}
@@ -186,6 +207,11 @@
           <div class="route-strip">
             <div class="route-step is-active" data-route-step="0"><strong>1. Sort</strong>Drag each food into the countable or uncountable basket.</div>
             <div class="route-step" data-route-step="1"><strong>2. Measure</strong>Choose a natural quantity phrase for each picture.</div>
+          </div>
+          <div class="mission-brief">
+            <div class="mission-icon" aria-hidden="true">GO</div>
+            <div><strong>Your food fair mission is ready.</strong><span>Sort the market foods first. Then choose quantity phrases that sound natural in English.</span></div>
+            <button type="button" class="audio-button" data-audio="audio/unit-5-market-basket/your-food-fair-mission-is-ready.mp3" data-feedback="sort">Hear the mission</button>
           </div>
           <div class="live-preview" aria-label="Current challenge progress">
             <div class="live-cell"><b id="liveSorted">0/12</b><span>foods in the right basket</span></div>
@@ -235,9 +261,9 @@
           <div class="feedback-box" id="measureFeedback" aria-live="assertive">First, place all 12 foods in the correct baskets.</div>
           <div class="quantity-grid" id="quantityGrid"></div>
           <div class="completion-card" id="completionCard" aria-live="polite">
-            <div class="trophy" aria-hidden="true">🏆</div>
-            <h2>Both challenges complete!</h2>
-            <p>You sorted 12 foods and chose 8 natural quantity phrases: 20 correct decisions.</p>
+            <div class="certificate-seal" aria-hidden="true">A+</div>
+            <h2>Market Basket Master</h2>
+            <p>You sorted 12 foods and chose 8 natural quantity phrases. Countable and uncountable food? Handled.</p>
           </div>
           <div class="game-actions"><button type="button" class="btn-market secondary" id="resetChallenge">Play both challenges again</button></div>
         </div>
@@ -250,25 +276,25 @@
   <script>
     const imageBase = "../../assets/img/english-intermediate/unit-5/market-basket-foods/";
     const foodItems = [
-      {name:"tomatoes", image:"tomatoes.webp", category:"countable", explanation:"Tomatoes are countable: one tomato, two tomatoes."},
-      {name:"eggs", image:"eggs.webp", category:"countable", explanation:"Eggs are separate objects, so we can count them: one egg, six eggs."},
-      {name:"apples", image:"apples.webp", category:"countable", explanation:"Apples are countable: one apple, three apples."},
-      {name:"carrots", image:"carrots.webp", category:"countable", explanation:"Carrots are individual items: one carrot, several carrots."},
-      {name:"avocados", image:"avocados.webp", category:"countable", explanation:"Avocados are countable: one avocado, two avocados."},
-      {name:"cans of beans", image:"cans-of-beans.webp", category:"countable", explanation:"The cans are countable: one can of beans, two cans of beans."},
-      {name:"rice", image:"rice.webp", category:"uncountable", explanation:"Rice is uncountable in English. Measure it with some rice or a cup of rice, not one rice."},
-      {name:"water", image:"water.webp", category:"uncountable", explanation:"Water is uncountable. Count a container instead: a bottle of water or two glasses of water."},
-      {name:"cheese", image:"cheese.webp", category:"uncountable", explanation:"Cheese is uncountable here. Say some cheese or a slice of cheese."},
-      {name:"oil", image:"oil.webp", category:"uncountable", explanation:"Oil is uncountable. Say a little oil or a bottle of oil."},
-      {name:"bread", image:"bread.webp", category:"uncountable", explanation:"Bread is uncountable. Count a unit: a slice of bread or a loaf of bread."},
-      {name:"chicken", image:"chicken.webp", category:"uncountable", explanation:"Chicken as food is usually uncountable. Say some chicken or a piece of chicken."}
+      {name:"tomatoes", image:"tomatoes.webp", category:"countable", explanation:"Tomatoes are countable because you can count each tomato.", good:"a few tomatoes", bad:"much tomatoes", audio:"audio/unit-5-market-basket/a-few-tomatoes.mp3"},
+      {name:"eggs", image:"eggs.webp", category:"countable", explanation:"Eggs are separate objects, so we can count them.", good:"six eggs", bad:"much eggs"},
+      {name:"apples", image:"apples.webp", category:"countable", explanation:"Apples are countable because each apple is one item.", good:"three apples", bad:"much apples"},
+      {name:"carrots", image:"carrots.webp", category:"countable", explanation:"Carrots are individual items: one carrot, several carrots.", good:"several carrots", bad:"much carrots"},
+      {name:"avocados", image:"avocados.webp", category:"countable", explanation:"Avocados are countable because you can count them one by one.", good:"two avocados", bad:"much avocados"},
+      {name:"cans of beans", image:"cans-of-beans.webp", category:"countable", explanation:"The cans are countable containers: one can, two cans.", good:"a can of beans", bad:"much cans"},
+      {name:"rice", image:"rice.webp", category:"uncountable", explanation:"Rice is uncountable in English, so measure it with an amount or container.", good:"a cup of rice", bad:"one rice", audio:"audio/unit-5-market-basket/a-cup-of-rice.mp3"},
+      {name:"water", image:"water.webp", category:"uncountable", explanation:"Water is uncountable, so count a container instead.", good:"a bottle of water", bad:"three waters", audio:"audio/unit-5-market-basket/a-bottle-of-water.mp3"},
+      {name:"cheese", image:"cheese.webp", category:"uncountable", explanation:"Cheese is uncountable here, so use an amount or a piece.", good:"some cheese", bad:"two cheeses"},
+      {name:"oil", image:"oil.webp", category:"uncountable", explanation:"Oil is uncountable, so use a little, some, or a container.", good:"a little oil", bad:"a few oil", audio:"audio/unit-5-market-basket/a-little-oil.mp3"},
+      {name:"bread", image:"bread.webp", category:"uncountable", explanation:"Bread is uncountable, so count a slice or a loaf.", good:"a slice of bread", bad:"a bread", audio:"audio/unit-5-market-basket/a-slice-of-bread.mp3"},
+      {name:"chicken", image:"chicken.webp", category:"uncountable", explanation:"Chicken as food is usually uncountable, so use some or a piece.", good:"some chicken", bad:"three chickens"}
     ];
     const quantityItems = [
       {prompt:"For six people, we need ___ rice.", image:"rice.webp", options:["three rices","many rice","three cups of cooked rice"], correct:2, explanation:"Rice is uncountable, so we measure it with cups." , audio:"audio/unit-5-market-basket/three-cups-of-cooked-rice.mp3"},
       {prompt:"Add ___ oil to the dressing.", image:"oil.webp", options:["a little","a few","many"], correct:0, explanation:"Oil is uncountable, so use a little, not a few." , audio:"audio/unit-5-market-basket/a-little-oil.mp3"},
       {prompt:"Buy ___ tomatoes for the salad.", image:"tomatoes.webp", options:["a few","a little","much"], correct:0, explanation:"Tomatoes are countable plural, so a few is natural." , audio:"audio/unit-5-market-basket/a-few-tomatoes.mp3"},
       {prompt:"We do not need ___ cheese for this dish.", image:"cheese.webp", options:["many","any","a few"], correct:1, explanation:"Any is natural with an uncountable noun in this negative sentence."},
-      {prompt:"How ___ water should we buy?", image:"water.webp", options:["many","much","few"], correct:1, explanation:"Water is uncountable, so ask how much water." , audio:"audio/unit-5-market-basket/a-bottle-of-water.mp3"},
+      {prompt:"Buy ___ water for the table.", image:"water.webp", options:["many","a bottle of","few"], correct:1, explanation:"Water is uncountable, so count the container: a bottle of water." , audio:"audio/unit-5-market-basket/a-bottle-of-water.mp3"},
       {prompt:"How ___ eggs do we need?", image:"eggs.webp", options:["many","much","little"], correct:0, explanation:"Eggs are countable plural, so ask how many eggs."},
       {prompt:"Put ___ bread on each plate.", image:"bread.webp", options:["a bread","many bread","a slice of"], correct:2, explanation:"Bread is uncountable, so use a countable unit: a slice of bread." , audio:"audio/unit-5-market-basket/a-slice-of-bread.mp3"},
       {prompt:"The recipe needs ___ beans.", image:"cans-of-beans.webp", options:["a little","a can of","much"], correct:1, explanation:"A can of gives beans a clear countable container."}
@@ -292,6 +318,7 @@
     let selectedFood = null;
     let draggedFood = null;
     let activeAudio = null;
+    let activeAudioButton = null;
 
     function escapeHtml(value){
       return String(value).replace(/[&<>"']/g,function(char){
@@ -300,13 +327,25 @@
     }
     function setFeedback(element,message,type){
       element.className = "feedback-box" + (type ? " " + type : "");
-      element.textContent = message;
+      if(typeof message === "string"){
+        element.textContent = message;
+        return;
+      }
+      element.innerHTML = `<div class="feedback-content">
+        <div class="feedback-title">${escapeHtml(message.title)}</div>
+        ${message.bad || message.good ? `<div class="feedback-examples">
+          ${message.bad ? `<div class="feedback-chip"><b>Not</b>${escapeHtml(message.bad)}</div>` : ""}
+          ${message.good ? `<div class="feedback-chip"><b>Say</b>${escapeHtml(message.good)}</div>` : ""}
+        </div>` : ""}
+        ${message.rule ? `<div class="feedback-chip"><b>Rule</b>${escapeHtml(message.rule)}</div>` : ""}
+      </div>`;
     }
     function renderFoods(){
       foodTray.innerHTML = foodItems.map(function(item,index){
         return `<div class="food-card" draggable="true" tabindex="0" role="button" aria-label="${escapeHtml(item.name)}. Drag or select this food." data-food="${index}">
           <img src="${imageBase + item.image}" alt="${escapeHtml(item.name)}" draggable="false" />
           <strong>${escapeHtml(item.name)}</strong>
+          ${item.audio ? `<button type="button" class="food-audio" data-audio="${item.audio}" data-feedback="sort">Hear: ${escapeHtml(item.good)}</button>` : `<span class="food-example">${escapeHtml(item.good)}</span>`}
         </div>`;
       }).join("");
     }
@@ -320,7 +359,7 @@
               ${item.options.map(function(option,optionIndex){return `<button type="button" class="quantity-option" data-quantity="${index}" data-option="${optionIndex}">${escapeHtml(option)}</button>`;}).join("")}
             </div>
             <div class="measure-note">${escapeHtml(item.explanation)}</div>
-            ${item.audio ? `<button type="button" class="audio-button" data-audio="${item.audio}">🔊 Hear a model phrase</button>` : ""}
+            ${item.audio ? `<button type="button" class="audio-button" data-audio="${item.audio}" data-feedback="measure">Hear a model phrase</button>` : ""}
           </div>
         </article>`;
       }).join("");
@@ -369,7 +408,7 @@
         card.classList.add("is-wrong");
         basket.classList.add("is-wrong");
         setTimeout(function(){card.classList.remove("is-wrong");basket.classList.remove("is-wrong");},420);
-        setFeedback(sortFeedback,"Not in this basket. " + item.explanation,"error");
+        setFeedback(sortFeedback,{title:"Not in this basket.",bad:item.bad,good:item.good,rule:item.explanation},"error");
         return;
       }
       sortAnswers[index] = true;
@@ -380,7 +419,11 @@
       card.setAttribute("draggable","false");
       card.setAttribute("tabindex","-1");
       document.getElementById(category + "Basket").appendChild(card);
-      setFeedback(sortFeedback,"Correct! " + item.explanation,"success");
+      basket.classList.remove("is-correct");
+      void basket.offsetWidth;
+      basket.classList.add("is-correct");
+      setTimeout(function(){basket.classList.remove("is-correct");},650);
+      setFeedback(sortFeedback,{title:"Correct basket.",good:item.good,rule:item.explanation},"success");
       const wasLast = sortAnswers.every(Boolean);
       updateProgress();
       if(wasLast){
@@ -396,7 +439,7 @@
       if(optionIndex !== item.correct){
         card.classList.add("is-wrong");
         button.classList.add("is-wrong");
-        setFeedback(measureFeedback,"Try again. " + item.explanation,"error");
+        setFeedback(measureFeedback,{title:"Try again.",bad:item.options[optionIndex],good:item.options[item.correct],rule:item.explanation},"error");
         return;
       }
       measureAnswers[questionIndex] = true;
@@ -404,15 +447,21 @@
       card.classList.add("is-correct");
       button.classList.add("is-correct");
       card.querySelectorAll(".quantity-option").forEach(function(option){option.disabled = true;});
-      setFeedback(measureFeedback,"Correct! " + item.explanation,"success");
+      setFeedback(measureFeedback,{title:"Correct phrase.",good:item.options[item.correct],rule:item.explanation},"success");
       updateProgress();
       if(measureAnswers.every(Boolean)) setFeedback(measureFeedback,"Perfect! You completed both visual challenges.","success");
     }
-    function playAudio(src,button){
+    function playAudio(src,button,feedbackTarget){
       if(activeAudio) activeAudio.pause();
+      if(activeAudioButton && activeAudioButton !== button) activeAudioButton.textContent = activeAudioButton.dataset.defaultLabel || activeAudioButton.textContent;
+      button.dataset.defaultLabel = button.dataset.defaultLabel || button.textContent;
+      activeAudioButton = button;
       activeAudio = new Audio(src);
-      activeAudio.play().then(function(){button.textContent = "🔊 Playing…";}).catch(function(){setFeedback(measureFeedback,"The model audio could not be played. You can still continue the challenge.","error");});
-      activeAudio.addEventListener("ended",function(){button.textContent = "🔊 Hear a model phrase";},{once:true});
+      activeAudio.play().then(function(){button.textContent = "Playing...";}).catch(function(){
+        button.textContent = button.dataset.defaultLabel;
+        setFeedback(feedbackTarget || measureFeedback,"The model audio could not be played. You can still continue the challenge.","error");
+      });
+      activeAudio.addEventListener("ended",function(){button.textContent = button.dataset.defaultLabel;},{once:true});
     }
     function resetChallenge(){
       sortAnswers.fill(false);
@@ -433,10 +482,13 @@
     updateProgress();
 
     foodTray.addEventListener("click",function(event){
+      const audioButton = event.target.closest("[data-audio]");
+      if(audioButton){playAudio(audioButton.dataset.audio,audioButton,sortFeedback);return;}
       const card = event.target.closest("[data-food]");
       if(card) selectFood(Number(card.dataset.food));
     });
     foodTray.addEventListener("keydown",function(event){
+      if(event.target.closest("[data-audio]")) return;
       const card = event.target.closest("[data-food]");
       if(card && (event.key === "Enter" || event.key === " ")){event.preventDefault();selectFood(Number(card.dataset.food));}
     });
@@ -464,7 +516,11 @@
       const option = event.target.closest("[data-quantity]");
       if(option){chooseQuantity(Number(option.dataset.quantity),Number(option.dataset.option),option);return;}
       const audioButton = event.target.closest("[data-audio]");
-      if(audioButton) playAudio(audioButton.dataset.audio,audioButton);
+      if(audioButton) playAudio(audioButton.dataset.audio,audioButton,measureFeedback);
+    });
+    document.addEventListener("click",function(event){
+      const audioButton = event.target.closest(".mission-brief [data-audio]");
+      if(audioButton) playAudio(audioButton.dataset.audio,audioButton,sortFeedback);
     });
     document.getElementById("resetChallenge").addEventListener("click",resetChallenge);
   </script>
