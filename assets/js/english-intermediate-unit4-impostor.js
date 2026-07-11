@@ -19,6 +19,11 @@
     voteSubmitted: "vote-submitted.mp3",
     resultRevealed: "result-revealed.mp3"
   };
+  var VOCAB_DECK_LABELS = {
+    unit2: "Unit 2 vocabulary",
+    unit3: "Unit 3 vocabulary",
+    unit4: "Unit 4 vocabulary"
+  };
 
   var localState = loadLocalState();
   var soundEnabled = loadSoundPreference();
@@ -59,6 +64,15 @@
 
   function cleanRoomCode(value) {
     return String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+  }
+
+  function cleanVocabDeck(value) {
+    var deck = String(value || "").toLowerCase();
+    return VOCAB_DECK_LABELS[deck] ? deck : "unit4";
+  }
+
+  function selectedVocabDeck() {
+    return cleanVocabDeck(localState.vocabDeck || "unit4");
   }
 
   function normalizeEmail(value) {
@@ -327,6 +341,21 @@
     navigator.clipboard.writeText(studentRoomUrl(localState.roomCode)).then(function () {
       showMessage("Student link copied.", "success");
     });
+  }
+
+  function syncVocabDeckButtons(deck) {
+    var current = cleanVocabDeck(deck || selectedVocabDeck());
+    document.querySelectorAll("[data-vocab-deck]").forEach(function (button) {
+      button.classList.toggle("active", cleanVocabDeck(button.getAttribute("data-vocab-deck")) === current);
+    });
+    setText("#selectedDeckNote", "Selected: " + VOCAB_DECK_LABELS[current]);
+  }
+
+  function chooseVocabDeck(deck) {
+    localState.vocabDeck = cleanVocabDeck(deck);
+    saveLocalState();
+    syncVocabDeckButtons(localState.vocabDeck);
+    showMessage(VOCAB_DECK_LABELS[localState.vocabDeck] + " will be used when roles are distributed.", "success");
   }
 
   function createQrSvg(text) {
@@ -687,6 +716,7 @@
     setHtml("#votePanel", "");
     setHtml("#resultPanel", "");
     renderRoomQr(null);
+    syncVocabDeckButtons(localState.vocabDeck);
     updateTeacherButtons(null);
     applyStoredFields();
     syncAuthUi();
@@ -705,6 +735,7 @@
     renderVote(payload);
     renderResult(payload);
     renderRoomQr(payload);
+    syncVocabDeckButtons(room.deck || localState.vocabDeck);
     updateTeacherButtons(payload);
     applyStoredFields();
     syncAuthUi();
@@ -743,8 +774,8 @@
         '<img src="../../assets/img/english-intermediate/unit-4/impostor/role-impostor.png" alt="Private impostor role card">' +
         '<div><p class="section-kicker">Your role</p><h3>You are the impostor</h3>' +
         '<p>' + escapeHtml(player.impostorInstruction || "You do not know the expression. Listen carefully, stay credible, and infer the phrasal verb or idiom from classmates answers.") + '</p>' +
-        '<p class="category-line">Unit 4: family phrasal verbs and idioms</p>' +
-        '<ul><li>Ask natural family-context questions.</li><li>Avoid answers that sound too general.</li><li>Use classmates examples to infer the hidden expression.</li></ul>' +
+        '<p class="category-line">' + escapeHtml(room.deckLabel || "Selected unit vocabulary") + '</p>' +
+        '<ul><li>Ask natural questions connected to the selected unit.</li><li>Avoid answers that sound too general.</li><li>Use classmates examples to infer the hidden item.</li></ul>' +
         confirmButton(player, room) + '</div></article>');
       return;
     }
@@ -756,7 +787,7 @@
         '<div><p class="section-kicker">Your secret expression</p><h3>' + escapeHtml(card.term) + '</h3>' +
         '<p class="category-line">' + escapeHtml(card.type || card.category) + '</p>' +
         '<div class="meaning-block"><strong>Meaning</strong><p>' + escapeHtml(card.brief) + '</p></div>' +
-        fieldBlock("Family context", card.familyContext) +
+        fieldBlock(card.contextLabel || "Practice context", card.familyContext) +
         fieldBlock("Speaking support", card.speakingHelp) +
         '<div class="mini-grid"><div><strong>Possible clues</strong><ul>' + listItems(card.clues) + '</ul></div>' +
         '<div><strong>Words to avoid</strong><ul>' + listItems(card.taboo) + '</ul></div></div>' +
@@ -896,13 +927,15 @@
     }
     if (!localState.roomCode || !localState.teacherToken) return;
     try {
-      var result = await request(action, { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
+      var requestPayload = { roomCode: localState.roomCode, teacherToken: localState.teacherToken };
+      if (action === "distribute") requestPayload.deck = selectedVocabDeck();
+      var result = await request(action, requestPayload);
       lastPayload = result.state;
       render(lastPayload);
       var actionMessage = {
         "open-vote": "Vote opened for all students.",
         reset: "Room reset. Players stay connected, but roles and votes start again."
-      }[action] || "Teacher action applied.";
+      }[action] || (action === "distribute" ? "Roles distributed with " + VOCAB_DECK_LABELS[selectedVocabDeck()] + "." : "Teacher action applied.");
       showMessage(actionMessage, "success");
       var sound = {
         distribute: "rolesDistributed",
@@ -1004,6 +1037,8 @@
     });
     document.addEventListener("click", function (event) {
       if (event.target && event.target.id === "confirmRoleBtn") confirmRole();
+      var deckButton = event.target && event.target.closest ? event.target.closest("[data-vocab-deck]") : null;
+      if (deckButton) chooseVocabDeck(deckButton.getAttribute("data-vocab-deck"));
     });
     document.addEventListener("submit", function (event) {
       if (event.target && event.target.id === "voteForm") submitVote(event);

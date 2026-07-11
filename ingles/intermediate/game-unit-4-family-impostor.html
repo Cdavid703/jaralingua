@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Family Dinner Impostor | Intermediate English Course 1 | JaraLingua</title>
+  <title>The Vocabulary Impostor | Intermediate English Course 1 | JaraLingua</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
@@ -43,8 +43,9 @@
     .vocabulary-finish-box{display:grid;gap:.65rem;margin:.2rem 0;padding:.85rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
     .vocabulary-finish-box p{margin:0;color:var(--intermediate-muted);font-weight:800;line-height:1.45}
     .vocab-button-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
-    .vocab-unit-btn{border-radius:999px;padding:.62rem .7rem;text-align:center;text-decoration:none;background:#fff;color:var(--intermediate-navy);border:1px solid var(--intermediate-border);font-weight:900}
-    .vocab-unit-btn:hover{background:#eef5ff;color:#0f766e}
+    .vocab-unit-btn{border-radius:999px;padding:.62rem .7rem;text-align:center;text-decoration:none;background:#fff;color:var(--intermediate-navy);border:1px solid var(--intermediate-border);font-weight:900;cursor:pointer}
+    .vocab-unit-btn:hover,.vocab-unit-btn.active{background:#eef5ff;color:#0f766e;border-color:#0f766e}
+    .selected-deck-note{margin:.15rem 0 0!important;color:#0f766e!important;font-weight:900!important}
     .join-form input{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.82rem 1rem;font-weight:800;color:var(--intermediate-navy);background:#fff}
     .join-row{display:grid;grid-template-columns:minmax(120px,.8fr) minmax(160px,1.1fr) minmax(120px,.55fr);gap:.55rem}
     .players-list{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
@@ -133,10 +134,10 @@
   <main>
     <section class="lesson-hero impostor-hero">
       <div class="lesson-hero-content">
-        <p class="eyebrow">Practice Lab - Unit 4 Speaking Game</p>
-        <h1>The Family Dinner Impostor</h1>
-        <p>A live hidden-role conversation game. Most students receive one Unit 4 phrasal verb or idiom with a visual card and explanation. The impostor receives no expression and must infer it from the discussion.</p>
-        <div class="lesson-meta"><span>Unit 4</span><span>Phrasal verbs</span><span>Idioms</span><span>Live speaking</span></div>
+        <p class="eyebrow">Practice Lab - Vocabulary Speaking Game</p>
+        <h1>The Vocabulary Impostor</h1>
+        <p>A live hidden-role conversation game. The teacher chooses Unit 2, Unit 3, or Unit 4 vocabulary. Most students receive one secret word or expression; the impostor receives no item and must infer it from the discussion.</p>
+        <div class="lesson-meta"><span>Units 2-4</span><span>Vocabulary</span><span>Hidden role</span><span>Live speaking</span></div>
         <div class="hero-actions"><a href="#game" class="btn btn-primary">Open game room</a><a href="practice-lab.html#unit-4-folder" class="btn btn-secondary">Back to Unit 4 folder</a></div>
       </div>
     </section>
@@ -160,15 +161,16 @@
                 <button type="button" class="btn btn-secondary" id="distributeBtn"><i class="bi bi-shuffle"></i> Distribute roles</button>
                 <button type="button" class="btn btn-secondary" id="forceDiscussionBtn"><i class="bi bi-forward-fill"></i> Start discussion anyway</button>
                 <button type="button" class="btn btn-primary" id="openVoteBtn"><i class="bi bi-person-check-fill"></i> We have a suspect</button>
-                <div class="vocabulary-finish-box" aria-label="Final vocabulary check before revealing the impostor">
-                  <p class="section-kicker mb-1">Before the reveal</p>
-                  <h3 style="margin:.1rem 0;color:var(--intermediate-navy)">Final vocabulary check</h3>
-                  <p>Open a unit vocabulary review before revealing the impostor result.</p>
+                <div class="vocabulary-finish-box" aria-label="Choose the vocabulary deck for this impostor game">
+                  <p class="section-kicker mb-1">Vocabulary deck</p>
+                  <h3 style="margin:.1rem 0;color:var(--intermediate-navy)">Choose before distributing roles</h3>
+                  <p>The selected button decides which unit vocabulary the server will use for the secret card.</p>
                   <div class="vocab-button-grid">
-                    <a class="vocab-unit-btn" href="wishes-hopes-dreams.html" target="_blank" rel="noopener">Unit 2 vocab</a>
-                    <a class="vocab-unit-btn" href="human-natural-wonders-world-records.html" target="_blank" rel="noopener">Unit 3 vocab</a>
-                    <a class="vocab-unit-btn" href="unit-4-family-problems-memories.html" target="_blank" rel="noopener">Unit 4 vocab</a>
+                    <button class="vocab-unit-btn" type="button" data-vocab-deck="unit2">Unit 2 vocab</button>
+                    <button class="vocab-unit-btn" type="button" data-vocab-deck="unit3">Unit 3 vocab</button>
+                    <button class="vocab-unit-btn active" type="button" data-vocab-deck="unit4">Unit 4 vocab</button>
                   </div>
+                  <p class="selected-deck-note" id="selectedDeckNote">Selected: Unit 4 vocabulary</p>
                 </div>
                 <button type="button" class="btn btn-secondary" id="revealBtn"><i class="bi bi-eye-fill"></i> Reveal result</button>
                 <button type="button" class="btn btn-secondary" id="resetBtn"><i class="bi bi-arrow-counterclockwise"></i> Reset room</button>
@@ -192,14 +194,14 @@
       </article>
 
       <section class="support-grid">
-        <article class="support-card"><p class="topic-label">Rules</p><h3>Do not reveal the expression</h3><ul><li>Ask and answer in English.</li><li>Use family examples from Unit 4.</li><li>Do not say the exact phrasal verb or idiom.</li><li>Vote only when the teacher opens the phase.</li></ul></article>
-        <article class="support-card"><p class="topic-label">Language bank</p><h3>Expressions in this game</h3><ul><li>bring up, work out, pitch in</li><li>clear the air</li><li>meet someone halfway</li><li>patch things up</li></ul></article>
-        <article class="support-card"><p class="topic-label">Speaking moves</p><h3>Useful discussion language</h3><ul><li>I think it is connected to...</li><li>In my family, people...</li><li>Your answer sounds too general.</li><li>I suspect this person because...</li></ul></article>
+        <article class="support-card"><p class="topic-label">Rules</p><h3>Do not reveal the secret item</h3><ul><li>Ask and answer in English.</li><li>Use examples from the selected unit.</li><li>Do not say the exact word or expression.</li><li>Vote only when the teacher opens the phase.</li></ul></article>
+        <article class="support-card"><p class="topic-label">Decks</p><h3>Vocabulary in this game</h3><ul><li>Unit 2: hopes, dreams, experiences</li><li>Unit 3: wonders, records, measurements</li><li>Unit 4: family phrasal verbs and idioms</li></ul></article>
+        <article class="support-card"><p class="topic-label">Speaking moves</p><h3>Useful discussion language</h3><ul><li>I think it is connected to...</li><li>In this unit, people usually...</li><li>Your answer sounds too general.</li><li>I suspect this person because...</li></ul></article>
       </section>
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260710-unit4-impostor"></script>
+  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260711-vocab-decks"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

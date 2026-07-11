@@ -2905,6 +2905,7 @@ def french8_imposteur_action(payload):
             "votes": {},
             "impostorIds": [],
             "card": None,
+            "deck": "unit4",
             "createdAt": timestamp,
             "updatedAt": timestamp,
             "updatedAtEpoch": int(time.time())
@@ -3149,6 +3150,222 @@ INTERMEDIATE_UNIT4_IMPOSTOR_CARDS = [
 ]
 
 
+INTERMEDIATE_UNIT2_IMPOSTOR_CARDS = [
+    {
+        "id": "look-forward-to",
+        "term": "look forward to",
+        "type": "Phrasal verb",
+        "category": "Unit 2 hopes and plans",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
+        "image": "/assets/img/english-intermediate/unit-2-wishes-hopes-dreams.jpg",
+        "brief": "To feel happy or excited about something that will happen in the future.",
+        "familyContext": "A student is excited about a future trip, study plan, celebration, or personal goal.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when someone talks about a future event they are excited about.",
+        "clues": ["excited about the future", "waiting happily", "a plan you want"],
+        "taboo": ["look", "forward", "excited", "future"]
+    },
+    {
+        "id": "give-up",
+        "term": "give up",
+        "type": "Phrasal verb",
+        "category": "Unit 2 goals and persistence",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
+        "image": "/assets/img/english-intermediate/unit-2-wishes-hopes-dreams.jpg",
+        "brief": "To stop trying to do something because it feels too difficult.",
+        "familyContext": "Someone has a difficult dream or goal, but classmates encourage the person to continue.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when a person stops trying, or when another person says not to stop.",
+        "clues": ["stop trying", "too difficult", "continue or quit"],
+        "taboo": ["give", "up", "quit", "stop"]
+    },
+    {
+        "id": "take-up",
+        "term": "take up",
+        "type": "Phrasal verb",
+        "category": "Unit 2 new experiences",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
+        "image": "/assets/img/english-intermediate/unit-2-unusual-experiences.jpg",
+        "brief": "To start a new activity, hobby, course, or habit.",
+        "familyContext": "A student starts photography, English practice, volunteering, or another new activity.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when someone begins a new hobby or learning experience.",
+        "clues": ["start a hobby", "begin a new activity", "new habit"],
+        "taboo": ["take", "up", "start", "hobby"]
+    },
+    {
+        "id": "end-up",
+        "term": "end up",
+        "type": "Phrasal verb",
+        "category": "Unit 2 unexpected results",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
+        "image": "/assets/img/english-intermediate/unit-2-unusual-experiences.jpg",
+        "brief": "To finally be in a place or situation, often unexpectedly.",
+        "familyContext": "A plan changes and someone finally studies, travels, works, or meets people in an unexpected way.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when the final result is different from the original plan.",
+        "clues": ["final result", "unexpected situation", "after many changes"],
+        "taboo": ["end", "up", "finish", "result"]
+    },
+    {
+        "id": "get-over",
+        "term": "get over",
+        "type": "Phrasal verb",
+        "category": "Unit 2 personal challenges",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
+        "image": "/assets/img/english-intermediate/unit-2-wishes-hopes-dreams.jpg",
+        "brief": "To recover from a difficult feeling, disappointment, fear, or problem.",
+        "familyContext": "Someone feels nervous or disappointed but gradually feels better and continues with a goal.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when someone becomes okay after a hard experience.",
+        "clues": ["recover emotionally", "feel better later", "move past a problem"],
+        "taboo": ["get", "over", "recover", "problem"]
+    },
+    {
+        "id": "come-across",
+        "term": "come across",
+        "type": "Phrasal verb",
+        "category": "Unit 2 surprising discoveries",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
+        "image": "/assets/img/english-intermediate/unit-2-unusual-experiences.jpg",
+        "brief": "To find or meet something by chance.",
+        "familyContext": "A student unexpectedly finds an old photo, a message, an opportunity, or a useful website.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when a discovery happens accidentally, not because it was planned.",
+        "clues": ["find by chance", "unexpected discovery", "not planned"],
+        "taboo": ["come", "across", "find", "discover"]
+    }
+]
+
+
+INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
+    {
+        "id": "breathtaking",
+        "term": "breathtaking",
+        "type": "Adjective",
+        "category": "Unit 3 wonder description",
+        "unit": "unit3",
+        "unitLabel": "Unit 3: human and natural wonders / world records",
+        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "brief": "Extremely beautiful, impressive, or surprising.",
+        "familyContext": "Students describe a canyon, river, mountain, building, or view that impresses visitors.",
+        "contextLabel": "Unit 3 context",
+        "speakingHelp": "Use it for a place or view that makes people react strongly.",
+        "clues": ["very beautiful", "amazing view", "impressive place"],
+        "taboo": ["breath", "taking", "beautiful", "amazing"]
+    },
+    {
+        "id": "record-breaking",
+        "term": "record-breaking",
+        "type": "Compound adjective",
+        "category": "Unit 3 world records",
+        "unit": "unit3",
+        "unitLabel": "Unit 3: human and natural wonders / world records",
+        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "brief": "Better, bigger, faster, longer, or higher than all previous examples.",
+        "familyContext": "A place or achievement has the highest number, longest distance, or biggest measurement.",
+        "contextLabel": "Unit 3 context",
+        "speakingHelp": "Use it when a fact beats a previous record.",
+        "clues": ["beats the old number", "highest or longest", "world record"],
+        "taboo": ["record", "breaking", "best", "highest"]
+    },
+    {
+        "id": "towering",
+        "term": "towering",
+        "type": "Adjective",
+        "category": "Unit 3 height and size",
+        "unit": "unit3",
+        "unitLabel": "Unit 3: human and natural wonders / world records",
+        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "brief": "Very tall and impressive.",
+        "familyContext": "Students describe a skyscraper, mountain, cliff, monument, or tall natural formation.",
+        "contextLabel": "Unit 3 context",
+        "speakingHelp": "Use it when height is the most important feature.",
+        "clues": ["very tall", "high above people", "impressive height"],
+        "taboo": ["tower", "towering", "tall", "high"]
+    },
+    {
+        "id": "ancient",
+        "term": "ancient",
+        "type": "Adjective",
+        "category": "Unit 3 age and history",
+        "unit": "unit3",
+        "unitLabel": "Unit 3: human and natural wonders / world records",
+        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "brief": "Very old, usually from a distant historical period.",
+        "familyContext": "Students compare historic monuments, old cities, ruins, or places with a long story.",
+        "contextLabel": "Unit 3 context",
+        "speakingHelp": "Use it when age and history make a place important.",
+        "clues": ["very old", "historical place", "from long ago"],
+        "taboo": ["ancient", "old", "history", "past"]
+    },
+    {
+        "id": "remote",
+        "term": "remote",
+        "type": "Adjective",
+        "category": "Unit 3 geography",
+        "unit": "unit3",
+        "unitLabel": "Unit 3: human and natural wonders / world records",
+        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "brief": "Far away from cities, crowds, or easy access.",
+        "familyContext": "Students describe a natural wonder that is difficult to reach or far from urban areas.",
+        "contextLabel": "Unit 3 context",
+        "speakingHelp": "Use it when distance and isolation are important.",
+        "clues": ["far away", "hard to reach", "not near cities"],
+        "taboo": ["remote", "far", "distance", "isolated"]
+    },
+    {
+        "id": "massive",
+        "term": "massive",
+        "type": "Adjective",
+        "category": "Unit 3 size and measurement",
+        "unit": "unit3",
+        "unitLabel": "Unit 3: human and natural wonders / world records",
+        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "brief": "Very large, heavy, or powerful in size.",
+        "familyContext": "Students describe a huge river, waterfall, wall, forest, canyon, or construction.",
+        "contextLabel": "Unit 3 context",
+        "speakingHelp": "Use it when size or scale is the strongest detail.",
+        "clues": ["very big", "huge size", "large scale"],
+        "taboo": ["massive", "big", "huge", "large"]
+    }
+]
+
+
+INTERMEDIATE_IMPOSTOR_DECKS = {
+    "unit2": {
+        "label": "Unit 2: wishes, hopes, dreams, and experiences",
+        "shortLabel": "Unit 2 vocabulary",
+        "cards": INTERMEDIATE_UNIT2_IMPOSTOR_CARDS
+    },
+    "unit3": {
+        "label": "Unit 3: human and natural wonders / world records",
+        "shortLabel": "Unit 3 vocabulary",
+        "cards": INTERMEDIATE_UNIT3_IMPOSTOR_CARDS
+    },
+    "unit4": {
+        "label": "Unit 4: family phrasal verbs and idioms",
+        "shortLabel": "Unit 4 vocabulary",
+        "cards": INTERMEDIATE_UNIT4_IMPOSTOR_CARDS
+    }
+}
+
+
+def clean_intermediate_impostor_deck(value):
+    deck = clean_text(value, 20).lower()
+    return deck if deck in INTERMEDIATE_IMPOSTOR_DECKS else "unit4"
+
+
+def intermediate_impostor_deck_config(value):
+    return INTERMEDIATE_IMPOSTOR_DECKS.get(clean_intermediate_impostor_deck(value), INTERMEDIATE_IMPOSTOR_DECKS["unit4"])
+
+
 def default_intermediate_unit4_impostor_store():
     return {"rooms": {}}
 
@@ -3172,9 +3389,12 @@ def intermediate_unit4_impostor_card_public(card):
         "term": clean_text(card.get("term"), 120),
         "type": clean_text(card.get("type"), 80),
         "category": clean_text(card.get("category"), 100),
+        "unit": clean_intermediate_impostor_deck(card.get("unit")),
+        "unitLabel": clean_text(card.get("unitLabel"), 120),
         "image": clean_text(card.get("image"), 240),
         "brief": clean_text(card.get("brief"), 500),
         "familyContext": clean_text(card.get("familyContext"), 500),
+        "contextLabel": clean_text(card.get("contextLabel"), 80),
         "speakingHelp": clean_text(card.get("speakingHelp"), 500),
         "clues": [clean_text(item, 120) for item in card.get("clues", []) if isinstance(item, str)][:4],
         "taboo": [clean_text(item, 80) for item in card.get("taboo", []) if isinstance(item, str)][:4]
@@ -3193,12 +3413,17 @@ def intermediate_unit4_impostor_room_payload(room, player_token="", teacher_toke
     ready_count = sum(1 for player in players if player.get("readyAt"))
     votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
     card = intermediate_unit4_impostor_card_public(room.get("card"))
+    deck_key = clean_intermediate_impostor_deck(room.get("deck"))
+    deck_config = intermediate_impostor_deck_config(deck_key)
     impostor_ids = {clean_text(item, 40) for item in room.get("impostorIds", []) if clean_text(item, 40)}
     payload = {
         "room": {
             "code": clean_imposteur_room_code(room.get("code")),
             "status": status,
             "round": int(room.get("round") or 1),
+            "deck": deck_key,
+            "deckLabel": deck_config.get("label"),
+            "deckShortLabel": deck_config.get("shortLabel"),
             "playerCount": len(players),
             "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS,
             "maxPlayers": FRENCH8_IMPOSTEUR_MAX_PLAYERS,
@@ -3224,7 +3449,7 @@ def intermediate_unit4_impostor_room_payload(room, player_token="", teacher_toke
         if role == "citizen" and status in ("briefing", "discussion", "voting", "revealed"):
             player_payload["card"] = card
         elif role == "impostor" and status in ("briefing", "discussion", "voting", "revealed"):
-            player_payload["impostorInstruction"] = "You are the impostor. You do not know the expression. Listen carefully, stay credible, and infer the phrasal verb or idiom from classmates' answers."
+            player_payload["impostorInstruction"] = "You are the impostor. You do not know the secret vocabulary item. Listen carefully, stay credible, and infer it from classmates' answers."
         payload["currentPlayer"] = player_payload
     if is_teacher:
         payload["teacher"] = {
@@ -3334,10 +3559,13 @@ def intermediate_unit4_impostor_action(payload):
             french8_imposteur_require_teacher(room, payload)
             if len(players) < FRENCH8_IMPOSTEUR_MIN_PLAYERS:
                 return 409, {"error": "not_enough_players", "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS}
-            card = secrets.choice(INTERMEDIATE_UNIT4_IMPOSTOR_CARDS)
+            deck_key = clean_intermediate_impostor_deck(payload.get("deck") or room.get("deck"))
+            deck_config = intermediate_impostor_deck_config(deck_key)
+            card = secrets.choice(deck_config.get("cards") or INTERMEDIATE_UNIT4_IMPOSTOR_CARDS)
             impostor_count = 2 if len(players) > 8 else 1
             impostors = secrets.SystemRandom().sample(players, impostor_count)
             room["status"] = "briefing"
+            room["deck"] = deck_key
             room["card"] = card
             room["impostorIds"] = [clean_text(player.get("id"), 40) for player in impostors]
             room["votes"] = {}
@@ -3421,6 +3649,7 @@ def intermediate_unit4_impostor_action(payload):
             room["votes"] = {}
             room["impostorIds"] = []
             room["card"] = None
+            room["deck"] = clean_intermediate_impostor_deck(room.get("deck"))
             for player in players:
                 player["readyAt"] = None
                 player.pop("votedAt", None)
