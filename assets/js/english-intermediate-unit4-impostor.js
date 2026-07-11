@@ -883,7 +883,7 @@
     setDisabled("#revealBtn", !canReveal);
     setDisabled("#resetBtn", !isTeacher || !hasRoom);
     setDisabled("#closeRoomBtn", !hasRoom || (Boolean(localState.teacherToken) && !authState.isTeacher));
-    setDisabled("#resetAllRoomsBtn", !authState.isTeacher || !localState.teacherToken);
+    setDisabled("#resetAllRoomsBtn", !authState.isTeacher);
   }
 
   function setDisabled(selector, disabled) {
@@ -997,15 +997,15 @@
   }
 
   async function resetAllRooms() {
-    if (!isTeacherAccess() || !localState.teacherToken) {
-      showMessage("Only the signed-in teacher with an active room can reset all rooms.", "error");
+    if (!isTeacherAccess()) {
+      showMessage("Only a signed-in teacher can reset all rooms.", "error");
       openAuthPanel();
       return;
     }
     var confirmed = window.confirm("Reset all Vocabulary Impostor rooms? Students in old rooms will be released and must join the new room again.");
     if (!confirmed) return;
     try {
-      var result = await request("reset-all", { teacherToken: localState.teacherToken });
+      var result = await request("reset-all", { teacherToken: localState.teacherToken || "" });
       clearCurrentRoom("All impostor rooms were reset. Cleared rooms: " + Number(result.clearedRooms || 0) + ". Create one new room and share only that code.", "success");
     } catch (error) {
       showMessage(messageForError(error), "error");

@@ -3520,18 +3520,6 @@ def intermediate_unit4_impostor_action(payload):
         return 200, {"ok": True, "roomCode": room_code, "teacherToken": teacher_token, "state": intermediate_unit4_impostor_room_payload(room, teacher_token=teacher_token)}
 
     if action == "reset-all":
-        teacher_token = clean_text(payload.get("teacherToken"), 200)
-        if not teacher_token:
-            write_intermediate_unit4_impostor_store(store)
-            return 403, {"error": "teacher_required"}
-        owns_room = any(
-            hmac.compare_digest(teacher_token, clean_text(room.get("teacherToken"), 200))
-            for room in rooms.values()
-            if isinstance(room, dict)
-        )
-        if not owns_room:
-            write_intermediate_unit4_impostor_store(store)
-            return 403, {"error": "teacher_required"}
         cleared_count = len(rooms)
         store["rooms"] = {}
         write_intermediate_unit4_impostor_store(store)
