@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Food Vocabulary Memory Game | Practice Lab Unit 5 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <style>
+    :root{
+      --food-navy:#071f4f;
+      --food-blue:#2454a6;
+      --food-teal:#0f766e;
+      --food-gold:#d9a441;
+      --food-coral:#d9433f;
+      --food-soft:#f4f7fb;
+      --food-paper:#ffffff;
+      --food-ink:#102033;
+      --food-muted:#536173;
+      --team-one:#2563eb;
+      --team-two:#0f9f6e;
+      --board:#153b55;
+    }
+    *{box-sizing:border-box}
+    body{
+      background:
+        radial-gradient(circle at 12% 8%,rgba(15,118,110,.14),transparent 27%),
+        radial-gradient(circle at 85% 10%,rgba(217,164,65,.18),transparent 25%),
+        linear-gradient(180deg,#f8fbff 0%,#eef8f7 100%);
+      color:var(--food-ink);
+      overflow-x:hidden;
+    }
+    .food-memory-hero{
+      min-height:540px;
+      background:
+        linear-gradient(90deg,rgba(7,31,79,.94),rgba(7,31,79,.68) 48%,rgba(15,118,110,.25)),
+        url("../../assets/img/english-intermediate/unit-5/food-vocabulary-memory-game.svg") center/cover no-repeat;
+    }
+    .food-memory-hero .lesson-hero-image{background:#fff;border-radius:24px;padding:.8rem}
+    .food-memory-hero .lesson-hero-image img{border-radius:18px;background:#f8fbff}
+    .game-shell{width:min(1420px,calc(100% - 32px));margin:34px auto 70px}
+    .teacher-panel{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin:0 0 22px}
+    .teacher-card{background:#fff;border:1px solid rgba(7,31,79,.08);border-radius:22px;box-shadow:0 16px 34px rgba(7,31,79,.08);padding:18px}
+    .teacher-card h2,.teacher-card h3{color:var(--food-navy);margin-top:0}
+    .teacher-card p,.teacher-card li{color:var(--food-muted);line-height:1.58;font-weight:750}
+    .teacher-card li{margin:.45rem 0}
+    .vocab-bank{display:flex;flex-wrap:wrap;gap:8px}
+    .vocab-bank span{border-radius:999px;background:#eef8f7;color:var(--food-teal);font-weight:900;padding:.5rem .7rem}
+    .game-toolbar{display:grid;grid-template-columns:1fr auto 1fr;gap:18px;align-items:stretch;margin-bottom:18px}
+    .team-panel{border:3px solid transparent;border-radius:20px;padding:16px 18px;background:#fff;box-shadow:0 12px 28px rgba(15,23,42,.1);display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;transition:.2s ease}
+    .team-panel.active{transform:translateY(-3px);box-shadow:0 18px 34px rgba(15,23,42,.18)}
+    .team-panel[data-team="0"].active{border-color:var(--team-one)}
+    .team-panel[data-team="1"].active{border-color:var(--team-two)}
+    .team-panel input{width:100%;border:0;background:transparent;color:var(--food-navy);font:inherit;font-weight:900;font-size:1.15rem;outline:none}
+    .team-score{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;color:#fff;font-size:1.7rem;font-weight:950}
+    .team-panel[data-team="0"] .team-score{background:var(--team-one)}
+    .team-panel[data-team="1"] .team-score{background:var(--team-two)}
+    .turn-center{min-width:230px;border-radius:20px;padding:13px 18px;background:var(--board);color:#fff;text-align:center;display:grid;place-items:center;box-shadow:0 12px 28px rgba(21,59,85,.22)}
+    .turn-center span{display:block;color:#dbeafe;text-transform:uppercase;font-size:.75rem;font-weight:900;letter-spacing:.08em}
+    .turn-center strong{font-size:1.15rem}
+    .game-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-bottom:18px}
+    .game-command,.game-icon-btn{border:0;cursor:pointer;font:inherit;font-weight:900;transition:transform .18s ease,background .18s ease}
+    .game-command{min-height:48px;border-radius:999px;padding:0 20px;background:var(--food-navy);color:#fff;display:inline-flex;align-items:center;gap:8px}
+    .game-command.primary{background:var(--team-one)}
+    .game-command.success{background:var(--team-two)}
+    .game-command.gold{background:var(--food-gold);color:#3d2a00}
+    .game-icon-btn{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--food-navy);box-shadow:0 8px 20px rgba(15,23,42,.1);font-size:1.15rem}
+    .game-command:hover,.game-icon-btn:hover{transform:translateY(-2px)}
+    .memory-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:11px;padding:18px;border-radius:26px;background:linear-gradient(145deg,#153b55,#0f766e);box-shadow:0 24px 55px rgba(21,59,85,.25);perspective:1200px}
+    .memory-card{position:relative;aspect-ratio:4/3;border:0;padding:0;background:transparent;cursor:pointer;transform-style:preserve-3d;transition:transform .48s cubic-bezier(.2,.75,.2,1);min-width:0}
+    .memory-card.is-flipped,.memory-card.is-matched{transform:rotateY(180deg)}
+    .memory-card.is-matched{cursor:default}
+    .card-face{position:absolute;inset:0;border-radius:15px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+    .card-back{display:grid;place-items:center;background:linear-gradient(145deg,#fff,#fff8e8);border:3px solid rgba(255,255,255,.86);color:var(--food-navy);box-shadow:0 7px 16px rgba(0,0,0,.18)}
+    .card-back strong{font-size:clamp(1.5rem,3.4vw,2.6rem);font-weight:950;line-height:1}
+    .card-back span{position:absolute;left:8px;top:6px;font-size:clamp(.7rem,1.2vw,1rem);opacity:.5}
+    .card-front{transform:rotateY(180deg);display:grid;grid-template-rows:1fr auto;background:#fff;border:3px solid #fff;box-shadow:0 7px 16px rgba(0,0,0,.2)}
+    .food-emoji{display:grid;place-items:center;background:linear-gradient(145deg,#f8fbff,#eef8f7);font-size:clamp(2.2rem,5vw,4.5rem)}
+    .card-front strong{display:block;padding:.45rem .35rem;background:rgba(7,31,79,.94);color:#fff;font-size:clamp(.62rem,1.05vw,.82rem);line-height:1.15;text-align:center;text-transform:capitalize}
+    .memory-card.is-matched .card-front{border-color:#f4c95d;box-shadow:0 0 0 3px rgba(244,201,93,.45),0 0 24px rgba(244,201,93,.7)}
+    .game-status{min-height:48px;margin:14px 0 0;text-align:center;color:#334155;font-weight:850}
+    .reading-gate,.winner-overlay{position:fixed;inset:0;z-index:2000;display:none;place-items:center;padding:20px;background:rgba(3,12,32,.82);backdrop-filter:blur(8px)}
+    .reading-gate.show,.winner-overlay.show{display:grid}
+    .gate-card,.winner-card{width:min(590px,100%);border-radius:24px;background:#fff;padding:24px;text-align:center;box-shadow:0 28px 80px rgba(0,0,0,.38)}
+    .gate-food{width:min(260px,70vw);aspect-ratio:1;display:grid;place-items:center;margin:0 auto;border-radius:24px;background:linear-gradient(145deg,#eef8f7,#fff8e8);font-size:clamp(4rem,18vw,8rem)}
+    .gate-card h2,.winner-card h2{color:var(--food-navy);margin:16px 0 8px}
+    .gate-card p,.winner-card p{color:var(--food-muted);line-height:1.55;font-weight:800}
+    .gate-word{font-size:clamp(2rem,8vw,3.5rem);color:var(--food-navy);font-weight:1000;text-transform:capitalize;margin:.2rem 0}
+    .gate-tag{display:inline-flex;border-radius:999px;background:#eef5ff;color:var(--food-blue);font-size:.85rem;font-weight:950;padding:.35rem .65rem}
+    .gate-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+    .winner-trophy{font-size:4rem;color:#d97706}
+    .winner-card{position:relative;overflow:hidden;background:linear-gradient(145deg,#fff,#ecfeff)}
+    .winner-card h2{font-size:clamp(2rem,6vw,3.5rem)}
+    .confetti-piece{position:fixed;top:-30px;width:12px;height:20px;z-index:2100;pointer-events:none;animation:confetti-fall var(--duration) linear forwards;transform:rotate(var(--rotation));background:var(--color)}
+    @keyframes confetti-fall{to{transform:translate3d(var(--drift),110vh,0) rotate(900deg)}}
+    @media(max-width:1100px){.teacher-panel{grid-template-columns:1fr}}
+    @media(max-width:900px){.memory-board{grid-template-columns:repeat(4,minmax(0,1fr))}.food-memory-hero{min-height:auto}}
+    @media(max-width:760px){.game-toolbar{grid-template-columns:1fr 1fr}.turn-center{grid-column:1/-1;grid-row:1;min-width:0}.memory-board{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding:10px}.game-shell{width:min(100% - 16px,1420px)}.team-panel{padding:10px}.team-score{width:44px;height:44px}.card-front strong{font-size:.68rem}.food-emoji{font-size:2.4rem}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero food-memory-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab · Unit 5</p>
+        <h1>Food Vocabulary Memory Game</h1>
+        <p>Two teams reveal food cards, find matching pairs, listen to the model pronunciation, and say the food word clearly before earning the point.</p>
+        <div class="lesson-meta"><span>12 pairs</span><span>24 cards</span><span>Team game</span><span>Vocabulary</span><span>Pronunciation</span></div>
+        <div class="hero-actions"><a href="#game" class="btn btn-primary">Play game</a><a href="unit-5-food-quantities-culture.html" class="btn btn-secondary">Review Unit 5</a><a href="practice-lab.html#unit-5-folder" class="btn btn-secondary">Practice Lab</a></div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-intermediate/unit-5/food-vocabulary-memory-game.svg" alt="Food vocabulary memory game board" /></aside>
+    </section>
+
+    <section class="game-shell" id="game">
+      <div class="teacher-panel">
+        <article class="teacher-card">
+          <h2>How to play</h2>
+          <ol>
+            <li>Team 1 chooses two hidden cards.</li>
+            <li>If the foods match, the student listens to the model audio.</li>
+            <li>The student repeats only the food word clearly.</li>
+            <li>The teacher confirms the pronunciation to award the point.</li>
+            <li>If the cards do not match, the turn passes to the other team.</li>
+          </ol>
+        </article>
+        <article class="teacher-card">
+          <h3>New food vocabulary</h3>
+          <p>These words are different from the repeated Unit 5 basket items, so students expand their food vocabulary.</p>
+          <div class="vocab-bank" id="vocabBank"></div>
+        </article>
+      </div>
+
+      <div class="game-toolbar">
+        <div class="team-panel active" data-team="0"><input id="teamName0" value="Team 1" maxlength="20" aria-label="Team 1 name" /><strong class="team-score" id="score0">0</strong></div>
+        <div class="turn-center"><div><span>Current turn</span><strong id="turnName">Team 1</strong></div></div>
+        <div class="team-panel" data-team="1"><input id="teamName1" value="Team 2" maxlength="20" aria-label="Team 2 name" /><strong class="team-score" id="score1">0</strong></div>
+      </div>
+
+      <div class="game-actions">
+        <button class="game-command primary" type="button" id="newGameBtn">Shuffle new game</button>
+        <button class="game-command gold" type="button" id="repeatBtn">Listen again</button>
+        <button class="game-icon-btn" id="soundButton" type="button" title="Mute or unmute sound" aria-label="Mute or unmute sound">🔊</button>
+      </div>
+      <div class="memory-board" id="memoryBoard" aria-label="Food vocabulary memory cards"></div>
+      <p class="game-status" id="gameStatus" aria-live="polite">Team 1: choose the first card.</p>
+    </section>
+  </main>
+
+  <div class="reading-gate" id="readingGate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+    <div class="gate-card">
+      <span class="gate-tag" id="gateCategory">Food vocabulary</span>
+      <div class="gate-food" id="gateEmoji" aria-hidden="true">🥒</div>
+      <h2 id="gateTitle">Say the word aloud</h2>
+      <div class="gate-word" id="gateWord">cucumber</div>
+      <p>Listen first. Then the student repeats only the food word. The teacher confirms pronunciation to award the point.</p>
+      <div class="gate-actions">
+        <button class="game-command gold" type="button" id="gateListenBtn">Listen again</button>
+        <button class="game-command success" type="button" id="confirmBtn">Student said it</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="winner-overlay" id="winnerOverlay" role="dialog" aria-modal="true" aria-labelledby="winnerTitle">
+    <div class="winner-card">
+      <div class="winner-trophy" aria-hidden="true">🏆</div>
+      <h2 id="winnerTitle">We have a winner!</h2>
+      <p id="winnerMessage"></p>
+      <button class="game-command primary" type="button" id="playAgainBtn">Play again</button>
+    </div>
+  </div>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
+  <script>
+    const foods = [
+      {slug:"cucumber", label:"cucumber", emoji:"🥒", category:"Countable food"},
+      {slug:"onion", label:"onion", emoji:"🧅", category:"Countable food"},
+      {slug:"potato", label:"potato", emoji:"🥔", category:"Countable food"},
+      {slug:"pepper", label:"pepper", emoji:"🫑", category:"Countable food"},
+      {slug:"mushroom", label:"mushroom", emoji:"🍄", category:"Countable food"},
+      {slug:"pineapple", label:"pineapple", emoji:"🍍", category:"Countable fruit"},
+      {slug:"grapes", label:"grapes", emoji:"🍇", category:"Usually plural"},
+      {slug:"watermelon", label:"watermelon", emoji:"🍉", category:"Fruit / serving"},
+      {slug:"cereal", label:"cereal", emoji:"🥣", category:"Uncountable food"},
+      {slug:"soup", label:"soup", emoji:"🍲", category:"Uncountable food"},
+      {slug:"butter", label:"butter", emoji:"🧈", category:"Uncountable ingredient"},
+      {slug:"flour", label:"flour", emoji:"🌾", category:"Uncountable ingredient"}
+    ];
+
+    let deck = [];
+    let selected = [];
+    let matchedPairs = 0;
+    let currentTeam = 0;
+    let scores = [0,0];
+    let locked = false;
+    let soundOn = true;
+    let lastText = "";
+    let pendingMatch = null;
+    let audioContext = null;
+
+    const board = document.getElementById("memoryBoard");
+    const status = document.getElementById("gameStatus");
+    const readingGate = document.getElementById("readingGate");
+    const winnerOverlay = document.getElementById("winnerOverlay");
+
+    function escapeHtml(value){
+      return String(value).replace(/[&<>"']/g,function(char){
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char];
+      });
+    }
+    function teamName(index){return document.getElementById("teamName" + index).value.trim() || "Team " + (index + 1);}
+    function shuffle(items){for(let i = items.length - 1; i > 0; i--){const j = Math.floor(Math.random() * (i + 1));[items[i],items[j]] = [items[j],items[i]];}return items;}
+    function setStatus(message){status.textContent = message;}
+    function updateTeams(){
+      document.querySelectorAll(".team-panel").forEach(function(panel,index){panel.classList.toggle("active",index === currentTeam);});
+      document.getElementById("turnName").textContent = teamName(currentTeam);
+    }
+    function renderVocabBank(){
+      document.getElementById("vocabBank").innerHTML = foods.map(function(food){
+        return "<span>" + food.emoji + " " + escapeHtml(food.label) + "</span>";
+      }).join("");
+    }
+    function buildDeck(){
+      deck = shuffle(foods.flatMap(function(food){return [0,1].map(function(copy){return {...food, id: food.slug + "-" + copy, matched:false};});}));
+      board.innerHTML = "";
+      deck.forEach(function(card,index){
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "memory-card";
+        button.dataset.index = index;
+        button.setAttribute("aria-label","Hidden memory card " + (index + 1));
+        button.innerHTML = '<span class="card-face card-back"><span>Food</span><strong>' + (index + 1) + '</strong></span><span class="card-face card-front"><span class="food-emoji" aria-hidden="true">' + card.emoji + '</span><strong>' + escapeHtml(card.label) + '</strong></span>';
+        button.addEventListener("click",function(){selectCard(index,button);});
+        board.appendChild(button);
+      });
+    }
+    function selectCard(index,element){
+      if(locked || deck[index].matched || element.classList.contains("is-flipped") || selected.length === 2) return;
+      element.classList.add("is-flipped");
+      element.setAttribute("aria-label",deck[index].label);
+      selected.push({index,element});
+      lastText = deck[index].label;
+      playModel(deck[index].label);
+      setStatus(teamName(currentTeam) + " revealed card " + (index + 1) + ": " + deck[index].label + ".");
+      if(selected.length === 2){
+        locked = true;
+        setTimeout(checkPair,650);
+      }
+    }
+    function checkPair(){
+      const first = selected[0];
+      const second = selected[1];
+      const isMatch = deck[first.index].slug === deck[second.index].slug;
+      if(isMatch){
+        deck[first.index].matched = true;
+        deck[second.index].matched = true;
+        first.element.classList.add("is-matched");
+        second.element.classList.add("is-matched");
+        pendingMatch = deck[first.index];
+        lastText = pendingMatch.label;
+        document.getElementById("gateEmoji").textContent = pendingMatch.emoji;
+        document.getElementById("gateWord").textContent = pendingMatch.label;
+        document.getElementById("gateCategory").textContent = pendingMatch.category;
+        readingGate.classList.add("show");
+        playModel(pendingMatch.label);
+        setStatus("Match! The student must say: " + pendingMatch.label + ".");
+      } else {
+        setStatus("No match. Turn passes to " + teamName(1 - currentTeam) + ".");
+        setTimeout(function(){
+          first.element.classList.remove("is-flipped");
+          second.element.classList.remove("is-flipped");
+          selected = [];
+          currentTeam = 1 - currentTeam;
+          locked = false;
+          updateTeams();
+          setStatus(teamName(currentTeam) + ": choose the first card.");
+        },1050);
+      }
+    }
+    function confirmReading(){
+      if(!pendingMatch) return;
+      scores[currentTeam] += 1;
+      matchedPairs += 1;
+      document.getElementById("score" + currentTeam).textContent = scores[currentTeam];
+      readingGate.classList.remove("show");
+      playEffect("match");
+      burstConfetti(34);
+      selected = [];
+      pendingMatch = null;
+      locked = false;
+      setStatus(teamName(currentTeam) + " earns a point and plays again!");
+      if(matchedPairs === foods.length) setTimeout(showWinner,700);
+    }
+    function preferredEnglishVoice(){
+      if(!("speechSynthesis" in window)) return null;
+      const voices = speechSynthesis.getVoices();
+      return voices.find(function(voice){return voice.lang.toLowerCase() === "en-us";}) || voices.find(function(voice){return voice.lang.toLowerCase().startsWith("en");}) || null;
+    }
+    function playModel(text){
+      lastText = text;
+      if(!soundOn) return;
+      if(!("speechSynthesis" in window)){
+        setStatus("Audio is not available in this browser. Students can still read and say the word.");
+        return;
+      }
+      speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = "en-US";
+      utterance.rate = .82;
+      utterance.pitch = 1;
+      const voice = preferredEnglishVoice();
+      if(voice) utterance.voice = voice;
+      speechSynthesis.speak(utterance);
+    }
+    function replayLastPhrase(){
+      if(pendingMatch) playModel(pendingMatch.label);
+      else if(lastText) playModel(lastText);
+      else setStatus("Reveal a card first, then use Listen again.");
+    }
+    function getAudioContext(){
+      if(!soundOn) return null;
+      if(!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      if(audioContext.state === "suspended") audioContext.resume();
+      return audioContext;
+    }
+    function playEffect(type){
+      const context = getAudioContext();
+      if(!context) return;
+      const notes = type === "victory" ? [523,659,784,1047] : [659,784,988];
+      notes.forEach(function(frequency,index){
+        const oscillator = context.createOscillator();
+        const gain = context.createGain();
+        oscillator.frequency.value = frequency;
+        oscillator.connect(gain);
+        gain.connect(context.destination);
+        gain.gain.setValueAtTime(.0001,context.currentTime + index * .12);
+        gain.gain.exponentialRampToValueAtTime(.18,context.currentTime + index * .12 + .02);
+        gain.gain.exponentialRampToValueAtTime(.0001,context.currentTime + index * .12 + .28);
+        oscillator.start(context.currentTime + index * .12);
+        oscillator.stop(context.currentTime + index * .12 + .3);
+      });
+    }
+    function toggleSound(){
+      soundOn = !soundOn;
+      if(!soundOn && "speechSynthesis" in window) speechSynthesis.cancel();
+      document.getElementById("soundButton").textContent = soundOn ? "🔊" : "🔇";
+      setStatus(soundOn ? "Sound is on." : "Sound is muted.");
+    }
+    function showWinner(){
+      const one = teamName(0);
+      const two = teamName(1);
+      let title;
+      let message;
+      if(scores[0] === scores[1]){
+        title = "It is a tie!";
+        message = one + " and " + two + " finish with " + scores[0] + " points each.";
+      } else {
+        const winner = scores[0] > scores[1] ? 0 : 1;
+        title = teamName(winner) + " wins!";
+        message = "Final score: " + one + " " + scores[0] + " - " + scores[1] + " " + two + ". Great food vocabulary and pronunciation!";
+      }
+      document.getElementById("winnerTitle").textContent = title;
+      document.getElementById("winnerMessage").textContent = message;
+      winnerOverlay.classList.add("show");
+      playEffect("victory");
+      burstConfetti(130);
+    }
+    function burstConfetti(count){
+      const colors = ["#2563eb","#0f9f6e","#f4c95d","#ef476f","#ffffff"];
+      for(let i = 0; i < count; i++){
+        const piece = document.createElement("i");
+        piece.className = "confetti-piece";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.setProperty("--color",colors[i % colors.length]);
+        piece.style.setProperty("--duration",(2.2 + Math.random() * 2.3) + "s");
+        piece.style.setProperty("--rotation",(Math.random() * 360) + "deg");
+        piece.style.setProperty("--drift",((Math.random() - .5) * 260) + "px");
+        piece.style.animationDelay = (Math.random() * .45) + "s";
+        document.body.appendChild(piece);
+        setTimeout(function(){piece.remove();},5200);
+      }
+    }
+    function newGame(){
+      if("speechSynthesis" in window) speechSynthesis.cancel();
+      selected = [];
+      matchedPairs = 0;
+      currentTeam = 0;
+      scores = [0,0];
+      locked = false;
+      pendingMatch = null;
+      lastText = "";
+      document.getElementById("score0").textContent = "0";
+      document.getElementById("score1").textContent = "0";
+      readingGate.classList.remove("show");
+      winnerOverlay.classList.remove("show");
+      buildDeck();
+      updateTeams();
+      setStatus(teamName(0) + ": choose the first card.");
+    }
+    function closeWinnerAndRestart(){
+      newGame();
+      document.getElementById("game").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+    renderVocabBank();
+    if("speechSynthesis" in window) speechSynthesis.onvoiceschanged = function(){};
+    document.getElementById("teamName0").addEventListener("input",updateTeams);
+    document.getElementById("teamName1").addEventListener("input",updateTeams);
+    document.getElementById("newGameBtn").addEventListener("click",newGame);
+    document.getElementById("repeatBtn").addEventListener("click",replayLastPhrase);
+    document.getElementById("soundButton").addEventListener("click",toggleSound);
+    document.getElementById("gateListenBtn").addEventListener("click",replayLastPhrase);
+    document.getElementById("confirmBtn").addEventListener("click",confirmReading);
+    document.getElementById("playAgainBtn").addEventListener("click",closeWinnerAndRestart);
+    newGame();
+  </script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
