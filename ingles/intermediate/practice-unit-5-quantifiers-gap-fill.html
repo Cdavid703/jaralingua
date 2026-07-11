@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quantifiers Gap Fill | Practice Lab Unit 5 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <style>
+    :root{
+      --quant-navy:#071f4f;
+      --quant-blue:#2454a6;
+      --quant-teal:#0f766e;
+      --quant-gold:#d9a441;
+      --quant-coral:#d9433f;
+      --quant-ink:#102033;
+      --quant-muted:#536173;
+      --quant-line:#d9e4ef;
+      --quant-soft:#f4f7fb;
+      --quant-paper:#ffffff;
+      --quant-green:#047857;
+      --quant-red:#b42318;
+      --quant-shadow:0 20px 46px rgba(7,31,79,.1);
+    }
+    *{box-sizing:border-box}
+    body{
+      background:
+        radial-gradient(circle at 12% 8%,rgba(15,118,110,.12),transparent 28%),
+        radial-gradient(circle at 90% 10%,rgba(217,164,65,.18),transparent 24%),
+        linear-gradient(180deg,#f8fbff 0%,#f2f8f6 100%);
+      color:var(--quant-ink);
+    }
+    .quant-page{width:min(1180px,calc(100% - 32px));margin:0 auto;padding:2.4rem 0 4rem}
+    .quant-hero{
+      display:grid;
+      grid-template-columns:1fr .95fr;
+      gap:2rem;
+      align-items:center;
+      padding:clamp(1.25rem,4vw,3rem);
+      border:1px solid var(--quant-line);
+      border-radius:30px;
+      background:linear-gradient(135deg,#fff 0%,#eef8f7 100%);
+      box-shadow:var(--quant-shadow);
+      overflow:hidden;
+      margin-bottom:1.4rem;
+    }
+    .quant-eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      margin-bottom:1rem;
+      padding:.45rem .82rem;
+      border-radius:999px;
+      background:#fff8e8;
+      color:#7a5000;
+      font-weight:1000;
+      font-size:.82rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+    }
+    .quant-dot{width:9px;height:9px;border-radius:50%;background:var(--quant-teal);box-shadow:0 0 0 6px rgba(15,118,110,.14)}
+    .quant-hero h1{color:var(--quant-navy);font-size:clamp(2.25rem,5vw,4.25rem);line-height:1;margin:.2rem 0 1rem}
+    .quant-hero h1 span{color:var(--quant-teal)}
+    .quant-hero p{color:var(--quant-muted);font-size:1.05rem;line-height:1.72;margin:.75rem 0}
+    .quant-actions{display:flex;flex-wrap:wrap;gap:.85rem;margin-top:1.25rem}
+    .quant-hero-image{padding:.8rem;border:1px solid var(--quant-line);border-radius:24px;background:#fff;box-shadow:0 16px 34px rgba(7,31,79,.08)}
+    .quant-hero-image img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px}
+    .quick-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin-top:1.2rem}
+    .metric-card{border:1px solid rgba(7,31,79,.1);border-radius:16px;background:rgba(255,255,255,.82);padding:.9rem}
+    .metric-card b{display:block;color:var(--quant-navy);font-size:1.55rem;line-height:1}
+    .metric-card span{display:block;color:var(--quant-muted);font-weight:900;margin-top:.28rem}
+    .quant-block{
+      background:var(--quant-paper);
+      border:1px solid var(--quant-line);
+      border-radius:26px;
+      box-shadow:var(--quant-shadow);
+      padding:clamp(1.1rem,3vw,2.1rem);
+      margin-bottom:1.35rem;
+    }
+    .section-title{color:var(--quant-navy);font-size:clamp(1.65rem,3.5vw,2.45rem);line-height:1.1;margin:0 0 .65rem}
+    .section-subtitle{color:var(--quant-muted);line-height:1.72;margin:0 0 1.3rem;max-width:880px}
+    .rule-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+    .rule-card{border:1px solid var(--quant-line);border-radius:18px;background:#fff;padding:1rem;box-shadow:0 12px 26px rgba(7,31,79,.06)}
+    .rule-card h3{color:var(--quant-blue);margin:0 0 .45rem;font-size:1.08rem}
+    .rule-card p{color:var(--quant-muted);line-height:1.58;margin:0}
+    .rule-chip{display:inline-flex;margin:.7rem .35rem 0 0;border-radius:999px;padding:.32rem .58rem;background:#eef8f7;color:var(--quant-teal);font-weight:950;font-size:.86rem}
+    .rule-card:nth-child(2) .rule-chip{background:#fff8e8;color:#7a5000}
+    .rule-card:nth-child(3) .rule-chip{background:#eef5ff;color:var(--quant-blue)}
+    .quiz-header{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-bottom:1rem}
+    .score-pill{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border-radius:999px;padding:.55rem .95rem;background:#ecfdf5;color:var(--quant-green);font-weight:1000;white-space:nowrap}
+    .question-list{display:grid;gap:1rem}
+    .question-card{border:1px solid var(--quant-line);border-radius:20px;background:#fff;padding:1.05rem;box-shadow:0 12px 28px rgba(7,31,79,.06);transition:border-color .18s ease,background .18s ease}
+    .question-card.is-correct{border-color:#86efac;background:#f0fdf4}
+    .question-card.is-wrong{border-color:#fecaca;background:#fff7f7}
+    .question-top{display:grid;grid-template-columns:42px minmax(0,1fr);gap:.8rem;align-items:start}
+    .question-number{display:grid;place-items:center;width:42px;height:42px;border-radius:15px;background:var(--quant-navy);color:#fff;font-weight:1000}
+    .question-text{color:var(--quant-ink);font-size:1.05rem;font-weight:900;line-height:1.62}
+    .blank{display:inline-flex;min-width:118px;justify-content:center;padding:0 .38rem;border-bottom:3px solid var(--quant-gold);color:var(--quant-blue)}
+    .question-meta{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.52rem}
+    .tag{border-radius:999px;background:#f4f7fb;color:var(--quant-muted);font-size:.78rem;font-weight:950;padding:.25rem .5rem}
+    .option-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;margin-top:.95rem}
+    .option-btn{min-height:52px;border:1px solid var(--quant-line);border-radius:14px;background:#fff;color:var(--quant-ink);font:inherit;font-weight:950;cursor:pointer;padding:.75rem;transition:transform .16s ease,border-color .16s ease,background .16s ease}
+    .option-btn:hover,.option-btn:focus-visible{outline:none;transform:translateY(-2px);border-color:rgba(15,118,110,.55);background:#eef8f7}
+    .option-btn.is-correct{border-color:#86efac;background:#dcfce7;color:#065f46}
+    .option-btn.is-wrong{border-color:#fecaca;background:#fee2e2;color:var(--quant-red)}
+    .option-btn:disabled{cursor:default;opacity:.7;transform:none}
+    .option-btn.is-correct:disabled{opacity:1}
+    .feedback{display:none;margin-top:.85rem;border-radius:15px;border:1px solid var(--quant-line);background:#f8fbfd;color:var(--quant-muted);padding:.85rem .95rem;line-height:1.6;font-weight:800}
+    .question-card.has-feedback .feedback{display:block}
+    .feedback strong{color:var(--quant-navy)}
+    .feedback.ok{border-color:#86efac;background:#ecfdf5;color:#065f46}
+    .feedback.no{border-color:#fecaca;background:#fff1f2;color:#7f1d1d}
+    .quiz-actions{display:flex;gap:.85rem;flex-wrap:wrap;margin-top:1.1rem}
+    .finish-panel{display:none;margin-top:1rem;border:1px solid #86efac;background:linear-gradient(135deg,#ecfdf5,#fff8e8);border-radius:20px;padding:1rem;color:var(--quant-navy)}
+    .finish-panel.show{display:block}
+    .finish-panel h3{margin:0 0 .35rem;color:var(--quant-navy)}
+    .finish-panel p{margin:.35rem 0;color:#38506b;line-height:1.6;font-weight:850}
+    .exit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .exit-card{border:1px solid var(--quant-line);border-radius:18px;background:#fff;padding:1rem}
+    .exit-card h3{color:var(--quant-blue);margin:0 0 .45rem}
+    .exit-card p{color:var(--quant-muted);line-height:1.6;margin:0}
+    .model-line{display:block;margin-top:.7rem;border-radius:14px;background:#eef8f7;color:var(--quant-navy);font-weight:900;padding:.75rem}
+    @media(max-width:900px){
+      .quant-hero,.rule-grid,.exit-grid{grid-template-columns:1fr}
+      .option-grid{grid-template-columns:1fr}
+    }
+    @media(max-width:620px){
+      .quant-page{width:min(100% - 22px,1180px);padding-top:1.4rem}
+      .quick-metrics{grid-template-columns:1fr}
+      .question-top{grid-template-columns:1fr}
+      .quant-actions .btn,.quiz-actions .btn{width:100%}
+    }
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+  </style>
+</head>
+<body class="english-intermediate-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="quant-page">
+    <section class="quant-hero">
+      <div>
+        <p class="quant-eyebrow"><span class="quant-dot"></span>Practice Lab · Unit 5</p>
+        <h1>Quantifiers <span>Gap Fill</span></h1>
+        <p>Choose the best quantifier for food sentences from Unit 5: <strong>some, any, much, many, a few,</strong> and <strong>a little</strong>.</p>
+        <p>Each item has three serious choices and immediate feedback, so students must notice countable nouns, uncountable nouns, questions, negatives, and natural recipe language.</p>
+        <div class="quant-actions">
+          <a class="btn btn-primary" href="#quiz">Start the 20 questions</a>
+          <a class="btn btn-secondary" href="unit-5-food-quantities-culture.html">Review Unit 5 explanation</a>
+          <a class="btn btn-secondary" href="practice-lab.html#unit-5-folder">Back to Unit 5 folder</a>
+        </div>
+        <div class="quick-metrics" aria-label="Activity summary">
+          <div class="metric-card"><b>20</b><span>mixed questions</span></div>
+          <div class="metric-card"><b>3</b><span>options each</span></div>
+          <div class="metric-card"><b>6</b><span>quantifiers</span></div>
+        </div>
+      </div>
+      <div class="quant-hero-image">
+        <img src="../../assets/img/english-intermediate/unit-5/practice-quantifiers-gap-fill.png" alt="Food quantifiers practice with baskets, ingredients, and gap-fill cards" />
+      </div>
+    </section>
+
+    <section class="quant-block" aria-labelledby="focus-title">
+      <h2 class="section-title" id="focus-title">Quick Grammar Map</h2>
+      <p class="section-subtitle">Read the sentence before choosing. The best answer depends on the noun and the sentence type, not only on the food word.</p>
+      <div class="rule-grid">
+        <article class="rule-card">
+          <h3>Countable plural</h3>
+          <p>Use <strong>many</strong> for questions or large numbers, and <strong>a few</strong> for a small positive number.</p>
+          <span class="rule-chip">many eggs</span><span class="rule-chip">a few tomatoes</span>
+        </article>
+        <article class="rule-card">
+          <h3>Uncountable food</h3>
+          <p>Use <strong>much</strong> in questions and negatives, and <strong>a little</strong> for a small useful amount.</p>
+          <span class="rule-chip">much rice</span><span class="rule-chip">a little oil</span>
+        </article>
+        <article class="rule-card">
+          <h3>Existence or absence</h3>
+          <p>Use <strong>some</strong> in affirmative sentences, offers, and requests. Use <strong>any</strong> in questions and negatives.</p>
+          <span class="rule-chip">some cheese</span><span class="rule-chip">any bread?</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="quant-block" id="quiz">
+      <div class="quiz-header">
+        <div>
+          <h2 class="section-title">20 Fill-in-the-Blank Questions</h2>
+          <p class="section-subtitle">Click an answer. Correct answers lock in; wrong answers explain the rule and let you try again.</p>
+        </div>
+        <div class="score-pill" id="scorePill" aria-live="polite">Score: 0 / 20</div>
+      </div>
+      <div class="question-list" id="questionList"></div>
+      <div class="finish-panel" id="finishPanel" aria-live="polite">
+        <h3>Quantifier route complete.</h3>
+        <p>You practiced countable and uncountable food nouns, questions, negatives, offers, requests, and small positive amounts. Now write two dinner-plan sentences in your notebook using the exit ticket below.</p>
+      </div>
+      <div class="quiz-actions">
+        <button class="btn btn-primary" type="button" id="showAnswersBtn">Reveal remaining answers</button>
+        <button class="btn btn-secondary" type="button" id="resetBtn">Reset practice</button>
+      </div>
+    </section>
+
+    <section class="quant-block">
+      <h2 class="section-title">Exit Ticket: Use It in a Dinner Plan</h2>
+      <p class="section-subtitle">After the quiz, students produce two original sentences so the activity closes with usable language, not only clicks.</p>
+      <div class="exit-grid">
+        <article class="exit-card">
+          <h3>Sentence 1</h3>
+          <p>Write one sentence with a countable plural food and explain the purpose.</p>
+          <span class="model-line">We need a few avocados because they add healthy fat.</span>
+        </article>
+        <article class="exit-card">
+          <h3>Sentence 2</h3>
+          <p>Write one sentence with an uncountable ingredient and explain the amount.</p>
+          <span class="model-line">We only need a little oil because the dressing should be light.</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
+  <script>
+    const questions = [
+      {sentence:"We need ___ rice for six people.", options:["many","some","a few"], correct:1, tag:"affirmative + uncountable", explanation:"Use some in an affirmative sentence when an amount exists but the exact amount is not important yet. Rice is uncountable."},
+      {sentence:"Do we have ___ tomatoes for the salad?", options:["any","much","a little"], correct:0, tag:"question + countable plural", explanation:"Use any in questions when you are checking if something exists. Tomatoes are countable plural, but the question is about availability."},
+      {sentence:"There isn't ___ oil in the bottle.", options:["many","a few","much"], correct:2, tag:"negative + uncountable", explanation:"Oil is uncountable, and much is common in negative sentences with uncountable nouns."},
+      {sentence:"Buy ___ carrots for the bowls.", options:["a little","much","a few"], correct:2, tag:"small positive countable", explanation:"Carrots are countable plural. A few means a small positive number."},
+      {sentence:"How ___ beans do we need?", options:["many","much","some"], correct:0, tag:"How many + plural", explanation:"Beans are countable plural in this sentence, so ask How many?"},
+      {sentence:"Add ___ salt to the dressing.", options:["a few","a little","many"], correct:1, tag:"small positive uncountable", explanation:"Salt is uncountable here. A little means a small useful amount."},
+      {sentence:"We don't need ___ bread today.", options:["many","a few","any"], correct:2, tag:"negative + absence", explanation:"Use any in negative sentences when the speaker says something is not needed or not present. Bread is uncountable here."},
+      {sentence:"How ___ water should we buy?", options:["much","many","a few"], correct:0, tag:"How much + uncountable", explanation:"Water is uncountable, so ask How much water?"},
+      {sentence:"There are ___ avocados on the table.", options:["a little","some","much"], correct:1, tag:"affirmative + plural", explanation:"Some works with plural countable nouns in affirmative sentences when the exact number is not the focus."},
+      {sentence:"I only want ___ yogurt with the fruit.", options:["a few","many","a little"], correct:2, tag:"small positive uncountable", explanation:"Yogurt is uncountable here, so use a little for a small amount."},
+      {sentence:"Are there ___ cans of beans in the bag?", options:["much","any","a little"], correct:1, tag:"question + availability", explanation:"Use any in questions about whether something exists. Cans are countable, but the question is checking availability."},
+      {sentence:"We have ___ strawberries for dessert.", options:["a few","much","a little"], correct:0, tag:"small positive countable", explanation:"Strawberries are countable plural, so a few is the natural small positive amount."},
+      {sentence:"The recipe doesn't use ___ cheese.", options:["many","a few","much"], correct:2, tag:"negative + uncountable", explanation:"Cheese is uncountable in this context. Much is natural in negative sentences with uncountable nouns."},
+      {sentence:"Would you like ___ mango in your fruit salad?", options:["some","many","a few"], correct:0, tag:"offer + uncountable/serving", explanation:"Some is common in offers and polite requests: Would you like some...? Mango refers to an amount of fruit here."},
+      {sentence:"How ___ apples are in the basket?", options:["much","many","a little"], correct:1, tag:"How many + plural", explanation:"Apples are countable plural, so ask How many apples?"},
+      {sentence:"Put ___ lime juice in the dressing.", options:["a few","many","a little"], correct:2, tag:"small positive uncountable", explanation:"Lime juice is uncountable, so use a little for a small amount."},
+      {sentence:"We don't have ___ lettuce yet.", options:["any","many","a few"], correct:0, tag:"negative + absence", explanation:"Use any in negative sentences to say that something is missing. Lettuce is uncountable here."},
+      {sentence:"There are ___ eggs in the box.", options:["a little","much","some"], correct:2, tag:"affirmative + plural", explanation:"Some works with plural countable nouns when the exact number is not important."},
+      {sentence:"Is there ___ sugar in the yogurt?", options:["many","any","a few"], correct:1, tag:"question + uncountable", explanation:"Use any in questions when checking if something exists. Sugar is uncountable."},
+      {sentence:"We should add ___ corn to the bowl.", options:["some","many","a few"], correct:0, tag:"affirmative + uncountable", explanation:"Corn as an ingredient is uncountable here. Some is natural in an affirmative suggestion."}
+    ];
+
+    const questionList = document.getElementById("questionList");
+    const scorePill = document.getElementById("scorePill");
+    const finishPanel = document.getElementById("finishPanel");
+    const showAnswersBtn = document.getElementById("showAnswersBtn");
+    const resetBtn = document.getElementById("resetBtn");
+    const answered = Array(questions.length).fill(false);
+
+    function escapeHtml(value){
+      return String(value).replace(/[&<>"']/g,function(char){
+        return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char];
+      });
+    }
+
+    function renderQuestions(){
+      questionList.innerHTML = questions.map(function(question,index){
+        const options = question.options.map(function(option,optionIndex){
+          return '<button class="option-btn" type="button" data-question="' + index + '" data-option="' + optionIndex + '">' + escapeHtml(option) + '</button>';
+        }).join("");
+        return '<article class="question-card" data-question-card="' + index + '">' +
+          '<div class="question-top">' +
+            '<span class="question-number">' + String(index + 1).padStart(2,"0") + '</span>' +
+            '<div><div class="question-text">' + escapeHtml(question.sentence).replace("___",'<span class="blank">_____</span>') + '</div>' +
+            '<div class="question-meta"><span class="tag">' + escapeHtml(question.tag) + '</span></div></div>' +
+          '</div>' +
+          '<div class="option-grid">' + options + '</div>' +
+          '<div class="feedback" data-feedback="' + index + '"></div>' +
+        '</article>';
+      }).join("");
+    }
+
+    function updateScore(){
+      const score = answered.filter(Boolean).length;
+      scorePill.textContent = "Score: " + score + " / " + questions.length;
+      finishPanel.classList.toggle("show",score === questions.length);
+    }
+
+    function setFeedback(index,type,message){
+      const feedback = document.querySelector('[data-feedback="' + index + '"]');
+      feedback.className = "feedback " + type;
+      feedback.innerHTML = message;
+      document.querySelector('[data-question-card="' + index + '"]').classList.add("has-feedback");
+    }
+
+    function chooseOption(questionIndex,optionIndex){
+      if(answered[questionIndex]) return;
+      const question = questions[questionIndex];
+      const card = document.querySelector('[data-question-card="' + questionIndex + '"]');
+      const buttons = card.querySelectorAll(".option-btn");
+      buttons.forEach(function(button){button.classList.remove("is-wrong","is-correct");});
+      if(optionIndex !== question.correct){
+        card.classList.remove("is-correct");
+        card.classList.add("is-wrong");
+        buttons[optionIndex].classList.add("is-wrong");
+        setFeedback(questionIndex,"no","<strong>Try again.</strong> " + escapeHtml(question.explanation));
+        return;
+      }
+      answered[questionIndex] = true;
+      card.classList.remove("is-wrong");
+      card.classList.add("is-correct");
+      buttons.forEach(function(button,buttonIndex){
+        button.disabled = true;
+        button.classList.toggle("is-correct",buttonIndex === question.correct);
+      });
+      setFeedback(questionIndex,"ok","<strong>Correct.</strong> " + escapeHtml(question.explanation));
+      updateScore();
+    }
+
+    function revealRemaining(){
+      questions.forEach(function(question,index){
+        const card = document.querySelector('[data-question-card="' + index + '"]');
+        const buttons = card.querySelectorAll(".option-btn");
+        buttons.forEach(function(button,buttonIndex){
+          button.disabled = true;
+          button.classList.remove("is-wrong");
+          button.classList.toggle("is-correct",buttonIndex === question.correct);
+        });
+        if(!answered[index]){
+          card.classList.add("has-feedback");
+          setFeedback(index,"ok","<strong>Answer:</strong> " + escapeHtml(question.options[question.correct]) + ". " + escapeHtml(question.explanation));
+        }
+      });
+      updateScore();
+    }
+
+    function resetPractice(){
+      answered.fill(false);
+      renderQuestions();
+      updateScore();
+      document.getElementById("quiz").scrollIntoView({behavior:"smooth",block:"start"});
+    }
+
+    renderQuestions();
+    updateScore();
+
+    questionList.addEventListener("click",function(event){
+      const button = event.target.closest("[data-question]");
+      if(!button) return;
+      chooseOption(Number(button.dataset.question),Number(button.dataset.option));
+    });
+    showAnswersBtn.addEventListener("click",revealRemaining);
+    resetBtn.addEventListener("click",resetPractice);
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260707-intermediate-id-claim"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
