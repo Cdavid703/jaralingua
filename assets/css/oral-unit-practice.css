@@ -1,0 +1,231 @@
+@import url("english-basic-final-oral-mock.css?v=20260712-balanced-bank");
+
+:root {
+  --oral-navy: #15345d;
+  --oral-blue: #1f4e8c;
+  --oral-teal: #2f9e77;
+  --oral-coral: #d62839;
+  --oral-gold: #f4c95d;
+  --oral-green: #198754;
+  --oral-soft: #f4f7fb;
+}
+
+.oral-unit-page {
+  background: var(--oral-soft);
+  color: #243044;
+}
+
+.oral-unit-hero {
+  min-height: min(680px, 82vh);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, .8fr);
+  gap: clamp(1.2rem, 4vw, 3rem);
+  align-items: center;
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+  padding: 7.5rem 0 4.5rem;
+}
+
+.oral-unit-hero-wrap {
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,.18), transparent 28%),
+    radial-gradient(circle at 88% 14%, rgba(244,201,93,.18), transparent 25%),
+    linear-gradient(135deg, rgba(21,52,93,.94), rgba(31,78,140,.68) 52%, rgba(214,40,57,.48)),
+    var(--hero-image, linear-gradient(135deg, #15345d, #1f4e8c 55%, #d62839)) center/cover no-repeat;
+}
+
+.oral-unit-hero-wrap::after {
+  content: "";
+  position: absolute;
+  right: -9rem;
+  bottom: -13rem;
+  width: 40rem;
+  height: 40rem;
+  border: 5rem solid rgba(255,255,255,.07);
+  border-radius: 50%;
+}
+
+.oral-unit-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.oral-unit-hero .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  width: fit-content;
+  margin: 0 0 1rem;
+  padding: .65rem .9rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,.92);
+  color: var(--oral-navy);
+  font-weight: 900;
+}
+
+.oral-unit-hero h1 {
+  max-width: 760px;
+  margin: 0 0 1rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2.6rem, 6vw, 5.2rem);
+  font-weight: 900;
+  line-height: .98;
+  letter-spacing: -.055em;
+  text-shadow: 0 12px 34px rgba(0,0,0,.2);
+}
+
+.oral-unit-hero p {
+  max-width: 700px;
+  color: rgba(255,255,255,.92);
+  font-size: 1.08rem;
+  line-height: 1.72;
+}
+
+.oral-unit-hero .lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .55rem;
+  margin-top: 1rem;
+}
+
+.oral-unit-hero .lesson-meta span {
+  display: inline-flex;
+  padding: .45rem .7rem;
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 999px;
+  background: rgba(255,255,255,.12);
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 900;
+}
+
+.oral-unit-hero .hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .7rem;
+  margin-top: 1.4rem;
+}
+
+.oral-unit-hero .lesson-hero-image {
+  border-radius: 38px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.24);
+  box-shadow: 0 34px 70px rgba(10,25,50,.28);
+  transform: rotate(1deg);
+  background: rgba(255,255,255,.12);
+}
+
+.oral-unit-hero .lesson-hero-image img {
+  display: block;
+  width: 100%;
+  height: clamp(330px, 36vw, 500px);
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.oral-unit-page .site-footer {
+  background: var(--oral-navy);
+  color: #fff;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.oral-unit-page .navbar {
+  background: rgba(255,255,255,.94);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 32px rgba(21,52,93,.08);
+}
+
+.oral-unit-page .navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .65rem;
+  color: var(--oral-navy);
+  font-weight: 900;
+}
+
+.oral-unit-page .brand-logo {
+  height: 42px;
+  width: auto;
+}
+
+.oral-unit-page .nav-link {
+  color: #243044;
+  font-weight: 900;
+  border-radius: 999px;
+  padding: .55rem .9rem !important;
+}
+
+.oral-unit-page .nav-link:hover,
+.oral-unit-page .nav-link.active {
+  color: var(--oral-blue);
+  background: rgba(31,78,140,.08);
+}
+
+.oral-unit-page .btn {
+  border-radius: 999px;
+  font-weight: 900;
+  padding: .82rem 1.15rem;
+}
+
+.oral-unit-page .btn-primary {
+  border: 0;
+  background: linear-gradient(135deg, var(--oral-coral), #9f1d2a);
+  box-shadow: 0 16px 34px rgba(214,40,57,.22);
+}
+
+.oral-unit-page .btn-secondary {
+  border: 2px solid rgba(255,255,255,.72);
+  background: rgba(255,255,255,.12);
+  color: #fff;
+}
+
+.oral-unit-page .btn-secondary:hover {
+  background: #fff;
+  color: var(--oral-navy);
+}
+
+.oral-unit-page .coverage-list li span {
+  min-width: 0;
+}
+
+.oral-unit-page .interviewer-identity small,
+.oral-unit-page .resume-note,
+.oral-unit-page .feedback-note,
+.oral-unit-page .confidence-disclaimer,
+.oral-unit-page .readiness-copy small {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 980px) {
+  .oral-unit-hero {
+    grid-template-columns: 1fr;
+    padding-top: 7rem;
+  }
+
+  .oral-unit-hero .lesson-hero-image {
+    transform: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .oral-unit-hero {
+    width: min(100% - 1rem, 1180px);
+    padding: 6.6rem 0 3rem;
+  }
+
+  .oral-unit-hero .hero-actions {
+    display: grid;
+  }
+
+  .oral-unit-hero .hero-actions .btn {
+    width: 100%;
+  }
+
+  .oral-unit-hero .lesson-hero-image img {
+    height: 270px;
+  }
+}
