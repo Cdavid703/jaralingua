@@ -576,24 +576,8 @@
       setStatus(teamName(currentTeam) + ": choose the first card.");
       startTurnTimer();
     }
-    function preferredEnglishVoice(){
-      if(!("speechSynthesis" in window)) return null;
-      const voices = speechSynthesis.getVoices();
-      return voices.find(function(voice){return voice.lang.toLowerCase() === "en-us";}) || voices.find(function(voice){return voice.lang.toLowerCase().startsWith("en");}) || null;
-    }
-    function fallbackSpeech(text){
-      if(!("speechSynthesis" in window)){
-        setStatus("Audio is not available in this browser. Students can still read and say the word.");
-        return;
-      }
-      speechSynthesis.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = "en-US";
-      utterance.rate = .82;
-      utterance.pitch = 1;
-      const voice = preferredEnglishVoice();
-      if(voice) utterance.voice = voice;
-      speechSynthesis.speak(utterance);
+    function reportMissingProfessionalAudio(text){
+      setStatus("Professional audio is not available for " + text + ". Please check the MP3 file before using this round.");
     }
     function playModel(item,forcedMode){
       const isCard = typeof item === "object" && item !== null;
@@ -604,7 +588,6 @@
       lastText = text;
       if(isCard) lastAudioItem = item;
       if(!soundOn) return;
-      if("speechSynthesis" in window) speechSynthesis.cancel();
       if(currentAudio){
         currentAudio.pause();
         currentAudio.currentTime = 0;
@@ -612,9 +595,9 @@
       if(source){
         currentAudio = new Audio(source);
         currentAudio.playbackRate = mode === "sentence" ? .98 : .92;
-        currentAudio.play().catch(function(){fallbackSpeech(text);});
+        currentAudio.play().catch(function(){reportMissingProfessionalAudio(text);});
       } else {
-        fallbackSpeech(text);
+        reportMissingProfessionalAudio(text);
       }
     }
     function replayLastPhrase(){
@@ -648,7 +631,6 @@
     }
     function toggleSound(){
       soundOn = !soundOn;
-      if(!soundOn && "speechSynthesis" in window) speechSynthesis.cancel();
       if(!soundOn && currentAudio) currentAudio.pause();
       document.getElementById("soundButton").textContent = soundOn ? "🔊" : "🔇";
       setStatus(soundOn ? "Sound is on." : "Sound is muted.");
@@ -689,7 +671,6 @@
       }
     }
     function newGame(){
-      if("speechSynthesis" in window) speechSynthesis.cancel();
       if(currentAudio) currentAudio.pause();
       stopTurnTimer();
       selected = [];
@@ -718,7 +699,6 @@
     }
 
     renderVocabBank();
-    if("speechSynthesis" in window) speechSynthesis.onvoiceschanged = function(){};
     document.getElementById("teamName0").addEventListener("input",updateTeams);
     document.getElementById("teamName1").addEventListener("input",updateTeams);
     document.getElementById("newGameBtn").addEventListener("click",newGame);
