@@ -110,7 +110,7 @@
     readingText.innerHTML = currentStage().text.split(/(\s+)/).map((part) => {
       if (/^\s+$/.test(part)) return part;
       const state = states[index++] || "";
-      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${spokenWord(part)}" title="Listen to this word">${part}</button>`;
+      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${spokenWord(part)}" title="Show pronunciation note">${part}</button>`;
     }).join("");
   }
 
@@ -178,18 +178,10 @@
     return "Listen to the complete word, then repeat it slowly with the same stress and number of syllables.";
   }
 
-  function speakWord(word) {
-    if (!word || !window.speechSynthesis) return;
-    speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(word);
-    const voices = speechSynthesis.getVoices();
-    const englishVoice = voices.find((voice) => voice.lang.toLowerCase() === "en-us") || voices.find((voice) => voice.lang.toLowerCase().startsWith("en"));
-    utterance.lang = "en-US";
-    if (englishVoice) utterance.voice = englishVoice;
-    utterance.rate = 0.72;
-    speechSynthesis.speak(utterance);
+  function showWordHelp(word) {
+    if (!word) return;
     wordHelp.hidden = false;
-    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> ${word}</strong><span>${pronunciationTip(word)}</span>`;
+    wordHelp.innerHTML = `<strong><i class="bi bi-info-circle"></i> ${word}</strong><span>${pronunciationTip(word)} Listen to the professional model for the full audio reference.</span>`;
   }
 
   function startLevelMeter(stream) {
@@ -538,7 +530,7 @@
   resetButton.addEventListener("click", () => resetAttempt(true));
   nextButton.addEventListener("click", advanceStage);
   retryButton.addEventListener("click", () => resetAttempt(true));
-  readingText.addEventListener("click", (event) => { const word = event.target.closest(".reading-word")?.dataset.spoken; if (word) speakWord(word); });
+  readingText.addEventListener("click", (event) => { const word = event.target.closest(".reading-word")?.dataset.spoken; if (word) showWordHelp(word); });
 
   refreshMicrophones();
   navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);
