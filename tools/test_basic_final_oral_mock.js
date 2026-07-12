@@ -65,6 +65,7 @@ global.document = {
 global.window = global;
 global.window.isSecureContext = true;
 global.window.addEventListener = () => {};
+global.window.__JARA_ORAL_MOCK_TEST__ = true;
 global.location = { protocol: "http:" };
 Object.defineProperty(global, "navigator", { value: {}, configurable: true });
 global.localStorage = {
@@ -90,6 +91,27 @@ assert.equal(start.listeners.has("click"), true, "Start button must be wired");
   await speedSlow.dispatch("click");
   assert.equal(elements.get("interviewerAudio").playbackRate, 0.75, "Slow speed should be available");
   assert.equal(elements.get("nextQuestionButton").disabled, true, "A student cannot continue before transcription");
+
+  const hooks = global.__JaraOralMockTest;
+  const samples = [
+    "My name is Laura and I'm from Medellin.",
+    "I usually get up at six in the morning. Then I have breakfast.",
+    "In my free time I like to listen to music.",
+    "My sister is friendly and she likes to cook.",
+    "The library is next to the school. Go straight and turn left."
+  ];
+  const answers = samples.map((transcript, index) => {
+    const words = transcript.split(/\s+/).map((text, wordIndex) => ({ text, probability: index === 0 && wordIndex === 4 ? 0.42 : 0.91 }));
+    return { transcript, durationMs: 8000, whisperWords: words, analysis: hooks.analyzeAnswer(transcript, 8000, words, hooks.QUESTIONS[index]) };
+  });
+  const report = hooks.buildReport(answers, []);
+  assert.equal(report.score > 70, true, "Complete sample answers should produce a useful readiness result");
+  assert.equal(report.metrics.task, 100, "All task targets should be detected");
+  assert.equal(report.unclearWords.length > 0, true, "Low-confidence words should appear in clarity practice");
+  assert.equal(report.attemptNumber, 1, "The first report should be attempt one");
+  const secondReport = hooks.buildReport(answers, [{ score: report.score - 5, completedAt: new Date().toISOString() }]);
+  assert.equal(secondReport.change, 5, "A later attempt should compare with the previous result");
+  assert.equal(secondReport.attemptNumber, 2, "History should increment the attempt number");
   console.log("Final oral mock smoke test passed.");
 })().catch((error) => {
   console.error(error);

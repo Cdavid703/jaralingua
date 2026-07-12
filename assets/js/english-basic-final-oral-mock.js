@@ -15,6 +15,7 @@
         "My name is ______, and I'm from ______.",
         "Hello! I'm ______. I'm from ______, and I live in ______."
       ],
+      improved: "Hello! My name is [your name]. I'm from [your city], and I live in [your neighborhood].",
       minWords: 5,
       checks: [
         { label: "an introduction", terms: ["my name", "i am", "i'm", "im"] },
@@ -31,6 +32,7 @@
         "I usually ______ in the morning. Then, I ______.",
         "In the morning, I ______ at ______. After that, I ______."
       ],
+      improved: "In the morning, I usually get up at [time]. Then, I [your next activity] before work or class.",
       minWords: 6,
       checks: [
         { label: "a routine action", terms: ["wake up", "get up", "have breakfast", "eat breakfast", "drink coffee", "take a shower", "get dressed", "brush", "go to work", "go to school", "start work", "start class", "study", "exercise"] },
@@ -47,6 +49,7 @@
         "In my free time, I like to ______.",
         "I enjoy ______ because it is ______."
       ],
+      improved: "In my free time, I like to [activity]. I usually do it [time or frequency] because it is [adjective].",
       minWords: 5,
       checks: [
         { label: "a preference", terms: ["i like", "i love", "i enjoy", "my favorite", "in my free time"] },
@@ -63,6 +66,7 @@
         "My ______'s name is ______. He / She is ______ and ______.",
         "One important person in my family is my ______. He / She likes to ______."
       ],
+      improved: "One important person in my family is my [family member]. His / Her name is [name]. He / She is [adjective] and likes to [activity].",
       minWords: 7,
       checks: [
         { label: "a family member", terms: ["mother", "mom", "father", "dad", "sister", "brother", "daughter", "son", "wife", "husband", "grandmother", "grandfather", "aunt", "uncle", "cousin", "family"] },
@@ -80,6 +84,7 @@
         "The library is next to the ______. Go straight and turn ______.",
         "From the bus stop, go straight past the ______. Turn left and continue straight. The library is on your left."
       ],
+      improved: "The library is next to the school. From the bus stop, go straight, turn left, and continue straight. The library is on your left.",
       minWords: 8,
       checks: [
         { label: "the library or its location", terms: ["library", "next to", "near", "across from", "on your left", "on the left"] },
@@ -126,6 +131,15 @@
     unsupported: document.getElementById("unsupported"),
     next: document.getElementById("nextQuestionButton"),
     summaryLead: document.getElementById("summaryLead"),
+    summaryScoreRing: document.getElementById("summaryScoreRing"),
+    summaryScore: document.getElementById("summaryScore"),
+    summaryReadiness: document.getElementById("summaryReadiness"),
+    summaryComparison: document.getElementById("summaryComparison"),
+    summaryMetrics: document.getElementById("summaryMetrics"),
+    summaryStrengths: document.getElementById("summaryStrengths"),
+    summaryPriorities: document.getElementById("summaryPriorities"),
+    summaryWordPractice: document.getElementById("summaryWordPractice"),
+    attemptHistory: document.getElementById("attemptHistory"),
     summaryAnswers: document.getElementById("summaryAnswers"),
     restart: document.getElementById("restartInterviewButton")
   };
@@ -137,7 +151,9 @@
       currentIndex: 0,
       answers: Array(QUESTIONS.length).fill(null),
       lastAnswers: Array.isArray(previous.lastAnswers) ? previous.lastAnswers : [],
-      completedAt: previous.completedAt || ""
+      completedAt: previous.completedAt || "",
+      lastReport: previous.lastReport && typeof previous.lastReport === "object" ? previous.lastReport : null,
+      attemptHistory: Array.isArray(previous.attemptHistory) ? previous.attemptHistory.slice(-10) : []
     };
   }
 
@@ -151,7 +167,9 @@
         currentIndex: Math.max(0, Math.min(QUESTIONS.length - 1, Number(value.currentIndex) || 0)),
         answers: Array.from({ length: QUESTIONS.length }, (_, index) => value.answers?.[index] || null),
         lastAnswers: Array.isArray(value.lastAnswers) ? value.lastAnswers.slice(0, QUESTIONS.length) : [],
-        completedAt: value.completedAt || ""
+        completedAt: value.completedAt || "",
+        lastReport: value.lastReport && typeof value.lastReport === "object" ? value.lastReport : null,
+        attemptHistory: Array.isArray(value.attemptHistory) ? value.attemptHistory.slice(-10) : []
       };
     } catch (_error) {
       return freshState();
@@ -198,10 +216,22 @@
     return normalizedTerm && normalizedText.includes(` ${normalizedTerm} `);
   }
 
-  function analyzeAnswer(transcript, durationMs) {
-    const question = currentQuestion();
+  function clamp(value, min = 0, max = 100) {
+    return Math.max(min, Math.min(max, Math.round(value)));
+  }
+
+  function cleanWhisperWords(words) {
+    if (!Array.isArray(words)) return [];
+    return words.map((word) => ({
+      text: String(word?.text || "").replace(/^[^a-zA-Z0-9]+|[^a-zA-Z0-9']+$/g, "").trim(),
+      probability: Math.max(0, Math.min(1, Number(word?.probability) || 0))
+    })).filter((word) => word.text);
+  }
+
+  function analyzeAnswer(transcript, durationMs, whisperWords = [], question = currentQuestion()) {
     const normalized = normalize(transcript);
     const words = normalized.trim().split(/\s+/).filter(Boolean);
+    const wordClarity = cleanWhisperWords(whisperWords);
     const targetChecks = question.checks.map((check) => ({
       label: check.label,
       met: check.terms.some((term) => includesTerm(normalized, term))
@@ -210,17 +240,46 @@
     const timingMet = durationMs >= 3000 && durationMs <= MAX_RECORDING_SECONDS * 1000;
     const allTargetsMet = targetChecks.every((check) => check.met);
     const missing = targetChecks.filter((check) => !check.met).map((check) => check.label);
+    const taskScore = clamp(targetChecks.filter((check) => check.met).length / Math.max(1, targetChecks.length) * 100);
+    const developmentScore = clamp(words.length / Math.max(1, question.minWords) * 100);
+    const averageProbability = wordClarity.length ? wordClarity.reduce((sum, word) => sum + word.probability, 0) / wordClarity.length : null;
+    const clarityScore = averageProbability === null ? 70 : clamp(averageProbability * 100);
+    const durationMinutes = Math.max(1 / 60, durationMs / 60000);
+    const wordsPerMinute = Math.round(words.length / durationMinutes);
+    const fluencyScore = durationMs < 3000 ? 40 : clamp(100 - Math.abs(wordsPerMinute - 85) * .85, 35, 100);
+    const score = clamp(taskScore * .3 + developmentScore * .25 + clarityScore * .3 + fluencyScore * .15);
+    const unclearWords = wordClarity.filter((word) => word.probability < .5).sort((a, b) => a.probability - b.probability).slice(0, 6);
     let message = question.success;
     if (!lengthMet) message = question.shortTip;
     else if (missing.length) message = `Your answer was recorded. For a stronger answer, add ${missing.join(" and ")}.`;
     if (!timingMet && durationMs < 3000) message += " Speak a little longer so your complete idea is clear.";
+    if (unclearWords.length) message += " Review the lower-confidence words shown below and pronounce them slowly once more.";
     return {
       wordCount: words.length,
       lengthMet,
       timingMet,
       targetChecks,
       coreComplete: lengthMet && allTargetsMet,
+      score,
+      wordsPerMinute,
+      clarityAvailable: wordClarity.length > 0,
+      unclearWords,
+      metrics: {
+        task: taskScore,
+        development: developmentScore,
+        clarity: clarityScore,
+        fluency: fluencyScore
+      },
       message
+    };
+  }
+
+  function ensureAnswerAnalysis(answer, questionIndex = currentIndex) {
+    if (!answer?.transcript) return answer;
+    if (answer.analysis?.metrics && Number.isFinite(answer.analysis?.score)) return answer;
+    return {
+      ...answer,
+      analysis: analyzeAnswer(answer.transcript, Number(answer.durationMs) || 5000, answer.whisperWords || [], QUESTIONS[questionIndex])
     };
   }
 
@@ -232,7 +291,9 @@
       ...analysis.targetChecks,
       { label: "Useful speaking time", met: analysis.timingMet }
     ];
-    elements.feedback.innerHTML = `<div class="feedback-checks">${checks.map((check) => `<span class="feedback-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i>${escapeHtml(check.label)}</span>`).join("")}</div><p class="feedback-message">${escapeHtml(analysis.message)}</p><p class="feedback-note">This formative check uses words, structures, and recording time. It does not replace teacher feedback.</p>`;
+    const unclear = analysis.unclearWords || [];
+    const wordReview = unclear.length ? `<div class="answer-word-review"><strong>Words to pronounce more clearly:</strong> ${unclear.map((word) => `${escapeHtml(word.text)} (${Math.round(word.probability * 100)}%)`).join(", ")}</div>` : "";
+    elements.feedback.innerHTML = `<div class="feedback-checks"><span class="feedback-check is-met"><i class="bi bi-clipboard-data"></i>Practice result: ${analysis.score}/100</span>${checks.map((check) => `<span class="feedback-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i>${escapeHtml(check.label)}</span>`).join("")}</div><p class="feedback-message">${escapeHtml(analysis.message)}</p>${wordReview}<p class="feedback-note">This formative check uses task language, answer length, recording time, and Whisper word confidence. It does not replace teacher feedback.</p>`;
     elements.feedback.hidden = false;
   }
 
@@ -272,7 +333,8 @@
 
   function renderQuestion(autoplay = false) {
     const question = currentQuestion();
-    const answer = state.answers[currentIndex];
+    const answer = ensureAnswerAnalysis(state.answers[currentIndex], currentIndex);
+    if (answer) state.answers[currentIndex] = answer;
     selectedFrame = Number.isInteger(answer?.selectedFrame) ? answer.selectedFrame : null;
     elements.counter.textContent = `Question ${currentIndex + 1} of ${QUESTIONS.length}`;
     elements.topic.textContent = question.topic;
@@ -531,12 +593,15 @@
         if (Number(audioStats.rms || 0) < 0.0008) throw new Error("The recording arrived silent. Choose another microphone and try again.");
         throw new Error("Speech was detected, but no clear English words were transcribed. Speak a little closer to the microphone.");
       }
+      const whisperWords = cleanWhisperWords(payload.words);
       const answer = {
         transcript,
         selectedFrame,
         durationMs: recordedDurationMs,
         answeredAt: new Date().toISOString(),
-        analysis: analyzeAnswer(transcript, recordedDurationMs)
+        languageProbability: Number(payload.language_probability) || null,
+        whisperWords,
+        analysis: analyzeAnswer(transcript, recordedDurationMs, whisperWords)
       };
       state.answers[currentIndex] = answer;
       state.inProgress = true;
@@ -584,6 +649,90 @@
     document.getElementById("oralMockApp").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
+  const REPORT_METRICS = [
+    { key: "task", label: "Task response", description: "Answers the question with the expected information." },
+    { key: "development", label: "Answer development", description: "Uses enough words to communicate a complete idea." },
+    { key: "clarity", label: "Speech clarity", description: "Uses Whisper confidence as an approximate clarity signal." },
+    { key: "fluency", label: "Fluency", description: "Maintains an understandable A1 speaking pace." }
+  ];
+
+  const STRENGTH_TEXT = {
+    task: "You usually included the information requested by the interviewer.",
+    development: "Your answers had enough detail to communicate complete ideas.",
+    clarity: "Most of your spoken words were recognized with good confidence.",
+    fluency: "Your speaking pace was generally appropriate for a short A1 interview."
+  };
+
+  const PRIORITY_TEXT = {
+    task: "Listen to the complete question and include every requested part in your answer.",
+    development: "Add one extra detail, time expression, reason, or adjective to each answer.",
+    clarity: "Repeat the lower-confidence words slowly, then say the complete sentence naturally.",
+    fluency: "Practice answering in short word groups without rushing or leaving very long pauses."
+  };
+
+  function readinessLabel(score) {
+    if (score >= 90) return "Very ready for the oral task";
+    if (score >= 78) return "Ready with minor practice";
+    if (score >= 65) return "Developing well";
+    return "Keep practicing step by step";
+  }
+
+  function aggregateUnclearWords(answers) {
+    const grouped = new Map();
+    answers.forEach((answer) => {
+      (answer?.analysis?.unclearWords || []).forEach((word) => {
+        const key = normalize(word.text).trim();
+        if (!key) return;
+        const current = grouped.get(key) || { text: word.text, total: 0, count: 0 };
+        current.total += Number(word.probability) || 0;
+        current.count += 1;
+        grouped.set(key, current);
+      });
+    });
+    return [...grouped.values()].map((word) => ({ text: word.text, probability: word.total / word.count, count: word.count })).sort((a, b) => a.probability - b.probability || b.count - a.count).slice(0, 10);
+  }
+
+  function buildReport(answers, history = state.attemptHistory) {
+    const preparedAnswers = answers.map((answer, index) => ensureAnswerAnalysis(answer, index)).filter(Boolean);
+    const metrics = {};
+    REPORT_METRICS.forEach(({ key }) => {
+      metrics[key] = preparedAnswers.length ? clamp(preparedAnswers.reduce((sum, answer) => sum + (Number(answer.analysis?.metrics?.[key]) || 0), 0) / preparedAnswers.length) : 0;
+    });
+    const score = preparedAnswers.length ? clamp(preparedAnswers.reduce((sum, answer) => sum + (Number(answer.analysis?.score) || 0), 0) / preparedAnswers.length) : 0;
+    const ranked = REPORT_METRICS.map((metric) => ({ ...metric, score: metrics[metric.key] })).sort((a, b) => b.score - a.score);
+    const previous = history.length ? history[history.length - 1] : null;
+    const change = previous ? score - Number(previous.score || 0) : null;
+    const previousBest = history.length ? Math.max(...history.map((attempt) => Number(attempt.score) || 0)) : null;
+    const bestScore = previousBest === null ? score : Math.max(previousBest, score);
+    let comparison = "This is your first recorded result. Repeat the interview whenever you want to build a personal best.";
+    if (change > 0) comparison = `You improved by ${change} point${change === 1 ? "" : "s"} compared with your previous attempt. Your best result is ${bestScore}/100.`;
+    else if (change === 0) comparison = `You matched your previous result. Your best result is ${bestScore}/100.`;
+    else if (change < 0) comparison = `This result is ${Math.abs(change)} point${Math.abs(change) === 1 ? "" : "s"} below your previous attempt. Review the priorities and try again. Your best result is ${bestScore}/100.`;
+    return {
+      score,
+      readiness: readinessLabel(score),
+      metrics,
+      strengths: ranked.slice(0, 2).map((metric) => STRENGTH_TEXT[metric.key]),
+      priorities: [...ranked].reverse().slice(0, 2).map((metric) => PRIORITY_TEXT[metric.key]),
+      unclearWords: aggregateUnclearWords(preparedAnswers),
+      comparison,
+      change,
+      bestScore,
+      attemptNumber: history.length + 1,
+      completedAt: new Date().toISOString()
+    };
+  }
+
+  function renderAttemptHistory() {
+    const attempts = state.attemptHistory.slice(-6);
+    elements.attemptHistory.innerHTML = attempts.length ? attempts.map((attempt, index) => {
+      const date = new Date(attempt.completedAt || Date.now());
+      const dateLabel = Number.isNaN(date.getTime()) ? "Practice" : date.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+      const isCurrent = index === attempts.length - 1;
+      return `<article class="attempt-card ${isCurrent ? "is-current" : ""}"><small>Attempt ${escapeHtml(attempt.attemptNumber || state.attemptHistory.length - attempts.length + index + 1)} · ${escapeHtml(dateLabel)}</small><strong>${escapeHtml(attempt.score)}/100</strong><span>${isCurrent ? "Current result" : escapeHtml(attempt.readiness || "Practice")}</span></article>`;
+    }).join("") : '<p class="word-practice-clear">Your first completed attempt will appear here.</p>';
+  }
+
   function nextQuestion() {
     if (!state.answers[currentIndex]?.transcript || analyzing) return;
     if (currentIndex < QUESTIONS.length - 1) {
@@ -594,28 +743,47 @@
       elements.interview.scrollIntoView({ behavior: "smooth", block: "start" });
       return;
     }
+    state.answers = state.answers.map((answer, index) => ensureAnswerAnalysis(answer, index));
+    const report = buildReport(state.answers, state.attemptHistory);
     state.hasCompleted = true;
     state.inProgress = false;
     state.currentIndex = 0;
-    state.completedAt = new Date().toISOString();
+    state.completedAt = report.completedAt;
     state.lastAnswers = state.answers.map((answer) => answer ? { ...answer } : null);
+    state.lastReport = report;
+    state.attemptHistory.push({ attemptNumber: report.attemptNumber, score: report.score, readiness: report.readiness, metrics: report.metrics, completedAt: report.completedAt });
+    state.attemptHistory = state.attemptHistory.slice(-10);
     saveState();
-    showSummary(state.lastAnswers, true);
+    showSummary(state.lastAnswers, true, report);
   }
 
-  function showSummary(answers, playCompletion = false) {
+  function showSummary(answers, playCompletion = false, savedReport = null) {
     stopTracks();
     elements.interviewerAudio.pause();
     elements.onboarding.hidden = true;
     elements.interview.hidden = true;
     elements.summary.hidden = false;
-    const completed = answers.filter((answer) => answer?.transcript).length;
-    const ready = answers.filter((answer) => answer?.analysis?.coreComplete).length;
-    elements.summaryLead.textContent = `You answered ${completed} of ${QUESTIONS.length} questions. ${ready} answers included the main language targets. This is practice feedback, not a grade.`;
-    elements.summaryAnswers.innerHTML = answers.map((answer, index) => {
+    const preparedAnswers = answers.map((answer, index) => ensureAnswerAnalysis(answer, index));
+    const report = savedReport?.metrics && Array.isArray(savedReport.strengths) && Array.isArray(savedReport.priorities) && Array.isArray(savedReport.unclearWords) ? savedReport : buildReport(preparedAnswers, state.attemptHistory.slice(0, -1));
+    const completed = preparedAnswers.filter((answer) => answer?.transcript).length;
+    const ready = preparedAnswers.filter((answer) => answer?.analysis?.coreComplete).length;
+    elements.summaryLead.textContent = `You answered ${completed} of ${QUESTIONS.length} questions. ${ready} answers included the main language targets. Use this report to prepare your next attempt.`;
+    elements.summaryScore.textContent = report.score;
+    elements.summaryScoreRing.style.setProperty("--score", report.score);
+    elements.summaryReadiness.textContent = report.readiness;
+    elements.summaryComparison.textContent = report.comparison;
+    elements.summaryMetrics.innerHTML = REPORT_METRICS.map((metric) => `<article class="summary-metric"><header><strong>${report.metrics[metric.key]}</strong><span>/100</span></header><p>${escapeHtml(metric.label)}</p><div class="summary-metric-bar"><i style="width:${report.metrics[metric.key]}%"></i></div><p>${escapeHtml(metric.description)}</p></article>`).join("");
+    elements.summaryStrengths.innerHTML = report.strengths.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    elements.summaryPriorities.innerHTML = report.priorities.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    elements.summaryWordPractice.innerHTML = report.unclearWords.length ? `<div class="word-practice-list">${report.unclearWords.map((word) => `<span class="word-practice-chip">${escapeHtml(word.text)} <small>${Math.round(word.probability * 100)}%${word.count > 1 ? ` · ${word.count} times` : ""}</small></span>`).join("")}</div>` : '<p class="word-practice-clear"><i class="bi bi-check-circle-fill"></i> No consistently low-confidence words were found in this attempt.</p>';
+    elements.summaryAnswers.innerHTML = preparedAnswers.map((answer, index) => {
       if (!answer) return "";
-      return `<article class="summary-answer"><header><h3>${index + 1}. ${escapeHtml(QUESTIONS[index].topic)}</h3><span>${Math.max(1, Math.round(answer.durationMs / 1000))} seconds</span></header><blockquote>${escapeHtml(answer.transcript)}</blockquote><p>${escapeHtml(answer.analysis.message)}</p></article>`;
+      const metrics = answer.analysis.metrics;
+      const unclear = answer.analysis.unclearWords || [];
+      const wordReview = unclear.length ? `<div class="answer-word-review"><strong>Words to pronounce more clearly:</strong> ${unclear.map((word) => `${escapeHtml(word.text)} (${Math.round(word.probability * 100)}%)`).join(", ")}</div>` : '<div class="answer-word-review"><strong>Clarity check:</strong> No low-confidence words were found in this answer.</div>';
+      return `<article class="summary-answer"><header><h3>${index + 1}. ${escapeHtml(QUESTIONS[index].topic)}</h3><span class="summary-answer-score">${answer.analysis.score}/100</span></header><blockquote>${escapeHtml(answer.transcript)}</blockquote><div class="answer-metric-grid"><div class="answer-mini-metric"><strong>${metrics.task}</strong><small>Task</small></div><div class="answer-mini-metric"><strong>${metrics.development}</strong><small>Detail</small></div><div class="answer-mini-metric"><strong>${metrics.clarity}</strong><small>Clarity</small></div><div class="answer-mini-metric"><strong>${metrics.fluency}</strong><small>Fluency</small></div></div><p>${escapeHtml(answer.analysis.message)}</p>${wordReview}<div class="answer-model"><strong>Improved answer model</strong>${escapeHtml(QUESTIONS[index].improved)}</div></article>`;
     }).join("");
+    renderAttemptHistory();
     if (playCompletion) {
       elements.interviewerAudio.src = "audio/final-oral-mock/completion.mp3";
       elements.interviewerAudio.playbackRate = 1;
@@ -648,7 +816,7 @@
 
   elements.start.addEventListener("click", startInterview);
   elements.preflight.addEventListener("click", preflightMicrophone);
-  elements.reviewPrevious.addEventListener("click", () => showSummary(state.lastAnswers, false));
+  elements.reviewPrevious.addEventListener("click", () => showSummary(state.lastAnswers, false, state.lastReport));
   elements.questionPlay.addEventListener("click", playQuestion);
   elements.interviewerAudio.addEventListener("play", updateQuestionPlayButton);
   elements.interviewerAudio.addEventListener("pause", updateQuestionPlayButton);
@@ -670,6 +838,10 @@
   elements.restart.addEventListener("click", restartInterview);
   navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);
   window.addEventListener("beforeunload", () => { stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); });
+
+  if (window.__JARA_ORAL_MOCK_TEST__) {
+    window.__JaraOralMockTest = { QUESTIONS, analyzeAnswer, buildReport, readinessLabel };
+  }
 
   prepareOnboarding();
   refreshMicrophones();

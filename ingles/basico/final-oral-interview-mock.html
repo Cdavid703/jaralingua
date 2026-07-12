@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
-  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-mock.css?v=20260712-final-oral-mock" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-mock.css?v=20260712-complete-report" />
 </head>
 <body class="english-basic-page oral-mock-page">
   <div class="global-course-switcher" aria-label="Courses">
@@ -119,9 +119,21 @@
           </div>
 
           <div class="oral-summary" id="summaryPanel" hidden>
-            <div class="summary-celebration"><i class="bi bi-check2-circle"></i><p class="oral-kicker">Practice completed</p><h2>You finished all five questions</h2><p id="summaryLead"></p></div>
+            <div class="summary-celebration"><i class="bi bi-check2-circle"></i><p class="oral-kicker">Practice completed</p><h2>Your complete interview report</h2><p id="summaryLead"></p></div>
+            <section class="readiness-report" aria-label="Practice readiness result">
+              <div class="readiness-score" id="summaryScoreRing"><div><strong id="summaryScore">0</strong><span>out of 100</span></div></div>
+              <div class="readiness-copy"><p class="oral-kicker">Practice Readiness Score</p><h3 id="summaryReadiness">Keep practicing</h3><p id="summaryComparison"></p><small>This is an automatic practice result, not an official course grade.</small></div>
+            </section>
+            <div class="summary-metrics" id="summaryMetrics"></div>
+            <div class="summary-guidance-grid">
+              <section><p class="oral-kicker">Your strengths</p><h3>What worked well</h3><ul id="summaryStrengths"></ul></section>
+              <section><p class="oral-kicker">Next priorities</p><h3>What to practice next</h3><ul id="summaryPriorities"></ul></section>
+            </div>
+            <section class="summary-word-practice"><p class="oral-kicker">Pronunciation clarity</p><h3>Words to pronounce more clearly</h3><div id="summaryWordPractice"></div><p class="confidence-disclaimer"><i class="bi bi-info-circle"></i> These words had lower Whisper confidence. This can indicate pronunciation, microphone noise, or an unfamiliar proper name; it is not a definitive pronunciation error.</p></section>
+            <section class="attempt-history-panel"><p class="oral-kicker">Unlimited practice</p><h3>Your recent attempts</h3><div class="attempt-history" id="attemptHistory"></div></section>
+            <div class="summary-section-heading"><p class="oral-kicker">Question-by-question feedback</p><h3>Review every answer</h3></div>
             <div class="summary-answers" id="summaryAnswers"></div>
-            <div class="summary-actions"><button class="oral-button primary" id="restartInterviewButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Practice the complete interview again</button><a class="oral-button secondary" href="practice-lab.html#final-oral-mock-folder">Return to Practice Lab</a></div>
+            <div class="summary-actions"><button class="oral-button primary" id="restartInterviewButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Try again and improve my result</button><a class="oral-button secondary" href="practice-lab.html#final-oral-mock-folder">Return to Practice Lab</a></div>
           </div>
         </section>
 
@@ -136,7 +148,7 @@
 
   <footer class="site-footer"><p>Basic English Course 1 &middot; Final Oral Interview Mock &middot; Formative practice only</p></footer>
   <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
-  <script src="../../assets/js/english-basic-final-oral-mock.js?v=20260712-final-oral-mock"></script>
+  <script src="../../assets/js/english-basic-final-oral-mock.js?v=20260712-complete-report"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260627-global-auth"></script>
