@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Join the room - JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <style>
+    body{margin:0;min-height:100vh;display:grid;place-items:center;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f8ff;color:#102a56}
+    main{width:min(92vw,440px);padding:1.5rem;border-radius:8px;background:#fff;box-shadow:0 20px 45px rgba(15,23,42,.14);text-align:center}
+    h1{margin:0 0 .6rem;font-size:1.35rem}
+    p{margin:0 0 1rem;color:#5d6b82;line-height:1.6}
+    a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 1rem;border-radius:8px;background:#0f766e;color:#fff;text-decoration:none;font-weight:800}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Join the English room</h1>
+    <p>Opening the Intermediate English Unit 4 Impostor game.</p>
+    <p id="roomHint"></p>
+    <a id="joinLink" href="/ingles/intermediate/game-unit-4-family-impostor.html#game">Open the game</a>
+  </main>
+  <script>
+    (function () {
+      function cleanRoomCode(value) {
+        return String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+      }
+      var params = new URLSearchParams(window.location.search || "");
+      var roomCode = cleanRoomCode(params.get("r") || params.get("room"));
+      var target = "/ingles/intermediate/game-unit-4-family-impostor.html";
+      if (roomCode) target += "?room=" + encodeURIComponent(roomCode);
+      target += "#game";
+      var link = document.getElementById("joinLink");
+      var hint = document.getElementById("roomHint");
+      if (hint && roomCode) hint.textContent = "Room code: " + roomCode;
+      if (link) link.href = target;
+      window.setTimeout(function () {
+        window.location.href = target;
+      }, 120);
+    })();
+  </script>
+</body>
+</html>
