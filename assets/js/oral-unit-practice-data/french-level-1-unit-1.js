@@ -71,7 +71,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Se présenter",
       text: "Bonjour. Comment tu t'appelles ?",
-      audio: "../audio/pratique-orale/unite-1/question-01.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-01.mp3?v=20260712-audiofix",
       frames: [
         "Bonjour, je m’appelle ______.",
         "Salut, moi, c’est ______."
@@ -91,7 +91,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Épeler",
       text: "Tu peux épeler ton prénom, s'il te plaît ?",
-      audio: "../audio/pratique-orale/unite-1/question-02.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-02.mp3?v=20260712-audiofix",
       frames: [
         "Oui. Mon prénom est ______. Ça s’écrit : ______.",
         "Je m’appelle ______. J’épelle : ______."
@@ -111,7 +111,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Origine",
       text: "Tu viens d'où ?",
-      audio: "../audio/pratique-orale/unite-1/question-03.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-03.mp3?v=20260712-audiofix",
       frames: [
         "Je viens de ______.",
         "Je suis de ______, en ______."
@@ -130,7 +130,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Ville",
       text: "Tu habites dans quelle ville ?",
-      audio: "../audio/pratique-orale/unite-1/question-04.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-04.mp3?v=20260712-audiofix",
       frames: [
         "J’habite à ______.",
         "J’habite dans la ville de ______."
@@ -149,7 +149,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Âge",
       text: "Quel âge as-tu ?",
-      audio: "../audio/pratique-orale/unite-1/question-05.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-05.mp3?v=20260712-audiofix",
       frames: [
         "J’ai ______ ans.",
         "Moi, j’ai ______ ans."
@@ -168,7 +168,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Nombres",
       text: "Quel est ton numéro préféré entre un et vingt ?",
-      audio: "../audio/pratique-orale/unite-1/question-06.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-06.mp3?v=20260712-audiofix",
       frames: [
         "Mon numéro préféré est le ______.",
         "J’aime le numéro ______."
@@ -188,7 +188,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Mini-présentation",
       text: "Présente-toi en deux phrases, s'il te plaît.",
-      audio: "../audio/pratique-orale/unite-1/question-07.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-07.mp3?v=20260712-audiofix",
       frames: [
         "Bonjour, je m’appelle ______. J’habite à ______.",
         "Salut, moi, c’est ______. Je viens de ______."
@@ -208,7 +208,7 @@ window.JaraLinguaOralUnitConfig = {
       unit: 1,
       topic: "Conversation courte",
       text: "Dis bonjour, présente-toi et termine avec enchanté ou enchantée.",
-      audio: "../audio/pratique-orale/unite-1/question-08.mp3",
+      audio: "../audio/pratique-orale/unite-1/question-08.mp3?v=20260712-audiofix",
       frames: [
         "Bonjour, je m’appelle ______. Enchanté / enchantée.",
         "Salut, moi, c’est ______. Enchanté / enchantée de faire votre connaissance."
