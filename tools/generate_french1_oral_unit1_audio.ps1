@@ -4,6 +4,11 @@ param(
 
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
+$pythonGenerator = Join-Path $root "tools\generate_french1_oral_unit1_audio.py"
+Write-Output "Delegating to UTF-8 safe Python generator: $pythonGenerator"
+python $pythonGenerator
+exit $LASTEXITCODE
+
 $envFile = Join-Path $root "elevenlabs.local.env"
 $outputDir = Join-Path $root "frances\Niveau 1\audio\pratique-orale\unite-1"
 

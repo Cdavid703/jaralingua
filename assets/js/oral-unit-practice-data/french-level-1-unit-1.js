@@ -70,7 +70,7 @@ window.JaraLinguaOralUnitConfig = {
       id: "fr1u1q1",
       unit: 1,
       topic: "Se présenter",
-      text: "Bonjour. Comment tu t’appelles ?",
+      text: "Bonjour. Comment tu t'appelles ?",
       audio: "../audio/pratique-orale/unite-1/question-01.mp3",
       frames: [
         "Bonjour, je m’appelle ______.",
@@ -90,7 +90,7 @@ window.JaraLinguaOralUnitConfig = {
       id: "fr1u1q2",
       unit: 1,
       topic: "Épeler",
-      text: "Tu peux épeler ton prénom, s’il te plaît ?",
+      text: "Tu peux épeler ton prénom, s'il te plaît ?",
       audio: "../audio/pratique-orale/unite-1/question-02.mp3",
       frames: [
         "Oui. Mon prénom est ______. Ça s’écrit : ______.",
@@ -110,7 +110,7 @@ window.JaraLinguaOralUnitConfig = {
       id: "fr1u1q3",
       unit: 1,
       topic: "Origine",
-      text: "Tu viens d’où ?",
+      text: "Tu viens d'où ?",
       audio: "../audio/pratique-orale/unite-1/question-03.mp3",
       frames: [
         "Je viens de ______.",
@@ -187,7 +187,7 @@ window.JaraLinguaOralUnitConfig = {
       id: "fr1u1q7",
       unit: 1,
       topic: "Mini-présentation",
-      text: "Présente-toi en deux phrases, s’il te plaît.",
+      text: "Présente-toi en deux phrases, s'il te plaît.",
       audio: "../audio/pratique-orale/unite-1/question-07.mp3",
       frames: [
         "Bonjour, je m’appelle ______. J’habite à ______.",
@@ -207,7 +207,7 @@ window.JaraLinguaOralUnitConfig = {
       id: "fr1u1q8",
       unit: 1,
       topic: "Conversation courte",
-      text: "Dis bonjour, présente-toi et termine avec « enchanté » ou « enchantée ».",
+      text: "Dis bonjour, présente-toi et termine avec enchanté ou enchantée.",
       audio: "../audio/pratique-orale/unite-1/question-08.mp3",
       frames: [
         "Bonjour, je m’appelle ______. Enchanté / enchantée.",
