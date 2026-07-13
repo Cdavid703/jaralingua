@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Unit Conversation Coach for Basic English Course 1 Unit 2: classroom objects, location, demonstratives, possession, and classroom questions.">
+  <title>Unit Conversation Coach - Unit 2 | Basic English Course 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../../assets/css/style.css?v=contrast-20260521b" rel="stylesheet">
+  <link href="../../assets/css/oral-unit-practice.css?v=20260712-enb1-u2" rel="stylesheet">
+</head>
+<body class="oral-unit-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html"><img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Basic English</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu" aria-label="Open menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="mainMenu">
+        <ul class="navbar-nav ms-auto">
+          <li><a class="nav-link" href="../../index.html">Home</a></li>
+          <li><a class="nav-link" href="../index.html">English</a></li>
+          <li><a class="nav-link" href="index.html">Basic Course</a></li>
+          <li><a class="nav-link" href="course-overview.html">Course Overview</a></li>
+          <li><a class="nav-link active" href="practice-lab.html#unit-2-folder">Practice Lab</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="oral-unit-hero-wrap" style="--hero-image:url('/assets/img/english-basic/practice-lab/oral-practice/unit-2-conversation-coach.webp?v=20260712-enb1-u2')">
+    <section class="oral-unit-hero">
+      <div>
+        <p class="eyebrow"><i class="bi bi-mic-fill"></i> English A1 - Unit 2</p>
+        <h1>Unit Conversation Coach - In Class</h1>
+        <p>Listen to a classroom question, use the sentence support, speak into the microphone, and receive formative feedback on objects, location, demonstratives, possession, and simple classroom questions.</p>
+        <div class="lesson-meta"><span>4 questions per attempt</span><span>8 possible questions</span><span>2-4 minutes</span><span>Not graded</span><span>Temporary Whisper</span></div>
+        <div class="hero-actions"><a href="#oralUnitApp" class="btn btn-primary"><i class="bi bi-play-fill"></i> Start</a><a href="practice-lab.html#unit-2-folder" class="btn btn-secondary">Back to Practice Lab</a></div>
+      </div>
+      <aside class="lesson-hero-image">
+        <img src="../../assets/img/english-basic/practice-lab/oral-practice/unit-2-conversation-coach.webp?v=20260712-enb1-u2" width="1672" height="941" fetchpriority="high" decoding="async" alt="Adult English learners practicing classroom object descriptions and location language">
+      </aside>
+    </section>
+  </header>
+
+  <main>
+    <section class="oral-outcomes" aria-label="Practice information">
+      <article><i class="bi bi-backpack3"></i><div><strong>Classroom objects</strong><span>Desk, notebook, backpack, pencil, phone</span></div></article>
+      <article><i class="bi bi-geo-alt"></i><div><strong>Location language</strong><span>Under, on, near, next to, behind</span></div></article>
+      <article><i class="bi bi-person-check"></i><div><strong>Possession</strong><span>My, your, mine, Ana's, whose</span></div></article>
+    </section>
+
+    <section class="oral-mock-shell" id="oralUnitApp">
+      <div class="oral-mock-layout">
+        <section class="oral-main-card" aria-live="polite">
+          <div class="oral-onboarding" id="onboardingPanel">
+            <p class="oral-kicker">Before you start</p>
+            <h2>A short classroom-language interview</h2>
+            <p>You will hear four questions from Unit 2. Answer with classroom objects and real or visible information. Use the support at first, then try again with the help hidden.</p>
+
+            <ol class="oral-steps">
+              <li><span>1</span><div><strong>Listen</strong><small>Read and listen to the classroom question at 0.75x or 1x.</small></div></li>
+              <li><span>2</span><div><strong>Prepare</strong><small>Choose a structure and add a real object, owner, or location.</small></div></li>
+              <li><span>3</span><div><strong>Speak</strong><small>Record a short answer in English.</small></div></li>
+              <li><span>4</span><div><strong>Review</strong><small>Check the transcript and formative feedback.</small></div></li>
+            </ol>
+
+            <div class="microphone-check">
+              <div><strong><i class="bi bi-mic"></i> Microphone check</strong><p id="preflightStatus">You can test your microphone now or allow access on the first question.</p></div>
+              <button class="oral-button secondary" id="preflightButton" type="button"><i class="bi bi-soundwave"></i> Test microphone</button>
+            </div>
+
+            <div class="oral-start-actions">
+              <button class="oral-button primary" id="startInterviewButton" type="button"><i class="bi bi-play-fill"></i> Start practice</button>
+              <button class="oral-text-button" id="reviewPreviousButton" type="button" hidden>Review my last attempt</button>
+            </div>
+            <p class="resume-note" id="resumeNote" hidden></p>
+          </div>
+
+          <div class="interview-panel" id="interviewPanel" hidden>
+            <div class="interview-progress-header">
+              <div><span id="questionCounter">Question 1 of 4</span><strong id="questionTopic">Classroom language</strong></div>
+              <div class="interview-progress-track" aria-hidden="true"><i id="interviewProgressBar"></i></div>
+            </div>
+
+            <section class="interviewer-card" aria-labelledby="questionText">
+              <div class="interviewer-identity"><span><i class="bi bi-person-video3"></i></span><div><strong id="interviewerName">Alex</strong><small id="interviewerRole">Conversation Coach</small></div></div>
+              <p class="interviewer-status" id="interviewerStatus">Ready to ask the question</p>
+              <h2 id="questionText"></h2>
+              <div class="interviewer-audio-controls">
+                <button class="question-play-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Listen to the question</span></button>
+                <div class="speed-control" aria-label="Playback speed"><span>Speed</span><button type="button" data-speed="0.75">0.75x</button><button type="button" data-speed="1" class="is-active">1x</button></div>
+              </div>
+              <audio id="interviewerAudio" preload="metadata"></audio>
+            </section>
+
+            <figure class="oral-map" id="questionVisualPanel" hidden>
+              <img id="questionVisualImage" src="../../assets/img/english-basic/practice-lab/oral-practice/unit-2-conversation-coach.webp" width="1672" height="941" decoding="async" alt="Visual support for the question">
+              <figcaption id="questionVisualCaption"></figcaption>
+            </figure>
+
+            <section class="answer-support" id="answerSupport">
+              <div class="answer-support-heading"><div><p class="oral-kicker">Prepare your answer</p><h3>Choose one structure</h3></div><button class="oral-text-button" id="toggleHelpButton" type="button">Hide help</button></div>
+              <p class="support-reminder">Replace the blanks with classroom objects, owners, or locations. You do not need to repeat the model exactly.</p>
+              <div class="answer-frame-grid" id="answerFrameGrid"></div>
+              <div class="language-support-grid">
+                <section><p class="oral-kicker">Vocabulary bank</p><div class="vocabulary-bank" id="vocabularyBank"></div></section>
+                <section><p class="oral-kicker">Grammar clue</p><p class="grammar-clue" id="grammarClue"></p></section>
+              </div>
+            </section>
+            <button class="oral-button secondary show-help-button" id="showHelpButton" type="button" hidden><i class="bi bi-lightbulb"></i> I need help</button>
+
+            <section class="answer-recorder" aria-label="Record your answer">
+              <label class="oral-microphone-picker"><span><i class="bi bi-mic"></i> Microphone used</span><select id="microphoneSelect" aria-label="Choose a microphone"><option value="">Default microphone</option></select></label>
+              <div class="oral-level-meter"><span>Microphone level</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div>
+              <button class="oral-mic-button" id="micButton" type="button" aria-label="Start answering with the microphone"><i class="bi bi-mic-fill"></i></button>
+              <p class="oral-record-status" id="recordStatus">Ready for your answer</p>
+              <p class="oral-record-help" id="recordHelp">Tap the microphone and answer in English.</p>
+              <span class="oral-timer" id="timer">00:00 / 00:30</span>
+              <div class="oral-recorder-actions"><button class="oral-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish answer</button><button class="oral-button secondary" id="retryButton" type="button" disabled><i class="bi bi-arrow-repeat"></i> Try again</button></div>
+              <div class="oral-transcript" id="liveTranscript" aria-live="polite">Your transcript will appear here after Whisper analysis.</div>
+              <audio id="studentAudio" controls hidden></audio>
+              <div class="oral-feedback" id="answerFeedback" hidden></div>
+              <div class="mic-unsupported" id="unsupported" hidden></div>
+            </section>
+
+            <div class="question-navigation"><button class="oral-button primary" id="nextQuestionButton" type="button" disabled>Continue <i class="bi bi-arrow-right"></i></button></div>
+          </div>
+
+          <div class="oral-summary" id="summaryPanel" hidden>
+            <div class="summary-celebration"><i class="bi bi-check2-circle"></i><p class="oral-kicker">Practice complete</p><h2 id="summaryTitle">Conversation report</h2><p id="summaryLead"></p></div>
+            <section class="readiness-report" aria-label="Oral readiness result">
+              <div class="readiness-score" id="summaryScoreRing"><div><strong id="summaryScore">0</strong><span>out of 100</span></div></div>
+              <div class="readiness-copy"><p class="oral-kicker">Oral readiness score</p><h3 id="summaryReadiness">Keep practicing</h3><p id="summaryComparison"></p><small>This is automatic practice feedback, not an official grade.</small></div>
+            </section>
+            <div class="summary-metrics" id="summaryMetrics"></div>
+            <div class="summary-guidance-grid">
+              <section><p class="oral-kicker">Strengths</p><h3>What works</h3><ul id="summaryStrengths"></ul></section>
+              <section><p class="oral-kicker">Priorities</p><h3>Practice now</h3><ul id="summaryPriorities"></ul></section>
+            </div>
+            <section class="summary-word-practice"><p class="oral-kicker">Pronunciation clarity</p><h3>Words to pronounce more clearly</h3><div id="summaryWordPractice"></div><p class="confidence-disclaimer"><i class="bi bi-info-circle"></i> These words had lower Whisper confidence. This may come from pronunciation, noise, microphone quality, or proper names. It is not a final phonetic diagnosis.</p></section>
+            <section class="attempt-history-panel"><p class="oral-kicker">Unlimited practice</p><h3>Recent attempts</h3><div class="attempt-history" id="attemptHistory"></div></section>
+            <div class="summary-section-heading"><p class="oral-kicker">Question-by-question feedback</p><h3>Review each answer</h3></div>
+            <div class="summary-answers" id="summaryAnswers"></div>
+            <div class="summary-actions"><button class="oral-button primary" id="restartInterviewButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> New full attempt</button><button class="oral-button secondary" id="weakPracticeButton" type="button"><i class="bi bi-bullseye"></i> Practice my two weak questions</button><a class="oral-button secondary" href="practice-lab.html#unit-2-folder">Back to Practice Lab</a></div>
+          </div>
+        </section>
+
+        <aside class="oral-sidebar">
+          <section><p class="oral-kicker">Unit content</p><h2>What you will practice</h2><ul class="coverage-list"><li><i class="bi bi-backpack3"></i><span>Name classroom objects</span></li><li><i class="bi bi-geo-alt"></i><span>Say where things are</span></li><li><i class="bi bi-hand-index"></i><span>Use this, that, these, and those</span></li><li><i class="bi bi-person-check"></i><span>Talk about possession with my, mine, and name + 's</span></li><li><i class="bi bi-question-circle"></i><span>Ask where, what, who, and whose questions</span></li></ul></section>
+          <section><p class="oral-kicker">Important</p><h3>This is not an evaluation</h3><p>This activity prepares oral production. The score is formative: it helps you know what to repeat, but it is not a grade.</p></section>
+          <section><p class="oral-kicker">Privacy</p><h3>Your voice is not stored</h3><p>The recording is sent temporarily to the JaraLingua Whisper service for transcription. This page only keeps the written summary in your browser.</p></section>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Basic English Course 1 - Unit Conversation Coach - Unit 2 - Formative practice</p></footer>
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../../assets/js/oral-unit-practice-data/english-basic-1-unit-2.js?v=20260712-u2"></script>
+  <script src="../../assets/js/oral-unit-practice-engine.js?v=20260712-enb1-u2"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
