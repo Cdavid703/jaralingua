@@ -61,6 +61,9 @@ BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS = {
 }
 OPENAI_IMAGES_MODEL = os.environ.get("JARALINGUA_OPENAI_IMAGES_MODEL", "gpt-image-2").strip() or "gpt-image-2"
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
+INTERMEDIATE_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/intermediate-integrated-task.json")
+INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/intermediate-integrated-task-submissions.json")
+INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/intermediate-integrated-task-real-us.mp3")
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
 INTERMEDIATE_UNIT4_IMPOSTOR_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_IMPOSTOR_DATA", "/var/lib/jaralingua/intermediate-unit4-impostor-games.json")
 INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_DATA", "/var/lib/jaralingua/intermediate-unit5-market-basket-live.json")
@@ -80,6 +83,7 @@ INTERMEDIATE_UNIT5_READING_ID = "unit5DishHistoryReading"
 INTERMEDIATE_UNIT5_DINNER_PLAN_ID = "unit5HealthyDinnerPlanner"
 INTERMEDIATE_UNIT5_PRONUNCIATION_ID = "unit5FoodQuantitiesPronunciation"
 INTERMEDIATE_UNIT5_SNACK_REVIEW_ID = "unit5GlobalSnackReview"
+INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -94,6 +98,8 @@ BUNDLED_FRENCH8_QUIZ_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_ass
 BUNDLED_BASIC_INTEGRATED_TASK_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task.local.json")
 BUNDLED_BASIC_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "data", "basic-integrated-task-real.local.mp3")
 BUNDLED_BASIC_ANDRES_RETAKE_AUDIO_PATH = os.path.join(REPO_ROOT, "ingles", "basico", "audio", "integrated-task", "basic-integrated-task-andres-munoz-retake.mp3")
+BUNDLED_INTERMEDIATE_INTEGRATED_TASK_PATH = os.path.join(REPO_ROOT, "data", "intermediate-integrated-task.local.json")
+BUNDLED_INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "intermediate-integrated-task-real-us.mp3")
 HOST = os.environ.get("JARALINGUA_PROGRESS_HOST", "127.0.0.1")
 PORT = int(os.environ.get("JARALINGUA_PROGRESS_PORT", "8787"))
 MAX_BODY_BYTES = 32 * 1024 * 1024
@@ -280,6 +286,14 @@ INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION = {
     "weight": 0,
     "type": "Writing follow-up",
     "description": "Resena cultural enviable al profesor. La entrega queda visible con peso 0."
+}
+
+INTERMEDIATE_INTEGRATED_TASK_EVALUATION = {
+    "id": INTERMEDIATE_INTEGRATED_TASK_ID,
+    "title": "INTERMEDIATE COURSE 1 - INTEGRATED TASK (20%)",
+    "weight": 20,
+    "type": "Integrated task",
+    "description": "Protected listening and integrated food-review assessment. Listening is scored automatically and writing is graded by the teacher with the institutional rubric."
 }
 
 BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION = {
@@ -1803,7 +1817,9 @@ def ensure_french2_gradebook_structure(grades_data):
 
 
 def ensure_intermediate_gradebook_structure(grades_data):
-    changed = ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_CATCHING_UP_EVALUATION)
+    changed = ensure_evaluation_template(grades_data, INTERMEDIATE_INTEGRATED_TASK_EVALUATION)
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_CATCHING_UP_EVALUATION):
+        changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_TIMELINE_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_READING_EVALUATION):
@@ -4348,6 +4364,191 @@ def clean_basic_rubric(value):
     return rubric
 
 
+def default_intermediate_integrated_task_bundle():
+    return {
+        "state": {
+            "isOpen": False,
+            "openedAt": None,
+            "closedAt": None,
+            "updatedAt": None,
+            "openedBy": None,
+            "reopenUntilEpoch": None,
+            "reopenUntilLabel": "",
+            "reopenStudentIds": [],
+            "reopenResetPlays": False
+        },
+        "exam": {
+            "id": "intermediate-course-1-integrated-task",
+            "title": "INTERMEDIATE COURSE 1 - INTEGRATED TASK (20%)",
+            "totalPoints": 50,
+            "listeningPoints": 25,
+            "writingPoints": 25,
+            "maxAudioPlays": 3,
+            "questions": []
+        }
+    }
+
+
+def read_intermediate_integrated_task_bundle():
+    source = INTERMEDIATE_INTEGRATED_TASK_PATH if os.path.exists(INTERMEDIATE_INTEGRATED_TASK_PATH) else BUNDLED_INTERMEDIATE_INTEGRATED_TASK_PATH
+    data = read_json_file(source, default_intermediate_integrated_task_bundle())
+    defaults = default_intermediate_integrated_task_bundle()
+    if not isinstance(data.get("state"), dict):
+        data["state"] = defaults["state"]
+    if not isinstance(data.get("exam"), dict):
+        data["exam"] = defaults["exam"]
+    for key, value in defaults["state"].items():
+        data["state"].setdefault(key, value)
+    for key, value in defaults["exam"].items():
+        data["exam"].setdefault(key, value)
+    return data
+
+
+def write_intermediate_integrated_task_bundle(data):
+    write_json_file(INTERMEDIATE_INTEGRATED_TASK_PATH, data, ".intermediate-integrated-task-")
+
+
+def read_intermediate_integrated_task_submissions():
+    data = read_json_file(INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH, {"submissions": {}, "events": []})
+    if not isinstance(data.get("submissions"), dict):
+        data["submissions"] = {}
+    if not isinstance(data.get("events"), list):
+        data["events"] = []
+    return data
+
+
+def write_intermediate_integrated_task_submissions(data):
+    write_json_file(INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH, data, ".intermediate-integrated-submissions-")
+
+
+def intermediate_integrated_can_take(role, state, student_id):
+    return basic_integrated_can_take(role, state, student_id)
+
+
+def intermediate_integrated_student_has_reopen(state, student_id):
+    return basic_integrated_student_has_reopen(state, student_id)
+
+
+def intermediate_integrated_public_exam(bundle):
+    exam = bundle.get("exam", {})
+    return {
+        "id": clean_text(exam.get("id") or "intermediate-course-1-integrated-task", 80),
+        "version": clean_text(exam.get("version") or "real", 80),
+        "title": clean_text(exam.get("title") or "INTERMEDIATE COURSE 1 - INTEGRATED TASK (20%)", 200),
+        "totalPoints": clean_exam_number(exam.get("totalPoints", 50)),
+        "listeningPoints": clean_exam_number(exam.get("listeningPoints", 25)),
+        "writingPoints": clean_exam_number(exam.get("writingPoints", 25)),
+        "maxAudioPlays": 3,
+        "questions": [basic_integrated_public_question(item) for item in exam.get("questions", []) if isinstance(item, dict)]
+    }
+
+
+def intermediate_integrated_state_payload(profile, grades_data, bundle, submissions):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+    state = bundle.get("state", {})
+    return {
+        "role": role,
+        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "state": state,
+        "student": basic_integrated_student_identity(student),
+        "submitted": basic_integrated_submission_public(submitted),
+        "canTake": intermediate_integrated_can_take(role, state, student_id),
+        "reopenActive": intermediate_integrated_student_has_reopen(state, student_id)
+    }
+
+
+def intermediate_integrated_health_payload(grades_data, bundle, submissions):
+    state = bundle.get("state", {})
+    submission_items = submissions.get("submissions", {})
+    if not isinstance(submission_items, dict):
+        submission_items = {}
+    students = []
+    counts = {"total": 0, "submitted": 0, "pendingWriting": 0, "graded": 0, "notSubmitted": 0, "reopenActive": 0}
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        submission = submission_items.get(student_id)
+        grade = (student.get("grades") or {}).get(INTERMEDIATE_INTEGRATED_TASK_ID) if isinstance(student.get("grades"), dict) else None
+        detail = (student.get("gradeDetails") or {}).get(INTERMEDIATE_INTEGRATED_TASK_ID) if isinstance(student.get("gradeDetails"), dict) else None
+        status = "not-submitted"
+        if isinstance(submission, dict):
+            status = "graded" if submission.get("status") == "graded" else "pending-writing"
+        elif isinstance(grade, (int, float)):
+            status = "graded"
+        reopen_active = intermediate_integrated_student_has_reopen(state, student_id)
+        counts["total"] += 1
+        if status == "graded":
+            counts["graded"] += 1
+            counts["submitted"] += 1
+        elif status == "pending-writing":
+            counts["pendingWriting"] += 1
+            counts["submitted"] += 1
+        else:
+            counts["notSubmitted"] += 1
+        if reopen_active:
+            counts["reopenActive"] += 1
+        students.append({
+            "id": student_id,
+            "fullName": clean_text(student.get("fullName"), 200),
+            "email": normalize_email(student.get("email")),
+            "status": status,
+            "grade": grade if isinstance(grade, (int, float)) else None,
+            "detail": detail if isinstance(detail, dict) else None,
+            "submission": basic_integrated_submission_public(submission) if isinstance(submission, dict) else None,
+            "canTake": intermediate_integrated_can_take("student", state, student_id),
+            "reopenActive": reopen_active
+        })
+    events = [basic_integrated_event_public(item) for item in submissions.get("events", [])[-80:] if isinstance(item, dict)]
+    events = [item for item in events if item]
+    events.reverse()
+    return {"state": state, "counts": counts, "students": students, "events": events}
+
+
+def ensure_intermediate_integrated_task_evaluation(grades_data):
+    return ensure_evaluation_template(grades_data, INTERMEDIATE_INTEGRATED_TASK_EVALUATION)
+
+
+def apply_intermediate_integrated_submission_status_to_gradebook(grades_data, submissions):
+    if not isinstance(grades_data, dict) or not isinstance(submissions, dict):
+        return False
+    submission_items = submissions.get("submissions", {})
+    if not isinstance(submission_items, dict):
+        return False
+    changed = False
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        submission = submission_items.get(student_id)
+        if not isinstance(submission, dict):
+            continue
+        grades = student.get("grades", {})
+        if isinstance(grades, dict) and isinstance(grades.get(INTERMEDIATE_INTEGRATED_TASK_ID), (int, float)):
+            continue
+        details = student.setdefault("gradeDetails", {})
+        if not isinstance(details, dict):
+            details = {}
+            student["gradeDetails"] = details
+        next_detail = {
+            "evaluationId": INTERMEDIATE_INTEGRATED_TASK_ID,
+            "activityTitle": INTERMEDIATE_INTEGRATED_TASK_EVALUATION["title"],
+            "status": clean_text(submission.get("status") or "submitted", 80),
+            "submittedAt": clean_text(submission.get("submittedAt"), 80),
+            "receiptId": clean_text(submission.get("receiptId"), 80),
+            "listeningPoints": clean_exam_number(submission.get("listeningPoints")),
+            "pendingTeacherReview": submission.get("status") != "graded",
+            "weight": 20
+        }
+        if details.get(INTERMEDIATE_INTEGRATED_TASK_ID) != next_detail:
+            details[INTERMEDIATE_INTEGRATED_TASK_ID] = next_detail
+            changed = True
+    return changed
+
+
 class ProgressHandler(BaseHTTPRequestHandler):
     server_version = "JaraLinguaProgress/1.0"
 
@@ -4933,10 +5134,98 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, basic_unit6_neighborhood_gallery_payload(profile, grades_data, gallery))
             return
 
-        if parsed.path == "/api/intermediate/grades":
+        if parsed.path == "/api/intermediate/integrated-task/state":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
                 if ensure_intermediate_gradebook_structure(grades_data):
+                    write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                bundle = read_intermediate_integrated_task_bundle()
+                submissions = read_intermediate_integrated_task_submissions()
+                json_response(self, 200, intermediate_integrated_state_payload(profile, grades_data, bundle, submissions))
+            return
+
+        if parsed.path == "/api/intermediate/integrated-task":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                if ensure_intermediate_gradebook_structure(grades_data):
+                    write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_intermediate_integrated_task_bundle()
+                submissions = read_intermediate_integrated_task_submissions()
+                state = bundle.get("state", {})
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                if submitted:
+                    json_response(self, 200, {"status": "submitted", "state": state, "result": basic_integrated_submission_public(submitted)})
+                    return
+                if not intermediate_integrated_can_take(role, state, student_id):
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+                json_response(self, 200, {
+                    "status": "open" if state.get("isOpen") is True else ("reopen-window" if intermediate_integrated_student_has_reopen(state, student_id) else "staff-preview"),
+                    "role": role,
+                    "state": state,
+                    "student": basic_integrated_student_identity(student),
+                    "exam": intermediate_integrated_public_exam(bundle)
+                })
+            return
+
+        if parsed.path == "/api/intermediate/integrated-task/audio":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                bundle = read_intermediate_integrated_task_bundle()
+                state = bundle.get("state", {})
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "not_authorized"})
+                    return
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                if not intermediate_integrated_can_take(role, state, student_id):
+                    json_response(self, 403, {"error": "exam_closed"})
+                    return
+                audio_path = INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH
+                if not os.path.exists(audio_path):
+                    audio_path = BUNDLED_INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH
+            if not os.path.exists(audio_path):
+                json_response(self, 404, {"error": "audio_not_found"})
+                return
+            with open(audio_path, "rb") as handle:
+                binary_response(self, 200, handle.read(), "audio/mpeg")
+            return
+
+        if parsed.path == "/api/intermediate/integrated-task/submissions":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                if ensure_intermediate_gradebook_structure(grades_data):
+                    write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                bundle = read_intermediate_integrated_task_bundle()
+                submissions_data = read_intermediate_integrated_task_submissions()
+                if apply_intermediate_integrated_submission_status_to_gradebook(grades_data, submissions_data):
+                    write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                submissions = submissions_data.get("submissions", {})
+                items = [basic_integrated_submission_public(item) for item in submissions.values() if isinstance(item, dict)]
+                items.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
+                health = intermediate_integrated_health_payload(grades_data, bundle, submissions_data)
+                json_response(self, 200, {"role": role, "submissions": items, "health": health})
+            return
+
+        if parsed.path == "/api/intermediate/grades":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                gradebook_changed = ensure_intermediate_gradebook_structure(grades_data)
+                submissions = read_intermediate_integrated_task_submissions()
+                if apply_intermediate_integrated_submission_status_to_gradebook(grades_data, submissions):
+                    gradebook_changed = True
+                if gradebook_changed:
                     write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                 query = urllib.parse.parse_qs(parsed.query)
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
@@ -6162,6 +6451,70 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
 
+        if parsed.path == "/api/intermediate/integrated-task/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                bundle = read_intermediate_integrated_task_bundle()
+                state = bundle.get("state", {})
+                student_id = clean_text(student.get("id"), 40)
+                if not intermediate_integrated_can_take("student", state, student_id):
+                    json_response(self, 403, {"error": "exam_closed", "state": state})
+                    return
+                submissions = read_intermediate_integrated_task_submissions()
+                existing = submissions.get("submissions", {}).get(student_id)
+                if existing:
+                    json_response(self, 409, {"error": "already_submitted", "result": basic_integrated_submission_public(existing)})
+                    return
+                writing = clean_basic_writing(payload.get("writing"))
+                word_count = basic_word_count(writing)
+                if word_count < 100:
+                    json_response(self, 400, {"error": "writing_too_short", "wordCount": word_count})
+                    return
+                if word_count > 140:
+                    json_response(self, 400, {"error": "writing_too_long", "wordCount": word_count})
+                    return
+                result = basic_integrated_score(bundle.get("exam", {}), payload.get("answers"))
+                try:
+                    audio_plays = max(0, min(3, int(payload.get("audioPlays", 0))))
+                except (TypeError, ValueError):
+                    audio_plays = 0
+                submitted_at = now_iso()
+                submission = {
+                    "receiptId": "IIT-" + secrets.token_hex(5).upper(),
+                    "studentId": student_id,
+                    "studentName": clean_text(student.get("fullName"), 200),
+                    "email": normalize_email(profile.get("email")),
+                    "courseCode": clean_text(payload.get("courseCode"), 40),
+                    "clientDate": clean_text(payload.get("clientDate"), 30),
+                    "submittedAt": submitted_at,
+                    "audioPlays": audio_plays,
+                    "listeningPoints": result["score"],
+                    "writingPoints": None,
+                    "finalPoints": None,
+                    "grade": None,
+                    "status": "pending-writing",
+                    "writing": writing,
+                    "answers": result["details"],
+                    "rubric": None,
+                    "teacherComments": "",
+                    "gradedAt": None,
+                    "gradedBy": ""
+                }
+                submissions.setdefault("submissions", {})[student_id] = submission
+                gradebook_changed = ensure_intermediate_integrated_task_evaluation(grades_data)
+                if apply_intermediate_integrated_submission_status_to_gradebook(grades_data, submissions):
+                    gradebook_changed = True
+                basic_integrated_append_event(submissions, "submitted", profile, student_id, "Student submitted the Intermediate Integrated Task")
+                write_intermediate_integrated_task_submissions(submissions)
+                if gradebook_changed:
+                    write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
+            return
+
         if parsed.path == "/api/basic/integrated-task/submit":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
@@ -6785,6 +7138,90 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
 
+        if parsed.path == "/api/intermediate/integrated-task/state":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                bundle = read_intermediate_integrated_task_bundle()
+                state = bundle.setdefault("state", {})
+                desired_open = payload.get("isOpen") is True
+                timestamp = now_iso()
+                state["isOpen"] = desired_open
+                state["updatedAt"] = timestamp
+                if desired_open:
+                    state["openedAt"] = timestamp
+                    state["openedBy"] = normalize_email(profile.get("email"))
+                    state["closedAt"] = None
+                else:
+                    state["closedAt"] = timestamp
+                write_intermediate_integrated_task_bundle(bundle)
+                submissions = read_intermediate_integrated_task_submissions()
+                basic_integrated_append_event(submissions, "exam-opened" if desired_open else "exam-closed", profile, "", "Global Intermediate Integrated Task availability changed")
+                write_intermediate_integrated_task_submissions(submissions)
+                json_response(self, 200, {"ok": True, "state": state})
+            return
+
+        if parsed.path == "/api/intermediate/integrated-task/submissions/grade":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                rubric = clean_basic_rubric(payload.get("rubric"))
+                if rubric is None:
+                    json_response(self, 400, {"error": "invalid_rubric"})
+                    return
+                student_id = clean_text(payload.get("studentId"), 40)
+                submissions = read_intermediate_integrated_task_submissions()
+                submission = submissions.get("submissions", {}).get(student_id)
+                if not isinstance(submission, dict):
+                    json_response(self, 404, {"error": "submission_not_found"})
+                    return
+                student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+                if not isinstance(student, dict):
+                    json_response(self, 404, {"error": "student_not_found"})
+                    return
+                writing_points = sum(rubric.values())
+                listening_points = float(submission.get("listeningPoints", 0))
+                final_points = clean_exam_number(listening_points + writing_points)
+                grade = round(float(final_points) / 10.0, 2)
+                submission["rubric"] = rubric
+                submission["writingPoints"] = writing_points
+                submission["finalPoints"] = final_points
+                submission["grade"] = grade
+                submission["status"] = "graded"
+                submission["teacherComments"] = str(payload.get("teacherComments") or "").strip()[:2000]
+                submission["gradedAt"] = now_iso()
+                submission["gradedBy"] = normalize_email(profile.get("email"))
+                ensure_intermediate_integrated_task_evaluation(grades_data)
+                student.setdefault("grades", {})[INTERMEDIATE_INTEGRATED_TASK_ID] = grade
+                details = student.setdefault("gradeDetails", {})
+                if isinstance(details, dict):
+                    details[INTERMEDIATE_INTEGRATED_TASK_ID] = {
+                        "evaluationId": INTERMEDIATE_INTEGRATED_TASK_ID,
+                        "activityTitle": INTERMEDIATE_INTEGRATED_TASK_EVALUATION["title"],
+                        "status": "graded",
+                        "submittedAt": clean_text(submission.get("submittedAt"), 80),
+                        "gradedAt": clean_text(submission.get("gradedAt"), 80),
+                        "receiptId": clean_text(submission.get("receiptId"), 80),
+                        "listeningPoints": clean_exam_number(submission.get("listeningPoints")),
+                        "writingPoints": clean_exam_number(writing_points),
+                        "finalPoints": clean_exam_number(final_points),
+                        "grade": grade,
+                        "pendingTeacherReview": False,
+                        "weight": 20
+                    }
+                basic_integrated_append_event(submissions, "graded", profile, student_id, "Teacher saved rubric and final Intermediate Integrated Task grade")
+                write_intermediate_integrated_task_submissions(submissions)
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
+            return
+
+
         if parsed.path == "/api/basic/integrated-task/state":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
@@ -6960,6 +7397,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 except ValueError as error:
                     json_response(self, 400, {"error": str(error)})
                     return
+                ensure_intermediate_gradebook_structure(next_data)
+                submissions = read_intermediate_integrated_task_submissions()
+                apply_intermediate_integrated_submission_status_to_gradebook(next_data, submissions)
                 write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, next_data, ".intermediate-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
             return
