@@ -74,6 +74,11 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 .speed-label { color: var(--intermediate-navy); font-weight: 900; margin-right: .25rem; }
 .speed-btn { min-width: 62px; min-height: 40px; border: 2px solid #bad1d0; border-radius: 8px; background: #fff; color: var(--intermediate-navy); cursor: pointer; font-weight: 900; }
 .speed-btn.active { background: var(--intermediate-teal); border-color: var(--intermediate-teal); color: #fff; }
+.speed-btn:active, .btn-main:active, .btn-soft:active, .btn-danger:active { transform: translateY(1px); }
+.inline-action-feedback { grid-column: 1 / -1; min-height: 1.5rem; padding: .55rem .7rem; border-radius: 8px; background: #f7f9fc; border: 1px solid var(--line); color: var(--muted); font-weight: 800; }
+.inline-action-feedback.success { background: #e8f6ef; border-color: #b5dfc8; color: var(--success); }
+.inline-action-feedback.pending { background: #fff8df; border-color: #ead477; color: var(--warning); }
+.inline-action-feedback.error { background: #fff0f1; border-color: #efbdc5; color: var(--danger); }
 
 .question-card { padding: 1rem 0; margin: 0; border: 0; border-bottom: 1px solid var(--line); }
 .question-card:last-child { border-bottom: 0; }
@@ -137,7 +142,7 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 .screen-footer p { margin-bottom: 0; color: rgba(255, 255, 255, .8); }
 .institutional-footer { padding: .6rem 1rem; background: #fff; }
 .institutional-footer img { display: block; width: min(1274px, 100%); height: auto; margin: auto; }
-.toast { position: fixed; right: 1rem; bottom: 1rem; z-index: 80; max-width: 390px; padding: 1rem; border-radius: 8px; background: var(--intermediate-navy); color: #fff; box-shadow: var(--shadow); font-weight: 900; }
+.toast { position: fixed; right: 1rem; bottom: 1rem; z-index: 80; max-width: min(390px, calc(100vw - 2rem)); padding: 1rem; border-radius: 8px; background: var(--intermediate-navy); color: #fff; box-shadow: var(--shadow); font-weight: 900; }
 .toast.success { background: var(--success); }
 .toast.error { background: var(--danger); }
 .print-only { display: none; }

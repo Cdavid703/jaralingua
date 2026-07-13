@@ -23,13 +23,15 @@
     questions: document.getElementById("questionsContainer"),
     audio: document.getElementById("listeningAudio"),
     counter: document.getElementById("playCounter"),
+    audioFeedback: document.getElementById("audioActionFeedback"),
     writing: document.getElementById("writingResponse"),
     words: document.getElementById("wordCount"),
     result: document.getElementById("submitResult"),
     submit: document.getElementById("submitExamBtn"),
     receipt: document.getElementById("printReceipt"),
     review: document.getElementById("reviewPanel"),
-    reviewGrid: document.getElementById("reviewGrid")
+    reviewGrid: document.getElementById("reviewGrid"),
+    reviewFeedback: document.getElementById("reviewActionFeedback")
   };
   var user = null;
   var student = null;
@@ -44,6 +46,8 @@
   var activeListen = false;
   var furthestAudioTime = 0;
   var currentSpeed = 1;
+  var adminFeedback = "";
+  var adminFeedbackType = "";
 
   function esc(value) {
     return String(value == null ? "" : value)
@@ -104,7 +108,12 @@
 
   function openLogin() {
     var trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
-    if (trigger) trigger.click();
+    if (trigger) {
+      trigger.click();
+      toast("Sign-in panel opened. Choose your registered account.", "success");
+    } else {
+      toast("The sign-in panel is not available. Reload the page and try again.", "error");
+    }
   }
 
   function toast(message, type) {
@@ -114,6 +123,8 @@
     node.className = "toast " + (type || "");
     node.textContent = message;
     node.setAttribute("role", "status");
+    node.setAttribute("aria-live", "polite");
+    node.setAttribute("aria-atomic", "true");
     document.body.appendChild(node);
     window.setTimeout(function () { node.remove(); }, 5200);
   }
@@ -133,6 +144,12 @@
   function setStatus(message, type) {
     els.result.className = "status-box show " + (type || "pending");
     els.result.innerHTML = message;
+  }
+
+  function setInlineFeedback(element, message, type) {
+    if (!element) return;
+    element.className = "inline-action-feedback " + (type || "");
+    element.textContent = message;
   }
 
   function today() {
@@ -225,7 +242,7 @@
     els.counter.textContent = count + " / 3 listens" + (count >= 3 ? " - final listen used" : "");
   }
 
-  function setAudioSpeed(value) {
+  function setAudioSpeed(value, announce) {
     var next = Number(value);
     if ([0.75, 1, 1.25].indexOf(next) === -1) return;
     currentSpeed = next;
@@ -235,6 +252,11 @@
       button.classList.toggle("active", active);
       button.setAttribute("aria-pressed", active ? "true" : "false");
     });
+    if (announce) {
+      var label = next + "x";
+      setInlineFeedback(els.audioFeedback, "Audio speed changed successfully to " + label + ".", "success");
+      toast("Audio speed set to " + label + ".", "success");
+    }
   }
 
   function wireAudio() {
@@ -242,13 +264,13 @@
     if (audioWired) return;
     audioWired = true;
     document.querySelectorAll("[data-audio-speed]").forEach(function (button) {
-      button.addEventListener("click", function () { setAudioSpeed(button.dataset.audioSpeed); });
+      button.addEventListener("click", function () { setAudioSpeed(button.dataset.audioSpeed, true); });
     });
     els.audio.addEventListener("contextmenu", function (event) { event.preventDefault(); });
     els.audio.addEventListener("ratechange", function () {
       if ([0.75, 1, 1.25].indexOf(Number(els.audio.playbackRate)) === -1) els.audio.playbackRate = currentSpeed;
       else currentSpeed = Number(els.audio.playbackRate);
-      setAudioSpeed(currentSpeed);
+      setAudioSpeed(currentSpeed, false);
     });
     els.audio.addEventListener("timeupdate", function () {
       if (!els.audio.seeking && els.audio.currentTime > furthestAudioTime) furthestAudioTime = els.audio.currentTime;
@@ -272,12 +294,16 @@
         activeListen = true;
         furthestAudioTime = 0;
         updatePlayCounter();
+        setInlineFeedback(els.audioFeedback, "Listening attempt " + (count + 1) + " of 3 started at " + currentSpeed + "x.", "success");
+        toast("Listening attempt " + (count + 1) + " of 3 started.", "success");
       }
     });
     els.audio.addEventListener("ended", function () {
       activeListen = false;
       furthestAudioTime = 0;
       els.audio.currentTime = 0;
+      setInlineFeedback(els.audioFeedback, "Listening attempt completed. " + readPlayCount() + " of 3 attempts used.", "success");
+      toast("Listening attempt completed.", "success");
     });
   }
 
@@ -316,7 +342,11 @@
 
   async function submitExam(answers) {
     if (submitting) return;
-    if (!window.confirm("After submission, you cannot change your answers. Submit this graded Integrated Task now?")) return;
+    if (!window.confirm("After submission, you cannot change your answers. Submit this graded Integrated Task now?")) {
+      setStatus("Submission canceled. Your answers remain saved on this page and nothing was sent to the teacher.", "pending");
+      toast("Submission canceled. Nothing was sent.", "");
+      return;
+    }
     submitting = true;
     els.submit.disabled = true;
     els.submit.innerHTML = '<i class="bi bi-hourglass-split"></i> Submitting...';
@@ -404,10 +434,11 @@
     }
     var open = state && state.isOpen === true;
     els.admin.hidden = false;
-    els.admin.innerHTML = '<div class="admin-state"><div><p class="section-kicker">Teacher control</p><h2 class="section-title">Integrated Task availability</h2><span class="state-badge ' + (open ? "open" : "closed") + '"><i class="bi ' + (open ? "bi-unlock-fill" : "bi-lock-fill") + '"></i> ' + (open ? "OPEN" : "CLOSED") + '</span><p class="section-copy">' + (open ? "Registered students can access the questions and protected audio." : "Students cannot access the questions or protected audio.") + '</p><small>Last update: ' + esc(state && state.updatedAt || "Not activated yet") + (state && state.openedBy ? " by " + esc(state.openedBy) : "") + '</small></div><div class="btn-row"><button class="btn-main" type="button" data-exam-state="open" ' + (open ? "disabled" : "") + '><i class="bi bi-unlock-fill"></i> Activate exam</button><button class="btn-danger" type="button" data-exam-state="closed" ' + (!open ? "disabled" : "") + '><i class="bi bi-lock-fill"></i> Close exam</button></div></div><div class="activation-feedback" id="activationFeedback" aria-live="polite"></div>';
+    els.admin.innerHTML = '<div class="admin-state"><div><p class="section-kicker">Teacher control</p><h2 class="section-title">Integrated Task availability</h2><span class="state-badge ' + (open ? "open" : "closed") + '"><i class="bi ' + (open ? "bi-unlock-fill" : "bi-lock-fill") + '"></i> ' + (open ? "OPEN" : "CLOSED") + '</span><p class="section-copy">' + (open ? "Registered students can access the questions and protected audio." : "Students cannot access the questions or protected audio.") + '</p><small>Last update: ' + esc(state && state.updatedAt || "Not activated yet") + (state && state.openedBy ? " by " + esc(state.openedBy) : "") + '</small></div><div class="btn-row"><button class="btn-main" type="button" data-exam-state="open" ' + (open ? "disabled" : "") + '><i class="bi bi-unlock-fill"></i> Activate exam</button><button class="btn-danger" type="button" data-exam-state="closed" ' + (!open ? "disabled" : "") + '><i class="bi bi-lock-fill"></i> Close exam</button><button class="btn-soft" type="button" data-refresh-reviews><i class="bi bi-arrow-clockwise"></i> Refresh submissions</button></div></div><div class="activation-feedback ' + esc(adminFeedbackType) + '" id="activationFeedback" role="status" aria-live="polite" aria-atomic="true">' + esc(adminFeedback) + '</div>';
     els.admin.querySelectorAll("[data-exam-state]").forEach(function (button) {
       button.addEventListener("click", function () { changeState(button.dataset.examState === "open", button); });
     });
+    els.admin.querySelector("[data-refresh-reviews]").addEventListener("click", function (event) { refreshReviews(event.currentTarget); });
   }
 
   async function changeState(open, button) {
@@ -416,17 +447,21 @@
     button.disabled = true;
     button.innerHTML = '<i class="bi bi-hourglass-split"></i> Updating...';
     feedback.textContent = "Saving the exam state...";
+    feedback.className = "activation-feedback";
     try {
       var result = await request(API.state, { method: "PUT", body: JSON.stringify({ isOpen: open }) });
       if (!result.ok) throw new Error("state_failed");
       state = result.data.state;
+      adminFeedback = open ? "Exam activated successfully. Students can enter now." : "Exam closed successfully. Student access and protected audio are locked.";
+      adminFeedbackType = "success";
       renderAdmin();
-      var nextFeedback = document.getElementById("activationFeedback");
-      var message = open ? "Exam activated. Students can enter now." : "Exam closed. Student access and protected audio are locked.";
-      if (nextFeedback) nextFeedback.textContent = message;
-      toast(message, open ? "success" : "");
+      var message = adminFeedback;
+      toast(message, "success");
     } catch (_error) {
-      feedback.textContent = "The exam state could not be changed. Please try again.";
+      adminFeedback = "The exam state could not be changed. No change was applied. Please try again.";
+      adminFeedbackType = "error";
+      feedback.textContent = adminFeedback;
+      feedback.className = "activation-feedback error";
       button.disabled = false;
       button.innerHTML = original;
       toast("The activation change failed.", "error");
@@ -469,9 +504,30 @@
   }
 
   async function loadReviews() {
-    if (["admin", "teacher"].indexOf(role) === -1) return;
+    if (["admin", "teacher"].indexOf(role) === -1) return false;
     var result = await request(API.submissions);
-    if (result.ok) renderReviews(result.data.submissions || [], result.data);
+    if (result.ok) {
+      renderReviews(result.data.submissions || [], result.data);
+      return true;
+    }
+    setInlineFeedback(els.reviewFeedback, "Submissions could not be loaded. Check the connection and try again.", "error");
+    return false;
+  }
+
+  async function refreshReviews(button) {
+    var original = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<i class="bi bi-hourglass-split"></i> Refreshing...';
+    setInlineFeedback(els.reviewFeedback, "Refreshing student submissions...", "pending");
+    var loaded = await loadReviews();
+    if (loaded) {
+      setInlineFeedback(els.reviewFeedback, "Submissions refreshed successfully.", "success");
+      toast("Teacher submissions refreshed.", "success");
+    } else {
+      toast("Submissions could not be refreshed.", "error");
+    }
+    button.disabled = false;
+    button.innerHTML = original;
   }
 
   async function saveGrade(card) {
@@ -483,7 +539,13 @@
       feedback.className = "activation-feedback error";
       return;
     }
-    if (!window.confirm("Save this rubric and send the final grade to Grades?")) return;
+    if (!window.confirm("Save this rubric and send the final grade to Grades?")) {
+      feedback.textContent = "Grade save canceled. No grade was changed.";
+      feedback.className = "activation-feedback";
+      setInlineFeedback(els.reviewFeedback, "Grade save canceled. No grade was changed.", "pending");
+      toast("Grade save canceled.", "");
+      return;
+    }
     var button = card.querySelector("[data-save-grade]");
     button.disabled = true;
     feedback.textContent = "Saving rubric and final grade...";
@@ -491,11 +553,13 @@
     if (result.ok) {
       feedback.textContent = "Saved. Final grade: " + result.data.result.grade + "/5.0. The 20% assessment is now recorded in Grades.";
       feedback.className = "activation-feedback success";
+      setInlineFeedback(els.reviewFeedback, "Rubric saved successfully. The final grade is now recorded in Grades.", "success");
       toast("Final grade saved in Grades.", "success");
       await loadReviews();
     } else {
       feedback.textContent = "The rubric could not be saved. Please try again.";
       feedback.className = "activation-feedback error";
+      setInlineFeedback(els.reviewFeedback, "The rubric could not be saved. No grade was changed.", "error");
       button.disabled = false;
     }
   }
@@ -566,7 +630,12 @@
     if (answers) submitExam(answers);
   });
   document.querySelectorAll("[data-open-login]").forEach(function (button) { button.addEventListener("click", openLogin); });
-  document.querySelectorAll("[data-print]").forEach(function (button) { button.addEventListener("click", function () { window.print(); }); });
+  document.querySelectorAll("[data-print]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      toast("Print dialog opened. Your exam has not been submitted by this action.", "success");
+      window.setTimeout(function () { window.print(); }, 120);
+    });
+  });
 
   verifyAccess();
   window.setInterval(verifyAccess, 4000);

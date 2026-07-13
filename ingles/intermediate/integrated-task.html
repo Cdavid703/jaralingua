@@ -43,7 +43,7 @@
 
   <main class="exam-shell" id="examContent" hidden>
     <div class="print-only print-receipt" id="printReceipt">NOT SUBMITTED - DIGITAL RECEIPT REQUIRED</div>
-    <form id="integratedTaskForm">
+    <form id="integratedTaskForm" novalidate>
       <section class="exam-section" id="instructions">
         <p class="section-kicker">Student information</p>
         <h2 class="section-title">Intermediate Course 1 - Integrated Task</h2>
@@ -69,6 +69,7 @@
           <audio id="listeningAudio" controls controlslist="nodownload noplaybackrate" preload="metadata"></audio>
           <div class="play-counter" id="playCounter">0 / 3 listens</div>
           <div class="audio-speed-row" aria-label="Audio speed controls"><span class="speed-label">Speed</span><button class="speed-btn" type="button" data-audio-speed="0.75" aria-pressed="false">0.75x</button><button class="speed-btn active" type="button" data-audio-speed="1" aria-pressed="true">1x</button><button class="speed-btn" type="button" data-audio-speed="1.25" aria-pressed="false">1.25x</button></div>
+          <div class="inline-action-feedback" id="audioActionFeedback" role="status" aria-live="polite" aria-atomic="true">Audio speed is set to 1x. No listening attempt has started.</div>
         </div>
         <div id="questionsContainer"></div>
       </section>
@@ -109,6 +110,7 @@
       <p class="section-kicker">Teacher only</p>
       <h2 class="section-title">Writing review and final grade</h2>
       <p class="section-copy">Review each submitted response, score all five criteria from 1 to 5, and save the final result to the 20% Integrated Task column in Grades.</p>
+      <div class="inline-action-feedback" id="reviewActionFeedback" role="status" aria-live="polite" aria-atomic="true">Submission review is ready.</div>
       <div id="reviewGrid"></div>
     </div>
   </section>
