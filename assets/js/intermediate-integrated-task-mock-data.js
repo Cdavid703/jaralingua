@@ -27,9 +27,9 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
       prompt: "Why does Marcus classify simit as an everyday food?",
       options: [
         "People often eat it for breakfast with cheese or tea.",
-        "It is served only at weddings.",
-        "It contains a lot of sugar.",
-        "It is difficult to share."
+        "People usually save it for celebrations.",
+        "It is served warm with a lot of cheese.",
+        "It is mainly shared at afternoon parties."
       ],
       answer: 0,
       points: 2.5
@@ -40,16 +40,21 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
       options: [
         "Cassava flour, milk, and cheese",
         "Wheat flour, sesame, and tea",
-        "Rice flour, sugar, and a little water",
-        "Eggs, butter, and a few nuts"
+        "Eggs, butter, and a few nuts",
+        "Rice flour, sugar, and a little water"
       ],
-      answer: 2,
+      answer: 3,
       points: 2.5
     },
     {
       id: "m5",
       prompt: "Why would Sofia serve only a few rice cakes per person?",
-      options: ["They are expensive.", "They are quite filling.", "They are very salty.", "They are difficult to prepare."],
+      options: [
+        "The pieces are difficult to share.",
+        "They are quite filling.",
+        "They contain a lot of cheese.",
+        "People eat them only for breakfast."
+      ],
       answer: 1,
       points: 2.5
     },
@@ -58,9 +63,9 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
       prompt: "What surprised Marcus about the rice cakes?",
       options: [
         "They were softer and stickier than he expected.",
-        "They were larger than the cheese bread.",
-        "They had no sugar.",
-        "They were served hot with tea."
+        "They were crisper and chewier than simit.",
+        "They were warm and soft inside.",
+        "They were less filling than he expected."
       ],
       answer: 0,
       points: 2.5
@@ -68,8 +73,8 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
     {
       id: "m7",
       prompt: "Which flour is used in the Brazilian cheese bread?",
-      options: ["Rice flour", "Cassava flour", "Corn flour", "Wheat flour"],
-      answer: 1,
+      options: ["Rice flour", "Wheat flour", "Corn flour", "Cassava flour"],
+      answer: 3,
       points: 2.5
     },
     {
@@ -87,20 +92,20 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
     {
       id: "m9",
       prompt: "Which snack works both as an afternoon snack and as party food?",
-      options: ["Simit", "Sweet rice cakes", "Brazilian cheese bread", "All three only fit special occasions"],
-      answer: 2,
+      options: ["Brazilian cheese bread", "Simit", "Sweet rice cakes", "All three only fit special occasions"],
+      answer: 0,
       points: 2.5
     },
     {
       id: "m10",
       prompt: "What final idea does Olivia emphasize?",
       options: [
-        "A food review should focus only on price.",
-        "Special-occasion food is always sweeter.",
-        "Ingredients, texture, and context shape a food review.",
-        "Every international snack belongs at a party."
+        "Price and portion size are the only useful evidence.",
+        "Everyday food should never be served at celebrations.",
+        "Texture matters more than ingredients or context.",
+        "Ingredients, texture, and context shape a food review."
       ],
-      answer: 2,
+      answer: 3,
       points: 2.5
     }
   ]
