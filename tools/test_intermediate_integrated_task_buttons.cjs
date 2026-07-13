@@ -39,8 +39,8 @@ function storedUser(role) {
   };
 }
 
-async function preparePage(browser, role, signedIn = true) {
-  const context = await browser.newContext({ viewport: { width: 1100, height: 900 } });
+async function preparePage(browser, role, signedIn = true, viewport = { width: 1100, height: 900 }) {
+  const context = await browser.newContext({ viewport });
   await context.addInitScript(({ user }) => {
     window.print = () => { window.__printCalled = true; };
     if (user) sessionStorage.setItem("jaralingua_local_user", JSON.stringify(user));
@@ -48,6 +48,35 @@ async function preparePage(browser, role, signedIn = true) {
   const page = await context.newPage();
   await page.route("https://accounts.google.com/**", route => route.abort());
   return { context, page };
+}
+
+async function assertResponsivePage(page, label) {
+  const layout = await page.evaluate(() => {
+    const width = document.documentElement.clientWidth;
+    const visible = element => {
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== "none" && style.visibility !== "hidden" && rect.width > 0 && rect.height > 0;
+    };
+    const overflow = Array.from(document.querySelectorAll("button, a, input, textarea, select, audio, .panel, .exam-section, .review-card"))
+      .filter(visible)
+      .map(element => {
+        const rect = element.getBoundingClientRect();
+        return { tag: element.tagName, text: (element.textContent || element.getAttribute("aria-label") || "").trim().slice(0, 60), left: rect.left, right: rect.right, width: rect.width };
+      })
+      .filter(item => item.left < -1 || item.right > width + 1 || item.width > width + 1);
+    return {
+      clientWidth: width,
+      scrollWidth: document.documentElement.scrollWidth,
+      overflow,
+      speedButtons: document.querySelectorAll("[data-audio-speed]").length,
+      questions: document.querySelectorAll(".question-card").length
+    };
+  });
+  assert.ok(layout.scrollWidth <= layout.clientWidth + 1, label + " has horizontal page overflow: " + JSON.stringify(layout));
+  assert.deepEqual(layout.overflow, [], label + " has controls outside the viewport");
+  assert.equal(layout.speedButtons, 3, label + " must keep the three speed controls");
+  assert.equal(layout.questions, 10, label + " must render all ten questions");
 }
 
 async function installStudentApi(page) {
@@ -239,13 +268,38 @@ async function testTeacherButtons(browser) {
   await context.close();
 }
 
+async function testResponsiveLayouts(browser) {
+  const viewports = [
+    { label: "mobile 390x844", width: 390, height: 844 },
+    { label: "tablet 768x1024", width: 768, height: 1024 },
+    { label: "laptop 1366x768", width: 1366, height: 768 }
+  ];
+  for (const viewport of viewports) {
+    const student = await preparePage(browser, "student", true, viewport);
+    await installStudentApi(student.page);
+    await student.page.goto(BASE_URL);
+    await student.page.locator("#examContent:not([hidden])").waitFor({ state: "visible" });
+    await assertResponsivePage(student.page, "student " + viewport.label);
+    await student.context.close();
+
+    const teacher = await preparePage(browser, "teacher", true, viewport);
+    await installTeacherApi(teacher.page);
+    await teacher.page.goto(BASE_URL);
+    await teacher.page.locator("#adminPanel:not([hidden])").waitFor({ state: "visible" });
+    await teacher.page.locator("#reviewPanel:not([hidden])").waitFor({ state: "visible" });
+    await assertResponsivePage(teacher.page, "teacher " + viewport.label);
+    await teacher.context.close();
+  }
+}
+
 (async () => {
   const browser = await chromium.launch({ headless: true, executablePath: CHROME_PATH });
   try {
     await testSignedOutButton(browser);
     await testStudentButtons(browser);
     await testTeacherButtons(browser);
-    console.log("PASS buttons: sign-in, speed, audio attempt, print, validation, submit, activate, refresh, rubric validation, grade, and close all execute and confirm their result");
+    await testResponsiveLayouts(browser);
+    console.log("PASS buttons and responsive layouts: student and teacher flows work at mobile 390x844, tablet 768x1024, and laptop 1366x768");
   } finally {
     await browser.close();
   }
