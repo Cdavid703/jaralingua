@@ -84,7 +84,7 @@
   }
 
   function formatGrade(value) {
-    return typeof value === "number" ? value.toFixed(1) : "En attente";
+    return typeof value === "number" ? value.toFixed(2) : "En attente";
   }
 
   function formatDetailScore(value, suffix) {
@@ -482,7 +482,7 @@
         <div>
           <label class="admin-grade-row">
             <span>${escapeHtml(evaluation.title)}</span>
-            <input class="form-control" type="number" min="0" max="5" step="0.1" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="En attente">
+            <input class="form-control" type="number" min="0" max="5" step="0.01" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="En attente">
           </label>
           ${pronunciationReviewMarkup(student, evaluation, true)}
         </div>
@@ -878,7 +878,7 @@
 
   function gradeValueForPdf(student, evaluation) {
     const grades = student.grades || {};
-    return typeof grades[evaluation.id] === "number" ? grades[evaluation.id].toFixed(1) : "En attente";
+    return typeof grades[evaluation.id] === "number" ? grades[evaluation.id].toFixed(2) : "En attente";
   }
 
   function totalValueForPdf(student, evaluations) {
