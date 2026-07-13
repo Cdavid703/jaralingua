@@ -26,54 +26,119 @@
   </header>
   <main>
 
-    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/course-overview/unit-2-in-class-banner.png');">
+    <style>
+      .unit2-guided-shell{display:grid;gap:1.35rem}
+      .unit2-practice-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);gap:1.2rem;align-items:start}
+      .unit2-control-panel,.unit2-output-panel,.unit2-bank-panel{background:#fff;border:1px solid rgba(15,23,42,.11);border-radius:24px;padding:1.25rem;box-shadow:0 18px 46px rgba(15,23,42,.08)}
+      .unit2-control-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}
+      .unit2-field label{display:block;font-weight:800;color:#172554;margin-bottom:.35rem}
+      .unit2-field select,.unit2-field input{width:100%;border:1px solid rgba(15,23,42,.18);border-radius:14px;padding:.78rem .9rem;font:inherit;background:#f8fafc;color:#0f172a}
+      .unit2-step-row{display:flex;gap:.85rem;align-items:flex-start;padding:.9rem;border-radius:18px;background:#f8fafc;border:1px solid rgba(15,23,42,.08);margin-top:.8rem}
+      .unit2-step-row b{display:grid;place-items:center;flex:0 0 34px;height:34px;border-radius:50%;background:#172554;color:#fff}
+      .unit2-step-row h3{margin:0 0 .25rem;color:#172554}
+      .unit2-step-row p{margin:0;color:#475569}
+      .unit2-model-stack{display:grid;gap:.75rem;margin-top:1rem}
+      .unit2-model-line{padding:.9rem 1rem;border-radius:16px;background:#eef2ff;color:#172554;border-left:5px solid #dc2626;font-weight:750}
+      .unit2-output-panel h3,.unit2-bank-panel h3{margin-top:0;color:#172554}
+      .unit2-report-box{min-height:170px;border-radius:20px;background:linear-gradient(135deg,#172554,#0f172a);color:#fff;padding:1.15rem;display:grid;align-content:center;gap:.65rem}
+      .unit2-report-box span{font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:#bfdbfe}
+      .unit2-report-box p{font-size:1.08rem;line-height:1.65;margin:0}
+      .unit2-mini-actions{display:flex;flex-wrap:wrap;gap:.65rem;margin-top:1rem}
+      .unit2-chip-bank{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:.75rem}
+      .unit2-chip-bank span{background:#f1f5f9;border:1px solid rgba(15,23,42,.1);border-radius:999px;padding:.45rem .7rem;font-weight:700;color:#334155}
+      .unit2-question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem;margin-top:1rem}
+      .unit2-question-card{background:#fff7ed;border:1px solid rgba(234,88,12,.2);border-radius:18px;padding:1rem}
+      .unit2-question-card span{display:block;font-size:.78rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#c2410c;margin-bottom:.35rem}
+      .unit2-question-card p{margin:0;color:#431407;font-weight:750}
+      .unit2-speaking-ladder{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.85rem;margin-top:1rem}
+      .unit2-speaking-ladder div{background:#f8fafc;border:1px solid rgba(15,23,42,.09);border-radius:18px;padding:1rem}
+      .unit2-speaking-ladder strong{display:block;color:#172554;margin-bottom:.3rem}
+      .unit2-speaking-ladder small{color:#475569}
+      @media (max-width: 980px){
+        .unit2-practice-grid,.unit2-question-grid,.unit2-speaking-ladder{grid-template-columns:1fr}
+        .unit2-control-grid{grid-template-columns:1fr}
+      }
+      @media (max-width: 640px){
+        .unit2-control-panel,.unit2-output-panel,.unit2-bank-panel{padding:1rem;border-radius:20px}
+        .unit2-step-row{display:block}
+        .unit2-step-row b{margin-bottom:.55rem}
+      }
+    </style>
+
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic/practice-lab/unit-2/unit-2-guided-practice-v1.webp?v=20260712-u2-practice');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab</p>
         <h1>Unit 2 Practice: In Class</h1>
-        <p>Practice classroom objects, locations, possession, and short conversations about where people and things are.</p>
-        <div class="lesson-meta"><span>Unit 2</span><span>Grammar</span><span>Conversation</span></div>
+        <p>Build short classroom descriptions step by step: identify an object, say where it is, say who owns it, and ask a correct classroom question.</p>
+        <div class="lesson-meta"><span>Unit 2</span><span>Objects</span><span>Location</span><span>Possession</span><span>Speaking</span></div>
         <div class="hero-actions">
           <a href="#practice-activity" class="btn btn-primary">Start activity</a>
           <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/course-overview/unit-2-in-class-banner.png" alt="Unit 2 Practice: In Class" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/unit-2/unit-2-guided-practice-v1.webp?v=20260712-u2-practice" width="1536" height="864" fetchpriority="high" decoding="async" alt="Adult English learners practicing classroom objects, location, and possession" /></aside>
     </section>
 
 
     <section class="lesson-outcome">
       <div class="outcome-card">
         <span class="outcome-label">Practice Goal</span>
-        <p>Practice classroom objects, locations, possession, and short conversations about where people and things are.</p>
+        <p>Students move from controlled grammar to oral production: <strong>This is a notebook.</strong> → <strong>It is on the desk.</strong> → <strong>It is Ana's notebook.</strong> → <strong>Whose notebook is this?</strong></p>
       </div>
     </section>
 
     <section class="premium-lesson-container" id="practice-activity">
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Grammar Practice</p><h2>Sentence Builder</h2></div></div>
-        <p class="lesson-text">Complete the fields, generate a model sentence, and personalize it orally with a partner.</p>
-        <div class="practice-form-panel"><div class="practice-form-header"><div><h3>Build Your Sentence</h3><p>Use the unit language to create a short speaking model.</p></div><span class="practice-badge">Unit 2</span></div><div class="practice-form-grid"><div class="practice-form-group"><label for="person">Person</label><input type="text" id="person" placeholder="Example: Karla" /></div><div class="practice-form-group"><label for="place">Place</label><input type="text" id="place" placeholder="Example: the library" /></div><div class="practice-form-group"><label for="thing">Object</label><input type="text" id="thing" placeholder="Example: cellphone" /></div><div class="practice-form-group"><label for="owner">Owner</label><input type="text" id="owner" placeholder="Example: my friend" /></div></div><button class="practice-submit-btn" type="button" onclick="generateSentence()">Generate model</button><div class="practice-result-card" id="result-card"><span class="result-label">Read this aloud</span><p id="speech-output"></p></div></div>
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Guided production</p><h2>Classroom Description Builder</h2></div></div>
+        <p class="lesson-text">Choose classroom information and generate a short model. Then say it aloud without reading every word.</p>
+        <div class="unit2-practice-grid">
+          <div class="unit2-control-panel">
+            <div class="practice-form-header"><div><h3>Build your classroom report</h3><p>Select or type information. The model will use Unit 2 grammar only.</p></div><span class="practice-badge">Unit 2</span></div>
+            <div class="unit2-control-grid">
+              <div class="unit2-field"><label for="thing">Object</label><select id="thing"><option>notebook</option><option>backpack</option><option>cellphone</option><option>pencil case</option><option>keys</option><option>charger</option><option>marker</option><option>laptop</option></select></div>
+              <div class="unit2-field"><label for="location">Location</label><select id="location"><option>on the desk</option><option>under the chair</option><option>in the backpack</option><option>next to the laptop</option><option>near the board</option><option>behind the book</option><option>in front of the teacher's desk</option><option>between two notebooks</option></select></div>
+              <div class="unit2-field"><label for="owner">Owner</label><input type="text" id="owner" placeholder="Example: Ana" /></div>
+              <div class="unit2-field"><label for="distance">Pointing word</label><select id="distance"><option value="this">this - near / singular</option><option value="that">that - far / singular</option><option value="these">these - near / plural</option><option value="those">those - far / plural</option></select></div>
+            </div>
+            <div class="unit2-mini-actions">
+              <button class="practice-submit-btn" type="button" onclick="generateClassroomReport()">Generate speaking model</button>
+              <button class="btn btn-secondary" type="button" onclick="randomizeClassroomReport()">Random example</button>
+            </div>
+          </div>
+          <div class="unit2-output-panel">
+            <h3>Read, then speak</h3>
+            <div class="unit2-report-box" id="reportBox"><span>Speaking model</span><p id="speech-output">Choose the information and generate a model.</p></div>
+            <div class="unit2-model-stack" id="modelStack" aria-live="polite"></div>
+          </div>
+        </div>
       </article>
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Conversation Game</p><h2>Classroom Search Mission</h2></div></div>
-        <p class="lesson-text">Turn the classroom into a search game. Students must ask, answer, confirm possession, and report locations.</p>
-        <div class="activity-steps">
-          <div class="activity-step"><b>1</b><div><h3>Location card warm-up</h3><p>In teams, look at picture cards and answer: "Where is he?", "Where is she?", "What is this place?"</p></div></div>
-          <div class="activity-step"><b>2</b><div><h3>Mystery object hunt</h3><p>The teacher or a student hides five objects. Partners ask: "Where is the marker?", "Is it on the desk?", "Is this your notebook?"</p></div></div>
-          <div class="activity-step"><b>3</b><div><h3>Bag exchange report</h3><p>Students exchange bags or pencil cases, list three items, ask who owns them, and report: "These are Laura's earbuds."</p></div></div>
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Speaking sequence</p><h2>From Word to Mini Report</h2></div></div>
+        <p class="lesson-text">The student should not jump directly into a long sentence. This ladder helps them build confidence.</p>
+        <div class="unit2-speaking-ladder">
+          <div><strong>1. Name it</strong><small>This is a notebook. / These are keys.</small></div>
+          <div><strong>2. Locate it</strong><small>It is on the desk. / They are in the bag.</small></div>
+          <div><strong>3. Say owner</strong><small>It is Ana's. / They are Carlos's.</small></div>
+          <div><strong>4. Ask</strong><small>Whose notebook is this?</small></div>
         </div>
-        <div class="conversation-challenge"><h3>Speaking challenge</h3><p>One student is the classroom detective, one is the owner, one is the witness, and one is the reporter. The reporter presents the findings to the class.</p><div class="role-card-grid"><span>Detective</span><span>Owner</span><span>Witness</span><span>Reporter</span></div></div>
+        <div class="unit2-step-row"><b>1</b><div><h3>Individual practice</h3><p>Each student generates one model and reads it once.</p></div></div>
+        <div class="unit2-step-row"><b>2</b><div><h3>Partner check</h3><p>Partner asks one question: <strong>Where is it?</strong> or <strong>Whose object is it?</strong></p></div></div>
+        <div class="unit2-step-row"><b>3</b><div><h3>Oral report</h3><p>Student reports without looking: <strong>This is a marker. It is Ana's marker. It is on the teacher's desk.</strong></p></div></div>
       </article>
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Possession Check</p><h2>Two Ways to Ask</h2></div></div>
-        <p class="lesson-text">Both questions are natural. Practice both forms before the mystery object game.</p>
-        <div class="question-model-grid">
-          <div class="question-model-card"><span>Owner first</span><p>Is this Maria's marker?</p></div>
-          <div class="question-model-card"><span>Object first</span><p>Is this marker Maria's?</p></div>
-          <div class="question-model-card"><span>Plural owner first</span><p>Are these Daniel's pencils?</p></div>
-          <div class="question-model-card"><span>Plural object first</span><p>Are these pencils Daniel's?</p></div>
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Question control</p><h2>Ask About People, Things, Location, and Owner</h2></div></div>
+        <p class="lesson-text">This activity prepares the student for the roulette, the mystery object game, the listening questions, and the oral coach.</p>
+        <div class="unit2-question-grid">
+          <div class="unit2-question-card"><span>Thing</span><p>What is this? / What are these?</p></div>
+          <div class="unit2-question-card"><span>Location</span><p>Where is the notebook? / Where are the keys?</p></div>
+          <div class="unit2-question-card"><span>Person</span><p>Who is that? / Who is near the board?</p></div>
+          <div class="unit2-question-card"><span>Owner</span><p>Whose notebook is this? / Whose keys are these?</p></div>
         </div>
-        <div class="teacher-tip"><span>Quick Rule</span><p><strong>Maria's marker</strong> means <strong>el marcador de Maria</strong>. <strong>This marker is Maria's</strong> means <strong>este marcador es de Maria</strong>. The owner can go before the object or at the end of the sentence.</p></div>
+        <div class="unit2-bank-panel">
+          <h3>Useful vocabulary</h3>
+          <div class="unit2-chip-bank"><span>desk</span><span>chair</span><span>board</span><span>door</span><span>window</span><span>backpack</span><span>notebook</span><span>cellphone</span><span>keys</span><span>charger</span><span>marker</span><span>pencil case</span><span>on</span><span>in</span><span>under</span><span>next to</span><span>near</span><span>behind</span><span>in front of</span><span>between</span></div>
+        </div>
+        <div class="teacher-tip"><span>Quick rule</span><p>Use <strong>who</strong> for people and <strong>whose</strong> for possession. Do not say <em>Who notebook is this?</em> Say: <strong>Whose notebook is this?</strong></p></div>
       </article>
     </section>
 
@@ -88,18 +153,60 @@
 
   </main>
   <script>
-    const template = "Where is {person}? {person} is in {place}. What is that? That is a {thing}. It is {owner}'s {thing}.";
-    const fields = ['person', 'place', 'thing', 'owner'];
-    const defaults = {'person': 'Karla', 'place': 'the library', 'thing': 'cellphone', 'owner': 'my friend'};
-    function generateSentence() {
-      let output = template;
-      fields.forEach(function(id) {
-        const value = document.getElementById(id).value.trim() || defaults[id];
-        output = output.replaceAll("{" + id + "}", value);
-      });
-      document.getElementById("speech-output").textContent = '"' + output + '"';
-      document.getElementById("result-card").style.display = "block";
+    const unit2Objects = ['notebook', 'backpack', 'cellphone', 'pencil case', 'keys', 'charger', 'marker', 'laptop'];
+    const unit2Locations = ['on the desk', 'under the chair', 'in the backpack', 'next to the laptop', 'near the board', 'behind the book', "in front of the teacher's desk", 'between two notebooks'];
+    const unit2Owners = ['Ana', 'Carlos', 'Laura', 'Daniel', 'Sofia', 'the teacher', 'my classmate', 'my friend'];
+    function isPluralThing(thing) {
+      return ['keys'].includes(thing.toLowerCase()) || thing.toLowerCase().endsWith('s');
     }
+    function pluralizeThing(thing) {
+      if (isPluralThing(thing)) return thing;
+      if (thing.endsWith('case')) return thing + 's';
+      if (thing.endsWith('ch')) return thing + 'es';
+      return thing + 's';
+    }
+    function setSelectValue(id, value) {
+      const el = document.getElementById(id);
+      Array.from(el.options).forEach(option => { option.selected = option.value === value || option.textContent === value; });
+    }
+    function randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    }
+    function randomizeClassroomReport() {
+      const thing = randomItem(unit2Objects);
+      setSelectValue('thing', thing);
+      setSelectValue('location', randomItem(unit2Locations));
+      document.getElementById('owner').value = randomItem(unit2Owners);
+      setSelectValue('distance', isPluralThing(thing) ? randomItem(['these', 'those']) : randomItem(['this', 'that']));
+      generateClassroomReport();
+    }
+    function generateClassroomReport() {
+      const thing = document.getElementById('thing').value;
+      const location = document.getElementById('location').value;
+      const owner = document.getElementById('owner').value.trim() || 'Ana';
+      let distance = document.getElementById('distance').value;
+      if (isPluralThing(thing) && distance === 'this') distance = 'these';
+      if (isPluralThing(thing) && distance === 'that') distance = 'those';
+      const plural = isPluralThing(thing) || ['these', 'those'].includes(distance);
+      const be = plural ? 'are' : 'is';
+      const pronoun = plural ? 'They' : 'It';
+      const displayThing = plural ? pluralizeThing(thing) : thing;
+      const objectPhrase = plural ? displayThing : 'a ' + displayThing;
+      const ownerMark = owner + "'s";
+      const questionNoun = displayThing;
+      const question = plural ? `Whose ${questionNoun} are ${distance}?` : `Whose ${questionNoun} is ${distance}?`;
+      const report = `${capitalize(distance)} ${be} ${objectPhrase}. ${pronoun} ${be} ${location}. ${pronoun} ${be} ${ownerMark}.`;
+      document.getElementById('speech-output').textContent = report;
+      document.getElementById('modelStack').innerHTML = [
+        `<div class="unit2-model-line">Question: ${question}</div>`,
+        `<div class="unit2-model-line">Answer: ${pronoun} ${be} ${ownerMark} ${displayThing}.</div>`,
+        `<div class="unit2-model-line">Partner follow-up: Where ${be} ${distance} ${displayThing}?</div>`
+      ].join('');
+    }
+    function capitalize(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+    document.addEventListener('DOMContentLoaded', generateClassroomReport);
   </script>
 
   <footer class="site-footer">
