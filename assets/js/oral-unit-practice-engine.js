@@ -192,7 +192,7 @@
     const terms = Array.isArray(check.terms) ? check.terms : [];
     const matches = terms.filter((term) => normalized.includes(normalize(term)));
     const needed = Number(check.minMatches) || 1;
-    return { label: check.label || "élément attendu", met: matches.length >= needed, matches: matches.length };
+    return { label: check.label || ui.expectedElement || "élément attendu", met: matches.length >= needed, matches: matches.length };
   }
 
   function analyzeAnswer(transcript, durationMs, whisperWords = [], question = currentQuestion()) {
@@ -210,11 +210,12 @@
     const clarityScore = Math.max(35, Math.min(100, Math.round(averageConfidence * 100)));
     const score = Math.round(taskScore * .3 + developmentScore * .25 + clarityScore * .3 + fluencyScore * .15);
     const lowConfidence = clearWords.filter((item) => item.probability < .68 && item.word.length > 2).slice(0, 8);
+    const scoreMessages = ui.scoreMessages || {};
     const message = score >= 84
-      ? "Très bien : la réponse couvre la tâche et reste claire."
+      ? (scoreMessages.high || "Très bien : la réponse couvre la tâche et reste claire.")
       : score >= 68
-        ? "Bon travail : répète la réponse en ajoutant une information ou une formule plus précise."
-        : "Continue : utilise une structure proposée et réponds avec une phrase complète.";
+        ? (scoreMessages.mid || "Bon travail : répète la réponse en ajoutant une information ou une formule plus précise.")
+        : (scoreMessages.low || "Continue : utilise une structure proposée et réponds avec une phrase complète.");
     return { score, wordCount, durationSeconds: seconds, checks, metrics: { task: taskScore, development: developmentScore, clarity: clarityScore, fluency: fluencyScore }, lowConfidence, message };
   }
 
@@ -237,9 +238,14 @@
   function feedbackHtml(analysis, question) {
     const checks = analysis.checks.map((check) => `<span class="feedback-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i>${escapeHtml(check.label)}</span>`).join("");
     const wordReview = analysis.lowConfidence?.length
-      ? `<p class="feedback-note"><strong>Mots à prononcer plus clairement :</strong> ${analysis.lowConfidence.map((item) => escapeHtml(item.word)).join(", ")}</p>`
+      ? `<p class="feedback-note"><strong>${escapeHtml(ui.lowConfidenceLabel || "Mots à prononcer plus clairement :")}</strong> ${analysis.lowConfidence.map((item) => escapeHtml(item.word)).join(", ")}</p>`
       : "";
-    return `<div class="feedback-checks"><span class="feedback-check is-met"><i class="bi bi-clipboard-data"></i>Score : ${analysis.score}/100</span>${checks}</div><p class="feedback-message">${escapeHtml(analysis.message)}</p>${wordReview}<p class="feedback-note">${escapeHtml(ui.formativeNotice || "Résultat formatif, pas une note officielle.")}</p><p class="answer-model"><strong>Modèle amélioré</strong>${escapeHtml(question.improved || "")}</p>`;
+    return `<div class="feedback-checks"><span class="feedback-check is-met"><i class="bi bi-clipboard-data"></i>${escapeHtml(ui.scoreLabel || "Score :")} ${analysis.score}/100</span>${checks}</div><p class="feedback-message">${escapeHtml(analysis.message)}</p>${wordReview}<p class="feedback-note">${escapeHtml(ui.formativeNotice || "Résultat formatif, pas une note officielle.")}</p><p class="answer-model"><strong>${escapeHtml(ui.improvedModelLabel || "Modèle amélioré")}</strong>${escapeHtml(question.improved || "")}</p>`;
+  }
+
+  function templateText(template, values, fallback) {
+    const base = template || fallback || "";
+    return Object.entries(values || {}).reduce((text, [key, value]) => text.replaceAll(`{${key}}`, String(value)), base);
   }
 
   function renderQuestion() {
@@ -247,7 +253,7 @@
     if (!question) return;
     const total = state.questionIds.length;
     const answer = answerForCurrent();
-    elements.counter.textContent = `Question ${state.currentIndex + 1} sur ${total}`;
+    elements.counter.textContent = templateText(ui.questionCounter, { current: state.currentIndex + 1, total }, `Question ${state.currentIndex + 1} sur ${total}`);
     elements.topic.textContent = question.topic || config.unitLabel || "";
     elements.progress.style.width = `${Math.round(((state.currentIndex + 1) / total) * 100)}%`;
     elements.questionText.textContent = question.text;
@@ -255,7 +261,7 @@
     elements.interviewerRole.textContent = config.interviewer?.role || "Coach de conversation";
     elements.interviewerAudio.src = question.audio;
     elements.interviewerAudio.playbackRate = selectedSpeed;
-    elements.interviewerStatus.textContent = "Écoutez la question, puis répondez avec vos informations.";
+    elements.interviewerStatus.textContent = ui.questionReadyStatus || "Écoutez la question, puis répondez avec vos informations.";
     if (question.visual?.src) {
       elements.visualPanel.hidden = false;
       elements.visualImage.src = question.visual.src;
@@ -264,7 +270,7 @@
     } else {
       elements.visualPanel.hidden = true;
     }
-    elements.frames.innerHTML = (question.frames || []).map((frame, index) => `<button class="answer-frame" type="button"><span>${index + 1}</span><strong>Structure ${index + 1}</strong><small>${escapeHtml(frame)}</small></button>`).join("");
+    elements.frames.innerHTML = (question.frames || []).map((frame, index) => `<button class="answer-frame" type="button"><span>${index + 1}</span><strong>${escapeHtml(templateText(ui.structureLabel, { number: index + 1 }, `Structure ${index + 1}`))}</strong><small>${escapeHtml(frame)}</small></button>`).join("");
     elements.vocabulary.innerHTML = (question.vocabulary || []).map((word) => `<span>${escapeHtml(word)}</span>`).join("");
     elements.grammar.innerHTML = escapeHtml(question.grammar || "");
     elements.support.hidden = state.currentIndex > 0;
@@ -310,7 +316,7 @@
     if (state.lastReport) {
       elements.reviewPrevious.hidden = false;
       elements.resumeNote.hidden = false;
-      elements.resumeNote.textContent = `Dernier score : ${state.lastReport.score}/100. Tu peux refaire la pratique ou revoir le rapport.`;
+      elements.resumeNote.textContent = templateText(ui.lastScore, { score: state.lastReport.score }, `Dernier score : ${state.lastReport.score}/100. Tu peux refaire la pratique ou revoir le rapport.`);
     }
   }
 
@@ -319,7 +325,7 @@
     try {
       const devices = (await navigator.mediaDevices.enumerateDevices()).filter((device) => device.kind === "audioinput");
       const current = elements.micSelect.value;
-      elements.micSelect.innerHTML = `<option value="">Microphone par défaut</option>${devices.map((device, index) => `<option value="${escapeHtml(device.deviceId)}">${escapeHtml(device.label || `Microphone ${index + 1}`)}</option>`).join("")}`;
+      elements.micSelect.innerHTML = `<option value="">${escapeHtml(ui.defaultMicrophone || "Microphone par défaut")}</option>${devices.map((device, index) => `<option value="${escapeHtml(device.deviceId)}">${escapeHtml(device.label || templateText(ui.microphoneLabel, { number: index + 1 }, `Microphone ${index + 1}`))}</option>`).join("")}`;
       if ([...elements.micSelect.options].some((option) => option.value === current)) elements.micSelect.value = current;
     } catch {
       // Device labels are optional.
@@ -343,7 +349,7 @@
     levelContext = null;
     levelAnalyser = null;
     if (elements.levelBar) elements.levelBar.style.width = "0";
-    if (elements.levelValue) elements.levelValue.textContent = "En attente";
+    if (elements.levelValue) elements.levelValue.textContent = ui.levelWaiting || "En attente";
   }
 
   function startLevelMeter(stream) {
@@ -505,38 +511,39 @@
 
   function renderSummary(report, includeCurrentHistory) {
     elements.summaryTitle.textContent = config.title || "Rapport de conversation";
-    elements.summaryLead.textContent = report.score >= 84 ? "Très bonne préparation pour une première conversation." : report.score >= 68 ? "Bonne base. Répète les questions faibles pour gagner en précision." : "Tu as commencé : reprends les structures et réponds avec des phrases complètes.";
+    elements.summaryLead.textContent = report.score >= 84 ? (ui.summaryLeadHigh || "Très bonne préparation pour une première conversation.") : report.score >= 68 ? (ui.summaryLeadMid || "Bonne base. Répète les questions faibles pour gagner en précision.") : (ui.summaryLeadLow || "Tu as commencé : reprends les structures et réponds avec des phrases complètes.");
     elements.summaryScore.textContent = String(report.score);
     elements.summaryScoreRing.style.setProperty("--score", report.score);
-    elements.summaryReadiness.textContent = report.score >= 84 ? "Prêt pour interagir" : report.score >= 68 ? "En bonne progression" : "À consolider";
+    elements.summaryReadiness.textContent = report.score >= 84 ? (ui.readinessHigh || "Prêt pour interagir") : report.score >= 68 ? (ui.readinessMid || "En bonne progression") : (ui.readinessLow || "À consolider");
     const previous = (state.attemptHistory || []).slice(-2, -1)[0];
-    elements.summaryComparison.textContent = previous && includeCurrentHistory ? `Essai précédent : ${previous.score}/100.` : "Refais la pratique plusieurs fois : les questions changent et l’aide peut être masquée.";
-    const metricLabels = [["task", "Tâche", "Réponse à la question"], ["development", "Développement", "Longueur et précision"], ["clarity", "Clarté", "Indice approximatif Whisper"], ["fluency", "Fluidité", "Durée et continuité"]];
+    elements.summaryComparison.textContent = previous && includeCurrentHistory ? templateText(ui.previousAttempt, { score: previous.score }, `Essai précédent : ${previous.score}/100.`) : (ui.comparisonDefault || "Refais la pratique plusieurs fois : les questions changent et l’aide peut être masquée.");
+    const metricLabels = ui.metricLabels || [["task", "Tâche", "Réponse à la question"], ["development", "Développement", "Longueur et précision"], ["clarity", "Clarté", "Indice approximatif Whisper"], ["fluency", "Fluidité", "Durée et continuité"]];
     elements.summaryMetrics.innerHTML = metricLabels.map(([key, label, description]) => {
       const value = report.metrics?.[key] || 0;
       return `<article class="summary-metric"><header><strong>${value}</strong><span>/100</span></header><p>${escapeHtml(label)} · ${escapeHtml(description)}</p><div class="summary-metric-bar"><i style="width:${value}%"></i></div></article>`;
     }).join("");
     const strengths = [];
     const priorities = [];
-    if ((report.metrics?.task || 0) >= 75) strengths.push("Tu réponds globalement aux questions posées."); else priorities.push("Réponds exactement à la question avant d’ajouter des détails.");
-    if ((report.metrics?.development || 0) >= 75) strengths.push("Tes réponses ont assez de mots pour être comprises."); else priorities.push("Ajoute une information personnelle : ville, pays, âge ou prénom.");
-    if ((report.metrics?.clarity || 0) >= 75) strengths.push("La transcription reconnaît une bonne partie de tes mots."); else priorities.push("Parle plus près du micro et ralentis légèrement.");
-    if ((report.metrics?.fluency || 0) >= 75) strengths.push("Tu maintiens une réponse assez continue."); else priorities.push("Prépare une phrase courte avant d’enregistrer.");
-    elements.summaryStrengths.innerHTML = (strengths.length ? strengths : ["Tu as terminé une pratique orale complète."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-    elements.summaryPriorities.innerHTML = (priorities.length ? priorities : ["Essaie sans afficher l’aide dès la première question."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    const summaryMessages = ui.summaryMessages || {};
+    if ((report.metrics?.task || 0) >= 75) strengths.push(summaryMessages.taskStrength || "Tu réponds globalement aux questions posées."); else priorities.push(summaryMessages.taskPriority || "Réponds exactement à la question avant d’ajouter des détails.");
+    if ((report.metrics?.development || 0) >= 75) strengths.push(summaryMessages.developmentStrength || "Tes réponses ont assez de mots pour être comprises."); else priorities.push(summaryMessages.developmentPriority || "Ajoute une information personnelle : ville, pays, âge ou prénom.");
+    if ((report.metrics?.clarity || 0) >= 75) strengths.push(summaryMessages.clarityStrength || "La transcription reconnaît une bonne partie de tes mots."); else priorities.push(summaryMessages.clarityPriority || "Parle plus près du micro et ralentis légèrement.");
+    if ((report.metrics?.fluency || 0) >= 75) strengths.push(summaryMessages.fluencyStrength || "Tu maintiens une réponse assez continue."); else priorities.push(summaryMessages.fluencyPriority || "Prépare une phrase courte avant d’enregistrer.");
+    elements.summaryStrengths.innerHTML = (strengths.length ? strengths : [summaryMessages.defaultStrength || "Tu as terminé une pratique orale complète."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
+    elements.summaryPriorities.innerHTML = (priorities.length ? priorities : [summaryMessages.defaultPriority || "Essaie sans afficher l’aide dès la première question."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     const lowWords = report.answers.flatMap((answer) => answer.lowConfidence || []).slice(0, 10);
-    elements.summaryWordPractice.innerHTML = lowWords.length ? `<div class="word-practice-list">${lowWords.map((item) => `<span class="word-practice-chip">${escapeHtml(item.word)} <small>${Math.round(item.probability * 100)}%</small></span>`).join("")}</div>` : `<p class="word-practice-clear"><i class="bi bi-check-circle-fill"></i> Aucun mot prioritaire détecté dans cet essai.</p>`;
-    elements.attemptHistory.innerHTML = (state.attemptHistory || []).slice().reverse().map((item, index) => `<article class="attempt-card ${index === 0 && includeCurrentHistory ? "is-current" : ""}"><small>${new Date(item.date).toLocaleDateString("fr-FR")}</small><strong>${item.score}</strong><span>${item.mode === "weak" ? "questions faibles" : "essai complet"}</span></article>`).join("") || "<p>Aucun essai précédent.</p>";
+    elements.summaryWordPractice.innerHTML = lowWords.length ? `<div class="word-practice-list">${lowWords.map((item) => `<span class="word-practice-chip">${escapeHtml(item.word)} <small>${Math.round(item.probability * 100)}%</small></span>`).join("")}</div>` : `<p class="word-practice-clear"><i class="bi bi-check-circle-fill"></i> ${escapeHtml(ui.noPriorityWords || "Aucun mot prioritaire détecté dans cet essai.")}</p>`;
+    elements.attemptHistory.innerHTML = (state.attemptHistory || []).slice().reverse().map((item, index) => `<article class="attempt-card ${index === 0 && includeCurrentHistory ? "is-current" : ""}"><small>${new Date(item.date).toLocaleDateString(ui.locale || "fr-FR")}</small><strong>${item.score}</strong><span>${item.mode === "weak" ? (ui.weakAttemptLabel || "questions faibles") : (ui.fullAttemptLabel || "essai complet")}</span></article>`).join("") || `<p>${escapeHtml(ui.noPreviousAttempts || "Aucun essai précédent.")}</p>`;
     elements.summaryAnswers.innerHTML = report.answers.map((answer, index) => {
       const checks = answer.checks.map((check) => `<span class="feedback-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i>${escapeHtml(check.label)}</span>`).join("");
-      return `<article class="summary-answer"><header><h3>${index + 1}. ${escapeHtml(answer.question)}</h3><span class="summary-answer-score">${answer.score}/100</span></header><blockquote>${escapeHtml(answer.transcript || "Aucune transcription disponible.")}</blockquote><div class="feedback-checks">${checks}</div><p>${escapeHtml(answer.message)}</p><div class="answer-model"><strong>Modèle amélioré</strong>${escapeHtml(answer.improved)}</div></article>`;
+      return `<article class="summary-answer"><header><h3>${index + 1}. ${escapeHtml(answer.question)}</h3><span class="summary-answer-score">${answer.score}/100</span></header><blockquote>${escapeHtml(answer.transcript || ui.noTranscript || "Aucune transcription disponible.")}</blockquote><div class="feedback-checks">${checks}</div><p>${escapeHtml(answer.message)}</p><div class="answer-model"><strong>${escapeHtml(ui.improvedModelLabel || "Modèle amélioré")}</strong>${escapeHtml(answer.improved)}</div></article>`;
     }).join("");
   }
 
   function playQuestion() {
     elements.interviewerAudio.playbackRate = selectedSpeed;
     elements.interviewerAudio.currentTime = 0;
-    elements.interviewerAudio.play().catch(() => { elements.interviewerStatus.textContent = "Impossible de lire l’audio pour le moment."; });
+    elements.interviewerAudio.play().catch(() => { elements.interviewerStatus.textContent = ui.audioPlayError || "Impossible de lire l’audio pour le moment."; });
   }
 
   function bindEvents() {
@@ -569,7 +576,7 @@
 
   function init() {
     if (!QUESTIONS.length) {
-      showUnsupported("Configuration absente", "Aucune question n’est disponible pour cette activité.");
+      showUnsupported(ui.missingConfigTitle || "Configuration absente", ui.missingConfigDetail || "Aucune question n’est disponible pour cette activité.");
       return;
     }
     bindEvents();
