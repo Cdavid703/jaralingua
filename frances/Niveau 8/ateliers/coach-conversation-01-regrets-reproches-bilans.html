@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Coach de conversation pour pratiquer les regrets, reproches diplomatiques et bilans en français niveau 8.">
+  <title>Coach de conversation – Thème 1 | Français Niveau 8</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="../../../assets/img/favicon.png" sizes="96x96">
+  <link href="../../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../../../assets/css/oral-unit-practice.css?v=20260713-fr8-t1" rel="stylesheet">
+</head>
+<body class="oral-unit-page">
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="../index.html"><img class="brand-logo" src="../../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Français · Niveau 8</span></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal" aria-label="Ouvrir le menu"><span class="navbar-toggler-icon"></span></button>
+      <div class="collapse navbar-collapse" id="menuPrincipal">
+        <ul class="navbar-nav ms-auto">
+          <li><a class="nav-link" href="../index.html">Accueil</a></li>
+          <li><a class="nav-link" href="../themes-du-cours.html">Thèmes</a></li>
+          <li><a class="nav-link active" href="../ateliers-activites.html#theme-01">Ateliers</a></li>
+          <li><a class="nav-link" href="../notes-evaluation.html">Notes</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="oral-unit-hero-wrap" style="--hero-image:url('/frances/Niveau%208/img/pratique-orale/theme-01-coach-conversation.webp?v=20260713-fr8-t1')">
+    <section class="oral-unit-hero">
+      <div>
+        <p class="eyebrow"><i class="bi bi-mic-fill"></i> Français B2 · Thème 01</p>
+        <h1>Coach de conversation – Regrets, reproches et bilans</h1>
+        <p>Écoutez une situation courte, répondez directement avec une phrase complète et recevez un retour automatique sur la clarté de votre réponse orale.</p>
+        <div class="lesson-meta"><span>4 questions par essai</span><span>6 questions possibles</span><span>3–5 minutes</span><span>Non noté</span><span>Whisper temporaire</span></div>
+        <div class="hero-actions"><a href="#oralUnitApp" class="btn btn-primary"><i class="bi bi-play-fill"></i> Commencer</a><a href="../ateliers-activites.html#theme-01" class="btn btn-secondary">Retour aux ateliers</a></div>
+      </div>
+      <aside class="lesson-hero-image">
+        <img src="../img/pratique-orale/theme-01-coach-conversation.webp?v=20260713-fr8-t1" width="1672" height="941" fetchpriority="high" decoding="async" alt="Apprenants adultes pratiquant une réponse orale avec un microphone">
+      </aside>
+    </section>
+  </header>
+
+  <main>
+    <section class="oral-outcomes" aria-label="Informations sur la pratique">
+      <article><i class="bi bi-person-video3"></i><div><strong>Réponse directe</strong><span>Une situation, une réponse attendue</span></div></article>
+      <article><i class="bi bi-lightbulb"></i><div><strong>Aide linguistique</strong><span>Modèles, vocabulaire et rappel grammatical</span></div></article>
+      <article><i class="bi bi-shield-check"></i><div><strong>Pratique privée</strong><span>Résultat formatif, pas de note officielle</span></div></article>
+    </section>
+
+    <section class="oral-mock-shell" id="oralUnitApp">
+      <div class="oral-mock-layout">
+        <section class="oral-main-card" aria-live="polite">
+          <div class="oral-onboarding" id="onboardingPanel">
+            <p class="oral-kicker">Avant de commencer</p>
+            <h2>Une pratique courte pour répondre sans tourner autour du sujet</h2>
+            <p>Vous entendrez quatre situations du thème 1. Chaque question demande une réponse précise : regret, reproche diplomatique ou bilan après une erreur. Utilisez l’aide au début, puis recommencez avec l’aide masquée.</p>
+
+            <ol class="oral-steps">
+              <li><span>1</span><div><strong>Écoutez</strong><small>Lisez la situation et écoutez la question à 0,75× ou 1×.</small></div></li>
+              <li><span>2</span><div><strong>Préparez</strong><small>Choisissez une structure et gardez une action concrète.</small></div></li>
+              <li><span>3</span><div><strong>Parlez</strong><small>Enregistrez une phrase complète en français.</small></div></li>
+              <li><span>4</span><div><strong>Relisez</strong><small>Vérifiez la transcription et le feedback formatif.</small></div></li>
+            </ol>
+
+            <div class="microphone-check">
+              <div><strong><i class="bi bi-mic"></i> Vérification du microphone</strong><p id="preflightStatus">Vous pouvez tester le microphone maintenant ou autoriser l’accès à la première question.</p></div>
+              <button class="oral-button secondary" id="preflightButton" type="button"><i class="bi bi-soundwave"></i> Tester le microphone</button>
+            </div>
+
+            <div class="oral-start-actions">
+              <button class="oral-button primary" id="startInterviewButton" type="button"><i class="bi bi-play-fill"></i> Commencer la pratique</button>
+              <button class="oral-text-button" id="reviewPreviousButton" type="button" hidden>Voir mon dernier essai</button>
+            </div>
+            <p class="resume-note" id="resumeNote" hidden></p>
+          </div>
+
+          <div class="interview-panel" id="interviewPanel" hidden>
+            <div class="interview-progress-header">
+              <div><span id="questionCounter">Question 1 sur 4</span><strong id="questionTopic">Regrets</strong></div>
+              <div class="interview-progress-track" aria-hidden="true"><i id="interviewProgressBar"></i></div>
+            </div>
+
+            <section class="interviewer-card" aria-labelledby="questionText">
+              <div class="interviewer-identity"><span><i class="bi bi-person-video3"></i></span><div><strong id="interviewerName">Camille</strong><small id="interviewerRole">Coach de conversation</small></div></div>
+              <p class="interviewer-status" id="interviewerStatus">Prêt à poser la question</p>
+              <h2 id="questionText"></h2>
+              <div class="interviewer-audio-controls">
+                <button class="question-play-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Écouter la question</span></button>
+                <div class="speed-control" aria-label="Vitesse de lecture"><span>Vitesse</span><button type="button" data-speed="0.75">0,75×</button><button type="button" data-speed="1" class="is-active">1×</button></div>
+              </div>
+              <audio id="interviewerAudio" preload="metadata"></audio>
+            </section>
+
+            <figure class="oral-map" id="questionVisualPanel" hidden>
+              <img id="questionVisualImage" src="../img/pratique-orale/theme-01-coach-conversation.webp" width="1672" height="941" decoding="async" alt="Support visuel de la question">
+              <figcaption id="questionVisualCaption"></figcaption>
+            </figure>
+
+            <section class="answer-support" id="answerSupport">
+              <div class="answer-support-heading"><div><p class="oral-kicker">Préparer la réponse</p><h3>Choisissez une réponse modèle</h3></div><button class="oral-text-button" id="toggleHelpButton" type="button">Masquer l’aide</button></div>
+              <p class="support-reminder">La réponse doit être courte, directe et logique. Vous pouvez adapter le modèle, mais gardez la structure du regret, du reproche ou du bilan.</p>
+              <div class="answer-frame-grid" id="answerFrameGrid"></div>
+              <div class="language-support-grid">
+                <section><p class="oral-kicker">Banque de vocabulaire</p><div class="vocabulary-bank" id="vocabularyBank"></div></section>
+                <section><p class="oral-kicker">Indice grammatical</p><p class="grammar-clue" id="grammarClue"></p></section>
+              </div>
+            </section>
+            <button class="oral-button secondary show-help-button" id="showHelpButton" type="button" hidden><i class="bi bi-lightbulb"></i> J’ai besoin d’aide</button>
+
+            <section class="answer-recorder" aria-label="Enregistrer votre réponse">
+              <label class="oral-microphone-picker"><span><i class="bi bi-mic"></i> Microphone utilisé</span><select id="microphoneSelect" aria-label="Choisir un microphone"><option value="">Microphone par défaut</option></select></label>
+              <div class="oral-level-meter"><span>Niveau du microphone</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">En attente</b></div>
+              <button class="oral-mic-button" id="micButton" type="button" aria-label="Commencer à répondre avec le microphone"><i class="bi bi-mic-fill"></i></button>
+              <p class="oral-record-status" id="recordStatus">Prêt pour votre réponse</p>
+              <p class="oral-record-help" id="recordHelp">Touchez le microphone et répondez en français avec une phrase complète.</p>
+              <span class="oral-timer" id="timer">00:00 / 00:40</span>
+              <div class="oral-recorder-actions"><button class="oral-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Terminer la réponse</button><button class="oral-button secondary" id="retryButton" type="button" disabled><i class="bi bi-arrow-repeat"></i> Recommencer</button></div>
+              <div class="oral-transcript" id="liveTranscript" aria-live="polite">Votre transcription apparaîtra ici après l’analyse Whisper.</div>
+              <audio id="studentAudio" controls hidden></audio>
+              <div class="oral-feedback" id="answerFeedback" hidden></div>
+              <div class="mic-unsupported" id="unsupported" hidden></div>
+            </section>
+
+            <div class="question-navigation"><button class="oral-button primary" id="nextQuestionButton" type="button" disabled>Continuer <i class="bi bi-arrow-right"></i></button></div>
+          </div>
+
+          <div class="oral-summary" id="summaryPanel" hidden>
+            <div class="summary-celebration"><i class="bi bi-check2-circle"></i><p class="oral-kicker">Pratique terminée</p><h2 id="summaryTitle">Rapport de conversation</h2><p id="summaryLead"></p></div>
+            <section class="readiness-report" aria-label="Résultat de préparation orale">
+              <div class="readiness-score" id="summaryScoreRing"><div><strong id="summaryScore">0</strong><span>sur 100</span></div></div>
+              <div class="readiness-copy"><p class="oral-kicker">Score de préparation orale</p><h3 id="summaryReadiness">Continuez à pratiquer</h3><p id="summaryComparison"></p><small>Ceci est un résultat automatique d’entraînement, et non une note officielle.</small></div>
+            </section>
+            <div class="summary-metrics" id="summaryMetrics"></div>
+            <div class="summary-guidance-grid">
+              <section><p class="oral-kicker">Points forts</p><h3>Ce qui fonctionne</h3><ul id="summaryStrengths"></ul></section>
+              <section><p class="oral-kicker">Priorités</p><h3>À pratiquer maintenant</h3><ul id="summaryPriorities"></ul></section>
+            </div>
+            <section class="summary-word-practice"><p class="oral-kicker">Clarté de prononciation</p><h3>Mots à prononcer plus clairement</h3><div id="summaryWordPractice"></div><p class="confidence-disclaimer"><i class="bi bi-info-circle"></i> Ces mots ont eu une confiance Whisper plus basse. Cela peut venir de la prononciation, du bruit, du micro ou d’un nom propre : ce n’est pas un diagnostic phonétique définitif.</p></section>
+            <section class="attempt-history-panel"><p class="oral-kicker">Pratique illimitée</p><h3>Essais récents</h3><div class="attempt-history" id="attemptHistory"></div></section>
+            <div class="summary-section-heading"><p class="oral-kicker">Feedback question par question</p><h3>Relisez chaque réponse</h3></div>
+            <div class="summary-answers" id="summaryAnswers"></div>
+            <div class="summary-actions"><button class="oral-button primary" id="restartInterviewButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Nouvel essai complet</button><button class="oral-button secondary" id="weakPracticeButton" type="button"><i class="bi bi-bullseye"></i> Pratiquer mes deux questions faibles</button><a class="oral-button secondary" href="../ateliers-activites.html#theme-01">Retour aux ateliers</a></div>
+          </div>
+        </section>
+
+        <aside class="oral-sidebar">
+          <section><p class="oral-kicker">Contenu travaillé</p><h2>Ce que vous allez pratiquer</h2><ul class="coverage-list"><li><i class="bi bi-arrow-counterclockwise"></i><span>Formuler un regret concret</span></li><li><i class="bi bi-chat-left-text"></i><span>Faire un reproche diplomatique</span></li><li><i class="bi bi-clipboard-check"></i><span>Faire un bilan après une erreur</span></li><li><i class="bi bi-tools"></i><span>Proposer une correction réaliste</span></li><li><i class="bi bi-soundwave"></i><span>Répondre clairement au micro</span></li></ul></section>
+          <section><p class="oral-kicker">Expression utile</p><h3>Refaire le monde</h3><p>Après une erreur, on peut facilement refaire le monde. Ici, l’objectif est plus précis : dire ce qui aurait été préférable avec une phrase claire.</p></section>
+          <section><p class="oral-kicker">Important</p><h3>Ce n’est pas une évaluation</h3><p>Cette activité prépare la production orale. Le score est formatif : il sert à savoir quoi répéter, pas à produire une note.</p></section>
+          <section><p class="oral-kicker">Confidentialité</p><h3>Votre voix n’est pas gardée</h3><p>L’enregistrement est envoyé temporairement au service Whisper de JaraLingua pour transcription. Cette page garde seulement le résumé écrit dans votre navigateur.</p></section>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Français Niveau 8 · Coach de conversation · Thème 1 · Pratique formative</p></footer>
+  <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../../../assets/js/oral-unit-practice-data/french-level-8-theme-1.js?v=20260713-fr8-t1"></script>
+  <script src="../../../assets/js/oral-unit-practice-engine.js?v=20260713-fr8-t1"></script>
+  <script src="../../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>

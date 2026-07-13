@@ -639,7 +639,22 @@ Antes de considerar completo Nivel 8, verificar:
 - No hay imagenes abstractas de relleno.
 - No hay archivos privados del examen en rutas publicas.
 
-## 24. Orden recomendado para completar el Nivel 8
+## 24. Cierre obligatorio de cualquier actividad nueva
+
+Cada vez que se construya una actividad nueva para Nivel 8, no se considera terminada hasta que se cierre el ciclo completo:
+
+1. Validar sintaxis y referencias tecnicas de los archivos tocados.
+2. Verificar que la actividad este enlazada en `ateliers-activites.html`, en el tema correspondiente y, si aplica, en la pagina teorica del tema.
+3. Confirmar que imagenes, audios, JavaScript, CSS y datos existen en rutas estables.
+4. Auditar audios contra su guion cuando la actividad incluya audio.
+5. Revisar que no haya caracteres corruptos, preguntas tontas ni opciones de respuesta absurdas.
+6. Hacer commit con mensaje claro.
+7. Desplegar al VPS.
+8. Verificar que produccion refleje los cambios desplegados.
+
+Esta regla aplica actividad por actividad. No se deben acumular actividades nuevas sin commit y despliegue. Si por alguna razon no se puede desplegar, la actividad debe quedar marcada como pendiente de cierre tecnico.
+
+## 25. Orden recomendado para completar el Nivel 8
 
 Como Nivel 8 esta parcialmente construido, el orden de trabajo recomendado es:
 
