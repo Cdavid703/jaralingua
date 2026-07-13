@@ -525,7 +525,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 1",
-        "description": "Défi final de prononciation du thème 1. Envoi autorisé à partir de 50/100."
+        "description": "Défi final de prononciation du thème 1. La note obtenue peut être envoyée au professeur."
     },
     "pronunciationTheme3": {
         "id": "pronunciationTheme3",
@@ -533,7 +533,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 3",
-        "description": "Défi final de prononciation du thème 3. Envoi autorisé à partir de 50/100."
+        "description": "Défi final de prononciation du thème 3. La note obtenue peut être envoyée au professeur."
     },
     "pronunciationTheme5": {
         "id": "pronunciationTheme5",
@@ -541,7 +541,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 5",
-        "description": "Défi final de prononciation du thème 5. Envoi autorisé à partir de 50/100."
+        "description": "Défi final de prononciation du thème 5. La note obtenue peut être envoyée au professeur."
     },
     "pronunciationTheme7": {
         "id": "pronunciationTheme7",
@@ -549,7 +549,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 7",
-        "description": "Défi final de prononciation du thème 7. Envoi autorisé à partir de 50/100."
+        "description": "Défi final de prononciation du thème 7. La note obtenue peut être envoyée au professeur."
     }
 }
 
@@ -560,7 +560,7 @@ FRENCH2_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du theme 1",
-        "description": "Defi final de prononciation du theme 1. Envoi autorise a partir de 50/100."
+        "description": "Defi final de prononciation du theme 1. La note obtenue peut etre envoyee au professeur."
     },
     "pronunciationTheme3": {
         "id": "pronunciationTheme3",
@@ -568,7 +568,7 @@ FRENCH2_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du theme 3",
-        "description": "Defi final de prononciation du theme 3. Envoi autorise a partir de 50/100."
+        "description": "Defi final de prononciation du theme 3. La note obtenue peut etre envoyee au professeur."
     },
     "pronunciationTheme5": {
         "id": "pronunciationTheme5",
@@ -576,7 +576,7 @@ FRENCH2_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du theme 5",
-        "description": "Defi final de prononciation du theme 5. Envoi autorise a partir de 50/100."
+        "description": "Defi final de prononciation du theme 5. La note obtenue peut etre envoyee au professeur."
     },
     "pronunciationTheme7": {
         "id": "pronunciationTheme7",
@@ -584,7 +584,7 @@ FRENCH2_PRONUNCIATION_EVALUATIONS = {
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du theme 7",
-        "description": "Defi final de prononciation du theme 7. Envoi autorise a partir de 50/100."
+        "description": "Defi final de prononciation du theme 7. La note obtenue peut etre envoyee au professeur."
     }
 }
 
@@ -1538,9 +1538,7 @@ def french8_pronunciation_grade_from_payload(payload):
         score100 = float(payload.get("score100"))
     except (TypeError, ValueError):
         raise ValueError("invalid_score")
-    if score100 < 50:
-        raise ValueError("score_too_low")
-    if score100 > 100:
+    if score100 < 0 or score100 > 100:
         raise ValueError("invalid_score")
     grade = round((score100 / 20.0) * 100) / 100
     return evaluation_id, int(round(score100)), grade
@@ -2182,9 +2180,7 @@ def pronunciation_grade_from_payload(payload, evaluations):
         score100 = float(payload.get("score100"))
     except (TypeError, ValueError):
         raise ValueError("invalid_score")
-    if score100 < 50:
-        raise ValueError("score_too_low")
-    if score100 > 100:
+    if score100 < 0 or score100 > 100:
         raise ValueError("invalid_score")
     grade = round((score100 / 20.0) * 100) / 100
     return evaluation_id, int(round(score100)), grade

@@ -279,7 +279,7 @@
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
       <h3><i class="bi bi-send-check"></i> Envoi au professeur</h3>
-      <p data-pronunciation-submit-copy>Cette activité est évaluée. Terminez le défi final avec au moins 50/100 pour envoyer la note.</p>
+      <p data-pronunciation-submit-copy>Cette activité est évaluée. Terminez le défi final pour envoyer la note obtenue au professeur.</p>
       <div class="pronunciation-submit-metrics">
         <span><b data-pronunciation-score>--</b><small>Défi final</small></span>
         <span><b data-pronunciation-grade>--</b><small>Note / 5</small></span>
@@ -316,17 +316,15 @@
       }
       scoreNode.textContent = `${Math.round(score)}/100`;
       gradeNode.textContent = `${gradeFromScore(score).toFixed(2)}/5`;
-      submitButton.disabled = score < 50;
-      copyNode.textContent = score < 50
-        ? "Le défi final doit atteindre au moins 50/100 pour être envoyé. Recommencez le défi final après avoir réécouté le modèle."
-        : "Votre défi final peut être envoyé. La note sera inscrite dans le carnet du Niveau 1.";
+      submitButton.disabled = false;
+      copyNode.textContent = "Votre défi final peut être envoyé avec la note obtenue. La note sera inscrite dans le carnet du Niveau 1.";
     }
 
     async function submitGrade() {
       const attempt = finalAttempt();
       const score = Number(attempt && attempt.overall);
-      if (!Number.isFinite(score) || score < 50) {
-        setStatus("Le score minimal pour envoyer est 50/100.", "error");
+      if (!Number.isFinite(score)) {
+        setStatus("Terminez d'abord le défi final avant d'envoyer.", "error");
         update();
         return;
       }
@@ -355,7 +353,7 @@
         });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) {
-          if (payload.error === "score_too_low") throw new Error("Le score minimal est 50/100.");
+          if (payload.error === "score_too_low") throw new Error("La note obtenue devrait pouvoir être envoyée. Actualisez la page et réessayez.");
           if (payload.error === "student_not_authorized") throw new Error("Votre compte n’est pas associé au carnet du Niveau 1.");
           throw new Error("L’envoi n’a pas pu être terminé.");
         }

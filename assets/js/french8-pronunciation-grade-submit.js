@@ -89,7 +89,7 @@
     panel.innerHTML = `
       <h3><i class="bi bi-send-check"></i> Envoi au professeur</h3>
       <p><strong>${deadline.notice}</strong></p>
-      <p data-pronunciation-submit-copy>Terminez le défi final avec au moins 50/100. Vous pourrez recommencer autant de fois que nécessaire avant d'envoyer votre note.</p>
+      <p data-pronunciation-submit-copy>Terminez le défi final. Vous pourrez envoyer la note obtenue au professeur, même si elle est inférieure à 3,0/5.</p>
       <div class="pronunciation-submit-metrics">
         <span><b data-pronunciation-score>--</b><small>Défi final</small></span>
         <span><b data-pronunciation-grade>--</b><small>Note / 5</small></span>
@@ -131,15 +131,13 @@
         scoreNode.textContent = "--";
         gradeNode.textContent = "--";
         submitButton.disabled = true;
-        copyNode.textContent = "Terminez le defi final avec au moins 50/100. " + deadline.notice;
+        copyNode.textContent = "Terminez le defi final pour activer l'envoi. " + deadline.notice;
         return;
       }
       scoreNode.textContent = Math.round(score) + "/100";
       gradeNode.textContent = gradeFromScore(score).toFixed(2) + "/5";
-      submitButton.disabled = score < 50;
-      copyNode.textContent = score < 50
-        ? "Le defi final doit atteindre au moins 50/100 pour etre envoye. " + deadline.notice
-        : "Votre defi final peut etre envoye. " + deadline.notice + " Seule la note sur 5 sera inscrite dans le carnet du Niveau 8.";
+      submitButton.disabled = false;
+      copyNode.textContent = "Votre defi final peut etre envoye avec la note obtenue. " + deadline.notice + " Seule la note sur 5 sera inscrite dans le carnet du Niveau 8.";
     }
 
     async function submit() {
@@ -150,8 +148,8 @@
         update();
         return;
       }
-      if (!Number.isFinite(score) || score < 50) {
-        setStatus("Le score minimal pour envoyer est 50/100.", "error");
+      if (!Number.isFinite(score)) {
+        setStatus("Terminez d'abord le defi final avant d'envoyer.", "error");
         update();
         return;
       }
@@ -182,7 +180,7 @@
         });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) {
-          if (payload.error === "score_too_low") throw new Error("Le score minimal est 50/100.");
+          if (payload.error === "score_too_low") throw new Error("La note obtenue devrait pouvoir etre envoyee. Actualisez la page et reessayez.");
           if (payload.error === "deadline_closed") throw new Error("La date limite est passee. L'envoi est ferme.");
           if (payload.error === "student_not_authorized") throw new Error("Votre compte n'est pas encore associé au carnet du Niveau 8.");
           throw new Error("L'envoi n'a pas pu être terminé.");

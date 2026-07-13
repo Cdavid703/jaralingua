@@ -109,7 +109,7 @@
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
       <h3><i class="bi bi-send-check"></i> Envoi au professeur</h3>
-      <p data-submit-copy>Cette activite est evaluable. Terminez le defi final avec au moins 50/100 pour envoyer la note.</p>
+      <p data-submit-copy>Cette activite est evaluable. Terminez le defi final pour envoyer la note obtenue au professeur.</p>
       <div class="pronunciation-submit-metrics">
         <span><b data-submit-score>--</b><small>Defi final</small></span>
         <span><b data-submit-grade>--</b><small>Note / 5</small></span>
@@ -141,16 +141,14 @@
     }
     scoreNode.textContent = `${latestAttempt.finalScore}/100`;
     gradeNode.textContent = `${gradeFromScore(latestAttempt.finalScore).toFixed(2)}/5`;
-    button.disabled = latestAttempt.finalScore < 50;
-    copy.textContent = latestAttempt.finalScore < 50
-      ? "Le score minimal est 50/100. Recommencez le defi final apres avoir reecoute le modele."
-      : "Votre defi final peut etre envoye. La note sera inscrite dans le carnet du Niveau 2.";
+    button.disabled = false;
+    copy.textContent = "Votre defi final peut etre envoye avec la note obtenue. La note sera inscrite dans le carnet du Niveau 2.";
   }
 
   async function submitGrade() {
     update();
-    if (!latestAttempt || latestAttempt.finalScore < 50) {
-      setStatus(status, "Le score minimal pour envoyer est 50/100.", "error");
+    if (!latestAttempt) {
+      setStatus(status, "Terminez d'abord le defi final avant d'envoyer.", "error");
       return;
     }
     const user = activeGradeUser();
@@ -178,7 +176,7 @@
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok) {
-        if (result.error === "score_too_low") throw new Error("Le score minimal est 50/100.");
+        if (result.error === "score_too_low") throw new Error("La note obtenue devrait pouvoir etre envoyee. Actualisez la page et reessayez.");
         if (result.error === "student_not_authorized") throw new Error("Votre compte n'est pas associe au carnet du Niveau 2.");
         throw new Error("L'envoi n'a pas pu etre termine.");
       }
