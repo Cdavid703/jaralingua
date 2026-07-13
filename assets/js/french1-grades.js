@@ -408,42 +408,37 @@
     document.getElementById("saveGrades").onclick = save;
   }
 
-  function drawStudentsLegacyCards() {
-    document.getElementById("studentCards").innerHTML = payload.students.length ? payload.students.map((student, index) => `<article class="admin-student-card mb-3" data-student="${index}"><div class="d-flex flex-wrap justify-content-between gap-2 mb-2"><h4 class="h5 mb-0">${esc(student.fullName || "Étudiant")}</h4><label class="form-check text-danger fw-bold mb-0"><input class="form-check-input" type="checkbox" data-delete-student> Supprimer</label></div><div class="row g-2"><label class="col-md-2">ID<input class="form-control" data-f="id" value="${esc(student.id)}"></label><label class="col-md-3">Nom<input class="form-control" data-f="fullName" value="${esc(student.fullName)}"></label><label class="col-md-3">Courriel<input class="form-control" type="email" data-f="email" value="${esc(student.email)}"></label><label class="col-md-2">Niveau<input class="form-control" data-f="level" value="${esc(student.level || CONFIG.levelLabel)}"></label><div class="col-md-2 d-flex align-items-end"><button type="button" class="btn-soft w-100" data-export="${index}">Fiche CSV</button></div></div><div class="admin-grade-grid mt-3">${payload.evaluations.map((evaluation) => `<label class="admin-grade-row"><span>${esc(evaluation.title)} (${evaluation.weight}%)</span><input class="form-control" type="number" min="0" max="5" step="0.1" data-grade="${esc(evaluation.id)}" value="${student.grades?.[evaluation.id] ?? ""}"></label>`).join("")}</div></article>`).join("") : `<div class="locked-card"><i class="bi bi-person-plus-fill"></i><h3>Aucun étudiant enregistré</h3><p>Ajoutez le premier étudiant, puis enregistrez le carnet.</p></div>`;
-    root.querySelectorAll("[data-export]").forEach((button) => {
-      button.onclick = () => {
-        const student = payload.students[Number(button.dataset.export)];
-        download(`fiche-${student.id}.csv`, [
-          ["Évaluation", "Note"],
-          ...payload.evaluations.map((evaluation) => [evaluation.title, student.grades?.[evaluation.id] ?? ""]),
-          ["Moyenne", average(student)]
-        ]);
-      };
-    });
-  }
-
   function drawStudents() {
     const holder = document.getElementById("studentCards");
     if (!payload.students.length) {
       holder.innerHTML = `<div class="locked-card"><i class="bi bi-person-plus-fill"></i><h3>Aucun étudiant enregistré</h3><p>Ajoutez le premier étudiant, puis enregistrez le carnet.</p></div>`;
       return;
     }
-    const evaluationHeaders = payload.evaluations.map((evaluation) => `<th title="${esc(evaluation.description || "")}">${esc(evaluation.title)}<br><small>${esc(evaluation.weight)}%</small></th>`).join("");
-    const rows = payload.students.map((student, index) => {
-      const gradeInputs = payload.evaluations.map((evaluation) => `<td><input class="form-control gradebook-grade-input" type="number" min="0" max="5" step="0.1" data-grade="${esc(evaluation.id)}" value="${student.grades?.[evaluation.id] ?? ""}" placeholder="—"></td>`).join("");
-      return `<tr data-student="${index}" data-student-row data-student-search="${esc(`${student.fullName || ""} ${student.email || ""} ${student.id || ""}`.toLowerCase())}">
-        <td class="text-center"><input class="form-check-input" type="checkbox" data-delete-student title="Supprimer"></td>
-        <td><input class="form-control gradebook-id-input" data-f="id" value="${esc(student.id)}"></td>
-        <td><input class="form-control gradebook-name-input" data-f="fullName" value="${esc(student.fullName)}"></td>
-        <td><input class="form-control gradebook-email-input" type="email" data-f="email" value="${esc(student.email)}"></td>
-        <td><input class="form-control gradebook-contact-input" data-f="contact" value="${esc(student.contact || "")}"></td>
-        <td><input class="form-control gradebook-level-input" data-f="level" value="${esc(student.level || CONFIG.levelLabel)}"></td>
-        ${gradeInputs}
-        <td class="fw-bold">${average(student)}</td>
-        <td><button type="button" class="btn-soft btn-sm" data-export="${index}">CSV</button></td>
-      </tr>`;
+    const cards = payload.students.map((student, index) => {
+      const gradeInputs = payload.evaluations.map((evaluation) => `<label class="admin-grade-row"><span>${esc(evaluation.title)} (${evaluation.weight}%)</span><input class="form-control gradebook-grade-input" type="number" min="0" max="5" step="0.1" data-grade="${esc(evaluation.id)}" value="${student.grades?.[evaluation.id] ?? ""}" placeholder="—"></label>`).join("");
+      return `<details class="admin-student-card mb-3" data-student="${index}" data-student-row data-student-search="${esc(`${student.fullName || ""} ${student.email || ""} ${student.id || ""}`.toLowerCase())}">
+        <summary class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <span><strong>${esc(student.fullName || "Étudiant")}</strong><br><small>${esc(student.id || "")}${student.email ? " · " + esc(student.email) : ""}</small></span>
+          <span class="fw-bold text-primary">Ouvrir</span>
+        </summary>
+        <div class="mt-3">
+          <label class="form-check text-danger fw-bold mb-3"><input class="form-check-input" type="checkbox" data-delete-student> Supprimer</label>
+          <div class="row g-2">
+            <label class="col-md-2">ID<input class="form-control gradebook-id-input" data-f="id" value="${esc(student.id)}"></label>
+            <label class="col-md-3">Nom<input class="form-control gradebook-name-input" data-f="fullName" value="${esc(student.fullName)}"></label>
+            <label class="col-md-3">Courriel<input class="form-control gradebook-email-input" type="email" data-f="email" value="${esc(student.email)}"></label>
+            <label class="col-md-2">Contact<input class="form-control gradebook-contact-input" data-f="contact" value="${esc(student.contact || "")}"></label>
+            <label class="col-md-2">Niveau<input class="form-control gradebook-level-input" data-f="level" value="${esc(student.level || CONFIG.levelLabel)}"></label>
+          </div>
+          <div class="admin-grade-grid mt-3">${gradeInputs}</div>
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-3">
+            <strong>Moyenne : ${average(student)}</strong>
+            <button type="button" class="btn-soft btn-sm" data-export="${index}">Fiche CSV</button>
+          </div>
+        </div>
+      </details>`;
     }).join("");
-    holder.innerHTML = `<div class="grades-panel"><div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><div><p class="section-kicker mb-1">Carnet de groupe</p><h4 class="h5 mb-0">${payload.students.length} étudiant${payload.students.length > 1 ? "s" : ""} · ${payload.evaluations.length} activité${payload.evaluations.length > 1 ? "s" : ""}</h4></div><label class="gradebook-filter">Filtrer<input class="form-control" type="search" data-student-filter placeholder="Nom, courriel ou ID"></label></div><div class="table-wrap gradebook-table-wrap"><table class="grades-table staff-gradebook-table"><thead><tr><th>Suppr.</th><th>ID</th><th>Nom</th><th>Courriel</th><th>Contact</th><th>Niveau</th>${evaluationHeaders}<th>Moyenne</th><th>Fiche</th></tr></thead><tbody>${rows}</tbody></table></div><p class="section-text mt-3 mb-0">Les champs vides restent en attente. Les notes doivent être comprises entre 0 et 5. Après modification, utilisez <strong>Enregistrer tout</strong>.</p></div>`;
+    holder.innerHTML = `<div class="grades-panel"><div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><div><p class="section-kicker mb-1">Carnet de groupe</p><h4 class="h5 mb-0">${payload.students.length} étudiant${payload.students.length > 1 ? "s" : ""} · ${payload.evaluations.length} activité${payload.evaluations.length > 1 ? "s" : ""}</h4></div><label class="gradebook-filter">Filtrer<input class="form-control" type="search" data-student-filter placeholder="Nom, courriel ou ID"></label></div>${cards}<p class="section-text mt-3 mb-0">Les champs vides restent en attente. Les notes doivent être comprises entre 0 et 5. Après modification, utilisez <strong>Enregistrer tout</strong>.</p></div>`;
     const filter = holder.querySelector("[data-student-filter]");
     filter?.addEventListener("input", () => {
       const query = filter.value.trim().toLowerCase();

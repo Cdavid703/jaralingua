@@ -403,6 +403,19 @@
       background: #f8fbff;
     }
 
+    .admin-student-card > summary {
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .admin-student-card > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .admin-student-card[open] {
+      background: var(--white);
+    }
+
     .admin-grade-row {
       display: grid;
       grid-template-columns: 1fr 100px;
@@ -536,7 +549,7 @@
   <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
   <script src="../../assets/js/google-auth.js?v=20260707-basic-claims"></script>
   <script src="../../assets/js/english-grade-report-pdf.js?v=20260608-3"></script>
-  <script src="../../assets/js/basic-english-grades.js?v=20260707-basic-claims"></script>
+  <script src="../../assets/js/basic-english-grades.js?v=20260713-student-accordion"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>

@@ -504,15 +504,17 @@
   function adminStudentCards(payload) {
     return payload.students.map(function (student, index) {
       return `
-        <article class="admin-student-card mb-3" data-student-editor-card data-student-index="${index}">
-          <div class="d-flex flex-wrap justify-content-between gap-2 mb-3">
-            <h3 class="h5 fw-bold mb-0">${escapeHtml(student.fullName)}</h3>
-            <label class="form-check fw-bold text-danger mb-0">
+        <details class="admin-student-card mb-3" data-student-editor-card data-student-index="${index}" data-student-search="${escapeHtml([student.fullName, student.email, student.id].join(" ").toLowerCase())}">
+          <summary class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <span><strong>${escapeHtml(student.fullName || "Student")}</strong><br><small>${escapeHtml(student.id || "")}${student.email ? " · " + escapeHtml(student.email) : ""}</small></span>
+            <span class="fw-bold text-primary">Open</span>
+          </summary>
+          <div class="mt-3">
+            <label class="form-check fw-bold text-danger mb-3">
               <input class="form-check-input" type="checkbox" data-student-delete>
               Delete
             </label>
-          </div>
-          <div class="row g-3">
+            <div class="row g-3">
             <div class="col-md-3">
               <label class="form-label fw-bold">ID</label>
               <input class="form-control" value="${escapeHtml(student.id)}" data-student-field="id">
@@ -533,9 +535,10 @@
               <label class="form-label fw-bold">Contact</label>
               <input class="form-control" value="${escapeHtml(student.contact || "")}" data-student-field="contact">
             </div>
+            </div>
+            <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, student)}</div>
           </div>
-          <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, student)}</div>
-        </article>
+        </details>
       `;
     }).join("");
   }
@@ -546,6 +549,9 @@
         <p class="section-kicker">Administrator</p>
         <h2 class="section-title">Edit students and grades</h2>
         <p class="section-text mb-3">Change names, IDs, levels, emails and grades. Empty grade fields remain pending.</p>
+        <label class="form-label fw-bold w-100 mb-3">Find a student
+          <input class="form-control" type="search" data-student-editor-filter placeholder="Name, email or ID">
+        </label>
         <form data-edit-students-form>
           ${adminStudentCards(payload)}
           <article class="admin-student-card mb-3" data-new-student-card>
@@ -913,6 +919,15 @@
     const form = root.querySelector("[data-edit-students-form]");
     if (!form) return;
     const status = root.querySelector("[data-edit-students-status]");
+    const filter = root.querySelector("[data-student-editor-filter]");
+    if (filter) {
+      filter.addEventListener("input", function () {
+        const query = filter.value.trim().toLowerCase();
+        root.querySelectorAll("[data-student-editor-card]").forEach(function (card) {
+          card.hidden = query && !(card.getAttribute("data-student-search") || "").includes(query);
+        });
+      });
+    }
     form.addEventListener("submit", function (event) {
       event.preventDefault();
       const nextPayload = JSON.parse(JSON.stringify(payload));
