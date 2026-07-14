@@ -189,7 +189,10 @@
 
   function checkTerms(transcript, check) {
     const normalized = normalize(transcript);
-    const terms = Array.isArray(check.terms) ? check.terms : [];
+    const terms = [
+      ...(Array.isArray(check.terms) ? check.terms : []),
+      ...(Array.isArray(check.transcriptionTerms) ? check.transcriptionTerms : [])
+    ];
     const matches = terms.filter((term) => normalized.includes(normalize(term)));
     const needed = Number(check.minMatches) || 1;
     return { label: check.label || ui.expectedElement || "élément attendu", met: matches.length >= needed, matches: matches.length };
@@ -270,7 +273,7 @@
     } else {
       elements.visualPanel.hidden = true;
     }
-    elements.frames.innerHTML = (question.frames || []).map((frame, index) => `<button class="answer-frame" type="button"><span>${index + 1}</span><strong>${escapeHtml(templateText(ui.structureLabel, { number: index + 1 }, `Structure ${index + 1}`))}</strong><small>${escapeHtml(frame)}</small></button>`).join("");
+    elements.frames.innerHTML = (question.frames || []).map((frame, index) => `<button class="answer-frame" type="button" data-frame-index="${index}"><span>${index + 1}</span><strong>${escapeHtml(templateText(ui.structureLabel, { number: index + 1 }, `Structure ${index + 1}`))}</strong><small>${escapeHtml(frame)}</small></button>`).join("");
     elements.vocabulary.innerHTML = (question.vocabulary || []).map((word) => `<span>${escapeHtml(word)}</span>`).join("");
     elements.grammar.innerHTML = escapeHtml(question.grammar || "");
     elements.support.hidden = state.currentIndex > 0;
@@ -470,10 +473,11 @@
       elements.retry.disabled = false;
       setStatus(ui.transcribed || "Réponse transcrite.");
     } catch (error) {
-      elements.transcript.textContent = error.message || "Impossible de transcrire la réponse.";
+      const retryAdvice = ui.transcriptionRetryAdvice || "Réessayez avec une phrase courte de 8 à 12 secondes, proche du micro, sans bruit autour.";
+      elements.transcript.textContent = `${error.message || "Impossible de transcrire la réponse."} ${retryAdvice}`;
       elements.feedback.hidden = true;
       elements.retry.disabled = false;
-      setStatus("Analyse indisponible. Réessayez.");
+      setStatus(ui.transcriptionErrorStatus || "Analyse indisponible. Réessayez.");
     }
   }
 
@@ -560,6 +564,15 @@
     });
     elements.toggleHelp?.addEventListener("click", () => { elements.support.hidden = true; elements.showHelp.hidden = false; });
     elements.showHelp?.addEventListener("click", () => { elements.support.hidden = false; elements.showHelp.hidden = true; });
+    elements.frames?.addEventListener("click", (event) => {
+      const button = event.target.closest(".answer-frame");
+      if (!button || !elements.frames.contains(button)) return;
+      elements.frames.querySelectorAll(".answer-frame").forEach((item) => item.classList.toggle("is-selected", item === button));
+      const model = button.querySelector("small")?.textContent?.trim();
+      if (model && elements.help) {
+        elements.help.textContent = templateText(ui.selectedFrameHelp, { model }, `Modèle choisi : ${model} Répétez-le une fois, puis adaptez-le à votre réponse.`);
+      }
+    });
     elements.mic?.addEventListener("click", startRecording);
     elements.stop?.addEventListener("click", stopRecording);
     elements.retry?.addEventListener("click", () => {

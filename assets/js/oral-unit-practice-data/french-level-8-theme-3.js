@@ -30,6 +30,8 @@ window.JaraLinguaOralUnitConfig = {
     transcribing: "Analyse temporaire de votre réponse avec Whisper…",
     transcribed: "Réponse transcrite. Relisez-la avant de continuer.",
     noSpeech: "Whisper a détecté du son, mais pas de mots français clairs. Parlez un peu plus près du microphone.",
+    transcriptionRetryAdvice: "Réessayez avec une phrase courte, proche du micro, en prononçant clairement le groupe après « que ».",
+    transcriptionErrorStatus: "Analyse indisponible. Recommencez la réponse.",
     unsupportedTitle: "Navigateur non compatible",
     unsupportedDetail: "Cette activité nécessite getUserMedia et MediaRecorder.",
     privacy: "L’audio est envoyé temporairement au service Whisper de JaraLingua pour transcription. Il n’est pas sauvegardé.",
@@ -37,6 +39,7 @@ window.JaraLinguaOralUnitConfig = {
     lowConfidenceLabel: "Mots à prononcer plus clairement :",
     improvedModelLabel: "Modèle attendu",
     structureLabel: "Réponse modèle {number}",
+    selectedFrameHelp: "Modèle choisi : {model} Répétez la structure, puis adaptez-la naturellement à votre voix.",
     questionCounter: "Question {current} sur {total}",
     questionReadyStatus: "Écoutez la situation, puis formulez la réaction demandée.",
     scoreLabel: "Préparation",
@@ -118,7 +121,7 @@ window.JaraLinguaOralUnitConfig = {
       grammar: "Après « je regrette que », utilisez le subjonctif : ait annoncé.",
       checks: [
         { label: "déclencheur obligatoire : Je regrette que", terms: ["je regrette que", "je regrette qu"] },
-        { label: "auxiliaire avoir au subjonctif : ait annoncé", terms: ["ait annoncé", "ait annonce"] },
+        { label: "auxiliaire avoir au subjonctif : ait annoncé", terms: ["ait annoncé", "ait annonce"], transcriptionTerms: ["et annonce"] },
         { label: "fait terminé clairement nommé", terms: ["fermeture", "décision", "decision", "trop tard"] }
       ],
       minWords: 9,
@@ -144,7 +147,7 @@ window.JaraLinguaOralUnitConfig = {
       grammar: "Avec « arriver », le subjonctif passé utilise être : soit arrivée.",
       checks: [
         { label: "déclencheur obligatoire : Je suis soulagé que", terms: ["je suis soulagé que", "je suis soulagée que", "je suis soulage que"] },
-        { label: "auxiliaire être au subjonctif : soit arrivée", terms: ["soit arrivée", "soit arrivee", "soit arrivé", "soit arrive"] },
+        { label: "auxiliaire être au subjonctif : soit arrivée", terms: ["soit arrivée", "soit arrivee", "soit arrivé", "soit arrive"], transcriptionTerms: ["sois arrivee", "sois arrive"] },
         { label: "action terminée clairement nommée", terms: ["équipe", "equipe", "rapidement", "alerte"] }
       ],
       minWords: 8,
@@ -170,7 +173,7 @@ window.JaraLinguaOralUnitConfig = {
       grammar: "Avec un verbe pronominal, utilisez se + être au subjonctif : qu’ils se soient préparés.",
       checks: [
         { label: "déclencheur obligatoire : Je suis content que", terms: ["je suis content que", "je suis contente que", "je suis content qu", "je suis contente qu"] },
-        { label: "forme pronominale : se soient préparés", terms: ["se soient préparés", "se soient prepares", "se soient préparé", "se soient prepare"] },
+        { label: "forme pronominale : se soient préparés", terms: ["se soient préparés", "se soient prepares", "se soient préparé", "se soient prepare"], transcriptionTerms: ["se soit prepares", "se soit prepare"] },
         { label: "contexte de préparation nommé", terms: ["étudiants", "etudiants", "table ronde", "préparés", "prepares"] }
       ],
       minWords: 8,
@@ -196,7 +199,7 @@ window.JaraLinguaOralUnitConfig = {
       grammar: "Avec une phrase négative, dites : qu’il n’ait pas vérifié.",
       checks: [
         { label: "déclencheur obligatoire : Il est dommage que", terms: ["il est dommage que", "il est dommage qu"] },
-        { label: "négation au subjonctif : n’ait pas vérifié", terms: ["n'ait pas vérifié", "n ait pas verifie", "n'ait pas verifie", "n ait pas vérifié"] },
+        { label: "négation au subjonctif : n’ait pas vérifié", terms: ["n'ait pas vérifié", "n ait pas verifie", "n'ait pas verifie", "n ait pas vérifié"], transcriptionTerms: ["n est pas verifie", "net pas verifie"] },
         { label: "source ou publication nommée", terms: ["source", "publier", "journaliste"] }
       ],
       minWords: 10,
@@ -222,7 +225,7 @@ window.JaraLinguaOralUnitConfig = {
       grammar: "Après « il est important que », utilisez le subjonctif : aient réagi.",
       checks: [
         { label: "déclencheur obligatoire : Il est important que", terms: ["il est important que", "il est important qu"] },
-        { label: "auxiliaire avoir au subjonctif : aient réagi", terms: ["aient réagi", "aient reagi"] },
+        { label: "auxiliaire avoir au subjonctif : aient réagi", terms: ["aient réagi", "aient reagi"], transcriptionTerms: ["et reagi"] },
         { label: "réaction à une crise nommée", terms: ["autorités", "autorites", "rapidement", "crise"] }
       ],
       minWords: 8,
@@ -248,7 +251,7 @@ window.JaraLinguaOralUnitConfig = {
       grammar: "Avec « pouvoir », utilisez : qu’elle ait pu + infinitif.",
       checks: [
         { label: "déclencheur obligatoire : Je suis heureux que", terms: ["je suis heureux que", "je suis heureuse que", "je suis heureux qu", "je suis heureuse qu"] },
-        { label: "subjonctif passé de pouvoir : ait pu", terms: ["ait pu parler", "ait pu"] },
+        { label: "subjonctif passé de pouvoir : ait pu", terms: ["ait pu parler", "ait pu"], transcriptionTerms: ["et pu parler", "et pu"] },
         { label: "contexte de décision nommé", terms: ["responsable", "décision", "decision", "Marie"] }
       ],
       minWords: 9,
