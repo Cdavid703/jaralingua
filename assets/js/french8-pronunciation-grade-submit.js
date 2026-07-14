@@ -13,8 +13,8 @@
       label: "dimanche 12 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
     },
     pronunciation03d: {
-      at: "2026-07-14T05:00:00Z",
-      label: "lundi 13 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+      at: "2026-07-16T05:00:00Z",
+      label: "mercredi 15 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
     },
     pronunciation04d: {
       at: "2026-07-14T05:00:00Z",
