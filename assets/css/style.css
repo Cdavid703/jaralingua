@@ -6902,6 +6902,301 @@ iframe {
   background: #eef4ff;
 }
 
+.academy-stage .visual-card-main {
+  inset: 0 0 56px 28px;
+}
+
+.academy-stage .visual-card-side {
+  width: 42%;
+  left: 0;
+  bottom: 4px;
+}
+
+.ecosystem-section,
+.experience-board-section {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 78px 0;
+}
+
+.ecosystem-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.ecosystem-card {
+  min-height: 220px;
+  padding: 24px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(18, 59, 143, 0.12);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.08);
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+
+.ecosystem-card i {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: #eef4ff;
+  color: var(--red);
+  font-size: 1.25rem;
+}
+
+.ecosystem-card h3,
+.route-card h3,
+.experience-copy h2 {
+  color: var(--blue-dark);
+}
+
+.ecosystem-card h3 {
+  font-size: 1.16rem;
+  line-height: 1.25;
+}
+
+.ecosystem-card p,
+.route-card p,
+.experience-copy p {
+  color: var(--gray);
+}
+
+.experience-board-section {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: 34px;
+  align-items: center;
+}
+
+.experience-copy .eyebrow {
+  color: var(--blue);
+  background: #e8eefc;
+}
+
+.experience-copy h2 {
+  font-size: 2.75rem;
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.experience-board {
+  padding: 22px;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(7, 31, 79, 0.96), rgba(18, 59, 143, 0.9)),
+    url("../img/hero-languages.jpg") center/cover no-repeat;
+  color: #ffffff;
+  box-shadow: 0 24px 58px rgba(15, 23, 42, 0.18);
+}
+
+.board-topline {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.board-topline span {
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 800;
+}
+
+.board-topline strong {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.board-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.board-tile {
+  min-height: 150px;
+  padding: 18px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--blue-dark);
+  display: grid;
+  align-content: space-between;
+  gap: 10px;
+}
+
+.board-tile small {
+  color: var(--gray);
+  font-weight: 900;
+}
+
+.board-tile b {
+  font-size: 1.72rem;
+  line-height: 1.1;
+}
+
+.board-tile span {
+  color: #475569;
+  font-weight: 800;
+}
+
+.tile-wide {
+  grid-row: span 2;
+}
+
+.tile-accent {
+  background: #fff7df;
+  border-left: 6px solid #ffc857;
+}
+
+.routes-showcase {
+  padding-top: 82px;
+}
+
+.route-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.route-card {
+  grid-column: span 2;
+  min-height: 420px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #ffffff;
+  background: var(--blue-dark);
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+}
+
+.route-featured {
+  grid-column: span 3;
+}
+
+.route-card:nth-child(2) {
+  grid-column: span 3;
+}
+
+.route-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.route-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(7, 31, 79, 0.05) 20%, rgba(7, 31, 79, 0.9) 88%);
+}
+
+.route-card:hover img {
+  transform: scale(1.04);
+}
+
+.route-card span,
+.route-card h3,
+.route-card p {
+  position: relative;
+  z-index: 1;
+}
+
+.route-card span {
+  width: fit-content;
+  margin-bottom: 10px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--blue-dark);
+  font-size: 0.78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.route-card h3 {
+  color: #ffffff;
+  font-size: 2rem;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.route-card p {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 800;
+}
+
+.platform-proof-section {
+  background:
+    linear-gradient(135deg, #ffffff, #f8fbff 58%, #fff8df);
+}
+
+@media (max-width: 980px) {
+  .ecosystem-grid,
+  .experience-board-section,
+  .route-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .route-card,
+  .route-featured,
+  .route-card:nth-child(2) {
+    grid-column: auto;
+  }
+
+  .route-card {
+    min-height: 340px;
+  }
+
+  .experience-copy h2 {
+    font-size: 2.25rem;
+  }
+}
+
+@media (max-width: 680px) {
+  .ecosystem-section,
+  .experience-board-section {
+    width: min(100% - 24px, 1180px);
+    padding: 54px 0;
+  }
+
+  .ecosystem-card {
+    min-height: auto;
+  }
+
+  .board-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tile-wide {
+    grid-row: auto;
+  }
+
+  .route-card {
+    min-height: 300px;
+  }
+
+  .experience-copy h2 {
+    font-size: 2rem;
+  }
+}
+
 @media (max-width: 680px) {
   .site-header {
     position: sticky;
