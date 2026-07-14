@@ -109,21 +109,41 @@
     var player = document.getElementById("activityAudio");
     var form = document.getElementById("quizForm");
     var resultBox = document.getElementById("resultBox");
+    var errorsOnlyButton = document.getElementById("errorsOnlyBtn");
     var variants = buildVariants(baseActivity);
     var currentVariant = activeVariantFromMarkup();
     var currentActivity = variants[currentVariant] || variants.quebec;
     var answers = [];
+    var latestIncorrect = [];
+    var errorsOnly = false;
+
+    function updateErrorsButton() {
+      if (!errorsOnlyButton) return;
+      errorsOnlyButton.innerHTML = errorsOnly
+        ? '<i class="bi bi-ui-checks"></i> Voir toutes les questions'
+        : '<i class="bi bi-funnel"></i> Voir mes erreurs seulement';
+    }
+
+    function applyErrorFilter() {
+      Array.prototype.forEach.call(form.querySelectorAll(".question-card"), function (card, index) {
+        card.classList.toggle("is-hidden", errorsOnly && latestIncorrect.indexOf(index) === -1);
+      });
+      updateErrorsButton();
+    }
 
     function resetQuiz() {
       Array.prototype.forEach.call(form.querySelectorAll('input[type="radio"]'), function (input) {
         input.checked = false;
       });
       Array.prototype.forEach.call(form.querySelectorAll(".question-card"), function (card) {
-        card.classList.remove("is-correct", "is-incorrect", "is-missing");
+        card.classList.remove("is-correct", "is-incorrect", "is-missing", "is-hidden");
       });
       Array.prototype.forEach.call(form.querySelectorAll(".question-feedback"), function (feedback) {
         feedback.textContent = "";
       });
+      latestIncorrect = [];
+      errorsOnly = false;
+      updateErrorsButton();
       resultBox.className = "result-box";
       resultBox.textContent = "";
     }
@@ -153,6 +173,7 @@
     function checkQuiz() {
       var score = 0;
       var complete = true;
+      latestIncorrect = [];
       answers.forEach(function (answer, index) {
         var question = currentActivity.questions[index] || [];
         var card = form.querySelector('[data-question="' + index + '"]');
@@ -165,12 +186,14 @@
         if (isCorrect) score += 1;
         if (card && selected) card.classList.add(isCorrect ? "is-correct" : "is-incorrect");
         if (card && !selected) card.classList.add("is-missing");
+        if (!isCorrect) latestIncorrect.push(index);
         if (feedback && selected) {
           var explanation = question[3] || "Réécoutez le passage correspondant et vérifiez l'information exacte.";
           var reviewHint = question[5] || "Réécoutez le passage correspondant avant de corriger votre réponse.";
           feedback.textContent = isCorrect ? "Correct. " + explanation : "À revoir. " + reviewHint + " " + explanation;
         }
       });
+      applyErrorFilter();
       if (!complete) {
         resultBox.className = "result-box incorrect";
         resultBox.textContent = "Répondez aux 10 questions avant de corriger.";
@@ -201,6 +224,17 @@
 
     document.getElementById("checkBtn").addEventListener("click", checkQuiz);
     document.getElementById("resetBtn").addEventListener("click", resetQuiz);
+    if (errorsOnlyButton) {
+      errorsOnlyButton.addEventListener("click", function () {
+        if (!latestIncorrect.length) {
+          resultBox.className = "result-box incorrect";
+          resultBox.textContent = "Corrigez d'abord l'activité pour identifier les questions à revoir.";
+          return;
+        }
+        errorsOnly = !errorsOnly;
+        applyErrorFilter();
+      });
+    }
     document.querySelector("[data-transcript-button]").addEventListener("click", downloadCurrentTranscript);
     Array.prototype.forEach.call(document.querySelectorAll("[data-audio-variant]"), function (button) {
       button.addEventListener("click", function () {
