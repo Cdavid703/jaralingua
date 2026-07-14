@@ -11,7 +11,6 @@ window.JaraLinguaOralUnitConfig = {
   },
   attemptQuestionCount: 4,
   maxRecordingSeconds: 42,
-  localUrl: "http://127.0.0.1:8021/frances/Niveau%208/ateliers/coach-conversation-03-subjonctif-passe.html",
   ui: {
     start: "Commencer la pratique",
     preflight: "Tester le microphone",
@@ -40,10 +39,34 @@ window.JaraLinguaOralUnitConfig = {
     structureLabel: "Réponse modèle {number}",
     questionCounter: "Question {current} sur {total}",
     questionReadyStatus: "Écoutez la situation, puis formulez la réaction demandée.",
+    scoreLabel: "Préparation",
+    expectedElement: "élément attendu",
+    summaryLeadHigh: "Très bonne préparation : vos réactions sont claires et le subjonctif passé apparaît dans les réponses.",
+    summaryLeadMid: "Bonne base : répétez surtout les réponses où le déclencheur ou l’auxiliaire n’a pas été reconnu.",
+    summaryLeadLow: "À reprendre : gardez une phrase courte avec le déclencheur imposé, puis que + subjonctif passé.",
+    comparisonDefault: "Refaites la pratique en masquant l’aide après la première question pour vérifier l’automatisation.",
+    metricLabels: [
+      ["task", "Structure attendue", "déclencheur, que et subjonctif passé"],
+      ["development", "Phrase complète", "longueur suffisante et contexte clair"],
+      ["clarity", "Clarté audio", "reconnaissance approximative par Whisper"],
+      ["fluency", "Continuité", "durée et réponse sans coupure excessive"]
+    ],
+    summaryMessages: {
+      taskStrength: "Vous respectez globalement la structure demandée : déclencheur + que + subjonctif passé.",
+      taskPriority: "Reprenez la structure exacte : déclencheur imposé, que, puis auxiliaire au subjonctif présent.",
+      developmentStrength: "Vos réponses donnent assez d’information pour comprendre le fait passé.",
+      developmentPriority: "Ajoutez le sujet et l’action terminée : qui a agi, qu’est-ce qui s’est passé.",
+      clarityStrength: "La transcription reconnaît une bonne partie de vos mots.",
+      clarityPriority: "Parlez plus près du micro et ralentissez les groupes verbaux difficiles.",
+      fluencyStrength: "Vos réponses gardent une continuité correcte.",
+      fluencyPriority: "Préparez une phrase courte avant d’enregistrer.",
+      defaultStrength: "Vous avez terminé une pratique orale complète.",
+      defaultPriority: "Reprenez deux questions en masquant l’aide."
+    },
     scoreMessages: {
-      high: "Très bien : la réaction et le subjonctif passé sont clairs.",
-      mid: "Bon travail : répétez en gardant le déclencheur et l’auxiliaire du subjonctif passé.",
-      low: "À reprendre : utilisez le déclencheur proposé, puis « que » + subjonctif passé."
+      high: "Très bien : la réaction, le déclencheur et le subjonctif passé sont clairs.",
+      mid: "Bon travail : répétez en vérifiant le déclencheur, l’auxiliaire et le participe passé.",
+      low: "À reprendre : utilisez le déclencheur proposé, puis « que » + auxiliaire au subjonctif présent + participe passé."
     }
   },
   unitContext: {
@@ -94,9 +117,9 @@ window.JaraLinguaOralUnitConfig = {
       vocabulary: ["mairie", "annoncer", "fermeture", "centre", "trop tard", "regretter"],
       grammar: "Après « je regrette que », utilisez le subjonctif : ait annoncé.",
       checks: [
-        { label: "déclencheur de regret", terms: ["je regrette que", "je regrette qu"] },
-        { label: "subjonctif passé avec avoir", terms: ["ait annoncé", "ait annonce"] },
-        { label: "fait terminé", terms: ["fermeture", "décision", "decision", "trop tard"] }
+        { label: "déclencheur obligatoire : Je regrette que", terms: ["je regrette que", "je regrette qu"] },
+        { label: "auxiliaire avoir au subjonctif : ait annoncé", terms: ["ait annoncé", "ait annonce"] },
+        { label: "fait terminé clairement nommé", terms: ["fermeture", "décision", "decision", "trop tard"] }
       ],
       minWords: 9,
       maxSeconds: 32,
@@ -120,9 +143,9 @@ window.JaraLinguaOralUnitConfig = {
       vocabulary: ["équipe médicale", "arriver", "rapidement", "alerte", "soulagé", "soulagée"],
       grammar: "Avec « arriver », le subjonctif passé utilise être : soit arrivée.",
       checks: [
-        { label: "déclencheur de soulagement", terms: ["je suis soulagé que", "je suis soulagée que", "je suis soulage que"] },
-        { label: "subjonctif passé avec être", terms: ["soit arrivée", "soit arrivee", "soit arrivé", "soit arrive"] },
-        { label: "action terminée", terms: ["équipe", "equipe", "rapidement", "alerte"] }
+        { label: "déclencheur obligatoire : Je suis soulagé que", terms: ["je suis soulagé que", "je suis soulagée que", "je suis soulage que"] },
+        { label: "auxiliaire être au subjonctif : soit arrivée", terms: ["soit arrivée", "soit arrivee", "soit arrivé", "soit arrive"] },
+        { label: "action terminée clairement nommée", terms: ["équipe", "equipe", "rapidement", "alerte"] }
       ],
       minWords: 8,
       maxSeconds: 32,
@@ -146,9 +169,9 @@ window.JaraLinguaOralUnitConfig = {
       vocabulary: ["étudiants", "se préparer", "table ronde", "content", "contente", "bien"],
       grammar: "Avec un verbe pronominal, utilisez se + être au subjonctif : qu’ils se soient préparés.",
       checks: [
-        { label: "déclencheur de satisfaction", terms: ["je suis content que", "je suis contente que", "je suis content qu", "je suis contente qu"] },
-        { label: "subjonctif passé pronominal", terms: ["se soient préparés", "se soient prepares", "se soient préparé", "se soient prepare"] },
-        { label: "contexte de préparation", terms: ["étudiants", "etudiants", "table ronde", "préparés", "prepares"] }
+        { label: "déclencheur obligatoire : Je suis content que", terms: ["je suis content que", "je suis contente que", "je suis content qu", "je suis contente qu"] },
+        { label: "forme pronominale : se soient préparés", terms: ["se soient préparés", "se soient prepares", "se soient préparé", "se soient prepare"] },
+        { label: "contexte de préparation nommé", terms: ["étudiants", "etudiants", "table ronde", "préparés", "prepares"] }
       ],
       minWords: 8,
       maxSeconds: 32,
@@ -172,9 +195,9 @@ window.JaraLinguaOralUnitConfig = {
       vocabulary: ["journaliste", "vérifier", "source", "publier", "dommage", "avant de"],
       grammar: "Avec une phrase négative, dites : qu’il n’ait pas vérifié.",
       checks: [
-        { label: "jugement avec dommage", terms: ["il est dommage que", "il est dommage qu"] },
-        { label: "subjonctif passé négatif", terms: ["n'ait pas vérifié", "n ait pas verifie", "n'ait pas verifie", "n ait pas vérifié"] },
-        { label: "source ou publication", terms: ["source", "publier", "journaliste"] }
+        { label: "déclencheur obligatoire : Il est dommage que", terms: ["il est dommage que", "il est dommage qu"] },
+        { label: "négation au subjonctif : n’ait pas vérifié", terms: ["n'ait pas vérifié", "n ait pas verifie", "n'ait pas verifie", "n ait pas vérifié"] },
+        { label: "source ou publication nommée", terms: ["source", "publier", "journaliste"] }
       ],
       minWords: 10,
       maxSeconds: 34,
@@ -198,9 +221,9 @@ window.JaraLinguaOralUnitConfig = {
       vocabulary: ["autorités", "réagir", "rapidement", "crise", "important", "appréciation"],
       grammar: "Après « il est important que », utilisez le subjonctif : aient réagi.",
       checks: [
-        { label: "déclencheur de jugement", terms: ["il est important que", "il est important qu"] },
-        { label: "subjonctif passé avec avoir", terms: ["aient réagi", "aient reagi"] },
-        { label: "réaction à une crise", terms: ["autorités", "autorites", "rapidement", "crise"] }
+        { label: "déclencheur obligatoire : Il est important que", terms: ["il est important que", "il est important qu"] },
+        { label: "auxiliaire avoir au subjonctif : aient réagi", terms: ["aient réagi", "aient reagi"] },
+        { label: "réaction à une crise nommée", terms: ["autorités", "autorites", "rapidement", "crise"] }
       ],
       minWords: 8,
       maxSeconds: 32,
@@ -224,9 +247,9 @@ window.JaraLinguaOralUnitConfig = {
       vocabulary: ["Marie", "pouvoir", "parler", "responsable", "décision", "heureux", "heureuse"],
       grammar: "Avec « pouvoir », utilisez : qu’elle ait pu + infinitif.",
       checks: [
-        { label: "déclencheur de satisfaction", terms: ["je suis heureux que", "je suis heureuse que", "je suis heureux qu", "je suis heureuse qu"] },
-        { label: "subjonctif passé de pouvoir", terms: ["ait pu parler", "ait pu"] },
-        { label: "contexte de décision", terms: ["responsable", "décision", "decision", "Marie"] }
+        { label: "déclencheur obligatoire : Je suis heureux que", terms: ["je suis heureux que", "je suis heureuse que", "je suis heureux qu", "je suis heureuse qu"] },
+        { label: "subjonctif passé de pouvoir : ait pu", terms: ["ait pu parler", "ait pu"] },
+        { label: "contexte de décision nommé", terms: ["responsable", "décision", "decision", "Marie"] }
       ],
       minWords: 9,
       maxSeconds: 34,
