@@ -7147,9 +7147,263 @@ iframe {
     linear-gradient(135deg, #ffffff, #f8fbff 58%, #fff8df);
 }
 
+.ecosystem-counter-section {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 28px 0 42px;
+}
+
+.counter-strip {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(18, 59, 143, 0.1);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+}
+
+.counter-strip article {
+  min-height: 104px;
+  padding: 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #f8fbff, #ffffff);
+  display: grid;
+  align-content: center;
+  gap: 4px;
+}
+
+.counter-strip strong {
+  color: var(--blue-dark);
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  line-height: 1;
+}
+
+.counter-strip span {
+  color: var(--gray);
+  font-weight: 850;
+  line-height: 1.35;
+}
+
+.audience-section,
+.pedagogy-section,
+.trust-strip-section {
+  width: min(1180px, calc(100% - 48px));
+  margin: 0 auto;
+  padding: 78px 0;
+}
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.audience-panel {
+  min-height: 430px;
+  padding: clamp(24px, 4vw, 36px);
+  border-radius: 8px;
+  color: #ffffff;
+  box-shadow: 0 22px 52px rgba(15, 23, 42, 0.14);
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  overflow: hidden;
+  position: relative;
+}
+
+.audience-panel::after {
+  content: "";
+  position: absolute;
+  inset: auto -18% -30% 38%;
+  height: 230px;
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(-12deg);
+}
+
+.student-panel {
+  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+}
+
+.teacher-panel {
+  background: linear-gradient(135deg, #6d1324, var(--red));
+}
+
+.audience-panel i {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  font-size: 1.45rem;
+}
+
+.audience-panel h3 {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.audience-panel p,
+.audience-panel li {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.audience-panel ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.audience-panel li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-weight: 850;
+}
+
+.audience-panel li::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  margin-top: 8px;
+  flex: 0 0 9px;
+  border-radius: 999px;
+  background: #ffc857;
+}
+
+.pedagogy-section {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.pedagogy-copy .eyebrow {
+  color: var(--blue);
+  background: #e8eefc;
+}
+
+.pedagogy-copy h2 {
+  color: var(--blue-dark);
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 1.08;
+  margin-bottom: 16px;
+}
+
+.pedagogy-copy p {
+  color: var(--gray);
+}
+
+.pedagogy-steps {
+  display: grid;
+  gap: 10px;
+}
+
+.pedagogy-steps article {
+  min-height: 104px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 14px;
+  align-items: start;
+  padding: 16px;
+  border-radius: 8px;
+  background: #ffffff;
+  border: 1px solid rgba(18, 59, 143, 0.1);
+  box-shadow: 0 14px 32px rgba(15, 23, 42, 0.07);
+}
+
+.pedagogy-steps span {
+  grid-row: span 2;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--blue-dark);
+  color: #ffffff;
+  font-weight: 900;
+  font-size: 0.82rem;
+}
+
+.pedagogy-steps strong {
+  color: var(--blue-dark);
+  font-size: 1.08rem;
+}
+
+.pedagogy-steps p {
+  margin: 0;
+  color: var(--gray);
+}
+
+.trust-strip-section {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 24px;
+  align-items: center;
+  padding: 34px;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(7, 31, 79, 0.96), rgba(18, 59, 143, 0.88)),
+    url("../img/hero-languages.jpg") center/cover no-repeat;
+  color: #ffffff;
+  box-shadow: 0 22px 52px rgba(15, 23, 42, 0.16);
+}
+
+.trust-strip-copy .eyebrow {
+  color: var(--blue-dark);
+  background: rgba(255, 255, 255, 0.92);
+}
+
+.trust-strip-copy h2 {
+  font-size: clamp(1.75rem, 3.3vw, 2.75rem);
+  line-height: 1.08;
+  margin-bottom: 12px;
+}
+
+.trust-strip-copy p {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.trust-strip-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.trust-strip-links a {
+  min-height: 74px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.trust-strip-links i {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffc857;
+}
+
 @media (max-width: 980px) {
   .ecosystem-grid,
   .experience-board-section,
+  .audience-grid,
+  .pedagogy-section,
+  .trust-strip-section,
   .route-grid {
     grid-template-columns: 1fr;
   }
@@ -7171,9 +7425,26 @@ iframe {
 
 @media (max-width: 680px) {
   .ecosystem-section,
-  .experience-board-section {
+  .experience-board-section,
+  .ecosystem-counter-section,
+  .audience-section,
+  .pedagogy-section,
+  .trust-strip-section {
     width: min(100% - 24px, 1180px);
     padding: 54px 0;
+  }
+
+  .counter-strip,
+  .trust-strip-links {
+    grid-template-columns: 1fr;
+  }
+
+  .audience-panel {
+    min-height: auto;
+  }
+
+  .trust-strip-section {
+    padding: 22px;
   }
 
   .ecosystem-card {
