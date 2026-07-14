@@ -96,7 +96,7 @@
   function pronunciationReviewMarkup(student, evaluation, canEditFeedback) {
     const details = student && student.gradeDetails && student.gradeDetails[evaluation.id];
     if (!details) return "";
-    const isWritingActivity = evaluation.id === "writingActivity" && details.submissionText;
+    const isWritingActivity = !!details.submissionText;
     const summaryText = isWritingActivity ? "Voir production, audio et feedback" : "Voir transcription et revision";
     const audioButton = details.audio && details.audio.file
       ? `
@@ -119,7 +119,7 @@
           <strong>Feedback professeur</strong>
           <textarea class="form-control" rows="3" data-hypotheses-feedback-text>${escapeHtml(details.feedback || "")}</textarea>
         </label>
-        <button class="btn-main btn-sm mt-2" type="button" data-hypotheses-feedback-save data-student-id="${escapeHtml(student.id)}">
+        <button class="btn-main btn-sm mt-2" type="button" data-hypotheses-feedback-save data-student-id="${escapeHtml(student.id)}" data-evaluation-id="${escapeHtml(evaluation.id)}">
           <i class="bi bi-chat-left-text-fill"></i> Enregistrer le feedback
         </button>
         <p class="mb-0" data-hypotheses-feedback-status></p>
@@ -1011,14 +1011,16 @@
         const card = button.closest("[data-student-editor-card]");
         const textarea = box && box.querySelector("[data-hypotheses-feedback-text]");
         const status = box && box.querySelector("[data-hypotheses-feedback-status]");
-        const gradeInput = card && card.querySelector('[data-student-grade="writingActivity"]');
+        const evaluationId = button.dataset.evaluationId || "writingActivity";
+        const gradeInput = card && card.querySelector('[data-student-grade="' + evaluationId + '"]');
         button.disabled = true;
         if (status) status.textContent = "Enregistrement du feedback...";
-        fetch("/api/french8/hypotheses-feedback", {
+        fetch("/api/french8/production-feedback", {
           method: "PUT",
           headers: authHeaders(user, { "Content-Type": "application/json" }),
           body: JSON.stringify({
             studentId: button.dataset.studentId || "",
+            evaluationId: evaluationId,
             feedback: textarea ? textarea.value : "",
             grade: gradeInput ? gradeInput.value : ""
           })

@@ -32,6 +32,7 @@ FRENCH2_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH2_GRADES_DATA", "/var/lib
 FRENCH8_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH8_GRADES_DATA", "/var/lib/jaralingua/french8-grades.json")
 FRENCH8_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_FRENCH8_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/french8-pronunciation-audio")
 FRENCH8_HYPOTHESES_ACTIVITY_ID = "writingActivity"
+FRENCH8_COMMENTARY_ACTIVITY_ID = "commentaryActivity03e"
 FRENCH8_QUIZ_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_DATA", "/var/lib/jaralingua/french8-quiz-ville-intelligente.json")
 FRENCH8_QUIZ_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_SUBMISSIONS", "/var/lib/jaralingua/french8-quiz-ville-intelligente-submissions.json")
 FRENCH8_QUIZ_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_AUDIO", "/var/lib/jaralingua/french8-quiz-ville-intelligente-audio.mp3")
@@ -504,6 +505,15 @@ FRENCH8_BASE_EVALUATIONS = {
         "date": "2026-07-01",
         "displayDate": "A definir",
         "description": "Texte ecrit avec hypothese irreelle dans le passe, expression idiomatique obligatoire et audio pour feedback."
+    },
+    "commentaryActivity03e": {
+        "id": "commentaryActivity03e",
+        "title": "Production 03E - Commentaire critique",
+        "weight": 0,
+        "type": "Production et oral",
+        "date": "2026-07-15",
+        "displayDate": "Feedback professeur",
+        "description": "Commentaire critique avec subjonctif passe et audio sauvegarde pour feedback professeur. Poids 0 : n'ajoute pas de pourcentage a la note finale."
     }
 }
 
@@ -1750,6 +1760,34 @@ def clean_french8_hypotheses_submission_details(payload, audio_ref):
         "idiom": idiom,
         "wordCount": simple_word_count(text),
         "promptVersion": clean_text(payload.get("promptVersion") or "20260629-hypotheses-final", 80),
+        "audio": audio_ref
+    }
+    return {key: value for key, value in details.items() if value not in ("", None, [], {})}
+
+
+def count_subjonctif_passe_forms(text):
+    return len(re.findall(
+        r"\b(?:aie|aies|ait|ayons|ayez|aient|sois|soit|soyons|soyez|soient)\s+[A-Za-zÀ-ÖØ-öø-ÿ'’-]+",
+        str(text or ""),
+        flags=re.IGNORECASE
+    ))
+
+
+def has_critical_nuance_marker(text):
+    return bool(re.search(r"\b(?:certes|cela dit|pourtant|neanmoins|néanmoins|toutefois)\b", str(text or ""), flags=re.IGNORECASE))
+
+
+def clean_french8_commentary_submission_details(payload, audio_ref):
+    text = normalized_activity_text(payload.get("text"))
+    details = {
+        "evaluationId": FRENCH8_COMMENTARY_ACTIVITY_ID,
+        "activityTitle": "Production 03E - Commentaire critique",
+        "submittedAt": now_iso(),
+        "submissionText": text,
+        "wordCount": simple_word_count(text),
+        "subjonctifCount": count_subjonctif_passe_forms(text),
+        "nuancePresent": has_critical_nuance_marker(text),
+        "promptVersion": clean_text(payload.get("promptVersion") or "20260714-commentaire-critique-03e", 80),
         "audio": audio_ref
     }
     return {key: value for key, value in details.items() if value not in ("", None, [], {})}
@@ -7001,6 +7039,52 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 })
             return
 
+        if parsed.path == "/api/french8/commentary-submission":
+            with data_lock:
+                grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                changed = ensure_french8_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                text = normalized_activity_text(payload.get("text"))
+                word_count = simple_word_count(text)
+                subjonctif_count = count_subjonctif_passe_forms(text)
+                if word_count < 140 or word_count > 180:
+                    json_response(self, 400, {"error": "invalid_word_count", "wordCount": word_count})
+                    return
+                if subjonctif_count < 4:
+                    json_response(self, 400, {"error": "subjonctif_required", "subjonctifCount": subjonctif_count})
+                    return
+                if not has_critical_nuance_marker(text):
+                    json_response(self, 400, {"error": "missing_nuance"})
+                    return
+                audio_payload = {"details": {"audioDataUrl": payload.get("audioDataUrl")}}
+                audio_ref = save_french8_pronunciation_audio(student, FRENCH8_COMMENTARY_ACTIVITY_ID, audio_payload)
+                if not audio_ref:
+                    json_response(self, 400, {"error": "missing_audio"})
+                    return
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                previous_detail = student["gradeDetails"].get(FRENCH8_COMMENTARY_ACTIVITY_ID)
+                if isinstance(previous_detail, dict):
+                    remove_french8_pronunciation_audio(previous_detail.get("audio"))
+                next_detail = clean_french8_commentary_submission_details(payload, audio_ref)
+                if isinstance(previous_detail, dict) and previous_detail.get("feedback"):
+                    next_detail["previousFeedback"] = previous_detail.get("feedback")
+                student["gradeDetails"][FRENCH8_COMMENTARY_ACTIVITY_ID] = next_detail
+                write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": FRENCH8_COMMENTARY_ACTIVITY_ID,
+                    "wordCount": next_detail.get("wordCount"),
+                    "subjonctifCount": next_detail.get("subjonctifCount"),
+                    "submittedAt": next_detail.get("submittedAt")
+                })
+            return
+
         json_response(self, 404, {"error": "not_found"})
 
     def do_PUT(self):
@@ -7099,12 +7183,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
             return
 
-        if parsed.path == "/api/french8/hypotheses-feedback":
+        if parsed.path in ("/api/french8/hypotheses-feedback", "/api/french8/production-feedback"):
             with data_lock:
                 grades_data = read_grades_data(FRENCH8_GRADES_PATH)
                 if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
                     json_response(self, 403, {"error": "forbidden"})
                     return
+                evaluation_id = clean_text(payload.get("evaluationId"), 80)
+                if evaluation_id not in (FRENCH8_HYPOTHESES_ACTIVITY_ID, FRENCH8_COMMENTARY_ACTIVITY_ID):
+                    evaluation_id = FRENCH8_HYPOTHESES_ACTIVITY_ID
                 student_id = clean_text(payload.get("studentId"), 40)
                 student = next(
                     (
@@ -7118,9 +7205,10 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 if not isinstance(student.get("gradeDetails"), dict):
                     student["gradeDetails"] = {}
-                detail = student["gradeDetails"].setdefault(FRENCH8_HYPOTHESES_ACTIVITY_ID, {
-                    "evaluationId": FRENCH8_HYPOTHESES_ACTIVITY_ID,
-                    "activityTitle": "Production ecrite et orale - Hypotheses irreelles"
+                default_title = "Production ecrite et orale - Hypotheses irreelles" if evaluation_id == FRENCH8_HYPOTHESES_ACTIVITY_ID else "Production 03E - Commentaire critique"
+                detail = student["gradeDetails"].setdefault(evaluation_id, {
+                    "evaluationId": evaluation_id,
+                    "activityTitle": default_title
                 })
                 feedback = clean_text(payload.get("feedback"), 1600)
                 detail["feedback"] = feedback
@@ -7128,7 +7216,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 detail["feedbackBy"] = normalize_email(profile.get("email"))
                 grade = clean_grade(payload.get("grade"))
                 if grade is not None:
-                    student.setdefault("grades", {})[FRENCH8_HYPOTHESES_ACTIVITY_ID] = grade
+                    student.setdefault("grades", {})[evaluation_id] = grade
                 write_json_file(FRENCH8_GRADES_PATH, grades_data, ".french8-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": detail["feedbackAt"], "grade": grade})
             return
