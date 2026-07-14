@@ -6,23 +6,23 @@
   const DEADLINES = {
     pronunciation01d: {
       at: "2026-06-30T05:00:00Z",
-      label: "lundi 29 juin 2026 jusqu'a 23 h 59 (heure de Bogota)"
+      label: "lundi 29 juin 2026 jusqu'à 23 h 59 (heure de Bogota)"
     },
     pronunciation02d: {
       at: "2026-07-13T05:00:00Z",
-      label: "dimanche 12 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+      label: "dimanche 12 juillet 2026 jusqu'à 23 h 59 (heure de Bogota)"
     },
     pronunciation03d: {
       at: "2026-07-16T05:00:00Z",
-      label: "mercredi 15 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+      label: "mercredi 15 juillet 2026 jusqu'à 23 h 59 (heure de Bogota)"
     },
     pronunciation04d: {
       at: "2026-07-14T05:00:00Z",
-      label: "lundi 13 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+      label: "lundi 13 juillet 2026 jusqu'à 23 h 59 (heure de Bogota)"
     },
     pronunciation09d: {
       at: "2026-07-27T05:00:00Z",
-      label: "dimanche 26 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
+      label: "dimanche 26 juillet 2026 jusqu'à 23 h 59 (heure de Bogota)"
     }
   };
 
@@ -51,7 +51,7 @@
     return {
       at: Date.parse(deadline.at),
       label,
-      notice: "Date limite d'envoi : " + label + ". Apres cette heure, l'envoi au professeur ne sera plus possible."
+      notice: "Date limite d'envoi : " + label + ". Après cette heure, l'envoi au professeur ne sera plus possible."
     };
   }
 
@@ -115,6 +115,7 @@
     function setStatus(message, type) {
       statusNode.textContent = message || "";
       statusNode.className = "pronunciation-submit-status" + (type ? " " + type : "");
+      panel.classList.toggle("is-submitted", type === "success");
     }
 
     function update() {
@@ -124,32 +125,32 @@
         scoreNode.textContent = Number.isFinite(score) ? Math.round(score) + "/100" : "--";
         gradeNode.textContent = Number.isFinite(score) ? gradeFromScore(score).toFixed(2) + "/5" : "--";
         submitButton.disabled = true;
-        copyNode.textContent = "La date limite est passee. L'envoi au professeur est ferme.";
+        copyNode.textContent = "La date limite est passée. L'envoi au professeur est fermé.";
         return;
       }
       if (!Number.isFinite(score)) {
         scoreNode.textContent = "--";
         gradeNode.textContent = "--";
         submitButton.disabled = true;
-        copyNode.textContent = "Terminez le defi final pour activer l'envoi. " + deadline.notice;
+        copyNode.textContent = "Terminez le défi final pour activer l'envoi. " + deadline.notice;
         return;
       }
       scoreNode.textContent = Math.round(score) + "/100";
       gradeNode.textContent = gradeFromScore(score).toFixed(2) + "/5";
       submitButton.disabled = false;
-      copyNode.textContent = "Votre defi final peut etre envoye avec la note obtenue. " + deadline.notice + " Seule la note sur 5 sera inscrite dans le carnet du Niveau 8.";
+      copyNode.textContent = "Votre défi final peut être envoyé avec la note obtenue, même si elle est inférieure à 3,0/5. " + deadline.notice + " Seule la note sur 5 sera inscrite dans le carnet du Niveau 8.";
     }
 
     async function submit() {
       const attempt = finalAttempt();
       const score = Number(attempt && attempt.overall);
       if (isDeadlineClosed(deadline)) {
-        setStatus("La date limite est passee. L'envoi est ferme.", "error");
+        setStatus("La date limite est passée. L'envoi est fermé.", "error");
         update();
         return;
       }
       if (!Number.isFinite(score)) {
-        setStatus("Terminez d'abord le defi final avant d'envoyer.", "error");
+        setStatus("Terminez d'abord le défi final avant d'envoyer.", "error");
         update();
         return;
       }
@@ -160,7 +161,7 @@
         return;
       }
       submitButton.disabled = true;
-      setStatus("Envoi en cours...", "pending");
+      setStatus("Envoi au professeur en cours. Ne fermez pas cette page.", "pending");
       try {
         const audioDataUrl = config.getFinalAudio ? config.getFinalAudio() : "";
         const details = Object.assign({}, attempt);
@@ -180,12 +181,13 @@
         });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) {
-          if (payload.error === "score_too_low") throw new Error("La note obtenue devrait pouvoir etre envoyee. Actualisez la page et reessayez.");
-          if (payload.error === "deadline_closed") throw new Error("La date limite est passee. L'envoi est ferme.");
+          if (payload.error === "score_too_low") throw new Error("La note obtenue devrait pouvoir être envoyée. Actualisez la page et réessayez.");
+          if (payload.error === "deadline_closed") throw new Error("La date limite est passée. L'envoi est fermé.");
           if (payload.error === "student_not_authorized") throw new Error("Votre compte n'est pas encore associé au carnet du Niveau 8.");
-          throw new Error("L'envoi n'a pas pu être terminé.");
+          throw new Error("L'envoi n'a pas pu être terminé. La note locale n'a pas été perdue : réessayez après avoir vérifié votre connexion.");
         }
-        setStatus("Envoyé. Note enregistrée : " + Number(payload.grade).toFixed(2) + "/5.", "success");
+        const audioSaved = audioDataUrl ? " Audio final sauvegardé pour réécoute professeur." : "";
+        setStatus("Envoyé correctement. Note enregistrée : " + Number(payload.grade).toFixed(2) + "/5." + audioSaved, "success");
       } catch (error) {
         setStatus(error.message || "Impossible d'envoyer la note.", "error");
       } finally {

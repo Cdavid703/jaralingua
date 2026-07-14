@@ -3,6 +3,7 @@ html,body{max-width:100%;overflow-x:hidden}
 .activity-visual img{object-position:center 42%}
 .student-audio,#studentAudio{max-width:100%}
 .pronunciation-submit-panel{margin-top:1rem;padding:1rem;border-radius:14px;background:linear-gradient(135deg,#eef5ff,#fff7df);border:1px solid rgba(31,78,140,.12)}
+.pronunciation-submit-panel.is-submitted{background:linear-gradient(135deg,#e9f8f2,#f4fffb);border-color:rgba(35,136,111,.35);box-shadow:0 14px 30px rgba(35,136,111,.12)}
 .pronunciation-submit-panel h3{margin:0 0 .55rem;color:var(--blue-dark,#15345d);font-size:1rem;font-weight:900}
 .pronunciation-submit-panel p{margin:.45rem 0;color:var(--muted,#5d6b82);line-height:1.5}
 .pronunciation-submit-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem;margin:.75rem 0}
