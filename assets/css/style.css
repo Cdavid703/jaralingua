@@ -7222,12 +7222,16 @@ iframe {
   transform: rotate(-12deg);
 }
 
-.student-panel {
-  background: linear-gradient(135deg, var(--blue-dark), var(--blue));
+.audience-panel.student-panel {
+  background:
+    linear-gradient(135deg, rgba(7, 31, 79, 0.98), rgba(18, 59, 143, 0.94)),
+    url("../img/hero-languages.jpg") center/cover no-repeat;
 }
 
-.teacher-panel {
-  background: linear-gradient(135deg, #6d1324, var(--red));
+.audience-panel.teacher-panel {
+  background:
+    linear-gradient(135deg, rgba(109, 19, 36, 0.98), rgba(215, 25, 63, 0.94)),
+    url("../img/hero-languages.jpg") center/cover no-repeat;
 }
 
 .audience-panel i {
@@ -7241,13 +7245,14 @@ iframe {
 }
 
 .audience-panel h3 {
+  color: #ffffff;
   font-size: 2rem;
   line-height: 1;
 }
 
 .audience-panel p,
 .audience-panel li {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.94);
 }
 
 .audience-panel ul {
