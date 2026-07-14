@@ -103,7 +103,7 @@
     const group = document.createElement("div");
     group.className = "speed-group";
     group.setAttribute("role", "group");
-    group.setAttribute("aria-label", options.label || "Controle de vitesse de l'audio");
+    group.setAttribute("aria-label", options.label || "Contrôle de vitesse de l'audio");
     group.innerHTML = '<span>Vitesse :</span>' + SPEEDS.map(function (speed) {
       return '<button type="button" class="speed-btn' + (speed === 1 ? " active" : "") + '" data-speed="' + speed + '" aria-pressed="' + (speed === 1 ? "true" : "false") + '">' + speed + 'x</button>';
     }).join("");
@@ -135,8 +135,8 @@
     const button = document.querySelector("[data-transcript-button]");
     if (!button) return;
     button.classList.add("transcript-download-button");
-    button.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Telecharger la transcription PDF';
-    button.setAttribute("title", "Telecharger la transcription reservee au professeur");
+    button.innerHTML = '<i class="bi bi-file-earmark-pdf"></i> Télécharger la transcription PDF';
+    button.setAttribute("title", "Télécharger la transcription réservée au professeur");
   }
 
   function enhanceAll(root) {
