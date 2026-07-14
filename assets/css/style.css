@@ -7211,6 +7211,7 @@ iframe {
   gap: 16px;
   overflow: hidden;
   position: relative;
+  isolation: isolate;
 }
 
 .audience-panel::after {
@@ -7220,6 +7221,13 @@ iframe {
   height: 230px;
   background: rgba(255, 255, 255, 0.1);
   transform: rotate(-12deg);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.audience-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .audience-panel.student-panel {
