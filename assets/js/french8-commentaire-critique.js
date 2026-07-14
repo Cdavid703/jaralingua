@@ -165,7 +165,7 @@
       return;
     }
     button.disabled = true;
-    if (status) status.textContent = "Envoi au professeur...";
+    if (status) status.textContent = "Envoi au professeur en cours. Ne fermez pas cette page.";
     try {
       const response = await fetch(API_PATH, {
         method: "POST",
@@ -188,8 +188,11 @@
         if (payload.error === "student_not_authorized") throw new Error("Votre compte n'est pas associé au carnet du Niveau 8.");
         throw new Error("L'envoi n'a pas pu être terminé.");
       }
-      if (status) status.textContent = "Envoyé. Votre texte et votre audio sont disponibles dans Notes du cours pour le feedback du professeur.";
-      button.textContent = "Envoyé au professeur";
+      const submittedAt = payload.submittedAt ? " Envoi enregistré : " + payload.submittedAt + "." : "";
+      const wordInfo = payload.wordCount ? " Mots : " + payload.wordCount + "." : "";
+      const subjInfo = payload.subjonctifCount ? " Subjonctifs passés détectés : " + payload.subjonctifCount + "." : "";
+      if (status) status.textContent = "Envoyé correctement. Votre texte et votre audio sont disponibles dans Notes du cours pour le feedback du professeur." + submittedAt + wordInfo + subjInfo;
+      button.innerHTML = '<i class="bi bi-check2-circle"></i> Envoyé au professeur';
       button.disabled = true;
     } catch (error) {
       if (status) status.textContent = error.message || "Impossible d'envoyer l'activité.";

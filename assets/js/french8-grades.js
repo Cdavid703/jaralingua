@@ -97,21 +97,23 @@
     const details = student && student.gradeDetails && student.gradeDetails[evaluation.id];
     if (!details) return "";
     const isWritingActivity = !!details.submissionText;
-    const summaryText = isWritingActivity ? "Voir production, audio et feedback" : "Voir transcription et revision";
+    const summaryText = isWritingActivity ? "Voir production, audio et feedback" : "Voir transcription et révision";
     const audioButton = details.audio && details.audio.file
       ? `
           <div class="pronunciation-audio-review">
             <button class="btn-soft btn-sm" type="button" data-pronunciation-audio data-student-id="${escapeHtml(student.id)}" data-evaluation-id="${escapeHtml(evaluation.id)}">
-              <i class="bi bi-play-fill"></i> Ecouter l'audio
+              <i class="bi bi-play-fill"></i> Écouter l'audio
             </button>
             <audio controls hidden data-pronunciation-audio-player></audio>
             <p class="mb-0" data-pronunciation-audio-status></p>
           </div>
         `
       : "<p><strong>Audio:</strong> pas encore disponible pour cet envoi.</p>";
-    const submissionText = details.submissionText ? `<p><strong>Texte de l'etudiant:</strong> ${escapeHtml(details.submissionText)}</p>` : "";
+    const submissionText = details.submissionText ? `<p><strong>Texte de l'étudiant:</strong> ${escapeHtml(details.submissionText)}</p>` : "";
     const idiom = details.idiom ? `<p><strong>Expression idiomatique:</strong> ${escapeHtml(details.idiom)}</p>` : "";
     const wordCount = details.wordCount ? `<p><strong>Mots:</strong> ${escapeHtml(details.wordCount)}</p>` : "";
+    const subjonctifCount = details.subjonctifCount != null ? `<p><strong>Subjonctifs passés détectés:</strong> ${escapeHtml(details.subjonctifCount)}</p>` : "";
+    const nuancePresent = details.nuancePresent != null ? `<p><strong>Nuance argumentative:</strong> ${details.nuancePresent ? "présente" : "à vérifier"}</p>` : "";
     const feedback = details.feedback ? `<p><strong>Feedback professeur:</strong> ${escapeHtml(details.feedback)}</p>` : "";
     const feedbackEditor = canEditFeedback && isWritingActivity ? `
       <div class="hypotheses-feedback-box">
@@ -144,13 +146,15 @@
           ${submissionText}
           ${idiom}
           ${wordCount}
+          ${subjonctifCount}
+          ${nuancePresent}
           ${transcript}
           ${reference}
           ${missed}
           ${liaison}
           ${feedback}
           ${feedbackEditor}
-          <p class="mb-0"><em>${isWritingActivity ? "Le professeur peut ecouter l'audio, lire le texte et laisser un feedback." : "Si la transcription n'est pas fidele a l'audio, le professeur peut corriger la note manuellement dans ce panel."}</em></p>
+          <p class="mb-0"><em>${isWritingActivity ? "Le professeur peut écouter l'audio, lire le texte et laisser un feedback." : "Si la transcription n'est pas fidèle à l'audio, le professeur peut corriger la note manuellement dans ce panel."}</em></p>
         </div>
       </details>
     `;
