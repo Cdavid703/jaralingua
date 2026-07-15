@@ -59,7 +59,20 @@
       var parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
       if (!parsed || parsed.version !== 1 || !Array.isArray(parsed.roster)) return defaultState();
       if (parsed.current && !entryById[parsed.current.entryId]) return defaultState();
-      return Object.assign(defaultState(), parsed);
+      var restored = Object.assign(defaultState(), parsed);
+      if (restored.current) {
+        var restoredEntry = entryById[restored.current.entryId];
+        var legacyHintLevel = restored.current.hintUsed ? 1 : 0;
+        restored.current.hintLevel = Number.isFinite(Number(restored.current.hintLevel))
+          ? Math.max(0, Math.floor(Number(restored.current.hintLevel)))
+          : legacyHintLevel;
+        if (restoredEntry.categoryId === "films-series") {
+          restored.current.hintLevel = Math.max(1, restored.current.hintLevel);
+        }
+        restored.current.hintLevel = Math.min(restored.current.hintLevel, restoredEntry.hints.length);
+        delete restored.current.hintUsed;
+      }
+      return restored;
     } catch (_error) {
       return defaultState();
     }
@@ -94,6 +107,7 @@
           categoryIcon: category.icon,
           answer: item.answer,
           clue: item.clue,
+          hints: Array.isArray(item.hints) && item.hints.length ? item.hints.slice(0, 3) : [item.clue],
           type: answerType(item.answer)
         });
       });
@@ -506,9 +520,8 @@
     $("#mistakeCount").textContent = String(state.current.errors || 0);
     $("#modeSummary").textContent = categoryLabel(state.category) + " · " + state.targetScore + " points" + (state.strictAccents ? " · accents stricts" : " · accents accompagnés");
     $("#scoreTargetLabel").textContent = state.targetScore + " points";
-    $("#cluePanel").innerHTML = state.current.hintUsed ? "<strong>Indice :</strong> " + escapeHtml(entry.clue) : "<strong>Indice :</strong> caché. Le demander ajoute une erreur et fait passer le tour.";
+    renderClues(entry);
     $("#solveButton").disabled = state.current.status !== "active";
-    $("#hintButton").disabled = state.current.status !== "active" || state.current.hintUsed;
     $("#nextRoundButton").hidden = state.current.status === "active" || state.status === "match-complete";
     renderWord(entry);
     renderKeyboard(entry);
@@ -517,6 +530,32 @@
     renderRoundResult(entry);
     renderWinner();
     renderSoundControls();
+  }
+
+  function renderClues(entry) {
+    var panel = $("#cluePanel");
+    var button = $("#hintButton");
+    var level = Math.max(0, Math.min(Number(state.current.hintLevel) || 0, entry.hints.length));
+    var visibleHints = entry.hints.slice(0, level);
+
+    if (!visibleHints.length) {
+      panel.innerHTML = "<strong>Indice :</strong> caché. Le demander ajoute une erreur et fait passer le tour.";
+    } else {
+      var heading = entry.hints.length > 1 ? "Indices progressifs" : "Indice";
+      var note = entry.categoryId === "films-series" && level === 1
+        ? '<p class="clue-note">Le premier indice est offert. Les suivants ajoutent une erreur et font passer le tour.</p>'
+        : "";
+      panel.innerHTML = '<strong class="clue-heading">' + heading + ' :</strong><ol class="progressive-clues">' + visibleHints.map(function (hint, index) {
+        return '<li><span>Indice ' + (index + 1) + '</span><p>' + escapeHtml(hint) + '</p></li>';
+      }).join("") + "</ol>" + note;
+    }
+
+    var nextLevel = level + 1;
+    var labels = ["Demander un indice", "Donner le deuxième indice", "Donner le troisième indice"];
+    var buttonText = nextLevel <= entry.hints.length ? labels[nextLevel - 1] : "Tous les indices sont visibles";
+    button.innerHTML = '<i class="bi bi-search"></i> ' + buttonText;
+    button.setAttribute("aria-label", buttonText);
+    button.disabled = state.current.status !== "active" || level >= entry.hints.length;
   }
 
   function escapeHtml(value) {
@@ -570,7 +609,14 @@
     state.usedIds.push(entry.id);
     state.roundNumber += 1;
     state.status = "active";
-    state.current = { entryId: entry.id, guesses: initialArticleGuesses(entry.answer), errors: 0, hintUsed: false, status: "active", success: false };
+    state.current = {
+      entryId: entry.id,
+      guesses: initialArticleGuesses(entry.answer),
+      errors: 0,
+      hintLevel: entry.categoryId === "films-series" ? 1 : 0,
+      status: "active",
+      success: false
+    };
     saveState();
     renderModePanels();
     if (playTurnSound) playSfx("turn");
@@ -629,10 +675,14 @@
   }
 
   function requestHint() {
-    if (!state.current || state.current.status !== "active" || state.current.hintUsed) return;
-    if (!window.confirm("Révéler l'indice ajoutera une erreur et fera passer le tour. Continuer ?")) return;
+    if (!state.current || state.current.status !== "active") return;
     var entry = entryById[state.current.entryId];
-    state.current.hintUsed = true;
+    var currentLevel = Math.max(0, Number(state.current.hintLevel) || 0);
+    if (currentLevel >= entry.hints.length) return;
+    var nextLevel = currentLevel + 1;
+    var ordinals = ["premier", "deuxième", "troisième"];
+    if (!window.confirm("Afficher le " + ordinals[nextLevel - 1] + " indice ajoutera une erreur et fera passer le tour. Continuer ?")) return;
+    state.current.hintLevel = nextLevel;
     state.current.errors += 1;
     if (state.current.errors >= MAX_ERRORS) {
       finishRound(false, "", "indice demandé à la sixième erreur");
@@ -643,7 +693,7 @@
     saveState();
     renderGame();
     playSfx("wrong");
-    showMessage("Indice révélé. Le tour passe à " + currentPlayer() + ".", "warning");
+    showMessage("Indice " + nextLevel + " révélé. Le tour passe à " + currentPlayer() + ".", "warning");
   }
 
   function openSolveDialog() {

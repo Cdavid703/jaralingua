@@ -2,25 +2,121 @@
   "use strict";
 
   window.JaraLinguaHangmanB2 = {
-    version: "20260715-b2",
+    version: "20260715-film-hints",
     categories: [
       {
         id: "films-series",
         label: "Films et séries célèbres",
         icon: "bi-film",
         entries: [
-          { answer: "Le Roi Lion", clue: "Un jeune héritier doit retrouver sa place dans la savane." },
-          { answer: "La Reine des neiges", clue: "Deux sœurs affrontent un hiver provoqué par un pouvoir incontrôlé." },
-          { answer: "Le Monde de Nemo", clue: "Un père traverse l'océan pour retrouver son fils." },
-          { answer: "Vice-versa", clue: "Des émotions personnifiées dirigent la vie intérieure d'une adolescente." },
-          { answer: "Moi, moche et méchant", clue: "Un ancien méchant découvre une nouvelle forme de famille." },
-          { answer: "Les Indestructibles", clue: "Une famille cache des capacités extraordinaires." },
-          { answer: "Monstres et Cie", clue: "Des créatures travaillent derrière les portes des chambres d'enfants." },
-          { answer: "Là-haut", clue: "Une maison s'envole grâce à des milliers de ballons." },
-          { answer: "La Belle et la Bête", clue: "Une jeune femme apprend à regarder au-delà des apparences." },
-          { answer: "Le Seigneur des Anneaux", clue: "Une communauté entreprend de détruire un objet très dangereux." },
-          { answer: "Le Hobbit", clue: "Un voyage inattendu conduit un personnage discret loin de chez lui." },
-          { answer: "Mercredi", clue: "Une adolescente singulière enquête dans une académie mystérieuse." }
+          {
+            answer: "Le Roi Lion",
+            clue: "Un jeune héritier doit retrouver sa place dans la savane.",
+            hints: [
+              "Cette histoire parle d'héritage, de responsabilité et de retour aux origines.",
+              "L'action se déroule dans la savane au sein d'une famille royale.",
+              "Un jeune félin nommé Simba doit reprendre la place laissée par son père."
+            ]
+          },
+          {
+            answer: "La Reine des neiges",
+            clue: "Deux sœurs affrontent un hiver provoqué par un pouvoir incontrôlé.",
+            hints: [
+              "Deux sœurs doivent reconstruire leur relation après une longue séparation.",
+              "Un pouvoir incontrôlé plonge tout un royaume dans un hiver permanent.",
+              "Elsa, Anna et un bonhomme nommé Olaf sont au centre de l'histoire."
+            ]
+          },
+          {
+            answer: "Le Monde de Nemo",
+            clue: "Un père traverse l'océan pour retrouver son fils.",
+            hints: [
+              "Une séparation familiale déclenche un très long voyage.",
+              "L'aventure se déroule presque entièrement sous l'océan.",
+              "Un poisson-clown très prudent cherche son fils avec l'aide de Dory."
+            ]
+          },
+          {
+            answer: "Vice-versa",
+            clue: "Des émotions personnifiées dirigent la vie intérieure d'une adolescente.",
+            hints: [
+              "Une adolescente traverse un changement de vie difficile après un déménagement.",
+              "Une grande partie de l'action se passe à l'intérieur de son esprit.",
+              "Joie, Tristesse, Peur, Colère et Dégoût dirigent ses réactions."
+            ]
+          },
+          {
+            answer: "Moi, moche et méchant",
+            clue: "Un ancien méchant découvre une nouvelle forme de famille.",
+            hints: [
+              "Un projet criminel est bouleversé par une rencontre familiale inattendue.",
+              "Un homme qui veut paraître dangereux adopte trois jeunes filles.",
+              "De petites créatures jaunes l'aident à préparer le vol de la Lune."
+            ]
+          },
+          {
+            answer: "Les Indestructibles",
+            clue: "Une famille cache des capacités extraordinaires.",
+            hints: [
+              "Une famille doit cacher ce qui la rend différente du reste de la société.",
+              "Les parents ont abandonné une ancienne vie héroïque pour vivre discrètement.",
+              "Toute la famille porte des costumes rouges et possède des super-pouvoirs."
+            ]
+          },
+          {
+            answer: "Monstres et Cie",
+            clue: "Des créatures travaillent derrière les portes des chambres d'enfants.",
+            hints: [
+              "Une entreprise dépend d'une ressource obtenue d'une manière très particulière.",
+              "Des portes permettent aux employés d'entrer la nuit dans des chambres d'enfants.",
+              "Sulli et Bob découvrent qu'une petite fille n'est pas aussi dangereuse qu'ils le croyaient."
+            ]
+          },
+          {
+            answer: "Là-haut",
+            clue: "Une maison s'envole grâce à des milliers de ballons.",
+            hints: [
+              "Une promesse de jeunesse conduit à une aventure tardive et inattendue.",
+              "Un homme âgé part en voyage accompagné malgré lui par un jeune explorateur.",
+              "Leur moyen de transport est une maison soulevée par des milliers de ballons."
+            ]
+          },
+          {
+            answer: "La Belle et la Bête",
+            clue: "Une jeune femme apprend à regarder au-delà des apparences.",
+            hints: [
+              "Cette histoire interroge les apparences, la peur et la capacité de changer.",
+              "Une jeune femme reste dans un château habité par des objets enchantés.",
+              "Une rose magique détermine le temps restant pour rompre une malédiction."
+            ]
+          },
+          {
+            answer: "Le Seigneur des Anneaux",
+            clue: "Une communauté entreprend de détruire un objet très dangereux.",
+            hints: [
+              "Le destin de plusieurs peuples dépend d'un objet extrêmement dangereux.",
+              "Un groupe traverse un vaste territoire pour détruire cet objet.",
+              "Frodon quitte la Comté et se dirige vers le Mordor."
+            ]
+          },
+          {
+            answer: "Le Hobbit",
+            clue: "Un voyage inattendu conduit un personnage discret loin de chez lui.",
+            hints: [
+              "Un personnage très attaché à son confort accepte un voyage qu'il n'avait pas prévu.",
+              "Il accompagne un groupe de nains qui veut récupérer son territoire.",
+              "Bilbon doit affronter le dragon Smaug et résoudre des énigmes."
+            ]
+          },
+          {
+            answer: "Mercredi",
+            clue: "Une adolescente singulière enquête dans une académie mystérieuse.",
+            hints: [
+              "Une adolescente solitaire observe son entourage avec beaucoup d'ironie.",
+              "Elle enquête sur une série d'événements dans une académie peu ordinaire.",
+              "Cette jeune fille appartient à la famille Addams et porte presque toujours du noir."
+            ]
+          }
         ]
       },
       {

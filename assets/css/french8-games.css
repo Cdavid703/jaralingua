@@ -500,6 +500,37 @@ body.games-page textarea { font: inherit; }
   line-height: 1.55;
 }
 .clue-panel strong { color: var(--games-navy); }
+.clue-heading { display: block; margin-bottom: .55rem; }
+.progressive-clues {
+  display: grid;
+  gap: .55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: none;
+}
+.progressive-clues li {
+  display: grid;
+  grid-template-columns: 76px minmax(0, 1fr);
+  gap: .65rem;
+  align-items: start;
+  padding: .62rem .7rem;
+  border: 1px solid rgba(21, 52, 93, .12);
+  border-radius: 6px;
+  background: #f7fafc;
+}
+.progressive-clues span {
+  color: var(--games-red);
+  font-size: .78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+.progressive-clues p { margin: 0; color: var(--games-navy); }
+.clue-note { margin: .6rem 0 0; font-size: .86rem; }
+
+@media (max-width: 575.98px) {
+  .progressive-clues li { grid-template-columns: 1fr; gap: .2rem; }
+}
 
 .keyboard { display: grid; gap: .45rem; margin-top: 1rem; }
 .keyboard-row { display: flex; flex-wrap: wrap; justify-content: center; gap: .38rem; }
