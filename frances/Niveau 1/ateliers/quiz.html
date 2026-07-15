@@ -13,6 +13,9 @@
   <style>
     .teacher-only{display:none!important}.can-view-transcripts .teacher-only{display:inline-flex!important}
     .teacher-note{display:none;color:var(--muted);font-weight:800}.can-view-transcripts .teacher-note{display:block}
+    .audio-guidance{display:grid;gap:.45rem;margin:1rem 0 0;padding:.85rem 1rem;border-radius:18px;background:#eef6ff;color:#173b62;font-weight:800;line-height:1.45}
+    .audio-guidance span{display:flex;gap:.5rem;align-items:flex-start}
+    .audio-guidance i{color:#d7263d;margin-top:.15rem}
   </style>
 </head>
 <body>
@@ -56,7 +59,7 @@
   <script src="../assets/original-banks.js?v=20260624-shtooka-nombres"></script>
   <script src="../assets/expanded-catalog.js?v=20260627-theme6"></script>
   <script src="../assets/theme7-catalog.js?v=20260628-theme7-ateliers"></script>
-  <script src="../assets/theme8-catalog.js?v=20260628-theme8-ateliers"></script>
+  <script src="../assets/theme8-catalog.js?v=20260715-theme8-full-dialogue"></script>
   <script src="../assets/theme9-catalog.js?v=20260628-theme9-ateliers"></script>
   <script>
     (function(){
@@ -226,6 +229,7 @@
         </article>`;
       }
       if (item.audio) {
+        const audioMeta = [item.duration ? `<span><i class="bi bi-clock"></i> ${item.duration}</span>` : "", item.listeningTip ? `<span><i class="bi bi-lightbulb"></i> ${item.listeningTip}</span>` : ""].filter(Boolean).join("");
         material.innerHTML = `<article class="content-card activity-material">
           <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between">
             <div>
@@ -235,6 +239,7 @@
             </div>
             <button type="button" class="btn-soft teacher-only" id="downloadTranscriptBtn"><i class="bi bi-file-earmark-pdf"></i> Télécharger la transcription</button>
           </div>
+          ${audioMeta ? `<div class="audio-guidance">${audioMeta}</div>` : ""}
           <audio controls preload="metadata" class="w-100 mt-3" src="${item.audio}"></audio>
         </article>`;
       }

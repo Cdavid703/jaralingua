@@ -28,7 +28,9 @@
         Q("Quelle formule de politesse est utilisée à la fin ?", ["Merci, bonne journée !", "Je ne parle pas.", "Où est la chambre ?"], 0, "La scène se termine avec une formule de remerciement et de politesse.")
       ],
       {
-        audio: "../audio/theme-8/au-cafe-de-la-place.mp3?v=20260628-theme8",
+        audio: "../audio/theme-8/au-cafe-de-la-place.mp3?v=20260715-theme8-full-dialogue",
+        duration: "environ 1 min 10 s",
+        listeningTip: "Écoute une première fois pour comprendre la situation générale, puis une deuxième fois pour vérifier les produits, les prix et le mode de paiement.",
         transcript: `Narratrice : Il est dix heures trente. Lina et Mateo entrent au Café de la place pour prendre une petite pause.
 
 Serveuse : Bonjour, vous désirez ?
