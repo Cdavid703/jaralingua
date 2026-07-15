@@ -754,18 +754,30 @@
   }
 
   function resetMatch(clearRoster) {
-    var prompt = clearRoster ? "Effacer toute la partie, les noms et les scores ?" : "Terminer cette partie et revenir à la préparation ? Les scores seront remis à zéro.";
+    if (!authState.isTeacher) {
+      showMessage("Cette commande est réservée au professeur connecté.", "error");
+      return;
+    }
+    var prompt = clearRoster
+      ? "Réinitialiser entièrement le jeu ? Les noms, les scores, les manches, l'historique et toute la progression sauvegardée seront supprimés de ce navigateur."
+      : "Recommencer avec les mêmes participants ? Les scores, les manches et l'historique seront remis à zéro.";
     if (!window.confirm(prompt)) return;
     var roster = clearRoster ? [] : state.roster.slice();
     var settings = { category: state.category, answerType: state.answerType, targetScore: state.targetScore, strictAccents: state.strictAccents };
     state = defaultState();
     state.roster = roster;
-    if (!clearRoster) Object.assign(state, settings);
-    saveState();
+    if (clearRoster) {
+      try { localStorage.removeItem(STORAGE_KEY); } catch (_error) {}
+    } else {
+      Object.assign(state, settings);
+      saveState();
+    }
     hydrateSetup();
+    if (clearRoster) $("#studentFileInput").value = "";
+    $("#rosterImportStatus").textContent = "";
     hideMessage();
     renderModePanels();
-    showMessage(clearRoster ? "Toutes les données locales du jeu ont été effacées." : "Nouvelle partie prête. La liste des participants a été conservée.", "success");
+    showMessage(clearRoster ? "Réinitialisation terminée : participants, scores, manches et progression ont été effacés." : "Nouvelle partie prête. La liste des participants a été conservée et les scores sont revenus à zéro.", "success");
   }
 
   function updateSoundToggle() {
@@ -793,6 +805,7 @@
     $("#startGameButton").addEventListener("click", startGame);
     $("#clearSavedButton").addEventListener("click", function () { resetMatch(true); });
     $("#resetMatchButton").addEventListener("click", function () { resetMatch(false); });
+    $("#resetAllButton").addEventListener("click", function () { resetMatch(true); });
     $("#letterKeyboard").addEventListener("click", function (event) {
       var button = event.target.closest("[data-letter]");
       if (button) proposeLetter(button.dataset.letter);

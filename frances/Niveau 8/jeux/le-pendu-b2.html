@@ -5,11 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Le Pendu B2 | Jeux · Français Niveau 8</title>
   <meta name="description" content="Jeu du Pendu B2 avec catégories, mots, expressions, participants, scores et contrôle du professeur.">
+  <meta property="og:title" content="Le Pendu B2 · JaraLingua">
+  <meta property="og:description" content="Jeu de vocabulaire B2 dirigé par le professeur, avec catégories, indices progressifs et classement.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://jaralingua.com/frances/Niveau%208/img/jeux/le-pendu-b2-professional-v2.jpg">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
   <link rel="stylesheet" href="../../../assets/vendor/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../../../assets/vendor/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="../../../assets/css/french8-games.css?v=20260715-film-hints">
+  <link rel="stylesheet" href="../../../assets/css/french8-games.css?v=20260715-reset-v2">
 </head>
 <body class="games-page pendu-page">
   <div class="global-course-switcher" aria-label="Cours"><details><summary><span>Cours</span></summary><nav><a href="../../../index.html">Accueil</a><a href="../../index.html">Français</a><a href="../../Niveau%207/index.html">Français Niveau 7</a><a href="../index.html">Français Niveau 8</a><a href="../../../ingles/index.html">Anglais</a></nav></details></div>
@@ -22,7 +26,7 @@
     </div>
   </nav>
 
-  <header class="games-hero" style="--hero-image:url('../img/jeux/le-pendu-b2-hero.jpg')">
+  <header class="games-hero" style="--hero-image:url('../img/jeux/le-pendu-b2-professional-v2.jpg')">
     <div class="container">
       <div class="games-hero-content">
         <span class="games-badge"><i class="bi bi-alphabet-uppercase"></i> Vocabulaire · B2</span>
@@ -96,7 +100,7 @@
                 </div>
                 <div class="form-field"><label for="targetScoreInput">Score à atteindre</label><input id="targetScoreInput" type="number" min="3" max="100" step="1" value="10" inputmode="numeric"></div>
                 <label class="switch-row" for="strictAccentsInput"><input id="strictAccentsInput" type="checkbox"><span><strong>Orthographe stricte</strong><br><small>Distinguer e, é, è, ê et les autres accents.</small></span></label>
-                <div class="setup-actions"><button class="games-btn" type="button" id="startGameButton"><i class="bi bi-play-fill"></i> Commencer la partie</button><button class="games-danger-btn" type="button" id="clearSavedButton"><i class="bi bi-trash3"></i> Tout effacer</button></div>
+                <div class="setup-actions"><button class="games-btn" type="button" id="startGameButton"><i class="bi bi-play-fill"></i> Commencer la partie</button><button class="games-danger-btn" type="button" id="clearSavedButton"><i class="bi bi-trash3"></i> Tout réinitialiser</button></div>
               </div>
             </div>
           </div>
@@ -105,7 +109,10 @@
         <section class="game-console" id="gameConsole" hidden>
           <div class="console-head">
             <div><h2><i class="bi bi-controller"></i> Partie en cours</h2><span id="modeSummary">Mélange B2 · 10 points</span></div>
-            <div class="console-head-actions"><div class="sound-control"><button class="games-icon-btn sound-button" type="button" id="soundToggleButton" title="Activer ou couper les effets sonores" aria-label="Couper les effets sonores"><i class="bi bi-volume-up-fill"></i></button><input id="soundVolumeInput" type="range" min="0" max="100" value="70" aria-label="Volume des effets sonores"></div><button class="games-danger-btn" type="button" id="resetMatchButton"><i class="bi bi-arrow-counterclockwise"></i> Nouvelle partie</button></div>
+            <div class="console-head-actions">
+              <div class="sound-control"><button class="games-icon-btn sound-button" type="button" id="soundToggleButton" title="Activer ou couper les effets sonores" aria-label="Couper les effets sonores"><i class="bi bi-volume-up-fill"></i></button><input id="soundVolumeInput" type="range" min="0" max="100" value="70" aria-label="Volume des effets sonores"></div>
+              <div class="reset-controls"><button class="games-btn-soft" type="button" id="resetMatchButton" title="Remettre les scores à zéro et conserver les participants"><i class="bi bi-arrow-counterclockwise"></i> Rejouer avec ces noms</button><button class="games-danger-btn" type="button" id="resetAllButton" title="Effacer les noms, les scores et toute la progression"><i class="bi bi-trash3"></i> Tout réinitialiser</button></div>
+            </div>
           </div>
 
           <div class="game-layout">
@@ -164,7 +171,7 @@
   <script src="../../../assets/js/google-auth.js?v=20260627-global-auth"></script>
   <script src="../../../assets/js/roster-import.js"></script>
   <script src="../../../assets/js/french8-hangman-data.js?v=20260715-film-hints"></script>
-  <script src="../../../assets/js/french8-hangman.js?v=20260715-film-hints"></script>
+  <script src="../../../assets/js/french8-hangman.js?v=20260715-reset-v2"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
