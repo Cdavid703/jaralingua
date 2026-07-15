@@ -110,7 +110,7 @@
           <div class="console-head">
             <div><h2><i class="bi bi-controller"></i> Partie en cours</h2><span id="modeSummary">Mélange B2 · 10 points</span></div>
             <div class="console-head-actions">
-              <div class="sound-control"><button class="games-icon-btn sound-button" type="button" id="soundToggleButton" title="Activer ou couper les effets sonores" aria-label="Couper les effets sonores"><i class="bi bi-volume-up-fill"></i></button><input id="soundVolumeInput" type="range" min="0" max="100" value="70" aria-label="Volume des effets sonores"></div>
+              <div class="sound-control"><button class="games-icon-btn sound-button" type="button" id="soundToggleButton" title="Couper les sons et la prononciation des lettres" aria-label="Couper les sons et la prononciation des lettres"><i class="bi bi-volume-up-fill"></i></button><input id="soundVolumeInput" type="range" min="0" max="100" value="70" aria-label="Volume des sons et des lettres"></div>
               <div class="reset-controls"><button class="games-btn-soft" type="button" id="resetMatchButton" title="Remettre les scores à zéro et conserver les participants"><i class="bi bi-arrow-counterclockwise"></i> Rejouer avec ces noms</button><button class="games-danger-btn" type="button" id="resetAllButton" title="Effacer les noms, les scores et toute la progression"><i class="bi bi-trash3"></i> Tout réinitialiser</button></div>
             </div>
           </div>
@@ -137,7 +137,7 @@
                 </div>
               </div>
 
-              <div class="keyboard" id="letterKeyboard" aria-label="Clavier de lettres françaises"><div class="keyboard-row" id="baseKeyboard"></div><div class="keyboard-row accents" id="accentKeyboard" hidden></div></div>
+              <div class="keyboard" id="letterKeyboard" aria-label="Clavier de lettres françaises avec prononciation audio"><div class="keyboard-row" id="baseKeyboard"></div><div class="keyboard-row accents" id="accentKeyboard" hidden></div></div>
               <div class="round-actions"><button class="games-btn" type="button" id="solveButton"><i class="bi bi-lightbulb-fill"></i> Proposer la solution</button><button class="games-btn-soft" type="button" id="hintButton"><i class="bi bi-search"></i> Demander un indice</button><button class="games-btn-soft" type="button" id="nextRoundButton" hidden><i class="bi bi-skip-forward-fill"></i> Manche suivante</button></div>
               <div id="roundResult" class="round-result" hidden></div>
               <div id="winnerPanel" class="winner-panel" hidden></div>
@@ -171,7 +171,7 @@
   <script src="../../../assets/js/google-auth.js?v=20260627-global-auth"></script>
   <script src="../../../assets/js/roster-import.js"></script>
   <script src="../../../assets/js/french8-hangman-data.js?v=20260715-film-hints"></script>
-  <script src="../../../assets/js/french8-hangman.js?v=20260715-reset-v2"></script>
+  <script src="../../../assets/js/french8-hangman.js?v=20260715-letter-audio"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

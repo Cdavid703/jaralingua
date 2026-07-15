@@ -13,6 +13,8 @@
   var BASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
   var ACCENT_LETTERS = "ÀÂÄÇÉÈÊËÎÏÔÖÙÛÜŸ".split("");
   var SFX_BASE = "../audio/sfx/pendu/";
+  var ALPHABET_AUDIO_BASE = "/frances/Niveau%201/audio/theme-1/alphabet/lettre-";
+  var ALPHABET_AUDIO_VERSION = "?v=20260624-alphabet-nz-fix";
   var SFX = {
     start: "game-start.mp3",
     correct: "correct-letter.mp3",
@@ -29,6 +31,10 @@
   }, {});
   var soundSettings = loadSoundSettings();
   var audioCache = {};
+  var activeLetterAudio = null;
+  var letterAudioPlaying = false;
+  var letterAudioToken = 0;
+  var queuedSfxName = "";
   var state = loadState();
   var authState = { user: null, isLoggedIn: false, isTeacher: false };
   var lastAuthSignature = "";
@@ -252,7 +258,7 @@
     if (box) box.hidden = true;
   }
 
-  function playSfx(name) {
+  function playSfxNow(name) {
     if (!soundSettings.enabled || !SFX[name]) return;
     try {
       if (!audioCache[name]) {
@@ -266,6 +272,76 @@
       var promise = audio.play();
       if (promise && typeof promise.catch === "function") promise.catch(function () {});
     } catch (_error) {}
+  }
+
+  function playSfx(name) {
+    if (!soundSettings.enabled || !SFX[name]) return;
+    if (letterAudioPlaying) {
+      queuedSfxName = name;
+      return;
+    }
+    playSfxNow(name);
+  }
+
+  function alphabetAudioLetter(letter) {
+    var key = fold(letter).replace(/[^A-Z]/g, "").charAt(0).toLowerCase();
+    return /^[a-z]$/.test(key) ? key : "";
+  }
+
+  function finishLetterAudio(token) {
+    if (token !== letterAudioToken) return;
+    letterAudioPlaying = false;
+    activeLetterAudio = null;
+    var nextSfx = queuedSfxName;
+    queuedSfxName = "";
+    if (nextSfx) playSfxNow(nextSfx);
+  }
+
+  function playLetterName(letter) {
+    if (!soundSettings.enabled) return;
+    var key = alphabetAudioLetter(letter);
+    if (!key) return;
+    var cacheKey = "alphabet-" + key;
+    var token = letterAudioToken + 1;
+    letterAudioToken = token;
+    queuedSfxName = "";
+    if (activeLetterAudio) {
+      activeLetterAudio.pause();
+      activeLetterAudio.currentTime = 0;
+    }
+    try {
+      if (!audioCache[cacheKey]) {
+        audioCache[cacheKey] = new Audio(ALPHABET_AUDIO_BASE + key + ".mp3" + ALPHABET_AUDIO_VERSION);
+        audioCache[cacheKey].preload = "auto";
+      }
+      var audio = audioCache[cacheKey];
+      activeLetterAudio = audio;
+      letterAudioPlaying = true;
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = soundSettings.volume;
+      audio.onended = function () { finishLetterAudio(token); };
+      audio.onerror = function () { finishLetterAudio(token); };
+      var promise = audio.play();
+      if (promise && typeof promise.catch === "function") {
+        promise.catch(function () { finishLetterAudio(token); });
+      }
+    } catch (_error) {
+      finishLetterAudio(token);
+    }
+  }
+
+  function stopAllAudio() {
+    letterAudioToken += 1;
+    letterAudioPlaying = false;
+    queuedSfxName = "";
+    activeLetterAudio = null;
+    Object.keys(audioCache).forEach(function (key) {
+      try {
+        audioCache[key].pause();
+        audioCache[key].currentTime = 0;
+      } catch (_error) {}
+    });
   }
 
   function normalizeEmail(value) { return String(value || "").trim().toLowerCase(); }
@@ -504,7 +580,9 @@
   function renderSoundControls() {
     var button = $("#soundToggleButton");
     button.innerHTML = soundSettings.enabled ? '<i class="bi bi-volume-up-fill"></i>' : '<i class="bi bi-volume-mute-fill"></i>';
-    button.setAttribute("aria-label", soundSettings.enabled ? "Couper les effets sonores" : "Activer les effets sonores");
+    var label = soundSettings.enabled ? "Couper les sons et la prononciation des lettres" : "Activer les sons et la prononciation des lettres";
+    button.setAttribute("aria-label", label);
+    button.setAttribute("title", label);
     $("#soundVolumeInput").value = Math.round(soundSettings.volume * 100);
   }
 
@@ -641,6 +719,7 @@
   function proposeLetter(letter) {
     if (!authState.isTeacher || state.status !== "active" || !state.current || state.current.status !== "active") return;
     var entry = entryById[state.current.entryId];
+    playLetterName(letter);
     var key = canonicalLetter(letter);
     if (!key || state.current.guesses.indexOf(key) !== -1) {
       showMessage("Cette lettre a déjà été proposée.", "warning");
@@ -762,6 +841,7 @@
       ? "Réinitialiser entièrement le jeu ? Les noms, les scores, les manches, l'historique et toute la progression sauvegardée seront supprimés de ce navigateur."
       : "Recommencer avec les mêmes participants ? Les scores, les manches et l'historique seront remis à zéro.";
     if (!window.confirm(prompt)) return;
+    stopAllAudio();
     var roster = clearRoster ? [] : state.roster.slice();
     var settings = { category: state.category, answerType: state.answerType, targetScore: state.targetScore, strictAccents: state.strictAccents };
     state = defaultState();
@@ -782,6 +862,7 @@
 
   function updateSoundToggle() {
     soundSettings.enabled = !soundSettings.enabled;
+    if (!soundSettings.enabled) stopAllAudio();
     saveSoundSettings();
     renderSoundControls();
     if (soundSettings.enabled) playSfx("correct");
@@ -823,6 +904,7 @@
     $("#soundToggleButton").addEventListener("click", updateSoundToggle);
     $("#soundVolumeInput").addEventListener("input", function (event) {
       soundSettings.volume = Math.max(0, Math.min(1, Number(event.target.value) / 100));
+      Object.keys(audioCache).forEach(function (key) { audioCache[key].volume = soundSettings.volume; });
       saveSoundSettings();
     });
     document.addEventListener("keydown", handleKeyboard);
@@ -873,6 +955,11 @@
       var guesses = initialArticleGuesses(answer);
       state.strictAccents = previous;
       return guesses;
+    },
+    alphabetAudioLetter: alphabetAudioLetter,
+    alphabetAudioUrl: function (letter) {
+      var key = alphabetAudioLetter(letter);
+      return key ? ALPHABET_AUDIO_BASE + key + ".mp3" + ALPHABET_AUDIO_VERSION : "";
     }
   };
 
