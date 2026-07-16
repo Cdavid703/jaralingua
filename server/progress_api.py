@@ -38,6 +38,7 @@ FRENCH8_QUIZ_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_SUBMISSI
 FRENCH8_QUIZ_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_AUDIO", "/var/lib/jaralingua/french8-quiz-ville-intelligente-audio.mp3")
 FRENCH8_QUIZ_EVENTS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_EVENTS", "/var/lib/jaralingua/french8-quiz-ville-intelligente-events.jsonl")
 FRENCH8_IMPOSTEUR_PATH = os.environ.get("JARALINGUA_FRENCH8_IMPOSTEUR_DATA", "/var/lib/jaralingua/french8-imposteur-games.json")
+FRENCH1_IMPOSTEUR_PATH = os.environ.get("JARALINGUA_FRENCH1_IMPOSTEUR_DATA", "/var/lib/jaralingua/french1-imposteur-games.json")
 FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "/var/lib/jaralingua/french7-final-exam.json")
 FRENCH7_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french7-final-exam-submissions.json")
 FRENCH7_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french7-final-exam-audio.mp3")
@@ -3169,6 +3170,462 @@ def french8_imposteur_action(payload):
     return 400, {"error": "invalid_action"}
 
 
+FRENCH1_IMPOSTEUR_DECKS = {
+    "all": {
+        "label": "Mélange A1",
+        "cards": []
+    },
+    "premiers-contacts": {
+        "label": "Premiers contacts",
+        "cards": [
+            {"id": "prenom-nom", "term": "prénom", "impostorTerm": "nom", "category": "Premiers contacts", "brief": "Identité personnelle : le mot individuel d'une personne.", "impostorBrief": "Identité familiale ou officielle.", "clues": ["identité", "personne", "formulaire"], "taboo": ["prénom", "nom"]},
+            {"id": "ville-pays", "term": "ville", "impostorTerm": "pays", "category": "Premiers contacts", "brief": "Lieu urbain comme Paris, Bogotá ou Medellín.", "impostorBrief": "Territoire national comme la France ou la Colombie.", "clues": ["lieu", "adresse", "habitation"], "taboo": ["ville", "pays"]},
+            {"id": "telephone-adresse", "term": "téléphone", "impostorTerm": "adresse", "category": "Premiers contacts", "brief": "Information de contact avec des chiffres.", "impostorBrief": "Information de contact liée à un lieu ou à un courriel.", "clues": ["contact", "formulaire", "information"], "taboo": ["téléphone", "adresse"]},
+            {"id": "bonjour-salut", "term": "bonjour", "impostorTerm": "salut", "category": "Premiers contacts", "brief": "Salutation polie de la journée.", "impostorBrief": "Salutation plus familière.", "clues": ["politesse", "début", "conversation"], "taboo": ["bonjour", "salut"]}
+        ]
+    },
+    "alphabet-nombres": {
+        "label": "Alphabet et nombres",
+        "cards": [
+            {"id": "sept-onze", "term": "sept", "impostorTerm": "onze", "category": "Alphabet et nombres", "brief": "Nombre entre six et huit.", "impostorBrief": "Nombre après dix.", "clues": ["nombre", "chiffre", "suite"], "taboo": ["sept", "onze"]},
+            {"id": "douze-quinze", "term": "douze", "impostorTerm": "quinze", "category": "Alphabet et nombres", "brief": "Nombre après onze.", "impostorBrief": "Nombre après quatorze.", "clues": ["nombre", "date", "quantité"], "taboo": ["douze", "quinze"]},
+            {"id": "alphabet-lettre", "term": "alphabet", "impostorTerm": "lettre", "category": "Alphabet et nombres", "brief": "Ensemble ordonné de toutes les lettres.", "impostorBrief": "Signe écrit qui forme un mot.", "clues": ["écriture", "A B C", "français"], "taboo": ["alphabet", "lettre"]},
+            {"id": "nombre-date", "term": "nombre", "impostorTerm": "date", "category": "Alphabet et nombres", "brief": "Mot général pour une quantité.", "impostorBrief": "Jour, mois et année.", "clues": ["chiffres", "calendrier", "information"], "taboo": ["nombre", "date"]}
+        ]
+    },
+    "classe": {
+        "label": "La classe",
+        "cards": [
+            {"id": "stylo-cahier", "term": "stylo", "impostorTerm": "cahier", "category": "La classe", "brief": "Objet pour écrire avec de l'encre.", "impostorBrief": "Objet avec des pages pour écrire.", "clues": ["classe", "écriture", "sac"], "taboo": ["stylo", "cahier"]},
+            {"id": "livre-tableau", "term": "livre", "impostorTerm": "tableau", "category": "La classe", "brief": "Objet avec des pages imprimées.", "impostorBrief": "Surface devant la classe.", "clues": ["étude", "cours", "professeur"], "taboo": ["livre", "tableau"]},
+            {"id": "professeur-etudiant", "term": "professeur", "impostorTerm": "étudiant", "category": "La classe", "brief": "Personne qui enseigne.", "impostorBrief": "Personne qui apprend dans un cours.", "clues": ["classe", "université", "personne"], "taboo": ["professeur", "étudiant"]},
+            {"id": "chaise-bureau", "term": "chaise", "impostorTerm": "bureau", "category": "La classe", "brief": "Meuble individuel pour s'asseoir.", "impostorBrief": "Meuble ou espace pour travailler.", "clues": ["meuble", "classe", "travail"], "taboo": ["chaise", "bureau"]}
+        ]
+    },
+    "famille": {
+        "label": "Famille",
+        "cards": [
+            {"id": "mere-pere", "term": "mère", "impostorTerm": "père", "category": "Famille", "brief": "Parent féminin direct.", "impostorBrief": "Parent masculin direct.", "clues": ["famille", "parent", "maison"], "taboo": ["mère", "père"]},
+            {"id": "frere-soeur", "term": "frère", "impostorTerm": "sœur", "category": "Famille", "brief": "Garçon ou homme avec les mêmes parents.", "impostorBrief": "Fille ou femme avec les mêmes parents.", "clues": ["famille", "enfants", "parents"], "taboo": ["frère", "sœur"]},
+            {"id": "cousin-cousine", "term": "cousin", "impostorTerm": "cousine", "category": "Famille", "brief": "Fils d'un oncle ou d'une tante.", "impostorBrief": "Fille d'un oncle ou d'une tante.", "clues": ["famille élargie", "oncle", "tante"], "taboo": ["cousin", "cousine"]},
+            {"id": "tante-oncle", "term": "tante", "impostorTerm": "oncle", "category": "Famille", "brief": "Sœur du père ou de la mère.", "impostorBrief": "Frère du père ou de la mère.", "clues": ["famille", "adulte", "parents"], "taboo": ["tante", "oncle"]}
+        ]
+    },
+    "description-physique": {
+        "label": "Description physique",
+        "cards": [
+            {"id": "cheveux-yeux", "term": "cheveux", "impostorTerm": "yeux", "category": "Description physique", "brief": "Partie du corps liée à la tête.", "impostorBrief": "Partie du visage pour voir.", "clues": ["visage", "couleur", "description"], "taboo": ["cheveux", "yeux"]},
+            {"id": "lunettes-barbe", "term": "lunettes", "impostorTerm": "barbe", "category": "Description physique", "brief": "Accessoire porté devant les yeux.", "impostorBrief": "Poils sur le visage.", "clues": ["visage", "apparence", "description"], "taboo": ["lunettes", "barbe"]},
+            {"id": "brun-blonde", "term": "brun", "impostorTerm": "blonde", "category": "Description physique", "brief": "Couleur foncée pour les cheveux.", "impostorBrief": "Couleur claire pour les cheveux au féminin.", "clues": ["couleur", "cheveux", "description"], "taboo": ["brun", "blonde"]},
+            {"id": "taille-grand", "term": "taille", "impostorTerm": "grand", "category": "Description physique", "brief": "Hauteur d'une personne.", "impostorBrief": "Adjectif pour une personne de haute taille.", "clues": ["corps", "hauteur", "description"], "taboo": ["taille", "grand"]}
+        ]
+    },
+    "professions": {
+        "label": "Professions",
+        "cards": [
+            {"id": "medecin-infirmiere", "term": "médecin", "impostorTerm": "infirmière", "category": "Professions", "brief": "Profession liée à la santé et aux patients.", "impostorBrief": "Profession de santé qui accompagne les soins.", "clues": ["santé", "hôpital", "patient"], "taboo": ["médecin", "infirmière"]},
+            {"id": "serveur-vendeuse", "term": "serveur", "impostorTerm": "vendeuse", "category": "Professions", "brief": "Profession dans un café ou un restaurant.", "impostorBrief": "Profession dans un magasin.", "clues": ["client", "travail", "service"], "taboo": ["serveur", "vendeuse"]},
+            {"id": "photographe-artiste", "term": "photographe", "impostorTerm": "artiste", "category": "Professions", "brief": "Personne qui travaille avec des photos.", "impostorBrief": "Personne liée à la création.", "clues": ["image", "création", "profession"], "taboo": ["photographe", "artiste"]},
+            {"id": "architecte-veterinaire", "term": "architecte", "impostorTerm": "vétérinaire", "category": "Professions", "brief": "Profession liée aux bâtiments.", "impostorBrief": "Profession liée à la santé des animaux.", "clues": ["profession", "études", "travail"], "taboo": ["architecte", "vétérinaire"]}
+        ]
+    },
+    "maison": {
+        "label": "Maison",
+        "cards": [
+            {"id": "maison-appartement", "term": "maison", "impostorTerm": "appartement", "category": "Maison", "brief": "Lieu de vie qui peut être indépendant.", "impostorBrief": "Logement dans un immeuble.", "clues": ["logement", "famille", "adresse"], "taboo": ["maison", "appartement"]},
+            {"id": "chambre-salon", "term": "chambre", "impostorTerm": "salon", "category": "Maison", "brief": "Pièce pour dormir.", "impostorBrief": "Pièce pour recevoir ou se reposer.", "clues": ["pièce", "maison", "meuble"], "taboo": ["chambre", "salon"]},
+            {"id": "cuisine-salle", "term": "cuisine", "impostorTerm": "salle", "category": "Maison", "brief": "Pièce pour préparer la nourriture.", "impostorBrief": "Mot général pour une pièce.", "clues": ["maison", "espace", "intérieur"], "taboo": ["cuisine", "salle"]},
+            {"id": "lit-table", "term": "lit", "impostorTerm": "table", "category": "Maison", "brief": "Meuble pour dormir.", "impostorBrief": "Meuble avec une surface plate.", "clues": ["meuble", "maison", "chambre"], "taboo": ["lit", "table"]}
+        ]
+    },
+    "objets-maison": {
+        "label": "Objets de la maison",
+        "cards": [
+            {"id": "miroir-lampe", "term": "miroir", "impostorTerm": "lampe", "category": "Objets de la maison", "brief": "Objet qui reflète l'image.", "impostorBrief": "Objet qui donne de la lumière.", "clues": ["objet", "maison", "chambre"], "taboo": ["miroir", "lampe"]},
+            {"id": "canape-chaise", "term": "canapé", "impostorTerm": "chaise", "category": "Objets de la maison", "brief": "Meuble confortable du salon.", "impostorBrief": "Meuble individuel pour s'asseoir.", "clues": ["meuble", "siège", "salon"], "taboo": ["canapé", "chaise"]},
+            {"id": "armoire-bureau", "term": "armoire", "impostorTerm": "bureau", "category": "Objets de la maison", "brief": "Meuble pour ranger des vêtements.", "impostorBrief": "Meuble ou espace pour travailler.", "clues": ["meuble", "chambre", "objet"], "taboo": ["armoire", "bureau"]},
+            {"id": "ordinateur-refrigerateur", "term": "ordinateur", "impostorTerm": "réfrigérateur", "category": "Objets de la maison", "brief": "Appareil électronique pour étudier ou travailler.", "impostorBrief": "Appareil de cuisine pour garder les aliments au froid.", "clues": ["appareil", "maison", "électricité"], "taboo": ["ordinateur", "réfrigérateur"]}
+        ]
+    },
+    "alimentation": {
+        "label": "Alimentation",
+        "cards": [
+            {"id": "cafe-the", "term": "café", "impostorTerm": "thé", "category": "Alimentation", "brief": "Boisson chaude très fréquente.", "impostorBrief": "Boisson chaude préparée avec des feuilles.", "clues": ["boisson", "matin", "chaud"], "taboo": ["café", "thé"]},
+            {"id": "pain-croissant", "term": "pain", "impostorTerm": "croissant", "category": "Alimentation", "brief": "Aliment de base fait avec de la farine.", "impostorBrief": "Viennoiserie française du petit déjeuner.", "clues": ["farine", "petit déjeuner", "France"], "taboo": ["pain", "croissant"]},
+            {"id": "pomme-tarte", "term": "pomme", "impostorTerm": "tarte", "category": "Alimentation", "brief": "Fruit rond rouge, vert ou jaune.", "impostorBrief": "Dessert ou plat avec une pâte.", "clues": ["aliment", "sucré", "dessert"], "taboo": ["pomme", "tarte"]},
+            {"id": "eau-jus", "term": "eau", "impostorTerm": "jus", "category": "Alimentation", "brief": "Boisson naturelle transparente.", "impostorBrief": "Boisson faite avec des fruits.", "clues": ["boisson", "verre", "restaurant"], "taboo": ["eau", "jus"]}
+        ]
+    },
+    "ville-transport": {
+        "label": "Ville et transport",
+        "cards": [
+            {"id": "bus-metro", "term": "bus", "impostorTerm": "métro", "category": "Ville et transport", "brief": "Transport public sur la route.", "impostorBrief": "Transport urbain souvent souterrain.", "clues": ["transport", "ville", "station"], "taboo": ["bus", "métro"]},
+            {"id": "gare-station", "term": "gare", "impostorTerm": "station", "category": "Ville et transport", "brief": "Lieu lié aux trains.", "impostorBrief": "Lieu où l'on attend un transport.", "clues": ["transport", "lieu", "voyage"], "taboo": ["gare", "station"]},
+            {"id": "rue-parc", "term": "rue", "impostorTerm": "parc", "category": "Ville et transport", "brief": "Voie dans une ville.", "impostorBrief": "Espace vert dans une ville.", "clues": ["ville", "extérieur", "adresse"], "taboo": ["rue", "parc"]},
+            {"id": "pharmacie-bibliotheque", "term": "pharmacie", "impostorTerm": "bibliothèque", "category": "Ville et transport", "brief": "Lieu où l'on achète des médicaments.", "impostorBrief": "Lieu avec des livres.", "clues": ["ville", "lieu public", "service"], "taboo": ["pharmacie", "bibliothèque"]}
+        ]
+    }
+}
+
+FRENCH1_IMPOSTEUR_ALL_CARDS = [
+    card
+    for deck_key, deck in FRENCH1_IMPOSTEUR_DECKS.items()
+    if deck_key != "all"
+    for card in deck["cards"]
+]
+FRENCH1_IMPOSTEUR_DECKS["all"]["cards"] = FRENCH1_IMPOSTEUR_ALL_CARDS
+
+
+def clean_french1_imposteur_deck(value):
+    deck = clean_text(value, 80).strip().lower()
+    return deck if deck in FRENCH1_IMPOSTEUR_DECKS else "all"
+
+
+def french1_imposteur_deck_options():
+    return [
+        {"id": key, "label": deck.get("label", key), "count": len(deck.get("cards") or [])}
+        for key, deck in FRENCH1_IMPOSTEUR_DECKS.items()
+    ]
+
+
+def default_french1_imposteur_store():
+    return {"rooms": {}}
+
+
+def read_french1_imposteur_store():
+    data = read_json_file(FRENCH1_IMPOSTEUR_PATH, default_french1_imposteur_store())
+    if not isinstance(data.get("rooms"), dict):
+        data["rooms"] = {}
+    return data
+
+
+def write_french1_imposteur_store(data):
+    write_json_file(FRENCH1_IMPOSTEUR_PATH, data, ".french1-imposteur-")
+
+
+def french1_imposteur_card_public(card):
+    if not isinstance(card, dict):
+        return None
+    return {
+        "id": clean_text(card.get("id"), 80),
+        "term": clean_text(card.get("term"), 120),
+        "impostorTerm": clean_text(card.get("impostorTerm"), 120),
+        "category": clean_text(card.get("category"), 80),
+        "brief": clean_text(card.get("brief"), 400),
+        "impostorBrief": clean_text(card.get("impostorBrief"), 400),
+        "clues": [clean_text(item, 100) for item in card.get("clues", []) if isinstance(item, str)][:4],
+        "taboo": [clean_text(item, 80) for item in card.get("taboo", []) if isinstance(item, str)][:4]
+    }
+
+
+def french1_imposteur_impostor_card(card):
+    public = french1_imposteur_card_public(card)
+    if not public:
+        return None
+    return {
+        "id": public.get("id"),
+        "term": public.get("impostorTerm"),
+        "category": public.get("category"),
+        "brief": public.get("impostorBrief") or "Mot proche du mot de la classe.",
+        "clues": public.get("clues") or [],
+        "taboo": public.get("taboo") or []
+    }
+
+
+def french1_imposteur_room_payload(room, player_token="", teacher_token=""):
+    players = french8_imposteur_players(room)
+    status = clean_text(room.get("status"), 40) or "waiting"
+    is_revealed = status == "revealed"
+    current = french8_imposteur_find_player(room, player_token)
+    is_teacher = clean_text(teacher_token, 200) and hmac.compare_digest(
+        clean_text(teacher_token, 200),
+        clean_text(room.get("teacherToken"), 200)
+    )
+    ready_count = sum(1 for player in players if player.get("readyAt"))
+    votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    current_round = french8_imposteur_current_round(room)
+    vote_count = sum(1 for vote_value in votes.values() if french8_imposteur_vote_suspect_id(vote_value, room))
+    card = french1_imposteur_card_public(room.get("card"))
+    impostor_ids = {clean_text(item, 40) for item in room.get("impostorIds", []) if clean_text(item, 40)}
+    deck_key = clean_french1_imposteur_deck(room.get("deck"))
+    payload = {
+        "room": {
+            "code": clean_imposteur_room_code(room.get("code")),
+            "status": status,
+            "round": current_round,
+            "deck": deck_key,
+            "deckLabel": FRENCH1_IMPOSTEUR_DECKS[deck_key]["label"],
+            "deckOptions": french1_imposteur_deck_options(),
+            "playerCount": len(players),
+            "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS,
+            "maxPlayers": FRENCH8_IMPOSTEUR_MAX_PLAYERS,
+            "impostorCount": len(impostor_ids) if impostor_ids else (2 if len(players) > 8 else 1),
+            "readyCount": ready_count,
+            "allReady": bool(players) and ready_count == len(players),
+            "voteCount": vote_count,
+            "createdAt": room.get("createdAt"),
+            "updatedAt": room.get("updatedAt")
+        },
+        "players": [french8_imposteur_player_public(player, room, is_revealed) for player in players],
+        "currentPlayer": None,
+        "teacher": None,
+        "result": None
+    }
+    if card:
+        payload["room"]["category"] = card.get("category")
+    if current:
+        current_id = clean_text(current.get("id"), 40)
+        role = "impostor" if current_id in impostor_ids else ("citizen" if room.get("card") else "waiting")
+        player_payload = french8_imposteur_player_public(current, room, is_revealed)
+        player_payload["role"] = role
+        if role == "citizen" and status in ("briefing", "discussion", "voting", "revealed"):
+            player_payload["card"] = card
+        elif role == "impostor" and status in ("briefing", "discussion", "voting", "revealed"):
+            player_payload["impostorCard"] = french1_imposteur_impostor_card(room.get("card"))
+            player_payload["impostorInstruction"] = "Tu es l'imposteur. Tu as un mot proche, mais différent. Écoute les autres, reste crédible et repère le mot de la classe."
+        payload["currentPlayer"] = player_payload
+    if is_teacher:
+        payload["teacher"] = {
+            "ok": True,
+            "card": card,
+            "impostors": [
+                {"id": clean_text(player.get("id"), 40), "name": clean_imposteur_name(player.get("name"))}
+                for player in players
+                if clean_text(player.get("id"), 40) in impostor_ids
+            ]
+        }
+    if is_revealed:
+        impostors = [
+            {"id": clean_text(player.get("id"), 40), "name": clean_imposteur_name(player.get("name"))}
+            for player in players
+            if clean_text(player.get("id"), 40) in impostor_ids
+        ]
+        payload["result"] = {
+            "card": card,
+            "impostors": impostors,
+            "votes": french8_imposteur_vote_summary(room)
+        }
+    return payload
+
+
+def french1_imposteur_get_state(query):
+    room_code = clean_imposteur_room_code((query.get("room") or [""])[0])
+    player_token = clean_text((query.get("playerToken") or [""])[0], 200)
+    teacher_token = clean_text((query.get("teacherToken") or [""])[0], 200)
+    store = read_french1_imposteur_store()
+    french8_imposteur_prune_rooms(store)
+    room = store.get("rooms", {}).get(room_code)
+    if not room:
+        write_french1_imposteur_store(store)
+        return 404, {"error": "room_not_found"}
+    french8_imposteur_touch(room)
+    write_french1_imposteur_store(store)
+    return 200, french1_imposteur_room_payload(room, player_token, teacher_token)
+
+
+def french1_imposteur_action(payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_json"}
+    action = clean_text(payload.get("action"), 40)
+    store = read_french1_imposteur_store()
+    rooms = store.setdefault("rooms", {})
+    french8_imposteur_prune_rooms(store)
+    timestamp = now_iso()
+
+    if action == "create":
+        room_code = french8_imposteur_new_room_code(rooms)
+        teacher_token = secrets.token_urlsafe(24)
+        deck_key = clean_french1_imposteur_deck(payload.get("deck"))
+        room = {
+            "code": room_code,
+            "teacherToken": teacher_token,
+            "status": "waiting",
+            "round": 1,
+            "players": [],
+            "votes": {},
+            "impostorIds": [],
+            "card": None,
+            "deck": deck_key,
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "updatedAtEpoch": int(time.time())
+        }
+        rooms[room_code] = room
+        write_french1_imposteur_store(store)
+        return 200, {"ok": True, "roomCode": room_code, "teacherToken": teacher_token, "state": french1_imposteur_room_payload(room, teacher_token=teacher_token)}
+
+    room_code = clean_imposteur_room_code(payload.get("roomCode") or payload.get("room"))
+    room = rooms.get(room_code)
+    if not room:
+        write_french1_imposteur_store(store)
+        return 404, {"error": "room_not_found"}
+    players = french8_imposteur_players(room)
+
+    try:
+        if action == "join":
+            name = clean_imposteur_name(payload.get("name"))
+            if len(name) < 2:
+                return 400, {"error": "name_required"}
+            player_token = clean_text(payload.get("playerToken"), 200)
+            existing = french8_imposteur_find_player(room, player_token)
+            if existing:
+                existing["name"] = name
+                existing["lastSeenAt"] = timestamp
+            else:
+                normalized = normalize_name(name)
+                if any(normalize_name(player.get("name")) == normalized for player in players):
+                    return 409, {"error": "name_taken"}
+                if len(players) >= FRENCH8_IMPOSTEUR_MAX_PLAYERS:
+                    return 409, {"error": "room_full"}
+                player_token = secrets.token_urlsafe(24)
+                players.append({
+                    "id": french8_imposteur_new_player_id(room),
+                    "name": name,
+                    "token": player_token,
+                    "joinedAt": timestamp,
+                    "lastSeenAt": timestamp,
+                    "readyAt": None
+                })
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "roomCode": room_code, "playerToken": player_token, "state": french1_imposteur_room_payload(room, player_token=player_token)}
+
+        if action == "distribute":
+            french8_imposteur_require_teacher(room, payload)
+            if len(players) < FRENCH8_IMPOSTEUR_MIN_PLAYERS:
+                return 409, {"error": "not_enough_players", "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS}
+            deck_key = clean_french1_imposteur_deck(payload.get("deck") or room.get("deck"))
+            deck_cards = FRENCH1_IMPOSTEUR_DECKS[deck_key]["cards"]
+            card = secrets.choice(deck_cards)
+            impostor_count = 2 if len(players) > 8 else 1
+            impostors = secrets.SystemRandom().sample(players, impostor_count)
+            room["status"] = "briefing"
+            room["card"] = card
+            room["deck"] = deck_key
+            room["impostorIds"] = [clean_text(player.get("id"), 40) for player in impostors]
+            room["votes"] = {}
+            for player in players:
+                player["readyAt"] = None
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "state": french1_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "confirm":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) not in ("briefing", "discussion"):
+                return 409, {"error": "not_in_briefing"}
+            player["readyAt"] = timestamp
+            if all(item.get("readyAt") for item in players):
+                room["status"] = "discussion"
+                room["discussionStartedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "state": french1_imposteur_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "force-discussion":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) != "briefing":
+                return 409, {"error": "not_in_briefing"}
+            room["status"] = "discussion"
+            room["discussionStartedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "state": french1_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "open-vote":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) not in ("discussion", "briefing"):
+                return 409, {"error": "vote_not_available"}
+            room["status"] = "voting"
+            room["voteOpenedAt"] = timestamp
+            room["votes"] = {}
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "state": french1_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "vote":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            suspect_id = clean_text(payload.get("suspectId"), 40)
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) != "voting":
+                return 409, {"error": "vote_closed"}
+            if not any(clean_text(item.get("id"), 40) == suspect_id for item in players):
+                return 400, {"error": "invalid_suspect"}
+            voter_id = clean_text(player.get("id"), 40)
+            if suspect_id == voter_id:
+                return 400, {"error": "self_vote_forbidden"}
+            votes = room.setdefault("votes", {})
+            if not isinstance(votes, dict):
+                votes = {}
+                room["votes"] = votes
+            votes[voter_id] = {
+                "suspectId": suspect_id,
+                "round": french8_imposteur_current_round(room),
+                "votedAt": timestamp
+            }
+            player["votedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "state": french1_imposteur_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "reveal":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) not in ("discussion", "voting"):
+                return 409, {"error": "reveal_not_available"}
+            room["status"] = "revealed"
+            room["revealedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "state": french1_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "reset":
+            french8_imposteur_require_teacher(room, payload)
+            room["status"] = "waiting"
+            room["round"] = int(room.get("round") or 1) + 1
+            room["votes"] = {}
+            room["impostorIds"] = []
+            room["card"] = None
+            room["deck"] = clean_french1_imposteur_deck(payload.get("deck") or room.get("deck"))
+            for player in players:
+                player["readyAt"] = None
+                player.pop("votedAt", None)
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "state": french1_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "close-room":
+            french8_imposteur_require_teacher(room, payload)
+            rooms.pop(room_code, None)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True, "closed": True}
+
+        if action == "leave":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            player_id = clean_text(player.get("id"), 40)
+            room["players"] = [item for item in players if clean_text(item.get("id"), 40) != player_id]
+            votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+            votes.pop(player_id, None)
+            room["votes"] = {
+                voter: vote_value
+                for voter, vote_value in votes.items()
+                if french8_imposteur_vote_suspect_id(vote_value, room) != player_id
+            }
+            room["impostorIds"] = [item for item in room.get("impostorIds", []) if clean_text(item, 40) != player_id]
+            french8_imposteur_touch(room)
+            write_french1_imposteur_store(store)
+            return 200, {"ok": True}
+    except PermissionError as error:
+        return 403, {"error": str(error)}
+
+    write_french1_imposteur_store(store)
+    return 400, {"error": "invalid_action"}
+
+
 INTERMEDIATE_UNIT4_IMPOSTOR_CARDS = [
     {
         "id": "bring-up",
@@ -4620,6 +5077,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, payload)
             return
 
+        if parsed.path == "/api/french1/imposteur/state":
+            query = urllib.parse.parse_qs(parsed.query)
+            with data_lock:
+                status, payload = french1_imposteur_get_state(query)
+            json_response(self, status, payload)
+            return
+
         if parsed.path == "/api/intermediate/unit4-impostor/state":
             query = urllib.parse.parse_qs(parsed.query)
             with data_lock:
@@ -5362,6 +5826,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 return
             with data_lock:
                 status, result = french8_imposteur_action(payload)
+            json_response(self, status, result)
+            return
+
+        if parsed.path == "/api/french1/imposteur":
+            payload = self.read_json_body()
+            if payload is None:
+                return
+            with data_lock:
+                status, result = french1_imposteur_action(payload)
             json_response(self, status, result)
             return
 
