@@ -11,6 +11,7 @@
     studentCsvName: "mes-notes-francais1.csv"
   }, window.JARALINGUA_GRADEBOOK_CONFIG || {});
   const API = CONFIG.api;
+  const PRONUNCIATION_AUDIO_API = CONFIG.pronunciationAudioApi || API.replace(/\/grades$/, "/pronunciation-audio");
   const LOCAL_KEY = "jaralingua_local_gradebook_user:" + CONFIG.rootId;
   const TEACHERS = CONFIG.teacherEmails.join(", ");
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
@@ -248,6 +249,42 @@
     return summary.average == null ? "—" : summary.average.toFixed(1);
   }
 
+  function formatSubmittedAt(value) {
+    if (!value) return "";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return String(value);
+    return date.toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
+  }
+
+  function pronunciationEvidence(student, evaluation) {
+    const details = student && student.gradeDetails && typeof student.gradeDetails === "object"
+      ? student.gradeDetails[evaluation.id]
+      : null;
+    if (!details || typeof details !== "object") return "";
+    const hasAudio = details.audio && details.audio.file;
+    const submittedAt = formatSubmittedAt(details.submittedAt || details.audio?.uploadedAt);
+    const transcript = details.transcript ? `<details class="mt-2"><summary>Transcription reconnue</summary><p class="mb-0">${esc(details.transcript)}</p></details>` : "";
+    const reference = details.referenceText ? `<details class="mt-2"><summary>Texte de référence</summary><p class="mb-0">${esc(details.referenceText)}</p></details>` : "";
+    const meta = [
+      submittedAt ? `Remis : ${submittedAt}` : "",
+      Number.isFinite(Number(details.score100)) ? `Score automatique : ${Math.round(Number(details.score100))}/100` : "",
+      Number.isFinite(Number(details.grade)) ? `Note envoyée : ${Number(details.grade).toFixed(2)}/5` : ""
+    ].filter(Boolean).join(" · ");
+    return `
+      <div class="pronunciation-audio-review mt-2">
+        ${hasAudio ? `
+          <button class="btn-soft btn-sm" type="button" data-pronunciation-audio data-student-id="${esc(student.id)}" data-evaluation-id="${esc(evaluation.id)}">
+            <i class="bi bi-play-circle"></i> Écouter l'audio remis
+          </button>
+          <audio controls hidden data-pronunciation-audio-player></audio>
+          <p class="mb-0" data-pronunciation-audio-status></p>
+        ` : `<p class="mb-0"><small>Aucun fichier audio n'est attaché à cette remise.</small></p>`}
+        ${meta ? `<p class="mt-2 mb-0"><small>${esc(meta)}</small></p>` : ""}
+        ${transcript}
+        ${reference}
+      </div>`;
+  }
+
   function totalWeight() {
     return payload.evaluations.reduce((sum, evaluation) => sum + (Number(evaluation.weight) || 0), 0);
   }
@@ -415,7 +452,11 @@
       return;
     }
     const cards = payload.students.map((student, index) => {
-      const gradeInputs = payload.evaluations.map((evaluation) => `<label class="admin-grade-row"><span>${esc(evaluation.title)} (${evaluation.weight}%)</span><input class="form-control gradebook-grade-input" type="number" min="0" max="5" step="0.1" data-grade="${esc(evaluation.id)}" value="${student.grades?.[evaluation.id] ?? ""}" placeholder="—"></label>`).join("");
+      const gradeInputs = payload.evaluations.map((evaluation) => `
+        <div class="admin-grade-row-wrap">
+          <label class="admin-grade-row"><span>${esc(evaluation.title)} (${evaluation.weight}%)</span><input class="form-control gradebook-grade-input" type="number" min="0" max="5" step="0.1" data-grade="${esc(evaluation.id)}" value="${student.grades?.[evaluation.id] ?? ""}" placeholder="—"></label>
+          ${pronunciationEvidence(student, evaluation)}
+        </div>`).join("");
       return `<details class="admin-student-card mb-3" data-student="${index}" data-student-row data-student-search="${esc(`${student.fullName || ""} ${student.email || ""} ${student.id || ""}`.toLowerCase())}">
         <summary class="d-flex flex-wrap justify-content-between align-items-center gap-2">
           <span><strong>${esc(student.fullName || "Étudiant")}</strong><br><small>${esc(student.id || "")}${student.email ? " · " + esc(student.email) : ""}</small></span>
@@ -455,6 +496,38 @@
           ...payload.evaluations.map((evaluation) => [evaluation.title, student.grades?.[evaluation.id] ?? ""]),
           ["Moyenne", average(student)]
         ]);
+      };
+    });
+    bindPronunciationAudio(holder);
+  }
+
+  function bindPronunciationAudio(scope) {
+    scope.querySelectorAll("[data-pronunciation-audio]").forEach((button) => {
+      button.onclick = async () => {
+        const wrapper = button.closest(".pronunciation-audio-review");
+        const player = wrapper && wrapper.querySelector("[data-pronunciation-audio-player]");
+        const status = wrapper && wrapper.querySelector("[data-pronunciation-audio-status]");
+        if (!player || !status) return;
+        button.disabled = true;
+        status.textContent = "Chargement de l'audio...";
+        try {
+          const response = await fetch(PRONUNCIATION_AUDIO_API + "?studentId=" + encodeURIComponent(button.dataset.studentId || "") + "&evaluationId=" + encodeURIComponent(button.dataset.evaluationId || ""), {
+            headers: headers()
+          });
+          if (!response.ok) throw new Error("audio_unavailable");
+          const blob = await response.blob();
+          if (player.dataset.objectUrl) URL.revokeObjectURL(player.dataset.objectUrl);
+          const objectUrl = URL.createObjectURL(blob);
+          player.dataset.objectUrl = objectUrl;
+          player.src = objectUrl;
+          player.hidden = false;
+          await player.play().catch(() => {});
+          status.textContent = "Audio disponible pour réécoute.";
+        } catch (_error) {
+          status.textContent = "Audio indisponible. Vérifiez que la remise contient bien un fichier.";
+        } finally {
+          button.disabled = false;
+        }
       };
     });
   }

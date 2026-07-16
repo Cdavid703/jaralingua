@@ -81,6 +81,31 @@
     node.className = "pronunciation-submit-status" + (type ? " " + type : "");
   }
 
+  function blobToDataUrl(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result || "");
+      reader.onerror = () => reject(reader.error || new Error("audio_read_error"));
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  async function currentFinalAudioDataUrl(attempt) {
+    if (attempt && typeof attempt.audioDataUrl === "string" && attempt.audioDataUrl.startsWith("data:")) {
+      return attempt.audioDataUrl;
+    }
+    const player = document.getElementById("recordingPlayback");
+    if (!player || !player.src || !player.src.startsWith("blob:")) return "";
+    try {
+      const response = await fetch(player.src);
+      if (!response.ok) return "";
+      const blob = await response.blob();
+      return await blobToDataUrl(blob);
+    } catch (_error) {
+      return "";
+    }
+  }
+
   function ensureStyles() {
     if (document.getElementById("french2PronunciationSubmitStyles")) return;
     const style = document.createElement("style");
@@ -160,6 +185,9 @@
     button.disabled = true;
     setStatus(status, "Envoi en cours...", "pending");
     try {
+      const audioDataUrl = await currentFinalAudioDataUrl(latestAttempt);
+      const details = Object.assign({}, latestAttempt);
+      if (audioDataUrl) details.audioDataUrl = audioDataUrl;
       const response = await fetch(API_PATH, {
         method: "POST",
         headers: {
@@ -171,7 +199,7 @@
           evaluationId: config.evaluationId,
           score100: latestAttempt.finalScore,
           activityTitle: config.label,
-          details: latestAttempt
+          details
         })
       });
       const result = await response.json().catch(() => ({}));

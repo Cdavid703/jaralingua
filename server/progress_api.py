@@ -30,6 +30,8 @@ FRENCH7_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH7_GRADES_DATA", "/var/lib
 FRENCH1_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH1_GRADES_DATA", "/var/lib/jaralingua/french1-grades.json")
 FRENCH2_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH2_GRADES_DATA", "/var/lib/jaralingua/french2-grades.json")
 FRENCH8_GRADES_PATH = os.environ.get("JARALINGUA_FRENCH8_GRADES_DATA", "/var/lib/jaralingua/french8-grades.json")
+FRENCH1_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_FRENCH1_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/french1-pronunciation-audio")
+FRENCH2_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_FRENCH2_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/french2-pronunciation-audio")
 FRENCH8_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_FRENCH8_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/french8-pronunciation-audio")
 FRENCH8_HYPOTHESES_ACTIVITY_ID = "writingActivity"
 FRENCH8_COMMENTARY_ACTIVITY_ID = "commentaryActivity03e"
@@ -1392,6 +1394,40 @@ def matched_student_for_profile(profile, grades_data):
             claimed_student["emailAliases"] = aliases
     return claimed_student
 
+
+def serve_pronunciation_audio(handler, parsed, profile, grades_path, audio_dir):
+    query = urllib.parse.parse_qs(parsed.query)
+    student_id = clean_text((query.get("studentId") or [""])[0], 40)
+    evaluation_id = clean_text((query.get("evaluationId") or [""])[0], 80)
+    with data_lock:
+        grades_data = read_grades_data(grades_path)
+        students = grades_data.get("students", [])
+        target = next(
+            (
+                item for item in students
+                if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id
+            ),
+            None
+        )
+        role = grade_user_role(profile, grades_data)
+        current_student = matched_student_for_profile(profile, grades_data)
+        is_self = isinstance(current_student, dict) and clean_text(current_student.get("id"), 40) == student_id
+        if not isinstance(target, dict) or (role not in ("admin", "teacher") and not is_self):
+            json_response(handler, 403, {"error": "forbidden"})
+            return
+        details = target.get("gradeDetails", {}).get(evaluation_id) if isinstance(target.get("gradeDetails"), dict) else None
+        audio_ref = details.get("audio") if isinstance(details, dict) else None
+        filename = safe_filename_token(audio_ref.get("file"), 160) if isinstance(audio_ref, dict) else ""
+        content_type = audio_ref.get("contentType", "audio/webm") if isinstance(audio_ref, dict) else "audio/webm"
+    path = os.path.abspath(os.path.join(audio_dir, filename))
+    root = os.path.abspath(audio_dir)
+    if not filename or not path.startswith(root + os.sep) or not os.path.exists(path):
+        json_response(handler, 404, {"error": "audio_not_found"})
+        return
+    with open(path, "rb") as handle:
+        binary_response(handler, 200, handle.read(), content_type)
+
+
 def grade_payload_for(profile, grades_data, query):
     role = grade_user_role(profile, grades_data)
     students = grades_data.get("students", [])
@@ -1634,14 +1670,14 @@ def audio_extension_for_type(content_type):
     return ""
 
 
-def remove_french8_pronunciation_audio(audio_ref):
+def remove_pronunciation_audio(audio_ref, audio_dir):
     if not isinstance(audio_ref, dict):
         return
     filename = safe_filename_token(audio_ref.get("file"), 160)
     if not filename:
         return
-    path = os.path.abspath(os.path.join(FRENCH8_PRONUNCIATION_AUDIO_DIR, filename))
-    root = os.path.abspath(FRENCH8_PRONUNCIATION_AUDIO_DIR)
+    path = os.path.abspath(os.path.join(audio_dir, filename))
+    root = os.path.abspath(audio_dir)
     if not path.startswith(root + os.sep):
         return
     try:
@@ -1651,7 +1687,7 @@ def remove_french8_pronunciation_audio(audio_ref):
         pass
 
 
-def save_french8_pronunciation_audio(student, evaluation_id, payload):
+def save_pronunciation_audio(audio_dir, student, evaluation_id, payload):
     details = payload.get("details")
     if not isinstance(details, dict):
         return None
@@ -1671,11 +1707,11 @@ def save_french8_pronunciation_audio(student, evaluation_id, payload):
         return None
     if not audio_bytes or len(audio_bytes) > 4 * 1024 * 1024:
         return None
-    os.makedirs(FRENCH8_PRONUNCIATION_AUDIO_DIR, exist_ok=True)
+    os.makedirs(audio_dir, exist_ok=True)
     student_token = safe_filename_token(student.get("id") or student.get("email") or "student")
     evaluation_token = safe_filename_token(evaluation_id)
     filename = f"{student_token}-{evaluation_token}-{int(time.time())}-{secrets.token_hex(4)}.{extension}"
-    path = os.path.join(FRENCH8_PRONUNCIATION_AUDIO_DIR, filename)
+    path = os.path.join(audio_dir, filename)
     with open(path, "wb") as handle:
         handle.write(audio_bytes)
     return {
@@ -1684,6 +1720,29 @@ def save_french8_pronunciation_audio(student, evaluation_id, payload):
         "bytes": len(audio_bytes),
         "uploadedAt": now_iso()
     }
+
+
+def attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, audio_dir):
+    if not isinstance(student.get("gradeDetails"), dict):
+        student["gradeDetails"] = {}
+    previous_detail = student["gradeDetails"].get(evaluation_id)
+    audio_ref = save_pronunciation_audio(audio_dir, student, evaluation_id, payload)
+    next_detail = clean_pronunciation_submission_details(payload, evaluation_id, score100, grade)
+    if audio_ref:
+        if isinstance(previous_detail, dict):
+            remove_pronunciation_audio(previous_detail.get("audio"), audio_dir)
+        next_detail["audio"] = audio_ref
+    elif isinstance(previous_detail, dict) and isinstance(previous_detail.get("audio"), dict):
+        next_detail["audio"] = previous_detail["audio"]
+    student["gradeDetails"][evaluation_id] = next_detail
+
+
+def remove_french8_pronunciation_audio(audio_ref):
+    remove_pronunciation_audio(audio_ref, FRENCH8_PRONUNCIATION_AUDIO_DIR)
+
+
+def save_french8_pronunciation_audio(student, evaluation_id, payload):
+    return save_pronunciation_audio(FRENCH8_PRONUNCIATION_AUDIO_DIR, student, evaluation_id, payload)
 
 
 def remove_intermediate_pronunciation_audio(audio_ref):
@@ -6246,6 +6305,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 binary_response(self, 200, handle.read(), "audio/mpeg")
             return
 
+        if parsed.path == "/api/french1/pronunciation-audio":
+            serve_pronunciation_audio(self, parsed, profile, FRENCH1_GRADES_PATH, FRENCH1_PRONUNCIATION_AUDIO_DIR)
+            return
+
+        if parsed.path == "/api/french2/pronunciation-audio":
+            serve_pronunciation_audio(self, parsed, profile, FRENCH2_GRADES_PATH, FRENCH2_PRONUNCIATION_AUDIO_DIR)
+            return
+
         if parsed.path == "/api/french8/pronunciation-audio":
             query = urllib.parse.parse_qs(parsed.query)
             student_id = clean_text((query.get("studentId") or [""])[0], 40)
@@ -8425,6 +8492,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 ensure_french1_gradebook_structure(grades_data)
                 student.setdefault("grades", {})[evaluation_id] = grade
+                attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, FRENCH1_PRONUNCIATION_AUDIO_DIR)
                 write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
                 json_response(self, 200, {
                     "ok": True,
@@ -8449,6 +8517,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 ensure_french2_gradebook_structure(grades_data)
                 student.setdefault("grades", {})[evaluation_id] = grade
+                attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, FRENCH2_PRONUNCIATION_AUDIO_DIR)
                 write_json_file(FRENCH2_GRADES_PATH, grades_data, ".french2-grades-")
                 json_response(self, 200, {
                     "ok": True,

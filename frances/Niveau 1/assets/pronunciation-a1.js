@@ -326,6 +326,30 @@
       copyNode.textContent = "Votre défi final peut être envoyé avec la note obtenue. La note sera inscrite dans le carnet du Niveau 1.";
     }
 
+    function blobToDataUrl(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result || "");
+        reader.onerror = () => reject(reader.error || new Error("audio_read_error"));
+        reader.readAsDataURL(blob);
+      });
+    }
+
+    async function currentFinalAudioDataUrl(attempt) {
+      if (attempt && typeof attempt.audioDataUrl === "string" && attempt.audioDataUrl.startsWith("data:")) {
+        return attempt.audioDataUrl;
+      }
+      if (!els.playback || !els.playback.src || !els.playback.src.startsWith("blob:")) return "";
+      try {
+        const response = await fetch(els.playback.src);
+        if (!response.ok) return "";
+        const blob = await response.blob();
+        return await blobToDataUrl(blob);
+      } catch (_error) {
+        return "";
+      }
+    }
+
     async function submitGrade() {
       const attempt = finalAttempt();
       const score = Number(attempt && attempt.overall);
@@ -343,6 +367,9 @@
       submitButton.disabled = true;
       setStatus("Envoi en cours...", "pending");
       try {
+        const audioDataUrl = await currentFinalAudioDataUrl(attempt);
+        const details = Object.assign({}, attempt);
+        if (audioDataUrl) details.audioDataUrl = audioDataUrl;
         const response = await fetch(GRADE_API_PATH, {
           method: "POST",
           headers: {
@@ -354,7 +381,7 @@
             evaluationId: gradeConfig.evaluationId,
             score100: Math.round(score),
             activityTitle: set.title,
-            details: attempt
+            details
           })
         });
         const payload = await response.json().catch(() => ({}));
