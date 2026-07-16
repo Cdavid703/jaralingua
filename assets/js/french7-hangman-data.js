@@ -2,187 +2,36 @@
   "use strict";
 
   window.JaraLinguaHangmanB1 = {
-    version: "20260716-n7-games",
+    version: "20260716-n7-pendu-vocab",
     categories: [
       {
-        id: "films-series",
-        label: "Films et séries célèbres",
-        icon: "bi-film",
-        entries: [
-          {
-            answer: "Le Roi Lion",
-            clue: "Un jeune héritier doit retrouver sa place dans la savane.",
-            hints: [
-              "Cette histoire parle d'héritage, de responsabilité et de retour aux origines.",
-              "L'action se déroule dans la savane au sein d'une famille royale.",
-              "Un jeune félin nommé Simba doit reprendre la place laissée par son père."
-            ]
-          },
-          {
-            answer: "La Reine des neiges",
-            clue: "Deux sœurs affrontent un hiver provoqué par un pouvoir incontrôlé.",
-            hints: [
-              "Deux sœurs doivent reconstruire leur relation après une longue séparation.",
-              "Un pouvoir incontrôlé plonge tout un royaume dans un hiver permanent.",
-              "Elsa, Anna et un bonhomme nommé Olaf sont au centre de l'histoire."
-            ]
-          },
-          {
-            answer: "Le Monde de Nemo",
-            clue: "Un père traverse l'océan pour retrouver son fils.",
-            hints: [
-              "Une séparation familiale déclenche un très long voyage.",
-              "L'aventure se déroule presque entièrement sous l'océan.",
-              "Un poisson-clown très prudent cherche son fils avec l'aide de Dory."
-            ]
-          },
-          {
-            answer: "Vice-versa",
-            clue: "Des émotions personnifiées dirigent la vie intérieure d'une adolescente.",
-            hints: [
-              "Une adolescente traverse un changement de vie difficile après un déménagement.",
-              "Une grande partie de l'action se passe à l'intérieur de son esprit.",
-              "Joie, Tristesse, Peur, Colère et Dégoût dirigent ses réactions."
-            ]
-          },
-          {
-            answer: "Moi, moche et méchant",
-            clue: "Un ancien méchant découvre une nouvelle forme de famille.",
-            hints: [
-              "Un projet criminel est bouleversé par une rencontre familiale inattendue.",
-              "Un homme qui veut paraître dangereux adopte trois jeunes filles.",
-              "De petites créatures jaunes l'aident à préparer le vol de la Lune."
-            ]
-          },
-          {
-            answer: "Les Indestructibles",
-            clue: "Une famille cache des capacités extraordinaires.",
-            hints: [
-              "Une famille doit cacher ce qui la rend différente du reste de la société.",
-              "Les parents ont abandonné une ancienne vie héroïque pour vivre discrètement.",
-              "Toute la famille porte des costumes rouges et possède des super-pouvoirs."
-            ]
-          },
-          {
-            answer: "Monstres et Cie",
-            clue: "Des créatures travaillent derrière les portes des chambres d'enfants.",
-            hints: [
-              "Une entreprise dépend d'une ressource obtenue d'une manière très particulière.",
-              "Des portes permettent aux employés d'entrer la nuit dans des chambres d'enfants.",
-              "Sulli et Bob découvrent qu'une petite fille n'est pas aussi dangereuse qu'ils le croyaient."
-            ]
-          },
-          {
-            answer: "Là-haut",
-            clue: "Une maison s'envole grâce à des milliers de ballons.",
-            hints: [
-              "Une promesse de jeunesse conduit à une aventure tardive et inattendue.",
-              "Un homme âgé part en voyage accompagné malgré lui par un jeune explorateur.",
-              "Leur moyen de transport est une maison soulevée par des milliers de ballons."
-            ]
-          },
-          {
-            answer: "La Belle et la Bête",
-            clue: "Une jeune femme apprend à regarder au-delà des apparences.",
-            hints: [
-              "Cette histoire interroge les apparences, la peur et la capacité de changer.",
-              "Une jeune femme reste dans un château habité par des objets enchantés.",
-              "Une rose magique détermine le temps restant pour rompre une malédiction."
-            ]
-          },
-          {
-            answer: "Le Seigneur des Anneaux",
-            clue: "Une communauté entreprend de détruire un objet très dangereux.",
-            hints: [
-              "Le destin de plusieurs peuples dépend d'un objet extrêmement dangereux.",
-              "Un groupe traverse un vaste territoire pour détruire cet objet.",
-              "Frodon quitte la Comté et se dirige vers le Mordor."
-            ]
-          },
-          {
-            answer: "Le Hobbit",
-            clue: "Un voyage inattendu conduit un personnage discret loin de chez lui.",
-            hints: [
-              "Un personnage très attaché à son confort accepte un voyage qu'il n'avait pas prévu.",
-              "Il accompagne un groupe de nains qui veut récupérer son territoire.",
-              "Bilbon doit affronter le dragon Smaug et résoudre des énigmes."
-            ]
-          },
-          {
-            answer: "Mercredi",
-            clue: "Une adolescente singulière enquête dans une académie mystérieuse.",
-            hints: [
-              "Une adolescente solitaire observe son entourage avec beaucoup d'ironie.",
-              "Elle enquête sur une série d'événements dans une académie peu ordinaire.",
-              "Cette jeune fille appartient à la famille Addams et porte presque toujours du noir."
-            ]
-          }
-        ]
-      },
-      {
-        id: "societe",
-        label: "Société",
-        icon: "bi-people-fill",
-        entries: [
-          { answer: "La cohésion sociale", clue: "La capacité d'un groupe à vivre ensemble malgré ses différences." },
-          { answer: "Les valeurs", clue: "Des principes qui orientent les choix et les comportements." },
-          { answer: "Les générations", clue: "Des groupes d'âge qui partagent une période et des expériences." },
-          { answer: "Les droits humains", clue: "Des protections fondamentales reconnues à toute personne." },
-          { answer: "Les inégalités", clue: "Des écarts injustes de ressources, de droits ou d'opportunités." },
-          { answer: "Le bénévolat", clue: "Une activité volontaire réalisée sans rémunération." },
-          { answer: "Les stéréotypes", clue: "Des idées simplifiées attribuées à tout un groupe." }
-        ]
-      },
-      {
-        id: "travail",
-        label: "Travail",
+        id: "professions",
+        label: "Professions",
         icon: "bi-briefcase-fill",
         entries: [
-          { answer: "Les métiers", clue: "Les différentes professions exercées dans la société." },
-          { answer: "L'entreprise", clue: "Une organisation qui produit des biens ou des services." },
-          { answer: "Le recrutement", clue: "Le processus utilisé pour choisir de nouveaux employés." },
-          { answer: "L'entretien d'embauche", clue: "Une rencontre qui permet d'évaluer une candidature." },
-          { answer: "Les compétences", clue: "Des savoirs et capacités mobilisés pour accomplir une tâche." },
-          { answer: "Le télétravail", clue: "Une organisation professionnelle exercée à distance." },
-          { answer: "Les conditions de travail", clue: "L'ensemble des circonstances matérielles et sociales d'un emploi." }
+          { answer: "L'architecte", clue: "Une personne qui conçoit des bâtiments et prépare des plans." },
+          { answer: "Le journaliste", clue: "Une personne qui cherche, vérifie et présente des informations." },
+          { answer: "La chercheuse", clue: "Une professionnelle qui produit de nouvelles connaissances." },
+          { answer: "L'infirmier", clue: "Un professionnel de santé qui accompagne les patients." },
+          { answer: "La traductrice", clue: "Une personne qui fait passer un texte d'une langue à une autre." },
+          { answer: "Le comptable", clue: "Une personne qui organise les chiffres et les finances d'une entreprise." },
+          { answer: "La cheffe de projet", clue: "Une personne qui coordonne une équipe et un calendrier de travail." },
+          { answer: "Le technicien", clue: "Un professionnel qui installe, répare ou contrôle des équipements." }
         ]
       },
       {
-        id: "education",
-        label: "Éducation",
-        icon: "bi-mortarboard-fill",
-        entries: [
-          { answer: "L'université", clue: "Un établissement d'enseignement supérieur et de recherche." },
-          { answer: "Les matières", clue: "Les disciplines étudiées dans un programme scolaire." },
-          { answer: "Les diplômes", clue: "Des documents qui attestent une formation réussie." },
-          { answer: "Les examens", clue: "Des épreuves destinées à évaluer des connaissances." },
-          { answer: "Les formations", clue: "Des parcours organisés pour développer des compétences." }
-        ]
-      },
-      {
-        id: "medias-communication",
-        label: "Médias et communication",
+        id: "medias",
+        label: "Médias",
         icon: "bi-broadcast-pin",
         entries: [
-          { answer: "Les médias", clue: "Des moyens qui diffusent des informations à un large public." },
-          { answer: "Les réseaux sociaux", clue: "Des plateformes numériques où les utilisateurs publient et échangent." },
-          { answer: "Les fausses informations", clue: "Des contenus inexacts présentés comme des faits." },
-          { answer: "La publicité", clue: "Un message conçu pour promouvoir un produit ou une idée." },
-          { answer: "La presse", clue: "L'ensemble des publications et des professionnels de l'information." },
-          { answer: "La télévision", clue: "Un média audiovisuel qui diffuse des programmes." }
-        ]
-      },
-      {
-        id: "technologie",
-        label: "Technologie",
-        icon: "bi-cpu-fill",
-        entries: [
-          { answer: "L'intelligence artificielle", clue: "Des systèmes capables d'exécuter certaines tâches associées au raisonnement." },
-          { answer: "L'informatique", clue: "Le traitement automatique de l'information par des machines." },
-          { answer: "Internet", clue: "Un réseau mondial qui relie des appareils et des services." },
-          { answer: "La cybersécurité", clue: "La protection des systèmes et des données contre les attaques numériques." },
-          { answer: "Les applications", clue: "Des programmes conçus pour accomplir des fonctions précises." },
-          { answer: "Les réseaux", clue: "Des ensembles de dispositifs reliés pour échanger des données." }
+          { answer: "La presse", clue: "L'ensemble des journaux, magazines et médias d'information." },
+          { answer: "Le reportage", clue: "Un contenu informatif réalisé sur le terrain." },
+          { answer: "Le titre", clue: "La phrase courte qui annonce le sujet principal d'un article." },
+          { answer: "La une", clue: "La première page d'un journal." },
+          { answer: "Les réseaux sociaux", clue: "Des plateformes où les utilisateurs publient et partagent du contenu." },
+          { answer: "La source", clue: "L'origine d'une information." },
+          { answer: "La rumeur", clue: "Une information qui circule sans preuve claire." },
+          { answer: "La publicité", clue: "Un message conçu pour promouvoir un produit, un service ou une idée." }
         ]
       },
       {
@@ -190,12 +39,29 @@
         label: "Environnement",
         icon: "bi-tree-fill",
         entries: [
-          { answer: "Le changement climatique", clue: "Une modification durable du climat à l'échelle mondiale." },
+          { answer: "La pollution", clue: "La dégradation d'un milieu par des substances ou des activités nocives." },
           { answer: "Le recyclage", clue: "La transformation de déchets pour réutiliser leurs matériaux." },
-          { answer: "La pollution", clue: "La dégradation d'un milieu par des substances ou activités nocives." },
+          { answer: "La biodiversité", clue: "La variété des espèces vivantes et des milieux naturels." },
+          { answer: "Le climat", clue: "L'ensemble des conditions météorologiques habituelles d'une région." },
+          { answer: "Les déchets", clue: "Des objets ou matières dont on veut se débarrasser." },
           { answer: "Les énergies renouvelables", clue: "Des sources d'énergie qui se reconstituent naturellement." },
-          { answer: "La biodiversité", clue: "La variété des espèces, des milieux et des formes de vie." },
-          { answer: "Les catastrophes naturelles", clue: "Des phénomènes naturels qui provoquent d'importants dégâts." }
+          { answer: "La forêt", clue: "Un grand espace couvert d'arbres." },
+          { answer: "L'eau potable", clue: "Une eau que l'on peut boire sans danger." }
+        ]
+      },
+      {
+        id: "technologie",
+        label: "Technologie",
+        icon: "bi-cpu-fill",
+        entries: [
+          { answer: "L'application", clue: "Un programme utilisé sur un téléphone, une tablette ou un ordinateur." },
+          { answer: "Le mot de passe", clue: "Une suite de caractères qui protège un compte." },
+          { answer: "Le réseau", clue: "Un ensemble d'appareils ou de personnes reliés entre eux." },
+          { answer: "La cybersécurité", clue: "La protection des données et des systèmes numériques." },
+          { answer: "Le fichier", clue: "Un document numérique enregistré sur un appareil." },
+          { answer: "L'écran", clue: "La surface où apparaissent les images et les informations." },
+          { answer: "Le clavier", clue: "L'objet utilisé pour taper des lettres et des chiffres." },
+          { answer: "L'intelligence artificielle", clue: "Un domaine technologique lié aux systèmes capables d'analyser et de produire des réponses." }
         ]
       },
       {
@@ -203,25 +69,29 @@
         label: "Santé",
         icon: "bi-heart-pulse-fill",
         entries: [
-          { answer: "La santé mentale", clue: "L'équilibre psychologique, émotionnel et social d'une personne." },
-          { answer: "Les maladies", clue: "Des altérations de l'état normal de l'organisme." },
-          { answer: "Les traitements", clue: "Des moyens employés pour soigner ou contrôler un problème de santé." },
-          { answer: "Le stress", clue: "Une réaction physique et mentale face à une forte pression." },
-          { answer: "Les addictions", clue: "Des dépendances difficiles à contrôler malgré leurs conséquences." },
-          { answer: "Les premiers secours", clue: "Les gestes immédiats pratiqués avant l'arrivée des professionnels." }
+          { answer: "Le médecin", clue: "Un professionnel qui examine, conseille et soigne les patients." },
+          { answer: "La pharmacie", clue: "Le lieu où l'on obtient des médicaments et des conseils de santé." },
+          { answer: "Le traitement", clue: "L'ensemble des moyens utilisés pour soigner un problème de santé." },
+          { answer: "La douleur", clue: "Une sensation désagréable liée à un problème physique." },
+          { answer: "Le repos", clue: "Un moment nécessaire pour récupérer de la fatigue." },
+          { answer: "La santé mentale", clue: "L'équilibre psychologique et émotionnel d'une personne." },
+          { answer: "Les premiers secours", clue: "Les gestes immédiats réalisés avant l'arrivée des professionnels." },
+          { answer: "L'assurance santé", clue: "Un système qui aide à couvrir des frais médicaux." }
         ]
       },
       {
-        id: "voyages",
-        label: "Voyages",
-        icon: "bi-airplane-fill",
+        id: "education",
+        label: "Éducation",
+        icon: "bi-mortarboard-fill",
         entries: [
-          { answer: "Les pays", clue: "Des territoires organisés sous une autorité politique." },
-          { answer: "Les capitales", clue: "Des villes où siègent généralement les institutions principales d'un pays." },
-          { answer: "Les monuments", clue: "Des constructions remarquables par leur histoire ou leur valeur culturelle." },
-          { answer: "Les hôtels", clue: "Des établissements qui proposent un hébergement temporaire." },
-          { answer: "Les vacances", clue: "Une période consacrée au repos ou au voyage." },
-          { answer: "Les aéroports", clue: "Des infrastructures où arrivent et partent les avions." }
+          { answer: "L'université", clue: "Un établissement d'enseignement supérieur." },
+          { answer: "Le diplôme", clue: "Un document qui confirme la réussite d'une formation." },
+          { answer: "La matière", clue: "Une discipline étudiée dans un programme." },
+          { answer: "L'examen", clue: "Une épreuve qui évalue des connaissances ou des compétences." },
+          { answer: "La bibliothèque", clue: "Un lieu où l'on consulte ou emprunte des livres et des ressources." },
+          { answer: "La formation", clue: "Un parcours organisé pour développer des compétences." },
+          { answer: "Le mémoire", clue: "Un travail écrit long souvent demandé à l'université." },
+          { answer: "La salle de classe", clue: "Le lieu où se déroule une partie du cours." }
         ]
       },
       {
@@ -229,106 +99,59 @@
         label: "Culture",
         icon: "bi-palette-fill",
         entries: [
-          { answer: "Les films et séries célèbres", clue: "Des œuvres audiovisuelles connues par un large public." },
-          { answer: "La musique", clue: "L'art d'organiser les sons, les rythmes et les silences." },
-          { answer: "Les instruments de musique", clue: "Des objets conçus pour produire des sons musicaux." },
-          { answer: "Les livres", clue: "Des œuvres écrites réunies dans un volume imprimé ou numérique." },
-          { answer: "Les écrivains", clue: "Des personnes qui créent des œuvres littéraires." },
-          { answer: "Les peintres", clue: "Des artistes qui s'expriment principalement par la peinture." }
+          { answer: "Le musée", clue: "Un lieu où l'on conserve et expose des œuvres ou des objets." },
+          { answer: "Le théâtre", clue: "Un lieu ou un art lié aux pièces jouées devant un public." },
+          { answer: "Le roman", clue: "Un long récit écrit avec des personnages et une histoire." },
+          { answer: "La peinture", clue: "Un art visuel réalisé avec des couleurs sur une surface." },
+          { answer: "La chanson", clue: "Une composition musicale avec des paroles." },
+          { answer: "Le festival", clue: "Un événement culturel organisé autour d'un thème ou d'un art." },
+          { answer: "Le patrimoine", clue: "L'ensemble des biens culturels transmis par l'histoire." },
+          { answer: "La bande dessinée", clue: "Une histoire racontée avec des images et des bulles de texte." }
         ]
       },
       {
-        id: "economie",
-        label: "Économie",
-        icon: "bi-graph-up-arrow",
+        id: "voyages",
+        label: "Voyages",
+        icon: "bi-airplane-fill",
         entries: [
-          { answer: "L'argent", clue: "Un moyen d'échange utilisé pour acheter des biens et des services." },
-          { answer: "Les banques", clue: "Des institutions qui gèrent l'épargne, le crédit et les paiements." },
-          { answer: "Le commerce", clue: "L'activité d'achat, de vente et d'échange." },
-          { answer: "Les impôts", clue: "Des contributions obligatoires destinées à financer les services publics." },
-          { answer: "L'inflation", clue: "Une hausse générale et durable des prix." }
+          { answer: "L'aéroport", clue: "Le lieu où arrivent et partent les avions." },
+          { answer: "Le passeport", clue: "Un document officiel utilisé pour voyager à l'étranger." },
+          { answer: "La valise", clue: "Un bagage utilisé pour transporter des affaires." },
+          { answer: "La réservation", clue: "Une confirmation pour un hôtel, un vol ou une activité." },
+          { answer: "Le billet", clue: "Un document qui donne accès à un transport ou à un événement." },
+          { answer: "L'hébergement", clue: "Le lieu où l'on dort pendant un voyage." },
+          { answer: "Le guide touristique", clue: "Une personne ou un document qui aide à découvrir un lieu." },
+          { answer: "La frontière", clue: "La limite entre deux pays ou territoires." }
         ]
       },
       {
-        id: "politique-citoyennete",
-        label: "Politique et citoyenneté",
-        icon: "bi-bank2",
+        id: "services",
+        label: "Services",
+        icon: "bi-building-fill-gear",
         entries: [
-          { answer: "Les élections", clue: "Un processus qui permet aux citoyens de choisir leurs représentants." },
-          { answer: "Le gouvernement", clue: "L'ensemble des responsables qui dirigent l'action de l'État." },
-          { answer: "Les institutions", clue: "Des structures durables qui organisent la vie publique." },
-          { answer: "Les lois", clue: "Des règles obligatoires adoptées par une autorité compétente." },
-          { answer: "La démocratie", clue: "Un système politique fondé sur la participation des citoyens." }
+          { answer: "La banque", clue: "Une institution où l'on gère de l'argent, des comptes et des paiements." },
+          { answer: "La poste", clue: "Un service lié aux lettres, colis et démarches administratives." },
+          { answer: "La mairie", clue: "L'administration principale d'une commune." },
+          { answer: "Le commissariat", clue: "Le lieu où travaillent des policiers." },
+          { answer: "Le guichet", clue: "Un point d'accueil où l'on fait une démarche." },
+          { answer: "Le formulaire", clue: "Un document avec des informations à compléter." },
+          { answer: "Le rendez-vous", clue: "Une rencontre prévue à une date et une heure précises." },
+          { answer: "Le service client", clue: "Un espace d'aide pour les utilisateurs ou les consommateurs." }
         ]
       },
       {
-        id: "justice",
-        label: "Justice",
-        icon: "bi-shield-fill-check",
+        id: "societe",
+        label: "Société",
+        icon: "bi-people-fill",
         entries: [
-          { answer: "Le tribunal", clue: "Le lieu et l'institution où des affaires sont jugées." },
-          { answer: "Les crimes", clue: "Des infractions considérées comme particulièrement graves." },
-          { answer: "Les sanctions", clue: "Des conséquences imposées lorsqu'une règle est enfreinte." },
-          { answer: "Les droits", clue: "Des libertés et protections reconnues par la loi." },
-          { answer: "Les avocats", clue: "Des professionnels qui conseillent et défendent leurs clients en justice." }
-        ]
-      },
-      {
-        id: "sciences",
-        label: "Sciences",
-        icon: "bi-eyedropper",
-        entries: [
-          { answer: "La biologie", clue: "La science qui étudie les êtres vivants." },
-          { answer: "La chimie", clue: "La science de la composition et des transformations de la matière." },
-          { answer: "La physique", clue: "La science qui étudie la matière, l'énergie et leurs interactions." },
-          { answer: "L'espace", clue: "L'immense étendue située au-delà de l'atmosphère terrestre." },
-          { answer: "Les inventions", clue: "Des créations nouvelles qui apportent une solution ou une technique." }
-        ]
-      },
-      {
-        id: "sports",
-        label: "Sports",
-        icon: "bi-trophy-fill",
-        entries: [
-          { answer: "L'esprit sportif", clue: "Une attitude fondée sur le respect, l'effort et le jeu loyal." },
-          { answer: "Les compétitions", clue: "Des épreuves dans lesquelles plusieurs participants cherchent à gagner." },
-          { answer: "Les Jeux olympiques", clue: "Une grande manifestation internationale organisée tous les quatre ans." },
-          { answer: "Les équipements sportifs", clue: "Le matériel et les installations nécessaires à la pratique d'un sport." }
-        ]
-      },
-      {
-        id: "nature",
-        label: "Nature",
-        icon: "bi-globe-americas",
-        entries: [
-          { answer: "Les animaux sauvages", clue: "Des espèces qui vivent sans dépendre directement des humains." },
-          { answer: "Les plantes", clue: "Des organismes vivants qui réalisent généralement la photosynthèse." },
-          { answer: "Les montagnes", clue: "Des reliefs naturels qui s'élèvent fortement au-dessus du terrain." },
-          { answer: "Les océans", clue: "De vastes étendues d'eau salée qui couvrent la majeure partie de la planète." },
-          { answer: "Les phénomènes météorologiques", clue: "Des événements atmosphériques comme les tempêtes ou le brouillard." }
-        ]
-      },
-      {
-        id: "gastronomie",
-        label: "Gastronomie",
-        icon: "bi-cup-hot-fill",
-        entries: [
-          { answer: "Les cuisines du monde", clue: "Les traditions culinaires propres à différentes régions et cultures." },
-          { answer: "Les desserts", clue: "Des préparations généralement servies à la fin d'un repas." },
-          { answer: "Les boissons", clue: "Des liquides destinés à être consommés." },
-          { answer: "Les ingrédients", clue: "Les produits utilisés pour préparer une recette." },
-          { answer: "Les épices", clue: "Des substances aromatiques qui donnent du goût aux aliments." }
-        ]
-      },
-      {
-        id: "personnalite",
-        label: "Personnalité",
-        icon: "bi-person-hearts",
-        entries: [
-          { answer: "Les qualités", clue: "Des caractéristiques considérées comme positives chez une personne." },
-          { answer: "Les défauts", clue: "Des traits jugés négatifs ou susceptibles d'être améliorés." },
-          { answer: "Les émotions", clue: "Des réactions affectives comme la joie, la peur ou la colère." },
-          { answer: "Les traits de caractère", clue: "Des tendances durables qui décrivent la manière d'être d'une personne." }
+          { answer: "La citoyenneté", clue: "Le statut et la participation d'une personne dans une société." },
+          { answer: "Les droits humains", clue: "Des protections fondamentales reconnues à chaque personne." },
+          { answer: "La solidarité", clue: "L'aide et le soutien entre personnes ou groupes." },
+          { answer: "Le bénévolat", clue: "Une activité volontaire réalisée sans salaire." },
+          { answer: "Les inégalités", clue: "Des différences injustes de ressources, de droits ou de possibilités." },
+          { answer: "Les stéréotypes", clue: "Des idées simplifiées attribuées à tout un groupe." },
+          { answer: "La diversité", clue: "La présence de différences culturelles, sociales ou personnelles." },
+          { answer: "La génération", clue: "Un groupe de personnes d'un âge ou d'une époque proche." }
         ]
       }
     ]

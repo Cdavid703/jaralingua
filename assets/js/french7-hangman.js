@@ -72,9 +72,6 @@
         restored.current.hintLevel = Number.isFinite(Number(restored.current.hintLevel))
           ? Math.max(0, Math.floor(Number(restored.current.hintLevel)))
           : legacyHintLevel;
-        if (restoredEntry.categoryId === "films-series") {
-          restored.current.hintLevel = Math.max(1, restored.current.hintLevel);
-        }
         restored.current.hintLevel = Math.min(restored.current.hintLevel, restoredEntry.hints.length);
         delete restored.current.hintUsed;
       }
@@ -620,12 +617,9 @@
       panel.innerHTML = "<strong>Indice :</strong> caché. Le demander ajoute une erreur et fait passer le tour.";
     } else {
       var heading = entry.hints.length > 1 ? "Indices progressifs" : "Indice";
-      var note = entry.categoryId === "films-series" && level === 1
-        ? '<p class="clue-note">Le premier indice est offert. Les suivants ajoutent une erreur et font passer le tour.</p>'
-        : "";
       panel.innerHTML = '<strong class="clue-heading">' + heading + ' :</strong><ol class="progressive-clues">' + visibleHints.map(function (hint, index) {
         return '<li><span>Indice ' + (index + 1) + '</span><p>' + escapeHtml(hint) + '</p></li>';
-      }).join("") + "</ol>" + note;
+      }).join("") + "</ol>";
     }
 
     var nextLevel = level + 1;
@@ -691,7 +685,7 @@
       entryId: entry.id,
       guesses: initialArticleGuesses(entry.answer),
       errors: 0,
-      hintLevel: entry.categoryId === "films-series" ? 1 : 0,
+      hintLevel: 0,
       status: "active",
       success: false
     };
@@ -930,7 +924,7 @@
     renderSoundControls();
     syncAuthUi(true);
     window.setInterval(function () { syncAuthUi(false); }, 1200);
-    if (entries.length !== 105) showMessage("La banque B1/B1+ n'a pas chargé toutes ses réponses. Rechargez la page.", "error");
+    if (entries.length !== 80) showMessage("La banque B1/B1+ n'a pas chargé toutes ses réponses. Rechargez la page.", "error");
   }
 
   window.JaraLinguaHangmanDiagnostics = {
