@@ -3187,6 +3187,170 @@ def write_french7_imposteur_store(data):
     write_json_file(FRENCH7_IMPOSTEUR_PATH, data, ".french7-imposteur-")
 
 
+FRENCH7_IMPOSTEUR_CARDS = [
+    {
+        "id": "architecte",
+        "term": "l'architecte",
+        "category": "Professions",
+        "brief": "Professionnel qui imagine des bâtiments, prépare des plans et collabore avec une équipe technique.",
+        "clues": ["bâtiment", "plans", "construction"],
+        "taboo": ["architecte", "plan", "maison"]
+    },
+    {
+        "id": "journaliste",
+        "term": "le journaliste",
+        "category": "Médias",
+        "brief": "Personne qui cherche, vérifie et présente des informations au public.",
+        "clues": ["information", "interview", "article"],
+        "taboo": ["journaliste", "journal", "nouvelle"]
+    },
+    {
+        "id": "reseaux-sociaux",
+        "term": "les réseaux sociaux",
+        "category": "Médias",
+        "brief": "Plateformes numériques où les personnes publient, commentent et partagent du contenu.",
+        "clues": ["publication", "commentaire", "communauté"],
+        "taboo": ["réseau", "social", "internet"]
+    },
+    {
+        "id": "recyclage",
+        "term": "le recyclage",
+        "category": "Environnement",
+        "brief": "Transformation de déchets pour réutiliser leurs matériaux.",
+        "clues": ["déchets", "matières", "réutilisation"],
+        "taboo": ["recyclage", "recycler", "poubelle"]
+    },
+    {
+        "id": "biodiversite",
+        "term": "la biodiversité",
+        "category": "Environnement",
+        "brief": "Variété des espèces vivantes, des milieux naturels et des formes de vie.",
+        "clues": ["nature", "espèces", "équilibre"],
+        "taboo": ["biodiversité", "animal", "plante"]
+    },
+    {
+        "id": "mot-de-passe",
+        "term": "le mot de passe",
+        "category": "Technologie",
+        "brief": "Suite de caractères utilisée pour protéger l'accès à un compte.",
+        "clues": ["sécurité", "compte", "connexion"],
+        "taboo": ["mot", "passe", "code"]
+    },
+    {
+        "id": "application",
+        "term": "l'application",
+        "category": "Technologie",
+        "brief": "Programme utilisé sur un téléphone, une tablette ou un ordinateur.",
+        "clues": ["téléphone", "outil numérique", "usage quotidien"],
+        "taboo": ["application", "appli", "portable"]
+    },
+    {
+        "id": "pharmacie",
+        "term": "la pharmacie",
+        "category": "Santé",
+        "brief": "Lieu où l'on obtient des médicaments et des conseils de santé.",
+        "clues": ["médicament", "ordonnance", "santé"],
+        "taboo": ["pharmacie", "pharmacien", "médicament"]
+    },
+    {
+        "id": "sante-mentale",
+        "term": "la santé mentale",
+        "category": "Santé",
+        "brief": "Équilibre psychologique et émotionnel d'une personne.",
+        "clues": ["émotions", "bien-être", "équilibre"],
+        "taboo": ["santé", "mental", "psychologique"]
+    },
+    {
+        "id": "universite",
+        "term": "l'université",
+        "category": "Éducation",
+        "brief": "Établissement d'enseignement supérieur où l'on suit une formation académique.",
+        "clues": ["études", "diplôme", "campus"],
+        "taboo": ["université", "étudiant", "cours"]
+    },
+    {
+        "id": "bibliotheque",
+        "term": "la bibliothèque",
+        "category": "Éducation",
+        "brief": "Lieu où l'on consulte ou emprunte des livres et des ressources.",
+        "clues": ["lecture", "livres", "recherche"],
+        "taboo": ["bibliothèque", "livre", "emprunter"]
+    },
+    {
+        "id": "musee",
+        "term": "le musée",
+        "category": "Culture",
+        "brief": "Lieu où l'on conserve et expose des œuvres ou des objets importants.",
+        "clues": ["œuvres", "visite", "exposition"],
+        "taboo": ["musée", "art", "tableau"]
+    },
+    {
+        "id": "festival",
+        "term": "le festival",
+        "category": "Culture",
+        "brief": "Événement culturel organisé autour d'un thème, d'un art ou d'un public.",
+        "clues": ["musique", "public", "programme"],
+        "taboo": ["festival", "concert", "fête"]
+    },
+    {
+        "id": "passeport",
+        "term": "le passeport",
+        "category": "Voyages",
+        "brief": "Document officiel utilisé pour voyager à l'étranger.",
+        "clues": ["frontière", "identité", "voyage"],
+        "taboo": ["passeport", "document", "pays"]
+    },
+    {
+        "id": "reservation",
+        "term": "la réservation",
+        "category": "Voyages",
+        "brief": "Confirmation pour un hôtel, un transport ou une activité.",
+        "clues": ["date", "place", "confirmation"],
+        "taboo": ["réservation", "réserver", "hôtel"]
+    },
+    {
+        "id": "mairie",
+        "term": "la mairie",
+        "category": "Services",
+        "brief": "Administration principale d'une commune.",
+        "clues": ["ville", "démarche", "document"],
+        "taboo": ["mairie", "maire", "municipal"]
+    },
+    {
+        "id": "service-client",
+        "term": "le service client",
+        "category": "Services",
+        "brief": "Espace d'aide pour les utilisateurs ou les consommateurs.",
+        "clues": ["aide", "problème", "réclamation"],
+        "taboo": ["service", "client", "assistance"]
+    },
+    {
+        "id": "solidarite",
+        "term": "la solidarité",
+        "category": "Société",
+        "brief": "Aide et soutien entre personnes ou groupes.",
+        "clues": ["entraide", "communauté", "soutien"],
+        "taboo": ["solidarité", "aider", "soutenir"]
+    },
+    {
+        "id": "droits-humains",
+        "term": "les droits humains",
+        "category": "Société",
+        "brief": "Protections fondamentales reconnues à chaque personne.",
+        "clues": ["liberté", "égalité", "protection"],
+        "taboo": ["droits", "humain", "liberté"]
+    },
+    {
+        "id": "stereotypes",
+        "term": "les stéréotypes",
+        "category": "Société",
+        "brief": "Idées simplifiées ou généralisées attribuées à un groupe.",
+        "clues": ["préjugé", "image", "groupe"],
+        "taboo": ["stéréotype", "préjugé", "cliché"]
+    }
+]
+
+
 def clean_imposteur_room_code(value):
     return "".join(ch for ch in str(value or "").upper() if ch in FRENCH8_IMPOSTEUR_ROOM_ALPHABET)[:6]
 
@@ -3489,7 +3653,7 @@ def french7_imposteur_action(payload):
             french8_imposteur_require_teacher(room, payload)
             if len(players) < FRENCH8_IMPOSTEUR_MIN_PLAYERS:
                 return 409, {"error": "not_enough_players", "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS}
-            card = secrets.choice(FRENCH8_IMPOSTEUR_CARDS)
+            card = secrets.choice(FRENCH7_IMPOSTEUR_CARDS)
             impostor_count = 2 if len(players) > 8 else 1
             impostors = secrets.SystemRandom().sample(players, impostor_count)
             room["status"] = "briefing"

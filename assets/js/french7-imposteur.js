@@ -295,7 +295,7 @@
   function studentRoomUrl(roomCode) {
     var code = cleanRoomCode(roomCode);
     var origin = window.location.origin && window.location.origin !== "null" ? window.location.origin : "";
-    if (origin) return origin.replace(/\/+$/, "") + "/i.html?r=" + encodeURIComponent(code);
+    if (origin) return origin.replace(/\/+$/, "") + "/frances/Niveau%207/jeux/l-imposteur-b1.html?room=" + encodeURIComponent(code) + "#jeu";
     var url = new URL(window.location.href);
     url.searchParams.set("room", code);
     url.hash = "jeu";
