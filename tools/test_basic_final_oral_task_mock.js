@@ -121,6 +121,8 @@ assert.match(html, /itm-final-oral-task-header\.jpg/, "The exact Final Oral Task
 assert.match(html, /itm-integrated-task-footer\.jpg/, "The exact institutional footer must be present");
 assert.match(html, /My Neighborhood/, "The official topic must be visible");
 assert.match(html, /No teacher submission/i, "The page must state that nothing is sent to the teacher");
+assert.match(html, /class="question-navigation" hidden/, "The normal conversation must not require a Continue button");
+assert.match(html, /id="floatingNextButton"[^>]+hidden/, "The floating Continue control must remain hidden in the automatic flow");
 assert.deepEqual([...new Set(speedButtons.map((button) => Number(button.dataset.speed || button.dataset.globalSpeed)))].sort(), [0.75, 1], "Only 0.75x and 1x may be available");
 assert.equal(/data-(?:global-)?speed="(?:1\.25|1\.5|2)"/.test(html), false, "No faster playback control may exist");
 assert.equal(source.includes("/api/french8/pronunciation-assessment"), false, "The English mock must never use the French pronunciation endpoint");
@@ -176,13 +178,24 @@ hooks.QUESTIONS.forEach((question) => {
   assert.equal(elements.get("floatingMicDock").hidden, false, "The floating microphone should appear before the lower recorder enters view");
   assert.equal(elements.get("floatingMicButton").listeners.has("click"), true, "The floating microphone must start the same recording flow");
   assert.equal(elements.get("floatingStopButton").listeners.has("click"), true, "The floating dock must be able to finish a recording");
-  assert.equal(elements.get("floatingNextButton").listeners.has("click"), true, "The floating dock must continue after transcription");
+  assert.equal(elements.get("floatingNextButton").listeners.has("click"), true, "The hidden recovery control should remain wired without appearing in the normal flow");
   assert.equal(mapLabels.find((label) => label.dataset.place === "home").classList.contains("is-active"), true, "The map should highlight the relevant place");
 
   const slowButton = speedButtons.find((button) => Number(button.dataset.speed || button.dataset.globalSpeed) === 0.75);
   await slowButton.dispatch("click");
   assert.equal(elements.get("interviewerAudio").playbackRate, 0.75, "Question audio must support 0.75x");
   assert.equal(elements.get("reactionAudio").playbackRate, 0.75, "Emma's responses must also support 0.75x");
+
+  const flowState = hooks.getState();
+  const openingTranscript = "My name is Laura and I live in the Laureles neighborhood.";
+  const openingWords = openingTranscript.split(/\s+/).map((text) => ({ text, probability: 0.93 }));
+  const openingAnswer = { questionId: hooks.QUESTIONS[0].id, transcript: openingTranscript, durationMs: 8000, whisperWords: openingWords, analysis: hooks.analyzeAnswer(openingTranscript, 8000, openingWords, hooks.QUESTIONS[0]) };
+  flowState.answers[0] = openingAnswer;
+  await hooks.playReaction(openingAnswer);
+  await elements.get("reactionAudio").dispatch("ended");
+  await new Promise((resolve) => setTimeout(resolve, 720));
+  assert.equal(flowState.currentIndex, 1, "The next turn must open automatically after Emma finishes responding");
+  assert.equal(elements.get("questionCounter").textContent, "Turn 2 of 8", "Automatic flow must render the next question without Continue");
 
   const samples = [
     "My name is Laura and I live in the Laureles neighborhood.",

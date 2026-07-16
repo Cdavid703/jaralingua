@@ -236,6 +236,8 @@
   let preflightStream = null;
   let floatingDockEnabled = false;
   let answerRecorderVisible = false;
+  let reactionAdvancesConversation = false;
+  let autoAdvanceTimer = null;
 
   function freshAttempt(questionIds = FULL_QUESTION_IDS) {
     return { mode: "guided", currentIndex: 0, questionIds: [...questionIds], answers: Array(questionIds.length).fill(null), startedAt: "" };
@@ -348,6 +350,8 @@
   }
 
   function stopEmmaAudio() {
+    reactionAdvancesConversation = false;
+    clearConversationAdvance();
     [elements.welcomeAudio, elements.taskInstructionsAudio, elements.interviewerAudio, elements.reactionAudio].forEach((audio) => { audio.pause(); });
     setAvatar("ready", "Emma is ready");
   }
@@ -385,11 +389,43 @@
     elements.emmaReactionText.hidden = false;
     elements.reactionAudio.src = AUDIO_ROOT + response.file;
     elements.reactionAudio.playbackRate = playbackSpeed;
+    reactionAdvancesConversation = true;
     try {
       await elements.reactionAudio.play();
     } catch (_error) {
-      setAvatar("ready", "Emma's response is ready");
+      reactionAdvancesConversation = false;
+      setAvatar("ready", "Moving to the next turn");
+      scheduleConversationAdvance(850);
     }
+  }
+
+  async function playRecoveryBridge() {
+    elements.emmaReactionText.textContent = "I could not check that recording this time, but your practice can continue.";
+    elements.emmaReactionText.hidden = false;
+    elements.reactionAudio.src = AUDIO_ROOT + "fallback-transcription-unavailable.mp3";
+    elements.reactionAudio.playbackRate = playbackSpeed;
+    reactionAdvancesConversation = true;
+    try {
+      await elements.reactionAudio.play();
+    } catch (_error) {
+      reactionAdvancesConversation = false;
+      scheduleConversationAdvance(850);
+    }
+  }
+
+  function clearConversationAdvance() {
+    if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+    autoAdvanceTimer = null;
+  }
+
+  function scheduleConversationAdvance(delay = 650) {
+    clearConversationAdvance();
+    if (!floatingDockEnabled || !state.answers[state.currentIndex]) return;
+    autoAdvanceTimer = setTimeout(() => {
+      autoAdvanceTimer = null;
+      nextQuestion();
+    }, delay);
+    updateFloatingDockControls();
   }
 
   function renderFrames() {
@@ -472,10 +508,10 @@
     elements.floatingTimer.textContent = elements.timer.textContent;
     elements.floatingMicButton.hidden = recording || hasAnswer;
     elements.floatingStopButton.hidden = !recording;
-    elements.floatingNextButton.hidden = !hasAnswer || recording;
+    elements.floatingNextButton.hidden = true;
     elements.floatingMicButton.disabled = recording || analyzing || hasAnswer || emmaPlaying;
     elements.floatingStopButton.disabled = !recording || analyzing;
-    elements.floatingNextButton.disabled = !hasAnswer || recording || analyzing || emmaPlaying;
+    elements.floatingNextButton.disabled = true;
     if (recording) {
       elements.floatingMicDock.dataset.state = "recording";
       elements.floatingMicLabel.textContent = "Recording your answer";
@@ -485,9 +521,12 @@
     } else if (hasAnswer && emmaPlaying) {
       elements.floatingMicDock.dataset.state = "responding";
       elements.floatingMicLabel.textContent = "Emma is responding";
+    } else if (hasAnswer && autoAdvanceTimer) {
+      elements.floatingMicDock.dataset.state = "continuing";
+      elements.floatingMicLabel.textContent = state.currentIndex === state.questionIds.length - 1 ? "Preparing your report…" : "Moving to the next turn…";
     } else if (hasAnswer) {
       elements.floatingMicDock.dataset.state = "complete";
-      elements.floatingMicLabel.textContent = "Answer ready to continue";
+      elements.floatingMicLabel.textContent = "Emma will continue automatically";
     } else if (emmaPlaying) {
       elements.floatingMicDock.dataset.state = "listening";
       elements.floatingMicLabel.textContent = "Listen to Emma first";
@@ -512,7 +551,7 @@
     elements.retryButton.disabled = recording || analyzing || !hasAnswer;
     elements.microphoneSelect.disabled = recording || analyzing;
     elements.nextQuestionButton.disabled = !hasAnswer || recording || analyzing || emmaPlaying;
-    elements.questionPlayButton.disabled = recording || analyzing;
+    elements.questionPlayButton.disabled = recording || analyzing || !elements.reactionAudio.paused;
     updateFloatingDockControls();
   }
 
@@ -765,9 +804,8 @@
       state.answers[state.currentIndex] = answer;
       elements.liveTranscript.textContent = transcript;
       elements.liveTranscript.classList.add("has-text");
-      elements.recordStatus.textContent = "Answer transcribed. Listen to yourself and review the text.";
-      elements.recordHelp.textContent = "If the transcription is not close to what you said, choose Record again.";
-      if (state.mode === "guided") renderTurnFeedback(answer);
+      elements.recordStatus.textContent = "Answer transcribed. Emma is responding.";
+      elements.recordHelp.textContent = "After Emma finishes speaking, the conversation will continue automatically.";
       await playReaction(answer);
     } catch (error) {
       elements.recordStatus.textContent = "The transcription service could not check this recording.";
@@ -788,20 +826,15 @@
     elements.liveTranscript.classList.add("has-text");
     elements.transcriptionRecovery.hidden = true;
     elements.recordStatus.textContent = "Recording kept for your self-review on this screen.";
-    elements.recordHelp.textContent = "Continue when you are ready. No words or score were invented for this turn.";
+    elements.recordHelp.textContent = "No words or score were invented. Emma will continue the conversation.";
     updateRecorderControls();
-  }
-
-  function renderTurnFeedback(answer) {
-    const analysis = answer.analysis;
-    const checks = analysis.targetChecks.map((check) => `<span class="feedback-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i>${escapeHtml(check.label)}</span>`).join("");
-    const unclear = analysis.unclearWords.length ? `<div class="answer-word-review"><strong>Words to repeat more clearly:</strong> ${analysis.unclearWords.map((word) => `${escapeHtml(word.text)} (${Math.round(word.probability * 100)}%)`).join(", ")}</div>` : "";
-    elements.answerFeedback.innerHTML = `<div class="feedback-checks">${currentQuestion().assessed === false ? '<span class="feedback-check is-met"><i class="bi bi-emoji-smile"></i>Warm-up only</span>' : `<span class="feedback-check is-met"><i class="bi bi-clipboard-data"></i>Practice readiness: ${Math.round(analysis.score100 / 10)}/10</span>`}${checks}</div><p class="feedback-message">${escapeHtml(analysis.message)}</p>${unclear}<p class="feedback-note">This is rule-based formative feedback. It does not replace teacher evaluation.</p>`;
-    elements.answerFeedback.hidden = false;
+    playRecoveryBridge();
   }
 
   function retryCurrentAnswer() {
     if (mediaRecorder?.state === "recording" || analyzing) return;
+    clearConversationAdvance();
+    reactionAdvancesConversation = false;
     state.answers[state.currentIndex] = null;
     elements.reactionAudio.pause();
     elements.emmaReactionText.hidden = true;
@@ -813,6 +846,8 @@
   }
 
   function beginAttempt(questionIds = FULL_QUESTION_IDS, mode = null) {
+    clearConversationAdvance();
+    reactionAdvancesConversation = false;
     state = freshAttempt(questionIds);
     state.mode = mode || (elements.realisticMode.checked ? "realistic" : "guided");
     state.startedAt = new Date().toISOString();
@@ -923,6 +958,8 @@
   }
 
   function showSummary(report, playClosing = true) {
+    clearConversationAdvance();
+    reactionAdvancesConversation = false;
     stopTracks();
     stopEmmaAudio();
     elements.onboardingPanel.hidden = true;
@@ -963,6 +1000,8 @@
 
   function nextQuestion() {
     if (!state.answers[state.currentIndex] || analyzing) return;
+    clearConversationAdvance();
+    reactionAdvancesConversation = false;
     if (state.currentIndex < state.questionIds.length - 1) {
       state.currentIndex += 1;
       renderQuestion(true);
@@ -1056,14 +1095,20 @@
   elements.interviewerAudio.addEventListener("ended", () => { setAvatar("ready", "Your turn to answer"); updateRecorderControls(); });
   elements.reactionAudio.addEventListener("play", () => { setAvatar("speaking", playbackSpeed === .75 ? "Emma is responding slowly (0.75×)" : "Emma is responding at normal speed (1×)"); updateRecorderControls(); });
   elements.reactionAudio.addEventListener("pause", updateRecorderControls);
-  elements.reactionAudio.addEventListener("ended", () => { setAvatar("ready", "Emma is ready to continue"); updateRecorderControls(); });
+  elements.reactionAudio.addEventListener("ended", () => {
+    const shouldAdvance = reactionAdvancesConversation;
+    reactionAdvancesConversation = false;
+    setAvatar("ready", shouldAdvance ? "Emma is continuing the conversation" : "Emma is ready");
+    if (shouldAdvance) scheduleConversationAdvance(650);
+    updateRecorderControls();
+  });
   navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);
-  window.addEventListener("pagehide", () => { if (mediaRecorder?.state === "recording") finishRecording(); stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
-  window.addEventListener("beforeunload", () => { stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
+  window.addEventListener("pagehide", () => { clearConversationAdvance(); if (mediaRecorder?.state === "recording") finishRecording(); stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
+  window.addEventListener("beforeunload", () => { clearConversationAdvance(); stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
   document.addEventListener("visibilitychange", () => { if (document.hidden && mediaRecorder?.state === "recording") finishRecording(); });
 
   if (window.__JARA_ORAL_MOCK_TEST__) {
-    window.__JaraFinalOralTaskMockTest = { QUESTIONS, analyzeAnswer, responseFor, readinessLabel, rubricBand, buildReport, REPORT_CRITERIA, getState: () => state };
+    window.__JaraFinalOralTaskMockTest = { QUESTIONS, analyzeAnswer, responseFor, playReaction, readinessLabel, rubricBand, buildReport, REPORT_CRITERIA, getState: () => state };
   }
 
   applyPlaybackSpeed(1);
