@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-mock.css?v=20260712-balanced-bank" />
-  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task-mock.css?v=20260716-feedback-continue-v4" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task-mock.css?v=20260716-compact-dialogue-v5" />
 </head>
 <body class="english-basic-page oral-mock-page final-oral-task-page">
   <div class="institutional-band final-task-institutional-band">
@@ -36,7 +36,7 @@
         <h1 id="pageTitle">My Neighborhood</h1>
         <p>Emma will be your conversation partner from preparation to private feedback. Describe places near your home, locate them, explain what people can do there, and ask Emma two questions.</p>
         <div class="lesson-meta"><span>Informal conversation</span><span>2–3 minutes</span><span>Unlimited attempts</span><span>Private practice</span><span>Result /50</span></div>
-        <div class="hero-actions"><a href="#oralMockApp" class="btn btn-primary"><i class="bi bi-play-fill"></i> Prepare my mock</a><a href="practice-lab.html#final-oral-mock-folder" class="btn btn-secondary">Back to Practice Lab</a></div>
+        <div class="hero-actions"><a href="#oralMockApp" class="btn btn-primary"><i class="bi bi-play-fill"></i> Start with Emma</a><a href="practice-lab.html#final-oral-mock-folder" class="btn btn-secondary">Back to Practice Lab</a></div>
       </div>
       <figure class="final-task-hero-image">
         <img src="../../assets/img/english-basic/practice-lab/final-oral-task/final-oral-task-hero-v1.webp" width="2048" height="1024" fetchpriority="high" decoding="async" alt="Adult learner having a comfortable English video conversation with a virtual partner" />
@@ -44,25 +44,35 @@
       </figure>
     </section>
 
-    <section class="final-task-identity" aria-labelledby="identityTitle">
-      <div class="identity-heading"><p class="oral-kicker">Institutional information</p><h2 id="identityTitle">Complete the fields as you would on exam day</h2><p>These fields remain in this page only. They are not submitted or added to Grades.</p></div>
-      <div class="identity-grid">
-        <label><span>Name</span><input id="studentName" type="text" autocomplete="name" placeholder="Your full name" /></label>
-        <label><span>ID</span><input id="studentId" type="text" inputmode="numeric" autocomplete="off" placeholder="Document number" /></label>
-        <label><span>Date</span><input id="practiceDate" type="date" /></label>
-        <label><span>Course Code</span><input id="courseCode" type="text" autocomplete="off" placeholder="Course code" /></label>
-        <label class="identity-score"><span>Formative Practice Result</span><output id="identityScore">— / 50</output></label>
-      </div>
+    <section class="final-task-identity" aria-label="Institutional information">
+      <details class="responsive-disclosure" id="identityDisclosure" data-responsive-disclosure open>
+        <summary><span><small>Institutional information</small><strong>Optional exam-day fields</strong></span><em>Name, ID, date and course code</em><i aria-hidden="true"></i></summary>
+        <div class="responsive-disclosure-body">
+          <div class="identity-heading"><p class="oral-kicker">Institutional information</p><h2 id="identityTitle">Complete the fields as you would on exam day</h2><p>These fields remain in this page only. They are not submitted or added to Grades.</p></div>
+          <div class="identity-grid">
+            <label><span>Name</span><input id="studentName" type="text" autocomplete="name" placeholder="Your full name" /></label>
+            <label><span>ID</span><input id="studentId" type="text" inputmode="numeric" autocomplete="off" placeholder="Document number" /></label>
+            <label><span>Date</span><input id="practiceDate" type="date" /></label>
+            <label><span>Course Code</span><input id="courseCode" type="text" autocomplete="off" placeholder="Course code" /></label>
+            <label class="identity-score"><span>Formative Practice Result</span><output id="identityScore">— / 50</output></label>
+          </div>
+        </div>
+      </details>
     </section>
 
-    <section class="task-brief" aria-labelledby="taskBriefTitle">
-      <div class="task-brief-heading"><p class="oral-kicker">Know the task</p><h2 id="taskBriefTitle">What happens in the real Final Oral Task?</h2><p>You have an informal conversation with a visitor who is new to your neighborhood. Speak naturally. Use short notes, but do not read a complete prepared text.</p></div>
-      <div class="task-brief-grid">
-        <article><span>01</span><i class="bi bi-buildings"></i><h3>Describe places</h3><p>Talk about a supermarket, park, school, restaurant, or another place near your home.</p></article>
-        <article><span>02</span><i class="bi bi-geo-alt"></i><h3>Locate them</h3><p>Use <strong>near</strong>, <strong>next to</strong>, <strong>across from</strong>, or <strong>on the corner</strong>.</p></article>
-        <article><span>03</span><i class="bi bi-chat-dots"></i><h3>Interact</h3><p>Answer the visitor and ask your own questions. This must feel like a conversation.</p></article>
-        <article><span>04</span><i class="bi bi-clock-history"></i><h3>Keep it natural</h3><p>The complete conversation should last approximately two to three minutes.</p></article>
-      </div>
+    <section class="task-brief" aria-label="Know the Final Oral Task">
+      <details class="responsive-disclosure" id="taskDisclosure" data-responsive-disclosure open>
+        <summary><span><small>Know the task</small><strong>What happens in the real task?</strong></span><em>4 steps · 2–3 minutes</em><i aria-hidden="true"></i></summary>
+        <div class="responsive-disclosure-body">
+          <div class="task-brief-heading"><p class="oral-kicker">Know the task</p><h2 id="taskBriefTitle">What happens in the real Final Oral Task?</h2><p>You have an informal conversation with a visitor who is new to your neighborhood. Speak naturally. Use short notes, but do not read a complete prepared text.</p></div>
+          <div class="task-brief-grid">
+            <article><span>01</span><i class="bi bi-buildings"></i><h3>Describe places</h3><p>Talk about a supermarket, park, school, restaurant, or another place near your home.</p></article>
+            <article><span>02</span><i class="bi bi-geo-alt"></i><h3>Locate them</h3><p>Use <strong>near</strong>, <strong>next to</strong>, <strong>across from</strong>, or <strong>on the corner</strong>.</p></article>
+            <article><span>03</span><i class="bi bi-chat-dots"></i><h3>Interact</h3><p>Answer the visitor and ask your own questions. This must feel like a conversation.</p></article>
+            <article><span>04</span><i class="bi bi-clock-history"></i><h3>Keep it natural</h3><p>The complete conversation should last approximately two to three minutes.</p></article>
+          </div>
+        </div>
+      </details>
     </section>
 
     <section class="oral-outcomes final-task-outcomes" aria-label="Practice guarantees">
@@ -204,9 +214,9 @@
         </section>
 
         <aside class="oral-sidebar final-task-sidebar">
-          <section><p class="oral-kicker">Official rubric · 50 points</p><h2>What the task evaluates</h2><ul class="coverage-list"><li><i class="bi bi-chat-square-text"></i><span>Communication / Task completion · 10</span></li><li><i class="bi bi-arrow-left-right"></i><span>Interaction and discourse · 10</span></li><li><i class="bi bi-speedometer2"></i><span>Fluency · 10</span></li><li><i class="bi bi-spellcheck"></i><span>Vocabulary and structure · 10</span></li><li><i class="bi bi-soundwave"></i><span>Pronunciation · 10</span></li></ul><p class="rubric-scale"><strong>Scale:</strong> Weak 1–3 · Low 4–5 · Fair 6–7 · Proficient 8–9 · Exemplary 10.</p></section>
+          <section class="sidebar-rubric"><details class="responsive-disclosure" id="rubricDisclosure" data-responsive-disclosure open><summary><span><small>Official rubric · 50 points</small><strong>What the task evaluates</strong></span><em>5 criteria · 10 points each</em><i aria-hidden="true"></i></summary><div class="responsive-disclosure-body"><p class="oral-kicker">Official rubric · 50 points</p><h2>What the task evaluates</h2><ul class="coverage-list"><li><i class="bi bi-chat-square-text"></i><span>Communication / Task completion · 10</span></li><li><i class="bi bi-arrow-left-right"></i><span>Interaction and discourse · 10</span></li><li><i class="bi bi-speedometer2"></i><span>Fluency · 10</span></li><li><i class="bi bi-spellcheck"></i><span>Vocabulary and structure · 10</span></li><li><i class="bi bi-soundwave"></i><span>Pronunciation · 10</span></li></ul><p class="rubric-scale"><strong>Scale:</strong> Weak 1–3 · Low 4–5 · Fair 6–7 · Proficient 8–9 · Exemplary 10.</p></div></details></section>
           <section><p class="oral-kicker">Useful language</p><h3>Location toolkit</h3><div class="sidebar-language"><span>there is / there are</span><span>near</span><span>next to</span><span>across from</span><span>on the corner</span><span>people can…</span><span>I recommend… because…</span></div></section>
-          <section><p class="oral-kicker">Privacy</p><h3>Your practice stays private</h3><p>Audio is sent temporarily to JaraLingua’s English transcription service and is not stored. No teacher button, submission, upload, or Grades record exists on this page.</p></section>
+          <section class="sidebar-privacy"><details class="responsive-disclosure" id="privacyDisclosure" data-responsive-disclosure open><summary><span><small>Privacy</small><strong>Your practice stays private</strong></span><em>Temporary processing · never stored</em><i aria-hidden="true"></i></summary><div class="responsive-disclosure-body"><p class="oral-kicker">Privacy</p><h3>Your practice stays private</h3><p>Audio is sent temporarily to JaraLingua’s English transcription service and is not stored. No teacher button, submission, upload, or Grades record exists on this page.</p></div></details></section>
           <section><p class="oral-kicker">More speaking practice</p><h3>Review all six units</h3><p>The separate Complete Course Oral Review keeps the 15-question bank covering Units 1–6.</p><a class="sidebar-link" href="complete-course-oral-review.html">Open the complete course review <i class="bi bi-arrow-right"></i></a></section>
         </aside>
       </div>
@@ -224,7 +234,7 @@
   <div class="institutional-footer final-task-institutional-footer"><img src="../../assets/img/english-basic/institutional/itm-integrated-task-footer.jpg" width="1274" height="215" alt="ITM institutional contact information and Alcaldía de Medellín" /></div>
 
   <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
-  <script src="../../assets/js/english-basic-final-oral-task-mock.js?v=20260716-feedback-continue-v4"></script>
+  <script src="../../assets/js/english-basic-final-oral-task-mock.js?v=20260716-compact-dialogue-v5"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

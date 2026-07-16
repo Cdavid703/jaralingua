@@ -173,26 +173,87 @@
   const QUESTION_BY_ID = new Map(QUESTIONS.map((question) => [question.id, question]));
   const FULL_QUESTION_IDS = QUESTIONS.map((question) => question.id);
 
-  const REACTIONS = [
-    { terms: ["park", "playground", "green area"], file: "reaction-park.mp3", text: "That park sounds like a lovely place to walk, exercise, or relax." },
-    { terms: ["supermarket", "grocery store", "market"], file: "reaction-supermarket.mp3", text: "That's convenient. It is very useful to have a supermarket close to home." },
-    { terms: ["school", "college", "university"], file: "reaction-school.mp3", text: "That school sounds like an important place for families in the neighborhood." },
-    { terms: ["restaurant", "food", "lunch", "dinner"], file: "reaction-restaurant.mp3", text: "That restaurant sounds interesting. I would like to know what food they serve." },
-    { terms: ["library", "books", "read", "study"], file: "reaction-library.mp3", text: "I like that. A nearby library is a great place to read and study." },
-    { terms: ["cafe", "coffee shop", "coffee"], file: "reaction-cafe.mp3", text: "That cafe sounds welcoming. It could be a nice place to meet a friend." },
-    { terms: ["church", "chapel"], file: "reaction-church.mp3", text: "I understand. The church sounds like a familiar landmark in your neighborhood." },
-    { terms: ["hospital", "clinic", "health center"], file: "reaction-hospital.mp3", text: "That is helpful to know. Having a hospital nearby can be very important." },
-    { terms: ["bank", "cash", "money"], file: "reaction-bank.mp3", text: "That bank sounds easy to find. Thank you for explaining where it is." },
-    { terms: ["gym", "sports center", "exercise"], file: "reaction-gym.mp3", text: "That gym sounds like a good place to exercise and stay active." }
+  const TURN_RESPONSES = {
+    opening: { file: "response-opening.mp3", text: "Thank you. Now I know your name and where you live." },
+    overview: { file: "response-overview.mp3", text: "Thank you. Now I know more about your neighborhood and the places near your home." },
+    supermarketYes: { file: "reaction-supermarket.mp3", text: "That's convenient. It is very useful to have a supermarket close to home." },
+    supermarketNo: { file: "response-no-supermarket.mp3", text: "I understand. Thank you for explaining that there is not a supermarket near your home." },
+    parkSchool: { file: "response-park-or-school.mp3", text: "Great. Now I know where that place is and what people can do there." },
+    restaurantYes: { file: "reaction-restaurant.mp3", text: "Thank you. Now I know where the restaurant is." },
+    restaurantNo: { file: "response-no-restaurant.mp3", text: "I see. So there is not a restaurant nearby. Thank you for letting me know." },
+    restaurantNotRecommended: { file: "response-not-recommended.mp3", text: "I understand. I can choose another place to eat. Thank you for explaining why." },
+    recommendation: { file: "response-final-recommendation.mp3", text: "Thank you for the recommendation. Now I know which place to visit first." },
+    continue: { file: "fallback-continue.mp3", text: "Thank you for your answer. Let's continue with the conversation." }
+  };
+
+  const STUDENT_QUESTION_RESPONSES = {
+    whereLibrary: { file: "emma-answer-where-is.mp3", text: "The public library is across from Central Park, on Green Street. It is next to a small cafe." },
+    wherePlace: { file: "emma-answer-where-is-other-place.mp3", text: "It is near Central Park, on Green Street. You can walk there." },
+    wherePark: { file: "emma-answer-where-is-park.mp3", text: "Central Park is on Green Street, across from the public library." },
+    wherePlaces: { file: "emma-answer-where-are-other-places.mp3", text: "They are near Central Park, between Green Street and Oak Avenue." },
+    isThere: { file: "emma-answer-is-there-other-place.mp3", text: "Yes, there is. It is on Green Street, near Central Park." },
+    isTherePark: { file: "emma-answer-is-there-park.mp3", text: "Yes, there is. Central Park is on Green Street, across from the public library." },
+    areThere: { file: "emma-answer-are-there-other-places.mp3", text: "Yes, there are. You can find them near Central Park." },
+    foodActivity: { file: "emma-answer-what-can-do-food.mp3", text: "People can eat, have a drink, and meet friends there." },
+    shoppingActivity: { file: "emma-answer-what-can-do-shopping.mp3", text: "People can buy groceries and other things they need there." },
+    pharmacyActivity: { file: "emma-answer-what-can-do-pharmacy.mp3", text: "People can buy medicine and get help there." },
+    studyActivity: { file: "emma-answer-what-can-do-study.mp3", text: "People can study, read, and learn there." },
+    parkActivity: { file: "emma-answer-what-can-do-park.mp3", text: "People can walk, exercise, play, and relax there." },
+    bankActivity: { file: "emma-answer-what-can-do-bank.mp3", text: "People can get money and pay bills there." },
+    hospitalActivity: { file: "emma-answer-what-can-do-hospital.mp3", text: "People can see a doctor and get help there." },
+    churchActivity: { file: "emma-answer-what-can-do-church.mp3", text: "People can pray and meet other people there." },
+    busStopActivity: { file: "emma-answer-what-can-do-bus-stop.mp3", text: "People can wait for the bus and travel to other parts of the city from there." },
+    gymActivity: { file: "emma-answer-what-can-do-gym.mp3", text: "People can exercise and play sports there." },
+    neighborhoodActivity: { file: "emma-answer-what-can-do.mp3", text: "People can read and study at the library. They can also walk, exercise, and meet friends in Central Park." },
+    myNeighborhoodActivity: { file: "emma-answer-what-i-do-neighborhood.mp3", text: "I walk in Central Park, read at the library, and visit my friends." },
+    genericActivity: { file: "emma-answer-what-can-do-general.mp3", text: "People can get help and do different activities there." },
+    likeNeighborhood: { file: "emma-answer-do-you-like.mp3", text: "Yes, I do. I like my neighborhood because it is friendly, quiet, and easy to walk around." },
+    likePlace: { file: "emma-answer-do-you-like-place.mp3", text: "Yes, I do. I like it because it is useful and close to my home." },
+    recommendPlace: { file: "emma-answer-do-you-recommend-place.mp3", text: "Yes, I do. I recommend it because it is a good place near my home." },
+    favoritePlace: { file: "emma-answer-favorite-place.mp3", text: "My favorite place is Central Park. It is beautiful and peaceful, and I can exercise there after work." },
+    favoriteSpecificPlace: { file: "emma-answer-favorite-specific-place.mp3", text: "My favorite one is near Central Park. I like it because it is useful and close to my home." },
+    favoriteFoodPlace: { file: "emma-answer-favorite-food-place.mp3", text: "My favorite place to eat is Green Cafe. It is near Central Park, and the food is good." },
+    recommendFoodPlace: { file: "emma-answer-recommend-food-place.mp3", text: "I recommend Green Cafe. It is near Central Park, and the food is good." },
+    distance: { file: "emma-answer-how-far.mp3", text: "It is about a ten-minute walk from my home." },
+    distanceBetweenPlaces: { file: "emma-answer-distance-between-places.mp3", text: "They are about a five-minute walk from each other." },
+    neighborhoodDescription: { file: "emma-answer-neighborhood-like.mp3", text: "My neighborhood is quiet, friendly, and nice. There are many useful places near my home." },
+    compoundLibraryExists: { file: "emma-answer-library-exists-activities.mp3", text: "Yes, there is. The library is across from Central Park. People can read and study there." },
+    compoundLibraryLocation: { file: "emma-answer-library-location-activities.mp3", text: "The library is across from Central Park. People can read and study there." },
+    compoundPlaceExists: { file: "emma-answer-place-exists-activities.mp3", text: "Yes, there is. It is near Central Park. People can do different activities there." },
+    compoundPlaceLocation: { file: "emma-answer-place-location-activities.mp3", text: "It is near Central Park, on Green Street. People can do different activities there." },
+    compoundParkExists: { file: "emma-answer-park-exists-activities.mp3", text: "Yes, there is. Central Park is on Green Street. People can walk and relax there." },
+    compoundParkLocation: { file: "emma-answer-park-location-activities.mp3", text: "Central Park is on Green Street. People can walk and relax there." },
+    compoundPlacesExist: { file: "emma-answer-places-exist-activities.mp3", text: "Yes, there are. They are near Central Park. People can do different activities there." },
+    compoundPlacesLocation: { file: "emma-answer-places-location-activities.mp3", text: "They are near Central Park. People can do different activities there." },
+    compoundParksExist: { file: "emma-answer-parks-exist-activities.mp3", text: "Yes, there are. People can walk, play, and relax in the parks." },
+    compoundParksLocation: { file: "emma-answer-parks-location-activities.mp3", text: "The parks are on Green Street. People can walk, play, and relax there." },
+    myPlaceActivity: { file: "emma-answer-what-i-do-place.mp3", text: "I go there, spend some time, and do activities with my friends." },
+    whereParkLibrary: { file: "emma-answer-where-park-library.mp3", text: "Central Park is on Green Street. The public library is across from the park." },
+    unknownPlace: { file: "emma-answer-unknown-place.mp3", text: "I do not know that place. Please ask me about another place in my neighborhood." },
+    differentQuestion: { file: "emma-answer-different-question.mp3", text: "Please ask a different question this time. You can ask about another place." },
+    retryQuestion: { file: "emma-answer-question-retry.mp3", text: "I am ready for your question. Please ask me about a place in my neighborhood." }
+  };
+
+  const ACTIVITY_RESPONSES = [
+    { key: "food", terms: ["restaurant", "restaurants", "cafe", "cafes", "coffee shop", "coffee shops", "food court", "food courts"], response: STUDENT_QUESTION_RESPONSES.foodActivity },
+    { key: "pharmacy", terms: ["pharmacy", "pharmacies", "drugstore", "drugstores"], response: STUDENT_QUESTION_RESPONSES.pharmacyActivity },
+    { key: "shopping", terms: ["supermarket", "supermarkets", "grocery store", "grocery stores", "market", "markets", "store", "stores", "shop", "shops"], response: STUDENT_QUESTION_RESPONSES.shoppingActivity },
+    { key: "study", terms: ["library", "libraries", "school", "schools", "college", "colleges", "university", "universities"], response: STUDENT_QUESTION_RESPONSES.studyActivity },
+    { key: "park", terms: ["park", "parks", "playground", "playgrounds", "green area", "green areas"], response: STUDENT_QUESTION_RESPONSES.parkActivity },
+    { key: "bank", terms: ["bank", "banks"], response: STUDENT_QUESTION_RESPONSES.bankActivity },
+    { key: "hospital", terms: ["hospital", "hospitals", "clinic", "clinics", "health center", "health centers"], response: STUDENT_QUESTION_RESPONSES.hospitalActivity },
+    { key: "church", terms: ["church", "churches", "chapel", "chapels"], response: STUDENT_QUESTION_RESPONSES.churchActivity },
+    { key: "transit", terms: ["bus stop", "bus stops", "bus station", "bus stations"], response: STUDENT_QUESTION_RESPONSES.busStopActivity },
+    { key: "gym", terms: ["gym", "gyms", "sports center", "sports centers"], response: STUDENT_QUESTION_RESPONSES.gymActivity }
   ];
 
-  const EMMA_ANSWERS = [
-    { test: (text) => includesAny(text, ["what can", "what do people", "what do you do"]), file: "emma-answer-what-can-do.mp3", text: "People can read and study at the library. They can also walk, exercise, and meet friends in Central Park." },
-    { test: (text) => includesAny(text, ["favorite place", "which place", "recommend"]), file: "emma-answer-favorite-place.mp3", text: "My favorite place is Central Park. It is beautiful and peaceful, and I can exercise there after work." },
-    { test: (text) => includesAny(text, ["where is", "where's"]), file: "emma-answer-where-is.mp3", text: "The public library is across from Central Park, on Green Street. It is next to a small cafe." },
-    { test: (text) => includesAny(text, ["is there", "isn't there"]), file: "emma-answer-is-there.mp3", text: "Yes, there is. There is a small cafe next to the library, and there is a supermarket near the bus stop." },
-    { test: (text) => includesAny(text, ["are there", "aren't there"]), file: "emma-answer-are-there.mp3", text: "Yes, there are. There are two parks and several small restaurants in my neighborhood." },
-    { test: (text) => includesAny(text, ["do you like", "like your neighborhood"]), file: "emma-answer-do-you-like.mp3", text: "Yes, I do. I like my neighborhood because it is friendly, quiet, and easy to walk around." }
+  const CANONICAL_ENTITIES = [
+    { key: "restaurant", terms: ["restaurant", "restaurants"] }, { key: "cafe", terms: ["cafe", "cafes", "coffee shop", "coffee shops"] },
+    { key: "pharmacy", terms: ["pharmacy", "pharmacies", "drugstore", "drugstores"] }, { key: "supermarket", terms: ["supermarket", "supermarkets", "grocery store", "grocery stores", "market", "markets"] },
+    { key: "library", terms: ["library", "libraries"] }, { key: "school", terms: ["school", "schools", "college", "colleges", "university", "universities"] },
+    { key: "park", terms: ["park", "parks", "playground", "playgrounds", "green area", "green areas"] }, { key: "bank", terms: ["bank", "banks"] },
+    { key: "hospital", terms: ["hospital", "hospitals", "clinic", "clinics", "health center", "health centers"] }, { key: "church", terms: ["church", "churches", "chapel", "chapels"] },
+    { key: "bus-stop", terms: ["bus stop", "bus stops", "bus station", "bus stations"] }, { key: "gym", terms: ["gym", "gyms", "sports center", "sports centers"] }
   ];
 
   const REPORT_CRITERIA = [
@@ -369,20 +430,187 @@
     }
   }
 
-  function responseFor(question, transcript) {
+  function hasNegativeExistence(normalized) {
+    const answer = normalized.trim();
+    return answer === "no"
+      || includesAny(normalized, ["there isn't", "there is not", "there is no", "there's no", "there are no", "there are not", "isn't near", "is not near", "not near", "not nearby", "not close", "far from", "is far", "don't have", "do not have", "no supermarket", "no restaurant"]);
+  }
+
+  function hasNegativeRecommendation(normalized) {
+    const answer = normalized.trim();
+    if (includesAny(normalized, ["don't recommend", "do not recommend", "wouldn't recommend", "would not recommend", "not recommend", "can't recommend", "cannot recommend", "would never recommend", "i wouldn't", "i would not", "i don't", "i do not", "don't like", "do not like", "prefer another", "prefer a different"])) return true;
+    return answer.startsWith("no ") && includesAny(normalized, ["because", "expensive", "bad", "dirty", "not good", "terrible", "slow", "unfriendly"]);
+  }
+
+  function primaryPlaceSegment(normalized) {
+    let text = normalized.trim();
+    const prefixes = [
+      /^(?:is|are) there (?:a |an |any |the )?/,
+      /^where (?:is|are) (?:a |an |the )?/,
+      /^what can (?:people|you) do (?:at|in) (?:a |an |the )?/,
+      /^what do (?:people|you) do (?:at|in) (?:a |an |the )?/,
+      /^(?:do|would) you (?:like|recommend) (?:a |an |the )?/,
+      /^can you recommend (?:a |an |the )?/,
+      /^what (?:is|'s) your favorite (?:a |an |the )?/,
+      /^how far (?:is|are) (?:a |an |the )?/
+    ];
+    const prefix = prefixes.find((pattern) => pattern.test(text));
+    if (prefix) text = text.replace(prefix, "");
+    text = text.split(/\b(?:and what|and where|near|next to|across from|in front of|behind|between|from|on the corner)\b/)[0].trim();
+    return normalize(text);
+  }
+
+  function targetPlaceGroup(normalized) {
+    const segment = primaryPlaceSegment(normalized);
+    return ACTIVITY_RESPONSES.find((item) => includesAny(segment, item.terms)) || null;
+  }
+
+  function targetEntityKey(normalized) {
+    const segment = primaryPlaceSegment(normalized);
+    return CANONICAL_ENTITIES.find((item) => includesAny(segment, item.terms))?.key || "";
+  }
+
+  function hasGenericPlaceTarget(normalized) {
+    return includesAny(primaryPlaceSegment(normalized), ["place", "places", "it", "there", "neighborhood", "area"]);
+  }
+
+  function mentionsSupportedPlace(normalized) {
+    return Boolean(targetPlaceGroup(normalized));
+  }
+
+  function hasActivityIntent(normalized) {
+    return includesAny(normalized, ["what can", "what do people", "what can people do", "what do you do"]);
+  }
+
+  function questionSignature(transcript) {
+    const normalized = normalize(transcript);
+    let intent = "";
+    if (includesAny(normalized, ["how far", "how long does it take", "how many minutes"])) intent = "distance";
+    else if (includesAny(normalized, ["where is", "where's", "where are", "where can i find"])) intent = "where";
+    else if (includesAny(normalized, ["is there", "isn't there", "are there", "aren't there"])) intent = "existence";
+    else if (hasActivityIntent(normalized)) intent = "activity";
+    else if (includesAny(normalized, ["favorite place", "which place", "what place do you recommend", "what is your favorite", "what's your favorite"])) intent = "favorite";
+    else if (includesAny(normalized, ["do you recommend", "would you recommend", "can you recommend"])) intent = "recommend";
+    else if (includesAny(normalized, ["do you like", "like your neighborhood"])) intent = "like";
+    const entity = targetEntityKey(normalized) || (hasGenericPlaceTarget(normalized) ? "place" : "");
+    return intent && entity ? `${intent}:${entity}` : normalize(transcript).trim();
+  }
+
+  function repeatsPreviousQuestion(transcript, previousTranscript) {
+    if (!previousTranscript) return false;
+    const current = questionSignature(transcript);
+    const previous = questionSignature(previousTranscript);
+    return Boolean(current && previous && current === previous);
+  }
+
+  function activityResponseFor(normalized) {
+    const matched = targetPlaceGroup(normalized);
+    if (matched) return matched.response;
+    if (includesAny(normalized, ["neighborhood", "area"])) return STUDENT_QUESTION_RESPONSES.neighborhoodActivity;
+    return STUDENT_QUESTION_RESPONSES.genericActivity;
+  }
+
+  function studentQuestionResponseFor(normalized) {
+    const activityIntent = hasActivityIntent(normalized);
+    const asksExistence = includesAny(normalized, ["is there", "isn't there"]);
+    const asksLocation = includesAny(normalized, ["where is", "where's", "where can i find"]);
+    const asksPluralExistence = includesAny(normalized, ["are there", "aren't there"]);
+    const asksPluralLocation = includesAny(normalized, ["where are"]);
+    const targetGroup = targetPlaceGroup(normalized);
+    const targetEntity = targetEntityKey(normalized);
+    const supportedPlace = Boolean(targetGroup);
+    const genericPlace = hasGenericPlaceTarget(normalized);
+    const parkTarget = targetGroup?.key === "park";
+    const foodTarget = targetGroup?.key === "food";
+    if (activityIntent && asksPluralExistence) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      return parkTarget ? STUDENT_QUESTION_RESPONSES.compoundParksExist : STUDENT_QUESTION_RESPONSES.compoundPlacesExist;
+    }
+    if (activityIntent && asksPluralLocation) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      return parkTarget ? STUDENT_QUESTION_RESPONSES.compoundParksLocation : STUDENT_QUESTION_RESPONSES.compoundPlacesLocation;
+    }
+    if (activityIntent && asksExistence) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      if (targetEntity === "library") return STUDENT_QUESTION_RESPONSES.compoundLibraryExists;
+      if (parkTarget) return STUDENT_QUESTION_RESPONSES.compoundParkExists;
+      return STUDENT_QUESTION_RESPONSES.compoundPlaceExists;
+    }
+    if (activityIntent && asksLocation) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      if (targetEntity === "library") return STUDENT_QUESTION_RESPONSES.compoundLibraryLocation;
+      if (parkTarget) return STUDENT_QUESTION_RESPONSES.compoundParkLocation;
+      return STUDENT_QUESTION_RESPONSES.compoundPlaceLocation;
+    }
+    if (includesAny(normalized, ["favorite place", "which place", "what place do you recommend", "what is your favorite", "what's your favorite", "is your favorite"])) {
+      if (foodTarget) return STUDENT_QUESTION_RESPONSES.favoriteFoodPlace;
+      if (!supportedPlace) return genericPlace ? STUDENT_QUESTION_RESPONSES.favoritePlace : STUDENT_QUESTION_RESPONSES.unknownPlace;
+      if (parkTarget) return STUDENT_QUESTION_RESPONSES.favoritePlace;
+      return STUDENT_QUESTION_RESPONSES.favoriteSpecificPlace;
+    }
+    if (includesAny(normalized, ["how far", "how long does it take", "how many minutes"])) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      return includesAny(normalized, ["from", "between"]) && !includesAny(normalized, ["from my home", "from your home"]) ? STUDENT_QUESTION_RESPONSES.distanceBetweenPlaces : STUDENT_QUESTION_RESPONSES.distance;
+    }
+    if (asksPluralLocation) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      const target = primaryPlaceSegment(normalized);
+      if (includesAny(target, ["park", "parks"]) && includesAny(target, ["library", "libraries"])) return STUDENT_QUESTION_RESPONSES.whereParkLibrary;
+      return STUDENT_QUESTION_RESPONSES.wherePlaces;
+    }
+    if (includesAny(normalized, ["where is", "where's", "where can i find"])) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      if (parkTarget) return STUDENT_QUESTION_RESPONSES.wherePark;
+      return targetEntity === "library" ? STUDENT_QUESTION_RESPONSES.whereLibrary : STUDENT_QUESTION_RESPONSES.wherePlace;
+    }
+    if (asksPluralExistence) return supportedPlace || genericPlace ? STUDENT_QUESTION_RESPONSES.areThere : STUDENT_QUESTION_RESPONSES.unknownPlace;
+    if (includesAny(normalized, ["is there", "isn't there"])) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      return parkTarget ? STUDENT_QUESTION_RESPONSES.isTherePark : STUDENT_QUESTION_RESPONSES.isThere;
+    }
+    if (activityIntent) {
+      if (includesAny(normalized, ["what do you do"]) && includesAny(normalized, ["neighborhood", "area"])) return STUDENT_QUESTION_RESPONSES.myNeighborhoodActivity;
+      if (includesAny(normalized, ["what do you do"])) return supportedPlace || genericPlace ? STUDENT_QUESTION_RESPONSES.myPlaceActivity : STUDENT_QUESTION_RESPONSES.unknownPlace;
+      return supportedPlace || includesAny(normalized, ["neighborhood", "area", "place"]) ? activityResponseFor(normalized) : STUDENT_QUESTION_RESPONSES.unknownPlace;
+    }
+    if (includesAny(normalized, ["can you recommend"]) || (includesAny(normalized, ["recommend"]) && includesAny(normalized, ["which", "what"]))) {
+      if (!supportedPlace && !genericPlace) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      if (foodTarget) return STUDENT_QUESTION_RESPONSES.recommendFoodPlace;
+      if (parkTarget || genericPlace) return STUDENT_QUESTION_RESPONSES.favoritePlace;
+      return STUDENT_QUESTION_RESPONSES.favoriteSpecificPlace;
+    }
+    if (includesAny(normalized, ["do you recommend", "would you recommend"])) return supportedPlace || genericPlace ? STUDENT_QUESTION_RESPONSES.recommendPlace : STUDENT_QUESTION_RESPONSES.unknownPlace;
+    if (includesAny(normalized, ["do you like", "like your neighborhood"])) {
+      if (!supportedPlace && !genericPlace && !includesAny(normalized, ["neighborhood", "area"])) return STUDENT_QUESTION_RESPONSES.unknownPlace;
+      return includesAny(normalized, ["neighborhood", "area"]) ? STUDENT_QUESTION_RESPONSES.likeNeighborhood : STUDENT_QUESTION_RESPONSES.likePlace;
+    }
+    if (includesAny(normalized, ["what is your neighborhood like", "what's your neighborhood like", "describe your neighborhood"])) return STUDENT_QUESTION_RESPONSES.neighborhoodDescription;
+    return STUDENT_QUESTION_RESPONSES.retryQuestion;
+  }
+
+  function responseFor(question, transcript, previousTranscript = "") {
     const normalized = normalize(transcript);
     if (question.interaction) {
-      const matched = EMMA_ANSWERS.find((answer) => answer.test(normalized));
-      return matched || { file: "emma-answer-generic-question.mp3", text: "That's a good question. Most places in my neighborhood are close together, so it is easy to walk from one place to another." };
+      if (question.id === "student-question-2" && repeatsPreviousQuestion(transcript, previousTranscript)) return STUDENT_QUESTION_RESPONSES.differentQuestion;
+      return studentQuestionResponseFor(normalized);
     }
-    const reaction = REACTIONS.find((item) => includesAny(normalized, item.terms));
-    return reaction || { file: "reaction-generic-place.mp3", text: "Thank you. That place sounds like an important part of your neighborhood." };
+    if (question.id === "opening") return TURN_RESPONSES.opening;
+    if (question.id === "overview") return TURN_RESPONSES.overview;
+    if (question.id === "supermarket") return hasNegativeExistence(normalized) ? TURN_RESPONSES.supermarketNo : TURN_RESPONSES.supermarketYes;
+    if (question.id === "park-school") return TURN_RESPONSES.parkSchool;
+    if (question.id === "restaurant") {
+      if (hasNegativeRecommendation(normalized)) return TURN_RESPONSES.restaurantNotRecommended;
+      return hasNegativeExistence(normalized) ? TURN_RESPONSES.restaurantNo : TURN_RESPONSES.restaurantYes;
+    }
+    if (question.id === "recommendation") return TURN_RESPONSES.recommendation;
+    return TURN_RESPONSES.continue;
   }
 
   async function playReaction(answer) {
     if (!answer?.transcript || answer.unavailable) return;
     emmaReplyPending = true;
-    const response = responseFor(currentQuestion(), answer.transcript);
+    const previousTranscript = state.currentIndex > 0 ? (state.answers[state.currentIndex - 1]?.transcript || "") : "";
+    const response = responseFor(currentQuestion(), answer.transcript, previousTranscript);
     answer.emmaResponse = response;
     elements.emmaReactionText.textContent = response.text;
     elements.emmaReactionText.hidden = false;
@@ -1029,10 +1257,30 @@
     document.querySelectorAll(".practice-mode-card").forEach((card) => card.classList.toggle("is-selected", Boolean(card.querySelector("input")?.checked)));
   }
 
+  function setupResponsiveDisclosures() {
+    const disclosures = [...document.querySelectorAll("[data-responsive-disclosure]")];
+    if (!disclosures.length) return;
+    const compactQuery = window.matchMedia?.("(max-width: 980px)");
+    const syncForViewport = () => disclosures.forEach((disclosure) => { disclosure.open = compactQuery ? !compactQuery.matches : true; });
+    syncForViewport();
+    if (compactQuery?.addEventListener) compactQuery.addEventListener("change", syncForViewport);
+    else compactQuery?.addListener?.(syncForViewport);
+
+    let printState = [];
+    window.addEventListener("beforeprint", () => {
+      printState = disclosures.map((disclosure) => disclosure.open);
+      disclosures.forEach((disclosure) => { disclosure.open = true; });
+    });
+    window.addEventListener("afterprint", () => {
+      disclosures.forEach((disclosure, index) => { disclosure.open = printState[index] ?? true; });
+    });
+  }
+
   function preparePage() {
     if (elements.practiceDate && !elements.practiceDate.value) elements.practiceDate.value = new Date().toISOString().slice(0, 10);
     elements.reviewPreviousButton.hidden = true;
     updateModeCards();
+    setupResponsiveDisclosures();
     renderAttemptHistory();
     refreshMicrophones();
     if ("IntersectionObserver" in window) {
@@ -1097,7 +1345,7 @@
   document.addEventListener("visibilitychange", () => { if (document.hidden && mediaRecorder?.state === "recording") finishRecording(); });
 
   if (window.__JARA_ORAL_MOCK_TEST__) {
-    window.__JaraFinalOralTaskMockTest = { QUESTIONS, analyzeAnswer, responseFor, playReaction, playRecoveryBridge, renderTurnFeedback, readinessLabel, rubricBand, buildReport, REPORT_CRITERIA, getState: () => state };
+    window.__JaraFinalOralTaskMockTest = { QUESTIONS, TURN_RESPONSES, STUDENT_QUESTION_RESPONSES, analyzeAnswer, responseFor, playReaction, playRecoveryBridge, renderTurnFeedback, readinessLabel, rubricBand, buildReport, REPORT_CRITERIA, getState: () => state };
   }
 
   applyPlaybackSpeed(1);

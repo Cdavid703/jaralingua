@@ -1,6 +1,7 @@
 param(
   [switch]$Overwrite,
   [switch]$DryRun,
+  [string[]]$Only = @(),
   [ValidateRange(1, 6)]
   [int]$MaxAttempts = 4
 )
@@ -135,6 +136,24 @@ function Read-AudioItems {
 
 $settings = Read-LocalSettings -Path $envFile
 $items = Read-AudioItems -Path $scriptPath -Destination $audioRoot
+
+if ($Only.Count -gt 0) {
+  $requested = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+  foreach ($rawValue in $Only) {
+    foreach ($fileName in $rawValue.Split(',')) {
+      $trimmed = $fileName.Trim()
+      if (-not [string]::IsNullOrWhiteSpace($trimmed)) {
+        [void]$requested.Add($trimmed)
+      }
+    }
+  }
+  $known = @($items | ForEach-Object { $_.FileName })
+  $unknown = @($requested | Where-Object { $_ -notin $known })
+  if ($unknown.Count -gt 0) {
+    throw "Unknown audio file requested with -Only: $($unknown -join ', ')"
+  }
+  $items = @($items | Where-Object { $requested.Contains($_.FileName) })
+}
 
 if ($DryRun) {
   Write-Output "DRY RUN - Basic Course 1 Final Oral Task Mock"
