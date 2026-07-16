@@ -539,7 +539,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
     },
     "pronunciationTheme3": {
         "id": "pronunciationTheme3",
-        "title": "Prononciation thème 3 - Verbes essentiels",
+        "title": "Prononciation thème 3 - Les verbes du premier groupe",
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 3",
@@ -547,7 +547,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
     },
     "pronunciationTheme5": {
         "id": "pronunciationTheme5",
-        "title": "Prononciation thème 5 - Description et professions",
+        "title": "Prononciation thème 5 - Famille et relations",
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 5",
@@ -555,7 +555,7 @@ FRENCH1_PRONUNCIATION_EVALUATIONS = {
     },
     "pronunciationTheme7": {
         "id": "pronunciationTheme7",
-        "title": "Prononciation thème 7 - Maison et localisation",
+        "title": "Prononciation thème 7 - Maison et environnement",
         "weight": 5,
         "type": "Prononciation",
         "displayDate": "Semaine du thème 7",

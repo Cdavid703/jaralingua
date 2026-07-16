@@ -34,7 +34,7 @@
     },
     {
       "id": "pronunciationTheme3",
-      "title": "Prononciation theme 3 - Verbes essentiels",
+      "title": "Prononciation theme 3 - Les verbes du premier groupe",
       "weight": 5,
       "type": "Prononciation",
       "displayDate": "Semaine du theme 3",
@@ -42,7 +42,7 @@
     },
     {
       "id": "pronunciationTheme5",
-      "title": "Prononciation theme 5 - Description et professions",
+      "title": "Prononciation theme 5 - Famille et relations",
       "weight": 5,
       "type": "Prononciation",
       "displayDate": "Semaine du theme 5",
@@ -50,7 +50,7 @@
     },
     {
       "id": "pronunciationTheme7",
-      "title": "Prononciation theme 7 - Maison et localisation",
+      "title": "Prononciation theme 7 - Maison et environnement",
       "weight": 5,
       "type": "Prononciation",
       "displayDate": "Semaine du theme 7",
