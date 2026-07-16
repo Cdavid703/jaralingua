@@ -130,6 +130,8 @@ assert.match(css, /@media \(max-width: 1060px\)/, "The layout must include a tab
 assert.match(css, /@media \(max-width: 760px\)/, "The layout must include a phone/tablet breakpoint");
 assert.match(css, /@media \(max-width: 520px\)/, "The layout must include a narrow-phone breakpoint");
 assert.match(css, /prefers-reduced-motion: reduce/, "Motion must respect the user's accessibility preference");
+assert.match(css, /\.floating-mic-dock\s*\{[\s\S]*?position:\s*fixed/, "The answer dock must remain reachable while the student reads the question");
+assert.match(css, /safe-area-inset-bottom/, "The floating microphone must respect the iPhone safe area");
 
 const referencedMp3 = [...source.matchAll(/"([a-z0-9-]+\.mp3)"/g)].map((match) => match[1]);
 referencedMp3.forEach((fileName) => assert.ok(fs.existsSync(path.join(audioRoot, fileName)), `Missing referenced ElevenLabs audio: ${fileName}`));
@@ -171,6 +173,10 @@ hooks.QUESTIONS.forEach((question) => {
   assert.equal(elements.get("questionCounter").textContent, "Turn 1 of 8");
   assert.match(elements.get("interviewerAudio").src, /turn-01-name-neighborhood\.mp3$/);
   assert.equal(elements.get("answerSupport").hidden, false, "Guided Rehearsal should show support");
+  assert.equal(elements.get("floatingMicDock").hidden, false, "The floating microphone should appear before the lower recorder enters view");
+  assert.equal(elements.get("floatingMicButton").listeners.has("click"), true, "The floating microphone must start the same recording flow");
+  assert.equal(elements.get("floatingStopButton").listeners.has("click"), true, "The floating dock must be able to finish a recording");
+  assert.equal(elements.get("floatingNextButton").listeners.has("click"), true, "The floating dock must continue after transcription");
   assert.equal(mapLabels.find((label) => label.dataset.place === "home").classList.contains("is-active"), true, "The map should highlight the relevant place");
 
   const slowButton = speedButtons.find((button) => Number(button.dataset.speed || button.dataset.globalSpeed) === 0.75);

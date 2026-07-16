@@ -654,6 +654,129 @@
   margin-top: .7rem;
 }
 
+.floating-mic-dock {
+  position: fixed;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 120;
+  width: min(430px, calc(100vw - 2rem));
+  min-height: 76px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: .7rem;
+  align-items: center;
+  padding: .7rem;
+  border: 1px solid rgba(45, 35, 77, .18);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 18px 48px rgba(20, 28, 45, .28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: floating-dock-in .24s ease both;
+}
+
+.floating-mic-dock[data-state="recording"] {
+  border-color: rgba(217, 79, 92, .55);
+  box-shadow: 0 18px 48px rgba(20, 28, 45, .28), 0 0 0 5px rgba(217, 79, 92, .11);
+}
+
+.floating-mic-dock[data-state="analyzing"] {
+  border-color: rgba(216, 164, 63, .6);
+}
+
+.floating-mic-copy {
+  min-width: 0;
+}
+
+.floating-mic-copy span,
+.floating-mic-copy strong {
+  display: block;
+}
+
+.floating-mic-copy span {
+  color: var(--final-teal);
+  font-size: .68rem;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.floating-mic-copy strong {
+  margin-top: .15rem;
+  overflow: hidden;
+  color: var(--final-purple);
+  font-size: .84rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.floating-mic-timer {
+  display: none;
+  padding: .35rem .5rem;
+  border-radius: 999px;
+  background: #fff0f1;
+  color: #a52c3a;
+  font-size: .76rem;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.floating-mic-dock[data-state="recording"] .floating-mic-timer {
+  display: inline-flex;
+}
+
+.floating-mic-action,
+.floating-stop-action,
+.floating-next-action {
+  min-height: 52px;
+  border: 0;
+  border-radius: 999px;
+  padding: .65rem .9rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  color: #fff;
+  font: inherit;
+  font-size: .8rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.floating-mic-action {
+  min-width: 112px;
+  background: linear-gradient(135deg, var(--final-coral), #ac3040);
+  box-shadow: 0 10px 22px rgba(217, 79, 92, .25);
+}
+
+.floating-stop-action {
+  min-width: 112px;
+  background: linear-gradient(135deg, #b82f40, #7f1d2a);
+  animation: floating-record-pulse 1.4s ease-in-out infinite;
+}
+
+.floating-next-action {
+  min-width: 118px;
+  background: linear-gradient(135deg, var(--final-teal), var(--final-purple));
+  box-shadow: 0 10px 22px rgba(45, 35, 77, .22);
+}
+
+.floating-mic-action:disabled,
+.floating-stop-action:disabled,
+.floating-next-action:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+  box-shadow: none;
+}
+
+.floating-mic-action:focus-visible,
+.floating-stop-action:focus-visible,
+.floating-next-action:focus-visible {
+  outline: 3px solid rgba(8, 126, 139, .25);
+  outline-offset: 3px;
+}
+
 .final-task-score {
   background: conic-gradient(var(--final-green) var(--score-angle, 0%), #dbe6ec 0);
 }
@@ -718,6 +841,16 @@
 @keyframes voice-wave {
   from { height: 6px; }
   to { height: 24px; }
+}
+
+@keyframes floating-dock-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floating-record-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 79, 92, .3); }
+  50% { box-shadow: 0 0 0 8px rgba(217, 79, 92, 0); }
 }
 
 @media (max-width: 1060px) {
@@ -881,6 +1014,32 @@
   .transcription-recovery .oral-button {
     width: 100%;
   }
+
+  .floating-mic-dock {
+    right: max(.5rem, env(safe-area-inset-right));
+    bottom: max(.5rem, env(safe-area-inset-bottom));
+    left: max(.5rem, env(safe-area-inset-left));
+    width: auto;
+    min-height: 70px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: .45rem;
+    padding: .55rem;
+    border-radius: 18px;
+  }
+
+  .floating-mic-timer {
+    grid-column: 1;
+    width: max-content;
+  }
+
+  .floating-mic-action,
+  .floating-stop-action,
+  .floating-next-action {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    min-width: 104px;
+    min-height: 54px;
+  }
 }
 
 @supports (padding: max(0px)) {
@@ -893,7 +1052,9 @@
   .emma-stage::before,
   .voice-wave i,
   .map-label,
-  .practice-mode-card > span {
+  .practice-mode-card > span,
+  .floating-mic-dock,
+  .floating-stop-action {
     animation: none !important;
     transition: none !important;
   }
@@ -928,6 +1089,10 @@
   .answer-support,
   .show-help-button,
   .question-navigation {
+    display: none !important;
+  }
+
+  .floating-mic-dock {
     display: none !important;
   }
 

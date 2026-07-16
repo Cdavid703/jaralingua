@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-mock.css?v=20260712-balanced-bank" />
-  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task-mock.css?v=20260716-final-oral-task-v1" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task-mock.css?v=20260716-floating-mic-v2" />
 </head>
 <body class="english-basic-page oral-mock-page final-oral-task-page">
   <div class="institutional-band final-task-institutional-band">
@@ -166,7 +166,7 @@
             </section>
             <button class="oral-button secondary show-help-button" id="showHelpButton" type="button" hidden><i class="bi bi-lightbulb"></i> I need support</button>
 
-            <section class="answer-recorder" aria-label="Record your answer">
+            <section class="answer-recorder" id="answerRecorderSection" aria-label="Record your answer">
               <label class="oral-microphone-picker"><span><i class="bi bi-mic"></i> Microphone in use</span><select id="microphoneSelect" aria-label="Choose a microphone"><option value="">Default microphone</option></select></label>
               <div class="oral-level-meter"><span>Microphone level</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div>
               <button class="oral-mic-button" id="micButton" type="button" aria-label="Start answering with the microphone"><i class="bi bi-mic-fill"></i></button>
@@ -210,6 +210,14 @@
           <section><p class="oral-kicker">More speaking practice</p><h3>Review all six units</h3><p>The separate Complete Course Oral Review keeps the 15-question bank covering Units 1–6.</p><a class="sidebar-link" href="complete-course-oral-review.html">Open the complete course review <i class="bi bi-arrow-right"></i></a></section>
         </aside>
       </div>
+
+      <div class="floating-mic-dock" id="floatingMicDock" data-state="ready" role="region" aria-label="Floating answer controls" hidden>
+        <div class="floating-mic-copy"><span id="floatingTurnLabel">Turn 1</span><strong id="floatingMicLabel">Ready to answer</strong></div>
+        <span class="floating-mic-timer" id="floatingTimer">00:00 / 00:25</span>
+        <button class="floating-mic-action" id="floatingMicButton" type="button" aria-label="Start answering with the floating microphone"><i class="bi bi-mic-fill"></i><span>Answer</span></button>
+        <button class="floating-stop-action" id="floatingStopButton" type="button" aria-label="Finish the current answer" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button>
+        <button class="floating-next-action" id="floatingNextButton" type="button" hidden><span>Continue</span><i class="bi bi-arrow-right"></i></button>
+      </div>
     </section>
   </main>
 
@@ -217,7 +225,7 @@
   <div class="institutional-footer final-task-institutional-footer"><img src="../../assets/img/english-basic/institutional/itm-integrated-task-footer.jpg" width="1274" height="215" alt="ITM institutional contact information and Alcaldía de Medellín" /></div>
 
   <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
-  <script src="../../assets/js/english-basic-final-oral-task-mock.js?v=20260716-final-oral-task-v1"></script>
+  <script src="../../assets/js/english-basic-final-oral-task-mock.js?v=20260716-floating-mic-v2"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

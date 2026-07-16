@@ -211,7 +211,8 @@
     "retryButton", "recordStatus", "recordHelp", "timer", "liveTranscript", "studentAudio", "answerFeedback", "transcriptionRecovery", "retryTranscriptionButton",
     "continueWithoutAnalysisButton", "unsupported", "nextQuestionButton", "summaryTitle", "summaryLead", "summaryScoreRing", "summaryScore", "summaryReadiness", "summaryComparison",
     "summaryMetrics", "summaryStrengths", "summaryPriorities", "summaryWordPractice", "attemptHistory", "summaryAnswers", "restartInterviewButton", "weakPracticeButton",
-    "clearHistoryButton", "identityScore", "practiceDate"
+    "clearHistoryButton", "identityScore", "practiceDate", "answerRecorderSection", "floatingMicDock", "floatingTurnLabel", "floatingMicLabel", "floatingTimer",
+    "floatingMicButton", "floatingStopButton", "floatingNextButton"
   ].map((id) => [id, document.getElementById(id)]));
 
   let persistent = loadPersistentState();
@@ -233,6 +234,8 @@
   let analyser = null;
   let meterFrame = null;
   let preflightStream = null;
+  let floatingDockEnabled = false;
+  let answerRecorderVisible = false;
 
   function freshAttempt(questionIds = FULL_QUESTION_IDS) {
     return { mode: "guided", currentIndex: 0, questionIds: [...questionIds], answers: Array(questionIds.length).fill(null), startedAt: "" };
@@ -425,6 +428,7 @@
     elements.answerFeedback.innerHTML = "";
     elements.transcriptionRecovery.hidden = true;
     elements.timer.textContent = `00:00 / ${formatTime(currentQuestion().maxSeconds * 1000)}`;
+    elements.floatingTimer.textContent = elements.timer.textContent;
     elements.recordStatus.textContent = "Ready for your answer";
     elements.recordHelp.textContent = "Tap the microphone and answer in English.";
     elements.levelMeterBar.style.width = "0";
@@ -454,6 +458,49 @@
     if (autoplay) playQuestion();
   }
 
+  function updateFloatingDockVisibility() {
+    const recording = mediaRecorder?.state === "recording";
+    const shouldShow = floatingDockEnabled && !elements.interviewPanel.hidden && (recording || !answerRecorderVisible);
+    elements.floatingMicDock.hidden = !shouldShow;
+  }
+
+  function updateFloatingDockControls() {
+    const recording = mediaRecorder?.state === "recording";
+    const hasAnswer = Boolean(state.answers[state.currentIndex]);
+    const emmaPlaying = !elements.interviewerAudio.paused || !elements.reactionAudio.paused;
+    elements.floatingTurnLabel.textContent = state.questionIds.length === 1 ? "Focused practice" : `Turn ${state.currentIndex + 1} of ${state.questionIds.length}`;
+    elements.floatingTimer.textContent = elements.timer.textContent;
+    elements.floatingMicButton.hidden = recording || hasAnswer;
+    elements.floatingStopButton.hidden = !recording;
+    elements.floatingNextButton.hidden = !hasAnswer || recording;
+    elements.floatingMicButton.disabled = recording || analyzing || hasAnswer || emmaPlaying;
+    elements.floatingStopButton.disabled = !recording || analyzing;
+    elements.floatingNextButton.disabled = !hasAnswer || recording || analyzing || emmaPlaying;
+    if (recording) {
+      elements.floatingMicDock.dataset.state = "recording";
+      elements.floatingMicLabel.textContent = "Recording your answer";
+    } else if (analyzing) {
+      elements.floatingMicDock.dataset.state = "analyzing";
+      elements.floatingMicLabel.textContent = "Checking your English…";
+    } else if (hasAnswer && emmaPlaying) {
+      elements.floatingMicDock.dataset.state = "responding";
+      elements.floatingMicLabel.textContent = "Emma is responding";
+    } else if (hasAnswer) {
+      elements.floatingMicDock.dataset.state = "complete";
+      elements.floatingMicLabel.textContent = "Answer ready to continue";
+    } else if (emmaPlaying) {
+      elements.floatingMicDock.dataset.state = "listening";
+      elements.floatingMicLabel.textContent = "Listen to Emma first";
+    } else if (currentBlob) {
+      elements.floatingMicDock.dataset.state = "recovery";
+      elements.floatingMicLabel.textContent = "Record again or use recovery below";
+    } else {
+      elements.floatingMicDock.dataset.state = "ready";
+      elements.floatingMicLabel.textContent = "Ready to answer";
+    }
+    updateFloatingDockVisibility();
+  }
+
   function updateRecorderControls() {
     const recording = mediaRecorder?.state === "recording";
     const hasAnswer = Boolean(state.answers[state.currentIndex]);
@@ -466,6 +513,7 @@
     elements.microphoneSelect.disabled = recording || analyzing;
     elements.nextQuestionButton.disabled = !hasAnswer || recording || analyzing || emmaPlaying;
     elements.questionPlayButton.disabled = recording || analyzing;
+    updateFloatingDockControls();
   }
 
   async function refreshMicrophones() {
@@ -560,6 +608,7 @@
 
   function updateTimer() {
     elements.timer.textContent = `${formatTime(Date.now() - startedAt)} / ${formatTime(currentQuestion().maxSeconds * 1000)}`;
+    elements.floatingTimer.textContent = elements.timer.textContent;
   }
 
   async function preflightMicrophone() {
@@ -770,6 +819,7 @@
     elements.onboardingPanel.hidden = true;
     elements.summaryPanel.hidden = true;
     elements.interviewPanel.hidden = false;
+    floatingDockEnabled = true;
     renderQuestion(true);
     document.getElementById("oralMockApp").scrollIntoView({ behavior: "smooth", block: "start" });
   }
@@ -878,6 +928,8 @@
     elements.onboardingPanel.hidden = true;
     elements.interviewPanel.hidden = true;
     elements.summaryPanel.hidden = false;
+    floatingDockEnabled = false;
+    updateFloatingDockControls();
     elements.summaryTitle.textContent = state.questionIds.length === 1 ? "Your focused-turn practice report" : "Your Final Oral Task practice report";
     elements.summaryLead.textContent = `${report.analyzedCount} of ${report.assessedCount} assessed turns were analyzed. Use the evidence below to prepare your next conversation.`;
     elements.summaryScore.textContent = report.score;
@@ -955,6 +1007,14 @@
     updateModeCards();
     renderAttemptHistory();
     refreshMicrophones();
+    if ("IntersectionObserver" in window) {
+      const recorderObserver = new IntersectionObserver((entries) => {
+        answerRecorderVisible = entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= .2);
+        updateFloatingDockVisibility();
+      }, { threshold: [0, .2, .6] });
+      recorderObserver.observe(elements.answerRecorderSection);
+    }
+    updateFloatingDockControls();
   }
 
   elements.startInterviewButton.addEventListener("click", startInterview);
@@ -980,6 +1040,9 @@
   elements.showHelpButton.addEventListener("click", () => setHelpVisibility(true));
   elements.micButton.addEventListener("click", startRecording);
   elements.stopButton.addEventListener("click", finishRecording);
+  elements.floatingMicButton.addEventListener("click", startRecording);
+  elements.floatingStopButton.addEventListener("click", finishRecording);
+  elements.floatingNextButton.addEventListener("click", nextQuestion);
   elements.retryButton.addEventListener("click", retryCurrentAnswer);
   elements.retryTranscriptionButton.addEventListener("click", transcribeCurrentBlob);
   elements.continueWithoutAnalysisButton.addEventListener("click", continueWithoutAnalysis);
