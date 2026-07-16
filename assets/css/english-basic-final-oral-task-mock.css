@@ -576,6 +576,58 @@
   height: 100%;
 }
 
+.final-task-interviewer-card .interviewer-audio-controls {
+  display: grid;
+  grid-template-columns: auto auto minmax(190px, max-content);
+  gap: .65rem;
+  align-items: center;
+}
+
+.final-task-interviewer-card .question-play-button,
+.conversation-continue-button {
+  width: auto;
+  min-height: 48px;
+  justify-content: center;
+}
+
+.conversation-continue-button {
+  border: 0;
+  border-radius: 999px;
+  padding: .72rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  background: linear-gradient(135deg, var(--final-teal), var(--final-purple));
+  color: #fff;
+  box-shadow: 0 11px 24px rgba(45, 35, 77, .2);
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.conversation-continue-button:disabled {
+  cursor: not-allowed;
+  opacity: .42;
+  box-shadow: none;
+}
+
+.conversation-continue-button.is-ready {
+  animation: continue-ready 1.5s ease-in-out 2;
+}
+
+.conversation-continue-button:focus-visible {
+  outline: 3px solid rgba(8, 126, 139, .24);
+  outline-offset: 3px;
+}
+
+.conversation-feedback {
+  margin-top: .85rem;
+  padding: .85rem;
+  border: 1px solid rgba(8, 126, 139, .18);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .92);
+}
+
 .emma-reaction-text {
   margin: .75rem 0 0;
   padding: .7rem .8rem;
@@ -727,8 +779,7 @@
 }
 
 .floating-mic-action,
-.floating-stop-action,
-.floating-next-action {
+.floating-stop-action {
   min-height: 52px;
   border: 0;
   border-radius: 999px;
@@ -756,23 +807,15 @@
   animation: floating-record-pulse 1.4s ease-in-out infinite;
 }
 
-.floating-next-action {
-  min-width: 118px;
-  background: linear-gradient(135deg, var(--final-teal), var(--final-purple));
-  box-shadow: 0 10px 22px rgba(45, 35, 77, .22);
-}
-
 .floating-mic-action:disabled,
-.floating-stop-action:disabled,
-.floating-next-action:disabled {
+.floating-stop-action:disabled {
   cursor: not-allowed;
   opacity: .5;
   box-shadow: none;
 }
 
 .floating-mic-action:focus-visible,
-.floating-stop-action:focus-visible,
-.floating-next-action:focus-visible {
+.floating-stop-action:focus-visible {
   outline: 3px solid rgba(8, 126, 139, .25);
   outline-offset: 3px;
 }
@@ -853,6 +896,11 @@
   50% { box-shadow: 0 0 0 8px rgba(217, 79, 92, 0); }
 }
 
+@keyframes continue-ready {
+  0%, 100% { box-shadow: 0 11px 24px rgba(45, 35, 77, .2); transform: translateY(0); }
+  50% { box-shadow: 0 11px 28px rgba(8, 126, 139, .38); transform: translateY(-2px); }
+}
+
 @media (max-width: 1060px) {
   .final-task-hero {
     grid-template-columns: 1fr;
@@ -923,6 +971,24 @@
   }
 
   .welcome-audio-row {
+    justify-content: center;
+  }
+
+  .final-task-interviewer-card .interviewer-audio-controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: .55rem;
+  }
+
+  .final-task-interviewer-card .question-play-button,
+  .conversation-continue-button {
+    width: 100%;
+    min-width: 0;
+    padding-inline: .65rem;
+  }
+
+  .final-task-interviewer-card .speed-control {
+    grid-column: 1 / -1;
+    width: 100%;
     justify-content: center;
   }
 
@@ -1033,8 +1099,7 @@
   }
 
   .floating-mic-action,
-  .floating-stop-action,
-  .floating-next-action {
+  .floating-stop-action {
     grid-column: 2;
     grid-row: 1 / span 2;
     min-width: 104px;
@@ -1054,7 +1119,8 @@
   .map-label,
   .practice-mode-card > span,
   .floating-mic-dock,
-  .floating-stop-action {
+  .floating-stop-action,
+  .conversation-continue-button.is-ready {
     animation: none !important;
     transition: none !important;
   }

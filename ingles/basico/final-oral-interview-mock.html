@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-mock.css?v=20260712-balanced-bank" />
-  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task-mock.css?v=20260716-fluid-conversation-v3" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task-mock.css?v=20260716-feedback-continue-v4" />
 </head>
 <body class="english-basic-page oral-mock-page final-oral-task-page">
   <div class="institutional-band final-task-institutional-band">
@@ -94,7 +94,7 @@
             <section class="practice-mode-panel" aria-labelledby="modeTitle">
               <div><p class="oral-kicker">Choose your experience</p><h3 id="modeTitle">How would you like to practice?</h3></div>
               <div class="practice-mode-grid">
-                <label class="practice-mode-card is-selected"><input id="guidedMode" type="radio" name="practiceMode" value="guided" checked /><span><i class="bi bi-lightbulb-fill"></i><strong>Guided Rehearsal</strong><small>See two answer structures, vocabulary, and grammar support before speaking. Review complete feedback at the end.</small><b>Recommended first</b></span></label>
+                <label class="practice-mode-card is-selected"><input id="guidedMode" type="radio" name="practiceMode" value="guided" checked /><span><i class="bi bi-lightbulb-fill"></i><strong>Guided Rehearsal</strong><small>See two answer structures, vocabulary, grammar support, and feedback after every turn.</small><b>Recommended first</b></span></label>
                 <label class="practice-mode-card"><input id="realisticMode" type="radio" name="practiceMode" value="realistic" /><span><i class="bi bi-stopwatch-fill"></i><strong>Realistic Mock</strong><small>Hide support during the conversation and receive all feedback when you finish.</small><b>Exam-like rhythm</b></span></label>
               </div>
             </section>
@@ -140,10 +140,12 @@
                 <p class="emma-reaction-text" id="emmaReactionText" hidden></p>
                 <div class="interviewer-audio-controls">
                   <button class="question-play-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Play Emma</span></button>
+                  <button class="conversation-continue-button" id="nextQuestionButton" type="button" aria-describedby="answerFeedback" disabled><span>Continue</span><i class="bi bi-arrow-right"></i></button>
                   <div class="speed-control" aria-label="Emma audio speed"><span>Speed</span><button type="button" data-speed="0.75">0.75×</button><button type="button" data-speed="1" class="is-active">1×</button></div>
                 </div>
                 <audio id="interviewerAudio" preload="metadata"></audio>
                 <audio id="reactionAudio" preload="metadata"></audio>
+                <div class="oral-feedback conversation-feedback" id="answerFeedback" role="status" aria-live="polite" tabindex="-1" hidden></div>
               </div>
             </section>
 
@@ -176,12 +178,10 @@
               <div class="oral-recorder-actions"><button class="oral-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish answer</button><button class="oral-button secondary" id="retryButton" type="button" disabled><i class="bi bi-arrow-repeat"></i> Record again</button></div>
               <div class="oral-transcript" id="liveTranscript" aria-live="polite">Your transcription will appear here after you finish.</div>
               <audio id="studentAudio" controls hidden></audio>
-              <div class="oral-feedback" id="answerFeedback" hidden></div>
               <div class="transcription-recovery" id="transcriptionRecovery" hidden><p>Your recording is safe on this screen, but the transcription service did not answer.</p><div><button class="oral-button secondary" id="retryTranscriptionButton" type="button">Try transcription again</button><button class="oral-button secondary" id="continueWithoutAnalysisButton" type="button">Continue without analysis</button></div></div>
               <div class="mic-unsupported" id="unsupported" hidden></div>
             </section>
 
-            <div class="question-navigation" hidden><button class="oral-button primary" id="nextQuestionButton" type="button" disabled>Continue <i class="bi bi-arrow-right"></i></button></div>
           </div>
 
           <div class="oral-summary" id="summaryPanel" hidden>
@@ -216,7 +216,6 @@
         <span class="floating-mic-timer" id="floatingTimer">00:00 / 00:25</span>
         <button class="floating-mic-action" id="floatingMicButton" type="button" aria-label="Start answering with the floating microphone"><i class="bi bi-mic-fill"></i><span>Answer</span></button>
         <button class="floating-stop-action" id="floatingStopButton" type="button" aria-label="Finish the current answer" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button>
-        <button class="floating-next-action" id="floatingNextButton" type="button" hidden><span>Continue</span><i class="bi bi-arrow-right"></i></button>
       </div>
     </section>
   </main>
@@ -225,7 +224,7 @@
   <div class="institutional-footer final-task-institutional-footer"><img src="../../assets/img/english-basic/institutional/itm-integrated-task-footer.jpg" width="1274" height="215" alt="ITM institutional contact information and Alcaldía de Medellín" /></div>
 
   <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
-  <script src="../../assets/js/english-basic-final-oral-task-mock.js?v=20260716-fluid-conversation-v3"></script>
+  <script src="../../assets/js/english-basic-final-oral-task-mock.js?v=20260716-feedback-continue-v4"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

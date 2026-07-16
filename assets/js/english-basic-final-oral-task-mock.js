@@ -212,7 +212,7 @@
     "continueWithoutAnalysisButton", "unsupported", "nextQuestionButton", "summaryTitle", "summaryLead", "summaryScoreRing", "summaryScore", "summaryReadiness", "summaryComparison",
     "summaryMetrics", "summaryStrengths", "summaryPriorities", "summaryWordPractice", "attemptHistory", "summaryAnswers", "restartInterviewButton", "weakPracticeButton",
     "clearHistoryButton", "identityScore", "practiceDate", "answerRecorderSection", "floatingMicDock", "floatingTurnLabel", "floatingMicLabel", "floatingTimer",
-    "floatingMicButton", "floatingStopButton", "floatingNextButton"
+    "floatingMicButton", "floatingStopButton"
   ].map((id) => [id, document.getElementById(id)]));
 
   let persistent = loadPersistentState();
@@ -236,8 +236,7 @@
   let preflightStream = null;
   let floatingDockEnabled = false;
   let answerRecorderVisible = false;
-  let reactionAdvancesConversation = false;
-  let autoAdvanceTimer = null;
+  let emmaReplyPending = false;
 
   function freshAttempt(questionIds = FULL_QUESTION_IDS) {
     return { mode: "guided", currentIndex: 0, questionIds: [...questionIds], answers: Array(questionIds.length).fill(null), startedAt: "" };
@@ -350,8 +349,7 @@
   }
 
   function stopEmmaAudio() {
-    reactionAdvancesConversation = false;
-    clearConversationAdvance();
+    emmaReplyPending = false;
     [elements.welcomeAudio, elements.taskInstructionsAudio, elements.interviewerAudio, elements.reactionAudio].forEach((audio) => { audio.pause(); });
     setAvatar("ready", "Emma is ready");
   }
@@ -383,49 +381,38 @@
 
   async function playReaction(answer) {
     if (!answer?.transcript || answer.unavailable) return;
+    emmaReplyPending = true;
     const response = responseFor(currentQuestion(), answer.transcript);
     answer.emmaResponse = response;
     elements.emmaReactionText.textContent = response.text;
     elements.emmaReactionText.hidden = false;
     elements.reactionAudio.src = AUDIO_ROOT + response.file;
     elements.reactionAudio.playbackRate = playbackSpeed;
-    reactionAdvancesConversation = true;
     try {
       await elements.reactionAudio.play();
     } catch (_error) {
-      reactionAdvancesConversation = false;
-      setAvatar("ready", "Moving to the next turn");
-      scheduleConversationAdvance(850);
+      setAvatar("ready", "Review your feedback, then continue");
+    } finally {
+      emmaReplyPending = false;
+      updateRecorderControls();
     }
   }
 
   async function playRecoveryBridge() {
+    emmaReplyPending = true;
+    updateRecorderControls();
     elements.emmaReactionText.textContent = "I could not check that recording this time, but your practice can continue.";
     elements.emmaReactionText.hidden = false;
     elements.reactionAudio.src = AUDIO_ROOT + "fallback-transcription-unavailable.mp3";
     elements.reactionAudio.playbackRate = playbackSpeed;
-    reactionAdvancesConversation = true;
     try {
       await elements.reactionAudio.play();
     } catch (_error) {
-      reactionAdvancesConversation = false;
-      scheduleConversationAdvance(850);
+      setAvatar("ready", "Continue when you are ready");
+    } finally {
+      emmaReplyPending = false;
+      updateRecorderControls();
     }
-  }
-
-  function clearConversationAdvance() {
-    if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
-    autoAdvanceTimer = null;
-  }
-
-  function scheduleConversationAdvance(delay = 650) {
-    clearConversationAdvance();
-    if (!floatingDockEnabled || !state.answers[state.currentIndex]) return;
-    autoAdvanceTimer = setTimeout(() => {
-      autoAdvanceTimer = null;
-      nextQuestion();
-    }, delay);
-    updateFloatingDockControls();
   }
 
   function renderFrames() {
@@ -496,22 +483,21 @@
 
   function updateFloatingDockVisibility() {
     const recording = mediaRecorder?.state === "recording";
-    const shouldShow = floatingDockEnabled && !elements.interviewPanel.hidden && (recording || !answerRecorderVisible);
+    const hasAnswer = Boolean(state.answers[state.currentIndex]);
+    const shouldShow = floatingDockEnabled && !elements.interviewPanel.hidden && (recording || (!hasAnswer && !answerRecorderVisible));
     elements.floatingMicDock.hidden = !shouldShow;
   }
 
   function updateFloatingDockControls() {
     const recording = mediaRecorder?.state === "recording";
     const hasAnswer = Boolean(state.answers[state.currentIndex]);
-    const emmaPlaying = !elements.interviewerAudio.paused || !elements.reactionAudio.paused;
+    const emmaPlaying = emmaReplyPending || !elements.interviewerAudio.paused || !elements.reactionAudio.paused;
     elements.floatingTurnLabel.textContent = state.questionIds.length === 1 ? "Focused practice" : `Turn ${state.currentIndex + 1} of ${state.questionIds.length}`;
     elements.floatingTimer.textContent = elements.timer.textContent;
     elements.floatingMicButton.hidden = recording || hasAnswer;
     elements.floatingStopButton.hidden = !recording;
-    elements.floatingNextButton.hidden = true;
     elements.floatingMicButton.disabled = recording || analyzing || hasAnswer || emmaPlaying;
     elements.floatingStopButton.disabled = !recording || analyzing;
-    elements.floatingNextButton.disabled = true;
     if (recording) {
       elements.floatingMicDock.dataset.state = "recording";
       elements.floatingMicLabel.textContent = "Recording your answer";
@@ -521,12 +507,9 @@
     } else if (hasAnswer && emmaPlaying) {
       elements.floatingMicDock.dataset.state = "responding";
       elements.floatingMicLabel.textContent = "Emma is responding";
-    } else if (hasAnswer && autoAdvanceTimer) {
-      elements.floatingMicDock.dataset.state = "continuing";
-      elements.floatingMicLabel.textContent = state.currentIndex === state.questionIds.length - 1 ? "Preparing your report…" : "Moving to the next turn…";
     } else if (hasAnswer) {
       elements.floatingMicDock.dataset.state = "complete";
-      elements.floatingMicLabel.textContent = "Emma will continue automatically";
+      elements.floatingMicLabel.textContent = "Read your feedback, then choose Continue";
     } else if (emmaPlaying) {
       elements.floatingMicDock.dataset.state = "listening";
       elements.floatingMicLabel.textContent = "Listen to Emma first";
@@ -543,14 +526,16 @@
   function updateRecorderControls() {
     const recording = mediaRecorder?.state === "recording";
     const hasAnswer = Boolean(state.answers[state.currentIndex]);
-    const emmaPlaying = !elements.interviewerAudio.paused || !elements.reactionAudio.paused;
+    const emmaPlaying = emmaReplyPending || !elements.interviewerAudio.paused || !elements.reactionAudio.paused;
+    const canContinue = hasAnswer && !recording && !analyzing && !emmaPlaying;
     elements.micButton.classList.toggle("is-recording", recording);
     elements.micButton.querySelector("i").className = recording ? "bi bi-soundwave" : "bi bi-mic-fill";
     elements.micButton.disabled = recording || analyzing || hasAnswer || emmaPlaying;
     elements.stopButton.disabled = !recording || analyzing;
     elements.retryButton.disabled = recording || analyzing || !hasAnswer;
     elements.microphoneSelect.disabled = recording || analyzing;
-    elements.nextQuestionButton.disabled = !hasAnswer || recording || analyzing || emmaPlaying;
+    elements.nextQuestionButton.disabled = !canContinue;
+    elements.nextQuestionButton.classList.toggle("is-ready", canContinue);
     elements.questionPlayButton.disabled = recording || analyzing || !elements.reactionAudio.paused;
     updateFloatingDockControls();
   }
@@ -777,6 +762,17 @@
     throw lastError || new Error("The transcription service did not answer.");
   }
 
+  function renderTurnFeedback(answer) {
+    if (!answer?.analysis) return;
+    const analysis = answer.analysis;
+    const checks = analysis.targetChecks.map((check) => `<span class="feedback-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i>${escapeHtml(check.label)}</span>`).join("");
+    const unclear = analysis.unclearWords.length
+      ? `<div class="answer-word-review"><strong>Words to repeat more clearly:</strong> ${analysis.unclearWords.map((word) => `${escapeHtml(word.text)} (${Math.round(word.probability * 100)}%)`).join(", ")}</div>`
+      : "";
+    elements.answerFeedback.innerHTML = `<div class="feedback-checks">${currentQuestion().assessed === false ? '<span class="feedback-check is-met"><i class="bi bi-emoji-smile"></i>Warm-up only</span>' : `<span class="feedback-check is-met"><i class="bi bi-clipboard-data"></i>Practice readiness: ${Math.round(analysis.score100 / 10)}/10</span>`}${checks}</div><p class="feedback-message">${escapeHtml(analysis.message)}</p>${unclear}<p class="feedback-note">This is rule-based formative feedback. It does not replace teacher evaluation. When you finish reading, choose <strong>Continue</strong> beside <strong>Play Emma</strong>.</p>`;
+    elements.answerFeedback.hidden = false;
+  }
+
   async function transcribeCurrentBlob() {
     if (!currentBlob || analyzing) return;
     analyzing = true;
@@ -805,7 +801,8 @@
       elements.liveTranscript.textContent = transcript;
       elements.liveTranscript.classList.add("has-text");
       elements.recordStatus.textContent = "Answer transcribed. Emma is responding.";
-      elements.recordHelp.textContent = "After Emma finishes speaking, the conversation will continue automatically.";
+      elements.recordHelp.textContent = "Read your feedback, then choose Continue beside Play Emma.";
+      if (state.mode === "guided") renderTurnFeedback(answer);
       await playReaction(answer);
     } catch (error) {
       elements.recordStatus.textContent = "The transcription service could not check this recording.";
@@ -826,15 +823,12 @@
     elements.liveTranscript.classList.add("has-text");
     elements.transcriptionRecovery.hidden = true;
     elements.recordStatus.textContent = "Recording kept for your self-review on this screen.";
-    elements.recordHelp.textContent = "No words or score were invented. Emma will continue the conversation.";
-    updateRecorderControls();
+    elements.recordHelp.textContent = "No words or score were invented. After Emma's message, choose Continue.";
     playRecoveryBridge();
   }
 
   function retryCurrentAnswer() {
     if (mediaRecorder?.state === "recording" || analyzing) return;
-    clearConversationAdvance();
-    reactionAdvancesConversation = false;
     state.answers[state.currentIndex] = null;
     elements.reactionAudio.pause();
     elements.emmaReactionText.hidden = true;
@@ -846,8 +840,6 @@
   }
 
   function beginAttempt(questionIds = FULL_QUESTION_IDS, mode = null) {
-    clearConversationAdvance();
-    reactionAdvancesConversation = false;
     state = freshAttempt(questionIds);
     state.mode = mode || (elements.realisticMode.checked ? "realistic" : "guided");
     state.startedAt = new Date().toISOString();
@@ -958,8 +950,6 @@
   }
 
   function showSummary(report, playClosing = true) {
-    clearConversationAdvance();
-    reactionAdvancesConversation = false;
     stopTracks();
     stopEmmaAudio();
     elements.onboardingPanel.hidden = true;
@@ -999,9 +989,8 @@
   }
 
   function nextQuestion() {
-    if (!state.answers[state.currentIndex] || analyzing) return;
-    clearConversationAdvance();
-    reactionAdvancesConversation = false;
+    const emmaPlaying = emmaReplyPending || !elements.interviewerAudio.paused || !elements.reactionAudio.paused;
+    if (!state.answers[state.currentIndex] || analyzing || mediaRecorder?.state === "recording" || emmaPlaying) return;
     if (state.currentIndex < state.questionIds.length - 1) {
       state.currentIndex += 1;
       renderQuestion(true);
@@ -1081,7 +1070,6 @@
   elements.stopButton.addEventListener("click", finishRecording);
   elements.floatingMicButton.addEventListener("click", startRecording);
   elements.floatingStopButton.addEventListener("click", finishRecording);
-  elements.floatingNextButton.addEventListener("click", nextQuestion);
   elements.retryButton.addEventListener("click", retryCurrentAnswer);
   elements.retryTranscriptionButton.addEventListener("click", transcribeCurrentBlob);
   elements.continueWithoutAnalysisButton.addEventListener("click", continueWithoutAnalysis);
@@ -1096,19 +1084,20 @@
   elements.reactionAudio.addEventListener("play", () => { setAvatar("speaking", playbackSpeed === .75 ? "Emma is responding slowly (0.75×)" : "Emma is responding at normal speed (1×)"); updateRecorderControls(); });
   elements.reactionAudio.addEventListener("pause", updateRecorderControls);
   elements.reactionAudio.addEventListener("ended", () => {
-    const shouldAdvance = reactionAdvancesConversation;
-    reactionAdvancesConversation = false;
-    setAvatar("ready", shouldAdvance ? "Emma is continuing the conversation" : "Emma is ready");
-    if (shouldAdvance) scheduleConversationAdvance(650);
+    const hasFeedback = state.mode === "guided" && !elements.answerFeedback.hidden;
+    setAvatar("ready", hasFeedback ? "Review your feedback, then continue" : "Continue when you are ready");
     updateRecorderControls();
+    const target = hasFeedback ? elements.answerFeedback : elements.nextQuestionButton;
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (hasFeedback) target.focus({ preventScroll: true });
   });
   navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);
-  window.addEventListener("pagehide", () => { clearConversationAdvance(); if (mediaRecorder?.state === "recording") finishRecording(); stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
-  window.addEventListener("beforeunload", () => { clearConversationAdvance(); stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
+  window.addEventListener("pagehide", () => { if (mediaRecorder?.state === "recording") finishRecording(); stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
+  window.addEventListener("beforeunload", () => { stopTracks(); if (objectUrl) URL.revokeObjectURL(objectUrl); if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl); });
   document.addEventListener("visibilitychange", () => { if (document.hidden && mediaRecorder?.state === "recording") finishRecording(); });
 
   if (window.__JARA_ORAL_MOCK_TEST__) {
-    window.__JaraFinalOralTaskMockTest = { QUESTIONS, analyzeAnswer, responseFor, playReaction, readinessLabel, rubricBand, buildReport, REPORT_CRITERIA, getState: () => state };
+    window.__JaraFinalOralTaskMockTest = { QUESTIONS, analyzeAnswer, responseFor, playReaction, playRecoveryBridge, renderTurnFeedback, readinessLabel, rubricBand, buildReport, REPORT_CRITERIA, getState: () => state };
   }
 
   applyPlaybackSpeed(1);

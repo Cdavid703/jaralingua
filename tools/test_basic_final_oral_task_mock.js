@@ -121,8 +121,9 @@ assert.match(html, /itm-final-oral-task-header\.jpg/, "The exact Final Oral Task
 assert.match(html, /itm-integrated-task-footer\.jpg/, "The exact institutional footer must be present");
 assert.match(html, /My Neighborhood/, "The official topic must be visible");
 assert.match(html, /No teacher submission/i, "The page must state that nothing is sent to the teacher");
-assert.match(html, /class="question-navigation" hidden/, "The normal conversation must not require a Continue button");
-assert.match(html, /id="floatingNextButton"[^>]+hidden/, "The floating Continue control must remain hidden in the automatic flow");
+assert.match(html, /id="questionPlayButton"[\s\S]{0,350}id="nextQuestionButton"/, "Continue must sit immediately after Play Emma in the same control group");
+assert.equal(html.includes('id="floatingNextButton"'), false, "Continue must not be duplicated inside the floating microphone dock");
+assert.match(html, /id="answerFeedback"[^>]+aria-live="polite"/, "Turn feedback must be announced accessibly");
 assert.deepEqual([...new Set(speedButtons.map((button) => Number(button.dataset.speed || button.dataset.globalSpeed)))].sort(), [0.75, 1], "Only 0.75x and 1x may be available");
 assert.equal(/data-(?:global-)?speed="(?:1\.25|1\.5|2)"/.test(html), false, "No faster playback control may exist");
 assert.equal(source.includes("/api/french8/pronunciation-assessment"), false, "The English mock must never use the French pronunciation endpoint");
@@ -134,6 +135,8 @@ assert.match(css, /@media \(max-width: 520px\)/, "The layout must include a narr
 assert.match(css, /prefers-reduced-motion: reduce/, "Motion must respect the user's accessibility preference");
 assert.match(css, /\.floating-mic-dock\s*\{[\s\S]*?position:\s*fixed/, "The answer dock must remain reachable while the student reads the question");
 assert.match(css, /safe-area-inset-bottom/, "The floating microphone must respect the iPhone safe area");
+assert.match(css, /\.final-task-interviewer-card \.interviewer-audio-controls\s*\{\s*grid-template-columns:\s*repeat\(2, minmax\(0, 1fr\)\)/, "Play Emma and Continue must remain side by side on phones and tablets");
+assert.equal(/scheduleConversationAdvance|reactionAdvancesConversation|autoAdvanceTimer/.test(source), false, "No automatic turn-advance mechanism may remain");
 
 const referencedMp3 = [...source.matchAll(/"([a-z0-9-]+\.mp3)"/g)].map((match) => match[1]);
 referencedMp3.forEach((fileName) => assert.ok(fs.existsSync(path.join(audioRoot, fileName)), `Missing referenced ElevenLabs audio: ${fileName}`));
@@ -178,7 +181,6 @@ hooks.QUESTIONS.forEach((question) => {
   assert.equal(elements.get("floatingMicDock").hidden, false, "The floating microphone should appear before the lower recorder enters view");
   assert.equal(elements.get("floatingMicButton").listeners.has("click"), true, "The floating microphone must start the same recording flow");
   assert.equal(elements.get("floatingStopButton").listeners.has("click"), true, "The floating dock must be able to finish a recording");
-  assert.equal(elements.get("floatingNextButton").listeners.has("click"), true, "The hidden recovery control should remain wired without appearing in the normal flow");
   assert.equal(mapLabels.find((label) => label.dataset.place === "home").classList.contains("is-active"), true, "The map should highlight the relevant place");
 
   const slowButton = speedButtons.find((button) => Number(button.dataset.speed || button.dataset.globalSpeed) === 0.75);
@@ -191,11 +193,35 @@ hooks.QUESTIONS.forEach((question) => {
   const openingWords = openingTranscript.split(/\s+/).map((text) => ({ text, probability: 0.93 }));
   const openingAnswer = { questionId: hooks.QUESTIONS[0].id, transcript: openingTranscript, durationMs: 8000, whisperWords: openingWords, analysis: hooks.analyzeAnswer(openingTranscript, 8000, openingWords, hooks.QUESTIONS[0]) };
   flowState.answers[0] = openingAnswer;
+  hooks.renderTurnFeedback(openingAnswer);
+  elements.get("interviewerAudio").paused = true;
+  elements.get("interviewerAudio").ended = true;
   await hooks.playReaction(openingAnswer);
+  assert.equal(elements.get("nextQuestionButton").disabled, true, "Continue must stay disabled while Emma is responding");
+  elements.get("reactionAudio").paused = true;
+  elements.get("reactionAudio").ended = true;
   await elements.get("reactionAudio").dispatch("ended");
   await new Promise((resolve) => setTimeout(resolve, 720));
-  assert.equal(flowState.currentIndex, 1, "The next turn must open automatically after Emma finishes responding");
-  assert.equal(elements.get("questionCounter").textContent, "Turn 2 of 8", "Automatic flow must render the next question without Continue");
+  assert.equal(flowState.currentIndex, 0, "Emma's response must not advance before the learner reads the feedback");
+  assert.equal(elements.get("answerFeedback").hidden, false, "Guided feedback must remain visible after Emma responds");
+  assert.equal(elements.get("nextQuestionButton").disabled, false, "Continue must unlock after Emma finishes responding");
+  assert.equal(elements.get("nextQuestionButton").classList.contains("is-ready"), true, "Continue must receive a clear ready state");
+  await elements.get("nextQuestionButton").dispatch("click");
+  assert.equal(flowState.currentIndex, 1, "The next turn must open only after the learner chooses Continue");
+  assert.equal(elements.get("questionCounter").textContent, "Turn 2 of 8", "Continue must render the next Emma question");
+
+  flowState.answers[1] = { questionId: hooks.QUESTIONS[1].id, transcript: "", durationMs: 5000, unavailable: true, analysis: null };
+  elements.get("interviewerAudio").paused = true;
+  elements.get("interviewerAudio").ended = true;
+  elements.get("reactionAudio").paused = true;
+  const recoveryPlayback = hooks.playRecoveryBridge();
+  assert.equal(elements.get("nextQuestionButton").disabled, true, "Recovery must not expose Continue before Emma's bridge starts");
+  await recoveryPlayback;
+  assert.equal(elements.get("nextQuestionButton").disabled, true, "Continue must remain blocked while Emma's recovery message is playing");
+  elements.get("reactionAudio").paused = true;
+  elements.get("reactionAudio").ended = true;
+  await elements.get("reactionAudio").dispatch("ended");
+  assert.equal(elements.get("nextQuestionButton").disabled, false, "Continue must unlock after the recovery message ends");
 
   const samples = [
     "My name is Laura and I live in the Laureles neighborhood.",
