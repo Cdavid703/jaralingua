@@ -126,6 +126,36 @@
     return localCompare(transcript);
   }
 
+  function allowGuidedProgressAfterAnalysisError(error) {
+    const isFinalStage = state.stage >= STAGES.length - 1;
+    const message = error?.message || "Analyse indisponible.";
+    if (isFinalStage) {
+      els.micStatus.textContent = message;
+      els.feedback.textContent = "Votre audio est bien enregistré dans le lecteur, mais le défi final doit être analysé correctement avant d’être envoyé au professeur. Réessayez l’enregistrement final.";
+      els.comparison.textContent = "Transcription non disponible : l’analyse automatique n’a pas répondu.";
+      els.nextBtn.disabled = true;
+      return;
+    }
+
+    const fallback = {
+      score: 0,
+      accuracy: 0,
+      completeness: 0,
+      fluency: 0,
+      correct: [],
+      missed: words(STAGES[state.stage].text),
+      transcript: "Analyse automatique indisponible",
+      feedback: "Votre enregistrement est terminé. L’analyse automatique n’a pas répondu, donc le score reste à 0, mais vous pouvez passer au mini-défi suivant et recommencer plus tard pour obtenir une correction précise.",
+      analysisUnavailable: true,
+      errorMessage: message
+    };
+    state.scores[state.stage] = fallback;
+    applyScore(fallback);
+    els.nextBtn.disabled = false;
+    els.micStatus.textContent = "Enregistrement terminé. Analyse indisponible; vous pouvez continuer.";
+    save();
+  }
+
   function setRecording(active) {
     els.recordBtn.disabled = active;
     els.stopBtn.disabled = !active;
@@ -189,8 +219,7 @@
       els.micStatus.textContent = "Bilan terminé.";
       save();
     } catch (error) {
-      els.micStatus.textContent = error.message || "Analyse indisponible.";
-      els.feedback.textContent = "Votre audio est enregistré localement dans le lecteur. Si l’analyse ne répond pas, réessayez ou vérifiez le serveur.";
+      allowGuidedProgressAfterAnalysisError(error);
     }
   }
 
