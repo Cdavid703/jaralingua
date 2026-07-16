@@ -2,16 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Final Oral Interview Mock | Basic English Course 1</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Institutional Final Oral Task mock for Basic Course 1: a guided My Neighborhood conversation with professional audio, microphone transcription, and private formative feedback." />
+  <title>Final Oral Task Mock - My Neighborhood | Basic Course 1</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-mock.css?v=20260712-balanced-bank" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task-mock.css?v=20260716-final-oral-task-v1" />
 </head>
-<body class="english-basic-page oral-mock-page">
+<body class="english-basic-page oral-mock-page final-oral-task-page">
+  <div class="institutional-band final-task-institutional-band">
+    <img src="../../assets/img/english-basic/institutional/itm-final-oral-task-header.jpg" width="1123" height="73" alt="ITM Institución Universitaria, 80 años, Hacia una era de Universidad y Humanidad" />
+  </div>
+
   <div class="global-course-switcher" aria-label="Courses">
     <details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details>
   </div>
@@ -23,45 +29,93 @@
   </header>
 
   <main>
-    <section class="lesson-hero immersive-basic-hero oral-mock-hero" style="--hero-image:url('../../assets/img/english-basic/practice-lab/final-oral-interview-mock-pro-v1.webp')">
-      <div class="lesson-hero-content">
-        <p class="eyebrow">Final Oral Task preparation</p>
-        <h1>Final Oral Interview Mock</h1>
-        <p>Meet your virtual interviewer, answer seven balanced questions from a 15-question course bank, and review every transcription before the real oral task.</p>
-        <div class="lesson-meta"><span>Basic Course 1</span><span>7 questions per attempt</span><span>15-question bank</span><span>Unlimited practice</span><span>No grade</span></div>
-        <div class="hero-actions"><a href="#oralMockApp" class="btn btn-primary"><i class="bi bi-mic-fill"></i> Start the mock interview</a><a href="practice-lab.html#final-oral-mock-folder" class="btn btn-secondary">Back to Practice Lab</a></div>
+    <section class="final-task-hero" aria-labelledby="pageTitle">
+      <div class="final-task-hero-copy">
+        <span class="final-task-pill"><i class="bi bi-mic-fill"></i> Institutional practice · No official grade</span>
+        <p class="eyebrow">Basic Course 1 · Final Oral Task Mock</p>
+        <h1 id="pageTitle">My Neighborhood</h1>
+        <p>Emma will be your conversation partner from preparation to private feedback. Describe places near your home, locate them, explain what people can do there, and ask Emma two questions.</p>
+        <div class="lesson-meta"><span>Informal conversation</span><span>2–3 minutes</span><span>Unlimited attempts</span><span>Private practice</span><span>Result /50</span></div>
+        <div class="hero-actions"><a href="#oralMockApp" class="btn btn-primary"><i class="bi bi-play-fill"></i> Prepare my mock</a><a href="practice-lab.html#final-oral-mock-folder" class="btn btn-secondary">Back to Practice Lab</a></div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic/practice-lab/final-oral-interview-mock-pro-v1.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="Adult English learner answering an online oral interview with headphones and a microphone" /></aside>
+      <figure class="final-task-hero-image">
+        <img src="../../assets/img/english-basic/practice-lab/final-oral-task/final-oral-task-hero-v1.webp" width="2048" height="1024" fetchpriority="high" decoding="async" alt="Adult learner having a comfortable English video conversation with a virtual partner" />
+        <figcaption><i class="bi bi-shield-check"></i> Your audio is processed temporarily and is never sent to the teacher.</figcaption>
+      </figure>
     </section>
 
-    <section class="oral-outcomes" aria-label="Practice information">
-      <article><i class="bi bi-person-video3"></i><div><strong>Guided interview</strong><span>One spoken question at a time</span></div></article>
-      <article><i class="bi bi-lightbulb"></i><div><strong>First-time support</strong><span>Two answer structures for every question</span></div></article>
-      <article><i class="bi bi-shield-check"></i><div><strong>Private practice</strong><span>Audio is transcribed temporarily and is not saved</span></div></article>
+    <section class="final-task-identity" aria-labelledby="identityTitle">
+      <div class="identity-heading"><p class="oral-kicker">Institutional information</p><h2 id="identityTitle">Complete the fields as you would on exam day</h2><p>These fields remain in this page only. They are not submitted or added to Grades.</p></div>
+      <div class="identity-grid">
+        <label><span>Name</span><input id="studentName" type="text" autocomplete="name" placeholder="Your full name" /></label>
+        <label><span>ID</span><input id="studentId" type="text" inputmode="numeric" autocomplete="off" placeholder="Document number" /></label>
+        <label><span>Date</span><input id="practiceDate" type="date" /></label>
+        <label><span>Course Code</span><input id="courseCode" type="text" autocomplete="off" placeholder="Course code" /></label>
+        <label class="identity-score"><span>Formative Practice Result</span><output id="identityScore">— / 50</output></label>
+      </div>
+    </section>
+
+    <section class="task-brief" aria-labelledby="taskBriefTitle">
+      <div class="task-brief-heading"><p class="oral-kicker">Know the task</p><h2 id="taskBriefTitle">What happens in the real Final Oral Task?</h2><p>You have an informal conversation with a visitor who is new to your neighborhood. Speak naturally. Use short notes, but do not read a complete prepared text.</p></div>
+      <div class="task-brief-grid">
+        <article><span>01</span><i class="bi bi-buildings"></i><h3>Describe places</h3><p>Talk about a supermarket, park, school, restaurant, or another place near your home.</p></article>
+        <article><span>02</span><i class="bi bi-geo-alt"></i><h3>Locate them</h3><p>Use <strong>near</strong>, <strong>next to</strong>, <strong>across from</strong>, or <strong>on the corner</strong>.</p></article>
+        <article><span>03</span><i class="bi bi-chat-dots"></i><h3>Interact</h3><p>Answer the visitor and ask your own questions. This must feel like a conversation.</p></article>
+        <article><span>04</span><i class="bi bi-clock-history"></i><h3>Keep it natural</h3><p>The complete conversation should last approximately two to three minutes.</p></article>
+      </div>
+    </section>
+
+    <section class="oral-outcomes final-task-outcomes" aria-label="Practice guarantees">
+      <article><i class="bi bi-volume-up"></i><div><strong>Professional ElevenLabs audio</strong><span>American English at 0.75× or 1× only</span></div></article>
+      <article><i class="bi bi-person-video3"></i><div><strong>A real conversation flow</strong><span>Emma listens, reacts, and answers your questions</span></div></article>
+      <article><i class="bi bi-shield-lock"></i><div><strong>No teacher submission</strong><span>No Grades record, upload, or official score</span></div></article>
     </section>
 
     <section class="oral-mock-shell" id="oralMockApp">
       <div class="oral-mock-layout">
         <section class="oral-main-card" aria-live="polite">
           <div class="oral-onboarding" id="onboardingPanel">
-            <p class="oral-kicker">Before you begin</p>
-            <h2>A short, friendly interview</h2>
-            <p>You will hear seven questions selected from all six course units. Listen, use the answer structures, vocabulary bank, and grammar clue if you need help, then respond with your own information.</p>
+            <div class="companion-welcome">
+              <figure><img src="../../assets/img/english-basic/practice-lab/final-oral-task/emma-virtual-partner-v1.webp" width="1024" height="1280" decoding="async" alt="Emma, the friendly virtual visitor and conversation partner" /></figure>
+              <div><p class="oral-kicker">Meet your partner</p><h2>Hi, I’m Emma</h2><p>I am new to your neighborhood. I will guide the conversation, listen to every answer, and help you prepare as many times as you want.</p>
+                <div class="welcome-audio-row"><button class="oral-button secondary" id="welcomePlayButton" type="button"><i class="bi bi-play-fill"></i><span>Hear Emma’s welcome</span></button><button class="oral-button secondary" id="taskInstructionsPlayButton" type="button"><i class="bi bi-volume-up-fill"></i><span>Hear the task instructions</span></button><div class="speed-control onboarding-speed" aria-label="Welcome and instruction audio speed"><span>Speed</span><button type="button" data-global-speed="0.75">0.75×</button><button type="button" data-global-speed="1" class="is-active">1×</button></div></div>
+                <audio id="welcomeAudio" src="audio/final-oral-task-mock/welcome.mp3" preload="metadata"></audio>
+                <audio id="taskInstructionsAudio" src="audio/final-oral-task-mock/task-instructions.mp3" preload="metadata"></audio>
+              </div>
+            </div>
 
-            <ol class="oral-steps">
-              <li><span>1</span><div><strong>Listen</strong><small>Play the interviewer at 0.75&times; or 1&times;.</small></div></li>
-              <li><span>2</span><div><strong>Prepare</strong><small>Use one of the two suggested structures.</small></div></li>
-              <li><span>3</span><div><strong>Answer</strong><small>Record, stop, and wait for your transcription.</small></div></li>
-              <li><span>4</span><div><strong>Review</strong><small>Try again or continue to the next question.</small></div></li>
+            <ol class="oral-steps final-task-steps">
+              <li><span>1</span><div><strong>Prepare</strong><small>Review the task and write keywords, not a script.</small></div></li>
+              <li><span>2</span><div><strong>Check</strong><small>Test your microphone and listen to yourself.</small></div></li>
+              <li><span>3</span><div><strong>Converse</strong><small>Listen, answer, and ask Emma two questions.</small></div></li>
+              <li><span>4</span><div><strong>Improve</strong><small>Read your private /50 report and practice again.</small></div></li>
             </ol>
 
-            <div class="microphone-check">
-              <div><strong><i class="bi bi-mic"></i> Microphone check</strong><p id="preflightStatus">You can test the microphone now, or allow access when you answer question 1.</p></div>
+            <section class="practice-mode-panel" aria-labelledby="modeTitle">
+              <div><p class="oral-kicker">Choose your experience</p><h3 id="modeTitle">How would you like to practice?</h3></div>
+              <div class="practice-mode-grid">
+                <label class="practice-mode-card is-selected"><input id="guidedMode" type="radio" name="practiceMode" value="guided" checked /><span><i class="bi bi-lightbulb-fill"></i><strong>Guided Rehearsal</strong><small>See two answer structures, vocabulary, grammar support, and feedback after every turn.</small><b>Recommended first</b></span></label>
+                <label class="practice-mode-card"><input id="realisticMode" type="radio" name="practiceMode" value="realistic" /><span><i class="bi bi-stopwatch-fill"></i><strong>Realistic Mock</strong><small>Hide support during the conversation and receive all feedback when you finish.</small><b>Exam-like rhythm</b></span></label>
+              </div>
+            </section>
+
+            <section class="notes-planner" aria-labelledby="notesTitle">
+              <div class="notes-planner-heading"><div><p class="oral-kicker">Short-note planner</p><h3 id="notesTitle">Prepare keywords only</h3></div><span><i class="bi bi-exclamation-circle"></i> Do not write a full text</span></div>
+              <div class="notes-grid">
+                <label><span>Places</span><input id="notePlaces" type="text" placeholder="park, supermarket, school..." /></label>
+                <label><span>Locations</span><input id="noteLocations" type="text" placeholder="near, next to, across from..." /></label>
+                <label><span>Descriptions</span><input id="noteDescriptions" type="text" placeholder="quiet, busy, modern, safe..." /></label>
+                <label><span>Activities</span><input id="noteActivities" type="text" placeholder="relax, study, eat, exercise..." /></label>
+              </div>
+            </section>
+
+            <div class="microphone-check final-task-microphone-check">
+              <div><strong><i class="bi bi-mic"></i> Microphone and service check</strong><p id="preflightStatus">Test the microphone now. You will record a short sentence and can play it back before the conversation.</p><audio id="preflightPlayback" controls hidden></audio></div>
               <button class="oral-button secondary" id="preflightButton" type="button"><i class="bi bi-soundwave"></i> Test microphone</button>
             </div>
 
             <div class="oral-start-actions">
-              <button class="oral-button primary" id="startInterviewButton" type="button"><i class="bi bi-play-fill"></i> Begin the interview</button>
+              <button class="oral-button primary" id="startInterviewButton" type="button"><i class="bi bi-play-fill"></i> Begin with Emma</button>
               <button class="oral-text-button" id="reviewPreviousButton" type="button" hidden>Review my latest practice</button>
             </div>
             <p class="resume-note" id="resumeNote" hidden></p>
@@ -69,36 +123,48 @@
 
           <div class="interview-panel" id="interviewPanel" hidden>
             <div class="interview-progress-header">
-              <div><span id="questionCounter">Question 1 of 7</span><strong id="questionTopic">Personal information</strong></div>
+              <div><span id="questionCounter">Turn 1 of 8</span><strong id="questionTopic">Warm-up</strong></div>
               <div class="interview-progress-track" aria-hidden="true"><i id="interviewProgressBar"></i></div>
             </div>
 
-            <section class="interviewer-card" aria-labelledby="questionText">
-              <div class="interviewer-identity"><span><i class="bi bi-person-video3"></i></span><div><strong>Emma</strong><small>Your virtual interviewer</small></div></div>
-              <p class="interviewer-status" id="interviewerStatus">Ready to ask your question</p>
-              <h2 id="questionText"></h2>
-              <div class="interviewer-audio-controls">
-                <button class="question-play-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Play question</span></button>
-                <div class="speed-control" aria-label="Interviewer speed"><span>Speed</span><button type="button" data-speed="0.75">0.75&times;</button><button type="button" data-speed="1" class="is-active">1&times;</button></div>
+            <section class="conversation-stage" id="conversationStage" aria-labelledby="questionText">
+              <div class="emma-stage" id="emmaStage" data-state="ready">
+                <figure><img src="../../assets/img/english-basic/practice-lab/final-oral-task/emma-virtual-partner-v1.webp" width="1024" height="1280" decoding="async" alt="Emma, your virtual visitor" /></figure>
+                <div class="emma-state"><span class="state-dot"></span><strong id="interviewerStatus">Emma is ready</strong></div>
+                <div class="voice-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
               </div>
-              <audio id="interviewerAudio" preload="metadata"></audio>
+              <div class="interviewer-card final-task-interviewer-card">
+                <div class="interviewer-identity"><span><i class="bi bi-person-video3"></i></span><div><strong>Emma</strong><small>Your visitor and conversation partner</small></div></div>
+                <p class="interviewer-status">Listen, then answer with your own information</p>
+                <h2 id="questionText"></h2>
+                <p class="emma-reaction-text" id="emmaReactionText" hidden></p>
+                <div class="interviewer-audio-controls">
+                  <button class="question-play-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Play Emma</span></button>
+                  <div class="speed-control" aria-label="Emma audio speed"><span>Speed</span><button type="button" data-speed="0.75">0.75×</button><button type="button" data-speed="1" class="is-active">1×</button></div>
+                </div>
+                <audio id="interviewerAudio" preload="metadata"></audio>
+                <audio id="reactionAudio" preload="metadata"></audio>
+              </div>
             </section>
 
-            <figure class="oral-map" id="questionVisualPanel" hidden>
-              <img id="questionVisualImage" src="../../assets/img/english-basic/practice-lab/unit-6/directions/directions-map-01.png" width="1672" height="941" decoding="async" alt="Visual support for the interview question" />
-              <figcaption id="questionVisualCaption"></figcaption>
+            <figure class="oral-map final-task-map" id="questionVisualPanel">
+              <div class="map-image-wrap">
+                <img id="questionVisualImage" src="../../assets/img/english-basic/practice-lab/final-oral-task/my-neighborhood-map-v1.webp" width="1536" height="1024" decoding="async" alt="Professional two-dimensional neighborhood map with several city blocks and recognizable places" />
+                <span class="map-label map-park" data-place="park">Park</span><span class="map-label map-school" data-place="school">School</span><span class="map-label map-supermarket" data-place="supermarket">Supermarket</span><span class="map-label map-home" data-place="home">Home</span><span class="map-label map-restaurant" data-place="restaurant">Restaurant</span><span class="map-label map-library" data-place="library">Library</span><span class="map-label map-church" data-place="church">Church</span>
+              </div>
+              <figcaption id="questionVisualCaption">Use the map as visual support. Your real answer should describe your own neighborhood.</figcaption>
             </figure>
 
             <section class="answer-support" id="answerSupport">
-              <div class="answer-support-heading"><div><p class="oral-kicker">Prepare your answer</p><h3>Choose one structure</h3></div><button class="oral-text-button" id="toggleHelpButton" type="button">Hide help</button></div>
-              <p class="support-reminder">Replace every blank with your own information. You do not have to repeat the model word for word.</p>
+              <div class="answer-support-heading"><div><p class="oral-kicker">Prepare your answer</p><h3>Choose one structure and personalize it</h3></div><button class="oral-text-button" id="toggleHelpButton" type="button">Hide support</button></div>
+              <p class="support-reminder">Replace every blank with your own information. Do not read the model word for word.</p>
               <div class="answer-frame-grid" id="answerFrameGrid"></div>
               <div class="language-support-grid">
                 <section><p class="oral-kicker">Vocabulary bank</p><div class="vocabulary-bank" id="vocabularyBank"></div></section>
                 <section><p class="oral-kicker">Grammar clue</p><p class="grammar-clue" id="grammarClue"></p></section>
               </div>
             </section>
-            <button class="oral-button secondary show-help-button" id="showHelpButton" type="button" hidden><i class="bi bi-lightbulb"></i> I need help</button>
+            <button class="oral-button secondary show-help-button" id="showHelpButton" type="button" hidden><i class="bi bi-lightbulb"></i> I need support</button>
 
             <section class="answer-recorder" aria-label="Record your answer">
               <label class="oral-microphone-picker"><span><i class="bi bi-mic"></i> Microphone in use</span><select id="microphoneSelect" aria-label="Choose a microphone"><option value="">Default microphone</option></select></label>
@@ -106,11 +172,12 @@
               <button class="oral-mic-button" id="micButton" type="button" aria-label="Start answering with the microphone"><i class="bi bi-mic-fill"></i></button>
               <p class="oral-record-status" id="recordStatus">Ready for your answer</p>
               <p class="oral-record-help" id="recordHelp">Tap the microphone and answer in English.</p>
-              <span class="oral-timer" id="timer">00:00 / 00:22</span>
-              <div class="oral-recorder-actions"><button class="oral-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish answer</button><button class="oral-button secondary" id="retryButton" type="button" disabled><i class="bi bi-arrow-repeat"></i> Try again</button></div>
+              <span class="oral-timer" id="timer">00:00 / 00:25</span>
+              <div class="oral-recorder-actions"><button class="oral-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish answer</button><button class="oral-button secondary" id="retryButton" type="button" disabled><i class="bi bi-arrow-repeat"></i> Record again</button></div>
               <div class="oral-transcript" id="liveTranscript" aria-live="polite">Your transcription will appear here after you finish.</div>
               <audio id="studentAudio" controls hidden></audio>
               <div class="oral-feedback" id="answerFeedback" hidden></div>
+              <div class="transcription-recovery" id="transcriptionRecovery" hidden><p>Your recording is safe on this screen, but the transcription service did not answer.</p><div><button class="oral-button secondary" id="retryTranscriptionButton" type="button">Try transcription again</button><button class="oral-button secondary" id="continueWithoutAnalysisButton" type="button">Continue without analysis</button></div></div>
               <div class="mic-unsupported" id="unsupported" hidden></div>
             </section>
 
@@ -118,39 +185,39 @@
           </div>
 
           <div class="oral-summary" id="summaryPanel" hidden>
-            <div class="summary-celebration"><i class="bi bi-check2-circle"></i><p class="oral-kicker">Practice completed</p><h2 id="summaryTitle">Your complete interview report</h2><p id="summaryLead"></p></div>
-            <section class="readiness-report" aria-label="Practice readiness result">
-              <div class="readiness-score" id="summaryScoreRing"><div><strong id="summaryScore">0</strong><span>out of 100</span></div></div>
-              <div class="readiness-copy"><p class="oral-kicker">Practice Readiness Score</p><h3 id="summaryReadiness">Keep practicing</h3><p id="summaryComparison"></p><small>This is an automatic practice result, not an official course grade.</small></div>
+            <div class="summary-celebration"><i class="bi bi-check2-circle"></i><p class="oral-kicker">Private practice completed</p><h2 id="summaryTitle">Your Final Oral Task practice report</h2><p id="summaryLead"></p></div>
+            <section class="readiness-report" aria-label="Formative practice result">
+              <div class="readiness-score final-task-score" id="summaryScoreRing"><div><strong id="summaryScore">0</strong><span>out of 50</span></div></div>
+              <div class="readiness-copy"><p class="oral-kicker">Formative practice estimate</p><h3 id="summaryReadiness">Keep practicing</h3><p id="summaryComparison"></p><small>This is not an official grade and nothing is sent to your teacher.</small></div>
             </section>
-            <div class="summary-metrics" id="summaryMetrics"></div>
+            <div class="summary-metrics final-rubric-metrics" id="summaryMetrics"></div>
             <div class="summary-guidance-grid">
               <section><p class="oral-kicker">Your strengths</p><h3>What worked well</h3><ul id="summaryStrengths"></ul></section>
               <section><p class="oral-kicker">Next priorities</p><h3>What to practice next</h3><ul id="summaryPriorities"></ul></section>
             </div>
-            <section class="summary-word-practice"><p class="oral-kicker">Pronunciation clarity</p><h3>Words to pronounce more clearly</h3><div id="summaryWordPractice"></div><p class="confidence-disclaimer"><i class="bi bi-info-circle"></i> These words had lower Whisper confidence. This can indicate pronunciation, microphone noise, or an unfamiliar proper name; it is not a definitive pronunciation error.</p></section>
-            <section class="attempt-history-panel"><p class="oral-kicker">Unlimited practice</p><h3>Your recent attempts</h3><div class="attempt-history" id="attemptHistory"></div></section>
-            <div class="summary-section-heading"><p class="oral-kicker">Question-by-question feedback</p><h3>Review every answer</h3></div>
+            <section class="summary-word-practice"><p class="oral-kicker">Pronunciation clarity</p><h3>Words to repeat more clearly</h3><div id="summaryWordPractice"></div><p class="confidence-disclaimer"><i class="bi bi-info-circle"></i> Lower transcription confidence can come from pronunciation, background noise, microphone quality, or proper names. It is not a definitive pronunciation diagnosis.</p></section>
+            <section class="attempt-history-panel"><div class="history-heading"><div><p class="oral-kicker">Unlimited practice</p><h3>Your recent attempts on this device</h3></div><button class="oral-text-button" id="clearHistoryButton" type="button">Clear history</button></div><div class="attempt-history" id="attemptHistory"></div></section>
+            <div class="summary-section-heading"><p class="oral-kicker">Turn-by-turn feedback</p><h3>Review every answer</h3></div>
             <div class="summary-answers" id="summaryAnswers"></div>
-            <div class="summary-actions"><button class="oral-button primary" id="restartInterviewButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Try a new complete interview</button><button class="oral-button secondary" id="weakPracticeButton" type="button"><i class="bi bi-bullseye"></i> Practice my two weakest questions</button><a class="oral-button secondary" href="practice-lab.html#final-oral-mock-folder">Return to Practice Lab</a></div>
+            <div class="summary-actions"><button class="oral-button primary" id="restartInterviewButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Start a new complete mock</button><button class="oral-button secondary" id="weakPracticeButton" type="button"><i class="bi bi-bullseye"></i> Practice my weakest turn</button><a class="oral-button secondary" href="practice-lab.html#final-oral-mock-folder">Return to Practice Lab</a></div>
           </div>
         </section>
 
-        <aside class="oral-sidebar">
-          <section><p class="oral-kicker">Interview coverage</p><h2>What you will practice</h2><ul class="coverage-list"><li><i class="bi bi-person-badge"></i><span>Personal information</span></li><li><i class="bi bi-sunrise"></i><span>Morning routines</span></li><li><i class="bi bi-controller"></i><span>Free-time activities</span></li><li><i class="bi bi-people"></i><span>Family descriptions</span></li><li><i class="bi bi-signpost-split"></i><span>Places and directions</span></li></ul></section>
-          <section><p class="oral-kicker">Remember</p><h3>This is a mock exam</h3><p>There is no grade and no attempt limit. The feedback uses simple language rules, so always read your transcription and decide whether it represents what you actually said.</p></section>
-          <section><p class="oral-kicker">Privacy</p><h3>Your voice is not stored</h3><p>The recording is sent temporarily to JaraLingua's local Whisper service for transcription. This page keeps only the written practice summary on your device.</p></section>
+        <aside class="oral-sidebar final-task-sidebar">
+          <section><p class="oral-kicker">Official rubric · 50 points</p><h2>What the task evaluates</h2><ul class="coverage-list"><li><i class="bi bi-chat-square-text"></i><span>Communication / Task completion · 10</span></li><li><i class="bi bi-arrow-left-right"></i><span>Interaction and discourse · 10</span></li><li><i class="bi bi-speedometer2"></i><span>Fluency · 10</span></li><li><i class="bi bi-spellcheck"></i><span>Vocabulary and structure · 10</span></li><li><i class="bi bi-soundwave"></i><span>Pronunciation · 10</span></li></ul><p class="rubric-scale"><strong>Scale:</strong> Weak 1–3 · Low 4–5 · Fair 6–7 · Proficient 8–9 · Exemplary 10.</p></section>
+          <section><p class="oral-kicker">Useful language</p><h3>Location toolkit</h3><div class="sidebar-language"><span>there is / there are</span><span>near</span><span>next to</span><span>across from</span><span>on the corner</span><span>people can…</span><span>I recommend… because…</span></div></section>
+          <section><p class="oral-kicker">Privacy</p><h3>Your practice stays private</h3><p>Audio is sent temporarily to JaraLingua’s English transcription service and is not stored. No teacher button, submission, upload, or Grades record exists on this page.</p></section>
+          <section><p class="oral-kicker">More speaking practice</p><h3>Review all six units</h3><p>The separate Complete Course Oral Review keeps the 15-question bank covering Units 1–6.</p><a class="sidebar-link" href="complete-course-oral-review.html">Open the complete course review <i class="bi bi-arrow-right"></i></a></section>
         </aside>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer"><p>Basic English Course 1 &middot; Final Oral Interview Mock &middot; Formative practice only</p></footer>
+  <footer class="site-footer final-task-screen-footer"><p>Basic Course 1 · Final Oral Task Mock · My Neighborhood · Formative practice only</p></footer>
+  <div class="institutional-footer final-task-institutional-footer"><img src="../../assets/img/english-basic/institutional/itm-integrated-task-footer.jpg" width="1274" height="215" alt="ITM institutional contact information and Alcaldía de Medellín" /></div>
+
   <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
-  <script src="../../assets/js/english-basic-final-oral-mock.js?v=20260712-balanced-bank"></script>
-  <script src="../../assets/js/google-auth-config.js"></script>
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="../../assets/js/google-auth.js?v=20260627-global-auth"></script>
+  <script src="../../assets/js/english-basic-final-oral-task-mock.js?v=20260716-final-oral-task-v1"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
