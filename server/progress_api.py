@@ -38,6 +38,7 @@ FRENCH8_QUIZ_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_SUBMISSI
 FRENCH8_QUIZ_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_AUDIO", "/var/lib/jaralingua/french8-quiz-ville-intelligente-audio.mp3")
 FRENCH8_QUIZ_EVENTS_PATH = os.environ.get("JARALINGUA_FRENCH8_QUIZ_EVENTS", "/var/lib/jaralingua/french8-quiz-ville-intelligente-events.jsonl")
 FRENCH8_IMPOSTEUR_PATH = os.environ.get("JARALINGUA_FRENCH8_IMPOSTEUR_DATA", "/var/lib/jaralingua/french8-imposteur-games.json")
+FRENCH7_IMPOSTEUR_PATH = os.environ.get("JARALINGUA_FRENCH7_IMPOSTEUR_DATA", "/var/lib/jaralingua/french7-imposteur-games.json")
 FRENCH1_IMPOSTEUR_PATH = os.environ.get("JARALINGUA_FRENCH1_IMPOSTEUR_DATA", "/var/lib/jaralingua/french1-imposteur-games.json")
 FRENCH2_IMPOSTEUR_PATH = os.environ.get("JARALINGUA_FRENCH2_IMPOSTEUR_DATA", "/var/lib/jaralingua/french2-imposteur-games.json")
 FRENCH7_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH7_FINAL_EXAM_DATA", "/var/lib/jaralingua/french7-final-exam.json")
@@ -3171,6 +3172,451 @@ def french8_imposteur_action(payload):
     return 400, {"error": "invalid_action"}
 
 
+def default_french7_imposteur_store():
+    return {"rooms": {}}
+
+
+def read_french7_imposteur_store():
+    data = read_json_file(FRENCH7_IMPOSTEUR_PATH, default_french7_imposteur_store())
+    if not isinstance(data.get("rooms"), dict):
+        data["rooms"] = {}
+    return data
+
+
+def write_french7_imposteur_store(data):
+    write_json_file(FRENCH7_IMPOSTEUR_PATH, data, ".french7-imposteur-")
+
+
+def clean_imposteur_room_code(value):
+    return "".join(ch for ch in str(value or "").upper() if ch in FRENCH8_IMPOSTEUR_ROOM_ALPHABET)[:6]
+
+
+def clean_imposteur_name(value):
+    return clean_text(value, 80).strip()
+
+
+def french8_imposteur_card_public(card):
+    if not isinstance(card, dict):
+        return None
+    return {
+        "id": clean_text(card.get("id"), 80),
+        "term": clean_text(card.get("term"), 120),
+        "category": clean_text(card.get("category"), 80),
+        "brief": clean_text(card.get("brief"), 400),
+        "clues": [clean_text(item, 100) for item in card.get("clues", []) if isinstance(item, str)][:4],
+        "taboo": [clean_text(item, 80) for item in card.get("taboo", []) if isinstance(item, str)][:4]
+    }
+
+
+def french8_imposteur_new_room_code(rooms):
+    for _attempt in range(80):
+        code = "".join(secrets.choice(FRENCH8_IMPOSTEUR_ROOM_ALPHABET) for _ in range(4))
+        if code not in rooms:
+            return code
+    return "".join(secrets.choice(FRENCH8_IMPOSTEUR_ROOM_ALPHABET) for _ in range(6))
+
+
+def french8_imposteur_new_player_id(room):
+    existing = {
+        clean_text(player.get("id"), 40)
+        for player in room.get("players", [])
+        if isinstance(player, dict)
+    }
+    for _attempt in range(80):
+        player_id = "p_" + secrets.token_urlsafe(5).replace("-", "").replace("_", "")[:8]
+        if player_id not in existing:
+            return player_id
+    return "p_" + secrets.token_urlsafe(9).replace("-", "").replace("_", "")[:12]
+
+
+def french8_imposteur_prune_rooms(store):
+    rooms = store.setdefault("rooms", {})
+    now_value = int(time.time())
+    expired = []
+    for code, room in rooms.items():
+        if not isinstance(room, dict):
+            expired.append(code)
+            continue
+        updated = room.get("updatedAtEpoch")
+        try:
+            updated_epoch = int(updated)
+        except (TypeError, ValueError):
+            updated_epoch = now_value
+        if now_value - updated_epoch > FRENCH8_IMPOSTEUR_ROOM_TTL_SECONDS:
+            expired.append(code)
+    for code in expired:
+        rooms.pop(code, None)
+
+
+def french8_imposteur_touch(room):
+    room["updatedAt"] = now_iso()
+    room["updatedAtEpoch"] = int(time.time())
+
+
+def french8_imposteur_players(room):
+    players = room.get("players")
+    if not isinstance(players, list):
+        players = []
+        room["players"] = players
+    cleaned = [player for player in players if isinstance(player, dict)]
+    if cleaned is not players:
+        room["players"] = cleaned
+    return room["players"]
+
+
+def french8_imposteur_find_player(room, player_token):
+    token = clean_text(player_token, 200)
+    if not token:
+        return None
+    for player in french8_imposteur_players(room):
+        if clean_text(player.get("token"), 200) == token:
+            return player
+    return None
+
+
+def french8_imposteur_current_round(room):
+    try:
+        return int(room.get("round") or 1)
+    except (TypeError, ValueError):
+        return 1
+
+
+def french8_imposteur_vote_suspect_id(vote_value, room):
+    if isinstance(vote_value, dict):
+        vote_round = vote_value.get("round")
+        if vote_round is not None:
+            try:
+                if int(vote_round) != french8_imposteur_current_round(room):
+                    return ""
+            except (TypeError, ValueError):
+                return ""
+        return clean_text(vote_value.get("suspectId"), 40)
+    if french8_imposteur_current_round(room) <= 1:
+        return clean_text(vote_value, 40)
+    return ""
+
+
+def french8_imposteur_player_public(player, room, revealed=False):
+    player_id = clean_text(player.get("id"), 40)
+    votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    vote_suspect_id = french8_imposteur_vote_suspect_id(votes.get(player_id), room)
+    public = {
+        "id": player_id,
+        "name": clean_imposteur_name(player.get("name")),
+        "ready": bool(player.get("readyAt")),
+        "hasVoted": bool(vote_suspect_id),
+        "voteSuspectId": vote_suspect_id
+    }
+    if revealed:
+        public["role"] = "impostor" if player_id in set(room.get("impostorIds") or []) else "citizen"
+    return public
+
+
+def french8_imposteur_vote_summary(room):
+    players = french8_imposteur_players(room)
+    names = {clean_text(player.get("id"), 40): clean_imposteur_name(player.get("name")) for player in players}
+    counts = {}
+    votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    for vote_value in votes.values():
+        suspect_id = french8_imposteur_vote_suspect_id(vote_value, room)
+        if suspect_id:
+            counts[suspect_id] = counts.get(suspect_id, 0) + 1
+    return [
+        {"playerId": player_id, "name": names.get(player_id, ""), "votes": count}
+        for player_id, count in sorted(counts.items(), key=lambda item: (-item[1], names.get(item[0], "")))
+    ]
+
+
+def french8_imposteur_room_payload(room, player_token="", teacher_token=""):
+    players = french8_imposteur_players(room)
+    status = clean_text(room.get("status"), 40) or "waiting"
+    is_revealed = status == "revealed"
+    current = french8_imposteur_find_player(room, player_token)
+    is_teacher = clean_text(teacher_token, 200) and hmac.compare_digest(
+        clean_text(teacher_token, 200),
+        clean_text(room.get("teacherToken"), 200)
+    )
+    ready_count = sum(1 for player in players if player.get("readyAt"))
+    votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    current_round = french8_imposteur_current_round(room)
+    vote_count = sum(1 for vote_value in votes.values() if french8_imposteur_vote_suspect_id(vote_value, room))
+    card = french8_imposteur_card_public(room.get("card"))
+    impostor_ids = {clean_text(item, 40) for item in room.get("impostorIds", []) if clean_text(item, 40)}
+    payload = {
+        "room": {
+            "code": clean_imposteur_room_code(room.get("code")),
+            "status": status,
+            "round": current_round,
+            "playerCount": len(players),
+            "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS,
+            "maxPlayers": FRENCH8_IMPOSTEUR_MAX_PLAYERS,
+            "impostorCount": len(impostor_ids) if impostor_ids else (2 if len(players) > 8 else 1),
+            "readyCount": ready_count,
+            "allReady": bool(players) and ready_count == len(players),
+            "voteCount": vote_count,
+            "createdAt": room.get("createdAt"),
+            "updatedAt": room.get("updatedAt")
+        },
+        "players": [french8_imposteur_player_public(player, room, is_revealed) for player in players],
+        "currentPlayer": None,
+        "teacher": None,
+        "result": None
+    }
+    if card:
+        payload["room"]["category"] = card.get("category")
+    if current:
+        current_id = clean_text(current.get("id"), 40)
+        role = "impostor" if current_id in impostor_ids else ("citizen" if room.get("card") else "waiting")
+        player_payload = french8_imposteur_player_public(current, room, is_revealed)
+        player_payload["role"] = role
+        if role == "citizen" and status in ("briefing", "discussion", "voting", "revealed"):
+            player_payload["card"] = card
+        elif role == "impostor" and status in ("briefing", "discussion", "voting", "revealed"):
+            player_payload["impostorInstruction"] = "Tu es l'imposteur. Ecoute les autres, reste credible et essaie de deviner le mot secret."
+        payload["currentPlayer"] = player_payload
+    if is_teacher:
+        payload["teacher"] = {
+            "ok": True,
+            "card": card,
+            "impostors": [
+                {"id": clean_text(player.get("id"), 40), "name": clean_imposteur_name(player.get("name"))}
+                for player in players
+                if clean_text(player.get("id"), 40) in impostor_ids
+            ]
+        }
+    if is_revealed:
+        impostors = [
+            {"id": clean_text(player.get("id"), 40), "name": clean_imposteur_name(player.get("name"))}
+            for player in players
+            if clean_text(player.get("id"), 40) in impostor_ids
+        ]
+        payload["result"] = {
+            "card": card,
+            "impostors": impostors,
+            "votes": french8_imposteur_vote_summary(room)
+        }
+    return payload
+
+
+def french7_imposteur_get_state(query):
+    room_code = clean_imposteur_room_code((query.get("room") or [""])[0])
+    player_token = clean_text((query.get("playerToken") or [""])[0], 200)
+    teacher_token = clean_text((query.get("teacherToken") or [""])[0], 200)
+    store = read_french7_imposteur_store()
+    french8_imposteur_prune_rooms(store)
+    room = store.get("rooms", {}).get(room_code)
+    if not room:
+        write_french7_imposteur_store(store)
+        return 404, {"error": "room_not_found"}
+    french8_imposteur_touch(room)
+    write_french7_imposteur_store(store)
+    return 200, french8_imposteur_room_payload(room, player_token, teacher_token)
+
+
+def french8_imposteur_require_teacher(room, payload):
+    teacher_token = clean_text(payload.get("teacherToken"), 200)
+    if not teacher_token or not hmac.compare_digest(teacher_token, clean_text(room.get("teacherToken"), 200)):
+        raise PermissionError("teacher_required")
+
+
+def french7_imposteur_action(payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_json"}
+    action = clean_text(payload.get("action"), 40)
+    store = read_french7_imposteur_store()
+    rooms = store.setdefault("rooms", {})
+    french8_imposteur_prune_rooms(store)
+    timestamp = now_iso()
+
+    if action == "create":
+        room_code = french8_imposteur_new_room_code(rooms)
+        teacher_token = secrets.token_urlsafe(24)
+        room = {
+            "code": room_code,
+            "teacherToken": teacher_token,
+            "status": "waiting",
+            "round": 1,
+            "players": [],
+            "votes": {},
+            "impostorIds": [],
+            "card": None,
+            "deck": "unit4",
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "updatedAtEpoch": int(time.time())
+        }
+        rooms[room_code] = room
+        write_french7_imposteur_store(store)
+        return 200, {"ok": True, "roomCode": room_code, "teacherToken": teacher_token, "state": french8_imposteur_room_payload(room, teacher_token=teacher_token)}
+
+    room_code = clean_imposteur_room_code(payload.get("roomCode") or payload.get("room"))
+    room = rooms.get(room_code)
+    if not room:
+        write_french7_imposteur_store(store)
+        return 404, {"error": "room_not_found"}
+    players = french8_imposteur_players(room)
+
+    try:
+        if action == "join":
+            name = clean_imposteur_name(payload.get("name"))
+            if len(name) < 2:
+                return 400, {"error": "name_required"}
+            player_token = clean_text(payload.get("playerToken"), 200)
+            existing = french8_imposteur_find_player(room, player_token)
+            if existing:
+                existing["name"] = name
+                existing["lastSeenAt"] = timestamp
+            else:
+                normalized = normalize_name(name)
+                if any(normalize_name(player.get("name")) == normalized for player in players):
+                    return 409, {"error": "name_taken"}
+                if len(players) >= FRENCH8_IMPOSTEUR_MAX_PLAYERS:
+                    return 409, {"error": "room_full"}
+                player_token = secrets.token_urlsafe(24)
+                players.append({
+                    "id": french8_imposteur_new_player_id(room),
+                    "name": name,
+                    "token": player_token,
+                    "joinedAt": timestamp,
+                    "lastSeenAt": timestamp,
+                    "readyAt": None
+                })
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "roomCode": room_code, "playerToken": player_token, "state": french8_imposteur_room_payload(room, player_token=player_token)}
+
+        if action == "distribute":
+            french8_imposteur_require_teacher(room, payload)
+            if len(players) < FRENCH8_IMPOSTEUR_MIN_PLAYERS:
+                return 409, {"error": "not_enough_players", "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS}
+            card = secrets.choice(FRENCH8_IMPOSTEUR_CARDS)
+            impostor_count = 2 if len(players) > 8 else 1
+            impostors = secrets.SystemRandom().sample(players, impostor_count)
+            room["status"] = "briefing"
+            room["card"] = card
+            room["impostorIds"] = [clean_text(player.get("id"), 40) for player in impostors]
+            room["votes"] = {}
+            for player in players:
+                player["readyAt"] = None
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "state": french8_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "confirm":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) not in ("briefing", "discussion"):
+                return 409, {"error": "not_in_briefing"}
+            player["readyAt"] = timestamp
+            if all(item.get("readyAt") for item in players):
+                room["status"] = "discussion"
+                room["discussionStartedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "state": french8_imposteur_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "force-discussion":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) != "briefing":
+                return 409, {"error": "not_in_briefing"}
+            room["status"] = "discussion"
+            room["discussionStartedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "state": french8_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "open-vote":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) not in ("discussion", "briefing"):
+                return 409, {"error": "vote_not_available"}
+            room["status"] = "voting"
+            room["voteOpenedAt"] = timestamp
+            room["votes"] = {}
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "state": french8_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "vote":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            suspect_id = clean_text(payload.get("suspectId"), 40)
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) != "voting":
+                return 409, {"error": "vote_closed"}
+            if not any(clean_text(item.get("id"), 40) == suspect_id for item in players):
+                return 400, {"error": "invalid_suspect"}
+            voter_id = clean_text(player.get("id"), 40)
+            if suspect_id == voter_id:
+                return 400, {"error": "self_vote_forbidden"}
+            votes = room.setdefault("votes", {})
+            if not isinstance(votes, dict):
+                votes = {}
+                room["votes"] = votes
+            votes[voter_id] = {
+                "suspectId": suspect_id,
+                "round": french8_imposteur_current_round(room),
+                "votedAt": timestamp
+            }
+            player["votedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "state": french8_imposteur_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "reveal":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) not in ("discussion", "voting"):
+                return 409, {"error": "reveal_not_available"}
+            room["status"] = "revealed"
+            room["revealedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "state": french8_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "reset":
+            french8_imposteur_require_teacher(room, payload)
+            room["status"] = "waiting"
+            room["round"] = int(room.get("round") or 1) + 1
+            room["votes"] = {}
+            room["impostorIds"] = []
+            room["card"] = None
+            for player in players:
+                player["readyAt"] = None
+                player.pop("votedAt", None)
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "state": french8_imposteur_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "close-room":
+            french8_imposteur_require_teacher(room, payload)
+            rooms.pop(room_code, None)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True, "closed": True}
+
+        if action == "leave":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            player_id = clean_text(player.get("id"), 40)
+            room["players"] = [item for item in players if clean_text(item.get("id"), 40) != player_id]
+            votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+            votes.pop(player_id, None)
+            room["votes"] = {
+                voter: vote_value
+                for voter, vote_value in votes.items()
+                if french8_imposteur_vote_suspect_id(vote_value, room) != player_id
+            }
+            room["impostorIds"] = [item for item in room.get("impostorIds", []) if clean_text(item, 40) != player_id]
+            french8_imposteur_touch(room)
+            write_french7_imposteur_store(store)
+            return 200, {"ok": True}
+    except PermissionError as error:
+        return 403, {"error": str(error)}
+
+    write_french7_imposteur_store(store)
+    return 400, {"error": "invalid_action"}
+
+
 FRENCH1_IMPOSTEUR_DECKS = {
     "all": {
         "label": "Mélange A1",
@@ -5472,6 +5918,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, payload)
             return
 
+        if parsed.path == "/api/french7/imposteur/state":
+            query = urllib.parse.parse_qs(parsed.query)
+            with data_lock:
+                status, payload = french7_imposteur_get_state(query)
+            json_response(self, status, payload)
+            return
+
         if parsed.path == "/api/french1/imposteur/state":
             query = urllib.parse.parse_qs(parsed.query)
             with data_lock:
@@ -6228,6 +6681,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 return
             with data_lock:
                 status, result = french8_imposteur_action(payload)
+            json_response(self, status, result)
+            return
+
+        if parsed.path == "/api/french7/imposteur":
+            payload = self.read_json_body()
+            if payload is None:
+                return
+            with data_lock:
+                status, result = french7_imposteur_action(payload)
             json_response(self, status, result)
             return
 
