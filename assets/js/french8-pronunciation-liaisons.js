@@ -4,7 +4,7 @@
   const RULES = {
     pronunciation01d: [
       { words: ["nous", "aurions"], label: "nous aurions", hint: "gardez le son /z/ entre nous et aurions" },
-      { words: ["aurions", "evite"], label: "aurions evite", hint: "enchainez la fin de aurions avec evite" },
+      { words: ["aurions", "evite"], label: "aurions évité", hint: "liaison en /z/ possible dans une lecture soignée, jamais obligatoire" },
       { words: ["mes", "amis", "auraient"], label: "mes amis auraient", hint: "faites entendre les liaisons en /z/" },
       { words: ["cette", "experience"], label: "cette experience", hint: "enchainez le t de cette avec experience" }
     ],
@@ -12,15 +12,11 @@
       { words: ["arrive", "a", "l'heure"], label: "arrive a l'heure", hint: "enchainez arrive avec a l'heure" },
       { words: ["cet", "imprevu"], label: "cet imprevu", hint: "gardez le t de cet devant la voyelle" },
       { words: ["de", "l'accident"], label: "de l'accident", hint: "enchainez l'article avec accident" },
-      { words: ["decisions", "auraient"], label: "decisions auraient", hint: "liaison possible en /z/ avant auraient" },
-      { words: ["nous", "n'en"], label: "nous n'en", hint: "enchainez nous et n'en sans pause" },
       { words: ["pas", "immediatement"], label: "pas immediatement", hint: "liaison possible en /z/ dans une lecture soignee" }
     ],
     pronunciation03d: [
-      { words: ["responsables", "aient"], label: "responsables aient", hint: "liaison possible en /z/ avant aient" },
       { words: ["ils", "aient"], label: "ils aient", hint: "faites entendre la liaison en /z/" },
       { words: ["des", "excuses"], label: "des excuses", hint: "faites entendre la liaison en /z/" },
-      { words: ["personnes", "aient"], label: "personnes aient", hint: "liaison possible en /z/ avant aient" },
       { words: ["sans", "avoir"], label: "sans avoir", hint: "faites entendre la liaison en /z/" },
       { words: ["elle", "ait"], label: "elle ait", hint: "enchainez les deux mots sans couper la voyelle" }
     ],
@@ -32,7 +28,27 @@
       { words: ["encore", "ecouter"], label: "encore ecouter", hint: "enchainez le r de encore avec ecouter" },
       { words: ["les", "habitants"], label: "les habitants", hint: "habitants a un h muet : liaison en /z/" },
       { words: ["les", "avis"], label: "les avis", hint: "faites entendre la liaison en /z/" },
-      { words: ["aient", "ete"], label: "aient ete", hint: "enchainez aient et ete dans le groupe verbal" }
+      { words: ["aient", "ete"], label: "aient été", hint: "liaison en /t/ possible dans une lecture très soignée, jamais obligatoire" }
+    ],
+    pronunciation05d: [
+      { words: ["c'est", "une"], label: "c'est une", hint: "enchainez le /t/ avec une" },
+      { words: ["c'est", "en"], label: "c'est en comparant", hint: "enchainez le /t/ avec en" }
+    ],
+    pronunciation06d: [
+      { words: ["les", "utilisateurs"], label: "les utilisateurs", hint: "faites entendre la liaison en /z/" },
+      { words: ["sans", "audit"], label: "sans audit", hint: "faites entendre la liaison en /z/" }
+    ],
+    pronunciation07d: [
+      { words: ["les", "obstacles"], label: "les obstacles", hint: "faites entendre la liaison en /z/" },
+      { words: ["certaines", "initiatives"], label: "certaines initiatives", hint: "enchainez le /z/ devant initiatives" }
+    ],
+    pronunciation08d: [
+      { words: ["un", "instant"], label: "un instant", hint: "faites entendre la liaison en /n/" },
+      { words: ["c'est", "ouf"], label: "c'est ouf", hint: "enchainez le /t/ avec ouf" }
+    ],
+    pronunciation09d: [
+      { words: ["les", "arguments"], label: "les arguments", hint: "faites entendre la liaison en /z/" },
+      { words: ["les", "etudiants"], label: "les étudiants", hint: "faites entendre la liaison en /z/" }
     ]
   };
 
@@ -56,7 +72,12 @@
   function hasSequence(haystack, needle) {
     if (!needle.length || needle.length > haystack.length) return false;
     for (let index = 0; index <= haystack.length - needle.length; index += 1) {
-      if (needle.every((word, offset) => haystack[index + offset] === word)) return true;
+      if (needle.every((word, offset) => {
+        const candidate = haystack[index + offset];
+        if (candidate === word) return true;
+        const cost = window.JaraFrench8PronunciationAssessment?.substitutionCost(word, candidate);
+        return Number.isFinite(cost) && cost <= 0.45;
+      })) return true;
     }
     return false;
   }
@@ -69,15 +90,15 @@
     const applicable = rules.filter((rule) => hasSequence(referenceTokens, rule.words));
     if (!applicable.length || !transcriptTokens.length) return null;
     const missed = applicable.filter((rule) => !hasSequence(transcriptTokens, rule.words));
-    const confirmed = applicable.length - missed.length;
     const priority = missed.slice(0, 3);
     const message = priority.length
-      ? " Liaisons / enchainements a verifier : " + priority.map((rule) => `${rule.label} (${rule.hint})`).join("; ") + ". Cette verification reste approximative, car elle s'appuie sur la transcription."
-      : " Liaisons / enchainements : bons indices dans la transcription pour les points attendus. Verification approximative par transcription.";
+      ? " Liaisons / enchaînements à réécouter : " + priority.map((rule) => `${rule.label} (${rule.hint})`).join("; ") + ". Ce conseil ne modifie pas la note : seule l'écoute permet de confirmer la liaison."
+      : " Les mots des liaisons / enchaînements attendus sont reconnus. Leur réalisation sonore reste à comparer avec le modèle : la transcription seule ne peut pas la confirmer.";
     return {
       checked: applicable.length,
-      confirmed,
+      confirmed: null,
       missed: missed.map((rule) => rule.label),
+      advisoryOnly: true,
       message
     };
   }

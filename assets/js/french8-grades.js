@@ -97,7 +97,7 @@
     const details = student && student.gradeDetails && student.gradeDetails[evaluation.id];
     if (!details) return "";
     const isWritingActivity = !!details.submissionText;
-    const summaryText = isWritingActivity ? "Voir production, audio et feedback" : "Voir transcription et révision";
+    const summaryText = isWritingActivity ? "Voir production, audio et feedback" : "Voir audio, transcription et validation";
     const audioButton = details.audio && details.audio.file
       ? `
           <div class="pronunciation-audio-review">
@@ -133,6 +133,9 @@
       ? `<p><strong>Mots marques par le systeme:</strong> ${details.missedWords.map(escapeHtml).join(", ")}</p>`
       : "";
     const liaison = details.liaison && details.liaison.message ? `<p><strong>Liaisons:</strong> ${escapeHtml(details.liaison.message)}</p>` : "";
+    const uncertainty = details.uncertain
+      ? `<p class="pronunciation-uncertain"><strong>Fiabilité technique:</strong> reconnaissance incertaine. Vérifiez l'audio avant de valider la note.${details.uncertaintyMessage ? ` ${escapeHtml(details.uncertaintyMessage)}` : ""}</p>`
+      : "";
     const autoScore = formatDetailScore(details.score100 || details.overall, "/100");
     const autoGrade = formatDetailScore(details.grade, "/5");
     const submitted = details.submittedAt ? `<p><strong>Envoi:</strong> ${escapeHtml(details.submittedAt)}</p>` : "";
@@ -140,8 +143,9 @@
       <details class="pronunciation-review">
         <summary>${escapeHtml(summaryText)}</summary>
         <div>
-          ${isWritingActivity ? "" : `<p><strong>Note automatique:</strong> ${escapeHtml([autoScore, autoGrade].filter(Boolean).join(" - ") || "En attente")}</p>`}
+          ${isWritingActivity ? "" : `<p><strong>Estimation automatique provisoire:</strong> ${escapeHtml([autoScore, autoGrade].filter(Boolean).join(" - ") || "En attente")}</p>`}
           ${submitted}
+          ${uncertainty}
           ${audioButton}
           ${submissionText}
           ${idiom}
@@ -154,7 +158,7 @@
           ${liaison}
           ${feedback}
           ${feedbackEditor}
-          <p class="mb-0"><em>${isWritingActivity ? "Le professeur peut écouter l'audio, lire le texte et laisser un feedback." : "Si la transcription n'est pas fidèle à l'audio, le professeur peut corriger la note manuellement dans ce panel."}</em></p>
+          <p class="mb-0"><em>${isWritingActivity ? "Le professeur peut écouter l'audio, lire le texte et laisser un feedback." : "L'audio est la preuve principale. Le professeur valide ou corrige manuellement l'estimation dans ce panel."}</em></p>
         </div>
       </details>
     `;

@@ -10,7 +10,7 @@ Claire: Si j’étais partie quelques minutes plus tôt, j’aurais pris ce trai
 
 File: `pronunciation/theme-02/section-2.mp3`
 
-Claire: Pourtant, cet imprévu m’aurait peut-être conduit sur la route au moment de l’accident.
+Claire: Pourtant, cet imprévu m’aurait peut-être conduite sur la route au moment de l’accident.
 
 ## Prononciation 02D — Section 3
 
@@ -28,4 +28,4 @@ Claire: même si nous n’en comprenions pas immédiatement les conséquences.
 
 File: `pronunciation/theme-02/n8-02d-hypotheses-passe-modele-france.mp3`
 
-Claire: Si j’étais partie quelques minutes plus tôt, j’aurais pris ce train et je serais arrivée à l’heure. Pourtant, cet imprévu m’aurait peut-être conduit sur la route au moment de l’accident. Avec le recul, je me dis que certaines décisions auraient radicalement changé notre histoire, même si nous n’en comprenions pas immédiatement les conséquences.
+Claire: Si j’étais partie quelques minutes plus tôt, j’aurais pris ce train et je serais arrivée à l’heure. Pourtant, cet imprévu m’aurait peut-être conduite sur la route au moment de l’accident. Avec le recul, je me dis que certaines décisions auraient radicalement changé notre histoire, même si nous n’en comprenions pas immédiatement les conséquences.

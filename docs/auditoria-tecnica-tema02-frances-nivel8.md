@@ -2,6 +2,8 @@
 
 Fecha: 2026-06-30
 
+Actualizacion 2026-07-17: la actividad de pronunciacion `02D` corrigio `m'aurait conduit` a `m'aurait conduite`, por concordancia del COD femenino `m'` colocado antes del participe passe. Se regeneraron unicamente `section-2.mp3` y el desafio final con la misma voz de Claire. La auditoria STT del 1 de julio sigue describiendo las versiones anteriores de esos dos archivos; los nuevos pasaron control de integridad y duracion sin volver a consumir creditos Scribe.
+
 Tema auditado: `Hypotheses irreelles dans le passe`
 
 Objetivo: confirmar si las comprensiones orales 02A, 02B y 02C cumplen el estandar tecnico definido para Nivel 8: audio de aproximadamente 1:30 a 2:00, variantes Francia/Quebec diferenciadas, transcripcion docente controlada, preguntas coordinadas con la transcripcion y ausencia de informacion inventada.

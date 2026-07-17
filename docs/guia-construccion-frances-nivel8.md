@@ -1,5 +1,7 @@
 # Guia de construccion - Frances Nivel 8
 
+> Para corregir las actividades `01D-09D` de pronunciacion o `01O-08O` de coach de conversacion, leer primero la [guia de correccion de pronunciacion y coach](./guia-correccion-pronunciacion-coach-conversacion-frances-nivel8.md). Ese archivo conserva el flujo aprobado, las reglas de puntaje dudoso, compatibilidad movil, privacidad, pruebas y el punto exacto de reanudacion.
+
 Esta guia define como debe construirse **Francais · Niveau 8** a partir de la carta descriptiva local `Carta descriptiva nivel 8.docx`. No es una bitacora de cambios: es una especificacion pedagogica, tecnica y visual para completar el nivel con el mismo estandar aplicado a los niveles anteriores.
 
 Nivel 8 corresponde a una transicion **B1+ hacia B2**. Por eso no debe construirse como un nivel de supervivencia comunicativa, sino como un nivel de argumentacion, matiz, analisis de temas contemporaneos, comprension oral autentica y produccion estructurada.

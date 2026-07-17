@@ -10,6 +10,28 @@
   const API_PATH = "/api/french8/pronunciation-assessment";
   const ACCEPTED_COST = 0.45;
   const WHOLE_WORD_HOMOPHONES = {
+    "0": "zero",
+    "1": "un",
+    "2": "deux",
+    "3": "trois",
+    "4": "quatre",
+    "5": "cinq",
+    "6": "six",
+    "7": "sept",
+    "8": "huit",
+    "9": "neuf",
+    "10": "dix",
+    "11": "onze",
+    "12": "douze",
+    "13": "treize",
+    "14": "quatorze",
+    "15": "quinze",
+    "16": "seize",
+    "20": "vingt",
+    "30": "trente",
+    "40": "quarante",
+    "50": "cinquante",
+    "60": "soixante",
     a: "a",
     ai: "e-open",
     ais: "e-open",
@@ -162,10 +184,44 @@
       .replace(/^jesais$/, "jsais")
       .replace(/^jenesais$/, "jnesais");
     const aliases = new Set([joined, reduced, phoneticBase(joined), phoneticBase(reduced)]);
+    const clockTime = clockTimeAlias(words);
+    if (clockTime) aliases.add(clockTime);
     phoneticVariants(joined).forEach((variant) => aliases.add(variant));
     phoneticVariants(reduced).forEach((variant) => aliases.add(variant));
     aliases.delete("");
     return aliases;
+  }
+
+  function frenchNumberValue(values) {
+    const units = {
+      zero: 0, un: 1, une: 1, deux: 2, trois: 3, quatre: 4, cinq: 5,
+      six: 6, sept: 7, huit: 8, neuf: 9, dix: 10, onze: 11,
+      douze: 12, treize: 13, quatorze: 14, quinze: 15, seize: 16
+    };
+    const tens = { vingt: 20, trente: 30, quarante: 40, cinquante: 50, soixante: 60 };
+    const parts = values
+      .flatMap((value) => normalizeWord(value).split("-"))
+      .filter((value) => value && value !== "et");
+    if (parts.length === 1 && /^\d{1,2}$/.test(parts[0])) return Number(parts[0]);
+    if (parts.length === 1 && Object.prototype.hasOwnProperty.call(units, parts[0])) return units[parts[0]];
+    if (parts.length === 1 && Object.prototype.hasOwnProperty.call(tens, parts[0])) return tens[parts[0]];
+    if (parts.length === 2 && Object.prototype.hasOwnProperty.call(tens, parts[0]) && Object.prototype.hasOwnProperty.call(units, parts[1])) {
+      return tens[parts[0]] + units[parts[1]];
+    }
+    return null;
+  }
+
+  function clockTimeAlias(words) {
+    const normalized = words.map(normalizeWord).filter(Boolean);
+    if (normalized.length === 1) {
+      const numeric = normalized[0].match(/^(\d{1,2})h(\d{1,2})$/);
+      if (numeric) return `clock-${Number(numeric[1])}-${Number(numeric[2])}`;
+    }
+    const hourIndex = normalized.findIndex((word) => word === "heure" || word === "heures");
+    if (hourIndex < 1 || hourIndex >= normalized.length - 1) return "";
+    const hours = frenchNumberValue(normalized.slice(0, hourIndex));
+    const minutes = frenchNumberValue(normalized.slice(hourIndex + 1));
+    return hours === null || minutes === null ? "" : `clock-${hours}-${minutes}`;
   }
 
   function groupedSubstitutionCost(referenceWords, spokenWords) {
@@ -370,6 +426,40 @@
       fluency,
       overall,
       quality
+    };
+  }
+
+  function validateRecordingEvidence(options) {
+    const transcript = String(options && options.transcript || "").trim();
+    if (tokens(transcript).length) return { ok: true, reason: "", message: "" };
+
+    const audio = options && options.audio || {};
+    const durationSeconds = finiteNumber(audio.duration_seconds);
+    const recordedDurationMs = finiteNumber(options && options.recordedDurationMs);
+    const rms = finiteNumber(audio.rms);
+    const peak = finiteNumber(audio.peak);
+    const weakSignal = (rms !== null && rms < 0.0025) || (peak !== null && peak < 0.012);
+    const tooShort = (durationSeconds !== null && durationSeconds < 0.9)
+      || (durationSeconds === null && recordedDurationMs !== null && recordedDurationMs < 900);
+
+    if (weakSignal) {
+      return {
+        ok: false,
+        reason: "weak_signal",
+        message: "Le microphone n'a pas capt\u00e9 une voix suffisamment forte. V\u00e9rifiez le microphone choisi et recommencez."
+      };
+    }
+    if (tooShort) {
+      return {
+        ok: false,
+        reason: "too_short",
+        message: "L'enregistrement est trop court pour corriger la prononciation. Lisez toute la phrase puis arr\u00eatez le micro."
+      };
+    }
+    return {
+      ok: false,
+      reason: "no_speech",
+      message: "Aucune parole exploitable n'a \u00e9t\u00e9 reconnue. \u00c9coutez l'enregistrement, puis rapprochez-vous du microphone et recommencez."
     };
   }
 
@@ -589,6 +679,7 @@
     phoneticVariants,
     rhythmScore,
     substitutionCost,
-    tokens
+    tokens,
+    validateRecordingEvidence
   };
 });

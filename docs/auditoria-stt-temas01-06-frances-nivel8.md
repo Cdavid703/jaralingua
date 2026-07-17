@@ -2,6 +2,8 @@
 
 Fecha: 2026-07-01.
 
+Actualizacion 2026-07-17: `02D section-2` y su desafio final fueron regenerados para corregir la concordancia femenina `m'aurait conduite`. Los porcentajes STT de `02D` documentados abajo corresponden a las versiones anteriores de esos dos archivos. Los nuevos MP3 se generaron directamente desde el guion canonico corregido y pasaron validacion de integridad y duracion en navegador; no se repitio Scribe para evitar consumo adicional de creditos STT.
+
 Motor usado: ElevenLabs Scribe. No se activo servidor local.
 
 Alcance:

@@ -191,6 +191,8 @@ FRENCH8_PRONUNCIATION_EVALUATIONS = {
     }
 }
 
+FRENCH8_PRONUNCIATION_AUDIO_REQUIRED = {"pronunciation01d", "pronunciation02d"}
+
 INTERMEDIATE_UNIT2_CATCHING_UP_EVALUATION = {
     "id": INTERMEDIATE_UNIT2_CATCHING_UP_ID,
     "title": "Unit 2 Listening - Catching Up After Years",
@@ -8815,11 +8817,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         "deadlineLabel": deadline["label"]
                     })
                     return
-                student.setdefault("grades", {})[evaluation_id] = grade
                 if not isinstance(student.get("gradeDetails"), dict):
                     student["gradeDetails"] = {}
                 previous_detail = student["gradeDetails"].get(evaluation_id)
                 audio_ref = save_french8_pronunciation_audio(student, evaluation_id, payload)
+                if evaluation_id in FRENCH8_PRONUNCIATION_AUDIO_REQUIRED and not audio_ref:
+                    json_response(self, 400, {"error": "audio_required"})
+                    return
+                student.setdefault("grades", {})[evaluation_id] = grade
                 next_detail = clean_pronunciation_submission_details(payload, evaluation_id, score100, grade)
                 if audio_ref:
                     if isinstance(previous_detail, dict):
@@ -8834,6 +8839,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "evaluationId": evaluation_id,
                     "score100": score100,
                     "grade": grade,
+                    "audioSaved": bool(audio_ref),
                     "updatedAt": now_iso()
                 })
             return

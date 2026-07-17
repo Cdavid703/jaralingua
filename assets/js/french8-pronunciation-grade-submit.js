@@ -87,16 +87,16 @@
     const panel = document.createElement("div");
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
-      <h3><i class="bi bi-send-check"></i> Envoi au professeur</h3>
+      <h3><i class="bi bi-send-check"></i> Audio et estimation provisoire</h3>
       <p><strong>${deadline.notice}</strong></p>
-      <p data-pronunciation-submit-copy>Terminez le défi final. Vous pourrez envoyer la note obtenue au professeur, même si elle est inférieure à 3,0/5.</p>
+      <p data-pronunciation-submit-copy>Terminez le défi final. L'audio et l'estimation automatique seront envoyés au professeur pour écoute et validation.</p>
       <div class="pronunciation-submit-metrics">
-        <span><b data-pronunciation-score>--</b><small>Défi final</small></span>
-        <span><b data-pronunciation-grade>--</b><small>Note / 5</small></span>
+        <span><b data-pronunciation-score>--</b><small>Estimation automatique</small></span>
+        <span><b data-pronunciation-grade>--</b><small>Note provisoire / 5</small></span>
       </div>
       <div class="pronunciation-submit-actions">
         <button type="button" class="action-button reset" data-pronunciation-reset><i class="bi bi-arrow-repeat"></i> Réinitialiser tout le défi</button>
-        <button type="button" class="action-button submit-grade" data-pronunciation-submit disabled><i class="bi bi-send-fill"></i> Envoyer au professeur</button>
+        <button type="button" class="action-button submit-grade" data-pronunciation-submit disabled><i class="bi bi-send-fill"></i> Envoyer l'audio</button>
       </div>
       <p class="pronunciation-submit-status" data-pronunciation-submit-status aria-live="polite"></p>
     `;
@@ -107,9 +107,26 @@
     const resetButton = panel.querySelector("[data-pronunciation-reset]");
     const statusNode = panel.querySelector("[data-pronunciation-submit-status]");
     const copyNode = panel.querySelector("[data-pronunciation-submit-copy]");
+    let submitting = false;
+    let lastSubmittedSignature = "";
 
     function finalAttempt() {
       return config.getFinalScore ? config.getFinalScore() : null;
+    }
+
+    function scoreForAttempt(attempt) {
+      if (!attempt || attempt.overall === null || attempt.overall === undefined || attempt.overall === "") return Number.NaN;
+      return Number(attempt.overall);
+    }
+
+    function finalAudio() {
+      const value = config.getFinalAudio ? config.getFinalAudio() : "";
+      return typeof value === "string" && value.startsWith("data:") ? value : "";
+    }
+
+    function submissionSignature(attempt, audioDataUrl) {
+      if (!attempt || !audioDataUrl) return "";
+      return [attempt.at || "", attempt.overall, audioDataUrl.length].join(":");
     }
 
     function setStatus(message, type) {
@@ -120,7 +137,8 @@
 
     function update() {
       const attempt = finalAttempt();
-      const score = Number(attempt && attempt.overall);
+      const score = scoreForAttempt(attempt);
+      const audioDataUrl = finalAudio();
       if (isDeadlineClosed(deadline)) {
         scoreNode.textContent = Number.isFinite(score) ? Math.round(score) + "/100" : "--";
         gradeNode.textContent = Number.isFinite(score) ? gradeFromScore(score).toFixed(2) + "/5" : "--";
@@ -137,13 +155,28 @@
       }
       scoreNode.textContent = Math.round(score) + "/100";
       gradeNode.textContent = gradeFromScore(score).toFixed(2) + "/5";
-      submitButton.disabled = false;
-      copyNode.textContent = "Votre défi final peut être envoyé avec la note obtenue, même si elle est inférieure à 3,0/5. " + deadline.notice + " Seule la note sur 5 sera inscrite dans le carnet du Niveau 8.";
+      if (config.requireFinalAudio === true && !audioDataUrl) {
+        submitButton.disabled = true;
+        copyNode.textContent = "Le résultat local est conservé, mais l'audio final n'est plus disponible après un rechargement. Refaites uniquement le défi final pour l'envoyer avec sa preuve audio. " + deadline.notice;
+        return;
+      }
+      const signature = submissionSignature(attempt, audioDataUrl);
+      if (signature && signature === lastSubmittedSignature) {
+        submitButton.disabled = true;
+        copyNode.textContent = "Cet essai a déjà été envoyé correctement au professeur. Refaites le défi final seulement si vous souhaitez produire un nouvel envoi.";
+        return;
+      }
+      submitButton.disabled = submitting;
+      copyNode.textContent = attempt.uncertain
+        ? "Reconnaissance incertaine : ce résultat reste indicatif. Vous pouvez refaire l'essai ou l'envoyer avec l'audio pour validation du professeur. " + deadline.notice
+        : "Cette estimation est provisoire. Le professeur pourra écouter l'audio et corriger la note dans le carnet. " + deadline.notice;
     }
 
     async function submit() {
+      if (submitting) return;
       const attempt = finalAttempt();
-      const score = Number(attempt && attempt.overall);
+      const score = scoreForAttempt(attempt);
+      const audioDataUrl = finalAudio();
       if (isDeadlineClosed(deadline)) {
         setStatus("La date limite est passée. L'envoi est fermé.", "error");
         update();
@@ -154,16 +187,21 @@
         update();
         return;
       }
+      if (config.requireFinalAudio === true && !audioDataUrl) {
+        setStatus("L'audio final est requis. Refaites le défi final avant d'envoyer.", "error");
+        update();
+        return;
+      }
       const user = readUser();
       if (!user || !user.credential) {
         setStatus("Connectez-vous avec votre compte enregistré avant d'envoyer.", "error");
         openGooglePanel();
         return;
       }
+      submitting = true;
       submitButton.disabled = true;
       setStatus("Envoi au professeur en cours. Ne fermez pas cette page.", "pending");
       try {
-        const audioDataUrl = config.getFinalAudio ? config.getFinalAudio() : "";
         const details = Object.assign({}, attempt);
         if (audioDataUrl) details.audioDataUrl = audioDataUrl;
         const response = await fetch(API_PATH, {
@@ -183,20 +221,24 @@
         if (!response.ok) {
           if (payload.error === "score_too_low") throw new Error("La note obtenue devrait pouvoir être envoyée. Actualisez la page et réessayez.");
           if (payload.error === "deadline_closed") throw new Error("La date limite est passée. L'envoi est fermé.");
+          if (payload.error === "audio_required") throw new Error("L'audio final n'a pas été reçu. Refaites le défi final, puis envoyez à nouveau.");
           if (payload.error === "student_not_authorized") throw new Error("Votre compte n'est pas encore associé au carnet du Niveau 8.");
           throw new Error("L'envoi n'a pas pu être terminé. La note locale n'a pas été perdue : réessayez après avoir vérifié votre connexion.");
         }
-        const audioSaved = audioDataUrl ? " Audio final sauvegardé pour réécoute professeur." : "";
-        setStatus("Envoyé correctement. Note enregistrée : " + Number(payload.grade).toFixed(2) + "/5." + audioSaved, "success");
+        lastSubmittedSignature = submissionSignature(attempt, audioDataUrl);
+        const audioSaved = audioDataUrl ? " Audio final sauvegardé pour l'écoute du professeur." : "";
+        setStatus("Envoyé correctement. Estimation provisoire enregistrée : " + Number(payload.grade).toFixed(2) + "/5." + audioSaved, "success");
       } catch (error) {
         setStatus(error.message || "Impossible d'envoyer la note.", "error");
       } finally {
+        submitting = false;
         update();
       }
     }
 
     resetButton.addEventListener("click", function () {
       if (config.resetAll) config.resetAll();
+      lastSubmittedSignature = "";
       setStatus("Résultats réinitialisés. Vous pouvez refaire l'atelier.", "pending");
       update();
     });
