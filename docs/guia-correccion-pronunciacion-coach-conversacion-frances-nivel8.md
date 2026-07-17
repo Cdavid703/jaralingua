@@ -9,13 +9,13 @@ Este archivo es la fuente de verdad para corregir las actividades de pronunciaci
 Estado al cerrar esta guia:
 
 - El nuevo motor compartido de pronunciacion esta implementado localmente en `assets/js/french8-pronunciation-assessment.js`.
-- Las nueve actividades `01D-09D` ya consumen ese motor. `01D-05D` ya muestran resultados dudosos sin bloquear el avance; `06D-09D` conservan QA individual pendiente y pueden contener todavia el estado temporal `Essai non note`, que debe retirarse al revisarlas.
+- Las nueve actividades `01D-09D` ya consumen ese motor. `01D-06D` ya muestran resultados dudosos sin bloquear el avance; `07D-09D` conservan QA individual pendiente y pueden contener todavia el estado temporal `Essai non note`, que debe retirarse al revisarlas.
 - La calibracion de microfono, la alineacion tolerante, el tratamiento de variantes orales y la advertencia de fiabilidad ya estan implementados localmente.
 - El panel de envio y `Notes du cours` ya distinguen una estimacion normal de una estimacion con reconocimiento incierto.
 - El backend ya conserva la marca de incertidumbre junto con el intento enviado.
 - Existe la prueba `tools/test_french8_pronunciation_assessment.cjs` y esta aprobada.
-- `01D`, `02D`, `03D`, `04D` y `05D` se cierran en tandas independientes del 2026-07-17; el trabajo pendiente comienza en `06D`.
-- `01D-05D` ya tienen validacion individual local. Falta continuar desde `06D` y despues corregir el motor compartido del coach de conversacion.
+- `01D`, `02D`, `03D`, `04D`, `05D` y `06D` se cierran en tandas independientes del 2026-07-17; el trabajo pendiente comienza en `07D`.
+- `01D-06D` ya tienen validacion individual local. Falta continuar desde `07D` y despues corregir el motor compartido del coach de conversacion.
 - Los coaches `01O-08O` todavia muestran un icono generico y una imagen contextual; falta construir el escenario visible del personaje.
 - No se debe iniciar un servidor local para esta tarea.
 
@@ -472,7 +472,7 @@ Una actividad solo se marca como cerrada cuando:
 | 03D | Correccion aplicada; pruebas pedagogicas/frontend/backend, audio y QA responsive aprobados | Validar microfono y envio autenticado en produccion sin alterar notas reales |
 | 04D | Correccion aplicada; pruebas pedagogicas/frontend/backend, audio y QA responsive aprobados | Validar microfono y envio autenticado en produccion sin alterar notas reales |
 | 05D | Correccion formativa aplicada; pruebas pedagogicas/frontend/backend, audio y QA responsive aprobados | Validar microfono real en produccion sin crear nota ni envio |
-| 06D | Motor compartido integrado; QA pendiente | Validar conectores y frases largas |
+| 06D | Correccion formativa aplicada; pruebas pedagogicas/frontend/backend, audio y QA responsive aprobados | Validar microfono real en produccion sin crear nota ni envio |
 | 07D | Motor compartido integrado; QA pendiente | Validar concesion y liaison consultiva |
 | 08D | Motor compartido integrado; QA pendiente | Validar contracciones y frances oral |
 | 09D | Motor compartido integrado; QA pendiente | Validar sintesis y configuracion formativa |
@@ -559,6 +559,26 @@ Una actividad solo se marca como cerrada cuando:
 - La auditoria STT existente sigue vigente: el tema 05 obtuvo 99,42 % promedio y no fue necesario regenerar audio ni consumir nuevos creditos.
 - Chrome decodifico los cinco MP3: secciones `4.83 s`, `4.18 s`, `3.81 s`, `3.99 s`; desafio final `20.57 s`.
 - Pruebas aprobadas: `tools/test_french8_pronunciation_theme5.cjs`, `tools/test_french8_pronunciation_theme5_backend.py`, `tools/test_french8_pronunciation_theme5_responsive.cjs`, el motor compartido y regresiones de `01D-04D`.
+- QA visual sin servidor aprobado en `1366x768`, `1024x768`, `768x1024`, `390x844` y `320x568`, mostrando calibracion, audio local, resultado y resumen formativo, sin panel de envio.
+- No se iniciaron servidores locales ni se modificaron archivos de datos o notas de estudiantes.
+- Pendiente antes del cierre operacional: prueba manual de permiso, calibracion y grabacion desde un dispositivo real contra produccion, confirmando que no se crea ningun envio.
+
+### Registro de revision 06D - 2026-07-17
+
+- Se conservaron `pronunciation06d`, el guion canonico y los cinco MP3 ya auditados. La actividad queda estrictamente formativa: no existe en `FRENCH8_PRONUNCIATION_EVALUATIONS` ni en la lista de audios exigidos por el backend.
+- Se retiro del controlador el codigo residual de panel de nota, serializacion del audio final y actualizacion de un `gradeSubmitter`. Ese contrato era invalido para `06D` y podia producir un envio fallido si el script de calificaciones volvia a cargarse.
+- Se retiro el estado temporal `Essai non note`: una transcripcion vacia produce `0` dudoso y deja disponibles la repeticion y el avance.
+- Un intento dudoso bajo no reemplaza un progreso fiable anterior mejor. El audio se reproduce localmente durante el intento, pero no se convierte en evidencia persistente ni se envia a `Notes du cours`.
+- El reinicio completo borra la progresion local y vuelve a la seccion 1 sin recrear inmediatamente la clave eliminada.
+- La pagina divide las frases largas mediante `etant donne que`, `de sorte que`, `pour que` y `sans`, y explica que el conector debe permanecer unido a la proposicion que introduce.
+- Se corrigio la pronunciacion de `IA` como /i.a/ y se explico el hiato de `l'IA analyse` sin inventar consonantes entre las vocales.
+- Se eliminaron las falsas orientaciones sobre `donnees sensibles` y `leurs droits`. `Donnees` /dɔne/ no contiene vocal nasal; `complexes` conserva /ks/ final y las letras finales de `droits` permanecen mudas.
+- Las orientaciones reales son `les utilisateurs` y `sans audit` con /z/, mas el enchainement del /t/ pronunciado en `audit independant`. No se fuerza la liaison verbal de `faut une`.
+- El score se presenta como estimacion automatica formativa con 55 % fidelidad, 35 % completitud y 10 % ritmo. La pagina declara expresamente que no envia nota ni audio al profesor.
+- Se elimino la carga duplicada de la hoja responsive, se ordenaron las dependencias y se agrego el bundle local de Bootstrap. El menu hamburguesa, reproduccion, pausa, velocidad y reinicio completo respondieron en QA.
+- La auditoria STT existente sigue vigente: el tema 06 obtuvo 99,94 % promedio y no fue necesario regenerar audio ni consumir nuevos creditos.
+- Chrome decodifico los cinco MP3: secciones `4.09 s`, `4.88 s`, `3.48 s`, `4.88 s`; desafio final `19.46 s`.
+- Pruebas aprobadas: `tools/test_french8_pronunciation_theme6.cjs`, `tools/test_french8_pronunciation_theme6_backend.py`, `tools/test_french8_pronunciation_theme6_responsive.cjs`, el motor compartido y regresiones de `01D-05D`.
 - QA visual sin servidor aprobado en `1366x768`, `1024x768`, `768x1024`, `390x844` y `320x568`, mostrando calibracion, audio local, resultado y resumen formativo, sin panel de envio.
 - No se iniciaron servidores locales ni se modificaron archivos de datos o notas de estudiantes.
 - Pendiente antes del cierre operacional: prueba manual de permiso, calibracion y grabacion desde un dispositivo real contra produccion, confirmando que no se crea ningun envio.

@@ -35,8 +35,9 @@
       { words: ["c'est", "en"], label: "c'est en comparant", hint: "enchaînez le /t/ déjà prononcé de c'est avec en" }
     ],
     pronunciation06d: [
-      { words: ["les", "utilisateurs"], label: "les utilisateurs", hint: "faites entendre la liaison en /z/" },
-      { words: ["sans", "audit"], label: "sans audit", hint: "faites entendre la liaison en /z/" }
+      { words: ["les", "utilisateurs"], label: "les utilisateurs", hint: "faites entendre la liaison en /z/ entre le déterminant et le nom" },
+      { words: ["sans", "audit"], label: "sans audit", hint: "faites entendre la liaison en /z/" },
+      { words: ["audit", "independant"], label: "audit indépendant", hint: "enchaînez le /t/ prononcé de audit avec indépendant" }
     ],
     pronunciation07d: [
       { words: ["les", "obstacles"], label: "les obstacles", hint: "faites entendre la liaison en /z/" },
