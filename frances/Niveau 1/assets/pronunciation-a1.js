@@ -225,7 +225,7 @@
     "theme-1": { evaluationId: "pronunciationTheme1", label: "Thème 1 · Premiers contacts" },
     "theme-3": { evaluationId: "pronunciationTheme3", label: "Thème 3 · Les verbes du premier groupe" },
     "theme-5": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Famille et relations" },
-    "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et localisation" }
+    "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et environnement" }
   };
   const gradeConfig = EVALUABLE_PRONUNCIATION[key] || null;
 
@@ -970,6 +970,7 @@
     const transcript = String(payload.text || payload.transcript || "").trim();
     const measured = assessment.assess({
       referenceText: currentText(),
+      targetText: currentText(),
       transcript,
       words: payload.words,
       audio: payload.audio,
