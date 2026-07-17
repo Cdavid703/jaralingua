@@ -15,10 +15,10 @@
       { words: ["pas", "immediatement"], label: "pas immediatement", hint: "liaison possible en /z/ dans une lecture soignee" }
     ],
     pronunciation03d: [
-      { words: ["ils", "aient"], label: "ils aient", hint: "faites entendre la liaison en /z/" },
-      { words: ["des", "excuses"], label: "des excuses", hint: "faites entendre la liaison en /z/" },
+      { words: ["les", "responsables"], label: "les responsables", hint: "faites entendre la liaison en /z/ entre le déterminant et le nom" },
+      { words: ["leurs", "excuses"], label: "leurs excuses", hint: "faites entendre la liaison en /z/" },
       { words: ["sans", "avoir"], label: "sans avoir", hint: "faites entendre la liaison en /z/" },
-      { words: ["elle", "ait"], label: "elle ait", hint: "enchainez les deux mots sans couper la voyelle" }
+      { words: ["qu'elle", "ait"], label: "qu’elle ait", hint: "enchaînez le /l/ prononcé de elle avec ait" }
     ],
     pronunciation04d: [
       { words: ["elle", "a", "explique"], label: "elle a explique", hint: "enchainez elle a sans pause" },
