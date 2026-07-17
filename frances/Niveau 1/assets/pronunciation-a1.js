@@ -71,7 +71,7 @@
         ["bi-music-note", "Gardez un rythme régulier : sujet + verbe + complément."]
       ]
     },
-    "theme-4-essential": {
+    "theme-4": {
       title: "Verbes essentiels à voix haute",
       audio: "../audio/prononciation/stages/theme-3-defi.mp3",
       audios: [
@@ -94,7 +94,7 @@
         ["bi-clock", "Ne lisez pas trop vite : les verbes irréguliers doivent rester très clairs."]
       ]
     },
-    "theme-4": {
+    "theme-5": {
       title: "Famille et relations à voix haute",
       audio: "../audio/prononciation/stages/theme-4-defi.mp3",
       audios: [
@@ -103,7 +103,7 @@
         "../audio/prononciation/stages/theme-4-stage-3.mp3",
         "../audio/prononciation/stages/theme-4-defi.mp3"
       ],
-      back: "../ateliers-activites.html#theme-05",
+      back: "../ateliers-activites.html#theme-5",
       image: "../img/ateliers/prononciation-famille.png",
       stages: [
         "Voici ma famille.",
@@ -117,7 +117,7 @@
         ["bi-link-45deg", "Dans « habitent à », faites une liaison douce : habitent-à."]
       ]
     },
-    "theme-5": {
+    "theme-6": {
       title: "Description, professions et présent progressif à voix haute",
       audio: "../audio/prononciation/stages/theme-5-defi.mp3",
       audios: [
@@ -224,7 +224,7 @@
   const EVALUABLE_PRONUNCIATION = {
     "theme-1": { evaluationId: "pronunciationTheme1", label: "Thème 1 · Premiers contacts" },
     "theme-3": { evaluationId: "pronunciationTheme3", label: "Thème 3 · Les verbes du premier groupe" },
-    "theme-5": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Description et professions" },
+    "theme-5": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Famille et relations" },
     "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et localisation" }
   };
   const gradeConfig = EVALUABLE_PRONUNCIATION[key] || null;
