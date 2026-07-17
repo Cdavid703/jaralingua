@@ -49,6 +49,29 @@
       ]
     },
     "theme-3": {
+      title: "Prononciation des verbes en -er",
+      audio: "../audio/prononciation/stages/theme-2-defi.mp3",
+      audios: [
+        "../audio/prononciation/stages/theme-2-stage-1.mp3",
+        "../audio/prononciation/stages/theme-2-stage-2.mp3",
+        "../audio/prononciation/stages/theme-2-stage-3.mp3",
+        "../audio/prononciation/stages/theme-2-defi.mp3"
+      ],
+      back: "../ateliers-activites.html#theme-3",
+      image: "../img/ateliers/prononciation-verbes-er.png",
+      stages: [
+        "Je parle français tous les jours.",
+        "Tu écoutes la radio le matin.",
+        "Nous travaillons ensemble.",
+        "Je parle français tous les jours. Tu écoutes la radio le matin. Nous travaillons ensemble."
+      ],
+      tips: [
+        ["bi-volume-mute", "Les terminaisons -e, -es et -ent ne se prononcent pas dans les verbes du premier groupe."],
+        ["bi-link-45deg", "Dans « nous travaillons ensemble », faites la liaison entre « travaillons » et « ensemble »."],
+        ["bi-music-note", "Gardez un rythme régulier : sujet + verbe + complément."]
+      ]
+    },
+    "theme-4-essential": {
       title: "Verbes essentiels à voix haute",
       audio: "../audio/prononciation/stages/theme-3-defi.mp3",
       audios: [
@@ -57,7 +80,7 @@
         "../audio/prononciation/stages/theme-3-stage-3.mp3",
         "../audio/prononciation/stages/theme-3-defi.mp3"
       ],
-      back: "../ateliers-activites.html#theme-04",
+      back: "../ateliers-activites.html#theme-4",
       image: "../img/ateliers/prononciation-verbes-essentiels.png",
       stages: [
         "Je suis étudiante et j’ai vingt ans.",
@@ -200,7 +223,7 @@
   const LOCAL_KEY = "jaralingua_local_gradebook_user:french1GradesApp";
   const EVALUABLE_PRONUNCIATION = {
     "theme-1": { evaluationId: "pronunciationTheme1", label: "Thème 1 · Premiers contacts" },
-    "theme-3": { evaluationId: "pronunciationTheme3", label: "Thème 3 · Verbes essentiels" },
+    "theme-3": { evaluationId: "pronunciationTheme3", label: "Thème 3 · Les verbes du premier groupe" },
     "theme-5": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Description et professions" },
     "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et localisation" }
   };
@@ -649,7 +672,7 @@
     els.modelAudio.pause();
     els.modelButton.querySelector("i").className = "bi bi-play-fill";
     els.modelAudio.src = currentModelAudio();
-    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-04'], [href$='#theme-05'], [href$='#theme-6'], [href$='#theme-7'], [href$='#theme-8'], [href$='#theme-9']").forEach((link) => {
+    document.querySelectorAll("[href$='#theme-01'], [href$='#theme-02'], [href$='#theme-03'], [href$='#theme-3'], [href$='#theme-04'], [href$='#theme-4'], [href$='#theme-05'], [href$='#theme-5'], [href$='#theme-6'], [href$='#theme-7'], [href$='#theme-8'], [href$='#theme-9']").forEach((link) => {
       if (link.textContent.includes("Ateliers") || link.textContent.includes("Retour")) link.href = set.back;
     });
     document.querySelector(".hero").style.setProperty("--hero-image", `url('${set.image}')`);
