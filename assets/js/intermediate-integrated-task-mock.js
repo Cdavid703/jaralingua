@@ -3,6 +3,7 @@
 
   var config = window.INTERMEDIATE_INTEGRATED_TASK_MOCK;
   var API = "/api/intermediate/grades";
+  var SUPPORT_API = "/api/intermediate/mock-integrated-task";
   var GOOGLE_USER_KEY = "jaralingua_google_user";
   var MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   var LOCAL_USER_KEY = "jaralingua_local_user";
@@ -20,7 +21,17 @@
     words: document.getElementById("wordCount"),
     result: document.getElementById("submitResult"),
     submit: document.getElementById("submitExamBtn"),
-    receipt: document.getElementById("printReceipt")
+    receipt: document.getElementById("printReceipt"),
+    history: document.getElementById("attemptHistory"),
+    diagnostic: document.getElementById("diagnosticSection"),
+    skillDiagnostic: document.getElementById("skillDiagnostic"),
+    writingDiagnostic: document.getElementById("writingDiagnostic"),
+    feedbackAdmin: document.getElementById("feedbackAdminPanel"),
+    feedbackBadge: document.getElementById("feedbackStateBadge"),
+    feedbackAdminStatus: document.getElementById("feedbackAdminStatus"),
+    feedbackStatus: document.getElementById("feedbackAccessStatus"),
+    feedbackButton: document.getElementById("loadFeedbackBtn"),
+    feedbackContent: document.getElementById("feedbackContent")
   };
   var user = null;
   var student = null;
@@ -31,6 +42,8 @@
   var activeListen = false;
   var furthestAudioTime = 0;
   var currentSpeed = 1;
+  var currentRole = "student";
+  var supportState = { state: { feedbackOpen: false }, attempts: [], feedbackAvailable: false };
 
   function escapeHtml(value) {
     return String(value == null ? "" : value)
@@ -272,20 +285,192 @@
     });
   }
 
-  function writingSignals(text) {
-    var normalized = text.toLowerCase();
-    return {
-      content: /(everyday|daily|special occasion|celebration|party|both)/.test(normalized) && /(from|origin|culture|traditional|region|country)/.test(normalized),
-      quantities: /(some|any|much|many|a few|a little|a lot of|cup|cups|piece|pieces|slice|slices)/.test(normalized),
-      sensory: /(sweet|salty|sour|spicy|bitter|savory|crispy|crisp|soft|chewy|sticky|creamy|crunchy|smooth)/.test(normalized),
-      comparison: /(similar|different|than|compared|reminds me|both)/.test(normalized),
-      recommendation: /(out of five|out of 5|recommend|would give|rating|should try)/.test(normalized)
-    };
-  }
-
   function setResult(html, type) {
     els.result.className = "status-box show " + (type || "pending");
     els.result.innerHTML = html;
+  }
+
+  function formatAttemptDate(value) {
+    if (!value) return "Date unavailable";
+    var date = new Date(value);
+    if (Number.isNaN(date.getTime())) return value;
+    return new Intl.DateTimeFormat("en", {
+      dateStyle: "medium",
+      timeStyle: "short",
+      timeZone: "America/Bogota"
+    }).format(date);
+  }
+
+  function diagnosticLevel(correct, total) {
+    if (correct === total) return { label: "Secure", className: "secure" };
+    if (correct > 0) return { label: "Developing", className: "developing" };
+    return { label: "Priority review", className: "priority" };
+  }
+
+  function renderDiagnostic(attempt) {
+    if (!attempt || !attempt.skills) return;
+    els.diagnostic.hidden = false;
+    els.skillDiagnostic.innerHTML = Object.keys(attempt.skills).map(function (key) {
+      var skill = attempt.skills[key];
+      var level = diagnosticLevel(Number(skill.correct || 0), Number(skill.total || 0));
+      return '<article class="diagnostic-card ' + level.className + '">' +
+        '<div class="diagnostic-card-head"><strong>' + escapeHtml(skill.label) + '</strong><span>' + level.label + '</span></div>' +
+        '<div class="diagnostic-score"><b>' + Number(skill.correct || 0) + '</b> / ' + Number(skill.total || 0) + '</div>' +
+        '<p>' + escapeHtml(skill.studyTip || "Review this listening area before your next attempt.") + '</p></article>';
+    }).join("");
+    var writingLabels = {
+      content: "Purpose and cultural context",
+      quantities: "Quantity language",
+      sensory: "Taste and texture evidence",
+      comparison: "Comparison",
+      recommendation: "Rating and recommendation"
+    };
+    els.writingDiagnostic.innerHTML = '<h3>Writing signals</h3><div class="signal-list">' +
+      Object.keys(writingLabels).map(function (key) {
+        var found = attempt.writingSignals && attempt.writingSignals[key] === true;
+        return '<span class="signal-chip ' + (found ? "found" : "missing") + '"><i class="bi ' + (found ? "bi-check-circle-fill" : "bi-dash-circle-fill") + '"></i>' + escapeHtml(writingLabels[key]) + '</span>';
+      }).join("") + '</div><p>The automatic report detects evidence in your text; it does not evaluate the quality of your ideas or language.</p>';
+  }
+
+  function renderHistory(attempts) {
+    var items = Array.isArray(attempts) ? attempts : [];
+    if (!items.length) {
+      els.history.innerHTML = '<p class="empty-state">No completed simulations yet. Your first saved attempt will appear here.</p>';
+      return;
+    }
+    els.history.innerHTML = items.map(function (attempt, index) {
+      return '<article class="history-item"><div><span>Attempt ' + (items.length - index) + '</span><strong>' + escapeHtml(formatAttemptDate(attempt.submittedAt)) + '</strong></div>' +
+        '<div><span>Listening</span><strong>' + Number(attempt.listeningPoints || 0).toFixed(1) + ' / 25</strong></div>' +
+        '<div><span>Writing signals</span><strong>' + Number(attempt.writingSignalCount || 0) + ' / 5</strong></div>' +
+        '<div><span>Audio used</span><strong>' + Number(attempt.audioPlays || 0) + ' / 3</strong></div>' +
+        '<button class="history-diagnostic-button" type="button" data-history-index="' + index + '"><i class="bi bi-bar-chart-fill"></i> View diagnosis</button></article>';
+    }).join("");
+    els.history.querySelectorAll("[data-history-index]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        var attempt = items[Number(button.getAttribute("data-history-index"))];
+        renderDiagnostic(attempt);
+        els.diagnostic.scrollIntoView({ behavior: "smooth", block: "start" });
+        toast("The selected attempt diagnosis is open.", "success");
+      });
+    });
+  }
+
+  function renderSupportState(payload) {
+    supportState = payload || supportState;
+    var state = supportState.state || { feedbackOpen: false };
+    var isStaff = currentRole === "teacher" || currentRole === "admin";
+    var attempts = Array.isArray(supportState.attempts) ? supportState.attempts : [];
+    renderHistory(attempts);
+    els.feedbackAdmin.hidden = !isStaff;
+    els.feedbackBadge.className = "state-badge " + (state.feedbackOpen ? "open" : "closed");
+    els.feedbackBadge.textContent = state.feedbackOpen ? "Open for students" : "Closed for students";
+    if (isStaff) {
+      els.feedbackAdminStatus.textContent = state.feedbackOpen
+        ? "Students with a saved attempt can load the transcript and explanations."
+        : "Students cannot load the transcript or explanations.";
+      els.feedbackButton.disabled = false;
+      els.feedbackStatus.textContent = "Teacher access is available for lesson preparation and post-attempt review.";
+    } else if (!attempts.length) {
+      els.feedbackButton.disabled = true;
+      els.feedbackStatus.textContent = "Complete and save one simulation before this resource can be released to you.";
+    } else if (supportState.feedbackAvailable) {
+      els.feedbackButton.disabled = false;
+      els.feedbackStatus.textContent = "Your teacher has released the transcript and answer explanations.";
+    } else {
+      els.feedbackButton.disabled = true;
+      els.feedbackStatus.textContent = "Your attempt is saved. The transcript and explanations are still locked by your teacher.";
+    }
+    if (!isStaff && !supportState.feedbackAvailable) {
+      els.feedbackContent.hidden = true;
+      els.feedbackContent.innerHTML = "";
+    }
+  }
+
+  async function loadSupportState() {
+    if (user && user.credential === "local-preview") {
+      renderSupportState({ role: currentRole, state: { feedbackOpen: false }, attempts: [], feedbackAvailable: currentRole !== "student" });
+      return;
+    }
+    try {
+      var response = await fetch(SUPPORT_API + "/state", { headers: authHeaders() });
+      var payload = await response.json().catch(function () { return {}; });
+      if (!response.ok) throw new Error(payload.error || "support_state_failed");
+      renderSupportState(payload);
+    } catch (_error) {
+      els.history.innerHTML = '<p class="empty-state error-text">Your practice history could not be loaded. Check the connection and try again.</p>';
+      els.feedbackButton.disabled = true;
+      els.feedbackStatus.textContent = "Feedback availability could not be checked.";
+    }
+  }
+
+  async function saveAttempt(answers) {
+    var response = await fetch(SUPPORT_API + "/attempts", {
+      method: "POST",
+      headers: authHeaders(),
+      body: JSON.stringify({
+        answers: answers,
+        writing: els.writing.value,
+        audioPlays: readPlayCount()
+      })
+    });
+    var payload = await response.json().catch(function () { return {}; });
+    if (!response.ok) throw new Error(payload.error || "attempt_save_failed");
+    return payload;
+  }
+
+  async function setFeedbackState(isOpen) {
+    var buttons = document.querySelectorAll("[data-feedback-state]");
+    buttons.forEach(function (button) { button.disabled = true; });
+    els.feedbackAdminStatus.className = "activation-feedback";
+    els.feedbackAdminStatus.textContent = isOpen ? "Opening feedback for students..." : "Closing feedback for students...";
+    try {
+      var response = await fetch(SUPPORT_API + "/state", {
+        method: "PUT",
+        headers: authHeaders(),
+        body: JSON.stringify({ feedbackOpen: isOpen })
+      });
+      var payload = await response.json().catch(function () { return {}; });
+      if (!response.ok) throw new Error(payload.error || "feedback_state_failed");
+      supportState.state = payload.state;
+      supportState.feedbackAvailable = true;
+      renderSupportState(supportState);
+      els.feedbackAdminStatus.className = "activation-feedback success";
+      els.feedbackAdminStatus.textContent = payload.message;
+      toast(payload.message, "success");
+    } catch (_error) {
+      els.feedbackAdminStatus.className = "activation-feedback error";
+      els.feedbackAdminStatus.textContent = "The feedback setting could not be changed. Check the connection and try again.";
+      toast("The feedback setting was not changed.", "error");
+    } finally {
+      buttons.forEach(function (button) { button.disabled = false; });
+    }
+  }
+
+  async function loadReleasedFeedback() {
+    els.feedbackButton.disabled = true;
+    els.feedbackStatus.textContent = "Loading the protected transcript and explanations...";
+    try {
+      var response = await fetch(SUPPORT_API + "/feedback", { headers: authHeaders() });
+      var payload = await response.json().catch(function () { return {}; });
+      if (!response.ok) throw new Error(payload.error || "feedback_load_failed");
+      var transcript = String(payload.transcript || "").split(/\n\s*\n/).map(function (paragraph) {
+        return "<p>" + escapeHtml(paragraph) + "</p>";
+      }).join("");
+      var explanations = (payload.explanations || []).map(function (item) {
+        return '<details class="answer-explanation"><summary><span>Question ' + Number(item.number) + '</span>' + escapeHtml(item.skill) + '</summary><div><strong>' + escapeHtml(item.question) + '</strong><p><b>Correct answer:</b> ' + escapeHtml(item.correctOption) + '</p><p><b>Why:</b> ' + escapeHtml(item.rationale) + '</p></div></details>';
+      }).join("");
+      els.feedbackContent.innerHTML = '<div class="protected-transcript"><h3>' + escapeHtml(payload.title || "Teacher-released transcript") + '</h3>' + transcript + '</div><div class="answer-explanation-list"><h3>Answer explanations</h3>' + explanations + '</div>';
+      els.feedbackContent.hidden = false;
+      els.feedbackStatus.textContent = "Protected feedback loaded successfully.";
+      toast("Transcript and explanations loaded successfully.", "success");
+    } catch (error) {
+      els.feedbackStatus.textContent = error.message === "feedback_locked"
+        ? "This resource is still locked by your teacher."
+        : "The protected feedback could not be loaded. Check the connection and try again.";
+      toast("Protected feedback was not loaded.", "error");
+    } finally {
+      els.feedbackButton.disabled = false;
+    }
   }
 
   function validate() {
@@ -303,41 +488,56 @@
     return answers;
   }
 
-  function checkPractice(answers) {
-    var score = 0;
-    var incorrect = [];
-    config.questions.forEach(function (question, index) {
-      if (answers[question.id] === question.answer) score += Number(question.points || 2.5);
-      else incorrect.push(index + 1);
-    });
-    var signals = writingSignals(els.writing.value);
-    var writingChecks = Object.keys(signals).filter(function (key) { return signals[key]; }).length;
-    var reviewLine = incorrect.length
-      ? "Questions to review: " + incorrect.join(", ") + ". Correct answers are not displayed; reset the full practice to try again."
-      : "All listening answers were accurate.";
-
+  async function checkPractice(answers) {
     els.form.querySelectorAll("input, textarea").forEach(function (node) { node.disabled = true; });
     els.submit.disabled = true;
-    sessionStorage.removeItem(draftKey());
-    els.receipt.textContent = "PRACTICE COPY - LISTENING " + score + " / 25 - WRITING NOT GRADED";
     setResult(
-      "<strong>Practice checked successfully.</strong> This result is not recorded in Grades." +
-      '<div class="result-grid"><div class="result-item"><strong>' + score.toFixed(1) + " / 25</strong>Listening score</div>" +
-      '<div class="result-item"><strong>' + writingChecks + " / 5</strong>Writing signals detected</div>" +
-      '<div class="result-item"><strong>' + wordCount() + "</strong>Words submitted</div></div>" +
-      "<p>" + escapeHtml(reviewLine) + "</p><p>Your teacher must evaluate writing quality with the institutional rubric; this automatic check only detects whether key elements are present.</p>",
-      "success"
+      '<strong>Checking and saving your practice...</strong><p class="attempt-save-status"><i class="bi bi-cloud-arrow-up-fill"></i> The protected server is calculating the listening result and diagnostic.</p>',
+      "pending"
     );
-    toast("Practice checked. No grade was recorded.", "success");
+    try {
+      var saved = await saveAttempt(answers);
+      var attempt = saved.attempt;
+      if (!attempt || !attempt.skills) throw new Error("invalid_attempt_result");
+      var incorrect = Array.isArray(attempt.incorrectQuestions) ? attempt.incorrectQuestions : [];
+      var reviewLine = incorrect.length
+        ? "Questions to review: " + incorrect.join(", ") + ". Correct answers are not displayed; reset the full practice to try again."
+        : "All listening answers were accurate.";
+      sessionStorage.removeItem(draftKey());
+      els.receipt.textContent = "PRACTICE COPY - LISTENING " + Number(attempt.listeningPoints || 0).toFixed(1) + " / 25 - WRITING NOT GRADED";
+      renderDiagnostic(attempt);
+      supportState.attempts = [attempt].concat(Array.isArray(supportState.attempts) ? supportState.attempts : []).slice(0, 10);
+      supportState.feedbackAvailable = currentRole !== "student" || saved.feedbackAvailable === true;
+      renderSupportState(supportState);
+      setResult(
+        "<strong>Practice checked and saved successfully.</strong> This result is not recorded in Grades." +
+        '<div class="result-grid"><div class="result-item"><strong>' + Number(attempt.listeningPoints || 0).toFixed(1) + " / 25</strong>Listening score</div>" +
+        '<div class="result-item"><strong>' + Number(attempt.writingSignalCount || 0) + " / 5</strong>Writing signals detected</div>" +
+        '<div class="result-item"><strong>' + Number(attempt.wordCount || 0) + "</strong>Words submitted</div></div>" +
+        "<p>" + escapeHtml(reviewLine) + "</p><p>Your diagnostic and attempt history are ready below. Correct answers remain protected until your teacher releases the feedback.</p>",
+        "success"
+      );
+      toast("Practice checked and saved. No grade was recorded.", "success");
+    } catch (_error) {
+      els.form.querySelectorAll("input, textarea").forEach(function (node) { node.disabled = false; });
+      els.submit.disabled = false;
+      setResult(
+        "<strong>Your practice could not be checked or saved.</strong><p>The answer key is protected on the server, so no score is calculated in the browser. Your answers remain selected; check the connection and press <strong>Check practice</strong> again.</p>",
+        "error"
+      );
+      toast("The practice was not checked. Your answers are still available for another attempt.", "error");
+    }
   }
 
   function setupStudent(identity, role) {
     student = identity;
+    currentRole = role || "student";
     fillIdentity(identity, role);
     renderQuestions();
     showExam();
     setupAudio();
     restoreDraft();
+    loadSupportState();
   }
 
   async function verifyAccess() {
@@ -390,6 +590,10 @@
   });
   document.querySelectorAll("[data-open-login]").forEach(function (button) { button.addEventListener("click", openLogin); });
   document.querySelectorAll("[data-print]").forEach(function (button) { button.addEventListener("click", function () { window.print(); }); });
+  document.querySelectorAll("[data-feedback-state]").forEach(function (button) {
+    button.addEventListener("click", function () { setFeedbackState(button.getAttribute("data-feedback-state") === "open"); });
+  });
+  els.feedbackButton.addEventListener("click", loadReleasedFeedback);
   document.querySelectorAll("[data-reset-practice]").forEach(function (button) {
     button.addEventListener("click", function () {
       if (!window.confirm("Reset every listening answer, the writing response, and the audio counter?")) return;
@@ -401,4 +605,7 @@
 
   verifyAccess();
   window.setInterval(verifyAccess, 1000);
+  window.setInterval(function () {
+    if (authorized) loadSupportState();
+  }, 15000);
 })();

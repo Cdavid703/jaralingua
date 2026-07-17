@@ -2,6 +2,13 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
   id: "intermediate-course-1-integrated-task-mock",
   title: "Intermediate Course 1 - Mock Integrated Task",
   audio: "audio/integrated-task/intermediate-mock-integrated-task-us.mp3?v=20260713-professional-us",
+  skills: {
+    mainIdea: { label: "Main idea and synthesis", studyTip: "Identify the program's purpose and listen for the final summary." },
+    factualDetail: { label: "Time and factual detail", studyTip: "Track names, time references, origins, and exact ingredients." },
+    quantities: { label: "Ingredients and quantities", studyTip: "Connect quantity expressions with the reason for each portion or ingredient." },
+    sensoryEvidence: { label: "Texture and sensory evidence", studyTip: "Notice adjective contrasts such as crisp outside but soft inside." },
+    foodContext: { label: "Food context and classification", studyTip: "Use evidence about breakfast, daily snacks, parties, and celebrations." }
+  },
   questions: [
     {
       id: "m1",
@@ -12,14 +19,14 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
         "To decide which country has the cheapest food",
         "To plan a formal restaurant menu"
       ],
-      answer: 1,
+      skill: "mainIdea",
       points: 2.5
     },
     {
       id: "m2",
       prompt: "When did Marcus try simit?",
       options: ["At breakfast today", "At a party last month", "On a trip last year", "During a class food fair"],
-      answer: 2,
+      skill: "factualDetail",
       points: 2.5
     },
     {
@@ -31,7 +38,7 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
         "It is served warm with a lot of cheese.",
         "It is mainly shared at afternoon parties."
       ],
-      answer: 0,
+      skill: "foodContext",
       points: 2.5
     },
     {
@@ -43,7 +50,7 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
         "Eggs, butter, and a few nuts",
         "Rice flour, sugar, and a little water"
       ],
-      answer: 3,
+      skill: "quantities",
       points: 2.5
     },
     {
@@ -55,7 +62,7 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
         "They contain a lot of cheese.",
         "People eat them only for breakfast."
       ],
-      answer: 1,
+      skill: "quantities",
       points: 2.5
     },
     {
@@ -67,14 +74,14 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
         "They were warm and soft inside.",
         "They were less filling than he expected."
       ],
-      answer: 0,
+      skill: "sensoryEvidence",
       points: 2.5
     },
     {
       id: "m7",
       prompt: "Which flour is used in the Brazilian cheese bread?",
       options: ["Rice flour", "Wheat flour", "Corn flour", "Cassava flour"],
-      answer: 3,
+      skill: "factualDetail",
       points: 2.5
     },
     {
@@ -86,14 +93,14 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
         "Crisp outside and soft inside",
         "Chewy outside and sweet inside"
       ],
-      answer: 2,
+      skill: "sensoryEvidence",
       points: 2.5
     },
     {
       id: "m9",
       prompt: "Which snack works both as an afternoon snack and as party food?",
       options: ["Brazilian cheese bread", "Simit", "Sweet rice cakes", "All three only fit special occasions"],
-      answer: 0,
+      skill: "foodContext",
       points: 2.5
     },
     {
@@ -105,7 +112,7 @@ window.INTERMEDIATE_INTEGRATED_TASK_MOCK = {
         "Texture matters more than ingredients or context.",
         "Ingredients, texture, and context shape a food review."
       ],
-      answer: 3,
+      skill: "mainIdea",
       points: 2.5
     }
   ]

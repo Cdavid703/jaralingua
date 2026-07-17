@@ -137,6 +137,92 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 .result-item { padding: .75rem; background: rgba(255, 255, 255, .64); border: 1px solid rgba(16, 42, 86, .12); border-radius: 8px; }
 .result-item strong { display: block; color: var(--intermediate-navy); font-size: 1.15rem; }
 
+.history-list { display: grid; border-top: 1px solid var(--line); }
+.history-item { display: grid; grid-template-columns: minmax(190px, 1.6fr) repeat(3, minmax(110px, .7fr)) auto; gap: .75rem; align-items: center; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.history-item > div { min-width: 0; }
+.history-item span { display: block; color: var(--muted); font-size: .8rem; font-weight: 800; }
+.history-item strong { display: block; overflow-wrap: anywhere; color: var(--intermediate-navy); }
+.history-diagnostic-button { min-height: 40px; display: inline-flex; align-items: center; justify-content: center; gap: .4rem; padding: .55rem .7rem; border: 2px solid #bad1d0; border-radius: 8px; background: #fff; color: var(--intermediate-navy); cursor: pointer; font-weight: 900; }
+.history-diagnostic-button:hover { border-color: var(--intermediate-teal); color: var(--intermediate-teal); }
+.empty-state { margin: 0; padding: 1rem 0; color: var(--muted); font-weight: 800; }
+.error-text { color: var(--danger); }
+
+.diagnostic-panel { border-top: 5px solid var(--intermediate-teal); }
+.diagnostic-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 1rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.diagnostic-card { min-width: 0; padding: 1rem; border-right: 1px solid var(--line); border-top: 4px solid #9aa7b9; }
+.diagnostic-card:last-child { border-right: 0; }
+.diagnostic-card.secure { border-top-color: var(--success); }
+.diagnostic-card.developing { border-top-color: var(--intermediate-gold); }
+.diagnostic-card.priority { border-top-color: var(--intermediate-coral); }
+.diagnostic-card-head { display: grid; gap: .45rem; }
+.diagnostic-card-head strong { color: var(--intermediate-navy); overflow-wrap: anywhere; }
+.diagnostic-card-head span { width: fit-content; padding: .25rem .42rem; border-radius: 6px; background: #eef2f7; color: var(--muted); font-size: .75rem; font-weight: 900; }
+.diagnostic-card.secure .diagnostic-card-head span { background: #e8f6ef; color: var(--success); }
+.diagnostic-card.developing .diagnostic-card-head span { background: #fff8df; color: var(--warning); }
+.diagnostic-card.priority .diagnostic-card-head span { background: #fff0f1; color: var(--danger); }
+.diagnostic-score { margin: .75rem 0 .35rem; color: var(--muted); font-weight: 900; }
+.diagnostic-score b { color: var(--intermediate-navy); font-size: 1.55rem; }
+.diagnostic-card p { margin: 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+.writing-diagnostic { margin-top: 1.2rem; }
+.writing-diagnostic h3, .feedback-content h3 { color: var(--intermediate-navy); }
+.signal-list { display: flex; flex-wrap: wrap; gap: .5rem; }
+.signal-chip { display: inline-flex; align-items: center; gap: .35rem; padding: .5rem .65rem; border-radius: 8px; font-weight: 900; }
+.signal-chip.found { background: #e8f6ef; color: var(--success); }
+.signal-chip.missing { background: #fff0f1; color: var(--danger); }
+.attempt-save-status { display: flex; align-items: center; gap: .45rem; }
+
+.feedback-panel { border-top: 5px solid var(--itm-purple); }
+.feedback-content { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 1.2rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.protected-transcript { max-height: 620px; overflow: auto; padding-right: .7rem; }
+.protected-transcript p { color: var(--ink); line-height: 1.7; }
+.answer-explanation-list { min-width: 0; }
+.answer-explanation { border-bottom: 1px solid var(--line); }
+.answer-explanation summary { display: flex; justify-content: space-between; gap: .7rem; padding: .8rem 0; color: var(--intermediate-navy); cursor: pointer; font-weight: 900; }
+.answer-explanation summary span { color: var(--intermediate-teal); white-space: nowrap; }
+.answer-explanation > div { padding: 0 0 1rem; color: var(--muted); line-height: 1.6; }
+.answer-explanation > div strong { color: var(--ink); }
+.answer-explanation > div p { margin: .45rem 0 0; }
+
+.study-companion .exam-hero { background-image: url("../img/english-intermediate/integrated-task/mock-study-companion-food-review.webp"); background-position: center 48%; }
+.study-companion .exam-hero::before { background: linear-gradient(90deg, rgba(7, 25, 57, .96) 0%, rgba(7, 25, 57, .76) 52%, rgba(7, 25, 57, .2) 100%); }
+.study-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.study-summary-item { padding: 1rem; border-right: 1px solid var(--line); }
+.study-summary-item:last-child { border-right: 0; }
+.study-summary-item i { color: var(--intermediate-teal); font-size: 1.35rem; }
+.study-summary-item strong { display: block; margin: .4rem 0 .2rem; color: var(--intermediate-navy); }
+.study-summary-item span { color: var(--muted); line-height: 1.5; }
+.study-audio-toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem; padding: .8rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.study-audio-toolbar p { min-width: min(100%, 300px); margin: 0; color: var(--muted); font-weight: 800; }
+.study-audio-speed { display: flex; align-items: center; gap: .45rem; }
+.vocabulary-list { display: grid; }
+.vocabulary-row { display: grid; grid-template-columns: minmax(160px, .8fr) minmax(180px, 1fr) minmax(260px, 1.5fr) auto; gap: 1rem; align-items: center; padding: 1rem 0; border-bottom: 1px solid var(--line); }
+.vocabulary-row:last-child { border-bottom: 0; }
+.vocabulary-expression { color: var(--intermediate-navy); font-size: 1.05rem; font-weight: 900; }
+.vocabulary-use { color: var(--muted); line-height: 1.5; }
+.vocabulary-example { color: var(--ink); line-height: 1.55; }
+.grammar-tag { width: fit-content; display: inline-flex; padding: .25rem .45rem; margin-top: .3rem; border-radius: 6px; background: #eef8f7; color: var(--intermediate-teal); font-size: .76rem; font-weight: 900; }
+.audio-model-button { width: 44px; height: 44px; display: grid; place-items: center; border: 2px solid #bad1d0; border-radius: 50%; background: #fff; color: var(--intermediate-navy); cursor: pointer; font-size: 1.1rem; }
+.audio-model-button:hover, .audio-model-button.is-playing { border-color: var(--intermediate-teal); background: var(--intermediate-teal); color: #fff; }
+.annotated-model { padding: 1rem 1.1rem; background: #f7f9fc; border-left: 5px solid var(--intermediate-gold); border-radius: 8px; color: var(--ink); font-size: 1.02rem; line-height: 1.82; }
+.annotated-model mark { padding: .08rem .18rem; border-radius: 4px; color: inherit; }
+.model-origin { background: #dfeafa; }
+.model-quantity { background: #d9f0e9; }
+.model-sensory { background: #fff0c7; }
+.model-comparison { background: #f6dfdf; }
+.model-recommendation { background: #e8e0f5; }
+.annotation-key { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-top: 1rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.annotation-item { padding: .85rem; border-right: 1px solid var(--line); }
+.annotation-item:last-child { border-right: 0; }
+.annotation-item strong { display: block; color: var(--intermediate-navy); }
+.annotation-item span { color: var(--muted); font-size: .86rem; line-height: 1.45; }
+.study-sequence { display: grid; grid-template-columns: repeat(5, 1fr); counter-reset: study-step; border-top: 1px solid var(--line); }
+.study-step { position: relative; padding: 1rem; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.study-step:last-child { border-right: 0; }
+.study-step::before { counter-increment: study-step; content: counter(study-step, decimal-leading-zero); display: block; color: var(--intermediate-gold); font-weight: 900; }
+.study-step strong { display: block; margin: .3rem 0; color: var(--intermediate-navy); }
+.study-step span { color: var(--muted); line-height: 1.5; }
+.study-audio-status { min-height: 1.5rem; color: var(--intermediate-teal); font-weight: 900; }
+
 .screen-footer { padding: 2rem 1rem; background: var(--intermediate-navy); color: #fff; }
 .screen-footer-inner { max-width: 1120px; margin: auto; }
 .screen-footer p { margin-bottom: 0; color: rgba(255, 255, 255, .8); }
@@ -160,6 +246,14 @@ button:disabled { opacity: .56; cursor: not-allowed; }
   .rubric-item { border-bottom: 1px solid var(--line); }
   .audio-card { grid-template-columns: 1fr; }
   .play-counter { white-space: normal; }
+  .history-item { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .history-diagnostic-button { width: 100%; }
+  .diagnostic-grid, .annotation-key, .study-sequence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .diagnostic-card:nth-child(2n), .annotation-item:nth-child(2n), .study-step:nth-child(2n) { border-right: 0; }
+  .feedback-content { grid-template-columns: 1fr; }
+  .protected-transcript { max-height: none; overflow: visible; padding-right: 0; }
+  .vocabulary-row { grid-template-columns: minmax(150px, .8fr) minmax(0, 1.4fr) auto; }
+  .vocabulary-use { grid-column: 1 / -1; grid-row: 2; }
 }
 
 @media (max-width: 560px) {
@@ -175,6 +269,15 @@ button:disabled { opacity: .56; cursor: not-allowed; }
   .speed-label { grid-column: 1 / -1; }
   .speed-btn { min-width: 0; }
   .word-row { flex-direction: column; gap: .2rem; }
+  .history-item, .diagnostic-grid, .study-summary-grid, .annotation-key, .study-sequence, .vocabulary-row { grid-template-columns: 1fr; }
+  .diagnostic-card, .annotation-item, .study-step, .study-summary-item { border-right: 0; border-bottom: 1px solid var(--line); }
+  .history-item { gap: .55rem; }
+  .history-diagnostic-button { width: 100%; }
+  .vocabulary-use { grid-column: auto; grid-row: auto; }
+  .audio-model-button { width: 100%; border-radius: 8px; }
+  .study-audio-toolbar, .study-audio-speed { align-items: stretch; }
+  .study-audio-toolbar { flex-direction: column; }
+  .study-audio-speed { display: grid; grid-template-columns: repeat(3, 1fr); }
 }
 
 @page { size: letter; margin: .85in .75in 1.35in; }

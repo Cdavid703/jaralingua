@@ -70,6 +70,7 @@ INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLI
 INTERMEDIATE_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/intermediate-integrated-task.json")
 INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/intermediate-integrated-task-submissions.json")
 INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/intermediate-integrated-task-real-us.mp3")
+INTERMEDIATE_MOCK_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_MOCK_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/intermediate-mock-integrated-task.json")
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
 INTERMEDIATE_UNIT4_IMPOSTOR_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_IMPOSTOR_DATA", "/var/lib/jaralingua/intermediate-unit4-impostor-games.json")
 INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_DATA", "/var/lib/jaralingua/intermediate-unit5-market-basket-live.json")
@@ -301,6 +302,45 @@ INTERMEDIATE_INTEGRATED_TASK_EVALUATION = {
     "type": "Integrated task",
     "description": "Protected listening and integrated food-review assessment. Listening is scored automatically and writing is graded by the teacher with the institutional rubric."
 }
+
+INTERMEDIATE_MOCK_QUESTION_BLUEPRINT = [
+    {"id": "m1", "answer": 1, "skill": "mainIdea", "question": "What is the main purpose of the Food Passport episode?", "correctOption": "To compare snacks, occasions, and food-review evidence.", "rationale": "Olivia introduces three snacks and the speakers compare their ingredients, textures, and everyday or special-occasion contexts."},
+    {"id": "m2", "answer": 2, "skill": "factualDetail", "question": "When did Marcus try simit?", "correctOption": "On a trip last year.", "rationale": "Marcus states the time directly before describing simit."},
+    {"id": "m3", "answer": 0, "skill": "foodContext", "question": "Why does Marcus classify simit as an everyday food?", "correctOption": "People often eat it for breakfast with cheese or tea.", "rationale": "His classification is based on when and how people commonly eat it, not only on its ingredients."},
+    {"id": "m4", "answer": 3, "skill": "quantities", "question": "What are the sweet rice cakes made with?", "correctOption": "Rice flour, sugar, and a little water.", "rationale": "Sofia gives the ingredient list and uses a little with the uncountable noun water."},
+    {"id": "m5", "answer": 1, "skill": "quantities", "question": "Why would Sofia serve only a few rice cakes per person?", "correctOption": "They are quite filling.", "rationale": "A few describes the limited number of pieces, and filling explains the portion decision."},
+    {"id": "m6", "answer": 0, "skill": "sensoryEvidence", "question": "What surprised Marcus about the rice cakes?", "correctOption": "They were softer and stickier than he expected.", "rationale": "Marcus contrasts his expectation that they would be hard with their actual soft, slightly sticky texture."},
+    {"id": "m7", "answer": 3, "skill": "factualDetail", "question": "Which flour is used in the Brazilian cheese bread?", "correctOption": "Cassava flour.", "rationale": "Sofia identifies cassava flour as one of the bread's ingredients."},
+    {"id": "m8", "answer": 2, "skill": "sensoryEvidence", "question": "Which texture contrast describes the Brazilian cheese bread?", "correctOption": "Crisp outside and soft inside.", "rationale": "The review uses an outside-inside contrast to give precise texture evidence."},
+    {"id": "m9", "answer": 0, "skill": "foodContext", "question": "Which snack works both as an afternoon snack and as party food?", "correctOption": "Brazilian cheese bread.", "rationale": "Marcus says it works as an everyday afternoon snack and that a large basket is easy to share at a party."},
+    {"id": "m10", "answer": 3, "skill": "mainIdea", "question": "What final idea does Olivia emphasize?", "correctOption": "Ingredients, texture, and context shape a food review.", "rationale": "Olivia's conclusion synthesizes the three kinds of evidence used throughout the episode."}
+]
+
+INTERMEDIATE_MOCK_SKILLS = {
+    "mainIdea": {"label": "Main idea and synthesis", "studyTip": "Identify the program's purpose and listen for the final summary."},
+    "factualDetail": {"label": "Time and factual detail", "studyTip": "Track names, time references, origins, and exact ingredients."},
+    "quantities": {"label": "Ingredients and quantities", "studyTip": "Connect quantity expressions with the reason for each portion or ingredient."},
+    "sensoryEvidence": {"label": "Texture and sensory evidence", "studyTip": "Notice adjective contrasts such as crisp outside but soft inside."},
+    "foodContext": {"label": "Food context and classification", "studyTip": "Use evidence about breakfast, daily snacks, parties, and celebrations."}
+}
+
+INTERMEDIATE_MOCK_TRANSCRIPT = """Olivia: Welcome to Food Passport. Today, Marcus and Sofia are tasting three snacks and deciding whether they fit everyday meals or special occasions. Marcus, have you ever tried simit?
+
+Marcus: Yes. I ate it on a trip last year. It is a sesame bread ring from Turkey. Mine was crisp outside and chewy inside. People often eat it for breakfast with cheese or tea, so I see it as an everyday food.
+
+Olivia: Sofia, what about the sweet rice cakes?
+
+Sofia: They are made with rice flour, sugar, and a little water. They look delicate, but they are quite filling. I would serve only a few pieces per person. Some families prepare them for celebrations, although people also buy them as a regular snack.
+
+Marcus: I expected them to be hard, but they were soft and slightly sticky. I liked them more than I expected.
+
+Olivia: Our final snack is Brazilian cheese bread.
+
+Sofia: These small rolls are made with cassava flour, eggs, milk, and a lot of cheese. They are light and crisp outside, but warm and soft inside.
+
+Marcus: They work as an everyday afternoon snack, but a large basket is also easy to share at a party. I would give them five out of five.
+
+Olivia: So simit is the clearest everyday choice, the rice cakes connect daily life with celebrations, and the cheese bread fits both. All three snacks show that ingredients, texture, and context can change a food review."""
 
 BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION = {
     "id": BASIC_UNIT6_NEIGHBORHOOD_AI_ID,
@@ -5976,6 +6016,134 @@ def write_intermediate_integrated_task_submissions(data):
     write_json_file(INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH, data, ".intermediate-integrated-submissions-")
 
 
+def default_intermediate_mock_integrated_task_data():
+    return {
+        "state": {
+            "feedbackOpen": False,
+            "updatedAt": None,
+            "updatedBy": ""
+        },
+        "attempts": {}
+    }
+
+
+def read_intermediate_mock_integrated_task_data():
+    data = read_json_file(INTERMEDIATE_MOCK_INTEGRATED_TASK_PATH, default_intermediate_mock_integrated_task_data())
+    if not isinstance(data.get("state"), dict):
+        data["state"] = default_intermediate_mock_integrated_task_data()["state"]
+    if not isinstance(data.get("attempts"), dict):
+        data["attempts"] = {}
+    data["state"].setdefault("feedbackOpen", False)
+    data["state"].setdefault("updatedAt", None)
+    data["state"].setdefault("updatedBy", "")
+    return data
+
+
+def write_intermediate_mock_integrated_task_data(data):
+    write_json_file(INTERMEDIATE_MOCK_INTEGRATED_TASK_PATH, data, ".intermediate-mock-integrated-task-")
+
+
+def intermediate_mock_writing_signals(text):
+    normalized = str(text or "").lower()
+    return {
+        "content": bool(re.search(r"(everyday|daily|special occasion|celebration|party|both)", normalized) and re.search(r"(from|origin|culture|traditional|region|country)", normalized)),
+        "quantities": bool(re.search(r"(some|any|much|many|a few|a little|a lot of|cup|cups|piece|pieces|slice|slices)", normalized)),
+        "sensory": bool(re.search(r"(sweet|salty|sour|spicy|bitter|savory|crispy|crisp|soft|chewy|sticky|creamy|crunchy|smooth)", normalized)),
+        "comparison": bool(re.search(r"(similar|different|than|compared|reminds me|both)", normalized)),
+        "recommendation": bool(re.search(r"(out of five|out of 5|recommend|would give|rating|should try)", normalized))
+    }
+
+
+def intermediate_mock_score_attempt(payload):
+    answers = payload.get("answers") if isinstance(payload.get("answers"), dict) else {}
+    skills = {
+        key: {
+            "label": details["label"],
+            "correct": 0,
+            "total": 0,
+            "studyTip": details["studyTip"]
+        }
+        for key, details in INTERMEDIATE_MOCK_SKILLS.items()
+    }
+    correct_count = 0
+    incorrect = []
+    for index, question in enumerate(INTERMEDIATE_MOCK_QUESTION_BLUEPRINT, 1):
+        skill = skills[question["skill"]]
+        skill["total"] += 1
+        try:
+            selected = int(answers.get(question["id"], -1))
+        except (TypeError, ValueError):
+            selected = -1
+        if selected == question["answer"]:
+            correct_count += 1
+            skill["correct"] += 1
+        else:
+            incorrect.append(index)
+    writing = str(payload.get("writing") or "")[:4000]
+    writing_signals = intermediate_mock_writing_signals(writing)
+    try:
+        audio_plays = max(0, min(3, int(payload.get("audioPlays", 0))))
+    except (TypeError, ValueError):
+        audio_plays = 0
+    return {
+        "attemptId": "MITM-" + secrets.token_hex(5).upper(),
+        "submittedAt": now_iso(),
+        "listeningPoints": clean_exam_number(correct_count * 2.5),
+        "correctAnswers": correct_count,
+        "totalQuestions": len(INTERMEDIATE_MOCK_QUESTION_BLUEPRINT),
+        "incorrectQuestions": incorrect,
+        "skills": skills,
+        "writingSignals": writing_signals,
+        "writingSignalCount": len([value for value in writing_signals.values() if value]),
+        "wordCount": basic_word_count(writing),
+        "audioPlays": audio_plays
+    }
+
+
+def intermediate_mock_public_attempt(attempt):
+    if not isinstance(attempt, dict):
+        return None
+    return {
+        "attemptId": clean_text(attempt.get("attemptId"), 80),
+        "submittedAt": clean_text(attempt.get("submittedAt"), 80),
+        "listeningPoints": clean_exam_number(attempt.get("listeningPoints")),
+        "correctAnswers": int(attempt.get("correctAnswers", 0)),
+        "totalQuestions": int(attempt.get("totalQuestions", 10)),
+        "incorrectQuestions": [int(value) for value in attempt.get("incorrectQuestions", []) if isinstance(value, int)],
+        "skills": attempt.get("skills", {}),
+        "writingSignals": attempt.get("writingSignals", {}),
+        "writingSignalCount": int(attempt.get("writingSignalCount", 0)),
+        "wordCount": int(attempt.get("wordCount", 0)),
+        "audioPlays": int(attempt.get("audioPlays", 0))
+    }
+
+
+def intermediate_mock_state_payload(profile, grades_data, data):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    attempts = data.get("attempts", {}).get(student_id, []) if student_id else []
+    if not isinstance(attempts, list):
+        attempts = []
+    public_attempts = [intermediate_mock_public_attempt(item) for item in attempts[-10:] if isinstance(item, dict)]
+    public_attempts = [item for item in public_attempts if item]
+    public_attempts.reverse()
+    total_attempts = sum(len(items) for items in data.get("attempts", {}).values() if isinstance(items, list))
+    feedback_open = data.get("state", {}).get("feedbackOpen") is True
+    return {
+        "role": role,
+        "student": basic_integrated_student_identity(student),
+        "state": {
+            "feedbackOpen": feedback_open,
+            "updatedAt": clean_text(data.get("state", {}).get("updatedAt"), 80),
+            "updatedBy": normalize_email(data.get("state", {}).get("updatedBy")) if role in ("admin", "teacher") else ""
+        },
+        "attempts": public_attempts,
+        "totalAttempts": total_attempts if role in ("admin", "teacher") else len(attempts),
+        "feedbackAvailable": role in ("admin", "teacher") or (feedback_open and bool(attempts))
+    }
+
+
 def intermediate_integrated_can_take(role, state, student_id):
     return basic_integrated_can_take(role, state, student_id)
 
@@ -6718,6 +6886,47 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, basic_unit6_neighborhood_gallery_payload(profile, grades_data, gallery))
             return
 
+        if parsed.path == "/api/intermediate/mock-integrated-task/state":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                data = read_intermediate_mock_integrated_task_data()
+                json_response(self, 200, intermediate_mock_state_payload(profile, grades_data, data))
+            return
+
+        if parsed.path == "/api/intermediate/mock-integrated-task/feedback":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                data = read_intermediate_mock_integrated_task_data()
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                attempts = data.get("attempts", {}).get(student_id, []) if student_id else []
+                feedback_open = data.get("state", {}).get("feedbackOpen") is True
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                if role not in ("admin", "teacher") and (not feedback_open or not isinstance(attempts, list) or not attempts):
+                    json_response(self, 403, {"error": "feedback_locked"})
+                    return
+                explanations = [{
+                    "number": index,
+                    "question": question["question"],
+                    "correctOption": question["correctOption"],
+                    "rationale": question["rationale"],
+                    "skill": INTERMEDIATE_MOCK_SKILLS[question["skill"]]["label"]
+                } for index, question in enumerate(INTERMEDIATE_MOCK_QUESTION_BLUEPRINT, 1)]
+                json_response(self, 200, {
+                    "title": "Food Passport - Mock Integrated Task",
+                    "transcript": INTERMEDIATE_MOCK_TRANSCRIPT,
+                    "explanations": explanations
+                })
+            return
+
         if parsed.path == "/api/intermediate/integrated-task/state":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
@@ -6960,6 +7169,36 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if (parsed.path.startswith("/api/intermediate/") or parsed.path.startswith("/api/basic/")) and isinstance(payload, dict):
             profile = dict(profile)
             profile["_studentIdClaim"] = payload.get("studentIdClaim") or payload.get("studentId") or payload.get("idClaim") or ""
+
+        if parsed.path == "/api/intermediate/mock-integrated-task/attempts":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                writing = str(payload.get("writing") or "")
+                word_count = basic_word_count(writing)
+                if word_count < 100 or word_count > 140:
+                    json_response(self, 400, {"error": "invalid_word_count", "wordCount": word_count})
+                    return
+                attempt = intermediate_mock_score_attempt(payload)
+                student_id = clean_text(student.get("id"), 40)
+                data = read_intermediate_mock_integrated_task_data()
+                attempts = data.setdefault("attempts", {}).setdefault(student_id, [])
+                if not isinstance(attempts, list):
+                    attempts = []
+                    data["attempts"][student_id] = attempts
+                attempts.append(attempt)
+                data["attempts"][student_id] = attempts[-20:]
+                write_intermediate_mock_integrated_task_data(data)
+                json_response(self, 200, {
+                    "ok": True,
+                    "attempt": intermediate_mock_public_attempt(attempt),
+                    "attemptCount": len(data["attempts"][student_id]),
+                    "feedbackAvailable": data.get("state", {}).get("feedbackOpen") is True
+                })
+            return
 
         if parsed.path == "/api/intermediate/unit4-expression-wall/activate":
             with data_lock:
@@ -8800,6 +9039,26 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {"ok": True, "updatedAt": detail["feedbackAt"], "grade": grade})
             return
 
+
+        if parsed.path == "/api/intermediate/mock-integrated-task/state":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                data = read_intermediate_mock_integrated_task_data()
+                state = data.setdefault("state", {})
+                state["feedbackOpen"] = payload.get("feedbackOpen") is True
+                state["updatedAt"] = now_iso()
+                state["updatedBy"] = normalize_email(profile.get("email"))
+                write_intermediate_mock_integrated_task_data(data)
+                json_response(self, 200, {
+                    "ok": True,
+                    "state": state,
+                    "message": "Post-attempt feedback opened for students." if state["feedbackOpen"] else "Post-attempt feedback closed for students."
+                })
+            return
 
         if parsed.path == "/api/intermediate/integrated-task/state":
             with data_lock:

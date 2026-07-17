@@ -15,7 +15,7 @@
   <nav class="exam-nav">
     <div class="exam-nav-inner">
       <a class="brand" href="index.html"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"><span>Intermediate English Course 1</span></a>
-      <div class="exam-nav-links"><a href="#access">Access</a><a href="#instructions">Instructions</a><a href="#listening">Listening</a><a href="#writing">Writing</a><a href="notas.html">Grades</a></div>
+      <div class="exam-nav-links"><a href="mock-integrated-task-study-companion.html">Study companion</a><a href="#access">Access</a><a href="#instructions">Instructions</a><a href="#listening">Listening</a><a href="#writing">Writing</a><a href="notas.html">Grades</a></div>
     </div>
   </nav>
 
@@ -26,7 +26,7 @@
         <p class="eyebrow">Listening + integrated food review</p>
         <h1>Mock Integrated Task</h1>
         <p class="hero-copy">Practice the complete Intermediate Course 1 format with a professional global-food listening and a guided review. This simulation does not affect your grades.</p>
-        <div class="btn-row"><a class="btn-main" href="#access"><i class="bi bi-play-circle-fill"></i> Start mock exam</a><a class="btn-soft" href="index.html"><i class="bi bi-house-door-fill"></i> Course home</a></div>
+        <div class="btn-row"><a class="btn-main" href="#access"><i class="bi bi-play-circle-fill"></i> Start mock exam</a><a class="btn-soft" href="mock-integrated-task-study-companion.html"><i class="bi bi-journal-richtext"></i> Study companion</a><a class="btn-soft" href="index.html"><i class="bi bi-house-door-fill"></i> Course home</a></div>
       </div>
     </div>
   </header>
@@ -35,7 +35,7 @@
     <div class="panel" id="accessPanel">
       <div class="access-grid">
         <div class="access-icon"><i class="bi bi-shield-check"></i></div>
-        <div><p class="section-kicker">Connected practice</p><h2 class="section-title">Sign in to begin</h2><p class="section-copy" id="accessStatus">Use the Google, Microsoft, or course account registered in Intermediate English Course 1.</p><div class="btn-row"><button class="btn-main" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Sign in</button></div></div>
+        <div><p class="section-kicker">Connected practice</p><h2 class="section-title">Sign in to begin</h2><p class="section-copy" id="accessStatus">Use the Google, Microsoft, or course account registered in Intermediate English Course 1.</p><div class="btn-row"><button class="btn-main" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Sign in</button><a class="btn-soft" href="mock-integrated-task-study-companion.html"><i class="bi bi-journal-richtext"></i> Prepare before the mock</a></div></div>
       </div>
     </div>
   </section>
@@ -58,6 +58,13 @@
           <div class="meta-item"><strong>Purpose</strong>Compare everyday and special-occasion food</div>
         </div>
         <p class="section-copy"><strong>Prompt:</strong> Listen to a short food-review program. Answer ten questions, and then write your own evidence-based food review.</p>
+      </section>
+
+      <section class="exam-section history-panel" id="historySection">
+        <p class="section-kicker">Your progress</p>
+        <h2 class="section-title">Attempt history</h2>
+        <p class="section-copy">Your completed simulations are stored as practice records only. They never enter Grades or affect a course percentage.</p>
+        <div class="history-list" id="attemptHistory" aria-live="polite"><p class="empty-state">Loading your practice history...</p></div>
       </section>
 
       <section class="exam-section" id="listening">
@@ -100,6 +107,31 @@
         <div class="btn-row"><button class="btn-main" id="submitExamBtn" type="submit"><i class="bi bi-check2-circle"></i> Check practice</button><button class="btn-soft" type="button" data-print><i class="bi bi-printer"></i> Print complete copy</button><button class="btn-danger" type="button" data-reset-practice><i class="bi bi-arrow-counterclockwise"></i> Reset full practice</button></div>
         <div class="status-box" id="submitResult" aria-live="polite"></div>
       </section>
+
+      <section class="exam-section diagnostic-panel" id="diagnosticSection" hidden>
+        <p class="section-kicker">Post-attempt diagnosis</p>
+        <h2 class="section-title">What your result means</h2>
+        <p class="section-copy">This report identifies the listening and writing areas to study. It does not reveal the correct options.</p>
+        <div class="diagnostic-grid" id="skillDiagnostic"></div>
+        <div class="writing-diagnostic" id="writingDiagnostic"></div>
+      </section>
+
+      <section class="exam-section admin-panel" id="feedbackAdminPanel" hidden>
+        <p class="section-kicker">Teacher control</p>
+        <div class="admin-state">
+          <div><h2 class="section-title">Post-attempt transcript and explanations</h2><p class="section-copy">Open this resource after the class has completed the simulation. Students must also have at least one saved attempt.</p><span class="state-badge closed" id="feedbackStateBadge">Closed for students</span></div>
+          <div class="btn-row"><button class="btn-main" type="button" data-feedback-state="open"><i class="bi bi-unlock-fill"></i> Open feedback</button><button class="btn-danger" type="button" data-feedback-state="closed"><i class="bi bi-lock-fill"></i> Close feedback</button></div>
+        </div>
+        <p class="activation-feedback" id="feedbackAdminStatus" role="status" aria-live="polite">Checking feedback availability...</p>
+      </section>
+
+      <section class="exam-section feedback-panel" id="feedbackSection">
+        <p class="section-kicker">Teacher-released review</p>
+        <h2 class="section-title">Transcript and answer explanations</h2>
+        <p class="section-copy" id="feedbackAccessStatus">Complete a simulation first. Your teacher decides when this review resource becomes available.</p>
+        <div class="btn-row"><button class="btn-soft" id="loadFeedbackBtn" type="button" disabled><i class="bi bi-file-earmark-text-fill"></i> Load released feedback</button></div>
+        <div class="feedback-content" id="feedbackContent" hidden></div>
+      </section>
     </form>
   </main>
 
@@ -113,8 +145,8 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
   <script src="../../assets/js/google-auth.js?v=20260716-mock-auth"></script>
-  <script src="../../assets/js/intermediate-integrated-task-mock-data.js?v=20260713-balanced-key"></script>
-  <script src="../../assets/js/intermediate-integrated-task-mock.js?v=20260716-auth-v2"></script>
+  <script src="../../assets/js/intermediate-integrated-task-mock-data.js?v=20260716-diagnostics"></script>
+  <script src="../../assets/js/intermediate-integrated-task-mock.js?v=20260716-study-support"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
