@@ -191,7 +191,7 @@ FRENCH8_PRONUNCIATION_EVALUATIONS = {
     }
 }
 
-FRENCH8_PRONUNCIATION_AUDIO_REQUIRED = {"pronunciation01d", "pronunciation02d", "pronunciation03d"}
+FRENCH8_PRONUNCIATION_AUDIO_REQUIRED = {"pronunciation01d", "pronunciation02d", "pronunciation03d", "pronunciation04d"}
 
 INTERMEDIATE_UNIT2_CATCHING_UP_EVALUATION = {
     "id": INTERMEDIATE_UNIT2_CATCHING_UP_ID,

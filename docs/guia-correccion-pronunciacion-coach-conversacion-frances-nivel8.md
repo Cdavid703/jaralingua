@@ -9,13 +9,13 @@ Este archivo es la fuente de verdad para corregir las actividades de pronunciaci
 Estado al cerrar esta guia:
 
 - El nuevo motor compartido de pronunciacion esta implementado localmente en `assets/js/french8-pronunciation-assessment.js`.
-- Las nueve actividades `01D-09D` ya consumen ese motor. `01D-03D` ya muestran resultados dudosos sin bloquear el avance; `04D-09D` conservan QA individual pendiente y pueden contener todavia el estado temporal `Essai non note`, que debe retirarse al revisarlas.
+- Las nueve actividades `01D-09D` ya consumen ese motor. `01D-04D` ya muestran resultados dudosos sin bloquear el avance; `05D-09D` conservan QA individual pendiente y pueden contener todavia el estado temporal `Essai non note`, que debe retirarse al revisarlas.
 - La calibracion de microfono, la alineacion tolerante, el tratamiento de variantes orales y la advertencia de fiabilidad ya estan implementados localmente.
 - El panel de envio y `Notes du cours` ya distinguen una estimacion normal de una estimacion con reconocimiento incierto.
 - El backend ya conserva la marca de incertidumbre junto con el intento enviado.
 - Existe la prueba `tools/test_french8_pronunciation_assessment.cjs` y esta aprobada.
-- `01D`, `02D` y `03D` se cierran en tandas independientes del 2026-07-17; el trabajo pendiente comienza en `04D`.
-- `01D-03D` ya tienen validacion individual local. Falta continuar desde `04D` y despues corregir el motor compartido del coach de conversacion.
+- `01D`, `02D`, `03D` y `04D` se cierran en tandas independientes del 2026-07-17; el trabajo pendiente comienza en `05D`.
+- `01D-04D` ya tienen validacion individual local. Falta continuar desde `05D` y despues corregir el motor compartido del coach de conversacion.
 - Los coaches `01O-08O` todavia muestran un icono generico y una imagen contextual; falta construir el escenario visible del personaje.
 - No se debe iniciar un servidor local para esta tarea.
 
@@ -470,7 +470,7 @@ Una actividad solo se marca como cerrada cuando:
 | 01D | Correccion aplicada; pruebas frontend/backend y QA responsive sin servidor aprobados | Validar microfono y envio autenticado en produccion sin alterar notas reales |
 | 02D | Correccion aplicada; pruebas pedagogicas/frontend/backend y QA responsive sin servidor aprobados | Validar microfono y envio autenticado en produccion sin alterar notas reales |
 | 03D | Correccion aplicada; pruebas pedagogicas/frontend/backend, audio y QA responsive aprobados | Validar microfono y envio autenticado en produccion sin alterar notas reales |
-| 04D | Motor compartido integrado; QA pendiente | Validar discurso reportado y envio |
+| 04D | Correccion aplicada; pruebas pedagogicas/frontend/backend, audio y QA responsive aprobados | Validar microfono y envio autenticado en produccion sin alterar notas reales |
 | 05D | Motor compartido integrado; QA pendiente | Confirmar que siga no calificable |
 | 06D | Motor compartido integrado; QA pendiente | Validar conectores y frases largas |
 | 07D | Motor compartido integrado; QA pendiente | Validar concesion y liaison consultiva |
@@ -525,6 +525,24 @@ Una actividad solo se marca como cerrada cuando:
 - Pruebas aprobadas: `tools/test_french8_pronunciation_theme3.cjs`, `tools/test_french8_pronunciation_theme3_backend.py`, `tools/test_french8_pronunciation_theme3_responsive.cjs` y regresiones de `01D-02D`.
 - QA visual sin servidor aprobado en `1366x768`, `1024x768`, `768x1024`, `390x844` y `320x568`, mostrando calibracion, audio del estudiante, resultado, resumen y panel de envio.
 - No se iniciaron servidores locales ni se modificaron archivos de datos o notas de estudiantes.
+- Pendiente antes del cierre operacional: prueba manual de permiso, calibracion, grabacion y envio autenticado desde un dispositivo real contra produccion.
+
+### Registro de revision 04D - 2026-07-17
+
+- Se conservaron `pronunciation04d`, el peso `5`, la escala sobre `5`, la formula `score100 / 20`, el guion canonico y los cinco MP3 ya auditados.
+- Se retiro el estado temporal `Essai non note`: una transcripcion vacia produce `0` dudoso y permite tanto repetir como continuar.
+- Un intento dudoso bajo no reemplaza un progreso fiable anterior mejor; el intento final que se envia y el audio adjunto siempre proceden de la misma grabacion.
+- El cliente exige audio final y el backend valida su presencia antes de escribir la nota o reemplazar los detalles de `04D`.
+- La pagina distingue el sonido abierto /ɛ/ de las terminaciones en `-ait / -aient` del sonido cerrado /e/ de `consulte`, `ecouter`, `ete` y `examines`.
+- Se retiro la falsa liaison `avis aient`, porque un nombre plural no se enlaza con el verbo siguiente. Tampoco se fuerza la liaison facultativa y rara de `aient ete`.
+- Las orientaciones reales son las liaisons de `son equipe`, `plusieurs associations`, `les habitants` y `les avis`, mas los enchainements de `elle a explique`, `elle a ajoute` y `encore ecouter`; siguen siendo consultivas y no modifican la nota.
+- El score se presenta como estimacion automatica provisional con pesos visibles de 55 % fidelidad, 35 % completitud y 10 % ritmo; la pagina recuerda que el profesor escucha y valida el audio.
+- Se elimino la carga duplicada de la hoja responsive y se agrego el bundle local de Bootstrap. El menu hamburguesa, reproduccion, pausa, velocidad y reinicio completo respondieron en QA.
+- La auditoria STT existente sigue vigente: el tema 04 obtuvo 99,91 % promedio y no fue necesario regenerar audio ni consumir nuevos creditos.
+- Chrome decodifico los cinco MP3: secciones `4.41 s`, `3.90 s`, `3.67 s`, `5.29 s`; desafio final `17.97 s`.
+- Pruebas aprobadas: `tools/test_french8_pronunciation_theme4.cjs`, `tools/test_french8_pronunciation_theme4_backend.py`, `tools/test_french8_pronunciation_theme4_responsive.cjs`, el motor compartido y regresiones de `01D-03D`.
+- QA visual sin servidor aprobado en `1366x768`, `1024x768`, `768x1024`, `390x844` y `320x568`, mostrando calibracion, audio del estudiante, resultado, resumen y panel de envio.
+- La fecha limite de `04D` sigue siendo el lunes 13 de julio de 2026 a las 23 h 59 (Bogota); no se reabrio ni se modificaron datos o notas de estudiantes.
 - Pendiente antes del cierre operacional: prueba manual de permiso, calibracion, grabacion y envio autenticado desde un dispositivo real contra produccion.
 
 ## 13. Decisiones que no se deben revertir

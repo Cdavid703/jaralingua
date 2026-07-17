@@ -75,6 +75,7 @@
   let objectUrl = null;
   let discardRecording = false;
   let finalAudioDataUrl = "";
+  let finalSubmissionAttempt = null;
   let analyzing = false;
   let audioContext = null;
   let analyser = null;
@@ -126,8 +127,9 @@
   const gradeSubmitter = window.JaraFrench8PronunciationGrade?.createPanel({
     evaluationId: GRADE_SUBMISSION.evaluationId,
     title: GRADE_SUBMISSION.title,
-    getFinalScore: () => stageScores[4],
+    getFinalScore: () => finalSubmissionAttempt || stageScores[4],
     getFinalAudio: () => finalAudioDataUrl,
+    requireFinalAudio: true,
     resetAll: resetAllResults
   });
   if (gradeSubmitter) finalSummary.insertAdjacentElement("afterend", gradeSubmitter.panel);
@@ -349,25 +351,28 @@
     });
   }
 
-  function evaluate(transcript, audioDataUrl) {
-    const spoken = tokens(transcript);
-    const referenceWords = tokens(currentStage().text);
-    if (!spoken.length) throw new Error("Aucune parole n’a été reconnue.");
-    const aligned = align(referenceWords, spoken);
-    const durationMinutes = Math.max(1 / 60, recordedDurationMs / 60000);
-    const wpm = spoken.length / durationMinutes;
-    const completeness = clamp(aligned.matches / referenceWords.length * 100);
-    const accuracy = clamp((1 - aligned.distance / Math.max(referenceWords.length, spoken.length)) * 100);
-    const fluency = clamp(100 - Math.abs(wpm - 125) * 1.2);
-    const overall = clamp(accuracy * .55 + completeness * .3 + fluency * .15);
+  function evaluate(transcript, audioDataUrl, payload = {}) {
+    const assessment = window.JaraFrench8PronunciationAssessment;
+    if (!assessment) throw new Error("Le module d’évaluation n’est pas disponible. Actualisez la page.");
+    const measured = assessment.assess({
+      referenceText: currentStage().text,
+      transcript,
+      words: payload.words,
+      audio: payload.audio,
+      languageProbability: payload.language_probability,
+      recordedDurationMs,
+      maxInputLevel
+    });
+    const { spoken, aligned, wpm, completeness, accuracy, fluency, overall, quality, provisional, uncertain, uncertaintyReasons, uncertaintyMessage } = measured;
     const previousAttempt = attemptHistory[currentStageIndex].at(-1) || null;
+    const savedStageScore = stageScores[currentStageIndex] || null;
     const liaison = window.JaraFrench8LiaisonFeedback?.analyze({
       evaluationId: GRADE_SUBMISSION.evaluationId,
       referenceText: currentStage().text,
       transcript
     });
     const displayWords = currentStage().text.split(/\s+/).map(spokenWord).filter(Boolean);
-    const missed = displayWords.filter((_, index) => aligned.states[index] !== "is-correct");
+    const missed = displayWords.filter((_, index) => aligned.states[index] === "is-missed");
     const attempt = {
       overall,
       accuracy,
@@ -379,12 +384,22 @@
       stageLabel: currentStage().label,
       final: currentStage().final === true,
       missedWords: missed.slice(0, 20),
+      acceptedVariants: aligned.accepted,
+      provisional,
+      uncertain,
+      uncertaintyReasons,
+      uncertaintyMessage,
+      quality,
       liaison,
       at: new Date().toISOString()
     };
-    if (currentStage().final) finalAudioDataUrl = audioDataUrl || "";
+    const retainSavedScore = uncertain && savedStageScore && savedStageScore.uncertain !== true && savedStageScore.overall > overall;
+    if (currentStage().final) {
+      finalSubmissionAttempt = attempt;
+      finalAudioDataUrl = audioDataUrl || "";
+    }
     attemptHistory[currentStageIndex].push(attempt);
-    stageScores[currentStageIndex] = attempt;
+    stageScores[currentStageIndex] = retainSavedScore ? savedStageScore : attempt;
     saveProgress();
     renderReference(aligned.states);
     document.getElementById("accuracyScore").textContent = `${accuracy}%`;
@@ -404,6 +419,8 @@
       feedback.textContent = feedbackFor(overall, missed, wpm) + comparison + liaisonMessage;
       nextButton.innerHTML = currentStageIndex === 3 ? '<i class="bi bi-trophy"></i> Passer au défi final' : '<i class="bi bi-arrow-right"></i> Section suivante';
     }
+    if (uncertain) feedback.textContent = `${uncertaintyMessage} ${feedback.textContent}`;
+    results.classList.toggle("is-uncertain", uncertain);
     nextButton.hidden = false;
     retryButton.hidden = false;
     renderHistory();
@@ -412,6 +429,7 @@
     stageProgress.children[currentStageIndex]?.classList.add("is-done");
     results.hidden = false;
     results.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    return attempt;
   }
 
   function renderFinalSummary() {
@@ -437,15 +455,12 @@
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || `Erreur du serveur (${response.status}).`);
       const transcript = (payload.text || "").trim();
-      const audioStats = payload.audio || {};
-      if (!transcript) {
-        if (Number(audioStats.rms || 0) < 0.0008) throw new Error("La grabación llegó en silencio. Seleccione otro micrófono y pruebe nuevamente.");
-        throw new Error("Whisper recibió sonido, pero no identificó palabras francesas. Hable un poco más cerca.");
-      }
-      liveTranscript.textContent = transcript;
+      liveTranscript.textContent = transcript || "Aucun mot n’a été reconnu dans cet essai.";
       const audioDataUrl = currentStage().final ? await blobToDataUrl(blob) : "";
-      evaluate(transcript, audioDataUrl);
-      recordStatus.textContent = `${currentStage().label} évaluée. Consultez votre résultat.`;
+      const attempt = evaluate(transcript, audioDataUrl, payload);
+      recordStatus.textContent = attempt.uncertain
+        ? "Résultat calculé avec réserve. Vous pouvez refaire l’essai ou continuer."
+        : `${currentStage().label} évaluée. Consultez votre résultat.`;
     } catch (error) {
       recordStatus.textContent = "L’analyse n’a pas pu être terminée.";
       liveTranscript.textContent = error.message || "Erreur de transcription.";
@@ -612,8 +627,8 @@
     stageScores.fill(null);
     attemptHistory.forEach((attempts) => attempts.splice(0));
     finalAudioDataUrl = "";
+    finalSubmissionAttempt = null;
     localStorage.removeItem(STORAGE_KEY);
-    saveProgress();
     resetAttempt(true);
     updateStageUI();
     gradeSubmitter?.update();

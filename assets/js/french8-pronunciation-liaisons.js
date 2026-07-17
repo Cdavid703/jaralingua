@@ -21,14 +21,13 @@
       { words: ["qu'elle", "ait"], label: "qu’elle ait", hint: "enchaînez le /l/ prononcé de elle avec ait" }
     ],
     pronunciation04d: [
-      { words: ["elle", "a", "explique"], label: "elle a explique", hint: "enchainez elle a sans pause" },
+      { words: ["elle", "a", "explique"], label: "elle a explique", hint: "enchaînez le /l/ déjà prononcé de elle avec a" },
       { words: ["son", "equipe"], label: "son equipe", hint: "gardez la liaison en /n/" },
       { words: ["plusieurs", "associations"], label: "plusieurs associations", hint: "faites entendre la liaison en /z/" },
-      { words: ["a", "ajoute"], label: "a ajoute", hint: "enchainez les deux voyelles sans rupture" },
-      { words: ["encore", "ecouter"], label: "encore ecouter", hint: "enchainez le r de encore avec ecouter" },
+      { words: ["elle", "a", "ajoute"], label: "elle a ajoute", hint: "enchaînez le /l/ déjà prononcé de elle avec a" },
+      { words: ["encore", "ecouter"], label: "encore ecouter", hint: "enchaînez le /r/ prononcé de encore avec écouter" },
       { words: ["les", "habitants"], label: "les habitants", hint: "habitants a un h muet : liaison en /z/" },
-      { words: ["les", "avis"], label: "les avis", hint: "faites entendre la liaison en /z/" },
-      { words: ["aient", "ete"], label: "aient été", hint: "liaison en /t/ possible dans une lecture très soignée, jamais obligatoire" }
+      { words: ["les", "avis"], label: "les avis", hint: "faites entendre la liaison en /z/" }
     ],
     pronunciation05d: [
       { words: ["c'est", "une"], label: "c'est une", hint: "enchainez le /t/ avec une" },
