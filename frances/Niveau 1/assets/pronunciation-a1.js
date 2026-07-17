@@ -204,13 +204,7 @@
     "theme-5": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Description et professions" },
     "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et localisation" }
   };
-  const COURSE_EVALUABLE_PRONUNCIATION = {
-    "theme-1": { evaluationId: "pronunciationTheme1", label: "Thème 1 · Premiers contacts" },
-    "theme-2": { evaluationId: "pronunciationTheme3", label: "Thème 3 · Les verbes du premier groupe" },
-    "theme-4": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Famille et relations" },
-    "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et environnement" }
-  };
-  const gradeConfig = COURSE_EVALUABLE_PRONUNCIATION[key] || null;
+  const gradeConfig = EVALUABLE_PRONUNCIATION[key] || null;
 
   const els = {
     title: document.getElementById("pronTitle"),
