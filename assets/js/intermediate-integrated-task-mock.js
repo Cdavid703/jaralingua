@@ -82,9 +82,30 @@
     return PLAY_KEY_PREFIX + userKey();
   }
 
-  function openLogin() {
-    var trigger = document.querySelector("[data-auth-nav-toggle], [data-auth-toggle]");
-    if (trigger) trigger.click();
+  function openLogin(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    var panel = document.querySelector("[data-auth-panel]");
+    if (panel && !panel.hidden) {
+      toast("Sign-in options are already open. Choose Google, Microsoft, or your course account.", "success");
+      return;
+    }
+    var trigger = document.querySelector("[data-auth-toggle]") || document.querySelector("[data-auth-nav-toggle]");
+    if (!trigger) {
+      toast("The sign-in options could not be loaded. Reload the page and try again.", "error");
+      return;
+    }
+    trigger.click();
+    window.setTimeout(function () {
+      var openedPanel = document.querySelector("[data-auth-panel]");
+      if (openedPanel && !openedPanel.hidden) {
+        toast("Sign-in options opened: Google, Microsoft, and course account.", "success");
+      } else {
+        toast("The sign-in panel did not open. Reload the page and try again.", "error");
+      }
+    }, 80);
   }
 
   function toast(message, type) {
@@ -94,6 +115,8 @@
     node.className = "toast " + (type || "");
     node.textContent = message;
     node.setAttribute("role", "status");
+    node.setAttribute("aria-live", "polite");
+    node.setAttribute("aria-atomic", "true");
     document.body.appendChild(node);
     window.setTimeout(function () { node.remove(); }, 5200);
   }
