@@ -256,6 +256,43 @@
     return date.toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
   }
 
+  function pronunciationMetrics(details) {
+    const metrics = details && typeof details.metrics === "object" && details.metrics ? details.metrics : details;
+    const rows = [
+      ["Fidélité", metrics.accuracy, "%"],
+      ["Complétude", metrics.completeness, "%"],
+      ["Rythme", metrics.fluency, "%"],
+      ["Débit", metrics.wpm, " mots/min"]
+    ]
+      .filter((row) => Number.isFinite(Number(row[1])))
+      .map((row) => `<li><strong>${esc(row[0])} :</strong> ${Number(row[1]).toFixed(row[0] === "Débit" ? 0 : 1)}${row[2]}</li>`)
+      .join("");
+    return rows ? `<details class="mt-2"><summary>Métriques de l'estimation</summary><ul class="mb-0">${rows}</ul></details>` : "";
+  }
+
+  function pronunciationUncertaintyReasons(details) {
+    const reasons = Array.isArray(details.uncertaintyReasons) ? details.uncertaintyReasons : [];
+    const items = reasons
+      .map((reason) => typeof reason === "object" ? reason.reason || reason.message : reason)
+      .map((reason) => esc(reason))
+      .filter(Boolean)
+      .slice(0, 8)
+      .map((reason) => `<li>${reason}</li>`)
+      .join("");
+    return items ? `<details class="mt-2"><summary>Raisons techniques</summary><ul class="mb-0">${items}</ul></details>` : "";
+  }
+
+  function pronunciationMissedWords(details) {
+    const words = Array.isArray(details.missedWords) ? details.missedWords : [];
+    const items = words
+      .map((word) => esc(word))
+      .filter(Boolean)
+      .slice(0, 30)
+      .map((word) => `<span class="badge text-bg-light me-1 mb-1">${word}</span>`)
+      .join("");
+    return items ? `<details class="mt-2"><summary>Mots à réécouter</summary><p class="mb-0">${items}</p></details>` : "";
+  }
+
   function pronunciationEvidence(student, evaluation) {
     const details = student && student.gradeDetails && typeof student.gradeDetails === "object"
       ? student.gradeDetails[evaluation.id]
@@ -264,7 +301,11 @@
     const hasAudio = details.audio && details.audio.file;
     const submittedAt = formatSubmittedAt(details.submittedAt || details.audio?.uploadedAt);
     const transcript = details.transcript ? `<details class="mt-2"><summary>Transcription reconnue</summary><p class="mb-0">${esc(details.transcript)}</p></details>` : "";
-    const reference = details.referenceText ? `<details class="mt-2"><summary>Texte de référence</summary><p class="mb-0">${esc(details.referenceText)}</p></details>` : "";
+    const referenceText = details.referenceText || details.targetText || "";
+    const reference = referenceText ? `<details class="mt-2"><summary>Texte de référence</summary><p class="mb-0">${esc(referenceText)}</p></details>` : "";
+    const uncertainty = details.uncertain
+      ? `<p class="mt-2 mb-0"><strong>Fiabilité technique :</strong> reconnaissance incertaine. Vérifiez l'audio avant de valider la note.${details.uncertaintyMessage ? ` ${esc(details.uncertaintyMessage)}` : ""}</p>`
+      : "";
     const meta = [
       submittedAt ? `Remis : ${submittedAt}` : "",
       Number.isFinite(Number(details.score100)) ? `Score automatique : ${Math.round(Number(details.score100))}/100` : "",
@@ -280,6 +321,10 @@
           <p class="mb-0" data-pronunciation-audio-status></p>
         ` : `<p class="mb-0"><small>Aucun fichier audio n'est attaché à cette remise.</small></p>`}
         ${meta ? `<p class="mt-2 mb-0"><small>${esc(meta)}</small></p>` : ""}
+        ${uncertainty}
+        ${pronunciationUncertaintyReasons(details)}
+        ${pronunciationMetrics(details)}
+        ${pronunciationMissedWords(details)}
         ${transcript}
         ${reference}
       </div>`;

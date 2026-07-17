@@ -1660,6 +1660,17 @@ def clean_pronunciation_submission_details(payload, evaluation_id, score100, gra
     details = payload.get("details")
     if not isinstance(details, dict):
         details = {}
+    uncertainty_reasons = []
+    raw_uncertainty_reasons = details.get("uncertaintyReasons")
+    if not isinstance(raw_uncertainty_reasons, list):
+        raw_uncertainty_reasons = []
+    for item in raw_uncertainty_reasons:
+        reason = item.get("reason") if isinstance(item, dict) else item
+        reason = clean_text(reason, 80)
+        if reason and reason not in uncertainty_reasons:
+            uncertainty_reasons.append(reason)
+        if len(uncertainty_reasons) >= 8:
+            break
     liaison = details.get("liaison")
     clean_liaison = {}
     if isinstance(liaison, dict):
@@ -1669,21 +1680,35 @@ def clean_pronunciation_submission_details(payload, evaluation_id, score100, gra
             "missed": clean_text_list(liaison.get("missed"), 30, 120),
             "message": clean_text(liaison.get("message"), 500)
         }
+    target_text = clean_text(details.get("targetText") or details.get("referenceText"), 3000)
+    metrics = {
+        "overall": clean_score_metric(details.get("overall")),
+        "accuracy": clean_score_metric(details.get("accuracy")),
+        "completeness": clean_score_metric(details.get("completeness")),
+        "fluency": clean_score_metric(details.get("fluency")),
+        "wpm": clean_score_metric(details.get("wpm"), 0, 300)
+    }
+    metrics = {key: value for key, value in metrics.items() if value is not None}
     clean_details = {
         "evaluationId": evaluation_id,
         "activityTitle": clean_text(payload.get("activityTitle"), 180),
         "submittedAt": now_iso(),
         "score100": score100,
         "grade": grade,
-        "overall": clean_score_metric(details.get("overall")),
-        "accuracy": clean_score_metric(details.get("accuracy")),
-        "completeness": clean_score_metric(details.get("completeness")),
-        "fluency": clean_score_metric(details.get("fluency")),
-        "wpm": clean_score_metric(details.get("wpm"), 0, 300),
+        "overall": metrics.get("overall"),
+        "accuracy": metrics.get("accuracy"),
+        "completeness": metrics.get("completeness"),
+        "fluency": metrics.get("fluency"),
+        "wpm": metrics.get("wpm"),
+        "metrics": metrics,
         "stageLabel": clean_text(details.get("stageLabel"), 120),
         "final": details.get("final") is True,
+        "uncertain": details.get("uncertain") is True,
+        "uncertaintyReasons": uncertainty_reasons,
+        "uncertaintyMessage": clean_text(details.get("uncertaintyMessage"), 500),
         "transcript": clean_text(details.get("transcript"), 3000),
-        "referenceText": clean_text(details.get("referenceText"), 3000),
+        "referenceText": target_text,
+        "targetText": target_text,
         "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
         "liaison": clean_liaison
     }
