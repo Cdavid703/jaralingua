@@ -193,7 +193,8 @@
   const set = SETS[key] || SETS["theme-1"];
   const API_PATH = "/api/french8/pronunciation-assessment";
   const GRADE_API_PATH = "/api/french1/pronunciation-grade";
-  const STORAGE_KEY = `jaralingua:french1:pronunciation:${key}:v2`;
+  const STORAGE_KEY = `jaralingua:french1:pronunciation:${key}:v3`;
+  const LEGACY_STORAGE_KEY = `jaralingua:french1:pronunciation:${key}:v2`;
   const GOOGLE_KEY = "jaralingua_google_user";
   const MICROSOFT_KEY = "jaralingua_microsoft_user";
   const LOCAL_KEY = "jaralingua_local_gradebook_user:french1GradesApp";
@@ -405,6 +406,9 @@
 
   let savedProgress = null;
   try { savedProgress = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null"); } catch (_error) { savedProgress = null; }
+  if (!savedProgress) {
+    try { savedProgress = JSON.parse(localStorage.getItem(LEGACY_STORAGE_KEY) || "null"); } catch (_error) { savedProgress = null; }
+  }
 
   let stageIndex = Number.isInteger(savedProgress?.stageIndex) ? Math.max(0, Math.min(set.stages.length - 1, savedProgress.stageIndex)) : 0;
   const stageScores = Array.from({ length: set.stages.length }, (_, index) => savedProgress?.stageScores?.[index] || null);
@@ -420,6 +424,13 @@
   let analyser = null;
   let meterFrame = null;
   let analyzing = false;
+  let calibrationReady = false;
+  let calibrationBusy = false;
+  let calibrationPanel = null;
+  let calibrationStatus = null;
+  let calibrationButton = null;
+  let calibrationPlayback = null;
+  let calibrationUrl = null;
 
   gradeSubmitter = createGradeSubmitPanel();
   if (gradeSubmitter) {
@@ -439,7 +450,14 @@
   }
 
   function saveProgress() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ stageIndex, stageScores, attemptHistory }));
+    const state = { stageIndex, stageScores, attemptHistory };
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch (_error) {
+      const leanScores = stageScores.map((score) => score ? Object.assign({}, score, { audioDataUrl: undefined }) : score);
+      const leanHistory = attemptHistory.map((items) => items.map((item) => item ? Object.assign({}, item, { audioDataUrl: undefined }) : item));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ stageIndex, stageScores: leanScores, attemptHistory: leanHistory }));
+    }
   }
 
   function deviceGuide() {
@@ -605,6 +623,7 @@
     els.completenessScore.textContent = "0%";
     els.fluencyScore.textContent = "0%";
     els.scoreRing.style.setProperty("--score", "0");
+    els.feedback.classList.remove("is-uncertain");
     els.feedback.textContent = "Aucun progrès enregistré pour le moment. Le bilan commence seulement après une lecture terminée.";
   }
 
@@ -621,6 +640,11 @@
     els.completenessScore.textContent = `${score.completeness}%`;
     els.fluencyScore.textContent = `${score.fluency}%`;
     els.scoreRing.style.setProperty("--score", String(score.overall));
+    els.feedback.classList.toggle("is-uncertain", score.uncertain === true);
+    els.feedback.textContent = score.feedback || feedbackForAttempt(score);
+    if (score.transcript || score.uncertain) {
+      els.comparisonNote.innerHTML = `<strong>Transcription :</strong> ${score.transcript || "Aucun mot reconnu."}`;
+    }
     renderHistory();
     gradeSubmitter?.update();
   }
@@ -744,6 +768,123 @@
     els.recordBtn.querySelector("i").className = recording ? "bi bi-soundwave" : "bi bi-mic-fill";
   }
 
+  function preferredMimeType() {
+    if (!window.MediaRecorder) return "";
+    return ["audio/webm;codecs=opus", "audio/webm", "audio/mp4;codecs=mp4a.40.2", "audio/mp4"]
+      .find((type) => MediaRecorder.isTypeSupported(type)) || "";
+  }
+
+  function audioConstraints() {
+    const constraints = {
+      echoCancellation: { ideal: true },
+      noiseSuppression: { ideal: true },
+      autoGainControl: { ideal: true },
+      channelCount: { ideal: 1 }
+    };
+    if (els.microphoneSelect.value) constraints.deviceId = { exact: els.microphoneSelect.value };
+    return constraints;
+  }
+
+  async function transcribeBlob(blob) {
+    const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.error || `Erreur serveur (${response.status}).`);
+    return payload;
+  }
+
+  function installCalibrationPanel() {
+    if (calibrationPanel) return;
+    calibrationPanel = document.createElement("div");
+    calibrationPanel.className = "permission-help";
+    calibrationPanel.innerHTML = `
+      <strong><i class="bi bi-phone-vibrate"></i> Vérification du microphone</strong>
+      <span>Faites un test court de trois secondes avant la première lecture. Cet échantillon ne sera pas sauvegardé.</span>
+      <button type="button" class="action-button reset" data-calibration-button><i class="bi bi-soundwave"></i> Tester pendant 3 s</button>
+      <p class="mb-0" data-calibration-status>Test requis avant de lire.</p>
+      <audio controls hidden data-calibration-playback></audio>
+    `;
+    els.microphoneSelect.closest(".microphone-picker")?.insertAdjacentElement("afterend", calibrationPanel);
+    calibrationStatus = calibrationPanel.querySelector("[data-calibration-status]");
+    calibrationButton = calibrationPanel.querySelector("[data-calibration-button]");
+    calibrationPlayback = calibrationPanel.querySelector("[data-calibration-playback]");
+    calibrationButton.addEventListener("click", runCalibration);
+  }
+
+  function recordCalibrationSample(activeStream) {
+    return new Promise((resolve, reject) => {
+      const mimeType = preferredMimeType();
+      let sampleRecorder;
+      try {
+        sampleRecorder = mimeType ? new MediaRecorder(activeStream, { mimeType }) : new MediaRecorder(activeStream);
+      } catch (error) {
+        reject(error);
+        return;
+      }
+      const sampleChunks = [];
+      let timeout = null;
+      sampleRecorder.ondataavailable = (event) => { if (event.data?.size) sampleChunks.push(event.data); };
+      sampleRecorder.onerror = (event) => reject(event.error || new Error("Enregistrement impossible."));
+      sampleRecorder.onstop = () => {
+        if (timeout) clearTimeout(timeout);
+        const blob = new Blob(sampleChunks, { type: sampleRecorder.mimeType || mimeType || "audio/webm" });
+        if (!blob.size) reject(new Error("Aucun son n'a été enregistré."));
+        else resolve(blob);
+      };
+      sampleRecorder.start(200);
+      timeout = setTimeout(() => {
+        if (sampleRecorder.state === "recording") sampleRecorder.stop();
+      }, 3200);
+    });
+  }
+
+  function calibrationResult(payload) {
+    const transcript = String(payload.text || payload.transcript || "").trim();
+    const audio = payload.audio || {};
+    const rms = Number(audio.rms);
+    const peak = Number(audio.peak);
+    if (!transcript) return { ok: false, message: "Le micro capte peut-être du son, mais aucun mot français clair n'a été reconnu." };
+    if (Number.isFinite(rms) && rms < 0.0025) return { ok: false, message: "Signal trop faible. Rapprochez le microphone et recommencez." };
+    if (Number.isFinite(peak) && peak < 0.012) return { ok: false, message: "Signal trop faible. Vérifiez le microphone sélectionné." };
+    if (Number.isFinite(peak) && peak >= 0.995) return { ok: true, warning: true, message: "Microphone prêt, mais le signal est très fort. Éloignez légèrement l'appareil." };
+    return { ok: true, message: "Microphone prêt. Le signal est suffisant pour commencer." };
+  }
+
+  async function runCalibration() {
+    if (calibrationBusy) return;
+    let sampleStream = null;
+    calibrationBusy = true;
+    calibrationReady = false;
+    calibrationButton.disabled = true;
+    calibrationStatus.textContent = "Préparation du microphone...";
+    try {
+      hidePermissionHelp();
+      sampleStream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints(), video: false });
+      calibrationStatus.textContent = "Dites : « Bonjour, je teste mon microphone. »";
+      const blob = await recordCalibrationSample(sampleStream);
+      if (calibrationUrl) URL.revokeObjectURL(calibrationUrl);
+      calibrationUrl = URL.createObjectURL(blob);
+      calibrationPlayback.src = calibrationUrl;
+      calibrationPlayback.hidden = false;
+      calibrationStatus.textContent = "Vérification du signal...";
+      const payload = await transcribeBlob(blob);
+      const result = calibrationResult(payload);
+      calibrationReady = result.ok;
+      calibrationStatus.textContent = result.message;
+      calibrationButton.innerHTML = result.ok
+        ? '<i class="bi bi-arrow-repeat"></i> Tester à nouveau'
+        : '<i class="bi bi-arrow-repeat"></i> Refaire le test';
+      els.micStatus.textContent = result.ok ? "Microphone vérifié. Vous pouvez commencer la lecture." : "Microphone à régler avant la lecture.";
+    } catch (error) {
+      calibrationStatus.textContent = error.message || "Le test du microphone n'a pas pu être terminé.";
+      calibrationButton.innerHTML = '<i class="bi bi-arrow-repeat"></i> Refaire le test';
+      els.micStatus.textContent = "Le test du microphone n'a pas pu être terminé.";
+    } finally {
+      sampleStream?.getTracks().forEach((track) => track.stop());
+      calibrationBusy = false;
+      calibrationButton.disabled = false;
+    }
+  }
+
   function align(reference, spoken) {
     const rows = reference.length + 1;
     const cols = spoken.length + 1;
@@ -791,6 +932,83 @@
     return `Réécoutez le modèle et reprenez cette section par petits groupes de mots. Travaillez d’abord : ${focus || "les mots en rouge"}.`;
   }
 
+  function scoreValue(score) {
+    return clamp(score?.overall ?? score?.score ?? 0);
+  }
+
+  function feedbackForAttempt(attempt) {
+    const focus = (attempt.missedWords || []).slice(0, 5).join(", ");
+    const base = attempt.overall >= 88
+      ? "Très bien. Votre lecture est claire et le rythme reste naturel."
+      : attempt.overall >= 70
+        ? `Bonne lecture. Reprenez surtout : ${focus || "les mots signalés"}, puis écoutez encore le modèle.`
+        : `Réécoutez le modèle et reprenez la phrase par petits groupes. Travaillez d’abord : ${focus || "les mots en rouge"}.`;
+    if (!attempt.uncertain) return base;
+    return `Résultat calculé avec réserve. Vous pouvez refaire l'essai ou continuer. ${attempt.uncertaintyMessage || ""} ${base}`.trim();
+  }
+
+  function attemptFromPayload(payload, audioDataUrl) {
+    const assessment = window.JaraFrench8PronunciationAssessment;
+    if (!assessment?.assess) throw new Error("Le module d'évaluation tolérante n'est pas disponible. Actualisez la page.");
+    const transcript = String(payload.text || payload.transcript || "").trim();
+    const measured = assessment.assess({
+      referenceText: currentText(),
+      transcript,
+      words: payload.words,
+      audio: payload.audio,
+      languageProbability: payload.language_probability,
+      recordedDurationMs
+    });
+    const displayWords = currentText().split(/\s+/).map(spokenWord).filter(Boolean);
+    const missedWords = displayWords.filter((_, index) => measured.aligned.states[index] !== "is-correct");
+    const correctWords = displayWords.filter((_, index) => measured.aligned.states[index] === "is-correct");
+    const attempt = {
+      score: measured.overall,
+      overall: measured.overall,
+      accuracy: measured.accuracy,
+      completeness: measured.completeness,
+      fluency: measured.fluency,
+      wpm: Math.round(measured.wpm || 0),
+      transcript,
+      referenceText: currentText(),
+      stageLabel: isFinalStage() ? "Défi final" : `Section ${stageIndex + 1}`,
+      final: isFinalStage(),
+      missedWords: missedWords.slice(0, 20),
+      correctWords,
+      acceptedVariants: measured.aligned.accepted,
+      states: measured.aligned.states,
+      provisional: true,
+      uncertain: measured.uncertain,
+      uncertaintyReasons: measured.uncertaintyReasons,
+      uncertaintyMessage: measured.uncertaintyMessage,
+      quality: measured.quality,
+      at: new Date().toISOString()
+    };
+    if (attempt.final && audioDataUrl) attempt.audioDataUrl = audioDataUrl;
+    attempt.feedback = feedbackForAttempt(attempt);
+    return attempt;
+  }
+
+  function storeAttempt(attempt) {
+    const previous = stageScores[stageIndex];
+    const previousReliable = previous && previous.uncertain !== true;
+    const retainPrevious = attempt.uncertain && previousReliable && scoreValue(previous) > scoreValue(attempt);
+    attemptHistory[stageIndex].push(attempt);
+    attemptHistory[stageIndex] = attemptHistory[stageIndex].slice(-6);
+    if (!retainPrevious) stageScores[stageIndex] = attempt;
+    saveProgress();
+    return retainPrevious;
+  }
+
+  function recordingBlobToDataUrl(blob) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result || "");
+      reader.onerror = () => reject(reader.error || new Error("audio_read_error"));
+      reader.readAsDataURL(blob);
+    });
+  }
+
   function evaluate(transcript) {
     const spoken = tokens(transcript);
     const referenceWords = tokens(currentText());
@@ -833,20 +1051,25 @@
     els.micStatus.textContent = "Analyse de cette lecture…";
     els.comparisonNote.textContent = "Transcription en cours…";
     try {
-      const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) throw new Error(payload.error || `Erreur serveur (${response.status}).`);
-      const transcript = (payload.text || "").trim();
-      const audioStats = payload.audio || {};
-      if (!transcript) {
-        if (Number(audioStats.rms || 0) < 0.0008) throw new Error("L’enregistrement semble silencieux. Choisissez un autre microphone et réessayez.");
-        throw new Error("Whisper a détecté du son, mais pas de mots français clairs. Parlez un peu plus près du microphone.");
-      }
-      els.comparisonNote.textContent = transcript;
-      evaluate(transcript);
-      els.micStatus.textContent = `${isFinalStage() ? "Défi final" : `Section ${stageIndex + 1}`} évalué. Consultez le bilan.`;
+      const payload = await transcribeBlob(blob);
+      const audioDataUrl = isFinalStage() ? await recordingBlobToDataUrl(blob) : "";
+      const attempt = attemptFromPayload(payload, audioDataUrl);
+      const retained = storeAttempt(attempt);
+      els.comparisonNote.innerHTML = `<strong>Transcription :</strong> ${attempt.transcript || "Aucun mot reconnu."}`;
+      renderReference(attempt.states || []);
+      renderStageProgress();
+      renderScore(attempt);
+      gradeSubmitter?.update();
+      els.feedback.classList.toggle("is-uncertain", attempt.uncertain === true);
+      els.feedback.textContent = retained
+        ? `${attempt.feedback} Votre meilleur essai fiable reste conservé pour la progression.`
+        : attempt.feedback;
+      els.micStatus.textContent = attempt.uncertain
+        ? "Résultat calculé avec réserve. Vous pouvez refaire l'essai ou continuer."
+        : `${isFinalStage() ? "Défi final" : `Section ${stageIndex + 1}`} évalué. Consultez le bilan.`;
     } catch (error) {
       els.micStatus.textContent = "L’analyse n’a pas pu être terminée.";
+      els.feedback.textContent = "Erreur de connexion ou de transcription. Réessayez l’enregistrement; aucune note automatique n’a été créée pour cet essai.";
       els.comparisonNote.textContent = error.message || "Erreur de transcription.";
     } finally {
       analyzing = false;
@@ -856,6 +1079,13 @@
 
   async function startRecording() {
     if (analyzing) return;
+    installCalibrationPanel();
+    if (!calibrationReady) {
+      calibrationStatus.textContent = "Effectuez d'abord le test de trois secondes.";
+      calibrationPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      calibrationButton.focus();
+      return;
+    }
     try {
       hidePermissionHelp();
       if (!window.isSecureContext) {
@@ -878,22 +1108,15 @@
       els.micStatus.textContent = "Demande d’autorisation du microphone…";
       els.recordHelp.textContent = "Si une fenêtre apparaît, choisissez Autoriser pour JaraLingua.";
       els.comparisonNote.textContent = "Lisez uniquement le texte affiché au-dessus.";
-      const audioConstraints = {
-        echoCancellation: { ideal: true },
-        noiseSuppression: { ideal: true },
-        autoGainControl: { ideal: true },
-        channelCount: { ideal: 1 }
-      };
-      if (els.microphoneSelect.value) audioConstraints.deviceId = { exact: els.microphoneSelect.value };
-      stream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints, video: false });
+      stream = await navigator.mediaDevices.getUserMedia({ audio: audioConstraints(), video: false });
       const activeTrack = stream.getAudioTracks()[0];
       await refreshMicrophones();
       const activeDeviceId = activeTrack?.getSettings?.().deviceId;
       if (activeDeviceId && [...els.microphoneSelect.options].some((option) => option.value === activeDeviceId)) els.microphoneSelect.value = activeDeviceId;
-      els.recordHelp.textContent = activeTrack?.label ? `Microphone actif : ${activeTrack.label}` : "Microphone actif.";
-      startLevelMeter(stream);
-      chunks = [];
-      const preferredType = ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((type) => MediaRecorder.isTypeSupported(type)) || "";
+    els.recordHelp.textContent = activeTrack?.label ? `Microphone actif : ${activeTrack.label}` : "Microphone actif.";
+    startLevelMeter(stream);
+    chunks = [];
+      const preferredType = preferredMimeType();
       recorder = preferredType ? new MediaRecorder(stream, { mimeType: preferredType }) : new MediaRecorder(stream);
       recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); };
       recorder.onstop = finishRecording;
@@ -1026,7 +1249,12 @@
   els.stopBtn.addEventListener("click", stopRecording);
   els.retryBtn.addEventListener("click", resetStage);
   els.nextBtn.addEventListener("click", nextStage);
+  els.microphoneSelect.addEventListener("change", () => {
+    calibrationReady = false;
+    if (calibrationStatus) calibrationStatus.textContent = "Microphone modifié : refaites le test avant de lire.";
+  });
 
+  installCalibrationPanel();
   refreshMicrophones();
   navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);
   render();
