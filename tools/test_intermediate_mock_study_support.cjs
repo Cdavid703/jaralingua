@@ -178,6 +178,8 @@ async function testTeacherControl(browser) {
 }
 
 async function testStudyCompanion(browser) {
+  const studyScript = fs.readFileSync(path.join("assets", "js", "intermediate-integrated-task-study.js"), "utf8");
+  assert.doesNotMatch(studyScript, /speechSynthesis|SpeechSynthesisUtterance/, "The study companion must not use browser speech synthesis");
   const expectedAudio = [
     "grapes-sentence.mp3", "cereal-sentence.mp3", "a-few-tomatoes.mp3", "a-little-oil.mp3",
     "a-cup-of-rice.mp3", "three-cups-of-cooked-rice.mp3", "a-slice-of-bread.mp3", "a-bottle-of-water.mp3"
@@ -197,6 +199,11 @@ async function testStudyCompanion(browser) {
     assert.equal(await page.locator("[data-study-speed]").count(), 3);
     await page.locator('[data-study-speed="0.75"]').click();
     assert.match(await page.locator("#studyAudioStatus").innerText(), /0.75x/);
+    if (viewport.width === 390) {
+      await page.locator("[data-study-audio]").first().click();
+      await page.waitForFunction(() => /Playing|completed/.test(document.getElementById("studyAudioStatus").textContent));
+      assert.match(await page.locator("#studyAudioStatus").innerText(), /Playing|completed/);
+    }
     await assertNoOverflow(page, "study companion " + viewport.width + "x" + viewport.height);
     await context.close();
   }
