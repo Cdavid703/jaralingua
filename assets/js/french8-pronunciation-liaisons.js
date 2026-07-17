@@ -30,8 +30,9 @@
       { words: ["les", "avis"], label: "les avis", hint: "faites entendre la liaison en /z/" }
     ],
     pronunciation05d: [
-      { words: ["c'est", "une"], label: "c'est une", hint: "enchainez le /t/ avec une" },
-      { words: ["c'est", "en"], label: "c'est en comparant", hint: "enchainez le /t/ avec en" }
+      { words: ["fausse", "information"], label: "fausse information", hint: "enchaînez le /s/ déjà prononcé de fausse avec information" },
+      { words: ["une", "image"], label: "une image", hint: "enchaînez le /n/ déjà prononcé de une avec image" },
+      { words: ["c'est", "en"], label: "c'est en comparant", hint: "enchaînez le /t/ déjà prononcé de c'est avec en" }
     ],
     pronunciation06d: [
       { words: ["les", "utilisateurs"], label: "les utilisateurs", hint: "faites entendre la liaison en /z/" },
