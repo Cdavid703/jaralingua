@@ -298,7 +298,16 @@
   let gradeSubmitter = null;
 
   function createGradeSubmitPanel() {
-    if (!gradeConfig) return null;
+    if (!gradeConfig) {
+      const panel = document.createElement("div");
+      panel.className = "pronunciation-submit-panel is-formative";
+      panel.innerHTML = `
+        <h3><i class="bi bi-info-circle"></i> Pratique formative</h3>
+        <p>Cette activité sert à s'entraîner et ne s'envoie pas au professeur. Les activités évaluées du Niveau 1 sont les thèmes 1, 3, 5 et 7.</p>
+        <p class="mb-0"><small>Si votre professeur vous demande la troisième remise de prononciation, ouvrez le thème 5. Si elle vous demande le thème 3, ouvrez « Prononciation des verbes en -er ».</small></p>
+      `;
+      return { panel, update() {} };
+    }
     const panel = document.createElement("div");
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
@@ -1085,6 +1094,11 @@
       els.micStatus.textContent = attempt.uncertain
         ? "Résultat calculé avec réserve. Vous pouvez refaire l'essai ou continuer."
         : `${isFinalStage() ? "Défi final" : `Section ${stageIndex + 1}`} évalué. Consultez le bilan.`;
+      if (isFinalStage() && gradeConfig && gradeSubmitter?.panel) {
+        window.setTimeout(() => {
+          gradeSubmitter.panel.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 250);
+      }
     } catch (error) {
       els.micStatus.textContent = "L’analyse n’a pas pu être terminée.";
       els.feedback.textContent = "Erreur de connexion ou de transcription. Réessayez l’enregistrement; aucune note automatique n’a été créée pour cet essai.";
