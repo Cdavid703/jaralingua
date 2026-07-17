@@ -22,7 +22,6 @@
     form: document.getElementById("integratedTaskForm"),
     questions: document.getElementById("questionsContainer"),
     audio: document.getElementById("listeningAudio"),
-    counter: document.getElementById("playCounter"),
     audioFeedback: document.getElementById("audioActionFeedback"),
     writing: document.getElementById("writingResponse"),
     words: document.getElementById("wordCount"),
@@ -237,11 +236,6 @@
     return Number(sessionStorage.getItem(playKey()) || 0);
   }
 
-  function updatePlayCounter() {
-    var count = readPlayCount();
-    els.counter.textContent = count + " / 3 listens" + (count >= 3 ? " - final listen used" : "");
-  }
-
   function setAudioSpeed(value, announce) {
     var next = Number(value);
     if ([0.75, 1, 1.25].indexOf(next) === -1) return;
@@ -260,7 +254,6 @@
   }
 
   function wireAudio() {
-    updatePlayCounter();
     if (audioWired) return;
     audioWired = true;
     document.querySelectorAll("[data-audio-speed]").forEach(function (button) {
@@ -281,29 +274,22 @@
         toast("Seeking is disabled during each listening attempt.", "error");
       }
     });
-    els.audio.addEventListener("play", function (event) {
+    els.audio.addEventListener("play", function () {
       var count = readPlayCount();
       if (!activeListen && els.audio.currentTime < 0.8) {
-        if (count >= 3) {
-          event.preventDefault();
-          els.audio.pause();
-          toast("You have already used the three permitted listens.", "error");
-          return;
-        }
         sessionStorage.setItem(playKey(), String(count + 1));
         activeListen = true;
         furthestAudioTime = 0;
-        updatePlayCounter();
-        setInlineFeedback(els.audioFeedback, "Listening attempt " + (count + 1) + " of 3 started at " + currentSpeed + "x.", "success");
-        toast("Listening attempt " + (count + 1) + " of 3 started.", "success");
+        setInlineFeedback(els.audioFeedback, "Listening started at " + currentSpeed + "x. Replay is available without a limit.", "success");
+        toast("Listening started. Replay is unlimited.", "success");
       }
     });
     els.audio.addEventListener("ended", function () {
       activeListen = false;
       furthestAudioTime = 0;
       els.audio.currentTime = 0;
-      setInlineFeedback(els.audioFeedback, "Listening attempt completed. " + readPlayCount() + " of 3 attempts used.", "success");
-      toast("Listening attempt completed.", "success");
+      setInlineFeedback(els.audioFeedback, "Listening completed. You may replay the audio as needed.", "success");
+      toast("Listening completed. You may listen again.", "success");
     });
   }
 

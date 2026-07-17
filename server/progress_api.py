@@ -5978,7 +5978,7 @@ def default_intermediate_integrated_task_bundle():
             "totalPoints": 50,
             "listeningPoints": 25,
             "writingPoints": 25,
-            "maxAudioPlays": 3,
+            "maxAudioPlays": None,
             "questions": []
         }
     }
@@ -6082,7 +6082,7 @@ def intermediate_mock_score_attempt(payload):
     writing = str(payload.get("writing") or "")[:4000]
     writing_signals = intermediate_mock_writing_signals(writing)
     try:
-        audio_plays = max(0, min(3, int(payload.get("audioPlays", 0))))
+        audio_plays = max(0, int(payload.get("audioPlays", 0)))
     except (TypeError, ValueError):
         audio_plays = 0
     return {
@@ -6161,7 +6161,7 @@ def intermediate_integrated_public_exam(bundle):
         "totalPoints": clean_exam_number(exam.get("totalPoints", 50)),
         "listeningPoints": clean_exam_number(exam.get("listeningPoints", 25)),
         "writingPoints": clean_exam_number(exam.get("writingPoints", 25)),
-        "maxAudioPlays": 3,
+        "maxAudioPlays": None,
         "questions": [basic_integrated_public_question(item) for item in exam.get("questions", []) if isinstance(item, dict)]
     }
 
@@ -8329,7 +8329,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 result = basic_integrated_score(bundle.get("exam", {}), payload.get("answers"))
                 try:
-                    audio_plays = max(0, min(3, int(payload.get("audioPlays", 0))))
+                    audio_plays = max(0, int(payload.get("audioPlays", 0)))
                 except (TypeError, ValueError):
                     audio_plays = 0
                 submitted_at = now_iso()

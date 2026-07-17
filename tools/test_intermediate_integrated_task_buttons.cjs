@@ -20,7 +20,7 @@ const publicExam = {
   totalPoints: 50,
   listeningPoints: 25,
   writingPoints: 25,
-  maxAudioPlays: 3,
+  maxAudioPlays: null,
   questions: Array.from({ length: 10 }, (_, index) => ({
     id: "i" + (index + 1),
     prompt: "Test listening question " + (index + 1) + "?",
@@ -212,10 +212,16 @@ async function testStudentButtons(browser) {
   assert.match(await page.locator("#audioActionFeedback").innerText(), /changed successfully to 0.75x/);
   assert.equal(await page.locator('[data-audio-speed="0.75"]').getAttribute("aria-pressed"), "true");
 
-  await page.evaluate(() => document.getElementById("listeningAudio").dispatchEvent(new Event("play")));
-  assert.match(await page.locator("#audioActionFeedback").innerText(), /Listening attempt 1 of 3 started/);
-  await page.evaluate(() => document.getElementById("listeningAudio").dispatchEvent(new Event("ended")));
-  assert.match(await page.locator("#audioActionFeedback").innerText(), /Listening attempt completed/);
+  await page.evaluate(() => {
+    const audio = document.getElementById("listeningAudio");
+    for (let listen = 0; listen < 5; listen += 1) {
+      audio.dispatchEvent(new Event("play"));
+      audio.dispatchEvent(new Event("ended"));
+    }
+  });
+  assert.match(await page.locator("#audioActionFeedback").innerText(), /Listening completed.*replay the audio as needed/);
+  assert.equal(await page.locator("#listeningAudio").isDisabled(), false);
+  assert.equal(await page.locator("#playCounter").count(), 0);
 
   await page.locator("[data-print]").click();
   await page.waitForTimeout(180);
@@ -230,7 +236,7 @@ async function testStudentButtons(browser) {
   await page.locator("#submitExamBtn").click();
   await page.locator("#submitResult.show").waitFor({ state: "visible" });
   assert.match(await page.locator("#submitResult").innerText(), /Exam submitted successfully/);
-  assert.equal(submittedPayload().audioPlays, 1);
+  assert.equal(submittedPayload().audioPlays, 5);
   assert.equal(Object.keys(submittedPayload().answers).length, 10);
   await context.close();
 }

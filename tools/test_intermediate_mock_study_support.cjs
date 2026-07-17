@@ -136,6 +136,16 @@ async function testStudentAttempt(browser) {
   await setup.page.locator("#examContent:not([hidden])").waitFor({ state: "visible" });
   assert.equal(await setup.page.locator(".history-item").count(), 1);
   assert.equal(await setup.page.locator("#loadFeedbackBtn").isDisabled(), true);
+  assert.equal(await setup.page.locator("#playCounter").count(), 0);
+  await setup.page.evaluate(() => {
+    const audio = document.getElementById("listeningAudio");
+    for (let listen = 0; listen < 5; listen += 1) {
+      audio.dispatchEvent(new Event("play"));
+      audio.dispatchEvent(new Event("ended"));
+    }
+  });
+  assert.match(await setup.page.locator("#audioActionFeedback").innerText(), /Listening completed.*replay the audio as needed/);
+  assert.equal(await setup.page.locator("#listeningAudio").isDisabled(), false);
   for (let index = 1; index <= 10; index += 1) await setup.page.locator('input[name="q_m' + index + '"]').first().check();
   const writing = Array.from({ length: 105 }, (_, index) => index % 8 === 0 ? "recommend" : "food").join(" ");
   await setup.page.locator("#writingResponse").fill(writing);
@@ -145,7 +155,7 @@ async function testStudentAttempt(browser) {
   assert.equal(await setup.page.locator(".signal-chip").count(), 5);
   assert.equal(await setup.page.locator(".history-item").count(), 2);
   assert.equal(Object.keys(setup.submitted().answers).length, 10);
-  assert.equal(setup.submitted().audioPlays, 0);
+  assert.equal(setup.submitted().audioPlays, 5);
   await assertNoOverflow(setup.page, "student mock mobile");
   await setup.context.close();
 }

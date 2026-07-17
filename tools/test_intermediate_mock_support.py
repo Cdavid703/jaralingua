@@ -36,7 +36,7 @@ wrong_answers["m4"] = 0
 wrong_attempt = api.intermediate_mock_score_attempt({"answers": wrong_answers, "writing": writing, "audioPlays": 9})
 assert wrong_attempt["listeningPoints"] == 20
 assert wrong_attempt["incorrectQuestions"] == [1, 4]
-assert wrong_attempt["audioPlays"] == 3
+assert wrong_attempt["audioPlays"] == 9
 assert wrong_attempt["skills"]["mainIdea"]["correct"] == 1
 assert wrong_attempt["skills"]["quantities"]["correct"] == 1
 

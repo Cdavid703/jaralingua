@@ -16,7 +16,7 @@
     form: document.getElementById("integratedTaskForm"),
     questions: document.getElementById("questionsContainer"),
     audio: document.getElementById("listeningAudio"),
-    counter: document.getElementById("playCounter"),
+    audioFeedback: document.getElementById("audioActionFeedback"),
     writing: document.getElementById("writingResponse"),
     words: document.getElementById("wordCount"),
     result: document.getElementById("submitResult"),
@@ -218,7 +218,6 @@
 
   function writePlayCount(count) {
     sessionStorage.setItem(playKey(), String(count));
-    els.counter.textContent = count + " / 3 listens" + (count >= 3 ? " - final play used" : "");
   }
 
   function setAudioSpeed(value) {
@@ -231,6 +230,8 @@
       button.classList.toggle("active", isActive);
       button.setAttribute("aria-pressed", isActive ? "true" : "false");
     });
+    els.audioFeedback.className = "inline-action-feedback success";
+    els.audioFeedback.textContent = "Audio speed changed successfully to " + next + "x. Replay remains unlimited.";
   }
 
   function setupAudio() {
@@ -262,26 +263,25 @@
         toast("Seeking is disabled during each listening attempt.", "error");
       }
     });
-    els.audio.addEventListener("play", function (event) {
+    els.audio.addEventListener("play", function () {
       var count = readPlayCount();
       if (!activeListen && els.audio.currentTime < 0.8) {
-        if (count >= 3) {
-          event.preventDefault();
-          els.audio.pause();
-          toast("You have already used the three permitted listens.", "error");
-          return;
-        }
         count += 1;
         activeListen = true;
         furthestAudioTime = 0;
         writePlayCount(count);
+        els.audioFeedback.className = "inline-action-feedback success";
+        els.audioFeedback.textContent = "Listening started at " + currentSpeed + "x. Replay is available without a limit.";
+        toast("Listening started. Replay is unlimited.", "success");
       }
     });
     els.audio.addEventListener("ended", function () {
       activeListen = false;
       furthestAudioTime = 0;
       els.audio.currentTime = 0;
-      if (readPlayCount() >= 3) els.audio.disabled = true;
+      els.audioFeedback.className = "inline-action-feedback success";
+      els.audioFeedback.textContent = "Listening completed. You may replay the audio as needed.";
+      toast("Listening completed. You may listen again.", "success");
     });
   }
 
@@ -342,7 +342,6 @@
       return '<article class="history-item"><div><span>Attempt ' + (items.length - index) + '</span><strong>' + escapeHtml(formatAttemptDate(attempt.submittedAt)) + '</strong></div>' +
         '<div><span>Listening</span><strong>' + Number(attempt.listeningPoints || 0).toFixed(1) + ' / 25</strong></div>' +
         '<div><span>Writing signals</span><strong>' + Number(attempt.writingSignalCount || 0) + ' / 5</strong></div>' +
-        '<div><span>Audio used</span><strong>' + Number(attempt.audioPlays || 0) + ' / 3</strong></div>' +
         '<button class="history-diagnostic-button" type="button" data-history-index="' + index + '"><i class="bi bi-bar-chart-fill"></i> View diagnosis</button></article>';
     }).join("");
     els.history.querySelectorAll("[data-history-index]").forEach(function (button) {
@@ -596,7 +595,7 @@
   els.feedbackButton.addEventListener("click", loadReleasedFeedback);
   document.querySelectorAll("[data-reset-practice]").forEach(function (button) {
     button.addEventListener("click", function () {
-      if (!window.confirm("Reset every listening answer, the writing response, and the audio counter?")) return;
+      if (!window.confirm("Reset every listening answer and the writing response?")) return;
       sessionStorage.removeItem(draftKey());
       sessionStorage.removeItem(playKey());
       window.location.reload();

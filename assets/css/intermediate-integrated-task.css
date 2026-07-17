@@ -67,9 +67,8 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 .meta-item { padding: .9rem .25rem; }
 .meta-item strong { display: block; color: var(--intermediate-navy); }
 
-.audio-card { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1rem; align-items: center; padding: 1rem; background: #eef8f7; border: 1px solid #b9ddd9; border-radius: 8px; }
+.audio-card { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; align-items: center; padding: 1rem; background: #eef8f7; border: 1px solid #b9ddd9; border-radius: 8px; }
 .audio-card audio { width: 100%; min-width: 0; }
-.play-counter { color: var(--intermediate-navy); font-weight: 900; white-space: nowrap; }
 .audio-speed-row { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin: 0; }
 .speed-label { color: var(--intermediate-navy); font-weight: 900; margin-right: .25rem; }
 .speed-btn { min-width: 62px; min-height: 40px; border: 2px solid #bad1d0; border-radius: 8px; background: #fff; color: var(--intermediate-navy); cursor: pointer; font-weight: 900; }
@@ -138,7 +137,7 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 .result-item strong { display: block; color: var(--intermediate-navy); font-size: 1.15rem; }
 
 .history-list { display: grid; border-top: 1px solid var(--line); }
-.history-item { display: grid; grid-template-columns: minmax(190px, 1.6fr) repeat(3, minmax(110px, .7fr)) auto; gap: .75rem; align-items: center; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.history-item { display: grid; grid-template-columns: minmax(190px, 1.6fr) repeat(2, minmax(110px, .7fr)) auto; gap: .75rem; align-items: center; padding: .9rem 0; border-bottom: 1px solid var(--line); }
 .history-item > div { min-width: 0; }
 .history-item span { display: block; color: var(--muted); font-size: .8rem; font-weight: 800; }
 .history-item strong { display: block; overflow-wrap: anywhere; color: var(--intermediate-navy); }
@@ -245,7 +244,6 @@ button:disabled { opacity: .56; cursor: not-allowed; }
   .admin-state .btn-row { width: 100%; }
   .rubric-item { border-bottom: 1px solid var(--line); }
   .audio-card { grid-template-columns: 1fr; }
-  .play-counter { white-space: normal; }
   .history-item { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .history-diagnostic-button { width: 100%; }
   .diagnostic-grid, .annotation-key, .study-sequence { grid-template-columns: repeat(2, minmax(0, 1fr)); }
