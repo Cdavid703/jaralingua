@@ -8253,30 +8253,83 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
+                client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+                if len(client_submission_id) < 8:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": "missing_client_submission_id"})
+                    return
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT5_SNACK_REVIEW_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                if isinstance(previous, dict) and clean_text(previous.get("clientSubmissionId"), 120) == client_submission_id:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 200, {
+                        "ok": True,
+                        "idempotent": True,
+                        "evaluationId": INTERMEDIATE_UNIT5_SNACK_REVIEW_ID,
+                        "studentName": clean_text(student.get("fullName"), 160),
+                        "wordCount": previous.get("wordCount", 0),
+                        "submittedAt": previous.get("submittedAt"),
+                        "attemptCount": previous.get("attemptCount", 1),
+                        "clientSubmissionId": client_submission_id,
+                        "followUpOnly": True,
+                        "weight": 0
+                    })
+                    return
                 try:
-                    response, word_count = clean_intermediate_text_followup(payload, "response", 90, 250)
+                    response, word_count = clean_intermediate_text_followup(payload, "response", 100, 150)
                 except ValueError as error:
                     if changed:
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                     json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("response"))})
                     return
+                snack_name = clean_text(payload.get("snackName"), 120)
+                origin = clean_text(payload.get("origin"), 180)
+                ingredients = clean_text(payload.get("ingredients"), 500)
+                rating = clean_text(payload.get("rating"), 20)
+                if len(snack_name) < 3 or len(origin) < 5 or len(ingredients) < 12 or rating not in ("1", "2", "3", "4", "5"):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": "invalid_review_metadata"})
+                    return
+                submission_history = []
+                if isinstance(previous, dict):
+                    raw_history = previous.get("submissionHistory", [])
+                    if isinstance(raw_history, list):
+                        submission_history = [item for item in raw_history if isinstance(item, dict)][-9:]
+                    if previous.get("submittedAt"):
+                        submission_history.append({
+                            "submittedAt": previous.get("submittedAt"),
+                            "attemptCount": previous.get("attemptCount", 1),
+                            "wordCount": previous.get("wordCount", 0),
+                            "clientSubmissionId": clean_text(previous.get("clientSubmissionId"), 120)
+                        })
                 submitted_at, attempt_count = save_intermediate_text_followup(student, INTERMEDIATE_UNIT5_SNACK_REVIEW_ID, {
                     "activity": "Global Snack Review",
                     "activityType": "Writing follow-up",
                     "response": response,
                     "wordCount": word_count,
-                    "snackName": clean_text(payload.get("snackName"), 120),
-                    "origin": clean_text(payload.get("origin"), 180),
-                    "rating": clean_text(payload.get("rating"), 20),
-                    "ingredients": clean_text(payload.get("ingredients"), 320)
+                    "snackName": snack_name,
+                    "origin": origin,
+                    "rating": rating,
+                    "ingredients": ingredients,
+                    "sensoryNotes": clean_text(payload.get("sensoryNotes"), 280),
+                    "servingNotes": clean_text(payload.get("servingNotes"), 280),
+                    "culturalNotes": clean_text(payload.get("culturalNotes"), 360),
+                    "recommendationNotes": clean_text(payload.get("recommendationNotes"), 360),
+                    "clientSubmissionId": client_submission_id,
+                    "clientDate": clean_text(payload.get("clientDate"), 40),
+                    "submissionHistory": submission_history[-10:]
                 })
                 write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": INTERMEDIATE_UNIT5_SNACK_REVIEW_ID,
+                    "studentName": clean_text(student.get("fullName"), 160),
                     "wordCount": word_count,
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
+                    "clientSubmissionId": client_submission_id,
                     "followUpOnly": True,
                     "weight": 0
                 })
