@@ -16,6 +16,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; }
 body { margin: 0; color: var(--ink); background: var(--surface); font-family: "Nunito", "Segoe UI", sans-serif; }
 button, input, textarea, select { font: inherit; }
@@ -116,6 +117,16 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 .stat-pill.pending { background: #fff8df; border-color: #ead477; }
 .stat-pill.graded { background: #e8f6ef; border-color: #b5dfc8; }
 .review-grid { display: grid; gap: 1rem; }
+.review-roster-wrap { margin: .4rem 0 1rem; }
+.review-roster-wrap h3 { margin: 0 0 .65rem; color: var(--intermediate-navy); }
+.review-table-scroll { width: 100%; overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+.review-roster-table { width: 100%; min-width: 760px; border-collapse: collapse; background: #fff; }
+.review-roster-table th, .review-roster-table td { padding: .72rem .8rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+.review-roster-table th { background: #f4f7fb; color: var(--intermediate-navy); font-size: .82rem; }
+.review-roster-table tbody tr:last-child td { border-bottom: 0; }
+.review-status { display: inline-flex; padding: .28rem .48rem; border-radius: 6px; background: #eef2f7; color: var(--muted); font-size: .78rem; font-weight: 900; white-space: nowrap; }
+.review-status.pending { background: #fff8df; color: var(--warning); }
+.review-status.graded { background: #e8f6ef; color: var(--success); }
 .review-card { padding: 1.1rem; border: 1px solid var(--line); border-left: 5px solid var(--intermediate-teal); border-radius: 8px; background: #fff; }
 .review-card h3 { margin: 0; color: var(--intermediate-navy); }
 .review-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin: .65rem 0; }

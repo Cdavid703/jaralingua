@@ -1341,6 +1341,14 @@ def clean_gradebook_payload(payload, existing):
         }
         if isinstance(original.get("gradeDetails"), dict):
             clean_student["gradeDetails"] = original["gradeDetails"]
+        for private_key in ("username", "login", "localUsername", "localPassword"):
+            private_value = original.get(private_key)
+            if isinstance(private_value, str) and private_value:
+                clean_student[private_key] = private_value
+        if isinstance(original.get("nameAliases"), list):
+            clean_student["nameAliases"] = [
+                clean_text(alias, 160) for alias in original["nameAliases"] if clean_text(alias, 160)
+            ]
         clean_students.append(clean_student)
 
     return {
@@ -1413,7 +1421,7 @@ def matched_student_for_profile(profile, grades_data):
     if name_match:
         return name_match
     claimed_id = "".join(ch for ch in str(profile.get("_studentIdClaim", "")) if ch.isdigit())
-    if not claimed_id or not email:
+    if not claimed_id or not email or grades_data.get("allowStudentIdClaim") is not True:
         return None
     claimed_student = next(
         (
@@ -1424,16 +1432,19 @@ def matched_student_for_profile(profile, grades_data):
     )
     if not isinstance(claimed_student, dict):
         return None
+    claimed_aliases = claimed_student.get("emailAliases", [])
+    has_existing_login = any((
+        normalize_email(claimed_student.get("email")),
+        normalize_login(claimed_student.get("username")),
+        normalize_login(claimed_student.get("login")),
+        normalize_login(claimed_student.get("localUsername")),
+        any(normalize_email(item) for item in claimed_aliases) if isinstance(claimed_aliases, list) else False,
+    ))
+    if has_existing_login:
+        return None
     current_email = normalize_email(claimed_student.get("email"))
     if not current_email:
         claimed_student["email"] = email
-    elif current_email != email:
-        aliases = claimed_student.get("emailAliases")
-        if not isinstance(aliases, list):
-            aliases = []
-        if email not in {normalize_email(item) for item in aliases}:
-            aliases.append(email)
-            claimed_student["emailAliases"] = aliases
     return claimed_student
 
 
@@ -5778,7 +5789,8 @@ def basic_integrated_submission_public(submission):
     keys = (
         "receiptId", "studentId", "studentName", "email", "courseCode", "clientDate",
         "submittedAt", "audioPlays", "listeningPoints", "writingPoints", "finalPoints",
-        "grade", "status", "writing", "rubric", "teacherComments", "gradedAt", "gradedBy"
+        "grade", "status", "writing", "rubric", "teacherComments", "gradedAt", "gradedBy",
+        "attemptNumber", "clientSubmissionId"
     )
     return {key: submission.get(key) for key in keys}
 
@@ -5949,6 +5961,35 @@ def basic_integrated_score(exam, answers):
     return {"score": clean_exam_number(score), "details": details}
 
 
+def integrated_answer_payload_status(exam, answers):
+    questions = [item for item in exam.get("questions", []) if isinstance(item, dict)]
+    if not isinstance(answers, dict):
+        answers = {}
+    invalid_ids = []
+    answered = 0
+    for question in questions:
+        question_id = clean_text(question.get("id"), 80)
+        options = question.get("options")
+        supplied = normalize_answer(answers.get(question_id))
+        valid = (
+            question_id
+            and isinstance(options, list)
+            and not isinstance(supplied, bool)
+            and isinstance(supplied, int)
+            and 0 <= supplied < len(options)
+        )
+        if valid:
+            answered += 1
+        else:
+            invalid_ids.append(question_id or "missing-id")
+    return {
+        "valid": bool(questions) and not invalid_ids,
+        "answered": answered,
+        "required": len(questions),
+        "invalidQuestionIds": invalid_ids,
+    }
+
+
 def clean_basic_writing(value):
     return str(value or "").replace("\r\n", "\n").replace("\r", "\n").strip()[:6000]
 
@@ -6031,9 +6072,11 @@ def write_intermediate_integrated_task_bundle(data):
 
 
 def read_intermediate_integrated_task_submissions():
-    data = read_json_file(INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH, {"submissions": {}, "events": []})
+    data = read_json_file(INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH, {"submissions": {}, "attempts": {}, "events": []})
     if not isinstance(data.get("submissions"), dict):
         data["submissions"] = {}
+    if not isinstance(data.get("attempts"), dict):
+        data["attempts"] = {}
     if not isinstance(data.get("events"), list):
         data["events"] = []
     return data
@@ -6216,7 +6259,10 @@ def intermediate_integrated_health_payload(grades_data, bundle, submissions):
     if not isinstance(submission_items, dict):
         submission_items = {}
     students = []
-    counts = {"total": 0, "submitted": 0, "pendingWriting": 0, "graded": 0, "notSubmitted": 0, "reopenActive": 0}
+    attempt_history = submissions.get("attempts", {})
+    if not isinstance(attempt_history, dict):
+        attempt_history = {}
+    counts = {"total": 0, "submitted": 0, "pendingWriting": 0, "graded": 0, "notSubmitted": 0, "reopenActive": 0, "attempts": 0}
     for student in grades_data.get("students", []):
         if not isinstance(student, dict):
             continue
@@ -6241,6 +6287,11 @@ def intermediate_integrated_health_payload(grades_data, bundle, submissions):
             counts["notSubmitted"] += 1
         if reopen_active:
             counts["reopenActive"] += 1
+        previous_attempts = attempt_history.get(student_id, [])
+        if not isinstance(previous_attempts, list):
+            previous_attempts = []
+        attempt_count = len(previous_attempts) + (1 if isinstance(submission, dict) else 0)
+        counts["attempts"] += attempt_count
         students.append({
             "id": student_id,
             "fullName": clean_text(student.get("fullName"), 200),
@@ -6249,6 +6300,7 @@ def intermediate_integrated_health_payload(grades_data, bundle, submissions):
             "grade": grade if isinstance(grade, (int, float)) else None,
             "detail": detail if isinstance(detail, dict) else None,
             "submission": basic_integrated_submission_public(submission) if isinstance(submission, dict) else None,
+            "attemptCount": attempt_count,
             "canTake": intermediate_integrated_can_take("student", state, student_id),
             "reopenActive": reopen_active
         })
@@ -6276,9 +6328,18 @@ def apply_intermediate_integrated_submission_status_to_gradebook(grades_data, su
         submission = submission_items.get(student_id)
         if not isinstance(submission, dict):
             continue
-        grades = student.get("grades", {})
-        if isinstance(grades, dict) and isinstance(grades.get(INTERMEDIATE_INTEGRATED_TASK_ID), (int, float)):
-            continue
+        status = clean_text(submission.get("status") or "submitted", 80)
+        submission_grade = clean_grade(submission.get("grade")) if status == "graded" else None
+        grades = student.setdefault("grades", {})
+        if not isinstance(grades, dict):
+            grades = {}
+            student["grades"] = grades
+        if submission_grade is not None and grades.get(INTERMEDIATE_INTEGRATED_TASK_ID) != submission_grade:
+            grades[INTERMEDIATE_INTEGRATED_TASK_ID] = submission_grade
+            changed = True
+        if submission_grade is None and INTERMEDIATE_INTEGRATED_TASK_ID in grades:
+            grades.pop(INTERMEDIATE_INTEGRATED_TASK_ID, None)
+            changed = True
         details = student.setdefault("gradeDetails", {})
         if not isinstance(details, dict):
             details = {}
@@ -6286,13 +6347,20 @@ def apply_intermediate_integrated_submission_status_to_gradebook(grades_data, su
         next_detail = {
             "evaluationId": INTERMEDIATE_INTEGRATED_TASK_ID,
             "activityTitle": INTERMEDIATE_INTEGRATED_TASK_EVALUATION["title"],
-            "status": clean_text(submission.get("status") or "submitted", 80),
+            "status": status,
             "submittedAt": clean_text(submission.get("submittedAt"), 80),
             "receiptId": clean_text(submission.get("receiptId"), 80),
             "listeningPoints": clean_exam_number(submission.get("listeningPoints")),
-            "pendingTeacherReview": submission.get("status") != "graded",
+            "pendingTeacherReview": submission_grade is None,
             "weight": 20
         }
+        if submission_grade is not None:
+            next_detail.update({
+                "gradedAt": clean_text(submission.get("gradedAt"), 80),
+                "writingPoints": clean_exam_number(submission.get("writingPoints")),
+                "finalPoints": clean_exam_number(submission.get("finalPoints")),
+                "grade": submission_grade,
+            })
         if details.get(INTERMEDIATE_INTEGRATED_TASK_ID) != next_detail:
             details[INTERMEDIATE_INTEGRATED_TASK_ID] = next_detail
             changed = True
@@ -6976,10 +7044,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 state = bundle.get("state", {})
                 student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
                 submitted = submissions.get("submissions", {}).get(student_id) if student_id else None
+                query = urllib.parse.parse_qs(parsed.query)
+                wants_new_attempt = (query.get("retake") or [""])[0] == "1"
                 if role not in ("admin", "teacher") and not isinstance(student, dict):
                     json_response(self, 403, {"error": "not_authorized"})
                     return
-                if submitted:
+                if submitted and not wants_new_attempt:
                     json_response(self, 200, {"status": "submitted", "state": state, "result": basic_integrated_submission_public(submitted)})
                     return
                 if not intermediate_integrated_can_take(role, state, student_id):
@@ -8343,8 +8413,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 submissions = read_intermediate_integrated_task_submissions()
                 existing = submissions.get("submissions", {}).get(student_id)
-                if existing:
-                    json_response(self, 409, {"error": "already_submitted", "result": basic_integrated_submission_public(existing)})
+                client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+                if len(client_submission_id) < 8:
+                    json_response(self, 400, {"error": "missing_client_submission_id"})
+                    return
+                if isinstance(existing, dict) and clean_text(existing.get("clientSubmissionId"), 120) == client_submission_id:
+                    json_response(self, 200, {"ok": True, "idempotent": True, "result": basic_integrated_submission_public(existing)})
+                    return
+                answer_status = integrated_answer_payload_status(bundle.get("exam", {}), payload.get("answers"))
+                if not answer_status["valid"]:
+                    json_response(self, 400, {"error": "invalid_answers", **answer_status})
                     return
                 writing = clean_basic_writing(payload.get("writing"))
                 word_count = basic_word_count(writing)
@@ -8360,6 +8438,22 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 except (TypeError, ValueError):
                     audio_plays = 0
                 submitted_at = now_iso()
+                history_by_student = submissions.setdefault("attempts", {})
+                if not isinstance(history_by_student, dict):
+                    history_by_student = {}
+                    submissions["attempts"] = history_by_student
+                history = history_by_student.setdefault(student_id, [])
+                if not isinstance(history, list):
+                    history = []
+                    history_by_student[student_id] = history
+                previous_attempt_number = 0
+                if isinstance(existing, dict):
+                    try:
+                        previous_attempt_number = max(0, int(existing.get("attemptNumber", 0)))
+                    except (TypeError, ValueError):
+                        previous_attempt_number = 0
+                    history.append(existing)
+                attempt_number = max(len(history) + 1, previous_attempt_number + 1)
                 submission = {
                     "receiptId": "IIT-" + secrets.token_hex(5).upper(),
                     "studentId": student_id,
@@ -8379,13 +8473,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "rubric": None,
                     "teacherComments": "",
                     "gradedAt": None,
-                    "gradedBy": ""
+                    "gradedBy": "",
+                    "attemptNumber": attempt_number,
+                    "clientSubmissionId": client_submission_id
                 }
                 submissions.setdefault("submissions", {})[student_id] = submission
                 gradebook_changed = ensure_intermediate_integrated_task_evaluation(grades_data)
                 if apply_intermediate_integrated_submission_status_to_gradebook(grades_data, submissions):
                     gradebook_changed = True
-                basic_integrated_append_event(submissions, "submitted", profile, student_id, "Student submitted the Intermediate Integrated Task")
+                event_type = "resubmitted" if attempt_number > 1 else "submitted"
+                basic_integrated_append_event(submissions, event_type, profile, student_id, "Student submitted Intermediate Integrated Task attempt " + str(attempt_number))
                 write_intermediate_integrated_task_submissions(submissions)
                 if gradebook_changed:
                     write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
@@ -9133,6 +9230,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 submission = submissions.get("submissions", {}).get(student_id)
                 if not isinstance(submission, dict):
                     json_response(self, 404, {"error": "submission_not_found"})
+                    return
+                receipt_id = clean_text(payload.get("receiptId"), 80)
+                if not receipt_id:
+                    json_response(self, 400, {"error": "missing_receipt_id"})
+                    return
+                if receipt_id != clean_text(submission.get("receiptId"), 80):
+                    json_response(self, 409, {"error": "submission_changed", "result": basic_integrated_submission_public(submission)})
                     return
                 student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
                 if not isinstance(student, dict):

@@ -1,6 +1,7 @@
 ﻿(function () {
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+  const LOCAL_USER_KEY = "jaralingua_local_user";
   const API_PATH = "/api/intermediate/grades";
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
   const MICROSOFT_CLIENT_ID = (window.JARALINGUA_MICROSOFT_CLIENT_ID || "4e729f8a-d101-4c5d-af68-609d749bc95a").trim();
@@ -32,6 +33,8 @@
     if (googleUser && googleUser.credential) return Object.assign({ provider: "google" }, googleUser);
     const microsoftUser = readStoredUser(MICROSOFT_USER_KEY);
     if (microsoftUser && microsoftUser.credential) return Object.assign({ provider: "microsoft" }, microsoftUser);
+    const localUser = readStoredUser(LOCAL_USER_KEY);
+    if (localUser && localUser.credential) return Object.assign({ provider: "local" }, localUser);
     return null;
   }
 
@@ -64,6 +67,20 @@
 
   function formatGrade(value) {
     return typeof value === "number" ? value.toFixed(1) : "Pending";
+  }
+
+  function assessmentStatus(student, evaluation) {
+    const grades = student.grades || {};
+    if (typeof grades[evaluation.id] === "number") return { label: "Recorded", className: "done", submitted: true };
+    const details = student.gradeDetails && typeof student.gradeDetails === "object" ? student.gradeDetails : {};
+    const detail = details[evaluation.id];
+    const pendingReview = detail && (
+      detail.pendingTeacherReview === true ||
+      ["submitted", "pending-writing", "pending-writing-review"].includes(String(detail.status || ""))
+    );
+    return pendingReview
+      ? { label: "Submitted - teacher review pending", className: "submitted", submitted: true }
+      : { label: "Not submitted", className: "pending", submitted: false };
   }
 
   function gradeSummary(student, evaluations) {
@@ -333,13 +350,14 @@
     const grades = student.grades || {};
     return evaluations.map(function (evaluation) {
       const hasGrade = typeof grades[evaluation.id] === "number";
+      const status = assessmentStatus(student, evaluation);
       return `
         <tr>
           <td>${escapeHtml(evaluation.title)}</td>
           <td>${escapeHtml(evaluation.type || "Assessment")}</td>
           <td>${evaluation.weight}%</td>
-          <td>${escapeHtml(formatGrade(grades[evaluation.id]))}</td>
-          <td><span class="status-pill ${hasGrade ? "done" : "pending"}">${hasGrade ? "Recorded" : "Pending"}</span></td>
+          <td>${escapeHtml(hasGrade ? formatGrade(grades[evaluation.id]) : (status.submitted ? "Awaiting rubric" : "Pending"))}</td>
+          <td><span class="status-pill ${status.className}">${escapeHtml(status.label)}</span></td>
         </tr>
       `;
     }).join("");
@@ -385,7 +403,8 @@
       const summary = gradeSummary(student, payload.evaluations);
       const grades = student.grades || {};
       const gradeCells = payload.evaluations.map(function (evaluation) {
-        return `<td>${escapeHtml(formatGrade(grades[evaluation.id]))}</td>`;
+        const status = assessmentStatus(student, evaluation);
+        return `<td>${typeof grades[evaluation.id] === "number" ? escapeHtml(formatGrade(grades[evaluation.id])) : `<span class="status-pill ${status.className}">${escapeHtml(status.label)}</span>`}</td>`;
       }).join("");
       return `
         <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
@@ -813,7 +832,8 @@
       const grades = student.grades || {};
       const summary = gradeSummary(student, payload.evaluations);
       const gradeCells = payload.evaluations.map(function (evaluation) {
-        return `<td style="text-align:center;">${excelCell(formatGrade(grades[evaluation.id]))}</td>`;
+        const status = assessmentStatus(student, evaluation);
+        return `<td style="text-align:center;">${excelCell(typeof grades[evaluation.id] === "number" ? formatGrade(grades[evaluation.id]) : status.label)}</td>`;
       }).join("");
       return `
         <tr>

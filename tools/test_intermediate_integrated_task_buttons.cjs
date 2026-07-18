@@ -115,6 +115,8 @@ async function installStudentApi(page) {
           finalPoints: null,
           grade: null,
           status: "pending-writing",
+          attemptNumber: 1,
+          clientSubmissionId: submittedPayload.clientSubmissionId,
           writing: submittedPayload.writing,
           rubric: null,
           teacherComments: ""
@@ -122,7 +124,7 @@ async function installStudentApi(page) {
       })
     });
   });
-  await page.route("**/api/intermediate/integrated-task", async route => {
+  await page.route(/\/api\/intermediate\/integrated-task(?:\?retake=1)?$/, async route => {
     await route.fulfill({
       status: 200,
       contentType: "application/json",
@@ -154,6 +156,8 @@ async function installTeacherApi(page) {
     finalPoints: null,
     grade: null,
     status: "pending-writing",
+    attemptNumber: 1,
+    clientSubmissionId: "teacher-client-attempt",
     writing: Array.from({ length: 100 }, () => "food").join(" "),
     rubric: null,
     teacherComments: ""
@@ -182,11 +186,21 @@ async function installTeacherApi(page) {
     await route.fulfill({
       status: 200,
       contentType: "application/json",
-      body: JSON.stringify({ role: "teacher", submissions: [submission], health: { counts: { total: 1, submitted: 1, pendingWriting: 1, graded: 0, notSubmitted: 0 } } })
+      body: JSON.stringify({
+        role: "teacher",
+        submissions: [submission],
+        health: {
+          counts: { total: 2, submitted: 1, pendingWriting: 1, graded: 0, notSubmitted: 1 },
+          students: [
+            { id: "S001", fullName: "Test Student", email: "student@test.local", status: "pending-writing", grade: null },
+            { id: "S002", fullName: "Second Student", email: "second@test.local", status: "not-submitted", grade: null }
+          ]
+        }
+      })
     });
   });
   await page.route("**/api/intermediate/integrated-task/audio", route => route.fulfill({ status: 200, contentType: "audio/mpeg", body: audio }));
-  await page.route("**/api/intermediate/integrated-task", async route => {
+  await page.route(/\/api\/intermediate\/integrated-task(?:\?retake=1)?$/, async route => {
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ status: "staff-preview", role: "teacher", state: { isOpen }, student: null, exam: publicExam }) });
   });
   return () => gradePayload;
@@ -238,6 +252,12 @@ async function testStudentButtons(browser) {
   assert.match(await page.locator("#submitResult").innerText(), /Exam submitted successfully/);
   assert.equal(submittedPayload().audioPlays, 5);
   assert.equal(Object.keys(submittedPayload().answers).length, 10);
+  assert.ok(submittedPayload().clientSubmissionId.length >= 8);
+  assert.equal(await page.locator("[data-new-attempt]").isVisible(), true);
+  await page.locator("[data-new-attempt]").click();
+  await page.locator("#submitExamBtn:visible").waitFor({ state: "visible" });
+  assert.equal(await page.locator("#writingResponse").inputValue(), "");
+  assert.equal(await page.locator(".question-card").count(), 10);
   await context.close();
 }
 
@@ -248,6 +268,9 @@ async function testTeacherButtons(browser) {
   await page.goto(BASE_URL);
   await page.locator("#adminPanel:not([hidden])").waitFor({ state: "visible" });
   await page.locator("#reviewPanel:not([hidden])").waitFor({ state: "visible" });
+  assert.equal(await page.locator(".review-roster-table tbody tr").count(), 2);
+  assert.match(await page.locator(".review-roster-table").innerText(), /Submitted - pending review/);
+  assert.match(await page.locator(".review-roster-table").innerText(), /Not submitted/);
 
   await page.locator('[data-exam-state="open"]').click();
   await waitForText(page, "#activationFeedback", "activated successfully");
@@ -267,10 +290,65 @@ async function testTeacherButtons(browser) {
   await waitForText(page, "#reviewActionFeedback", "Rubric saved successfully");
   assert.match(await page.locator("#reviewActionFeedback").innerText(), /Rubric saved successfully/);
   assert.deepEqual(gradePayload().rubric, { content: 5, composing: 5, vocabulary: 5, structure: 5, mechanics: 5 });
+  assert.equal(gradePayload().receiptId, "IIT-TEACHERTEST");
 
   await page.locator('[data-exam-state="closed"]').click();
   await waitForText(page, "#activationFeedback", "closed successfully");
   assert.match(await page.locator("#activationFeedback").innerText(), /closed successfully/);
+  await context.close();
+}
+
+async function testAccountSwitchResetsExam(browser) {
+  const context = await browser.newContext({ viewport: { width: 768, height: 1024 } });
+  const userA = { ...storedUser("student"), credential: "student-a-token", email: "a@test.local", name: "Student A" };
+  const userB = { ...storedUser("student"), credential: "student-b-token", email: "b@test.local", name: "Student B" };
+  await context.addInitScript(({ user }) => sessionStorage.setItem("jaralingua_local_user", JSON.stringify(user)), { user: userA });
+  const page = await context.newPage();
+  const submittedA = {
+    receiptId: "IIT-STUDENT-A",
+    studentId: "S001",
+    studentName: "Student A",
+    submittedAt: "2026-07-13T14:05:00Z",
+    audioPlays: 2,
+    listeningPoints: 20,
+    status: "pending-writing",
+    attemptNumber: 1,
+    clientSubmissionId: "student-a-client-attempt",
+    writing: Array.from({ length: 100 }, () => "food").join(" "),
+    rubric: null,
+    teacherComments: ""
+  };
+  const isUserB = route => String(route.request().headers().authorization || "").includes("student-b-token");
+  await page.route("https://accounts.google.com/**", route => route.abort());
+  await page.route("**/api/intermediate/integrated-task/state", async route => {
+    const second = isUserB(route);
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        role: "student",
+        state: { isOpen: true },
+        student: { id: second ? "S002" : "S001", fullName: second ? "Student B" : "Student A" },
+        submitted: second ? null : submittedA,
+        canTake: true,
+        allowStudentIdClaim: false
+      })
+    });
+  });
+  await page.route("**/api/intermediate/integrated-task/audio", route => route.fulfill({ status: 200, contentType: "audio/mpeg", body: fs.readFileSync(AUDIO_PATH) }));
+  await page.route(/\/api\/intermediate\/integrated-task(?:\?retake=1)?$/, async route => {
+    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ status: "open", role: "student", state: { isOpen: true }, student: { id: "S002", fullName: "Student B" }, exam: publicExam }) });
+  });
+  await page.goto(BASE_URL);
+  await page.locator("#submitResult.show").waitFor({ state: "visible" });
+  assert.equal(await page.locator("#submitExamBtn").isVisible(), false);
+  await page.evaluate(user => sessionStorage.setItem("jaralingua_local_user", JSON.stringify(user)), userB);
+  await page.waitForFunction(() => document.getElementById("studentId").value === "S002", null, { timeout: 9000 });
+  assert.equal(await page.locator("#submitExamBtn").isVisible(), true);
+  assert.equal(await page.locator("#submitExamBtn").isEnabled(), true);
+  assert.equal(await page.locator("#writingResponse").isEnabled(), true);
+  assert.equal(await page.locator("#writingResponse").inputValue(), "");
+  assert.equal(await page.locator(".question-card").count(), 10);
   await context.close();
 }
 
@@ -304,6 +382,7 @@ async function testResponsiveLayouts(browser) {
     await testSignedOutButton(browser);
     await testStudentButtons(browser);
     await testTeacherButtons(browser);
+    await testAccountSwitchResetsExam(browser);
     await testResponsiveLayouts(browser);
     console.log("PASS buttons and responsive layouts: student and teacher flows work at mobile 390x844, tablet 768x1024, and laptop 1366x768");
   } finally {
