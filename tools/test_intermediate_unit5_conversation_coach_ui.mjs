@@ -31,7 +31,7 @@ function transcriptFor(prompt, topic = "") {
   if (normalized.includes("meal quantities")) return "For four people, we need two cups of rice, a can of beans, a few tomatoes, and a little olive oil.";
   if (normalized.includes("containers")) return "I would buy two bottles of water, a carton of yogurt, a bag of nuts, and a few apples.";
   if (normalized.includes("identity")) return "Arepas represent my family because we prepare them together. They remind me of weekend breakfasts at home.";
-  if (normalized.includes("comparison")) return "Both arepas and tortillas are made from corn, but arepas are thicker while tortillas are thinner.";
+  if (normalized.includes("comparison")) return "Both arepas and tortillas are made from corn, but arepas are thicker while tortillas are thinner and easier to fold around ingredients.";
   if (normalized.includes("snack")) return "I recommend Japanese onigiri because it is soft and savory. It is made with rice and traditional fillings.";
   return "What is your favorite dish and what is it made with? How do you prepare it and why do you recommend it?";
 }
@@ -43,13 +43,22 @@ async function preparePage(context, viewport, apiMode = "success") {
   let nextTranscript = "";
   page.on("pageerror", (error) => errors.push(error.message));
   await page.route("**/*.mp3", (route) => route.fulfill({ status: 200, contentType: "audio/mpeg", body: sampleAudio }));
-  await page.route("**/api/french8/pronunciation-assessment", async (route) => {
+  await page.route("**/api/english-intermediate/pronunciation-assessment", async (route) => {
     if (apiMode === "failure") {
       await route.fulfill({ status: 503, contentType: "application/json", body: JSON.stringify({ error: "Temporary test failure" }) });
       return;
     }
-    const words = nextTranscript.split(/\s+/).map((word) => ({ word: word.replace(/[^A-Za-z']/g, ""), probability: .91 })).filter((item) => item.word);
-    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ text: nextTranscript, words, audio: { rms: .08 } }) });
+    if (apiMode === "foreign") {
+      await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ text: "Elle a été créée.", language_code: "fr", words: [{ word: "Elle", probability: .2 }, { word: "été", probability: .2 }, { word: "créée", probability: .2 }], audio: { rms: .08 } }) });
+      return;
+    }
+    const words = [
+      { word: "Elle", probability: .2 },
+      { word: "été", probability: .2 },
+      { word: "créée", probability: .2 },
+      ...nextTranscript.split(/\s+/).map((word) => ({ word: word.replace(/[^A-Za-z']/g, ""), probability: .91 })).filter((item) => item.word)
+    ];
+    await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ text: nextTranscript, language_code: "en", words, audio: { rms: .08 } }) });
   });
   await page.goto(url, { waitUntil: "networkidle" });
   return { page, errors, setTranscript: (value) => { nextTranscript = value; } };
@@ -175,6 +184,7 @@ try {
   assert.equal(await guided.page.locator("#summaryAnswers article").count(), 4, "Report must review all four turns");
   assert.equal(await guided.page.locator("#summaryAnswers .coach-answer-phase").count(), 7, "Report must separate all seven spoken responses");
   assert.match(await guided.page.locator("#summaryCoverage").innerText(), /7 of 7 responses analyzed/i, "Report must state complete seven-response coverage");
+  assert.doesNotMatch(await guided.page.locator("#summaryWords").innerText(), /\belle\b|été|créée/i, "French hallucination tokens must never appear in English feedback");
   await guided.page.screenshot({ path: path.join(outputDir, "laptop-summary.png"), fullPage: true });
   assert.equal(guided.errors.length, 0, "Guided conversation must not produce runtime errors");
   await guided.page.close();
@@ -222,6 +232,19 @@ try {
   assert.match(await recovery.page.locator("#liveTranscript").innerText(), /follow-up.*not transcribed or scored/i, "Recovery must state that no follow-up score was invented");
   assert.equal(recovery.errors.length, 0, "Recovery path must not produce runtime errors");
   await recovery.page.close();
+
+  const foreignLanguage = await preparePage(context, { width: 390, height: 844 }, "foreign");
+  await foreignLanguage.page.locator("#startConversationButton").click();
+  await foreignLanguage.page.waitForSelector("#interviewPanel:not([hidden])");
+  await foreignLanguage.page.waitForFunction(() => !document.getElementById("questionPlayButton").disabled);
+  await foreignLanguage.page.locator("#micButton").click();
+  await foreignLanguage.page.waitForTimeout(1300);
+  await foreignLanguage.page.locator("#stopButton").click();
+  await foreignLanguage.page.waitForSelector("#transcriptionRecovery:not([hidden])", { timeout: 15000 });
+  assert.match(await foreignLanguage.page.locator("#liveTranscript").innerText(), /did not return English analysis/i, "A French transcription response must be rejected before feedback");
+  assert.equal(await foreignLanguage.page.locator("#nextTurnButton").isDisabled(), true, "A rejected foreign transcript must never enable Continue");
+  assert.equal(foreignLanguage.errors.length, 0, "Foreign-language rejection must not produce runtime errors");
+  await foreignLanguage.page.close();
 
   console.log(`PASS Unit 5 Conversation Coach UI audit; screenshots=${outputDir}`);
 } finally {

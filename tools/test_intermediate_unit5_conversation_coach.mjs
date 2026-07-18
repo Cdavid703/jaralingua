@@ -31,6 +31,8 @@ assert.deepEqual(Array.from(config.mandatoryQuestionIds), ["u5q8-role-reversal"]
 assert.equal(config.selectionGroups.length, 3, "Ingredients, quantities, and culture groups are required");
 assert.deepEqual(Array.from(config.selectionGroups, (group) => group.id), ["ingredients", "quantities", "culture"]);
 assert.equal(config.rubric.length, 5, "The report must use five /10 criteria");
+assert.equal(config.apiPath, "/api/english-intermediate/pronunciation-assessment", "Intermediate English must never use the French transcription route");
+assert.doesNotMatch(configPath + engine, /\/api\/french8\/pronunciation-assessment/, "The Intermediate Coach must contain no French transcription fallback");
 
 const scriptItems = new Map();
 const lines = scripts.split(/\r?\n/);
@@ -102,6 +104,9 @@ assert.match(engine, /selectBalancedQuestions/, "The engine must enforce balance
 assert.match(engine, /chooseAdaptiveFollowUp/, "The engine must select follow-ups from answer evidence");
 assert.match(engine, /turnIsComplete/, "The engine must require the follow-up before advancing");
 assert.match(engine, /continueWithoutScore/, "The engine must support an honest unscored recovery path");
+assert.match(engine, /did not return English analysis/, "The engine must reject a non-English transcription response");
+assert.match(engine, /frenchFeedbackWords/, "The pronunciation feedback must filter clearly French tokens");
+assert.match(engine, /reportLowConfidence.*filter.*isUsefulEnglishFeedbackWord/, "Stored reports must also remove clearly French feedback tokens");
 assert.match(page, /7 spoken responses/i, "The learner-facing page must explain the complete response load");
 assert.match(page, /audio is not stored/i, "Privacy copy must state that audio is not stored");
 assert.match(css, /@media \(max-width: 980px\)/, "Tablet layout is required");

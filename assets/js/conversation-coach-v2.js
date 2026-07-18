@@ -5,7 +5,7 @@
   const questions = Array.isArray(config.questions) ? config.questions : [];
   const questionById = new Map(questions.map((question) => [question.id, question]));
   const storageKey = config.storageKey || "jaralingua:conversation-coach:v2";
-  const apiPath = config.apiPath || "/api/french8/pronunciation-assessment";
+  const apiPath = config.apiPath || "/api/english-intermediate/pronunciation-assessment";
   const audioRoot = config.audioRoot || "";
   const maxRecordingSeconds = Number(config.maxRecordingSeconds) || 40;
   const transcriptionTimeoutMs = 30000;
@@ -618,7 +618,16 @@
           signal: controller.signal
         });
         const payload = await response.json().catch(() => ({}));
-        if (response.ok) return payload;
+        if (response.ok) {
+          const expectedLanguage = String(config.language || "").toLowerCase();
+          const returnedLanguage = String(payload.language_code || payload.language || "").toLowerCase();
+          if (expectedLanguage && returnedLanguage && !returnedLanguage.startsWith(expectedLanguage)) {
+            const languageError = new Error("The transcription service did not return English analysis. Please retry this recording.");
+            languageError.status = 502;
+            throw languageError;
+          }
+          return payload;
+        }
         const error = new Error(payload.error || `Transcription service error (${response.status}).`);
         error.status = response.status;
         throw error;
@@ -640,6 +649,18 @@
       word: String(item.word || item.text || "").trim(),
       probability: Number(item.probability ?? item.confidence ?? 1)
     })).filter((item) => item.word && Number.isFinite(item.probability));
+  }
+
+  const frenchFeedbackWords = new Set([
+    "avec", "cette", "comme", "cree", "dans", "elle", "elles", "entre", "mais", "nous", "pour", "sont", "tout", "tres", "vous"
+  ]);
+
+  function isUsefulEnglishFeedbackWord(word) {
+    const raw = String(word || "").trim();
+    if (String(config.language || "").toLowerCase() !== "en") return normalize(raw).length > 2;
+    if (/[\u0300-\u036f]/.test(raw.normalize("NFD"))) return false;
+    const token = raw.toLowerCase().replace(/^[^a-z]+|[^a-z'-]+$/g, "");
+    return /^[a-z][a-z'-]{2,}$/.test(token) && !frenchFeedbackWords.has(token);
   }
 
   function countWords(text) {
@@ -682,7 +703,10 @@
     const connectorCount = ["because", "but", "however", "while", "and", "so"].filter((term) => normalized.includes(term)).length;
     const unitMatchCount = (question.unitTerms || []).filter((term) => normalized.includes(normalize(term))).length;
     const wordsPerMinute = (wordCount / seconds) * 60;
-    const clearWords = cleanWhisperWords(whisperWords);
+    const whisperEvidence = cleanWhisperWords(whisperWords);
+    const clearWords = String(config.language || "").toLowerCase() === "en"
+      ? whisperEvidence.filter((item) => isUsefulEnglishFeedbackWord(item.word))
+      : whisperEvidence;
     const averageConfidence = clearWords.length ? clearWords.reduce((sum, item) => sum + item.probability, 0) / clearWords.length : .72;
 
     const task = clampScore(2 + checkRatio * 6 + lengthRatio * 2);
@@ -695,7 +719,7 @@
     const clarity = clampScore(averageConfidence * 10);
     const metrics = { task, interaction, language, fluency, clarity };
     const total = Object.values(metrics).reduce((sum, value) => sum + value, 0);
-    const lowConfidence = clearWords.filter((item) => item.probability < .68 && normalize(item.word).length > 2).slice(0, 8);
+    const lowConfidence = clearWords.filter((item) => item.probability < .68).slice(0, 8);
     const missing = checks.filter((check) => !check.met).map((check) => check.label);
     const message = total >= 43
       ? "Your answer is detailed, relevant, and ready for a more independent attempt."
@@ -1072,6 +1096,7 @@
   function renderReport(report) {
     const turns = (report.answers || []).map(normalizeReportTurn);
     const totalResponses = report.totalResponses || report.totalTurns || turns.length;
+    const reportLowConfidence = (report.lowConfidence || []).filter((item) => isUsefulEnglishFeedbackWord(item.word));
     elements.summaryScore.textContent = report.score == null ? "--" : report.score;
     elements.summaryReadiness.textContent = report.readiness;
     elements.summaryLead.textContent = report.score != null ? "You completed a balanced four-turn, seven-response food conversation with Maya." : "You completed the conversation, but at least one response could not be analyzed.";
@@ -1080,7 +1105,7 @@
     elements.summaryMetrics.innerHTML = (config.rubric || []).map((criterion) => `<article class="coach-summary-metric"><strong>${report.criteria[criterion.key] == null ? "--" : report.criteria[criterion.key]}</strong><span>/10 - ${escapeHtml(criterion.label)}</span><p>${escapeHtml(criterion.description)}</p></article>`).join("");
     elements.summaryStrengths.innerHTML = (report.strengths.length ? report.strengths : ["You completed the complete interaction sequence."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     elements.summaryPriorities.innerHTML = (report.priorities.length ? report.priorities : ["Repeat the conversation when the transcription service is available."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
-    elements.summaryWords.innerHTML = report.lowConfidence.length ? report.lowConfidence.map((item) => `<span>${escapeHtml(item.word)} <small>${Math.round(item.probability * 100)}%</small></span>`).join("") : "<p>No lower-confidence words were identified in the analyzed turns.</p>";
+    elements.summaryWords.innerHTML = reportLowConfidence.length ? reportLowConfidence.map((item) => `<span>${escapeHtml(item.word)} <small>${Math.round(item.probability * 100)}%</small></span>`).join("") : "<p>No lower-confidence words were identified in the analyzed turns.</p>";
     elements.summaryAnswers.innerHTML = turns.map((turn, index) => {
       const score = turn.turnScore == null ? "Not analyzed" : `${turn.turnScore}/50 average`;
       const followUp = turn.followUpPrompt && turn.followUp

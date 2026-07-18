@@ -1,6 +1,6 @@
 window.JaraLinguaConversationCoachConfig = {
   id: "english-intermediate-1-unit-5",
-  apiPath: "/api/french8/pronunciation-assessment",
+  apiPath: "/api/english-intermediate/pronunciation-assessment",
   storageKey: "jaralingua:english-intermediate-1:conversation-coach:unit-5:v1",
   language: "en",
   locale: "en-US",
