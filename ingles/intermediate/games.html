@@ -4,17 +4,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Games | Intermediate English Course 1 | JaraLingua</title>
-  <meta name="description" content="Interactive classroom games for Intermediate English Course 1: Guess Who and The Vocabulary Impostor.">
+  <meta name="description" content="Interactive classroom games for Intermediate English Course 1: Guess Who, The Vocabulary Impostor, and Hangman.">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
   <link rel="stylesheet" href="../../assets/vendor/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="../../assets/css/french8-games.css?v=20260717-english-hub">
+  <link rel="stylesheet" href="../../assets/css/english-intermediate-games.css?v=20260718-hangman-hub">
   <style>
-    .english-games-hub .game-library{grid-template-columns:repeat(2,minmax(0,1fr));max-width:980px}
+    .english-games-hub .game-library{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1180px}
     .english-games-hub .games-hero{--hero-image:url('../../assets/img/english-basic/practice-lab/guess-who-game-banner.png')}
     .english-games-hub .games-hero::before{background:rgba(7,25,52,.82)}
     .english-games-hub .game-status.shared{background:#eef5ff;color:#15345d}
+    @media(max-width:1050px){.english-games-hub .game-library{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:700px){.english-games-hub .game-library{grid-template-columns:1fr}}
   </style>
 </head>
@@ -34,7 +35,7 @@
       <div class="games-hero-content">
         <span class="games-badge"><i class="bi bi-controller"></i> Classroom games</span>
         <h1>Games</h1>
-        <p class="lead">Choose a deduction game or open a live vocabulary room for the class.</p>
+        <p class="lead">Choose a deduction, vocabulary, spelling, or live-room game for the class.</p>
         <div class="games-actions"><a class="games-btn" href="#game-library"><i class="bi bi-play-fill"></i> Choose a game</a><a class="games-btn-soft" href="index.html"><i class="bi bi-arrow-left"></i> Back to course</a></div>
       </div>
     </div>
@@ -45,7 +46,7 @@
       <div class="container">
         <p class="games-kicker">Game library</p>
         <h2 class="games-title">Ready for the classroom</h2>
-        <p class="games-copy mb-0">Both games keep their own rules, vocabulary, and classroom flow.</p>
+        <p class="games-copy mb-0">Each game keeps its own rules, vocabulary, and classroom flow.</p>
 
         <div class="game-library">
           <article class="game-card">
@@ -56,6 +57,11 @@
           <article class="game-card">
             <div class="game-card-media"><img src="../../assets/img/english-intermediate/unit-4/impostor/family-impostor-hero.png" alt="Intermediate English learners playing The Vocabulary Impostor" loading="lazy"><span class="game-card-icon"><i class="bi bi-incognito"></i></span></div>
             <div class="game-card-body"><span class="game-status"><i class="bi bi-check-circle-fill"></i> Live room</span><h2>The Vocabulary Impostor</h2><p>Choose Unit 2, Unit 3, or Unit 4 vocabulary, distribute private roles, discuss clues, vote, and play another clean round.</p><a class="games-btn" href="game-unit-4-family-impostor.html"><i class="bi bi-play-fill"></i> Create or join</a></div>
+          </article>
+
+          <article class="game-card">
+            <div class="game-card-media"><img src="../../assets/img/english-intermediate/games/hangman-classroom-hero.webp" alt="Adult Intermediate English learners solving a classroom word puzzle" loading="lazy"><span class="game-card-icon"><i class="bi bi-alphabet-uppercase"></i></span></div>
+            <div class="game-card-body"><span class="game-status"><i class="bi bi-check-circle-fill"></i> 116 course answers</span><h2>Hangman</h2><p>Use progressive clues, recorded letter pronunciation, a live scoreboard, and a learning recap to reconstruct vocabulary from Units 1 to 5.</p><a class="games-btn" href="game-hangman.html"><i class="bi bi-play-fill"></i> Set up Hangman</a></div>
           </article>
         </div>
       </div>
