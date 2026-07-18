@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>French 2 microphone guard harness</title>
+</head>
+<body>
+  <button id="modelButton" type="button">Modele</button>
+  <audio id="modelAudio"></audio>
+  <div id="stageCounter"></div>
+  <div id="stageTitle"></div>
+  <div id="stageProgress"></div>
+  <div id="readingText"></div>
+
+  <div class="record-zone">
+    <div class="microphone-picker">
+      <select id="microphoneSelect"><option value="">Microphone par defaut</option></select>
+    </div>
+    <button id="recordBtn" type="button">Enregistrer</button>
+    <button id="stopBtn" type="button" disabled>Terminer</button>
+    <button id="retryBtn" type="button">Recommencer</button>
+    <button id="nextBtn" type="button" disabled>Suivant</button>
+    <audio id="recordingPlayback" hidden></audio>
+    <div id="timer">00:00</div>
+    <div id="micStatus"></div>
+    <div id="recordHelp"></div>
+    <div id="micPermissionHelp"></div>
+  </div>
+
+  <div id="comparisonNote"></div>
+  <div id="scoreRing"></div>
+  <div id="overallScore"></div>
+  <div id="accuracyScore"></div>
+  <div id="completenessScore"></div>
+  <div id="fluencyScore"></div>
+  <div id="feedback"></div>
+  <div id="tips"></div>
+
+  <script>
+    localStorage.removeItem("jaralingua:french2:pronunciation:routines:v1");
+    localStorage.removeItem("jaralingua:french2:pronunciation:routines:v2");
+
+    const fakeTrack = { stop() {}, readyState: "live" };
+    Object.defineProperty(navigator, "mediaDevices", {
+      configurable: true,
+      value: {
+        getUserMedia: async () => ({ getTracks: () => [fakeTrack], getAudioTracks: () => [fakeTrack] }),
+        enumerateDevices: async () => [{ kind: "audioinput", deviceId: "mock-mic", label: "Mock microphone" }]
+      }
+    });
+
+    class FakeMediaRecorder {
+      static isTypeSupported(type) { return type.startsWith("audio/webm"); }
+      constructor(_stream, options = {}) {
+        this.mimeType = options.mimeType || "audio/webm";
+        this.state = "inactive";
+        this.ondataavailable = null;
+        this.onstop = null;
+      }
+      start() { this.state = "recording"; }
+      stop() {
+        if (this.state !== "recording") return;
+        this.state = "inactive";
+        const data = new Blob(["mock-audio-data"], { type: this.mimeType });
+        queueMicrotask(() => {
+          this.ondataavailable?.({ data });
+          this.onstop?.();
+        });
+      }
+    }
+    window.MediaRecorder = FakeMediaRecorder;
+
+    let assessmentCalls = 0;
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = async (url, options) => {
+      if (!String(url).includes("/api/french8/pronunciation-assessment")) return nativeFetch(url, options);
+      assessmentCalls += 1;
+      const payload = assessmentCalls === 1
+        ? { text: "Bonjour je teste mon microphone", audio: { duration_seconds: 3.2, rms: 0.02, peak: 0.1 }, words: [] }
+        : { text: "", audio: { duration_seconds: 2.5, rms: 0, peak: 0 }, words: [] };
+      return { ok: true, status: 200, json: async () => payload };
+    };
+    window.__micGuardCalls = () => assessmentCalls;
+  </script>
+  <script src="../assets/js/french8-pronunciation-assessment.js"></script>
+  <script src="../frances/Niveau 2/assets/pronunciation-a2.js"></script>
+</body>
+</html>

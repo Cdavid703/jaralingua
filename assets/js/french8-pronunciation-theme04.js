@@ -342,6 +342,25 @@
     return `Réécoutez le modèle et reprenez cette section par groupes de mots. Travaillez d’abord : ${focus || "les mots en rouge"}.`;
   }
 
+  function recordingEvidence(payload) {
+    const transcript = String(payload?.text || payload?.transcript || "").trim();
+    const validate = window.JaraFrench8PronunciationAssessment?.validateRecordingEvidence;
+    if (validate) return validate({ transcript, audio: payload?.audio, recordedDurationMs });
+    return transcript
+      ? { ok: true, reason: "", message: "" }
+      : { ok: false, reason: "no_speech", message: "Aucune parole exploitable n'a été reconnue. Réessayez l'enregistrement." };
+  }
+
+  function showRecordingIssue(issue) {
+    const saved = stageScores[currentStageIndex];
+    renderReference();
+    results.hidden = true;
+    retryButton.hidden = false;
+    nextButton.hidden = !saved;
+    liveTranscript.textContent = `${issue.message} Aucun mot n'est marqué comme incorrect et aucune note n'est créée pour cet essai.${saved ? " Votre meilleur essai précédent reste enregistré." : ""}`;
+    recordStatus.textContent = "Essai non noté : la voix n'a pas été captée correctement.";
+  }
+
   function blobToDataUrl(blob) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -454,6 +473,11 @@
       const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || `Erreur du serveur (${response.status}).`);
+      const evidence = recordingEvidence(payload);
+      if (!evidence.ok) {
+        showRecordingIssue(evidence);
+        return;
+      }
       const transcript = (payload.text || "").trim();
       liveTranscript.textContent = transcript || "Aucun mot n’a été reconnu dans cet essai.";
       const audioDataUrl = currentStage().final ? await blobToDataUrl(blob) : "";

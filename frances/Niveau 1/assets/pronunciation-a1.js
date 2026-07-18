@@ -973,6 +973,26 @@
     return `Résultat calculé avec réserve. Vous pouvez refaire l'essai ou continuer. ${attempt.uncertaintyMessage || ""} ${base}`.trim();
   }
 
+  function recordingEvidence(payload) {
+    const transcript = String(payload?.text || payload?.transcript || "").trim();
+    const validate = window.JaraFrench8PronunciationAssessment?.validateRecordingEvidence;
+    if (validate) return validate({ transcript, audio: payload?.audio, recordedDurationMs });
+    return transcript
+      ? { ok: true, reason: "", message: "" }
+      : { ok: false, reason: "no_speech", message: "Aucune parole exploitable n'a été reconnue. Réessayez l'enregistrement." };
+  }
+
+  function showRecordingIssue(issue) {
+    const saved = stageScores[stageIndex];
+    renderReference(saved?.states || []);
+    renderStageProgress();
+    renderScore(saved);
+    els.feedback.classList.add("is-uncertain");
+    els.feedback.textContent = `${issue.message} Aucun mot n'est marqué comme incorrect et aucune note n'est créée pour cet essai.${saved ? " Votre meilleur essai précédent reste enregistré." : ""}`;
+    els.comparisonNote.textContent = "Aucune transcription exploitable. Écoutez votre enregistrement, vérifiez le microphone, puis recommencez.";
+    els.micStatus.textContent = "Essai non noté : la voix n'a pas été captée correctement.";
+  }
+
   function attemptFromPayload(payload, audioDataUrl) {
     const assessment = window.JaraFrench8PronunciationAssessment;
     if (!assessment?.assess) throw new Error("Le module d'évaluation tolérante n'est pas disponible. Actualisez la page.");
@@ -1079,6 +1099,11 @@
     els.comparisonNote.textContent = "Transcription en cours…";
     try {
       const payload = await transcribeBlob(blob);
+      const evidence = recordingEvidence(payload);
+      if (!evidence.ok) {
+        showRecordingIssue(evidence);
+        return;
+      }
       const audioDataUrl = isFinalStage() ? await recordingBlobToDataUrl(blob) : "";
       const attempt = attemptFromPayload(payload, audioDataUrl);
       const retained = storeAttempt(attempt);

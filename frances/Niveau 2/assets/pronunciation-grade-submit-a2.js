@@ -8,25 +8,25 @@
   const CONFIGS = [
     {
       path: "/ateliers/prononciation.html",
-      storageKey: "jaralingua:french2:pronunciation:routines:v1",
+      storageKey: "jaralingua:french2:pronunciation:routines:v2",
       evaluationId: "pronunciationTheme1",
       label: "Theme 1 - Routines quotidiennes"
     },
     {
       path: "/ateliers/prononciation-logement.html",
-      storageKey: "jaralingua:french2:pronunciation:logement:v1",
+      storageKey: "jaralingua:french2:pronunciation:logement:v2",
       evaluationId: "pronunciationTheme3",
       label: "Theme 3 - Logement"
     },
     {
       path: "/ateliers/prononciation-sante.html",
-      storageKey: "jaralingua:french2:pronunciation:sante:v1",
+      storageKey: "jaralingua:french2:pronunciation:sante:v2",
       evaluationId: "pronunciationTheme5",
       label: "Theme 5 - Sante"
     },
     {
       path: "/ateliers/prononciation-directions.html",
-      storageKey: "jaralingua:french2:pronunciation:theme7:v1",
+      storageKey: "jaralingua:french2:pronunciation:theme7:v2",
       evaluationId: "pronunciationTheme7",
       label: "Theme 7 - Ville et directions"
     }
@@ -124,6 +124,7 @@
       .pronunciation-submit-status.success{color:#126047}
       .pronunciation-submit-status.error{color:#9f1d2a}
       .pronunciation-submit-status.pending{color:#765000}
+      .pronunciation-submit-status.uncertain{color:#765000}
     `;
     document.head.appendChild(style);
   }
@@ -134,7 +135,7 @@
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
       <h3><i class="bi bi-send-check"></i> Envoi au professeur</h3>
-      <p data-submit-copy>Cette activite est evaluable. Terminez le defi final pour envoyer la note obtenue au professeur.</p>
+      <p data-submit-copy>Cette activite est evaluable. Terminez le defi final pour envoyer la note obtenue au professeur. Une nouvelle remise remplace la precedente.</p>
       <div class="pronunciation-submit-metrics">
         <span><b data-submit-score>--</b><small>Defi final</small></span>
         <span><b data-submit-grade>--</b><small>Note / 5</small></span>
@@ -161,13 +162,22 @@
       scoreNode.textContent = "--";
       gradeNode.textContent = "--";
       button.disabled = true;
-      copy.textContent = `${config.label} est evaluable. Le bouton s'active apres le defi final.`;
+      copy.textContent = `${config.label} est evaluable. Le bouton s'active apres le defi final. Une nouvelle remise remplace la precedente.`;
       return;
     }
     scoreNode.textContent = `${latestAttempt.finalScore}/100`;
     gradeNode.textContent = `${gradeFromScore(latestAttempt.finalScore).toFixed(2)}/5`;
     button.disabled = false;
-    copy.textContent = "Votre defi final peut etre envoye avec la note obtenue. La note sera inscrite dans le carnet du Niveau 2.";
+    copy.textContent = latestAttempt.uncertain
+      ? "Votre defi final peut etre envoye comme estimation avec reserve. Le professeur doit verifier l'audio avant de valider la note. Une nouvelle remise remplace la precedente."
+      : "Votre defi final peut etre envoye avec la note obtenue. Une nouvelle remise remplace la note precedente dans le carnet du Niveau 2.";
+    if (latestAttempt.uncertain) {
+      if (!status.classList.contains("success") && !status.classList.contains("pending")) {
+        setStatus(status, "Reconnaissance incertaine : l'audio reste la preuve principale.", "uncertain");
+      }
+    } else if (status.classList.contains("uncertain")) {
+      setStatus(status, "", "");
+    }
   }
 
   async function submitGrade() {

@@ -349,25 +349,47 @@
     });
   }
 
-  function evaluate(transcript, audioDataUrl) {
-    const spoken = tokens(transcript);
-    const referenceWords = tokens(currentStage().text);
-    if (!spoken.length) throw new Error("Aucune parole n'a ete reconnue.");
-    const aligned = align(referenceWords, spoken);
-    const durationMinutes = Math.max(1 / 60, recordedDurationMs / 60000);
-    const wpm = spoken.length / durationMinutes;
-    const completeness = clamp(aligned.matches / referenceWords.length * 100);
-    const accuracy = clamp((1 - aligned.distance / Math.max(referenceWords.length, spoken.length)) * 100);
-    const fluency = clamp(100 - Math.abs(wpm - 125) * 1.2);
-    const overall = clamp(accuracy * .55 + completeness * .3 + fluency * .15);
+  function recordingEvidence(payload) {
+    const transcript = String(payload?.text || payload?.transcript || "").trim();
+    const validate = window.JaraFrench8PronunciationAssessment?.validateRecordingEvidence;
+    if (validate) return validate({ transcript, audio: payload?.audio, recordedDurationMs });
+    return transcript
+      ? { ok: true, reason: "", message: "" }
+      : { ok: false, reason: "no_speech", message: "Aucune parole exploitable n'a été reconnue. Réessayez l'enregistrement." };
+  }
+
+  function showRecordingIssue(issue) {
+    const saved = stageScores[currentStageIndex];
+    renderReference();
+    results.hidden = true;
+    retryButton.hidden = false;
+    nextButton.hidden = !saved;
+    liveTranscript.textContent = `${issue.message} Aucun mot n'est marqué comme incorrect et aucune note n'est créée pour cet essai.${saved ? " Votre meilleur essai précédent reste enregistré." : ""}`;
+    recordStatus.textContent = "Essai non noté : la voix n'a pas été captée correctement.";
+  }
+
+  function evaluate(transcript, audioDataUrl, payload = {}) {
+    const assessment = window.JaraFrench8PronunciationAssessment;
+    if (!assessment) throw new Error("Le module d’évaluation n’est pas disponible. Actualisez la page.");
+    const measured = assessment.assess({
+      referenceText: currentStage().text,
+      transcript,
+      words: payload.words,
+      audio: payload.audio,
+      languageProbability: payload.language_probability,
+      recordedDurationMs,
+      maxInputLevel
+    });
+    const { spoken, aligned, wpm, completeness, accuracy, fluency, overall, quality, provisional, uncertain, uncertaintyReasons, uncertaintyMessage } = measured;
     const previousAttempt = attemptHistory[currentStageIndex].at(-1) || null;
+    const savedStageScore = stageScores[currentStageIndex] || null;
     const liaison = window.JaraFrench8LiaisonFeedback?.analyze({
       evaluationId: GRADE_SUBMISSION.evaluationId,
       referenceText: currentStage().text,
       transcript
     });
     const displayWords = currentStage().text.split(/\s+/).map(spokenWord).filter(Boolean);
-    const missed = displayWords.filter((_, index) => aligned.states[index] !== "is-correct");
+    const missed = displayWords.filter((_, index) => aligned.states[index] === "is-missed");
     const attempt = {
       overall,
       accuracy,
@@ -379,12 +401,19 @@
       stageLabel: currentStage().label,
       final: currentStage().final === true,
       missedWords: missed.slice(0, 20),
+      acceptedVariants: aligned.accepted,
+      provisional,
+      uncertain,
+      uncertaintyReasons,
+      uncertaintyMessage,
+      quality,
       liaison,
       at: new Date().toISOString()
     };
-    if (currentStage().final) finalAudioDataUrl = audioDataUrl || "";
+    const retainSavedScore = uncertain && savedStageScore && savedStageScore.uncertain !== true && savedStageScore.overall > overall;
+    if (currentStage().final && !retainSavedScore) finalAudioDataUrl = audioDataUrl || "";
     attemptHistory[currentStageIndex].push(attempt);
-    stageScores[currentStageIndex] = attempt;
+    stageScores[currentStageIndex] = retainSavedScore ? savedStageScore : attempt;
     saveProgress();
     renderReference(aligned.states);
     document.getElementById("accuracyScore").textContent = `${accuracy}%`;
@@ -404,6 +433,8 @@
       feedback.textContent = feedbackFor(overall, missed, wpm) + comparison + liaisonMessage;
       nextButton.innerHTML = currentStageIndex === 3 ? '<i class="bi bi-trophy"></i> Passer au defi final' : '<i class="bi bi-arrow-right"></i> Section suivante';
     }
+    if (uncertain) feedback.textContent = `${uncertaintyMessage} ${feedback.textContent}`;
+    results.classList.toggle("is-uncertain", uncertain);
     nextButton.hidden = false;
     retryButton.hidden = false;
     renderHistory();
@@ -412,6 +443,7 @@
     stageProgress.children[currentStageIndex]?.classList.add("is-done");
     results.hidden = false;
     results.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    return attempt;
   }
 
   function renderFinalSummary() {
@@ -436,18 +468,20 @@
       const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || `Erreur du serveur (${response.status}).`);
-      const transcript = (payload.text || "").trim();
-      const audioStats = payload.audio || {};
-      if (!transcript) {
-        if (Number(audioStats.rms || 0) < 0.0008) throw new Error("La grabacion llego en silencio. Seleccione otro microfono y pruebe nuevamente.");
-        throw new Error("Whisper recibio sonido, pero no identifico palabras francesas. Hable un poco mas cerca.");
+      const evidence = recordingEvidence(payload);
+      if (!evidence.ok) {
+        showRecordingIssue(evidence);
+        return;
       }
-      liveTranscript.textContent = transcript;
+      const transcript = (payload.text || "").trim();
+      liveTranscript.textContent = transcript || "Aucun mot n’a été reconnu dans cet essai.";
       const audioDataUrl = currentStage().final ?await blobToDataUrl(blob) : "";
-      evaluate(transcript, audioDataUrl);
-      recordStatus.textContent = `${currentStage().label} evaluee. Consultez votre resultat.`;
+      const attempt = evaluate(transcript, audioDataUrl, payload);
+      recordStatus.textContent = attempt.uncertain
+        ? "Résultat calculé avec réserve. Vous pouvez refaire l’essai ou continuer."
+        : `${currentStage().label} evaluee. Consultez votre resultat.`;
     } catch (error) {
-      recordStatus.textContent = "L'analyse n'a pas pu etre terminee.";
+      recordStatus.textContent = "L'analyse n'a pas pu être terminée.";
       liveTranscript.textContent = error.message || "Erreur de transcription.";
     } finally {
       analyzing = false;
