@@ -4852,7 +4852,7 @@ INTERMEDIATE_UNIT2_IMPOSTOR_CARDS = [
         "category": "Unit 2 hopes and plans",
         "unit": "unit2",
         "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
-        "image": "/assets/img/english-intermediate/unit-2-wishes-hopes-dreams.jpg",
+        "image": "/assets/img/english-intermediate/unit-2/impostor/look-forward-to.png",
         "brief": "To feel happy or excited about something that will happen in the future.",
         "familyContext": "A student is excited about a future trip, study plan, celebration, or personal goal.",
         "contextLabel": "Unit 2 context",
@@ -4867,7 +4867,7 @@ INTERMEDIATE_UNIT2_IMPOSTOR_CARDS = [
         "category": "Unit 2 goals and persistence",
         "unit": "unit2",
         "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
-        "image": "/assets/img/english-intermediate/unit-2-wishes-hopes-dreams.jpg",
+        "image": "/assets/img/english-intermediate/unit-2/impostor/give-up.png",
         "brief": "To stop trying to do something because it feels too difficult.",
         "familyContext": "Someone has a difficult dream or goal, but classmates encourage the person to continue.",
         "contextLabel": "Unit 2 context",
@@ -4882,7 +4882,7 @@ INTERMEDIATE_UNIT2_IMPOSTOR_CARDS = [
         "category": "Unit 2 new experiences",
         "unit": "unit2",
         "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
-        "image": "/assets/img/english-intermediate/unit-2-unusual-experiences.jpg",
+        "image": "/assets/img/english-intermediate/unit-2/impostor/take-up.png",
         "brief": "To start a new activity, hobby, course, or habit.",
         "familyContext": "A student starts photography, English practice, volunteering, or another new activity.",
         "contextLabel": "Unit 2 context",
@@ -4897,7 +4897,7 @@ INTERMEDIATE_UNIT2_IMPOSTOR_CARDS = [
         "category": "Unit 2 unexpected results",
         "unit": "unit2",
         "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
-        "image": "/assets/img/english-intermediate/unit-2-unusual-experiences.jpg",
+        "image": "/assets/img/english-intermediate/unit-2/impostor/end-up.png",
         "brief": "To finally be in a place or situation, often unexpectedly.",
         "familyContext": "A plan changes and someone finally studies, travels, works, or meets people in an unexpected way.",
         "contextLabel": "Unit 2 context",
@@ -4912,7 +4912,7 @@ INTERMEDIATE_UNIT2_IMPOSTOR_CARDS = [
         "category": "Unit 2 personal challenges",
         "unit": "unit2",
         "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
-        "image": "/assets/img/english-intermediate/unit-2-wishes-hopes-dreams.jpg",
+        "image": "/assets/img/english-intermediate/unit-2/impostor/get-over.png",
         "brief": "To recover from a difficult feeling, disappointment, fear, or problem.",
         "familyContext": "Someone feels nervous or disappointed but gradually feels better and continues with a goal.",
         "contextLabel": "Unit 2 context",
@@ -4927,7 +4927,7 @@ INTERMEDIATE_UNIT2_IMPOSTOR_CARDS = [
         "category": "Unit 2 surprising discoveries",
         "unit": "unit2",
         "unitLabel": "Unit 2: wishes, hopes, dreams, and experiences",
-        "image": "/assets/img/english-intermediate/unit-2-unusual-experiences.jpg",
+        "image": "/assets/img/english-intermediate/unit-2/impostor/come-across.png",
         "brief": "To find or meet something by chance.",
         "familyContext": "A student unexpectedly finds an old photo, a message, an opportunity, or a useful website.",
         "contextLabel": "Unit 2 context",
@@ -4946,7 +4946,7 @@ INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
         "category": "Unit 3 wonder description",
         "unit": "unit3",
         "unitLabel": "Unit 3: human and natural wonders / world records",
-        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "image": "/assets/img/english-intermediate/unit-3/impostor/breathtaking.png",
         "brief": "Extremely beautiful, impressive, or surprising.",
         "familyContext": "Students describe a canyon, river, mountain, building, or view that impresses visitors.",
         "contextLabel": "Unit 3 context",
@@ -4961,7 +4961,7 @@ INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
         "category": "Unit 3 world records",
         "unit": "unit3",
         "unitLabel": "Unit 3: human and natural wonders / world records",
-        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "image": "/assets/img/english-intermediate/unit-3/impostor/record-breaking.png",
         "brief": "Better, bigger, faster, longer, or higher than all previous examples.",
         "familyContext": "A place or achievement has the highest number, longest distance, or biggest measurement.",
         "contextLabel": "Unit 3 context",
@@ -4976,7 +4976,7 @@ INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
         "category": "Unit 3 height and size",
         "unit": "unit3",
         "unitLabel": "Unit 3: human and natural wonders / world records",
-        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "image": "/assets/img/english-intermediate/unit-3/impostor/towering.png",
         "brief": "Very tall and impressive.",
         "familyContext": "Students describe a skyscraper, mountain, cliff, monument, or tall natural formation.",
         "contextLabel": "Unit 3 context",
@@ -4991,7 +4991,7 @@ INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
         "category": "Unit 3 age and history",
         "unit": "unit3",
         "unitLabel": "Unit 3: human and natural wonders / world records",
-        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "image": "/assets/img/english-intermediate/unit-3/impostor/ancient.png",
         "brief": "Very old, usually from a distant historical period.",
         "familyContext": "Students compare historic monuments, old cities, ruins, or places with a long story.",
         "contextLabel": "Unit 3 context",
@@ -5006,7 +5006,7 @@ INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
         "category": "Unit 3 geography",
         "unit": "unit3",
         "unitLabel": "Unit 3: human and natural wonders / world records",
-        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "image": "/assets/img/english-intermediate/unit-3/impostor/remote.png",
         "brief": "Far away from cities, crowds, or easy access.",
         "familyContext": "Students describe a natural wonder that is difficult to reach or far from urban areas.",
         "contextLabel": "Unit 3 context",
@@ -5021,7 +5021,7 @@ INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
         "category": "Unit 3 size and measurement",
         "unit": "unit3",
         "unitLabel": "Unit 3: human and natural wonders / world records",
-        "image": "/assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png",
+        "image": "/assets/img/english-intermediate/unit-3/impostor/massive.png",
         "brief": "Very large, heavy, or powerful in size.",
         "familyContext": "Students describe a huge river, waterfall, wall, forest, canyon, or construction.",
         "contextLabel": "Unit 3 context",
@@ -5216,10 +5216,32 @@ def intermediate_unit4_impostor_action(payload):
         return 200, {"ok": True, "roomCode": room_code, "teacherToken": teacher_token, "state": intermediate_unit4_impostor_room_payload(room, teacher_token=teacher_token)}
 
     if action == "reset-all":
-        cleared_count = len(rooms)
-        store["rooms"] = {}
+        room_refs = payload.get("rooms")
+        if not isinstance(room_refs, list) or not room_refs:
+            write_intermediate_unit4_impostor_store(store)
+            return 400, {"error": "invalid_room_list"}
+        cleared_codes = []
+        ignored_count = 0
+        for reference in room_refs[:30]:
+            if not isinstance(reference, dict):
+                ignored_count += 1
+                continue
+            reference_code = clean_imposteur_room_code(reference.get("roomCode") or reference.get("room"))
+            reference_token = clean_text(reference.get("teacherToken"), 200)
+            referenced_room = rooms.get(reference_code)
+            stored_token = clean_text(referenced_room.get("teacherToken"), 200) if isinstance(referenced_room, dict) else ""
+            if not referenced_room or not reference_token or not stored_token or not hmac.compare_digest(reference_token, stored_token):
+                ignored_count += 1
+                continue
+            rooms.pop(reference_code, None)
+            cleared_codes.append(reference_code)
         write_intermediate_unit4_impostor_store(store)
-        return 200, {"ok": True, "resetAll": True, "clearedRooms": cleared_count}
+        return 200, {
+            "ok": True,
+            "resetAll": True,
+            "clearedRooms": len(cleared_codes),
+            "ignoredRooms": ignored_count
+        }
 
     room_code = clean_imposteur_room_code(payload.get("roomCode") or payload.get("room"))
     room = rooms.get(room_code)

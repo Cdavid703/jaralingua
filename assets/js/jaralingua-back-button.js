@@ -11,6 +11,7 @@
   function buildButton() {
     if (document.querySelector(".jara-back-button")) return;
 
+    const isEnglish = String(document.documentElement.lang || "").toLowerCase().startsWith("en");
     const inferredFallback = /\/(ateliers|themes|grammaire)\//.test(window.location.pathname)
       ? "../index.html"
       : "index.html";
@@ -18,9 +19,9 @@
     const button = document.createElement("button");
     button.type = "button";
     button.className = "jara-back-button";
-    button.setAttribute("aria-label", "Retour a la page precedente");
+    button.setAttribute("aria-label", isEnglish ? "Back to the previous page" : "Retour a la page precedente");
     button.setAttribute("data-fallback", fallback);
-    button.innerHTML = '<i class="bi bi-arrow-left"></i><span>Retour</span>';
+    button.innerHTML = '<i class="bi bi-arrow-left"></i><span>' + (isEnglish ? "Back" : "Retour") + "</span>";
     button.addEventListener("click", goBack);
     document.body.appendChild(button);
   }

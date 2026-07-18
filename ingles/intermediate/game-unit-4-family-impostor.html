@@ -28,6 +28,8 @@
     @keyframes spin{to{transform:rotate(360deg)}}
     .w-100{width:100%}.mt-2{margin-top:.5rem}.mb-1{margin-bottom:.25rem}
     button:disabled{opacity:.45;cursor:not-allowed}
+    button:not(:disabled):active{transform:translateY(1px);filter:brightness(.96)}
+    button.is-working{cursor:progress;box-shadow:0 0 0 3px rgba(15,118,110,.16)}
     .game-panel,.support-card,.private-card,.vote-box,.result-box-final{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);overflow:hidden}
     .panel-head{padding:1rem 1.15rem;background:linear-gradient(135deg,#071f4f,#0f766e);color:#fff}
     .panel-head h2,.panel-head h3{margin:0;color:#fff}
@@ -43,6 +45,7 @@
     .status-card span{display:block;color:var(--intermediate-muted);font-size:.8rem;font-weight:800}
     .status-card strong{display:block;color:var(--intermediate-navy);font-size:1.25rem}
     .teacher-actions,.join-form{display:grid;gap:.65rem}
+    .join-form[hidden]{display:none!important}
     .teacher-actions{grid-template-columns:1fr}
     .vocabulary-finish-box{display:grid;gap:.65rem;margin:.2rem 0;padding:.85rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
     .vocabulary-finish-box p{margin:0;color:var(--intermediate-muted);font-weight:800;line-height:1.45}
@@ -52,6 +55,10 @@
     .selected-deck-note{margin:.15rem 0 0!important;color:#0f766e!important;font-weight:900!important}
     .join-form input{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.82rem 1rem;font-weight:800;color:var(--intermediate-navy);background:#fff}
     .join-row{display:grid;grid-template-columns:minmax(120px,.8fr) minmax(160px,1.1fr) minmax(120px,.55fr);gap:.55rem}
+    .student-connection-status{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin:0 0 1rem;padding:.78rem .85rem;border-radius:8px;background:#ecfdf5;border:1px solid #99f6e4;color:#064e3b;font-weight:900}
+    .student-connection-status[hidden]{display:none!important}
+    .student-connection-status span{min-width:0;overflow-wrap:anywhere}
+    .student-connection-status .btn-soft{flex:0 0 auto;padding:.55rem .8rem}
     .players-list{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
     .players-list li{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.72rem .8rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
     .players-list span{font-weight:900;color:var(--intermediate-navy)}
@@ -88,6 +95,7 @@
     .sound-toggle{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin:0 0 1rem;padding:.75rem .85rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border);font-weight:900;color:var(--intermediate-navy)}
     .sound-toggle span{display:flex;align-items:center;gap:.45rem}
     .sound-toggle input{width:1.15rem;height:1.15rem;accent-color:#0f766e}
+    .teacher-action-guide{margin:.8rem 0 1rem;padding:.8rem .9rem;border-left:4px solid #0f766e;border-radius:6px;background:#ecfdf5;color:#064e3b;font-weight:900;line-height:1.5}
     .qr-panel{margin:-.25rem 0 1rem;padding:1rem;border-radius:8px;background:#fff;border:1px solid var(--intermediate-border);box-shadow:0 14px 30px rgba(15,23,42,.08)}
     .qr-panel[hidden]{display:none!important}
     .qr-copy{display:grid;grid-template-columns:minmax(0,1fr) 156px;align-items:center;gap:1rem}
@@ -104,7 +112,7 @@
     .auth-gate p{margin:0 0 .8rem;color:var(--intermediate-muted);line-height:1.55;font-weight:800}
     body.student-only .game-layout{grid-template-columns:1fr}
     body.student-only .teacher-panel{display:none!important}
-    @media(max-width:1000px){.game-layout,.support-grid{grid-template-columns:1fr}.private-card,.vote-box{grid-template-columns:1fr}.private-card img,.vote-box img{height:280px}.join-row{grid-template-columns:1fr}}
+    @media(max-width:1000px){.game-layout,.support-grid{grid-template-columns:1fr}.private-card,.vote-box{grid-template-columns:1fr}.private-card img,.vote-box img{height:280px;min-height:0}.join-row{grid-template-columns:1fr}}
     @media(max-width:560px){
       .english-intermediate-page{max-width:100%;overflow-x:hidden}
       .site-header .navbar{flex-direction:column;align-items:center;gap:.55rem;width:100%;max-width:100vw;padding:8px 10px;overflow:hidden;box-sizing:border-box}
@@ -123,11 +131,15 @@
       .impostor-hero .lesson-meta{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;width:100%}
       .impostor-hero .lesson-meta span{justify-content:center;text-align:center;white-space:normal;line-height:1.15;padding:8px 10px}
       .room-code{align-items:flex-start;flex-direction:column}
+      .student-connection-status{align-items:stretch;flex-direction:column}
+      .student-connection-status .btn-soft{width:100%}
       .status-grid,.mini-grid,.vocab-button-grid{grid-template-columns:1fr}
       .players-list li{align-items:flex-start;flex-direction:column}
       .vote-options{grid-template-columns:1fr}
       .qr-copy{grid-template-columns:1fr}
       .qr-code-box{width:min(220px,100%);margin:0 auto}
+      .private-card img,.vote-box img{height:clamp(220px,72vw,300px);min-height:0}
+      .private-card>div,.vote-box>div{min-width:0;overflow-wrap:anywhere}
       .hero-actions .btn,.btn{width:100%}
     }
   </style>
@@ -150,7 +162,7 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Live room</p><h2>Create, Join, Confirm, Discuss, Vote</h2></div></div>
         <p>The teacher controls the phases. Students see only their private role card on their own device.</p>
-        <div id="statusMessage" class="status-message info" hidden></div>
+        <div id="statusMessage" class="status-message info" role="status" aria-live="polite" hidden></div>
         <div class="game-layout">
           <aside class="game-panel teacher-panel" id="teacherPanel" hidden>
             <div class="panel-head"><h2>Teacher Control</h2></div>
@@ -160,6 +172,7 @@
               <p class="topic-label">Status</p>
               <h3 id="statusLabel">No room</h3>
               <p id="statusHint">Create a room or enter a code to join the game.</p>
+              <p class="teacher-action-guide" id="teacherActionGuide" aria-live="polite">Next step: create one room and share its code with the class.</p>
               <div class="teacher-actions">
                 <button type="button" class="btn btn-primary" id="createRoomBtn"><i class="bi bi-plus-circle"></i> Create room</button>
                 <button type="button" class="btn btn-secondary" id="distributeBtn"><i class="bi bi-shuffle"></i> Distribute roles</button>
@@ -189,6 +202,7 @@
             <div class="panel-head"><h2>Student Area</h2></div>
             <div class="panel-body">
               <div class="auth-gate" id="studentAuthGate" hidden><h3>Sign-in required</h3><p>Sign in to join the room. The QR prepares the code, but the game must be linked to a student account.</p><button type="button" class="btn btn-primary" id="openAuthFromGame"><i class="bi bi-person-circle"></i> Sign in</button></div>
+              <div class="student-connection-status" id="studentConnectionStatus" role="status" aria-live="polite" hidden><span id="studentConnectionText"></span><button type="button" class="btn-soft" id="studentLeaveRoomBtn"><i class="bi bi-box-arrow-left"></i> Leave room</button></div>
               <form class="join-form" id="joinForm" hidden><div class="join-row"><input id="roomCode" maxlength="6" autocomplete="off" placeholder="Room code" /><input id="playerName" maxlength="80" autocomplete="name" placeholder="Your name" /><button type="submit" class="btn btn-primary" id="joinSubmitBtn"><i class="bi bi-box-arrow-in-right"></i> Join</button></div></form>
               <div id="roleCard"></div>
               <div id="votePanel" style="margin-top:1rem"></div>
@@ -206,8 +220,8 @@
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260712-english-room-qr"></script>
-  <script src="../../assets/js/jaralingua-back-button.js"></script>
+  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260717-multiround-audit2"></script>
+  <script src="../../assets/js/jaralingua-back-button.js?v=20260717-language"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>

@@ -4,6 +4,7 @@
   var API = "/api/intermediate/unit4-impostor";
   var STATE_API = "/api/intermediate/unit4-impostor/state";
   var STORAGE_KEY = "english-intermediate-unit4-impostor-live-state";
+  var TEACHER_ROOMS_STORAGE_KEY = "english-intermediate-impostor-teacher-rooms-v2";
   var SOUND_STORAGE_KEY = "english-intermediate-unit4-impostor-sound-enabled";
   var POLL_MS = 1800;
   var QR_VERSION = 3;
@@ -55,6 +56,56 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
     } catch (_error) {}
+  }
+
+  function readTrackedTeacherRooms() {
+    try {
+      var parsed = JSON.parse(localStorage.getItem(TEACHER_ROOMS_STORAGE_KEY) || "[]");
+      var seen = {};
+      return (Array.isArray(parsed) ? parsed : []).map(function (item) {
+        return {
+          roomCode: cleanRoomCode(item && item.roomCode),
+          teacherToken: String(item && item.teacherToken || "").slice(0, 200)
+        };
+      }).filter(function (item) {
+        if (!item.roomCode || !item.teacherToken || seen[item.roomCode]) return false;
+        seen[item.roomCode] = true;
+        return true;
+      }).slice(0, 30);
+    } catch (_error) {
+      return [];
+    }
+  }
+
+  function writeTrackedTeacherRooms(rooms) {
+    try {
+      localStorage.setItem(TEACHER_ROOMS_STORAGE_KEY, JSON.stringify(rooms || []));
+    } catch (_error) {}
+  }
+
+  function trackTeacherRoom(roomCode, teacherToken) {
+    var code = cleanRoomCode(roomCode);
+    var token = String(teacherToken || "").slice(0, 200);
+    if (!code || !token) return;
+    var rooms = readTrackedTeacherRooms().filter(function (item) { return item.roomCode !== code; });
+    rooms.push({ roomCode: code, teacherToken: token });
+    writeTrackedTeacherRooms(rooms.slice(-30));
+  }
+
+  function forgetTeacherRoom(roomCode) {
+    var code = cleanRoomCode(roomCode);
+    if (!code) return;
+    writeTrackedTeacherRooms(readTrackedTeacherRooms().filter(function (item) { return item.roomCode !== code; }));
+  }
+
+  function trackedTeacherRoomRefs() {
+    var rooms = readTrackedTeacherRooms();
+    if (localState.roomCode && localState.teacherToken && !rooms.some(function (item) {
+      return item.roomCode === cleanRoomCode(localState.roomCode);
+    })) {
+      rooms.push({ roomCode: cleanRoomCode(localState.roomCode), teacherToken: String(localState.teacherToken).slice(0, 200) });
+    }
+    return rooms.slice(0, 30);
   }
 
   function stopPolling() {
@@ -170,6 +221,8 @@
 
   function syncAuthUi() {
     authState = readAuthAccess();
+    var currentPlayer = lastPayload && lastPayload.currentPlayer;
+    var joinedRoom = Boolean(currentPlayer && localState.roomCode && localState.playerToken);
     document.body.classList.toggle("teacher-mode", authState.isTeacher);
     document.body.classList.toggle("student-only", !authState.isTeacher);
 
@@ -180,7 +233,15 @@
     if (gate) gate.hidden = authState.canJoin;
 
     var joinForm = $("#joinForm");
-    if (joinForm) joinForm.hidden = !authState.canJoin;
+    if (joinForm) joinForm.hidden = !authState.canJoin || joinedRoom;
+
+    var connectionStatus = $("#studentConnectionStatus");
+    if (connectionStatus) connectionStatus.hidden = !joinedRoom;
+    if (joinedRoom) {
+      setText("#studentConnectionText", "Connected as " + currentPlayer.name + " · Room " + cleanRoomCode(localState.roomCode));
+    } else {
+      setText("#studentConnectionText", "");
+    }
 
     var roomInput = $("#roomCode");
     if (roomInput) roomInput.disabled = !authState.canJoin;
@@ -194,7 +255,7 @@
     }
 
     var joinSubmit = $("#joinSubmitBtn");
-    if (joinSubmit) joinSubmit.disabled = !authState.canJoin;
+    if (joinSubmit) joinSubmit.disabled = !authState.canJoin || joinedRoom;
 
     if (!authState.isTeacher && localState.teacherToken) {
       delete localState.teacherToken;
@@ -352,11 +413,38 @@
     link.href = url;
   }
 
+  async function copyText(value, successMessage) {
+    var text = String(value || "");
+    var fallbackInput = null;
+    if (!text) {
+      showMessage("There is nothing to copy yet.", "error");
+      return false;
+    }
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(text);
+      } else {
+        fallbackInput = document.createElement("textarea");
+        fallbackInput.value = text;
+        fallbackInput.setAttribute("readonly", "");
+        fallbackInput.style.position = "fixed";
+        fallbackInput.style.opacity = "0";
+        document.body.appendChild(fallbackInput);
+        fallbackInput.select();
+        if (!document.execCommand("copy")) throw new Error("copy_failed");
+      }
+      showMessage(successMessage || "Copied.", "success");
+      return true;
+    } catch (_error) {
+      showMessage("Copy failed. Select the code or link and copy it manually.", "error");
+      return false;
+    } finally {
+      if (fallbackInput && fallbackInput.parentNode) fallbackInput.remove();
+    }
+  }
+
   function copyStudentLink() {
-    if (!localState.roomCode || !navigator.clipboard) return;
-    navigator.clipboard.writeText(studentRoomUrl(localState.roomCode)).then(function () {
-      showMessage("Student link copied.", "success");
-    });
+    return copyText(studentRoomUrl(localState.roomCode), "Student link copied.");
   }
 
   function syncVocabDeckButtons(deck) {
@@ -596,13 +684,14 @@
     }[status] || "Waiting room";
   }
 
-  function statusHint(status) {
+  function statusHint(status, room) {
+    var deck = room && (room.deckShortLabel || room.deckLabel) || "selected unit vocabulary";
     return {
       waiting: "The teacher creates the room and students join with their signed-in account.",
       briefing: "Each student reads a private card and confirms that the role was received.",
-      discussion: "Students discuss in English without saying the exact phrasal verb or idiom.",
-      voting: "The teacher has opened the vote: choose the classmate who may be the impostor.",
-      revealed: "The class can compare votes, the secret expression, and the impostor role."
+      discussion: "Students discuss in English without saying the exact item from " + deck + ".",
+      voting: "The vote is open. Students may submit or update one choice until the result is revealed.",
+      revealed: "The class can compare the votes, the secret vocabulary item, and the impostor role."
     }[status] || "";
   }
 
@@ -630,8 +719,10 @@
     var data = await response.json().catch(function () { return {}; });
     if (!response.ok) {
       if (data.error === "room_not_found") {
+        forgetTeacherRoom(localState.roomCode);
         localState = {};
         saveLocalState();
+        stopPolling();
         renderEmpty();
       }
       throw new Error(data.error || "state_failed");
@@ -657,9 +748,12 @@
     try {
       return await task();
     } finally {
-      button.classList.remove("is-working");
-      button.disabled = originalDisabled;
-      button.innerHTML = originalHtml;
+      if (button.isConnected) {
+        button.classList.remove("is-working");
+        button.disabled = originalDisabled;
+        button.innerHTML = originalHtml;
+      }
+      updateTeacherButtons(lastPayload);
     }
   }
 
@@ -688,11 +782,13 @@
     } catch (_error) {}
   }
 
-  function clearCurrentRoom(message, type) {
+  function clearCurrentRoom(message, type, keepTrackedRoom) {
+    var previousRoomCode = localState.roomCode;
     stopPolling();
     localState = {};
     lastPayload = null;
     saveLocalState();
+    if (!keepTrackedRoom) forgetTeacherRoom(previousRoomCode);
     clearRoomUrl();
     renderEmpty();
     applyStoredFields();
@@ -732,7 +828,9 @@
       invalid_suspect: "Choose a valid player.",
       self_vote_forbidden: "You cannot vote for yourself.",
       reveal_not_available: "The result cannot be revealed yet.",
-      player_required: "Join the room again before continuing."
+      player_required: "Join the room again before continuing.",
+      invalid_room_list: "No rooms created in this browser are available to reset.",
+      invalid_action: "That action is not available during the current phase."
     }[code] || "Action unavailable right now. Try again in a few seconds.";
   }
 
@@ -740,6 +838,7 @@
     setText("#roomCodeDisplay", "----");
     setText("#statusLabel", "No room");
     setText("#statusHint", "Create a room or enter a code to join the game.");
+    setText("#teacherActionGuide", "Next step: create one room and share its code with the class.");
     setText("#playerCount", "0");
     setText("#readyCount", "0");
     setText("#voteCount", "0");
@@ -758,7 +857,7 @@
     var room = payload.room || {};
     setText("#roomCodeDisplay", room.code || "----");
     setText("#statusLabel", statusLabel(room.status));
-    setText("#statusHint", statusHint(room.status));
+    setText("#statusHint", statusHint(room.status, room));
     setText("#playerCount", room.playerCount || 0);
     setText("#readyCount", (room.readyCount || 0) + "/" + (room.playerCount || 0));
     setText("#voteCount", (room.voteCount || 0) + "/" + (room.playerCount || 0));
@@ -823,7 +922,7 @@
       var card = player.card;
       var image = card.image || "../../assets/img/english-intermediate/unit-4/impostor/family-impostor-hero.png";
       setHtml("#roleCard", '<article class="private-card citizen">' +
-        '<img src="' + escapeHtml(image) + '" alt="Visual support for the secret expression">' +
+        '<img src="' + escapeHtml(image) + '" alt="Visual support for ' + escapeHtml(card.term) + '">' +
         '<div><p class="section-kicker">Your secret expression</p><h3>' + escapeHtml(card.term) + '</h3>' +
         '<p class="category-line">' + escapeHtml(card.type || card.category) + '</p>' +
         '<div class="meaning-block"><strong>Meaning</strong><p>' + escapeHtml(card.brief) + '</p></div>' +
@@ -873,7 +972,7 @@
     var buttonLabel = player.hasVoted ? "Update my vote" : "Submit my vote";
     setHtml("#votePanel", '<section class="vote-box active"><img src="../../assets/img/english-intermediate/unit-4/impostor/vote.png" alt="Impostor vote">' +
       '<div><p class="section-kicker">Secret vote</p><h3>Who is the impostor?</h3>' +
-      '<p>Choose the person who seemed not to know the hidden phrasal verb or idiom.</p>' + savedNote +
+      '<p>Choose the person who seemed not to know the hidden item from ' + escapeHtml(room.deckShortLabel || "the selected unit") + '.</p>' + savedNote +
       '<form id="voteForm" class="vote-options">' + options +
       '<button type="submit" class="btn-main"><i class="bi bi-send-check-fill"></i> ' + buttonLabel + '</button></form></div></section>');
   }
@@ -898,18 +997,43 @@
     var room = payload && payload.room ? payload.room : {};
     var status = room.status || "waiting";
     var hasRoom = Boolean(cleanRoomCode(room.code || localState.roomCode));
-    var canDistribute = isTeacher && status === "waiting" && Number(room.playerCount || 0) >= Number(room.minPlayers || 4);
-    var canForce = isTeacher && status === "briefing";
-    var canVote = isTeacher && (status === "discussion" || status === "briefing");
-    var canReveal = isTeacher && (status === "voting" || status === "discussion");
+    var playerCount = Number(room.playerCount || 0);
+    var minPlayers = Number(room.minPlayers || 4);
+    var remainingPlayers = Math.max(0, minPlayers - playerCount);
+    var remainingConfirmations = Math.max(0, playerCount - Number(room.readyCount || 0));
+    var remainingVotes = Math.max(0, playerCount - Number(room.voteCount || 0));
+    var guide = !hasRoom
+      ? "Next step: create one room and share its code with the class."
+      : status === "waiting" && remainingPlayers > 0
+        ? "Waiting room: " + remainingPlayers + " more player" + (remainingPlayers === 1 ? "" : "s") + " must join before roles can be distributed."
+        : status === "waiting"
+          ? "Ready: choose the vocabulary deck and distribute the secret roles."
+          : status === "briefing" && remainingConfirmations > 0
+            ? "Role check: " + remainingConfirmations + " player" + (remainingConfirmations === 1 ? "" : "s") + " still need to confirm. The teacher may start the discussion anyway."
+            : status === "briefing"
+              ? "All roles are confirmed. The discussion starts automatically."
+              : status === "discussion"
+                ? "Discussion in progress: open the vote when students have exchanged enough clues."
+                : status === "voting" && remainingVotes > 0
+                  ? "Vote open: waiting for " + remainingVotes + " vote" + (remainingVotes === 1 ? "" : "s") + ". Students may update a saved choice."
+                  : status === "voting"
+                    ? "All votes are recorded. Reveal the result when the class is ready."
+                    : "Round complete: review the result, then reset the room for another round with the same players.";
+    setText("#teacherActionGuide", guide);
     setDisabled("#createRoomBtn", !authState.isTeacher);
-    setDisabled("#distributeBtn", !canDistribute);
-    setDisabled("#forceDiscussionBtn", !canForce);
-    setDisabled("#openVoteBtn", !canVote);
-    setDisabled("#revealBtn", !canReveal);
+    setDisabled("#distributeBtn", !isTeacher || !hasRoom);
+    setDisabled("#forceDiscussionBtn", !isTeacher || !hasRoom);
+    setDisabled("#openVoteBtn", !isTeacher || !hasRoom);
+    setDisabled("#revealBtn", !isTeacher || !hasRoom);
     setDisabled("#resetBtn", !isTeacher || !hasRoom);
     setDisabled("#closeRoomBtn", !hasRoom || (Boolean(localState.teacherToken) && !authState.isTeacher));
     setDisabled("#resetAllRoomsBtn", !authState.isTeacher);
+    var createButton = $("#createRoomBtn");
+    if (createButton && !createButton.classList.contains("is-working")) {
+      createButton.innerHTML = hasRoom
+        ? '<i class="bi bi-plus-circle"></i> Create a new room'
+        : '<i class="bi bi-plus-circle"></i> Create room';
+    }
   }
 
   function setDisabled(selector, disabled) {
@@ -925,12 +1049,28 @@
     }
     return withButtonWorking($("#createRoomBtn"), '<i class="bi bi-hourglass-split"></i> Creating...', async function () {
       try {
+        if (localState.roomCode && localState.teacherToken) {
+          var replaceRoom = window.confirm("Close the current room and create a new one? Connected students will leave the old room.");
+          if (!replaceRoom) {
+            showMessage("The current room remains active.", "info");
+            return;
+          }
+          try {
+            await request("close-room", { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
+          } catch (closeError) {
+            if (!closeError || closeError.message !== "room_not_found") throw closeError;
+          }
+          forgetTeacherRoom(localState.roomCode);
+          localState = {};
+          saveLocalState();
+        }
         showMessage("Creating room...", "info");
         var result = await request("create");
         localState.roomCode = result.roomCode;
         localState.teacherToken = result.teacherToken;
         delete localState.playerToken;
         saveLocalState();
+        trackTeacherRoom(result.roomCode, result.teacherToken);
         showMessage("Room created. Share the code with students.", "success");
         lastPayload = result.state;
         render(lastPayload);
@@ -975,7 +1115,10 @@
       openAuthPanel();
       return;
     }
-    if (!localState.roomCode || !localState.teacherToken) return;
+    if (!localState.roomCode || !localState.teacherToken) {
+      showMessage("Create a room before using the teacher controls.", "error");
+      return;
+    }
     return withButtonWorking(button, '<i class="bi bi-hourglass-split"></i> Working...', async function () {
       try {
         var requestPayload = { roomCode: localState.roomCode, teacherToken: localState.teacherToken };
@@ -985,7 +1128,9 @@
         render(lastPayload);
         var actionMessage = {
           "open-vote": "Vote opened for all students.",
-          reset: "Room reset. Players stay connected, but roles and votes start again."
+          "force-discussion": "Discussion started. Students can now exchange clues in English.",
+          reveal: "Result revealed to the class.",
+          reset: "New round ready. Players stay connected, while previous roles and votes have been cleared."
         }[action] || (action === "distribute" ? "Roles distributed with " + VOCAB_DECK_LABELS[selectedVocabDeck()] + "." : "Teacher action applied.");
         showMessage(actionMessage, "success");
         var sound = {
@@ -1000,7 +1145,8 @@
     });
   }
 
-  async function closeOrLeaveRoom() {
+  async function closeOrLeaveRoom(event) {
+    var button = event && event.currentTarget || $("#closeRoomBtn");
     if (!localState.roomCode) {
       clearCurrentRoom();
       return;
@@ -1011,17 +1157,22 @@
         openAuthPanel();
         return;
       }
-      try {
-        await request("close-room", { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
-        clearCurrentRoom("Room closed. You can create a new one.", "success");
-      } catch (error) {
-        if (error && error.message === "room_not_found") {
-          clearCurrentRoom("Room not found. The screen was reset.", "success");
-          return;
-        }
-        showMessage(messageForError(error), "error");
+      if (!window.confirm("Close this room? Connected students will be released.")) {
+        showMessage("The room remains active.", "info");
+        return;
       }
-      return;
+      return withButtonWorking(button, '<i class="bi bi-hourglass-split"></i> Closing...', async function () {
+        try {
+          await request("close-room", { roomCode: localState.roomCode, teacherToken: localState.teacherToken });
+          clearCurrentRoom("Room closed. You can create a new one.", "success");
+        } catch (error) {
+          if (error && error.message === "room_not_found") {
+            clearCurrentRoom("Room not found. The screen was reset.", "success");
+            return;
+          }
+          showMessage(messageForError(error), "error");
+        }
+      });
     }
     if (localState.playerToken) {
       try {
@@ -1031,20 +1182,28 @@
     clearCurrentRoom("You left the room. You can join another one.", "success");
   }
 
-  async function resetAllRooms() {
+  async function resetAllRooms(event) {
     if (!isTeacherAccess()) {
       showMessage("Only a signed-in teacher can reset all rooms.", "error");
       openAuthPanel();
       return;
     }
-    var confirmed = window.confirm("Reset all Vocabulary Impostor rooms? Students in old rooms will be released and must join the new room again.");
-    if (!confirmed) return;
-    try {
-      var result = await request("reset-all", { teacherToken: localState.teacherToken || "" });
-      clearCurrentRoom("All impostor rooms were reset. Cleared rooms: " + Number(result.clearedRooms || 0) + ". Create one new room and share only that code.", "success");
-    } catch (error) {
-      showMessage(messageForError(error), "error");
+    var roomRefs = trackedTeacherRoomRefs();
+    if (!roomRefs.length) {
+      showMessage("No rooms created in this browser are available to reset.", "info");
+      return;
     }
+    var confirmed = window.confirm("Reset every Vocabulary Impostor room created in this browser? Students in those rooms will be released.");
+    if (!confirmed) return;
+    return withButtonWorking(event && event.currentTarget || $("#resetAllRoomsBtn"), '<i class="bi bi-hourglass-split"></i> Resetting...', async function () {
+      try {
+        var result = await request("reset-all", { rooms: roomRefs });
+        writeTrackedTeacherRooms([]);
+        clearCurrentRoom("Room reset complete. Cleared rooms: " + Number(result.clearedRooms || 0) + ". Create one new room and share only that code.", "success", true);
+      } catch (error) {
+        showMessage(messageForError(error), "error");
+      }
+    });
   }
 
   async function confirmRole(button) {
@@ -1097,6 +1256,7 @@
     $("#revealBtn") && $("#revealBtn").addEventListener("click", function (event) { teacherAction("reveal", event.currentTarget); });
     $("#resetBtn") && $("#resetBtn").addEventListener("click", function (event) { teacherAction("reset", event.currentTarget); });
     $("#closeRoomBtn") && $("#closeRoomBtn").addEventListener("click", closeOrLeaveRoom);
+    $("#studentLeaveRoomBtn") && $("#studentLeaveRoomBtn").addEventListener("click", closeOrLeaveRoom);
     $("#resetAllRoomsBtn") && $("#resetAllRoomsBtn").addEventListener("click", resetAllRooms);
     $("#soundToggle") && $("#soundToggle").addEventListener("change", function (event) {
       soundEnabled = Boolean(event.target.checked);
@@ -1106,10 +1266,7 @@
     $("#copyRoomLinkBtn") && $("#copyRoomLinkBtn").addEventListener("click", copyStudentLink);
     $("#openAuthFromGame") && $("#openAuthFromGame").addEventListener("click", openAuthPanel);
     $("#copyCodeBtn") && $("#copyCodeBtn").addEventListener("click", function () {
-      if (!localState.roomCode || !navigator.clipboard) return;
-      navigator.clipboard.writeText(localState.roomCode).then(function () {
-        showMessage("Room code copied.", "success");
-      });
+      copyText(localState.roomCode, "Room code copied.");
     });
     document.addEventListener("click", function (event) {
       if (event.target && event.target.id === "confirmRoleBtn") confirmRole(event.target);
