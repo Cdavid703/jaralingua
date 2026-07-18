@@ -102,6 +102,212 @@ window.JaraLinguaConversationCoachConfig = {
     file: "answer-generic.mp3",
     text: "That is an interesting question. My favorite meals combine grains, vegetables, and a fresh dressing because they are easy to share and personalize."
   },
+  followUpSets: {
+    ingredients: {
+      incomplete: {
+        id: "followup-ingredient-detail",
+        text: "Which ingredient gives the dish its most important flavor, and why?",
+        audio: "followup-ingredient-detail.mp3",
+        frames: ["The most important ingredient is ______ because ______."],
+        vocabulary: ["main flavor", "fresh", "savory", "spicy", "sweet", "because"],
+        grammar: "Name one ingredient, then use because to explain its role in the dish.",
+        checks: [
+          { label: "one specific ingredient", terms: ["rice", "beans", "vegetables", "chicken", "fish", "cheese", "spices", "herbs", "lime", "tomato", "onion", "garlic", "sauce", "dressing"] },
+          { label: "a flavor reason", terms: ["because", "flavor", "taste", "fresh", "savory", "spicy", "sweet", "salty", "creamy", "important"] }
+        ],
+        unitTerms: ["ingredient", "because", "flavor", "taste", "fresh", "savory", "spicy", "sweet"],
+        minWords: 9,
+        maxSeconds: 20,
+        improved: "The most important ingredient is lime because it gives the dressing a fresh, bright flavor."
+      },
+      complete: {
+        id: "followup-ingredient-reason",
+        text: "Who would you prepare this dish for, and why would you recommend it?",
+        audio: "followup-ingredient-reason.mp3",
+        frames: ["I would prepare it for ______ because ______. I recommend it because ______."],
+        vocabulary: ["family", "friends", "visitors", "recommend", "balanced", "filling", "easy to share"],
+        grammar: "Use would for the imagined choice and because for the recommendation evidence.",
+        checks: [
+          { label: "a person or group", terms: ["family", "friends", "classmates", "visitors", "children", "parents", "guests", "people"] },
+          { label: "a recommendation reason", terms: ["because", "recommend", "balanced", "healthy", "delicious", "filling", "colorful", "easy", "share"] }
+        ],
+        unitTerms: ["would prepare", "recommend", "because", "balanced", "filling", "share"],
+        minWords: 11,
+        maxSeconds: 20,
+        improved: "I would prepare it for my friends because it is easy to share. I recommend it because it is colorful and balanced."
+      }
+    },
+    transformation: {
+      incomplete: {
+        id: "followup-transformation-process",
+        text: "What happens to the original ingredient before it becomes the final food product?",
+        audio: "followup-transformation-process.mp3",
+        frames: ["First, the original ingredient is ______. Then, it becomes ______."],
+        vocabulary: ["roasted", "ground", "mixed", "heated", "fermented", "processed", "transformed"],
+        grammar: "Use passive process verbs to explain how the original material changes.",
+        checks: [
+          { label: "a process action", terms: ["roasted", "ground", "mixed", "heated", "cooked", "fermented", "processed", "dried", "pressed", "transformed"] },
+          { label: "a change into the product", terms: ["becomes", "turns into", "changes into", "final product", "made from"] }
+        ],
+        unitTerms: ["processed", "transformed", "becomes", "turns into", "made from"],
+        minWords: 10,
+        maxSeconds: 20,
+        improved: "First, the cocoa beans are roasted and ground. Then, the cocoa is processed and becomes chocolate."
+      },
+      complete: {
+        id: "followup-transformation-example",
+        text: "Can you name another product made from a transformed ingredient and explain the change?",
+        audio: "followup-transformation-example.mp3",
+        frames: ["______ is made from ______. The original ingredient is ______ before it becomes ______."],
+        vocabulary: ["cheese", "bread", "tofu", "juice", "flour", "milk", "soybeans", "wheat"],
+        grammar: "Use made from when the source changes visibly during production.",
+        checks: [
+          { label: "made from", terms: ["made from", "comes from", "produced from"] },
+          { label: "a second source and product", terms: ["cheese", "milk", "bread", "wheat", "flour", "tofu", "soybeans", "juice", "fruit", "oil", "olives"] }
+        ],
+        unitTerms: ["made from", "original ingredient", "becomes", "processed", "transformed"],
+        minWords: 11,
+        maxSeconds: 20,
+        improved: "Cheese is made from milk. The milk is cultured and processed before it becomes a solid cheese."
+      }
+    },
+    quantities: {
+      incomplete: {
+        id: "followup-quantity-adjust",
+        text: "Imagine that two more people are joining the meal. How would you adjust the quantities?",
+        audio: "followup-quantity-adjust.mp3",
+        frames: ["For two more people, I would add ______ and ______."],
+        vocabulary: ["one more cup of", "another can of", "a few more", "a little more", "enough for six"],
+        grammar: "Use another with one container, more with amounts, and a few more with countable plural foods.",
+        checks: [
+          { label: "an adjusted amount", terms: ["more", "another", "extra", "add", "increase", "six people", "two more"] },
+          { label: "a quantity expression", terms: ["cup", "cups", "can", "cans", "bottle", "bottles", "pieces", "a few", "a little", "some"] }
+        ],
+        unitTerms: ["another", "more", "a few more", "a little more", "enough for"],
+        minWords: 10,
+        maxSeconds: 20,
+        improved: "For two more people, I would add one more cup of rice, another can of beans, and a few more vegetables."
+      },
+      complete: {
+        id: "followup-quantity-choice",
+        text: "Which quantity on your list is the most difficult to estimate, and how would you measure it?",
+        audio: "followup-quantity-choice.mp3",
+        frames: ["The most difficult quantity is ______. I would measure it with ______."],
+        vocabulary: ["estimate", "measure", "cup", "tablespoon", "grams", "pieces", "container"],
+        grammar: "Name the difficult amount and use with plus a measuring tool or unit.",
+        checks: [
+          { label: "a difficult food amount", terms: ["difficult", "hard", "estimate", "amount", "quantity", "rice", "oil", "sauce", "vegetables", "spices"] },
+          { label: "a measurement", terms: ["measure", "cup", "cups", "tablespoon", "spoon", "grams", "kilograms", "pieces", "bottle", "scale"] }
+        ],
+        unitTerms: ["quantity", "estimate", "measure", "cup", "tablespoon", "grams"],
+        minWords: 10,
+        maxSeconds: 20,
+        improved: "The most difficult quantity is the dressing. I would measure the oil and lime juice with tablespoons."
+      }
+    },
+    culture: {
+      incomplete: {
+        id: "followup-culture-memory",
+        text: "What specific memory do you connect with that dish?",
+        audio: "followup-culture-memory.mp3",
+        frames: ["This dish reminds me of ______ because ______."],
+        vocabulary: ["reminds me of", "childhood", "grandparents", "celebration", "weekend", "family gathering"],
+        grammar: "Use reminds me of plus a person, time, place, or event.",
+        checks: [
+          { label: "a specific memory", terms: ["reminds me", "memory", "childhood", "grandmother", "grandfather", "grandparents", "weekend", "celebration", "home", "family"] },
+          { label: "a supporting detail", terms: ["because", "when", "where", "together", "used to", "always", "usually"] }
+        ],
+        unitTerms: ["reminds me of", "memory", "family gathering", "because"],
+        minWords: 10,
+        maxSeconds: 20,
+        improved: "This dish reminds me of Sunday lunches because my grandparents used to prepare it for the whole family."
+      },
+      complete: {
+        id: "followup-culture-occasion",
+        text: "When do people usually share this dish, and who prepares it?",
+        audio: "followup-culture-occasion.mp3",
+        frames: ["People usually share it during ______. It is prepared by ______."],
+        vocabulary: ["holiday", "festival", "family gathering", "weekend", "special occasion", "prepared by"],
+        grammar: "Use the simple present for cultural habits and passive is prepared by for the cook.",
+        checks: [
+          { label: "an occasion", terms: ["holiday", "festival", "celebration", "gathering", "weekend", "birthday", "Christmas", "Easter", "special occasion", "lunch", "dinner"] },
+          { label: "who prepares it", terms: ["prepared by", "made by", "cooked by", "mother", "father", "grandmother", "grandfather", "family", "people", "cook"] }
+        ],
+        unitTerms: ["usually", "share", "prepared by", "special occasion", "family gathering"],
+        minWords: 10,
+        maxSeconds: 20,
+        improved: "People usually share it during family celebrations, and it is prepared by my grandmother and my aunts."
+      }
+    },
+    comparison: {
+      incomplete: {
+        id: "followup-comparison-detail",
+        text: "Can you add one more similarity and one more difference between the two dishes?",
+        audio: "followup-comparison-detail.mp3",
+        frames: ["Both dishes ______. However, ______, while ______."],
+        vocabulary: ["both", "similar", "however", "while", "ingredients", "texture", "served"],
+        grammar: "Use both for the similarity and however or while for the difference.",
+        checks: [
+          { label: "another similarity", terms: ["both", "similar", "also", "in common", "same"] },
+          { label: "another difference", terms: ["however", "while", "but", "different", "thicker", "thinner", "spicier", "lighter", "more", "less"] }
+        ],
+        unitTerms: ["both", "similar", "however", "while", "different"],
+        minWords: 12,
+        maxSeconds: 20,
+        improved: "Both dishes are served warm and can include cheese. However, arepas are thicker, while tortillas are easier to fold."
+      },
+      complete: {
+        id: "followup-comparison-choice",
+        text: "Which of the two dishes would you recommend to a visitor, and what evidence supports your choice?",
+        audio: "followup-comparison-choice.mp3",
+        frames: ["I would recommend ______ because ______."],
+        vocabulary: ["recommend", "visitor", "traditional", "accessible", "flavor", "experience", "because"],
+        grammar: "Use would recommend for your choice and because for specific evidence.",
+        checks: [
+          { label: "a clear choice", terms: ["recommend", "choose", "suggest", "prefer", "visitor", "tourist"] },
+          { label: "supporting evidence", terms: ["because", "traditional", "flavor", "taste", "texture", "culture", "experience", "easy", "interesting"] }
+        ],
+        unitTerms: ["would recommend", "because", "traditional", "cultural experience"],
+        minWords: 10,
+        maxSeconds: 20,
+        improved: "I would recommend arepas because visitors can try a traditional corn dish with several regional fillings."
+      }
+    },
+    recommendation: {
+      incomplete: {
+        id: "followup-recommendation-evidence",
+        text: "What exact taste or texture would make someone want to try this snack?",
+        audio: "followup-recommendation-evidence.mp3",
+        frames: ["Someone should try it because it is ______ and ______."],
+        vocabulary: ["crispy", "creamy", "savory", "sweet", "soft", "fresh", "crunchy"],
+        grammar: "Use two sensory adjectives and because to strengthen the recommendation.",
+        checks: [
+          { label: "two sensory details", minMatches: 2, terms: ["crispy", "creamy", "savory", "sweet", "soft", "fresh", "crunchy", "salty", "spicy", "smooth", "juicy"] },
+          { label: "recommendation evidence", terms: ["because", "should try", "recommend", "want to try", "worth trying"] }
+        ],
+        unitTerms: ["should try", "because", "crispy", "creamy", "savory", "sweet", "fresh"],
+        minWords: 9,
+        maxSeconds: 20,
+        improved: "Someone should try it because the outside is crispy, the filling is savory, and the rice is soft."
+      },
+      complete: {
+        id: "followup-recommendation-serving",
+        text: "How much would you serve to one person, and what would you serve with it?",
+        audio: "followup-recommendation-serving.mp3",
+        frames: ["I would serve ______ per person with ______."],
+        vocabulary: ["one piece", "two pieces", "a small bowl of", "a cup of", "a little", "served with"],
+        grammar: "Use a partitive or exact measure for the serving and with for the accompaniment.",
+        checks: [
+          { label: "a serving quantity", terms: ["piece", "pieces", "bowl", "cup", "slice", "slices", "portion", "per person", "one", "two", "a little", "a few"] },
+          { label: "an accompaniment", terms: ["with", "serve it with", "served with", "sauce", "drink", "tea", "juice", "salad", "fruit", "vegetables"] }
+        ],
+        unitTerms: ["per person", "piece of", "bowl of", "cup of", "served with"],
+        minWords: 9,
+        maxSeconds: 20,
+        improved: "I would serve two pieces per person with a small bowl of salad and a little dipping sauce."
+      }
+    }
+  },
   questions: [
     {
       id: "u5q1-dish",
@@ -109,6 +315,7 @@ window.JaraLinguaConversationCoachConfig = {
       topic: "Dish and ingredients",
       text: "Tell me about a dish you know well. What is it made with?",
       audio: "question-01.mp3",
+      followUpSet: "ingredients",
       frames: [
         "A dish I know well is ______. It is made with ______.",
         "I would like to describe ______. It contains ______, and the main ingredient is ______."
@@ -134,6 +341,7 @@ window.JaraLinguaConversationCoachConfig = {
       topic: "Source and transformation",
       text: "Choose one food product, such as chocolate, cheese, or tofu. What is it made from?",
       audio: "question-02.mp3",
+      followUpSet: "transformation",
       frames: [
         "______ is made from ______.",
         "The original ingredient is ______. It changes into ______ during production."
@@ -159,6 +367,7 @@ window.JaraLinguaConversationCoachConfig = {
       topic: "Meal quantities",
       text: "You are preparing a balanced meal for four people. What ingredients and quantities do you need?",
       audio: "question-03.mp3",
+      followUpSet: "quantities",
       frames: [
         "For four people, we need ______, ______, and ______.",
         "I would use a few ______, a little ______, and ______ cups of ______."
@@ -184,6 +393,7 @@ window.JaraLinguaConversationCoachConfig = {
       topic: "Containers and measures",
       text: "Imagine you are shopping for a healthy snack table. Which containers, measures, or partitives would you buy?",
       audio: "question-04.mp3",
+      followUpSet: "quantities",
       frames: [
         "I would buy a ______ of ______ and a ______ of ______.",
         "For the snack table, I need two ______ of ______, a few ______, and a little ______."
@@ -209,6 +419,7 @@ window.JaraLinguaConversationCoachConfig = {
       topic: "Food and identity",
       text: "What dish represents your family, city, or region, and why is it important to you?",
       audio: "question-05.mp3",
+      followUpSet: "culture",
       frames: [
         "______ represents my ______ because ______.",
         "An important dish in my family or region is ______. It reminds me of ______."
@@ -234,6 +445,7 @@ window.JaraLinguaConversationCoachConfig = {
       topic: "Cultural comparison",
       text: "Compare a Colombian dish with a dish from another culture. What is similar, and what is different?",
       audio: "question-06.mp3",
+      followUpSet: "comparison",
       frames: [
         "Both ______ and ______ are made with ______, but ______.",
         "______ is similar to ______ because ______. However, ______."
@@ -259,6 +471,7 @@ window.JaraLinguaConversationCoachConfig = {
       topic: "Global snack review",
       text: "Recommend a snack from any culture. Describe its ingredients, taste, and cultural connection.",
       audio: "question-07.mp3",
+      followUpSet: "recommendation",
       frames: [
         "I recommend ______. It is made with ______, and it tastes ______.",
         "You should try ______ because ______. It comes from ______ and is usually eaten ______."

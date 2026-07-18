@@ -13,10 +13,22 @@ Every coach must follow this sequence:
 3. Optional language support in guided mode.
 4. Student recording and temporary transcription.
 5. Evidence-based formative feedback.
-6. Character reaction or answer.
-7. A final private report and a focused retry route.
+6. Adaptive follow-up selected from the student's evidence when the activity profile requires it.
+7. Student's second response to the follow-up.
+8. Character reaction or answer.
+9. A final private report and a focused retry route.
 
 Questions must require meaning, not isolated repetition. Each full attempt must balance the unit grammar, vocabulary, functions, and interaction goal. A question bank must not produce four prompts that test the same structure.
+
+## Adaptive follow-ups
+
+- A follow-up must respond to observable evidence in the preceding transcription. It must not be selected randomly.
+- Configure at least two routes for each eligible question: one that requests missing evidence and one that extends a complete answer.
+- The follow-up must require new meaning. It must not ask the learner to repeat the same answer in different words.
+- Keep the prompt short enough for a natural exchange and provide a separate answer frame, vocabulary bank, grammar focus, evidence checks, time limit, and stronger model.
+- Every follow-up spoken by the character requires its own approved professional audio file. Browser speech synthesis is prohibited.
+- The interface must identify the follow-up clearly and keep the next-turn control disabled until the learner records or explicitly preserves the response as not analyzed.
+- The report must separate the initial answer from the follow-up while calculating one transparent average for the turn.
 
 ## Character and visual identity
 
@@ -100,6 +112,7 @@ The report must state that automatic pronunciation information is approximate. N
 Before deployment, verify:
 
 - Eight-question bank and balanced four-question attempts.
+- Adaptive follow-up selection, second-response requirement, and separate report evidence when configured.
 - Mandatory interaction turn when configured.
 - ElevenLabs MP3 presence, duration, decoding, and script agreement.
 - No `speechSynthesis` references.
@@ -113,4 +126,4 @@ Before deployment, verify:
 
 ## Unit 5 implementation profile
 
-The first v2 implementation is `Intermediate English Course 1 - Unit 5: Food, Quantities and Culture` with the character Maya Brooks. Maya uses one professional female American English voice. Every full attempt includes ingredients, quantities, culture, and a role-reversal turn.
+The first v2 implementation is `Intermediate English Course 1 - Unit 5: Food, Quantities and Culture` with the character Maya Brooks. Maya uses one professional female American English voice. Every full attempt includes ingredients, quantities, culture, and a role-reversal turn. The first three turns each contain one evidence-based adaptive follow-up, so a complete attempt has four turns and seven spoken learner responses. The adaptive bank contains twelve professional prompts: a missing-evidence route and a complete-answer route for each of six skill categories.

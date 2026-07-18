@@ -71,8 +71,8 @@ def scribe(audio_path: Path, api_key: str) -> str:
 
 def main() -> int:
     items = expected_items()
-    if len(items) != 28:
-        print(f"Expected 28 scripts, found {len(items)}", file=sys.stderr)
+    if len(items) != 40:
+        print(f"Expected 40 scripts, found {len(items)}", file=sys.stderr)
         return 2
     load_env()
     api_key = os.environ.get("ELEVENLABS_API_KEY", "").strip()

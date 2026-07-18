@@ -507,6 +507,10 @@
 .coach-answer-review h3 { margin: 0; font-size: 1rem; }
 .coach-answer-review p { margin: .45rem 0 0; color: var(--coach-muted); line-height: 1.5; }
 .coach-answer-score { float: right; color: var(--coach-teal); font-weight: 900; }
+.coach-answer-phase { clear: both; margin-top: .75rem; padding-top: .75rem; border-top: 1px solid var(--coach-line); }
+.coach-answer-phase-heading { display: flex; align-items: center; justify-content: space-between; gap: .75rem; color: var(--coach-navy); }
+.coach-answer-phase-heading strong { font-size: .9rem; }
+.coach-answer-phase-heading span { color: var(--coach-teal); font-size: .82rem; font-weight: 900; }
 
 .coach-summary-actions { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: 1rem; }
 

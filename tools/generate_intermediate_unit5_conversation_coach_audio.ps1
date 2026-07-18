@@ -1,5 +1,6 @@
 param(
-  [switch]$Overwrite
+  [switch]$Overwrite,
+  [string]$Only = ""
 )
 
 $ErrorActionPreference = "Stop"
@@ -47,8 +48,12 @@ for ($index = 0; $index -lt $content.Count; $index++) {
   }
 }
 
-if ($items.Count -ne 28) {
-  throw "Expected 28 audio scripts but found $($items.Count)"
+if ($items.Count -ne 40) {
+  throw "Expected 40 audio scripts but found $($items.Count)"
+}
+
+if (-not [string]::IsNullOrWhiteSpace($Only) -and -not ($items | Where-Object { (Split-Path -Leaf $_.Output) -eq $Only })) {
+  throw "Unknown audio script requested with -Only: $Only"
 }
 
 $headers = @{
@@ -60,6 +65,10 @@ $created = 0
 $skipped = 0
 
 foreach ($item in $items) {
+  if (-not [string]::IsNullOrWhiteSpace($Only) -and (Split-Path -Leaf $item.Output) -ne $Only) {
+    $skipped++
+    continue
+  }
   if ((Test-Path -LiteralPath $item.Output) -and -not $Overwrite) {
     $skipped++
     continue

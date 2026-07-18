@@ -143,7 +143,7 @@
   }
 
   function freshSession(ids = [], mode = "guided") {
-    return { questionIds: ids, currentIndex: 0, answers: [], mode, startedAt: "" };
+    return { questionIds: ids, currentIndex: 0, answers: [], mode, phase: "main", activeFollowUp: null, startedAt: "" };
   }
 
   function randomIndex(length) {
@@ -179,6 +179,27 @@
 
   function currentQuestion() {
     return questionById.get(session.questionIds[session.currentIndex]);
+  }
+
+  function currentTurn() {
+    return session.answers[session.currentIndex] || null;
+  }
+
+  function currentPrompt() {
+    return session.phase === "followup" && session.activeFollowUp ? session.activeFollowUp : currentQuestion();
+  }
+
+  function currentPhaseAnswer() {
+    const turn = currentTurn();
+    if (!turn) return null;
+    return session.phase === "followup" ? turn.followUp : turn.main;
+  }
+
+  function turnIsComplete() {
+    const question = currentQuestion();
+    const turn = currentTurn();
+    if (!question || !turn?.main) return false;
+    return question.interaction || !question.followUpSet || Boolean(turn.followUp);
   }
 
   function audioPath(file) {
@@ -276,10 +297,10 @@
   }
 
   async function playQuestion() {
-    const question = currentQuestion();
-    if (!question || audioBusy || mediaRecorder?.state === "recording") return;
-    showToast("Maya's question is playing.");
-    await playAudio(elements.questionAudio, question.audio, { stageState: "speaking", stageLabel: "Maya is asking the question" });
+    const prompt = currentPrompt();
+    if (!prompt || audioBusy || mediaRecorder?.state === "recording") return;
+    showToast(session.phase === "followup" ? "Maya's follow-up is playing." : "Maya's question is playing.");
+    await playAudio(elements.questionAudio, prompt.audio, { stageState: "speaking", stageLabel: session.phase === "followup" ? "Maya is asking a follow-up" : "Maya is asking the question" });
   }
 
   async function playAudioQueue(entries) {
@@ -296,7 +317,7 @@
   }
 
   function recordingLimit() {
-    return Number(currentQuestion()?.maxSeconds) || maxRecordingSeconds;
+    return Number(currentPrompt()?.maxSeconds) || maxRecordingSeconds;
   }
 
   function updateTimer() {
@@ -326,6 +347,8 @@
     const question = currentQuestion();
     if (!question) return;
     releaseCurrentRecording();
+    session.phase = "main";
+    session.activeFollowUp = null;
     const total = session.questionIds.length;
     elements.counter.textContent = `Turn ${session.currentIndex + 1} of ${total}`;
     elements.floatingTurn.textContent = `Turn ${session.currentIndex + 1} of ${total}`;
@@ -500,13 +523,13 @@
 
   function updateControls() {
     const recording = mediaRecorder?.state === "recording";
-    const hasAnswer = Boolean(session.answers[session.currentIndex]);
+    const hasAnswer = Boolean(currentPhaseAnswer());
     const locked = analyzing || audioBusy;
     elements.mic.disabled = recording || locked || hasAnswer;
     elements.stop.disabled = !recording;
     elements.recordAgain.disabled = recording || analyzing || (!currentBlob && !hasAnswer);
     elements.questionPlay.disabled = recording || locked;
-    elements.next.disabled = !hasAnswer || recording || locked;
+    elements.next.disabled = !turnIsComplete() || recording || locked;
     elements.microphoneSelect.disabled = recording || analyzing;
     elements.floatingMic.hidden = recording;
     elements.floatingStop.hidden = !recording;
@@ -515,7 +538,7 @@
   }
 
   async function startRecording() {
-    if (mediaRecorder?.state === "recording" || analyzing || audioBusy || session.answers[session.currentIndex]) return;
+    if (mediaRecorder?.state === "recording" || analyzing || audioBusy || currentPhaseAnswer()) return;
     stopCoachAudio();
     elements.unsupported.hidden = true;
     try {
@@ -696,19 +719,73 @@
     return config.defaultInteractionResponse ? [config.defaultInteractionResponse] : [];
   }
 
-  function responseEntries(answer, question) {
+  function responseEntries(answer, question, evaluatedPrompt = question) {
     if (question.interaction) return roleReversalResponses(answer.transcript);
-    const complete = answer.analysis.checks.every((check) => check.met) && answer.analysis.wordCount >= Number(question.minWords || 0);
+    const complete = answer.analysis.checks.every((check) => check.met) && answer.analysis.wordCount >= Number(evaluatedPrompt.minWords || 0);
     return [complete && question.reaction ? question.reaction : config.audio.needDetail].filter(Boolean);
   }
 
-  async function presentMayaResponse(answer, question) {
-    const entries = responseEntries(answer, question);
+  async function presentMayaResponse(answer, question, evaluatedPrompt = question) {
+    const entries = responseEntries(answer, question, evaluatedPrompt);
     if (!entries.length) return;
     elements.reactionText.textContent = entries.map((entry) => entry.text).join(" ");
     elements.reaction.hidden = false;
     setRecordStatus("Answer analyzed", question.interaction ? "Listen to Maya answer the food topics she recognized." : "Listen to Maya's response, then continue.");
     await playAudioQueue(entries);
+  }
+
+  function chooseAdaptiveFollowUp(answer, question) {
+    const set = config.followUpSets?.[question.followUpSet];
+    if (!set) return null;
+    const complete = Boolean(answer?.analysis)
+      && answer.analysis.checks.every((check) => check.met)
+      && answer.analysis.wordCount >= Number(question.minWords || 0);
+    return complete ? set.complete : set.incomplete;
+  }
+
+  function renderAdaptiveFollowUp(followUp) {
+    releaseCurrentRecording();
+    session.phase = "followup";
+    session.activeFollowUp = followUp;
+    const total = session.questionIds.length;
+    elements.counter.textContent = `Turn ${session.currentIndex + 1} of ${total} - Follow-up`;
+    elements.floatingTurn.textContent = `Turn ${session.currentIndex + 1} follow-up`;
+    elements.topic.textContent = `${currentQuestion().topic} - Maya's follow-up`;
+    elements.questionText.textContent = followUp.text;
+    elements.questionAudio.src = audioPath(followUp.audio);
+    elements.questionAudio.playbackRate = playbackSpeed;
+    elements.frames.innerHTML = (followUp.frames || []).map((frame) => `<div class="coach-frame">${escapeHtml(frame)}</div>`).join("");
+    elements.vocabulary.innerHTML = (followUp.vocabulary || []).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
+    elements.grammar.textContent = followUp.grammar || "";
+    elements.support.open = session.mode === "guided";
+    elements.supportLabel.textContent = session.mode === "guided" ? "Follow-up support" : "Optional support";
+    elements.recovery.hidden = true;
+    elements.reaction.hidden = false;
+    elements.reactionText.textContent = followUp.text;
+    elements.transcript.textContent = "Your follow-up transcript will appear after temporary Whisper analysis.";
+    elements.transcript.classList.remove("has-text");
+    elements.studentAudio.hidden = true;
+    elements.studentAudio.removeAttribute("src");
+    elements.unsupported.hidden = true;
+    elements.next.disabled = true;
+    elements.recordAgain.disabled = true;
+    resetTimer();
+    setRecordStatus("Maya has a follow-up", "Listen, then give a short second response in English.");
+    setStage("speaking", "Maya is asking a follow-up");
+    updateControls();
+  }
+
+  async function presentAdaptiveFollowUp(answer, question) {
+    const followUp = chooseAdaptiveFollowUp(answer, question);
+    if (!followUp) {
+      await presentMayaResponse(answer, question);
+      return;
+    }
+    renderAdaptiveFollowUp(followUp);
+    showToast("Maya selected a follow-up from your answer evidence.");
+    await playQuestion();
+    setRecordStatus("Ready for the follow-up", "Answer Maya's new question in approximately fifteen to twenty seconds.");
+    updateControls();
   }
 
   async function transcribeCurrentRecording() {
@@ -728,19 +805,28 @@
         throw new Error(silent ? "The recording arrived silent. Choose another microphone and try again." : "Speech was detected, but no clear English words were transcribed.");
       }
       const question = currentQuestion();
+      const prompt = currentPrompt();
       const whisperWords = cleanWhisperWords(payload.words);
-      const analysis = analyzeAnswer(transcript, recordingDurationMs, whisperWords, question);
-      const answer = { questionId: question.id, transcript, durationMs: recordingDurationMs, analysis, unavailable: false };
-      session.answers[session.currentIndex] = answer;
+      const analysis = analyzeAnswer(transcript, recordingDurationMs, whisperWords, prompt);
+      const answer = { questionId: question.id, promptId: prompt.id || question.id, prompt: prompt.text, transcript, durationMs: recordingDurationMs, analysis, unavailable: false };
+      const turn = currentTurn() || { questionId: question.id, main: null, followUpPrompt: null, followUp: null };
+      if (session.phase === "followup") {
+        turn.followUpPrompt = prompt;
+        turn.followUp = answer;
+      } else {
+        turn.main = answer;
+      }
+      session.answers[session.currentIndex] = turn;
       elements.transcript.textContent = transcript;
       elements.transcript.classList.add("has-text");
       if (session.mode === "guided") {
-        elements.feedback.innerHTML = feedbackMarkup(answer, question);
+        elements.feedback.innerHTML = feedbackMarkup(answer, prompt);
         elements.feedback.hidden = false;
       }
-      showToast("Answer transcribed successfully. Maya is responding.");
+      showToast(session.phase === "followup" ? "Follow-up transcribed successfully. Maya is responding." : "Answer transcribed successfully. Maya is responding.");
       analyzing = false;
-      await presentMayaResponse(answer, question);
+      if (session.phase === "main" && question.followUpSet && !question.interaction) await presentAdaptiveFollowUp(answer, question);
+      else await presentMayaResponse(answer, question, prompt);
     } catch (error) {
       const message = error.name === "AbortError" ? "The transcription service took too long to answer." : (error.message || "The transcription service is unavailable.");
       const noSpeechIssue = /silent|no clear english words|no clear words/i.test(message);
@@ -764,8 +850,17 @@
   async function continueWithoutScore() {
     if (!currentBlob || analyzing) return;
     const question = currentQuestion();
-    session.answers[session.currentIndex] = { questionId: question.id, transcript: "", durationMs: recordingDurationMs, analysis: null, unavailable: true };
-    elements.transcript.textContent = "This turn was kept for your playback but was not transcribed or scored.";
+    const prompt = currentPrompt();
+    const answer = { questionId: question.id, promptId: prompt.id || question.id, prompt: prompt.text, transcript: "", durationMs: recordingDurationMs, analysis: null, unavailable: true };
+    const turn = currentTurn() || { questionId: question.id, main: null, followUpPrompt: null, followUp: null };
+    if (session.phase === "followup") {
+      turn.followUpPrompt = prompt;
+      turn.followUp = answer;
+    } else {
+      turn.main = answer;
+    }
+    session.answers[session.currentIndex] = turn;
+    elements.transcript.textContent = session.phase === "followup" ? "This follow-up was kept for playback but was not transcribed or scored." : "This response was kept for playback but was not transcribed or scored.";
     elements.transcript.classList.add("has-text");
     elements.recovery.hidden = true;
     elements.feedback.hidden = true;
@@ -777,6 +872,7 @@
     }
     setRecordStatus("Turn marked as not analyzed", "No words or score were invented. You may continue.");
     showToast("Turn saved without a score.");
+    if (session.phase === "main" && question.followUpSet && !question.interaction) await presentAdaptiveFollowUp(null, question);
     updateControls();
   }
 
@@ -797,7 +893,9 @@
   function recordAgain() {
     if (mediaRecorder?.state === "recording" || analyzing) return;
     stopCoachAudio();
-    session.answers[session.currentIndex] = null;
+    const turn = currentTurn();
+    if (session.phase === "followup" && turn) turn.followUp = null;
+    else session.answers[session.currentIndex] = null;
     releaseCurrentRecording();
     elements.studentAudio.hidden = true;
     elements.studentAudio.removeAttribute("src");
@@ -817,7 +915,7 @@
   }
 
   function nextTurn() {
-    if (!session.answers[session.currentIndex] || analyzing || audioBusy || mediaRecorder?.state === "recording") return;
+    if (!turnIsComplete() || analyzing || audioBusy || mediaRecorder?.state === "recording") return;
     if (session.currentIndex < session.questionIds.length - 1) {
       session.currentIndex += 1;
       renderQuestion(true);
@@ -832,6 +930,18 @@
     const analyzed = answers.filter((answer) => answer.analysis);
     if (!analyzed.length) return null;
     return Math.round(analyzed.reduce((sum, answer) => sum + answer.analysis.metrics[key], 0) / analyzed.length);
+  }
+
+  function turnResponses(turn) {
+    if (!turn) return [];
+    if (Object.prototype.hasOwnProperty.call(turn, "main")) return [turn.main, turn.followUp].filter(Boolean);
+    return [turn];
+  }
+
+  function turnAverage(turn) {
+    const analyzed = turnResponses(turn).filter((answer) => answer.analysis);
+    if (!analyzed.length) return null;
+    return Math.round(analyzed.reduce((sum, answer) => sum + answer.analysis.total, 0) / analyzed.length);
   }
 
   function aggregateLowConfidence(answers) {
@@ -874,12 +984,27 @@
   function buildReport() {
     const answers = session.questionIds.map((id, index) => {
       const question = questionById.get(id);
-      const answer = session.answers[index] || { questionId: id, transcript: "", analysis: null, unavailable: true };
-      return { ...answer, question: question.text, topic: question.topic, improved: question.improved };
+      const stored = session.answers[index] || { questionId: id, main: null, followUpPrompt: null, followUp: null };
+      const main = Object.prototype.hasOwnProperty.call(stored, "main") ? stored.main : stored;
+      return {
+        questionId: id,
+        topic: question.topic,
+        mainPrompt: question.text,
+        mainImproved: question.improved,
+        main,
+        followUpPrompt: stored.followUpPrompt || null,
+        followUp: stored.followUp || null,
+        turnScore: turnAverage(stored)
+      };
     });
-    const analyzedCount = answers.filter((answer) => answer.analysis).length;
+    const responses = answers.flatMap((turn) => turnResponses(turn));
+    const analyzedCount = responses.filter((answer) => answer.analysis).length;
+    const totalResponses = session.questionIds.reduce((total, id) => {
+      const question = questionById.get(id);
+      return total + (question?.followUpSet && !question.interaction ? 2 : 1);
+    }, 0);
     const criteria = {};
-    (config.rubric || []).forEach((criterion) => { criteria[criterion.key] = criterionAverage(answers, criterion.key); });
+    (config.rubric || []).forEach((criterion) => { criteria[criterion.key] = criterionAverage(responses, criterion.key); });
     const availableCriteria = Object.values(criteria).filter((value) => value != null);
     const score = availableCriteria.length === (config.rubric || []).length ? availableCriteria.reduce((sum, value) => sum + value, 0) : null;
     const ranked = (config.rubric || []).map((criterion) => ({ ...criterion, score: criteria[criterion.key] })).filter((criterion) => criterion.score != null).sort((a, b) => b.score - a.score);
@@ -896,6 +1021,7 @@
     return {
       score,
       analyzedCount,
+      totalResponses,
       totalTurns: answers.length,
       criteria,
       readiness: readinessLabel(score),
@@ -904,7 +1030,7 @@
       completedAt: new Date().toISOString(),
       strengths: ranked.slice(0, 2).map((criterion) => strengthMessages[criterion.key]),
       priorities: ranked.slice(-2).reverse().map((criterion) => priorityMessages[criterion.key]),
-      lowConfidence: aggregateLowConfidence(answers),
+      lowConfidence: aggregateLowConfidence(responses),
       answers
     };
   }
@@ -916,28 +1042,54 @@
     }
     elements.attemptHistory.innerHTML = persistent.history.slice().reverse().map((attempt) => {
       const date = new Date(attempt.completedAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" });
-      return `<article><div><strong>${attempt.score == null ? "Not scored" : `${attempt.score}/50`}</strong><span>${escapeHtml(attempt.mode === "real" ? "Real Conversation" : "Guided Rehearsal")} - ${attempt.analyzedCount}/${attempt.totalTurns} analyzed</span></div><span>${escapeHtml(date)}</span></article>`;
+      const total = attempt.totalResponses || attempt.totalTurns;
+      return `<article><div><strong>${attempt.score == null ? "Not scored" : `${attempt.score}/50`}</strong><span>${escapeHtml(attempt.mode === "real" ? "Real Conversation" : "Guided Rehearsal")} - ${attempt.analyzedCount}/${total} responses analyzed</span></div><span>${escapeHtml(date)}</span></article>`;
     }).join("");
   }
 
+  function normalizeReportTurn(turn) {
+    if (Object.prototype.hasOwnProperty.call(turn, "main")) return turn;
+    return {
+      questionId: turn.questionId,
+      topic: turn.topic,
+      mainPrompt: turn.question,
+      mainImproved: turn.improved,
+      main: turn,
+      followUpPrompt: null,
+      followUp: null,
+      turnScore: turn.analysis?.total ?? null
+    };
+  }
+
+  function responseReview(label, prompt, answer, improved) {
+    if (!answer) return "";
+    const score = answer.analysis ? `${answer.analysis.total}/50` : "Not analyzed";
+    const transcript = answer.transcript || "No transcript was available for this response.";
+    const feedback = answer.analysis?.message || "No automatic feedback was created because there was no usable transcription.";
+    return `<section class="coach-answer-phase"><div class="coach-answer-phase-heading"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(score)}</span></div><p><strong>Maya asked:</strong> ${escapeHtml(prompt || answer.prompt || "")}</p><p><strong>You said:</strong> ${escapeHtml(transcript)}</p><p><strong>Feedback:</strong> ${escapeHtml(feedback)}</p><p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(improved || "")}</p></section>`;
+  }
+
   function renderReport(report) {
+    const turns = (report.answers || []).map(normalizeReportTurn);
+    const totalResponses = report.totalResponses || report.totalTurns || turns.length;
     elements.summaryScore.textContent = report.score == null ? "--" : report.score;
     elements.summaryReadiness.textContent = report.readiness;
-    elements.summaryLead.textContent = report.score != null ? "You completed a balanced four-turn food conversation with Maya." : "You completed the conversation, but at least one turn could not be analyzed.";
+    elements.summaryLead.textContent = report.score != null ? "You completed a balanced four-turn, seven-response food conversation with Maya." : "You completed the conversation, but at least one response could not be analyzed.";
     elements.summaryComparison.textContent = report.comparison;
-    elements.summaryCoverage.textContent = `${report.analyzedCount} of ${report.totalTurns} turns analyzed. This formative estimate is not a grade and is never sent to your teacher.`;
+    elements.summaryCoverage.textContent = `${report.analyzedCount} of ${totalResponses} responses analyzed. This formative estimate is not a grade and is never sent to your teacher.`;
     elements.summaryMetrics.innerHTML = (config.rubric || []).map((criterion) => `<article class="coach-summary-metric"><strong>${report.criteria[criterion.key] == null ? "--" : report.criteria[criterion.key]}</strong><span>/10 - ${escapeHtml(criterion.label)}</span><p>${escapeHtml(criterion.description)}</p></article>`).join("");
     elements.summaryStrengths.innerHTML = (report.strengths.length ? report.strengths : ["You completed the complete interaction sequence."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     elements.summaryPriorities.innerHTML = (report.priorities.length ? report.priorities : ["Repeat the conversation when the transcription service is available."]).map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     elements.summaryWords.innerHTML = report.lowConfidence.length ? report.lowConfidence.map((item) => `<span>${escapeHtml(item.word)} <small>${Math.round(item.probability * 100)}%</small></span>`).join("") : "<p>No lower-confidence words were identified in the analyzed turns.</p>";
-    elements.summaryAnswers.innerHTML = report.answers.map((answer, index) => {
-      const score = answer.analysis ? `${answer.analysis.total}/50` : "Not analyzed";
-      const transcript = answer.transcript || "No transcript was available for this turn.";
-      const feedback = answer.analysis?.message || "No automatic feedback was created because there was no usable transcription.";
-      return `<article><span class="coach-answer-score">${escapeHtml(score)}</span><h3>Turn ${index + 1}: ${escapeHtml(answer.topic)}</h3><p><strong>Maya asked:</strong> ${escapeHtml(answer.question)}</p><p><strong>You said:</strong> ${escapeHtml(transcript)}</p><p><strong>Feedback:</strong> ${escapeHtml(feedback)}</p><p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(answer.improved || "")}</p></article>`;
+    elements.summaryAnswers.innerHTML = turns.map((turn, index) => {
+      const score = turn.turnScore == null ? "Not analyzed" : `${turn.turnScore}/50 average`;
+      const followUp = turn.followUpPrompt && turn.followUp
+        ? responseReview("Adaptive follow-up", turn.followUpPrompt.text, turn.followUp, turn.followUpPrompt.improved)
+        : "";
+      return `<article><span class="coach-answer-score">${escapeHtml(score)}</span><h3>Turn ${index + 1}: ${escapeHtml(turn.topic)}</h3>${responseReview("Initial answer", turn.mainPrompt, turn.main, turn.mainImproved)}${followUp}</article>`;
     }).join("");
     renderHistory();
-    const weakIds = report.answers.filter((answer) => answer.analysis).sort((a, b) => a.analysis.total - b.analysis.total).slice(0, 2).map((answer) => answer.questionId);
+    const weakIds = turns.filter((turn) => turn.turnScore != null).sort((a, b) => a.turnScore - b.turnScore).slice(0, 2).map((turn) => turn.questionId);
     elements.weakPractice.dataset.questionIds = weakIds.join(",");
     elements.weakPractice.hidden = !weakIds.length;
   }
@@ -947,7 +1099,7 @@
     stopCoachAudio();
     const report = buildReport();
     persistent.lastReport = report;
-    persistent.history.push({ score: report.score, mode: report.mode, completedAt: report.completedAt, analyzedCount: report.analyzedCount, totalTurns: report.totalTurns });
+    persistent.history.push({ score: report.score, mode: report.mode, completedAt: report.completedAt, analyzedCount: report.analyzedCount, totalResponses: report.totalResponses, totalTurns: report.totalTurns });
     persistent.history = persistent.history.slice(-8);
     savePersistent();
     renderReport(report);

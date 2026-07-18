@@ -86,6 +86,56 @@ That recommendation gives me a real reason to try the snack. You connected ingre
 
 You have a useful starting point. Add one precise ingredient, quantity, comparison, or cultural reason before you move on.
 
+## Adaptive follow-up questions
+
+### `followup-ingredient-detail.mp3`
+
+Which ingredient gives the dish its most important flavor, and why?
+
+### `followup-ingredient-reason.mp3`
+
+Who would you prepare this dish for, and why would you recommend it?
+
+### `followup-transformation-process.mp3`
+
+What happens to the original ingredient before it becomes the final food product?
+
+### `followup-transformation-example.mp3`
+
+Can you name another product made from a transformed ingredient and explain the change?
+
+### `followup-quantity-adjust.mp3`
+
+Imagine that two more people are joining the meal. How would you adjust the quantities?
+
+### `followup-quantity-choice.mp3`
+
+Which quantity on your list is the most difficult to estimate, and how would you measure it?
+
+### `followup-culture-memory.mp3`
+
+What specific memory do you connect with that dish?
+
+### `followup-culture-occasion.mp3`
+
+When do people usually share this dish, and who prepares it?
+
+### `followup-comparison-detail.mp3`
+
+Can you add one more similarity and one more difference between the two dishes?
+
+### `followup-comparison-choice.mp3`
+
+Which of the two dishes would you recommend to a visitor, and what evidence supports your choice?
+
+### `followup-recommendation-evidence.mp3`
+
+What exact taste or texture would make someone want to try this snack?
+
+### `followup-recommendation-serving.mp3`
+
+How much would you serve to one person, and what would you serve with it?
+
 ## Maya's role-reversal answers
 
 ### `answer-favorite-dish.mp3`

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="Intermediate English Unit 5 Conversation Coach with professional audio, balanced food and culture questions, microphone transcription, interaction with Maya, and private formative feedback." />
+  <meta name="description" content="Intermediate English Unit 5 Conversation Coach with professional audio, adaptive follow-up questions, microphone transcription, interaction with Maya, and private formative feedback." />
   <title>Maya's Global Food Table | Unit 5 Conversation Coach | JaraLingua</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css?v=20260718-intermediate" />
-  <link rel="stylesheet" href="../../assets/css/conversation-coach-v2.css?v=20260718-u5-v1" />
+  <link rel="stylesheet" href="../../assets/css/conversation-coach-v2.css?v=20260718-u5-v2" />
 </head>
 <body class="english-intermediate-page conversation-coach-page">
   <div class="global-course-switcher" aria-label="Courses">
@@ -30,8 +30,8 @@
       <div class="coach-hero-copy">
         <p class="coach-kicker">Intermediate Course 1 - Unit 5 - Conversation Coach</p>
         <h1 id="pageTitle">Maya's Global Food Table</h1>
-        <p>Have a four-turn conversation about ingredients, quantities, dishes, and food culture. Maya listens, reacts, answers your questions, and prepares a private practice report.</p>
-        <div class="coach-meta"><span>8-question bank</span><span>4 balanced turns</span><span>American English</span><span>Unlimited attempts</span><span>Private result /50</span></div>
+        <p>Have a four-turn conversation about ingredients, quantities, dishes, and food culture. Maya listens to your evidence, asks three adaptive follow-ups, answers your questions, and prepares a private practice report.</p>
+        <div class="coach-meta"><span>8-question bank</span><span>4 balanced turns</span><span>7 spoken responses</span><span>American English</span><span>Unlimited attempts</span><span>Private result /50</span></div>
         <div class="coach-actions"><a class="coach-link-button primary" href="#conversationCoachApp"><i class="bi bi-play-fill"></i> Meet Maya</a><a class="coach-link-button secondary" href="unit-5-food-quantities-culture.html">Review Unit 5</a><a class="coach-link-button secondary" href="practice-lab.html#unit-5-folder">Back to Unit 5 folder</a></div>
       </div>
       <figure class="coach-hero-visual">
@@ -42,7 +42,7 @@
 
     <section class="coach-outcomes" aria-label="Practice design">
       <article><i class="bi bi-volume-up-fill"></i><div><strong>Professional voice model</strong><span>Maya uses one consistent American English voice at 0.75x, 1x, or 1.25x.</span></div></article>
-      <article><i class="bi bi-arrow-left-right"></i><div><strong>Real interaction</strong><span>You answer three balanced prompts and finish by interviewing Maya.</span></div></article>
+      <article><i class="bi bi-arrow-left-right"></i><div><strong>Real interaction</strong><span>You answer three prompts, respond to Maya's evidence-based follow-ups, and finish by interviewing her.</span></div></article>
       <article><i class="bi bi-clipboard2-pulse"></i><div><strong>Formative evidence</strong><span>The /50 estimate guides another attempt but never enters Grades.</span></div></article>
     </section>
 
@@ -52,7 +52,7 @@
           <div id="onboardingPanel">
             <section class="coach-companion-welcome">
               <figure><img src="../../assets/img/english-intermediate/unit-5/conversation-coach-maya-portrait-v1.webp" width="640" height="800" decoding="async" alt="Maya Brooks, the Global Food Conversation Coach" /></figure>
-              <div><p class="coach-kicker">Meet your partner</p><h2>Hi, I'm Maya Brooks</h2><p>I will ask about real food decisions and cultural meaning. At the end, you will ask me two questions so this becomes a conversation, not a speech.</p>
+              <div><p class="coach-kicker">Meet your partner</p><h2>Hi, I'm Maya Brooks</h2><p>I will ask about real food decisions and cultural meaning. After your first three answers, I will use what you said to ask a short follow-up. At the end, you will ask me two questions so this becomes a conversation, not a speech.</p>
                 <div class="coach-audio-row"><button class="coach-audio-button" id="welcomePlayButton" type="button"><i class="bi bi-play-fill"></i><span>Hear Maya's welcome</span></button><button class="coach-audio-button" id="instructionsPlayButton" type="button"><i class="bi bi-volume-up-fill"></i><span>Hear instructions</span></button><div class="coach-speed" aria-label="Audio speed"><span>Speed</span><button type="button" data-coach-speed="0.75">0.75x</button><button type="button" data-coach-speed="1" class="is-active">1x</button><button type="button" data-coach-speed="1.25">1.25x</button></div></div>
                 <audio id="welcomeAudio" preload="metadata"></audio><audio id="instructionsAudio" preload="metadata"></audio>
               </div>
@@ -61,14 +61,14 @@
             <ol class="coach-steps">
               <li><span>1</span><div><strong>Choose</strong><small>Guided rehearsal or real conversation.</small></div></li>
               <li><span>2</span><div><strong>Check</strong><small>Record and play a microphone test.</small></div></li>
-              <li><span>3</span><div><strong>Converse</strong><small>Listen, answer, and interview Maya.</small></div></li>
+              <li><span>3</span><div><strong>Converse</strong><small>Answer, respond to follow-ups, and interview Maya.</small></div></li>
               <li><span>4</span><div><strong>Improve</strong><small>Use your private /50 report.</small></div></li>
             </ol>
 
             <section class="coach-mode-panel" aria-labelledby="modeTitle">
               <div class="coach-section-heading"><div><p class="coach-kicker">Practice mode</p><h3 id="modeTitle">Choose how much support you need</h3></div></div>
               <div class="coach-mode-grid">
-                <label class="coach-mode-card"><input id="guidedMode" type="radio" name="coachMode" value="guided" checked /><span><i class="bi bi-lightbulb-fill"></i><strong>Guided Rehearsal</strong><small>Open sentence frames, vocabulary, and grammar. See feedback after each turn.</small><b>Recommended first</b></span></label>
+                <label class="coach-mode-card"><input id="guidedMode" type="radio" name="coachMode" value="guided" checked /><span><i class="bi bi-lightbulb-fill"></i><strong>Guided Rehearsal</strong><small>Open sentence frames, vocabulary, and grammar. See feedback after each response.</small><b>Recommended first</b></span></label>
                 <label class="coach-mode-card"><input id="realMode" type="radio" name="coachMode" value="real" /><span><i class="bi bi-chat-square-quote-fill"></i><strong>Real Conversation</strong><small>Keep support closed and receive detailed feedback only after the conversation.</small><b>More independent</b></span></label>
               </div>
             </section>
@@ -130,7 +130,7 @@
         </section>
 
         <aside class="coach-sidebar">
-          <section><p class="coach-kicker">Balanced attempt</p><h2>Every conversation includes</h2><ul class="coach-sidebar-list"><li><i class="bi bi-basket2"></i><span>Ingredients or food transformation</span></li><li><i class="bi bi-rulers"></i><span>Quantities, containers, or partitives</span></li><li><i class="bi bi-globe-americas"></i><span>Food culture, comparison, or recommendation</span></li><li><i class="bi bi-question-circle"></i><span>Two questions for Maya</span></li></ul></section>
+          <section><p class="coach-kicker">Balanced attempt</p><h2>Every conversation includes</h2><ul class="coach-sidebar-list"><li><i class="bi bi-basket2"></i><span>Ingredients or food transformation</span></li><li><i class="bi bi-rulers"></i><span>Quantities, containers, or partitives</span></li><li><i class="bi bi-globe-americas"></i><span>Food culture, comparison, or recommendation</span></li><li><i class="bi bi-signpost-split"></i><span>One adaptive follow-up after each of the first three answers</span></li><li><i class="bi bi-question-circle"></i><span>Two questions for Maya</span></li></ul></section>
           <section><p class="coach-kicker">Rubric - 50 points</p><h3>Five formative criteria</h3><ul class="coach-sidebar-list"><li><i class="bi bi-bullseye"></i><span>Task completion - 10</span></li><li><i class="bi bi-arrow-left-right"></i><span>Interaction - 10</span></li><li><i class="bi bi-spellcheck"></i><span>Vocabulary and structures - 10</span></li><li><i class="bi bi-speedometer2"></i><span>Fluency - 10</span></li><li><i class="bi bi-soundwave"></i><span>Approximate pronunciation clarity - 10</span></li></ul></section>
           <section><p class="coach-kicker">Privacy</p><h3>Your voice is not stored</h3><p>Audio is processed temporarily by JaraLingua's transcription service. Only the written report and attempt history may remain in this browser. There is no teacher submission or Grades record.</p></section>
         </aside>
@@ -143,8 +143,8 @@
 
   <footer class="site-footer"><p>Intermediate English Course 1 - Unit 5 Conversation Coach - Private formative practice</p></footer>
   <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
-  <script src="../../assets/js/conversation-coach-data/english-intermediate-1-unit-5.js?v=20260718-u5-v1"></script>
-  <script src="../../assets/js/conversation-coach-v2.js?v=20260718-v1"></script>
+  <script src="../../assets/js/conversation-coach-data/english-intermediate-1-unit-5.js?v=20260718-u5-v2"></script>
+  <script src="../../assets/js/conversation-coach-v2.js?v=20260718-v2"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
