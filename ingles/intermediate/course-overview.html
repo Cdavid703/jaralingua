@@ -10,6 +10,7 @@
 
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
 
   <style>
     .intermediate-overview-hero {
@@ -82,32 +83,51 @@
     }
 
     .overview-units-dashboard {
-      padding: 2rem 8% 5rem;
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 2rem 0 5rem;
       background: #ffffff;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 1.8rem;
+      gap: 1rem;
     }
 
     .overview-unit-card {
       background: #ffffff;
       border: 1px solid #dce8f8;
-      border-radius: 28px;
-      box-shadow: 0 16px 36px rgba(20, 64, 130, 0.08);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+      border-radius: 8px;
+      box-shadow: 0 12px 28px rgba(20, 64, 130, 0.07);
+      transition: box-shadow 0.25s ease, border-color 0.25s ease;
       overflow: hidden;
       position: relative;
     }
 
-    .overview-unit-card:hover {
-      transform: translateY(-6px);
+    .overview-unit-card[open] {
       border-color: #b8d4ff;
-      box-shadow: 0 22px 46px rgba(20, 64, 130, 0.14);
+      box-shadow: 0 18px 38px rgba(20, 64, 130, 0.12);
+    }
+
+    .overview-unit-summary {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 220px;
+      cursor: pointer;
+      list-style: none;
+      position: relative;
+    }
+
+    .overview-unit-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .overview-unit-summary:focus-visible {
+      outline: 3px solid #2563eb;
+      outline-offset: -3px;
     }
 
     .overview-unit-image {
       width: 100%;
-      height: 255px;
+      height: 100%;
+      min-height: 220px;
       background: #eef5ff;
       overflow: hidden;
     }
@@ -120,14 +140,14 @@
       transition: transform 0.35s ease;
     }
 
-    .overview-unit-card:hover .overview-unit-image img {
+    .overview-unit-summary:hover .overview-unit-image img {
       transform: scale(1.04);
     }
 
     .overview-unit-content {
-      padding: 2rem;
+      padding: 1.6rem 5rem 1.6rem 1.8rem;
       position: relative;
-      z-index: 1;
+      align-self: center;
     }
 
     .unit-label {
@@ -153,7 +173,34 @@
     .overview-unit-card p {
       color: #52657d;
       line-height: 1.7;
-      margin-bottom: 1.3rem;
+      margin: 0;
+    }
+
+    .overview-unit-toggle {
+      display: grid;
+      place-items: center;
+      position: absolute;
+      right: 1.5rem;
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      transform: translateY(-50%);
+      border-radius: 50%;
+      background: #eef5ff;
+      color: #2563eb;
+      font-size: 1.2rem;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .overview-unit-card[open] .overview-unit-toggle {
+      transform: translateY(-50%) rotate(180deg);
+      background: #dceaff;
+    }
+
+    .overview-unit-details {
+      padding: 1.5rem 2rem 1.8rem;
+      border-top: 1px solid #dce8f8;
+      background: #fbfdff;
     }
 
     .unit-focus-list {
@@ -185,8 +232,8 @@
       }
 
       .overview-units-dashboard {
-        grid-template-columns: 1fr;
-        padding: 2rem 6% 4rem;
+        width: min(88%, 1180px);
+        padding: 2rem 0 4rem;
       }
 
       .overview-intro-section {
@@ -195,17 +242,39 @@
       }
 
       .overview-unit-image {
-        height: 240px;
+        min-height: 210px;
+      }
+
+      .overview-unit-summary {
+        grid-template-columns: 230px minmax(0, 1fr);
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 680px) {
+      .overview-units-dashboard {
+        width: min(100% - 24px, 1180px);
+      }
+
+      .overview-unit-summary {
+        grid-template-columns: 1fr;
+      }
+
       .overview-unit-content {
-        padding: 1.5rem;
+        padding: 1.35rem 4rem 1.45rem 1.25rem;
       }
 
       .overview-unit-image {
-        height: 210px;
+        height: 190px;
+        min-height: 190px;
+      }
+
+      .overview-unit-toggle {
+        right: 1rem;
+        top: 50%;
+      }
+
+      .overview-unit-details {
+        padding: 1.3rem 1.25rem 1.5rem;
       }
     }
   </style>
@@ -285,7 +354,8 @@
     <!-- COURSE UNITS -->
     <section class="overview-units-dashboard" id="intermediate-units">
 
-      <article class="overview-unit-card">
+      <details class="overview-unit-card">
+        <summary class="overview-unit-summary">
         <div class="overview-unit-image">
           <img
             src="../../assets/img/english-intermediate/unit-1-stereotypes-behavior.jpg"
@@ -302,7 +372,11 @@
             Explore how people describe personality, behavior, and stereotypes. Learn how
             to talk about the way people act, think, and interact in different situations.
           </p>
+          <span class="overview-unit-toggle" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+        </div>
+        </summary>
 
+        <div class="overview-unit-details">
           <ul class="unit-focus-list">
             <li>Describing personality and behavior</li>
             <li>Talking about stereotypes carefully</li>
@@ -311,9 +385,10 @@
 
           <a href="the-way-we-are.html" class="card-link">Open unit</a>
         </div>
-      </article>
+      </details>
 
-      <article class="overview-unit-card">
+      <details class="overview-unit-card">
+        <summary class="overview-unit-summary">
         <div class="overview-unit-image">
           <img
             src="../../assets/img/english-intermediate/unit-1-personality-annoying-habits.jpg"
@@ -330,7 +405,11 @@
             Learn how to describe personality traits and talk about habits that can be
             funny, difficult, common, or annoying in everyday life.
           </p>
+          <span class="overview-unit-toggle" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+        </div>
+        </summary>
 
+        <div class="overview-unit-details">
           <ul class="unit-focus-list">
             <li>Personality adjectives</li>
             <li>Annoying habits and routines</li>
@@ -339,9 +418,10 @@
 
           <a href="personality-annoying-habits.html" class="card-link">Open unit</a>
         </div>
-      </article>
+      </details>
 
-      <article class="overview-unit-card">
+      <details class="overview-unit-card">
+        <summary class="overview-unit-summary">
         <div class="overview-unit-image">
           <img
             src="../../assets/img/english-intermediate/unit-2-wishes-hopes-dreams.jpg"
@@ -358,7 +438,11 @@
             Practice talking about personal dreams, future goals, hopes, and wishes using
             clear expressions and meaningful examples.
           </p>
+          <span class="overview-unit-toggle" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+        </div>
+        </summary>
 
+        <div class="overview-unit-details">
           <ul class="unit-focus-list">
             <li>Talking about hopes and dreams</li>
             <li>Expressing wishes</li>
@@ -371,9 +455,10 @@
             <a href="pronunciation-unit-2-study-abroad.html">Pronunciation</a>
           </div>
         </div>
-      </article>
+      </details>
 
-      <article class="overview-unit-card">
+      <details class="overview-unit-card">
+        <summary class="overview-unit-summary">
         <div class="overview-unit-image">
           <img
             src="../../assets/img/english-intermediate/unit-2-unusual-experiences.jpg"
@@ -390,7 +475,11 @@
             Learn how to tell stories about surprising, strange, funny, or memorable
             experiences using more detailed English.
           </p>
+          <span class="overview-unit-toggle" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+        </div>
+        </summary>
 
+        <div class="overview-unit-details">
           <ul class="unit-focus-list">
             <li>Describing past experiences</li>
             <li>Telling short stories</li>
@@ -404,9 +493,10 @@
             <a href="reading-unit-2-the-letter-i-never-sent.html">Reading</a>
           </div>
         </div>
-      </article>
+      </details>
 
-      <article class="overview-unit-card">
+      <details class="overview-unit-card">
+        <summary class="overview-unit-summary">
         <div class="overview-unit-image">
           <img
             src="../../assets/img/english-intermediate/unit-3-human-natural-wonders-world-records.png"
@@ -423,7 +513,11 @@
             Compare amazing places around the world using superlatives, measurement
             questions, travel descriptions, and world record ideas.
           </p>
+          <span class="overview-unit-toggle" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+        </div>
+        </summary>
 
+        <div class="overview-unit-details">
           <ul class="unit-focus-list">
             <li>Using superlatives with short and long adjectives</li>
             <li>Asking about height, length, age, and size</li>
@@ -439,9 +533,10 @@
             <a href="pronunciation-unit-3-unforgettable-natural-wonder.html">Pronunciation</a>
           </div>
         </div>
-      </article>
+      </details>
 
-      <article class="overview-unit-card">
+      <details class="overview-unit-card">
+        <summary class="overview-unit-summary">
         <div class="overview-unit-image">
           <img
             src="../../assets/img/english-intermediate/unit-4/unit-4-family-problems-memories.png"
@@ -458,7 +553,11 @@
             Use fictional family scenarios to talk about obligations, permission limits,
             respectful disagreement, mediation, and memories from the past.
           </p>
+          <span class="overview-unit-toggle" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+        </div>
+        </summary>
 
+        <div class="overview-unit-details">
           <ul class="unit-focus-list">
             <li>Using have to, won't let, and want someone to</li>
             <li>Contrasting past habits and present routines with used to</li>
@@ -475,9 +574,10 @@
             <a href="pronunciation-unit-4-family-stories.html">Pronunciation</a>
           </div>
         </div>
-      </article>
+      </details>
 
-      <article class="overview-unit-card">
+      <details class="overview-unit-card">
+        <summary class="overview-unit-summary">
         <div class="overview-unit-image">
           <img
             src="../../assets/img/english-intermediate/unit-5/unit-5-food-quantities-culture.png"
@@ -494,7 +594,11 @@
             Explain food with accurate quantity language, describe what dishes are made
             with, and compare Colombian and global food traditions respectfully.
           </p>
+          <span class="overview-unit-toggle" aria-hidden="true"><i class="bi bi-chevron-down"></i></span>
+        </div>
+        </summary>
 
+        <div class="overview-unit-details">
           <ul class="unit-focus-list">
             <li>Using countable and uncountable food nouns accurately</li>
             <li>Planning balanced meals with containers and quantities</li>
@@ -513,7 +617,7 @@
             <a href="integrated-task.html">Integrated Task (20%)</a>
           </div>
         </div>
-      </article>
+      </details>
 
     </section>
 
@@ -522,6 +626,19 @@
   <footer class="site-footer">
     <p>© 2026 JaraLingua. English and French for step-by-step learning.</p>
   </footer>
+  <script>
+    (function () {
+      const topics = Array.from(document.querySelectorAll(".overview-unit-card"));
+      topics.forEach(function (topic) {
+        topic.addEventListener("toggle", function () {
+          if (!topic.open) return;
+          topics.forEach(function (otherTopic) {
+            if (otherTopic !== topic) otherTopic.open = false;
+          });
+        });
+      });
+    })();
+  </script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
