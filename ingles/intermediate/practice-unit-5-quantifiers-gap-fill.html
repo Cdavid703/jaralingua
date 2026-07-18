@@ -98,8 +98,6 @@
     .question-number{display:grid;place-items:center;width:42px;height:42px;border-radius:15px;background:var(--quant-navy);color:#fff;font-weight:1000}
     .question-text{color:var(--quant-ink);font-size:1.05rem;font-weight:900;line-height:1.62}
     .blank{display:inline-flex;min-width:118px;justify-content:center;padding:0 .38rem;border-bottom:3px solid var(--quant-gold);color:var(--quant-blue)}
-    .question-meta{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.52rem}
-    .tag{border-radius:999px;background:#f4f7fb;color:var(--quant-muted);font-size:.78rem;font-weight:950;padding:.25rem .5rem}
     .option-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.65rem;margin-top:.95rem}
     .option-btn{min-height:52px;border:1px solid var(--quant-line);border-radius:14px;background:#fff;color:var(--quant-ink);font:inherit;font-weight:950;cursor:pointer;padding:.75rem;transition:transform .16s ease,border-color .16s ease,background .16s ease}
     .option-btn:hover,.option-btn:focus-visible{outline:none;transform:translateY(-2px);border-color:rgba(15,118,110,.55);background:#eef8f7}
@@ -208,7 +206,6 @@
         <p>You practiced countable and uncountable food nouns, questions, negatives, offers, requests, and small positive amounts. Now write two dinner-plan sentences in your notebook using the exit ticket below.</p>
       </div>
       <div class="quiz-actions">
-        <button class="btn btn-primary" type="button" id="showAnswersBtn">Reveal remaining answers</button>
         <button class="btn btn-secondary" type="button" id="resetBtn">Reset practice</button>
       </div>
     </section>
@@ -235,32 +232,31 @@
 
   <script>
     const questions = [
-      {sentence:"We need ___ rice for six people.", options:["many","some","a few"], correct:1, tag:"affirmative + uncountable", explanation:"Use some in an affirmative sentence when an amount exists but the exact amount is not important yet. Rice is uncountable."},
-      {sentence:"Do we have ___ tomatoes for the salad?", options:["any","much","a little"], correct:0, tag:"question + countable plural", explanation:"Use any in questions when you are checking if something exists. Tomatoes are countable plural, but the question is about availability."},
-      {sentence:"There isn't ___ oil in the bottle.", options:["many","a few","much"], correct:2, tag:"negative + uncountable", explanation:"Oil is uncountable, and much is common in negative sentences with uncountable nouns."},
-      {sentence:"Buy ___ carrots for the bowls.", options:["a little","much","a few"], correct:2, tag:"small positive countable", explanation:"Carrots are countable plural. A few means a small positive number."},
-      {sentence:"How ___ beans do we need?", options:["many","much","some"], correct:0, tag:"How many + plural", explanation:"Beans are countable plural in this sentence, so ask How many?"},
-      {sentence:"Add ___ salt to the dressing.", options:["a few","a little","many"], correct:1, tag:"small positive uncountable", explanation:"Salt is uncountable here. A little means a small useful amount."},
-      {sentence:"We don't need ___ bread today.", options:["many","a few","any"], correct:2, tag:"negative + absence", explanation:"Use any in negative sentences when the speaker says something is not needed or not present. Bread is uncountable here."},
-      {sentence:"How ___ water should we buy?", options:["much","many","a few"], correct:0, tag:"How much + uncountable", explanation:"Water is uncountable, so ask How much water?"},
-      {sentence:"There are ___ avocados on the table.", options:["a little","some","much"], correct:1, tag:"affirmative + plural", explanation:"Some works with plural countable nouns in affirmative sentences when the exact number is not the focus."},
-      {sentence:"I only want ___ yogurt with the fruit.", options:["a few","many","a little"], correct:2, tag:"small positive uncountable", explanation:"Yogurt is uncountable here, so use a little for a small amount."},
-      {sentence:"Are there ___ cans of beans in the bag?", options:["much","any","a little"], correct:1, tag:"question + availability", explanation:"Use any in questions about whether something exists. Cans are countable, but the question is checking availability."},
-      {sentence:"We have ___ strawberries for dessert.", options:["a few","much","a little"], correct:0, tag:"small positive countable", explanation:"Strawberries are countable plural, so a few is the natural small positive amount."},
-      {sentence:"The recipe doesn't use ___ cheese.", options:["many","a few","much"], correct:2, tag:"negative + uncountable", explanation:"Cheese is uncountable in this context. Much is natural in negative sentences with uncountable nouns."},
-      {sentence:"Would you like ___ mango in your fruit salad?", options:["some","many","a few"], correct:0, tag:"offer + uncountable/serving", explanation:"Some is common in offers and polite requests: Would you like some...? Mango refers to an amount of fruit here."},
-      {sentence:"How ___ apples are in the basket?", options:["much","many","a little"], correct:1, tag:"How many + plural", explanation:"Apples are countable plural, so ask How many apples?"},
-      {sentence:"Put ___ lime juice in the dressing.", options:["a few","many","a little"], correct:2, tag:"small positive uncountable", explanation:"Lime juice is uncountable, so use a little for a small amount."},
-      {sentence:"We don't have ___ lettuce yet.", options:["any","many","a few"], correct:0, tag:"negative + absence", explanation:"Use any in negative sentences to say that something is missing. Lettuce is uncountable here."},
-      {sentence:"There are ___ eggs in the box.", options:["a little","much","some"], correct:2, tag:"affirmative + plural", explanation:"Some works with plural countable nouns when the exact number is not important."},
-      {sentence:"Is there ___ sugar in the yogurt?", options:["many","any","a few"], correct:1, tag:"question + uncountable", explanation:"Use any in questions when checking if something exists. Sugar is uncountable."},
-      {sentence:"We should add ___ corn to the bowl.", options:["some","many","a few"], correct:0, tag:"affirmative + uncountable", explanation:"Corn as an ingredient is uncountable here. Some is natural in an affirmative suggestion."}
+      {sentence:"We need ___ rice for six people.", options:["many","some","a few"], correct:1, explanation:"Use some in an affirmative sentence when an amount exists but the exact amount is not important yet. Rice is uncountable."},
+      {sentence:"Do we have ___ tomatoes for the salad?", options:["any","much","a little"], correct:0, explanation:"Use any in questions when you are checking if something exists. Tomatoes are countable plural, but the question is about availability."},
+      {sentence:"There isn't ___ oil in the bottle.", options:["many","a few","much"], correct:2, explanation:"Oil is uncountable, and much is common in negative sentences with uncountable nouns."},
+      {sentence:"Buy ___ carrots for the bowls.", options:["a little","much","a few"], correct:2, explanation:"Carrots are countable plural. A few means a small positive number."},
+      {sentence:"How ___ beans do we need?", options:["many","much","some"], correct:0, explanation:"Beans are countable plural in this sentence, so ask How many?"},
+      {sentence:"Add ___ salt to the dressing.", options:["a few","a little","many"], correct:1, explanation:"Salt is uncountable here. A little means a small useful amount."},
+      {sentence:"We don't need ___ bread today.", options:["many","a few","any"], correct:2, explanation:"Use any in negative sentences when the speaker says something is not needed or not present. Bread is uncountable here."},
+      {sentence:"How ___ water should we buy?", options:["much","many","a few"], correct:0, explanation:"Water is uncountable, so ask How much water?"},
+      {sentence:"There are ___ avocados on the table.", options:["a little","some","much"], correct:1, explanation:"Some works with plural countable nouns in affirmative sentences when the exact number is not the focus."},
+      {sentence:"I only want ___ yogurt with the fruit.", options:["a few","many","a little"], correct:2, explanation:"Yogurt is uncountable here, so use a little for a small amount."},
+      {sentence:"Are there ___ cans of beans in the bag?", options:["much","any","a little"], correct:1, explanation:"Use any in questions about whether something exists. Cans are countable, but the question is checking availability."},
+      {sentence:"We have ___ strawberries for dessert.", options:["a few","much","a little"], correct:0, explanation:"Strawberries are countable plural, so a few is the natural small positive amount."},
+      {sentence:"The recipe doesn't use ___ cheese.", options:["many","a few","much"], correct:2, explanation:"Cheese is uncountable in this context. Much is natural in negative sentences with uncountable nouns."},
+      {sentence:"Would you like ___ mango in your fruit salad?", options:["some","many","a few"], correct:0, explanation:"Some is common in offers and polite requests: Would you like some...? Mango refers to an amount of fruit here."},
+      {sentence:"How ___ apples are in the basket?", options:["much","many","a little"], correct:1, explanation:"Apples are countable plural, so ask How many apples?"},
+      {sentence:"Put ___ lime juice in the dressing.", options:["a few","many","a little"], correct:2, explanation:"Lime juice is uncountable, so use a little for a small amount."},
+      {sentence:"We don't have ___ lettuce yet.", options:["any","many","a few"], correct:0, explanation:"Use any in negative sentences to say that something is missing. Lettuce is uncountable here."},
+      {sentence:"There are ___ eggs in the box.", options:["a little","much","some"], correct:2, explanation:"Some works with plural countable nouns when the exact number is not important."},
+      {sentence:"Is there ___ sugar in the yogurt?", options:["many","any","a few"], correct:1, explanation:"Use any in questions when checking if something exists. Sugar is uncountable."},
+      {sentence:"We should add ___ corn to the bowl.", options:["some","many","a few"], correct:0, explanation:"Corn as an ingredient is uncountable here. Some is natural in an affirmative suggestion."}
     ];
 
     const questionList = document.getElementById("questionList");
     const scorePill = document.getElementById("scorePill");
     const finishPanel = document.getElementById("finishPanel");
-    const showAnswersBtn = document.getElementById("showAnswersBtn");
     const resetBtn = document.getElementById("resetBtn");
     const answered = Array(questions.length).fill(false);
 
@@ -278,8 +274,7 @@
         return '<article class="question-card" data-question-card="' + index + '">' +
           '<div class="question-top">' +
             '<span class="question-number">' + String(index + 1).padStart(2,"0") + '</span>' +
-            '<div><div class="question-text">' + escapeHtml(question.sentence).replace("___",'<span class="blank">_____</span>') + '</div>' +
-            '<div class="question-meta"><span class="tag">' + escapeHtml(question.tag) + '</span></div></div>' +
+            '<div><div class="question-text">' + escapeHtml(question.sentence).replace("___",'<span class="blank">_____</span>') + '</div></div>' +
           '</div>' +
           '<div class="option-grid">' + options + '</div>' +
           '<div class="feedback" data-feedback="' + index + '"></div>' +
@@ -310,7 +305,7 @@
         card.classList.remove("is-correct");
         card.classList.add("is-wrong");
         buttons[optionIndex].classList.add("is-wrong");
-        setFeedback(questionIndex,"no","<strong>Try again.</strong> " + escapeHtml(question.explanation));
+        setFeedback(questionIndex,"no","<strong>Try again.</strong> Choose another option.");
         return;
       }
       answered[questionIndex] = true;
@@ -321,23 +316,6 @@
         button.classList.toggle("is-correct",buttonIndex === question.correct);
       });
       setFeedback(questionIndex,"ok","<strong>Correct.</strong> " + escapeHtml(question.explanation));
-      updateScore();
-    }
-
-    function revealRemaining(){
-      questions.forEach(function(question,index){
-        const card = document.querySelector('[data-question-card="' + index + '"]');
-        const buttons = card.querySelectorAll(".option-btn");
-        buttons.forEach(function(button,buttonIndex){
-          button.disabled = true;
-          button.classList.remove("is-wrong");
-          button.classList.toggle("is-correct",buttonIndex === question.correct);
-        });
-        if(!answered[index]){
-          card.classList.add("has-feedback");
-          setFeedback(index,"ok","<strong>Answer:</strong> " + escapeHtml(question.options[question.correct]) + ". " + escapeHtml(question.explanation));
-        }
-      });
       updateScore();
     }
 
@@ -356,7 +334,6 @@
       if(!button) return;
       chooseOption(Number(button.dataset.question),Number(button.dataset.option));
     });
-    showAnswersBtn.addEventListener("click",revealRemaining);
     resetBtn.addEventListener("click",resetPractice);
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>
