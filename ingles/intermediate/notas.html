@@ -343,6 +343,27 @@
       font-weight: 700;
     }
 
+    .gradebook-student-id {
+      display: inline-block;
+      margin-top: 0.2rem;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    [data-official-gradebook] .grades-table th:first-child,
+    [data-official-gradebook] .grades-table td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: var(--white);
+    }
+
+    [data-official-gradebook] .grades-table th:first-child {
+      z-index: 2;
+      background: #eef4ff;
+    }
+
     .status-pill {
       display: inline-flex;
       align-items: center;
@@ -401,16 +422,125 @@
       background: #f8fbff;
     }
 
+    .grades-disclosure {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .grades-disclosure > summary,
+    .nested-disclosure > summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .grades-disclosure > summary::-webkit-details-marker,
+    .nested-disclosure > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .grades-disclosure > summary {
+      min-height: 78px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .grades-disclosure > summary:hover,
+    .grades-disclosure > summary:focus-visible {
+      background: #f8fbff;
+    }
+
+    .grades-disclosure[open] > summary {
+      border-bottom: 1px solid var(--line);
+      background: #f8fbff;
+    }
+
+    .disclosure-heading {
+      min-width: 0;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .disclosure-heading small {
+      color: var(--red);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .disclosure-heading strong {
+      color: var(--ink);
+      font-size: 1.1rem;
+      overflow-wrap: anywhere;
+    }
+
+    .disclosure-action {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--blue);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .disclosure-action i,
+    .nested-disclosure > summary i,
+    .admin-student-card > summary i {
+      transition: transform 180ms ease;
+    }
+
+    .grades-disclosure[open] > summary .disclosure-action i,
+    .nested-disclosure[open] > summary i,
+    .admin-student-card[open] > summary .bi-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    .grades-disclosure-body {
+      padding: 1.2rem;
+    }
+
+    .nested-disclosure {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fbff;
+    }
+
+    .nested-disclosure > summary {
+      min-height: 52px;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
     .admin-student-card {
       border: 1px solid var(--line);
       border-radius: 8px;
-      padding: 1rem;
+      padding: 0;
+      overflow: hidden;
       background: #f8fbff;
     }
 
     .admin-student-card > summary {
       cursor: pointer;
       list-style: none;
+      min-height: 68px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--ink);
     }
 
     .admin-student-card > summary::-webkit-details-marker {
@@ -419,6 +549,25 @@
 
     .admin-student-card[open] {
       background: var(--white);
+    }
+
+    .admin-student-card[open] > summary {
+      border-bottom: 1px solid var(--line);
+      background: #f8fbff;
+    }
+
+    .admin-student-card > summary span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .admin-student-card > summary small {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .admin-student-body {
+      padding: 1rem;
     }
 
     .admin-grade-row {
@@ -476,6 +625,24 @@
       .hero-actions .btn-main,
       .hero-actions .btn-soft {
         width: 100%;
+      }
+
+      .grades-disclosure > summary {
+        align-items: flex-start;
+        padding: 0.9rem 1rem;
+      }
+
+      .disclosure-action span {
+        display: none;
+      }
+
+      .grades-disclosure-body,
+      .admin-student-body {
+        padding: 0.9rem;
+      }
+
+      .admin-grade-row {
+        grid-template-columns: minmax(0, 1fr) 88px;
       }
     }
   </style>
@@ -556,7 +723,7 @@
   <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
   <script src="../../assets/js/english-grade-report-pdf.js?v=20260608-3"></script>
-  <script src="../../assets/js/intermediate-english-grades.js?v=20260717-integrated-status"></script>
+  <script src="../../assets/js/intermediate-english-grades.js?v=20260721-teacher-layout-v2"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>

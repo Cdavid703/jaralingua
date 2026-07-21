@@ -83,15 +83,29 @@
       : { label: "Not submitted", className: "pending", submitted: false };
   }
 
+  function weightedEvaluations(evaluations) {
+    return (Array.isArray(evaluations) ? evaluations : []).filter(function (evaluation) {
+      return Number(evaluation && evaluation.weight) > 0;
+    });
+  }
+
+  function evaluationDisplayTitle(evaluation) {
+    return String(evaluation && evaluation.title || "Assessment")
+      .replace(/\s*\(\s*\d+(?:\.\d+)?\s*%\s*\)\s*$/i, "")
+      .trim();
+  }
+
   function gradeSummary(student, evaluations) {
     let completedWeight = 0;
     let earned = 0;
     const grades = student.grades || {};
     evaluations.forEach(function (evaluation) {
+      const weight = Number(evaluation.weight) || 0;
+      if (weight <= 0) return;
       const grade = grades[evaluation.id];
       if (typeof grade !== "number") return;
-      completedWeight += evaluation.weight;
-      earned += grade * evaluation.weight;
+      completedWeight += weight;
+      earned += grade * weight;
     });
     return {
       completedWeight: completedWeight,
@@ -348,12 +362,16 @@
 
   function studentGradesRows(student, evaluations) {
     const grades = student.grades || {};
-    return evaluations.map(function (evaluation) {
+    const officialEvaluations = weightedEvaluations(evaluations);
+    if (!officialEvaluations.length) {
+      return '<tr><td colspan="5">No weighted assessments are configured yet.</td></tr>';
+    }
+    return officialEvaluations.map(function (evaluation) {
       const hasGrade = typeof grades[evaluation.id] === "number";
       const status = assessmentStatus(student, evaluation);
       return `
         <tr>
-          <td>${escapeHtml(evaluation.title)}</td>
+          <td>${escapeHtml(evaluationDisplayTitle(evaluation))}</td>
           <td>${escapeHtml(evaluation.type || "Assessment")}</td>
           <td>${evaluation.weight}%</td>
           <td>${escapeHtml(hasGrade ? formatGrade(grades[evaluation.id]) : (status.submitted ? "Awaiting rubric" : "Pending"))}</td>
@@ -364,6 +382,7 @@
   }
 
   function renderStudentPanel(student, payload, user) {
+    const officialEvaluations = weightedEvaluations(payload.evaluations);
     return `
       <div class="privacy-note mb-4">
         <i class="bi bi-shield-check"></i>
@@ -379,7 +398,7 @@
             <p class="section-kicker">Individual progress</p>
             <h2 class="section-title">My Intermediate English grades</h2>
             <p class="section-text">Review your current scores and the percentage already evaluated in the course.</p>
-            ${studentMetricsMarkup(student, payload.evaluations)}
+            ${studentMetricsMarkup(student, officialEvaluations)}
           </div>
         </div>
         <div class="col-lg-7">
@@ -389,7 +408,7 @@
             <div class="table-wrap">
               <table class="grades-table">
                 <thead><tr><th>Assessment</th><th>Type</th><th>Weight</th><th>Grade</th><th>Status</th></tr></thead>
-                <tbody>${studentGradesRows(student, payload.evaluations)}</tbody>
+                <tbody>${studentGradesRows(student, officialEvaluations)}</tbody>
               </table>
             </div>
           </div>
@@ -398,17 +417,17 @@
     `;
   }
 
-  function staffStudentRows(payload) {
+  function staffStudentRows(payload, evaluations) {
     return payload.students.map(function (student) {
-      const summary = gradeSummary(student, payload.evaluations);
+      const summary = gradeSummary(student, evaluations);
       const grades = student.grades || {};
-      const gradeCells = payload.evaluations.map(function (evaluation) {
+      const gradeCells = evaluations.map(function (evaluation) {
         const status = assessmentStatus(student, evaluation);
         return `<td>${typeof grades[evaluation.id] === "number" ? escapeHtml(formatGrade(grades[evaluation.id])) : `<span class="status-pill ${status.className}">${escapeHtml(status.label)}</span>`}</td>`;
       }).join("");
       return `
         <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
-          <td>${escapeHtml(student.fullName)}<br><span class="status-pill">${escapeHtml(student.level)}</span></td>
+          <td>${escapeHtml(student.fullName)}<br><span class="gradebook-student-id">${escapeHtml(student.id || "")}</span></td>
           <td>${escapeHtml(student.email || "No email")}</td>
           ${gradeCells}
           <td>${summary.average == null ? "Pending" : summary.average.toFixed(2)}</td>
@@ -430,9 +449,10 @@
   }
 
   function adminExistingGradeRows(payload) {
+    const officialEvaluations = weightedEvaluations(payload.evaluations);
     return payload.students.map(function (student) {
       const grades = student.grades || {};
-      const inputs = payload.evaluations.map(function (evaluation) {
+      const inputs = officialEvaluations.map(function (evaluation) {
         const value = typeof grades[evaluation.id] === "number" ? grades[evaluation.id] : "";
         return `
           <label class="admin-grade-row">
@@ -442,59 +462,78 @@
         `;
       }).join("");
       return `
-        <article class="grades-panel mb-3">
-          <h3 class="h5 fw-bold mb-3">${escapeHtml(student.fullName)}</h3>
-          <div class="admin-grade-grid">${inputs}</div>
-        </article>
+        <details class="admin-student-card mb-3" data-grade-editor-card data-student-search="${escapeHtml([student.fullName, student.id, student.email].join(" ").toLowerCase())}">
+          <summary>
+            <span><strong>${escapeHtml(student.fullName)}</strong><br><small>${escapeHtml(student.id || "")}</small></span>
+            <i class="bi bi-chevron-down" aria-hidden="true"></i>
+          </summary>
+          <div class="admin-student-body">
+            <div class="admin-grade-grid">${inputs}</div>
+          </div>
+        </details>
       `;
     }).join("");
   }
 
   function adminToolsMarkup(payload) {
     return `
-      <div class="grades-panel mb-4" data-admin-tools>
-        <p class="section-kicker">Administrator</p>
-        <h2 class="section-title">Add a new grade</h2>
-        <form data-add-grade-form class="admin-grade-form">
-          <div class="row g-3">
-            <div class="col-md-5">
-              <label class="form-label fw-bold" for="newGradeTitle">Assessment name</label>
-              <input id="newGradeTitle" class="form-control" data-new-grade-title placeholder="Final Speaking Task" required>
+      <details class="grades-disclosure mb-4" data-admin-tools>
+        <summary>
+          <span class="disclosure-heading"><small>Administrator</small><strong>Add a new grade</strong></span>
+          <span class="disclosure-action"><span>Open</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <div class="grades-disclosure-body">
+          <form data-add-grade-form class="admin-grade-form">
+            <div class="row g-3">
+              <div class="col-md-5">
+                <label class="form-label fw-bold" for="newGradeTitle">Assessment name</label>
+                <input id="newGradeTitle" class="form-control" data-new-grade-title placeholder="Final Speaking Task" required>
+              </div>
+              <div class="col-md-3">
+                <label class="form-label fw-bold" for="newGradeType">Type</label>
+                <input id="newGradeType" class="form-control" data-new-grade-type placeholder="Speaking">
+              </div>
+              <div class="col-md-2">
+                <label class="form-label fw-bold" for="newGradeWeight">Weight %</label>
+                <input id="newGradeWeight" class="form-control" type="number" min="0" max="100" step="1" data-new-grade-weight placeholder="20" required>
+              </div>
+              <div class="col-md-2 d-grid align-items-end">
+                <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save</button>
+              </div>
             </div>
-            <div class="col-md-3">
-              <label class="form-label fw-bold" for="newGradeType">Type</label>
-              <input id="newGradeType" class="form-control" data-new-grade-type placeholder="Speaking">
-            </div>
-            <div class="col-md-2">
-              <label class="form-label fw-bold" for="newGradeWeight">Weight %</label>
-              <input id="newGradeWeight" class="form-control" type="number" min="0" max="100" step="1" data-new-grade-weight placeholder="20" required>
-            </div>
-            <div class="col-md-2 d-grid align-items-end">
-              <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save</button>
-            </div>
-          </div>
-          <label class="form-label fw-bold mt-3" for="newGradeDescription">Description</label>
-          <input id="newGradeDescription" class="form-control" data-new-grade-description placeholder="Short description for students">
-          <div class="admin-grade-grid mt-3">${adminGradeInputs(payload)}</div>
-          <p class="section-text mt-3" data-admin-grade-status></p>
-        </form>
-      </div>
-      <div class="grades-panel mb-4" data-admin-edit-tools>
-        <p class="section-kicker">Manual editing</p>
-        <h2 class="section-title">Edit recorded grades</h2>
-        <p class="section-text mb-3">Adjust current assessment grades manually. Empty fields remain pending.</p>
-        <form data-edit-grades-form>
-          ${adminExistingGradeRows(payload)}
-          <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save grade changes</button>
-          <p class="section-text mt-3" data-edit-grade-status></p>
-        </form>
-      </div>
+            <label class="form-label fw-bold mt-3" for="newGradeDescription">Description</label>
+            <input id="newGradeDescription" class="form-control" data-new-grade-description placeholder="Short description for students">
+            <details class="nested-disclosure mt-3">
+              <summary><span>Initial grades by student</span><i class="bi bi-chevron-down" aria-hidden="true"></i></summary>
+              <div class="admin-grade-grid mt-3">${adminGradeInputs(payload)}</div>
+            </details>
+            <p class="section-text mt-3" data-admin-grade-status></p>
+          </form>
+        </div>
+      </details>
+      <details class="grades-disclosure mb-4" data-admin-edit-tools>
+        <summary>
+          <span class="disclosure-heading"><small>Manual editing</small><strong>Edit recorded grades</strong></span>
+          <span class="disclosure-action"><span>Open</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <div class="grades-disclosure-body">
+          <p class="section-text mb-3">Select one student at a time. Empty fields remain pending.</p>
+          <label class="form-label fw-bold w-100 mb-3">Find a student
+            <input class="form-control" type="search" data-grade-editor-filter placeholder="Name, email or ID">
+          </label>
+          <form data-edit-grades-form>
+            ${adminExistingGradeRows(payload)}
+            <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save grade changes</button>
+            <p class="section-text mt-3" data-edit-grade-status></p>
+          </form>
+        </div>
+      </details>
     `;
   }
 
   function adminStudentGradeInputs(payload, student) {
     const grades = student && student.grades ? student.grades : {};
-    return payload.evaluations.map(function (evaluation) {
+    return weightedEvaluations(payload.evaluations).map(function (evaluation) {
       const value = typeof grades[evaluation.id] === "number" ? grades[evaluation.id] : "";
       return `
         <label class="admin-grade-row">
@@ -509,11 +548,11 @@
     return payload.students.map(function (student, index) {
       return `
         <details class="admin-student-card mb-3" data-student-editor-card data-student-index="${index}" data-student-search="${escapeHtml([student.fullName, student.email, student.id].join(" ").toLowerCase())}">
-          <summary class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+          <summary>
             <span><strong>${escapeHtml(student.fullName || "Student")}</strong><br><small>${escapeHtml(student.id || "")}${student.email ? " · " + escapeHtml(student.email) : ""}</small></span>
-            <span class="fw-bold text-primary">Open</span>
+            <i class="bi bi-chevron-down" aria-hidden="true"></i>
           </summary>
-          <div class="mt-3">
+          <div class="admin-student-body">
             <label class="form-check fw-bold text-danger mb-3">
               <input class="form-check-input" type="checkbox" data-student-delete>
               Delete
@@ -549,45 +588,51 @@
 
   function adminStudentEditorMarkup(payload) {
     return `
-      <div class="grades-panel mb-4" data-admin-student-tools>
-        <p class="section-kicker">Administrator</p>
-        <h2 class="section-title">Edit students and grades</h2>
-        <p class="section-text mb-3">Change names, IDs, levels, emails and grades. Empty grade fields remain pending.</p>
-        <label class="form-label fw-bold w-100 mb-3">Find a student
-          <input class="form-control" type="search" data-student-editor-filter placeholder="Name, email or ID">
-        </label>
-        <form data-edit-students-form>
-          ${adminStudentCards(payload)}
-          <article class="admin-student-card mb-3" data-new-student-card>
-            <h3 class="h5 fw-bold mb-3">Add a student</h3>
-            <div class="row g-3">
-              <div class="col-md-3">
-                <label class="form-label fw-bold">ID</label>
-                <input class="form-control" data-new-student-field="id">
+      <details class="grades-disclosure mb-4" data-admin-student-tools>
+        <summary>
+          <span class="disclosure-heading"><small>Administrator</small><strong>Edit students and accounts</strong></span>
+          <span class="disclosure-action"><span>${payload.students.length} students</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <div class="grades-disclosure-body">
+          <p class="section-text mb-3">Change one student record at a time. Existing follow-up results remain preserved.</p>
+          <label class="form-label fw-bold w-100 mb-3">Find a student
+            <input class="form-control" type="search" data-student-editor-filter placeholder="Name, email or ID">
+          </label>
+          <form data-edit-students-form>
+            ${adminStudentCards(payload)}
+            <details class="admin-student-card mb-3" data-new-student-card>
+              <summary><span><strong>Add a student</strong><br><small>Create a new course record</small></span><i class="bi bi-plus-lg" aria-hidden="true"></i></summary>
+              <div class="admin-student-body">
+                <div class="row g-3">
+                  <div class="col-md-3">
+                    <label class="form-label fw-bold">ID</label>
+                    <input class="form-control" data-new-student-field="id">
+                  </div>
+                  <div class="col-md-5">
+                    <label class="form-label fw-bold">Full name</label>
+                    <input class="form-control" data-new-student-field="fullName">
+                  </div>
+                  <div class="col-md-4">
+                    <label class="form-label fw-bold">Level</label>
+                    <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || "Intermediate English Course 1")}" data-new-student-field="level">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-bold">Email</label>
+                    <input class="form-control" type="email" data-new-student-field="email">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label fw-bold">Contact</label>
+                    <input class="form-control" data-new-student-field="contact">
+                  </div>
+                </div>
+                <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, { grades: {} })}</div>
               </div>
-              <div class="col-md-5">
-                <label class="form-label fw-bold">Full name</label>
-                <input class="form-control" data-new-student-field="fullName">
-              </div>
-              <div class="col-md-4">
-                <label class="form-label fw-bold">Level</label>
-                <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || "Intermediate English Course 1")}" data-new-student-field="level">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label fw-bold">Email</label>
-                <input class="form-control" type="email" data-new-student-field="email">
-              </div>
-              <div class="col-md-6">
-                <label class="form-label fw-bold">Contact</label>
-                <input class="form-control" data-new-student-field="contact">
-              </div>
-            </div>
-            <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, { grades: {} })}</div>
-          </article>
-          <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save student changes</button>
-          <p class="section-text mt-3" data-edit-students-status></p>
-        </form>
-      </div>
+            </details>
+            <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save student changes</button>
+            <p class="section-text mt-3" data-edit-students-status></p>
+          </form>
+        </div>
+      </details>
     `;
   }
 
@@ -655,19 +700,33 @@
     }).join("");
   }
 
+  function followUpSubmissionCount(payload) {
+    return payload.students.reduce(function (total, student) {
+      const details = student.gradeDetails || {};
+      return total + Object.keys(details).filter(function (key) {
+        return details[key] && details[key].followUpOnly === true;
+      }).length;
+    }, 0);
+  }
+
   function followUpSubmissionsMarkup(payload) {
+    const submissionCount = followUpSubmissionCount(payload);
     return `
-      <div class="grades-panel mb-4">
-        <p class="section-kicker">Follow-up only</p>
-        <h2 class="section-title">Follow-up submissions</h2>
-        <p class="section-text mb-3">These activities are submitted to the teacher and may give students a reference grade, but their weight is 0 and they do not affect the accumulated percentage.</p>
-        <div class="table-wrap">
-          <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th><th>Activity</th><th>Type</th><th>Reference grade</th><th>Score / words</th><th>Submitted</th><th>Response</th></tr></thead>
-            <tbody>${followUpSubmissionRows(payload)}</tbody>
-          </table>
+      <details class="grades-disclosure mb-4" data-followup-disclosure>
+        <summary>
+          <span class="disclosure-heading"><small>Weight 0% · tracking only</small><strong>Follow-up submissions</strong></span>
+          <span class="disclosure-action"><span>${submissionCount} submissions</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <div class="grades-disclosure-body">
+          <p class="section-text mb-3">Reference results are kept here for delivery tracking and do not affect the accumulated course grade.</p>
+          <div class="table-wrap">
+            <table class="grades-table">
+              <thead><tr><th>Student</th><th>Email</th><th>Activity</th><th>Type</th><th>Reference grade</th><th>Score / words</th><th>Submitted</th><th>Response</th></tr></thead>
+              <tbody>${followUpSubmissionRows(payload)}</tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </details>
     `;
   }
 
@@ -689,26 +748,32 @@
       `;
     }).join("");
     return `
-      <div class="grades-panel mb-4" data-admin-pdf-tools>
-        <p class="section-kicker">PDF reports</p>
-        <h2 class="section-title">ITM Plurilingüe downloads</h2>
-        <p class="section-text mb-3">Download PDF grade reports separated by level with the ITM Plurilingüe Presupuesto Participativo banner.</p>
-        <div class="mb-3">
-          <h3 class="h6 fw-bold text-primary mb-2">For directors</h3>
-          <div class="d-flex flex-wrap gap-2">${directorsButtons}</div>
+      <details class="grades-disclosure mb-4" data-admin-pdf-tools>
+        <summary>
+          <span class="disclosure-heading"><small>PDF reports</small><strong>ITM Plurilingüe downloads</strong></span>
+          <span class="disclosure-action"><span>Open</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
+        </summary>
+        <div class="grades-disclosure-body">
+          <p class="section-text mb-3">Download official reports containing only assessments with a course weight.</p>
+          <div class="mb-3">
+            <h3 class="h6 fw-bold text-primary mb-2">For directors</h3>
+            <div class="d-flex flex-wrap gap-2">${directorsButtons}</div>
+          </div>
+          <div>
+            <h3 class="h6 fw-bold text-primary mb-2">For students</h3>
+            <div class="d-flex flex-wrap gap-2">${studentButtons}</div>
+          </div>
         </div>
-        <div>
-          <h3 class="h6 fw-bold text-primary mb-2">For students</h3>
-          <div class="d-flex flex-wrap gap-2">${studentButtons}</div>
-        </div>
-      </div>
+      </details>
     `;
   }
 
   function renderStaffPanel(payload, user) {
-    const headers = payload.evaluations.map(function (evaluation) {
-      return `<th>${escapeHtml(evaluation.title)}<br>${evaluation.weight}%</th>`;
+    const officialEvaluations = weightedEvaluations(payload.evaluations);
+    const headers = officialEvaluations.map(function (evaluation) {
+      return `<th>${escapeHtml(evaluationDisplayTitle(evaluation))}<br>${evaluation.weight}%</th>`;
     }).join("");
+    const emptyOfficialRow = `<tr><td colspan="${officialEvaluations.length + 4}">No weighted assessments are configured yet.</td></tr>`;
     return `
       <div class="privacy-note mb-4">
         <i class="bi bi-shield-check"></i>
@@ -720,24 +785,25 @@
       </div>
       <div class="metric-grid mb-4">
         <div class="metric-card"><span>Students</span><strong>${payload.students.length}</strong></div>
-        <div class="metric-card"><span>Assessments</span><strong>${payload.evaluations.length}</strong></div>
+        <div class="metric-card"><span>Weighted assessments</span><strong>${officialEvaluations.length}</strong></div>
         <div class="metric-card"><span>Course</span><strong>Intermediate English</strong></div>
       </div>
       ${staffControlsMarkup()}
-      ${followUpSubmissionsMarkup(payload)}
-      ${staffPdfToolsMarkup(payload)}
-      ${payload.role === "admin" ? adminToolsMarkup(payload) : ""}
-      ${payload.role === "admin" ? adminStudentEditorMarkup(payload) : ""}
-      <div class="grades-panel">
-        <p class="section-kicker">Private data</p>
+      <div class="grades-panel mb-4" data-official-gradebook>
+        <p class="section-kicker">Official course record</p>
         <h2 class="section-title">Intermediate English gradebook</h2>
+        <p class="section-text mb-3">Only assessments with a course weight appear in this table.</p>
         <div class="table-wrap">
           <table class="grades-table">
             <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
-            <tbody>${staffStudentRows(payload)}</tbody>
+            <tbody>${officialEvaluations.length ? staffStudentRows(payload, officialEvaluations) : emptyOfficialRow}</tbody>
           </table>
         </div>
       </div>
+      ${staffPdfToolsMarkup(payload)}
+      ${followUpSubmissionsMarkup(payload)}
+      ${payload.role === "admin" ? adminToolsMarkup(payload) : ""}
+      ${payload.role === "admin" ? adminStudentEditorMarkup(payload) : ""}
     `;
   }
 
@@ -825,13 +891,14 @@
   }
 
   function exportExcel(payload) {
-    const headers = payload.evaluations.map(function (evaluation) {
-      return `<th>${excelCell(evaluation.title + " (" + evaluation.weight + "%)")}</th>`;
+    const officialEvaluations = weightedEvaluations(payload.evaluations);
+    const headers = officialEvaluations.map(function (evaluation) {
+      return `<th>${excelCell(evaluationDisplayTitle(evaluation) + " (" + evaluation.weight + "%)")}</th>`;
     }).join("");
     const rows = payload.students.map(function (student) {
       const grades = student.grades || {};
-      const summary = gradeSummary(student, payload.evaluations);
-      const gradeCells = payload.evaluations.map(function (evaluation) {
+      const summary = gradeSummary(student, officialEvaluations);
+      const gradeCells = officialEvaluations.map(function (evaluation) {
         const status = assessmentStatus(student, evaluation);
         return `<td style="text-align:center;">${excelCell(typeof grades[evaluation.id] === "number" ? formatGrade(grades[evaluation.id]) : status.label)}</td>`;
       }).join("");
@@ -860,7 +927,7 @@
         </head>
         <body>
           <table>
-            <tr><td class="title" colspan="${payload.evaluations.length + 5}">Intermediate English Course 1 - Grades</td></tr>
+            <tr><td class="title" colspan="${officialEvaluations.length + 5}">Intermediate English Course 1 - Grades</td></tr>
             <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr>
             ${rows}
           </table>
@@ -888,10 +955,15 @@
 
   function wirePdfExport(root, payload) {
     if (!window.JaraEnglishGradeReports) return;
+    const reportPayload = Object.assign({}, payload, {
+      evaluations: weightedEvaluations(payload.evaluations).map(function (evaluation) {
+        return Object.assign({}, evaluation, { title: evaluationDisplayTitle(evaluation) });
+      })
+    });
     root.querySelectorAll("[data-download-pdf-audience][data-download-pdf-level]").forEach(function (button) {
       button.addEventListener("click", function () {
         window.JaraEnglishGradeReports.download(
-          payload,
+          reportPayload,
           button.dataset.downloadPdfAudience,
           button.dataset.downloadPdfLevel,
           "Intermediate English",
@@ -905,6 +977,15 @@
     const form = root.querySelector("[data-add-grade-form]");
     const editForm = root.querySelector("[data-edit-grades-form]");
     const status = root.querySelector("[data-admin-grade-status]");
+    const gradeFilter = root.querySelector("[data-grade-editor-filter]");
+    if (gradeFilter) {
+      gradeFilter.addEventListener("input", function () {
+        const query = gradeFilter.value.trim().toLowerCase();
+        root.querySelectorAll("[data-grade-editor-card]").forEach(function (card) {
+          card.hidden = query && !(card.getAttribute("data-student-search") || "").includes(query);
+        });
+      });
+    }
     if (form) form.addEventListener("submit", function (event) {
       event.preventDefault();
       const title = (root.querySelector("[data-new-grade-title]") || {}).value || "";
@@ -951,19 +1032,21 @@
       event.preventDefault();
       const editStatus = root.querySelector("[data-edit-grade-status]");
       const nextPayload = JSON.parse(JSON.stringify(payload));
-      nextPayload.students.forEach(function (student) {
-        student.grades = {};
-      });
       root.querySelectorAll("[data-edit-grade-student]").forEach(function (input) {
+        const evaluationId = input.getAttribute("data-edit-grade-evaluation");
         const value = input.value.trim();
-        if (!value) return;
-        const grade = Number(value);
-        if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
         const student = nextPayload.students.find(function (item) {
           return item.id === input.getAttribute("data-edit-grade-student");
         });
         if (!student) return;
-        student.grades[input.getAttribute("data-edit-grade-evaluation")] = Math.round(grade * 100) / 100;
+        student.grades = student.grades && typeof student.grades === "object" ? student.grades : {};
+        if (!value) {
+          delete student.grades[evaluationId];
+          return;
+        }
+        const grade = Number(value);
+        if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
+        student.grades[evaluationId] = Math.round(grade * 100) / 100;
       });
       if (editStatus) editStatus.textContent = "Saving...";
       saveGradebook(user, nextPayload)
@@ -988,14 +1071,18 @@
     return input ? input.value.trim() : "";
   }
 
-  function gradesFromCard(card) {
-    const grades = {};
+  function gradesFromCard(card, originalGrades) {
+    const grades = Object.assign({}, originalGrades || {});
     card.querySelectorAll("[data-student-grade]").forEach(function (input) {
+      const evaluationId = input.getAttribute("data-student-grade");
       const value = input.value.trim();
-      if (!value) return;
+      if (!value) {
+        delete grades[evaluationId];
+        return;
+      }
       const grade = Number(value);
       if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
-      grades[input.getAttribute("data-student-grade")] = Math.round(grade * 100) / 100;
+      grades[evaluationId] = Math.round(grade * 100) / 100;
     });
     return grades;
   }
@@ -1014,7 +1101,7 @@
       emailAliases: original.emailAliases || [],
       contact: cardField(card, "contact"),
       bookDate: original.bookDate || null,
-      grades: gradesFromCard(card)
+      grades: gradesFromCard(card, original.grades)
     };
   }
 
@@ -1032,7 +1119,7 @@
       emailAliases: [],
       contact: newStudentField(card, "contact"),
       bookDate: null,
-      grades: gradesFromCard(card)
+      grades: gradesFromCard(card, {})
     };
   }
 

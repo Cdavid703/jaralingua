@@ -12,6 +12,14 @@ const evaluation = {
   description: "Integrated assessment"
 };
 
+const followUpEvaluation = {
+  id: "unit5DishHistoryReading",
+  title: "Unit 5 Reading - A Dish with a History",
+  type: "Reading follow-up",
+  weight: 0,
+  description: "Tracking only"
+};
+
 function localUser(role) {
   return {
     credential: "grades-" + role + "-token",
@@ -39,17 +47,23 @@ async function assertNoPageOverflow(page, label) {
 async function testStudent(browser) {
   const payload = {
     role: "student",
-    evaluations: [evaluation],
+    evaluations: [evaluation, followUpEvaluation],
     student: {
       id: "S001",
       level: "Intermediate English Course 1",
-      grades: {},
+      grades: { unit5DishHistoryReading: 5 },
       gradeDetails: {
         intermediateIntegratedTask20: {
           status: "pending-writing",
           pendingTeacherReview: true,
           submittedAt: "2026-07-17T20:00:00Z",
           weight: 20
+        },
+        unit5DishHistoryReading: {
+          status: "submitted",
+          followUpOnly: true,
+          grade: 5,
+          weight: 0
         }
       }
     }
@@ -58,6 +72,7 @@ async function testStudent(browser) {
   await page.goto(BASE_URL);
   await page.getByText("Submitted - teacher review pending", { exact: true }).waitFor({ state: "visible" });
   assert.match(await page.locator("#intermediateEnglishGradesApp").innerText(), /Awaiting rubric/);
+  assert.doesNotMatch(await page.locator("#intermediateEnglishGradesApp").innerText(), /A Dish with a History/);
   await assertNoPageOverflow(page, "student gradebook mobile");
   await context.close();
 }
@@ -65,7 +80,7 @@ async function testStudent(browser) {
 async function testTeacher(browser) {
   const payload = {
     role: "teacher",
-    evaluations: [evaluation],
+    evaluations: [evaluation, followUpEvaluation],
     students: [
       {
         id: "S001",
@@ -73,7 +88,11 @@ async function testTeacher(browser) {
         level: "Intermediate English Course 1",
         email: "submitted@test.local",
         grades: {},
-        gradeDetails: { intermediateIntegratedTask20: { status: "pending-writing", pendingTeacherReview: true } }
+        grades: { unit5DishHistoryReading: 5 },
+        gradeDetails: {
+          intermediateIntegratedTask20: { status: "pending-writing", pendingTeacherReview: true },
+          unit5DishHistoryReading: { status: "submitted", followUpOnly: true, grade: 5, activity: "A Dish with a History" }
+        }
       },
       {
         id: "S002",
@@ -99,7 +118,60 @@ async function testTeacher(browser) {
   await page.getByText("Submitted - teacher review pending", { exact: true }).waitFor({ state: "visible" });
   assert.equal(await page.getByText("Not submitted", { exact: true }).count(), 1);
   assert.match(await page.locator("#intermediateEnglishGradesApp").innerText(), /4\.6/);
+  const official = page.locator("[data-official-gradebook]");
+  assert.match(await official.innerText(), /INTEGRATED TASK/);
+  assert.doesNotMatch(await official.innerText(), /A Dish with a History/);
+  assert.equal(await page.locator("[data-followup-disclosure]").evaluate(node => node.open), false);
+  assert.ok(await official.evaluate((node, followUp) => Boolean(node.compareDocumentPosition(followUp) & Node.DOCUMENT_POSITION_FOLLOWING), await page.locator("[data-followup-disclosure]").elementHandle()));
   await assertNoPageOverflow(page, "teacher gradebook tablet");
+  await context.close();
+}
+
+async function testAdmin(browser) {
+  const payload = {
+    role: "admin",
+    evaluations: [evaluation, followUpEvaluation],
+    students: [
+      {
+        id: "S001",
+        fullName: "Admin Test Student",
+        level: "Intermediate English Course 1",
+        email: "student@test.local",
+        grades: { intermediateIntegratedTask20: 4.5, unit5DishHistoryReading: 5 },
+        gradeDetails: { unit5DishHistoryReading: { status: "submitted", followUpOnly: true, grade: 5, activity: "A Dish with a History" } }
+      }
+    ],
+    bonusEvent: null
+  };
+  const { context, page } = await prepare(browser, "admin", payload, { width: 1440, height: 900 });
+  let savedPayload = null;
+  page.on("request", request => {
+    if (request.method() === "PUT" && request.url().endsWith("/api/intermediate/grades")) savedPayload = request.postDataJSON();
+  });
+  await page.goto(BASE_URL);
+  await page.locator("[data-official-gradebook]").waitFor({ state: "visible" });
+  for (const selector of ["[data-admin-tools]", "[data-admin-edit-tools]", "[data-admin-student-tools]", "[data-followup-disclosure]"]) {
+    assert.equal(await page.locator(selector).evaluate(node => node.open), false, selector + " should be closed by default");
+  }
+  assert.doesNotMatch(await page.locator("[data-official-gradebook]").innerText(), /A Dish with a History/);
+  await page.locator("[data-admin-edit-tools] > summary").click();
+  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").count(), 1);
+  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").evaluate(node => node.open), false);
+  assert.doesNotMatch(await page.locator("[data-admin-edit-tools]").innerText(), /A Dish with a History/);
+  await page.locator("[data-grade-editor-filter]").fill("no matching student");
+  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").evaluate(node => node.hidden), true);
+  await page.locator("[data-grade-editor-filter]").fill("");
+  await page.locator("[data-admin-edit-tools] .admin-student-card > summary").click();
+  assert.equal(await page.locator("[data-admin-edit-tools] [data-edit-grade-student]").count(), 1);
+  await page.locator("[data-admin-edit-tools] [data-edit-grade-student]").fill("4.4");
+  await Promise.all([
+    page.waitForRequest(request => request.method() === "PUT" && request.url().endsWith("/api/intermediate/grades")),
+    page.locator("[data-admin-edit-tools] [data-edit-grades-form] button[type=submit]").click()
+  ]);
+  assert.ok(savedPayload, "the edited gradebook should be sent to the API");
+  assert.equal(savedPayload.students[0].grades.intermediateIntegratedTask20, 4.4);
+  assert.equal(savedPayload.students[0].grades.unit5DishHistoryReading, 5, "hidden 0% tracking grades must be preserved");
+  await assertNoPageOverflow(page, "admin gradebook desktop");
   await context.close();
 }
 
@@ -108,7 +180,8 @@ async function testTeacher(browser) {
   try {
     await testStudent(browser);
     await testTeacher(browser);
-    console.log("PASS intermediate gradebook status: local accounts, submitted pending review, not submitted, and recorded grades");
+    await testAdmin(browser);
+    console.log("PASS intermediate gradebook: official weighted columns, collapsed follow-ups, admin accordions, and responsive layout");
   } finally {
     await browser.close();
   }
