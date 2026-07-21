@@ -17,6 +17,9 @@ import unicodedata
 import urllib.error
 import urllib.parse
 import urllib.request
+import shutil
+import subprocess
+from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 _SERVER_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -86,9 +89,43 @@ BASIC_FINAL_ORAL_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_DATA", "/var
 BASIC_FINAL_ORAL_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_SUBMISSIONS", "/var/lib/jaralingua/basic-final-oral-submissions.json")
 BASIC_FINAL_ORAL_AUDIO_DIR = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_AUDIO_DIR", "/var/lib/jaralingua/basic-final-oral-audio")
 BASIC_FINAL_ORAL_PROMPT_AUDIO_DIR = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_PROMPT_AUDIO_DIR", "/var/lib/jaralingua/basic-final-oral-prompts")
+BASIC_FINAL_ORAL_AUDIT_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_AUDIT", "/var/lib/jaralingua/basic-final-oral-audit.jsonl")
 BASIC_FINAL_ORAL_EVALUATION_ID = "finalOralTask"
 BASIC_FINAL_ORAL_EXAM_VERSION = "basic-final-oral-v1"
 BASIC_FINAL_ORAL_MAX_AUDIO_BYTES = 8 * 1024 * 1024
+BASIC_FINAL_ORAL_MAX_DURATION_MS = 180000
+BASIC_FINAL_ORAL_MIN_DURATION_MS = 500
+BASIC_FINAL_ORAL_EXPECTED_TURNS = 7
+BASIC_FINAL_ORAL_TURN_MAX_MS = {
+    "unit-1": 20000,
+    "unit-2": 22000,
+    "unit-3": 24000,
+    "unit-4": 28000,
+    "unit-5": 26000,
+    "unit-6": 32000,
+    "interaction": 28000,
+}
+BASIC_FINAL_ORAL_DURATION_TOLERANCE_MS = 1500
+BASIC_FINAL_ORAL_PAIRING_TTL_SECONDS = 15 * 60
+BASIC_FINAL_ORAL_LEASE_SECONDS = 5 * 60
+BASIC_FINAL_ORAL_INSPECTOR = None  # Tests/deployments may inject a strict media inspector.
+BASIC_FINAL_ORAL_INSPECT_URL = os.environ.get(
+    "JARALINGUA_BASIC_FINAL_ORAL_INSPECT_URL",
+    "http://127.0.0.1:8020/internal/pronunciation/audio-inspect",
+).strip()
+BASIC_FINAL_ORAL_INTERNAL_TOKEN = os.environ.get("JARALINGUA_INTERNAL_TRANSCRIBER_TOKEN", "").strip()
+BASIC_FINAL_ORAL_AUTH_ATTEMPTS = {}
+BASIC_FINAL_ORAL_STATE_ACTIONS = {}
+BASIC_FINAL_ORAL_INSPECTOR_STATUS = {"lastError": "", "lastSuccessAt": None, "lastProbeAtEpoch": 0.0, "ready": False}
+BASIC_FINAL_ORAL_STORAGE_STATUS = {
+    "lastProbeAtEpoch": 0.0,
+    "lastSuccessAt": None,
+    "audioWritable": False,
+    "auditWritable": False,
+    "audioError": "not_probed",
+    "auditError": "not_probed",
+}
+BASIC_FINAL_ORAL_AUDIT_LOCK = threading.Lock()
 BASIC_UNIT6_NEIGHBORHOOD_GALLERY_PATH = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_GALLERY", "/var/lib/jaralingua/basic-unit6-neighborhood-gallery.json")
 BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR", "/var/lib/jaralingua/basic-unit6-neighborhood-images")
 BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS = {
@@ -805,7 +842,19 @@ def write_json_file(path, data, prefix):
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             json.dump(data, handle, ensure_ascii=False, indent=2)
             handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
         os.replace(temp_path, path)
+        try:
+            directory_fd = os.open(directory, os.O_RDONLY)
+            try:
+                os.fsync(directory_fd)
+            finally:
+                os.close(directory_fd)
+        except OSError:
+            # Some platforms do not support fsync on directory handles. The
+            # fully fsynced temp file and atomic replace still remain valid.
+            pass
     finally:
         if os.path.exists(temp_path):
             os.unlink(temp_path)
@@ -1114,6 +1163,52 @@ def local_gradebook_login(payload, grades_data, level_key, level_label):
             "level": level_label
         }
     }
+
+
+def local_login_rate_key(client_ip, email):
+    return clean_text(client_ip, 80) + "|" + normalize_email(email)
+
+
+def local_login_ip_rate_key(client_ip, prefix="ip"):
+    return clean_text(prefix, 20) + "|" + (clean_text(client_ip, 80) or "unknown")
+
+
+def local_login_prune_attempts(now=None):
+    now = float(now if now is not None else time.time())
+    for key in list(BASIC_FINAL_ORAL_AUTH_ATTEMPTS):
+        recent = [stamp for stamp in BASIC_FINAL_ORAL_AUTH_ATTEMPTS.get(key, []) if now - stamp < 900]
+        if recent:
+            BASIC_FINAL_ORAL_AUTH_ATTEMPTS[key] = recent[-30:]
+        else:
+            BASIC_FINAL_ORAL_AUTH_ATTEMPTS.pop(key, None)
+    if len(BASIC_FINAL_ORAL_AUTH_ATTEMPTS) > 4096:
+        oldest_first = sorted(
+            BASIC_FINAL_ORAL_AUTH_ATTEMPTS,
+            key=lambda key: max(BASIC_FINAL_ORAL_AUTH_ATTEMPTS.get(key) or [0]),
+        )
+        for key in oldest_first[:len(BASIC_FINAL_ORAL_AUTH_ATTEMPTS) - 4096]:
+            BASIC_FINAL_ORAL_AUTH_ATTEMPTS.pop(key, None)
+
+
+def local_login_rate_limited(key, now=None):
+    now = float(now if now is not None else time.time())
+    local_login_prune_attempts(now)
+    attempts = [stamp for stamp in BASIC_FINAL_ORAL_AUTH_ATTEMPTS.get(key, []) if now - stamp < 900]
+    BASIC_FINAL_ORAL_AUTH_ATTEMPTS[key] = attempts
+    limit = 25 if str(key).startswith("ip|") else (20 if str(key).startswith("pair-ip|") else 5)
+    return len(attempts) >= limit
+
+
+def local_login_record_failure(key, now=None):
+    now = float(now if now is not None else time.time())
+    local_login_prune_attempts(now)
+    attempts = [stamp for stamp in BASIC_FINAL_ORAL_AUTH_ATTEMPTS.get(key, []) if now - stamp < 900]
+    BASIC_FINAL_ORAL_AUTH_ATTEMPTS[key] = (attempts + [now])[-30:]
+    local_login_prune_attempts(now)
+
+
+def local_login_clear_failures(key):
+    BASIC_FINAL_ORAL_AUTH_ATTEMPTS.pop(key, None)
 
 
 def validate_google_token(token):
@@ -7156,12 +7251,102 @@ BASIC_FINAL_ORAL_INTERACTION_QUESTION = {
 }
 
 
+class BasicFinalOralStorageError(RuntimeError):
+    """Raised when high-stakes state cannot be read safely.
+
+    Unlike the generic JSON helpers, this assessment must never interpret a
+    corrupt file as an empty gradebook or an empty submission store.
+    """
+
+
+class BasicFinalOralAudioVerificationPending(RuntimeError):
+    """Raised when temporary inspector unavailability makes an ACK unsafe."""
+
+
+def read_basic_final_oral_grades_data():
+    """Read the official gradebook without ever degrading corruption to emptiness."""
+    try:
+        with open(BASIC_ENGLISH_GRADES_PATH, "r", encoding="utf-8-sig") as handle:
+            data = json.load(handle)
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise BasicFinalOralStorageError("gradebook_unavailable") from error
+    if not isinstance(data, dict):
+        raise BasicFinalOralStorageError("gradebook_invalid_root")
+    for key in ("adminEmails", "teacherEmails", "students", "evaluations"):
+        if not isinstance(data.get(key), list):
+            raise BasicFinalOralStorageError("gradebook_invalid_schema:" + key)
+    seen_student_ids = set()
+    for student in data["students"]:
+        if not isinstance(student, dict):
+            raise BasicFinalOralStorageError("gradebook_invalid_student")
+        student_id = clean_text(student.get("id"), 40)
+        if not student_id or student_id in seen_student_ids:
+            raise BasicFinalOralStorageError("gradebook_invalid_student_id")
+        seen_student_ids.add(student_id)
+        if student.get("grades") is not None and not isinstance(student.get("grades"), dict):
+            raise BasicFinalOralStorageError("gradebook_invalid_student_grades")
+        if student.get("gradeDetails") is not None and not isinstance(student.get("gradeDetails"), dict):
+            raise BasicFinalOralStorageError("gradebook_invalid_student_details")
+    seen_evaluation_ids = set()
+    for evaluation in data["evaluations"]:
+        if not isinstance(evaluation, dict):
+            raise BasicFinalOralStorageError("gradebook_invalid_evaluation")
+        evaluation_id = clean_text(evaluation.get("id"), 120)
+        if not evaluation_id or evaluation_id in seen_evaluation_ids:
+            raise BasicFinalOralStorageError("gradebook_invalid_evaluation_id")
+        seen_evaluation_ids.add(evaluation_id)
+    data.setdefault("bonusEvent", None)
+    data.setdefault("allowStudentIdClaim", False)
+    return data
+
+
+def read_basic_final_oral_json(path, default):
+    if not os.path.exists(path):
+        return default
+    try:
+        with open(path, "r", encoding="utf-8-sig") as handle:
+            data = json.load(handle)
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise BasicFinalOralStorageError("corrupt_or_unreadable:" + os.path.basename(path)) from error
+    if not isinstance(data, dict):
+        raise BasicFinalOralStorageError("invalid_root:" + os.path.basename(path))
+    return data
+
+
+def basic_final_oral_parse_time(value):
+    text = clean_text(value, 80)
+    if not text:
+        return None
+    try:
+        parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        if parsed.tzinfo is None:
+            parsed = parsed.replace(tzinfo=timezone.utc)
+        return parsed.astimezone(timezone.utc)
+    except (TypeError, ValueError):
+        return None
+
+
+def basic_final_oral_time_iso(value):
+    parsed = basic_final_oral_parse_time(value)
+    return parsed.isoformat().replace("+00:00", "Z") if parsed else None
+
+
+def basic_final_oral_now():
+    return datetime.now(timezone.utc)
+
+
 def default_basic_final_oral_bundle():
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
         "state": {
             "isOpen": False,
+            "opensAt": None,
+            "closesAt": None,
+            "closeMode": "soft",
+            "graceSeconds": 900,
+            "eligibleStudentIds": [],
+            "extensions": {},
             "openedAt": None,
             "openedBy": "",
             "closedAt": None,
@@ -7173,13 +7358,24 @@ def default_basic_final_oral_bundle():
 
 
 def read_basic_final_oral_bundle():
-    data = read_json_file(BASIC_FINAL_ORAL_PATH, default_basic_final_oral_bundle())
+    data = read_basic_final_oral_json(BASIC_FINAL_ORAL_PATH, default_basic_final_oral_bundle())
     defaults = default_basic_final_oral_bundle()
-    state = data.get("state") if isinstance(data.get("state"), dict) else {}
+    if not isinstance(data.get("state"), dict):
+        raise BasicFinalOralStorageError("invalid_bundle_state")
+    state = data.get("state")
+    if "eligibleStudentIds" in state and not isinstance(state.get("eligibleStudentIds"), list):
+        raise BasicFinalOralStorageError("invalid_bundle_state:eligibleStudentIds")
+    if "extensions" in state and not isinstance(state.get("extensions"), dict):
+        raise BasicFinalOralStorageError("invalid_bundle_state:extensions")
     for key, value in defaults["state"].items():
         state.setdefault(key, value)
     data["state"] = state
-    data["schemaVersion"] = 1
+    state["closeMode"] = "hard" if state.get("closeMode") == "hard" else "soft"
+    try:
+        state["graceSeconds"] = max(0, min(86400, int(state.get("graceSeconds", 900))))
+    except (TypeError, ValueError):
+        state["graceSeconds"] = 900
+    data["schemaVersion"] = 2
     data["examVersion"] = BASIC_FINAL_ORAL_EXAM_VERSION
     return data
 
@@ -7190,22 +7386,35 @@ def write_basic_final_oral_bundle(data):
 
 def default_basic_final_oral_store():
     return {
-        "schemaVersion": 1,
+        "schemaVersion": 2,
         "attempts": {},
         "submissions": {},
         "idempotency": {},
+        "outbox": {},
+        "pairings": {},
+        "attemptHistory": [],
         "events": []
     }
 
 
 def read_basic_final_oral_store():
-    data = read_json_file(BASIC_FINAL_ORAL_SUBMISSIONS_PATH, default_basic_final_oral_store())
-    for key in ("attempts", "submissions", "idempotency"):
-        if not isinstance(data.get(key), dict):
+    data = read_basic_final_oral_json(BASIC_FINAL_ORAL_SUBMISSIONS_PATH, default_basic_final_oral_store())
+    for key in ("attempts", "submissions", "idempotency", "outbox", "pairings"):
+        if key not in data:
             data[key] = {}
-    if not isinstance(data.get("events"), list):
-        data["events"] = []
-    data["schemaVersion"] = 1
+        elif not isinstance(data.get(key), dict):
+            raise BasicFinalOralStorageError("invalid_store_schema:" + key)
+    for key in ("attemptHistory", "events"):
+        if key not in data:
+            data[key] = []
+        elif not isinstance(data.get(key), list):
+            raise BasicFinalOralStorageError("invalid_store_schema:" + key)
+    for attempt in data.get("attempts", {}).values():
+        if isinstance(attempt, dict) and not clean_text(attempt.get("attemptScopeToken"), 160):
+            attempt_id = clean_text(attempt.get("attemptId"), 120)
+            if attempt_id:
+                attempt["attemptScopeToken"] = hmac.new(local_auth_secret(), ("basic-final-oral|" + attempt_id).encode("utf-8"), hashlib.sha256).hexdigest()
+    data["schemaVersion"] = 2
     return data
 
 
@@ -7213,18 +7422,30 @@ def write_basic_final_oral_store(data):
     write_json_file(BASIC_FINAL_ORAL_SUBMISSIONS_PATH, data, ".basic-final-oral-submissions-")
 
 
-def basic_final_oral_append_event(store, event_type, profile=None, student_id="", detail=None):
+def basic_final_oral_append_event(store, event_type, profile=None, student_id="", detail=None, request_id=""):
     event = {
         "id": "BFOE-" + secrets.token_hex(6).upper(),
         "type": clean_text(event_type, 80),
         "studentId": clean_text(student_id, 40),
         "at": now_iso(),
         "actor": normalize_email((profile or {}).get("email")),
-        "detail": clean_text(detail, 600)
+        "detail": clean_text(detail, 600),
+        "requestId": clean_text(request_id, 120)
     }
     events = store.setdefault("events", [])
     events.append(event)
     store["events"] = events[-500:]
+    try:
+        directory = os.path.dirname(BASIC_FINAL_ORAL_AUDIT_PATH) or "."
+        os.makedirs(directory, exist_ok=True)
+        line = json.dumps(event, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n"
+        with BASIC_FINAL_ORAL_AUDIT_LOCK:
+            with open(BASIC_FINAL_ORAL_AUDIT_PATH, "a", encoding="utf-8") as handle:
+                handle.write(line)
+                handle.flush()
+                os.fsync(handle.fileno())
+    except OSError as error:
+        raise BasicFinalOralStorageError("audit_log_unavailable") from error
     return event
 
 
@@ -7237,6 +7458,125 @@ def basic_final_oral_student_identity(student):
         "level": clean_text(student.get("level") or "Basic English Course 1", 120),
         "email": clean_email(student.get("email"))
     }
+
+
+def basic_final_oral_registered_student(profile, grades_data):
+    """High-stakes identity: registered email/alias only, never names or free ID claims."""
+    return registered_student_for_profile(profile, grades_data)
+
+
+def basic_final_oral_effective_close(state, student_id):
+    extensions = state.get("extensions") if isinstance(state.get("extensions"), dict) else {}
+    extension = extensions.get(clean_text(student_id, 40))
+    return basic_final_oral_parse_time(extension) or basic_final_oral_parse_time(state.get("closesAt"))
+
+
+def basic_final_oral_access(state, student_id, has_attempt=False, now=None):
+    now = now or basic_final_oral_now()
+    student_id = clean_text(student_id, 40)
+    eligible = {
+        clean_text(item, 40) for item in state.get("eligibleStudentIds", [])
+        if clean_text(item, 40)
+    } if isinstance(state.get("eligibleStudentIds"), list) else set()
+    if eligible and student_id not in eligible:
+        return False, "student_not_eligible", None
+    opens_at = basic_final_oral_parse_time(state.get("opensAt"))
+    closes_at = basic_final_oral_effective_close(state, student_id)
+    if opens_at and now < opens_at:
+        return False, "exam_not_open_yet", closes_at
+    if state.get("isOpen") is not True:
+        if has_attempt and state.get("closeMode") != "hard":
+            grace = max(0, int(state.get("graceSeconds", 0) or 0))
+            if not closes_at or now <= closes_at + timedelta(seconds=grace):
+                return True, "soft_close_resume", closes_at
+        return False, "exam_closed", closes_at
+    if closes_at and now > closes_at:
+        if has_attempt and state.get("closeMode") != "hard":
+            grace = max(0, int(state.get("graceSeconds", 0) or 0))
+            if now <= closes_at + timedelta(seconds=grace):
+                return True, "grace_period", closes_at
+        return False, "exam_expired", closes_at
+    return True, "open", closes_at
+
+
+def basic_final_oral_scope_token(attempt):
+    return clean_text(attempt.get("attemptScopeToken"), 160) if isinstance(attempt, dict) else ""
+
+
+def basic_final_oral_scope_valid(attempt, supplied):
+    expected = basic_final_oral_scope_token(attempt)
+    candidate = clean_text(supplied, 160)
+    return bool(expected and candidate and hmac.compare_digest(expected, candidate))
+
+
+def basic_final_oral_transcriber_scope(attempt):
+    if not BASIC_FINAL_ORAL_INTERNAL_TOKEN or not isinstance(attempt, dict):
+        return "", None
+    expires_at = int(time.time()) + 10 * 60
+    claims = {
+        "aud": "jaralingua-pronunciation-transcriber",
+        "purpose": "basic-final-oral",
+        "attemptId": clean_text(attempt.get("attemptId"), 120),
+        "studentId": clean_text(attempt.get("studentId"), 40),
+        "examVersion": clean_text(attempt.get("examVersion"), 80),
+        "exp": expires_at,
+    }
+    body = b64url_encode(json.dumps(claims, sort_keys=True, separators=(",", ":")).encode("utf-8"))
+    signature = b64url_encode(hmac.new(BASIC_FINAL_ORAL_INTERNAL_TOKEN.encode("utf-8"), body.encode("ascii"), hashlib.sha256).digest())
+    return body + "." + signature, expires_at
+
+
+def basic_final_oral_device_hash(device_id):
+    device_id = clean_text(device_id, 160)
+    if not device_id:
+        return ""
+    return hmac.new(local_auth_secret(), ("basic-final-oral-device|" + device_id).encode("utf-8"), hashlib.sha256).hexdigest()
+
+
+def basic_final_oral_lease_active(attempt, lease_id="", device_id=""):
+    lease = attempt.get("lease") if isinstance(attempt, dict) and isinstance(attempt.get("lease"), dict) else None
+    if not lease:
+        return False
+    expected = clean_text(lease.get("leaseId"), 160)
+    supplied = clean_text(lease_id, 160)
+    supplied_device_hash = basic_final_oral_device_hash(device_id)
+    expected_device_hash = clean_text(lease.get("deviceHash"), 80)
+    if not expected_device_hash and clean_text(lease.get("deviceId"), 160):
+        expected_device_hash = basic_final_oral_device_hash(lease.get("deviceId"))
+    expires = basic_final_oral_parse_time(lease.get("expiresAt"))
+    return bool(expected and supplied and supplied_device_hash and expected_device_hash and hmac.compare_digest(expected, supplied) and hmac.compare_digest(expected_device_hash, supplied_device_hash) and expires and basic_final_oral_now() <= expires)
+
+
+def basic_final_oral_acquire_lease(attempt, device_id, profile=None, force=False):
+    device_id = clean_text(device_id, 160) or "browser-session"
+    device_hash = basic_final_oral_device_hash(device_id)
+    existing = attempt.get("lease") if isinstance(attempt.get("lease"), dict) else None
+    expires = basic_final_oral_parse_time((existing or {}).get("expiresAt"))
+    existing_device_hash = clean_text((existing or {}).get("deviceHash"), 80) or basic_final_oral_device_hash((existing or {}).get("deviceId"))
+    if existing and expires and basic_final_oral_now() <= expires and not hmac.compare_digest(existing_device_hash, device_hash) and not force:
+        return None
+    if existing and expires and basic_final_oral_now() <= expires and hmac.compare_digest(existing_device_hash, device_hash) and not force:
+        basic_final_oral_touch_lease(attempt)
+        return attempt.get("lease")
+    now = basic_final_oral_now()
+    lease = {
+        "leaseId": secrets.token_urlsafe(24), "deviceHash": device_hash,
+        "acquiredAt": now.isoformat().replace("+00:00", "Z"),
+        "lastSeenAt": now.isoformat().replace("+00:00", "Z"),
+        "expiresAt": (now + timedelta(seconds=BASIC_FINAL_ORAL_LEASE_SECONDS)).isoformat().replace("+00:00", "Z"),
+        "actor": normalize_email((profile or {}).get("email")),
+    }
+    attempt["lease"] = lease
+    return lease
+
+
+def basic_final_oral_touch_lease(attempt):
+    lease = attempt.get("lease") if isinstance(attempt.get("lease"), dict) else None
+    if not lease:
+        return
+    now = basic_final_oral_now()
+    lease["lastSeenAt"] = now.isoformat().replace("+00:00", "Z")
+    lease["expiresAt"] = (now + timedelta(seconds=BASIC_FINAL_ORAL_LEASE_SECONDS)).isoformat().replace("+00:00", "Z")
 
 
 def basic_final_oral_assign_questions():
@@ -7287,7 +7627,12 @@ def basic_final_oral_public_turn(turn, attempt_id):
         "turnId": clean_text(turn.get("turnId"), 40),
         "variantId": clean_text(turn.get("variantId"), 80),
         "transcript": clean_text(turn.get("transcript"), 4000),
+        "transcriptStatus": clean_text(turn.get("transcriptStatus") or ("ready" if turn.get("transcript") else "pending"), 40),
         "durationMs": int(turn.get("durationMs", 0) or 0),
+        "durationSource": clean_text(turn.get("durationSource"), 40),
+        "verificationStatus": clean_text(turn.get("verificationStatus") or "pending", 40),
+        "silenceFlag": bool(turn.get("silenceFlag")),
+        "version": int(turn.get("version", 1) or 1),
         "savedAt": clean_text(turn.get("savedAt"), 80),
         "updatedAt": clean_text(turn.get("updatedAt"), 80),
         "audioAvailable": bool(audio),
@@ -7297,7 +7642,8 @@ def basic_final_oral_public_turn(turn, attempt_id):
         public["audio"] = {
             "contentType": clean_text(audio.get("contentType"), 80),
             "size": int(audio.get("size", 0) or 0),
-            "sha256": clean_text(audio.get("sha256"), 80)
+            "sha256": clean_text(audio.get("sha256"), 80),
+            "verified": audio.get("verified") is True
         }
     return public
 
@@ -7307,10 +7653,22 @@ def basic_final_oral_public_attempt(attempt):
         return None
     attempt_id = clean_text(attempt.get("attemptId"), 120)
     turns = attempt.get("turns") if isinstance(attempt.get("turns"), dict) else {}
+    lease = attempt.get("lease") if isinstance(attempt.get("lease"), dict) else {}
+    transcriber_scope, transcriber_exp = basic_final_oral_transcriber_scope(attempt)
     return {
         "attemptId": attempt_id,
         "examVersion": clean_text(attempt.get("examVersion"), 80),
         "status": clean_text(attempt.get("status"), 40),
+        "workflowStatus": clean_text(attempt.get("workflowStatus") or attempt.get("status"), 60),
+        "attemptScopeToken": basic_final_oral_scope_token(attempt),
+        "transcriberScopeToken": transcriber_scope,
+        "transcriberScopeExpiresAt": transcriber_exp,
+        "transcriberScopeHeader": "X-Jaralingua-Exam-Scope",
+        "lease": {
+            "leaseId": clean_text(lease.get("leaseId"), 160),
+            "expiresAt": clean_text(lease.get("expiresAt"), 80),
+            "active": bool(lease and basic_final_oral_parse_time(lease.get("expiresAt")) and basic_final_oral_now() <= basic_final_oral_parse_time(lease.get("expiresAt"))),
+        } if lease else None,
         "student": attempt.get("student") if isinstance(attempt.get("student"), dict) else None,
         "assignedQuestions": [
             basic_final_oral_public_question(item)
@@ -7325,11 +7683,13 @@ def basic_final_oral_public_attempt(attempt):
         "revision": int(attempt.get("revision", 0) or 0),
         "startedAt": clean_text(attempt.get("startedAt"), 80),
         "lastSeenAt": clean_text(attempt.get("lastSeenAt"), 80),
+        "expiresAt": clean_text(attempt.get("expiresAt"), 80) or None,
+        "completedAt": clean_text(attempt.get("completedAt"), 80) or None,
         "submittedAt": clean_text(attempt.get("submittedAt"), 80) or None
     }
 
 
-def basic_final_oral_public_submission(submission):
+def basic_final_oral_public_submission(submission, viewer_role="student"):
     if not isinstance(submission, dict):
         return None
     public = {
@@ -7339,6 +7699,8 @@ def basic_final_oral_public_submission(submission):
         "studentName": clean_text(submission.get("studentName"), 200),
         "email": clean_email(submission.get("email")),
         "status": clean_text(submission.get("status"), 60),
+        "workflowStatus": clean_text(submission.get("workflowStatus") or submission.get("status"), 60),
+        "syncStatus": clean_text(submission.get("syncStatus"), 60),
         "submittedAt": clean_text(submission.get("submittedAt"), 80),
         "totalDurationMs": int(submission.get("totalDurationMs", 0) or 0),
         "assignedQuestions": [
@@ -7347,42 +7709,235 @@ def basic_final_oral_public_submission(submission):
             if isinstance(item, dict)
         ],
         "turns": submission.get("turns") if isinstance(submission.get("turns"), list) else [],
-        "rubric": submission.get("rubric") if isinstance(submission.get("rubric"), dict) else None,
-        "score50": submission.get("score50"),
-        "grade": submission.get("grade"),
-        "teacherFeedback": clean_text(submission.get("teacherFeedback"), 5000),
-        "teacherEvidence": submission.get("teacherEvidence") if isinstance(submission.get("teacherEvidence"), dict) else {},
-        "gradedAt": clean_text(submission.get("gradedAt"), 80) or None,
-        "gradedBy": clean_email(submission.get("gradedBy"))
+        "rubric": None,
+        "score50": None,
+        "grade": None,
+        "teacherFeedback": "",
+        "teacherEvidence": {},
+        "gradedAt": None,
     }
+    is_staff = viewer_role in ("admin", "teacher", "staff")
+    is_published = submission.get("workflowStatus") == "published"
+    if not is_staff and not is_published:
+        public["status"] = "pending_teacher_review"
+        public["workflowStatus"] = "pending_teacher_review"
+    if is_staff or is_published:
+        public.update({
+            "rubric": submission.get("rubric") if isinstance(submission.get("rubric"), dict) else None,
+            "score50": submission.get("score50"),
+            "grade": submission.get("grade"),
+            "teacherFeedback": clean_text(submission.get("teacherFeedback"), 5000),
+            "teacherEvidence": submission.get("teacherEvidence") if isinstance(submission.get("teacherEvidence"), dict) else {},
+            "gradedAt": clean_text(submission.get("gradedAt"), 80) or None,
+        })
+    public["publishedAt"] = clean_text(submission.get("publishedAt"), 80) or None if is_staff or is_published else None
+    if is_staff:
+        public["gradeRevision"] = int(submission.get("gradeRevision", 0) or 0)
+        public["reviewedAudioEvidence"] = submission.get("reviewedAudioEvidence") if isinstance(submission.get("reviewedAudioEvidence"), list) else []
+        public["gradedBy"] = clean_email(submission.get("gradedBy"))
+        public["gradeHistory"] = submission.get("gradeHistory") if isinstance(submission.get("gradeHistory"), list) else []
+        public["workflowHistory"] = submission.get("workflowHistory") if isinstance(submission.get("workflowHistory"), list) else []
+    public["recovered"] = submission.get("recovered") is True
     return public
+
+
+def basic_final_oral_roster(grades_data, store, bundle):
+    attempts = store.get("attempts", {}) if isinstance(store.get("attempts"), dict) else {}
+    submissions = store.get("submissions", {}) if isinstance(store.get("submissions"), dict) else {}
+    state = bundle.get("state", {}) if isinstance(bundle.get("state"), dict) else {}
+    rows = []
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        if not student_id:
+            continue
+        email = clean_email(student.get("email"))
+        if email and grade_user_role({"email": email}, grades_data) in ("admin", "teacher"):
+            continue
+        attempt = attempts.get(student_id) if isinstance(attempts.get(student_id), dict) else None
+        submission = submissions.get(student_id) if isinstance(submissions.get(student_id), dict) else None
+        turns = attempt.get("turns", {}) if isinstance(attempt, dict) and isinstance(attempt.get("turns"), dict) else {}
+        issues = []
+        for turn_id, turn in turns.items():
+            if not isinstance(turn, dict) or not isinstance(turn.get("audio"), dict):
+                issues.append(clean_text(turn_id, 40) + ":missing")
+            elif turn.get("verificationStatus") not in ("verified", "signature_fallback"):
+                issues.append(clean_text(turn_id, 40) + ":unverified")
+            if isinstance(turn, dict) and turn.get("silenceFlag") is True:
+                issues.append(clean_text(turn_id, 40) + ":silence_flag")
+        if submission:
+            status = clean_text(submission.get("workflowStatus") or submission.get("status"), 60)
+        elif attempt:
+            status = clean_text(attempt.get("workflowStatus") or attempt.get("status"), 60)
+            allowed, reason, _close = basic_final_oral_access(state, student_id, True)
+            if not allowed and status == "in_progress":
+                status = reason
+        else:
+            allowed, reason, _close = basic_final_oral_access(state, student_id, False)
+            status = "not_started" if allowed else reason
+        rows.append({
+            "student": basic_final_oral_student_identity(student), "status": status,
+            "turnsCompleted": len(turns), "turnsTotal": BASIC_FINAL_ORAL_EXPECTED_TURNS,
+            "lastActivityAt": clean_text((attempt or {}).get("lastSeenAt") or (submission or {}).get("submittedAt"), 80) or None,
+            "attemptId": clean_text((attempt or {}).get("attemptId"), 120),
+            "receiptId": clean_text((submission or {}).get("receiptId"), 80),
+            "syncStatus": clean_text((submission or {}).get("syncStatus"), 40),
+            "audioIssues": issues,
+        })
+    return rows
+
+
+def basic_final_oral_health_payload(grades_data, bundle, store):
+    expected_prompts = len(basic_final_oral_known_prompt_ids())
+    available_prompts = sum(1 for prompt_id in basic_final_oral_known_prompt_ids() if os.path.isfile(basic_final_oral_prompt_audio_path(prompt_id)))
+    retained_attempts = [item for item in store.get("attempts", {}).values() if isinstance(item, dict)]
+    retained_attempts.extend(
+        item.get("attempt") for item in store.get("attemptHistory", [])
+        if isinstance(item, dict) and isinstance(item.get("attempt"), dict)
+    )
+    known_files = {
+        clean_text(version.get("audio", {}).get("file"), 180)
+        for attempt in retained_attempts
+        for turn in attempt.get("turns", {}).values() if isinstance(turn, dict)
+        for version in ([{"audio": turn.get("audio", {})}] + (turn.get("versions", []) if isinstance(turn.get("versions"), list) else []))
+        if isinstance(version, dict) and clean_text(version.get("audio", {}).get("file"), 180)
+    }
+    disk_files = set()
+    try:
+        if os.path.isdir(BASIC_FINAL_ORAL_AUDIO_DIR):
+            disk_files = {name for name in os.listdir(BASIC_FINAL_ORAL_AUDIO_DIR) if basic_final_oral_audio_path(name)}
+    except OSError:
+        disk_files = set()
+    divergence = [student_id for student_id in store.get("submissions", {}) if not basic_final_oral_gradebook_matches(grades_data, store, student_id)]
+    evaluations = [item for item in grades_data.get("evaluations", []) if isinstance(item, dict)]
+    oral_evaluation = next((item for item in evaluations if item.get("id") == BASIC_FINAL_ORAL_EVALUATION_ID), {})
+    try:
+        total_weight = sum(float(item.get("weight", 0) or 0) for item in evaluations)
+    except (TypeError, ValueError):
+        total_weight = None
+    storage_probe_age = max(0.0, time.time() - float(BASIC_FINAL_ORAL_STORAGE_STATUS.get("lastProbeAtEpoch", 0) or 0))
+    storage_probe_fresh = storage_probe_age <= 60 and float(BASIC_FINAL_ORAL_STORAGE_STATUS.get("lastProbeAtEpoch", 0) or 0) > 0
+    try:
+        usage = shutil.disk_usage(BASIC_FINAL_ORAL_AUDIO_DIR if os.path.isdir(BASIC_FINAL_ORAL_AUDIO_DIR) else os.path.dirname(BASIC_FINAL_ORAL_AUDIO_DIR) or ".")
+        storage = {
+            "freeBytes": usage.free,
+            "totalBytes": usage.total,
+            "writable": storage_probe_fresh and BASIC_FINAL_ORAL_STORAGE_STATUS.get("audioWritable") is True,
+            "probeAgeSeconds": round(storage_probe_age, 3),
+            "lastError": clean_text(BASIC_FINAL_ORAL_STORAGE_STATUS.get("audioError"), 240) or None,
+        }
+    except OSError:
+        storage = {"freeBytes": None, "totalBytes": None, "writable": False, "probeAgeSeconds": round(storage_probe_age, 3), "lastError": "disk_usage_failed"}
+    try:
+        audit_bytes = os.path.getsize(BASIC_FINAL_ORAL_AUDIT_PATH) if os.path.isfile(BASIC_FINAL_ORAL_AUDIT_PATH) else 0
+    except OSError:
+        audit_bytes = 0
+    audit_health = {
+        "pathConfigured": bool(BASIC_FINAL_ORAL_AUDIT_PATH),
+        "writable": storage_probe_fresh and BASIC_FINAL_ORAL_STORAGE_STATUS.get("auditWritable") is True,
+        "bytes": audit_bytes,
+        "probeAgeSeconds": round(storage_probe_age, 3),
+        "lastError": clean_text(BASIC_FINAL_ORAL_STORAGE_STATUS.get("auditError"), 240) or None,
+        "lastSuccessAt": BASIC_FINAL_ORAL_STORAGE_STATUS.get("lastSuccessAt"),
+    }
+    warnings = []
+    if available_prompts != expected_prompts:
+        warnings.append("prompt_audio_incomplete")
+    if divergence:
+        warnings.append("gradebook_sync_divergence")
+    try:
+        oral_weight_ok = float(oral_evaluation.get("weight")) == 20.0
+    except (TypeError, ValueError):
+        oral_weight_ok = False
+    if not oral_weight_ok:
+        warnings.append("final_oral_weight_not_20")
+    if total_weight is not None and round(total_weight, 4) != 100:
+        warnings.append("gradebook_total_weight_not_100")
+    if not callable(BASIC_FINAL_ORAL_INSPECTOR) and not BASIC_FINAL_ORAL_INSPECT_URL and not shutil.which("ffprobe"):
+        warnings.append("audio_inspector_unavailable")
+    probe_age_seconds = max(0.0, time.time() - float(BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("lastProbeAtEpoch", 0) or 0))
+    inspector_probe_fresh = BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("ready") is True and probe_age_seconds <= 60
+    if not inspector_probe_fresh:
+        warnings.append("audio_inspector_not_ready")
+    if not BASIC_FINAL_ORAL_INTERNAL_TOKEN:
+        warnings.append("transcriber_scope_secret_missing")
+    if str(BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("lastError", "")).startswith("authentication_failed"):
+        warnings.append("audio_inspector_authentication_failed")
+    if BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("lastError") == "internal_inspector_unavailable" and not shutil.which("ffprobe") and not callable(BASIC_FINAL_ORAL_INSPECTOR):
+        warnings.append("audio_inspector_unavailable")
+    if disk_files - known_files:
+        warnings.append("orphan_audio_files")
+    if known_files - disk_files:
+        warnings.append("audio_files_missing")
+    if storage.get("freeBytes") is not None and storage.get("freeBytes") < 500 * 1024 * 1024:
+        warnings.append("audio_storage_low")
+    if storage.get("writable") is not True:
+        warnings.append("audio_storage_not_writable")
+    if audit_health.get("writable") is not True:
+        warnings.append("audit_log_not_writable")
+    return {
+        "ok": not any(item in warnings for item in ("prompt_audio_incomplete", "gradebook_sync_divergence", "audio_inspector_unavailable", "audio_inspector_not_ready", "audio_inspector_authentication_failed", "transcriber_scope_secret_missing", "audio_files_missing", "audio_storage_low", "audio_storage_not_writable", "audit_log_not_writable")),
+        "warnings": warnings,
+        "promptAudio": {"expected": expected_prompts, "available": available_prompts},
+        "audioInspector": {"internalUrlConfigured": bool(BASIC_FINAL_ORAL_INSPECT_URL), "ffprobeAvailable": bool(shutil.which("ffprobe")), "pluggable": callable(BASIC_FINAL_ORAL_INSPECTOR), "ready": inspector_probe_fresh, "probeAgeSeconds": round(probe_age_seconds, 3), "probe": BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("probe"), "lastError": BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("lastError"), "lastSuccessAt": BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("lastSuccessAt"), "examScopeConfigured": bool(BASIC_FINAL_ORAL_INTERNAL_TOKEN), "examScopeHeader": "X-Jaralingua-Exam-Scope"},
+        "storage": dict(storage, knownFiles=len(known_files), retainedAttemptCount=len(retained_attempts), diskFiles=len(disk_files), orphanFiles=len(disk_files - known_files), missingFiles=len(known_files - disk_files)),
+        "audit": audit_health,
+        "weights": {"expectedFinalOral": 20, "actualFinalOral": oral_evaluation.get("weight"), "gradebookTotal": total_weight},
+        "sync": {"divergentStudentIds": divergence, "pendingOutbox": len([item for item in store.get("outbox", {}).values() if isinstance(item, dict) and item.get("status") in ("pending", "retry")]), "canceledOutbox": len([item for item in store.get("outbox", {}).values() if isinstance(item, dict) and item.get("status") == "canceled"])},
+        "state": bundle.get("state", {}),
+    }
+
+
+def basic_final_oral_public_state(state, role="anonymous", student_id=""):
+    state = state if isinstance(state, dict) else {}
+    if role in ("admin", "teacher"):
+        return dict(state)
+    student_id = clean_text(student_id, 40)
+    eligible_ids = {
+        clean_text(item, 40) for item in state.get("eligibleStudentIds", [])
+        if clean_text(item, 40)
+    } if isinstance(state.get("eligibleStudentIds"), list) else set()
+    effective_close = basic_final_oral_effective_close(state, student_id) if student_id else basic_final_oral_parse_time(state.get("closesAt"))
+    return {
+        "isOpen": state.get("isOpen") is True,
+        "opensAt": basic_final_oral_time_iso(state.get("opensAt")),
+        "closesAt": basic_final_oral_time_iso(state.get("closesAt")),
+        "closeMode": "hard" if state.get("closeMode") == "hard" else "soft",
+        "graceSeconds": max(0, int(state.get("graceSeconds", 0) or 0)),
+        "isEligible": (not eligible_ids or student_id in eligible_ids) if student_id else None,
+        "effectiveClosesAt": effective_close.isoformat().replace("+00:00", "Z") if effective_close else None,
+    }
 
 
 def basic_final_oral_state_payload(profile, grades_data, bundle, store):
     role = grade_user_role(profile, grades_data)
-    student = matched_student_for_profile(profile, grades_data) if role == "student" else None
+    student = basic_final_oral_registered_student(profile, grades_data) if role == "student" else None
     student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
     attempt = store.get("attempts", {}).get(student_id) if student_id else None
     submission = store.get("submissions", {}).get(student_id) if student_id else None
     state = bundle.get("state", {})
     payload = {
         "role": role,
-        "state": state,
+        "state": basic_final_oral_public_state(state, role, student_id),
         "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
         "student": basic_final_oral_student_identity(student),
-        "canStart": bool(student_id and state.get("isOpen") is True and not attempt and not submission),
-        "canResume": bool(isinstance(attempt, dict) and attempt.get("status") == "in_progress"),
+        "canStart": bool(student_id and basic_final_oral_access(state, student_id, False)[0] and not attempt and not submission),
+        "canResume": bool(isinstance(attempt, dict) and attempt.get("status") in ("in_progress", "complete_pending_submit") and basic_final_oral_access(state, student_id, True)[0]),
         "attempt": basic_final_oral_public_attempt(attempt),
-        "submission": basic_final_oral_public_submission(submission)
+        "submission": basic_final_oral_public_submission(submission, role)
     }
     if role in ("admin", "teacher"):
         submissions = [item for item in store.get("submissions", {}).values() if isinstance(item, dict)]
         attempts = [item for item in store.get("attempts", {}).values() if isinstance(item, dict)]
         payload["counts"] = {
             "inProgress": len([item for item in attempts if item.get("status") == "in_progress"]),
+            "completePendingSubmit": len([item for item in attempts if item.get("status") == "complete_pending_submit"]),
             "submitted": len(submissions),
             "pendingReview": len([item for item in submissions if item.get("status") == "pending_teacher_review"]),
-            "graded": len([item for item in submissions if item.get("status") == "graded"])
+            "graded": len([item for item in submissions if item.get("workflowStatus") in ("graded", "published") or item.get("status") == "graded"]),
+            "published": len([item for item in submissions if item.get("workflowStatus") == "published"]),
+            "syncPending": len([item for item in submissions if item.get("syncStatus") == "pending"]),
         }
         payload["activeAttempts"] = [
             {
@@ -7394,13 +7949,15 @@ def basic_final_oral_state_payload(profile, grades_data, bundle, store):
                 "turnsTotal": len(item.get("assignedQuestions", [])) if isinstance(item.get("assignedQuestions"), list) else 0
             }
             for item in attempts
-            if item.get("status") == "in_progress"
+            if item.get("status") in ("in_progress", "complete_pending_submit")
         ]
         payload["questionBank"] = {
             unit: [basic_final_oral_public_question(dict(item, turnId="unit-" + unit)) for item in variants]
             for unit, variants in BASIC_FINAL_ORAL_QUESTION_BANK.items()
         }
         payload["interactionQuestion"] = basic_final_oral_public_question(dict(BASIC_FINAL_ORAL_INTERACTION_QUESTION, turnId="interaction", sequence=7))
+        payload["roster"] = basic_final_oral_roster(grades_data, store, bundle)
+        payload["health"] = basic_final_oral_health_payload(grades_data, bundle, store)
     return payload
 
 
@@ -7496,6 +8053,223 @@ def decode_basic_final_oral_audio(payload):
     return audio_bytes, content_type, audio_extension_for_type(content_type)
 
 
+def basic_final_oral_probe_inspector(force=False):
+    """Authenticate the internal inspector outside ``data_lock``.
+
+    The short cache prevents repeated loopback calls while ensuring an exam
+    cannot be opened merely because a URL happens to be configured.
+    """
+    now_epoch = time.time()
+    if not force and BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("ready") is True and now_epoch - float(BASIC_FINAL_ORAL_INSPECTOR_STATUS.get("lastProbeAtEpoch", 0) or 0) < 60:
+        return True, dict(BASIC_FINAL_ORAL_INSPECTOR_STATUS)
+    if callable(BASIC_FINAL_ORAL_INSPECTOR):
+        BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({
+            "ready": True, "lastError": "", "lastSuccessAt": now_iso(), "lastProbeAtEpoch": now_epoch,
+            "probe": "pluggable",
+        })
+        return True, dict(BASIC_FINAL_ORAL_INSPECTOR_STATUS)
+    if not BASIC_FINAL_ORAL_INSPECT_URL or not BASIC_FINAL_ORAL_INTERNAL_TOKEN:
+        BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({
+            "ready": False, "lastError": "inspector_probe_not_configured", "lastProbeAtEpoch": now_epoch,
+        })
+        return False, dict(BASIC_FINAL_ORAL_INSPECTOR_STATUS)
+    headers = {"X-Jaralingua-Internal-Token": BASIC_FINAL_ORAL_INTERNAL_TOKEN, "Accept": "application/json"}
+    request = urllib.request.Request(BASIC_FINAL_ORAL_INSPECT_URL, method="GET", headers=headers)
+    try:
+        with urllib.request.urlopen(request, timeout=2) as response:
+            result = json.loads(response.read().decode("utf-8"))
+        inspector = result.get("inspector") if isinstance(result, dict) and isinstance(result.get("inspector"), dict) else {}
+        ready = result.get("ok") is True and inspector.get("ready") is True and inspector.get("scope_validation_configured") is True
+        if not ready:
+            raise ValueError("inspector_probe_not_ready")
+    except urllib.error.HTTPError as error:
+        code = "authentication_failed_" + str(error.code) if error.code in (401, 403) else "inspector_probe_http_" + str(error.code)
+        BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": False, "lastError": code, "lastProbeAtEpoch": now_epoch})
+        return False, dict(BASIC_FINAL_ORAL_INSPECTOR_STATUS)
+    except (OSError, urllib.error.URLError, TimeoutError, json.JSONDecodeError, TypeError, ValueError):
+        BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": False, "lastError": "internal_inspector_unavailable", "lastProbeAtEpoch": now_epoch})
+        return False, dict(BASIC_FINAL_ORAL_INSPECTOR_STATUS)
+    BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({
+        "ready": True, "lastError": "", "lastSuccessAt": now_iso(), "lastProbeAtEpoch": now_epoch,
+        "probe": "authenticated_internal_get",
+    })
+    return True, dict(BASIC_FINAL_ORAL_INSPECTOR_STATUS)
+
+
+def basic_final_oral_probe_storage(force=False):
+    """Perform real fsync probes for both official audio and audit storage."""
+    now_epoch = time.time()
+    last_probe = float(BASIC_FINAL_ORAL_STORAGE_STATUS.get("lastProbeAtEpoch", 0) or 0)
+    if not force and now_epoch - last_probe < 60:
+        return (
+            BASIC_FINAL_ORAL_STORAGE_STATUS.get("audioWritable") is True
+            and BASIC_FINAL_ORAL_STORAGE_STATUS.get("auditWritable") is True,
+            dict(BASIC_FINAL_ORAL_STORAGE_STATUS),
+        )
+    audio_writable = False
+    audit_writable = False
+    audio_error = ""
+    audit_error = ""
+    audio_probe_path = ""
+    try:
+        os.makedirs(BASIC_FINAL_ORAL_AUDIO_DIR, exist_ok=True)
+        fd, audio_probe_path = tempfile.mkstemp(prefix=".storage-probe-", suffix=".tmp", dir=BASIC_FINAL_ORAL_AUDIO_DIR)
+        with os.fdopen(fd, "wb") as handle:
+            handle.write(b"jaralingua-final-oral-storage-probe\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.unlink(audio_probe_path)
+        audio_probe_path = ""
+        audio_writable = True
+    except OSError as error:
+        audio_error = clean_text(getattr(error, "strerror", None) or error.__class__.__name__, 200) or "audio_storage_probe_failed"
+    finally:
+        if audio_probe_path:
+            try:
+                os.unlink(audio_probe_path)
+            except OSError:
+                pass
+    try:
+        audit_directory = os.path.dirname(BASIC_FINAL_ORAL_AUDIT_PATH) or "."
+        os.makedirs(audit_directory, exist_ok=True)
+        probe_event = {
+            "id": "BFOH-" + secrets.token_hex(6).upper(),
+            "type": "health_probe",
+            "at": now_iso(),
+            "audioWritable": audio_writable,
+        }
+        line = json.dumps(probe_event, ensure_ascii=False, sort_keys=True, separators=(",", ":")) + "\n"
+        with BASIC_FINAL_ORAL_AUDIT_LOCK:
+            with open(BASIC_FINAL_ORAL_AUDIT_PATH, "a", encoding="utf-8") as handle:
+                handle.write(line)
+                handle.flush()
+                os.fsync(handle.fileno())
+        audit_writable = True
+    except OSError as error:
+        audit_error = clean_text(getattr(error, "strerror", None) or error.__class__.__name__, 200) or "audit_storage_probe_failed"
+    success = audio_writable and audit_writable
+    BASIC_FINAL_ORAL_STORAGE_STATUS.update({
+        "lastProbeAtEpoch": now_epoch,
+        "lastSuccessAt": now_iso() if success else BASIC_FINAL_ORAL_STORAGE_STATUS.get("lastSuccessAt"),
+        "audioWritable": audio_writable,
+        "auditWritable": audit_writable,
+        "audioError": audio_error,
+        "auditError": audit_error,
+    })
+    return success, dict(BASIC_FINAL_ORAL_STORAGE_STATUS)
+
+
+def basic_final_oral_state_rate_allowed(profile):
+    actor = normalize_email((profile or {}).get("email")) or "anonymous"
+    now_epoch = time.time()
+    recent = [stamp for stamp in BASIC_FINAL_ORAL_STATE_ACTIONS.get(actor, []) if now_epoch - stamp < 60]
+    if len(recent) >= 30:
+        BASIC_FINAL_ORAL_STATE_ACTIONS[actor] = recent
+        return False
+    BASIC_FINAL_ORAL_STATE_ACTIONS[actor] = recent + [now_epoch]
+    return True
+
+
+def basic_final_oral_turn_duration_limit(turn_id):
+    return BASIC_FINAL_ORAL_TURN_MAX_MS.get(clean_text(turn_id, 40), 0) + BASIC_FINAL_ORAL_DURATION_TOLERANCE_MS
+
+
+def basic_final_oral_turn_unlock(attempt, turn_id):
+    unlocks = attempt.get("turnUnlocks") if isinstance(attempt, dict) and isinstance(attempt.get("turnUnlocks"), dict) else {}
+    unlock = unlocks.get(clean_text(turn_id, 40))
+    if not isinstance(unlock, dict) or int(unlock.get("usesRemaining", 0) or 0) < 1:
+        return None
+    expires_at = basic_final_oral_parse_time(unlock.get("expiresAt"))
+    if not expires_at or expires_at <= basic_final_oral_now():
+        return None
+    return unlock
+
+
+def inspect_basic_final_oral_audio(path, content_type, claimed_duration_ms=0):
+    """Return trusted media facts using an injectable inspector or ffprobe.
+
+    A signature-only fallback remains available on hosts without ffprobe, but
+    is explicitly reported as degraded in health and in each turn.
+    """
+    if callable(BASIC_FINAL_ORAL_INSPECTOR):
+        result = BASIC_FINAL_ORAL_INSPECTOR(path, content_type)
+        if not isinstance(result, dict) or result.get("valid") is not True:
+            raise ValueError(clean_text((result or {}).get("error"), 80) or "audio_decode_failed")
+        duration_ms = int(result.get("durationMs", 0) or 0)
+        BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": True, "lastError": "", "lastSuccessAt": now_iso(), "lastProbeAtEpoch": time.time()})
+        return {
+            "valid": True,
+            "verified": True,
+            "inspector": clean_text(result.get("inspector") or "pluggable", 80),
+            "durationMs": duration_ms,
+            "silenceFlag": result.get("silenceFlag") is True,
+        }
+    if BASIC_FINAL_ORAL_INSPECT_URL:
+        try:
+            with open(path, "rb") as handle:
+                body = handle.read(BASIC_FINAL_ORAL_MAX_AUDIO_BYTES + 1)
+            headers = {"Content-Type": content_type, "Content-Length": str(len(body))}
+            if BASIC_FINAL_ORAL_INTERNAL_TOKEN:
+                headers["X-Jaralingua-Internal-Token"] = BASIC_FINAL_ORAL_INTERNAL_TOKEN
+            request = urllib.request.Request(BASIC_FINAL_ORAL_INSPECT_URL, data=body, method="POST", headers=headers)
+            with urllib.request.urlopen(request, timeout=3) as response:
+                result = json.loads(response.read().decode("utf-8"))
+            audio = result.get("audio") if isinstance(result, dict) and isinstance(result.get("audio"), dict) else {}
+            if result.get("ok") is not True or audio.get("decodable") is not True:
+                raise ValueError("audio_decode_failed")
+            duration_ms = int(round(float(audio.get("duration_seconds", 0)) * 1000))
+            if duration_ms < BASIC_FINAL_ORAL_MIN_DURATION_MS or duration_ms > BASIC_FINAL_ORAL_MAX_DURATION_MS:
+                raise ValueError("invalid_audio_duration")
+            BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": True, "lastError": "", "lastSuccessAt": now_iso(), "lastProbeAtEpoch": time.time()})
+            return {
+                "valid": True, "verified": True, "inspector": "internal_transcriber",
+                "durationMs": duration_ms, "silenceFlag": audio.get("likely_silent") is True,
+                "format": clean_text(audio.get("format"), 40),
+                "rms": audio.get("rms"), "peak": audio.get("peak"),
+            }
+        except urllib.error.HTTPError as error:
+            if error.code in (400, 413, 415, 422):
+                BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": False, "lastError": "media_rejected_" + str(error.code)})
+                raise ValueError("audio_decode_failed")
+            if error.code in (401, 403):
+                BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": False, "lastError": "authentication_failed_" + str(error.code)})
+                raise ValueError("audio_inspector_authentication_failed")
+            BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": False, "lastError": "internal_inspector_http_" + str(error.code)})
+        except ValueError:
+            raise
+        except (OSError, urllib.error.URLError, TimeoutError, json.JSONDecodeError, TypeError, OverflowError):
+            # Availability failures fall through to local ffprobe. Semantic
+            # media failures above remain closed.
+            BASIC_FINAL_ORAL_INSPECTOR_STATUS.update({"ready": False, "lastError": "internal_inspector_unavailable"})
+    ffprobe = shutil.which("ffprobe")
+    if ffprobe:
+        try:
+            completed = subprocess.run(
+                [ffprobe, "-v", "error", "-show_entries", "format=duration", "-of", "json", path],
+                capture_output=True, text=True, timeout=12, check=False,
+            )
+            if completed.returncode != 0:
+                raise ValueError("audio_decode_failed")
+            parsed = json.loads(completed.stdout or "{}")
+            duration_ms = int(round(float(parsed.get("format", {}).get("duration")) * 1000))
+        except (OSError, subprocess.SubprocessError, json.JSONDecodeError, TypeError, ValueError, OverflowError):
+            raise ValueError("audio_decode_failed")
+        if duration_ms < BASIC_FINAL_ORAL_MIN_DURATION_MS or duration_ms > BASIC_FINAL_ORAL_MAX_DURATION_MS:
+            raise ValueError("invalid_audio_duration")
+        return {"valid": True, "verified": True, "inspector": "ffprobe", "durationMs": duration_ms, "silenceFlag": False}
+    try:
+        duration_ms = int(claimed_duration_ms or 0)
+    except (TypeError, ValueError):
+        duration_ms = 0
+    return {
+        "valid": True,
+        "verified": False,
+        "inspector": "signature_fallback",
+        "durationMs": max(0, min(BASIC_FINAL_ORAL_MAX_DURATION_MS, duration_ms)),
+        "silenceFlag": False,
+    }
+
+
 def save_basic_final_oral_audio(attempt_id, turn_id, payload):
     audio_bytes, content_type, extension = decode_basic_final_oral_audio(payload)
     filename = safe_filename_token(attempt_id, 90) + "-" + safe_filename_token(turn_id, 30) + "-" + secrets.token_hex(6) + "." + extension
@@ -7504,9 +8278,23 @@ def save_basic_final_oral_audio(attempt_id, turn_id, payload):
         raise ValueError("invalid_audio_path")
     os.makedirs(BASIC_FINAL_ORAL_AUDIO_DIR, exist_ok=True)
     fd, temp_path = tempfile.mkstemp(prefix=".basic-final-oral-", suffix="." + extension, dir=BASIC_FINAL_ORAL_AUDIO_DIR)
+    inspection = None
     try:
         with os.fdopen(fd, "wb") as handle:
             handle.write(audio_bytes)
+            handle.flush()
+            os.fsync(handle.fileno())
+        try:
+            inspection = inspect_basic_final_oral_audio(temp_path, content_type, payload.get("durationMs"))
+        except (OSError, TimeoutError) as error:
+            raise BasicFinalOralAudioVerificationPending("audio_verification_pending") from error
+        if not isinstance(inspection, dict) or inspection.get("verified") is not True:
+            raise BasicFinalOralAudioVerificationPending("audio_verification_pending")
+        duration_ms = int(inspection.get("durationMs", 0) or 0)
+        if duration_ms < BASIC_FINAL_ORAL_MIN_DURATION_MS:
+            raise ValueError("invalid_audio_duration")
+        if duration_ms > basic_final_oral_turn_duration_limit(turn_id):
+            raise ValueError("turn_audio_too_long")
         os.replace(temp_path, path)
         try:
             os.chmod(path, 0o640)
@@ -7515,12 +8303,67 @@ def save_basic_final_oral_audio(attempt_id, turn_id, payload):
     finally:
         if os.path.exists(temp_path):
             os.unlink(temp_path)
-    return {
+    result = {
         "file": filename,
         "contentType": content_type,
         "size": len(audio_bytes),
-        "sha256": hashlib.sha256(audio_bytes).hexdigest()
+        "sha256": hashlib.sha256(audio_bytes).hexdigest(),
+        "verified": inspection.get("verified") is True,
+        "inspector": clean_text(inspection.get("inspector"), 80),
+        "durationMs": int(inspection.get("durationMs", 0) or 0),
+        "silenceFlag": inspection.get("silenceFlag") is True,
+        "verifiedAt": now_iso() if inspection.get("verified") else None,
+        "mtimeNs": os.stat(path).st_mtime_ns,
     }
+    return result
+
+
+def verify_basic_final_oral_audio(audio_ref, claimed_duration_ms=0, allow_probe=False):
+    if not isinstance(audio_ref, dict):
+        return False, "missing_audio", None
+    path = basic_final_oral_audio_path(audio_ref.get("file"))
+    if not path or not os.path.isfile(path):
+        return False, "audio_file_missing", None
+    try:
+        size = os.path.getsize(path)
+        if size != int(audio_ref.get("size", -1)):
+            return False, "audio_size_mismatch", None
+        digest = hashlib.sha256()
+        with open(path, "rb") as handle:
+            for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+                digest.update(chunk)
+        if not hmac.compare_digest(digest.hexdigest(), clean_text(audio_ref.get("sha256"), 80)):
+            return False, "audio_hash_mismatch", None
+        current_mtime = os.stat(path).st_mtime_ns
+        if audio_ref.get("verified") is True and int(audio_ref.get("mtimeNs", -1) or -1) == current_mtime:
+            inspection = {
+                "valid": True, "verified": True,
+                "inspector": clean_text(audio_ref.get("inspector"), 80),
+                "durationMs": int(audio_ref.get("durationMs", 0) or claimed_duration_ms or 0),
+                "silenceFlag": audio_ref.get("silenceFlag") is True,
+                "cached": True,
+            }
+        elif allow_probe:
+            inspection = inspect_basic_final_oral_audio(path, clean_text(audio_ref.get("contentType"), 80), claimed_duration_ms)
+        else:
+            return False, "audio_not_server_verified", None
+    except (OSError, ValueError) as error:
+        return False, clean_text(error, 80) or "audio_decode_failed", None
+    return True, "verified" if inspection.get("verified") else "signature_fallback", inspection
+
+
+def basic_final_oral_request_hash(payload, audio_sha=""):
+    canonical = {
+        "attemptId": clean_text(payload.get("attemptId"), 120),
+        "turnId": clean_text(payload.get("turnId"), 40),
+        "variantId": clean_text(payload.get("variantId"), 80),
+        "revision": payload.get("revision"),
+        "transcript": clean_text(payload.get("transcript"), 4000),
+        "transcriptStatus": clean_text(payload.get("transcriptStatus"), 40),
+        "durationMs": payload.get("durationMs"),
+        "audioSha256": clean_text(audio_sha, 80),
+    }
+    return hashlib.sha256(json.dumps(canonical, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
 def remove_basic_final_oral_audio(audio_ref):
@@ -7559,6 +8402,52 @@ def clean_basic_final_oral_rubric(value):
     return rubric
 
 
+def clean_basic_final_oral_draft_rubric(value):
+    if value is None:
+        return {}
+    if not isinstance(value, dict):
+        return None
+    rubric = {}
+    for key in ("taskCompletion", "interactionDiscourse", "fluency", "vocabularyStructure", "pronunciation"):
+        raw = value.get(key)
+        if raw in (None, ""):
+            continue
+        try:
+            score = float(raw)
+        except (TypeError, ValueError):
+            return None
+        if not math.isfinite(score) or score < 0 or score > 10:
+            return None
+        rubric[key] = round(score, 2)
+    return rubric
+
+
+def clean_basic_final_oral_reviewed_audio(value, submission, require_all=False):
+    if value is None and not require_all:
+        return []
+    if not isinstance(value, list):
+        return None
+    expected = {
+        clean_text(turn.get("turnId"), 40): clean_text((turn.get("audio") or {}).get("sha256"), 80)
+        for turn in submission.get("turns", [])
+        if isinstance(turn, dict) and clean_text(turn.get("turnId"), 40) and isinstance(turn.get("audio"), dict)
+    }
+    reviewed = {}
+    for item in value:
+        if not isinstance(item, dict):
+            return None
+        turn_id = clean_text(item.get("turnId"), 40)
+        sha256 = clean_text(item.get("sha256"), 80).lower()
+        if not turn_id or not re.fullmatch(r"[0-9a-f]{64}", sha256 or "") or turn_id in reviewed:
+            return None
+        if turn_id not in expected or not hmac.compare_digest(expected.get(turn_id, "").lower(), sha256):
+            return None
+        reviewed[turn_id] = sha256
+    if require_all and (len(expected) != BASIC_FINAL_ORAL_EXPECTED_TURNS or set(reviewed) != set(expected)):
+        return None
+    return [{"turnId": turn_id, "sha256": reviewed[turn_id]} for turn_id in expected if turn_id in reviewed]
+
+
 def clean_basic_final_oral_teacher_evidence(value):
     if not isinstance(value, dict):
         return {}
@@ -7592,6 +8481,7 @@ def basic_final_oral_gradebook_pending_detail(attempt, submission):
         "score50": None,
         "grade": None,
         "teacherFeedback": ""
+        ,"workflowStatus": "pending_teacher_review"
     }
 
 
@@ -7615,7 +8505,9 @@ def basic_final_oral_gradebook_graded_detail(submission):
         "grade": submission.get("grade"),
         "teacherFeedback": clean_text(submission.get("teacherFeedback"), 5000),
         "teacherEvidence": submission.get("teacherEvidence") if isinstance(submission.get("teacherEvidence"), dict) else {},
+        "reviewedAudioEvidence": submission.get("reviewedAudioEvidence") if isinstance(submission.get("reviewedAudioEvidence"), list) else [],
         "evidence": submission.get("turns", []) if isinstance(submission.get("turns"), list) else []
+        ,"workflowStatus": "published"
     }
 
 
@@ -7644,7 +8536,8 @@ def apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
             details = {}
             student["gradeDetails"] = details
             changed = True
-        if submission.get("status") == "graded" and clean_grade(submission.get("grade")) is not None:
+        published = submission.get("workflowStatus") == "published" or bool(submission.get("publishedAt"))
+        if published and clean_grade(submission.get("grade")) is not None:
             grade = clean_grade(submission.get("grade"))
             next_detail = basic_final_oral_gradebook_graded_detail(submission)
             if grades.get(BASIC_FINAL_ORAL_EVALUATION_ID) != grade:
@@ -7664,21 +8557,93 @@ def apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
     return changed
 
 
-def basic_final_oral_start(profile):
-    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+def basic_final_oral_gradebook_matches(grades_data, store, student_id):
+    student_id = clean_text(student_id, 40)
+    student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+    submission = store.get("submissions", {}).get(student_id)
+    if not isinstance(student, dict) or not isinstance(submission, dict):
+        return False
+    detail = student.get("gradeDetails", {}).get(BASIC_FINAL_ORAL_EVALUATION_ID) if isinstance(student.get("gradeDetails"), dict) else None
+    if not isinstance(detail, dict) or clean_text(detail.get("receiptId"), 80) != clean_text(submission.get("receiptId"), 80):
+        return False
+    if submission.get("workflowStatus") == "published":
+        return clean_grade(student.get("grades", {}).get(BASIC_FINAL_ORAL_EVALUATION_ID)) == clean_grade(submission.get("grade"))
+    return BASIC_FINAL_ORAL_EVALUATION_ID not in student.get("grades", {})
+
+
+def basic_final_oral_mark_sync(store, grades_data):
+    changed = False
+    for student_id, submission in store.get("submissions", {}).items():
+        if not isinstance(submission, dict):
+            continue
+        if basic_final_oral_gradebook_matches(grades_data, store, student_id):
+            target = "published" if submission.get("workflowStatus") == "published" else "synced"
+            if submission.get("workflowStatus") not in ("graded", "published") and submission.get("workflowStatus") != target:
+                submission["workflowStatus"] = target
+                submission["syncStatus"] = "synced"
+                submission.setdefault("workflowHistory", []).append({"status": target, "at": now_iso()})
+                changed = True
+            elif submission.get("syncStatus") != "synced":
+                submission["syncStatus"] = "synced"
+                changed = True
+            outbox = store.setdefault("outbox", {}).get(clean_text(submission.get("receiptId"), 80))
+            if isinstance(outbox, dict) and outbox.get("status") != "done":
+                outbox["status"] = "done"
+                outbox["completedAt"] = now_iso()
+                changed = True
+        else:
+            submission["syncStatus"] = "pending"
+    return changed
+
+
+def basic_final_oral_create_submission(store, attempt, student, profile=None, client_submission_id="", recovered=False):
+    student_id = clean_text(attempt.get("studentId"), 40)
+    attempt_id = clean_text(attempt.get("attemptId"), 120)
+    turns = attempt.get("turns") if isinstance(attempt.get("turns"), dict) else {}
+    submitted_at = now_iso()
+    public_turns = [basic_final_oral_public_turn(turns.get(question.get("turnId")), attempt_id) for question in attempt.get("assignedQuestions", [])]
+    receipt_id = "BFO-" + secrets.token_hex(6).upper()
+    submission = {
+        "receiptId": receipt_id, "attemptId": attempt_id, "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
+        "studentId": student_id,
+        "studentName": clean_text((student or {}).get("fullName") or attempt.get("student", {}).get("fullName"), 200),
+        "email": clean_email((student or {}).get("email") or attempt.get("student", {}).get("email")),
+        "status": "pending_teacher_review", "workflowStatus": "sync_pending", "syncStatus": "pending",
+        "submittedAt": submitted_at,
+        "totalDurationMs": sum(int(item.get("durationMs", 0) or 0) for item in turns.values() if isinstance(item, dict)),
+        "assignedQuestions": [dict(item) for item in attempt.get("assignedQuestions", []) if isinstance(item, dict)],
+        "turns": public_turns, "rubric": None, "score50": None, "grade": None,
+        "teacherFeedback": "", "teacherEvidence": {}, "reviewedAudioEvidence": [], "gradedAt": None, "gradedBy": "",
+        "publishedAt": None, "gradeRevision": 0, "gradeHistory": [],
+        "workflowHistory": [{"status": "submitted", "at": submitted_at}, {"status": "sync_pending", "at": submitted_at}],
+        "clientSubmissionId": clean_text(client_submission_id, 120), "recovered": recovered is True,
+    }
+    attempt.update({"status": "submitted", "workflowStatus": "submitted", "submittedAt": submitted_at, "lastSeenAt": submitted_at})
+    store.setdefault("submissions", {})[student_id] = submission
+    store.setdefault("outbox", {})[receipt_id] = {
+        "id": receipt_id, "type": "gradebook_sync", "studentId": student_id,
+        "status": "pending", "createdAt": submitted_at, "attempts": 0,
+    }
+    if client_submission_id:
+        store.setdefault("idempotency", {})[student_id + ":" + clean_text(client_submission_id, 120)] = receipt_id
+    basic_final_oral_append_event(store, "submission_recovered" if recovered else "submitted", profile, student_id, receipt_id, client_submission_id)
+    return submission
+
+
+def basic_final_oral_start(profile, payload=None):
+    payload = payload if isinstance(payload, dict) else {}
+    grades_data = read_basic_final_oral_grades_data()
     grades_changed = ensure_basic_gradebook_structure(grades_data)
     role = grade_user_role(profile, grades_data)
     if role in ("admin", "teacher"):
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 403, {"error": "student_only"}
-    student = matched_student_for_profile(profile, grades_data)
+    student = basic_final_oral_registered_student(profile, grades_data)
     if not isinstance(student, dict):
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
-        return 403, {"error": "student_not_authorized", "claimAvailable": grades_data.get("allowStudentIdClaim") is True}
-    if profile.get("_studentIdClaim"):
-        grades_changed = True
+        return 403, {"error": "student_not_authorized", "pairingRequired": True}
     student_id = clean_text(student.get("id"), 40)
     bundle = read_basic_final_oral_bundle()
     store = read_basic_final_oral_store()
@@ -7688,7 +8653,14 @@ def basic_final_oral_start(profile):
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 409, {"error": "already_submitted", "submission": basic_final_oral_public_submission(submission)}
     attempt = store.get("attempts", {}).get(student_id)
-    if isinstance(attempt, dict) and attempt.get("status") == "in_progress":
+    if isinstance(attempt, dict) and attempt.get("status") in ("in_progress", "complete_pending_submit"):
+        allowed, access_reason, _effective_close = basic_final_oral_access(bundle.get("state", {}), student_id, True)
+        if not allowed:
+            return 403, {"error": access_reason, "state": basic_final_oral_public_state(bundle.get("state", {}), "student", student_id)}
+        lease = basic_final_oral_acquire_lease(attempt, payload.get("deviceId"), profile, payload.get("forceLease") is True and role in ("admin", "teacher"))
+        if not lease:
+            existing_lease = attempt.get("lease", {})
+            return 409, {"error": "attempt_in_use", "serverLeaseExpiresAt": clean_text(existing_lease.get("expiresAt"), 80), "attempt": basic_final_oral_public_attempt(attempt)}
         attempt["lastSeenAt"] = now_iso()
         write_basic_final_oral_store(store)
         if grades_changed:
@@ -7698,10 +8670,11 @@ def basic_final_oral_start(profile):
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 409, {"error": "official_attempt_exists", "attempt": basic_final_oral_public_attempt(attempt)}
-    if bundle.get("state", {}).get("isOpen") is not True:
+    allowed, access_reason, effective_close = basic_final_oral_access(bundle.get("state", {}), student_id, False)
+    if not allowed:
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
-        return 403, {"error": "exam_closed", "state": bundle.get("state", {})}
+        return 403, {"error": access_reason, "state": basic_final_oral_public_state(bundle.get("state", {}), "student", student_id)}
     timestamp = now_iso()
     attempt = {
         "attemptId": "BFOA-" + secrets.token_hex(10).upper(),
@@ -7709,23 +8682,29 @@ def basic_final_oral_start(profile):
         "studentId": student_id,
         "student": basic_final_oral_student_identity(student),
         "status": "in_progress",
+        "workflowStatus": "in_progress",
+        "attemptScopeToken": secrets.token_urlsafe(32),
         "assignedQuestions": basic_final_oral_assign_questions(),
         "turns": {},
         "revision": 0,
         "startedAt": timestamp,
         "lastSeenAt": timestamp,
+        "expiresAt": (effective_close + timedelta(seconds=max(0, int(bundle.get("state", {}).get("graceSeconds", 0) or 0)))).isoformat().replace("+00:00", "Z") if effective_close else None,
         "submittedAt": None
     }
+    basic_final_oral_acquire_lease(attempt, payload.get("deviceId"), profile, True)
     store.setdefault("attempts", {})[student_id] = attempt
     basic_final_oral_append_event(store, "attempt_started", profile, student_id, attempt["attemptId"])
     write_basic_final_oral_store(store)
     if grades_changed:
         write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    if basic_final_oral_mark_sync(store, grades_data):
+        write_basic_final_oral_store(store)
     return 200, {"ok": True, "resumed": False, "attempt": basic_final_oral_public_attempt(attempt)}
 
 
 def basic_final_oral_get_attempt(profile, query):
-    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_data = read_basic_final_oral_grades_data()
     grades_changed = ensure_basic_gradebook_structure(grades_data)
     role = grade_user_role(profile, grades_data)
     store = read_basic_final_oral_store()
@@ -7739,12 +8718,10 @@ def basic_final_oral_get_attempt(profile, query):
             attempt = store.get("attempts", {}).get(requested_student_id)
             student_id = requested_student_id if isinstance(attempt, dict) else ""
     else:
-        student = matched_student_for_profile(profile, grades_data)
+        student = basic_final_oral_registered_student(profile, grades_data)
         if isinstance(student, dict):
             student_id = clean_text(student.get("id"), 40)
             attempt = store.get("attempts", {}).get(student_id)
-            if profile.get("_studentIdClaim"):
-                grades_changed = True
     if grades_changed:
         write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
     if not isinstance(attempt, dict):
@@ -7757,35 +8734,96 @@ def basic_final_oral_get_attempt(profile, query):
     return 200, {
         "ok": True,
         "attempt": basic_final_oral_public_attempt(attempt),
-        "submission": basic_final_oral_public_submission(submission)
+        "submission": basic_final_oral_public_submission(submission, role)
     }
 
 
-def basic_final_oral_save_turn(profile, payload):
-    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+def basic_final_oral_turn_preflight(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    role = grade_user_role(profile, grades_data)
+    if role in ("admin", "teacher"):
+        return 403, {"error": "student_only"}
+    student = basic_final_oral_registered_student(profile, grades_data)
+    if not isinstance(student, dict):
+        return 403, {"error": "student_not_authorized"}
+    student_id = clean_text(student.get("id"), 40)
+    store = read_basic_final_oral_store()
+    attempt = store.get("attempts", {}).get(student_id)
+    if not isinstance(attempt, dict):
+        return 404, {"error": "attempt_not_found"}
+    if attempt.get("status") not in ("in_progress", "complete_pending_submit"):
+        return 409, {"error": "attempt_not_editable"}
+    allowed, access_reason, _effective_close = basic_final_oral_access(read_basic_final_oral_bundle().get("state", {}), student_id, True)
+    if not allowed:
+        return 403, {"error": access_reason}
+    attempt_id = clean_text(payload.get("attemptId"), 120)
+    if attempt_id != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    if not basic_final_oral_scope_valid(attempt, payload.get("attemptScopeToken")):
+        return 403, {"error": "invalid_attempt_scope"}
+    if not basic_final_oral_lease_active(attempt, payload.get("leaseId"), payload.get("deviceId")):
+        return 409, {"error": "attempt_lease_required", "serverLeaseExpiresAt": clean_text(attempt.get("lease", {}).get("expiresAt"), 80), "attempt": basic_final_oral_public_attempt(attempt)}
+    turn_id = clean_text(payload.get("turnId"), 40)
+    assignment = next((item for item in attempt.get("assignedQuestions", []) if isinstance(item, dict) and clean_text(item.get("turnId"), 40) == turn_id), None)
+    if not isinstance(assignment, dict):
+        return 400, {"error": "invalid_turn"}
+    supplied_variant = clean_text(payload.get("variantId"), 80)
+    if supplied_variant and supplied_variant != clean_text(assignment.get("variantId"), 80):
+        return 409, {"error": "variant_mismatch"}
+    client_turn_id = clean_text(payload.get("clientTurnId"), 120)
+    if len(client_turn_id) < 8:
+        return 400, {"error": "missing_client_turn_id"}
+    existing = attempt.get("turns", {}).get(turn_id) if isinstance(attempt.get("turns"), dict) else None
+    existing_client = isinstance(existing, dict) and clean_text(existing.get("clientTurnId"), 120) == client_turn_id
+    if not existing_client:
+        try:
+            submitted_revision = int(payload.get("revision"))
+        except (TypeError, ValueError):
+            return 400, {"error": "invalid_revision"}
+        if submitted_revision != int(attempt.get("revision", 0) or 0):
+            return 409, {"error": "stale_attempt", "revision": int(attempt.get("revision", 0) or 0), "attempt": basic_final_oral_public_attempt(attempt)}
+    has_audio = bool(payload.get("audioDataUrl") or payload.get("audioBase64"))
+    if not has_audio and not (isinstance(existing, dict) and isinstance(existing.get("audio"), dict)):
+        return 400, {"error": "missing_audio"}
+    replacement_authorized = False
+    if has_audio and isinstance(existing, dict) and not existing_client:
+        replacement_authorized = basic_final_oral_turn_unlock(attempt, turn_id) is not None
+        if not replacement_authorized:
+            return 409, {"error": "turn_locked", "turnId": turn_id, "turn": basic_final_oral_public_turn(existing, attempt_id)}
+    return 200, {"ok": True, "existingClient": existing_client, "replacementAuthorized": replacement_authorized, "attemptId": attempt_id, "turnId": turn_id}
+
+
+def basic_final_oral_save_turn(profile, payload, prepared_audio=None, prepared_audio_sha="", audio_was_supplied=False):
+    grades_data = read_basic_final_oral_grades_data()
     grades_changed = ensure_basic_gradebook_structure(grades_data)
     role = grade_user_role(profile, grades_data)
     if role in ("admin", "teacher"):
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 403, {"error": "student_only"}
-    student = matched_student_for_profile(profile, grades_data)
+    student = basic_final_oral_registered_student(profile, grades_data)
     if not isinstance(student, dict):
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 403, {"error": "student_not_authorized"}
-    if profile.get("_studentIdClaim"):
-        grades_changed = True
     student_id = clean_text(student.get("id"), 40)
     store = read_basic_final_oral_store()
     attempt = store.get("attempts", {}).get(student_id)
     if not isinstance(attempt, dict):
         return 404, {"error": "attempt_not_found"}
-    if attempt.get("status") != "in_progress":
+    if attempt.get("status") not in ("in_progress", "complete_pending_submit"):
         return 409, {"error": "attempt_not_editable"}
+    bundle = read_basic_final_oral_bundle()
+    allowed, access_reason, _effective_close = basic_final_oral_access(bundle.get("state", {}), student_id, True)
+    if not allowed:
+        return 403, {"error": access_reason, "state": basic_final_oral_public_state(bundle.get("state", {}), "student", student_id)}
     attempt_id = clean_text(payload.get("attemptId"), 120)
     if not attempt_id or attempt_id != clean_text(attempt.get("attemptId"), 120):
         return 409, {"error": "attempt_mismatch"}
+    if not basic_final_oral_scope_valid(attempt, payload.get("attemptScopeToken")):
+        return 403, {"error": "invalid_attempt_scope"}
+    if not basic_final_oral_lease_active(attempt, payload.get("leaseId"), payload.get("deviceId")):
+        return 409, {"error": "attempt_lease_required", "attempt": basic_final_oral_public_attempt(attempt)}
     turn_id = clean_text(payload.get("turnId"), 40)
     assignment = next(
         (item for item in attempt.get("assignedQuestions", []) if isinstance(item, dict) and clean_text(item.get("turnId"), 40) == turn_id),
@@ -7800,8 +8838,25 @@ def basic_final_oral_save_turn(profile, payload):
     client_turn_id = clean_text(payload.get("clientTurnId"), 120)
     if len(client_turn_id) < 8:
         return 400, {"error": "missing_client_turn_id"}
+    prepared_audio = prepared_audio if isinstance(prepared_audio, dict) else None
+    has_new_audio = bool(audio_was_supplied or prepared_audio or payload.get("audioDataUrl") or payload.get("audioBase64"))
+    supplied_audio_sha = ""
+    if has_new_audio:
+        if prepared_audio_sha:
+            supplied_audio_sha = clean_text(prepared_audio_sha, 80)
+        elif prepared_audio:
+            supplied_audio_sha = clean_text(prepared_audio.get("sha256"), 80)
+        else:
+            try:
+                supplied_audio_sha = hashlib.sha256(decode_basic_final_oral_audio(payload)[0]).hexdigest()
+            except ValueError as error:
+                return 400, {"error": str(error)}
+    request_hash = basic_final_oral_request_hash(payload, supplied_audio_sha)
     existing = attempt.setdefault("turns", {}).get(turn_id)
     if isinstance(existing, dict) and clean_text(existing.get("clientTurnId"), 120) == client_turn_id:
+        prior_request_hash = clean_text(existing.get("requestHash"), 80)
+        if prior_request_hash and not hmac.compare_digest(prior_request_hash, request_hash):
+            return 409, {"error": "idempotency_conflict", "turn": basic_final_oral_public_turn(existing, attempt_id)}
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 200, {
@@ -7810,6 +8865,11 @@ def basic_final_oral_save_turn(profile, payload):
             "revision": int(attempt.get("revision", 0) or 0),
             "turn": basic_final_oral_public_turn(existing, attempt_id)
         }
+    replacement_unlock = None
+    if has_new_audio and isinstance(existing, dict) and isinstance(existing.get("audio"), dict):
+        replacement_unlock = basic_final_oral_turn_unlock(attempt, turn_id)
+        if not isinstance(replacement_unlock, dict):
+            return 409, {"error": "turn_locked", "turnId": turn_id, "turn": basic_final_oral_public_turn(existing, attempt_id)}
     try:
         submitted_revision = int(payload.get("revision"))
     except (TypeError, ValueError):
@@ -7826,34 +8886,80 @@ def basic_final_oral_save_turn(profile, payload):
         duration_ms = int(payload.get("durationMs", 0) or 0)
     except (TypeError, ValueError):
         return 400, {"error": "invalid_duration"}
-    if duration_ms < 0 or duration_ms > 180000:
+    if duration_ms < 0 or duration_ms > BASIC_FINAL_ORAL_MAX_DURATION_MS:
         return 400, {"error": "invalid_duration"}
-    has_new_audio = bool(payload.get("audioDataUrl") or payload.get("audioBase64"))
     if not has_new_audio and not (isinstance(existing, dict) and isinstance(existing.get("audio"), dict)):
         return 400, {"error": "missing_audio"}
     new_audio = None
     if has_new_audio:
-        try:
-            new_audio = save_basic_final_oral_audio(attempt_id, turn_id, payload)
-        except ValueError as error:
-            return 400, {"error": str(error)}
+        if prepared_audio:
+            new_audio = prepared_audio
+        elif audio_was_supplied:
+            return 409, {"error": "audio_preparation_required"}
+        else:
+            try:
+                new_audio = save_basic_final_oral_audio(attempt_id, turn_id, payload)
+            except ValueError as error:
+                return 400, {"error": str(error)}
     timestamp = now_iso()
+    previous_versions = list(existing.get("versions", [])) if isinstance(existing, dict) and isinstance(existing.get("versions"), list) else []
+    if new_audio and isinstance(existing, dict) and isinstance(existing.get("audio"), dict):
+        previous_versions.append({
+            "version": int(existing.get("version", 1) or 1),
+            "audio": dict(existing.get("audio")),
+            "transcript": clean_text(existing.get("transcript"), 4000),
+            "updatedAt": clean_text(existing.get("updatedAt"), 80),
+            "requestHash": clean_text(existing.get("requestHash"), 80),
+        })
+    effective_audio = new_audio or (existing.get("audio") if isinstance(existing, dict) else None)
+    verified_duration = int((effective_audio or {}).get("durationMs", 0) or duration_ms)
+    if verified_duration < BASIC_FINAL_ORAL_MIN_DURATION_MS or verified_duration > basic_final_oral_turn_duration_limit(turn_id):
+        return 400, {"error": "turn_audio_too_long" if verified_duration > basic_final_oral_turn_duration_limit(turn_id) else "invalid_audio_duration", "turnId": turn_id, "maxDurationMs": basic_final_oral_turn_duration_limit(turn_id)}
+    prospective_total = verified_duration + sum(
+        int(item.get("durationMs", 0) or 0)
+        for existing_turn_id, item in attempt.get("turns", {}).items()
+        if existing_turn_id != turn_id and isinstance(item, dict)
+    )
+    if prospective_total > BASIC_FINAL_ORAL_MAX_DURATION_MS:
+        return 400, {"error": "attempt_audio_too_long", "totalDurationMs": prospective_total, "maxDurationMs": BASIC_FINAL_ORAL_MAX_DURATION_MS}
+    transcript = clean_text(payload.get("transcript"), 4000)
+    transcript_status = clean_text(payload.get("transcriptStatus"), 40) or ("ready" if transcript else "pending")
+    if transcript_status not in ("pending", "processing", "ready", "failed"):
+        transcript_status = "ready" if transcript else "pending"
     turn = {
         "turnId": turn_id,
         "variantId": expected_variant,
         "transcript": transcript,
-        "durationMs": duration_ms,
-        "audio": new_audio or existing.get("audio"),
+        "transcriptStatus": transcript_status,
+        "durationMs": verified_duration,
+        "durationSource": "inspector" if (effective_audio or {}).get("verified") else "client_unverified",
+        "verificationStatus": "verified" if (effective_audio or {}).get("verified") else "signature_fallback",
+        "silenceFlag": bool((effective_audio or {}).get("silenceFlag")),
+        "audio": effective_audio,
+        "version": (int(existing.get("version", 1) or 1) + 1) if new_audio and isinstance(existing, dict) else int((existing or {}).get("version", 1) or 1),
+        "versions": previous_versions,
         "clientTurnId": client_turn_id,
+        "requestHash": request_hash,
         "savedAt": existing.get("savedAt") if isinstance(existing, dict) else timestamp,
         "updatedAt": timestamp
     }
     attempt["turns"][turn_id] = turn
+    if isinstance(replacement_unlock, dict):
+        attempt.setdefault("turnUnlocks", {}).pop(turn_id, None)
     attempt["revision"] = current_revision + 1
     attempt["lastSeenAt"] = timestamp
+    basic_final_oral_touch_lease(attempt)
+    if len(attempt.get("turns", {})) == BASIC_FINAL_ORAL_EXPECTED_TURNS:
+        attempt["status"] = "complete_pending_submit"
+        attempt["workflowStatus"] = "complete_pending_submit"
+        attempt["completedAt"] = attempt.get("completedAt") or timestamp
+    if isinstance(replacement_unlock, dict):
+        basic_final_oral_append_event(
+            store, "turn_replaced_authorized", profile, student_id,
+            turn_id + ": " + clean_text(replacement_unlock.get("reason"), 400), client_turn_id,
+        )
+    basic_final_oral_append_event(store, "turn_saved", profile, student_id, turn_id + " r" + str(attempt["revision"]), client_turn_id)
     write_basic_final_oral_store(store)
-    if new_audio and isinstance(existing, dict):
-        remove_basic_final_oral_audio(existing.get("audio"))
     if grades_changed:
         write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
     return 200, {
@@ -7861,24 +8967,23 @@ def basic_final_oral_save_turn(profile, payload):
         "idempotent": False,
         "revision": attempt["revision"],
         "turn": basic_final_oral_public_turn(turn, attempt_id)
+        ,"serverLeaseExpiresAt": clean_text(attempt.get("lease", {}).get("expiresAt"), 80)
     }
 
 
 def basic_final_oral_submit(profile, payload):
-    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_data = read_basic_final_oral_grades_data()
     grades_changed = ensure_basic_gradebook_structure(grades_data)
     role = grade_user_role(profile, grades_data)
     if role in ("admin", "teacher"):
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 403, {"error": "student_only"}
-    student = matched_student_for_profile(profile, grades_data)
+    student = basic_final_oral_registered_student(profile, grades_data)
     if not isinstance(student, dict):
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 403, {"error": "student_not_authorized"}
-    if profile.get("_studentIdClaim"):
-        grades_changed = True
     student_id = clean_text(student.get("id"), 40)
     client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
     if len(client_submission_id) < 8:
@@ -7892,21 +8997,33 @@ def basic_final_oral_submit(profile, payload):
             grades_changed = True
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        if basic_final_oral_mark_sync(store, grades_data):
+            write_basic_final_oral_store(store)
         return 200, {"ok": True, "idempotent": True, "submission": basic_final_oral_public_submission(existing_submission)}
     if isinstance(existing_submission, dict):
         if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
             grades_changed = True
         if grades_changed:
             write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        if basic_final_oral_mark_sync(store, grades_data):
+            write_basic_final_oral_store(store)
         return 409, {"error": "already_submitted", "submission": basic_final_oral_public_submission(existing_submission)}
     attempt = store.get("attempts", {}).get(student_id)
     if not isinstance(attempt, dict):
         return 404, {"error": "attempt_not_found"}
-    if attempt.get("status") != "in_progress":
+    if attempt.get("status") not in ("in_progress", "complete_pending_submit"):
         return 409, {"error": "attempt_not_editable"}
     attempt_id = clean_text(payload.get("attemptId"), 120)
     if not attempt_id or attempt_id != clean_text(attempt.get("attemptId"), 120):
         return 409, {"error": "attempt_mismatch"}
+    if not basic_final_oral_scope_valid(attempt, payload.get("attemptScopeToken")):
+        return 403, {"error": "invalid_attempt_scope"}
+    if not basic_final_oral_lease_active(attempt, payload.get("leaseId"), payload.get("deviceId")):
+        return 409, {"error": "attempt_lease_required", "serverLeaseExpiresAt": clean_text(attempt.get("lease", {}).get("expiresAt"), 80), "attempt": basic_final_oral_public_attempt(attempt)}
+    bundle = read_basic_final_oral_bundle()
+    allowed, access_reason, _effective_close = basic_final_oral_access(bundle.get("state", {}), student_id, True)
+    if not allowed:
+        return 403, {"error": access_reason, "state": basic_final_oral_public_state(bundle.get("state", {}), "student", student_id)}
     if payload.get("revision") is not None:
         try:
             submitted_revision = int(payload.get("revision"))
@@ -7916,47 +9033,34 @@ def basic_final_oral_submit(profile, payload):
         if submitted_revision != current_revision:
             return 409, {"error": "stale_attempt", "revision": current_revision, "attempt": basic_final_oral_public_attempt(attempt)}
     missing_turns = []
+    invalid_turns = []
+    total_duration_ms = 0
     turns = attempt.get("turns") if isinstance(attempt.get("turns"), dict) else {}
     for question in attempt.get("assignedQuestions", []):
         turn_id = clean_text(question.get("turnId"), 40)
         turn = turns.get(turn_id)
         if not isinstance(turn, dict) or not isinstance(turn.get("audio"), dict):
             missing_turns.append(turn_id)
+            continue
+        valid, verification, inspection = verify_basic_final_oral_audio(turn.get("audio"), turn.get("durationMs"))
+        if not valid or not isinstance(inspection, dict) or inspection.get("verified") is not True:
+            invalid_turns.append({"turnId": turn_id, "reason": verification})
+            continue
+        turn["verificationStatus"] = "verified"
+        turn["durationMs"] = int(inspection.get("durationMs", 0) or turn.get("durationMs", 0) or 0)
+        turn["durationSource"] = "inspector"
+        turn["silenceFlag"] = inspection.get("silenceFlag") is True
+        if turn["durationMs"] > basic_final_oral_turn_duration_limit(turn_id):
+            invalid_turns.append({"turnId": turn_id, "reason": "turn_audio_too_long", "maxDurationMs": basic_final_oral_turn_duration_limit(turn_id)})
+            continue
+        total_duration_ms += turn["durationMs"]
     if missing_turns:
         return 400, {"error": "incomplete_attempt", "missingTurns": missing_turns}
-    submitted_at = now_iso()
-    public_turns = [
-        basic_final_oral_public_turn(turns.get(question.get("turnId")), attempt_id)
-        for question in attempt.get("assignedQuestions", [])
-    ]
-    total_duration = sum(int(item.get("durationMs", 0) or 0) for item in turns.values() if isinstance(item, dict))
-    submission = {
-        "receiptId": "BFO-" + secrets.token_hex(6).upper(),
-        "attemptId": attempt_id,
-        "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
-        "studentId": student_id,
-        "studentName": clean_text(student.get("fullName"), 200),
-        "email": normalize_email(profile.get("email")),
-        "status": "pending_teacher_review",
-        "submittedAt": submitted_at,
-        "totalDurationMs": total_duration,
-        "assignedQuestions": [dict(item) for item in attempt.get("assignedQuestions", []) if isinstance(item, dict)],
-        "turns": public_turns,
-        "rubric": None,
-        "score50": None,
-        "grade": None,
-        "teacherFeedback": "",
-        "teacherEvidence": {},
-        "gradedAt": None,
-        "gradedBy": "",
-        "clientSubmissionId": client_submission_id
-    }
-    attempt["status"] = "submitted"
-    attempt["submittedAt"] = submitted_at
-    attempt["lastSeenAt"] = submitted_at
-    store.setdefault("submissions", {})[student_id] = submission
-    store.setdefault("idempotency", {})[idempotency_key] = submission["receiptId"]
-    basic_final_oral_append_event(store, "submitted", profile, student_id, submission["receiptId"])
+    if invalid_turns:
+        return 422, {"error": "audio_verification_failed", "invalidTurns": invalid_turns}
+    if total_duration_ms > BASIC_FINAL_ORAL_MAX_DURATION_MS:
+        return 422, {"error": "attempt_audio_too_long", "totalDurationMs": total_duration_ms, "maxDurationMs": BASIC_FINAL_ORAL_MAX_DURATION_MS}
+    submission = basic_final_oral_create_submission(store, attempt, student, profile, client_submission_id)
     student.setdefault("grades", {}).pop(BASIC_FINAL_ORAL_EVALUATION_ID, None)
     details = student.setdefault("gradeDetails", {})
     if not isinstance(details, dict):
@@ -7965,11 +9069,13 @@ def basic_final_oral_submit(profile, payload):
     details[BASIC_FINAL_ORAL_EVALUATION_ID] = basic_final_oral_gradebook_pending_detail(attempt, submission)
     write_basic_final_oral_store(store)
     write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
-    return 200, {"ok": True, "idempotent": False, "submission": basic_final_oral_public_submission(submission)}
+    if basic_final_oral_mark_sync(store, grades_data):
+        write_basic_final_oral_store(store)
+    return 200, {"ok": True, "idempotent": False, "serverLeaseExpiresAt": clean_text(attempt.get("lease", {}).get("expiresAt"), 80), "submission": basic_final_oral_public_submission(submission)}
 
 
 def basic_final_oral_submissions_payload(profile):
-    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_data = read_basic_final_oral_grades_data()
     grades_changed = ensure_basic_gradebook_structure(grades_data)
     role = grade_user_role(profile, grades_data)
     if role not in ("admin", "teacher"):
@@ -7981,7 +9087,9 @@ def basic_final_oral_submissions_payload(profile):
         grades_changed = True
     if grades_changed:
         write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
-    items = [basic_final_oral_public_submission(item) for item in store.get("submissions", {}).values() if isinstance(item, dict)]
+    if basic_final_oral_mark_sync(store, grades_data):
+        write_basic_final_oral_store(store)
+    items = [basic_final_oral_public_submission(item, role) for item in store.get("submissions", {}).values() if isinstance(item, dict)]
     items.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
     return 200, {
         "role": role,
@@ -7989,22 +9097,262 @@ def basic_final_oral_submissions_payload(profile):
         "counts": {
             "total": len(items),
             "pendingReview": len([item for item in items if item.get("status") == "pending_teacher_review"]),
-            "graded": len([item for item in items if item.get("status") == "graded"])
+            "graded": len([item for item in items if item.get("workflowStatus") in ("graded", "published") or item.get("status") == "graded"]),
+            "published": len([item for item in items if item.get("workflowStatus") == "published"]),
+            "syncPending": len([item for item in items if item.get("syncStatus") == "pending"]),
         }
     }
 
 
-def basic_final_oral_grade(profile, payload):
-    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+def basic_final_oral_verify_attempt(attempt):
+    turns = attempt.get("turns", {}) if isinstance(attempt, dict) and isinstance(attempt.get("turns"), dict) else {}
+    issues = []
+    total_duration_ms = 0
+    for question in attempt.get("assignedQuestions", []) if isinstance(attempt, dict) else []:
+        turn_id = clean_text(question.get("turnId"), 40)
+        turn = turns.get(turn_id)
+        if not isinstance(turn, dict):
+            issues.append({"turnId": turn_id, "reason": "missing_turn"})
+            continue
+        valid, reason, inspection = verify_basic_final_oral_audio(turn.get("audio"), turn.get("durationMs"))
+        if not valid or not isinstance(inspection, dict) or inspection.get("verified") is not True:
+            issues.append({"turnId": turn_id, "reason": reason})
+            continue
+        turn.update({
+            "verificationStatus": "verified", "durationSource": "inspector",
+            "durationMs": int(inspection.get("durationMs", 0) or turn.get("durationMs", 0) or 0),
+            "silenceFlag": inspection.get("silenceFlag") is True,
+        })
+        if turn["durationMs"] > basic_final_oral_turn_duration_limit(turn_id):
+            issues.append({"turnId": turn_id, "reason": "turn_audio_too_long"})
+            continue
+        total_duration_ms += turn["durationMs"]
+    if total_duration_ms > BASIC_FINAL_ORAL_MAX_DURATION_MS:
+        issues.append({"turnId": "all", "reason": "attempt_audio_too_long"})
+    return issues
+
+
+def basic_final_oral_reconcile(profile, payload=None):
+    payload = payload if isinstance(payload, dict) else {}
+    grades_data = read_basic_final_oral_grades_data()
     grades_changed = ensure_basic_gradebook_structure(grades_data)
     role = grade_user_role(profile, grades_data)
     if role not in ("admin", "teacher"):
-        if grades_changed:
-            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
         return 403, {"error": "forbidden"}
-    rubric = clean_basic_final_oral_rubric(payload.get("rubric"))
-    if rubric is None:
-        return 400, {"error": "invalid_rubric"}
+    reason = clean_text(payload.get("reason"), 600)
+    if not reason:
+        return 400, {"error": "reason_required"}
+    store = read_basic_final_oral_store()
+    recovered = []
+    failed = []
+    students = {clean_text(item.get("id"), 40): item for item in grades_data.get("students", []) if isinstance(item, dict)}
+    if payload.get("recoverComplete", True) is not False:
+        for student_id, attempt in store.get("attempts", {}).items():
+            if not isinstance(attempt, dict) or student_id in store.get("submissions", {}):
+                continue
+            if len(attempt.get("turns", {})) != BASIC_FINAL_ORAL_EXPECTED_TURNS:
+                continue
+            issues = basic_final_oral_verify_attempt(attempt)
+            if issues:
+                failed.append({"studentId": student_id, "issues": issues})
+                continue
+            submission = basic_final_oral_create_submission(store, attempt, students.get(student_id), profile, "reconcile-" + secrets.token_hex(8), True)
+            recovered.append({"studentId": student_id, "receiptId": submission["receiptId"]})
+    if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+        grades_changed = True
+    for item in store.get("outbox", {}).values():
+        if isinstance(item, dict) and item.get("status") in ("pending", "retry"):
+            item["attempts"] = int(item.get("attempts", 0) or 0) + 1
+            item["lastAttemptAt"] = now_iso()
+    basic_final_oral_append_event(store, "reconciled", profile, "", reason, clean_text(payload.get("requestId"), 120))
+    write_basic_final_oral_store(store)
+    if grades_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    if basic_final_oral_mark_sync(store, grades_data):
+        write_basic_final_oral_store(store)
+    return 200, {"ok": True, "recovered": recovered, "failed": failed, "health": basic_final_oral_health_payload(grades_data, read_basic_final_oral_bundle(), store)}
+
+
+def basic_final_oral_pair(profile, payload):
+    email = normalize_email(profile.get("email"))
+    student_id = clean_text(payload.get("studentId"), 40)
+    code = clean_text(payload.get("pairingCode"), 80)
+    if not email or not student_id or not code:
+        return 400, {"error": "missing_pairing_credentials"}
+    rate_key = "pair|" + email
+    ip_rate_key = local_login_ip_rate_key(payload.get("_clientIp"), "pair-ip")
+    if local_login_rate_limited(rate_key) or local_login_rate_limited(ip_rate_key):
+        return 429, {"error": "too_many_pairing_attempts", "retryAfterSeconds": 900}
+    grades_data = read_basic_final_oral_grades_data()
+    if basic_final_oral_registered_student(profile, grades_data):
+        return 409, {"error": "account_already_linked"}
+    store = read_basic_final_oral_store()
+    pairing = store.get("pairings", {}).get(student_id)
+    expected = hashlib.sha256((code + "|" + local_auth_secret().hex()).encode("utf-8")).hexdigest()
+    if not isinstance(pairing, dict) or pairing.get("usedAt") or not hmac.compare_digest(clean_text(pairing.get("codeHash"), 80), expected):
+        local_login_record_failure(rate_key)
+        local_login_record_failure(ip_rate_key)
+        return 403, {"error": "invalid_pairing_code"}
+    expires = basic_final_oral_parse_time(pairing.get("expiresAt"))
+    if not expires or basic_final_oral_now() > expires:
+        local_login_record_failure(rate_key)
+        local_login_record_failure(ip_rate_key)
+        return 403, {"error": "pairing_code_expired"}
+    student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+    if not isinstance(student, dict):
+        return 404, {"error": "student_not_found"}
+    if any(isinstance(item, dict) and clean_text(item.get("id"), 40) != student_id and email_matches_student(item, email) for item in grades_data.get("students", [])):
+        return 409, {"error": "email_already_linked"}
+    if not normalize_email(student.get("email")):
+        student["email"] = email
+    else:
+        aliases = student.setdefault("emailAliases", [])
+        if email not in {normalize_email(item) for item in aliases}:
+            aliases.append(email)
+    pairing["usedAt"] = now_iso()
+    pairing["usedBy"] = email
+    basic_final_oral_append_event(store, "account_paired", profile, student_id, "Verified administrative pairing")
+    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    write_basic_final_oral_store(store)
+    local_login_clear_failures(rate_key)
+    return 200, {"ok": True, "student": basic_final_oral_student_identity(student)}
+
+
+def basic_final_oral_lease(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    student = basic_final_oral_registered_student(profile, grades_data)
+    if not isinstance(student, dict):
+        return 403, {"error": "student_not_authorized"}
+    student_id = clean_text(student.get("id"), 40)
+    store = read_basic_final_oral_store()
+    attempt = store.get("attempts", {}).get(student_id)
+    if not isinstance(attempt, dict):
+        return 404, {"error": "attempt_not_found"}
+    if clean_text(payload.get("attemptId"), 120) != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    if not basic_final_oral_scope_valid(attempt, payload.get("attemptScopeToken")):
+        return 403, {"error": "invalid_attempt_scope"}
+    action = clean_text(payload.get("action") or "renew", 20).lower()
+    if action == "acquire":
+        lease = basic_final_oral_acquire_lease(attempt, payload.get("deviceId"), profile, False)
+        if not lease:
+            return 409, {"error": "attempt_in_use", "serverLeaseExpiresAt": clean_text(attempt.get("lease", {}).get("expiresAt"), 80), "attempt": basic_final_oral_public_attempt(attempt)}
+    elif action == "renew":
+        if not basic_final_oral_lease_active(attempt, payload.get("leaseId"), payload.get("deviceId")):
+            return 409, {"error": "attempt_lease_expired", "serverLeaseExpiresAt": clean_text(attempt.get("lease", {}).get("expiresAt"), 80), "attempt": basic_final_oral_public_attempt(attempt)}
+        basic_final_oral_touch_lease(attempt)
+        lease = attempt.get("lease")
+    elif action == "release":
+        if not basic_final_oral_lease_active(attempt, payload.get("leaseId"), payload.get("deviceId")):
+            return 409, {"error": "attempt_lease_expired", "serverLeaseExpiresAt": clean_text(attempt.get("lease", {}).get("expiresAt"), 80), "attempt": basic_final_oral_public_attempt(attempt)}
+        lease = dict(attempt.get("lease"))
+        attempt["lease"] = None
+    else:
+        return 400, {"error": "invalid_lease_action"}
+    basic_final_oral_append_event(store, "lease_" + action, profile, student_id, clean_text(attempt.get("attemptId"), 120), clean_text(payload.get("requestId"), 120))
+    write_basic_final_oral_store(store)
+    server_lease_expires = None if action == "release" else (clean_text((lease or {}).get("expiresAt"), 80) or None)
+    return 200, {"ok": True, "action": action, "serverLeaseExpiresAt": server_lease_expires, "attempt": basic_final_oral_public_attempt(attempt), "lease": None if action == "release" else {"leaseId": clean_text((lease or {}).get("leaseId"), 160), "expiresAt": clean_text((lease or {}).get("expiresAt"), 80)}}
+
+
+def basic_final_oral_student_action(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    student_id = clean_text(payload.get("studentId"), 40)
+    action = clean_text(payload.get("action"), 40)
+    reason = clean_text(payload.get("reason"), 600)
+    request_id = clean_text(payload.get("requestId"), 120)
+    if not student_id or action not in ("cancel", "reopen", "reset", "extend", "issue_pairing", "unlock_turn"):
+        return 400, {"error": "invalid_student_action"}
+    if not reason:
+        return 400, {"error": "reason_required"}
+    student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+    if not isinstance(student, dict):
+        return 404, {"error": "student_not_found"}
+    bundle = read_basic_final_oral_bundle()
+    store = read_basic_final_oral_store()
+    attempt = store.get("attempts", {}).get(student_id)
+    submission = store.get("submissions", {}).get(student_id)
+    result = {}
+    if action == "issue_pairing":
+        code = "".join(str(secrets.randbelow(10)) for _ in range(8))
+        expires = basic_final_oral_now() + timedelta(seconds=BASIC_FINAL_ORAL_PAIRING_TTL_SECONDS)
+        store.setdefault("pairings", {})[student_id] = {
+            "codeHash": hashlib.sha256((code + "|" + local_auth_secret().hex()).encode("utf-8")).hexdigest(),
+            "expiresAt": expires.isoformat().replace("+00:00", "Z"), "issuedAt": now_iso(),
+            "issuedBy": normalize_email(profile.get("email")), "reason": reason, "usedAt": None,
+        }
+        result = {"pairingCode": code, "expiresAt": expires.isoformat().replace("+00:00", "Z")}
+    elif action == "unlock_turn":
+        if not isinstance(attempt, dict) or isinstance(submission, dict) or attempt.get("status") not in ("in_progress", "complete_pending_submit"):
+            return 409, {"error": "turn_not_unlockable"}
+        turn_id = clean_text(payload.get("turnId"), 40)
+        turn = attempt.get("turns", {}).get(turn_id) if isinstance(attempt.get("turns"), dict) else None
+        if not turn_id or not isinstance(turn, dict) or not isinstance(turn.get("audio"), dict):
+            return 404, {"error": "turn_not_found"}
+        now_value = basic_final_oral_now()
+        expires = basic_final_oral_parse_time(payload.get("until")) if payload.get("until") else now_value + timedelta(minutes=10)
+        if not expires or expires <= now_value or expires > now_value + timedelta(minutes=15):
+            return 400, {"error": "invalid_turn_unlock_window", "maxMinutes": 15}
+        expires_at = expires.isoformat().replace("+00:00", "Z")
+        attempt.setdefault("turnUnlocks", {})[turn_id] = {
+            "expiresAt": expires_at,
+            "issuedAt": now_iso(),
+            "issuedBy": normalize_email(profile.get("email")),
+            "reason": reason,
+            "usesRemaining": 1,
+        }
+        result = {"turnId": turn_id, "expiresAt": expires_at, "usesRemaining": 1}
+    elif action == "cancel":
+        if not isinstance(attempt, dict) or isinstance(submission, dict):
+            return 409, {"error": "attempt_not_cancelable"}
+        attempt.update({"status": "canceled", "workflowStatus": "canceled", "canceledAt": now_iso(), "canceledBy": normalize_email(profile.get("email")), "cancelReason": reason})
+    elif action == "reopen":
+        if not isinstance(attempt, dict) or isinstance(submission, dict):
+            return 409, {"error": "attempt_not_reopenable"}
+        attempt.update({"status": "complete_pending_submit" if len(attempt.get("turns", {})) == BASIC_FINAL_ORAL_EXPECTED_TURNS else "in_progress", "workflowStatus": "complete_pending_submit" if len(attempt.get("turns", {})) == BASIC_FINAL_ORAL_EXPECTED_TURNS else "in_progress", "reopenedAt": now_iso(), "reopenedBy": normalize_email(profile.get("email"))})
+        until = basic_final_oral_time_iso(payload.get("until"))
+        if until:
+            bundle.setdefault("state", {}).setdefault("extensions", {})[student_id] = until
+            result["until"] = until
+    elif action == "extend":
+        until = basic_final_oral_time_iso(payload.get("until"))
+        if not until or basic_final_oral_parse_time(until) <= basic_final_oral_now():
+            return 400, {"error": "invalid_extension"}
+        bundle.setdefault("state", {}).setdefault("extensions", {})[student_id] = until
+        result["until"] = until
+    elif action == "reset":
+        if not isinstance(attempt, dict) and not isinstance(submission, dict):
+            return 404, {"error": "attempt_not_found"}
+        reset_at = now_iso()
+        store.setdefault("attemptHistory", []).append({"studentId": student_id, "attempt": attempt, "submission": submission, "resetAt": reset_at, "resetBy": normalize_email(profile.get("email")), "reason": reason, "retention": "audit_evidence"})
+        receipt_id = clean_text((submission or {}).get("receiptId"), 80)
+        outbox_item = store.setdefault("outbox", {}).get(receipt_id) if receipt_id else None
+        if isinstance(outbox_item, dict):
+            outbox_item.update({"status": "canceled", "canceledAt": reset_at, "cancelReason": reason})
+        for key in list(store.get("idempotency", {}).keys()):
+            if key.startswith(student_id + ":") or (receipt_id and receipt_id in key):
+                store["idempotency"].pop(key, None)
+        store.get("attempts", {}).pop(student_id, None)
+        store.get("submissions", {}).pop(student_id, None)
+        student.setdefault("grades", {}).pop(BASIC_FINAL_ORAL_EVALUATION_ID, None)
+        if isinstance(student.get("gradeDetails"), dict):
+            student["gradeDetails"].pop(BASIC_FINAL_ORAL_EVALUATION_ID, None)
+        result["reset"] = True
+    basic_final_oral_append_event(store, "student_" + action, profile, student_id, reason, request_id)
+    write_basic_final_oral_bundle(bundle)
+    write_basic_final_oral_store(store)
+    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, dict({"ok": True, "action": action, "studentId": student_id}, **result)
+
+
+def basic_final_oral_grade(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
     student_id = clean_text(payload.get("studentId"), 40)
     receipt_id = clean_text(payload.get("receiptId"), 80)
     if not student_id or not receipt_id:
@@ -8014,42 +9362,137 @@ def basic_final_oral_grade(profile, payload):
     if not isinstance(submission, dict):
         return 404, {"error": "submission_not_found"}
     if clean_text(submission.get("receiptId"), 80) != receipt_id:
-        return 409, {"error": "submission_changed", "submission": basic_final_oral_public_submission(submission)}
+        return 409, {"error": "submission_changed", "submission": basic_final_oral_public_submission(submission, role)}
+    action = clean_text(payload.get("action") or "publish", 20).lower()
+    if action not in ("draft", "publish"):
+        return 400, {"error": "invalid_grade_action"}
+    if action == "draft" and submission.get("workflowStatus") == "published":
+        return 409, {"error": "published_submission_requires_republish", "submission": basic_final_oral_public_submission(submission, role)}
+    rubric = clean_basic_final_oral_rubric(payload.get("rubric")) if action == "publish" else clean_basic_final_oral_draft_rubric(payload.get("rubric"))
+    if rubric is None:
+        return 400, {"error": "invalid_rubric"}
+    feedback = clean_text(payload.get("teacherFeedback") or payload.get("feedback"), 5000)
+    if action == "publish" and not feedback:
+        return 400, {"error": "teacher_feedback_required"}
+    reviewed_audio = clean_basic_final_oral_reviewed_audio(
+        payload.get("reviewedAudioEvidence"), submission, require_all=action == "publish",
+    )
+    if reviewed_audio is None:
+        return 400, {"error": "reviewed_audio_evidence_required" if action == "publish" and not isinstance(payload.get("reviewedAudioEvidence"), list) else "invalid_reviewed_audio_evidence"}
+    evidence = clean_basic_final_oral_teacher_evidence(payload.get("teacherEvidence") or payload.get("evidence"))
+    request_id = clean_text(payload.get("requestId"), 120)
+    grade_hash = ""
+    idem_key = ""
+    if request_id:
+        grade_hash = hashlib.sha256(json.dumps({
+            "studentId": student_id, "receiptId": receipt_id, "action": action,
+            "rubric": payload.get("rubric"), "teacherFeedback": payload.get("teacherFeedback") or payload.get("feedback"),
+            "evidence": payload.get("teacherEvidence") or payload.get("evidence"),
+            "reviewedAudioEvidence": payload.get("reviewedAudioEvidence"),
+            "expectedRevision": payload.get("expectedRevision"), "reason": payload.get("reason"),
+        }, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+        idem_key = "grade:" + receipt_id + ":" + request_id
+        prior_hash = clean_text(store.setdefault("idempotency", {}).get(idem_key), 80)
+        if prior_hash:
+            if hmac.compare_digest(prior_hash, grade_hash):
+                if action == "publish":
+                    grades_changed = ensure_basic_gradebook_structure(grades_data)
+                    if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+                        grades_changed = True
+                    try:
+                        if grades_changed:
+                            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                    except OSError:
+                        submission["syncStatus"] = "pending"
+                        return 503, {"error": "gradebook_sync_pending", "retryable": True, "submission": basic_final_oral_public_submission(submission, role)}
+                    if basic_final_oral_mark_sync(store, grades_data):
+                        write_basic_final_oral_store(store)
+                return 200, {"ok": True, "idempotent": True, "submission": basic_final_oral_public_submission(submission, role)}
+            return 409, {"error": "idempotency_conflict"}
+    current_revision = int(submission.get("gradeRevision", 0) or 0)
+    if payload.get("expectedRevision") is not None:
+        try:
+            expected_revision = int(payload.get("expectedRevision"))
+        except (TypeError, ValueError):
+            return 400, {"error": "invalid_grade_revision"}
+        if expected_revision != current_revision:
+            return 409, {"error": "grade_revision_conflict", "submission": basic_final_oral_public_submission(submission, role)}
+    elif current_revision > 0:
+        return 409, {"error": "grade_revision_required", "submission": basic_final_oral_public_submission(submission, role)}
     student = next(
         (item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id),
         None
     )
     if not isinstance(student, dict):
         return 404, {"error": "student_not_found"}
-    score50 = round(sum(rubric.values()), 2)
-    grade = round(score50 / 10.0, 2)
-    feedback = clean_text(payload.get("teacherFeedback") or payload.get("feedback"), 5000)
-    evidence = clean_basic_final_oral_teacher_evidence(payload.get("teacherEvidence") or payload.get("evidence"))
+    complete_rubric = len(rubric) == 5
+    score50 = round(sum(rubric.values()), 2) if complete_rubric else None
+    grade = round(score50 / 10.0, 2) if action == "publish" and score50 is not None else None
+    reason = clean_text(payload.get("reason"), 600)
+    if submission.get("workflowStatus") == "published" and not reason:
+        return 400, {"error": "reason_required_for_published_grade_change"}
+    if not request_id:
+        request_id = "legacy-grade-" + hashlib.sha256((receipt_id + json.dumps(rubric, sort_keys=True) + action).encode("utf-8")).hexdigest()[:24]
+        grade_hash = hashlib.sha256(json.dumps({
+            "studentId": student_id, "receiptId": receipt_id, "action": action, "rubric": rubric,
+            "feedback": feedback, "evidence": evidence, "reviewedAudioEvidence": reviewed_audio,
+            "expectedRevision": current_revision, "reason": reason,
+        }, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+        idem_key = "grade:" + receipt_id + ":" + request_id
     graded_at = now_iso()
+    history = submission.setdefault("gradeHistory", [])
+    history.append({
+        "revision": current_revision, "workflowStatus": clean_text(submission.get("workflowStatus"), 60),
+        "rubric": submission.get("rubric"), "score50": submission.get("score50"), "grade": submission.get("grade"),
+        "teacherFeedback": clean_text(submission.get("teacherFeedback"), 5000),
+        "teacherEvidence": submission.get("teacherEvidence") if isinstance(submission.get("teacherEvidence"), dict) else {},
+        "reviewedAudioEvidence": submission.get("reviewedAudioEvidence") if isinstance(submission.get("reviewedAudioEvidence"), list) else [],
+        "changedAt": graded_at, "changedBy": normalize_email(profile.get("email")), "reason": reason or ("Initial " + action),
+    })
+    submission["gradeHistory"] = history[-100:]
     submission.update({
-        "status": "graded",
+        "status": "graded" if action == "publish" else "pending_teacher_review",
+        "workflowStatus": "published" if action == "publish" else "graded",
         "rubric": rubric,
         "score50": score50,
         "grade": grade,
         "teacherFeedback": feedback,
         "teacherEvidence": evidence,
+        "reviewedAudioEvidence": reviewed_audio,
         "gradedAt": graded_at,
-        "gradedBy": normalize_email(profile.get("email"))
+        "gradedBy": normalize_email(profile.get("email")),
+        "gradeRevision": current_revision + 1,
+        "publishedAt": graded_at if action == "publish" else None,
     })
-    student.setdefault("grades", {})[BASIC_FINAL_ORAL_EVALUATION_ID] = grade
-    details = student.setdefault("gradeDetails", {})
-    if not isinstance(details, dict):
-        details = {}
-        student["gradeDetails"] = details
-    details[BASIC_FINAL_ORAL_EVALUATION_ID] = basic_final_oral_gradebook_graded_detail(submission)
-    basic_final_oral_append_event(store, "graded", profile, student_id, receipt_id + " score " + str(score50) + "/50")
+    submission.setdefault("workflowHistory", []).append({"status": "published" if action == "publish" else "graded", "at": graded_at, "actor": normalize_email(profile.get("email"))})
+    submission["workflowHistory"] = submission["workflowHistory"][-100:]
+    store["idempotency"][idem_key] = grade_hash
+    if action == "publish":
+        submission["syncStatus"] = "pending"
+        store.setdefault("outbox", {})[receipt_id] = {
+            "id": receipt_id, "type": "gradebook_sync", "studentId": student_id,
+            "status": "pending", "createdAt": graded_at, "attempts": 0,
+        }
+    basic_final_oral_append_event(store, "grade_published" if action == "publish" else "grade_drafted", profile, student_id, receipt_id + " score " + str(score50) + "/50", request_id)
     write_basic_final_oral_store(store)
-    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
-    return 200, {"ok": True, "submission": basic_final_oral_public_submission(submission)}
+    if action == "draft":
+        return 200, {"ok": True, "idempotent": False, "submission": basic_final_oral_public_submission(submission, role)}
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+        grades_changed = True
+    if grades_changed:
+        try:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        except OSError:
+            submission["syncStatus"] = "pending"
+            return 503, {"error": "gradebook_sync_pending", "retryable": True, "submission": basic_final_oral_public_submission(submission, role)}
+    if basic_final_oral_mark_sync(store, grades_data):
+        write_basic_final_oral_store(store)
+    return 200, {"ok": True, "idempotent": False, "submission": basic_final_oral_public_submission(submission, role)}
 
 
 def basic_final_oral_update_state(profile, payload):
-    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_data = read_basic_final_oral_grades_data()
     grades_changed = ensure_basic_gradebook_structure(grades_data)
     role = grade_user_role(profile, grades_data)
     if role not in ("admin", "teacher"):
@@ -8062,6 +9505,59 @@ def basic_final_oral_update_state(profile, payload):
     store = read_basic_final_oral_store()
     state = bundle.setdefault("state", {})
     is_open = payload.get("isOpen") is True
+    opens_at = basic_final_oral_time_iso(payload.get("opensAt")) if payload.get("opensAt") else state.get("opensAt")
+    closes_at = basic_final_oral_time_iso(payload.get("closesAt")) if payload.get("closesAt") else state.get("closesAt")
+    if is_open and payload.get("closesAt") is None and state.get("closedAt"):
+        closes_at = None
+    if payload.get("opensAt") and not opens_at:
+        return 400, {"error": "invalid_opens_at"}
+    if payload.get("closesAt") and not closes_at:
+        return 400, {"error": "invalid_closes_at"}
+    if opens_at and closes_at and basic_final_oral_parse_time(opens_at) >= basic_final_oral_parse_time(closes_at):
+        return 400, {"error": "invalid_exam_window"}
+    roster_ids = {clean_text(item.get("id"), 40) for item in grades_data.get("students", []) if isinstance(item, dict)}
+    if payload.get("eligibleStudentIds") is not None:
+        if not isinstance(payload.get("eligibleStudentIds"), list):
+            return 400, {"error": "invalid_eligible_students"}
+        eligible = list(dict.fromkeys(clean_text(item, 40) for item in payload.get("eligibleStudentIds") if clean_text(item, 40)))
+        unknown = [item for item in eligible if item not in roster_ids]
+        if unknown:
+            return 400, {"error": "unknown_eligible_students", "studentIds": unknown}
+        state["eligibleStudentIds"] = eligible
+    if payload.get("extensions") is not None:
+        if not isinstance(payload.get("extensions"), dict):
+            return 400, {"error": "invalid_extensions"}
+        extensions = {}
+        for student_id, until in payload.get("extensions").items():
+            clean_id = clean_text(student_id, 40)
+            clean_until = basic_final_oral_time_iso(until)
+            if not clean_id or not clean_until:
+                return 400, {"error": "invalid_extension", "studentId": clean_id}
+            if clean_id not in roster_ids:
+                return 400, {"error": "student_not_found", "studentId": clean_id}
+            extensions[clean_id] = clean_until
+        state["extensions"] = extensions
+    close_mode = clean_text(payload.get("closeMode") or state.get("closeMode") or "soft", 20).lower()
+    if close_mode not in ("soft", "hard"):
+        return 400, {"error": "invalid_close_mode"}
+    try:
+        grace_seconds = int(payload.get("graceSeconds", state.get("graceSeconds", 900)))
+    except (TypeError, ValueError):
+        return 400, {"error": "invalid_grace_seconds"}
+    if grace_seconds < 0 or grace_seconds > 86400:
+        return 400, {"error": "invalid_grace_seconds"}
+    state.update({"opensAt": opens_at, "closesAt": closes_at, "closeMode": close_mode, "graceSeconds": grace_seconds})
+    if is_open:
+        health = basic_final_oral_health_payload(grades_data, bundle, store)
+        blocking = [warning for warning in health.get("warnings", []) if warning in (
+            "prompt_audio_incomplete", "gradebook_sync_divergence", "audio_inspector_unavailable",
+            "audio_inspector_not_ready", "audio_inspector_authentication_failed", "final_oral_weight_not_20", "gradebook_total_weight_not_100",
+            "transcriber_scope_secret_missing",
+            "audio_files_missing", "audio_storage_low", "audio_storage_not_writable",
+            "audit_log_not_writable",
+        )]
+        if blocking:
+            return 409, {"error": "exam_health_check_failed", "blockingWarnings": blocking, "health": health}
     timestamp = now_iso()
     actor = normalize_email(profile.get("email"))
     state["isOpen"] = is_open
@@ -8075,14 +9571,23 @@ def basic_final_oral_update_state(profile, payload):
     else:
         state["closedAt"] = timestamp
         state["closedBy"] = actor
+        if not payload.get("closesAt"):
+            state["closesAt"] = timestamp
     basic_final_oral_append_event(store, "exam_opened" if is_open else "exam_closed", profile, "", "Official Final Oral Task availability changed")
     write_basic_final_oral_bundle(bundle)
     write_basic_final_oral_store(store)
     if grades_changed:
         write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    reconcile_result = None
+    if not is_open:
+        _reconcile_status, reconcile_result = basic_final_oral_reconcile(profile, {
+            "reason": clean_text(payload.get("reason"), 600) or "Automatic recovery when the official exam closed",
+            "requestId": clean_text(payload.get("requestId"), 120), "recoverComplete": True,
+        })
     return 200, {
         "ok": True,
         "state": state,
+        "reconcile": reconcile_result,
         "message": "The official Final Oral Task is now open." if is_open else "The official Final Oral Task is now closed for new attempts. Active attempts can still be resumed and submitted."
     }
 
@@ -8096,10 +9601,10 @@ def serve_basic_final_oral_audio(handler, parsed, profile):
             json_response(handler, 404, {"error": "prompt_audio_not_found"})
             return
         with data_lock:
-            grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+            grades_data = read_basic_final_oral_grades_data()
             role = grade_user_role(profile, grades_data)
             if role not in ("admin", "teacher"):
-                student = matched_student_for_profile(profile, grades_data)
+                student = basic_final_oral_registered_student(profile, grades_data)
                 student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
                 store = read_basic_final_oral_store()
                 attempt = store.get("attempts", {}).get(student_id) if student_id else None
@@ -8124,9 +9629,9 @@ def serve_basic_final_oral_audio(handler, parsed, profile):
         json_response(handler, 400, {"error": "missing_audio_identity"})
         return
     with data_lock:
-        grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+        grades_data = read_basic_final_oral_grades_data()
         role = grade_user_role(profile, grades_data)
-        student = matched_student_for_profile(profile, grades_data) if role == "student" else None
+        student = basic_final_oral_registered_student(profile, grades_data) if role == "student" else None
         store = read_basic_final_oral_store()
         owner_id, attempt = basic_final_oral_find_attempt(store, attempt_id)
         if not isinstance(attempt, dict):
@@ -9601,37 +11106,67 @@ class ProgressHandler(BaseHTTPRequestHandler):
 
 
         if parsed.path == "/api/basic-final-oral/state":
-            with data_lock:
-                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
-                grades_changed = ensure_basic_gradebook_structure(grades_data)
-                bundle = read_basic_final_oral_bundle()
-                store = read_basic_final_oral_store()
-                if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
-                    grades_changed = True
-                response = basic_final_oral_state_payload(profile, grades_data, bundle, store)
-                response["claimAvailable"] = grades_data.get("allowStudentIdClaim") is True
-                if profile.get("_studentIdClaim") and response.get("student"):
-                    grades_changed = True
-                if grades_changed:
-                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
-                json_response(self, 200, response)
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    grades_changed = ensure_basic_gradebook_structure(grades_data)
+                    bundle = read_basic_final_oral_bundle()
+                    store = read_basic_final_oral_store()
+                    if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+                        grades_changed = True
+                    response = basic_final_oral_state_payload(profile, grades_data, bundle, store)
+                    response["claimAvailable"] = False
+                    response["pairingAvailable"] = True
+                    if grades_changed:
+                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                    if basic_final_oral_mark_sync(store, grades_data):
+                        write_basic_final_oral_store(store)
+                    json_response(self, 200, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic-final-oral/health":
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    role = grade_user_role(profile, grades_data)
+                    if role not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                basic_final_oral_probe_inspector(force=False)
+                basic_final_oral_probe_storage(force=True)
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    json_response(self, 200, basic_final_oral_health_payload(grades_data, read_basic_final_oral_bundle(), read_basic_final_oral_store()))
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic-final-oral/attempt":
             query = urllib.parse.parse_qs(parsed.query)
-            with data_lock:
-                status, response = basic_final_oral_get_attempt(profile, query)
-                json_response(self, status, response)
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_get_attempt(profile, query)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic-final-oral/submissions":
-            with data_lock:
-                status, response = basic_final_oral_submissions_payload(profile)
-                json_response(self, status, response)
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_submissions_payload(profile)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic-final-oral/audio":
-            serve_basic_final_oral_audio(self, parsed, profile)
+            try:
+                serve_basic_final_oral_audio(self, parsed, profile)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic/integrated-task/state":
@@ -9764,19 +11299,24 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/basic/grades":
-            with data_lock:
-                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
-                gradebook_changed = ensure_basic_gradebook_structure(grades_data)
-                submissions = read_basic_integrated_task_submissions()
-                if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
-                    gradebook_changed = True
-                oral_store = read_basic_final_oral_store()
-                if apply_basic_final_oral_submission_status_to_gradebook(grades_data, oral_store):
-                    gradebook_changed = True
-                if gradebook_changed:
-                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
-                query = urllib.parse.parse_qs(parsed.query)
-                json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+                    submissions = read_basic_integrated_task_submissions()
+                    if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
+                        gradebook_changed = True
+                    oral_store = read_basic_final_oral_store()
+                    if apply_basic_final_oral_submission_status_to_gradebook(grades_data, oral_store):
+                        gradebook_changed = True
+                    if gradebook_changed:
+                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                    if basic_final_oral_mark_sync(oral_store, grades_data):
+                        write_basic_final_oral_store(oral_store)
+                    query = urllib.parse.parse_qs(parsed.query)
+                    json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic/unit6-neighborhood-gallery":
@@ -10015,12 +11555,25 @@ class ProgressHandler(BaseHTTPRequestHandler):
             payload = self.read_json_body()
             if payload is None:
                 return
+            client_ip = self.client_address[0] if self.client_address else ""
+            rate_key = local_login_rate_key(client_ip, payload.get("email"))
+            ip_rate_key = local_login_ip_rate_key(client_ip)
+            with data_lock:
+                if local_login_rate_limited(rate_key) or local_login_rate_limited(ip_rate_key):
+                    json_response(self, 429, {"error": "too_many_login_attempts", "retryAfterSeconds": 900})
+                    return
             level_key, level_label, grades_path = local_login_target
             with data_lock:
                 grades_data = read_grades_data(grades_path)
             try:
-                json_response(self, 200, local_gradebook_login(payload, grades_data, level_key, level_label))
+                result = local_gradebook_login(payload, grades_data, level_key, level_label)
+                with data_lock:
+                    local_login_clear_failures(rate_key)
+                json_response(self, 200, result)
             except ValueError as error:
+                with data_lock:
+                    local_login_record_failure(rate_key)
+                    local_login_record_failure(ip_rate_key)
                 json_response(self, 401, {"error": str(error)})
             return
 
@@ -11486,15 +13039,50 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/basic-final-oral/start":
-            with data_lock:
-                status, response = basic_final_oral_start(profile)
-                json_response(self, status, response)
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_start(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic-final-oral/submit":
-            with data_lock:
-                status, response = basic_final_oral_submit(profile, payload)
-                json_response(self, status, response)
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_submit(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic-final-oral/pair":
+            try:
+                pairing_payload = dict(payload)
+                pairing_payload["_clientIp"] = self.client_address[0] if self.client_address else ""
+                with data_lock:
+                    status, response = basic_final_oral_pair(profile, pairing_payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic-final-oral/lease":
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_lease(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic-final-oral/reconcile":
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_reconcile(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic/integrated-task/submit":
@@ -12352,21 +13940,84 @@ class ProgressHandler(BaseHTTPRequestHandler):
 
 
         if parsed.path == "/api/basic-final-oral/state":
-            with data_lock:
-                status, response = basic_final_oral_update_state(profile, payload)
-                json_response(self, status, response)
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    if not basic_final_oral_state_rate_allowed(profile):
+                        json_response(self, 429, {"error": "state_rate_limited", "retryAfterSeconds": 60})
+                        return
+                if payload.get("isOpen") is True:
+                    basic_final_oral_probe_inspector(force=True)
+                    basic_final_oral_probe_storage(force=True)
+                with data_lock:
+                    status, response = basic_final_oral_update_state(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/basic-final-oral/turn":
-            with data_lock:
-                status, response = basic_final_oral_save_turn(profile, payload)
+            prepared_audio = None
+            try:
+                turn_payload = dict(payload)
+                turn_payload.pop("_preparedAudio", None)
+                has_audio_payload = bool(payload.get("audioDataUrl") or payload.get("audioBase64"))
+                with data_lock:
+                    preflight_status, preflight = basic_final_oral_turn_preflight(profile, turn_payload)
+                if preflight_status != 200:
+                    json_response(self, preflight_status, preflight)
+                    return
+                prepared_audio_sha = ""
+                if has_audio_payload and preflight.get("existingClient") is True:
+                    prepared_audio_sha = hashlib.sha256(decode_basic_final_oral_audio(payload)[0]).hexdigest()
+                elif has_audio_payload:
+                    raw_attempt_id = clean_text(payload.get("attemptId"), 120)
+                    raw_turn_id = clean_text(payload.get("turnId"), 40)
+                    prepared_audio = save_basic_final_oral_audio(raw_attempt_id, raw_turn_id, payload)
+                    prepared_audio_sha = clean_text(prepared_audio.get("sha256"), 80)
+                turn_payload.pop("audioDataUrl", None)
+                turn_payload.pop("audioBase64", None)
+                with data_lock:
+                    status, response = basic_final_oral_save_turn(
+                        profile, turn_payload, prepared_audio=prepared_audio,
+                        prepared_audio_sha=prepared_audio_sha, audio_was_supplied=has_audio_payload,
+                    )
+                if prepared_audio and (status != 200 or response.get("idempotent") is True):
+                    remove_basic_final_oral_audio(prepared_audio)
                 json_response(self, status, response)
+            except ValueError as error:
+                if prepared_audio:
+                    remove_basic_final_oral_audio(prepared_audio)
+                json_response(self, 400, {"error": str(error)})
+            except BasicFinalOralAudioVerificationPending:
+                if prepared_audio:
+                    remove_basic_final_oral_audio(prepared_audio)
+                json_response(self, 503, {"error": "audio_verification_pending", "retryable": True})
+            except BasicFinalOralStorageError:
+                if prepared_audio:
+                    remove_basic_final_oral_audio(prepared_audio)
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path in ("/api/basic-final-oral/grade", "/api/basic-final-oral/submissions/grade"):
-            with data_lock:
-                status, response = basic_final_oral_grade(profile, payload)
-                json_response(self, status, response)
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_grade(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic-final-oral/student-action":
+            try:
+                with data_lock:
+                    status, response = basic_final_oral_student_action(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
 
@@ -12520,18 +14171,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/basic/grades":
-            with data_lock:
-                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
-                if grade_user_role(profile, grades_data) != "admin":
-                    json_response(self, 403, {"error": "forbidden"})
-                    return
-                try:
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    if grade_user_role(profile, grades_data) != "admin":
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
                     next_data = clean_gradebook_payload(payload, grades_data)
-                except ValueError as error:
-                    json_response(self, 400, {"error": str(error)})
-                    return
-                write_json_file(BASIC_ENGLISH_GRADES_PATH, next_data, ".basic-grades-")
-                json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, next_data, ".basic-grades-")
+                    json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+            except ValueError as error:
+                json_response(self, 400, {"error": str(error)})
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
         if parsed.path == "/api/intermediate/grades":

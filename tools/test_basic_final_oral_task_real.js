@@ -67,6 +67,28 @@ for (const fileName of scripts.keys()) {
   "interaction-v1.webp"
 ].forEach((fileName) => assert(fs.existsSync(path.join(imageDir, fileName)), `Missing professional image: ${fileName}`));
 assert.strictEqual(api.REQUIRED_TURNS, 7, "The official attempt must require exactly seven recordings");
+assert.strictEqual(api.isAttemptContract({ attemptId: "A1", assignedQuestions: [], turns: {} }), true, "Valid attempt acknowledgement rejected");
+assert.strictEqual(api.isAttemptContract({ assignedQuestions: [], turns: {} }), false, "Attempt without server id must be rejected");
+const secureQuestionSet = Array.from({ length: 7 }, (_value, index) => ({ turnId: index === 6 ? "interaction" : `unit-${index + 1}`, variantId: `variant-${index + 1}`, unit: index === 6 ? "interaction" : String(index + 1), question: `Question ${index + 1}`, promptAudioUrl: `/api/basic-final-oral/audio?prompt=${index + 1}`, sequence: index + 1 }));
+assert.strictEqual(api.isScopedAttemptContract({ attemptId: "A1", attemptScopeToken: "scope", transcriberScopeToken: "speech", transcriberScopeExpiresAt: "2099-01-01T00:00:00Z", lease: null, assignedQuestions: secureQuestionSet, turns: {} }), true, "A resumed scoped attempt must remain recoverable after its page-release lease is cleared");
+assert.strictEqual(api.isSecureAttemptContract({ attemptId: "A1", attemptScopeToken: "scope", transcriberScopeToken: "speech", transcriberScopeExpiresAt: "2099-01-01T00:00:00Z", lease: { leaseId: "lease", expiresAt: "2099-01-01T00:00:00Z" }, assignedQuestions: secureQuestionSet, turns: {} }), true, "Secure attempt acknowledgement rejected");
+assert.strictEqual(api.isSecureAttemptContract({ attemptId: "A1", assignedQuestions: [], turns: {} }), false, "Attempt without mutation, speech, and lease scopes must fail closed");
+assert.strictEqual(api.isTurnContract({ turnId: "unit-1", verification: { audioVerified: true } }), true, "Verified audio turn acknowledgement rejected");
+assert.strictEqual(api.isTurnContract({ turnId: "unit-1" }), false, "Unverified 2xx turn body must be rejected");
+assert.strictEqual(api.isSubmissionContract({ receiptId: "R1", attemptId: "A1", submittedAt: "2026-07-21T12:00:00Z", workflowStatus: "pending_review" }), true, "Valid receipt acknowledgement rejected");
+assert.strictEqual(api.isSubmissionContract({ status: "submitted" }), false, "Submission without receipt must be rejected");
+assert.strictEqual(api.workflowOf({ workflowStatus: "complete_pending_submit" }), "complete_pending_submit");
+const frozenAudioHash = "a".repeat(64);
+const draftMutation = api.buildGradeMutation("draft", { studentId: "S1", receiptId: "R1", gradeRevision: 4, turns: [{ turnId: "unit-1", audio: { sha256: frozenAudioHash } }], teacherEvidence: { general: "Reviewed against the rubric." } }, { fluency: 7 }, "Private note", "", "REQ-DRAFT");
+assert.strictEqual(draftMutation.action, "draft");
+assert.strictEqual(draftMutation.expectedRevision, 4, "Draft must protect the current grade revision");
+assert.strictEqual(draftMutation.requestId, "REQ-DRAFT", "Draft save must be idempotent");
+assert.deepStrictEqual(JSON.parse(JSON.stringify(draftMutation.reviewedAudioEvidence)), [{ turnId: "unit-1", sha256: frozenAudioHash }], "Grade mutation must bind the frozen reviewed audio hash");
+assert.deepStrictEqual(JSON.parse(JSON.stringify(draftMutation.teacherEvidence)), { general: "Reviewed against the rubric." }, "Teacher evidence must remain a textual object, not an audio-hash array");
+const publishMutation = api.buildGradeMutation("publish", { studentId: "S1", receiptId: "R1", gradeRevision: 5, turns: [] }, { fluency: 8 }, "Published feedback", "Correction reason", "REQ-PUBLISH");
+assert.strictEqual(publishMutation.action, "publish");
+assert.strictEqual(publishMutation.expectedRevision, 5, "Publish must compare the latest grade revision");
+assert.strictEqual(publishMutation.reason, "Correction reason", "Published-grade corrections need an auditable reason");
 assert.strictEqual(Object.values(api.TURN_LIMIT_SECONDS).reduce((sum, value) => sum + value, 0), 180, "Seven recording caps must total the official three-minute maximum");
 assert.deepStrictEqual(Array.from(api.RUBRIC, (item) => item.key), [
   "taskCompletion", "interactionDiscourse", "fluency", "vocabularyStructure", "pronunciation"
@@ -80,11 +102,17 @@ const expectedEndpoints = {
   submit: "/api/basic-final-oral/submit",
   submissions: "/api/basic-final-oral/submissions",
   grade: "/api/basic-final-oral/grade",
-  audio: "/api/basic-final-oral/audio"
+  health: "/api/basic-final-oral/health",
+  reconcile: "/api/basic-final-oral/reconcile",
+  studentAction: "/api/basic-final-oral/student-action",
+  pair: "/api/basic-final-oral/pair",
+  lease: "/api/basic-final-oral/lease",
+  audio: "/api/basic-final-oral/audio",
+  speechHealth: "/api/english-basic/pronunciation-health"
 };
 Object.entries(expectedEndpoints).forEach(([key, value]) => {
   assert.strictEqual(api.API[key], value, `Frontend endpoint mismatch: ${key}`);
-  assert(server.includes(value), `Backend route is missing: ${value}`);
+  if (key !== "speechHealth") assert(server.includes(value), `Backend route is missing: ${value}`);
 });
 assert(server.includes('"promptAudioUrl": "/api/basic-final-oral/audio?"'), "Assigned questions must expose authenticated prompt audio URLs");
 assert(source.includes("question?.promptAudioUrl || question?.audioUrl"), "Frontend must consume the server-provided protected prompt URL");
@@ -149,6 +177,8 @@ Object.values(api.TURN_REACTIONS).forEach((answer) => {
 });
 
 assert(source.includes("audioDataUrl"), "Official turn must upload its audio evidence");
+assert(source.includes("attemptScopeToken"), "Turn and submit mutations must carry the server-issued attempt scope token");
+assert(source.includes("leaseId: serverLeaseId") && source.includes('action: "release"'), "Server lease must protect turn and submit mutations and be released explicitly");
 assert(source.includes("clientTurnId"), "Turn saves must be idempotent");
 assert(source.includes("clientSubmissionId"), "Final submit must be idempotent");
 assert(source.includes("revision"), "Attempt saves must use optimistic revisions");
@@ -156,6 +186,52 @@ assert(source.includes("MediaRecorder"), "Cross-device microphone recording is m
 assert(source.includes("audio/mp4"), "iPhone-compatible MediaRecorder fallback is missing");
 assert(source.includes("audio/webm"), "Android/desktop MediaRecorder format is missing");
 assert(source.includes("X-Jaralingua-Language\"] = \"en\"") || source.includes('"X-Jaralingua-Language": "en"'), "Whisper language must be fixed to English");
+assert(source.includes('"X-Jaralingua-Workload": officialStudent ? "final-oral" : "practice"'), "Official students must use the dedicated final-oral queue while the non-persistent admin preview uses practice scope");
+assert(source.includes('"X-Jaralingua-Exam-Scope": attempt.transcriberScopeToken') && source.includes("refreshAttemptSecurityScope"), "Official transcription needs a refreshable signed exam scope");
+assert(source.includes("const TRANSCRIPTION_TIMEOUT_MS = 120000") && /timeout: TRANSCRIPTION_TIMEOUT_MS\s*\n\s*\}, 1\)/.test(source), "Non-blocking transcription must use one nginx-aligned request without duplicate timeout retries");
+
+const officialProcessor = source.match(/async function processAndSaveCurrentTurn\(\)\s*\{([\s\S]*?)\n  \}\n\n  function showTechnicalRecovery/);
+assert(officialProcessor, "Could not isolate the audio-first official processor");
+const processorBody = officialProcessor[1];
+assert(processorBody.indexOf("putQueuedAudio(record)") >= 0, "Original audio must enter the durable local queue");
+assert(processorBody.indexOf("putQueuedAudio(record)") < processorBody.indexOf("uploadQueuedRecord(record)"), "Audio must be protected locally before server upload");
+assert(processorBody.indexOf("uploadQueuedRecord(record)") < processorBody.indexOf("transcribeSavedAudio(record)"), "Server audio acknowledgement must precede transcription");
+assert(!processorBody.includes("await requestTranscription"), "Official progress must never wait for transcription before saving audio");
+assert(source.includes('transcriptStatus: transcript ? "complete" : "pending"'), "Turn contract needs an explicit pending transcript state");
+assert(source.includes("Transcription continues separately and does not block"), "Pending transcription must be explicitly non-blocking");
+assert(source.includes("indexedDB.open(AUDIO_QUEUE_DB, AUDIO_QUEUE_DB_VERSION)") && source.includes('createObjectStore(AUDIO_QUEUE_STORE, { keyPath: "queueId" })'), "Versioned IndexedDB durable audio queue is missing");
+assert(source.includes('createIndex(AUDIO_QUEUE_SCOPE_INDEX, "scope"') && source.includes('createIndex(AUDIO_QUEUE_SCOPE_ATTEMPT_INDEX, ["scope", "attemptId"]') && source.includes('createIndex(AUDIO_QUEUE_EXPIRY_INDEX, "expiresAtMs"'), "Audio queue must index account, attempt, and expiry without materializing every account blob");
+assert(source.includes("AUDIO_QUEUE_TTL_MS") && source.includes("purgeExpiredQueuedAudio") && source.includes("clearQueuedAudio(accountScope(), submission?.attemptId"), "Sensitive queued audio needs TTL and post-submission cleanup");
+assert(!/objectStore\(AUDIO_QUEUE_STORE\)\.getAll\(\)/.test(source), "Audio queue must never materialize every account's blobs");
+assert(source.includes("durable: false") && source.includes("Do not close or reload this page"), "Volatile fallback must be explicit and warn against closing or reloading");
+assert(source.includes("await deleteQueuedAudio(record.queueId)") && source.indexOf("await deleteQueuedAudio(record.queueId)") > source.indexOf('saveCurrentTurn("", dataUrl'), "Queued blob must only clear after the server turn acknowledgement");
+assert(source.includes('window.addEventListener("online"') && source.includes("drainAudioQueue()"), "Reconnection must automatically drain the protected queue");
+assert(source.includes("renderRecoveredQueuedTurn(record, savedTurn)") && source.includes("no second recording is required"), "A queue recovered after reload must unlock Continue instead of asking for a duplicate answer");
+assert(source.includes('window.addEventListener("offline"'), "Offline state must be visible and handled");
+assert(source.includes('window.addEventListener("pagehide"') && source.includes('document.addEventListener("visibilitychange"'), "Mobile lifecycle guards are incomplete");
+assert(source.includes('navigator.mediaDevices?.addEventListener?.("devicechange"'), "Microphone device changes must be monitored");
+assert(source.includes('mediaRecorder.addEventListener("error"') && source.includes('activeTrack?.addEventListener("ended", handleMicrophoneTrackEnded'), "Recorder and microphone track failure handlers are required");
+assert(source.includes("if (!recordingDurationMs && recordingStartedAt)"), "Spontaneous recorder stops must calculate real elapsed duration");
+assert(source.includes("MICROPHONE_TIMEOUT_MS") && source.includes("getUserMediaWithTimeout"), "getUserMedia needs a finite timeout");
+assert(source.includes("preflightVoicePeak >= 4") && source.includes("preflightPlaybackConfirmed"), "Preflight must detect voice and require sample playback");
+assert(source.includes("verifiedMicrophoneId") && source.includes("invalidatePreflight"), "The verified microphone must remain synchronized and invalidate on change");
+assert(source.includes("safeStorageGet(key)") && source.includes("safeStorageSet(key, value)"), "Idempotency needs a private-mode storage fallback");
+const submissionIdSource = source.match(/function submissionId\(\)\s*\{([\s\S]*?)\n  \}/);
+assert(submissionIdSource && !submissionIdSource[1].includes("localStorage."), "Submission idempotency must not directly depend on localStorage");
+assert(source.includes("invalid_json_response") && source.includes("invalid_turn_acknowledgement") && source.includes("invalid_submit_acknowledgement"), "2xx responses need schema/JSON validation before UI success");
+assert(source.includes("promptPrefetch") && source.includes('error?.name === "NotAllowedError"'), "Protected Daniel audio needs Safari/iOS gesture recovery");
+assert(source.includes("pauseAllAudio(elements.questionAudio)") && source.includes("pauseAllAudio();"), "Prompt, reaction and microphone audio must never overlap");
+assert(source.includes("BroadcastChannel") && source.includes("LEASE_TTL_MS") && source.includes("claimAttemptLease"), "Two-tab lease protection is missing");
+assert(source.includes('"attempt_lease_required", "attempt_lease_expired", "attempt_in_use"') && source.includes("recoverServerLease"), "Canonical server-lease failures need one secure reacquisition path");
+assert(source.includes("deviceId: deviceInstanceId") && source.includes("sessionStorage.getItem(DEVICE_KEY)"), "Every protected mutation needs a tab-session device id");
+assert(source.includes("serverLeaseUsable()") && source.includes("SERVER_LEASE_SAFETY_MS"), "Lease expiry must be checked before upload and submission");
+assert(source.includes("return saveCurrentTurn(transcript, dataUrl, allowStaleRetry, saveContext, false)") && source.includes("record.transcriptClientTurnId = record.transcriptClientTurnId ||"), "Turn and transcript lease retries must preserve their idempotency identifiers");
+assert(source.includes("renderAdminMonitor") && source.includes("loadAdminHealth") && source.includes("reconcileGrades") && source.includes("runStudentAction"), "Administrator health, roster, reconciliation and recovery controls are incomplete");
+assert(source.includes("API.speechHealth") && html.includes('data-health="speech"') && html.includes('data-health="weights"') && html.includes('data-health="audit"'), "Admin health must include speech capacity, weights, and audit state");
+assert(source.includes("buildGradeMutation") && source.includes("expectedRevision") && source.includes("gradeHistory"), "Draft/publish grading needs optimistic revision and history support");
+assert(source.includes("reviewedAudioEvidence") && source.includes("turn?.audio?.sha256") && source.includes("teacherEvidence"), "Grading must bind frozen audio hashes separately from textual teacher evidence");
+assert(source.includes('setHidden(elements.saveGradeDraftButton, alreadyPublished)') && source.includes('if (!publish && workflowOf(selectedStaffSubmission) === "published") return'), "A published grade must only accept a revisioned publish with a reason, never a downgrade back to draft");
+assert(source.includes('const reviewed = workflow === "published"') && source.includes('const status = workflow === "published"'), "Private grading drafts must never appear as a published result in the student receipt workflow");
 assert(source.includes("data-final-oral-speed"));
 assert(!source.includes("data-final-oral-speed=\"1.25\""));
 assert(!source.includes("frames:"), "Real exam must not expose answer frames");
@@ -163,6 +239,7 @@ assert(!source.includes("vocabulary:"), "Real exam must not expose vocabulary hi
 assert(source.includes("No answer model, vocabulary hint, or correction"), "Real-exam no-help notice is missing");
 assert(html.includes('id="claimStudentPanel"'), "Inline document-claim panel is missing");
 assert(html.includes('id="claimStudentIdInput"'), "Inline document-number input is missing");
+assert(html.includes('id="claimPairingCodeInput"'), "Temporary secure pairing-code input is missing");
 assert(html.includes('id="claimStudentButton"'), "Inline document verification button is missing");
 assert(/id="signInButton"[^>]*data-open-google-login/.test(html), "The internal sign-in button must be recognized as an external auth trigger");
 assert(!/\.official-oral-page\s+\.jaralingua-auth\s*>\s*\.auth-trigger\s*\{[^}]*display\s*:\s*none/i.test(css), "The floating course login must remain visible");
@@ -172,7 +249,7 @@ assert(source.includes('headers["X-Jaralingua-Student-Id-Claim"] = claim'), "Doc
 assert(source.includes('const CLAIM_KEY = "jaralingua_basic_final_oral_student_claim_v2"'), "The official exam needs a dedicated document-claim key");
 assert(source.includes("JSON.stringify({ scope, value: normalized })"), "Document claims must be stored with their authenticated account scope");
 assert(source.includes("stored?.scope === accountScope(account)"), "A document claim must never cross over to another signed-in account");
-assert(source.includes("credential === lastCredential") && source.includes("resetProtectedSession({ clearClaim: accountChanged })"), "Sign-out and account switches must reset protected exam state");
+assert(source.includes("credential === lastCredential") && source.includes("purgeAudio: accountChanged"), "Sign-out and account switches must reset protected exam state and purge sensitive local audio");
 assert(source.includes("stateLoadGeneration") && source.includes("readUser()?.credential !== requestedCredential"), "Late state responses from a previous account must be ignored");
 assert(source.includes("totalRecordedDuration() + activeRecording + capturedUnsaved"), "Visible timer must measure recorded speaking time, not network or reading time");
 assert(html.includes('aria-label="Recorded speaking time"'), "Speaking-time indicator needs an accessible label");
@@ -210,13 +287,24 @@ assert.strictEqual(loginToast, "", "Working sign-in must not show a loading erro
 [
   "activateExamButton", "deactivateExamButton", "signInButton", "refreshAccessButton", "claimStudentButton",
   "adminPreviewButton", "adminPreviewPreviousButton", "adminPreviewNextButton", "adminPreviewExitButton",
+  "saveExamWindowButton", "refreshAdminMonitorButton", "reconcileGradesButton", "takeOverSessionButton",
   "welcomePlayButton", "instructionsPlayButton", "preflightButton", "startExamButton", "questionPlayButton",
   "micButton", "stopButton", "nextTurnButton", "retryProcessingButton", "recordAgainButton", "submitExamButton", "copyReceiptButton",
-  "refreshSubmissionsButton", "evidencePlayButton", "publishGradeButton", "floatingMicButton", "floatingStopButton"
+  "refreshSubmissionsButton", "evidencePlayButton", "saveGradeDraftButton", "publishGradeButton", "floatingMicButton", "floatingStopButton"
 ].forEach((id) => {
   assert(html.includes(`id="${id}"`), `Interactive button missing from HTML: ${id}`);
   assert(source.includes(`"${id}"`), `Interactive button is not mapped in JavaScript: ${id}`);
 });
+assert(html.includes('id="examSystemStrip"') && html.includes('id="tabLeaseAlert"'), "Students need visible connection, queue and duplicate-tab status");
+assert(html.includes('id="responseSecurityPipeline"') && html.includes('data-pipeline-step="audio"'), "Audio-first acknowledgement pipeline is missing");
+assert(html.includes('id="submissionWorkflow"') && html.includes('data-workflow-step="grades"'), "Receipt/Grades workflow must be visible");
+assert(html.includes('id="adminHealthGrid"') && html.includes('id="adminRosterBody"'), "Administrator operational monitor is missing");
+assert(html.includes('id="gradeHistoryList"'), "Published grade revisions need a visible history");
+assert(/id="busyOverlay"[^>]*role="status"[^>]*aria-live="assertive"[^>]*tabindex="-1"/.test(html), "Busy overlay needs focusable live status semantics");
+assert(/id="turnProgressTrack"[^>]*role="progressbar"[^>]*aria-valuenow="0"/.test(html), "Interview progress requires real progressbar semantics");
+assert(/id="levelMeterTrack"[^>]*role="progressbar"/.test(html), "Microphone level requires progressbar semantics");
+assert(css.includes(".official-mic-button:disabled") && css.includes(".floating-action:disabled"), "Microphone controls need unmistakable disabled styling");
+assert(css.includes(".admin-roster-table") && css.includes(".response-security-pipeline") && css.includes("@media (max-width: 620px)"), "New safeguard UI must remain responsive");
 assert(source.includes("setDisabled(elements.next, false)"), "Continue must unlock after Daniel's saved-response reaction");
 assert(source.includes("if (!savedCurrentTurn || reactionBusy) return"), "Continue must remain guarded until the response is saved");
 assert(source.includes('const events = ["ended", "error", "stalled", "abort"]'), "Daniel's reaction must recover from interrupted media events");
@@ -309,12 +397,271 @@ const responseHarness = vm.runInNewContext(`(() => {
   const setText = (node, value) => { node.textContent = value; };
   const setDanielState = () => {};
   const updateAdminPreviewNavigation = () => {};
+  const pauseAllAudio = () => {};
   async function playResponseQueue(responses) {${responseQueueSource[1]}
   }
   return { playResponseQueue, next, reactionBusy: () => reactionBusy };
 })()`, responseSandbox);
 
+const safeGetSource = source.match(/function safeStorageGet\(key\)\s*\{([\s\S]*?)\n  \}\n\n  function safeStorageSet/);
+const safeSetSource = source.match(/function safeStorageSet\(key, value\)\s*\{([\s\S]*?)\n  \}\n\n  function safeStorageRemove/);
+assert(safeGetSource && safeSetSource, "Could not isolate private-mode idempotency storage");
+const safeStorageHarness = vm.runInNewContext(`(() => {
+  const memoryStorage = new Map();
+  const localStorage = { getItem: () => null, setItem: () => { throw Object.assign(new Error("quota"), { name: "QuotaExceededError" }); } };
+  function safeStorageGet(key) {${safeGetSource[1]}
+  }
+  function safeStorageSet(key, value) {${safeSetSource[1]}
+  }
+  return { safeStorageGet, safeStorageSet };
+})()`, { Map });
+assert.strictEqual(safeStorageHarness.safeStorageSet("submission", "ID-1"), false, "Quota failure must be reported without throwing");
+assert.strictEqual(safeStorageHarness.safeStorageGet("submission"), "ID-1", "Memory fallback must survive a localStorage quota failure");
+
+const queueIndexSource = source.match(/async function readIndexedQueuedAudio\(scope, attemptId = ""\)\s*\{([\s\S]*?)\n  \}\n\n  async function deleteQueuedAudioRecord/);
+const queueListSource = source.match(/async function listQueuedAudio\(scope = accountScope\(\), attemptId = ""\)\s*\{([\s\S]*?)\n  \}\n\n  async function putQueuedAudio/);
+const queuePutSource = source.match(/async function putQueuedAudio\(record\)\s*\{([\s\S]*?)\n  \}\n\n  async function deleteQueuedAudio/);
+const queueClearSource = source.match(/async function clearQueuedAudio\(scope, attemptId = ""\)\s*\{([\s\S]*?)\n  \}\n\n  async function refreshQueuedAudioCount/);
+assert(queueIndexSource && queueListSource && queuePutSource && queueClearSource, "Could not isolate scoped durable queue logic");
+const queueIndexHarness = vm.runInNewContext(`(() => {
+  const calls = [];
+  const IDBKeyRange = { only: (value) => ({ only: value }) };
+  const AUDIO_QUEUE_SCOPE_INDEX = "scope";
+  const AUDIO_QUEUE_SCOPE_ATTEMPT_INDEX = "scopeAttempt";
+  const audioQueueOperation = async (_mode, operation) => operation({ index(name) { return { getAll(key) { calls.push({ name, key }); return []; } }; } });
+  async function readIndexedQueuedAudio(scope, attemptId = "") {${queueIndexSource[1]}
+  }
+  return { readIndexedQueuedAudio, calls };
+})()`, { Array });
+const queueHarness = vm.runInNewContext(`(() => {
+  const future = Date.now() + 60000;
+  const past = Date.now() - 1;
+  const memoryAudioQueue = new Map([
+    ["same", { queueId: "same", scope: "scope:user", attemptId: "A1", expiresAtMs: future, source: "memory" }],
+    ["memory-only", { queueId: "memory-only", scope: "scope:user", attemptId: "A1", expiresAtMs: future, source: "memory" }],
+    ["foreign-memory", { queueId: "foreign-memory", scope: "scope:other", attemptId: "A1", expiresAtMs: future, source: "foreign" }]
+  ]);
+  const deleted = [];
+  const readIndexedQueuedAudio = async () => [
+    { queueId: "same", scope: "scope:user", attemptId: "A1", expiresAtMs: future, source: "indexeddb" },
+    { queueId: "db-only", scope: "scope:user", attemptId: "A1", expiresAtMs: future, source: "indexeddb" },
+    { queueId: "expired", scope: "scope:user", attemptId: "A1", expiresAtMs: past, source: "indexeddb" },
+    { queueId: "foreign-db", scope: "scope:other", attemptId: "A1", expiresAtMs: future, source: "foreign" }
+  ];
+  const isExpiredQueueRecord = (record) => Number(record.expiresAtMs) <= Date.now();
+  const deleteQueuedAudioRecord = async (queueId) => { deleted.push(queueId); memoryAudioQueue.delete(queueId); };
+  const accountScope = () => "scope:user";
+  async function listQueuedAudio(scope = accountScope(), attemptId = "") {${queueListSource[1]}
+  }
+  return { listQueuedAudio, deleted };
+})()`, { Map, Array, Date, Promise });
+const queuePutHarness = vm.runInNewContext(`(() => {
+  let shouldFail = true;
+  const memoryAudioQueue = new Map();
+  const warnings = [];
+  const AUDIO_QUEUE_TTL_MS = 86400000;
+  const audioQueueOperation = async (_mode, operation) => {
+    if (shouldFail) throw Object.assign(new Error("quota"), { name: "QuotaExceededError" });
+    operation({ put() {} });
+  };
+  const toast = (message) => warnings.push(message);
+  const refreshQueuedAudioCount = async () => {};
+  async function putQueuedAudio(record) {${queuePutSource[1]}
+  }
+  return { putQueuedAudio, memoryAudioQueue, warnings, setFailure: (value) => { shouldFail = value; } };
+})()`, { Map, Date, Object, Promise, Error });
+const queueClearHarness = vm.runInNewContext(`(() => {
+  const memoryAudioQueue = new Map([
+    ["a1", { queueId: "a1", scope: "scope:a", attemptId: "A1" }],
+    ["a2", { queueId: "a2", scope: "scope:a", attemptId: "A2" }],
+    ["b1", { queueId: "b1", scope: "scope:b", attemptId: "B1" }]
+  ]);
+  const deleted = [];
+  const listQueuedAudio = async (scope, attemptId) => Array.from(memoryAudioQueue.values()).filter((record) => record.scope === scope && (!attemptId || record.attemptId === attemptId));
+  const deleteQueuedAudioRecord = async (queueId) => { deleted.push(queueId); memoryAudioQueue.delete(queueId); };
+  const accountScope = () => "scope:b";
+  const refreshQueuedAudioCount = async () => {};
+  async function clearQueuedAudio(scope, attemptId = "") {${queueClearSource[1]}
+  }
+  return { clearQueuedAudio, memoryAudioQueue, deleted };
+})()`, { Map, Array, Promise });
+
+const onlineSource = source.match(/function handleOnlineConnection\(\)\s*\{([\s\S]*?)\n  \}\n\n  function handleOfflineConnection/);
+assert(onlineSource, "Could not isolate automatic online recovery");
+const onlineHarness = vm.runInNewContext(`(() => {
+  let online = false;
+  let currentBlob = {};
+  let savedCurrentTurn = false;
+  let analyzing = false;
+  const events = [];
+  const updateConnectionUi = () => events.push("ui-online");
+  const setWorkflowMessage = () => events.push("workflow");
+  const drainAudioQueue = async () => { events.push("drain"); };
+  const processAndSaveCurrentTurn = async () => { events.push("retry-current"); };
+  function handleOnlineConnection() {${onlineSource[1]}
+  }
+  return { handleOnlineConnection, events, isOnline: () => online };
+})()`, { Promise });
+
+const visibilitySource = source.match(/function handleVisibilityChange\(\)\s*\{([\s\S]*?)\n  \}\n\n  function handlePageHide/);
+const unloadSource = source.match(/function handleBeforeUnload\(event\)\s*\{([\s\S]*?)\n  \}\n\n  function bindEvents/);
+assert(visibilitySource && unloadSource, "Could not isolate page lifecycle guards");
+const lifecycleHarness = vm.runInNewContext(`(() => {
+  let recorderFailureReason = "";
+  let stopCalls = 0;
+  const document = { visibilityState: "hidden" };
+  const mediaRecorder = { state: "recording" };
+  const elements = { recordStatus: {} };
+  const stopRecording = () => { stopCalls += 1; mediaRecorder.state = "inactive"; };
+  const setText = () => {};
+  const hasUnsavedAudio = () => true;
+  function handleVisibilityChange() {${visibilitySource[1]}
+  }
+  function handleBeforeUnload(event) {${unloadSource[1]}
+  }
+  return { handleVisibilityChange, handleBeforeUnload, stopCalls: () => stopCalls, mediaRecorder };
+})()`, {});
+
+const requestSource = source.match(/async function request\(url, options = \{\}, maxAttempts = 1\)\s*\{([\s\S]*?)\n  \}\n\n  const jsonOptions/);
+assert(requestSource, "Could not isolate the JSON response contract guard");
+const invalidResponseHarness = vm.runInNewContext(`(() => {
+  const window = { setTimeout, clearTimeout };
+  const authHeaders = (value) => value;
+  const isRecord = (value) => Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  const contractError = (code, data = null) => { const error = new Error(code); error.name = "ContractError"; error.status = 502; error.data = data; return error; };
+  const fetch = async () => ({ ok: true, status: 200, text: async () => "not-json" });
+  const REQUEST_TIMEOUT_MS = 1000;
+  async function request(url, options = {}, maxAttempts = 1) {${requestSource[1]}
+  }
+  return { request };
+})()`, { setTimeout, clearTimeout, AbortController, Promise, JSON, Error, Array });
+
+const transcriptionSource = source.match(/async function requestTranscription\(blob, allowScopeRefresh = true\)\s*\{([\s\S]*?)\n  \}\n\n  function blobToDataUrl/);
+assert(transcriptionSource, "Could not isolate the non-blocking transcription request");
+const transcriptionHarness = vm.runInNewContext(`(() => {
+  let calls = 0;
+  const role = "student";
+  const adminPreviewMode = false;
+  const attempt = { transcriberScopeToken: "signed-scope", transcriberScopeExpiresAt: "2099-01-01T00:00:00Z" };
+  const API = { transcribe: "/transcribe" };
+  const TRANSCRIPTION_TIMEOUT_MS = 120000;
+  const request = async () => { calls += 1; throw Object.assign(new Error("timeout"), { name: "AbortError" }); };
+  const refreshAttemptSecurityScope = async () => {};
+  const hasText = (value) => typeof value === "string" && value.length > 0;
+  const requireContract = (condition) => { if (!condition) throw new Error("contract"); };
+  async function requestTranscription(blob, allowScopeRefresh = true) {${transcriptionSource[1]}
+  }
+  return { requestTranscription, calls: () => calls };
+})()`, { Date, Number, Object, Error, Promise, Array });
+
+const submissionRetrySource = source.match(/async function sendFinalSubmission\(payload, allowLeaseRetry = true\)\s*\{([\s\S]*?)\n  \}\n\n  async function submitExam/);
+assert(submissionRetrySource, "Could not isolate idempotent final-submission lease recovery");
+const submissionRetryHarness = vm.runInNewContext(`(() => {
+  let leaseVersion = 1;
+  let revision = 7;
+  let serverLeaseId = "lease-1";
+  const calls = [];
+  const API = { submit: "/submit" };
+  const deviceInstanceId = "tab-device";
+  const jsonOptions = (_method, payload) => ({ body: JSON.stringify(payload) });
+  const ensureServerLease = async () => ({ leaseId: serverLeaseId });
+  const request = async (_url, options) => {
+    calls.push(JSON.parse(options.body));
+    if (calls.length === 1) throw Object.assign(new Error("expired"), { status: 409, data: { error: "attempt_lease_expired" } });
+    return { data: { submission: { receiptId: "R1", status: "pending_review" }, serverLeaseExpiresAt: "2099-01-01T00:00:00Z" } };
+  };
+  const isLeaseError = (error) => error?.status === 409 && ["attempt_lease_required", "attempt_lease_expired", "attempt_in_use"].includes(error?.data?.error);
+  const recoverServerLease = async () => { leaseVersion += 1; serverLeaseId = "lease-" + leaseVersion; return true; };
+  const updateServerLeaseExpiry = () => {};
+  async function sendFinalSubmission(payload, allowLeaseRetry = true) {${submissionRetrySource[1]}
+  }
+  return { sendFinalSubmission, calls };
+})()`, { JSON, Object, Error, Array, Promise });
+
+const audioFirstHarness = vm.runInNewContext(`(() => {
+  let currentBlob = { type: "audio/webm" };
+  let analyzing = false;
+  let sessionGeneration = 1;
+  let attempt = { attemptId: "A1", attemptScopeToken: "scope", turns: {} };
+  let recordingDurationMs = 1200;
+  let currentQueueId = "";
+  let currentClientTurnId = "client-turn";
+  let currentIndex = 0;
+  let online = true;
+  let savedCurrentTurn = false;
+  let currentTranscript = "";
+  const REQUIRED_TURNS = 7;
+  const elements = { recovery: {}, recordStatus: {}, saveStatus: {}, saveState: {}, answerCaptured: {}, next: {} };
+  const events = [];
+  const currentQuestion = () => ({ turnId: "unit-1", variantId: "unit-1-a", unit: "1" });
+  const createId = (prefix) => prefix + "-id";
+  const accountScope = () => "scope:user";
+  const setHidden = () => {};
+  const setText = () => {};
+  const setDanielState = () => {};
+  const setBusy = () => {};
+  const setPipeline = () => {};
+  const updateRecordingControls = () => {};
+  const setWorkflowMessage = () => {};
+  const setDisabled = () => {};
+  const putQueuedAudio = async () => { events.push("indexeddb"); };
+  const uploadQueuedRecord = async () => { events.push("server-audio-ack"); return { turnId: "unit-1", savedAt: "now", transcriptStatus: "pending" }; };
+  const sessionChangedError = () => new Error("session_changed");
+  const requireContract = (condition) => { if (!condition) throw new Error("contract"); };
+  const isTurnContract = () => true;
+  const transcribeSavedAudio = () => events.push("transcription-started");
+  const playResponseQueue = async () => { events.push("continue-unlocked"); };
+  const responsesForTurn = () => [];
+  const renderLeaseState = () => {};
+  let leaseReadOnly = false;
+  async function processAndSaveCurrentTurn() {${processorBody}
+  }
+  return { processAndSaveCurrentTurn, events, saved: () => savedCurrentTurn };
+})()`, { Date, Math, Object, String, Error });
+
 (async () => {
+  await queueIndexHarness.readIndexedQueuedAudio("scope:user", "A1");
+  await queueIndexHarness.readIndexedQueuedAudio("scope:user");
+  assert.deepStrictEqual(JSON.parse(JSON.stringify(queueIndexHarness.calls)), [
+    { name: "scopeAttempt", key: { only: ["scope:user", "A1"] } },
+    { name: "scope", key: "scope:user" }
+  ], "IndexedDB reads must target only the authenticated account and attempt indexes");
+  const mergedQueue = await queueHarness.listQueuedAudio("scope:user", "A1");
+  assert.strictEqual(mergedQueue.length, 3, "IndexedDB and volatile fallback records must be merged");
+  assert.strictEqual(mergedQueue.find((item) => item.queueId === "same").source, "memory", "Most recent memory record must win queue-id conflicts");
+  assert(!mergedQueue.some((item) => item.scope !== "scope:user"), "Queued audio from another account must never be materialized into the current account view");
+  assert.deepStrictEqual(Array.from(queueHarness.deleted), ["expired"], "Expired sensitive audio must be purged during the scoped read");
+  const volatileRecord = await queuePutHarness.putQueuedAudio({ queueId: "volatile", scope: "scope:user", attemptId: "A1", createdAtMs: Date.now() });
+  assert.strictEqual(volatileRecord.durable, false, "Quota failure must be reported as volatile, never durable");
+  assert.strictEqual(queuePutHarness.memoryAudioQueue.get("volatile").durable, false, "Volatile fallback flag must survive in the memory queue");
+  assert(queuePutHarness.warnings.some((message) => message.includes("Do not close or reload")), "Quota fallback needs an explicit page-lifecycle warning");
+  queuePutHarness.setFailure(false);
+  const durableRecord = await queuePutHarness.putQueuedAudio({ queueId: "durable", scope: "scope:user", attemptId: "A1", createdAtMs: Date.now() });
+  assert.strictEqual(durableRecord.durable, true, "Successful IndexedDB commit must be marked durable");
+  await queueClearHarness.clearQueuedAudio("scope:a", "A1");
+  assert.deepStrictEqual(Array.from(queueClearHarness.memoryAudioQueue.keys()).sort(), ["a2", "b1"], "Attempt cleanup must not erase another attempt or account");
+  await queueClearHarness.clearQueuedAudio("scope:a");
+  assert.deepStrictEqual(Array.from(queueClearHarness.memoryAudioQueue.keys()), ["b1"], "Logout cleanup must purge only the departing account's sensitive audio");
+  await onlineHarness.handleOnlineConnection();
+  assert.strictEqual(onlineHarness.isOnline(), true, "Online event must restore connection state");
+  assert.deepStrictEqual(Array.from(onlineHarness.events), ["ui-online", "workflow", "drain", "retry-current"], "Online event must drain durable queue before retrying the visible answer");
+  lifecycleHarness.handleVisibilityChange();
+  assert.strictEqual(lifecycleHarness.stopCalls(), 1, "Moving a mobile exam to the background must stop the active recording safely");
+  const unloadEvent = { prevented: false, preventDefault() { this.prevented = true; }, returnValue: null };
+  lifecycleHarness.handleBeforeUnload(unloadEvent);
+  assert.strictEqual(unloadEvent.prevented, true, "Unsaved audio must trigger the browser leave guard");
+  await assert.rejects(() => invalidResponseHarness.request("/fake", {}, 1), (error) => error.name === "ContractError" && error.message === "invalid_json_response", "Invalid 2xx JSON must never be accepted as success");
+  await assert.rejects(() => transcriptionHarness.requestTranscription({ type: "audio/webm" }), (error) => error.name === "AbortError", "Transcription timeout must remain pending instead of blocking or being disguised");
+  assert.strictEqual(transcriptionHarness.calls(), 1, "A transcription timeout must not duplicate expensive server inference");
+  const retryPayload = { attemptId: "A1", clientSubmissionId: "submit-idempotency-1" };
+  await submissionRetryHarness.sendFinalSubmission(retryPayload);
+  assert.strictEqual(submissionRetryHarness.calls.length, 2, "Expired lease must reacquire once and retry the same final submission");
+  assert.strictEqual(submissionRetryHarness.calls[0].clientSubmissionId, submissionRetryHarness.calls[1].clientSubmissionId, "Lease recovery must preserve the submission idempotency id");
+  assert.strictEqual(submissionRetryHarness.calls[0].deviceId, "tab-device", "Submit must bind the tab-session device id");
+  assert.deepStrictEqual(Array.from(submissionRetryHarness.calls, (item) => item.leaseId), ["lease-1", "lease-2"], "Lease retry must replace only the stale lease id");
+  await audioFirstHarness.processAndSaveCurrentTurn();
+  assert.strictEqual(audioFirstHarness.saved(), true, "Verified server audio acknowledgement must unlock official progress");
+  assert.deepStrictEqual(Array.from(audioFirstHarness.events), ["indexeddb", "server-audio-ack", "transcription-started", "continue-unlocked"], "Functional audio-first sequence must protect, acknowledge, then transcribe");
   previewDispatcherHarness.setPreview(true);
   await previewDispatcherHarness.processCapturedTurn();
   assert.strictEqual(JSON.stringify(previewDispatcherHarness.counts()), JSON.stringify({ previewCalls: 1, officialCalls: 0 }), "Preview retry must never enter the official save processor");

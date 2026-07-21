@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
-  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task.css?v=20260721-official-oral-v3" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task.css?v=20260721-official-oral-v5" />
 </head>
 <body class="english-basic-page official-oral-page" data-exam-mode="real" data-exam-code="basic-course-1-final-oral-task">
   <div class="institutional-band official-institutional-band">
@@ -54,6 +54,13 @@
       <article><span><i class="bi bi-journal-check"></i></span><div><strong>Teacher evaluation</strong><small>Your teacher reviews all six units with the institutional /50 rubric.</small></div></article>
     </section>
 
+    <section class="exam-system-strip" id="examSystemStrip" data-connection="online" aria-label="Exam system status">
+      <p id="connectionStatus" role="status" aria-live="polite"><i class="bi bi-wifi"></i><strong>Online</strong><span>The secure exam server is available.</span></p>
+      <p id="queueStatus" role="status" aria-live="polite"><i class="bi bi-device-ssd-fill"></i><strong>Protected locally</strong><span>No recording is waiting to upload.</span></p>
+      <p id="workflowStatus" role="status" aria-live="polite"><i class="bi bi-shield-check"></i><strong>Ready</strong><span>Audio is saved before transcription.</span></p>
+    </section>
+    <aside class="tab-lease-alert" id="tabLeaseAlert" role="alert" aria-live="assertive" hidden><i class="bi bi-window-stack"></i><div><strong>This exam is active in another tab or device.</strong><span>This tab is read-only to prevent duplicate or conflicting recordings. Return to the active tab, or wait until its secure session expires.</span></div><button class="official-button secondary" id="takeOverSessionButton" type="button">Use this tab</button></aside>
+
     <section class="official-shell official-access-shell" id="access" aria-labelledby="accessTitle">
       <section class="official-admin-panel" id="adminPanel" data-panel="admin" hidden>
         <div class="admin-panel-heading">
@@ -63,6 +70,7 @@
         </div>
         <div class="admin-control-grid">
           <div class="admin-control-actions"><button class="official-button success" id="activateExamButton" type="button" data-admin-action="activate"><i class="bi bi-unlock-fill"></i> Activate exam</button><button class="official-button danger" id="deactivateExamButton" type="button" data-admin-action="deactivate"><i class="bi bi-lock-fill"></i> Close exam</button></div>
+          <section class="admin-window-config" aria-labelledby="adminWindowTitle"><div><small>Server-controlled window</small><h3 id="adminWindowTitle">Availability rules</h3></div><label><span>Opens</span><input id="adminOpensAt" type="datetime-local" /></label><label><span>Closes</span><input id="adminClosesAt" type="datetime-local" /></label><label><span>Close mode</span><select id="adminCloseMode"><option value="soft">Soft · active students finish</option><option value="hard">Hard · stop at deadline</option></select></label><label><span>Grace seconds</span><input id="adminGraceSeconds" type="number" min="0" max="3600" step="60" value="300" /></label><label class="admin-eligible-field"><span>Eligible student IDs (optional)</span><textarea id="adminEligibleStudents" rows="2" placeholder="Leave blank for the complete active roster; or separate IDs with commas"></textarea></label><button class="official-button secondary" id="saveExamWindowButton" type="button"><i class="bi bi-calendar-check"></i> Save availability window</button></section>
           <section class="admin-preview-launch" aria-labelledby="adminPreviewTitle">
             <span class="admin-preview-icon"><i class="bi bi-person-video2"></i></span>
             <div class="admin-preview-copy"><small>Private administrator mode</small><h3 id="adminPreviewTitle">View and rehearse the complete exam</h3><p>Choose an A, B, or C review set, listen to every Daniel prompt, test the microphone, and move freely through all seven parts. Real student questions are randomized independently by unit. Preview audio may be processed temporarily for transcription, but it is never stored in Grades or student submissions.</p></div>
@@ -71,6 +79,12 @@
           </section>
         </div>
         <div class="admin-confirmation" id="adminActivationStatus" role="status" aria-live="polite"><i class="bi bi-info-circle-fill"></i><span>The exam is currently locked for students.</span></div>
+        <section class="admin-operations" aria-labelledby="adminOperationsTitle">
+          <header><div><p class="official-kicker">Operational safeguards</p><h3 id="adminOperationsTitle">Exam health and student delivery monitor</h3></div><div class="admin-operations-actions"><button class="official-button secondary" id="refreshAdminMonitorButton" type="button"><i class="bi bi-arrow-clockwise"></i> Refresh monitor</button><button class="official-button secondary" id="reconcileGradesButton" type="button"><i class="bi bi-arrow-repeat"></i> Verify Grades sync</button></div></header>
+          <div class="admin-health-grid" id="adminHealthGrid" role="status" aria-live="polite"><span data-health="api"><i class="bi bi-server"></i><strong>Exam API</strong><small>Checking…</small></span><span data-health="storage"><i class="bi bi-device-ssd"></i><strong>Audio storage</strong><small>Checking…</small></span><span data-health="prompts"><i class="bi bi-volume-up"></i><strong>Daniel audio</strong><small>Checking…</small></span><span data-health="speech"><i class="bi bi-soundwave"></i><strong>Speech queue</strong><small>Checking…</small></span><span data-health="grades"><i class="bi bi-journal-check"></i><strong>Grades sync</strong><small>Checking…</small></span><span data-health="weights"><i class="bi bi-percent"></i><strong>Grade weights</strong><small>Checking…</small></span><span data-health="audit"><i class="bi bi-shield-lock"></i><strong>Audit trail</strong><small>Checking…</small></span></div>
+          <div class="admin-roster-wrap"><table class="admin-roster-table"><caption id="adminRosterCaption">Course roster and Final Oral Task delivery states</caption><thead><tr><th scope="col">Student</th><th scope="col">Exam status</th><th scope="col">Evidence</th><th scope="col">Last activity</th><th scope="col">Action</th></tr></thead><tbody id="adminRosterBody"><tr><td colspan="5">The delivery monitor will load after staff access is confirmed.</td></tr></tbody></table></div>
+          <p class="admin-operation-status" id="adminOperationStatus" role="status" aria-live="polite">No administrative recovery action is pending.</p>
+        </section>
       </section>
 
       <section class="official-access-panel" id="accessPanel" data-panel="access">
@@ -83,7 +97,8 @@
           <div class="official-button-row"><button class="official-button primary" id="signInButton" type="button" data-open-login data-open-google-login><i class="bi bi-box-arrow-in-right"></i> Sign in to continue</button><button class="official-button secondary" id="refreshAccessButton" type="button"><i class="bi bi-arrow-clockwise"></i> Check availability</button></div>
           <div class="student-claim-panel" id="claimStudentPanel" hidden>
             <label for="claimStudentIdInput"><span>Document number registered in Grades</span><input id="claimStudentIdInput" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter your document number" /></label>
-            <button class="official-button secondary" id="claimStudentButton" type="button"><i class="bi bi-person-vcard"></i> Verify document</button>
+            <label for="claimPairingCodeInput"><span>Temporary pairing code (when issued by the teacher)</span><input id="claimPairingCodeInput" type="text" inputmode="text" autocomplete="one-time-code" maxlength="24" placeholder="Enter the temporary code" /></label>
+            <button class="official-button secondary" id="claimStudentButton" type="button"><i class="bi bi-person-vcard"></i> Verify secure pairing</button>
           </div>
           <p class="access-message neutral" id="accessMessage" role="status" aria-live="polite"><i class="bi bi-shield-lock"></i><span>Questions, images, and audio remain protected until access is confirmed.</span></p>
           <div id="loginMount" data-login-mount></div>
@@ -142,7 +157,7 @@
 
       <div class="official-exam-layout">
         <section class="official-interview-card" aria-live="polite">
-          <header class="interview-progress-header"><div><span id="turnCounter">Question 1 of 7</span><strong id="turnTopic">Unit 1 · All About You</strong></div><div class="interview-progress-track" aria-hidden="true"><i id="turnProgress"></i></div><time id="examTimer" datetime="PT0M0S" aria-label="Recorded speaking time">Speaking 0:00</time></header>
+          <header class="interview-progress-header"><div><span id="turnCounter">Question 1 of 7</span><strong id="turnTopic">Unit 1 · All About You</strong></div><div class="interview-progress-track" id="turnProgressTrack" role="progressbar" aria-label="Saved responses" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0" aria-valuetext="0 of 7 responses saved"><i id="turnProgress"></i></div><time id="examTimer" datetime="PT0M0S" aria-label="Recorded speaking time">Speaking 0:00</time></header>
 
           <section class="daniel-stage" id="danielStage" data-state="ready" aria-labelledby="questionText">
             <figure class="daniel-portrait"><img id="danielPortrait" src="../../assets/img/english-basic/final-oral-task-real/daniel-carter-portrait-v1.webp" width="1122" height="1402" decoding="async" alt="Daniel Carter, official interviewer" /></figure>
@@ -164,13 +179,16 @@
 
           <section class="official-recorder" id="answerRecorder" aria-label="Record your official answer">
             <div class="recorder-header"><div><p class="official-kicker">Your official answer</p><h2>Speak when you are ready</h2></div><span class="answer-state ready" id="answerState"><i class="bi bi-circle-fill"></i> Ready</span></div>
-            <div class="recorder-device-row"><label class="microphone-picker"><span><i class="bi bi-mic"></i> Microphone</span><select id="microphoneSelect"><option value="">Default microphone</option></select></label><div class="official-level"><span>Voice level</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div></div>
+            <div class="recorder-device-row"><label class="microphone-picker"><span><i class="bi bi-mic"></i> Microphone verified in preflight</span><select id="microphoneSelect"><option value="">Default microphone</option></select></label><div class="official-level"><span>Voice level</span><div id="levelMeterTrack" role="progressbar" aria-label="Microphone input level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div></div>
             <button class="official-mic-button" id="micButton" type="button" aria-label="Start recording your official answer"><span class="mic-rings" aria-hidden="true"><i></i><i></i></span><i class="bi bi-mic-fill"></i><strong>Tap to answer</strong></button>
             <p class="record-status" id="recordStatus">Your response has not started.</p><span class="record-timer" id="recordTimer">00:00 / 00:30</span>
             <div class="voice-waveform" id="voiceWaveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <div class="recorder-actions"><button class="official-button danger" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish answer</button><button class="official-button primary" id="nextTurnButton" type="button" disabled>Continue <i class="bi bi-arrow-right"></i></button></div>
             <audio id="studentAudio" controls hidden></audio>
             <div class="answer-captured" id="answerCaptured" hidden><i class="bi bi-check2-circle"></i><div><strong>Answer captured securely</strong><p>Your response was saved. No score or feedback is shown during the official exam.</p></div></div>
+            <ol class="response-security-pipeline" id="responseSecurityPipeline" aria-label="Response security status">
+              <li data-pipeline-step="queued"><i class="bi bi-device-ssd"></i><span>Protected on this device</span></li><li data-pipeline-step="audio"><i class="bi bi-cloud-check"></i><span>Audio verified by server</span></li><li data-pipeline-step="transcript"><i class="bi bi-card-text"></i><span>Transcript pending</span></li>
+            </ol>
             <div id="liveTranscript" hidden></div>
             <div class="technical-recovery" id="technicalRecovery" hidden><i class="bi bi-wifi-off"></i><div><strong>We could not process this answer yet</strong><p id="technicalRecoveryMessage">Your recording remains on this screen. Retry the technical process without recording a new answer.</p><div class="official-button-row"><button class="official-button secondary" id="retryProcessingButton" type="button"><i class="bi bi-arrow-clockwise"></i> Retry secure processing</button><button class="official-button secondary" id="recordAgainButton" type="button"><i class="bi bi-mic"></i> Record again after technical failure</button></div></div></div>
             <div class="unsupported-message" id="unsupportedMessage" hidden></div>
@@ -198,12 +216,13 @@
       </div>
       <label class="final-submit-confirmation"><input id="finalSubmitConfirmation" type="checkbox" /><span><strong>I confirm this is my final delivery.</strong><small>I understand that submitted responses cannot be replaced.</small></span></label>
       <div class="submission-actions"><button class="official-button primary large" id="submitExamButton" type="button" disabled><i class="bi bi-send-check-fill"></i> Submit official oral task</button><p id="submitStatus" role="status" aria-live="polite">Waiting for secure validation.</p></div>
+      <ol class="submission-workflow" id="submissionWorkflow" aria-label="Final delivery workflow"><li data-workflow-step="received"><i class="bi bi-inbox-fill"></i><span>Received</span></li><li data-workflow-step="verified"><i class="bi bi-shield-check"></i><span>7 audios verified</span></li><li data-workflow-step="grades"><i class="bi bi-journal-check"></i><span>Visible in Grades</span></li><li data-workflow-step="review"><i class="bi bi-person-check"></i><span>Teacher review</span></li></ol>
     </section>
 
     <section class="official-shell receipt-panel" id="receiptPanel" data-panel="receipt" hidden aria-labelledby="receiptTitle">
       <div class="receipt-check"><i class="bi bi-check2"></i></div><p class="official-kicker">Delivery confirmed</p><h2 id="receiptTitle">Your Final Oral Task was submitted</h2><p>The teacher can now review your seven recordings across the six units and final interaction. Keep this confirmation code as evidence of delivery.</p>
       <div class="receipt-code"><small>Confirmation code</small><strong id="receiptCode">—</strong><button id="copyReceiptButton" type="button" aria-label="Copy confirmation code"><i class="bi bi-copy"></i></button></div>
-      <dl class="receipt-details"><div><dt>Student</dt><dd id="receiptStudent">—</dd></div><div><dt>Submitted</dt><dd id="receiptSubmittedAt">—</dd></div><div><dt>Course</dt><dd>Basic Course 1</dd></div><div><dt>Status</dt><dd><span><i class="bi bi-hourglass-split"></i> Awaiting teacher review</span></dd></div></dl>
+      <dl class="receipt-details"><div><dt>Student</dt><dd id="receiptStudent">—</dd></div><div><dt>Submitted</dt><dd id="receiptSubmittedAt">—</dd></div><div><dt>Course</dt><dd>Basic Course 1</dd></div><div><dt>Status</dt><dd><span id="receiptWorkflowStatus"><i class="bi bi-hourglass-split"></i> Verifying Grades delivery</span></dd></div></dl>
       <div class="receipt-actions"><a class="official-button primary" href="index.html"><i class="bi bi-house-door"></i> Return to Basic Course</a><a class="official-button secondary" href="notas.html"><i class="bi bi-journal-check"></i> Open Grades</a></div>
     </section>
 
@@ -245,12 +264,12 @@
         </div>
       </section>
 
-      <section class="teacher-feedback-panel"><label><span><i class="bi bi-chat-heart-fill"></i><strong>Teacher feedback for the student</strong><small>Highlight specific strengths, corrections, and one achievable next step.</small></span><textarea id="teacherFeedback" rows="7" placeholder="Write clear, direct feedback to the student…"></textarea></label><div class="publish-grade-card"><div><small>Official result</small><strong><span id="publishScore">0</span><em>/50</em></strong><p>Equivalent grade: <b id="publishGrade">0.0 / 5.0</b></p></div><button class="official-button success large" id="publishGradeButton" type="button" disabled><i class="bi bi-patch-check-fill"></i> Publish grade and feedback</button><p id="publishStatus" role="status" aria-live="polite">Complete the five criteria and feedback before publishing.</p></div></section>
+      <section class="teacher-feedback-panel"><label><span><i class="bi bi-chat-heart-fill"></i><strong>Teacher feedback for the student</strong><small>Highlight specific strengths, corrections, and one achievable next step.</small></span><textarea id="teacherFeedback" rows="7" placeholder="Write clear, direct feedback to the student…"></textarea></label><div class="publish-grade-card"><div><small>Official result</small><strong><span id="publishScore">0</span><em>/50</em></strong><p>Equivalent grade: <b id="publishGrade">0.0 / 5.0</b></p></div><div class="grade-action-row"><button class="official-button secondary large" id="saveGradeDraftButton" type="button" disabled><i class="bi bi-floppy-fill"></i> Save private draft</button><button class="official-button success large" id="publishGradeButton" type="button" disabled><i class="bi bi-patch-check-fill"></i> Publish grade and feedback</button></div><p id="publishStatus" role="status" aria-live="polite">Complete the five criteria and feedback before publishing.</p><details class="grade-history"><summary><i class="bi bi-clock-history"></i> Grade history and revisions</summary><ol id="gradeHistoryList"><li>No grade revision has been recorded.</li></ol></details></div></section>
     </section>
 
     <div class="floating-mic-dock" id="floatingMicDock" data-state="ready" role="region" aria-label="Floating official recording controls" hidden><div class="floating-copy"><span id="floatingTurnLabel">Unit 1 · Question 1</span><strong id="floatingStatus" aria-live="polite">Ready to answer</strong></div><span class="floating-timer" id="floatingTimer">00:00 / 00:30</span><button class="floating-action" id="floatingMicButton" type="button" aria-label="Start official answer"><i class="bi bi-mic-fill"></i><span>Answer</span></button><button class="floating-action stop" id="floatingStopButton" type="button" aria-label="Finish official answer" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
     <div class="official-toast" id="officialToast" role="status" aria-live="polite" hidden></div>
-    <div class="official-busy-overlay" id="busyOverlay" hidden><span><i></i><i></i><i></i></span><strong id="busyMessage">Securing your response…</strong></div>
+    <div class="official-busy-overlay" id="busyOverlay" role="status" aria-live="assertive" aria-modal="true" tabindex="-1" hidden><span aria-hidden="true"><i></i><i></i><i></i></span><strong id="busyMessage">Securing your response…</strong></div>
   </main>
 
   <footer class="site-footer official-screen-footer"><p>BASIC COURSE 1 · FINAL ORAL TASK (20%) · Secure institutional assessment</p></footer>
@@ -260,7 +279,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
-  <script src="../../assets/js/english-basic-final-oral-task.js?v=20260721-official-oral-v3"></script>
+  <script src="../../assets/js/english-basic-final-oral-task.js?v=20260721-official-oral-v5"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

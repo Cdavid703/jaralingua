@@ -10,6 +10,7 @@ WorkingDirectory=/var/www/jaralingua.com
 Environment=WHISPER_MODEL_SIZE=base
 Environment=HF_HOME=/var/cache/jaralingua-whisper
 Environment=WHISPER_CACHE_DIR=/var/cache/jaralingua-whisper
+EnvironmentFile=-/etc/jaralingua/transcriber-internal.env
 ExecStart=/var/www/jaralingua.com/.venv-whisper/bin/python /var/www/jaralingua.com/tools/french8_pronunciation_server_local.py --host 127.0.0.1 --port 8020
 Restart=on-failure
 RestartSec=3

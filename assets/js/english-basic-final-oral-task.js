@@ -9,7 +9,13 @@
     submit: "/api/basic-final-oral/submit",
     submissions: "/api/basic-final-oral/submissions",
     grade: "/api/basic-final-oral/grade",
+    health: "/api/basic-final-oral/health",
+    reconcile: "/api/basic-final-oral/reconcile",
+    studentAction: "/api/basic-final-oral/student-action",
+    pair: "/api/basic-final-oral/pair",
+    lease: "/api/basic-final-oral/lease",
     audio: "/api/basic-final-oral/audio",
+    speechHealth: "/api/english-basic/pronunciation-health",
     transcribe: "/api/english-basic/pronunciation-assessment"
   });
   const AUDIO_ROOT = "audio/final-oral-task-real/";
@@ -18,10 +24,28 @@
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const LOCAL_USER_KEY = "jaralingua_local_user";
+  const AUDIO_QUEUE_DB = "jaralingua-basic-final-oral-audio-v1";
+  const AUDIO_QUEUE_STORE = "pendingAudio";
+  const AUDIO_QUEUE_DB_VERSION = 2;
+  const AUDIO_QUEUE_SCOPE_INDEX = "scope";
+  const AUDIO_QUEUE_SCOPE_ATTEMPT_INDEX = "scopeAttempt";
+  const AUDIO_QUEUE_EXPIRY_INDEX = "expiresAtMs";
+  const AUDIO_QUEUE_TTL_MS = 24 * 60 * 60 * 1000;
+  const LEASE_KEY_PREFIX = "jaralingua:basic-final-oral:lease:";
+  const DEVICE_KEY = "jaralingua:basic-final-oral:device-id";
   const REQUIRED_TURNS = 7;
-  const TRANSCRIPTION_TIMEOUT_MS = 30000;
+  const TRANSCRIPTION_TIMEOUT_MS = 120000;
   const REQUEST_TIMEOUT_MS = 25000;
   const MAX_AUDIO_BYTES = 8 * 1024 * 1024;
+  const MICROPHONE_TIMEOUT_MS = 15000;
+  const LEASE_TTL_MS = 12000;
+  const LEASE_HEARTBEAT_MS = 4000;
+  const SERVER_LEASE_RENEW_MS = 120000;
+  const SERVER_LEASE_SAFETY_MS = 30000;
+  const LEASE_ERROR_CODES = new Set([
+    "attempt_lease_required", "attempt_lease_expired", "attempt_in_use",
+    "lease_required", "lease_expired", "lease_conflict"
+  ]);
   // The seven caps add up to exactly 180 seconds, the official upper limit.
   const TURN_LIMIT_SECONDS = Object.freeze({ "1": 20, "2": 22, "3": 24, "4": 28, "5": 26, "6": 32, interaction: 28 });
   const RUBRIC = Object.freeze([
@@ -156,8 +180,49 @@
     return selected.length ? selected : [DANIEL_ANSWERS.general];
   }
 
+  const isRecord = (value) => Boolean(value) && typeof value === "object" && !Array.isArray(value);
+  const hasText = (value) => typeof value === "string" && value.trim().length > 0;
+  const isAttemptContract = (value) => isRecord(value) && hasText(value.attemptId) && Array.isArray(value.assignedQuestions) && isRecord(value.turns || {});
+  const hasAssignedQuestionContract = (value) => isRecord(value) && hasText(value.turnId) && hasText(value.variantId)
+    && hasText(value.unit) && hasText(value.question) && hasText(value.promptAudioUrl) && Number(value.sequence) >= 1;
+  const isScopedAttemptContract = (value) => isAttemptContract(value) && hasText(value.attemptScopeToken)
+    && hasText(value.transcriberScopeToken) && hasText(value.transcriberScopeExpiresAt)
+    && value.assignedQuestions.length === REQUIRED_TURNS && value.assignedQuestions.every(hasAssignedQuestionContract)
+    && new Set(value.assignedQuestions.map((question) => question.turnId)).size === REQUIRED_TURNS
+    && Object.keys(value.turns || {}).every((turnId) => value.assignedQuestions.some((question) => question.turnId === turnId));
+  const isSecureAttemptContract = (value) => isScopedAttemptContract(value)
+    && isRecord(value.lease) && hasText(value.lease.leaseId) && hasText(value.lease.expiresAt);
+  const isTurnContract = (value) => isRecord(value) && hasText(value.turnId) && (value.audioAvailable === true || value.verification?.audioVerified === true || value.audio?.verified === true);
+  const isSubmissionContract = (value) => isRecord(value) && hasText(value.receiptId) && hasText(value.attemptId)
+    && hasText(value.status || value.workflowStatus || "") && hasText(value.submittedAt);
+  const workflowOf = (value) => String(value?.workflowStatus || value?.status || "").trim().toLowerCase();
+  const isLeaseError = (error) => Number(error?.status) === 409 && LEASE_ERROR_CODES.has(String(error?.data?.error || ""));
+  const queueRecordExpiresAt = (record) => Number(record?.expiresAtMs || 0) || (Number(record?.createdAtMs || 0) + AUDIO_QUEUE_TTL_MS);
+  const isExpiredQueueRecord = (record, now = Date.now()) => !Number.isFinite(queueRecordExpiresAt(record)) || queueRecordExpiresAt(record) <= now;
+  const reviewedAudioEvidenceFor = (selected) => (selected?.turns || []).map((turn) => ({
+    turnId: String(turn?.turnId || ""),
+    sha256: String(turn?.audio?.sha256 || "").toLowerCase()
+  })).filter((item) => item.turnId && /^[0-9a-f]{64}$/.test(item.sha256));
+  function buildGradeMutation(action, selected, rubric, teacherFeedback, reason, requestId) {
+    const reviewedAudioEvidence = reviewedAudioEvidenceFor(selected);
+    return {
+      action: action === "draft" ? "draft" : "publish",
+      studentId: selected?.studentId,
+      receiptId: selected?.receiptId,
+      rubric,
+      teacherFeedback,
+      reviewedAudioEvidence,
+      teacherEvidence: isRecord(selected?.teacherEvidence) ? selected.teacherEvidence : {},
+      expectedRevision: Number(selected?.gradeRevision || 0),
+      requestId,
+      reason: reason || ""
+    };
+  }
+
   window.__JaraLinguaBasicFinalOralTaskTest = Object.freeze({
-    API, REQUIRED_TURNS, TURN_LIMIT_SECONDS, RUBRIC, normalize, questionSegments, studentQuestionResponseFor, responsesForTurn, TURN_REACTIONS, DANIEL_ANSWERS
+    API, REQUIRED_TURNS, TURN_LIMIT_SECONDS, RUBRIC, normalize, questionSegments, studentQuestionResponseFor, responsesForTurn, TURN_REACTIONS, DANIEL_ANSWERS,
+    isAttemptContract, isScopedAttemptContract, isSecureAttemptContract, isTurnContract, isSubmissionContract, workflowOf, buildGradeMutation,
+    isLeaseError, queueRecordExpiresAt, isExpiredQueueRecord, reviewedAudioEvidenceFor, hasAssignedQuestionContract
   });
 
   const root = document.getElementById("finalOralTaskApp") || document.querySelector?.('[data-exam-code="basic-course-1-final-oral-task"]') || document.body;
@@ -175,8 +240,15 @@
     accountAvatar: byId("authenticatedAvatar"),
     accountName: byId("authenticatedName"),
     accountEmail: byId("authenticatedEmail"),
+    systemStrip: byId("examSystemStrip"),
+    connectionStatus: byId("connectionStatus"),
+    queueStatus: byId("queueStatus"),
+    workflowStatus: byId("workflowStatus"),
+    tabLeaseAlert: byId("tabLeaseAlert"),
+    takeOverSession: byId("takeOverSessionButton"),
     claimPanel: byId("claimStudentPanel"),
     claimInput: byId("claimStudentIdInput"),
+    claimPairingCode: byId("claimPairingCodeInput"),
     claim: byId("finalOralClaimButton", "claimStudentButton"),
     onboarding: byId("finalOralOnboardingPanel", "onboardingPanel", "preflightPanel"),
     welcomePlay: byId("danielWelcomePlayButton", "welcomePlayButton"),
@@ -199,6 +271,7 @@
     counter: byId("finalOralTurnCounter", "turnCounter"),
     topic: byId("finalOralTurnTopic", "turnTopic"),
     progress: byId("finalOralProgress", "turnProgress"),
+    progressTrack: byId("turnProgressTrack"),
     examTimer: byId("examTimer"),
     journeyLabel: byId("journeyProgressLabel"),
     interactionJourney: byId("interactionJourneyStep"),
@@ -229,6 +302,7 @@
     transcript: byId("finalOralTranscript", "liveTranscript"),
     saveStatus: byId("finalOralSaveStatus", "saveStatus", "lastSavedAt"),
     saveState: byId("saveState"),
+    securityPipeline: byId("responseSecurityPipeline"),
     answerState: byId("answerState"),
     answerCaptured: byId("answerCaptured"),
     recovery: byId("finalOralTechnicalRecovery", "technicalRecovery"),
@@ -242,16 +316,24 @@
     submitConfirmation: byId("finalSubmitConfirmation"),
     submissionGrid: byId("submissionUnitGrid"),
     submissionStatus: byId("finalOralSubmissionStatus", "submissionStatus", "submitStatus"),
+    submissionWorkflow: byId("submissionWorkflow"),
     complete: byId("finalOralCompletionPanel", "completionPanel", "receiptPanel"),
     receipt: byId("finalOralReceipt", "completionReceipt", "receiptCode"),
     copyReceipt: byId("copyReceiptButton"),
     receiptStudent: byId("receiptStudent"),
     receiptSubmittedAt: byId("receiptSubmittedAt"),
+    receiptWorkflowStatus: byId("receiptWorkflowStatus"),
     admin: byId("finalOralAdminPanel", "adminPanel"),
     adminStatus: byId("finalOralAdminStatus", "adminStatus", "adminActivationStatus"),
     adminState: byId("adminExamState"),
     adminOpen: byId("openFinalOralButton", "openExamButton", "activateExamButton"),
     adminClose: byId("closeFinalOralButton", "closeExamButton", "deactivateExamButton"),
+    adminOpensAt: byId("adminOpensAt"),
+    adminClosesAt: byId("adminClosesAt"),
+    adminCloseMode: byId("adminCloseMode"),
+    adminGraceSeconds: byId("adminGraceSeconds"),
+    adminEligibleStudents: byId("adminEligibleStudents"),
+    adminSaveWindow: byId("saveExamWindowButton"),
     adminPreviewButton: byId("adminPreviewButton"),
     adminPreviewVariant: byId("adminPreviewVariant"),
     adminPreviewToolbar: byId("adminPreviewToolbar"),
@@ -259,6 +341,12 @@
     adminPreviewPrevious: byId("adminPreviewPreviousButton"),
     adminPreviewNext: byId("adminPreviewNextButton"),
     adminPreviewExit: byId("adminPreviewExitButton"),
+    adminMonitorRefresh: byId("refreshAdminMonitorButton"),
+    adminReconcile: byId("reconcileGradesButton"),
+    adminHealthGrid: byId("adminHealthGrid"),
+    adminRosterBody: byId("adminRosterBody"),
+    adminRosterCaption: byId("adminRosterCaption"),
+    adminOperationStatus: byId("adminOperationStatus"),
     staff: byId("finalOralStaffReviewPanel", "staffReviewPanel"),
     staffRefresh: byId("finalOralStaffRefreshButton", "staffRefreshButton", "refreshSubmissionsButton"),
     staffStatus: byId("finalOralStaffStatus", "staffReviewStatus"),
@@ -294,7 +382,9 @@
     rubricPronunciation: byId("rubricPronunciation"),
     teacherFeedback: byId("teacherFeedback"),
     publishGradeButton: byId("publishGradeButton"),
+    saveGradeDraftButton: byId("saveGradeDraftButton"),
     publishStatus: byId("publishStatus"),
+    gradeHistoryList: byId("gradeHistoryList"),
     dock: byId("finalOralFloatingMic", "floatingMicDock"),
     dockLabel: byId("finalOralFloatingTurn", "floatingTurnLabel"),
     dockStatus: byId("finalOralFloatingStatus", "floatingStatus"),
@@ -365,11 +455,125 @@
   let adminQuestionBank = {};
   let adminInteractionQuestion = null;
   let adminPreviewMode = false;
+  let adminRoster = [];
+  let adminHealth = {};
+  let currentQueueId = "";
+  let pendingAudioCount = 0;
+  let volatileAudioCount = 0;
+  let pendingTranscriptJobs = new Map();
+  let audioQueueDbPromise = null;
+  let serverMutationChain = Promise.resolve();
+  let preflightVoicePeak = 0;
+  let preflightPlaybackConfirmed = false;
+  let verifiedMicrophoneId = "";
+  let selectedMicrophoneId = "";
+  let recorderFailureReason = "";
+  let pageClosing = false;
+  let online = navigator.onLine !== false;
+  let promptPrefetch = null;
+  let promptPrefetchTurnId = "";
+  let toastTimer = 0;
+  let busyReturnFocus = null;
+  let inMemorySubmissionId = "";
+  let activeLeaseAttemptId = "";
+  let leaseReadOnly = false;
+  let leaseHeartbeat = 0;
+  let leaseChannel = null;
+  let serverLeaseId = "";
+  let serverLeaseExpiresAt = "";
+  let serverLeaseHeartbeat = 0;
+  const tabId = createId("bfo-tab");
+  const memoryStorage = new Map();
+  const memoryAudioQueue = new Map();
+  const intentionallyStoppedTracks = new WeakSet();
+  const deviceInstanceId = (() => {
+    try {
+      const saved = sessionStorage.getItem(DEVICE_KEY);
+      if (saved) return saved;
+    } catch { /* a tab-private memory id is still safer than a shared id */ }
+    const created = createId("bfo-device");
+    try { sessionStorage.setItem(DEVICE_KEY, created); } catch { /* keep this page's in-memory id */ }
+    return created;
+  })();
 
   const setText = (node, value) => { if (node) node.textContent = value; };
   const setHidden = (node, hidden) => { if (node) node.hidden = Boolean(hidden); };
   const setDisabled = (node, disabled) => { if (node) node.disabled = Boolean(disabled); };
   const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+
+  function safeStorageGet(key) {
+    try { return localStorage.getItem(key) ?? memoryStorage.get(key) ?? null; } catch { return memoryStorage.get(key) ?? null; }
+  }
+
+  function safeStorageSet(key, value) {
+    const textValue = String(value);
+    memoryStorage.set(key, textValue);
+    try { localStorage.setItem(key, textValue); return true; } catch { return false; }
+  }
+
+  function safeStorageRemove(key) {
+    memoryStorage.delete(key);
+    try { localStorage.removeItem(key); } catch { /* private mode fallback */ }
+  }
+
+  function contractError(code, data = null) {
+    const error = new Error(code);
+    error.name = "ContractError";
+    error.data = data;
+    error.status = 502;
+    return error;
+  }
+
+  function requireContract(condition, code, data) {
+    if (!condition) throw contractError(code, data);
+    return data;
+  }
+
+  function focusPanel(panel) {
+    if (!panel) return;
+    const target = panel.querySelector("h1, h2, [role='heading'], button:not(:disabled), [tabindex]");
+    if (!target) return;
+    if (!target.hasAttribute("tabindex") && !/^(BUTTON|A|INPUT|SELECT|TEXTAREA)$/.test(target.tagName)) target.setAttribute("tabindex", "-1");
+    window.requestAnimationFrame(() => target.focus({ preventScroll: true }));
+  }
+
+  function pauseAllAudio(except = null) {
+    [elements.welcomeAudio, elements.instructionsAudio, elements.questionAudio, elements.reactionAudio, elements.studentAudio, elements.preflightPlayback, elements.evidenceAudio]
+      .forEach((audio) => { if (audio && audio !== except && !audio.paused) audio.pause(); });
+  }
+
+  function setPipeline(step, state = "active") {
+    const order = ["queued", "audio", "transcript"];
+    const activeIndex = order.indexOf(step);
+    elements.securityPipeline?.querySelectorAll("[data-pipeline-step]").forEach((item) => {
+      const index = order.indexOf(item.dataset.pipelineStep);
+      item.classList.toggle("is-complete", state === "complete" ? index <= activeIndex : index < activeIndex);
+      item.classList.toggle("is-active", state === "active" && index === activeIndex);
+      item.classList.toggle("is-error", state === "error" && index === activeIndex);
+    });
+  }
+
+  function updateConnectionUi(message = "") {
+    online = navigator.onLine !== false;
+    if (elements.systemStrip) {
+      elements.systemStrip.dataset.connection = online ? "online" : "offline";
+      elements.systemStrip.dataset.queue = volatileAudioCount > 0 ? "volatile" : pendingAudioCount > 0 ? "pending" : "clear";
+    }
+    if (elements.connectionStatus) elements.connectionStatus.innerHTML = online
+      ? `<i class="bi bi-wifi"></i><strong>Online</strong><span>${escapeHtml(message || "The secure exam server is available.")}</span>`
+      : volatileAudioCount > 0
+        ? '<i class="bi bi-wifi-off"></i><strong>Offline</strong><span>Temporary memory only: do not close or reload this page.</span>'
+        : '<i class="bi bi-wifi-off"></i><strong>Offline</strong><span>Your recording stays protected on this device and will retry automatically.</span>';
+    if (elements.queueStatus) elements.queueStatus.innerHTML = volatileAudioCount > 0
+      ? `<i class="bi bi-exclamation-triangle-fill"></i><strong>Temporary protection only</strong><span>${volatileAudioCount} recording${volatileAudioCount === 1 ? " is" : "s are"} held in memory. Do not close or reload this page until upload is confirmed.</span>`
+      : pendingAudioCount > 0
+        ? `<i class="bi bi-device-ssd-fill"></i><strong>Upload pending</strong><span>${pendingAudioCount} protected recording${pendingAudioCount === 1 ? "" : "s"} waiting for server confirmation.</span>`
+      : '<i class="bi bi-device-ssd-fill"></i><strong>Protected locally</strong><span>No recording is waiting to upload.</span>';
+  }
+
+  function setWorkflowMessage(title, detail, icon = "bi-shield-check") {
+    if (elements.workflowStatus) elements.workflowStatus.innerHTML = `<i class="bi ${icon}"></i><strong>${escapeHtml(title)}</strong><span>${escapeHtml(detail)}</span>`;
+  }
 
   function readStoredUser(key, provider) {
     try {
@@ -441,31 +645,60 @@
     return value ? storeStudentClaim(value) : "";
   }
 
-  function submitStudentClaim() {
+  async function submitStudentClaim() {
     const inlineValue = String(elements.claimInput?.value || "").replace(/\D+/g, "");
-    const value = inlineValue || promptStudentClaim();
+    const value = inlineValue || String(window.prompt("Enter the document number registered in Grades:", "") || "").replace(/\D+/g, "");
     if (!value) {
       toast("Enter the document number registered in Grades.", "error");
       return;
     }
-    storeStudentClaim(value);
-    if (elements.claimInput) elements.claimInput.value = value;
-    loadState(false);
+    const pairingCode = String(elements.claimPairingCode?.value || "").trim();
+    setDisabled(elements.claim, true);
+    try {
+      if (pairingCode) {
+        const result = await request(API.pair, jsonOptions("POST", { studentId: value, pairingCode, requestId: createId("bfo-pair") }), 2);
+        requireContract(result.data.ok === true || isRecord(result.data.student), "invalid_pairing_acknowledgement", result.data);
+      }
+      storeStudentClaim(value);
+      if (elements.claimInput) elements.claimInput.value = value;
+      await loadState(false);
+    } catch (error) {
+      if (error.status === 404 && !pairingCode) {
+        storeStudentClaim(value);
+        return loadState(false);
+      }
+      showAccess(error.data?.error === "invalid_pairing_code" ? "The temporary pairing code is invalid or expired. Ask the teacher to issue a new one." : "Secure pairing was not confirmed. Check the document and temporary code.", "error");
+      setDisabled(elements.claim, false);
+    }
   }
 
   function toast(message, type = "") {
     if (!elements.toast) return;
+    if (toastTimer) window.clearTimeout(toastTimer);
     elements.toast.hidden = false;
     elements.toast.textContent = message;
     elements.toast.classList.add("is-visible");
     elements.toast.classList.toggle("success", type === "success");
     elements.toast.classList.toggle("error", type === "error");
-    window.setTimeout(() => { elements.toast?.classList.remove("is-visible", "success", "error"); if (elements.toast) elements.toast.hidden = true; }, 5200);
+    toastTimer = window.setTimeout(() => { elements.toast?.classList.remove("is-visible", "success", "error"); if (elements.toast) elements.toast.hidden = true; toastTimer = 0; }, 5200);
   }
 
   function setBusy(active, message = "Securing your response…") {
     setHidden(elements.busy, !active);
     setText(elements.busyMessage, message);
+    root.setAttribute("aria-busy", active ? "true" : "false");
+    root.querySelectorAll("[data-panel]").forEach((panel) => {
+      if (active) panel.setAttribute("inert", "");
+      else panel.removeAttribute("inert");
+    });
+    if (active) {
+      busyReturnFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      window.requestAnimationFrame(() => elements.busy?.focus({ preventScroll: true }));
+    } else if (busyReturnFocus?.isConnected && !busyReturnFocus.disabled && !busyReturnFocus.closest("[hidden]")) {
+      const target = busyReturnFocus;
+      busyReturnFocus = null;
+      window.requestAnimationFrame(() => target.focus({ preventScroll: true }));
+    } else busyReturnFocus = null;
   }
 
   function createId(prefix) {
@@ -484,7 +717,16 @@
           headers: authHeaders(options.headers || {})
         }));
         let data = {};
-        try { data = await response.json(); } catch { /* binary or empty response */ }
+        const rawBody = await response.text();
+        if (rawBody.trim()) {
+          try { data = JSON.parse(rawBody); }
+          catch {
+            const invalidJson = contractError("invalid_json_response", { status: response.status });
+            invalidJson.status = response.status;
+            throw invalidJson;
+          }
+        }
+        if (!isRecord(data)) throw contractError("invalid_response_envelope", data);
         if (response.ok) return { ok: true, status: response.status, data, response };
         const error = new Error(data.error || `Request failed (${response.status}).`);
         error.status = response.status;
@@ -502,6 +744,326 @@
   }
 
   const jsonOptions = (method, payload) => ({ method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+
+  function openAudioQueueDb() {
+    if (!window.indexedDB) return Promise.reject(new Error("indexeddb_unavailable"));
+    if (audioQueueDbPromise) return audioQueueDbPromise;
+    audioQueueDbPromise = new Promise((resolve, reject) => {
+      const requestOpen = indexedDB.open(AUDIO_QUEUE_DB, AUDIO_QUEUE_DB_VERSION);
+      requestOpen.addEventListener("upgradeneeded", () => {
+        const db = requestOpen.result;
+        const store = db.objectStoreNames.contains(AUDIO_QUEUE_STORE)
+          ? requestOpen.transaction.objectStore(AUDIO_QUEUE_STORE)
+          : db.createObjectStore(AUDIO_QUEUE_STORE, { keyPath: "queueId" });
+        if (!store.indexNames.contains(AUDIO_QUEUE_SCOPE_INDEX)) store.createIndex(AUDIO_QUEUE_SCOPE_INDEX, "scope", { unique: false });
+        if (!store.indexNames.contains(AUDIO_QUEUE_SCOPE_ATTEMPT_INDEX)) store.createIndex(AUDIO_QUEUE_SCOPE_ATTEMPT_INDEX, ["scope", "attemptId"], { unique: false });
+        if (!store.indexNames.contains(AUDIO_QUEUE_EXPIRY_INDEX)) store.createIndex(AUDIO_QUEUE_EXPIRY_INDEX, "expiresAtMs", { unique: false });
+      });
+      requestOpen.addEventListener("success", () => {
+        const db = requestOpen.result;
+        db.addEventListener("versionchange", () => { db.close(); audioQueueDbPromise = null; }, { once: true });
+        resolve(db);
+      }, { once: true });
+      requestOpen.addEventListener("error", () => reject(requestOpen.error || new Error("indexeddb_open_failed")), { once: true });
+      requestOpen.addEventListener("blocked", () => reject(new Error("indexeddb_blocked")), { once: true });
+    }).catch((error) => { audioQueueDbPromise = null; throw error; });
+    return audioQueueDbPromise;
+  }
+
+  async function audioQueueOperation(mode, operation) {
+    const db = await openAudioQueueDb();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(AUDIO_QUEUE_STORE, mode);
+      const store = transaction.objectStore(AUDIO_QUEUE_STORE);
+      let result;
+      try { result = operation(store); } catch (error) { reject(error); return; }
+      transaction.addEventListener("complete", () => resolve(result?.result), { once: true });
+      transaction.addEventListener("abort", () => reject(transaction.error || new Error("indexeddb_transaction_aborted")), { once: true });
+      transaction.addEventListener("error", () => reject(transaction.error || new Error("indexeddb_transaction_failed")), { once: true });
+    });
+  }
+
+  async function purgeExpiredQueuedAudio() {
+    const db = await openAudioQueueDb();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction(AUDIO_QUEUE_STORE, "readwrite");
+      const store = transaction.objectStore(AUDIO_QUEUE_STORE);
+      const index = store.index(AUDIO_QUEUE_EXPIRY_INDEX);
+      const range = IDBKeyRange.upperBound(Date.now());
+      const cursorRequest = index.openKeyCursor(range);
+      cursorRequest.addEventListener("success", () => {
+        const cursor = cursorRequest.result;
+        if (!cursor) return;
+        store.delete(cursor.primaryKey);
+        memoryAudioQueue.delete(cursor.primaryKey);
+        cursor.continue();
+      });
+      transaction.addEventListener("complete", () => resolve(), { once: true });
+      transaction.addEventListener("abort", () => reject(transaction.error || new Error("indexeddb_expiry_purge_aborted")), { once: true });
+      transaction.addEventListener("error", () => reject(transaction.error || new Error("indexeddb_expiry_purge_failed")), { once: true });
+    });
+  }
+
+  async function readIndexedQueuedAudio(scope, attemptId = "") {
+    if (!scope) return [];
+    return audioQueueOperation("readonly", (store) => attemptId
+      ? store.index(AUDIO_QUEUE_SCOPE_ATTEMPT_INDEX).getAll(IDBKeyRange.only([scope, attemptId]))
+      : store.index(AUDIO_QUEUE_SCOPE_INDEX).getAll(scope));
+  }
+
+  async function deleteQueuedAudioRecord(queueId) {
+    if (!queueId) return;
+    memoryAudioQueue.delete(queueId);
+    try { await audioQueueOperation("readwrite", (store) => store.delete(queueId)); } catch { /* the in-memory copy is already removed */ }
+  }
+
+  async function listQueuedAudio(scope = accountScope(), attemptId = "") {
+    if (!scope) return [];
+    try {
+      const records = await readIndexedQueuedAudio(scope, attemptId);
+      const merged = new Map((Array.isArray(records) ? records : [])
+        .filter((record) => record?.scope === scope && (!attemptId || record.attemptId === attemptId))
+        .map((record) => [record.queueId, record]));
+      memoryAudioQueue.forEach((record, queueId) => {
+        if (record.scope === scope && (!attemptId || record.attemptId === attemptId)) merged.set(queueId, record);
+      });
+      const active = [];
+      const expired = [];
+      merged.forEach((record) => (isExpiredQueueRecord(record) ? expired : active).push(record));
+      if (expired.length) await Promise.all(expired.map((record) => deleteQueuedAudioRecord(record.queueId)));
+      return active;
+    } catch {
+      const active = [];
+      memoryAudioQueue.forEach((record) => {
+        if (record.scope === scope && (!attemptId || record.attemptId === attemptId) && !isExpiredQueueRecord(record)) active.push(record);
+      });
+      return active;
+    }
+  }
+
+  async function putQueuedAudio(record) {
+    const expiringRecord = Object.assign({}, record, {
+      expiresAtMs: Number(record.expiresAtMs || 0) || Date.now() + AUDIO_QUEUE_TTL_MS,
+      durable: false
+    });
+    memoryAudioQueue.set(expiringRecord.queueId, expiringRecord);
+    let protectedRecord = expiringRecord;
+    try {
+      protectedRecord = Object.assign({}, expiringRecord, { durable: true });
+      await audioQueueOperation("readwrite", (store) => store.put(protectedRecord));
+      memoryAudioQueue.set(protectedRecord.queueId, protectedRecord);
+    } catch {
+      protectedRecord = expiringRecord;
+      toast("This recording is protected only while this page remains open. Do not close or reload until upload is confirmed.", "error");
+    }
+    await refreshQueuedAudioCount();
+    return protectedRecord;
+  }
+
+  async function deleteQueuedAudio(queueId) {
+    await deleteQueuedAudioRecord(queueId);
+    await refreshQueuedAudioCount();
+  }
+
+  async function clearQueuedAudio(scope, attemptId = "") {
+    if (!scope) return;
+    const records = await listQueuedAudio(scope, attemptId);
+    await Promise.all(records.map((record) => deleteQueuedAudioRecord(record.queueId)));
+    memoryAudioQueue.forEach((record, queueId) => {
+      if (record.scope === scope && (!attemptId || record.attemptId === attemptId)) memoryAudioQueue.delete(queueId);
+    });
+    if (scope === accountScope()) await refreshQueuedAudioCount();
+  }
+
+  async function refreshQueuedAudioCount() {
+    const records = await listQueuedAudio(accountScope());
+    pendingAudioCount = records.length;
+    volatileAudioCount = records.filter((item) => item.durable === false).length;
+    updateConnectionUi();
+    return pendingAudioCount;
+  }
+
+  function hasUnsavedAudio() {
+    return Boolean(!adminPreviewMode && (mediaRecorder?.state === "recording" || recordingFinalizing || (currentBlob && !savedCurrentTurn) || pendingAudioCount > 0));
+  }
+
+  function leaseKey(attemptId = activeLeaseAttemptId) { return `${LEASE_KEY_PREFIX}${attemptId || "none"}`; }
+
+  function applyServerLease(value) {
+    const lease = value?.lease || value;
+    requireContract(isRecord(lease) && hasText(lease.leaseId) && hasText(lease.expiresAt), "invalid_lease_contract", value);
+    serverLeaseId = lease.leaseId;
+    serverLeaseExpiresAt = lease.expiresAt;
+    if (attempt) attempt.lease = Object.assign({}, attempt.lease || {}, lease);
+    return lease;
+  }
+
+  function clearServerLease() {
+    serverLeaseId = "";
+    serverLeaseExpiresAt = "";
+    if (attempt?.lease) attempt.lease = Object.assign({}, attempt.lease, { leaseId: "", expiresAt: "", active: false });
+  }
+
+  function updateServerLeaseExpiry(value) {
+    const expiresAt = String(value?.serverLeaseExpiresAt || value?.lease?.expiresAt || "").trim();
+    if (!expiresAt) return;
+    serverLeaseExpiresAt = expiresAt;
+    if (attempt?.lease) attempt.lease.expiresAt = expiresAt;
+  }
+
+  function serverLeaseUsable() {
+    const expiresAt = Date.parse(serverLeaseExpiresAt || attempt?.lease?.expiresAt || "");
+    return Boolean(serverLeaseId && Number.isFinite(expiresAt) && expiresAt > Date.now() + SERVER_LEASE_SAFETY_MS);
+  }
+
+  async function renewServerLease(action = "renew") {
+    if (!attempt?.attemptId || !attempt?.attemptScopeToken || adminPreviewMode) return null;
+    const result = await request(API.lease, jsonOptions("POST", {
+      action,
+      attemptId: attempt.attemptId,
+      attemptScopeToken: attempt.attemptScopeToken,
+      leaseId: serverLeaseId || undefined,
+      deviceId: deviceInstanceId,
+      requestId: createId(`bfo-lease-${action}`)
+    }), 2);
+    const lease = applyServerLease(result.data.lease || result.data);
+    updateServerLeaseExpiry(result.data);
+    leaseReadOnly = false;
+    renderLeaseState();
+    return lease;
+  }
+
+  function scheduleServerLeaseRenewal() {
+    if (serverLeaseHeartbeat) window.clearInterval(serverLeaseHeartbeat);
+    serverLeaseHeartbeat = window.setInterval(() => {
+      renewServerLease("renew").catch((error) => {
+        if (isLeaseError(error) || error.status === 401) {
+          clearServerLease();
+          leaseReadOnly = true;
+          renderLeaseState();
+          setWorkflowMessage("Session control moved", "The server reports another active device or tab.", "bi-window-stack");
+        } else setWorkflowMessage("Lease renewal pending", "Your saved evidence is safe; reconnect before the next mutation.", "bi-wifi-off");
+      });
+    }, SERVER_LEASE_RENEW_MS);
+  }
+
+  function ensureServerLease() {
+    if (!attempt?.attemptId || adminPreviewMode) return Promise.resolve(null);
+    const lease = attempt.lease;
+    if (!serverLeaseId && lease?.active !== false && hasText(lease?.leaseId) && hasText(lease?.expiresAt)) {
+      applyServerLease(lease);
+    }
+    if (serverLeaseUsable()) {
+      scheduleServerLeaseRenewal();
+      return Promise.resolve(attempt.lease);
+    }
+    clearServerLease();
+    return renewServerLease("acquire").then((nextLease) => { scheduleServerLeaseRenewal(); return nextLease; });
+  }
+
+  async function recoverServerLease(error) {
+    if (!isLeaseError(error)) return false;
+    clearServerLease();
+    try {
+      await renewServerLease("acquire");
+      scheduleServerLeaseRenewal();
+      leaseReadOnly = false;
+      renderLeaseState();
+      return true;
+    } catch (leaseError) {
+      clearServerLease();
+      leaseReadOnly = true;
+      renderLeaseState();
+      const expiresAt = leaseError?.data?.serverLeaseExpiresAt || error?.data?.serverLeaseExpiresAt;
+      setWorkflowMessage("Session control unavailable", expiresAt ? `Another device controls this attempt until ${expiresAt}.` : "Another device or tab controls this attempt.", "bi-window-stack");
+      return false;
+    }
+  }
+
+  function releaseServerLease(attemptId = attempt?.attemptId, attemptScopeToken = attempt?.attemptScopeToken) {
+    if (serverLeaseHeartbeat) window.clearInterval(serverLeaseHeartbeat);
+    serverLeaseHeartbeat = 0;
+    const leaseId = serverLeaseId;
+    clearServerLease();
+    if (!attemptId || !attemptScopeToken || !leaseId || adminPreviewMode) return;
+    const options = jsonOptions("POST", { action: "release", attemptId, attemptScopeToken, leaseId, deviceId: deviceInstanceId, requestId: createId("bfo-lease-release") });
+    options.keepalive = true;
+    options.timeout = 5000;
+    request(API.lease, options, 1).catch(() => {});
+  }
+
+  function readLease(attemptId = activeLeaseAttemptId) {
+    try { return JSON.parse(safeStorageGet(leaseKey(attemptId)) || "null"); } catch { return null; }
+  }
+
+  function renderLeaseState() {
+    setHidden(elements.tabLeaseAlert, !leaseReadOnly);
+    root.classList.toggle("is-lease-readonly", leaseReadOnly);
+    updateRecordingControls(mediaRecorder?.state === "recording");
+    if (leaseReadOnly) {
+      setDisabled(elements.next, true);
+      setDisabled(elements.submit, true);
+      setWorkflowMessage("Read-only tab", "Continue in the active tab to prevent duplicate evidence.", "bi-window-stack");
+    } else if (savedCurrentTurn && !reactionBusy) setDisabled(elements.next, false);
+  }
+
+  function claimAttemptLease(force = false) {
+    if (!activeLeaseAttemptId || adminPreviewMode) return true;
+    const now = Date.now();
+    const existing = readLease();
+    if (!force && existing?.tabId && existing.tabId !== tabId && Number(existing.expiresAt || 0) > now) {
+      leaseReadOnly = true;
+      renderLeaseState();
+      return false;
+    }
+    const lease = { tabId, attemptId: activeLeaseAttemptId, expiresAt: now + LEASE_TTL_MS, updatedAt: new Date(now).toISOString() };
+    safeStorageSet(leaseKey(), JSON.stringify(lease));
+    leaseChannel?.postMessage?.({ type: "lease", lease });
+    leaseReadOnly = false;
+    renderLeaseState();
+    return true;
+  }
+
+  function releaseAttemptLease() {
+    if (!activeLeaseAttemptId) { releaseServerLease(); return; }
+    releaseServerLease();
+    const existing = readLease();
+    if (existing?.tabId === tabId) safeStorageRemove(leaseKey());
+    leaseChannel?.postMessage?.({ type: "release", tabId, attemptId: activeLeaseAttemptId });
+    if (leaseHeartbeat) window.clearInterval(leaseHeartbeat);
+    leaseHeartbeat = 0;
+    leaseChannel?.close?.();
+    leaseChannel = null;
+    activeLeaseAttemptId = "";
+    leaseReadOnly = false;
+    renderLeaseState();
+  }
+
+  function activateAttemptLease(attemptId) {
+    if (!attemptId || adminPreviewMode) return;
+    if (activeLeaseAttemptId && activeLeaseAttemptId !== attemptId) releaseAttemptLease();
+    activeLeaseAttemptId = attemptId;
+    if ("BroadcastChannel" in window && !leaseChannel) {
+      leaseChannel = new window.BroadcastChannel("jaralingua-basic-final-oral");
+      leaseChannel.addEventListener("message", (event) => {
+        const message = event.data || {};
+        if (message.attemptId !== activeLeaseAttemptId && message.lease?.attemptId !== activeLeaseAttemptId) return;
+        if (message.type === "takeover" && message.tabId !== tabId) {
+          leaseReadOnly = true;
+          renderLeaseState();
+        } else if (message.type === "release") claimAttemptLease(false);
+      });
+    }
+    claimAttemptLease(false);
+    ensureServerLease().catch((error) => {
+      if (isLeaseError(error)) {
+        clearServerLease();
+        leaseReadOnly = true;
+        renderLeaseState();
+      }
+    });
+    if (!leaseHeartbeat) leaseHeartbeat = window.setInterval(() => claimAttemptLease(false), LEASE_HEARTBEAT_MS);
+  }
 
   function formatDuration(milliseconds) {
     const seconds = Math.max(0, Math.round(Number(milliseconds || 0) / 1000));
@@ -584,6 +1146,7 @@
 
   async function playClip(audio, source, protectedAudio = false) {
     if (!audio || !source) return;
+    pauseAllAudio(audio);
     audio.pause();
     if (protectedAudio) {
       const blob = await fetchProtectedAudio(source);
@@ -602,6 +1165,8 @@
     questionAudioLoading = false;
     questionAudioPlaying = false;
     questionHeard = false;
+    promptPrefetch = null;
+    promptPrefetchTurnId = "";
     if (elements.questionAudio) {
       elements.questionAudio.pause();
       elements.questionAudio.removeAttribute("src");
@@ -630,6 +1195,7 @@
     setDanielState("speaking", "Daniel is responding");
     setHidden(elements.reaction, false);
     try {
+      pauseAllAudio(elements.reactionAudio);
       for (const response of responses) {
         setText(elements.reactionText, response.text);
         await new Promise((resolve) => {
@@ -690,10 +1256,168 @@
     }
     setDisabled(elements.adminOpen, open);
     setDisabled(elements.adminClose, !open);
+    const toLocalInput = (value) => {
+      if (!value) return "";
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) return String(value).slice(0, 16);
+      const offset = date.getTimezoneOffset() * 60000;
+      return new Date(date.getTime() - offset).toISOString().slice(0, 16);
+    };
+    if (!document.activeElement?.closest?.(".admin-window-config")) {
+      if (elements.adminOpensAt) elements.adminOpensAt.value = toLocalInput(serverState?.opensAt);
+      if (elements.adminClosesAt) elements.adminClosesAt.value = toLocalInput(serverState?.closesAt);
+      if (elements.adminCloseMode) elements.adminCloseMode.value = serverState?.closeMode === "hard" ? "hard" : "soft";
+      if (elements.adminGraceSeconds) elements.adminGraceSeconds.value = String(Number(serverState?.graceSeconds ?? 300));
+      if (elements.adminEligibleStudents) elements.adminEligibleStudents.value = Array.isArray(serverState?.eligibleStudentIds) ? serverState.eligibleStudentIds.join(", ") : "";
+    }
     const previewReady = ["1", "2", "3", "4", "5", "6"].every((unit) => Array.isArray(adminQuestionBank[unit]) && adminQuestionBank[unit].length)
       && Boolean(adminInteractionQuestion);
     setDisabled(elements.adminPreviewButton, !previewReady);
     setDisabled(elements.adminPreviewVariant, !previewReady);
+  }
+
+  function normalizedRosterStatus(item) {
+    const status = workflowOf(item) || String(item?.examStatus || item?.attemptStatus || "").toLowerCase() || workflowOf(item?.attempt) || (item?.submission ? workflowOf(item.submission) : "");
+    if (status) return status;
+    const saved = Number(item?.turnsCompleted ?? item?.savedTurns ?? item?.savedTurnCount ?? item?.turnCount ?? Object.keys(item?.attempt?.turns || {}).length);
+    if (item?.submission) return item.submission.status || "submitted";
+    if (saved >= REQUIRED_TURNS) return "complete_pending_submit";
+    if (saved > 0) return "in_progress";
+    return "not_started";
+  }
+
+  function rosterStatusLabel(status) {
+    return ({ not_started: "Not started", in_progress: "In progress", complete_pending_submit: "Complete · pending submit", received: "Received", verified: "Verified", sync_pending: "Grades sync pending", pending_review: "Pending review", pending_teacher_review: "Pending review", submitted: "Submitted", graded: "Graded", published: "Published", canceled: "Cancelled", cancelled: "Cancelled", error: "Needs attention" })[status] || status.replace(/_/g, " ");
+  }
+
+  function renderAdminHealth() {
+    const health = adminHealth || {};
+    const numberOrNaN = (value) => value === null || value === undefined || value === "" ? Number.NaN : Number(value);
+    const storage = isRecord(health.storage) ? health.storage : {};
+    const prompts = isRecord(health.promptAudio) ? health.promptAudio : {};
+    const sync = isRecord(health.sync) ? health.sync : {};
+    const weights = isRecord(health.weights) ? health.weights : {};
+    const audit = isRecord(health.audit) ? health.audit : {};
+    const speech = isRecord(health.speech) ? health.speech : {};
+    const speechQueue = isRecord(speech.queue) ? speech.queue : {};
+    const scopeConfigured = speech?.policies?.final_oral?.scope_configured === true || speech?.security?.exam_scope_configured === true;
+    const freeBytes = numberOrNaN(storage.freeBytes);
+    const freeLabel = Number.isFinite(freeBytes) ? `${(freeBytes / (1024 ** 3)).toFixed(1)} GB free` : "free space unknown";
+    const missingFiles = Number(storage.missingFiles || 0);
+    const orphanFiles = Number(storage.orphanFiles || 0);
+    const availablePrompts = numberOrNaN(prompts.available);
+    const expectedPrompts = numberOrNaN(prompts.expected);
+    const divergent = Array.isArray(sync.divergentStudentIds) ? sync.divergentStudentIds.length : 0;
+    const pendingOutbox = Number(sync.pendingOutbox || 0);
+    const queueDepth = Number(speechQueue.depth || 0);
+    const queueMaximum = Number(speechQueue.max_depth ?? speechQueue.maxDepth ?? 0);
+    const queueCapacity = Number(speechQueue.capacity || 0);
+    const queueActive = Number(speechQueue.active || 0);
+    const speechSaturated = (queueMaximum > 0 && queueDepth >= queueMaximum) || (queueCapacity > 0 && queueActive >= queueCapacity && queueDepth > 0);
+    const actualWeight = numberOrNaN(weights.actualFinalOral);
+    const totalWeight = numberOrNaN(weights.gradebookTotal);
+    const weightOk = actualWeight === Number(weights.expectedFinalOral ?? 20) && totalWeight === 100;
+    const values = {
+      api: { state: health.apiError || health.ok === false ? "error" : Array.isArray(health.warnings) && health.warnings.length ? "warning" : "ok", label: health.apiError ? "Exam health unavailable" : health.ok === false ? `${health.warnings?.length || 0} blocking warning(s)` : `${health.warnings?.length || 0} warning(s)` },
+      storage: { state: storage.writable !== true || missingFiles > 0 ? "error" : !Number.isFinite(freeBytes) || freeBytes < 500 * 1024 * 1024 || orphanFiles > 0 ? "warning" : "ok", label: `${storage.writable === true ? "Writable" : "Not writable"} · ${missingFiles} missing · ${orphanFiles} orphan · ${freeLabel}` },
+      prompts: { state: expectedPrompts > 0 && availablePrompts === expectedPrompts ? "ok" : "error", label: Number.isFinite(expectedPrompts) ? `${availablePrompts} / ${expectedPrompts} protected clips available` : "Prompt inventory unavailable" },
+      speech: { state: !speech.ok || !scopeConfigured || speechSaturated ? "error" : queueDepth > 0 ? "warning" : "ok", label: !speech.ok ? "Speech service unavailable" : !scopeConfigured ? "Final-exam scope is not configured" : speechSaturated ? `Queue saturated · ${queueDepth} / ${queueMaximum}` : `Queue ${queueDepth} / ${queueMaximum || "—"} · ${queueActive} active` },
+      grades: { state: divergent > 0 ? "error" : pendingOutbox > 0 ? "warning" : "ok", label: `${divergent} divergent · ${pendingOutbox} sync pending` },
+      weights: { state: weightOk ? "ok" : "error", label: `${Number.isFinite(actualWeight) ? actualWeight : "—"}% oral · ${Number.isFinite(totalWeight) ? totalWeight : "—"}% total` },
+      audit: { state: audit.pathConfigured === false || audit.writable !== true ? "error" : "ok", label: `${audit.writable === true ? "Writable" : "Not writable"} · ${Number(audit.bytes || 0).toLocaleString()} bytes` }
+    };
+    elements.adminHealthGrid?.querySelectorAll("[data-health]").forEach((card) => {
+      const descriptor = values[card.dataset.health] || { state: "warning", label: "Health data unavailable" };
+      card.dataset.state = descriptor.state;
+      setText(card.querySelector("small"), descriptor.label);
+    });
+  }
+
+  function renderAdminMonitor() {
+    renderAdminHealth();
+    if (!elements.adminRosterBody) return;
+    elements.adminRosterBody.innerHTML = adminRoster.length ? adminRoster.map((item) => {
+      const student = item.student || item;
+      const studentId = String(student.id || student.studentId || item.studentId || "");
+      const name = student.fullName || student.name || item.studentName || "Course student";
+      const email = student.email || item.email || "No email linked";
+      const status = normalizedRosterStatus(item);
+      const turns = Number(item.turnsCompleted ?? item.savedTurns ?? item.savedTurnCount ?? item.turnCount ?? Object.keys(item.attempt?.turns || {}).length ?? 0);
+      const audioIssues = Array.isArray(item.audioIssues) ? item.audioIssues : item.audioIssue ? [item.audioIssue] : [];
+      const evidence = audioIssues.length ? `${audioIssues.length} audio issue${audioIssues.length === 1 ? "" : "s"}` : `${Math.min(REQUIRED_TURNS, turns)} / ${REQUIRED_TURNS} audios`;
+      const lastActivity = item.lastActivityAt || item.updatedAt || item.attempt?.updatedAt || "—";
+      return `<tr data-student-id="${escapeHtml(studentId)}"><td><strong>${escapeHtml(name)}</strong><small>${escapeHtml(studentId || email)}</small></td><td><span class="admin-roster-status" data-state="${escapeHtml(status)}">${escapeHtml(rosterStatusLabel(status))}</span></td><td>${escapeHtml(evidence)}</td><td>${escapeHtml(lastActivity)}</td><td><div class="admin-roster-actions"><button type="button" data-student-action="issue_pairing" ${studentId ? "" : "disabled"}>Issue PIN</button><button type="button" data-student-action="reopen" ${studentId ? "" : "disabled"}>Reopen</button><button type="button" data-student-action="extend" ${studentId ? "" : "disabled"}>Extend</button><button type="button" data-student-action="cancel" ${studentId ? "" : "disabled"}>Cancel</button><button type="button" data-student-action="reset" ${studentId ? "" : "disabled"}>Reset</button></div></td></tr>`;
+    }).join("") : '<tr><td colspan="5">No roster monitor was returned. Legacy submission review remains available below.</td></tr>';
+    setText(elements.adminRosterCaption, `${adminRoster.length} course record${adminRoster.length === 1 ? "" : "s"} · live delivery states`);
+  }
+
+  async function loadAdminHealth() {
+    if (!(role === "admin" || role === "teacher")) return;
+    const [examResult, speechResult] = await Promise.allSettled([
+      request(API.health, { method: "GET" }, 1),
+      request(API.speechHealth, { method: "GET" }, 1)
+    ]);
+    let examHealth = {};
+    if (examResult.status === "fulfilled" && isRecord(examResult.value.data.health || examResult.value.data)) {
+      examHealth = examResult.value.data.health || examResult.value.data;
+      if (Array.isArray(examResult.value.data.roster)) adminRoster = examResult.value.data.roster;
+    } else {
+      examHealth = { apiError: true, ok: false, warnings: ["health_endpoint_unavailable"] };
+      if (examResult.status !== "rejected" || examResult.reason?.status !== 404) setText(elements.adminOperationStatus, "Detailed exam health could not be refreshed. No opening decision should rely on this screen until the server responds.");
+    }
+    adminHealth = Object.assign({}, examHealth, {
+      speech: speechResult.status === "fulfilled" && isRecord(speechResult.value.data)
+        ? speechResult.value.data
+        : { ok: false, error: speechResult.reason?.data?.error || "speech_health_unavailable" }
+    });
+    renderAdminMonitor();
+  }
+
+  async function reconcileGrades() {
+    if (!(role === "admin" || role === "teacher")) return;
+    const reason = String(window.prompt("Reason for verifying Final Oral Task delivery against Grades:", "Administrative integrity check") || "").trim();
+    if (!reason) return;
+    setDisabled(elements.adminReconcile, true);
+    setText(elements.adminOperationStatus, "Verifying receipts and Grades synchronization.");
+    try {
+      const result = await request(API.reconcile, jsonOptions("POST", { reason, requestId: createId("bfo-reconcile"), recoverComplete: true }), 2);
+      requireContract(result.data.ok === true || isRecord(result.data.summary) || Array.isArray(result.data.reconciled), "invalid_reconcile_contract", result.data);
+      setText(elements.adminOperationStatus, result.data.message || `Verification complete · ${Number(result.data.summary?.repaired || result.data.repaired || 0)} record(s) repaired.`);
+      toast("Final Oral Task and Grades synchronization verified.", "success");
+      await loadState(false);
+    } catch (error) {
+      setText(elements.adminOperationStatus, error.status === 404 ? "This server is still using the legacy reconciliation process. Refresh submissions and contact technical support if a receipt is missing." : "The verification did not complete. No grade or submission was changed without confirmation.");
+    } finally { setDisabled(elements.adminReconcile, false); }
+  }
+
+  async function runStudentAction(button) {
+    const row = button?.closest("[data-student-id]");
+    const studentId = row?.dataset.studentId || "";
+    const action = button?.dataset.studentAction || "";
+    if (!studentId || !["reopen", "extend", "cancel", "reset", "issue_pairing"].includes(action)) return;
+    const destructive = action === "cancel" || action === "reset";
+    if (destructive && !window.confirm(`${action === "reset" ? "Reset" : "Cancel"} this student's official oral attempt? Existing evidence will only be changed according to the server recovery policy.`)) return;
+    const reason = String(window.prompt(`Required reason to ${action.replace("_", " ")} this student's exam:`, "") || "").trim();
+    if (!reason) return;
+    const payload = { studentId, action, reason, requestId: createId(`bfo-${action}`) };
+    if (action === "extend") {
+      const extensionUntil = String(window.prompt("Extension end (YYYY-MM-DD HH:MM, Bogotá time):", "") || "").trim();
+      if (!extensionUntil) return;
+      payload.until = extensionUntil;
+    }
+    setDisabled(button, true);
+    setText(elements.adminOperationStatus, `Applying ${action} for student ${studentId}.`);
+    try {
+      const result = await request(API.studentAction, jsonOptions("PUT", payload), 2);
+      requireContract(result.data.ok === true || isRecord(result.data.student) || isRecord(result.data.result), "invalid_student_action_contract", result.data);
+      const pairingCode = result.data.pairingCode || result.data.result?.pairingCode || "";
+      setText(elements.adminOperationStatus, pairingCode ? `Temporary pairing code for ${studentId}: ${pairingCode}. Share it privately; it expires automatically.` : result.data.message || `${action} completed for student ${studentId}.`);
+      toast("Administrative recovery action confirmed by the server.", "success");
+      await loadState(false);
+    } catch (error) {
+      setText(elements.adminOperationStatus, error.status === 404 ? "Individual recovery is not available on this server version yet." : "The action was not confirmed and was not shown as completed.");
+      setDisabled(button, false);
+    }
   }
 
   function buildAdminPreviewQuestions() {
@@ -782,24 +1506,50 @@
   }
 
   function renderSubmission(result) {
-    submission = result || submission;
+    const nextSubmission = result || submission;
+    requireContract(isSubmissionContract(nextSubmission), "invalid_submission_contract", nextSubmission);
+    submission = nextSubmission;
     setHidden(elements.onboarding, true);
     setHidden(elements.exam, true);
     setHidden(elements.ready, true);
     setHidden(elements.complete, false);
-    const status = submission?.status === "graded" ? `Graded: ${Number(submission.grade).toFixed(2)} / 5.0` : "Submitted — pending teacher review";
+    const workflow = workflowOf(submission);
+    const gradesSync = String(submission?.syncStatus || submission?.gradesSyncStatus || submission?.gradesStatus || "").toLowerCase();
+    const status = workflow === "published" && Number.isFinite(Number(submission.grade)) ? `Graded: ${Number(submission.grade).toFixed(2)} / 5.0`
+      : workflow === "sync_pending" || gradesSync === "pending" ? "Submitted — Grades synchronization pending"
+        : "Submitted — pending teacher review";
     setText(elements.receipt, `Receipt ${submission?.receiptId || "—"} · ${status}`);
     if (elements.receipt?.id === "receiptCode") setText(elements.receipt, submission?.receiptId || "—");
     setText(elements.receiptStudent, submission?.studentName || attempt?.student?.fullName || user?.name || "—");
     setText(elements.receiptSubmittedAt, submission?.submittedAt || "—");
     setText(elements.submissionStatus, status);
+    if (elements.receiptWorkflowStatus) elements.receiptWorkflowStatus.innerHTML = gradesSync === "synced" || ["pending_review", "pending_teacher_review", "published"].includes(workflow)
+      ? '<i class="bi bi-journal-check"></i> Visible in Grades'
+      : '<i class="bi bi-arrow-repeat"></i> Safely received · Grades sync pending';
+    renderSubmissionWorkflow(submission);
     stopExamClock();
+    clearQueuedAudio(accountScope(), submission?.attemptId || attempt?.attemptId || "").catch(() => {});
+    releaseAttemptLease();
+    focusPanel(elements.complete);
   }
 
   function hydrateAttempt(nextAttempt, enterExam = true) {
+    requireContract(isScopedAttemptContract(nextAttempt), "invalid_attempt_contract", nextAttempt);
+    const attemptExpiry = Date.parse(nextAttempt.expiresAt || "");
+    if (Number.isFinite(attemptExpiry) && attemptExpiry <= Date.now()) {
+      releaseAttemptLease();
+      clearQueuedAudio(accountScope(), nextAttempt.attemptId).catch(() => {});
+      showAccess("This official attempt has expired. Its temporary device audio was removed; ask the teacher about the recorded server evidence.", "closed");
+      setHidden(elements.exam, true);
+      setHidden(elements.onboarding, true);
+      return;
+    }
     attempt = nextAttempt;
     assignedQuestions = Array.isArray(attempt?.assignedQuestions) ? attempt.assignedQuestions.slice().sort((a, b) => Number(a.sequence) - Number(b.sequence)) : [];
     revision = Number(attempt?.revision || 0);
+    if (attempt.lease?.leaseId && attempt.lease?.expiresAt) applyServerLease(attempt.lease);
+    else clearServerLease();
+    activateAttemptLease(attempt.attemptId);
     fillIdentity(attempt?.student);
     const saved = attempt?.turns && typeof attempt.turns === "object" ? attempt.turns : {};
     currentIndex = assignedQuestions.findIndex((question) => !saved[question.turnId]);
@@ -816,11 +1566,14 @@
       setHidden(elements.onboarding, false);
       showAccess(`${Object.keys(saved).length} of ${REQUIRED_TURNS} responses are already saved. Complete the microphone check, then resume.`, "resume");
     }
+    refreshQueuedAudioCount().then(() => drainAudioQueue()).catch(() => {});
   }
 
-  function resetProtectedSession({ clearClaim = true } = {}) {
+  function resetProtectedSession({ clearClaim = true, purgeAudio = false, audioScope = accountScope() } = {}) {
+    if (purgeAudio && audioScope) clearQueuedAudio(audioScope).catch(() => {});
     sessionGeneration += 1;
     stateLoadGeneration += 1;
+    releaseAttemptLease();
     window.clearInterval(timerHandle);
     window.clearTimeout(autoStopHandle);
     timerHandle = null;
@@ -878,8 +1631,20 @@
     adminQuestionBank = {};
     adminInteractionQuestion = null;
     adminPreviewMode = false;
+    adminRoster = [];
+    adminHealth = {};
+    currentQueueId = "";
+    pendingAudioCount = 0;
+    volatileAudioCount = 0;
+    pendingTranscriptJobs = new Map();
+    preflightVoicePeak = 0;
+    preflightPlaybackConfirmed = false;
+    verifiedMicrophoneId = "";
+    selectedMicrophoneId = "";
+    recorderFailureReason = "";
     if (clearClaim) clearStudentClaim();
     if (elements.claimInput) elements.claimInput.value = "";
+    if (elements.claimPairingCode) elements.claimPairingCode.value = "";
     if (elements.studentName) elements.studentName.value = "";
     if (elements.studentId) elements.studentId.value = "";
     if (elements.preflightPlayback) { elements.preflightPlayback.removeAttribute("src"); elements.preflightPlayback.hidden = true; }
@@ -905,13 +1670,16 @@
     setDisabled(elements.submit, true);
     setDisabled(elements.submitConfirmation, false);
     setEvidenceControlsEnabled(false);
+    setPipeline("queued", "active");
+    refreshQueuedAudioCount().catch(() => {});
   }
 
   async function loadState(allowClaimPrompt = false) {
+    const previousUser = user;
     const activeUser = readUser();
     user = activeUser;
     if (!user) {
-      resetProtectedSession({ clearClaim: true });
+      resetProtectedSession({ clearClaim: true, purgeAudio: true, audioScope: accountScope(previousUser) });
       showAccess("Please sign in with Google, Microsoft, or your course account before opening the Final Oral Task.", "login");
       openLogin();
       return;
@@ -923,6 +1691,7 @@
       const result = await request(API.state, { method: "GET" }, 2);
       if (loadGeneration !== stateLoadGeneration || readUser()?.credential !== requestedCredential) return;
       const payload = result.data || {};
+      requireContract(hasText(payload.role || "student") && isRecord(payload.state || {}), "invalid_state_contract", payload);
       attempt = null;
       submission = null;
       assignedQuestions = [];
@@ -941,6 +1710,8 @@
       if (role === "admin" || role === "teacher") {
         adminQuestionBank = payload.questionBank && typeof payload.questionBank === "object" ? payload.questionBank : {};
         adminInteractionQuestion = payload.interactionQuestion || null;
+        adminRoster = Array.isArray(payload.roster) ? payload.roster : [];
+        adminHealth = isRecord(payload.health) ? payload.health : {};
       } else {
         adminQuestionBank = {};
         adminInteractionQuestion = null;
@@ -950,12 +1721,14 @@
         showAccess("Staff access confirmed. Use the administration and review panels below.", "staff");
         setHidden(elements.onboarding, true);
         setHidden(elements.staff, false);
+        renderAdminMonitor();
+        loadAdminHealth().catch(() => {});
         await loadStaffSubmissions();
         return;
       }
       if (!payload.student) {
-        if (allowClaimPrompt && payload.claimAvailable && promptStudentClaim()) return loadState(false);
-        showAccess("This signed-in account is not linked to a Basic English student record. Enter the document number associated with the gradebook.", "claim");
+        if (allowClaimPrompt && payload.claimAvailable && payload.pairingRequired !== true && promptStudentClaim()) return loadState(false);
+        showAccess("This account is not linked to a Basic English student record. Enter the registered document and, when required, the temporary code issued by the teacher.", "claim");
         setHidden(elements.claimPanel, false);
         setHidden(elements.claim, false);
         elements.claimInput?.focus();
@@ -964,8 +1737,12 @@
       setHidden(elements.claimPanel, true);
       setHidden(elements.claim, true);
       fillIdentity(payload.student);
-      if (payload.submission) return renderSubmission(payload.submission);
+      if (payload.submission) {
+        requireContract(isSubmissionContract(payload.submission), "invalid_submission_contract", payload.submission);
+        return renderSubmission(payload.submission);
+      }
       if (payload.attempt) {
+        requireContract(isScopedAttemptContract(payload.attempt), "invalid_attempt_contract", payload.attempt);
         setHidden(elements.access, true);
         setHidden(elements.onboarding, false);
         hydrateAttempt(payload.attempt, false);
@@ -984,13 +1761,17 @@
       }
     } catch (error) {
       if (loadGeneration !== stateLoadGeneration || readUser()?.credential !== requestedCredential) return;
-      showAccess(error.status === 401 ? "Your session expired. Please sign in again." : "The exam server did not answer. Reload the page and try again.", "error");
+      showAccess(error.status === 401 ? "Your session expired. Please sign in again." : error.name === "ContractError" ? "The server answered, but its exam confirmation was incomplete. Nothing was marked as saved; refresh and contact the teacher if this continues." : "The exam server did not answer. Reload the page and try again.", "error");
       if (error.status === 401) openLogin();
     }
   }
 
   async function startAttempt() {
     if (attemptRequestBusy) return;
+    if (!online) {
+      setText(elements.preflightStatus, "Reconnect to the internet before starting the official attempt.");
+      return;
+    }
     if (!preflightPassed) {
       setText(elements.preflightStatus, "Complete and confirm the microphone check before starting.");
       return;
@@ -1000,8 +1781,9 @@
     attemptRequestBusy = true;
     setDisabled(elements.start, true);
     try {
-      const result = await request(API.start, jsonOptions("POST", {}), 2);
+      const result = await request(API.start, jsonOptions("POST", { deviceId: deviceInstanceId }), 2);
       if (requestSession !== sessionGeneration || user?.credential !== requestCredential) return;
+      requireContract(isSecureAttemptContract(result.data.attempt), "invalid_start_contract", result.data);
       setHidden(elements.access, true);
       setHidden(elements.onboarding, true);
       setHidden(elements.exam, false);
@@ -1010,7 +1792,18 @@
     } catch (error) {
       if (requestSession !== sessionGeneration || user?.credential !== requestCredential) return;
       if (error.status === 409 && error.data?.submission) return renderSubmission(error.data.submission);
-      if (error.status === 403 && error.data?.error === "student_not_authorized" && promptStudentClaim()) return loadState(false);
+      if (error.status === 409 && error.data?.error === "attempt_in_use") {
+        setText(elements.preflightStatus, `This official attempt is active in another tab or device${error.data.leaseExpiresAt ? ` until ${error.data.leaseExpiresAt}` : ""}. Return there or wait for the secure lease to expire.`);
+        setDisabled(elements.start, true);
+        return;
+      }
+      if (error.status === 403 && error.data?.error === "student_not_authorized") {
+        showAccess("Enter the registered document and the temporary pairing code issued by the teacher.", "claim");
+        setHidden(elements.claimPanel, false);
+        setHidden(elements.claim, false);
+        elements.claimInput?.focus();
+        return;
+      }
       const examClosed = error.data?.error === "exam_closed";
       setText(elements.preflightStatus, examClosed ? "The exam was closed before the attempt started." : "The attempt could not start. Your microphone check remains valid; try again.");
       setDisabled(elements.start, examClosed);
@@ -1032,7 +1825,11 @@
     try {
       const result = await request(`${API.attempt}?attemptId=${encodeURIComponent(attempt?.attemptId || "")}`, { method: "GET" }, 2);
       if (requestSession !== sessionGeneration || user?.credential !== requestCredential) return;
-      if (result.data.submission) return renderSubmission(result.data.submission);
+      if (result.data.submission) {
+        requireContract(isSubmissionContract(result.data.submission), "invalid_submission_contract", result.data);
+        return renderSubmission(result.data.submission);
+      }
+      requireContract(isScopedAttemptContract(result.data.attempt), "invalid_resume_contract", result.data);
       setHidden(elements.onboarding, true);
       setHidden(elements.exam, false);
       hydrateAttempt(result.data.attempt);
@@ -1063,7 +1860,9 @@
         elements.progress.max = REQUIRED_TURNS;
         elements.progress.value = currentIndex;
       } else elements.progress.style.width = `${Math.round((currentIndex / REQUIRED_TURNS) * 100)}%`;
-      elements.progress.setAttribute("aria-valuetext", `${currentIndex} of ${REQUIRED_TURNS} responses saved`);
+      const progressNode = elements.progressTrack || elements.progress;
+      progressNode.setAttribute("aria-valuenow", String(currentIndex));
+      progressNode.setAttribute("aria-valuetext", `${currentIndex} of ${REQUIRED_TURNS} responses saved`);
     }
     if (elements.unitVisualPanel) elements.unitVisualPanel.dataset.unit = currentUnit;
     if (elements.unitVisualImage) {
@@ -1128,7 +1927,32 @@
     setText(elements.sessionCode, adminPreviewMode ? "ADMIN PREVIEW · NOT SAVED" : attempt?.attemptId || "Pending");
     setHidden(elements.adminPreviewToolbar, !adminPreviewMode);
     updateAdminPreviewNavigation();
+    if (!adminPreviewMode) {
+      const savedTurn = attempt?.turns?.[question.turnId];
+      const transcriptState = String(savedTurn?.transcriptStatus || (savedTurn?.transcript ? "complete" : "pending"));
+      setPipeline(savedCurrentTurn ? (transcriptState === "complete" ? "transcript" : "audio") : "queued", savedCurrentTurn && transcriptState === "complete" ? "complete" : "active");
+      setWorkflowMessage(savedCurrentTurn ? "Audio saved" : "Ready to record", savedCurrentTurn ? (transcriptState === "complete" ? "Audio and transcript are secured." : "Transcript is pending and does not block your exam.") : "The recording will be protected locally, then verified by the server.");
+      activateAttemptLease(attempt?.attemptId);
+    }
+    prefetchCurrentQuestionAudio();
     startExamClock();
+    focusPanel(elements.exam);
+  }
+
+  function prefetchCurrentQuestionAudio() {
+    const question = currentQuestion();
+    const source = promptAudioUrl(question);
+    const turnId = String(question?.turnId || "");
+    if (!source || !turnId || !(source.startsWith("/api/") || source.includes("/api/basic-final-oral/"))) {
+      promptPrefetch = null;
+      promptPrefetchTurnId = "";
+      return;
+    }
+    promptPrefetchTurnId = turnId;
+    promptPrefetch = fetchProtectedAudio(source).catch((error) => {
+      if (promptPrefetchTurnId === turnId) promptPrefetch = null;
+      throw error;
+    });
   }
 
   async function playCurrentQuestion() {
@@ -1138,19 +1962,21 @@
     const playbackToken = ++questionPlaybackToken;
     questionAudioLoading = true;
     try {
+      pauseAllAudio(elements.questionAudio);
       questionHeard = false;
       updateRecordingControls(false);
       setDanielState("speaking", playbackSpeed === .75 ? "Daniel is speaking slowly" : "Daniel is speaking");
       const source = promptAudioUrl(question);
       if (!source) throw new Error("prompt_audio_unavailable");
       const protectedAudio = source.startsWith("/api/") || source.includes("/api/basic-final-oral/");
-      if (protectedAudio) {
-        const blob = await fetchProtectedAudio(source);
+      const alreadyLoaded = elements.questionAudio.dataset.turnId === turnId && Boolean(elements.questionAudio.src);
+      if (protectedAudio && !alreadyLoaded) {
+        const blob = promptPrefetchTurnId === turnId && promptPrefetch ? await promptPrefetch : await fetchProtectedAudio(source);
         if (playbackToken !== questionPlaybackToken || String(currentQuestion()?.turnId || "") !== turnId) return;
         if (promptObjectUrl) URL.revokeObjectURL(promptObjectUrl);
         promptObjectUrl = URL.createObjectURL(blob);
         elements.questionAudio.src = promptObjectUrl;
-      } else {
+      } else if (!alreadyLoaded) {
         elements.questionAudio.src = source;
       }
       if (playbackToken !== questionPlaybackToken || String(currentQuestion()?.turnId || "") !== turnId) return;
@@ -1166,13 +1992,14 @@
       }, 45000);
       await elements.questionAudio.play();
       setText(elements.recordStatus, "Listen to Daniel's complete question before recording.");
-    } catch {
+    } catch (error) {
       if (playbackToken !== questionPlaybackToken) return;
       if (questionPlaybackWatchdog) window.clearTimeout(questionPlaybackWatchdog);
       questionPlaybackWatchdog = 0;
       questionAudioPlaying = false;
-      setDanielState("ready", "Daniel's audio could not play");
-      setText(elements.recordStatus, "The question audio could not play. Check the connection and press Play Daniel again.");
+      const gestureRetry = error?.name === "NotAllowedError" && Boolean(elements.questionAudio?.src);
+      setDanielState("ready", gestureRetry ? "Daniel's audio is ready" : "Daniel's audio could not play");
+      setText(elements.recordStatus, gestureRetry ? "The audio is loaded. Tap Play Daniel once more to start it on this device." : "The question audio could not play. Check the connection and press Play Daniel again.");
     } finally {
       if (playbackToken === questionPlaybackToken) {
         questionAudioLoading = false;
@@ -1187,11 +2014,17 @@
   }
 
   async function listMicrophones(select = elements.microphoneSelect) {
-    if (!navigator.mediaDevices?.enumerateDevices || !select) return;
+    if (!navigator.mediaDevices?.enumerateDevices) return [];
     const devices = (await navigator.mediaDevices.enumerateDevices()).filter((device) => device.kind === "audioinput");
-    const selected = select.value;
-    select.innerHTML = devices.map((device, index) => `<option value="${escapeHtml(device.deviceId)}">${escapeHtml(device.label || `Microphone ${index + 1}`)}</option>`).join("");
-    if (devices.some((device) => device.deviceId === selected)) select.value = selected;
+    const requested = select?.value || selectedMicrophoneId || verifiedMicrophoneId;
+    [elements.preflightMicrophoneSelect, elements.microphoneSelect].filter(Boolean).forEach((target) => {
+      const ownSelected = target.value || requested;
+      target.innerHTML = devices.length ? devices.map((device, index) => `<option value="${escapeHtml(device.deviceId)}">${escapeHtml(device.label || `Microphone ${index + 1}`)}</option>`).join("") : '<option value="">Default microphone</option>';
+      if (devices.some((device) => device.deviceId === ownSelected)) target.value = ownSelected;
+      else if (devices.some((device) => device.deviceId === requested)) target.value = requested;
+    });
+    selectedMicrophoneId = elements.microphoneSelect?.value || elements.preflightMicrophoneSelect?.value || requested || "";
+    return devices;
   }
 
   function stopLevelMeter() {
@@ -1226,6 +2059,9 @@
         const percent = Math.min(100, Math.round(Math.sqrt(sum / data.length) * 380));
         if (activeLevelBar) activeLevelBar.style.width = `${percent}%`;
         setText(activeLevelValue, `${percent}%`);
+        if (activeLevelBar === elements.preflightLevelBar) preflightVoicePeak = Math.max(preflightVoicePeak, percent);
+        const track = activeLevelBar?.parentElement;
+        if (track?.getAttribute("role") === "progressbar") track.setAttribute("aria-valuenow", String(percent));
         levelFrame = requestAnimationFrame(draw);
       };
       draw();
@@ -1234,19 +2070,55 @@
 
   function stopMediaStream() {
     stopLevelMeter();
-    if (mediaStream) mediaStream.getTracks().forEach((track) => track.stop());
+    if (mediaStream) mediaStream.getTracks().forEach((track) => { intentionallyStoppedTracks.add(track); track.stop(); });
     mediaStream = null;
+  }
+
+  function getUserMediaWithTimeout(constraints, timeoutMs = MICROPHONE_TIMEOUT_MS) {
+    let timedOut = false;
+    let timeout = 0;
+    const mediaPromise = navigator.mediaDevices.getUserMedia(constraints).then((stream) => {
+      if (timedOut) {
+        stream.getTracks().forEach((track) => track.stop());
+        throw Object.assign(new Error("microphone_timeout"), { name: "TimeoutError" });
+      }
+      return stream;
+    });
+    const timeoutPromise = new Promise((_, reject) => {
+      timeout = window.setTimeout(() => {
+        timedOut = true;
+        reject(Object.assign(new Error("microphone_timeout"), { name: "TimeoutError" }));
+      }, timeoutMs);
+    });
+    return Promise.race([mediaPromise, timeoutPromise]).finally(() => window.clearTimeout(timeout));
+  }
+
+  function handleMicrophoneTrackEnded(event) {
+    if (pageClosing || intentionallyStoppedTracks.has(event?.target)) return;
+    recorderFailureReason = "microphone_disconnected";
+    if (mediaRecorder?.state === "recording") {
+      recordingDurationMs = Math.max(recordingDurationMs, Date.now() - recordingStartedAt);
+      try { mediaRecorder.stop(); } catch { /* stop event may already be queued */ }
+    }
+    setText(elements.recordStatus, "The selected microphone disconnected. The captured audio will be protected if it is complete.");
+    setWorkflowMessage("Microphone disconnected", "Reconnect or select a microphone before the next response.", "bi-mic-mute-fill");
   }
 
   async function ensureMediaStream(select = elements.microphoneSelect) {
     if (!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder) throw new Error("unsupported_microphone");
     if (mediaStream?.getTracks().some((track) => track.readyState === "live")) return mediaStream;
     const deviceId = select?.value;
-    mediaStream = await navigator.mediaDevices.getUserMedia({
+    mediaStream = await getUserMediaWithTimeout({
       audio: { deviceId: deviceId ? { exact: deviceId } : undefined, echoCancellation: true, noiseSuppression: true, autoGainControl: true },
       video: false
     });
+    const activeTrack = mediaStream.getAudioTracks()[0];
+    activeTrack?.addEventListener("ended", handleMicrophoneTrackEnded, { once: true });
+    selectedMicrophoneId = activeTrack?.getSettings?.().deviceId || deviceId || "";
     await listMicrophones(select).catch(() => {});
+    [elements.preflightMicrophoneSelect, elements.microphoneSelect].filter(Boolean).forEach((target) => {
+      if (selectedMicrophoneId && Array.from(target.options).some((option) => option.value === selectedMicrophoneId)) target.value = selectedMicrophoneId;
+    });
     return mediaStream;
   }
 
@@ -1254,6 +2126,9 @@
     if (preflightRecorder?.state === "recording") return;
     const preflightSession = sessionGeneration;
     preflightPassed = false;
+    preflightSampleReady = false;
+    preflightVoicePeak = 0;
+    preflightPlaybackConfirmed = false;
     setDisabled(elements.start, true);
     setDisabled(elements.preflight, true);
     setDisabled(elements.preflightConfirm, true);
@@ -1267,6 +2142,10 @@
       const mimeType = supportedMimeType();
       preflightRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
       preflightRecorder.addEventListener("dataavailable", (event) => { if (event.data?.size) sampleChunks.push(event.data); });
+      preflightRecorder.addEventListener("error", () => {
+        preflightSampleReady = false;
+        setText(elements.preflightStatus, "The microphone recorder reported an error. Select another device and test again.");
+      });
       preflightRecorder.addEventListener("stop", () => {
         if (preflightSession !== sessionGeneration) {
           stopMediaStream();
@@ -1277,13 +2156,15 @@
         if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl);
         preflightObjectUrl = URL.createObjectURL(sample);
         if (elements.preflightPlayback) { elements.preflightPlayback.src = preflightObjectUrl; elements.preflightPlayback.hidden = false; }
-        setText(elements.preflightStatus, "Play the sample. If your voice is clear, confirm the microphone check.");
-        preflightSampleReady = sample.size >= 700;
-        setDisabled(elements.preflightConfirm, sample.size < 700);
+        const hasVoice = preflightVoicePeak >= 4;
+        preflightSampleReady = sample.size >= 700 && hasVoice;
+        verifiedMicrophoneId = preflightSampleReady ? (selectedMicrophoneId || "default") : "";
+        setText(elements.preflightStatus, preflightSampleReady ? `Voice detected (peak ${preflightVoicePeak}%). Play the sample completely before confirming.` : "No clear voice level was detected. Speak closer to the microphone and test again.");
+        setDisabled(elements.preflightConfirm, true);
         setDisabled(elements.preflight, false);
         setDisabled(elements.preflightMicrophoneSelect, false);
         setDisabled(elements.microphoneSelect, false);
-        if (preflightSampleReady && elements.preflightConfirm?.type === "checkbox" && elements.preflightConfirm.checked) confirmPreflight();
+        if (!preflightSampleReady && elements.preflightConfirm?.type === "checkbox") elements.preflightConfirm.checked = false;
       }, { once: true });
       preflightRecorder.start(200);
       window.setTimeout(() => { if (preflightRecorder?.state === "recording") preflightRecorder.stop(); }, 4000);
@@ -1292,15 +2173,15 @@
       setDisabled(elements.preflight, false);
       setDisabled(elements.preflightMicrophoneSelect, false);
       setDisabled(elements.microphoneSelect, false);
-      setText(elements.preflightStatus, error.name === "NotAllowedError" ? "Microphone permission was denied. Allow access in the browser settings and retry." : "The microphone could not start. Select another microphone or browser and retry.");
+      setText(elements.preflightStatus, error.name === "NotAllowedError" ? "Microphone permission was denied. Allow access in the browser settings and retry." : error.name === "TimeoutError" ? "The browser did not finish the microphone request. Close the permission prompt, check browser settings, and retry." : "The microphone could not start. Select another microphone or browser and retry.");
     }
   }
 
   function confirmPreflight() {
-    if (!preflightSampleReady) {
+    if (!preflightSampleReady || !preflightPlaybackConfirmed || !verifiedMicrophoneId) {
       preflightPassed = false;
       setDisabled(elements.start, true);
-      setText(elements.preflightStatus, "Record and play the microphone sample before confirming readiness.");
+      setText(elements.preflightStatus, "Record a clear voice sample and play it before confirming readiness.");
       return;
     }
     if (elements.preflightConfirm?.type === "checkbox" && !elements.preflightConfirm.checked) {
@@ -1318,15 +2199,17 @@
 
   function updateRecordingControls(recording) {
     const controlsBusy = recording || recordingStartPending || recordingFinalizing || analyzing;
-    setDisabled(elements.mic, controlsBusy || savedCurrentTurn || !questionHeard);
-    setDisabled(elements.dockMic, controlsBusy || savedCurrentTurn || !questionHeard);
+    setDisabled(elements.mic, leaseReadOnly || controlsBusy || savedCurrentTurn || !questionHeard);
+    setDisabled(elements.dockMic, leaseReadOnly || controlsBusy || savedCurrentTurn || !questionHeard);
     setDisabled(elements.stop, !recording);
     setDisabled(elements.dockStop, !recording);
     setHidden(elements.dockMic, recording);
     setHidden(elements.dockStop, !recording);
     setDisabled(elements.microphoneSelect, controlsBusy);
     setDisabled(elements.preflightMicrophoneSelect, controlsBusy);
-    setDisabled(elements.questionPlay, controlsBusy || reactionBusy || savedCurrentTurn || questionAudioLoading || questionAudioPlaying);
+    setDisabled(elements.questionPlay, leaseReadOnly || controlsBusy || reactionBusy || savedCurrentTurn || questionAudioLoading || questionAudioPlaying);
+    elements.mic?.classList.toggle("is-recording", recording);
+    elements.dock?.classList.toggle("is-recording", recording);
     updateAdminPreviewNavigation();
     if (elements.answerState) {
       elements.answerState.className = `answer-state ${recording ? "recording" : analyzing ? "processing" : savedCurrentTurn ? "saved" : "ready"}`;
@@ -1342,11 +2225,13 @@
   }
 
   async function startRecording() {
+    if (leaseReadOnly) return;
     if (!questionHeard || analyzing || savedCurrentTurn || recordingStartPending || recordingFinalizing || mediaRecorder?.state === "recording") return;
     const recordingSession = sessionGeneration;
     recordingStartPending = true;
     updateRecordingControls(false);
     try {
+      pauseAllAudio();
       const stream = await ensureMediaStream(elements.microphoneSelect);
       if (recordingSession !== sessionGeneration) {
         stream.getTracks().forEach((track) => track.stop());
@@ -1356,13 +2241,21 @@
       chunks = [];
       const mimeType = supportedMimeType();
       mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
+      recorderFailureReason = "";
       mediaRecorder.addEventListener("dataavailable", (event) => {
         if (recordingSession === sessionGeneration && event.data?.size) chunks.push(event.data);
       });
       mediaRecorder.addEventListener("stop", () => {
+        if (!recordingDurationMs && recordingStartedAt) recordingDurationMs = Math.max(0, Date.now() - recordingStartedAt);
         if (recordingSession === sessionGeneration) handleRecordingStopped();
         else stopMediaStream();
       }, { once: true });
+      mediaRecorder.addEventListener("error", (event) => {
+        recorderFailureReason = event.error?.name || "recorder_error";
+        recordingDurationMs = Math.max(recordingDurationMs, recordingStartedAt ? Date.now() - recordingStartedAt : 0);
+        setText(elements.recordStatus, "The recorder reported an interruption. The captured audio will be protected if it is complete.");
+        if (mediaRecorder?.state === "recording") try { mediaRecorder.stop(); } catch { /* stop is already in progress */ }
+      });
       mediaRecorder.start(250);
       recordingStartPending = false;
       recordingStartedAt = Date.now();
@@ -1376,7 +2269,7 @@
       autoStopHandle = window.setTimeout(stopRecording, limit);
     } catch (error) {
       if (recordingSession !== sessionGeneration) return;
-      setText(elements.recordStatus, error.name === "NotAllowedError" ? "Microphone permission was denied. Allow access and retry this technical step." : "The microphone could not start. Select another microphone and retry.");
+      setText(elements.recordStatus, error.name === "NotAllowedError" ? "Microphone permission was denied. Allow access and retry this technical step." : error.name === "TimeoutError" ? "The microphone request timed out. Check browser permissions and retry." : "The microphone could not start. Select another microphone and retry.");
       showTechnicalRecovery("The microphone did not start. Your saved responses are unchanged.");
     } finally {
       if (mediaRecorder?.state !== "recording") {
@@ -1423,14 +2316,34 @@
     await processCapturedTurn();
   }
 
-  async function requestTranscription(blob) {
-    const result = await request(API.transcribe, {
-      method: "POST",
-      headers: { "Content-Type": blob.type || "audio/webm", "X-Jaralingua-Language": "en" },
-      body: blob,
-      timeout: TRANSCRIPTION_TIMEOUT_MS
-    }, 3);
-    return result.data || {};
+  async function refreshAttemptSecurityScope() {
+    if (!attempt?.attemptId || role === "admin" || role === "teacher" || adminPreviewMode) return;
+    const result = await request(`${API.attempt}?attemptId=${encodeURIComponent(attempt.attemptId)}`, { method: "GET" }, 2);
+    requireContract(isScopedAttemptContract(result.data.attempt), "invalid_scope_refresh_contract", result.data);
+    applyServerAttempt(result.data.attempt);
+  }
+
+  async function requestTranscription(blob, allowScopeRefresh = true) {
+    const officialStudent = role === "student" && !adminPreviewMode;
+    const expiresAt = Date.parse(attempt?.transcriberScopeExpiresAt || "");
+    if (officialStudent && (!attempt?.transcriberScopeToken || (Number.isFinite(expiresAt) && expiresAt <= Date.now() + 30000))) await refreshAttemptSecurityScope();
+    if (officialStudent) requireContract(hasText(attempt?.transcriberScopeToken), "missing_transcriber_scope", attempt);
+    const scopeHeaders = attempt?.transcriberScopeToken ? { "X-Jaralingua-Exam-Scope": attempt.transcriberScopeToken } : {};
+    try {
+      const result = await request(API.transcribe, {
+        method: "POST",
+        headers: Object.assign({ "Content-Type": blob.type || "audio/webm", "X-Jaralingua-Language": "en", "X-Jaralingua-Workload": officialStudent ? "final-oral" : "practice" }, scopeHeaders),
+        body: blob,
+        timeout: TRANSCRIPTION_TIMEOUT_MS
+      }, 1);
+      requireContract(typeof result.data.text === "string", "invalid_transcription_contract", result.data);
+      return result.data || {};
+    } catch (error) {
+      const expired = allowScopeRefresh && officialStudent && (error.status === 401 || error.status === 403 || ["scope_expired", "invalid_exam_scope", "missing_exam_scope"].includes(error.data?.error));
+      if (!expired) throw error;
+      await refreshAttemptSecurityScope();
+      return requestTranscription(blob, false);
+    }
   }
 
   function blobToDataUrl(blob) {
@@ -1444,48 +2357,201 @@
 
   function applyServerAttempt(nextAttempt) {
     if (!nextAttempt) return;
+    requireContract(isScopedAttemptContract(nextAttempt), "invalid_attempt_contract", nextAttempt);
     attempt = nextAttempt;
     revision = Number(nextAttempt.revision || revision);
     assignedQuestions = Array.isArray(nextAttempt.assignedQuestions) ? nextAttempt.assignedQuestions.slice().sort((a, b) => Number(a.sequence) - Number(b.sequence)) : assignedQuestions;
+    if (nextAttempt.lease?.leaseId && nextAttempt.lease?.expiresAt) applyServerLease(nextAttempt.lease);
+    else clearServerLease();
   }
 
   function sessionChangedError() { return Object.assign(new Error("session_changed"), { silent: true }); }
 
-  async function saveCurrentTurn(transcript, dataUrl, allowStaleRetry = true, context = null) {
+  async function saveCurrentTurn(transcript, dataUrl, allowStaleRetry = true, context = null, allowLeaseRetry = true) {
     const saveContext = context || {
       session: sessionGeneration,
       attemptId: attempt?.attemptId || "",
-      mimeType: currentBlob?.type || "audio/webm"
-    };
-    const question = currentQuestion();
-    if (!question || !attempt || saveContext.session !== sessionGeneration || attempt.attemptId !== saveContext.attemptId) throw sessionChangedError();
-    const payload = {
-      attemptId: saveContext.attemptId,
-      turnId: question.turnId,
-      variantId: question.variantId,
+      mimeType: currentBlob?.type || "audio/webm",
+      question: currentQuestion(),
       clientTurnId: currentClientTurnId,
-      transcript,
-      durationMs: Math.round(recordingDurationMs),
-      revision,
-      audioDataUrl: dataUrl,
-      mimeType: saveContext.mimeType
+      durationMs: recordingDurationMs
     };
+    const question = saveContext.question || currentQuestion();
+    if (!question || !attempt || saveContext.session !== sessionGeneration || attempt.attemptId !== saveContext.attemptId) throw sessionChangedError();
     try {
+      const lease = await ensureServerLease();
+      const payload = {
+        attemptId: saveContext.attemptId,
+        attemptScopeToken: attempt.attemptScopeToken || saveContext.attemptScopeToken || undefined,
+        leaseId: lease?.leaseId || serverLeaseId,
+        deviceId: deviceInstanceId,
+        turnId: question.turnId,
+        variantId: question.variantId,
+        clientTurnId: saveContext.clientTurnId || currentClientTurnId,
+        transcript: transcript || undefined,
+        transcriptStatus: transcript ? "complete" : "pending",
+        durationMs: Math.round(saveContext.durationMs ?? recordingDurationMs),
+        revision,
+        audioDataUrl: dataUrl,
+        mimeType: saveContext.mimeType
+      };
       const result = await request(API.turn, jsonOptions("PUT", payload), 3);
       if (saveContext.session !== sessionGeneration || attempt?.attemptId !== saveContext.attemptId) throw sessionChangedError();
+      requireContract(isTurnContract(result.data.turn) && Number.isFinite(Number(result.data.revision ?? revision + 1)), "invalid_turn_acknowledgement", result.data);
       revision = Number(result.data.revision ?? revision + 1);
       attempt.revision = revision;
       attempt.turns = attempt.turns || {};
       attempt.turns[question.turnId] = result.data.turn;
+      updateServerLeaseExpiry(result.data);
       return result.data.turn;
     } catch (error) {
       if (error?.silent || saveContext.session !== sessionGeneration || attempt?.attemptId !== saveContext.attemptId) throw sessionChangedError();
+      if (allowLeaseRetry && isLeaseError(error) && await recoverServerLease(error)) {
+        return saveCurrentTurn(transcript, dataUrl, allowStaleRetry, saveContext, false);
+      }
       if (allowStaleRetry && error.status === 409 && error.data?.error === "stale_attempt" && error.data.attempt) {
+        requireContract(isScopedAttemptContract(error.data.attempt), "invalid_stale_attempt_contract", error.data);
         applyServerAttempt(error.data.attempt);
-        if (attempt.turns?.[question.turnId]) return attempt.turns[question.turnId];
-        return saveCurrentTurn(transcript, dataUrl, false, saveContext);
+        if (attempt.turns?.[question.turnId] && isTurnContract(attempt.turns[question.turnId])) return attempt.turns[question.turnId];
+        return saveCurrentTurn(transcript, dataUrl, false, saveContext, allowLeaseRetry);
       }
       throw error;
+    }
+  }
+
+  function enqueueServerMutation(operation) {
+    const run = serverMutationChain.then(operation, operation);
+    serverMutationChain = run.catch(() => {});
+    return run;
+  }
+
+  async function uploadQueuedRecord(record) {
+    if (!record?.blob || record.scope !== accountScope() || record.attemptId !== attempt?.attemptId) return null;
+    await ensureServerLease();
+    const question = assignedQuestions.find((item) => item.turnId === record.turnId) || record.question;
+    requireContract(Boolean(question?.turnId), "queued_question_missing", record);
+    const dataUrl = await blobToDataUrl(record.blob);
+    const context = {
+      session: sessionGeneration,
+      attemptId: record.attemptId,
+      attemptScopeToken: record.attemptScopeToken,
+      mimeType: record.mimeType || record.blob.type || "audio/webm",
+      question,
+      clientTurnId: record.clientTurnId,
+      durationMs: record.durationMs
+    };
+    const turn = await enqueueServerMutation(() => saveCurrentTurn("", dataUrl, true, context));
+    await deleteQueuedAudio(record.queueId);
+    return turn;
+  }
+
+  async function updateSavedTurnTranscript(record, transcript, allowStaleRetry = true, allowLeaseRetry = true) {
+    if (!transcript || record.scope !== accountScope() || record.attemptId !== attempt?.attemptId) return null;
+    record.transcriptClientTurnId = record.transcriptClientTurnId || createId("bfo-transcript");
+    try {
+      const lease = await ensureServerLease();
+      const payload = {
+        attemptId: record.attemptId,
+        attemptScopeToken: attempt?.attemptScopeToken || record.attemptScopeToken || undefined,
+        leaseId: lease?.leaseId || serverLeaseId,
+        deviceId: deviceInstanceId,
+        turnId: record.turnId,
+        variantId: record.variantId,
+        clientTurnId: record.transcriptClientTurnId,
+        transcript,
+        transcriptStatus: "complete",
+        revision
+      };
+      const result = await enqueueServerMutation(() => request(API.turn, jsonOptions("PUT", payload), 3));
+      requireContract(isTurnContract(result.data.turn) && Number.isFinite(Number(result.data.revision ?? revision + 1)), "invalid_transcript_acknowledgement", result.data);
+      revision = Number(result.data.revision ?? revision + 1);
+      attempt.revision = revision;
+      attempt.turns = attempt.turns || {};
+      attempt.turns[record.turnId] = result.data.turn;
+      updateServerLeaseExpiry(result.data);
+      return result.data.turn;
+    } catch (error) {
+      if (allowLeaseRetry && isLeaseError(error) && await recoverServerLease(error)) {
+        return updateSavedTurnTranscript(record, transcript, allowStaleRetry, false);
+      }
+      if (allowStaleRetry && error.status === 409 && error.data?.error === "stale_attempt" && isAttemptContract(error.data.attempt)) {
+        applyServerAttempt(error.data.attempt);
+        const current = attempt.turns?.[record.turnId];
+        if (current?.transcript && String(current.transcriptStatus || "complete") === "complete") return current;
+        return updateSavedTurnTranscript(record, transcript, false, allowLeaseRetry);
+      }
+      throw error;
+    }
+  }
+
+  function transcribeSavedAudio(record) {
+    if (!record?.blob || pendingTranscriptJobs.has(record.turnId)) return;
+    const jobSession = sessionGeneration;
+    const job = (async () => {
+      try {
+        const transcription = await requestTranscription(record.blob);
+        const transcript = String(transcription.text || "").trim();
+        if (!transcript || jobSession !== sessionGeneration || attempt?.attemptId !== record.attemptId) return;
+        const turn = await updateSavedTurnTranscript(record, transcript);
+        if (jobSession !== sessionGeneration) return;
+        if (currentQuestion()?.turnId === record.turnId) {
+          currentTranscript = transcript;
+          setText(elements.transcript, "Transcript completed and stored privately for teacher review.");
+          setPipeline("transcript", "complete");
+          setWorkflowMessage("Audio and transcript secured", "You may continue. The recording remains the primary evidence.");
+        }
+        return turn;
+      } catch {
+        if (jobSession === sessionGeneration && currentQuestion()?.turnId === record.turnId) {
+          setText(elements.transcript, "Transcript pending. Your verified audio is already saved and you may continue.");
+          setPipeline("transcript", "active");
+          setWorkflowMessage("Audio saved", "Transcription is pending and will not block this exam.", "bi-cloud-check-fill");
+        }
+      } finally { pendingTranscriptJobs.delete(record.turnId); }
+    })();
+    pendingTranscriptJobs.set(record.turnId, job);
+  }
+
+  function renderRecoveredQueuedTurn(record, savedTurn) {
+    if (currentQuestion()?.turnId !== record?.turnId || !isTurnContract(savedTurn)) return;
+    savedCurrentTurn = true;
+    currentQueueId = "";
+    currentTranscript = String(savedTurn.transcript || "");
+    if (record.blob) {
+      currentBlob = record.blob;
+      if (objectUrl) URL.revokeObjectURL(objectUrl);
+      objectUrl = URL.createObjectURL(record.blob);
+      if (elements.studentAudio) { elements.studentAudio.src = objectUrl; elements.studentAudio.hidden = false; }
+    }
+    setText(elements.transcript, currentTranscript ? "Recovered transcript stored privately for teacher review." : "Transcript pending. The recovered audio is already verified.");
+    setText(elements.recordStatus, "Your queued answer was recovered and verified by the server. You may continue.");
+    setText(elements.saveStatus, `Recovered securely · response ${currentIndex + 1} of ${REQUIRED_TURNS}`);
+    setHidden(elements.answerCaptured, false);
+    setHidden(elements.recovery, true);
+    setHidden(elements.next, false);
+    setDisabled(elements.next, false);
+    setPipeline(currentTranscript ? "transcript" : "audio", currentTranscript ? "complete" : "active");
+    setWorkflowMessage("Queued audio recovered", "The server confirmed this answer; no second recording is required.", "bi-cloud-check-fill");
+    setDanielState("ready", "Daniel is ready for you to continue");
+    updateRecordingControls(false);
+  }
+
+  async function drainAudioQueue() {
+    if (!online || !attempt || adminPreviewMode || leaseReadOnly) return;
+    const records = (await listQueuedAudio()).filter((item) => item.scope === accountScope() && item.attemptId === attempt.attemptId).sort((a, b) => Number(a.createdAtMs) - Number(b.createdAtMs));
+    for (const record of records) {
+      const saved = attempt.turns?.[record.turnId];
+      if (saved && isTurnContract(saved) && (saved.audioAvailable || saved.verification || saved.savedAt)) {
+        await deleteQueuedAudio(record.queueId);
+        renderRecoveredQueuedTurn(record, saved);
+        if (!saved.transcript) transcribeSavedAudio(record);
+        continue;
+      }
+      try {
+        const savedTurn = await uploadQueuedRecord(Object.assign({}, record, { session: sessionGeneration }));
+        renderRecoveredQueuedTurn(record, savedTurn);
+        transcribeSavedAudio(record);
+      } catch { break; }
     }
   }
 
@@ -1549,41 +2615,77 @@
     const processingSession = sessionGeneration;
     const processingAttemptId = attempt?.attemptId || "";
     const processingBlob = currentBlob;
-    const saveContext = { session: processingSession, attemptId: processingAttemptId, mimeType: processingBlob.type || "audio/webm" };
+    const processingQuestion = currentQuestion();
+    if (!processingQuestion || !processingAttemptId) return;
+    const record = {
+      queueId: currentQueueId || createId("bfo-audio"),
+      scope: accountScope(),
+      attemptId: processingAttemptId,
+      turnId: processingQuestion.turnId,
+      variantId: processingQuestion.variantId,
+      question: processingQuestion,
+      clientTurnId: currentClientTurnId || createId("bfo-turn"),
+      durationMs: Math.round(recordingDurationMs),
+      mimeType: processingBlob.type || "audio/webm",
+      blob: processingBlob,
+      createdAtMs: Date.now()
+    };
+    currentQueueId = record.queueId;
     analyzing = true;
     setHidden(elements.recovery, true);
-    setText(elements.recordStatus, "Transcribing the English response with the secure speech service.");
-    setText(elements.saveStatus, "Saving is in progress. Do not close this page.");
-    setDanielState("thinking", "Daniel is waiting while the response is saved");
-    setBusy(true, "Securing your response…");
-    if (elements.saveState) { elements.saveState.className = "exam-save-state saving"; elements.saveState.innerHTML = '<i class="bi bi-cloud-arrow-up-fill"></i><span>Saving response…</span>'; }
+    setText(elements.recordStatus, "Protecting the original audio before transcription.");
+    setText(elements.saveStatus, "Step 1 of 2: protecting audio on this device.");
+    setDanielState("thinking", "Daniel is waiting for the audio confirmation");
+    setBusy(true, "Protecting the original recording…");
+    setPipeline("queued", "active");
+    if (elements.saveState) { elements.saveState.className = "exam-save-state saving"; elements.saveState.innerHTML = '<i class="bi bi-device-ssd-fill"></i><span>Protecting audio…</span>'; }
     updateRecordingControls(false);
     try {
-      const transcription = await requestTranscription(processingBlob);
+      Object.assign(record, await putQueuedAudio(record));
       if (processingSession !== sessionGeneration || attempt?.attemptId !== processingAttemptId) throw sessionChangedError();
-      currentTranscript = String(transcription.text || "").trim();
-      if (!currentTranscript) throw Object.assign(new Error("empty_transcript"), { technicalStage: "transcription" });
-      const dataUrl = await blobToDataUrl(processingBlob);
+      if (record.durable === false) {
+        setText(elements.saveStatus, "Temporary in-memory protection only. Do not close or reload this page before server confirmation.");
+        setWorkflowMessage("Keep this page open", "Local durable storage is unavailable; secure upload is continuing now.", "bi-exclamation-triangle-fill");
+      }
+      setPipeline("audio", "active");
+      setText(elements.saveStatus, record.durable === false
+        ? "Temporary memory only: keep this page open while the server verifies the audio."
+        : online ? "Step 2 of 2: waiting for server audio verification." : "Offline: the recording is protected on this device and will upload automatically.");
+      if (!online) throw Object.assign(new Error("offline_audio_queued"), { queued: true });
+      const savedTurn = await uploadQueuedRecord(record);
       if (processingSession !== sessionGeneration || attempt?.attemptId !== processingAttemptId) throw sessionChangedError();
-      await saveCurrentTurn(currentTranscript, dataUrl, true, saveContext);
-      if (processingSession !== sessionGeneration || attempt?.attemptId !== processingAttemptId) throw sessionChangedError();
+      requireContract(isTurnContract(savedTurn), "invalid_audio_acknowledgement", savedTurn);
       savedCurrentTurn = true;
-      setText(elements.transcript, "Transcript stored privately for teacher review.");
-      setText(elements.recordStatus, "Official response saved.");
-      setText(elements.saveStatus, `Saved securely · response ${currentIndex + 1} of ${REQUIRED_TURNS}`);
+      currentQueueId = "";
+      currentTranscript = String(savedTurn.transcript || "");
+      setText(elements.transcript, currentTranscript ? "Transcript stored privately for teacher review." : "Transcript pending. Your verified audio is already saved.");
+      setText(elements.recordStatus, "Official audio saved and verified. You may continue.");
+      setText(elements.saveStatus, `Audio saved securely · response ${currentIndex + 1} of ${REQUIRED_TURNS} · transcript ${currentTranscript ? "complete" : "pending"}`);
       setHidden(elements.answerCaptured, false);
       if (elements.saveState) { elements.saveState.className = "exam-save-state saved"; elements.saveState.innerHTML = '<i class="bi bi-cloud-check-fill"></i><span>Progress saved</span>'; }
+      setPipeline(currentTranscript ? "transcript" : "audio", currentTranscript ? "complete" : "active");
+      setWorkflowMessage("Audio verified", currentTranscript ? "The transcript is complete." : "Transcription continues separately and does not block the exam.", "bi-cloud-check-fill");
       setHidden(elements.recovery, true);
       setHidden(elements.next, false);
       setDisabled(elements.next, true);
       updateRecordingControls(false);
-      await playResponseQueue(responsesForTurn(currentQuestion(), currentTranscript));
+      if (!currentTranscript) transcribeSavedAudio(record);
+      await playResponseQueue(responsesForTurn(processingQuestion, currentTranscript));
     } catch (error) {
       if (error?.silent || processingSession !== sessionGeneration) return;
-      setText(elements.recordStatus, "The technical save did not finish. Your recording remains on this screen.");
-      setText(elements.saveStatus, "NOT SAVED — retry the technical step before continuing.");
-      if (elements.saveState) { elements.saveState.className = "exam-save-state error"; elements.saveState.innerHTML = '<i class="bi bi-cloud-slash-fill"></i><span>Not saved yet</span>'; }
-      showTechnicalRecovery(error.message === "empty_transcript" ? "The service detected no clear English transcript. Check the recording and retry the technical analysis, or record again if the file is silent." : "The connection or transcription service did not finish. Retry without changing your response.");
+      if (isLeaseError(error)) {
+        clearServerLease();
+        leaseReadOnly = true;
+        renderLeaseState();
+      }
+      const volatileOnly = record.durable === false;
+      setText(elements.recordStatus, volatileOnly
+        ? "This recording is held only in temporary memory. Do not close or reload this page while secure upload is pending."
+        : error.queued || !online ? "Your recording is protected on this device and is waiting for the connection." : "The server has not confirmed this audio yet. The protected recording remains available for retry.");
+      setText(elements.saveStatus, volatileOnly ? "TEMPORARY MEMORY ONLY — KEEP THIS PAGE OPEN UNTIL THE SERVER CONFIRMS THE AUDIO." : "AUDIO NOT YET ACKNOWLEDGED — retry is automatic when the connection returns.");
+      if (elements.saveState) { elements.saveState.className = "exam-save-state error"; elements.saveState.innerHTML = volatileOnly ? '<i class="bi bi-exclamation-triangle-fill"></i><span>Temporary memory · keep page open</span>' : '<i class="bi bi-device-ssd-fill"></i><span>Protected · upload pending</span>'; }
+      setPipeline(error.name === "ContractError" ? "audio" : "queued", error.name === "ContractError" ? "error" : "active");
+      showTechnicalRecovery(volatileOnly ? "Keep this page open and reconnect or press Retry secure processing. Closing or reloading will lose this temporary in-memory recording." : error.name === "ContractError" ? "The server response was incomplete, so this answer was not marked saved. Retry the same protected audio; do not record again." : "The original recording is protected. Reconnect or press Retry secure processing; no new answer is needed.");
     } finally {
       if (processingSession !== sessionGeneration) return;
       analyzing = false;
@@ -1597,11 +2699,11 @@
     setHidden(elements.recovery, false);
     setText(elements.recoveryMessage, message);
     setDisabled(elements.retry, !currentBlob);
-    setDisabled(elements.recordAgain, false);
+    setDisabled(elements.recordAgain, Boolean(currentQueueId));
   }
 
   function resetFailedRecording() {
-    if (savedCurrentTurn) return;
+    if (savedCurrentTurn || currentQueueId) return;
     currentBlob = null;
     currentTranscript = "";
     currentClientTurnId = "";
@@ -1622,6 +2724,17 @@
       else renderReadyToSubmit();
     }
     else renderCurrentTurn();
+  }
+
+  function renderSubmissionWorkflow(value = attempt) {
+    const workflow = workflowOf(value);
+    const gradesSync = String(value?.syncStatus || value?.gradesSyncStatus || value?.gradesStatus || "").toLowerCase();
+    const verified = value?.verification?.allAudioVerified === true || value?.audioVerified === true || ["verified", "pending_review", "graded", "published"].includes(workflow);
+    const received = Boolean(value?.receiptId) || ["received", "verified", "sync_pending", "pending_review", "graded", "published"].includes(workflow);
+    const synced = gradesSync === "synced" || ["pending_review", "graded", "published"].includes(workflow);
+    const reviewed = workflow === "published";
+    const states = { received, verified, grades: synced, review: reviewed };
+    elements.submissionWorkflow?.querySelectorAll("[data-workflow-step]").forEach((item) => item.classList.toggle("is-complete", Boolean(states[item.dataset.workflowStep])));
   }
 
   function renderReadyToSubmit() {
@@ -1651,12 +2764,15 @@
       else elements.progress.style.width = `${Math.round((savedCount / REQUIRED_TURNS) * 100)}%`;
     }
     setText(elements.submissionStatus, savedCount === REQUIRED_TURNS ? (confirmed ? "Seven recordings validated. Ready to submit." : "Confirm your final delivery to enable submission.") : `${savedCount} of ${REQUIRED_TURNS} recordings are saved.`);
+    setWorkflowMessage("Complete · pending final submission", "Seven answers are secured. Submit to obtain the official receipt.", "bi-send-check-fill");
+    renderSubmissionWorkflow(Object.assign({}, attempt, { workflowStatus: "complete_pending_submit" }));
+    focusPanel(elements.ready);
   }
 
   function submissionId() {
     const key = SUBMISSION_KEY_PREFIX + (attempt?.attemptId || "unknown");
-    let value = localStorage.getItem(key);
-    if (!value) { value = createId("bfo-submit"); localStorage.setItem(key, value); }
+    let value = safeStorageGet(key) || inMemorySubmissionId;
+    if (!value) { value = createId("bfo-submit"); inMemorySubmissionId = value; safeStorageSet(key, value); }
     return value;
   }
 
@@ -1664,10 +2780,31 @@
     try {
       const result = await request(`${API.attempt}?attemptId=${encodeURIComponent(expectedAttemptId)}`, { method: "GET" }, 2);
       if (expectedSession !== sessionGeneration || attempt?.attemptId !== expectedAttemptId) return null;
-      if (result.data.submission) return result.data.submission;
-      if (result.data.attempt) applyServerAttempt(result.data.attempt);
+      if (result.data.submission) {
+        requireContract(isSubmissionContract(result.data.submission), "invalid_submission_contract", result.data);
+        return result.data.submission;
+      }
+      if (result.data.attempt) {
+        requireContract(isScopedAttemptContract(result.data.attempt), "invalid_attempt_contract", result.data);
+        applyServerAttempt(result.data.attempt);
+      }
     } catch { /* preserve current screen */ }
     return null;
+  }
+
+  async function sendFinalSubmission(payload, allowLeaseRetry = true) {
+    try {
+      const lease = await ensureServerLease();
+      payload.leaseId = lease?.leaseId || serverLeaseId;
+      payload.deviceId = deviceInstanceId;
+      payload.revision = revision;
+      const result = await request(API.submit, jsonOptions("POST", payload), 3);
+      updateServerLeaseExpiry(result.data);
+      return result;
+    } catch (error) {
+      if (allowLeaseRetry && isLeaseError(error) && await recoverServerLease(error)) return sendFinalSubmission(payload, false);
+      throw error;
+    }
   }
 
   async function submitExam() {
@@ -1678,15 +2815,21 @@
     setDisabled(elements.submit, true);
     setDisabled(elements.submitConfirmation, true);
     setText(elements.submissionStatus, "Submitting seven official recordings. Keep this page open.");
-    const payload = { attemptId: submitAttemptId, revision, clientSubmissionId: submissionId() };
+    const payload = { attemptId: submitAttemptId, attemptScopeToken: attempt.attemptScopeToken || undefined, revision, clientSubmissionId: submissionId(), deviceId: deviceInstanceId };
     try {
-      const result = await request(API.submit, jsonOptions("POST", payload), 3);
+      const result = await sendFinalSubmission(payload);
       if (submitSession !== sessionGeneration || attempt?.attemptId !== submitAttemptId) return;
+      requireContract(isSubmissionContract(result.data.submission), "invalid_submit_acknowledgement", result.data);
       renderSubmission(result.data.submission);
       try { await playClip(elements.reactionAudio, AUDIO_ROOT + "submission-complete.mp3"); } catch { /* receipt is authoritative */ }
       toast("Final Oral Task submitted successfully.", "success");
     } catch (error) {
       if (submitSession !== sessionGeneration || attempt?.attemptId !== submitAttemptId) return;
+      if (isLeaseError(error)) {
+        clearServerLease();
+        leaseReadOnly = true;
+        renderLeaseState();
+      }
       if (error.status === 409 && error.data?.submission) return renderSubmission(error.data.submission);
       const recovered = await recoverSubmission(submitSession, submitAttemptId);
       if (submitSession !== sessionGeneration || attempt?.attemptId !== submitAttemptId) return;
@@ -1705,19 +2848,45 @@
     const adminSession = sessionGeneration;
     setDisabled(elements.adminOpen, true);
     setDisabled(elements.adminClose, true);
+    setDisabled(elements.adminSaveWindow, true);
     if (elements.adminStatus) setText(elements.adminStatus.querySelector?.("span") || elements.adminStatus, "Saving the new exam state.");
     try {
-      const result = await request(API.state, jsonOptions("PUT", { isOpen }), 2);
+      const eligibleStudentIds = String(elements.adminEligibleStudents?.value || "").split(/[\s,;]+/).map((value) => value.trim()).filter(Boolean);
+      const payload = {
+        isOpen,
+        opensAt: elements.adminOpensAt?.value ? new Date(elements.adminOpensAt.value).toISOString() : null,
+        closesAt: elements.adminClosesAt?.value ? new Date(elements.adminClosesAt.value).toISOString() : null,
+        closeMode: elements.adminCloseMode?.value === "hard" ? "hard" : "soft",
+        graceSeconds: Math.max(0, Math.min(3600, Number(elements.adminGraceSeconds?.value || 0))),
+        eligibleStudentIds
+      };
+      const result = await request(API.state, jsonOptions("PUT", payload), 2);
       if (adminSession !== sessionGeneration) return;
+      requireContract(isRecord(result.data.state) && typeof result.data.state.isOpen === "boolean", "invalid_admin_state_acknowledgement", result.data);
       serverState = result.data.state;
       renderAdminState();
       toast(result.data.message || (isOpen ? "The official exam is open." : "The official exam is closed."), "success");
-    } catch {
+    } catch (error) {
       if (adminSession !== sessionGeneration) return;
+      if (error.status === 409 && error.data?.error === "exam_health_check_failed") {
+        if (isRecord(error.data.health)) adminHealth = error.data.health;
+        renderAdminHealth();
+        const warnings = Array.isArray(error.data.blockingWarnings) ? error.data.blockingWarnings.join(" · ") : "A blocking health warning must be resolved before opening.";
+        setText(elements.adminOperationStatus, warnings);
+        if (elements.adminStatus) setText(elements.adminStatus.querySelector?.("span") || elements.adminStatus, "The exam remained closed because a health check failed.");
+        toast("The exam was not opened. Review the blocking health warning.", "error");
+        renderAdminState();
+        return;
+      }
       renderAdminState();
       if (elements.adminStatus) setText(elements.adminStatus.querySelector?.("span") || elements.adminStatus, "The exam state could not be changed. Try again.");
       toast("The exam state did not change.", "error");
-    }
+    } finally { setDisabled(elements.adminSaveWindow, false); }
+  }
+
+  async function saveAdminWindow() {
+    const keepOpen = serverState?.isOpen === true;
+    await updateAdminState(keepOpen);
   }
 
   function staffSubmissionCard(item) {
@@ -1785,15 +2954,24 @@
     const rubric = {};
     card.querySelectorAll("[data-final-oral-rubric]").forEach((input) => { rubric[input.dataset.finalOralRubric] = Number(input.value); });
     const status = card.querySelector("[data-final-oral-grade-status]");
+    const selected = staffSubmissions.find((item) => item.receiptId === card.dataset.receiptId) || {
+      studentId: card.dataset.studentId, receiptId: card.dataset.receiptId, gradeRevision: Number(card.dataset.gradeRevision || 0), turns: []
+    };
+    if (reviewedAudioEvidenceFor(selected).length !== REQUIRED_TURNS) {
+      setText(status, "Publishing is blocked because the seven frozen audio hashes are not available.");
+      return;
+    }
+    let reason = "";
+    if (workflowOf(selected) === "published") {
+      reason = String(window.prompt("Reason for changing an already published official grade:", "") || "").trim();
+      if (!reason) return;
+    }
     button.disabled = true;
     setText(status, "Saving the official rubric and feedback.");
     try {
-      const result = await request(API.grade, jsonOptions("PUT", {
-        studentId: card.dataset.studentId,
-        receiptId: card.dataset.receiptId,
-        rubric,
-        teacherFeedback: card.querySelector("[data-final-oral-feedback]")?.value || ""
-      }), 2);
+      const mutation = buildGradeMutation("publish", selected, rubric, card.querySelector("[data-final-oral-feedback]")?.value || "", reason, createId("bfo-grade-publish"));
+      const result = await request(API.grade, jsonOptions("PUT", mutation), 2);
+      requireContract(isSubmissionContract(result.data.submission), "invalid_grade_acknowledgement", result.data);
       setText(status, `Saved · ${result.data.submission.score50} / 50 · ${Number(result.data.submission.grade).toFixed(2)} / 5.0`);
       toast("Final Oral Task grade saved in Grades.", "success");
     } catch (error) {
@@ -1843,9 +3021,14 @@
       elements.rubricRadar.setAttribute("points", points.join(" "));
     }
     const feedbackReady = String(elements.teacherFeedback?.value || "").trim().length >= 10;
-    setDisabled(elements.publishGradeButton, !selectedStaffSubmission || !valid || !feedbackReady);
-    setText(elements.publishStatus, !selectedStaffSubmission ? "Select a student submission." : !valid ? "Complete the five criteria from 1 to 10." : !feedbackReady ? "Add specific teacher feedback before publishing." : `Ready to publish ${total} / 50 (${(total / 10).toFixed(2)} / 5.0).`);
-    return valid && feedbackReady;
+    const reviewedAudioEvidence = reviewedAudioEvidenceFor(selectedStaffSubmission);
+    const evidenceReady = reviewedAudioEvidence.length === REQUIRED_TURNS && new Set(reviewedAudioEvidence.map((item) => item.turnId)).size === REQUIRED_TURNS;
+    const alreadyPublished = workflowOf(selectedStaffSubmission) === "published";
+    setDisabled(elements.publishGradeButton, !selectedStaffSubmission || !valid || !feedbackReady || !evidenceReady);
+    setHidden(elements.saveGradeDraftButton, alreadyPublished);
+    setDisabled(elements.saveGradeDraftButton, !selectedStaffSubmission || alreadyPublished);
+    setText(elements.publishStatus, !selectedStaffSubmission ? "Select a student submission." : !evidenceReady ? "Publishing is blocked: verify that all seven frozen audio hashes are available." : !valid ? "Complete the five criteria from 1 to 10." : !feedbackReady ? "Add specific teacher feedback before publishing." : `Ready to publish ${total} / 50 (${(total / 10).toFixed(2)} / 5.0).`);
+    return valid && feedbackReady && evidenceReady;
   }
 
   function setEvidenceControlsEnabled(enabled) {
@@ -1908,6 +3091,7 @@
     if (!selectedStaffSubmission) {
       setText(elements.staffStudentName, "No submission selected");
       setDisabled(elements.publishGradeButton, true);
+      setDisabled(elements.saveGradeDraftButton, true);
       setEvidenceControlsEnabled(false);
       if (elements.evidencePlay) {
         elements.evidencePlay.dataset.audioUrl = "";
@@ -1919,14 +3103,32 @@
     setText(elements.staffStudentId, `ID ${selectedStaffSubmission.studentId || "—"}`);
     setText(elements.staffSubmittedAt, `Submitted ${selectedStaffSubmission.submittedAt || "—"}`);
     setText(elements.staffReceipt, `Receipt ${selectedStaffSubmission.receiptId || "—"}`);
-    if (elements.staffReviewStatus) elements.staffReviewStatus.innerHTML = selectedStaffSubmission.status === "graded" ? '<i class="bi bi-patch-check-fill"></i> Graded' : '<i class="bi bi-hourglass-split"></i> Pending review';
+    if (elements.staffReviewStatus) elements.staffReviewStatus.innerHTML = workflowOf(selectedStaffSubmission) === "published"
+      ? '<i class="bi bi-patch-check-fill"></i> Graded and published'
+      : workflowOf(selectedStaffSubmission) === "graded"
+        ? '<i class="bi bi-floppy-fill"></i> Private draft'
+        : '<i class="bi bi-hourglass-split"></i> Pending review';
     setText(elements.evidenceCoverage, `${(selectedStaffSubmission.turns || []).filter((turn) => turn?.audioAvailable).length} of ${REQUIRED_TURNS} loaded`);
     const rubric = selectedStaffSubmission.rubric || {};
     Object.entries(fixedRubricInputs()).forEach(([key, input]) => { if (input) input.value = rubric[key] ?? ""; });
     if (elements.teacherFeedback) elements.teacherFeedback.value = selectedStaffSubmission.teacherFeedback || "";
+    renderGradeHistory(selectedStaffSubmission);
     setEvidenceControlsEnabled(true);
     renderFixedEvidence(0);
     updateFixedRubric();
+  }
+
+  function renderGradeHistory(item) {
+    if (!elements.gradeHistoryList) return;
+    const history = Array.isArray(item?.gradeHistory) ? item.gradeHistory : [];
+    elements.gradeHistoryList.innerHTML = history.length ? history.slice().reverse().map((entry) => {
+      const action = entry.workflowStatus || entry.action || entry.status || "revision";
+      const score = entry.score50 ?? entry.newScore50 ?? "—";
+      const actor = entry.changedBy || entry.actorName || entry.actor || "Teacher";
+      const at = entry.changedAt || entry.at || entry.createdAt || entry.updatedAt || "—";
+      const reason = entry.reason ? ` · ${entry.reason}` : "";
+      return `<li><strong>${escapeHtml(action)}</strong> · ${escapeHtml(score)} / 50 · ${escapeHtml(actor)} · ${escapeHtml(at)}${escapeHtml(reason)}</li>`;
+    }).join("") : "<li>No grade revision has been recorded.</li>";
   }
 
   async function playFixedEvidence() {
@@ -1942,6 +3144,7 @@
       && selectedEvidenceIndex === evidenceIndex
       && elements.evidencePlay?.dataset.audioUrl === url;
     try {
+      pauseAllAudio(elements.evidenceAudio);
       if (!elements.evidenceAudio.src) {
         setBusy(true, "Loading protected student evidence…");
         const blob = await fetchProtectedAudio(url);
@@ -1971,29 +3174,39 @@
     }
   }
 
-  async function saveFixedStaffGrade() {
-    if (!selectedStaffSubmission || !updateFixedRubric()) return;
+  async function saveFixedStaffGrade(action = "publish") {
+    const publish = action === "publish";
+    const readyToPublish = updateFixedRubric();
+    if (!publish && workflowOf(selectedStaffSubmission) === "published") return;
     const inputs = fixedRubricInputs();
-    const rubric = Object.fromEntries(Object.entries(inputs).map(([key, input]) => [key, Number(input.value)]));
+    const rubric = Object.fromEntries(Object.entries(inputs).filter(([, input]) => input?.value !== "").map(([key, input]) => [key, Number(input.value)]));
+    const completeRubric = RUBRIC.every((criterion) => Number.isFinite(rubric[criterion.key]) && rubric[criterion.key] >= 1 && rubric[criterion.key] <= 10);
+    if (!selectedStaffSubmission || (publish && (!completeRubric || !readyToPublish))) return;
+    let reason = "";
+    if (workflowOf(selectedStaffSubmission) === "published") {
+      reason = String(window.prompt("Reason for changing an already published official grade:", "") || "").trim();
+      if (!reason) return;
+    }
     setDisabled(elements.publishGradeButton, true);
-    setText(elements.publishStatus, "Saving the official grade and feedback in Grades.");
+    setDisabled(elements.saveGradeDraftButton, true);
+    setText(elements.publishStatus, publish ? "Publishing the official grade and feedback in Grades." : "Saving a private grading draft. The student cannot see it yet.");
     try {
-      const result = await request(API.grade, jsonOptions("PUT", {
-        studentId: selectedStaffSubmission.studentId,
-        receiptId: selectedStaffSubmission.receiptId,
-        rubric,
-        teacherFeedback: elements.teacherFeedback.value
-      }), 2);
+      const mutation = buildGradeMutation(publish ? "publish" : "draft", selectedStaffSubmission, rubric, elements.teacherFeedback.value, reason, createId(publish ? "bfo-grade-publish" : "bfo-grade-draft"));
+      const result = await request(API.grade, jsonOptions("PUT", mutation), 2);
+      requireContract(isSubmissionContract(result.data.submission), "invalid_grade_acknowledgement", result.data);
       selectedStaffSubmission = result.data.submission;
       const index = staffSubmissions.findIndex((item) => item.receiptId === selectedStaffSubmission.receiptId);
       if (index >= 0) staffSubmissions[index] = selectedStaffSubmission;
-      setText(elements.publishStatus, `Published · ${selectedStaffSubmission.score50} / 50 · ${Number(selectedStaffSubmission.grade).toFixed(2)} / 5.0`);
-      if (elements.staffReviewStatus) elements.staffReviewStatus.innerHTML = '<i class="bi bi-patch-check-fill"></i> Graded';
-      toast("Final Oral Task grade and feedback published.", "success");
+      setText(elements.publishStatus, publish ? `Published · ${selectedStaffSubmission.score50} / 50 · ${Number(selectedStaffSubmission.grade).toFixed(2)} / 5.0 · revision ${selectedStaffSubmission.gradeRevision || "confirmed"}` : `Private draft saved · revision ${selectedStaffSubmission.gradeRevision || "confirmed"}`);
+      if (elements.staffReviewStatus) elements.staffReviewStatus.innerHTML = publish ? '<i class="bi bi-patch-check-fill"></i> Graded and published' : '<i class="bi bi-floppy-fill"></i> Private draft';
+      renderGradeHistory(selectedStaffSubmission);
+      toast(publish ? "Final Oral Task grade and feedback published." : "Private grading draft saved.", "success");
     } catch (error) {
-      setText(elements.publishStatus, error.data?.error === "submission_changed" ? "This submission changed. Refresh before publishing." : "The grade could not be published. Check the connection and retry.");
+      const conflict = ["submission_changed", "grade_conflict", "stale_grade_revision"].includes(error.data?.error) || error.status === 409;
+      setText(elements.publishStatus, conflict ? "Another teacher or process changed this record. Your screen was not allowed to overwrite it; refresh before continuing." : "The grade action was not confirmed. Check the connection and retry.");
       setDisabled(elements.publishGradeButton, false);
-    }
+      setDisabled(elements.saveGradeDraftButton, false);
+    } finally { updateFixedRubric(); }
   }
 
   async function loadStaffSubmissions() {
@@ -2003,7 +3216,9 @@
     try {
       const result = await request(API.submissions, { method: "GET" }, 2);
       if (staffSession !== sessionGeneration || !(role === "admin" || role === "teacher")) return;
+      requireContract(Array.isArray(result.data.submissions), "invalid_submissions_contract", result.data);
       const items = Array.isArray(result.data.submissions) ? result.data.submissions : [];
+      requireContract(items.every(isSubmissionContract), "invalid_submission_item_contract", result.data);
       staffSubmissions = items;
       if (elements.staffList) {
         elements.staffList.innerHTML = items.length ? items.map(staffSubmissionCard).join("") : "<p>No Final Oral Task submissions have arrived yet.</p>";
@@ -2022,6 +3237,61 @@
     }
   }
 
+  function invalidatePreflight(message = "The microphone selection changed. Run the microphone check again before continuing.") {
+    preflightPassed = false;
+    preflightSampleReady = false;
+    preflightPlaybackConfirmed = false;
+    verifiedMicrophoneId = "";
+    if (elements.preflightConfirm?.type === "checkbox") elements.preflightConfirm.checked = false;
+    setDisabled(elements.preflightConfirm, true);
+    setDisabled(elements.start, true);
+    setDisabled(elements.resume, true);
+    setText(elements.preflightStatus, message);
+  }
+
+  async function handleDeviceChange() {
+    const expected = verifiedMicrophoneId;
+    const devices = await listMicrophones().catch(() => []);
+    if (expected && expected !== "default" && !devices.some((device) => device.deviceId === expected)) invalidatePreflight("The microphone used in the technical check disconnected. Select a microphone and run the check again.");
+  }
+
+  function handleOnlineConnection() {
+    online = true;
+    updateConnectionUi("Connection restored. Pending protected recordings are retrying now.");
+    setWorkflowMessage("Connection restored", "Secure upload retry is running automatically.", "bi-arrow-repeat");
+    return drainAudioQueue().then(() => {
+      if (currentBlob && !savedCurrentTurn && !analyzing) return processAndSaveCurrentTurn();
+      return undefined;
+    }).catch(() => {});
+  }
+
+  function handleOfflineConnection() {
+    online = false;
+    updateConnectionUi();
+    setWorkflowMessage(volatileAudioCount > 0 ? "Temporary memory only" : "Offline protection active", volatileAudioCount > 0 ? "Do not close or reload this page; reconnect before continuing." : "Finish the answer normally; it will remain on this device until reconnection.", "bi-wifi-off");
+  }
+
+  function handleVisibilityChange() {
+    if (document.visibilityState === "hidden" && mediaRecorder?.state === "recording") {
+      recorderFailureReason = "page_hidden";
+      stopRecording();
+      setText(elements.recordStatus, "Recording stopped safely because the exam moved to the background.");
+    }
+  }
+
+  function handlePageHide() {
+    pageClosing = true;
+    if (mediaRecorder?.state === "recording") stopRecording();
+    releaseAttemptLease();
+  }
+
+  function handleBeforeUnload(event) {
+    if (mediaRecorder?.state === "recording") stopRecording();
+    if (!hasUnsavedAudio()) return;
+    event.preventDefault();
+    event.returnValue = "";
+  }
+
   function bindEvents() {
     root.querySelectorAll("[data-final-oral-speed], [data-audio-speed], [data-question-speed]").forEach((button) => button.addEventListener("click", () => {
       const next = Number(button.dataset.finalOralSpeed ?? button.dataset.audioSpeed ?? button.dataset.questionSpeed);
@@ -2035,6 +3305,7 @@
     elements.refreshAccess?.addEventListener("click", () => loadState(true));
     elements.claim?.addEventListener("click", submitStudentClaim);
     elements.claimInput?.addEventListener("keydown", (event) => { if (event.key === "Enter") submitStudentClaim(); });
+    elements.claimPairingCode?.addEventListener("keydown", (event) => { if (event.key === "Enter") submitStudentClaim(); });
     elements.preflight?.addEventListener("click", runPreflight);
     elements.preflightConfirm?.addEventListener(elements.preflightConfirm.type === "checkbox" ? "change" : "click", confirmPreflight);
     elements.start?.addEventListener("click", () => attempt ? resumeAttempt() : startAttempt());
@@ -2051,11 +3322,18 @@
     elements.submitConfirmation?.addEventListener("change", renderReadyToSubmit);
     elements.adminOpen?.addEventListener("click", () => updateAdminState(true));
     elements.adminClose?.addEventListener("click", () => updateAdminState(false));
+    elements.adminSaveWindow?.addEventListener("click", saveAdminWindow);
     elements.adminPreviewButton?.addEventListener("click", startAdminPreview);
     elements.adminPreviewPrevious?.addEventListener("click", () => moveAdminPreview(-1));
     elements.adminPreviewNext?.addEventListener("click", () => moveAdminPreview(1));
     elements.adminPreviewExit?.addEventListener("click", () => finishAdminPreview(false));
     elements.staffRefresh?.addEventListener("click", loadStaffSubmissions);
+    elements.adminMonitorRefresh?.addEventListener("click", () => loadState(false));
+    elements.adminReconcile?.addEventListener("click", reconcileGrades);
+    elements.adminRosterBody?.addEventListener("click", (event) => {
+      const button = event.target.closest?.("[data-student-action]");
+      if (button) runStudentAction(button);
+    });
     elements.submissionSelector?.addEventListener("change", () => selectFixedSubmission(elements.submissionSelector.value));
     elements.evidenceTabs?.querySelectorAll("[data-evidence-unit]").forEach((button) => {
       button.addEventListener("click", () => activateEvidenceTab(button));
@@ -2083,20 +3361,36 @@
     elements.evidenceAudio?.addEventListener("ended", () => { if (elements.evidencePlay) elements.evidencePlay.innerHTML = '<i class="bi bi-play-fill"></i>'; });
     Object.values(fixedRubricInputs()).forEach((input) => input?.addEventListener("input", updateFixedRubric));
     elements.teacherFeedback?.addEventListener("input", updateFixedRubric);
-    elements.publishGradeButton?.addEventListener("click", saveFixedStaffGrade);
+    elements.saveGradeDraftButton?.addEventListener("click", () => saveFixedStaffGrade("draft"));
+    elements.publishGradeButton?.addEventListener("click", () => saveFixedStaffGrade("publish"));
     elements.copyReceipt?.addEventListener("click", async () => {
       const code = submission?.receiptId || elements.receipt?.textContent || "";
       try { await navigator.clipboard.writeText(code); toast("Confirmation code copied.", "success"); } catch { toast(`Confirmation code: ${code}`, ""); }
     });
-    const handleMicrophoneSelectionChange = () => {
+    const handleMicrophoneSelectionChange = (event) => {
       if (recordingStartPending || analyzing || mediaRecorder?.state === "recording" || preflightRecorder?.state === "recording") {
         toast("Finish the current microphone step before changing devices.", "error");
         return;
       }
       stopMediaStream();
+      const source = event.currentTarget || elements.microphoneSelect;
+      selectedMicrophoneId = source?.value || "";
+      [elements.preflightMicrophoneSelect, elements.microphoneSelect].filter(Boolean).forEach((target) => {
+        if (target !== source && Array.from(target.options).some((option) => option.value === selectedMicrophoneId)) target.value = selectedMicrophoneId;
+      });
+      invalidatePreflight();
     };
     elements.microphoneSelect?.addEventListener("change", handleMicrophoneSelectionChange);
     elements.preflightMicrophoneSelect?.addEventListener("change", handleMicrophoneSelectionChange);
+    elements.preflightPlayback?.addEventListener("play", () => pauseAllAudio(elements.preflightPlayback));
+    elements.preflightPlayback?.addEventListener("ended", () => {
+      if (!preflightSampleReady) return;
+      preflightPlaybackConfirmed = true;
+      setText(elements.preflightStatus, "Voice sample played successfully. Confirm independent work to enable the official attempt.");
+      setDisabled(elements.preflightConfirm, false);
+      if (elements.preflightConfirm?.checked) confirmPreflight();
+    });
+    [elements.welcomeAudio, elements.instructionsAudio, elements.studentAudio, elements.evidenceAudio].filter(Boolean).forEach((audio) => audio.addEventListener("play", () => pauseAllAudio(audio)));
     elements.questionAudio?.addEventListener("ended", () => {
       const turnId = String(elements.questionAudio?.dataset.turnId || "");
       if (questionPlaybackWatchdog) window.clearTimeout(questionPlaybackWatchdog);
@@ -2119,7 +3413,29 @@
       questionAudioLoading = false;
       updateRecordingControls(false);
     });
-    window.addEventListener("beforeunload", stopMediaStream);
+    elements.takeOverSession?.addEventListener("click", async () => {
+      leaseChannel?.postMessage?.({ type: "takeover", tabId, attemptId: activeLeaseAttemptId });
+      claimAttemptLease(true);
+      try {
+        await renewServerLease("acquire");
+        scheduleServerLeaseRenewal();
+        toast("This tab now holds the active exam controls.", "success");
+      } catch {
+        leaseReadOnly = true;
+        renderLeaseState();
+        toast("The server still protects another active session. Wait for it to close or ask the teacher for recovery.", "error");
+      }
+    });
+    navigator.mediaDevices?.addEventListener?.("devicechange", handleDeviceChange);
+    window.addEventListener("online", handleOnlineConnection);
+    window.addEventListener("offline", handleOfflineConnection);
+    window.addEventListener("storage", (event) => {
+      if (activeLeaseAttemptId && event.key === leaseKey()) claimAttemptLease(false);
+    });
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    window.addEventListener("pagehide", handlePageHide);
+    window.addEventListener("pageshow", () => { pageClosing = false; if (attempt?.attemptId) activateAttemptLease(attempt.attemptId); });
+    window.addEventListener("beforeunload", handleBeforeUnload);
   }
 
   bindEvents();
@@ -2132,6 +3448,8 @@
   setHidden(elements.adminPreviewToolbar, true);
   setDisabled(elements.preflightConfirm, true);
   setEvidenceControlsEnabled(false);
+  updateConnectionUi();
+  purgeExpiredQueuedAudio().catch(() => {}).finally(() => refreshQueuedAudioCount().catch(() => {}));
   loadState(false);
   window.setInterval(() => {
     const current = readUser();
@@ -2139,7 +3457,7 @@
     if (credential === lastCredential) return;
     const accountChanged = accountScope(current) !== accountScope(user);
     lastCredential = credential;
-    resetProtectedSession({ clearClaim: accountChanged });
+    resetProtectedSession({ clearClaim: accountChanged, purgeAudio: accountChanged, audioScope: accountScope(user) });
     user = current;
     if (user) loadState(false);
     else {
