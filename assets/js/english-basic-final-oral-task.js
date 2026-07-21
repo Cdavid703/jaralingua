@@ -13,7 +13,7 @@
     transcribe: "/api/english-basic/pronunciation-assessment"
   });
   const AUDIO_ROOT = "audio/final-oral-task-real/";
-  const CLAIM_KEY = "jaralingua_basic_student_id_claim";
+  const CLAIM_KEY = "jaralingua_basic_final_oral_student_claim_v2";
   const SUBMISSION_KEY_PREFIX = "jaralingua:basic-final-oral:submission:";
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
@@ -328,6 +328,16 @@
   let analyzing = false;
   let savedCurrentTurn = false;
   let reactionBusy = false;
+  let recordingStartPending = false;
+  let recordingFinalizing = false;
+  let questionAudioLoading = false;
+  let questionAudioPlaying = false;
+  let questionPlaybackToken = 0;
+  let questionPlaybackWatchdog = 0;
+  let attemptRequestBusy = false;
+  let submissionBusy = false;
+  let stateLoadGeneration = 0;
+  let sessionGeneration = 0;
   let objectUrl = "";
   let promptObjectUrl = "";
   let preflightObjectUrl = "";
@@ -344,6 +354,7 @@
   let selectedStaffSubmission = null;
   let selectedEvidenceIndex = 0;
   let staffAudioObjectUrl = "";
+  let staffEvidenceLoadToken = 0;
 
   const setText = (node, value) => { if (node) node.textContent = value; };
   const setHidden = (node, hidden) => { if (node) node.hidden = Boolean(hidden); };
@@ -362,7 +373,28 @@
     return readStoredUser(GOOGLE_USER_KEY, "google") || readStoredUser(MICROSOFT_USER_KEY, "microsoft") || readStoredUser(LOCAL_USER_KEY, "local");
   }
 
-  function savedClaim() { return String(sessionStorage.getItem(CLAIM_KEY) || "").replace(/\D+/g, ""); }
+  function accountScope(account = user) {
+    const identity = String(account?.sub || account?.email || "").trim().toLowerCase();
+    return identity ? `${account?.provider || "unknown"}:${identity}` : "";
+  }
+
+  function savedClaim(account = user) {
+    try {
+      const stored = JSON.parse(sessionStorage.getItem(CLAIM_KEY) || "null");
+      const value = String(stored?.value || "").replace(/\D+/g, "");
+      return value && stored?.scope === accountScope(account) ? value : "";
+    } catch { return ""; }
+  }
+
+  function storeStudentClaim(value) {
+    const normalized = String(value || "").replace(/\D+/g, "");
+    const scope = accountScope();
+    if (!normalized || !scope) return "";
+    sessionStorage.setItem(CLAIM_KEY, JSON.stringify({ scope, value: normalized }));
+    return normalized;
+  }
+
+  function clearStudentClaim() { sessionStorage.removeItem(CLAIM_KEY); }
 
   function authHeaders(extra = {}) {
     const headers = Object.assign({}, extra);
@@ -375,12 +407,28 @@
     return headers;
   }
 
-  function openLogin() { document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click(); }
+  function openLogin(event) {
+    event?.stopPropagation?.();
+    let attempts = 0;
+    const activate = () => {
+      const trigger = document.querySelector("[data-auth-toggle]") || document.querySelector("[data-auth-nav-toggle]");
+      if (trigger) {
+        trigger.click();
+        return;
+      }
+      attempts += 1;
+      if (attempts < 25) {
+        window.setTimeout(activate, 200);
+        return;
+      }
+      toast("The sign-in panel is still loading. Please try again.", "error");
+    };
+    window.setTimeout(activate, 0);
+  }
 
   function promptStudentClaim() {
     const value = String(window.prompt("We could not match this account to a Basic English student. Enter your ID or document number:", "") || "").replace(/\D+/g, "");
-    if (value) sessionStorage.setItem(CLAIM_KEY, value);
-    return value;
+    return value ? storeStudentClaim(value) : "";
   }
 
   function submitStudentClaim() {
@@ -390,7 +438,7 @@
       toast("Enter the document number registered in Grades.", "error");
       return;
     }
-    sessionStorage.setItem(CLAIM_KEY, value);
+    storeStudentClaim(value);
     if (elements.claimInput) elements.claimInput.value = value;
     loadState(false);
   }
@@ -494,7 +542,7 @@
 
   function setDanielState(state, label) {
     if (elements.stage) elements.stage.dataset.state = state;
-    setText(elements.stageStatus, label);
+    setText(elements.stageStatus?.querySelector?.("span") || elements.stageStatus, label);
     setText(elements.dockStatus, label);
   }
 
@@ -508,10 +556,16 @@
     [elements.welcomeAudio, elements.instructionsAudio, elements.questionAudio, elements.reactionAudio].forEach((audio) => { if (audio) audio.playbackRate = playbackSpeed; });
   }
 
-  async function fetchProtectedAudio(url) {
-    const response = await fetch(url, { headers: authHeaders() });
-    if (!response.ok) throw new Error("audio_unavailable");
-    return response.blob();
+  async function fetchProtectedAudio(url, timeoutMs = 18000) {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const response = await fetch(url, { headers: authHeaders(), signal: controller.signal });
+      if (!response.ok) throw new Error("audio_unavailable");
+      return await response.blob();
+    } finally {
+      window.clearTimeout(timeout);
+    }
   }
 
   function promptAudioUrl(question) {
@@ -531,29 +585,66 @@
     await audio.play();
   }
 
+  function clearQuestionAudio() {
+    if (questionPlaybackWatchdog) window.clearTimeout(questionPlaybackWatchdog);
+    questionPlaybackWatchdog = 0;
+    questionPlaybackToken += 1;
+    questionAudioLoading = false;
+    questionAudioPlaying = false;
+    questionHeard = false;
+    if (elements.questionAudio) {
+      elements.questionAudio.pause();
+      elements.questionAudio.removeAttribute("src");
+      delete elements.questionAudio.dataset.turnId;
+      elements.questionAudio.load();
+    }
+    if (promptObjectUrl) {
+      URL.revokeObjectURL(promptObjectUrl);
+      promptObjectUrl = "";
+    }
+  }
+
   async function playResponseQueue(responses) {
-    if (!elements.reactionAudio || !responses.length) return;
+    const responseSession = sessionGeneration;
+    if (!elements.reactionAudio || !responses.length) {
+      if (responseSession === sessionGeneration) {
+        reactionBusy = false;
+        setDisabled(elements.next, false);
+      }
+      return;
+    }
     reactionBusy = true;
     setDisabled(elements.next, true);
     setDanielState("speaking", "Daniel is responding");
     setHidden(elements.reaction, false);
-    for (const response of responses) {
-      setText(elements.reactionText, response.text);
-      try {
+    try {
+      for (const response of responses) {
+        setText(elements.reactionText, response.text);
         await new Promise((resolve) => {
           const audio = elements.reactionAudio;
-          const finish = () => { audio.removeEventListener("ended", finish); audio.removeEventListener("error", finish); resolve(); };
-          audio.addEventListener("ended", finish, { once: true });
-          audio.addEventListener("error", finish, { once: true });
+          let watchdog = 0;
+          let settled = false;
+          const events = ["ended", "error", "stalled", "abort"];
+          const finish = () => {
+            if (settled) return;
+            settled = true;
+            if (watchdog) window.clearTimeout(watchdog);
+            events.forEach((name) => audio.removeEventListener(name, finish));
+            resolve();
+          };
+          events.forEach((name) => audio.addEventListener(name, finish, { once: true }));
+          watchdog = window.setTimeout(finish, 12000);
           audio.src = AUDIO_ROOT + response.file;
           audio.playbackRate = playbackSpeed;
           audio.play().catch(finish);
         });
-      } catch { /* conversational audio is non-essential evidence */ }
+      }
+    } finally {
+      if (responseSession !== sessionGeneration) return;
+      reactionBusy = false;
+      setDanielState("ready", "Daniel is ready to continue");
+      setDisabled(elements.next, false);
     }
-    reactionBusy = false;
-    setDanielState("ready", "Daniel is ready to continue");
-    setDisabled(elements.next, false);
   }
 
   function showAccess(message, type = "") {
@@ -624,17 +715,118 @@
     }
   }
 
+  function resetProtectedSession({ clearClaim = true } = {}) {
+    sessionGeneration += 1;
+    stateLoadGeneration += 1;
+    window.clearInterval(timerHandle);
+    window.clearTimeout(autoStopHandle);
+    timerHandle = null;
+    autoStopHandle = null;
+    try { if (mediaRecorder?.state === "recording") mediaRecorder.stop(); } catch { /* recorder is already closing */ }
+    try { if (preflightRecorder?.state === "recording") preflightRecorder.stop(); } catch { /* preflight is already closing */ }
+    stopMediaStream();
+    stopExamClock();
+    clearQuestionAudio();
+    staffEvidenceLoadToken += 1;
+    setBusy(false);
+    [elements.reactionAudio, elements.studentAudio, elements.evidenceAudio].forEach((audio) => {
+      if (!audio) return;
+      audio.pause();
+      audio.removeAttribute("src");
+      audio.load();
+    });
+    elements.staffList?.querySelectorAll("audio").forEach((audio) => {
+      audio.pause();
+      if (audio.dataset.objectUrl) URL.revokeObjectURL(audio.dataset.objectUrl);
+      delete audio.dataset.objectUrl;
+      audio.removeAttribute("src");
+      audio.load();
+    });
+    [objectUrl, preflightObjectUrl, staffAudioObjectUrl].forEach((url) => { if (url) URL.revokeObjectURL(url); });
+    objectUrl = "";
+    preflightObjectUrl = "";
+    staffAudioObjectUrl = "";
+    role = "student";
+    serverState = null;
+    attempt = null;
+    submission = null;
+    assignedQuestions = [];
+    currentIndex = 0;
+    revision = 0;
+    preflightPassed = false;
+    preflightSampleReady = false;
+    mediaRecorder = null;
+    preflightRecorder = null;
+    chunks = [];
+    currentBlob = null;
+    currentTranscript = "";
+    currentClientTurnId = "";
+    recordingDurationMs = 0;
+    analyzing = false;
+    savedCurrentTurn = false;
+    reactionBusy = false;
+    recordingStartPending = false;
+    recordingFinalizing = false;
+    attemptRequestBusy = false;
+    submissionBusy = false;
+    staffSubmissions = [];
+    selectedStaffSubmission = null;
+    selectedEvidenceIndex = 0;
+    if (clearClaim) clearStudentClaim();
+    if (elements.claimInput) elements.claimInput.value = "";
+    if (elements.studentName) elements.studentName.value = "";
+    if (elements.studentId) elements.studentId.value = "";
+    if (elements.preflightPlayback) { elements.preflightPlayback.removeAttribute("src"); elements.preflightPlayback.hidden = true; }
+    if (elements.preflightConfirm?.type === "checkbox") elements.preflightConfirm.checked = false;
+    if (elements.submitConfirmation) elements.submitConfirmation.checked = false;
+    setHidden(elements.account, true);
+    setHidden(elements.claimPanel, true);
+    setHidden(elements.onboarding, true);
+    setHidden(elements.exam, true);
+    setHidden(elements.ready, true);
+    setHidden(elements.complete, true);
+    setHidden(elements.admin, true);
+    setHidden(elements.staff, true);
+    setHidden(elements.dock, true);
+    setHidden(elements.reaction, true);
+    setHidden(elements.recovery, true);
+    setDisabled(elements.start, true);
+    setDisabled(elements.resume, true);
+    setDisabled(elements.preflightConfirm, true);
+    setDisabled(elements.submit, true);
+    setDisabled(elements.submitConfirmation, false);
+    setEvidenceControlsEnabled(false);
+  }
+
   async function loadState(allowClaimPrompt = false) {
-    user = readUser();
+    const activeUser = readUser();
+    user = activeUser;
     if (!user) {
+      resetProtectedSession({ clearClaim: true });
       showAccess("Please sign in with Google, Microsoft, or your course account before opening the Final Oral Task.", "login");
       openLogin();
       return;
     }
-    lastCredential = user.credential || lastCredential;
+    const requestedCredential = user.credential;
+    const loadGeneration = ++stateLoadGeneration;
+    lastCredential = requestedCredential;
     try {
       const result = await request(API.state, { method: "GET" }, 2);
+      if (loadGeneration !== stateLoadGeneration || readUser()?.credential !== requestedCredential) return;
       const payload = result.data || {};
+      attempt = null;
+      submission = null;
+      assignedQuestions = [];
+      currentIndex = 0;
+      revision = 0;
+      savedCurrentTurn = false;
+      selectedStaffSubmission = null;
+      setHidden(elements.exam, true);
+      setHidden(elements.ready, true);
+      setHidden(elements.complete, true);
+      setHidden(elements.staff, true);
+      setHidden(elements.dock, true);
+      setEvidenceControlsEnabled(false);
       role = payload.role || "student";
       serverState = payload.state || {};
       renderAdminState();
@@ -675,45 +867,67 @@
         setDisabled(elements.start, true);
       }
     } catch (error) {
+      if (loadGeneration !== stateLoadGeneration || readUser()?.credential !== requestedCredential) return;
       showAccess(error.status === 401 ? "Your session expired. Please sign in again." : "The exam server did not answer. Reload the page and try again.", "error");
       if (error.status === 401) openLogin();
     }
   }
 
   async function startAttempt() {
+    if (attemptRequestBusy) return;
     if (!preflightPassed) {
       setText(elements.preflightStatus, "Complete and confirm the microphone check before starting.");
       return;
     }
+    const requestSession = sessionGeneration;
+    const requestCredential = user?.credential || "";
+    attemptRequestBusy = true;
     setDisabled(elements.start, true);
     try {
       const result = await request(API.start, jsonOptions("POST", {}), 2);
+      if (requestSession !== sessionGeneration || user?.credential !== requestCredential) return;
       setHidden(elements.access, true);
       setHidden(elements.onboarding, true);
       setHidden(elements.exam, false);
       hydrateAttempt(result.data.attempt);
       toast(result.data.resumed ? "Your saved attempt was restored." : "Your official attempt has started.", "success");
     } catch (error) {
+      if (requestSession !== sessionGeneration || user?.credential !== requestCredential) return;
       if (error.status === 409 && error.data?.submission) return renderSubmission(error.data.submission);
       if (error.status === 403 && error.data?.error === "student_not_authorized" && promptStudentClaim()) return loadState(false);
-      setText(elements.preflightStatus, error.data?.error === "exam_closed" ? "The exam was closed before the attempt started." : "The attempt could not start. Your microphone check remains valid; try again.");
-      setDisabled(elements.start, false);
+      const examClosed = error.data?.error === "exam_closed";
+      setText(elements.preflightStatus, examClosed ? "The exam was closed before the attempt started." : "The attempt could not start. Your microphone check remains valid; try again.");
+      setDisabled(elements.start, examClosed);
+    } finally {
+      if (requestSession === sessionGeneration) attemptRequestBusy = false;
     }
   }
 
   async function resumeAttempt() {
+    if (attemptRequestBusy) return;
     if (!preflightPassed) {
       setText(elements.preflightStatus, "Complete and confirm the microphone check before resuming.");
       return;
     }
+    const requestSession = sessionGeneration;
+    const requestCredential = user?.credential || "";
+    attemptRequestBusy = true;
+    setDisabled(elements.resume || elements.start, true);
     try {
       const result = await request(`${API.attempt}?attemptId=${encodeURIComponent(attempt?.attemptId || "")}`, { method: "GET" }, 2);
+      if (requestSession !== sessionGeneration || user?.credential !== requestCredential) return;
       if (result.data.submission) return renderSubmission(result.data.submission);
       setHidden(elements.onboarding, true);
       setHidden(elements.exam, false);
       hydrateAttempt(result.data.attempt);
       toast("Your saved oral exam was restored.", "success");
-    } catch { toast("The saved attempt could not be restored. Check the connection and try again.", "error"); }
+    } catch {
+      if (requestSession !== sessionGeneration || user?.credential !== requestCredential) return;
+      setDisabled(elements.resume || elements.start, !preflightPassed);
+      toast("The saved attempt could not be restored. Check the connection and try again.", "error");
+    } finally {
+      if (requestSession === sessionGeneration) attemptRequestBusy = false;
+    }
   }
 
   function currentQuestion() { return assignedQuestions[currentIndex] || null; }
@@ -750,6 +964,7 @@
   function renderCurrentTurn() {
     const question = currentQuestion();
     if (!question) return renderReadyToSubmit();
+    clearQuestionAudio();
     setHidden(elements.onboarding, true);
     setHidden(elements.exam, false);
     setHidden(elements.ready, true);
@@ -779,7 +994,7 @@
     setText(elements.answerState, "Ready");
     if (elements.answerState) elements.answerState.className = "answer-state ready";
     setHidden(elements.answerCaptured, true);
-    setDisabled(elements.questionPlay, false);
+    setDisabled(elements.questionPlay, savedCurrentTurn);
     setDisabled(elements.mic, true);
     setDisabled(elements.dockMic, true);
     setDisabled(elements.stop, true);
@@ -792,19 +1007,51 @@
 
   async function playCurrentQuestion() {
     const question = currentQuestion();
-    if (!question || analyzing || reactionBusy) return;
+    if (!question || analyzing || reactionBusy || savedCurrentTurn || questionAudioLoading || questionAudioPlaying) return;
+    const turnId = String(question.turnId || "");
+    const playbackToken = ++questionPlaybackToken;
+    questionAudioLoading = true;
     try {
       questionHeard = false;
-      setDisabled(elements.mic, true);
-      setDisabled(elements.dockMic, true);
+      updateRecordingControls(false);
       setDanielState("speaking", playbackSpeed === .75 ? "Daniel is speaking slowly" : "Daniel is speaking");
       const source = promptAudioUrl(question);
       if (!source) throw new Error("prompt_audio_unavailable");
-      await playClip(elements.questionAudio, source, source.startsWith("/api/") || source.includes("/api/basic-final-oral/"));
+      const protectedAudio = source.startsWith("/api/") || source.includes("/api/basic-final-oral/");
+      if (protectedAudio) {
+        const blob = await fetchProtectedAudio(source);
+        if (playbackToken !== questionPlaybackToken || String(currentQuestion()?.turnId || "") !== turnId) return;
+        if (promptObjectUrl) URL.revokeObjectURL(promptObjectUrl);
+        promptObjectUrl = URL.createObjectURL(blob);
+        elements.questionAudio.src = promptObjectUrl;
+      } else {
+        elements.questionAudio.src = source;
+      }
+      if (playbackToken !== questionPlaybackToken || String(currentQuestion()?.turnId || "") !== turnId) return;
+      elements.questionAudio.dataset.turnId = turnId;
+      elements.questionAudio.playbackRate = playbackSpeed;
+      questionAudioPlaying = true;
+      questionPlaybackWatchdog = window.setTimeout(() => {
+        if (playbackToken !== questionPlaybackToken || String(currentQuestion()?.turnId || "") !== turnId) return;
+        clearQuestionAudio();
+        setDanielState("ready", "Daniel's audio stopped responding");
+        setText(elements.recordStatus, "The question audio stopped responding. Check the connection and press Play Daniel again.");
+        updateRecordingControls(false);
+      }, 45000);
+      await elements.questionAudio.play();
       setText(elements.recordStatus, "Listen to Daniel's complete question before recording.");
     } catch {
+      if (playbackToken !== questionPlaybackToken) return;
+      if (questionPlaybackWatchdog) window.clearTimeout(questionPlaybackWatchdog);
+      questionPlaybackWatchdog = 0;
+      questionAudioPlaying = false;
       setDanielState("ready", "Daniel's audio could not play");
       setText(elements.recordStatus, "The question audio could not play. Check the connection and press Play Daniel again.");
+    } finally {
+      if (playbackToken === questionPlaybackToken) {
+        questionAudioLoading = false;
+        updateRecordingControls(mediaRecorder?.state === "recording");
+      }
     }
   }
 
@@ -879,10 +1126,13 @@
 
   async function runPreflight() {
     if (preflightRecorder?.state === "recording") return;
+    const preflightSession = sessionGeneration;
     preflightPassed = false;
     setDisabled(elements.start, true);
     setDisabled(elements.preflight, true);
     setDisabled(elements.preflightConfirm, true);
+    setDisabled(elements.preflightMicrophoneSelect, true);
+    setDisabled(elements.microphoneSelect, true);
     setText(elements.preflightStatus, "Recording a four-second microphone sample. Speak now.");
     try {
       const stream = await ensureMediaStream(elements.preflightMicrophoneSelect || elements.microphoneSelect);
@@ -892,6 +1142,10 @@
       preflightRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
       preflightRecorder.addEventListener("dataavailable", (event) => { if (event.data?.size) sampleChunks.push(event.data); });
       preflightRecorder.addEventListener("stop", () => {
+        if (preflightSession !== sessionGeneration) {
+          stopMediaStream();
+          return;
+        }
         const sample = new Blob(sampleChunks, { type: preflightRecorder.mimeType || "audio/webm" });
         stopMediaStream();
         if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl);
@@ -901,6 +1155,8 @@
         preflightSampleReady = sample.size >= 700;
         setDisabled(elements.preflightConfirm, sample.size < 700);
         setDisabled(elements.preflight, false);
+        setDisabled(elements.preflightMicrophoneSelect, false);
+        setDisabled(elements.microphoneSelect, false);
         if (preflightSampleReady && elements.preflightConfirm?.type === "checkbox" && elements.preflightConfirm.checked) confirmPreflight();
       }, { once: true });
       preflightRecorder.start(200);
@@ -908,6 +1164,8 @@
     } catch (error) {
       stopMediaStream();
       setDisabled(elements.preflight, false);
+      setDisabled(elements.preflightMicrophoneSelect, false);
+      setDisabled(elements.microphoneSelect, false);
       setText(elements.preflightStatus, error.name === "NotAllowedError" ? "Microphone permission was denied. Allow access in the browser settings and retry." : "The microphone could not start. Select another microphone or browser and retry.");
     }
   }
@@ -933,13 +1191,16 @@
   }
 
   function updateRecordingControls(recording) {
-    setDisabled(elements.mic, recording || analyzing || savedCurrentTurn || !questionHeard);
-    setDisabled(elements.dockMic, recording || analyzing || savedCurrentTurn || !questionHeard);
+    const controlsBusy = recording || recordingStartPending || recordingFinalizing || analyzing;
+    setDisabled(elements.mic, controlsBusy || savedCurrentTurn || !questionHeard);
+    setDisabled(elements.dockMic, controlsBusy || savedCurrentTurn || !questionHeard);
     setDisabled(elements.stop, !recording);
     setDisabled(elements.dockStop, !recording);
     setHidden(elements.dockMic, recording);
     setHidden(elements.dockStop, !recording);
-    setDisabled(elements.questionPlay, recording || analyzing || reactionBusy);
+    setDisabled(elements.microphoneSelect, controlsBusy);
+    setDisabled(elements.preflightMicrophoneSelect, controlsBusy);
+    setDisabled(elements.questionPlay, controlsBusy || reactionBusy || savedCurrentTurn || questionAudioLoading || questionAudioPlaying);
     if (elements.answerState) {
       elements.answerState.className = `answer-state ${recording ? "recording" : analyzing ? "processing" : savedCurrentTurn ? "saved" : "ready"}`;
       elements.answerState.innerHTML = `<i class="bi bi-circle-fill"></i> ${recording ? "Recording" : analyzing ? "Processing" : savedCurrentTurn ? "Saved" : "Ready"}`;
@@ -954,16 +1215,29 @@
   }
 
   async function startRecording() {
-    if (!questionHeard || analyzing || savedCurrentTurn || mediaRecorder?.state === "recording") return;
+    if (!questionHeard || analyzing || savedCurrentTurn || recordingStartPending || recordingFinalizing || mediaRecorder?.state === "recording") return;
+    const recordingSession = sessionGeneration;
+    recordingStartPending = true;
+    updateRecordingControls(false);
     try {
       const stream = await ensureMediaStream(elements.microphoneSelect);
+      if (recordingSession !== sessionGeneration) {
+        stream.getTracks().forEach((track) => track.stop());
+        return;
+      }
       startLevelMeter(stream);
       chunks = [];
       const mimeType = supportedMimeType();
       mediaRecorder = mimeType ? new MediaRecorder(stream, { mimeType }) : new MediaRecorder(stream);
-      mediaRecorder.addEventListener("dataavailable", (event) => { if (event.data?.size) chunks.push(event.data); });
-      mediaRecorder.addEventListener("stop", handleRecordingStopped, { once: true });
+      mediaRecorder.addEventListener("dataavailable", (event) => {
+        if (recordingSession === sessionGeneration && event.data?.size) chunks.push(event.data);
+      });
+      mediaRecorder.addEventListener("stop", () => {
+        if (recordingSession === sessionGeneration) handleRecordingStopped();
+        else stopMediaStream();
+      }, { once: true });
       mediaRecorder.start(250);
+      recordingStartPending = false;
       recordingStartedAt = Date.now();
       currentClientTurnId = createId("bfo-turn");
       setDanielState("listening", "Daniel is listening");
@@ -974,13 +1248,20 @@
       const limit = (TURN_LIMIT_SECONDS[currentQuestion()?.unit] || 28) * 1000;
       autoStopHandle = window.setTimeout(stopRecording, limit);
     } catch (error) {
+      if (recordingSession !== sessionGeneration) return;
       setText(elements.recordStatus, error.name === "NotAllowedError" ? "Microphone permission was denied. Allow access and retry this technical step." : "The microphone could not start. Select another microphone and retry.");
       showTechnicalRecovery("The microphone did not start. Your saved responses are unchanged.");
+    } finally {
+      if (mediaRecorder?.state !== "recording") {
+        recordingStartPending = false;
+        updateRecordingControls(false);
+      }
     }
   }
 
   function stopRecording() {
     if (mediaRecorder?.state !== "recording") return;
+    recordingFinalizing = true;
     recordingDurationMs = Date.now() - recordingStartedAt;
     window.clearInterval(timerHandle);
     window.clearTimeout(autoStopHandle);
@@ -997,16 +1278,21 @@
     chunks = [];
     if (currentBlob.size < 700 || recordingDurationMs < 700) {
       currentBlob = null;
+      recordingFinalizing = false;
       setText(elements.recordStatus, "The recording was empty or too short. Retry this technical step.");
+      updateRecordingControls(false);
       return showTechnicalRecovery("No complete audio reached the system. Check the microphone and record again.");
     }
     if (currentBlob.size > MAX_AUDIO_BYTES) {
+      recordingFinalizing = false;
       setText(elements.recordStatus, "The recording exceeded the supported size. Retry this technical step.");
+      updateRecordingControls(false);
       return showTechnicalRecovery("The audio was too large to save. Record the response again without exceeding the timer.");
     }
     if (objectUrl) URL.revokeObjectURL(objectUrl);
     objectUrl = URL.createObjectURL(currentBlob);
     if (elements.studentAudio) { elements.studentAudio.src = objectUrl; elements.studentAudio.hidden = false; }
+    recordingFinalizing = false;
     await processAndSaveCurrentTurn();
   }
 
@@ -1036,10 +1322,18 @@
     assignedQuestions = Array.isArray(nextAttempt.assignedQuestions) ? nextAttempt.assignedQuestions.slice().sort((a, b) => Number(a.sequence) - Number(b.sequence)) : assignedQuestions;
   }
 
-  async function saveCurrentTurn(transcript, dataUrl, allowStaleRetry = true) {
+  function sessionChangedError() { return Object.assign(new Error("session_changed"), { silent: true }); }
+
+  async function saveCurrentTurn(transcript, dataUrl, allowStaleRetry = true, context = null) {
+    const saveContext = context || {
+      session: sessionGeneration,
+      attemptId: attempt?.attemptId || "",
+      mimeType: currentBlob?.type || "audio/webm"
+    };
     const question = currentQuestion();
+    if (!question || !attempt || saveContext.session !== sessionGeneration || attempt.attemptId !== saveContext.attemptId) throw sessionChangedError();
     const payload = {
-      attemptId: attempt.attemptId,
+      attemptId: saveContext.attemptId,
       turnId: question.turnId,
       variantId: question.variantId,
       clientTurnId: currentClientTurnId,
@@ -1047,20 +1341,22 @@
       durationMs: Math.round(recordingDurationMs),
       revision,
       audioDataUrl: dataUrl,
-      mimeType: currentBlob.type || "audio/webm"
+      mimeType: saveContext.mimeType
     };
     try {
       const result = await request(API.turn, jsonOptions("PUT", payload), 3);
+      if (saveContext.session !== sessionGeneration || attempt?.attemptId !== saveContext.attemptId) throw sessionChangedError();
       revision = Number(result.data.revision ?? revision + 1);
       attempt.revision = revision;
       attempt.turns = attempt.turns || {};
       attempt.turns[question.turnId] = result.data.turn;
       return result.data.turn;
     } catch (error) {
+      if (error?.silent || saveContext.session !== sessionGeneration || attempt?.attemptId !== saveContext.attemptId) throw sessionChangedError();
       if (allowStaleRetry && error.status === 409 && error.data?.error === "stale_attempt" && error.data.attempt) {
         applyServerAttempt(error.data.attempt);
         if (attempt.turns?.[question.turnId]) return attempt.turns[question.turnId];
-        return saveCurrentTurn(transcript, dataUrl, false);
+        return saveCurrentTurn(transcript, dataUrl, false, saveContext);
       }
       throw error;
     }
@@ -1068,6 +1364,10 @@
 
   async function processAndSaveCurrentTurn() {
     if (!currentBlob || analyzing) return;
+    const processingSession = sessionGeneration;
+    const processingAttemptId = attempt?.attemptId || "";
+    const processingBlob = currentBlob;
+    const saveContext = { session: processingSession, attemptId: processingAttemptId, mimeType: processingBlob.type || "audio/webm" };
     analyzing = true;
     setHidden(elements.recovery, true);
     setText(elements.recordStatus, "Transcribing the English response with the secure speech service.");
@@ -1077,11 +1377,14 @@
     if (elements.saveState) { elements.saveState.className = "exam-save-state saving"; elements.saveState.innerHTML = '<i class="bi bi-cloud-arrow-up-fill"></i><span>Saving response…</span>'; }
     updateRecordingControls(false);
     try {
-      const transcription = await requestTranscription(currentBlob);
+      const transcription = await requestTranscription(processingBlob);
+      if (processingSession !== sessionGeneration || attempt?.attemptId !== processingAttemptId) throw sessionChangedError();
       currentTranscript = String(transcription.text || "").trim();
       if (!currentTranscript) throw Object.assign(new Error("empty_transcript"), { technicalStage: "transcription" });
-      const dataUrl = await blobToDataUrl(currentBlob);
-      await saveCurrentTurn(currentTranscript, dataUrl);
+      const dataUrl = await blobToDataUrl(processingBlob);
+      if (processingSession !== sessionGeneration || attempt?.attemptId !== processingAttemptId) throw sessionChangedError();
+      await saveCurrentTurn(currentTranscript, dataUrl, true, saveContext);
+      if (processingSession !== sessionGeneration || attempt?.attemptId !== processingAttemptId) throw sessionChangedError();
       savedCurrentTurn = true;
       setText(elements.transcript, "Transcript stored privately for teacher review.");
       setText(elements.recordStatus, "Official response saved.");
@@ -1094,11 +1397,13 @@
       updateRecordingControls(false);
       await playResponseQueue(responsesForTurn(currentQuestion(), currentTranscript));
     } catch (error) {
+      if (error?.silent || processingSession !== sessionGeneration) return;
       setText(elements.recordStatus, "The technical save did not finish. Your recording remains on this screen.");
       setText(elements.saveStatus, "NOT SAVED — retry the technical step before continuing.");
       if (elements.saveState) { elements.saveState.className = "exam-save-state error"; elements.saveState.innerHTML = '<i class="bi bi-cloud-slash-fill"></i><span>Not saved yet</span>'; }
       showTechnicalRecovery(error.message === "empty_transcript" ? "The service detected no clear English transcript. Check the recording and retry the technical analysis, or record again if the file is silent." : "The connection or transcription service did not finish. Retry without changing your response.");
     } finally {
+      if (processingSession !== sessionGeneration) return;
       analyzing = false;
       setBusy(false);
       if (!savedCurrentTurn) setDanielState("ready", "Daniel is waiting while you resolve the technical issue");
@@ -1128,6 +1433,7 @@
 
   function nextTurn() {
     if (!savedCurrentTurn || reactionBusy) return;
+    clearQuestionAudio();
     currentIndex += 1;
     if (currentIndex >= assignedQuestions.length) renderReadyToSubmit();
     else renderCurrentTurn();
@@ -1152,7 +1458,8 @@
       if (icon) icon.className = `bi ${saved ? "bi-check2-circle" : "bi-exclamation-circle"}`;
     });
     const confirmed = !elements.submitConfirmation || elements.submitConfirmation.checked;
-    setDisabled(elements.submit, savedCount !== REQUIRED_TURNS || !confirmed);
+    setDisabled(elements.submitConfirmation, submissionBusy);
+    setDisabled(elements.submit, submissionBusy || savedCount !== REQUIRED_TURNS || !confirmed);
     if (elements.progress) {
       if (elements.progress instanceof HTMLProgressElement) { elements.progress.max = REQUIRED_TURNS; elements.progress.value = savedCount; }
       else elements.progress.style.width = `${Math.round((savedCount / REQUIRED_TURNS) * 100)}%`;
@@ -1167,9 +1474,10 @@
     return value;
   }
 
-  async function recoverSubmission() {
+  async function recoverSubmission(expectedSession = sessionGeneration, expectedAttemptId = attempt?.attemptId || "") {
     try {
-      const result = await request(`${API.attempt}?attemptId=${encodeURIComponent(attempt?.attemptId || "")}`, { method: "GET" }, 2);
+      const result = await request(`${API.attempt}?attemptId=${encodeURIComponent(expectedAttemptId)}`, { method: "GET" }, 2);
+      if (expectedSession !== sessionGeneration || attempt?.attemptId !== expectedAttemptId) return null;
       if (result.data.submission) return result.data.submission;
       if (result.data.attempt) applyServerAttempt(result.data.attempt);
     } catch { /* preserve current screen */ }
@@ -1177,35 +1485,49 @@
   }
 
   async function submitExam() {
-    if (Object.keys(attempt?.turns || {}).length !== REQUIRED_TURNS) return;
+    if (submissionBusy || Object.keys(attempt?.turns || {}).length !== REQUIRED_TURNS || (elements.submitConfirmation && !elements.submitConfirmation.checked)) return;
+    const submitSession = sessionGeneration;
+    const submitAttemptId = attempt.attemptId;
+    submissionBusy = true;
     setDisabled(elements.submit, true);
+    setDisabled(elements.submitConfirmation, true);
     setText(elements.submissionStatus, "Submitting seven official recordings. Keep this page open.");
-    const payload = { attemptId: attempt.attemptId, revision, clientSubmissionId: submissionId() };
+    const payload = { attemptId: submitAttemptId, revision, clientSubmissionId: submissionId() };
     try {
       const result = await request(API.submit, jsonOptions("POST", payload), 3);
+      if (submitSession !== sessionGeneration || attempt?.attemptId !== submitAttemptId) return;
       renderSubmission(result.data.submission);
       try { await playClip(elements.reactionAudio, AUDIO_ROOT + "submission-complete.mp3"); } catch { /* receipt is authoritative */ }
       toast("Final Oral Task submitted successfully.", "success");
     } catch (error) {
+      if (submitSession !== sessionGeneration || attempt?.attemptId !== submitAttemptId) return;
       if (error.status === 409 && error.data?.submission) return renderSubmission(error.data.submission);
-      const recovered = await recoverSubmission();
+      const recovered = await recoverSubmission(submitSession, submitAttemptId);
+      if (submitSession !== sessionGeneration || attempt?.attemptId !== submitAttemptId) return;
       if (recovered) return renderSubmission(recovered);
       setText(elements.submissionStatus, "NOT SUBMITTED. Your seven recordings remain saved. Check the connection and press Submit again.");
       setDisabled(elements.submit, false);
       toast("The final submission did not complete. Your recordings remain saved.", "error");
+    } finally {
+      if (submitSession !== sessionGeneration) return;
+      submissionBusy = false;
+      if (!submission) renderReadyToSubmit();
     }
   }
 
   async function updateAdminState(isOpen) {
+    const adminSession = sessionGeneration;
     setDisabled(elements.adminOpen, true);
     setDisabled(elements.adminClose, true);
     if (elements.adminStatus) setText(elements.adminStatus.querySelector?.("span") || elements.adminStatus, "Saving the new exam state.");
     try {
       const result = await request(API.state, jsonOptions("PUT", { isOpen }), 2);
+      if (adminSession !== sessionGeneration) return;
       serverState = result.data.state;
       renderAdminState();
       toast(result.data.message || (isOpen ? "The official exam is open." : "The official exam is closed."), "success");
     } catch {
+      if (adminSession !== sessionGeneration) return;
       renderAdminState();
       if (elements.adminStatus) setText(elements.adminStatus.querySelector?.("span") || elements.adminStatus, "The exam state could not be changed. Try again.");
       toast("The exam state did not change.", "error");
@@ -1242,15 +1564,21 @@
   async function loadStaffAudio(button) {
     const audio = button.nextElementSibling;
     if (!(audio instanceof HTMLAudioElement)) return;
+    const staffSession = sessionGeneration;
     button.disabled = true;
     button.textContent = "Loading protected recording…";
     try {
       const blob = await fetchProtectedAudio(button.dataset.loadFinalOralAudio);
-      audio.src = URL.createObjectURL(blob);
+      if (staffSession !== sessionGeneration || !(role === "admin" || role === "teacher")) return;
+      if (audio.dataset.objectUrl) URL.revokeObjectURL(audio.dataset.objectUrl);
+      const audioObjectUrl = URL.createObjectURL(blob);
+      audio.dataset.objectUrl = audioObjectUrl;
+      audio.src = audioObjectUrl;
       audio.hidden = false;
       button.textContent = "Recording loaded";
       await audio.play().catch(() => {});
     } catch {
+      if (staffSession !== sessionGeneration) return;
       button.disabled = false;
       button.textContent = "Retry protected recording";
     }
@@ -1334,8 +1662,28 @@
     return valid && feedbackReady;
   }
 
+  function setEvidenceControlsEnabled(enabled) {
+    const buttons = Array.from(elements.evidenceTabs?.querySelectorAll("[data-evidence-unit]") || []);
+    buttons.forEach((button) => {
+      button.disabled = !enabled;
+      if (!enabled) button.setAttribute("aria-selected", "false");
+      button.tabIndex = enabled && button.getAttribute("aria-selected") === "true" ? 0 : -1;
+    });
+    if (elements.evidencePlay) {
+      elements.evidencePlay.disabled = !enabled || !elements.evidencePlay.dataset.audioUrl;
+    }
+  }
+
+  function activateEvidenceTab(button) {
+    if (!selectedStaffSubmission || !button || button.disabled) return;
+    const index = (selectedStaffSubmission.assignedQuestions || []).findIndex((question) => String(question.unit) === String(button.dataset.evidenceUnit));
+    if (index >= 0) renderFixedEvidence(index);
+  }
+
   function renderFixedEvidence(index) {
     if (!selectedStaffSubmission) return;
+    staffEvidenceLoadToken += 1;
+    setBusy(false);
     const questions = selectedStaffSubmission.assignedQuestions || [];
     const turns = selectedStaffSubmission.turns || [];
     const question = questions[index] || {};
@@ -1343,7 +1691,10 @@
     selectedEvidenceIndex = index;
     elements.evidenceTabs?.querySelectorAll("[data-evidence-unit]").forEach((button) => {
       const active = String(button.dataset.evidenceUnit) === String(question.unit);
+      const available = questions.some((item) => String(item.unit) === String(button.dataset.evidenceUnit));
+      button.disabled = !available;
       button.setAttribute("aria-selected", active ? "true" : "false");
+      button.tabIndex = active ? 0 : -1;
     });
     setText(elements.evidenceUnitBadge, question.unit === "interaction" ? "FINAL" : `UNIT ${String(question.unit || index + 1).padStart(2, "0")}`);
     setText(elements.evidenceTopic, question.unitLabel || UNIT_VIEW[String(question.unit)]?.label || "Course evidence");
@@ -1365,10 +1716,17 @@
   }
 
   function selectFixedSubmission(receiptId) {
+    staffEvidenceLoadToken += 1;
+    setBusy(false);
     selectedStaffSubmission = staffSubmissions.find((item) => item.receiptId === receiptId) || null;
     if (!selectedStaffSubmission) {
       setText(elements.staffStudentName, "No submission selected");
       setDisabled(elements.publishGradeButton, true);
+      setEvidenceControlsEnabled(false);
+      if (elements.evidencePlay) {
+        elements.evidencePlay.dataset.audioUrl = "";
+        elements.evidencePlay.innerHTML = '<i class="bi bi-play-fill"></i>';
+      }
       return;
     }
     setText(elements.staffStudentName, selectedStaffSubmission.studentName || "Student");
@@ -1380,6 +1738,7 @@
     const rubric = selectedStaffSubmission.rubric || {};
     Object.entries(fixedRubricInputs()).forEach(([key, input]) => { if (input) input.value = rubric[key] ?? ""; });
     if (elements.teacherFeedback) elements.teacherFeedback.value = selectedStaffSubmission.teacherFeedback || "";
+    setEvidenceControlsEnabled(true);
     renderFixedEvidence(0);
     updateFixedRubric();
   }
@@ -1387,22 +1746,43 @@
   async function playFixedEvidence() {
     const url = elements.evidencePlay?.dataset.audioUrl;
     if (!url || !elements.evidenceAudio) return;
+    const staffSession = sessionGeneration;
+    const receiptId = selectedStaffSubmission?.receiptId || "";
+    const evidenceIndex = selectedEvidenceIndex;
+    const loadToken = ++staffEvidenceLoadToken;
+    const stillCurrent = () => staffSession === sessionGeneration
+      && loadToken === staffEvidenceLoadToken
+      && selectedStaffSubmission?.receiptId === receiptId
+      && selectedEvidenceIndex === evidenceIndex
+      && elements.evidencePlay?.dataset.audioUrl === url;
     try {
       if (!elements.evidenceAudio.src) {
         setBusy(true, "Loading protected student evidence…");
         const blob = await fetchProtectedAudio(url);
-        staffAudioObjectUrl = URL.createObjectURL(blob);
+        if (!stillCurrent()) return;
+        const nextObjectUrl = URL.createObjectURL(blob);
+        if (!stillCurrent()) {
+          URL.revokeObjectURL(nextObjectUrl);
+          return;
+        }
+        if (staffAudioObjectUrl) URL.revokeObjectURL(staffAudioObjectUrl);
+        staffAudioObjectUrl = nextObjectUrl;
         elements.evidenceAudio.src = staffAudioObjectUrl;
       }
+      if (!stillCurrent()) return;
       if (elements.evidenceAudio.paused) {
         await elements.evidenceAudio.play();
+        if (!stillCurrent()) return;
         if (elements.evidencePlay) elements.evidencePlay.innerHTML = '<i class="bi bi-pause-fill"></i>';
       } else {
         elements.evidenceAudio.pause();
         if (elements.evidencePlay) elements.evidencePlay.innerHTML = '<i class="bi bi-play-fill"></i>';
       }
-    } catch { toast("The protected recording could not be loaded. Retry the connection.", "error"); }
-    finally { setBusy(false); }
+    } catch {
+      if (stillCurrent()) toast("The protected recording could not be loaded. Retry the connection.", "error");
+    } finally {
+      if (stillCurrent()) setBusy(false);
+    }
   }
 
   async function saveFixedStaffGrade() {
@@ -1432,9 +1812,11 @@
 
   async function loadStaffSubmissions() {
     if (!(role === "admin" || role === "teacher") || (!elements.staffList && !elements.submissionSelector)) return;
+    const staffSession = sessionGeneration;
     setText(elements.staffStatus, "Loading submitted oral exams.");
     try {
       const result = await request(API.submissions, { method: "GET" }, 2);
+      if (staffSession !== sessionGeneration || !(role === "admin" || role === "teacher")) return;
       const items = Array.isArray(result.data.submissions) ? result.data.submissions : [];
       staffSubmissions = items;
       if (elements.staffList) {
@@ -1449,7 +1831,9 @@
         selectFixedSubmission(preferred);
       }
       setText(elements.staffStatus, `${items.length} submitted · ${result.data.counts?.pendingReview || 0} pending review · ${result.data.counts?.graded || 0} graded`);
-    } catch { setText(elements.staffStatus, "The submissions could not be loaded. Check the server connection and retry."); }
+    } catch {
+      if (staffSession === sessionGeneration) setText(elements.staffStatus, "The submissions could not be loaded. Check the server connection and retry.");
+    }
   }
 
   function bindEvents() {
@@ -1483,11 +1867,22 @@
     elements.adminClose?.addEventListener("click", () => updateAdminState(false));
     elements.staffRefresh?.addEventListener("click", loadStaffSubmissions);
     elements.submissionSelector?.addEventListener("change", () => selectFixedSubmission(elements.submissionSelector.value));
-    elements.evidenceTabs?.querySelectorAll("[data-evidence-unit]").forEach((button) => button.addEventListener("click", () => {
-      if (!selectedStaffSubmission) return;
-      const index = (selectedStaffSubmission.assignedQuestions || []).findIndex((question) => String(question.unit) === String(button.dataset.evidenceUnit));
-      if (index >= 0) renderFixedEvidence(index);
-    }));
+    elements.evidenceTabs?.querySelectorAll("[data-evidence-unit]").forEach((button) => {
+      button.addEventListener("click", () => activateEvidenceTab(button));
+      button.addEventListener("keydown", (event) => {
+        if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+        const buttons = Array.from(elements.evidenceTabs.querySelectorAll("[data-evidence-unit]:not(:disabled)"));
+        if (!buttons.length) return;
+        event.preventDefault();
+        const current = Math.max(0, buttons.indexOf(button));
+        const target = event.key === "Home" ? buttons[0]
+          : event.key === "End" ? buttons[buttons.length - 1]
+            : event.key === "ArrowRight" ? buttons[(current + 1) % buttons.length]
+              : buttons[(current - 1 + buttons.length) % buttons.length];
+        target.focus();
+        activateEvidenceTab(target);
+      });
+    });
     elements.evidencePlay?.addEventListener("click", playFixedEvidence);
     elements.evidenceAudio?.addEventListener("timeupdate", () => {
       const audio = elements.evidenceAudio;
@@ -1503,14 +1898,36 @@
       const code = submission?.receiptId || elements.receipt?.textContent || "";
       try { await navigator.clipboard.writeText(code); toast("Confirmation code copied.", "success"); } catch { toast(`Confirmation code: ${code}`, ""); }
     });
-    elements.microphoneSelect?.addEventListener("change", stopMediaStream);
-    elements.preflightMicrophoneSelect?.addEventListener("change", stopMediaStream);
+    const handleMicrophoneSelectionChange = () => {
+      if (recordingStartPending || analyzing || mediaRecorder?.state === "recording" || preflightRecorder?.state === "recording") {
+        toast("Finish the current microphone step before changing devices.", "error");
+        return;
+      }
+      stopMediaStream();
+    };
+    elements.microphoneSelect?.addEventListener("change", handleMicrophoneSelectionChange);
+    elements.preflightMicrophoneSelect?.addEventListener("change", handleMicrophoneSelectionChange);
     elements.questionAudio?.addEventListener("ended", () => {
+      const turnId = String(elements.questionAudio?.dataset.turnId || "");
+      if (questionPlaybackWatchdog) window.clearTimeout(questionPlaybackWatchdog);
+      questionPlaybackWatchdog = 0;
+      questionAudioPlaying = false;
+      if (!turnId || turnId !== String(currentQuestion()?.turnId || "") || savedCurrentTurn) {
+        updateRecordingControls(false);
+        return;
+      }
       questionHeard = true;
       setDanielState("ready", "Daniel is listening for your response");
-      setDisabled(elements.mic, false);
-      setDisabled(elements.dockMic, false);
+      updateRecordingControls(false);
       setText(elements.recordStatus, "Daniel's question is complete. Record one response when you are ready.");
+    });
+    elements.questionAudio?.addEventListener("error", () => {
+      if (!elements.questionAudio?.dataset.turnId) return;
+      if (questionPlaybackWatchdog) window.clearTimeout(questionPlaybackWatchdog);
+      questionPlaybackWatchdog = 0;
+      questionAudioPlaying = false;
+      questionAudioLoading = false;
+      updateRecordingControls(false);
     });
     window.addEventListener("beforeunload", stopMediaStream);
   }
@@ -1523,14 +1940,20 @@
   setHidden(elements.staff, true);
   setHidden(elements.dock, true);
   setDisabled(elements.preflightConfirm, true);
+  setEvidenceControlsEnabled(false);
   loadState(false);
   window.setInterval(() => {
     const current = readUser();
     const credential = current?.credential || "";
-    if (credential && credential !== lastCredential) {
-      lastCredential = credential;
-      user = current;
-      loadState(false);
+    if (credential === lastCredential) return;
+    const accountChanged = accountScope(current) !== accountScope(user);
+    lastCredential = credential;
+    resetProtectedSession({ clearClaim: accountChanged });
+    user = current;
+    if (user) loadState(false);
+    else {
+      showAccess("You signed out. Sign in again to access the Final Oral Task.", "login");
+      openLogin();
     }
   }, 1400);
 })();

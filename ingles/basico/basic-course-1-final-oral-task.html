@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
-  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task.css?v=20260721-official-oral-v1" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-final-oral-task.css?v=20260721-official-oral-v2" />
 </head>
 <body class="english-basic-page official-oral-page" data-exam-mode="real" data-exam-code="basic-course-1-final-oral-task">
   <div class="institutional-band official-institutional-band">
@@ -74,7 +74,7 @@
           <h2 id="accessTitle">Verify your exam access</h2>
           <p id="accessStatus">Sign in with the Google, Microsoft, or course account linked to Basic Course 1. The interview becomes visible only when the administrator activates it.</p>
           <div class="access-account" id="authenticatedAccount" hidden><span id="authenticatedAvatar">DC</span><div><strong id="authenticatedName">Course student</strong><small id="authenticatedEmail">Verified account</small></div><i class="bi bi-patch-check-fill"></i></div>
-          <div class="official-button-row"><button class="official-button primary" id="signInButton" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Sign in to continue</button><button class="official-button secondary" id="refreshAccessButton" type="button"><i class="bi bi-arrow-clockwise"></i> Check availability</button></div>
+          <div class="official-button-row"><button class="official-button primary" id="signInButton" type="button" data-open-login data-open-google-login><i class="bi bi-box-arrow-in-right"></i> Sign in to continue</button><button class="official-button secondary" id="refreshAccessButton" type="button"><i class="bi bi-arrow-clockwise"></i> Check availability</button></div>
           <div class="student-claim-panel" id="claimStudentPanel" hidden>
             <label for="claimStudentIdInput"><span>Document number registered in Grades</span><input id="claimStudentIdInput" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter your document number" /></label>
             <button class="official-button secondary" id="claimStudentButton" type="button"><i class="bi bi-person-vcard"></i> Verify document</button>
@@ -135,7 +135,7 @@
           <section class="daniel-stage" id="danielStage" data-state="ready" aria-labelledby="questionText">
             <figure class="daniel-portrait"><img id="danielPortrait" src="../../assets/img/english-basic/final-oral-task-real/daniel-carter-portrait-v1.webp" width="1122" height="1402" decoding="async" alt="Daniel Carter, official interviewer" /></figure>
             <div class="daniel-question-card">
-              <div class="daniel-identity"><span><i class="bi bi-person-video3"></i></span><div><strong>Daniel Carter</strong><small>Official interviewer · American English</small></div><em id="danielStatus"><i></i> Ready</em></div>
+              <div class="daniel-identity"><span><i class="bi bi-person-video3"></i></span><div><strong>Daniel Carter</strong><small>Official interviewer · American English</small></div><em id="danielStatus"><i></i><span>Ready</span></em></div>
               <p class="question-instruction" id="questionInstruction">Listen carefully. Then answer with your own information.</p>
               <h1 id="questionText">Your first question will appear here.</h1>
               <div class="daniel-audio-controls"><button class="question-play-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Play Daniel</span></button><div class="official-speed" aria-label="Question audio speed"><span>Speed</span><button type="button" data-question-speed="0.75">0.75×</button><button type="button" data-question-speed="1" class="is-active">1×</button></div></div>
@@ -160,7 +160,7 @@
             <audio id="studentAudio" controls hidden></audio>
             <div class="answer-captured" id="answerCaptured" hidden><i class="bi bi-check2-circle"></i><div><strong>Answer captured securely</strong><p>Your response was saved. No score or feedback is shown during the official exam.</p></div></div>
             <div id="liveTranscript" hidden></div>
-            <div class="technical-recovery" id="technicalRecovery" hidden><i class="bi bi-wifi-off"></i><div><strong>We could not process this answer yet</strong><p>Your recording remains on this screen. Retry the technical process without recording a new answer.</p><button class="official-button secondary" id="retryProcessingButton" type="button"><i class="bi bi-arrow-clockwise"></i> Retry secure processing</button></div></div>
+            <div class="technical-recovery" id="technicalRecovery" hidden><i class="bi bi-wifi-off"></i><div><strong>We could not process this answer yet</strong><p id="technicalRecoveryMessage">Your recording remains on this screen. Retry the technical process without recording a new answer.</p><div class="official-button-row"><button class="official-button secondary" id="retryProcessingButton" type="button"><i class="bi bi-arrow-clockwise"></i> Retry secure processing</button><button class="official-button secondary" id="recordAgainButton" type="button"><i class="bi bi-mic"></i> Record again after technical failure</button></div></div></div>
             <div class="unsupported-message" id="unsupportedMessage" hidden></div>
           </section>
         </section>
@@ -204,11 +204,11 @@
         <section class="evidence-studio">
           <div class="evidence-heading"><div><p class="official-kicker">Course evidence</p><h3>Seven-recording response portfolio</h3></div><span id="evidenceCoverage">0 of 7 loaded</span></div>
           <div class="evidence-tabs" id="evidenceTabs" role="tablist" aria-label="Unit evidence">
-            <button type="button" role="tab" aria-selected="true" data-evidence-unit="1"><span>01</span>All About You</button><button type="button" role="tab" aria-selected="false" data-evidence-unit="2"><span>02</span>In Class</button><button type="button" role="tab" aria-selected="false" data-evidence-unit="3"><span>03</span>Favorite People</button><button type="button" role="tab" aria-selected="false" data-evidence-unit="4"><span>04</span>Everyday Life</button><button type="button" role="tab" aria-selected="false" data-evidence-unit="5"><span>05</span>Free Time</button><button type="button" role="tab" aria-selected="false" data-evidence-unit="6"><span>06</span>Neighborhoods</button><button type="button" role="tab" aria-selected="false" data-evidence-unit="interaction"><span><i class="bi bi-chat-dots-fill"></i></span>Final interaction</button>
+            <button type="button" role="tab" aria-selected="false" tabindex="-1" data-evidence-unit="1" disabled><span>01</span>All About You</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-evidence-unit="2" disabled><span>02</span>In Class</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-evidence-unit="3" disabled><span>03</span>Favorite People</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-evidence-unit="4" disabled><span>04</span>Everyday Life</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-evidence-unit="5" disabled><span>05</span>Free Time</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-evidence-unit="6" disabled><span>06</span>Neighborhoods</button><button type="button" role="tab" aria-selected="false" tabindex="-1" data-evidence-unit="interaction" disabled><span><i class="bi bi-chat-dots-fill"></i></span>Final interaction</button>
           </div>
           <article class="evidence-player" id="evidencePlayer">
             <div class="evidence-context"><span id="evidenceUnitBadge">UNIT 01</span><div><p id="evidenceTopic">All About You</p><h3 id="evidenceQuestion">Select a student submission to load the question.</h3></div></div>
-            <div class="staff-audio-player"><button id="evidencePlayButton" type="button" aria-label="Play student answer"><i class="bi bi-play-fill"></i></button><div><span id="evidenceAudioLabel">Student answer</span><div class="staff-audio-track"><i id="evidenceAudioProgress"></i></div></div><time id="evidenceAudioTime">00:00</time><audio id="evidenceAudio" preload="metadata"></audio></div>
+            <div class="staff-audio-player"><button id="evidencePlayButton" type="button" aria-label="Play student answer" disabled><i class="bi bi-play-fill"></i></button><div><span id="evidenceAudioLabel">Student answer</span><div class="staff-audio-track"><i id="evidenceAudioProgress"></i></div></div><time id="evidenceAudioTime">00:00</time><audio id="evidenceAudio" preload="metadata"></audio></div>
             <section class="evidence-transcript"><div><strong>Secure transcript</strong><span id="transcriptConfidence">Confidence —</span></div><p id="evidenceTranscript">The transcript will appear here.</p></section>
             <div class="evidence-metadata"><span><i class="bi bi-clock"></i><b id="evidenceDuration">—</b> duration</span><span><i class="bi bi-calendar3"></i><b id="evidenceRecordedAt">—</b> recorded</span><span><i class="bi bi-cloud-check"></i><b id="evidenceStorageState">—</b> evidence</span></div>
           </article>
@@ -248,7 +248,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
-  <script src="../../assets/js/english-basic-final-oral-task.js?v=20260721-official-oral-v1"></script>
+  <script src="../../assets/js/english-basic-final-oral-task.js?v=20260721-official-oral-v2"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

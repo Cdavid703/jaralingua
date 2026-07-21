@@ -8,6 +8,7 @@ const vm = require("vm");
 const root = path.resolve(__dirname, "..");
 const jsPath = path.join(root, "assets", "js", "english-basic-final-oral-task.js");
 const htmlPath = path.join(root, "ingles", "basico", "basic-course-1-final-oral-task.html");
+const cssPath = path.join(root, "assets", "css", "english-basic-final-oral-task.css");
 const scriptsPath = path.join(root, "ingles", "basico", "audio", "final-oral-task-real", "scripts.md");
 const publicAudioDir = path.dirname(scriptsPath);
 const protectedPromptDir = path.join(root, "server", "private_assets", "basic-final-oral-prompts");
@@ -17,6 +18,7 @@ const serverPath = path.join(root, "server", "progress_api.py");
 
 const source = fs.readFileSync(jsPath, "utf8");
 const html = fs.readFileSync(htmlPath, "utf8");
+const css = fs.readFileSync(cssPath, "utf8");
 const scriptsSource = fs.readFileSync(scriptsPath, "utf8");
 const generator = fs.readFileSync(generatorPath, "utf8");
 const server = fs.readFileSync(serverPath, "utf8");
@@ -61,7 +63,8 @@ for (const fileName of scripts.keys()) {
 [
   "hero-v1.webp", "daniel-carter-portrait-v1.webp",
   "unit-1-v1.webp", "unit-2-v1.webp", "unit-3-v1.webp",
-  "unit-4-v1.webp", "unit-5-v1.webp", "unit-6-v1.webp"
+  "unit-4-v1.webp", "unit-5-v1.webp", "unit-6-v1.webp",
+  "interaction-v1.webp"
 ].forEach((fileName) => assert(fs.existsSync(path.join(imageDir, fileName)), `Missing professional image: ${fileName}`));
 assert.strictEqual(api.REQUIRED_TURNS, 7, "The official attempt must require exactly seven recordings");
 assert.strictEqual(Object.values(api.TURN_LIMIT_SECONDS).reduce((sum, value) => sum + value, 0), 180, "Seven recording caps must total the official three-minute maximum");
@@ -161,7 +164,16 @@ assert(source.includes("No answer model, vocabulary hint, or correction"), "Real
 assert(html.includes('id="claimStudentPanel"'), "Inline document-claim panel is missing");
 assert(html.includes('id="claimStudentIdInput"'), "Inline document-number input is missing");
 assert(html.includes('id="claimStudentButton"'), "Inline document verification button is missing");
+assert(/id="signInButton"[^>]*data-open-google-login/.test(html), "The internal sign-in button must be recognized as an external auth trigger");
+assert(!/\.official-oral-page\s+\.jaralingua-auth\s*>\s*\.auth-trigger\s*\{[^}]*display\s*:\s*none/i.test(css), "The floating course login must remain visible");
+assert(source.includes('event?.stopPropagation?.()'), "The internal sign-in click must not be closed by the global outside-click handler");
+assert(source.includes('document.querySelector("[data-auth-toggle]") || document.querySelector("[data-auth-nav-toggle]")'), "Sign-in must prefer the floating trigger and retain the nav fallback");
 assert(source.includes('headers["X-Jaralingua-Student-Id-Claim"] = claim'), "Document claim must travel in the authenticated request header");
+assert(source.includes('const CLAIM_KEY = "jaralingua_basic_final_oral_student_claim_v2"'), "The official exam needs a dedicated document-claim key");
+assert(source.includes("JSON.stringify({ scope, value: normalized })"), "Document claims must be stored with their authenticated account scope");
+assert(source.includes("stored?.scope === accountScope(account)"), "A document claim must never cross over to another signed-in account");
+assert(source.includes("credential === lastCredential") && source.includes("resetProtectedSession({ clearClaim: accountChanged })"), "Sign-out and account switches must reset protected exam state");
+assert(source.includes("stateLoadGeneration") && source.includes("readUser()?.credential !== requestedCredential"), "Late state responses from a previous account must be ignored");
 assert(source.includes("totalRecordedDuration() + activeRecording + capturedUnsaved"), "Visible timer must measure recorded speaking time, not network or reading time");
 assert(html.includes('aria-label="Recorded speaking time"'), "Speaking-time indicator needs an accessible label");
 
@@ -171,4 +183,99 @@ assert(generator.includes("server\\private_assets\\basic-final-oral-prompts"), "
 assert(generator.includes("[switch]$DryRun"));
 assert(generator.includes("[string[]]$Only"));
 
-console.log("Basic Course 1 Final Oral Task frontend/audio contract test passed.");
+const openLoginSource = source.match(/function openLogin\(event\)\s*\{([\s\S]*?)\n  \}\n\n  function promptStudentClaim/);
+assert(openLoginSource, "Could not isolate the sign-in controller for functional testing");
+let floatingClicks = 0;
+let navClicks = 0;
+let stoppedClicks = 0;
+let loginToast = "";
+const loginSandbox = {
+  document: {
+    querySelector(selector) {
+      if (selector === "[data-auth-toggle]" && floatingClicks >= 0) return { click: () => { floatingClicks += 1; } };
+      if (selector === "[data-auth-nav-toggle]") return { click: () => { navClicks += 1; } };
+      return null;
+    }
+  },
+  window: { setTimeout: (callback) => callback() },
+  toast: (message) => { loginToast = message; }
+};
+const testedOpenLogin = vm.runInNewContext(`(function openLogin(event) {${openLoginSource[1]}\n})`, loginSandbox);
+testedOpenLogin({ stopPropagation: () => { stoppedClicks += 1; } });
+assert.strictEqual(stoppedClicks, 1, "Internal sign-in must stop the outside-click closer");
+assert.strictEqual(floatingClicks, 1, "Internal sign-in must activate the floating login control");
+assert.strictEqual(navClicks, 0, "Nav fallback must not supersede an available floating login");
+assert.strictEqual(loginToast, "", "Working sign-in must not show a loading error");
+
+[
+  "activateExamButton", "deactivateExamButton", "signInButton", "refreshAccessButton", "claimStudentButton",
+  "welcomePlayButton", "instructionsPlayButton", "preflightButton", "startExamButton", "questionPlayButton",
+  "micButton", "stopButton", "nextTurnButton", "retryProcessingButton", "recordAgainButton", "submitExamButton", "copyReceiptButton",
+  "refreshSubmissionsButton", "evidencePlayButton", "publishGradeButton", "floatingMicButton", "floatingStopButton"
+].forEach((id) => {
+  assert(html.includes(`id="${id}"`), `Interactive button missing from HTML: ${id}`);
+  assert(source.includes(`"${id}"`), `Interactive button is not mapped in JavaScript: ${id}`);
+});
+assert(source.includes("setDisabled(elements.next, false)"), "Continue must unlock after Daniel's saved-response reaction");
+assert(source.includes("if (!savedCurrentTurn || reactionBusy) return"), "Continue must remain guarded until the response is saved");
+assert(source.includes('const events = ["ended", "error", "stalled", "abort"]'), "Daniel's reaction must recover from interrupted media events");
+assert(source.includes("window.setTimeout(finish, 12000)"), "Daniel's reaction needs a watchdog so Continue cannot remain locked forever");
+assert(/finally\s*\{[\s\S]*?setDisabled\(elements\.next, false\)/.test(source), "Continue must unlock in the reaction cleanup path");
+assert(html.includes('id="technicalRecoveryMessage"'), "Technical recovery needs a visible specific message");
+assert(source.includes("recordingStartPending") && source.includes("if (!questionHeard || analyzing || savedCurrentTurn || recordingStartPending"), "Rapid microphone taps must not start concurrent recorders");
+assert(source.includes("setDisabled(elements.microphoneSelect, controlsBusy)"), "Microphone selection must lock while recording or processing");
+assert(source.includes("const controller = new AbortController()") && source.includes("controller.abort(), timeoutMs"), "Protected audio requests need a timeout");
+assert(source.includes("questionPlaybackWatchdog") && source.includes("}, 45000)"), "Question playback needs a watchdog for stalled media");
+assert(source.includes("elements.questionAudio.dataset.turnId = turnId"), "Question audio must be bound to the active turn");
+assert(source.includes('turnId !== String(currentQuestion()?.turnId || "")'), "Old question audio must not unlock a later turn's microphone");
+assert(source.includes("questionAudioLoading") && source.includes("questionAudioPlaying"), "Question Play needs loading and playback guards");
+assert(source.includes("submissionBusy") && source.includes("setDisabled(elements.submitConfirmation, submissionBusy)"), "Final submission controls must remain locked during delivery");
+assert(/function resetProtectedSession[\s\S]*?setBusy\(false\)/.test(source), "Account changes must always clear a blocking busy overlay");
+assert(source.includes("staffSession !== sessionGeneration || !(role === \"admin\" || role === \"teacher\")"), "Protected staff audio must be discarded after logout or account change");
+assert(source.includes("loadToken === staffEvidenceLoadToken"), "Teacher evidence downloads must remain bound to the selected submission and tab");
+assert(/id="evidencePlayButton"[^>]*disabled/.test(html), "Teacher evidence playback must start disabled without a selected submission");
+assert.strictEqual((html.match(/role="tab"[^>]*disabled/g) || []).length, 7, "All seven teacher evidence tabs must start disabled");
+assert(source.includes('["ArrowLeft", "ArrowRight", "Home", "End"]'), "Teacher evidence tabs need keyboard navigation");
+assert(html.includes('<em id="danielStatus"><i></i><span>Ready</span></em>'), "Daniel status updates must preserve the live-state indicator");
+
+const responseQueueSource = source.match(/async function playResponseQueue\(responses\)\s*\{([\s\S]*?)\n  \}\n\n  function showAccess/);
+assert(responseQueueSource, "Could not isolate the Continue unlock controller for functional testing");
+const responseSandbox = {
+  Promise,
+  window: { setTimeout, clearTimeout },
+  AUDIO_ROOT: "audio/",
+  playbackSpeed: 1
+};
+const responseHarness = vm.runInNewContext(`(() => {
+  let sessionGeneration = 1;
+  let reactionBusy = false;
+  const next = { disabled: false };
+  const audio = {
+    src: "",
+    playbackRate: 1,
+    addEventListener() {},
+    removeEventListener() {},
+    play() { return Promise.reject(new Error("simulated media failure")); }
+  };
+  const elements = { reactionAudio: audio, next, reaction: { hidden: true }, reactionText: { textContent: "" } };
+  const setDisabled = (node, value) => { node.disabled = Boolean(value); };
+  const setHidden = (node, value) => { node.hidden = Boolean(value); };
+  const setText = (node, value) => { node.textContent = value; };
+  const setDanielState = () => {};
+  async function playResponseQueue(responses) {${responseQueueSource[1]}
+  }
+  return { playResponseQueue, next, reactionBusy: () => reactionBusy };
+})()`, responseSandbox);
+
+(async () => {
+  await responseHarness.playResponseQueue([{ file: "reaction.mp3", text: "Thank you." }]);
+  assert.strictEqual(responseHarness.next.disabled, false, "Continue must unlock when reaction audio cannot play");
+  assert.strictEqual(responseHarness.reactionBusy(), false, "Reaction state must clear after a media failure");
+  responseHarness.next.disabled = true;
+  await responseHarness.playResponseQueue([]);
+  assert.strictEqual(responseHarness.next.disabled, false, "Continue must unlock when no reaction clip is available");
+  console.log("Basic Course 1 Final Oral Task frontend/audio contract test passed.");
+})().catch((error) => {
+  console.error(error);
+  process.exitCode = 1;
+});
