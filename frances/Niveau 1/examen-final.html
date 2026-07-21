@@ -28,10 +28,12 @@
     .hero h1{margin:1.15rem 0 .8rem;font-size:clamp(2.55rem,6.4vw,5.45rem);font-weight:900;line-height:.98;letter-spacing:-.05em}
     .hero-lead{font-size:clamp(1.15rem,2vw,1.5rem);font-weight:900;color:rgba(255,255,255,.92)}
     .hero-text{max-width:700px;color:rgba(255,255,255,.84);font-size:1.08rem;line-height:1.7}
-    .btn-main,.btn-soft,.btn-danger-soft{min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;padding:.78rem 1.15rem;font-weight:900;text-decoration:none;cursor:pointer}
+    .btn-main,.btn-soft,.btn-danger-soft{min-height:46px;display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:999px;padding:.78rem 1.15rem;font-weight:900;text-decoration:none;cursor:pointer;transition:transform .16s ease,filter .16s ease,box-shadow .16s ease}
     .btn-main{border:0;background:linear-gradient(135deg,var(--iue-orange),#ff9b2f);color:#111;box-shadow:0 16px 34px rgba(244,123,32,.24)}
     .btn-main:hover{color:#111;filter:brightness(1.03)}
     .btn-main:disabled,.btn-soft:disabled,.btn-danger-soft:disabled{opacity:.58;cursor:not-allowed}
+    .btn-main:not(:disabled):active,.btn-soft:not(:disabled):active,.btn-danger-soft:not(:disabled):active{transform:scale(.97)}
+    .btn-main:focus-visible,.btn-soft:focus-visible,.btn-danger-soft:focus-visible,.choice:focus-within{outline:4px solid rgba(244,123,32,.3);outline-offset:3px}
     .btn-soft{background:rgba(255,255,255,.95);color:var(--blue-dark);border:2px solid rgba(31,78,140,.12)}
     .btn-danger-soft{background:#fff;color:var(--red);border:2px solid rgba(214,40,57,.18)}
     section{padding:4.5rem 0}
@@ -52,10 +54,14 @@
     .reading-box h3,.audio-box h3{color:var(--blue-dark);font-weight:900}
     .audio-box audio{width:100%;margin:.75rem 0 .4rem}
     .question-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
-    .question-card{border-radius:18px;background:#f8fbff;border:1px solid rgba(31,78,140,.08);padding:1rem;height:100%}
+    .question-card{border-radius:18px;background:#f8fbff;border:2px solid transparent;padding:1rem;height:100%;transition:border-color .18s ease,background .18s ease,box-shadow .18s ease}
+    .question-card.is-answered{border-color:rgba(31,157,117,.28);background:#f6fffb}
+    .question-card.is-missing{border-color:var(--red);background:#fff6f7;box-shadow:0 0 0 4px rgba(214,40,57,.08)}
     .question-card legend{display:block;width:100%;margin:0 0 .75rem;color:var(--blue-dark);font-size:1rem;font-weight:900;line-height:1.45}
-    .choice{min-height:42px;display:flex;align-items:flex-start;gap:.55rem;margin:.45rem 0;padding:.65rem .75rem;border-radius:14px;background:#fff;border:1px solid rgba(31,78,140,.1);cursor:pointer;color:var(--text);font-weight:800;line-height:1.35}
+    .choice{min-height:46px;display:flex;align-items:flex-start;gap:.55rem;margin:.45rem 0;padding:.7rem .78rem;border-radius:14px;background:#fff;border:2px solid rgba(31,78,140,.1);cursor:pointer;color:var(--text);font-weight:800;line-height:1.35;transition:border-color .16s ease,background .16s ease,transform .16s ease}
     .choice:hover{border-color:rgba(31,78,140,.32);background:#fdfefe}
+    .choice:active{transform:scale(.985)}
+    .choice:has(input:checked){border-color:var(--blue);background:#eaf3ff;box-shadow:0 8px 18px rgba(31,78,140,.1)}
     .choice input{margin-top:.22rem;flex:0 0 auto}
     .submit-zone{position:sticky;bottom:1rem;z-index:5;border-radius:24px;background:linear-gradient(135deg,var(--blue-dark),var(--iue-blue));color:#fff;box-shadow:0 24px 50px rgba(21,52,93,.25);padding:1rem 1.2rem;margin:1.5rem 0}
     .submit-zone p{margin:0;color:rgba(255,255,255,.82)}
@@ -148,6 +154,12 @@
       let currentExam = null;
       let audioObjectUrl = null;
       let loading = false;
+      let stateUpdating = false;
+      let examInProgress = false;
+      let audioReady = false;
+      let submitting = false;
+      let audioLoadToken = 0;
+      const DRAFT_PREFIX = "jaralingua-final-exam-draft:french1";
 
       function esc(value) {
         return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -188,17 +200,30 @@
         }, extra);
       }
 
-      async function request(url, options = {}) {
-        const response = await fetch(url, Object.assign({}, options, { headers: Object.assign({}, headers(), options.headers || {}) }));
-        const payload = await response.json().catch(() => ({}));
-        return { ok: response.ok, status: response.status, data: payload };
+      async function request(url, options = {}, timeoutMs = 15000) {
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+        try {
+          const response = await fetch(url, Object.assign({}, options, {
+            signal: controller.signal,
+            headers: Object.assign({}, headers(), options.headers || {})
+          }));
+          const payload = await response.json().catch(() => ({}));
+          return { ok: response.ok, status: response.status, data: payload };
+        } finally {
+          window.clearTimeout(timeout);
+        }
       }
 
       function openLoginPanel() {
-        document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();
+        const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
+        if (!trigger) return false;
+        trigger.click();
+        return true;
       }
 
       function renderLogin(message) {
+        examInProgress = false;
         els.root.hidden = true;
         els.admin.hidden = true;
         els.access.innerHTML = `
@@ -226,7 +251,12 @@
             </div>
           </div>`;
         els.access.querySelector("[data-open-login]").addEventListener("click", () => {
-          openLoginPanel();
+          const opened = openLoginPanel();
+          if (!opened) {
+            const status = document.getElementById("courseLoginStatus");
+            if (status) status.textContent = "Le panneau Google / Microsoft n’est pas disponible. Rechargez la page ou utilisez le courriel du cours.";
+            return;
+          }
           setTimeout(loadState, 1400);
           setTimeout(loadState, 3200);
         });
@@ -241,9 +271,13 @@
         const button = form.querySelector("button[type='submit']");
         status.textContent = "Vérification du compte du cours...";
         button.disabled = true;
+        button.setAttribute("aria-busy", "true");
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 15000);
         try {
           const response = await fetch(API.login, {
             method: "POST",
+            signal: controller.signal,
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: form.courseEmail.value.trim(), password: form.coursePassword.value })
           });
@@ -263,10 +297,14 @@
         } catch (_error) {
           status.textContent = "Courriel ou mot de passe incorrect. Mot de passe : numéro ID + astérisque.";
           button.disabled = false;
+        } finally {
+          window.clearTimeout(timeout);
+          button.removeAttribute("aria-busy");
         }
       }
 
       function renderLocked(message, payload) {
+        examInProgress = false;
         els.root.hidden = true;
         els.access.innerHTML = `
           <div class="d-flex flex-wrap align-items-start gap-3">
@@ -327,6 +365,13 @@
       }
 
       async function setExamState(isOpen) {
+        if (stateUpdating) return;
+        stateUpdating = true;
+        const controls = Array.from(els.admin.querySelectorAll("[data-set-open]"));
+        controls.forEach((button) => {
+          button.disabled = true;
+          button.setAttribute("aria-busy", "true");
+        });
         setAdminStatus("Mise à jour de l’état de l’examen...");
         try {
           const result = await request(API.state, { method: "PUT", body: JSON.stringify({ isOpen }) });
@@ -334,11 +379,16 @@
           const message = isOpen
             ? "L’examen final est maintenant ouvert. Les étudiants peuvent le voir et le réaliser. N’oubliez pas de le fermer à la fin de la séance."
             : "L’examen final est fermé. Les étudiants ne peuvent plus l’ouvrir ni le soumettre.";
-          setAdminStatus(message, "success");
-          await loadState();
+          await loadState({ force: true });
           setAdminStatus(message, "success");
         } catch (_error) {
           setAdminStatus("Impossible de modifier l’état de l’examen. Vérifiez votre accès professeur.", "error");
+        } finally {
+          stateUpdating = false;
+          els.admin.querySelectorAll("[data-set-open]").forEach((button) => {
+            button.disabled = false;
+            button.removeAttribute("aria-busy");
+          });
         }
       }
 
@@ -364,22 +414,27 @@
         }
       }
 
+      function shuffledOptionEntries(question) {
+        const entries = question.type === "truefalse"
+          ? [{ value: "true", label: "Vrai" }, { value: "false", label: "Faux" }]
+          : (question.options || []).map((label, value) => ({ value: String(value), label }));
+        for (let index = entries.length - 1; index > 0; index -= 1) {
+          const target = Math.floor(Math.random() * (index + 1));
+          [entries[index], entries[target]] = [entries[target], entries[index]];
+        }
+        return entries;
+      }
+
       function questionHtml(question, index) {
         const block = question.block ? `<span class="pill mb-2">${esc(question.block)}</span>` : "";
-        if (question.type === "truefalse") {
-          return `<fieldset class="question-card" data-question="${esc(question.id)}">${block}<legend>${index + 1}. ${esc(question.prompt)}</legend>
-            <label class="choice"><input type="radio" name="${esc(question.id)}" value="true" required><span>Vrai</span></label>
-            <label class="choice"><input type="radio" name="${esc(question.id)}" value="false" required><span>Faux</span></label>
-          </fieldset>`;
-        }
-        return `<fieldset class="question-card" data-question="${esc(question.id)}">${block}<legend>${index + 1}. ${esc(question.prompt)}</legend>
-          ${(question.options || []).map((option, optionIndex) => `<label class="choice"><input type="radio" name="${esc(question.id)}" value="${optionIndex}" required><span>${esc(option)}</span></label>`).join("")}
-        </fieldset>`;
+        const choices = shuffledOptionEntries(question).map((entry) => `
+          <label class="choice"><input type="radio" name="${esc(question.id)}" value="${esc(entry.value)}" required><span>${esc(entry.label)}</span></label>`).join("");
+        return `<fieldset class="question-card" data-question="${esc(question.id)}">${block}<legend>${index + 1}. ${esc(question.prompt)}</legend>${choices}</fieldset>`;
       }
 
       function renderSection(section) {
         const reading = section.readingText?.length ? `<div class="reading-box"><h3>${esc(section.readingTitle || "Texte")}</h3>${section.readingText.map((paragraph) => `<p>${esc(paragraph)}</p>`).join("")}</div>` : "";
-        const audio = section.audioSrc ? `<div class="audio-box"><h3>${esc(section.audioTitle || "Audio")}</h3><p>${esc(section.audioText || "Écoutez l’audio et répondez.")}</p><audio id="finalExamAudio" controls preload="metadata" aria-label="Audio protégé de l’examen final"></audio></div>` : "";
+        const audio = section.audioSrc ? `<div class="audio-box"><h3>${esc(section.audioTitle || "Audio")}</h3><p>${esc(section.audioText || "Écoutez l’audio et répondez.")}</p><audio id="finalExamAudio" controls preload="metadata" aria-label="Audio protégé de l’examen final"></audio><p class="status-message pending mt-2" data-audio-status role="status" aria-live="polite">Chargement sécurisé de l’audio...</p><button class="btn-soft mt-2" type="button" data-audio-retry hidden><i class="bi bi-arrow-repeat"></i> Réessayer le chargement</button></div>` : "";
         return `<section class="section-card" data-section="${esc(section.id)}">
           <p class="section-kicker">${esc(section.title)} · ${esc(section.points)} points</p>
           <h2 class="section-title">${esc(section.subtitle || section.title)}</h2>
@@ -390,26 +445,158 @@
         </section>`;
       }
 
+      function draftKey() {
+        const user = activeUser();
+        const identity = String(user?.email || user?.id || "session").trim().toLowerCase();
+        return `${DRAFT_PREFIX}:${currentExam?.version || "sans-version"}:${identity}`;
+      }
+
+      function saveDraft() {
+        if (!examInProgress || !currentExam) return;
+        const answers = {};
+        els.form.querySelectorAll("input[type='radio']:checked").forEach((input) => {
+          answers[input.name] = input.value;
+        });
+        try {
+          sessionStorage.setItem(draftKey(), JSON.stringify({ version: currentExam.version || "", answers, savedAt: new Date().toISOString() }));
+        } catch (_error) {
+          // Le formulaire reste utilisable même si le stockage du navigateur est indisponible.
+        }
+      }
+
+      function restoreDraft() {
+        if (!examInProgress || !currentExam) return 0;
+        try {
+          const draft = JSON.parse(sessionStorage.getItem(draftKey()) || "null");
+          if (!draft || draft.version !== (currentExam.version || "") || !draft.answers) return 0;
+          let restored = 0;
+          Object.entries(draft.answers).forEach(([questionId, value]) => {
+            const inputs = Array.from(els.form.querySelectorAll(`input[name="${CSS.escape(questionId)}"]`));
+            const matching = inputs.find((input) => input.value === String(value));
+            if (matching) {
+              matching.checked = true;
+              restored += 1;
+            }
+          });
+          updateQuestionCards();
+          return restored;
+        } catch (_error) {
+          return 0;
+        }
+      }
+
+      function clearDraft() {
+        const user = activeUser();
+        const identity = String(user?.email || user?.id || "session").trim().toLowerCase();
+        try {
+          for (let index = sessionStorage.length - 1; index >= 0; index -= 1) {
+            const key = sessionStorage.key(index) || "";
+            if (key.startsWith(`${DRAFT_PREFIX}:`) && key.endsWith(`:${identity}`)) sessionStorage.removeItem(key);
+          }
+        } catch (_error) { /* rien à faire */ }
+      }
+
+      function updateQuestionCards() {
+        els.form.querySelectorAll(".question-card").forEach((card) => {
+          const answered = Boolean(card.querySelector("input[type='radio']:checked"));
+          card.classList.toggle("is-answered", answered);
+          if (answered) card.classList.remove("is-missing");
+        });
+      }
+
+      function submitButton() {
+        return els.form.querySelector("button[type='submit']");
+      }
+
+      function updateSubmitAvailability() {
+        const button = submitButton();
+        if (!button) return;
+        const blocked = ["admin", "teacher"].includes(currentRole) || !audioReady || submitting;
+        button.disabled = blocked;
+        button.setAttribute("aria-disabled", blocked ? "true" : "false");
+        button.setAttribute("aria-busy", submitting ? "true" : "false");
+      }
+
+      function setAudioStatus(message, type = "pending", allowRetry = false) {
+        const status = els.form.querySelector("[data-audio-status]");
+        const retry = els.form.querySelector("[data-audio-retry]");
+        if (status) {
+          status.className = `status-message ${type} mt-2`;
+          status.textContent = message;
+        }
+        if (retry) retry.hidden = !allowRetry;
+      }
+
+      function waitForAudioMetadata(audio, timeoutMs = 15000) {
+        if (audio.readyState >= 1 && Number.isFinite(audio.duration) && audio.duration > 0) return Promise.resolve();
+        return new Promise((resolve, reject) => {
+          const timeout = window.setTimeout(() => finish(new Error("audio_timeout")), timeoutMs);
+          const finish = (error) => {
+            window.clearTimeout(timeout);
+            audio.removeEventListener("loadedmetadata", onReady);
+            audio.removeEventListener("error", onError);
+            if (error) reject(error); else resolve();
+          };
+          const onReady = () => finish();
+          const onError = () => finish(new Error("audio_decode_error"));
+          audio.addEventListener("loadedmetadata", onReady, { once: true });
+          audio.addEventListener("error", onError, { once: true });
+        });
+      }
+
       async function loadProtectedAudio() {
         const audio = document.getElementById("finalExamAudio");
-        if (!audio) return;
+        const token = ++audioLoadToken;
+        audioReady = false;
+        updateSubmitAvailability();
+        if (!audio) {
+          audioReady = true;
+          updateSubmitAvailability();
+          return;
+        }
+        setAudioStatus("Chargement sécurisé de l’audio...", "pending");
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 45000);
         try {
-          const response = await fetch(API.audio, { headers: headers({ "Content-Type": "application/octet-stream" }) });
+          const response = await fetch(API.audio, { cache: "no-store", signal: controller.signal, headers: headers({ Accept: "audio/mpeg" }) });
           if (!response.ok) throw new Error("audio_unavailable");
           const blob = await response.blob();
+          if (blob.size < 1024) throw new Error("audio_empty");
+          if (token !== audioLoadToken) return;
           if (audioObjectUrl) URL.revokeObjectURL(audioObjectUrl);
           audioObjectUrl = URL.createObjectURL(blob);
           audio.src = audioObjectUrl;
+          const metadataReady = waitForAudioMetadata(audio);
+          audio.load();
+          await metadataReady;
+          if (token !== audioLoadToken) return;
+          audioReady = true;
+          setAudioStatus("Audio prêt. Écoutez-le avant de répondre à la compréhension orale.", "success");
+          updateSubmitAvailability();
         } catch (_error) {
-          audio.insertAdjacentHTML("afterend", `<p class="status-message error mt-2">L’audio protégé n’a pas pu être chargé. Ne soumettez pas l’examen et prévenez le professeur.</p>`);
+          if (token !== audioLoadToken) return;
+          audioReady = false;
+          setAudioStatus("L’audio protégé n’a pas pu être chargé. Réessayez avant de soumettre l’examen.", "error", true);
+          updateSubmitAvailability();
+        } finally {
+          window.clearTimeout(timeout);
         }
       }
 
       function renderExam(payload) {
+        audioLoadToken += 1;
+        if (audioObjectUrl) {
+          URL.revokeObjectURL(audioObjectUrl);
+          audioObjectUrl = null;
+        }
+        audioReady = false;
+        submitting = false;
         currentRole = payload.role || currentRole;
         currentExam = payload.exam;
         const user = activeUser();
         const isStaff = ["admin", "teacher"].includes(currentRole);
+        examInProgress = !isStaff;
+        const isOpen = payload?.state?.isOpen === true;
         els.root.hidden = false;
         els.access.innerHTML = `
           <div class="d-flex flex-wrap align-items-start gap-3">
@@ -419,7 +606,7 @@
               <h2 class="section-title">${esc(currentExam.title || "Examen final")}</h2>
               <p class="section-text mb-0">${isStaff ? "Vous pouvez prévisualiser l’examen. Les comptes professeur ne soumettent pas de note." : "Répondez soigneusement. Une seule soumission sera enregistrée."}</p>
               <div class="identity-strip mt-3">
-                <span class="pill open"><i class="bi bi-unlock-fill"></i> Examen ouvert</span>
+                <span class="pill ${isOpen ? "open" : "closed"}"><i class="bi ${isOpen ? "bi-unlock-fill" : "bi-eye-fill"}"></i> ${isOpen ? "Examen ouvert" : "Aperçu sécurisé — examen fermé"}</span>
                 <span class="pill"><i class="bi bi-person-circle"></i> ${esc(user?.name || user?.email || "Utilisateur")}</span>
                 <span class="pill"><i class="bi bi-award-fill"></i> ${esc(currentExam.totalPoints || 50)} points · note /5</span>
               </div>
@@ -434,10 +621,18 @@
                 <p>${isStaff ? "Aperçu professeur : la soumission est désactivée." : "Vérifiez toutes vos réponses avant d’envoyer. Après l’envoi, la note sera enregistrée dans Notes."}</p>
                 <p class="mt-2 mb-0" id="submitStatus" aria-live="polite"></p>
               </div>
-              <button class="btn-main" type="submit" ${isStaff ? "disabled" : ""}><i class="bi bi-send-check-fill"></i> Envoyer l’examen final</button>
+              <button class="btn-main" type="submit" disabled aria-disabled="true"><i class="bi bi-send-check-fill"></i> Envoyer l’examen final</button>
             </div>
           </div>`;
-        els.form.addEventListener("submit", submitExam, { once: true });
+        els.form.onsubmit = submitExam;
+        els.form.onchange = (event) => {
+          if (!event.target.matches("input[type='radio']")) return;
+          updateQuestionCards();
+          saveDraft();
+        };
+        els.form.querySelector("[data-audio-retry]")?.addEventListener("click", loadProtectedAudio);
+        const restored = restoreDraft();
+        if (restored > 0) setSubmitStatus(`Brouillon restauré : ${restored} réponse(s) récupérée(s) sur cet appareil.`, "success");
         loadProtectedAudio();
       }
 
@@ -445,19 +640,27 @@
         return (currentExam?.sections || []).flatMap((section) => section.questions || []);
       }
 
-      function collectAnswers() {
+      function collectAnswers(markMissing = false) {
         const answers = {};
         let missing = 0;
+        let firstMissing = null;
         allQuestions().forEach((question) => {
           const selected = els.form.querySelector(`input[name="${CSS.escape(question.id)}"]:checked`);
+          const card = els.form.querySelector(`[data-question="${CSS.escape(question.id)}"]`);
           if (!selected) {
             missing += 1;
+            if (markMissing && card) {
+              card.classList.add("is-missing");
+              if (!firstMissing) firstMissing = card;
+            }
             return;
           }
+          card?.classList.add("is-answered");
+          card?.classList.remove("is-missing");
           if (question.type === "truefalse") answers[question.id] = selected.value === "true";
           else answers[question.id] = Number(selected.value);
         });
-        return { answers, missing };
+        return { answers, missing, firstMissing };
       }
 
       function setSubmitStatus(message, type = "pending") {
@@ -469,31 +672,48 @@
 
       async function submitExam(event) {
         event.preventDefault();
-        const submitButton = els.form.querySelector("button[type='submit']");
-        const { answers, missing } = collectAnswers();
-        if (missing > 0) {
-          setSubmitStatus(`Il manque ${missing} réponse(s). Répondez à toutes les questions avant d’envoyer.`, "error");
-          els.form.addEventListener("submit", submitExam, { once: true });
+        if (submitting) return;
+        if (!audioReady) {
+          setSubmitStatus("L’audio doit être chargé correctement avant l’envoi. Utilisez le bouton Réessayer dans la section d’écoute.", "error");
+          els.form.querySelector("[data-audio-retry]")?.focus();
           return;
         }
-        submitButton.disabled = true;
+        const { answers, missing, firstMissing } = collectAnswers(true);
+        if (missing > 0) {
+          setSubmitStatus(`Il manque ${missing} réponse(s). Répondez à toutes les questions avant d’envoyer.`, "error");
+          firstMissing?.scrollIntoView({ behavior: "smooth", block: "center" });
+          window.setTimeout(() => firstMissing?.querySelector("input[type='radio']")?.focus(), 450);
+          return;
+        }
+        submitting = true;
+        updateSubmitAvailability();
         setSubmitStatus("Envoi de l’examen final en cours...", "pending");
         try {
-          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers }) });
+          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers, examVersion: currentExam?.version || "" }) }, 30000);
           if (!result.ok) {
             if (result.data?.error === "already_submitted" && result.data.result) return renderSubmitted(result.data.result);
             if (result.data?.error === "exam_closed") throw new Error("L’examen est fermé. La soumission n’a pas été enregistrée.");
+            if (result.data?.error === "exam_version_changed") throw new Error("L’examen a été mis à jour. Rechargez la page avant de recommencer; cette version ne peut pas être envoyée.");
             throw new Error("La soumission n’a pas pu être enregistrée.");
           }
           renderSubmitted(result.data.result);
         } catch (error) {
           setSubmitStatus(error.message || "Erreur d’envoi. Vos réponses restent sur cette page.", "error");
-          submitButton.disabled = false;
-          els.form.addEventListener("submit", submitExam, { once: true });
+          submitting = false;
+          updateSubmitAvailability();
         }
       }
 
       function renderSubmitted(result) {
+        examInProgress = false;
+        submitting = false;
+        audioReady = false;
+        audioLoadToken += 1;
+        clearDraft();
+        if (audioObjectUrl) {
+          URL.revokeObjectURL(audioObjectUrl);
+          audioObjectUrl = null;
+        }
         els.root.hidden = false;
         els.admin.hidden = true;
         els.access.innerHTML = `
@@ -530,9 +750,10 @@
       }
 
       async function loadState(options = {}) {
-        if (loading) return;
+        if (loading || (examInProgress && options.force !== true)) return;
         const user = activeUser();
         if (!user) {
+          examInProgress = false;
           renderLogin("Connectez-vous pour savoir si l’examen est ouvert pour votre compte.");
           return;
         }
@@ -564,7 +785,12 @@
       }
 
       loadState();
-      window.addEventListener("focus", () => setTimeout(loadState, 250));
+      window.addEventListener("focus", () => {
+        if (examInProgress || stateUpdating) return;
+        window.setTimeout(() => {
+          if (!examInProgress && !stateUpdating) loadState();
+        }, 250);
+      });
     })();
   </script>
 </body>

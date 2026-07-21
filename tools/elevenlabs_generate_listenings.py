@@ -112,6 +112,8 @@ FEMALE_HINTS = {
     "madame",
     "mother",
     "nina",
+    "nora",
+    "narratrice",
     "partner_female",
     "sara",
     "sarah",
@@ -554,7 +556,10 @@ def parse_dialogue(script: str) -> list[Turn]:
     unique_speakers = {turn.speaker for turn in turns}
     if len(unique_speakers) == 1 and turns:
         speaker = turns[0].speaker
-        return [Turn(speaker=speaker, text=" ".join(turn.text for turn in turns))]
+        # Preserve paragraph boundaries for long-form TTS. Flattening them to
+        # spaces makes beginner listenings sound rushed and removes the natural
+        # pause between ideas.
+        return [Turn(speaker=speaker, text="\n\n".join(turn.text for turn in turns))]
     return turns if len(unique_speakers) >= 2 else []
 
 
@@ -828,6 +833,7 @@ def synthesize_tts(
     output_format: str,
     stability: float,
     similarity_boost: float,
+    speed: float,
     language_code: str | None,
 ) -> bytes:
     speaker = plan.turns[0].speaker
@@ -838,6 +844,7 @@ def synthesize_tts(
         "voice_settings": {
             "stability": stability,
             "similarity_boost": similarity_boost,
+            "speed": speed,
         },
     }
     if language_code:
@@ -950,8 +957,17 @@ def main() -> int:
     parser.add_argument("--apply-text-normalization", choices=["auto", "on", "off"], default=os.environ.get("ELEVENLABS_TEXT_NORMALIZATION", "auto"))
     parser.add_argument("--stability", type=float, default=float(os.environ.get("ELEVENLABS_STABILITY", "0.55")))
     parser.add_argument("--similarity-boost", type=float, default=float(os.environ.get("ELEVENLABS_SIMILARITY_BOOST", "0.80")))
+    parser.add_argument(
+        "--speed",
+        type=float,
+        default=float(os.environ.get("ELEVENLABS_SPEED", "1.0")),
+        help="Voice speed for TTS mode (supported range: 0.7 to 1.2).",
+    )
     parser.add_argument("--language-code", help="Override ElevenLabs language_code. Defaults to profile language code.")
     args = parser.parse_args()
+
+    if not 0.7 <= args.speed <= 1.2:
+        parser.error("--speed must be between 0.7 and 1.2")
 
     if args.audit:
         args.dry_run = True
@@ -1035,6 +1051,7 @@ def main() -> int:
                     args.output_format,
                     args.stability,
                     args.similarity_boost,
+                    args.speed,
                     language_code,
                 )
 

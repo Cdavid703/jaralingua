@@ -645,6 +645,18 @@ FRENCH2_PRONUNCIATION_EVALUATIONS = {
     }
 }
 
+FRENCH2_FINAL_EXAM_EVALUATION = {
+    "id": "finalExam",
+    "title": "Examen final A1.2",
+    "weight": 0,
+    "type": "Examen final",
+    "displayDate": "Séance d'examen",
+    "description": (
+        "Examen final verrouillé, noté automatiquement sur 5. Poids provisoire de 0 % : "
+        "la grille du Niveau 2 totalise déjà 100 % et le professeur doit définir le poste à rééquilibrer."
+    ),
+}
+
 FRENCH1_CORE_EVALUATIONS = {
     "finalExam": {
         "id": "finalExam",
@@ -1448,6 +1460,20 @@ def matched_student_for_profile(profile, grades_data):
     return claimed_student
 
 
+def registered_student_for_profile(profile, grades_data):
+    """Match high-stakes assessments only through a registered email or alias."""
+    email = normalize_email(profile.get("email"))
+    if not email:
+        return None
+    return next(
+        (
+            item for item in grades_data.get("students", [])
+            if isinstance(item, dict) and email_matches_student(item, email)
+        ),
+        None,
+    )
+
+
 def serve_pronunciation_audio(handler, parsed, profile, grades_path, audio_dir):
     query = urllib.parse.parse_qs(parsed.query)
     student_id = clean_text((query.get("studentId") or [""])[0], 40)
@@ -1947,6 +1973,21 @@ def ensure_evaluation_template(grades_data, template):
     return True
 
 
+def ensure_evaluation_defaults(grades_data, template):
+    """Create an evaluation or fill missing fields without undoing teacher edits."""
+    evaluations = grades_data.setdefault("evaluations", [])
+    existing = next((item for item in evaluations if isinstance(item, dict) and item.get("id") == template.get("id")), None)
+    if not existing:
+        evaluations.append(dict(template))
+        return True
+    changed = False
+    for key, value in template.items():
+        if key not in existing:
+            existing[key] = value
+            changed = True
+    return changed
+
+
 def ensure_french1_gradebook_structure(grades_data):
     changed = False
     obsolete_ids = {"participation", "ecoute", "lecture", "prononciation", "evaluationApreciser15"}
@@ -1963,10 +2004,10 @@ def ensure_french1_gradebook_structure(grades_data):
                 student["grades"].pop(obsolete_id, None)
                 changed = True
     for template in FRENCH1_CORE_EVALUATIONS.values():
-        if ensure_evaluation_template(grades_data, template):
+        if ensure_evaluation_defaults(grades_data, template):
             changed = True
     for template in FRENCH1_PRONUNCIATION_EVALUATIONS.values():
-        if ensure_evaluation_template(grades_data, template):
+        if ensure_evaluation_defaults(grades_data, template):
             changed = True
     return changed
 
@@ -1987,8 +2028,10 @@ def ensure_french2_gradebook_structure(grades_data):
                 student["grades"].pop(obsolete_id, None)
                 changed = True
     for template in FRENCH2_PRONUNCIATION_EVALUATIONS.values():
-        if ensure_evaluation_template(grades_data, template):
+        if ensure_evaluation_defaults(grades_data, template):
             changed = True
+    if ensure_evaluation_defaults(grades_data, FRENCH2_FINAL_EXAM_EVALUATION):
+        changed = True
     return changed
 
 
@@ -5424,6 +5467,7 @@ def french1_final_exam_submission_public(submission):
         "scorePoints": submission.get("scorePoints"),
         "totalPoints": submission.get("totalPoints"),
         "grade": submission.get("grade"),
+        "examVersion": submission.get("examVersion"),
         "submittedAt": submission.get("submittedAt")
     }
 
@@ -5435,7 +5479,7 @@ def final_exam_public_question(question):
         "prompt": clean_text(question.get("prompt"), 1000),
         "points": question.get("points", 1)
     }
-    for optional in ("title",):
+    for optional in ("title", "block"):
         if question.get(optional):
             public[optional] = clean_text(question.get(optional), 300)
     if isinstance(question.get("options"), list):
@@ -5474,9 +5518,13 @@ def final_exam_public_payload(bundle):
     }
 
 
-def final_exam_state_payload(profile, grades_data, bundle, submissions):
+def final_exam_state_payload(profile, grades_data, bundle, submissions, strict_student=False):
     role = grade_user_role(profile, grades_data)
-    student = matched_student_for_profile(profile, grades_data)
+    student = (
+        registered_student_for_profile(profile, grades_data)
+        if strict_student
+        else matched_student_for_profile(profile, grades_data)
+    )
     student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
     return {
         "role": role,
@@ -5517,6 +5565,31 @@ def normalize_answer(value):
         except ValueError:
             return stripped[:500]
     return None
+
+
+def validate_final_exam_answers(exam, answers):
+    if not isinstance(answers, dict):
+        raise ValueError("invalid_answers")
+    expected_questions = [
+        question
+        for section in exam.get("sections", [])
+        if isinstance(section, dict)
+        for question in section.get("questions", [])
+        if isinstance(question, dict) and clean_text(question.get("id"), 80)
+    ]
+    expected_ids = [clean_text(question.get("id"), 80) for question in expected_questions]
+    if any(question_id not in answers for question_id in expected_ids):
+        raise ValueError("incomplete_answers")
+    for question in expected_questions:
+        question_id = clean_text(question.get("id"), 80)
+        value = answers.get(question_id)
+        if question.get("type") == "truefalse":
+            if not isinstance(value, bool):
+                raise ValueError("invalid_answer")
+            continue
+        options = question.get("options", [])
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0 or value >= len(options):
+            raise ValueError("invalid_answer")
 
 
 def score_final_exam(exam, answers):
@@ -6699,7 +6772,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
                 bundle = read_french1_final_exam_bundle()
                 submissions = read_french1_final_exam_submissions()
-                raw_payload = final_exam_state_payload(profile, grades_data, bundle, submissions)
+                raw_payload = final_exam_state_payload(profile, grades_data, bundle, submissions, strict_student=True)
                 raw_payload["submitted"] = french1_final_exam_submission_public(raw_payload.get("submitted"))
                 json_response(self, 200, raw_payload)
             return
@@ -6710,7 +6783,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if ensure_french1_gradebook_structure(grades_data):
                     write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
                 role = grade_user_role(profile, grades_data)
-                student = matched_student_for_profile(profile, grades_data)
+                student = registered_student_for_profile(profile, grades_data)
                 bundle = read_french1_final_exam_bundle()
                 submissions = read_french1_final_exam_submissions()
                 state = bundle.get("state", {})
@@ -6740,7 +6813,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
             with data_lock:
                 grades_data = read_grades_data(FRENCH1_GRADES_PATH)
                 role = grade_user_role(profile, grades_data)
-                student = matched_student_for_profile(profile, grades_data)
+                student = registered_student_for_profile(profile, grades_data)
                 bundle = read_french1_final_exam_bundle()
                 state = bundle.get("state", {})
                 if role not in ("admin", "teacher") and not isinstance(student, dict):
@@ -6776,7 +6849,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 grades_data = read_grades_data(FRENCH2_GRADES_PATH)
                 bundle = read_french2_final_exam_bundle()
                 submissions = read_french2_final_exam_submissions()
-                raw_payload = final_exam_state_payload(profile, grades_data, bundle, submissions)
+                raw_payload = final_exam_state_payload(profile, grades_data, bundle, submissions, strict_student=True)
                 raw_payload["submitted"] = french1_final_exam_submission_public(raw_payload.get("submitted"))
                 json_response(self, 200, raw_payload)
             return
@@ -6785,7 +6858,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
             with data_lock:
                 grades_data = read_grades_data(FRENCH2_GRADES_PATH)
                 role = grade_user_role(profile, grades_data)
-                student = matched_student_for_profile(profile, grades_data)
+                student = registered_student_for_profile(profile, grades_data)
                 bundle = read_french2_final_exam_bundle()
                 submissions = read_french2_final_exam_submissions()
                 state = bundle.get("state", {})
@@ -6815,7 +6888,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
             with data_lock:
                 grades_data = read_grades_data(FRENCH2_GRADES_PATH)
                 role = grade_user_role(profile, grades_data)
-                student = matched_student_for_profile(profile, grades_data)
+                student = registered_student_for_profile(profile, grades_data)
                 bundle = read_french2_final_exam_bundle()
                 state = bundle.get("state", {})
                 if role not in ("admin", "teacher") and not isinstance(student, dict):
@@ -8727,11 +8800,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/french1/final-exam/submit":
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
             with data_lock:
                 grades_data = read_grades_data(FRENCH1_GRADES_PATH)
                 if ensure_french1_gradebook_structure(grades_data):
                     write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
-                student = matched_student_for_profile(profile, grades_data)
+                student = registered_student_for_profile(profile, grades_data)
                 if not isinstance(student, dict):
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
@@ -8746,12 +8822,29 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 student_id = clean_text(student.get("id"), 40)
                 existing = submissions.get("submissions", {}).get(student_id)
                 if existing:
+                    existing_grade = clean_grade(existing.get("grade"))
+                    if existing_grade is None:
+                        json_response(self, 409, {"error": "submission_inconsistent"})
+                        return
+                    ensure_evaluation_defaults(grades_data, FRENCH1_CORE_EVALUATIONS["finalExam"])
+                    student.setdefault("grades", {})["finalExam"] = existing_grade
+                    write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
                     json_response(self, 409, {
                         "error": "already_submitted",
                         "result": french1_final_exam_submission_public(existing)
                     })
                     return
 
+                server_version = clean_text(bundle.get("exam", {}).get("version"), 80)
+                client_version = clean_text(payload.get("examVersion"), 80)
+                if not client_version or client_version != server_version:
+                    json_response(self, 409, {"error": "exam_version_changed", "examVersion": server_version})
+                    return
+                try:
+                    validate_final_exam_answers(bundle.get("exam", {}), payload.get("answers"))
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
                 result = score_final_exam(bundle.get("exam", {}), payload.get("answers"))
                 submitted_at = now_iso()
                 submission = {
@@ -8761,13 +8854,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "scorePoints": result["scorePoints"],
                     "totalPoints": result["totalPoints"],
                     "grade": result["grade"],
+                    "examVersion": clean_text(bundle.get("exam", {}).get("version"), 80),
                     "sectionScores": result["sectionScores"],
                     "submittedAt": submitted_at,
                     "answers": result["details"]
                 }
                 submissions.setdefault("submissions", {})[student_id] = submission
 
-                ensure_evaluation_template(grades_data, FRENCH1_CORE_EVALUATIONS["finalExam"])
+                ensure_evaluation_defaults(grades_data, FRENCH1_CORE_EVALUATIONS["finalExam"])
                 student.setdefault("grades", {})["finalExam"] = result["grade"]
                 write_french1_final_exam_submissions(submissions)
                 write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
@@ -8775,9 +8869,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/french2/final-exam/submit":
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
             with data_lock:
                 grades_data = read_grades_data(FRENCH2_GRADES_PATH)
-                student = matched_student_for_profile(profile, grades_data)
+                student = registered_student_for_profile(profile, grades_data)
                 if not isinstance(student, dict):
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
@@ -8792,12 +8889,29 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 student_id = clean_text(student.get("id"), 40)
                 existing = submissions.get("submissions", {}).get(student_id)
                 if existing:
+                    existing_grade = clean_grade(existing.get("grade"))
+                    if existing_grade is None:
+                        json_response(self, 409, {"error": "submission_inconsistent"})
+                        return
+                    ensure_evaluation_defaults(grades_data, FRENCH2_FINAL_EXAM_EVALUATION)
+                    student.setdefault("grades", {})["finalExam"] = existing_grade
+                    write_json_file(FRENCH2_GRADES_PATH, grades_data, ".french2-grades-")
                     json_response(self, 409, {
                         "error": "already_submitted",
                         "result": french1_final_exam_submission_public(existing)
                     })
                     return
 
+                server_version = clean_text(bundle.get("exam", {}).get("version"), 80)
+                client_version = clean_text(payload.get("examVersion"), 80)
+                if not client_version or client_version != server_version:
+                    json_response(self, 409, {"error": "exam_version_changed", "examVersion": server_version})
+                    return
+                try:
+                    validate_final_exam_answers(bundle.get("exam", {}), payload.get("answers"))
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
                 result = score_final_exam(bundle.get("exam", {}), payload.get("answers"))
                 submitted_at = now_iso()
                 submission = {
@@ -8807,13 +8921,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "scorePoints": result["scorePoints"],
                     "totalPoints": result["totalPoints"],
                     "grade": result["grade"],
+                    "examVersion": clean_text(bundle.get("exam", {}).get("version"), 80),
                     "sectionScores": result["sectionScores"],
                     "submittedAt": submitted_at,
                     "answers": result["details"]
                 }
                 submissions.setdefault("submissions", {})[student_id] = submission
 
-                ensure_final_exam_evaluation(grades_data)
+                ensure_evaluation_defaults(grades_data, FRENCH2_FINAL_EXAM_EVALUATION)
                 student.setdefault("grades", {})["finalExam"] = result["grade"]
                 write_french2_final_exam_submissions(submissions)
                 write_json_file(FRENCH2_GRADES_PATH, grades_data, ".french2-grades-")
@@ -9537,6 +9652,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/french1/final-exam/state":
+            if not isinstance(payload, dict) or not isinstance(payload.get("isOpen"), bool):
+                json_response(self, 400, {"error": "invalid_state"})
+                return
             with data_lock:
                 grades_data = read_grades_data(FRENCH1_GRADES_PATH)
                 role = grade_user_role(profile, grades_data)
@@ -9545,7 +9663,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 bundle = read_french1_final_exam_bundle()
                 state = bundle.setdefault("state", {})
-                desired_open = payload.get("isOpen") is True
+                desired_open = payload["isOpen"]
                 timestamp = now_iso()
                 state["isOpen"] = desired_open
                 state["updatedAt"] = timestamp
@@ -9589,6 +9707,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
         if parsed.path == "/api/french2/final-exam/state":
+            if not isinstance(payload, dict) or not isinstance(payload.get("isOpen"), bool):
+                json_response(self, 400, {"error": "invalid_state"})
+                return
             with data_lock:
                 grades_data = read_grades_data(FRENCH2_GRADES_PATH)
                 role = grade_user_role(profile, grades_data)
@@ -9597,7 +9718,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 bundle = read_french2_final_exam_bundle()
                 state = bundle.setdefault("state", {})
-                desired_open = payload.get("isOpen") is True
+                desired_open = payload["isOpen"]
                 timestamp = now_iso()
                 state["isOpen"] = desired_open
                 state["updatedAt"] = timestamp

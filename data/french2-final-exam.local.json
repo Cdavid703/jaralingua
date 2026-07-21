@@ -1,0 +1,677 @@
+{
+  "state": {
+    "isOpen": false,
+    "openedAt": null,
+    "closedAt": null,
+    "openedBy": null,
+    "updatedAt": null
+  },
+  "exam": {
+    "id": "french2-final-exam",
+    "title": "Examen final A1.2",
+    "totalPoints": 50,
+    "transcript": "Bonjour, je m’appelle Nora. Aujourd’hui, je vais passer une journée à Envigado avec mon ami Malik. Le matin, je vais à la pharmacie parce que j’ai mal à la gorge.\n\nEnsuite, nous allons déjeuner dans un petit restaurant près du parc. Je voudrais une soupe, du riz et de l’eau. Malik préfère une salade avec du poulet. Il ne veut pas de dessert parce qu’il n’a pas très faim.\n\nÀ midi, il va faire chaud. L’après-midi, il va y avoir du vent et quelques nuages. Je vais porter un pantalon noir et une chemise blanche. Malik va mettre une veste légère parce qu’il a souvent froid quand il y a du vent.\n\nAprès le déjeuner, nous allons visiter un appartement pour sa cousine. Il est plus grand que son studio, mais il coûte plus cher. La cuisine est à droite du salon, la salle de bains est en face de la chambre et le bureau est près de la fenêtre.\n\nÀ la fin de la journée, nous allons retrouver deux camarades à la gare. Pour y aller, il faut continuer tout droit, tourner à gauche et traverser la rue. Si mon téléphone n’a plus de batterie, nous allons demander notre chemin à quelqu’un.",
+    "sections": [
+      {
+        "id": "vocabulaire",
+        "title": "I. Vocabulaire",
+        "subtitle": "Choisissez le mot ou l’expression qui complète chaque situation.",
+        "points": 15,
+        "instructions": "Lisez chaque phrase et choisissez une seule réponse.",
+        "questions": [
+          {
+            "id": "v1",
+            "type": "mcq",
+            "prompt": "En hiver, on porte un…",
+            "options": [
+              "chaise",
+              "lit",
+              "manteau"
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "v2",
+            "type": "mcq",
+            "prompt": "Pour être propre, on…",
+            "options": [
+              "prend une douche",
+              "prend un livre",
+              "prend une chaise"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "v3",
+            "type": "mcq",
+            "prompt": "Je bois de l’…",
+            "options": [
+              "eau",
+              "pomme",
+              "pain"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "v4",
+            "type": "mcq",
+            "prompt": "Après le petit déjeuner, on…",
+            "options": [
+              "se brosse les dents",
+              "se couche",
+              "se promène"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "v5",
+            "type": "mcq",
+            "prompt": "Pour aller à l’école, on peut prendre le…",
+            "options": [
+              "lit",
+              "bus",
+              "pain"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "v6",
+            "type": "mcq",
+            "prompt": "On attend le bus à l’…",
+            "options": [
+              "arrêt",
+              "chambre",
+              "cuisine"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "v7",
+            "type": "mcq",
+            "prompt": "Le soir, on va au…",
+            "options": [
+              "table",
+              "lit",
+              "chaise"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "v8",
+            "type": "mcq",
+            "prompt": "On achète du pain à la…",
+            "options": [
+              "boulangerie",
+              "pharmacie",
+              "école"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "v9",
+            "type": "mcq",
+            "prompt": "On va au… pour voir un film.",
+            "options": [
+              "gare",
+              "cinéma",
+              "banque"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "v10",
+            "type": "mcq",
+            "prompt": "Le matin, avant d’aller à l’école, on prend le…",
+            "options": [
+              "déjeuner",
+              "petit déjeuner",
+              "dîner"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "v11",
+            "type": "mcq",
+            "prompt": "Quel vêtement porte-t-on quand il fait froid ?",
+            "options": [
+              "t-shirt",
+              "short",
+              "veste"
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "v12",
+            "type": "mcq",
+            "prompt": "En été, il fait souvent…",
+            "options": [
+              "chaud",
+              "gris",
+              "mouillé"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "v13",
+            "type": "mcq",
+            "prompt": "Je mange une…",
+            "options": [
+              "table",
+              "lait",
+              "banane"
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "v14",
+            "type": "mcq",
+            "prompt": "Aux pieds, on porte des…",
+            "options": [
+              "chaussures",
+              "lunettes",
+              "chemises"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "v15",
+            "type": "mcq",
+            "prompt": "Sur la tête, on peut porter une…",
+            "options": [
+              "jupe",
+              "robe",
+              "casquette"
+            ],
+            "answer": 2,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": "grammaire",
+        "title": "II. Grammaire et structures A1.2",
+        "subtitle": "Complétez chaque phrase avec la forme correcte.",
+        "points": 15,
+        "instructions": "Chaque question reprend une structure travaillée dans les thèmes du Niveau 2.",
+        "questions": [
+          {
+            "id": "g1",
+            "type": "mcq",
+            "block": "Articles partitifs",
+            "prompt": "Je voudrais ___ soupe et ___ eau.",
+            "options": [
+              "de la / de l'",
+              "du / de la",
+              "des / du"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g2",
+            "type": "mcq",
+            "block": "Négation",
+            "prompt": "Malik ne veut pas ___ dessert.",
+            "options": [
+              "du",
+              "des",
+              "de"
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g3",
+            "type": "mcq",
+            "block": "Futur proche",
+            "prompt": "Nous ___ visiter un appartement.",
+            "options": [
+              "avons",
+              "allons",
+              "sommes"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g4",
+            "type": "mcq",
+            "block": "Accord de l’adjectif",
+            "prompt": "Nora porte une chemise ___.",
+            "options": [
+              "blanche",
+              "blanc",
+              "blanches"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g5",
+            "type": "mcq",
+            "block": "Comparatif",
+            "prompt": "L'appartement est ___ grand que le studio.",
+            "options": [
+              "très",
+              "beaucoup",
+              "plus"
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g6",
+            "type": "mcq",
+            "block": "Comparatif",
+            "prompt": "Le studio coûte ___ cher que l'appartement.",
+            "options": [
+              "beaucoup",
+              "moins",
+              "très"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g7",
+            "type": "mcq",
+            "block": "Santé",
+            "prompt": "Nora a mal ___ la gorge.",
+            "options": [
+              "à",
+              "au",
+              "aux"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g8",
+            "type": "mcq",
+            "block": "Prépositions",
+            "prompt": "La cuisine est ___ droite du salon.",
+            "options": [
+              "en",
+              "à",
+              "chez"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g9",
+            "type": "mcq",
+            "block": "Négation élargie",
+            "prompt": "Malik ne mange ___ de viande.",
+            "options": [
+              "jamais",
+              "rien",
+              "personne"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g10",
+            "type": "mcq",
+            "block": "Pronoms toniques",
+            "prompt": "___, je vais demander mon chemin; lui, il va regarder le plan.",
+            "options": [
+              "Moi",
+              "Me",
+              "Mon"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g11",
+            "type": "mcq",
+            "block": "Question",
+            "prompt": "La question correcte est :",
+            "options": [
+              "Où la gare est ?",
+              "Où gare est ?",
+              "Où est la gare ?"
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "g12",
+            "type": "mcq",
+            "block": "Impératif",
+            "prompt": "Pour donner une direction : ___ tout droit.",
+            "options": [
+              "Vous allez",
+              "Allez",
+              "Aller"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g13",
+            "type": "mcq",
+            "block": "Verbes pronominaux",
+            "prompt": "Le matin, Nora ___ à sept heures.",
+            "options": [
+              "se lève",
+              "me lève",
+              "se lèvent"
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "g14",
+            "type": "mcq",
+            "block": "Quantité",
+            "prompt": "Je prends ___ riz.",
+            "options": [
+              "un peu du",
+              "un peu de",
+              "une peu de"
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "g15",
+            "type": "mcq",
+            "block": "Il faut + infinitif",
+            "prompt": "Pour aller à la gare, il ___ continuer tout droit.",
+            "options": [
+              "faut",
+              "fait",
+              "va"
+            ],
+            "answer": 0,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": "lecture",
+        "title": "III. Compréhension écrite",
+        "subtitle": "Lisez le message et choisissez la meilleure réponse.",
+        "points": 10,
+        "instructions": "Les questions vérifient les liens entre santé, restaurant, météo, logement et déplacement.",
+        "readingTitle": "Message de Malik à Nora",
+        "readingText": [
+          "Salut Nora. Demain matin, je vais passer à la pharmacie avec toi parce que tu as mal à la gorge. Ensuite, nous allons déjeuner au restaurant près du parc. Je vais prendre une salade avec du poulet et un verre d’eau. Je ne veux pas de dessert parce que je préfère manger léger.",
+          "L’après-midi, nous allons visiter l’appartement de ma cousine. Il est plus grand que mon studio, mais il coûte plus cher. La chambre est en face de la salle de bains, et le bureau est près de la fenêtre. S’il y a du vent, je vais porter une veste légère. Après la visite, nous allons à la gare. Elle est à deux pas du restaurant."
+        ],
+        "questions": [
+          {
+            "id": "r1",
+            "type": "mcq",
+            "prompt": "Pourquoi Nora et Malik passent-ils à la pharmacie ?",
+            "options": [
+              "Parce que Malik cherche un appartement.",
+              "Parce qu'ils veulent commander une soupe.",
+              "Parce que Nora a mal à la gorge."
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "r2",
+            "type": "mcq",
+            "prompt": "Où vont-ils déjeuner ?",
+            "options": [
+              "Au restaurant près du parc.",
+              "Dans la gare.",
+              "Dans la cuisine de la cousine."
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "r3",
+            "type": "mcq",
+            "prompt": "Que veut prendre Malik ?",
+            "options": [
+              "Une soupe, du riz et un dessert.",
+              "Une salade avec du poulet et de l'eau.",
+              "Un café et une veste."
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "r4",
+            "type": "mcq",
+            "prompt": "Pourquoi Malik ne veut-il pas de dessert ?",
+            "options": [
+              "Parce qu'il a mal à la tête.",
+              "Parce que la gare est loin.",
+              "Parce qu'il préfère manger léger."
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "r5",
+            "type": "mcq",
+            "prompt": "Comment l'appartement est-il comparé au studio ?",
+            "options": [
+              "Il est plus grand, mais plus cher.",
+              "Il est moins grand et moins cher.",
+              "Il est plus petit, mais confortable."
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "r6",
+            "type": "mcq",
+            "prompt": "Où est le bureau ?",
+            "options": [
+              "À côté du restaurant.",
+              "Près de la fenêtre.",
+              "En face de la gare."
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "r7",
+            "type": "mcq",
+            "prompt": "Pourquoi Malik pense-t-il à une veste légère ?",
+            "options": [
+              "Parce qu'il peut y avoir du vent.",
+              "Parce que la pharmacie est fermée.",
+              "Parce que le dessert est cher."
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "r8",
+            "type": "mcq",
+            "prompt": "Que signifie « la gare est à deux pas » dans le message ?",
+            "options": [
+              "La gare est très chère.",
+              "La gare est dans l'appartement.",
+              "La gare est très proche."
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "r9",
+            "type": "mcq",
+            "prompt": "Quelle phrase résume le mieux l'après-midi ?",
+            "options": [
+              "Ils restent toute la journée au restaurant.",
+              "Ils visitent un appartement, puis ils vont à la gare.",
+              "Ils achètent seulement des médicaments."
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "r10",
+            "type": "mcq",
+            "prompt": "Quelle pièce est en face de la salle de bains ?",
+            "options": [
+              "La chambre.",
+              "La cuisine.",
+              "Le bureau."
+            ],
+            "answer": 0,
+            "points": 1
+          }
+        ]
+      },
+      {
+        "id": "ecoute",
+        "title": "IV. Compréhension orale",
+        "subtitle": "Écoutez l'audio protégé de l'examen final.",
+        "points": 10,
+        "instructions": "L'audio est réservé à l'examen final et ne doit pas apparaître dans la bibliothèque publique.",
+        "audioTitle": "Une journée pratique à Envigado",
+        "audioText": "Écoutez Nora et choisissez la meilleure réponse.",
+        "audioSrc": "/api/french2/final-exam/audio",
+        "questions": [
+          {
+            "id": "l1",
+            "type": "mcq",
+            "prompt": "Pourquoi Nora va-t-elle passer à la pharmacie ?",
+            "options": [
+              "Parce qu'elle a mal à la gorge.",
+              "Parce qu'elle veut acheter une chemise.",
+              "Parce qu'elle cherche un studio."
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l2",
+            "type": "mcq",
+            "prompt": "Que veut commander Nora au restaurant ?",
+            "options": [
+              "Une salade, un dessert et du café.",
+              "Du poulet, du pain et du jus.",
+              "Une soupe, du riz et de l'eau."
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "l3",
+            "type": "mcq",
+            "prompt": "Pourquoi Malik ne veut-il pas de dessert ?",
+            "options": [
+              "Parce qu'il a froid.",
+              "Parce qu'il n'a pas très faim.",
+              "Parce qu'il va à la gare."
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "l4",
+            "type": "mcq",
+            "prompt": "Quel temps est annoncé pour l'après-midi ?",
+            "options": [
+              "Du vent et quelques nuages.",
+              "De la neige forte.",
+              "Un orage toute la journée."
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l5",
+            "type": "mcq",
+            "prompt": "Que va porter Nora ?",
+            "options": [
+              "Une robe verte et des bottes.",
+              "Une veste rouge et un chapeau.",
+              "Un pantalon noir et une chemise blanche."
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "l6",
+            "type": "mcq",
+            "prompt": "Pourquoi Malik va-t-il mettre une veste légère ?",
+            "options": [
+              "Parce que le restaurant est élégant.",
+              "Parce qu'il a souvent froid quand il y a du vent.",
+              "Parce que la pharmacie le demande."
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "l7",
+            "type": "mcq",
+            "prompt": "Comment l'appartement est-il décrit ?",
+            "options": [
+              "Plus grand que le studio, mais plus cher.",
+              "Plus petit que la chambre, mais gratuit.",
+              "Moins clair que le restaurant."
+            ],
+            "answer": 0,
+            "points": 1
+          },
+          {
+            "id": "l8",
+            "type": "mcq",
+            "prompt": "Où est le bureau dans l'appartement ?",
+            "options": [
+              "À droite de la gare.",
+              "Dans la pharmacie.",
+              "Près de la fenêtre."
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
+            "id": "l9",
+            "type": "mcq",
+            "prompt": "Quel chemin mène à la gare ?",
+            "options": [
+              "Entrer dans le restaurant et monter l'escalier.",
+              "Aller tout droit, tourner à gauche et traverser la rue.",
+              "Tourner à droite dans la cuisine."
+            ],
+            "answer": 1,
+            "points": 1
+          },
+          {
+            "id": "l10",
+            "type": "mcq",
+            "prompt": "Que vont-ils faire si le téléphone n’a plus de batterie ?",
+            "options": [
+              "Ils vont demander leur chemin à quelqu’un.",
+              "Ils vont commander un dessert.",
+              "Ils vont annuler la visite de l’appartement."
+            ],
+            "answer": 0,
+            "points": 1
+          }
+        ]
+      }
+    ],
+    "version": "2026-07-20-teacher-vocabulary"
+  }
+}
