@@ -87,7 +87,7 @@
   color: var(--restaurant-ink);
 }
 
-.restaurant-privacy-note {
+.restaurant-hero .coach-hero-copy > p.restaurant-privacy-note {
   display: flex;
   max-width: 740px;
   align-items: flex-start;
@@ -378,6 +378,144 @@
   line-height: 1.35;
 }
 
+.restaurant-delivery-panel {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid rgba(8, 127, 120, .3);
+  border-left: 5px solid var(--restaurant-teal);
+  border-radius: 8px;
+  background: #f5fbfa;
+}
+
+.restaurant-delivery-heading {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: .8rem;
+  align-items: start;
+}
+
+.restaurant-delivery-heading h3,
+.restaurant-delivery-heading p {
+  margin: 0;
+}
+
+.restaurant-delivery-heading h3 {
+  color: var(--restaurant-ink);
+  font-size: 1.18rem;
+}
+
+.restaurant-delivery-heading p:not(.coach-kicker) {
+  margin-top: .35rem;
+  color: var(--coach-muted);
+  line-height: 1.5;
+}
+
+.restaurant-delivery-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--restaurant-teal);
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.restaurant-delivery-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .55rem;
+  margin-top: .9rem;
+}
+
+.restaurant-delivery-metrics span {
+  min-width: 0;
+  padding: .7rem;
+  border: 1px solid rgba(16, 40, 79, .13);
+  border-radius: 7px;
+  background: #fff;
+  text-align: center;
+}
+
+.restaurant-delivery-metrics strong,
+.restaurant-delivery-metrics small {
+  display: block;
+}
+
+.restaurant-delivery-metrics strong {
+  color: var(--restaurant-ink);
+  font-size: 1.2rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.restaurant-delivery-metrics small {
+  margin-top: .12rem;
+  color: var(--coach-muted);
+  font-size: .72rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.restaurant-delivery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: .85rem;
+}
+
+.restaurant-delivery-actions > * {
+  min-height: 44px;
+}
+
+.restaurant-delivery-status {
+  min-height: 1.5rem;
+  margin: .7rem 0 0;
+  padding: .65rem .75rem;
+  border-radius: 7px;
+  background: #e8eff7;
+  color: var(--restaurant-ink);
+  font-size: .82rem;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.restaurant-delivery-status.ready {
+  background: #e6f4f2;
+  color: var(--restaurant-teal-dark);
+}
+
+.restaurant-delivery-status.success {
+  background: #e4f5eb;
+  color: #17633b;
+}
+
+.restaurant-delivery-status.error {
+  background: #fff0ed;
+  color: #8d2e21;
+}
+
+.restaurant-delivery-panel.is-submitted {
+  border-left-color: #258553;
+  background: #f4fbf7;
+}
+
+.restaurant-coach-page #floatingMicDock.is-recording {
+  border-color: rgba(255, 213, 99, .9);
+  box-shadow: 0 0 0 3px rgba(216, 162, 39, .22), 0 18px 40px rgba(7, 31, 79, .3);
+}
+
+.restaurant-coach-page > .jaralingua-auth > .auth-trigger {
+  display: none;
+}
+
+.restaurant-coach-page > .jaralingua-auth {
+  pointer-events: none;
+}
+
+.restaurant-coach-page > .jaralingua-auth .auth-panel {
+  pointer-events: auto;
+}
+
 @media (hover: hover) {
   .restaurant-dish-card:hover {
     transform: translateY(-2px);
@@ -474,7 +612,7 @@
     text-align: center;
   }
 
-  .restaurant-privacy-note {
+  .restaurant-hero .coach-hero-copy > p.restaurant-privacy-note {
     margin-top: .7rem;
     font-size: .7rem;
     line-height: 1.35;
@@ -490,6 +628,34 @@
 
   .restaurant-selected-pill {
     max-width: none;
+  }
+
+  .restaurant-delivery-heading {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .restaurant-delivery-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .restaurant-delivery-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .restaurant-delivery-actions > * {
+    width: 100%;
+  }
+}
+
+@media (max-width: 760px) {
+  .restaurant-coach-page.has-floating-dock .jaralingua-auth {
+    bottom: calc(112px + env(safe-area-inset-bottom));
+  }
+
+  .restaurant-coach-page.has-floating-dock .jaralingua-auth-toast {
+    bottom: calc(112px + env(safe-area-inset-bottom));
   }
 }
 
@@ -527,6 +693,30 @@
 
   .restaurant-dish-actions {
     grid-template-columns: 44px minmax(0, 1fr);
+  }
+
+  .restaurant-delivery-panel {
+    padding: .75rem;
+  }
+
+  .restaurant-delivery-heading {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-delivery-metrics {
+    gap: .35rem;
+  }
+
+  .restaurant-delivery-metrics span {
+    padding: .55rem .35rem;
+  }
+
+  .restaurant-delivery-metrics strong {
+    font-size: 1rem;
+  }
+
+  .restaurant-delivery-metrics small {
+    font-size: .64rem;
   }
 }
 

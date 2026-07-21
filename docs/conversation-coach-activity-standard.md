@@ -16,7 +16,8 @@ Every coach must follow this sequence:
 6. Adaptive follow-up selected from the student's evidence when the activity profile requires it.
 7. Student's second response to the follow-up.
 8. Character reaction or answer.
-9. A final private report and a focused retry route.
+9. A final formative report and a focused retry route.
+10. Optional teacher delivery only when the approved activity profile requires it.
 
 Questions must require meaning, not isolated repetition. Each full attempt must balance the unit grammar, vocabulary, functions, and interaction goal. A question bank must not produce four prompts that test the same structure.
 
@@ -78,6 +79,18 @@ Hide language support during the active conversation. Keep the same professional
 - If transcription fails, offer: retry analysis, record again, or continue as not analyzed.
 - Every button action must produce visible status feedback.
 
+### Floating microphone dock
+
+For long or multi-section Conversation Coaches, the active turn must provide a floating microphone dock so the learner can consult the menu, images, language support, or earlier context without losing the recording controls.
+
+- Show the dock only during an active conversation turn. Hide it during onboarding and the final report.
+- Keep it fixed and visible while the learner scrolls, including during recording and analysis.
+- Mirror the main recorder state exactly: start, stop, disabled, busy, timer, stage label, and visible status.
+- Reserve enough page space for the full dock height plus the device safe area. It must never cover the final content on the page.
+- Keep the floating sign-in control, authentication panel, status toast, navigation, and recorder clear of the dock on mobile.
+- Use a visible recording state and immediate confirmation when recording starts or stops.
+- Test the actual behavior by starting a recording, scrolling to distant content, stopping from the floating dock, and confirming that the same response is analyzed.
+
 ## Formative report
 
 Default rubric: 50 points.
@@ -90,7 +103,7 @@ Default rubric: 50 points.
 | Fluency | 10 | Development, duration, and continuity |
 | Pronunciation clarity | 10 | Approximate transcription confidence only |
 
-The report must state that automatic pronunciation information is approximate. Noise, names, device quality, and transcription uncertainty can affect confidence. It is not a phonetic diagnosis or an official teacher grade.
+The report must state that automatic pronunciation information is approximate. Noise, names, device quality, and transcription uncertainty can affect confidence. It is not a phonetic diagnosis. When teacher delivery is approved, the automatic result is a reference grade rather than a weighted course grade.
 
 ## Privacy and gradebook policy
 
@@ -98,12 +111,18 @@ The report must state that automatic pronunciation information is approximate. N
 - It does not submit to the teacher and does not create a Grades record unless a separate approved requirement explicitly adds that behavior.
 - Keep only written reports and recent scores in the learner's browser.
 - Never persist recorded blobs in `localStorage`.
+- An approved teacher follow-up sends only the written transcript, stage evidence, feedback metrics, and reference score unless audio delivery is explicitly required. Temporary audio must not be included by accident.
+- A formative teacher follow-up must use `weight: 0`, `followUpOnly: true`, and `doesNotAffectAverage: true`.
+- Both learner and teacher must see the reference grade on the 0-to-5 scale, the submission status, and the submission time.
+- The activity must appear in the grade grid and follow-up submissions panel, but its weight must remain `0%` so it never changes the weighted average or accumulated percentage.
+- Delivery must require an authenticated account linked to the correct course student record and use an idempotent client submission identifier.
 
 ## Responsive behavior
 
 - Test at minimum: `390x844`, `768x1024`, and `1366x768`.
 - No image, header, character stage, support panel, recorder, or floating control may cover another element.
-- A floating microphone dock may appear only during an active turn and must reserve enough page space to avoid covering content.
+- A floating microphone dock may appear only during an active turn, must remain visible while scrolling, and must reserve enough page space to avoid covering content.
+- On mobile, the dock and the floating authentication control must occupy separate vertical zones.
 - Buttons must remain at least 44 pixels high and communicate pressed, busy, complete, and disabled states.
 - Long prompts and translations must wrap without changing the dimensions of fixed-format controls.
 
@@ -118,12 +137,16 @@ Before deployment, verify:
 - No `speechSynthesis` references.
 - Welcome, instructions, questions, reactions, recovery messages, and closing audio.
 - Microphone permission, device selection, recording, stopping, playback, retry, and transcription recovery.
+- Start recording, scroll away from the recorder, and stop successfully from the floating microphone dock.
 - Guided and realistic modes.
 - Unlimited attempts, weak-question practice, and attempt history.
 - Formative `/50` report and question-by-question review.
+- When teacher delivery is configured: authenticated submission, visible success/error state, duplicate-request idempotency, reference grade `/5`, gradebook weight `0`, follow-up visibility, and confirmation that no audio bytes are stored.
 - Responsive screenshots and element-overlap checks.
 - Navigation entry, production HTTP status, and cache-busted assets.
 
 ## Unit 5 implementation profile
 
 The first v2 implementation is `Intermediate English Course 1 - Unit 5: Food, Quantities and Culture` with the character Maya Brooks. Maya uses one professional female American English voice. Every full attempt includes ingredients, quantities, culture, and a role-reversal turn. The first three turns each contain one evidence-based adaptive follow-up, so a complete attempt has four turns and seven spoken learner responses. The adaptive bank contains twelve professional prompts: a missing-evidence route and a complete-answer route for each of six skill categories.
+
+The second Unit 5 implementation is `Dinner at Cedar & Stone` with Ethan Cole. It uses six connected restaurant stages, a visual menu, one consistent professional male American English voice, and a persistent floating microphone dock. Its approved delivery profile sends the written report to the teacher, records a reference grade from `0` to `5`, appears in Intermediate Grades with weight `0%`, and never uploads or stores the learner's temporary audio.

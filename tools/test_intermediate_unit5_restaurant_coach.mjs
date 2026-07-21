@@ -9,12 +9,16 @@ const configPath = path.join(root, "assets/js/conversation-coach-data/english-in
 const enginePath = path.join(root, "assets/js/restaurant-conversation-coach.js");
 const cssPath = path.join(root, "assets/css/restaurant-conversation-coach.css");
 const scriptsPath = path.join(root, "ingles/intermediate/audio/conversation-coach/unit-5-restaurant/scripts.md");
+const standardPath = path.join(root, "docs/conversation-coach-activity-standard.md");
+const serverPath = path.join(root, "server/progress_api.py");
 
 const page = fs.readFileSync(pagePath, "utf8");
 const configSource = fs.readFileSync(configPath, "utf8");
 const engine = fs.readFileSync(enginePath, "utf8");
 const css = fs.readFileSync(cssPath, "utf8");
 const scripts = fs.readFileSync(scriptsPath, "utf8");
+const standard = fs.readFileSync(standardPath, "utf8");
+const server = fs.readFileSync(serverPath, "utf8");
 const practiceLab = fs.readFileSync(path.join(root, "ingles/intermediate/practice-lab.html"), "utf8");
 const overview = fs.readFileSync(path.join(root, "ingles/intermediate/course-overview.html"), "utf8");
 const unitPage = fs.readFileSync(path.join(root, "ingles/intermediate/unit-5-food-quantities-culture.html"), "utf8");
@@ -85,12 +89,27 @@ assert.match(page, /6 connected stages/i, "Page must explain the complete servic
 assert.match(page, /You are the customer/i, "Learner role must be explicit");
 assert.match(page, /0\.75x[\s\S]*1x[\s\S]*1\.25x/, "Only the approved audio speeds must be visible");
 assert.match(page, /audio is not stored/i, "Privacy copy must state that audio is not stored");
+assert.match(page, /id="teacherDeliveryPanel"/, "Summary must include the teacher delivery panel");
+assert.match(page, /id="deliveryButton"[^>]*disabled/, "Teacher delivery must remain locked until a complete report exists");
+assert.match(page, /Send to teacher/, "The delivery command must be visible in English");
+assert.match(page, /Gradebook weight 0%/i, "Page must state the non-weighted gradebook behavior");
+assert.match(page, /role="region" aria-label="Floating recording controls"/, "The floating microphone dock must expose an accessible region");
+assert.match(page, /google-auth\.js/, "The full JaraLingua sign-in widget must be available");
 assert.doesNotMatch(engine, /speechSynthesis/i, "Browser speech synthesis is prohibited");
 assert.doesNotMatch(engine, /api\/french/i, "Restaurant Coach must not call a French endpoint");
+assert.doesNotMatch(engine, /audioDataUrl|blobToDataUrl/i, "Teacher delivery must never serialize or upload the temporary audio");
 assert.match(engine, /language_code/, "Returned transcription language must be checked");
 assert.match(engine, /frenchFeedbackWords/, "Clearly French feedback tokens must be filtered");
+assert.match(engine, /\/api\/intermediate\/unit5-restaurant-coach\/submit/, "Coach must use its dedicated teacher-delivery endpoint");
+assert.match(engine, /clientSubmissionId/, "Coach delivery must use an idempotent client submission identifier");
 assert.match(css, /@media \(max-width: 980px\)/, "Tablet menu layout is required");
 assert.match(css, /@media \(max-width: 560px\)/, "Mobile menu layout is required");
+assert.match(css, /has-floating-dock \.jaralingua-auth/, "Mobile authentication must remain clear of the floating dock");
+assert.match(css, /restaurant-coach-page > \.jaralingua-auth > \.auth-trigger/, "The duplicate floating sign-in trigger must stay hidden on this page");
+assert.match(standard, /### Floating microphone dock/, "The reusable floating microphone standard must be documented");
+assert.match(standard, /weight: 0/, "The approved non-weighted delivery contract must be documented");
+assert.match(server, /INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID\s*=\s*"unit5RestaurantConversationCoach"/, "Server must define a dedicated gradebook evaluation");
+assert.match(server, /\/api\/intermediate\/unit5-restaurant-coach\/submit/, "Server must expose the dedicated delivery endpoint");
 
 assert.match(practiceLab, /Unit 5 - 12 activities/, "Practice Lab quick access must show twelve Unit 5 activities");
 assert.match(practiceLab, /<strong class="practice-folder-count">12 activities<\/strong>/, "Unit 5 folder must show twelve activities");

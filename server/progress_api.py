@@ -4,6 +4,7 @@ import base64
 import binascii
 import hashlib
 import hmac
+import math
 import os
 import random
 import re
@@ -113,6 +114,7 @@ INTERMEDIATE_UNIT5_READING_ID = "unit5DishHistoryReading"
 INTERMEDIATE_UNIT5_DINNER_PLAN_ID = "unit5HealthyDinnerPlanner"
 INTERMEDIATE_UNIT5_PRONUNCIATION_ID = "unit5FoodQuantitiesPronunciation"
 INTERMEDIATE_UNIT5_SNACK_REVIEW_ID = "unit5GlobalSnackReview"
+INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID = "unit5RestaurantConversationCoach"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
@@ -319,6 +321,14 @@ INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION = {
     "weight": 0,
     "type": "Writing follow-up",
     "description": "Resena cultural enviable al profesor. La entrega queda visible con peso 0."
+}
+
+INTERMEDIATE_UNIT5_RESTAURANT_COACH_EVALUATION = {
+    "id": INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID,
+    "title": "Unit 5 Speaking - Dinner at Cedar & Stone",
+    "weight": 0,
+    "type": "Conversation follow-up",
+    "description": "Seguimiento oral enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
 }
 
 INTERMEDIATE_INTEGRATED_TASK_EVALUATION = {
@@ -2163,6 +2173,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_SNACK_REVIEW_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT5_RESTAURANT_COACH_EVALUATION):
+        changed = True
     return changed
 
 
@@ -2297,6 +2309,126 @@ def save_intermediate_text_followup(student, evaluation_id, detail):
     })
     student["gradeDetails"][evaluation_id] = next_detail
     return submitted_at, attempt_count
+
+
+def strict_finite_number(value, minimum, maximum, error_code):
+    if isinstance(value, bool):
+        raise ValueError(error_code)
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        raise ValueError(error_code)
+    if not math.isfinite(number) or number < minimum or number > maximum:
+        raise ValueError(error_code)
+    return round(number, 2)
+
+
+def clean_intermediate_unit5_restaurant_coach(payload):
+    metric_keys = ("task", "interaction", "language", "fluency", "clarity")
+    raw_metrics = payload.get("metrics")
+    if not isinstance(raw_metrics, dict):
+        raise ValueError("invalid_metrics")
+    metrics = {
+        key: strict_finite_number(raw_metrics.get(key), 0, 10, "invalid_metrics")
+        for key in metric_keys
+    }
+    score = round(sum(metrics.values()), 2)
+    grade = round(score / 10.0, 2)
+
+    try:
+        analyzed_count = int(payload.get("analyzedCount"))
+        total_stages = int(payload.get("totalStages"))
+    except (TypeError, ValueError):
+        raise ValueError("incomplete_conversation")
+    if analyzed_count != 6 or total_stages != 6:
+        raise ValueError("incomplete_conversation")
+
+    raw_stage_scores = payload.get("stageScores")
+    if not isinstance(raw_stage_scores, list) or len(raw_stage_scores) != 6:
+        raise ValueError("incomplete_conversation")
+    stage_scores = [
+        strict_finite_number(value, 0, 50, "invalid_stage_scores")
+        for value in raw_stage_scores
+    ]
+
+    raw_turns = payload.get("turns")
+    if not isinstance(raw_turns, list) or len(raw_turns) < 6 or len(raw_turns) > 12:
+        raise ValueError("incomplete_conversation")
+    stage_topics = (
+        "Arrival and table",
+        "Preferences and dietary needs",
+        "Ask about the menu",
+        "Place the order",
+        "Resolve a service problem",
+        "Request the check",
+    )
+    turns = []
+    scored_stages = set()
+    for raw_turn in raw_turns:
+        if not isinstance(raw_turn, dict):
+            raise ValueError("invalid_turns")
+        try:
+            stage_index = int(raw_turn.get("stageIndex"))
+        except (TypeError, ValueError):
+            raise ValueError("invalid_turns")
+        if stage_index < 0 or stage_index >= 6:
+            raise ValueError("invalid_turns")
+        phase = "clarify" if raw_turn.get("phase") == "clarify" else "main"
+        prompt = clean_text(raw_turn.get("prompt"), 900)
+        transcript = clean_text(raw_turn.get("transcript"), 1800)
+        if len(prompt) < 3 or len(transcript) < 3:
+            raise ValueError("invalid_turns")
+        turn_score = None
+        if raw_turn.get("score") is not None:
+            turn_score = strict_finite_number(raw_turn.get("score"), 0, 50, "invalid_turns")
+            scored_stages.add(stage_index)
+        turns.append({
+            "stageIndex": stage_index,
+            "topic": stage_topics[stage_index],
+            "phase": phase,
+            "prompt": prompt,
+            "transcript": transcript,
+            "score": turn_score,
+        })
+    if scored_stages != set(range(6)):
+        raise ValueError("incomplete_conversation")
+
+    mode = clean_text(payload.get("mode"), 20)
+    if mode not in ("guided", "real"):
+        raise ValueError("invalid_mode")
+    selected_dish = clean_text(payload.get("selectedDish"), 160)
+    service_scenario = clean_text(payload.get("serviceScenario"), 420)
+    transcript_lines = [
+        "Mode: " + ("Real Restaurant" if mode == "real" else "Guided Rehearsal"),
+        "Selected dish: " + (selected_dish or "Not specified"),
+        "Service scenario: " + (service_scenario or "Not specified"),
+        "",
+    ]
+    for turn in turns:
+        phase_label = "Clarification" if turn["phase"] == "clarify" else "Initial response"
+        score_label = "Not analyzed" if turn["score"] is None else f'{turn["score"]:g}/50'
+        transcript_lines.extend([
+            f'Stage {turn["stageIndex"] + 1} - {turn["topic"]} ({phase_label})',
+            "Ethan: " + turn["prompt"],
+            "Student: " + turn["transcript"],
+            "Reference stage score: " + score_label,
+            "",
+        ])
+
+    return {
+        "score": score,
+        "total": 50,
+        "grade": grade,
+        "metrics": metrics,
+        "analyzedCount": analyzed_count,
+        "totalStages": total_stages,
+        "stageScores": stage_scores,
+        "turns": turns,
+        "mode": mode,
+        "selectedDish": selected_dish,
+        "serviceScenario": service_scenario,
+        "transcript": "\n".join(transcript_lines).strip(),
+    }
 
 
 def intermediate_unit4_expression_by_id(expression_id):
@@ -9081,6 +9213,115 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
                     "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit5-restaurant-coach/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+                if len(client_submission_id) < 8:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": "missing_client_submission_id"})
+                    return
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                if isinstance(previous, dict) and clean_text(previous.get("clientSubmissionId"), 120) == client_submission_id:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 200, {
+                        "ok": True,
+                        "idempotent": True,
+                        "evaluationId": INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID,
+                        "studentName": clean_text(student.get("fullName"), 160),
+                        "score": previous.get("score", 0),
+                        "total": previous.get("total", 50),
+                        "grade": previous.get("grade", 0),
+                        "submittedAt": previous.get("submittedAt"),
+                        "attemptCount": previous.get("attemptCount", 1),
+                        "clientSubmissionId": client_submission_id,
+                        "followUpOnly": True,
+                        "weight": 0,
+                    })
+                    return
+                try:
+                    result = clean_intermediate_unit5_restaurant_coach(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+
+                submission_history = []
+                if isinstance(previous, dict):
+                    raw_history = previous.get("submissionHistory", [])
+                    if isinstance(raw_history, list):
+                        submission_history = [item for item in raw_history if isinstance(item, dict)][-9:]
+                    if previous.get("submittedAt"):
+                        submission_history.append({
+                            "submittedAt": previous.get("submittedAt"),
+                            "attemptCount": previous.get("attemptCount", 1),
+                            "score": previous.get("score"),
+                            "total": previous.get("total", 50),
+                            "grade": previous.get("grade"),
+                            "mode": clean_text(previous.get("mode"), 20),
+                            "clientSubmissionId": clean_text(previous.get("clientSubmissionId"), 120),
+                        })
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                if not isinstance(student.get("grades"), dict):
+                    student["grades"] = {}
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["grades"][INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID] = result["grade"]
+                student["gradeDetails"][INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "metrics": result["metrics"],
+                    "analyzedCount": result["analyzedCount"],
+                    "totalStages": result["totalStages"],
+                    "stageScores": result["stageScores"],
+                    "responses": result["turns"],
+                    "transcript": result["transcript"],
+                    "mode": result["mode"],
+                    "selectedDish": result["selectedDish"],
+                    "serviceScenario": result["serviceScenario"],
+                    "clientSubmissionId": client_submission_id,
+                    "clientDate": clean_text(payload.get("clientDate"), 40),
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Dinner at Cedar & Stone",
+                    "activityType": "Conversation follow-up",
+                    "submissionHistory": submission_history[-10:],
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID,
+                    "studentName": clean_text(student.get("fullName"), 160),
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "clientSubmissionId": client_submission_id,
+                    "followUpOnly": True,
+                    "weight": 0,
                 })
             return
 

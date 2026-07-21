@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="Intermediate English Unit 5 restaurant Conversation Coach with a professional waiter, visual menu, adaptive service dialogue, microphone transcription, and private formative feedback." />
+  <meta name="description" content="Intermediate English Unit 5 restaurant Conversation Coach with a professional waiter, visual menu, adaptive service dialogue, floating microphone, and a teacher follow-up report with weight 0." />
   <title>Dinner at Cedar & Stone | Unit 5 Conversation Coach | JaraLingua</title>
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css?v=20260718-intermediate" />
   <link rel="stylesheet" href="../../assets/css/conversation-coach-v2.css?v=20260718-u5-v2" />
-  <link rel="stylesheet" href="../../assets/css/restaurant-conversation-coach.css?v=20260721-u5-restaurant-hero-v2" />
+  <link rel="stylesheet" href="../../assets/css/restaurant-conversation-coach.css?v=20260721-u5-restaurant-delivery-v1" />
 </head>
 <body class="english-intermediate-page conversation-coach-page restaurant-coach-page">
   <div class="global-course-switcher" aria-label="Courses">
@@ -32,9 +32,9 @@
         <p class="coach-kicker">Intermediate Course 1 | Unit 5 | Conversation Coach 2</p>
         <h1 id="pageTitle">Dinner at Cedar &amp; Stone</h1>
         <p>Be the customer in a complete restaurant exchange: ask about ingredients, order precisely, solve a service problem, and request the check with Ethan.</p>
-        <div class="coach-meta"><span>6 connected stages</span><span>Professional waiter voice</span><span>Visual menu</span><span>American English</span><span>Unlimited attempts</span><span>Private result /50</span></div>
+        <div class="coach-meta"><span>6 connected stages</span><span>Professional waiter voice</span><span>Visual menu</span><span>American English</span><span>Unlimited attempts</span><span>Reference grade /5</span><span>Gradebook weight 0%</span></div>
         <div class="coach-actions"><a class="coach-link-button primary" href="#conversationCoachApp"><i class="bi bi-play-fill"></i> Enter Cedar &amp; Stone</a><a class="coach-link-button secondary" href="unit-5-food-quantities-culture.html">Review Unit 5</a><a class="coach-link-button secondary" href="practice-lab.html#unit-5-folder">Back to Unit 5 folder</a></div>
-        <p class="restaurant-privacy-note"><i class="bi bi-shield-check"></i><span>Temporary transcription. Audio is not stored or sent to the teacher.</span></p>
+        <p class="restaurant-privacy-note"><i class="bi bi-shield-check"></i><span>Audio is not stored; it is processed temporarily. Only the written report is sent when you choose <strong>Send to teacher</strong>.</span></p>
       </div>
       <figure class="coach-hero-visual">
         <img src="../../assets/img/english-intermediate/unit-5/restaurant-coach/cedar-stone-hero-v1.webp" width="1536" height="1024" fetchpriority="high" decoding="async" alt="Ethan Cole speaking with an adult customer at Cedar and Stone restaurant" />
@@ -44,7 +44,7 @@
     <section class="coach-outcomes" aria-label="Conversation design">
       <article><i class="bi bi-person-badge-fill"></i><div><strong>You are the customer</strong><span>Ethan remains the waiter throughout the complete service exchange.</span></div></article>
       <article><i class="bi bi-signpost-split-fill"></i><div><strong>Adaptive service</strong><span>Ethan advances when your message is complete or asks one focused clarification.</span></div></article>
-      <article><i class="bi bi-clipboard2-pulse"></i><div><strong>Private evidence</strong><span>The /50 estimate guides another attempt but never enters Grades.</span></div></article>
+      <article><i class="bi bi-clipboard2-check-fill"></i><div><strong>Teacher follow-up</strong><span>Your written report and reference grade can enter Grades with weight 0%.</span></div></article>
     </section>
 
     <section class="coach-shell" id="conversationCoachApp">
@@ -129,8 +129,14 @@
           </div>
 
           <div id="summaryPanel" hidden>
-            <header class="coach-summary-head"><i class="bi bi-check2-circle"></i><p class="coach-kicker">Private restaurant practice complete</p><h2>Your Cedar &amp; Stone report</h2><p id="summaryLead"></p></header>
-            <section class="coach-score-report"><div class="coach-score-ring"><div><strong id="summaryScore">--</strong><span>out of 50</span></div></div><div class="coach-score-copy"><p class="coach-kicker">Formative estimate</p><h3 id="summaryReadiness">Practice report</h3><p id="summaryComparison"></p><small id="summaryCoverage">This result is not a grade and is never sent to your teacher.</small></div></section>
+            <header class="coach-summary-head"><i class="bi bi-check2-circle"></i><p class="coach-kicker">Restaurant follow-up ready</p><h2>Your Cedar &amp; Stone report</h2><p id="summaryLead"></p></header>
+            <section class="coach-score-report"><div class="coach-score-ring"><div><strong id="summaryScore">--</strong><span>out of 50</span></div></div><div class="coach-score-copy"><p class="coach-kicker">Formative estimate</p><h3 id="summaryReadiness">Practice report</h3><p id="summaryComparison"></p><small id="summaryCoverage">Complete all six analyzed stages to unlock teacher delivery.</small></div></section>
+            <section class="restaurant-delivery-panel" id="teacherDeliveryPanel" aria-labelledby="teacherDeliveryTitle">
+              <div class="restaurant-delivery-heading"><span class="restaurant-delivery-icon"><i class="bi bi-send-check-fill"></i></span><div><p class="coach-kicker">Teacher follow-up</p><h3 id="teacherDeliveryTitle">Send your written conversation report</h3><p>Your audio is never uploaded. The report and reference grade appear in Grades with weight 0% and do not affect your course average.</p></div></div>
+              <div class="restaurant-delivery-metrics" aria-label="Delivery summary"><span><strong id="deliveryScore">--</strong><small>Report /50</small></span><span><strong id="deliveryGrade">--</strong><small>Reference grade /5</small></span><span><strong>0%</strong><small>Gradebook weight</small></span></div>
+              <div class="restaurant-delivery-actions"><button class="coach-button primary" id="deliveryButton" type="button" disabled><i class="bi bi-send-fill"></i> Send to teacher</button><a class="coach-link-button secondary" href="notas.html"><i class="bi bi-journal-check"></i> Open Grades</a></div>
+              <p class="restaurant-delivery-status pending" id="deliveryStatus" role="status" aria-live="polite">Complete the six analyzed stages to prepare this delivery.</p>
+            </section>
             <div class="coach-summary-metrics" id="summaryMetrics"></div>
             <div class="coach-guidance-grid"><section><p class="coach-kicker">Strengths</p><h3>What worked</h3><ul id="summaryStrengths"></ul></section><section><p class="coach-kicker">Priorities</p><h3>Practice next</h3><ul id="summaryPriorities"></ul></section></div>
             <section class="coach-report-section"><div class="coach-section-heading"><div><p class="coach-kicker">Pronunciation clarity</p><h3>Words to repeat</h3></div></div><div class="coach-word-list" id="summaryWords"></div><p class="coach-disclaimer"><i class="bi bi-info-circle"></i> Lower Whisper confidence may come from pronunciation, background noise, microphone quality, or proper names. It is not a phonetic diagnosis.</p></section>
@@ -143,19 +149,22 @@
         <aside class="coach-sidebar">
           <section><p class="coach-kicker">One coherent dinner</p><h2>Six connected stages</h2><ol class="restaurant-stage-list"><li><span>1</span><div><strong>Arrival</strong><small>Reservation and party size</small></div></li><li><span>2</span><div><strong>Preferences</strong><small>Allergies and dietary needs</small></div></li><li><span>3</span><div><strong>Menu question</strong><small>Made with, made from, flavor</small></div></li><li><span>4</span><div><strong>Order</strong><small>Quantity and modification</small></div></li><li><span>5</span><div><strong>Service problem</strong><small>Polite correction request</small></div></li><li><span>6</span><div><strong>Check</strong><small>Together or separately</small></div></li></ol></section>
           <section><p class="coach-kicker">Rubric - 50 points</p><h3>Five formative criteria</h3><ul class="coach-sidebar-list"><li><i class="bi bi-bullseye"></i><span>Task completion - 10</span></li><li><i class="bi bi-arrow-left-right"></i><span>Interaction - 10</span></li><li><i class="bi bi-spellcheck"></i><span>Unit 5 language - 10</span></li><li><i class="bi bi-speedometer2"></i><span>Fluency - 10</span></li><li><i class="bi bi-soundwave"></i><span>Approximate pronunciation clarity - 10</span></li></ul></section>
-          <section><p class="coach-kicker">Privacy</p><h3>Your voice is not stored</h3><p>Audio is processed temporarily by JaraLingua's English transcription service. Only the written report and attempt history may remain in this browser. There is no teacher submission or Grades record.</p></section>
+          <section><p class="coach-kicker">Privacy and delivery</p><h3>Your voice is not stored</h3><p>Audio is processed temporarily by JaraLingua's English transcription service and stays out of Grades. You decide whether to send the written transcript, feedback, and reference grade to the teacher.</p></section>
         </aside>
       </div>
     </section>
 
-    <div class="coach-floating-dock" id="floatingMicDock" hidden><div class="coach-floating-copy"><span id="floatingTurnLabel">Stage 1</span><strong id="floatingStatus">Ready to respond</strong></div><span class="coach-floating-timer" id="floatingTimer">00:00 / 00:35</span><button class="coach-icon-button" id="floatingMicButton" type="button"><i class="bi bi-mic-fill"></i><span>Respond</span></button><button class="coach-icon-button stop" id="floatingStopButton" type="button" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
+    <div class="coach-floating-dock" id="floatingMicDock" role="region" aria-label="Floating recording controls" hidden><div class="coach-floating-copy"><span id="floatingTurnLabel">Stage 1</span><strong id="floatingStatus" aria-live="polite">Ready to respond</strong></div><span class="coach-floating-timer" id="floatingTimer">00:00 / 00:35</span><button class="coach-icon-button" id="floatingMicButton" type="button" aria-label="Start customer response from the floating microphone"><i class="bi bi-mic-fill"></i><span>Respond</span></button><button class="coach-icon-button stop" id="floatingStopButton" type="button" aria-label="Finish customer response from the floating microphone" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
     <div class="coach-toast" id="coachToast" role="status" aria-live="polite" hidden></div>
   </main>
 
-  <footer class="site-footer"><p>Intermediate English Course 1 - Unit 5 Restaurant Conversation Coach - Private formative practice</p></footer>
+  <footer class="site-footer"><p>Intermediate English Course 1 - Unit 5 Restaurant Conversation Coach - Teacher follow-up with weight 0%</p></footer>
   <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
   <script src="../../assets/js/conversation-coach-data/english-intermediate-1-unit-5-restaurant.js?v=20260718-u5-restaurant-v1"></script>
-  <script src="../../assets/js/restaurant-conversation-coach.js?v=20260718-u5-restaurant-v1"></script>
+  <script src="../../assets/js/restaurant-conversation-coach.js?v=20260721-u5-restaurant-delivery-v1"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

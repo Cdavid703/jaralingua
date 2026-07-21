@@ -30,8 +30,10 @@ async function preparePage(context, viewport, apiMode = "success") {
   const page = await context.newPage();
   await page.setViewportSize(viewport);
   const errors = [];
+  const submissions = [];
   let nextTranscript = "";
   page.on("pageerror", (error) => errors.push(error.message));
+  await page.route("https://accounts.google.com/gsi/client", (route) => route.fulfill({ status: 200, contentType: "application/javascript", body: "" }));
   await page.route("**/*.mp3", (route) => route.fulfill({ status: 200, contentType: "audio/mpeg", body: sampleAudio }));
   await page.route("**/api/english-intermediate/pronunciation-assessment", async (route) => {
     if (apiMode === "failure") {
@@ -48,8 +50,29 @@ async function preparePage(context, viewport, apiMode = "success") {
     ];
     await route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify({ text: nextTranscript, language_code: "en", words, audio: { rms: .08 } }) });
   });
+  await page.route("**/api/intermediate/unit5-restaurant-coach/submit", async (route) => {
+    const body = route.request().postDataJSON();
+    submissions.push(body);
+    const score = Object.values(body.metrics || {}).reduce((sum, value) => sum + Number(value || 0), 0);
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        ok: true,
+        evaluationId: "unit5RestaurantConversationCoach",
+        score,
+        total: 50,
+        grade: score / 10,
+        submittedAt: "2026-07-21T20:00:00Z",
+        attemptCount: 1,
+        clientSubmissionId: body.clientSubmissionId,
+        followUpOnly: true,
+        weight: 0
+      })
+    });
+  });
   await page.goto(url, { waitUntil: "networkidle" });
-  return { page, errors, setTranscript: (value) => { nextTranscript = value; } };
+  return { page, errors, submissions, setTranscript: (value) => { nextTranscript = value; } };
 }
 
 async function assertResponsive(page, label) {
@@ -155,7 +178,36 @@ try {
   assert.equal(await guided.page.locator("#summaryAnswers > article").count(), 6, "Report must review all six stages");
   assert.match(await guided.page.locator("#summaryCoverage").innerText(), /6 of 6 stages analyzed/i, "Report must state full coverage");
   assert.doesNotMatch(await guided.page.locator("#summaryWords").innerText(), /\belle\b/i, "French hallucination tokens must never appear");
+  assert.equal(await guided.page.locator("#deliveryButton").isDisabled(), false, "Complete six-stage report must unlock teacher delivery");
+  await guided.page.evaluate(() => {
+    sessionStorage.setItem("jaralingua_local_user", JSON.stringify({ credential: "restaurant-ui-test-token", exp: Math.floor(Date.now() / 1000) + 3600 }));
+  });
+  await guided.page.locator("#deliveryButton").click();
+  await guided.page.waitForFunction(() => /submitted to teacher/i.test(document.getElementById("deliveryStatus").textContent || ""));
+  assert.equal(guided.submissions.length, 1, "Teacher delivery must make exactly one request");
+  assert.equal(guided.submissions[0].turns.length, 6, "Teacher delivery must include all six analyzed turns");
+  assert.doesNotMatch(JSON.stringify(guided.submissions[0]), /audioDataUrl|data:audio|audio\/webm/i, "Teacher delivery must not include audio bytes");
+  assert.match(await guided.page.locator("#deliveryStatus").innerText(), /weight:\s*0%/i, "Visible confirmation must explain weight 0");
+  assert.match(await guided.page.locator("#deliveryGrade").innerText(), /^\d+\.\d{2}\/5$/, "Student must see the reference grade on the 0-to-5 scale");
+  assert.equal(await guided.page.locator("#deliveryButton").isDisabled(), true, "Delivered report must prevent accidental duplicate clicks");
   await guided.page.screenshot({ path: path.join(outputDir, "laptop-summary.png"), fullPage: true });
+  await guided.page.setViewportSize({ width: 390, height: 844 });
+  await assertResponsive(guided.page, "mobile summary");
+  const mobileDelivery = await guided.page.evaluate(() => {
+    const panel = document.getElementById("teacherDeliveryPanel").getBoundingClientRect();
+    const button = document.getElementById("deliveryButton").getBoundingClientRect();
+    const metrics = [...document.querySelectorAll(".restaurant-delivery-metrics > span")].map((item) => item.getBoundingClientRect());
+    return {
+      panelLeft: panel.left,
+      panelRight: panel.right,
+      buttonHeight: button.height,
+      metricsInside: metrics.every((item) => item.left >= panel.left && item.right <= panel.right)
+    };
+  });
+  assert.ok(mobileDelivery.panelLeft >= 0 && mobileDelivery.panelRight <= 391, "Mobile delivery panel must stay inside the viewport");
+  assert.ok(mobileDelivery.buttonHeight >= 44, "Mobile teacher-delivery button must remain touch friendly");
+  assert.equal(mobileDelivery.metricsInside, true, "Mobile score, grade, and weight metrics must stay inside the delivery panel");
+  await guided.page.screenshot({ path: path.join(outputDir, "mobile-summary.png"), fullPage: true });
   assert.equal(guided.errors.length, 0, "Guided dinner must not produce runtime errors");
   await guided.page.close();
 
@@ -175,13 +227,39 @@ try {
   await realistic.page.locator("#startConversationButton").click();
   await realistic.page.waitForSelector("#interviewPanel:not([hidden])");
   assert.equal(await realistic.page.locator("#answerSupport").getAttribute("open"), null, "Real Restaurant must keep support closed");
+  const realisticTopic = await realistic.page.locator("#turnTopic").innerText();
+  const realisticPrompt = await realistic.page.locator("#questionText").innerText();
+  realistic.setTranscript(transcriptFor(realisticTopic, realisticPrompt));
+  await realistic.page.waitForFunction(() => !document.getElementById("floatingMicButton").disabled, null, { timeout: 15000 });
+  await realistic.page.locator("#floatingMicButton").click();
+  await realistic.page.waitForTimeout(1300);
+  await realistic.page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+  await realistic.page.waitForTimeout(150);
   const dock = await realistic.page.evaluate(() => ({
     visible: !document.getElementById("floatingMicDock").hidden,
     padding: parseFloat(getComputedStyle(document.body).paddingBottom),
-    height: document.getElementById("floatingMicDock").getBoundingClientRect().height
+    height: document.getElementById("floatingMicDock").getBoundingClientRect().height,
+    position: getComputedStyle(document.getElementById("floatingMicDock")).position,
+    top: document.getElementById("floatingMicDock").getBoundingClientRect().top,
+    bottom: document.getElementById("floatingMicDock").getBoundingClientRect().bottom,
+    viewportHeight: window.innerHeight,
+    state: document.getElementById("floatingMicDock").dataset.state,
+    authOverlap: (() => {
+      const auth = document.querySelector(".jaralingua-auth");
+      if (!auth || getComputedStyle(auth).display === "none") return false;
+      const a = auth.getBoundingClientRect();
+      const d = document.getElementById("floatingMicDock").getBoundingClientRect();
+      return a.left < d.right && a.right > d.left && a.top < d.bottom && a.bottom > d.top;
+    })()
   }));
   assert.equal(dock.visible, true, "Floating controls must be visible during the conversation");
   assert.ok(dock.padding >= dock.height, "Mobile page must reserve space for floating controls");
+  assert.equal(dock.position, "fixed", "Floating microphone must remain fixed while the learner scrolls");
+  assert.equal(dock.state, "recording", "Floating dock must mirror the active recording state");
+  assert.ok(dock.top >= 0 && dock.bottom <= dock.viewportHeight + 1, "Floating controls must stay inside the scrolled viewport");
+  assert.equal(dock.authOverlap, false, "Floating authentication and microphone controls must not overlap");
+  await realistic.page.locator("#floatingStopButton").click();
+  await realistic.page.waitForFunction(() => !document.getElementById("nextTurnButton").disabled, null, { timeout: 15000 });
   await assertResponsive(realistic.page, "mobile conversation");
   await realistic.page.screenshot({ path: path.join(outputDir, "mobile-real-restaurant.png"), fullPage: true });
   await realistic.page.close();

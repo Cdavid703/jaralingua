@@ -9,6 +9,10 @@
   const incidentById = new Map(incidents.map((incident) => [incident.id, incident]));
   const storageKey = config.storageKey || "jaralingua:restaurant-conversation-coach:v1";
   const apiPath = config.apiPath || "/api/english-intermediate/pronunciation-assessment";
+  const submitPath = "/api/intermediate/unit5-restaurant-coach/submit";
+  const GOOGLE_USER_KEY = "jaralingua_google_user";
+  const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+  const LOCAL_USER_KEY = "jaralingua_local_user";
   const audioRoot = config.audioRoot || "";
   const imageRoot = config.imageRoot || "";
   const maxRecordingSeconds = Number(config.maxRecordingSeconds) || 35;
@@ -76,6 +80,11 @@
     summaryReadiness: $("summaryReadiness"),
     summaryComparison: $("summaryComparison"),
     summaryCoverage: $("summaryCoverage"),
+    deliveryPanel: $("teacherDeliveryPanel"),
+    deliveryScore: $("deliveryScore"),
+    deliveryGrade: $("deliveryGrade"),
+    deliveryButton: $("deliveryButton"),
+    deliveryStatus: $("deliveryStatus"),
     summaryMetrics: $("summaryMetrics"),
     summaryStrengths: $("summaryStrengths"),
     summaryPriorities: $("summaryPriorities"),
@@ -115,6 +124,7 @@
   let levelFrame = null;
   let toastTimer = null;
   let preflightObjectUrl = "";
+  let submissionBusy = false;
 
   function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -152,6 +162,40 @@
     } catch {
       // Local practice history is optional.
     }
+  }
+
+  function readStoredUser(key, provider) {
+    try {
+      const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+      if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
+        sessionStorage.removeItem(key);
+        return null;
+      }
+      return Object.assign({ provider }, saved);
+    } catch {
+      sessionStorage.removeItem(key);
+      return null;
+    }
+  }
+
+  function readUser() {
+    return readStoredUser(GOOGLE_USER_KEY, "google") ||
+      readStoredUser(MICROSOFT_USER_KEY, "microsoft") ||
+      readStoredUser(LOCAL_USER_KEY, "local");
+  }
+
+  function openLoginPanel() {
+    document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();
+  }
+
+  function createSubmissionId() {
+    if (window.crypto?.randomUUID) return `restaurant-coach-${window.crypto.randomUUID()}`;
+    return `restaurant-coach-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+  }
+
+  function ensureReportSubmissionId(report) {
+    if (!report.clientSubmissionId) report.clientSubmissionId = createSubmissionId();
+    return report.clientSubmissionId;
   }
 
   function freshSession(mode = "guided") {
@@ -214,6 +258,7 @@
     elements.summary.hidden = name !== "summary";
     const inConversation = name === "interview";
     elements.dock.hidden = !inConversation;
+    elements.dock.setAttribute("aria-hidden", String(!inConversation));
     document.body.classList.toggle("has-floating-dock", inConversation);
   }
 
@@ -586,8 +631,11 @@
     elements.mic.disabled = !canRecord;
     elements.floatingMic.disabled = !canRecord;
     elements.stop.disabled = !recording;
+    elements.floatingStop.disabled = !recording;
     elements.floatingStop.hidden = !recording;
     elements.floatingMic.hidden = recording;
+    elements.dock.classList.toggle("is-recording", recording);
+    elements.dock.dataset.state = recording ? "recording" : analyzing ? "analyzing" : canRecord ? "ready" : "waiting";
     elements.questionPlay.disabled = recording || analyzing || audioBusy || !promptAudio();
     elements.recordAgain.disabled = recording || analyzing || (!currentBlob && !session.awaitingContinue);
     elements.microphoneSelect.disabled = recording || analyzing;
@@ -1039,8 +1087,139 @@
       priorities: priorities.length ? priorities.slice(0, 3) : ["Repeat the full exchange with more precise Unit 5 language."],
       answers: session.answers,
       selectedDishId: session.selectedDishId,
-      incidentId: session.incidentId
+      incidentId: session.incidentId,
+      clientSubmissionId: createSubmissionId()
     };
+  }
+
+  function referenceGrade(score) {
+    return Number.isFinite(score) ? Math.round((score / 10) * 100) / 100 : null;
+  }
+
+  function reportIsDeliverable(report) {
+    return Number.isFinite(report?.score) &&
+      Number(report.analyzedCount) === stages.length &&
+      Number(report.totalStages) === stages.length &&
+      Array.isArray(report.stageScores) &&
+      report.stageScores.length === stages.length &&
+      report.stageScores.every(Number.isFinite);
+  }
+
+  function setDeliveryStatus(message, type = "pending") {
+    elements.deliveryStatus.textContent = message;
+    elements.deliveryStatus.className = `restaurant-delivery-status ${type}`;
+  }
+
+  function updateDelivery(report) {
+    if (!elements.deliveryPanel) return;
+    ensureReportSubmissionId(report);
+    const grade = referenceGrade(report.score);
+    elements.deliveryScore.textContent = Number.isFinite(report.score) ? `${report.score}/50` : "--";
+    elements.deliveryGrade.textContent = grade == null ? "--" : `${grade.toFixed(2)}/5`;
+
+    if (!reportIsDeliverable(report)) {
+      elements.deliveryButton.disabled = true;
+      elements.deliveryButton.innerHTML = '<i class="bi bi-send-fill"></i> Send to teacher';
+      setDeliveryStatus(`This report has ${Number(report.analyzedCount) || 0} of ${stages.length} analyzed stages. Complete a new full dinner before sending it.`, "error");
+      return;
+    }
+
+    if (report.submission?.clientSubmissionId === report.clientSubmissionId) {
+      elements.deliveryPanel.classList.add("is-submitted");
+      elements.deliveryButton.disabled = true;
+      elements.deliveryButton.innerHTML = '<i class="bi bi-check-circle-fill"></i> Submitted to teacher';
+      const submittedGrade = Number(report.submission.grade);
+      const gradeText = Number.isFinite(submittedGrade) ? submittedGrade.toFixed(2) : grade.toFixed(2);
+      setDeliveryStatus(`Submitted to teacher. Reference grade: ${gradeText}/5. Gradebook weight: 0%. This result does not affect your course average.`, "success");
+      return;
+    }
+
+    elements.deliveryPanel.classList.remove("is-submitted");
+    elements.deliveryButton.disabled = submissionBusy;
+    elements.deliveryButton.innerHTML = submissionBusy ? '<i class="bi bi-hourglass-split"></i> Sending to teacher...' : '<i class="bi bi-send-fill"></i> Send to teacher';
+    setDeliveryStatus(submissionBusy ? "Sending the written report to your teacher..." : "Report ready. Sign in with your Intermediate English account and send it when you are ready.", submissionBusy ? "pending" : "ready");
+  }
+
+  function deliveryTurns(report) {
+    return (Array.isArray(report.answers) ? report.answers : []).map((answer) => {
+      const stageIndex = Number(answer.stageIndex);
+      const stage = stages[stageIndex] || {};
+      return {
+        stageIndex,
+        topic: stage.topic || "",
+        phase: answer.phase === "clarify" ? "clarify" : "main",
+        prompt: answer.prompt || "",
+        transcript: answer.transcript || "",
+        score: Number.isFinite(answer.analysis?.total) ? Math.round(answer.analysis.total) : null
+      };
+    });
+  }
+
+  async function submitReport() {
+    const report = persistent.lastReport;
+    if (!report || !reportIsDeliverable(report)) {
+      setDeliveryStatus("Complete all six analyzed stages before sending this activity.", "error");
+      showToast("The full conversation must be analyzed before delivery.");
+      return;
+    }
+    const user = readUser();
+    if (!user?.credential) {
+      setDeliveryStatus("Sign in first with the account registered in Intermediate English.", "error");
+      showToast("Sign in before sending the report.");
+      openLoginPanel();
+      return;
+    }
+
+    submissionBusy = true;
+    updateDelivery(report);
+    let failureMessage = "";
+    try {
+      const dish = dishById.get(report.selectedDishId);
+      const incident = incidentById.get(report.incidentId);
+      const response = await fetch(submitPath, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${user.credential}`,
+          "X-Jaralingua-Auth-Provider": user.provider || "google",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          clientSubmissionId: ensureReportSubmissionId(report),
+          clientDate: new Date().toISOString().slice(0, 10),
+          mode: report.mode,
+          selectedDish: dish?.name || "",
+          serviceScenario: incident?.prompt || "",
+          metrics: report.metrics,
+          analyzedCount: report.analyzedCount,
+          totalStages: report.totalStages,
+          stageScores: report.stageScores,
+          turns: deliveryTurns(report)
+        })
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        if (response.status === 401) throw new Error("Your session expired. Sign in again before sending this report.");
+        if (payload.error === "student_not_authorized") throw new Error("This account is signed in but is not linked to an Intermediate English student record.");
+        if (payload.error === "incomplete_conversation") throw new Error("The server could not verify all six analyzed stages. Complete a new full dinner and try again.");
+        throw new Error("The report could not be submitted. Please try again.");
+      }
+      report.submission = {
+        submittedAt: payload.submittedAt,
+        grade: Number(payload.grade),
+        attemptCount: payload.attemptCount,
+        clientSubmissionId: payload.clientSubmissionId || report.clientSubmissionId
+      };
+      persistent.lastReport = report;
+      savePersistent();
+      showToast("Submitted to teacher. Reference grade recorded with weight 0%.");
+    } catch (error) {
+      failureMessage = error.message || "The report could not be submitted.";
+      showToast(failureMessage);
+    } finally {
+      submissionBusy = false;
+      updateDelivery(report);
+      if (failureMessage) setDeliveryStatus(failureMessage, "error");
+    }
   }
 
   function renderHistory() {
@@ -1056,13 +1235,16 @@
   }
 
   function renderReport(report) {
+    ensureReportSubmissionId(report);
+    persistent.lastReport = report;
+    savePersistent();
     const dish = dishById.get(report.selectedDishId);
     const incident = incidentById.get(report.incidentId);
     elements.summaryLead.textContent = `You completed the customer route${dish ? ` with ${dish.name}` : ""}. Review the evidence before your next unlimited attempt.`;
     elements.summaryScore.textContent = report.score == null ? "--" : report.score;
     elements.summaryReadiness.textContent = readinessLabel(report.score);
-    elements.summaryComparison.textContent = report.score == null ? "No automatic score was created because no usable English transcription was available." : `This private estimate summarizes your latest analyzed response in each restaurant stage.`;
-    elements.summaryCoverage.textContent = `${report.analyzedCount} of ${report.totalStages} stages analyzed. This is not a grade and is never sent to your teacher.`;
+    elements.summaryComparison.textContent = report.score == null ? "No automatic score was created because no usable English transcription was available." : "This formative estimate summarizes your latest analyzed response in each restaurant stage.";
+    elements.summaryCoverage.textContent = reportIsDeliverable(report) ? `${report.analyzedCount} of ${report.totalStages} stages analyzed. The written report is ready for optional teacher delivery.` : `${report.analyzedCount} of ${report.totalStages} stages analyzed. Complete all six stages to unlock teacher delivery.`;
     elements.summaryMetrics.innerHTML = (config.rubric || []).map((criterion) => `<article class="coach-summary-metric"><strong>${report.metrics[criterion.key] ?? "--"}</strong><span>${escapeHtml(criterion.label)} /10</span><p>${escapeHtml(criterion.description)}</p></article>`).join("");
     elements.summaryStrengths.innerHTML = report.strengths.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     elements.summaryPriorities.innerHTML = report.priorities.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
@@ -1078,6 +1260,7 @@
       return `<article><h3><span class="coach-answer-score">${report.stageScores[stageIndex] == null ? "--" : `${report.stageScores[stageIndex]}/50`}</span>Stage ${stageIndex + 1}: ${escapeHtml(stage.topic)}</h3>${context}${attemptsMarkup}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(stage.improved || "")}</p></article>`;
     }).join("");
     renderHistory();
+    updateDelivery(report);
   }
 
   function completeConversation() {
@@ -1096,7 +1279,7 @@
     renderReport(report);
     showPanel("summary");
     elements.summary.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast("Private restaurant report created. Nothing was sent to Grades.");
+    showToast("Restaurant report ready. Nothing is sent until you choose Send to teacher.");
   }
 
   function reviewLatest() {
@@ -1104,7 +1287,7 @@
     renderReport(persistent.lastReport);
     showPanel("summary");
     elements.summary.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast("Latest private report opened.");
+    showToast("Latest restaurant report opened.");
   }
 
   function clearHistory() {
@@ -1155,6 +1338,7 @@
   elements.weakPractice.addEventListener("click", restartGuided);
   elements.closingPlay.addEventListener("click", () => playAudio(elements.reactionAudio, stages.at(-1)?.complete?.file));
   elements.clearHistory.addEventListener("click", clearHistory);
+  elements.deliveryButton.addEventListener("click", submitReport);
   elements.microphoneSelect.addEventListener("change", () => showToast(elements.microphoneSelect.value ? "Selected microphone ready." : "Default microphone selected."));
 
   navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);
