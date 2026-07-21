@@ -111,8 +111,8 @@ assert.match(page, /7 spoken responses/i, "The learner-facing page must explain 
 assert.match(page, /audio is not stored/i, "Privacy copy must state that audio is not stored");
 assert.match(css, /@media \(max-width: 980px\)/, "Tablet layout is required");
 assert.match(css, /@media \(max-width: 470px\)/, "Small mobile layout is required");
-assert.match(practiceLab, /Unit 5 - 11 activities/, "Practice Lab quick access must show eleven Unit 5 activities");
-assert.match(practiceLab, /<strong class="practice-folder-count">11 activities<\/strong>/, "Unit 5 folder count must show eleven activities");
+assert.match(practiceLab, /Unit 5 - 12 activities/, "Practice Lab quick access must show twelve Unit 5 activities");
+assert.match(practiceLab, /<strong class="practice-folder-count">12 activities<\/strong>/, "Unit 5 folder count must show twelve activities");
 assert.match(practiceLab, /href="unit-conversation-coach-unit-5\.html"/, "Practice Lab must link the Conversation Coach");
 assert.match(overview, /href="unit-conversation-coach-unit-5\.html"/, "Course Overview must link the Conversation Coach");
 assert.match(unitPage, /href="unit-conversation-coach-unit-5\.html"/, "Unit 5 explanation route must link the Conversation Coach");
