@@ -252,6 +252,13 @@
     adminState: byId("adminExamState"),
     adminOpen: byId("openFinalOralButton", "openExamButton", "activateExamButton"),
     adminClose: byId("closeFinalOralButton", "closeExamButton", "deactivateExamButton"),
+    adminPreviewButton: byId("adminPreviewButton"),
+    adminPreviewVariant: byId("adminPreviewVariant"),
+    adminPreviewToolbar: byId("adminPreviewToolbar"),
+    adminPreviewModelLabel: byId("adminPreviewModelLabel"),
+    adminPreviewPrevious: byId("adminPreviewPreviousButton"),
+    adminPreviewNext: byId("adminPreviewNextButton"),
+    adminPreviewExit: byId("adminPreviewExitButton"),
     staff: byId("finalOralStaffReviewPanel", "staffReviewPanel"),
     staffRefresh: byId("finalOralStaffRefreshButton", "staffRefreshButton", "refreshSubmissionsButton"),
     staffStatus: byId("finalOralStaffStatus", "staffReviewStatus"),
@@ -355,6 +362,9 @@
   let selectedEvidenceIndex = 0;
   let staffAudioObjectUrl = "";
   let staffEvidenceLoadToken = 0;
+  let adminQuestionBank = {};
+  let adminInteractionQuestion = null;
+  let adminPreviewMode = false;
 
   const setText = (node, value) => { if (node) node.textContent = value; };
   const setHidden = (node, hidden) => { if (node) node.hidden = Boolean(hidden); };
@@ -610,11 +620,13 @@
       if (responseSession === sessionGeneration) {
         reactionBusy = false;
         setDisabled(elements.next, false);
+        updateAdminPreviewNavigation();
       }
       return;
     }
     reactionBusy = true;
     setDisabled(elements.next, true);
+    updateAdminPreviewNavigation();
     setDanielState("speaking", "Daniel is responding");
     setHidden(elements.reaction, false);
     try {
@@ -644,10 +656,12 @@
       reactionBusy = false;
       setDanielState("ready", "Daniel is ready to continue");
       setDisabled(elements.next, false);
+      updateAdminPreviewNavigation();
     }
   }
 
   function showAccess(message, type = "") {
+    setHidden(elements.accessShell, false);
     setHidden(elements.access, false);
     if (elements.accessStatus) {
       elements.accessStatus.textContent = message;
@@ -676,6 +690,95 @@
     }
     setDisabled(elements.adminOpen, open);
     setDisabled(elements.adminClose, !open);
+    const previewReady = ["1", "2", "3", "4", "5", "6"].every((unit) => Array.isArray(adminQuestionBank[unit]) && adminQuestionBank[unit].length)
+      && Boolean(adminInteractionQuestion);
+    setDisabled(elements.adminPreviewButton, !previewReady);
+    setDisabled(elements.adminPreviewVariant, !previewReady);
+  }
+
+  function buildAdminPreviewQuestions() {
+    const variantIndex = Math.max(0, Math.min(2, Number(elements.adminPreviewVariant?.value || 0)));
+    const questions = ["1", "2", "3", "4", "5", "6"].map((unit, index) => {
+      const variants = Array.isArray(adminQuestionBank[unit]) ? adminQuestionBank[unit] : [];
+      const selected = variants[variantIndex] || variants[0];
+      return selected ? Object.assign({}, selected, { turnId: `unit-${unit}`, sequence: index + 1 }) : null;
+    }).filter(Boolean);
+    if (adminInteractionQuestion) questions.push(Object.assign({}, adminInteractionQuestion, { turnId: "interaction", sequence: 7 }));
+    return questions;
+  }
+
+  function updateAdminPreviewNavigation() {
+    if (!adminPreviewMode) return;
+    const busy = recordingStartPending || recordingFinalizing || analyzing || reactionBusy || mediaRecorder?.state === "recording";
+    setDisabled(elements.adminPreviewPrevious, busy || currentIndex <= 0);
+    setDisabled(elements.adminPreviewNext, busy);
+    setDisabled(elements.adminPreviewExit, busy);
+    if (elements.adminPreviewNext) {
+      elements.adminPreviewNext.innerHTML = currentIndex >= assignedQuestions.length - 1
+        ? 'Finish preview <i class="bi bi-check2-circle"></i>'
+        : 'Next question <i class="bi bi-arrow-right"></i>';
+    }
+  }
+
+  function startAdminPreview() {
+    if (!(role === "admin" || role === "teacher") || adminPreviewMode) return;
+    const questions = buildAdminPreviewQuestions();
+    if (questions.length !== REQUIRED_TURNS) {
+      toast("The administrator question bank is still loading. Check availability and try again.", "error");
+      return;
+    }
+    sessionGeneration += 1;
+    staffEvidenceLoadToken += 1;
+    setBusy(false);
+    elements.evidenceAudio?.pause();
+    elements.staffList?.querySelectorAll("audio").forEach((audio) => audio.pause());
+    adminPreviewMode = true;
+    attempt = {
+      attemptId: "ADMIN-PREVIEW",
+      revision: 0,
+      student: { fullName: `${user?.name || "Administrator"} · preview`, id: "NOT SAVED" },
+      assignedQuestions: questions,
+      turns: {}
+    };
+    assignedQuestions = questions;
+    currentIndex = 0;
+    revision = 0;
+    savedCurrentTurn = false;
+    if (elements.submitConfirmation) elements.submitConfirmation.checked = false;
+    setText(elements.adminPreviewModelLabel, `Model ${String.fromCharCode(65 + Number(elements.adminPreviewVariant?.value || 0))} · nothing is saved`);
+    setHidden(elements.accessShell, true);
+    setHidden(elements.admin, true);
+    setHidden(elements.staff, true);
+    setHidden(elements.onboarding, true);
+    setHidden(elements.ready, true);
+    setHidden(elements.complete, true);
+    setHidden(elements.adminPreviewToolbar, false);
+    fillIdentity(attempt.student);
+    renderCurrentTurn();
+    toast("Administrator preview opened. No attempt, grade, or submission will be created.", "success");
+  }
+
+  function moveAdminPreview(direction) {
+    if (!adminPreviewMode || recordingStartPending || recordingFinalizing || analyzing || reactionBusy || mediaRecorder?.state === "recording") return;
+    if (direction < 0) {
+      currentIndex = Math.max(0, currentIndex - 1);
+      renderCurrentTurn();
+      return;
+    }
+    if (currentIndex >= assignedQuestions.length - 1) {
+      finishAdminPreview(true);
+      return;
+    }
+    currentIndex += 1;
+    renderCurrentTurn();
+  }
+
+  function finishAdminPreview(completed = false) {
+    if (!adminPreviewMode) return;
+    resetProtectedSession({ clearClaim: false });
+    showAccess("Restoring the administrator control room.", "staff");
+    loadState(false);
+    toast(completed ? "Administrator rehearsal completed. Nothing was saved or graded." : "Administrator preview closed. Nothing was saved or graded.", "success");
   }
 
   function renderSubmission(result) {
@@ -772,6 +875,9 @@
     staffSubmissions = [];
     selectedStaffSubmission = null;
     selectedEvidenceIndex = 0;
+    adminQuestionBank = {};
+    adminInteractionQuestion = null;
+    adminPreviewMode = false;
     if (clearClaim) clearStudentClaim();
     if (elements.claimInput) elements.claimInput.value = "";
     if (elements.studentName) elements.studentName.value = "";
@@ -780,6 +886,7 @@
     if (elements.preflightConfirm?.type === "checkbox") elements.preflightConfirm.checked = false;
     if (elements.submitConfirmation) elements.submitConfirmation.checked = false;
     setHidden(elements.account, true);
+    setHidden(elements.accessShell, false);
     setHidden(elements.claimPanel, true);
     setHidden(elements.onboarding, true);
     setHidden(elements.exam, true);
@@ -790,6 +897,8 @@
     setHidden(elements.dock, true);
     setHidden(elements.reaction, true);
     setHidden(elements.recovery, true);
+    setHidden(elements.adminPreviewToolbar, true);
+    setHidden(elements.transcript, true);
     setDisabled(elements.start, true);
     setDisabled(elements.resume, true);
     setDisabled(elements.preflightConfirm, true);
@@ -829,6 +938,13 @@
       setEvidenceControlsEnabled(false);
       role = payload.role || "student";
       serverState = payload.state || {};
+      if (role === "admin" || role === "teacher") {
+        adminQuestionBank = payload.questionBank && typeof payload.questionBank === "object" ? payload.questionBank : {};
+        adminInteractionQuestion = payload.interactionQuestion || null;
+      } else {
+        adminQuestionBank = {};
+        adminInteractionQuestion = null;
+      }
       renderAdminState();
       if (role === "admin" || role === "teacher") {
         showAccess("Staff access confirmed. Use the administration and review panels below.", "staff");
@@ -972,7 +1088,7 @@
     setHidden(elements.reaction, true);
     setHidden(elements.recovery, true);
     questionHeard = false;
-    savedCurrentTurn = Boolean(attempt?.turns?.[question.turnId]);
+    savedCurrentTurn = adminPreviewMode ? false : Boolean(attempt?.turns?.[question.turnId]);
     currentBlob = null;
     currentTranscript = "";
     currentClientTurnId = "";
@@ -983,10 +1099,13 @@
     setText(elements.topic, question.unit === "interaction" ? "Final interaction · ask Daniel two questions" : `Unit ${question.unit} · ${question.unitLabel || "Course conversation"}`);
     updateJourney(question);
     setText(elements.question, question.question || "Listen to Daniel's question.");
-    setText(elements.recordStatus, "Listen to Daniel before recording your response.");
-    setText(elements.recordHelp, question.unit === "interaction" ? "Record both questions in one response. No answer model or hint is shown during the exam." : "No answer model, vocabulary hint, or correction is shown during the exam.");
-    setText(elements.transcript, "Your transcript is stored privately for teacher review after the recording is saved.");
-    setText(elements.saveStatus, savedCurrentTurn ? "Response already saved." : "Not saved yet.");
+    setText(elements.recordStatus, adminPreviewMode ? "Administrator rehearsal: listen to Daniel, then record if you want to test the complete interaction." : "Listen to Daniel before recording your response.");
+    setText(elements.recordHelp, adminPreviewMode
+      ? "Preview only. You may rehearse with the microphone or use the administrator controls to browse without recording."
+      : question.unit === "interaction" ? "Record both questions in one response. No answer model or hint is shown during the exam." : "No answer model, vocabulary hint, or correction is shown during the exam.");
+    setText(elements.transcript, adminPreviewMode ? "Your private preview transcript will appear here after recording." : "Your transcript is stored privately for teacher review after the recording is saved.");
+    setHidden(elements.transcript, !adminPreviewMode);
+    setText(elements.saveStatus, adminPreviewMode ? "ADMIN PREVIEW · nothing is saved" : savedCurrentTurn ? "Response already saved." : "Not saved yet.");
     setText(elements.timer, `0:00 / 0:${String(TURN_LIMIT_SECONDS[question.unit] || 28).padStart(2, "0")}`);
     setText(elements.dockLabel, `Response ${currentIndex + 1} of ${REQUIRED_TURNS}`);
     setText(elements.dockTimer, "0:00");
@@ -994,6 +1113,11 @@
     setText(elements.answerState, "Ready");
     if (elements.answerState) elements.answerState.className = "answer-state ready";
     setHidden(elements.answerCaptured, true);
+    if (elements.answerCaptured) {
+      elements.answerCaptured.innerHTML = adminPreviewMode
+        ? '<i class="bi bi-eye-fill"></i><div><strong>Administrator rehearsal captured for this preview</strong><p>The transcript may be processed temporarily, but the response never enters Grades or student submissions.</p></div>'
+        : '<i class="bi bi-check2-circle"></i><div><strong>Answer captured securely</strong><p>Your response was saved. No score or feedback is shown during the official exam.</p></div>';
+    }
     setDisabled(elements.questionPlay, savedCurrentTurn);
     setDisabled(elements.mic, true);
     setDisabled(elements.dockMic, true);
@@ -1001,7 +1125,9 @@
     setDisabled(elements.dockStop, true);
     setHidden(elements.next, true);
     setDanielState("ready", "Daniel is ready");
-    setText(elements.sessionCode, attempt?.attemptId || "Pending");
+    setText(elements.sessionCode, adminPreviewMode ? "ADMIN PREVIEW · NOT SAVED" : attempt?.attemptId || "Pending");
+    setHidden(elements.adminPreviewToolbar, !adminPreviewMode);
+    updateAdminPreviewNavigation();
     startExamClock();
   }
 
@@ -1201,6 +1327,7 @@
     setDisabled(elements.microphoneSelect, controlsBusy);
     setDisabled(elements.preflightMicrophoneSelect, controlsBusy);
     setDisabled(elements.questionPlay, controlsBusy || reactionBusy || savedCurrentTurn || questionAudioLoading || questionAudioPlaying);
+    updateAdminPreviewNavigation();
     if (elements.answerState) {
       elements.answerState.className = `answer-state ${recording ? "recording" : analyzing ? "processing" : savedCurrentTurn ? "saved" : "ready"}`;
       elements.answerState.innerHTML = `<i class="bi bi-circle-fill"></i> ${recording ? "Recording" : analyzing ? "Processing" : savedCurrentTurn ? "Saved" : "Ready"}`;
@@ -1293,7 +1420,7 @@
     objectUrl = URL.createObjectURL(currentBlob);
     if (elements.studentAudio) { elements.studentAudio.src = objectUrl; elements.studentAudio.hidden = false; }
     recordingFinalizing = false;
-    await processAndSaveCurrentTurn();
+    await processCapturedTurn();
   }
 
   async function requestTranscription(blob) {
@@ -1360,6 +1487,61 @@
       }
       throw error;
     }
+  }
+
+  async function processAdminPreviewTurn() {
+    if (!adminPreviewMode || !currentBlob || analyzing) return;
+    const previewSession = sessionGeneration;
+    const previewQuestion = currentQuestion();
+    const previewBlob = currentBlob;
+    analyzing = true;
+    setHidden(elements.recovery, true);
+    setText(elements.recordStatus, "Requesting a temporary administrator preview transcript. It will not be stored in Grades or submissions.");
+    setText(elements.saveStatus, "ADMIN PREVIEW · temporary transcription · nothing will be stored or submitted");
+    setDanielState("thinking", "Daniel is preparing the preview response");
+    setBusy(true, "Processing the private administrator rehearsal…");
+    if (elements.saveState) elements.saveState.innerHTML = '<i class="bi bi-eye-fill"></i><span>Administrator preview only</span>';
+    updateRecordingControls(false);
+    let transcript = "";
+    try {
+      try {
+        const transcription = await requestTranscription(previewBlob);
+        transcript = String(transcription.text || "").trim();
+      } catch {
+        if (previewSession !== sessionGeneration || !adminPreviewMode) return;
+      }
+      if (previewSession !== sessionGeneration || !adminPreviewMode || !previewQuestion || currentQuestion()?.turnId !== previewQuestion.turnId) return;
+      currentTranscript = transcript;
+      attempt.turns = attempt.turns || {};
+      attempt.turns[previewQuestion.turnId] = {
+        turnId: previewQuestion.turnId,
+        transcript,
+        durationMs: Math.round(recordingDurationMs),
+        savedAt: new Date().toISOString(),
+        previewOnly: true
+      };
+      savedCurrentTurn = true;
+      setText(elements.transcript, transcript ? `Temporary preview transcript: ${transcript}` : "No transcript was returned, but the rehearsal audio remains available in this preview.");
+      setHidden(elements.transcript, false);
+      setText(elements.recordStatus, "Administrator rehearsal completed for this question.");
+      setText(elements.saveStatus, "PREVIEW ONLY · response kept temporarily in this tab · not saved or graded");
+      setHidden(elements.answerCaptured, false);
+      if (elements.saveState) { elements.saveState.className = "exam-save-state saved"; elements.saveState.innerHTML = '<i class="bi bi-eye-fill"></i><span>Preview only · not saved</span>'; }
+      setHidden(elements.next, false);
+      setDisabled(elements.next, true);
+      updateRecordingControls(false);
+      await playResponseQueue(responsesForTurn(previewQuestion, transcript));
+    } finally {
+      if (previewSession !== sessionGeneration || !adminPreviewMode) return;
+      analyzing = false;
+      setBusy(false);
+      updateRecordingControls(false);
+    }
+  }
+
+  async function processCapturedTurn() {
+    if (adminPreviewMode) return processAdminPreviewTurn();
+    return processAndSaveCurrentTurn();
   }
 
   async function processAndSaveCurrentTurn() {
@@ -1435,11 +1617,15 @@
     if (!savedCurrentTurn || reactionBusy) return;
     clearQuestionAudio();
     currentIndex += 1;
-    if (currentIndex >= assignedQuestions.length) renderReadyToSubmit();
+    if (currentIndex >= assignedQuestions.length) {
+      if (adminPreviewMode) finishAdminPreview(true);
+      else renderReadyToSubmit();
+    }
     else renderCurrentTurn();
   }
 
   function renderReadyToSubmit() {
+    if (adminPreviewMode) return finishAdminPreview(true);
     setHidden(elements.exam, true);
     setHidden(elements.ready, false);
     setHidden(elements.dock, true);
@@ -1858,13 +2044,17 @@
     elements.dockMic?.addEventListener("click", startRecording);
     elements.stop?.addEventListener("click", stopRecording);
     elements.dockStop?.addEventListener("click", stopRecording);
-    elements.retry?.addEventListener("click", processAndSaveCurrentTurn);
+    elements.retry?.addEventListener("click", processCapturedTurn);
     elements.recordAgain?.addEventListener("click", resetFailedRecording);
     elements.next?.addEventListener("click", nextTurn);
     elements.submit?.addEventListener("click", submitExam);
     elements.submitConfirmation?.addEventListener("change", renderReadyToSubmit);
     elements.adminOpen?.addEventListener("click", () => updateAdminState(true));
     elements.adminClose?.addEventListener("click", () => updateAdminState(false));
+    elements.adminPreviewButton?.addEventListener("click", startAdminPreview);
+    elements.adminPreviewPrevious?.addEventListener("click", () => moveAdminPreview(-1));
+    elements.adminPreviewNext?.addEventListener("click", () => moveAdminPreview(1));
+    elements.adminPreviewExit?.addEventListener("click", () => finishAdminPreview(false));
     elements.staffRefresh?.addEventListener("click", loadStaffSubmissions);
     elements.submissionSelector?.addEventListener("change", () => selectFixedSubmission(elements.submissionSelector.value));
     elements.evidenceTabs?.querySelectorAll("[data-evidence-unit]").forEach((button) => {
@@ -1939,6 +2129,7 @@
   setHidden(elements.complete, true);
   setHidden(elements.staff, true);
   setHidden(elements.dock, true);
+  setHidden(elements.adminPreviewToolbar, true);
   setDisabled(elements.preflightConfirm, true);
   setEvidenceControlsEnabled(false);
   loadState(false);

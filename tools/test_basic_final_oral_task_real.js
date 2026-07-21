@@ -209,6 +209,7 @@ assert.strictEqual(loginToast, "", "Working sign-in must not show a loading erro
 
 [
   "activateExamButton", "deactivateExamButton", "signInButton", "refreshAccessButton", "claimStudentButton",
+  "adminPreviewButton", "adminPreviewPreviousButton", "adminPreviewNextButton", "adminPreviewExitButton",
   "welcomePlayButton", "instructionsPlayButton", "preflightButton", "startExamButton", "questionPlayButton",
   "micButton", "stopButton", "nextTurnButton", "retryProcessingButton", "recordAgainButton", "submitExamButton", "copyReceiptButton",
   "refreshSubmissionsButton", "evidencePlayButton", "publishGradeButton", "floatingMicButton", "floatingStopButton"
@@ -237,6 +238,51 @@ assert(/id="evidencePlayButton"[^>]*disabled/.test(html), "Teacher evidence play
 assert.strictEqual((html.match(/role="tab"[^>]*disabled/g) || []).length, 7, "All seven teacher evidence tabs must start disabled");
 assert(source.includes('["ArrowLeft", "ArrowRight", "Home", "End"]'), "Teacher evidence tabs need keyboard navigation");
 assert(html.includes('<em id="danielStatus"><i></i><span>Ready</span></em>'), "Daniel status updates must preserve the live-state indicator");
+assert(html.includes('id="adminPreviewVariant"') && html.includes("Model A") && html.includes("Model B") && html.includes("Model C"), "Administrator preview must expose all three question models");
+assert(html.includes('id="adminPreviewToolbar"') && html.includes("ADMINISTRATOR PREVIEW"), "Administrator rehearsal needs an unmistakable preview banner");
+assert(source.includes("payload.questionBank") && source.includes("payload.interactionQuestion"), "Administrator preview must use the read-only server question bank");
+assert(source.includes("function startAdminPreview()") && source.includes("function finishAdminPreview("), "Administrator preview lifecycle is incomplete");
+assert(source.includes("function processAdminPreviewTurn()") && source.includes("previewOnly: true"), "Administrator microphone rehearsal must remain non-persistent");
+const isolatedAdminPreviewProcessor = source.match(/async function processAdminPreviewTurn\(\)\s*\{([\s\S]*?)\n  \}\n\n  async function processCapturedTurn/);
+assert(isolatedAdminPreviewProcessor, "Could not isolate the administrator preview processor");
+assert(!isolatedAdminPreviewProcessor[1].includes("API.turn") && !isolatedAdminPreviewProcessor[1].includes("API.submit") && !isolatedAdminPreviewProcessor[1].includes("saveCurrentTurn"), "Administrator rehearsal must never create a student turn or submission");
+assert(source.includes("setDisabled(elements.adminPreviewExit, busy)"), "Administrator preview must not exit while recording or processing");
+assert(source.includes('elements.retry?.addEventListener("click", processCapturedTurn)'), "Retry must preserve the administrator preview boundary");
+assert(html.includes("Real student questions are randomized independently by unit"), "Administrator review sets must be distinguished from student randomization");
+assert(server.includes('payload["questionBank"]') && server.includes('payload["interactionQuestion"]'), "Backend must expose the complete model read-only to staff");
+assert(server.includes('if role not in ("admin", "teacher"):') && server.includes('"error": "prompt_not_assigned"'), "Prompt audio access must remain unrestricted for authenticated staff and assignment-bound for students");
+
+const previewBuilderSource = source.match(/function buildAdminPreviewQuestions\(\)\s*\{([\s\S]*?)\n  \}\n\n  function updateAdminPreviewNavigation/);
+assert(previewBuilderSource, "Could not isolate the administrator model builder");
+const previewQuestions = vm.runInNewContext(`(() => {
+  const elements = { adminPreviewVariant: { value: "1" } };
+  const adminQuestionBank = Object.fromEntries(["1", "2", "3", "4", "5", "6"].map((unit) => [unit, ["a", "b", "c"].map((letter) => ({ unit, variantId: \`unit-\${unit}-\${letter}\` }))]));
+  const adminInteractionQuestion = { unit: "interaction", variantId: "interaction-a" };
+  const REQUIRED_TURNS = 7;
+  function buildAdminPreviewQuestions() {${previewBuilderSource[1]}
+  }
+  return buildAdminPreviewQuestions();
+})()`, {});
+assert.strictEqual(previewQuestions.length, 7, "Every administrator model must cover six units and the final interaction");
+assert.deepStrictEqual(Array.from(previewQuestions, (item) => item.variantId), ["unit-1-b", "unit-2-b", "unit-3-b", "unit-4-b", "unit-5-b", "unit-6-b", "interaction-a"], "Model B must select the matching server variant for every unit");
+assert.deepStrictEqual(Array.from(previewQuestions, (item) => item.turnId), ["unit-1", "unit-2", "unit-3", "unit-4", "unit-5", "unit-6", "interaction"], "Administrator preview turn identities must match the real exam structure");
+
+const previewDispatcherSource = source.match(/async function processCapturedTurn\(\)\s*\{([\s\S]*?)\n  \}\n\n  async function processAndSaveCurrentTurn/);
+assert(previewDispatcherSource, "Could not isolate the captured-response dispatcher");
+const previewDispatcherHarness = vm.runInNewContext(`(() => {
+  let adminPreviewMode = false;
+  let previewCalls = 0;
+  let officialCalls = 0;
+  const processAdminPreviewTurn = async () => { previewCalls += 1; };
+  const processAndSaveCurrentTurn = async () => { officialCalls += 1; };
+  async function processCapturedTurn() {${previewDispatcherSource[1]}
+  }
+  return {
+    processCapturedTurn,
+    setPreview: (value) => { adminPreviewMode = value; },
+    counts: () => ({ previewCalls, officialCalls })
+  };
+})()`, {});
 
 const responseQueueSource = source.match(/async function playResponseQueue\(responses\)\s*\{([\s\S]*?)\n  \}\n\n  function showAccess/);
 assert(responseQueueSource, "Could not isolate the Continue unlock controller for functional testing");
@@ -262,12 +308,19 @@ const responseHarness = vm.runInNewContext(`(() => {
   const setHidden = (node, value) => { node.hidden = Boolean(value); };
   const setText = (node, value) => { node.textContent = value; };
   const setDanielState = () => {};
+  const updateAdminPreviewNavigation = () => {};
   async function playResponseQueue(responses) {${responseQueueSource[1]}
   }
   return { playResponseQueue, next, reactionBusy: () => reactionBusy };
 })()`, responseSandbox);
 
 (async () => {
+  previewDispatcherHarness.setPreview(true);
+  await previewDispatcherHarness.processCapturedTurn();
+  assert.strictEqual(JSON.stringify(previewDispatcherHarness.counts()), JSON.stringify({ previewCalls: 1, officialCalls: 0 }), "Preview retry must never enter the official save processor");
+  previewDispatcherHarness.setPreview(false);
+  await previewDispatcherHarness.processCapturedTurn();
+  assert.strictEqual(JSON.stringify(previewDispatcherHarness.counts()), JSON.stringify({ previewCalls: 1, officialCalls: 1 }), "Student retry must continue through the official save processor");
   await responseHarness.playResponseQueue([{ file: "reaction.mp3", text: "Thank you." }]);
   assert.strictEqual(responseHarness.next.disabled, false, "Continue must unlock when reaction audio cannot play");
   assert.strictEqual(responseHarness.reactionBusy(), false, "Reaction state must clear after a media failure");
