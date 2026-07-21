@@ -13,6 +13,7 @@
   let lastSignature = "";
   let microsoftClient = null;
   let googleInlineReady = false;
+  let activeStaffTab = "gradebook";
 
   function readStoredUser(key) {
     try {
@@ -475,14 +476,12 @@
     }).join("");
   }
 
-  function adminToolsMarkup(payload) {
+  function adminAddGradeMarkup(payload) {
     return `
-      <details class="grades-disclosure mb-4" data-admin-tools>
-        <summary>
-          <span class="disclosure-heading"><small>Administrator</small><strong>Add a new grade</strong></span>
-          <span class="disclosure-action"><span>Open</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
-        </summary>
-        <div class="grades-disclosure-body">
+      <div class="grades-panel" data-admin-tools>
+        <p class="section-kicker">Administrator</p>
+        <h2 class="section-title">Add a new grade</h2>
+        <p class="section-text mb-3">Create a weighted assessment and, if needed, enter its initial grades.</p>
           <form data-add-grade-form class="admin-grade-form">
             <div class="row g-3">
               <div class="col-md-5">
@@ -509,14 +508,15 @@
             </details>
             <p class="section-text mt-3" data-admin-grade-status></p>
           </form>
-        </div>
-      </details>
-      <details class="grades-disclosure mb-4" data-admin-edit-tools>
-        <summary>
-          <span class="disclosure-heading"><small>Manual editing</small><strong>Edit recorded grades</strong></span>
-          <span class="disclosure-action"><span>Open</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
-        </summary>
-        <div class="grades-disclosure-body">
+      </div>
+    `;
+  }
+
+  function adminEditGradesMarkup(payload) {
+    return `
+      <div class="grades-panel" data-admin-edit-tools>
+        <p class="section-kicker">Manual editing</p>
+        <h2 class="section-title">Edit recorded grades</h2>
           <p class="section-text mb-3">Select one student at a time. Empty fields remain pending.</p>
           <label class="form-label fw-bold w-100 mb-3">Find a student
             <input class="form-control" type="search" data-grade-editor-filter placeholder="Name, email or ID">
@@ -526,8 +526,7 @@
             <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save grade changes</button>
             <p class="section-text mt-3" data-edit-grade-status></p>
           </form>
-        </div>
-      </details>
+      </div>
     `;
   }
 
@@ -588,12 +587,9 @@
 
   function adminStudentEditorMarkup(payload) {
     return `
-      <details class="grades-disclosure mb-4" data-admin-student-tools>
-        <summary>
-          <span class="disclosure-heading"><small>Administrator</small><strong>Edit students and accounts</strong></span>
-          <span class="disclosure-action"><span>${payload.students.length} students</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
-        </summary>
-        <div class="grades-disclosure-body">
+      <div class="grades-panel" data-admin-student-tools>
+          <p class="section-kicker">Administrator · ${payload.students.length} students</p>
+          <h2 class="section-title">Edit students and accounts</h2>
           <p class="section-text mb-3">Change one student record at a time. Existing follow-up results remain preserved.</p>
           <label class="form-label fw-bold w-100 mb-3">Find a student
             <input class="form-control" type="search" data-student-editor-filter placeholder="Name, email or ID">
@@ -631,8 +627,7 @@
             <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save student changes</button>
             <p class="section-text mt-3" data-edit-students-status></p>
           </form>
-        </div>
-      </details>
+      </div>
     `;
   }
 
@@ -644,9 +639,6 @@
           <div class="col-lg-7">
             <label class="form-label fw-bold" for="studentFilter">Filter students by name or email</label>
             <input id="studentFilter" class="form-control" data-student-filter placeholder="Type a name, last name, or email">
-          </div>
-          <div class="col-lg-5 d-flex flex-wrap gap-2">
-            <button class="btn-main" type="button" data-export-excel><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</button>
           </div>
         </div>
       </div>
@@ -710,14 +702,10 @@
   }
 
   function followUpSubmissionsMarkup(payload) {
-    const submissionCount = followUpSubmissionCount(payload);
     return `
-      <details class="grades-disclosure mb-4" data-followup-disclosure>
-        <summary>
-          <span class="disclosure-heading"><small>Weight 0% · tracking only</small><strong>Follow-up submissions</strong></span>
-          <span class="disclosure-action"><span>${submissionCount} submissions</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
-        </summary>
-        <div class="grades-disclosure-body">
+      <div class="grades-panel" data-followup-disclosure>
+          <p class="section-kicker">Weight 0% · tracking only</p>
+          <h2 class="section-title">Follow-up submissions</h2>
           <p class="section-text mb-3">Reference results are kept here for delivery tracking and do not affect the accumulated course grade.</p>
           <div class="table-wrap">
             <table class="grades-table">
@@ -725,8 +713,7 @@
               <tbody>${followUpSubmissionRows(payload)}</tbody>
             </table>
           </div>
-        </div>
-      </details>
+      </div>
     `;
   }
 
@@ -748,12 +735,9 @@
       `;
     }).join("");
     return `
-      <details class="grades-disclosure mb-4" data-admin-pdf-tools>
-        <summary>
-          <span class="disclosure-heading"><small>PDF reports</small><strong>ITM Plurilingüe downloads</strong></span>
-          <span class="disclosure-action"><span>Open</span><i class="bi bi-chevron-down" aria-hidden="true"></i></span>
-        </summary>
-        <div class="grades-disclosure-body">
+      <div data-admin-pdf-tools>
+          <hr class="my-4">
+          <h3 class="h5 fw-bold mb-2">ITM Plurilingüe PDF reports</h3>
           <p class="section-text mb-3">Download official reports containing only assessments with a course weight.</p>
           <div class="mb-3">
             <h3 class="h6 fw-bold text-primary mb-2">For directors</h3>
@@ -763,9 +747,34 @@
             <h3 class="h6 fw-bold text-primary mb-2">For students</h3>
             <div class="d-flex flex-wrap gap-2">${studentButtons}</div>
           </div>
-        </div>
-      </details>
+      </div>
     `;
+  }
+
+  function staffReportsMarkup(payload) {
+    return `
+      <div class="grades-panel">
+        <p class="section-kicker">Exports and reports</p>
+        <h2 class="section-title">Course reports</h2>
+        <p class="section-text mb-3">Export the official gradebook. Assessments worth 0% are excluded from these files.</p>
+        <button class="btn-main" type="button" data-export-excel><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</button>
+        ${staffPdfToolsMarkup(payload)}
+      </div>
+    `;
+  }
+
+  function staffTabButton(id, label, icon, selected, count) {
+    return `
+      <button class="staff-tab" type="button" role="tab" id="staff-tab-${escapeHtml(id)}" aria-controls="staff-panel-${escapeHtml(id)}" aria-selected="${selected ? "true" : "false"}" tabindex="${selected ? "0" : "-1"}" data-staff-tab="${escapeHtml(id)}">
+        <i class="bi ${escapeHtml(icon)}" aria-hidden="true"></i>
+        <span>${escapeHtml(label)}</span>
+        ${count == null ? "" : `<span class="staff-tab-count" aria-label="${escapeHtml(count)} items">${escapeHtml(count)}</span>`}
+      </button>
+    `;
+  }
+
+  function staffTabPanel(id, content, selected) {
+    return `<section class="staff-tab-panel" role="tabpanel" id="staff-panel-${escapeHtml(id)}" aria-labelledby="staff-tab-${escapeHtml(id)}" tabindex="0" data-staff-panel="${escapeHtml(id)}"${selected ? "" : " hidden"}>${content}</section>`;
   }
 
   function renderStaffPanel(payload, user) {
@@ -774,6 +783,39 @@
       return `<th>${escapeHtml(evaluationDisplayTitle(evaluation))}<br>${evaluation.weight}%</th>`;
     }).join("");
     const emptyOfficialRow = `<tr><td colspan="${officialEvaluations.length + 4}">No weighted assessments are configured yet.</td></tr>`;
+    const followUpCount = followUpSubmissionCount(payload);
+    const gradebookContent = `
+      ${staffControlsMarkup()}
+      <div class="grades-panel mb-4" data-official-gradebook>
+        <p class="section-kicker">Official course record</p>
+        <h2 class="section-title">Intermediate English gradebook</h2>
+        <p class="section-text mb-3">Only assessments with a course weight appear in this table.</p>
+        <div class="table-wrap">
+          <table class="grades-table">
+            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
+            <tbody>${officialEvaluations.length ? staffStudentRows(payload, officialEvaluations) : emptyOfficialRow}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+    const tabs = [
+      staffTabButton("gradebook", "Gradebook", "bi-table", true),
+      staffTabButton("follow-up", "Follow-up reports", "bi-inbox-fill", false, followUpCount),
+      staffTabButton("reports", "Reports", "bi-file-earmark-bar-graph-fill", false)
+    ];
+    const panels = [
+      staffTabPanel("gradebook", gradebookContent, true),
+      staffTabPanel("follow-up", followUpSubmissionsMarkup(payload), false),
+      staffTabPanel("reports", staffReportsMarkup(payload), false)
+    ];
+    if (payload.role === "admin") {
+      tabs.push(staffTabButton("add-grade", "Add grade", "bi-plus-square-fill", false));
+      tabs.push(staffTabButton("edit-grades", "Edit grades", "bi-pencil-square", false));
+      tabs.push(staffTabButton("students", "Students", "bi-people-fill", false, payload.students.length));
+      panels.push(staffTabPanel("add-grade", adminAddGradeMarkup(payload), false));
+      panels.push(staffTabPanel("edit-grades", adminEditGradesMarkup(payload), false));
+      panels.push(staffTabPanel("students", adminStudentEditorMarkup(payload), false));
+    }
     return `
       <div class="privacy-note mb-4">
         <i class="bi bi-shield-check"></i>
@@ -788,22 +830,12 @@
         <div class="metric-card"><span>Weighted assessments</span><strong>${officialEvaluations.length}</strong></div>
         <div class="metric-card"><span>Course</span><strong>Intermediate English</strong></div>
       </div>
-      ${staffControlsMarkup()}
-      <div class="grades-panel mb-4" data-official-gradebook>
-        <p class="section-kicker">Official course record</p>
-        <h2 class="section-title">Intermediate English gradebook</h2>
-        <p class="section-text mb-3">Only assessments with a course weight appear in this table.</p>
-        <div class="table-wrap">
-          <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
-            <tbody>${officialEvaluations.length ? staffStudentRows(payload, officialEvaluations) : emptyOfficialRow}</tbody>
-          </table>
+      <div class="staff-tabs" data-staff-tabs>
+        <div class="staff-tab-nav" role="tablist" aria-label="Gradebook administration sections">
+          ${tabs.join("")}
         </div>
+        ${panels.join("")}
       </div>
-      ${staffPdfToolsMarkup(payload)}
-      ${followUpSubmissionsMarkup(payload)}
-      ${payload.role === "admin" ? adminToolsMarkup(payload) : ""}
-      ${payload.role === "admin" ? adminStudentEditorMarkup(payload) : ""}
     `;
   }
 
@@ -884,6 +916,49 @@
         row.hidden = query && search.indexOf(query) === -1;
       });
     });
+  }
+
+  function wireStaffTabs(root) {
+    const tabsRoot = root.querySelector("[data-staff-tabs]");
+    if (!tabsRoot) return;
+    const tabs = Array.from(tabsRoot.querySelectorAll("[data-staff-tab]"));
+    const panels = Array.from(tabsRoot.querySelectorAll("[data-staff-panel]"));
+
+    function activate(tabId, moveFocus) {
+      const nextTab = tabs.find(function (tab) {
+        return tab.getAttribute("data-staff-tab") === tabId;
+      }) || tabs[0];
+      if (!nextTab) return;
+      const nextId = nextTab.getAttribute("data-staff-tab");
+      activeStaffTab = nextId;
+      tabs.forEach(function (tab) {
+        const selected = tab === nextTab;
+        tab.setAttribute("aria-selected", selected ? "true" : "false");
+        tab.tabIndex = selected ? 0 : -1;
+      });
+      panels.forEach(function (panel) {
+        panel.hidden = panel.getAttribute("data-staff-panel") !== nextId;
+      });
+      if (moveFocus) nextTab.focus();
+    }
+
+    tabs.forEach(function (tab, index) {
+      tab.addEventListener("click", function () {
+        activate(tab.getAttribute("data-staff-tab"), false);
+      });
+      tab.addEventListener("keydown", function (event) {
+        let nextIndex = null;
+        if (event.key === "ArrowRight") nextIndex = (index + 1) % tabs.length;
+        if (event.key === "ArrowLeft") nextIndex = (index - 1 + tabs.length) % tabs.length;
+        if (event.key === "Home") nextIndex = 0;
+        if (event.key === "End") nextIndex = tabs.length - 1;
+        if (nextIndex == null) return;
+        event.preventDefault();
+        activate(tabs[nextIndex].getAttribute("data-staff-tab"), true);
+      });
+    });
+
+    activate(activeStaffTab, false);
   }
 
   function excelCell(value) {
@@ -1194,6 +1269,7 @@
   function renderPayload(root, payload, user) {
     if (payload.role === "admin" || payload.role === "teacher") {
       root.innerHTML = renderStaffPanel(payload, user);
+      wireStaffTabs(root);
       wireMicrosoftSignout(root);
       wireStudentFilter(root);
       wireFollowUpAudio(root, user);

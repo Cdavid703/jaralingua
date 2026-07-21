@@ -1,8 +1,17 @@
 const assert = require("node:assert/strict");
+const path = require("node:path");
+const fs = require("node:fs");
 const { chromium } = require("playwright");
 
 const BASE_URL = process.env.JARALINGUA_GRADES_TEST_URL || "http://127.0.0.1:8022/ingles/intermediate/notas.html";
 const CHROME_PATH = process.env.JARALINGUA_CHROME_PATH || "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
+const SCREENSHOT_DIR = process.env.JARALINGUA_GRADES_SCREENSHOT_DIR || "";
+
+async function capture(page, name) {
+  if (!SCREENSHOT_DIR) return;
+  fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(SCREENSHOT_DIR, name + ".png"), fullPage: false });
+}
 
 const evaluation = {
   id: "intermediateIntegratedTask20",
@@ -121,8 +130,11 @@ async function testTeacher(browser) {
   const official = page.locator("[data-official-gradebook]");
   assert.match(await official.innerText(), /INTEGRATED TASK/);
   assert.doesNotMatch(await official.innerText(), /A Dish with a History/);
-  assert.equal(await page.locator("[data-followup-disclosure]").evaluate(node => node.open), false);
+  assert.equal(await page.locator('[data-staff-tab="gradebook"]').getAttribute("aria-selected"), "true");
+  assert.equal(await page.locator("[data-followup-disclosure]").isHidden(), true);
   assert.ok(await official.evaluate((node, followUp) => Boolean(node.compareDocumentPosition(followUp) & Node.DOCUMENT_POSITION_FOLLOWING), await page.locator("[data-followup-disclosure]").elementHandle()));
+  await page.locator('[data-staff-tab="follow-up"]').click();
+  assert.equal(await page.locator("[data-followup-disclosure]").isVisible(), true);
   await assertNoPageOverflow(page, "teacher gradebook tablet");
   await context.close();
 }
@@ -150,11 +162,17 @@ async function testAdmin(browser) {
   });
   await page.goto(BASE_URL);
   await page.locator("[data-official-gradebook]").waitFor({ state: "visible" });
-  for (const selector of ["[data-admin-tools]", "[data-admin-edit-tools]", "[data-admin-student-tools]", "[data-followup-disclosure]"]) {
-    assert.equal(await page.locator(selector).evaluate(node => node.open), false, selector + " should be closed by default");
+  await page.locator("[data-staff-tabs]").scrollIntoViewIfNeeded();
+  await capture(page, "intermediate-gradebook-tabs-desktop");
+  assert.equal(await page.locator('[role="tab"]').count(), 6);
+  for (const selector of ["[data-admin-tools]", "[data-admin-edit-tools]", "[data-admin-student-tools]", "[data-followup-disclosure]", "[data-admin-pdf-tools]"]) {
+    assert.equal(await page.locator(selector).isHidden(), true, selector + " should be in an inactive tab by default");
   }
   assert.doesNotMatch(await page.locator("[data-official-gradebook]").innerText(), /A Dish with a History/);
-  await page.locator("[data-admin-edit-tools] > summary").click();
+  await page.locator('[data-staff-tab="edit-grades"]').click();
+  assert.equal(await page.locator('[data-staff-tab="edit-grades"]').getAttribute("aria-selected"), "true");
+  assert.equal(await page.locator("[data-official-gradebook]").isHidden(), true);
+  assert.equal(await page.locator("[data-admin-edit-tools]").isVisible(), true);
   assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").count(), 1);
   assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").evaluate(node => node.open), false);
   assert.doesNotMatch(await page.locator("[data-admin-edit-tools]").innerText(), /A Dish with a History/);
@@ -171,7 +189,14 @@ async function testAdmin(browser) {
   assert.ok(savedPayload, "the edited gradebook should be sent to the API");
   assert.equal(savedPayload.students[0].grades.intermediateIntegratedTask20, 4.4);
   assert.equal(savedPayload.students[0].grades.unit5DishHistoryReading, 5, "hidden 0% tracking grades must be preserved");
+  assert.equal(await page.locator('[data-staff-tab="edit-grades"]').getAttribute("aria-selected"), "true", "active tab should survive a save and rerender");
+  await page.locator('[data-staff-tab="edit-grades"]').press("End");
+  assert.equal(await page.locator('[data-staff-tab="students"]').getAttribute("aria-selected"), "true", "keyboard navigation should activate the final tab");
   await assertNoPageOverflow(page, "admin gradebook desktop");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.locator("[data-staff-tabs]").scrollIntoViewIfNeeded();
+  await assertNoPageOverflow(page, "admin gradebook mobile");
+  await capture(page, "intermediate-gradebook-tabs-mobile");
   await context.close();
 }
 
@@ -181,7 +206,7 @@ async function testAdmin(browser) {
     await testStudent(browser);
     await testTeacher(browser);
     await testAdmin(browser);
-    console.log("PASS intermediate gradebook: official weighted columns, collapsed follow-ups, admin accordions, and responsive layout");
+    console.log("PASS intermediate gradebook: weighted columns, accessible staff tabs, preserved edits, and responsive layout");
   } finally {
     await browser.close();
   }

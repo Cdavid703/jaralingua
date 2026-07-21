@@ -422,6 +422,73 @@
       background: #f8fbff;
     }
 
+    .staff-tabs {
+      min-width: 0;
+    }
+
+    .staff-tab-nav {
+      position: relative;
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
+      padding: 0 0.25rem;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .staff-tab {
+      flex: 0 0 auto;
+      min-height: 52px;
+      padding: 0.7rem 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .staff-tab:hover,
+    .staff-tab:focus-visible {
+      color: var(--blue);
+      background: #f8fbff;
+      outline: none;
+    }
+
+    .staff-tab[aria-selected="true"] {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+      background: #eef4ff;
+    }
+
+    .staff-tab-count {
+      min-width: 24px;
+      min-height: 24px;
+      padding: 0 0.42rem;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.11);
+      color: var(--blue);
+      font-size: 0.72rem;
+      line-height: 1;
+    }
+
+    .staff-tab-panel[hidden] {
+      display: none !important;
+    }
+
+    .staff-tab-panel:focus {
+      outline: none;
+    }
+
     .grades-disclosure {
       overflow: hidden;
       border: 1px solid var(--line);
@@ -644,6 +711,36 @@
       .admin-grade-row {
         grid-template-columns: minmax(0, 1fr) 88px;
       }
+
+      .staff-tab-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.3rem;
+        margin-inline: 0;
+        padding: 0.35rem;
+        overflow: visible;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .staff-tab {
+        width: 100%;
+        min-width: 0;
+        min-height: 48px;
+        justify-content: flex-start;
+        padding-inline: 0.65rem;
+        border-bottom: 0;
+        border-left: 3px solid transparent;
+        font-size: 0.88rem;
+        white-space: normal;
+        text-align: left;
+        line-height: 1.2;
+      }
+
+      .staff-tab[aria-selected="true"] {
+        border-bottom-color: transparent;
+        border-left-color: var(--blue);
+      }
     }
   </style>
 </head>
@@ -723,7 +820,7 @@
   <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
   <script src="../../assets/js/english-grade-report-pdf.js?v=20260608-3"></script>
-  <script src="../../assets/js/intermediate-english-grades.js?v=20260721-teacher-layout-v2"></script>
+  <script src="../../assets/js/intermediate-english-grades.js?v=20260721-teacher-tabs-v3"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
