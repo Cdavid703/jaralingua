@@ -21,7 +21,7 @@
     .brand-logo{height:42px}
     .nav-link{color:var(--text);font-weight:800;border-radius:999px;padding:.55rem .9rem!important}
     .nav-link:hover,.nav-link.active{color:var(--blue);background:rgba(31,78,140,.08)}
-    .hero{min-height:650px;display:flex;align-items:center;position:relative;overflow:hidden;padding:7.6rem 0 4.5rem;background:linear-gradient(90deg,rgba(3,19,35,.92) 0%,rgba(21,52,93,.78) 46%,rgba(21,52,93,.08) 100%),url("img/evaluation/simulacre-examen-final-a12.png?v=20260630-n2-final") center/cover no-repeat}
+    .hero{min-height:650px;display:flex;align-items:center;position:relative;overflow:hidden;padding:7.6rem 0 4.5rem;background:linear-gradient(90deg,rgba(3,19,35,.92) 0%,rgba(21,52,93,.78) 46%,rgba(21,52,93,.08) 100%),url("img/examen-final/examen-final-a12-hero-v1.webp?v=20260720-n2-final") center/cover no-repeat}
     .hero:after{content:"";position:absolute;inset:auto 0 0;height:130px;background:linear-gradient(to bottom,transparent,var(--soft));pointer-events:none}
     .hero-content{position:relative;z-index:1;max-width:790px;color:#fff}
     .badge-course{display:inline-flex;align-items:center;gap:.55rem;padding:.7rem 1rem;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.22);color:#fff;font-weight:900;backdrop-filter:blur(10px)}
@@ -69,6 +69,16 @@
     .status-message.success{background:#e8f7ef;color:#11633b}
     .status-message.error{background:#fff0f1;color:#9f1d2a}
     .status-message.pending{background:#eef5ff;color:var(--blue-dark)}
+    .preflight-panel,.timer-panel,.monitor-panel,.analytics-panel{margin-top:1rem;border-radius:20px;background:#f8fbff;border:1px solid rgba(31,78,140,.12);padding:1rem}
+    .preflight-grid,.monitor-grid,.analytics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem}
+    .check-card,.monitor-card,.metric-card{border-radius:16px;background:#fff;border:1px solid rgba(31,78,140,.1);padding:.8rem;font-weight:800}
+    .check-card.ok{border-color:rgba(31,157,117,.35);color:#11633b}.check-card.error{border-color:rgba(214,40,57,.3);color:#9f1d2a}
+    .timer-panel{position:sticky;top:84px;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#fff;border:2px solid rgba(31,78,140,.14);box-shadow:0 12px 30px rgba(21,52,93,.12)}
+    .timer-value{font-family:"Montserrat",sans-serif;font-size:1.35rem;font-weight:900;color:var(--blue-dark)}
+    .timer-panel.warning{border-color:var(--yellow);background:#fff9e8}.timer-panel.urgent{border-color:var(--red);background:#fff0f1}
+    .confirm-dialog{width:min(620px,calc(100% - 2rem));border:0;border-radius:24px;padding:0;box-shadow:0 28px 80px rgba(10,30,60,.32)}
+    .confirm-dialog::backdrop{background:rgba(5,20,40,.62);backdrop-filter:blur(4px)}
+    .confirm-content{padding:1.5rem}.receipt-code{font-family:monospace;font-size:1.15rem;font-weight:900;letter-spacing:.08em}
     .grade-number{font-size:clamp(3rem,8vw,6rem);font-weight:900;color:var(--blue-dark);line-height:.95;letter-spacing:-.06em}
     footer{background:var(--blue-dark);color:#fff;padding:3rem 0}
     footer a{color:#fff;text-decoration:none;font-weight:900;opacity:.86}
@@ -122,13 +132,21 @@
       const GOOGLE_KEY = "jaralingua_google_user";
       const MICROSOFT_KEY = "jaralingua_microsoft_user";
       const LOCAL_KEY = "jaralingua_local_gradebook_user:french2GradesApp";
+      const EXAM_AUTH_KEY = "jaralingua-final-exam-session:french2";
+      const EXAM_LEVEL = "french2";
       const API = {
         login: "/api/french2/grades/login",
         state: "/api/french2/final-exam/state",
         exam: "/api/french2/final-exam",
         audio: "/api/french2/final-exam/audio",
         transcript: "/api/french2/final-exam/transcript",
-        submit: "/api/french2/final-exam/submit"
+        submit: "/api/french2/final-exam/submit",
+        preflight: "/api/french2/final-exam/preflight",
+        preflightAudio: "/api/french2/final-exam/preflight-audio",
+        draft: "/api/french2/final-exam/draft",
+        session: "/api/french2/final-exam/session",
+        monitor: "/api/french2/final-exam/monitor",
+        analytics: "/api/french2/final-exam/analytics"
       };
       const els = {
         access: document.getElementById("accessPanel"),
@@ -139,13 +157,42 @@
       let currentRole = "student";
       let currentExam = null;
       let audioObjectUrl = null;
+      let preflightObjectUrl = null;
       let loading = false;
       let stateUpdating = false;
       let examInProgress = false;
       let audioReady = false;
       let submitting = false;
       let audioLoadToken = 0;
+      let attemptSeed = "";
+      let currentState = {};
+      let timerHandle = 0;
+      let timingSyncHandle = 0;
+      let monitorHandle = 0;
+      let monitorGeneration = 0;
+      let monitorRefreshing = false;
+      let latestMonitorRows = [];
+      let draftHandle = 0;
+      let sessionHandle = 0;
+      let submittingAutomatically = false;
+      let timerWarnings = new Set();
+      let currentAttemptId = "";
+      let draftRevision = 0;
+      let stablePresentation = {};
+      let draftPendingAnswers = null;
+      let draftSavePromise = null;
+      let restoringDraft = false;
+      let pendingExamPayload = null;
+      let startGateActive = false;
       const DRAFT_PREFIX = "jaralingua-final-exam-draft:french2";
+      let currentStudentId = "";
+      let currentStudentEmail = "";
+      let currentStudentName = "";
+      let currentDraftKey = "";
+      let authRecoveryActive = false;
+      let authRecoveryPromise = null;
+      let accountSwitchBlocked = false;
+      let lastPrimaryAccountKey = "";
 
       function esc(value) {
         return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -177,28 +224,361 @@
         return null;
       }
 
-      function headers(extra = {}) {
-        const user = activeUser();
+      function normalizeIdentity(value) {
+        return String(value || "").trim().toLowerCase();
+      }
+
+      function readExamAccess() {
+        try {
+          const saved = JSON.parse(sessionStorage.getItem(EXAM_AUTH_KEY) || "null");
+          const credential = saved?.credential || saved?.examAccessToken || "";
+          const exp = Number(saved?.exp || saved?.examAccessExp || 0);
+          if (!saved || !credential || saved.level !== EXAM_LEVEL || !exp || exp <= Date.now() / 1000) {
+            sessionStorage.removeItem(EXAM_AUTH_KEY);
+            return null;
+          }
+          return Object.assign({}, saved, { credential, exp, provider: "local" });
+        } catch (_error) {
+          sessionStorage.removeItem(EXAM_AUTH_KEY);
+          return null;
+        }
+      }
+
+      function bridgeAttemptId(payload = {}) {
+        return String(payload.session?.attemptId || payload.attemptId || currentAttemptId || readExamAccess()?.attemptId || "");
+      }
+
+      function bridgeExamVersion(payload = {}) {
+        return String(payload.exam?.version || payload.session?.examVersion || payload.examVersion || currentExam?.version || readExamAccess()?.examVersion || "");
+      }
+
+      function serverAttemptId(payload = {}) {
+        return String(payload.session?.attemptId || payload.attemptId || payload.result?.attemptId || "");
+      }
+
+      function serverExamVersion(payload = {}) {
+        return String(payload.exam?.version || payload.session?.examVersion || payload.examVersion || payload.result?.examVersion || "");
+      }
+
+      function captureRuntimeAccess(payload = {}) {
+        if (!payload.examAccessToken) return true;
+        return captureExamAccess(Object.assign({}, payload, {
+          student: payload.student || { id: currentStudentId },
+          exam: payload.exam || currentExam
+        }));
+      }
+
+      function captureExamAccess(payload = {}) {
+        const token = payload.examAccessToken;
+        const exp = Number(payload.examAccessExp || 0);
+        if (!token || !exp || exp <= Date.now() / 1000) {
+          const existing = readExamAccess();
+          if (!existing) return false;
+          const suppliedAttemptId = String(payload.session?.attemptId || payload.attemptId || "");
+          const suppliedVersion = String(payload.exam?.version || payload.session?.examVersion || payload.examVersion || "");
+          const suppliedStudentId = String(payload.student?.id || "");
+          return Boolean(
+            (!suppliedAttemptId || suppliedAttemptId === existing.attemptId) &&
+            (!suppliedVersion || suppliedVersion === existing.examVersion) &&
+            (!suppliedStudentId || suppliedStudentId === existing.studentId)
+          );
+        }
+        const attemptId = bridgeAttemptId(payload);
+        const examVersion = bridgeExamVersion(payload);
+        const studentId = String(payload.student?.id || currentStudentId || readExamAccess()?.studentId || "");
+        const accessUser = payload.examAccessUser || {};
+        const email = normalizeIdentity(accessUser.email || currentStudentEmail || readExamAccess()?.email || activeUser()?.email);
+        const name = String(accessUser.name || currentStudentName || readExamAccess()?.name || activeUser()?.name || email);
+        if (!attemptId || !examVersion || !studentId || !email) return false;
+        if (examInProgress && currentAttemptId && currentAttemptId !== attemptId) {
+          blockForAccountSwitch("Cette session appartient à une autre tentative. Reconnectez le compte qui a commencé l’examen.");
+          return false;
+        }
+        if (examInProgress && currentStudentId && currentStudentId !== studentId) {
+          blockForAccountSwitch("Un autre compte étudiant a été détecté. L’examen en cours reste protégé.");
+          return false;
+        }
+        const record = {
+          credential: token,
+          exp,
+          provider: "local",
+          level: EXAM_LEVEL,
+          studentId,
+          attemptId,
+          examVersion,
+          email,
+          name
+        };
+        sessionStorage.setItem(EXAM_AUTH_KEY, JSON.stringify(record));
+        return true;
+      }
+
+      function clearExamAccess() {
+        sessionStorage.removeItem(EXAM_AUTH_KEY);
+      }
+
+      function externalAccountMatches(record, user) {
+        if (!record || !user) return true;
+        const bridgeEmail = normalizeIdentity(record.email);
+        const userEmail = normalizeIdentity(user.email);
+        return !bridgeEmail || !userEmail || bridgeEmail === userEmail;
+      }
+
+      function authDescriptor(mode = "auto") {
+        const external = activeUser();
+        const bridge = readExamAccess();
+        if (mode === "external") {
+          if (!external) throw new Error("auth_required");
+          return { source: "external", user: external };
+        }
+        if (mode === "exam") {
+          if (accountSwitchBlocked) throw new Error("account_switch");
+          if (!bridge) throw new Error("exam_auth_required");
+          return { source: "exam", user: bridge };
+        }
+        if (["admin", "teacher"].includes(currentRole)) {
+          if (!external) throw new Error("auth_required");
+          return { source: "external", user: external };
+        }
+        if (examInProgress) {
+          if (accountSwitchBlocked) throw new Error("account_switch");
+          if (bridge) return { source: "exam", user: bridge };
+          throw new Error("exam_auth_required");
+        }
+        // Une tentative déjà liée à ce navigateur reste prioritaire. Les
+        // opérations de connexion, de préflight et d’administration demandent
+        // explicitement le mode externe et ne passent jamais par ce bridge.
+        if (bridge) return { source: "exam", user: bridge };
+        if (external) return { source: "external", user: external };
+        throw new Error("auth_required");
+      }
+
+      function headers(extra = {}, authMode = "auto") {
+        const descriptor = authDescriptor(authMode);
         return Object.assign({
           "Content-Type": "application/json",
-          Authorization: "Bearer " + user.credential,
-          "X-Jaralingua-Auth-Provider": user.provider || "google"
+          Authorization: "Bearer " + descriptor.user.credential,
+          "X-Jaralingua-Auth-Provider": descriptor.source === "exam" ? "local" : (descriptor.user.provider || "google")
         }, extra);
       }
 
-      async function request(url, options = {}, timeoutMs = 15000) {
+      function setExamFormBlocked(blocked) {
+        if (!els.form) return;
+        els.form.inert = Boolean(blocked);
+        els.form.style.pointerEvents = blocked ? "none" : "";
+        els.form.style.filter = blocked ? "blur(8px)" : "";
+        els.form.style.userSelect = blocked ? "none" : "";
+        if (blocked) els.form.setAttribute("aria-hidden", "true");
+        else els.form.removeAttribute("aria-hidden");
+      }
+
+      function showReconnectNotice(message, accountSwitch = false) {
+        authRecoveryActive = true;
+        accountSwitchBlocked = accountSwitchBlocked || accountSwitch;
+        let notice = els.access.querySelector("[data-exam-reconnect]");
+        if (!notice) {
+          els.access.insertAdjacentHTML("beforeend", `<div class="status-message error mt-3" data-exam-reconnect role="alert"><strong>Connexion à rétablir</strong><p class="mb-2 mt-1" data-reconnect-message></p><div class="d-flex flex-wrap gap-2"><button class="btn-soft" type="button" data-reconnect-login><i class="bi bi-person-check-fill"></i> Se reconnecter</button><button class="btn-main" type="button" data-reconnect-check><i class="bi bi-arrow-repeat"></i> Vérifier et reprendre</button></div></div>`);
+          notice = els.access.querySelector("[data-exam-reconnect]");
+          notice.querySelector("[data-reconnect-login]")?.addEventListener("click", openLoginPanel);
+          notice.querySelector("[data-reconnect-check]")?.addEventListener("click", recoverExamAccess);
+        }
+        const text = notice.querySelector("[data-reconnect-message]");
+        if (text) text.textContent = message || "Reconnectez le compte qui a commencé cet examen. Vos réponses restent conservées sur cet appareil.";
+        if (accountSwitchBlocked) setExamFormBlocked(true);
+        setSubmitStatus("Connexion interrompue : les réponses restent conservées localement. Reconnectez-vous avant l’envoi.", "error");
+        updateSubmitAvailability();
+      }
+
+      function clearReconnectNotice() {
+        authRecoveryActive = false;
+        accountSwitchBlocked = false;
+        els.access.querySelector("[data-exam-reconnect]")?.remove();
+        setExamFormBlocked(false);
+        updateSubmitAvailability();
+      }
+
+      function blockForAccountSwitch(message) {
+        showReconnectNotice(message || "Le compte actif ne correspond pas à l’étudiant qui a commencé cet examen.", true);
+      }
+
+      function handleUnauthorized(source, payload = {}) {
+        if (source === "exam") clearExamAccess();
+        if (examInProgress) {
+          showReconnectNotice(payload.message || "La session sécurisée a expiré. Reconnectez le même compte pour continuer sans perdre vos réponses.");
+        }
+      }
+
+      async function request(url, options = {}, timeoutMs = 15000, authMode = "auto") {
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), timeoutMs);
+        let descriptor = null;
         try {
+          try {
+            descriptor = authDescriptor(authMode);
+          } catch (error) {
+            if (authMode === "exam" || (authMode === "auto" && examInProgress)) {
+              handleUnauthorized("exam", { message: "La session sécurisée de cette tentative doit être renouvelée." });
+            }
+            throw error;
+          }
           const response = await fetch(url, Object.assign({}, options, {
             signal: controller.signal,
-            headers: Object.assign({}, headers(), options.headers || {})
+            headers: Object.assign({}, {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + descriptor.user.credential,
+              "X-Jaralingua-Auth-Provider": descriptor.source === "exam" ? "local" : (descriptor.user.provider || "google")
+            }, options.headers || {})
           }));
           const payload = await response.json().catch(() => ({}));
+          if (response.status === 401 || (response.status === 403 && payload?.error === "token_scope_invalid")) {
+            handleUnauthorized(descriptor.source, payload);
+          }
           return { ok: response.ok, status: response.status, data: payload };
         } finally {
           window.clearTimeout(timeout);
         }
+      }
+
+      function currentAnswerMap() {
+        const answers = {};
+        els.form?.querySelectorAll("input[type='radio']:checked").forEach((input) => {
+          answers[input.name] = input.value;
+        });
+        return answers;
+      }
+
+      function primaryAccountKey(user = activeUser()) {
+        if (!user) return "";
+        return `${user.provider || "external"}:${normalizeIdentity(user.sub || user.email || user.id)}`;
+      }
+
+      async function recoverExamAccess() {
+        if (!examInProgress) return false;
+        if (authRecoveryPromise) return authRecoveryPromise;
+        const external = activeUser();
+        if (!external) {
+          showReconnectNotice("Reconnectez le compte qui a commencé cet examen. Vos réponses restent conservées sur cet appareil.");
+          openLoginPanel();
+          return false;
+        }
+        authRecoveryPromise = (async () => {
+          const expectedStudentId = currentStudentId;
+          const expectedAttemptId = currentAttemptId;
+          const expectedVersion = currentExam?.version || readExamAccess()?.examVersion || "";
+          try {
+            let examCheck = await request(API.exam, {}, 15000, "external");
+            if (!examCheck.ok) {
+              showReconnectNotice("Le serveur n’a pas pu confirmer cette tentative. Vérifiez le compte connecté puis réessayez.");
+              return false;
+            }
+            const studentId = String(examCheck.data?.student?.id || examCheck.data?.result?.studentId || "");
+            const attemptId = serverAttemptId(examCheck.data);
+            const version = serverExamVersion(examCheck.data);
+            if ((expectedStudentId && studentId !== expectedStudentId) ||
+                (expectedAttemptId && attemptId !== expectedAttemptId) ||
+                (expectedVersion && version !== expectedVersion)) {
+              clearExamAccess();
+              blockForAccountSwitch("Le compte connecté ne correspond pas à la tentative ouverte. Reconnectez le compte étudiant qui a commencé cet examen.");
+              return false;
+            }
+            if (examCheck.data?.status === "submitted" && examCheck.data.result) {
+              renderSubmitted(examCheck.data.result);
+              return true;
+            }
+            let payload = examCheck.data;
+            if (!payload.examAccessToken) {
+              if (!attemptId) {
+                showReconnectNotice("Aucune tentative active correspondant à cet examen n’a été trouvée. Contactez le professeur avant de continuer.");
+                return false;
+              }
+              const resumed = await request(API.session, {
+                method: "POST",
+                body: JSON.stringify({
+                  event: "resume_auth",
+                  answeredCount: Object.keys(currentAnswerMap()).length,
+                  attemptId,
+                  examVersion: version
+                })
+              }, 15000, "external");
+              if (resumed.status === 409 && resumed.data?.error === "already_submitted" && resumed.data.result) {
+                renderSubmitted(resumed.data.result);
+                return true;
+              }
+              if (!resumed.ok) {
+                showReconnectNotice("La reconnexion n’a pas pu être finalisée. Vos réponses restent conservées; réessayez avec le même compte.");
+                return false;
+              }
+              payload = Object.assign({}, examCheck.data, resumed.data, { student: examCheck.data.student });
+            }
+            if (!captureExamAccess(payload)) {
+              showReconnectNotice("Le serveur n’a pas fourni une autorisation valable pour cette tentative. Réessayez sans changer de compte.");
+              return false;
+            }
+            currentStudentId = studentId || readExamAccess()?.studentId || currentStudentId;
+            currentStudentEmail = normalizeIdentity(payload.examAccessUser?.email || readExamAccess()?.email || currentStudentEmail);
+            currentStudentName = String(payload.examAccessUser?.name || readExamAccess()?.name || currentStudentName);
+            const needsInitialRender = els.root.hidden || !els.form.querySelector(".section-card");
+            if (needsInitialRender && payload.exam) {
+              renderExam(payload);
+              return true;
+            }
+            accountSwitchBlocked = false;
+            setExamFormBlocked(false);
+            updateSubmitAvailability();
+            const saved = await saveServerDraft(currentAnswerMap());
+            if (payload.timing) startTimer(payload.timing);
+            if (!audioReady) loadProtectedAudio();
+            if (saved === false) {
+              showReconnectNotice("La connexion a été rétablie, mais le brouillon n’a pas encore été confirmé par le serveur. Touchez de nouveau Vérifier et reprendre.");
+              return false;
+            }
+            clearReconnectNotice();
+            setSubmitStatus("Connexion rétablie et brouillon sécurisé synchronisé.", "success");
+            return true;
+          } catch (_error) {
+            showReconnectNotice("La reconnexion a été interrompue. Vos réponses restent conservées sur cet appareil; réessayez.");
+            return false;
+          }
+        })().finally(() => { authRecoveryPromise = null; });
+        return authRecoveryPromise;
+      }
+
+      function watchPrimaryAccount() {
+        const user = activeUser();
+        const nextKey = primaryAccountKey(user);
+        if (!lastPrimaryAccountKey) {
+          if (nextKey) lastPrimaryAccountKey = nextKey;
+          return;
+        }
+        if (!nextKey) return;
+        if (nextKey === lastPrimaryAccountKey) {
+          if (examInProgress && authRecoveryActive && !authRecoveryPromise) recoverExamAccess();
+          return;
+        }
+        lastPrimaryAccountKey = nextKey;
+        if (!examInProgress) return;
+        blockForAccountSwitch("Un changement de compte a été détecté. Vérifiez ce compte avant de reprendre la tentative protégée.");
+        recoverExamAccess();
+      }
+
+      function handleExplicitSignOut(event) {
+        if (!examInProgress || !event.target.closest?.("[data-auth-signout]")) return;
+        const answers = currentAnswerMap();
+        const key = draftKey();
+        if (key) {
+          try {
+            sessionStorage.setItem(key, JSON.stringify({
+              version: currentExam?.version || "",
+              studentId: currentStudentId,
+              attemptId: currentAttemptId,
+              answers,
+              savedAt: new Date().toISOString()
+            }));
+          } catch (_error) { /* Le formulaire reste intact. */ }
+        }
+        const flush = saveServerDraft(answers);
+        blockForAccountSwitch("Vous vous êtes déconnecté pendant l’examen. Reconnectez le même compte pour reprendre; vos réponses ont été conservées.");
+        Promise.resolve(flush).finally(clearExamAccess);
       }
 
       function openLoginPanel() {
@@ -209,6 +589,7 @@
       }
 
       function renderLogin(message) {
+        startGateActive = false;
         examInProgress = false;
         els.root.hidden = true;
         els.admin.hidden = true;
@@ -279,6 +660,17 @@
           sessionStorage.removeItem(GOOGLE_KEY);
           sessionStorage.removeItem(MICROSOFT_KEY);
           status.textContent = "Compte validé.";
+          const nextUser = activeUser();
+          const nextKey = primaryAccountKey(nextUser);
+          if (examInProgress) {
+            if (!externalAccountMatches({ email: currentStudentEmail }, nextUser)) {
+              blockForAccountSwitch("Ce compte doit être vérifié avant de pouvoir reprendre la tentative en cours.");
+            }
+            lastPrimaryAccountKey = nextKey;
+            await recoverExamAccess();
+            return;
+          }
+          lastPrimaryAccountKey = nextKey;
           await loadState();
         } catch (_error) {
           status.textContent = "Courriel ou mot de passe incorrect. Mot de passe : numéro ID + astérisque.";
@@ -289,7 +681,142 @@
         }
       }
 
+      function stopRuntimeLoops() {
+        window.clearInterval(timerHandle);
+        window.clearInterval(timingSyncHandle);
+        window.clearInterval(monitorHandle);
+        monitorGeneration += 1;
+        window.clearTimeout(draftHandle);
+        window.clearTimeout(sessionHandle);
+        timerHandle = timingSyncHandle = monitorHandle = draftHandle = sessionHandle = 0;
+        if (preflightObjectUrl) {
+          URL.revokeObjectURL(preflightObjectUrl);
+          preflightObjectUrl = null;
+        }
+      }
+
+      function preflightHtml() {
+        return `<div class="preflight-panel" data-preflight>
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+            <div><h3 class="h5 fw-bold mb-1">Test technique avant l’examen</h3><p class="section-text mb-0">Vérifiez votre compte, la connexion et le son sans accéder aux questions.</p></div>
+            <button class="btn-soft" type="button" data-run-preflight><i class="bi bi-activity"></i> Lancer le test</button>
+          </div>
+          <div class="preflight-grid" data-preflight-results>
+            <div class="check-card"><i class="bi bi-person-check"></i> Compte : en attente</div>
+            <div class="check-card"><i class="bi bi-wifi"></i> Connexion : en attente</div>
+            <div class="check-card"><i class="bi bi-volume-up"></i> Audio : en attente</div>
+          </div>
+          <div class="mt-3" data-preflight-audio-zone hidden>
+            <audio class="w-100" data-preflight-audio controls preload="metadata" aria-label="Audio de test technique"></audio>
+            <div class="d-flex flex-wrap gap-2 mt-2"><button class="btn-soft" type="button" data-play-preflight><i class="bi bi-play-fill"></i> Écouter le test</button><button class="btn-main" type="button" data-heard-preflight disabled><i class="bi bi-ear-fill"></i> Je l’entends</button></div>
+          </div>
+          <p class="mt-3 mb-0" data-preflight-status aria-live="polite"></p>
+        </div>`;
+      }
+
+      async function runPreflight(container = els.access) {
+        const panel = container.querySelector("[data-preflight]");
+        if (!panel) return;
+        const button = panel.querySelector("[data-run-preflight]");
+        const cards = panel.querySelectorAll(".check-card");
+        const status = panel.querySelector("[data-preflight-status]");
+        button.disabled = true;
+        button.setAttribute("aria-busy", "true");
+        cards.forEach((card) => { card.className = "check-card"; });
+        if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl);
+        preflightObjectUrl = null;
+        status.className = "status-message pending";
+        status.textContent = "Vérification en cours...";
+        let accountOk = false;
+        let connectionOk = false;
+        panel.dataset.ready = "false";
+        panel.dataset.accountOk = "false";
+        panel.dataset.connectionOk = "false";
+        panel.dataset.audioPrepared = "false";
+        container.querySelector("[data-start-exam]")?.setAttribute("disabled", "");
+        const sample = panel.querySelector("[data-preflight-audio]");
+        sample.pause();
+        sample.removeAttribute("src");
+        sample.load();
+        panel.querySelector("[data-preflight-audio-zone]").hidden = true;
+        panel.querySelector("[data-heard-preflight]").disabled = true;
+        try {
+          const result = await request(API.preflight, { method: "GET" }, 15000, "external");
+          connectionOk = result.ok;
+          accountOk = result.ok && result.data?.accountReady !== false && result.data?.accountOk !== false && result.data?.authorized !== false;
+          connectionOk = result.ok && result.data?.serverReady !== false;
+          panel.dataset.accountOk = accountOk ? "true" : "false";
+          panel.dataset.connectionOk = connectionOk ? "true" : "false";
+          cards[0].className = `check-card ${accountOk ? "ok" : "error"}`;
+          cards[0].innerHTML = `<i class="bi ${accountOk ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i> Compte : ${accountOk ? "autorisé" : "à vérifier"}`;
+          cards[1].className = `check-card ${connectionOk ? "ok" : "error"}`;
+          cards[1].innerHTML = `<i class="bi ${connectionOk ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i> Connexion : ${connectionOk ? "serveur disponible" : "indisponible"}`;
+          if (result.ok) {
+            const controller = new AbortController();
+            const timeout = window.setTimeout(() => controller.abort(), 15000);
+            try {
+              const response = await fetch(API.preflightAudio, { cache: "no-store", signal: controller.signal, headers: headers({ Accept: "audio/mpeg" }, "external") });
+              if (!response.ok) throw new Error("audio_preflight");
+              const blob = await response.blob();
+              if (blob.size < 256) throw new Error("audio_preflight_empty");
+              if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl);
+              preflightObjectUrl = URL.createObjectURL(blob);
+              sample.src = preflightObjectUrl;
+              sample.load();
+              panel.querySelector("[data-preflight-audio-zone]").hidden = false;
+              panel.dataset.audioPrepared = "true";
+            } finally { window.clearTimeout(timeout); }
+          }
+        } catch (_error) {
+          cards[0].classList.add(accountOk ? "ok" : "error");
+          cards[1].classList.add(connectionOk ? "ok" : "error");
+        }
+        const prepared = accountOk && connectionOk && Boolean(preflightObjectUrl);
+        cards[2].className = "check-card";
+        cards[2].innerHTML = `<i class="bi bi-volume-up"></i> Audio : ${prepared ? "prêt à écouter" : "non disponible"}`;
+        status.className = `status-message ${prepared ? "pending" : "error"}`;
+        status.textContent = prepared ? "Touchez « Écouter le test », puis confirmez avec « Je l’entends »." : "Au moins un contrôle a échoué. Corrigez-le et relancez le test.";
+        button.disabled = false;
+        button.removeAttribute("aria-busy");
+      }
+
+      function bindPreflight(container = els.access) {
+        container.querySelector("[data-run-preflight]")?.addEventListener("click", () => runPreflight(container));
+        container.querySelector("[data-play-preflight]")?.addEventListener("click", async () => {
+          const panel = container.querySelector("[data-preflight]");
+          const audio = panel?.querySelector("[data-preflight-audio]");
+          if (!audio?.src) return;
+          audio.pause();
+          audio.currentTime = 0;
+          try {
+            await audio.play();
+            panel.querySelector("[data-heard-preflight]").disabled = false;
+          } catch (_error) {
+            const status = panel.querySelector("[data-preflight-status]");
+            status.className = "status-message error";
+            status.textContent = "Le navigateur a bloqué la lecture. Utilisez directement le bouton Lecture du lecteur audio.";
+          }
+        });
+        container.querySelector("[data-heard-preflight]")?.addEventListener("click", () => {
+          const panel = container.querySelector("[data-preflight]");
+          const cards = panel.querySelectorAll(".check-card");
+          if (panel.dataset.accountOk !== "true" || panel.dataset.connectionOk !== "true" || panel.dataset.audioPrepared !== "true") return;
+          cards[2].className = "check-card ok";
+          cards[2].innerHTML = `<i class="bi bi-check-circle-fill"></i> Audio : entendu`;
+          panel.dataset.ready = "true";
+          const status = panel.querySelector("[data-preflight-status]");
+          status.className = "status-message success";
+          status.textContent = "Votre appareil est prêt pour l’examen.";
+          container.querySelector("[data-start-exam]")?.removeAttribute("disabled");
+        });
+        container.querySelector("[data-preflight-audio]")?.addEventListener("play", () => {
+          container.querySelector("[data-heard-preflight]")?.removeAttribute("disabled");
+        });
+      }
+
       function renderLocked(message, payload) {
+        startGateActive = false;
+        stopRuntimeLoops();
         examInProgress = false;
         els.root.hidden = true;
         els.access.innerHTML = `
@@ -304,9 +831,11 @@
                 ${payload?.state?.updatedAt ? `<span class="pill"><i class="bi bi-clock-history"></i> Dernière mise à jour : ${esc(payload.state.updatedAt)}</span>` : ""}
               </div>
               <button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier à nouveau</button>
+              ${preflightHtml()}
             </div>
           </div>`;
         els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
+        bindPreflight();
       }
 
       function renderAdmin(payload) {
@@ -317,6 +846,9 @@
           return;
         }
         const open = payload?.state?.isOpen === true;
+        currentState = payload?.state || currentState;
+        const duration = Number(payload?.state?.durationMinutes || 60);
+        const released = payload?.state?.releaseResults === true;
         els.admin.hidden = false;
         els.admin.innerHTML = `
           <div class="d-flex flex-wrap justify-content-between align-items-start gap-3">
@@ -330,16 +862,24 @@
               <p class="section-text mb-0">Quand vous ouvrez l’examen, les étudiants autorisés peuvent le voir, écouter l’audio protégé et soumettre une seule fois. Pensez à le fermer à la fin de la séance.</p>
               <p class="mt-3 mb-0 status-message pending" id="adminStatus" hidden></p>
             </div>
-            <div class="d-flex flex-wrap gap-2">
-              <button class="btn-main" type="button" data-set-open="true"><i class="bi bi-unlock-fill"></i> Ouvrir</button>
-              <button class="btn-danger-soft" type="button" data-set-open="false"><i class="bi bi-lock-fill"></i> Fermer</button>
+            <div class="d-flex flex-wrap gap-2 align-items-end">
+              <label class="fw-bold">Durée<br><select class="form-control" data-duration ${open || released ? "disabled" : ""}><option value="45" ${duration === 45 ? "selected" : ""}>45 min</option><option value="60" ${duration === 60 ? "selected" : ""}>60 min</option><option value="75" ${duration === 75 ? "selected" : ""}>75 min</option><option value="90" ${duration === 90 ? "selected" : ""}>90 min</option><option value="120" ${duration === 120 ? "selected" : ""}>120 min</option></select></label>
+              <button class="btn-main" type="button" data-set-open="true" ${open || released ? "disabled" : ""}><i class="bi bi-unlock-fill"></i> Ouvrir</button>
+              <button class="btn-danger-soft" type="button" data-set-open="false" ${!open ? "disabled" : ""}><i class="bi bi-lock-fill"></i> Fermer</button>
+              <button class="btn-soft" type="button" data-release-results="true" disabled title="${open ? "Fermez d’abord l’examen" : released ? "Publication définitive déjà effectuée" : !payload?.state?.closedAt ? "L’examen doit avoir été ouvert puis fermé" : "Vérification des copies remises…"}"><i class="bi ${released ? "bi-check-circle-fill" : "bi-eye-fill"}"></i> ${released ? "Notes publiées" : "Publier les notes"}</button>
               <button class="btn-soft" type="button" data-download-transcript><i class="bi bi-file-earmark-arrow-down-fill"></i> Transcription professeur</button>
             </div>
-          </div>`;
+          </div>
+          <div class="monitor-panel" data-monitor-panel><div class="d-flex justify-content-between align-items-center gap-2"><div><h3 class="h5 fw-bold mb-1">Suivi en direct</h3><p class="section-text mb-0">Actualisation automatique toutes les 5 secondes, sans afficher les réponses.</p></div><span class="pill" data-monitor-status>Connexion…</span></div><div class="monitor-grid mt-3" data-monitor-list><div class="monitor-card">Chargement des sessions…</div></div><div class="d-flex flex-wrap gap-2 mt-3 align-items-end"><label class="fw-bold" for="extraStudentN2">Étudiant à prolonger<input id="extraStudentN2" class="form-control mt-1" style="max-width:280px" data-extra-student placeholder="Courriel ou identifiant"></label><button class="btn-soft" type="button" data-add-time ${!open ? "disabled" : ""}><i class="bi bi-clock-history"></i> Ajouter 10 minutes</button></div></div>
+          <div class="analytics-panel" data-analytics-panel ${open ? "hidden" : ""}><div class="d-flex justify-content-between align-items-center gap-2"><div><h3 class="h5 fw-bold mb-1">Analyse pédagogique</h3><p class="section-text mb-0">Disponible uniquement après la fermeture de l’examen.</p></div><button class="btn-soft" type="button" data-load-analytics><i class="bi bi-graph-up"></i> Actualiser</button></div><div class="analytics-grid mt-3" data-analytics-list><div class="metric-card">Cliquez sur Actualiser pour charger les résultats agrégés.</div></div></div>`;
         els.admin.querySelectorAll("[data-set-open]").forEach((button) => {
           button.addEventListener("click", () => setExamState(button.getAttribute("data-set-open") === "true"));
         });
         els.admin.querySelector("[data-download-transcript]").addEventListener("click", downloadTranscript);
+        els.admin.querySelector("[data-release-results]").addEventListener("click", (event) => setReleaseResults(event.currentTarget.dataset.releaseResults === "true"));
+        els.admin.querySelector("[data-add-time]").addEventListener("click", addStudentTime);
+        els.admin.querySelector("[data-load-analytics]")?.addEventListener("click", loadAnalytics);
+        startMonitor();
       }
 
       function setAdminStatus(message, type = "pending") {
@@ -348,6 +888,19 @@
         node.hidden = false;
         node.className = "mt-3 mb-0 status-message " + type;
         node.textContent = message;
+      }
+
+      function adminErrorMessage(code, fallback) {
+        const messages = {
+          gradebook_not_ready: "Le carnet de notes n’est pas prêt : les pondérations doivent totaliser exactement 100 %.",
+          exam_not_ready: "L’examen ne peut pas être ouvert : son intégrité ou son audio protégé doit être vérifié.",
+          results_already_released: "Les résultats ont déjà été publiés définitivement.",
+          exam_active: "Fermez d’abord l’examen avant d’effectuer cette opération.",
+          results_release_irreversible: "La publication des résultats est définitive et ne peut pas être annulée.",
+          exam_not_completed: "L’examen doit avoir été ouvert puis fermé avant toute publication.",
+          no_submissions: "Aucune copie n’a encore été remise; il n’y a aucun résultat à publier."
+        };
+        return messages[code] || fallback;
       }
 
       async function setExamState(isOpen) {
@@ -360,28 +913,168 @@
         });
         setAdminStatus("Mise à jour de l’état de l’examen...");
         try {
-          const result = await request(API.state, { method: "PUT", body: JSON.stringify({ isOpen }) });
+          const durationMinutes = Number(els.admin.querySelector("[data-duration]")?.value || 60);
+          const statePayload = isOpen ? { isOpen: true, durationMinutes } : { isOpen: false };
+          let result = await request(API.state, { method: "PUT", body: JSON.stringify(statePayload) }, 15000, "external");
+          if (!isOpen && result.status === 409 && result.data?.error === "active_attempts") {
+            const active = Number(result.data?.activeAttempts || 0);
+            const confirmed = window.confirm(`${active} étudiant(s) ont encore un examen en cours. Fermer maintenant remettra automatiquement leurs brouillons partiels. Confirmer la fermeture ?`);
+            if (!confirmed) {
+              setAdminStatus("Fermeture annulée : les examens en cours restent actifs.", "pending");
+              return;
+            }
+            result = await request(API.state, { method: "PUT", body: JSON.stringify({ isOpen: false, confirmClose: true }) }, 15000, "external");
+          }
           if (!result.ok) throw new Error(result.data?.error || "state_error");
           const message = isOpen
             ? "L’examen final est maintenant ouvert. Les étudiants peuvent le voir et le réaliser. N’oubliez pas de le fermer à la fin de la séance."
             : "L’examen final est fermé. Les étudiants ne peuvent plus l’ouvrir ni le soumettre.";
           await loadState({ force: true });
           setAdminStatus(message, "success");
-        } catch (_error) {
-          setAdminStatus("Impossible de modifier l’état de l’examen. Vérifiez votre accès professeur.", "error");
+        } catch (error) {
+          setAdminStatus(adminErrorMessage(error.message, "Impossible de modifier l’état de l’examen. Réessayez ou vérifiez son état technique."), "error");
         } finally {
           stateUpdating = false;
-          els.admin.querySelectorAll("[data-set-open]").forEach((button) => {
+          controls.forEach((button) => {
             button.disabled = false;
             button.removeAttribute("aria-busy");
           });
         }
       }
 
+      async function setReleaseResults(releaseResults) {
+        if (stateUpdating || releaseResults !== true || currentState?.releaseResults === true) return;
+        if (currentState?.isOpen === true) {
+          setAdminStatus("Fermez l’examen avant de publier les notes.", "error");
+          return;
+        }
+        if (!currentState?.closedAt) {
+          setAdminStatus("L’examen doit d’abord être ouvert, réalisé puis fermé avant toute publication.", "error");
+          return;
+        }
+        if (!window.confirm("Publier définitivement les notes ? Après cette confirmation, les étudiants pourront consulter leur résultat et la publication ne pourra pas être annulée.")) return;
+        stateUpdating = true;
+        setAdminStatus("Publication définitive des notes…");
+        try {
+          const result = await request(API.state, { method: "PUT", body: JSON.stringify({ releaseResults: true }) }, 15000, "external");
+          if (!result.ok) throw new Error(result.data?.error || "release_error");
+          await loadState({ force: true });
+          setAdminStatus("Les notes sont publiées définitivement. Les étudiants peuvent maintenant consulter leur résultat.", "success");
+        } catch (error) {
+          setAdminStatus(adminErrorMessage(error.message, "Impossible de publier les notes pour le moment."), "error");
+        } finally { stateUpdating = false; }
+      }
+
+      async function addStudentTime(studentIdOverride = "", currentExtraOverride = null) {
+        const input = els.admin.querySelector("[data-extra-student]");
+        const studentId = typeof studentIdOverride === "string" && studentIdOverride ? studentIdOverride : input?.value.trim();
+        if (!studentId) {
+          setAdminStatus("Indiquez le courriel ou l’identifiant de l’étudiant.", "error");
+          input?.focus();
+          return;
+        }
+        setAdminStatus("Ajout du temps supplémentaire…");
+        try {
+          const normalizedStudent = String(studentId).trim().toLowerCase();
+          const row = latestMonitorRows.find((item) => [item.studentId, item.email].some((value) => String(value || "").trim().toLowerCase() === normalizedStudent));
+          if (currentExtraOverride == null && !row) throw new Error("student_not_in_monitor");
+          const currentExtra = currentExtraOverride == null ? Number(row?.extraMinutes || 0) : Number(currentExtraOverride || 0);
+          const nextExtra = Math.min(180, currentExtra + 10);
+          const result = await request(API.state, { method: "PUT", body: JSON.stringify({ studentId, extraMinutes: nextExtra }) }, 15000, "external");
+          if (!result.ok) throw new Error(result.data?.error || "extra_time_error");
+          if (input) input.value = "";
+          const totalExtra = Number(result.data?.extraMinutes ?? result.data?.totalExtraMinutes);
+          setAdminStatus(Number.isFinite(totalExtra) ? `Dix minutes ont été ajoutées. Extension totale : +${totalExtra} minutes.` : "Dix minutes supplémentaires ont été ajoutées à cet étudiant.", "success");
+          await refreshMonitor();
+        } catch (_error) { setAdminStatus("Impossible d’ajouter du temps. Vérifiez l’étudiant indiqué.", "error"); }
+      }
+
+      function monitorEntryHtml(entry) {
+        const answered = Number(entry.answeredCount || 0);
+        const total = Number(entry.totalQuestions || currentExam?.sections?.flatMap((section) => section.questions || []).length || 0);
+        const label = entry.studentName || entry.name || entry.email || entry.studentId || "Étudiant";
+        const eventLabels = { started: "Commencé", progress: "En cours", audio_ready: "Audio chargé", submitted: "Envoyé", submitted_auto: "Envoyé automatiquement", in_progress: "En cours", not_started: "Pas encore commencé", error: "Erreur technique" };
+        const remaining = entry.remainingSeconds ?? entry.timing?.remainingSeconds;
+        const extra = Number(entry.extraMinutes || 0);
+        const canExtend = currentState?.isOpen === true && !["submitted", "submitted_auto"].includes(entry.status) && extra < 180;
+        return `<div class="monitor-card"><strong>${esc(label)}</strong><br><span>${esc(eventLabels[entry.event] || entry.status || "En attente")}</span><br><small>${answered}/${total || "–"} réponses${entry.draftSaved || entry.draftUpdatedAt ? " · brouillon enregistré" : ""}${remaining != null ? ` · ${formatTime(remaining)}` : ""}</small><br><span class="pill mt-2">Extension : +${extra} min</span>${canExtend ? `<button class="btn-soft mt-2" type="button" data-add-time-row="${esc(entry.studentId || entry.email || "")}" data-current-extra="${extra}"><i class="bi bi-clock-history"></i> +10 min</button>` : ""}</div>`;
+      }
+
+      async function refreshMonitor() {
+        if (monitorRefreshing) return;
+        const list = els.admin.querySelector("[data-monitor-list]");
+        const status = els.admin.querySelector("[data-monitor-status]");
+        if (!list || !status) return;
+        monitorRefreshing = true;
+        try {
+          const result = await request(API.monitor, {}, 10000, "external");
+          if (!result.ok) throw new Error("monitor_error");
+          const sessions = result.data?.students || result.data?.sessions || [];
+          latestMonitorRows = Array.isArray(sessions) ? sessions : [];
+          currentState = result.data?.state || currentState;
+          list.innerHTML = sessions.length ? sessions.map(monitorEntryHtml).join("") : `<div class="monitor-card">Aucune session étudiante active pour le moment.</div>`;
+          list.querySelectorAll("[data-add-time-row]").forEach((button) => button.addEventListener("click", () => addStudentTime(button.dataset.addTimeRow, button.dataset.currentExtra)));
+          status.className = "pill open";
+          status.textContent = "En direct";
+          const releaseButton = els.admin.querySelector("[data-release-results]");
+          if (releaseButton) {
+            const submittedCount = Number(result.data?.counts?.submitted ?? latestMonitorRows.filter((entry) => ["submitted", "submitted_auto"].includes(entry.status)).length);
+            const canPublish = currentState?.isOpen !== true && Boolean(currentState?.closedAt) && currentState?.releaseResults !== true && submittedCount > 0;
+            releaseButton.disabled = !canPublish;
+            releaseButton.title = canPublish ? "Publier définitivement les notes" : currentState?.releaseResults === true ? "Publication définitive déjà effectuée" : submittedCount < 1 ? "Aucune copie remise à publier" : "Fermez d’abord l’examen";
+          }
+        } catch (_error) {
+          status.className = "pill closed";
+          status.textContent = "Reconnexion…";
+        } finally { monitorRefreshing = false; }
+      }
+
+      function startMonitor() {
+        window.clearTimeout(monitorHandle);
+        const generation = ++monitorGeneration;
+        const loop = async () => {
+          await refreshMonitor();
+          if (generation !== monitorGeneration || !els.admin.isConnected || els.admin.hidden) return;
+          monitorHandle = window.setTimeout(loop, 5000);
+        };
+        loop();
+      }
+
+      async function loadAnalytics() {
+        const list = els.admin.querySelector("[data-analytics-list]");
+        if (!list) return;
+        list.innerHTML = `<div class="metric-card">Calcul des statistiques…</div>`;
+        try {
+          const result = await request(API.analytics, {}, 15000, "external");
+          if (!result.ok) throw new Error("analytics_error");
+          const data = result.data || {};
+          const raw = data.raw || {};
+          const grades = raw.grades || data.grades || {};
+          const questionData = raw.questions || data.questions;
+          const sectionData = raw.sections || data.sections;
+          const questions = Array.isArray(questionData) ? questionData : (questionData && typeof questionData === "object" ? Object.values(questionData) : []);
+          const sections = Array.isArray(sectionData) ? sectionData : (sectionData && typeof sectionData === "object" ? Object.values(sectionData) : []);
+          const distribution = Array.isArray(data.gradeDistribution) ? data.gradeDistribution : (grades.frequency && typeof grades.frequency === "object" ? Object.entries(grades.frequency).map(([label, count]) => ({ label: `${label}/5`, count })) : []);
+          const hardestQuestions = [...questions].sort((left, right) => Number(left.correctPercent || 0) - Number(right.correctPercent || 0)).slice(0, 10);
+          list.innerHTML = `
+            <div class="metric-card"><strong>${esc(data.submissionCount ?? grades.submissionCount ?? data.submissions ?? 0)}</strong><br>copies remises</div>
+            <div class="metric-card"><strong>${Number(data.averageGrade ?? grades.average ?? data.average ?? 0).toFixed(2)}/5</strong><br>moyenne</div>
+            <div class="metric-card"><strong>${Number(data.medianGrade ?? grades.median ?? data.median ?? 0).toFixed(2)}/5</strong><br>médiane</div>
+            <div class="metric-card"><strong>${esc(grades.passed ?? 0)} / ${esc(grades.failed ?? 0)}</strong><br>réussites / échecs</div>
+            ${distribution.map((bucket) => `<div class="metric-card"><strong>${esc(bucket.label || bucket.range || "Tranche")}</strong><br>${esc(bucket.count ?? bucket.students ?? 0)} étudiant(s)</div>`).join("")}
+            ${sections.map((section) => `<div class="metric-card"><strong>${esc(section.title || section.id)}</strong><br>${esc(section.averagePercent ?? section.average ?? 0)} %</div>`).join("")}
+            ${hardestQuestions.map((question) => { const distractor = question.topDistractor || question.distractors?.[0]?.label || question.distractors?.[0]?.value; return `<div class="metric-card"><strong>${esc(question.prompt || question.id)}</strong><br>${esc(question.correctPercent ?? question.successRate ?? 0)} % de réussite${distractor != null ? `<br><small>Distracteur fréquent : ${esc(distractor)}</small>` : ""}</div>`; }).join("")}`;
+          const ambiguous = Array.isArray(data.ambiguousQuestions) ? data.ambiguousQuestions : questions.filter((question) => Number(question.responseCount || 0) >= 3 && Number(question.correctPercent || 0) < 35);
+          if (ambiguous.length) {
+            list.insertAdjacentHTML("beforeend", ambiguous.map((question) => `<div class="metric-card"><strong>À examiner : ${esc(question.prompt || question.id)}</strong><br><small>${esc(question.reason || "Taux de réussite particulièrement faible")}</small></div>`).join(""));
+          }
+        } catch (_error) { list.innerHTML = `<div class="metric-card text-danger">Les statistiques ne sont pas disponibles. L’examen doit être fermé.</div>`; }
+      }
+
       async function downloadTranscript() {
         setAdminStatus("Préparation de la transcription...");
         try {
-          const result = await request(API.transcript);
+          const result = await request(API.transcript, {}, 15000, "external");
           if (!result.ok || !result.data?.transcript) throw new Error("transcript_unavailable");
           const title = "Transcription professeur — Examen final A1.2";
           if (window.downloadTranscriptPdf) {
@@ -400,12 +1093,28 @@
         }
       }
 
+      function seededNumber(value) {
+        let hash = 2166136261;
+        const text = String(value);
+        for (let index = 0; index < text.length; index += 1) {
+          hash ^= text.charCodeAt(index);
+          hash = Math.imul(hash, 16777619);
+        }
+        return (hash >>> 0) / 4294967296;
+      }
+
       function shuffledOptionEntries(question) {
         const entries = question.type === "truefalse"
           ? [{ value: "true", label: "Vrai" }, { value: "false", label: "Faux" }]
           : (question.options || []).map((label, value) => ({ value: String(value), label }));
+        const presentationSection = Array.isArray(stablePresentation?.sections) ? stablePresentation.sections.find((section) => section?.optionOrders?.[question.id]) : null;
+        const supplied = presentationSection?.optionOrders?.[question.id] || stablePresentation?.options?.[question.id] || stablePresentation?.[question.id];
+        if (Array.isArray(supplied)) {
+          const ordered = supplied.map((value) => entries.find((entry) => entry.value === String(value))).filter(Boolean);
+          if (ordered.length === entries.length) return ordered;
+        }
         for (let index = entries.length - 1; index > 0; index -= 1) {
-          const target = Math.floor(Math.random() * (index + 1));
+          const target = Math.floor(seededNumber(`${attemptSeed}:${question.id}:${index}`) * (index + 1));
           [entries[index], entries[target]] = [entries[target], entries[index]];
         }
         return entries;
@@ -418,6 +1127,19 @@
         return `<fieldset class="question-card" data-question="${esc(question.id)}">${block}<legend>${index + 1}. ${esc(question.prompt)}</legend>${choices}</fieldset>`;
       }
 
+      function orderedQuestions(section) {
+        const questions = [...(section.questions || [])];
+        const presentationSection = Array.isArray(stablePresentation?.sections) ? stablePresentation.sections.find((item) => item?.sectionId === section.id) : null;
+        const supplied = presentationSection?.questionIds || stablePresentation?.questions?.[section.id] || stablePresentation?.questionOrder?.[section.id];
+        const globalOrder = Array.isArray(stablePresentation?.questionOrder) ? stablePresentation.questionOrder.filter((id) => questions.some((question) => question.id === id)) : null;
+        const requestedOrder = Array.isArray(supplied) ? supplied : globalOrder;
+        if (Array.isArray(requestedOrder)) {
+          const ordered = requestedOrder.map((id) => questions.find((question) => question.id === id)).filter(Boolean);
+          if (ordered.length === questions.length) return ordered;
+        }
+        return questions.sort((left, right) => seededNumber(`${attemptSeed}:${section.id}:${left.id}`) - seededNumber(`${attemptSeed}:${section.id}:${right.id}`));
+      }
+
       function renderSection(section) {
         const reading = section.readingText?.length ? `<div class="reading-box"><h3>${esc(section.readingTitle || "Texte")}</h3>${section.readingText.map((paragraph) => `<p>${esc(paragraph)}</p>`).join("")}</div>` : "";
         const audio = section.audioSrc ? `<div class="audio-box"><h3>${esc(section.audioTitle || "Audio")}</h3><p>${esc(section.audioText || "Écoutez l’audio et répondez.")}</p><audio id="finalExamAudio" data-listening-audio controls preload="metadata" aria-label="Audio protégé de l’examen final"></audio><p class="status-message pending mt-2" data-audio-status role="status" aria-live="polite">Chargement sécurisé de l’audio...</p><button class="btn-soft mt-2" type="button" data-audio-retry hidden><i class="bi bi-arrow-repeat"></i> Réessayer le chargement</button></div>` : "";
@@ -427,58 +1149,184 @@
           <p class="section-text">${esc(section.instructions || "")}</p>
           ${reading}
           ${audio}
-          <div class="question-grid">${(section.questions || []).map(questionHtml).join("")}</div>
+          <div class="question-grid">${orderedQuestions(section).map(questionHtml).join("")}</div>
         </section>`;
       }
 
       function draftKey() {
-        const user = activeUser();
-        const identity = String(user?.email || user?.id || "session").trim().toLowerCase();
-        return `${DRAFT_PREFIX}:${currentExam?.version || "sans-version"}:${identity}`;
+        if (currentDraftKey) return currentDraftKey;
+        const bridge = readExamAccess();
+        const version = String(currentExam?.version || bridge?.examVersion || "");
+        const studentId = String(currentStudentId || bridge?.studentId || "");
+        const attemptId = String(currentAttemptId || bridge?.attemptId || "");
+        if (!version || !studentId || !attemptId) return "";
+        currentDraftKey = `${DRAFT_PREFIX}:${version}:${studentId}:${attemptId}`;
+        return currentDraftKey;
+      }
+
+      function writeLocalDraft(answers) {
+        const key = draftKey();
+        if (!key) return false;
+        try {
+          sessionStorage.setItem(key, JSON.stringify({
+            version: currentExam?.version || "",
+            studentId: currentStudentId,
+            attemptId: currentAttemptId,
+            answers: Object.assign({}, answers),
+            savedAt: new Date().toISOString()
+          }));
+          return true;
+        } catch (_error) {
+          return false;
+        }
       }
 
       function saveDraft() {
-        if (!examInProgress || !currentExam) return;
-        const answers = {};
-        els.form.querySelectorAll("input[type='radio']:checked").forEach((input) => {
-          answers[input.name] = input.value;
+        if (!examInProgress || !currentExam || restoringDraft) return;
+        const answers = currentAnswerMap();
+        writeLocalDraft(answers);
+        window.clearTimeout(draftHandle);
+        draftHandle = window.setTimeout(() => saveServerDraft(answers), 900);
+        scheduleSessionEvent("progress", Object.keys(answers).length);
+      }
+
+      async function saveServerDraft(answers) {
+        if (!examInProgress || !currentExam) return false;
+        draftPendingAnswers = Object.assign({}, answers);
+        if (draftSavePromise) return draftSavePromise;
+        draftSavePromise = (async () => {
+          let fullySaved = true;
+          while (draftPendingAnswers) {
+            const nextAnswers = draftPendingAnswers;
+            draftPendingAnswers = null;
+            try {
+              const result = await request(API.draft, { method: "PUT", body: JSON.stringify({ answers: nextAnswers, examVersion: currentExam?.version || "", attemptId: currentAttemptId, revision: draftRevision }) }, 10000, "exam");
+              if (!examInProgress) {
+                draftPendingAnswers = null;
+                return false;
+              }
+              if (result.status === 409 && result.data?.error === "stale_draft") {
+                const queuedNewer = draftPendingAnswers ? Object.assign({}, draftPendingAnswers) : null;
+                draftRevision = Number(result.data.revision || draftRevision);
+                restoringDraft = true;
+                const serverAnswers = result.data.answers || result.data.draft || {};
+                const restoredAnswers = Object.assign({}, serverAnswers, nextAnswers, queuedNewer || {});
+                applyAnswerMap(restoredAnswers, true);
+                writeLocalDraft(restoredAnswers);
+                restoringDraft = false;
+                draftPendingAnswers = restoredAnswers;
+                setSubmitStatus("Le brouillon serveur et vos réponses locales ont été réunis. Synchronisation de la version la plus récente…", "pending");
+                continue;
+              }
+              if (result.status === 409 && ["already_submitted", "time_expired"].includes(result.data?.error) && result.data?.result) {
+                renderSubmitted(result.data.result);
+                return false;
+              }
+              if (!result.ok) {
+                draftPendingAnswers = Object.assign({}, nextAnswers, draftPendingAnswers || {});
+                fullySaved = false;
+                if (!authRecoveryActive) setSubmitStatus("Le brouillon reste conservé sur cet appareil. La synchronisation serveur sera retentée après la reconnexion.", "error");
+                break;
+              }
+              draftRevision = Number(result.data?.revision ?? draftRevision + 1);
+            } catch (_error) {
+              if (!examInProgress) {
+                draftPendingAnswers = null;
+                return false;
+              }
+              draftPendingAnswers = Object.assign({}, nextAnswers, draftPendingAnswers || {});
+              fullySaved = false;
+              if (!authRecoveryActive) setSubmitStatus("Connexion interrompue : le brouillon local est intact et sera synchronisé après la reconnexion.", "error");
+              break;
+            }
+          }
+          return fullySaved && !draftPendingAnswers;
+        })().finally(() => { draftSavePromise = null; });
+        return draftSavePromise;
+      }
+
+      function applyAnswerMap(answers = {}, replace = false) {
+        if (replace) els.form.querySelectorAll("input[type='radio']").forEach((input) => { input.checked = false; });
+        let restored = 0;
+        Object.entries(answers).forEach(([questionId, value]) => {
+          const inputs = Array.from(els.form.querySelectorAll(`input[name="${CSS.escape(questionId)}"]`));
+          const matching = inputs.find((input) => input.value === String(value));
+          if (matching) { matching.checked = true; restored += 1; }
         });
+        updateQuestionCards();
+        return restored;
+      }
+
+      async function restoreServerDraft() {
+        if (!examInProgress || !currentExam) return false;
+        let mergedAnswers = null;
+        let needsServerSync = false;
         try {
-          sessionStorage.setItem(draftKey(), JSON.stringify({ version: currentExam.version || "", answers, savedAt: new Date().toISOString() }));
+          const result = await request(API.draft, {}, 10000, "exam");
+          if (result.status === 409 && result.data?.error === "already_submitted" && result.data?.result) return renderSubmitted(result.data.result);
+          if (!result.ok) {
+            if (!authRecoveryActive) setSubmitStatus("Le brouillon local reste disponible, mais le serveur n’a pas encore confirmé la synchronisation.", "error");
+            return false;
+          }
+          if (!result.data?.answers || result.data.version !== (currentExam.version || "")) return false;
+          if (result.data.attemptId && currentAttemptId && result.data.attemptId !== currentAttemptId) {
+            blockForAccountSwitch("Le brouillon reçu appartient à une autre tentative. Le formulaire a été protégé.");
+            return false;
+          }
+          draftRevision = Number(result.data.revision || 0);
+          const localAnswers = currentAnswerMap();
+          mergedAnswers = Object.assign({}, result.data.answers, localAnswers);
+          needsServerSync = Object.entries(mergedAnswers).some(([questionId, value]) => String(result.data.answers[questionId]) !== String(value));
+          const restored = applyAnswerMap(mergedAnswers, true);
+          writeLocalDraft(mergedAnswers);
+          setSubmitStatus(restored > 0 ? `Brouillon sécurisé restauré : ${restored} réponse(s).` : "Brouillon sécurisé prêt. Vous pouvez commencer à répondre.", "success");
+          return true;
         } catch (_error) {
-          // Le formulaire reste utilisable même si le stockage du navigateur est indisponible.
+          if (!authRecoveryActive) setSubmitStatus("Le brouillon local reste disponible. Reconnectez-vous pour confirmer sa sauvegarde sur le serveur.", "error");
+          return false;
         }
+        finally {
+          restoringDraft = false;
+          els.form.querySelectorAll("input[type='radio']").forEach((input) => { input.disabled = false; });
+          updateSubmitAvailability();
+          if (needsServerSync && mergedAnswers && examInProgress) saveServerDraft(mergedAnswers);
+        }
+      }
+
+      async function recordSession(event, answeredCount = null) {
+        if (!examInProgress) return null;
+        try {
+          const count = answeredCount ?? (allQuestions().length - collectAnswers(false).missing);
+          const result = await request(API.session, { method: "POST", body: JSON.stringify({ event, answeredCount: count, attemptId: currentAttemptId, examVersion: currentExam?.version || "", audioReady: event === "audio_ready" || audioReady }) }, 8000, "exam");
+          if (result.ok) captureRuntimeAccess(result.data);
+          if (result.status === 409 && result.data?.error === "already_submitted" && result.data?.result) renderSubmitted(result.data.result);
+          return result;
+        } catch (_error) { return null; }
+      }
+
+      function scheduleSessionEvent(event, answeredCount) {
+        window.clearTimeout(sessionHandle);
+        sessionHandle = window.setTimeout(() => recordSession(event, answeredCount), 1200);
       }
 
       function restoreDraft() {
         if (!examInProgress || !currentExam) return 0;
         try {
-          const draft = JSON.parse(sessionStorage.getItem(draftKey()) || "null");
-          if (!draft || draft.version !== (currentExam.version || "") || !draft.answers) return 0;
-          let restored = 0;
-          Object.entries(draft.answers).forEach(([questionId, value]) => {
-            const inputs = Array.from(els.form.querySelectorAll(`input[name="${CSS.escape(questionId)}"]`));
-            const matching = inputs.find((input) => input.value === String(value));
-            if (matching) {
-              matching.checked = true;
-              restored += 1;
-            }
-          });
-          updateQuestionCards();
-          return restored;
+          const key = draftKey();
+          if (!key) return 0;
+          const draft = JSON.parse(sessionStorage.getItem(key) || "null");
+          if (!draft || draft.version !== (currentExam.version || "") || draft.studentId !== currentStudentId || draft.attemptId !== currentAttemptId || !draft.answers) return 0;
+          return applyAnswerMap(draft.answers);
         } catch (_error) {
           return 0;
         }
       }
 
       function clearDraft() {
-        const user = activeUser();
-        const identity = String(user?.email || user?.id || "session").trim().toLowerCase();
+        const key = currentDraftKey || draftKey();
+        if (!key) return;
         try {
-          for (let index = sessionStorage.length - 1; index >= 0; index -= 1) {
-            const key = sessionStorage.key(index) || "";
-            if (key.startsWith(`${DRAFT_PREFIX}:`) && key.endsWith(`:${identity}`)) sessionStorage.removeItem(key);
-          }
+          sessionStorage.removeItem(key);
         } catch (_error) { /* rien à faire */ }
       }
 
@@ -497,7 +1345,7 @@
       function updateSubmitAvailability() {
         const button = submitButton();
         if (!button) return;
-        const blocked = ["admin", "teacher"].includes(currentRole) || !audioReady || submitting;
+        const blocked = ["admin", "teacher"].includes(currentRole) || !audioReady || submitting || restoringDraft || authRecoveryActive || accountSwitchBlocked;
         button.disabled = blocked;
         button.setAttribute("aria-disabled", blocked ? "true" : "false");
         button.setAttribute("aria-busy", submitting ? "true" : "false");
@@ -543,9 +1391,22 @@
         setAudioStatus("Chargement sécurisé de l’audio...", "pending");
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 45000);
+        const isStaff = ["admin", "teacher"].includes(currentRole);
+        const authMode = isStaff ? "external" : "exam";
         try {
-          const response = await fetch(API.audio, { cache: "no-store", signal: controller.signal, headers: headers({ Accept: "audio/mpeg" }) });
-          if (!response.ok) throw new Error("audio_unavailable");
+          const response = await fetch(API.audio, { cache: "no-store", signal: controller.signal, headers: headers({ Accept: "audio/mpeg" }, authMode) });
+          if (!response.ok) {
+            const payload = await response.clone().json().catch(() => ({}));
+            if (!isStaff && response.status === 409 && payload?.result) {
+              renderSubmitted(payload.result);
+              return;
+            }
+            if (!isStaff && (response.status === 401 || (response.status === 403 && payload?.error === "token_scope_invalid"))) {
+              handleUnauthorized("exam", payload);
+              throw new Error("exam_auth_required");
+            }
+            throw new Error("audio_unavailable");
+          }
           const blob = await response.blob();
           if (blob.size < 1024) throw new Error("audio_empty");
           if (token !== audioLoadToken) return;
@@ -559,19 +1420,104 @@
           window.JaraLinguaN2ListeningControls?.enhanceAudio?.(audio);
           audioReady = true;
           setAudioStatus("Audio prêt. Écoutez-le avant de répondre à la compréhension orale.", "success");
+          recordSession("audio_ready", allQuestions().length - collectAnswers(false).missing);
           updateSubmitAvailability();
-        } catch (_error) {
+        } catch (error) {
           if (token !== audioLoadToken) return;
           audioReady = false;
-          setAudioStatus("L’audio protégé n’a pas pu être chargé. Réessayez avant de soumettre l’examen.", "error", true);
+          if (!isStaff && ["exam_auth_required", "account_switch"].includes(error.message)) {
+            showReconnectNotice("La session sécurisée de l’audio a expiré. Reconnectez le même compte; vos réponses restent conservées.");
+            setAudioStatus("Reconnectez le compte de cette tentative, puis rechargez l’audio protégé.", "error", true);
+          } else {
+            setAudioStatus("L’audio protégé n’a pas pu être chargé. Réessayez avant de soumettre l’examen.", "error", true);
+          }
           updateSubmitAvailability();
+          recordSession("error", allQuestions().length - collectAnswers(false).missing);
         } finally {
           window.clearTimeout(timeout);
         }
       }
 
+      function formatTime(seconds) {
+        const safe = Math.max(0, Math.floor(Number(seconds) || 0));
+        const hours = Math.floor(safe / 3600);
+        const minutes = Math.floor((safe % 3600) / 60);
+        const secs = safe % 60;
+        return `${hours ? `${hours}:` : ""}${String(minutes).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+      }
+
+      async function confirmTimeExpired() {
+        try {
+          const result = await request(API.session, { method: "POST", body: JSON.stringify({ event: "timer_sync", answeredCount: allQuestions().length - collectAnswers(false).missing, attemptId: currentAttemptId, examVersion: currentExam?.version || "" }) }, 10000, "exam");
+          if (result.ok) captureRuntimeAccess(result.data);
+          if (result.status === 409 && result.data?.error === "already_submitted" && result.data?.result) return renderSubmitted(result.data.result);
+          if ((result.ok || result.data?.error === "timer_active") && Number(result.data?.timing?.remainingSeconds) > 0) {
+            startTimer(result.data.timing, false);
+            return;
+          }
+          if (!result.ok && authRecoveryActive) return;
+        } catch (_error) {
+          if (authRecoveryActive) return;
+        }
+        if (authRecoveryActive || accountSwitchBlocked) return;
+        performSubmit(true);
+      }
+
+      function startTimer(timing = {}, scheduleSync = true) {
+        window.clearInterval(timerHandle);
+        if (!examInProgress || timing.remainingSeconds == null) return;
+        if (scheduleSync) timerWarnings = new Set();
+        const initial = Math.max(0, Number(timing.remainingSeconds));
+        const startedAt = Date.now();
+        const tick = () => {
+          const remaining = Math.max(0, Math.ceil(initial - ((Date.now() - startedAt) / 1000)));
+          const panel = document.querySelector("[data-exam-timer]");
+          const value = document.querySelector("[data-timer-value]");
+          const message = document.querySelector("[data-timer-message]");
+          if (value) value.textContent = formatTime(remaining);
+          panel?.classList.toggle("warning", remaining <= 900 && remaining > 60);
+          panel?.classList.toggle("urgent", remaining <= 60);
+          [[900, "Il reste 15 minutes."], [300, "Il reste 5 minutes."], [60, "Il reste 1 minute."]].forEach(([threshold, label]) => {
+            if (remaining <= threshold && !timerWarnings.has(threshold)) {
+              timerWarnings.add(threshold);
+              if (message) message.textContent = label;
+              panel?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+          });
+          if (remaining <= 0) {
+            window.clearInterval(timerHandle);
+            if (message) message.textContent = "Temps écoulé : envoi automatique en cours.";
+            confirmTimeExpired();
+          }
+        };
+        tick();
+        timerHandle = window.setInterval(tick, 1000);
+        if (scheduleSync) {
+          window.clearInterval(timingSyncHandle);
+          timingSyncHandle = window.setInterval(async () => {
+            if (!examInProgress || submitting) return;
+            try {
+              const result = await request(API.session, { method: "POST", body: JSON.stringify({ event: "timer_sync", answeredCount: allQuestions().length - collectAnswers(false).missing, attemptId: currentAttemptId, examVersion: currentExam?.version || "" }) }, 10000, "exam");
+              if (result.ok) captureRuntimeAccess(result.data);
+              if (result.status === 409 && result.data?.error === "already_submitted" && result.data?.result) return renderSubmitted(result.data.result);
+              if ((result.ok || result.data?.error === "timer_active") && result.data?.timing) startTimer(result.data.timing, false);
+            } catch (_error) { /* Le compteur local continue. */ }
+          }, 30000);
+        }
+      }
+
       function renderExam(payload) {
+        startGateActive = false;
+        window.clearInterval(timerHandle);
+        window.clearInterval(timingSyncHandle);
+        window.clearTimeout(draftHandle);
+        window.clearTimeout(sessionHandle);
         audioLoadToken += 1;
+        els.access.querySelector("[data-preflight-audio]")?.pause();
+        if (preflightObjectUrl) {
+          URL.revokeObjectURL(preflightObjectUrl);
+          preflightObjectUrl = null;
+        }
         if (audioObjectUrl) {
           URL.revokeObjectURL(audioObjectUrl);
           audioObjectUrl = null;
@@ -580,9 +1526,42 @@
         submitting = false;
         currentRole = payload.role || currentRole;
         currentExam = payload.exam;
-        const user = activeUser();
+        currentState = payload.state || currentState;
+        currentAttemptId = payload.session?.attemptId || payload.attemptId || currentAttemptId;
+        attemptSeed = String(payload.attemptSeed || payload.session?.attemptSeed || currentAttemptId || currentExam?.version || "jaralingua");
+        stablePresentation = payload.session?.presentation || payload.presentation || {};
+        draftRevision = Number(payload.revision ?? payload.draft?.revision ?? 0);
         const isStaff = ["admin", "teacher"].includes(currentRole);
-        examInProgress = !isStaff;
+        const external = activeUser();
+        if (!isStaff) {
+          captureExamAccess(payload);
+          const bridge = readExamAccess();
+          currentStudentId = String(payload.student?.id || bridge?.studentId || currentStudentId || "");
+          currentStudentEmail = normalizeIdentity(payload.examAccessUser?.email || bridge?.email || currentStudentEmail);
+          currentStudentName = String(payload.examAccessUser?.name || bridge?.name || currentStudentName || currentStudentEmail);
+          currentDraftKey = "";
+          examInProgress = true;
+          const identityValid = Boolean(
+            bridge &&
+            bridge.studentId === currentStudentId &&
+            bridge.attemptId === currentAttemptId &&
+            bridge.examVersion === String(currentExam?.version || "")
+          );
+          if (!identityValid) {
+            els.root.hidden = true;
+            showReconnectNotice("La tentative existe, mais son autorisation sécurisée doit être renouvelée avec le même compte avant d’afficher les questions.");
+            return;
+          }
+          draftKey();
+          clearReconnectNotice();
+        } else {
+          examInProgress = false;
+          currentStudentId = "";
+          currentStudentEmail = normalizeIdentity(external?.email);
+          currentStudentName = String(external?.name || external?.email || "Utilisateur");
+          currentDraftKey = "";
+        }
+        if (!isStaff) window.clearInterval(monitorHandle);
         const isOpen = payload?.state?.isOpen === true;
         els.root.hidden = false;
         els.access.innerHTML = `
@@ -594,12 +1573,13 @@
               <p class="section-text mb-0">${isStaff ? "Vous pouvez prévisualiser l’examen. Les comptes professeur ne soumettent pas de note." : "Répondez soigneusement. Une seule soumission sera enregistrée."}</p>
               <div class="identity-strip mt-3">
                 <span class="pill ${isOpen ? "open" : "closed"}"><i class="bi ${isOpen ? "bi-unlock-fill" : "bi-eye-fill"}"></i> ${isOpen ? "Examen ouvert" : "Aperçu sécurisé — examen fermé"}</span>
-                <span class="pill"><i class="bi bi-person-circle"></i> ${esc(user?.name || user?.email || "Utilisateur")}</span>
+                <span class="pill"><i class="bi bi-person-circle"></i> ${esc(currentStudentName || currentStudentEmail || "Utilisateur")}</span>
                 <span class="pill"><i class="bi bi-award-fill"></i> ${esc(currentExam.totalPoints || 50)} points · note /5</span>
               </div>
             </div>
           </div>`;
         els.form.innerHTML = `
+          ${!isStaff ? `<div class="timer-panel" data-exam-timer><div><span class="section-kicker">Temps restant</span><div class="timer-value" data-timer-value aria-label="Temps restant">--:--</div></div><strong data-timer-message role="status" aria-live="polite">Votre brouillon est enregistré automatiquement.</strong></div>` : ""}
           ${currentExam.sections.map(renderSection).join("")}
           <div class="submit-zone">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
@@ -610,7 +1590,8 @@
               </div>
               <button class="btn-main" type="submit" disabled aria-disabled="true"><i class="bi bi-send-check-fill"></i> Envoyer l’examen final</button>
             </div>
-          </div>`;
+          </div>
+          <dialog class="confirm-dialog" data-confirm-dialog><div class="confirm-content"><p class="section-kicker">Confirmation finale</p><h2 class="h3 fw-bold text-primary-emphasis">Envoyer définitivement l’examen ?</h2><p class="section-text" data-confirm-summary></p><div class="identity-strip"><span class="pill"><i class="bi bi-list-check"></i> <span data-confirm-count></span></span><span class="pill"><i class="bi bi-clock"></i> <span data-confirm-time></span></span></div><p class="status-message pending">Une seule soumission est autorisée. Les réponses ne pourront plus être modifiées.</p><div class="d-flex flex-wrap justify-content-end gap-2 mt-3"><button class="btn-soft" type="button" data-cancel-submit>Revenir à l’examen</button><button class="btn-main" type="button" data-confirm-submit><i class="bi bi-send-check-fill"></i> Confirmer l’envoi</button></div></div></dialog>`;
         els.form.onsubmit = submitExam;
         els.form.onchange = (event) => {
           if (!event.target.matches("input[type='radio']")) return;
@@ -618,9 +1599,30 @@
           saveDraft();
         };
         els.form.querySelector("[data-audio-retry]")?.addEventListener("click", loadProtectedAudio);
+        els.form.querySelector("[data-cancel-submit]")?.addEventListener("click", () => els.form.querySelector("[data-confirm-dialog]")?.close?.());
+        els.form.querySelector("[data-confirm-submit]")?.addEventListener("click", () => { els.form.querySelector("[data-confirm-dialog]")?.close?.(); performSubmit(false); });
+        if (!isStaff) {
+          restoringDraft = true;
+          els.form.querySelectorAll("input[type='radio']").forEach((input) => { input.disabled = true; });
+          setSubmitStatus("Récupération du brouillon sécurisé avant d’autoriser les réponses…", "pending");
+        }
         const restored = restoreDraft();
-        if (restored > 0) setSubmitStatus(`Brouillon restauré : ${restored} réponse(s) récupérée(s) sur cet appareil.`, "success");
+        if (restored > 0) {
+          setSubmitStatus(`Brouillon restauré : ${restored} réponse(s) récupérée(s) sur cet appareil.`, "success");
+        }
         loadProtectedAudio();
+        if (!isStaff) restoreServerDraft();
+        if (!isStaff) {
+          recordSession("started", restored);
+          startTimer(payload.timing || {});
+          const bridge = readExamAccess();
+          if (external && bridge && !externalAccountMatches(bridge, external)) {
+            window.setTimeout(() => {
+              blockForAccountSwitch("Le compte externe actif a changé. Vérification de son identité avant de poursuivre cette tentative protégée.");
+              recoverExamAccess();
+            }, 0);
+          }
+        }
       }
 
       function allQuestions() {
@@ -672,11 +1674,54 @@
           window.setTimeout(() => firstMissing?.querySelector("input[type='radio']")?.focus(), 450);
           return;
         }
+        const dialog = els.form.querySelector("[data-confirm-dialog]");
+        const total = allQuestions().length;
+        dialog.querySelector("[data-confirm-summary]").textContent = "Vérifiez ce résumé avant de confirmer. Aucun corrigé ne sera affiché après l’envoi.";
+        dialog.querySelector("[data-confirm-count]").textContent = `${total}/${total} réponses complètes`;
+        dialog.querySelector("[data-confirm-time]").textContent = `Temps restant : ${document.querySelector("[data-timer-value]")?.textContent || "non limité"}`;
+        if (typeof dialog.showModal === "function") dialog.showModal();
+        else if (window.confirm("Toutes les réponses sont complètes. Confirmer l’envoi définitif ?")) performSubmit(false);
+      }
+
+      async function performSubmit(autoSubmit = false) {
+        if (submitting) return;
+        if (authRecoveryActive || accountSwitchBlocked) {
+          showReconnectNotice("Rétablissez d’abord la connexion du compte qui a commencé cet examen. Les réponses restent conservées.", accountSwitchBlocked);
+          return;
+        }
+        const initial = collectAnswers(!autoSubmit);
+        let answers = initial.answers;
+        let missing = initial.missing;
+        const firstMissing = initial.firstMissing;
+        if (!autoSubmit && missing > 0) {
+          firstMissing?.scrollIntoView({ behavior: "smooth", block: "center" });
+          return;
+        }
         submitting = true;
+        submittingAutomatically = autoSubmit;
         updateSubmitAvailability();
-        setSubmitStatus("Envoi de l’examen final en cours...", "pending");
+        setSubmitStatus(autoSubmit ? "Temps écoulé : envoi automatique de vos réponses…" : "Envoi de l’examen final en cours...", "pending");
         try {
-          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers, examVersion: currentExam?.version || "" }) }, 30000);
+          writeLocalDraft(Object.fromEntries(Object.entries(answers).map(([id, value]) => [id, String(value)])));
+          const draftSaved = await saveServerDraft(Object.fromEntries(Object.entries(answers).map(([id, value]) => [id, String(value)])));
+          if (draftSaved !== true || !examInProgress) {
+            submitting = false;
+            submittingAutomatically = false;
+            updateSubmitAvailability();
+            if (examInProgress) setSubmitStatus("L’envoi est suspendu jusqu’à la confirmation du brouillon par le serveur. Vos réponses restent conservées.", "error");
+            return;
+          }
+          const latest = collectAnswers(!autoSubmit);
+          answers = latest.answers;
+          missing = latest.missing;
+          if (!autoSubmit && missing > 0) {
+            submitting = false;
+            updateSubmitAvailability();
+            setSubmitStatus("Le serveur a restauré un brouillon plus récent qui n’est pas complet. Vérifiez les réponses manquantes avant l’envoi.", "error");
+            latest.firstMissing?.scrollIntoView({ behavior: "smooth", block: "center" });
+            return;
+          }
+          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers, examVersion: currentExam?.version || "", attemptId: currentAttemptId, revision: draftRevision, autoSubmit }) }, 30000, "exam");
           if (!result.ok) {
             if (result.data?.error === "already_submitted" && result.data.result) return renderSubmitted(result.data.result);
             if (result.data?.error === "exam_closed") throw new Error("L’examen est fermé. La soumission n’a pas été enregistrée.");
@@ -687,39 +1732,259 @@
         } catch (error) {
           setSubmitStatus(error.message || "Erreur d’envoi. Vos réponses restent sur cette page.", "error");
           submitting = false;
+          submittingAutomatically = false;
           updateSubmitAvailability();
+          if (autoSubmit && examInProgress && !authRecoveryActive && !accountSwitchBlocked) window.setTimeout(() => performSubmit(true), 5000);
         }
       }
 
       function renderSubmitted(result) {
+        const resultStudentId = String(result?.studentId || "");
+        const resultAttemptId = String(result?.attemptId || "");
+        const resultVersion = String(result?.examVersion || "");
+        if ((currentStudentId && resultStudentId !== currentStudentId) ||
+            (currentAttemptId && resultAttemptId !== currentAttemptId) ||
+            (currentExam?.version && resultVersion !== String(currentExam.version))) {
+          clearExamAccess();
+          blockForAccountSwitch("Le reçu appartient à un autre étudiant ou à une autre tentative. Le brouillon en cours n’a pas été supprimé.");
+          return;
+        }
+        const confirmedReceipt = result?.receiptCode || result?.receipt?.code || result?.submissionId;
+        if (!result || !confirmedReceipt) {
+          submitting = false;
+          submittingAutomatically = false;
+          updateSubmitAvailability();
+          setSubmitStatus("Le serveur n’a pas fourni de reçu vérifiable. Le formulaire et son brouillon restent intacts; réessayez ou contactez le professeur.", "error");
+          return;
+        }
+        const submittedName = result.studentName || currentStudentName || currentStudentEmail || "Étudiant";
+        const submittedVersion = result.examVersion || currentExam?.version || "";
+        const exactDraftKey = currentDraftKey || (
+          result.examVersion && result.studentId && result.attemptId
+            ? `${DRAFT_PREFIX}:${result.examVersion}:${result.studentId}:${result.attemptId}`
+            : draftKey()
+        );
+        startGateActive = false;
+        stopRuntimeLoops();
         examInProgress = false;
         submitting = false;
         audioReady = false;
         audioLoadToken += 1;
-        clearDraft();
+        if (exactDraftKey) {
+          try { sessionStorage.removeItem(exactDraftKey); } catch (_error) { /* reçu déjà confirmé */ }
+        }
+        draftPendingAnswers = null;
+        clearExamAccess();
+        currentDraftKey = "";
+        authRecoveryActive = false;
+        accountSwitchBlocked = false;
+        setExamFormBlocked(false);
         if (audioObjectUrl) {
           URL.revokeObjectURL(audioObjectUrl);
           audioObjectUrl = null;
         }
         els.root.hidden = false;
         els.admin.hidden = true;
+        const released = typeof currentState?.releaseResults === "boolean"
+          ? currentState.releaseResults
+          : !(result?.resultReleased === false || result?.resultsReleased === false) && (result?.resultReleased === true || result?.resultsReleased === true || result?.releaseResults === true);
+        const receipt = result?.receiptCode || result?.receipt?.code || result?.submissionId || "Enregistré";
         els.access.innerHTML = `
           <div class="submitted-panel">
             <p class="section-kicker">Examen soumis</p>
             <h2 class="section-title">Votre examen final a été enregistré</h2>
-            <p class="section-text">La note finale a été calculée automatiquement et envoyée au carnet de notes. Les réponses correctes ne sont pas affichées dans l’examen final.</p>
+            <p class="section-text">${released ? "La note finale est publiée dans le carnet de notes." : "La copie a bien été reçue. La note restera masquée jusqu’à sa publication par le professeur."} Les réponses correctes ne sont jamais affichées ici.</p>
             <div class="row g-4 align-items-center">
-              <div class="col-md-5"><div class="grade-number">${Number(result.grade || 0).toFixed(2)}</div><p class="h5 fw-bold text-primary-emphasis mb-0">Note finale / 5</p></div>
+              <div class="col-md-5">${released ? `<div class="grade-number">${Number(result.grade || 0).toFixed(2)}</div><p class="h5 fw-bold text-primary-emphasis mb-0">Note finale / 5</p>` : `<div class="access-icon"><i class="bi bi-eye-slash-fill"></i></div><p class="h5 fw-bold text-primary-emphasis mt-3 mb-0">Résultat en attente de publication</p>`}</div>
               <div class="col-md-7">
                 <div class="identity-strip">
-                  <span class="pill"><i class="bi bi-check-circle-fill"></i> ${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</span>
+                  ${released ? `<span class="pill"><i class="bi bi-check-circle-fill"></i> ${esc(result.scorePoints)} / ${esc(result.totalPoints)} points</span>` : ""}
                   <span class="pill"><i class="bi bi-clock-history"></i> ${esc(result.submittedAt || "")}</span>
                 </div>
+                <div class="status-message success mb-3"><strong>Reçu de remise</strong><br><span class="receipt-code">${esc(receipt)}</span><br><small>${esc(submittedName)} · version ${esc(submittedVersion)}</small></div>
                 <a class="btn-main" href="notes-evaluation.html"><i class="bi bi-bar-chart-fill"></i> Consulter mes notes</a>
               </div>
             </div>
           </div>`;
         els.form.innerHTML = "";
+        currentAttemptId = "";
+        currentStudentId = "";
+        currentStudentEmail = "";
+        currentStudentName = "";
+        pendingExamPayload = null;
+        draftRevision = 0;
+        stablePresentation = {};
+      }
+
+      function renderStartGate(payload) {
+        stopRuntimeLoops();
+        pendingExamPayload = payload;
+        startGateActive = true;
+        examInProgress = false;
+        currentExam = null;
+        currentAttemptId = "";
+        currentStudentId = "";
+        currentStudentEmail = "";
+        currentStudentName = "";
+        currentDraftKey = "";
+        els.root.hidden = true;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="access-icon"><i class="bi bi-clipboard-check-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">Avant de commencer</p><h2 class="section-title">Préparez votre appareil</h2><p class="section-text">Le chronomètre ne commencera qu’après le test technique et votre confirmation explicite. Une fois commencé, l’examen devra être remis dans le temps prévu.</p>${preflightHtml()}<button class="btn-main mt-3" type="button" data-start-exam disabled><i class="bi bi-play-circle-fill"></i> Commencer l’examen</button><p class="mt-2 mb-0" data-start-status aria-live="polite"></p></div></div>`;
+        bindPreflight();
+        els.access.querySelector("[data-start-exam]").addEventListener("click", startExamAttempt);
+      }
+
+      async function startExamAttempt() {
+        const button = els.access.querySelector("[data-start-exam]");
+        const status = els.access.querySelector("[data-start-status]");
+        if (els.access.querySelector("[data-preflight]")?.dataset.ready !== "true" || !pendingExamPayload) return;
+        const initialPayload = pendingExamPayload;
+        const expectedStudentId = String(initialPayload.student?.id || "");
+        const expectedVersion = String(initialPayload.exam?.version || initialPayload.examVersion || "");
+        let expectedAttemptId = serverAttemptId(initialPayload);
+        let verifiedExternalKey = "";
+        const sessionBody = JSON.stringify({
+          event: "started",
+          answeredCount: 0,
+          examVersion: expectedVersion
+        });
+        const validateStartPayload = (payload, options = {}) => {
+          const returnedStudentId = String(payload?.student?.id || payload?.studentId || payload?.result?.studentId || "");
+          const returnedAttemptId = serverAttemptId(payload);
+          const returnedVersion = serverExamVersion(payload);
+          if (!expectedStudentId || (!returnedStudentId && options.requireStudent === true) || (returnedStudentId && returnedStudentId !== expectedStudentId)) {
+            throw new Error("account_changed_before_start");
+          }
+          if (expectedAttemptId && returnedAttemptId && returnedAttemptId !== expectedAttemptId) throw new Error("attempt_changed_before_start");
+          if (options.requireAttempt === true && !returnedAttemptId) throw new Error("attempt_missing_after_start");
+          if (expectedVersion && returnedVersion && returnedVersion !== expectedVersion) throw new Error("exam_version_changed_before_start");
+          if (options.requireVersion === true && !returnedVersion) throw new Error("exam_version_missing_after_start");
+          if (!expectedAttemptId && returnedAttemptId) expectedAttemptId = returnedAttemptId;
+          return returnedStudentId;
+        };
+        const verifyExternalIdentity = async () => {
+          const accountKeyBefore = primaryAccountKey();
+          if (!accountKeyBefore) throw new Error("start_identity_unavailable");
+          const identityCheck = await request(API.state, {}, 15000, "external");
+          const accountKeyAfter = primaryAccountKey();
+          if (!identityCheck.ok || !accountKeyAfter || accountKeyBefore !== accountKeyAfter) throw new Error("start_identity_unavailable");
+          validateStartPayload(identityCheck.data, { requireStudent: true });
+          if (["admin", "teacher"].includes(identityCheck.data?.role)) throw new Error("account_changed_before_start");
+          verifiedExternalKey = accountKeyAfter;
+          return identityCheck;
+        };
+        const finishStartedSession = (sessionData) => {
+          validateStartPayload(sessionData, { requireAttempt: true, requireVersion: true });
+          const payload = Object.assign({}, initialPayload, sessionData, { student: sessionData.student || { id: expectedStudentId } });
+          if (!captureExamAccess(payload)) throw new Error("exam_access_missing");
+          pendingExamPayload = null;
+          renderExam(payload);
+        };
+        let sessionRequested = false;
+        button.disabled = true;
+        button.setAttribute("aria-busy", "true");
+        els.access.querySelector("[data-preflight-audio]")?.pause();
+        status.className = "status-message pending";
+        status.textContent = "Création sécurisée de votre tentative…";
+        try {
+          const identityCheck = await verifyExternalIdentity();
+          if (identityCheck.data?.submitted) {
+            validateStartPayload(identityCheck.data.submitted, { requireStudent: true, requireAttempt: true, requireVersion: true });
+            return renderSubmitted(identityCheck.data.submitted);
+          }
+          if (primaryAccountKey() !== verifiedExternalKey) throw new Error("account_changed_before_start");
+          sessionRequested = true;
+          const session = await request(API.session, { method: "POST", body: sessionBody }, 15000, "external");
+          if (!session.ok) {
+            if (session.data?.error === "already_submitted" && session.data.result) {
+              validateStartPayload(session.data.result, { requireStudent: true, requireAttempt: true, requireVersion: true });
+              return renderSubmitted(session.data.result);
+            }
+            throw new Error(session.data?.error || "session_error");
+          }
+          finishStartedSession(session.data);
+        } catch (error) {
+          if (!sessionRequested) {
+            const panel = els.access.querySelector("[data-preflight]");
+            if (error.message === "account_changed_before_start" && panel) panel.dataset.ready = "false";
+            status.className = "status-message error";
+            status.textContent = error.message === "account_changed_before_start"
+              ? "Le compte a changé depuis le test technique. Rechargez l’accès et recommencez le test avec le compte étudiant correct."
+              : "Impossible de confirmer l’identité avant le démarrage. Aucune tentative n’a été créée; vérifiez la connexion et réessayez.";
+            button.disabled = error.message === "account_changed_before_start";
+            button.removeAttribute("aria-busy");
+            return;
+          }
+          if (error.message === "preflight_required") {
+            const panel = els.access.querySelector("[data-preflight]");
+            if (panel) panel.dataset.ready = "false";
+            status.className = "status-message error";
+            status.textContent = "Le serveur demande un nouveau test technique. Relancez le test, écoutez l’audio et confirmez avant de commencer.";
+            button.disabled = true;
+            button.removeAttribute("aria-busy");
+            els.access.querySelector("[data-run-preflight]")?.focus();
+            return;
+          }
+          status.className = "status-message pending";
+          status.textContent = "La réponse du serveur a été interrompue. Vérification de votre tentative en cours…";
+          try {
+            // La création est idempotente : on répète d’abord exactement la
+            // même requête avant d’essayer de reconstruire un rendu.
+            const repeatedIdentity = await verifyExternalIdentity();
+            if (repeatedIdentity.data?.submitted) {
+              validateStartPayload(repeatedIdentity.data.submitted, { requireStudent: true, requireAttempt: true, requireVersion: true });
+              return renderSubmitted(repeatedIdentity.data.submitted);
+            }
+            if (primaryAccountKey() !== verifiedExternalKey) throw new Error("account_changed_before_start");
+            const repeatedSession = await request(API.session, { method: "POST", body: sessionBody }, 15000, "external");
+            if (repeatedSession.status === 409 && repeatedSession.data?.error === "already_submitted" && repeatedSession.data.result) {
+              validateStartPayload(repeatedSession.data.result, { requireStudent: true, requireAttempt: true, requireVersion: true });
+              return renderSubmitted(repeatedSession.data.result);
+            }
+            if (repeatedSession.ok) {
+              finishStartedSession(repeatedSession.data);
+              return;
+            }
+            if (repeatedSession.data?.error === "preflight_required") {
+              const panel = els.access.querySelector("[data-preflight]");
+              if (panel) panel.dataset.ready = "false";
+              status.className = "status-message error";
+              status.textContent = "Le serveur demande un nouveau test technique. Relancez-le avant de commencer.";
+              button.disabled = true;
+              button.removeAttribute("aria-busy");
+              return;
+            }
+            const examIdentity = await verifyExternalIdentity();
+            if (examIdentity.data?.submitted) {
+              validateStartPayload(examIdentity.data.submitted, { requireStudent: true, requireAttempt: true, requireVersion: true });
+              return renderSubmitted(examIdentity.data.submitted);
+            }
+            if (primaryAccountKey() !== verifiedExternalKey) throw new Error("account_changed_before_start");
+            const examCheck = await request(API.exam, {}, 15000, "external");
+            if (examCheck.ok) validateStartPayload(examCheck.data, { requireStudent: true, requireVersion: true });
+            if (examCheck.ok && examCheck.data?.status === "submitted" && examCheck.data.result) {
+              validateStartPayload(examCheck.data.result, { requireStudent: true, requireAttempt: true, requireVersion: true });
+              return renderSubmitted(examCheck.data.result);
+            }
+            if (examCheck.ok && examCheck.data?.exam && serverAttemptId(examCheck.data) && captureExamAccess(examCheck.data)) {
+              const recovered = Object.assign({}, initialPayload, examCheck.data, { student: examCheck.data.student || initialPayload.student });
+              pendingExamPayload = null;
+              renderExam(recovered);
+              return;
+            }
+            if (examCheck.ok && !serverAttemptId(examCheck.data)) {
+              status.className = "status-message error";
+              status.textContent = "Le serveur confirme que la tentative n’a pas commencé et qu’aucune minute n’a été décomptée. Vous pouvez réessayer.";
+            } else {
+              status.className = "status-message error";
+              status.textContent = "Impossible de confirmer l’état de la tentative. Réessayez : la création est idempotente et ne démarrera pas un second examen.";
+            }
+          } catch (_recoveryError) {
+            status.className = "status-message error";
+            status.textContent = "Impossible de confirmer l’état de la tentative. Réessayez : aucun second examen ne sera créé.";
+          }
+          button.disabled = false;
+          button.removeAttribute("aria-busy");
+        }
       }
 
       async function loadExam() {
@@ -733,23 +1998,71 @@
           renderSubmitted(result.data.result);
           return;
         }
-        renderExam(result.data);
+        if (["admin", "teacher"].includes(result.data.role || currentRole)) return renderExam(result.data);
+        if (result.data?.exam && serverAttemptId(result.data)) {
+          let payload = result.data;
+          if (!captureExamAccess(payload) && activeUser()) {
+            const resumed = await request(API.session, {
+              method: "POST",
+              body: JSON.stringify({
+                event: "resume_auth",
+                answeredCount: 0,
+                attemptId: serverAttemptId(payload),
+                examVersion: serverExamVersion(payload)
+              })
+            }, 15000, "external");
+            if (resumed.status === 409 && resumed.data?.error === "already_submitted" && resumed.data.result) return renderSubmitted(resumed.data.result);
+            if (resumed.ok) payload = Object.assign({}, payload, resumed.data, { student: payload.student });
+          }
+          if (!captureExamAccess(payload)) {
+            currentStudentId = String(payload.student?.id || "");
+            currentAttemptId = serverAttemptId(payload);
+            currentExam = payload.exam;
+            examInProgress = true;
+            showReconnectNotice("Reconnectez le compte qui a commencé cette tentative afin de renouveler son accès sécurisé.");
+            return;
+          }
+          return renderExam(payload);
+        }
+        renderStartGate(result.data);
       }
 
       async function loadState(options = {}) {
         if (loading || (examInProgress && options.force !== true)) return;
         const user = activeUser();
-        if (!user) {
+        const bridge = readExamAccess();
+        if (!user && !bridge) {
           examInProgress = false;
           renderLogin("Connectez-vous pour savoir si l’examen est ouvert pour votre compte.");
+          return;
+        }
+        if (!user && bridge && accountSwitchBlocked) {
+          renderLogin("Reconnectez le compte étudiant qui a commencé la tentative protégée. Le brouillon reste conservé.");
           return;
         }
         loading = true;
         try {
           els.access.innerHTML = `<div class="access-panel"><p class="section-kicker">Vérification</p><h2 class="section-title">Chargement de l’accès...</h2><p class="section-text">Connexion au service de l’examen final.</p></div>`;
-          const result = await request(API.state);
+          const verifyChangedExternal = Boolean(user && bridge && (accountSwitchBlocked || !externalAccountMatches(bridge, user)));
+          let result = await request(API.state, {}, 15000, verifyChangedExternal ? "external" : "auto");
+          if (!result.ok && verifyChangedExternal) {
+            accountSwitchBlocked = true;
+            throw new Error("external_identity_check_failed");
+          }
+          if (!result.ok && bridge && activeUser()) result = await request(API.state, {}, 15000, "external");
           if (!result.ok) throw new Error(result.data?.error || "state_error");
           currentRole = result.data.role || "student";
+          const verifiedBridge = readExamAccess();
+          if (verifiedBridge) {
+            const verifiedStudentId = String(result.data.student?.id || "");
+            if (["admin", "teacher"].includes(currentRole) || (verifiedStudentId && verifiedStudentId !== verifiedBridge.studentId)) {
+              clearExamAccess();
+              clearReconnectNotice();
+            } else if (verifyChangedExternal) {
+              clearReconnectNotice();
+            }
+          }
+          currentState = result.data.state || currentState;
           renderAdmin(result.data);
           if (options.keepAdminMessage) {
             const node = document.getElementById("adminStatus");
@@ -764,18 +2077,30 @@
             return;
           }
           renderLocked("Le professeur n’a pas encore ouvert l’examen final.", result.data);
-        } catch (_error) {
-          renderLogin("Impossible de vérifier l’accès. Rechargez la page ou reconnectez-vous.");
+        } catch (error) {
+          if (examInProgress) showReconnectNotice("Impossible de vérifier l’accès pour le moment. Le formulaire et son brouillon restent intacts.");
+          else if (error.message === "external_identity_check_failed") renderLogin("Le nouveau compte n’a pas pu être vérifié. La tentative précédente et son brouillon restent protégés; reconnectez le compte étudiant qui l’a commencée.");
+          else renderLogin("Impossible de vérifier l’accès. Rechargez la page ou reconnectez-vous.");
         } finally {
           loading = false;
         }
       }
 
+      lastPrimaryAccountKey = primaryAccountKey();
       loadState();
+      document.addEventListener("click", handleExplicitSignOut, true);
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && examInProgress) saveDraft();
+      });
+      window.setInterval(watchPrimaryAccount, 1000);
       window.addEventListener("focus", () => {
-        if (examInProgress || stateUpdating) return;
+        if (examInProgress) {
+          if (authRecoveryActive && !authRecoveryPromise) window.setTimeout(recoverExamAccess, 250);
+          return;
+        }
+        if (startGateActive || stateUpdating) return;
         window.setTimeout(() => {
-          if (!examInProgress && !stateUpdating) loadState();
+          if (!examInProgress && !startGateActive && !stateUpdating) loadState();
         }, 250);
       });
     })();

@@ -12,14 +12,14 @@
     {
       "id": "comprehension",
       "title": "Comprehension orale et ecrite",
-      "weight": 20,
+      "weight": 10,
       "type": "Comprehension",
       "description": "Comprendre une routine, des horaires, des annonces simples et de courts messages."
     },
     {
       "id": "grammaire",
       "title": "Grammaire en contexte",
-      "weight": 30,
+      "weight": 20,
       "type": "Grammaire",
       "description": "Present, verbes pronominaux, negation elargie, questions et connecteurs."
     },
@@ -68,6 +68,14 @@
       "weight": 10,
       "type": "Projet",
       "description": "Presenter Ma vie quotidienne en francais avec texte et dialogue simule."
+    },
+    {
+      "id": "finalExam",
+      "title": "Examen final A1.2",
+      "weight": 20,
+      "type": "Examen final",
+      "displayDate": "Seance d'examen",
+      "description": "Examen final verrouille, note automatiquement sur 5. Les resultats sont publies uniquement lorsque le professeur le decide."
     }
   ],
   "bonusEvent": null

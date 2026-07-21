@@ -358,8 +358,8 @@
             "prompt": "La lampe est ___ le bureau.",
             "options": [
               "sur",
-              "gentille",
-              "technicien"
+              "sous",
+              "derrière"
             ],
             "answer": 0,
             "points": 1
@@ -507,7 +507,7 @@
             "options": [
               "Dix-neuf ans",
               "Vingt-deux ans",
-              "Trente ans"
+              "Trente et un ans"
             ],
             "answer": 1,
             "points": 1
@@ -517,9 +517,9 @@
             "type": "mcq",
             "prompt": "Où habite Camille ?",
             "options": [
-              "À Paris",
-              "À Lyon",
-              "À Envigado"
+              "Dans la ville de Paris",
+              "Dans la ville de Lyon",
+              "Dans la ville d’Envigado"
             ],
             "answer": 2,
             "points": 1
@@ -530,8 +530,8 @@
             "prompt": "Avec qui habite-t-elle ?",
             "options": [
               "Avec son père, sa sœur et son petit frère",
-              "Avec ses grands-parents",
-              "Avec deux amies"
+              "Avec sa mère, son frère et sa grand-mère",
+              "Avec deux amies et leur jeune enfant"
             ],
             "answer": 0,
             "points": 1
@@ -541,9 +541,9 @@
             "type": "mcq",
             "prompt": "Comment est l’appartement ?",
             "options": [
-              "Très grand et froid",
-              "Petit mais confortable",
-              "Ancien et bruyant"
+              "Il est très grand, mais assez froid",
+              "Il est petit, mais très confortable",
+              "Il est ancien et vraiment bruyant"
             ],
             "answer": 1,
             "points": 1
@@ -566,8 +566,8 @@
             "prompt": "Qu’est-ce qu’il y a sur son bureau ?",
             "options": [
               "Un cahier de français, un téléphone et une petite lampe",
-              "Une télévision et trois livres",
-              "Une plante et des lunettes"
+              "Un dictionnaire, trois livres et une grande horloge",
+              "Une plante verte, des lunettes et une petite radio"
             ],
             "answer": 0,
             "points": 1
@@ -603,7 +603,7 @@
             "options": [
               "Elle vient de rentrer à la maison",
               "Elle vient d’acheter une armoire",
-              "Elle vient de dormir"
+              "Elle vient de déjeuner au restaurant"
             ],
             "answer": 0,
             "points": 1
@@ -613,9 +613,9 @@
             "type": "mcq",
             "prompt": "Que révise Camille ?",
             "options": [
-              "Les transports et les billets",
+              "Les transports, les billets et les itinéraires",
               "Les nombres, les professions, la famille, la description physique et la maison",
-              "Les restaurants et les menus"
+              "Les aliments, les restaurants et les différents menus"
             ],
             "answer": 1,
             "points": 1
@@ -623,6 +623,6 @@
         ]
       }
     ],
-    "version": "2026-07-20-teacher-vocabulary"
+    "version": "2026-07-20-final-audit-v2"
   }
 }

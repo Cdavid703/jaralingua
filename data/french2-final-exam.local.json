@@ -355,7 +355,7 @@
             "id": "g12",
             "type": "mcq",
             "block": "Impératif",
-            "prompt": "Pour donner une direction : ___ tout droit.",
+            "prompt": "Choisissez la forme à l’impératif pour donner directement une instruction : « ___ tout droit. »",
             "options": [
               "Vous allez",
               "Allez",
@@ -394,7 +394,7 @@
             "id": "g15",
             "type": "mcq",
             "block": "Il faut + infinitif",
-            "prompt": "Pour aller à la gare, il ___ continuer tout droit.",
+            "prompt": "Complétez avec la construction « il faut + infinitif » : Pour aller à la gare, il ___ continuer tout droit.",
             "options": [
               "faut",
               "fait",
@@ -410,33 +410,34 @@
         "title": "III. Compréhension écrite",
         "subtitle": "Lisez le message et choisissez la meilleure réponse.",
         "points": 10,
-        "instructions": "Les questions vérifient les liens entre santé, restaurant, météo, logement et déplacement.",
-        "readingTitle": "Message de Malik à Nora",
+        "instructions": "Lisez la journée de Sofia et repérez les horaires, les vêtements, les achats, le repas et l’itinéraire.",
+        "readingTitle": "Le samedi de Sofia au centre-ville",
         "readingText": [
-          "Salut Nora. Demain matin, je vais passer à la pharmacie avec toi parce que tu as mal à la gorge. Ensuite, nous allons déjeuner au restaurant près du parc. Je vais prendre une salade avec du poulet et un verre d’eau. Je ne veux pas de dessert parce que je préfère manger léger.",
-          "L’après-midi, nous allons visiter l’appartement de ma cousine. Il est plus grand que mon studio, mais il coûte plus cher. La chambre est en face de la salle de bains, et le bureau est près de la fenêtre. S’il y a du vent, je vais porter une veste légère. Après la visite, nous allons à la gare. Elle est à deux pas du restaurant."
+          "Samedi, Sofia se lève à huit heures. Après sa douche, elle prend son petit déjeuner : une banane, deux tartines et du thé. Il fait frais, mais le ciel est ensoleillé. Elle met un pull bleu, un pantalon beige et des chaussures blanches.",
+          "À dix heures, Sofia prend le bus numéro cinq avec son amie Inès pour aller au centre-ville. Dans un magasin de vêtements, elle cherche un imperméable pour les jours de pluie. Elle essaie deux modèles de taille M : un jaune et un vert. L’imperméable jaune est plus confortable et moins cher; elle l’achète pour quarante-huit euros.",
+          "À midi, les deux amies déjeunent dans une boulangerie. Sofia choisit un sandwich au fromage, une petite salade et un jus de pomme. Ensuite, elles cherchent la bibliothèque municipale. Elle se trouve derrière la mairie et en face du cinéma. Un commerçant leur conseille de continuer tout droit, puis de tourner à droite après la pharmacie. Ce soir, Sofia va téléphoner à sa sœur pour lui montrer son nouvel imperméable."
         ],
         "questions": [
           {
             "id": "r1",
             "type": "mcq",
-            "prompt": "Pourquoi Nora et Malik passent-ils à la pharmacie ?",
+            "prompt": "À quelle heure Sofia se lève-t-elle ?",
             "options": [
-              "Parce que Malik cherche un appartement.",
-              "Parce qu'ils veulent commander une soupe.",
-              "Parce que Nora a mal à la gorge."
+              "À sept heures.",
+              "À huit heures.",
+              "À neuf heures."
             ],
-            "answer": 2,
+            "answer": 1,
             "points": 1
           },
           {
             "id": "r2",
             "type": "mcq",
-            "prompt": "Où vont-ils déjeuner ?",
+            "prompt": "Quel temps fait-il le matin ?",
             "options": [
-              "Au restaurant près du parc.",
-              "Dans la gare.",
-              "Dans la cuisine de la cousine."
+              "Il fait frais et le ciel est ensoleillé.",
+              "Il fait très chaud et il y a un orage.",
+              "Il neige et le ciel est complètement gris."
             ],
             "answer": 0,
             "points": 1
@@ -444,11 +445,11 @@
           {
             "id": "r3",
             "type": "mcq",
-            "prompt": "Que veut prendre Malik ?",
+            "prompt": "Quels vêtements Sofia met-elle avant de sortir ?",
             "options": [
-              "Une soupe, du riz et un dessert.",
-              "Une salade avec du poulet et de l'eau.",
-              "Un café et une veste."
+              "Une robe verte, une veste noire et des bottes.",
+              "Un pull bleu, un pantalon beige et des chaussures blanches.",
+              "Une chemise rouge, une jupe grise et des sandales."
             ],
             "answer": 1,
             "points": 1
@@ -456,35 +457,35 @@
           {
             "id": "r4",
             "type": "mcq",
-            "prompt": "Pourquoi Malik ne veut-il pas de dessert ?",
+            "prompt": "Comment Sofia et Inès vont-elles au centre-ville ?",
             "options": [
-              "Parce qu'il a mal à la tête.",
-              "Parce que la gare est loin.",
-              "Parce qu'il préfère manger léger."
-            ],
-            "answer": 2,
-            "points": 1
-          },
-          {
-            "id": "r5",
-            "type": "mcq",
-            "prompt": "Comment l'appartement est-il comparé au studio ?",
-            "options": [
-              "Il est plus grand, mais plus cher.",
-              "Il est moins grand et moins cher.",
-              "Il est plus petit, mais confortable."
+              "Elles prennent le bus numéro cinq.",
+              "Elles prennent le métro numéro deux.",
+              "Elles y vont à pied avec leur professeur."
             ],
             "answer": 0,
             "points": 1
           },
           {
+            "id": "r5",
+            "type": "mcq",
+            "prompt": "Pourquoi Sofia cherche-t-elle un imperméable ?",
+            "options": [
+              "Pour faire du sport à la bibliothèque.",
+              "Pour voyager en bus pendant l’été.",
+              "Pour le porter pendant les jours de pluie."
+            ],
+            "answer": 2,
+            "points": 1
+          },
+          {
             "id": "r6",
             "type": "mcq",
-            "prompt": "Où est le bureau ?",
+            "prompt": "Quel imperméable Sofia achète-t-elle ?",
             "options": [
-              "À côté du restaurant.",
-              "Près de la fenêtre.",
-              "En face de la gare."
+              "Le modèle vert de taille S.",
+              "Le modèle jaune de taille M.",
+              "Le modèle bleu de taille L."
             ],
             "answer": 1,
             "points": 1
@@ -492,11 +493,11 @@
           {
             "id": "r7",
             "type": "mcq",
-            "prompt": "Pourquoi Malik pense-t-il à une veste légère ?",
+            "prompt": "Pourquoi choisit-elle le modèle jaune ?",
             "options": [
-              "Parce qu'il peut y avoir du vent.",
-              "Parce que la pharmacie est fermée.",
-              "Parce que le dessert est cher."
+              "Il est plus confortable et moins cher.",
+              "Il est plus grand et beaucoup plus élégant.",
+              "Il est plus chaud et coûte soixante euros."
             ],
             "answer": 0,
             "points": 1
@@ -504,11 +505,11 @@
           {
             "id": "r8",
             "type": "mcq",
-            "prompt": "Que signifie « la gare est à deux pas » dans le message ?",
+            "prompt": "Que prend Sofia pour déjeuner ?",
             "options": [
-              "La gare est très chère.",
-              "La gare est dans l'appartement.",
-              "La gare est très proche."
+              "Une soupe, du riz et un verre d’eau.",
+              "Un croissant, un café et une orange.",
+              "Un sandwich au fromage, une salade et un jus de pomme."
             ],
             "answer": 2,
             "points": 1
@@ -516,25 +517,25 @@
           {
             "id": "r9",
             "type": "mcq",
-            "prompt": "Quelle phrase résume le mieux l'après-midi ?",
+            "prompt": "Où se trouve la bibliothèque municipale ?",
             "options": [
-              "Ils restent toute la journée au restaurant.",
-              "Ils visitent un appartement, puis ils vont à la gare.",
-              "Ils achètent seulement des médicaments."
+              "Derrière la mairie et en face du cinéma.",
+              "À gauche du magasin et devant la gare.",
+              "Entre la boulangerie et l’arrêt de bus."
             ],
-            "answer": 1,
+            "answer": 0,
             "points": 1
           },
           {
             "id": "r10",
             "type": "mcq",
-            "prompt": "Quelle pièce est en face de la salle de bains ?",
+            "prompt": "Que va faire Sofia ce soir ?",
             "options": [
-              "La chambre.",
-              "La cuisine.",
-              "Le bureau."
+              "Elle va retourner au magasin avec Inès.",
+              "Elle va téléphoner à sa sœur et lui montrer son achat.",
+              "Elle va prendre le bus pour aller à la bibliothèque."
             ],
-            "answer": 0,
+            "answer": 1,
             "points": 1
           }
         ]
@@ -578,9 +579,9 @@
             "type": "mcq",
             "prompt": "Pourquoi Malik ne veut-il pas de dessert ?",
             "options": [
-              "Parce qu'il a froid.",
+              "Parce qu'il a déjà beaucoup mangé.",
               "Parce qu'il n'a pas très faim.",
-              "Parce qu'il va à la gare."
+              "Parce qu'il préfère aller à la gare."
             ],
             "answer": 1,
             "points": 1
@@ -591,8 +592,8 @@
             "prompt": "Quel temps est annoncé pour l'après-midi ?",
             "options": [
               "Du vent et quelques nuages.",
-              "De la neige forte.",
-              "Un orage toute la journée."
+              "De fortes pluies et un ciel couvert.",
+              "Un grand soleil sans aucun nuage."
             ],
             "answer": 0,
             "points": 1
@@ -602,8 +603,8 @@
             "type": "mcq",
             "prompt": "Que va porter Nora ?",
             "options": [
-              "Une robe verte et des bottes.",
-              "Une veste rouge et un chapeau.",
+              "Une robe verte avec des bottes noires.",
+              "Une veste rouge avec un grand chapeau.",
               "Un pantalon noir et une chemise blanche."
             ],
             "answer": 2,
@@ -614,9 +615,9 @@
             "type": "mcq",
             "prompt": "Pourquoi Malik va-t-il mettre une veste légère ?",
             "options": [
-              "Parce que le restaurant est élégant.",
+              "Parce que le restaurant sera assez frais.",
               "Parce qu'il a souvent froid quand il y a du vent.",
-              "Parce que la pharmacie le demande."
+              "Parce que la pharmacie ferme dans une heure."
             ],
             "answer": 1,
             "points": 1
@@ -627,8 +628,8 @@
             "prompt": "Comment l'appartement est-il décrit ?",
             "options": [
               "Plus grand que le studio, mais plus cher.",
-              "Plus petit que la chambre, mais gratuit.",
-              "Moins clair que le restaurant."
+              "Plus petit que le studio, mais moins cher.",
+              "Aussi grand que le studio et au même prix."
             ],
             "answer": 0,
             "points": 1
@@ -650,9 +651,9 @@
             "type": "mcq",
             "prompt": "Quel chemin mène à la gare ?",
             "options": [
-              "Entrer dans le restaurant et monter l'escalier.",
+              "Continuer tout droit, tourner à droite et longer le parc.",
               "Aller tout droit, tourner à gauche et traverser la rue.",
-              "Tourner à droite dans la cuisine."
+              "Traverser la rue, tourner à droite et revenir à la pharmacie."
             ],
             "answer": 1,
             "points": 1
@@ -663,8 +664,8 @@
             "prompt": "Que vont-ils faire si le téléphone n’a plus de batterie ?",
             "options": [
               "Ils vont demander leur chemin à quelqu’un.",
-              "Ils vont commander un dessert.",
-              "Ils vont annuler la visite de l’appartement."
+              "Ils vont chercher une batterie dans le restaurant.",
+              "Ils vont retourner directement visiter l’appartement."
             ],
             "answer": 0,
             "points": 1
@@ -672,6 +673,6 @@
         ]
       }
     ],
-    "version": "2026-07-20-teacher-vocabulary"
+    "version": "2026-07-20-final-audit-v2"
   }
 }

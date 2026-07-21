@@ -8,6 +8,7 @@ d'écoute et leur transcription canonique, ainsi que l'asset audio privé A1.2.
 
 from __future__ import annotations
 
+import hashlib
 import json
 import importlib.util
 import re
@@ -24,6 +25,7 @@ EXAM_PATHS = {
 }
 N2_SCRIPT_PATH = ROOT / "server" / "private_assets" / "french2-final-exam-audio-script.md"
 N2_AUDIO_PATH = ROOT / "server" / "private_assets" / "french2-final-exam-audio.mp3"
+PREFLIGHT_AUDIO_PATH = ROOT / "server" / "private_assets" / "french-final-exam-preflight-audio.mp3"
 PROGRESS_API_PATH = ROOT / "server" / "progress_api.py"
 EXAM_HTML_PATHS = {
     "Niveau 1": ROOT / "frances" / "Niveau 1" / "examen-final.html",
@@ -37,6 +39,8 @@ EXPECTED_SECTION_POINTS = {
     "ecoute": 10,
 }
 
+EXPECTED_EXAM_VERSION = "2026-07-20-final-audit-v2"
+
 EXPECTED_VOCABULARY_ANSWERS = {
     "Niveau 1": [
         "grand-mère", "cinéma", "serveur / serveuse", "professeur / professeure",
@@ -48,6 +52,14 @@ EXPECTED_VOCABULARY_ANSWERS = {
         "lit", "boulangerie", "cinéma", "petit déjeuner", "veste", "chaud", "banane",
         "chaussures", "casquette",
     ],
+}
+
+# Empreinte du contenu intégral (consigne, choix et réponse) des 15 questions
+# remises par la professeure. Elle empêche qu'une correction apportée ailleurs
+# dans l'examen modifie silencieusement cette banque validée.
+EXPECTED_VOCABULARY_FINGERPRINTS = {
+    "Niveau 1": "378571fe1e6fdd6c02545d80e706a8b3970e89717f70b75d9c68797505abb622",
+    "Niveau 2": "57f50447665fcef1b0f97fafe4137244f217c6138f421b95cd6cb086a8e216a0",
 }
 
 # Fragments entendus qui justifient sans ambiguïté chaque bonne réponse.
@@ -131,6 +143,37 @@ def listening_section(exam: dict[str, Any]) -> dict[str, Any]:
     return next(section for section in exam["sections"] if section["id"] == "ecoute")
 
 
+def section_by_id(exam: dict[str, Any], section_id: str) -> dict[str, Any]:
+    return next(section for section in exam["sections"] if section["id"] == section_id)
+
+
+def question_by_id(exam: dict[str, Any], question_id: str) -> dict[str, Any]:
+    return next(
+        question
+        for section in exam["sections"]
+        for question in section["questions"]
+        if question["id"] == question_id
+    )
+
+
+def canonical_fingerprint(value: Any) -> str:
+    payload = json.dumps(
+        value,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
+def word_ngrams(value: str, size: int) -> set[tuple[str, ...]]:
+    words = normalized_words(value).split()
+    return {
+        tuple(words[index : index + size])
+        for index in range(max(0, len(words) - size + 1))
+    }
+
+
 def script_spoken_text(markdown: str) -> str:
     paragraphs: list[str] = []
     for line in markdown.splitlines():
@@ -211,6 +254,17 @@ class FrenchFinalExamTests(unittest.TestCase):
         cls.bundles = {name: load_bundle(path) for name, path in EXAM_PATHS.items()}
         cls.progress_api = load_progress_api()
 
+    def test_exam_versions_match_the_final_audit_release(self) -> None:
+        versions = {
+            level: bundle["exam"].get("version")
+            for level, bundle in self.bundles.items()
+        }
+        self.assertEqual(
+            set(versions.values()),
+            {EXPECTED_EXAM_VERSION},
+            f"Les deux niveaux doivent partager la version {EXPECTED_EXAM_VERSION}: {versions}",
+        )
+
     def test_exam_versions_and_point_structure(self) -> None:
         for level, bundle in self.bundles.items():
             with self.subTest(level=level):
@@ -241,6 +295,11 @@ class FrenchFinalExamTests(unittest.TestCase):
                     for question in section["questions"]
                 ]
                 self.assertEqual(correct_answers, EXPECTED_VOCABULARY_ANSWERS[level])
+                self.assertEqual(
+                    canonical_fingerprint(section["questions"]),
+                    EXPECTED_VOCABULARY_FINGERPRINTS[level],
+                    "La banque de 15 questions de vocabulaire validée par la professeure a changé",
+                )
 
     def test_question_ids_and_answers_are_valid(self) -> None:
         for level, bundle in self.bundles.items():
@@ -325,6 +384,109 @@ class FrenchFinalExamTests(unittest.TestCase):
                             f"{level} {question_id}: preuve absente de la transcription",
                         )
 
+    def test_niveau_two_reading_is_distinct_from_listening_scenario(self) -> None:
+        exam = self.bundles["Niveau 2"]["exam"]
+        reading = section_by_id(exam, "lecture")
+        listening = listening_section(exam)
+        reading_text = " ".join(reading.get("readingText", []))
+        transcript = exam.get("transcript", "")
+
+        self.assertGreaterEqual(len(normalized_words(reading_text).split()), 120)
+        self.assertNotEqual(normalized_words(reading_text), normalized_words(transcript))
+
+        # Des expressions ordinaires du niveau A1 peuvent naturellement se
+        # répéter. En revanche, deux scénarios indépendants ne doivent pas
+        # partager une part importante de suites de six mots consécutifs.
+        reading_ngrams = word_ngrams(reading_text, 6)
+        listening_ngrams = word_ngrams(transcript, 6)
+        shared = reading_ngrams & listening_ngrams
+        overlap = len(shared) / max(1, min(len(reading_ngrams), len(listening_ngrams)))
+        self.assertLessEqual(
+            overlap,
+            0.05,
+            f"La lecture A1.2 recycle trop l'écoute ({overlap:.1%} de suites partagées)",
+        )
+
+        reading_prompts = {normalized_words(question["prompt"]) for question in reading["questions"]}
+        listening_prompts = {normalized_words(question["prompt"]) for question in listening["questions"]}
+        self.assertTrue(
+            reading_prompts.isdisjoint(listening_prompts),
+            "Une question de lecture A1.2 duplique exactement une question d'écoute",
+        )
+
+    def test_listening_options_have_reasonably_balanced_lengths(self) -> None:
+        for level, bundle in self.bundles.items():
+            questions = listening_section(bundle["exam"])["questions"]
+            sole_longest_correct = 0
+            sole_shortest_correct = 0
+
+            for question in questions:
+                with self.subTest(level=level, question=question["id"]):
+                    normalized_options = [normalized_words(option) for option in question["options"]]
+                    self.assertEqual(
+                        len(normalized_options),
+                        len(set(normalized_options)),
+                        "Deux options d'écoute sont identiques après normalisation",
+                    )
+                    word_counts = [len(option.split()) for option in normalized_options]
+                    compact_lengths = [len(option.replace(" ", "")) for option in normalized_options]
+                    shortest_words = min(word_counts)
+                    longest_words = max(word_counts)
+                    shortest_chars = min(compact_lengths)
+                    longest_chars = max(compact_lengths)
+
+                    # Tolère les formulations françaises naturelles (articles,
+                    # prépositions, nombres composés), mais détecte une option
+                    # d'un mot opposée à une phrase manifestement beaucoup plus longue.
+                    self.assertLessEqual(longest_words, shortest_words * 2 + 2)
+                    self.assertLessEqual(longest_chars, shortest_chars * 3 + 5)
+                    if longest_words >= 7:
+                        self.assertGreaterEqual(shortest_words, 3)
+
+                    correct_length = word_counts[question["answer"]]
+                    sole_longest_correct += int(
+                        correct_length == longest_words and word_counts.count(correct_length) == 1
+                    )
+                    sole_shortest_correct += int(
+                        correct_length == shortest_words and word_counts.count(correct_length) == 1
+                    )
+
+            # La longueur ne doit pas devenir un indice systématique de réponse.
+            maximum_pattern = max(1, int(len(questions) * 0.60))
+            self.assertLessEqual(sole_longest_correct, maximum_pattern, level)
+            self.assertLessEqual(sole_shortest_correct, maximum_pattern, level)
+
+    def test_targeted_grammar_and_vocabulary_questions_are_unambiguous(self) -> None:
+        n1 = self.bundles["Niveau 1"]["exam"]
+        n1_g12 = question_by_id(n1, "g12")
+        self.assertEqual(n1_g12["options"][n1_g12["answer"]], "sur")
+        self.assertEqual(
+            {normalized_words(option) for option in n1_g12["options"]},
+            {"sur", "sous", "derriere"},
+            "Les distracteurs de g12 A1.1 doivent tous être des prépositions de lieu",
+        )
+
+        n2 = self.bundles["Niveau 2"]["exam"]
+        n2_v12 = question_by_id(n2, "v12")
+        # On conserve mot pour mot la question fournie par la professeure :
+        # le cadre saisonnier et la construction « il fait » appellent
+        # « chaud », tandis que les distracteurs décrivent plutôt un objet
+        # ou le ciel avec une autre construction.
+        self.assertEqual(n2_v12["prompt"], "En été, il fait souvent…")
+        self.assertEqual(n2_v12["options"], ["chaud", "gris", "mouillé"])
+        self.assertEqual(n2_v12["options"][n2_v12["answer"]], "chaud")
+
+        n2_g12 = question_by_id(n2, "g12")
+        self.assertIn("impératif", n2_g12["prompt"].casefold())
+        self.assertIn("instruction", n2_g12["prompt"].casefold())
+        self.assertEqual(n2_g12["options"], ["Vous allez", "Allez", "Aller"])
+        self.assertEqual(n2_g12["options"][n2_g12["answer"]], "Allez")
+
+        n2_g15 = question_by_id(n2, "g15")
+        self.assertIn("il faut + infinitif", n2_g15["prompt"].casefold())
+        self.assertEqual(n2_g15["options"], ["faut", "fait", "va"])
+        self.assertEqual(n2_g15["options"][n2_g15["answer"]], "faut")
+
     def test_niveau_two_script_matches_canonical_transcript(self) -> None:
         script = N2_SCRIPT_PATH.read_text(encoding="utf-8")
         spoken = script_spoken_text(script)
@@ -343,6 +505,21 @@ class FrenchFinalExamTests(unittest.TestCase):
         self.assertGreater(frames, 1_000, "Nombre de trames MP3 insuffisant")
         self.assertGreaterEqual(duration, 60.0, "L’audio A1.2 est trop court pour la transcription")
         self.assertLessEqual(duration, 120.0, "L’audio A1.2 est anormalement long")
+
+    def test_niveau_one_listening_uses_a1_pedagogical_tempo(self) -> None:
+        html = EXAM_HTML_PATHS["Niveau 1"].read_text(encoding="utf-8")
+        self.assertIn("audio.defaultPlaybackRate = 0.8", html)
+        self.assertIn("audio.playbackRate = 0.8", html)
+        self.assertIn("audio.preservesPitch = true", html)
+
+    def test_shared_preflight_mp3_is_complete_and_plausible(self) -> None:
+        self.assertTrue(PREFLIGHT_AUDIO_PATH.is_file(), "L’audio du test technique est absent")
+        payload = PREFLIGHT_AUDIO_PATH.read_bytes()
+        self.assertGreater(len(payload), 20_000, "L’audio du test technique est anormalement petit")
+        frames, duration = parse_mp3_frames(payload)
+        self.assertGreater(frames, 100, "Nombre de trames MP3 insuffisant pour le test technique")
+        self.assertGreaterEqual(duration, 3.0, "Le test technique est trop court")
+        self.assertLessEqual(duration, 15.0, "Le test technique est anormalement long")
 
     def test_server_rejects_incomplete_or_invalid_final_exam_answers(self) -> None:
         validate = self.progress_api.validate_final_exam_answers
@@ -427,28 +604,172 @@ class FrenchFinalExamTests(unittest.TestCase):
 
     def test_exam_pages_include_submission_resilience_contract(self) -> None:
         required_fragments = {
-            "version envoyée au serveur": 'JSON.stringify({ answers, examVersion: currentExam?.version || "" })',
+            "version envoyée au serveur": 'examVersion: currentExam?.version || ""',
+            "identifiant d’intention envoyé": "attemptId: currentAttemptId",
+            "envoi automatique signalé": "autoSubmit })",
             "clé de brouillon versionnée": "const DRAFT_PREFIX =",
-            "sauvegarde du brouillon": "sessionStorage.setItem(draftKey()",
             "restauration du brouillon": "function restoreDraft()",
+            "brouillon serveur": "async function saveServerDraft(answers)",
+            "test technique préalable": "function preflightHtml()",
+            "ordre stable individualisé": "attemptSeed",
+            "temporisateur serveur": "function startTimer(timing = {}",
+            "confirmation de fermeture active": "confirmClose: true",
+            "publication irréversible": "Publication définitive des notes",
+            "reçu de remise": "Reçu de remise",
+            "suivi professeur": "function startMonitor()",
+            "analyse pédagogique": "async function loadAnalytics()",
             "verrou audio à l’envoi": "if (!audioReady)",
             "contrôle audio du bouton": '|| !audioReady || submitting',
             "bouton de réessai audio": "data-audio-retry",
             "réessai relié au chargeur": 'addEventListener("click", loadProtectedAudio)',
             "questions manquantes signalées": 'card.classList.add("is-missing")',
-            "protection contre focus pendant examen": "if (examInProgress || stateUpdating) return;",
-            "absence de recharge différée pendant examen": "if (!examInProgress && !stateUpdating) loadState();",
+            "gestion explicite du retour de fenêtre": 'window.addEventListener("focus"',
         }
         for level, path in EXAM_HTML_PATHS.items():
             html = path.read_text(encoding="utf-8")
             with self.subTest(level=level):
                 for feature, fragment in required_fragments.items():
                     self.assertIn(fragment, html, f"Fonction technique absente: {feature}")
+                self.assertTrue(
+                    "sessionStorage.setItem(draftKey()" in html or "function writeLocalDraft(answers)" in html,
+                    "La page doit conserver un brouillon local avant la synchronisation serveur",
+                )
                 self.assertRegex(
                     html,
                     r"function loadState\(options = \{\}\) \{\s*if \(loading \|\| \(examInProgress && options\.force !== true\)\) return;",
-                    "loadState doit refuser une recharge silencieuse pendant l’examen",
+                    "loadState doit refuser une recharge silencieuse pendant l'examen",
                 )
+
+    def test_exam_pages_include_scoped_long_session_auth_contract(self) -> None:
+        """Le token du fournisseur ne doit pas être un point unique de panne."""
+
+        for level, path in EXAM_HTML_PATHS.items():
+            html = path.read_text(encoding="utf-8")
+            with self.subTest(level=level):
+                for fragment in (
+                    "const EXAM_AUTH_KEY =",
+                    "examAccessToken",
+                    "examAccessExp",
+                    "examAccessUser",
+                    "sessionStorage.setItem(EXAM_AUTH_KEY",
+                    "sessionStorage.removeItem(EXAM_AUTH_KEY",
+                    "showReconnectNotice",
+                    "confirmedReceipt",
+                    "clearExamAccess",
+                    "data-auth-signout",
+                ):
+                    self.assertIn(fragment, html, f"Contrat de session longue absent: {fragment}")
+
+                self.assertRegex(
+                    html,
+                    r"\$\{DRAFT_PREFIX\}:\$\{(?:identity\.examVersion|version)\}:\$\{(?:identity\.studentId|studentId)\}:\$\{(?:identity\.attemptId|attemptId)\}",
+                    "La clé locale doit être immuable par niveau/version/étudiant/tentative",
+                )
+                self.assertIn(
+                    "draftPendingAnswers = Object.assign({}, nextAnswers, draftPendingAnswers || {})",
+                    html,
+                    "Un 401 ou une panne ne doit pas jeter le lot en attente",
+                )
+                self.assertRegex(
+                    html,
+                    r"Object\.assign\(\{\}, (?:serverAnswers|result\.data\.answers), localAnswers\)",
+                    "À la reprise, le serveur se fusionne d'abord et le brouillon local plus récent gagne",
+                )
+
+                audio_block = re.search(
+                    r"async function loadProtectedAudio\(\) \{(?P<body>[\s\S]+?)\n\s*function formatTime",
+                    html,
+                )
+                self.assertIsNotNone(audio_block)
+                self.assertIn("401", audio_block.group("body"))
+                self.assertIn(
+                    "showReconnectNotice",
+                    audio_block.group("body"),
+                    "Le 401 du MP3 protégé doit activer une récupération non destructive",
+                )
+                self.assertIn(
+                    '"exam"',
+                    audio_block.group("body"),
+                    "L’audio étudiant doit utiliser la crédential limitée à la tentative",
+                )
+
+                submitted_block = re.search(
+                    r"function renderSubmitted\(result\) \{(?P<body>[\s\S]+?)\n\s*function renderStartGate",
+                    html,
+                )
+                self.assertIsNotNone(submitted_block)
+                submitted_body = submitted_block.group("body")
+                self.assertIn("confirmedReceipt", submitted_body)
+                self.assertIn("exactDraftKey", submitted_body)
+                self.assertIn("clearExamAccess", submitted_body)
+                self.assertIn("resultStudentId", submitted_body)
+                self.assertIn("resultAttemptId", submitted_body)
+                receipt_assignment = re.search(
+                    r"const confirmedReceipt\s*=\s*(?P<expr>[^;]+);",
+                    submitted_body,
+                )
+                self.assertIsNotNone(receipt_assignment)
+                self.assertNotIn(
+                    "submittedAt",
+                    receipt_assignment.group("expr"),
+                    "Une date de soumission seule ne constitue pas un reçu vérifiable",
+                )
+
+                for endpoint in ("API.monitor", "API.analytics", "API.transcript"):
+                    self.assertRegex(
+                        html,
+                        re.escape(endpoint) + r"[^\n]{0,180}\"external\"",
+                        f"La ruta docente {endpoint} nunca debe usar el bridge estudiantil",
+                    )
+                self.assertRegex(
+                    html,
+                    r"request\(API\.submit,[\s\S]{0,260}?\"exam\"\)",
+                    "La entrega debe usar la credencial limitada a la tentativa",
+                )
+                self.assertRegex(
+                    html,
+                    r"request\(API\.draft,[\s\S]{0,360}?\"exam\"\)",
+                    "Le brouillon serveur doit utiliser la crédential limitée à la tentative",
+                )
+                self.assertRegex(
+                    html,
+                    r"request\(API\.session,[\s\S]{0,420}?\"exam\"\)",
+                    "Les événements d’une tentative active doivent utiliser le bridge",
+                )
+                self.assertRegex(
+                    html,
+                    r"request\(API\.preflight,[^\n]+\"external\"\)",
+                    "El preflight debe exigir la identidad primaria",
+                )
+
+    def test_exam_pages_do_not_embed_answer_keys_or_question_banks(self) -> None:
+        forbidden_key_patterns = (
+            r"[\"']answer[\"']\s*:",
+            r"\banswer\s*:",
+            r"\b(?:correctAnswer|answerKey|solutionKey)\b",
+            r"data-(?:correct-)?answer\s*=",
+        )
+        for level, path in EXAM_HTML_PATHS.items():
+            html = path.read_text(encoding="utf-8")
+            with self.subTest(level=level):
+                for pattern in forbidden_key_patterns:
+                    self.assertIsNone(
+                        re.search(pattern, html, flags=re.IGNORECASE),
+                        f"Clé de correction potentiellement exposée dans le HTML: {pattern}",
+                    )
+
+                # Les pages ne doivent pas embarquer une copie statique du
+                # questionnaire : l'énoncé n'arrive que par l'API protégée.
+                normalized_html = normalized_words(html)
+                for section in self.bundles[level]["exam"]["sections"]:
+                    for question in section["questions"]:
+                        prompt = normalized_words(question["prompt"])
+                        if len(prompt.split()) >= 5:
+                            self.assertNotIn(
+                                prompt,
+                                normalized_html,
+                                f"Question {question['id']} embarquée dans la page publique",
+                            )
 
 
 if __name__ == "__main__":
