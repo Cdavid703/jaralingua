@@ -453,10 +453,58 @@
     </section>`;
   }
 
+  function staffGradebookMarkup() {
+    const headers = payload.evaluations.map((evaluation) => `<th>${esc(evaluation.title)}<br>${esc(evaluation.weight)}%</th>`).join("");
+    const rows = payload.students.map((studentData) => {
+      const grades = payload.evaluations.map((evaluation) => `<td>${studentData.grades?.[evaluation.id] ?? "En attente"}</td>`).join("");
+      return `<tr><td>${esc(studentData.fullName)}<br><small>${esc(studentData.id)}</small></td><td>${esc(studentData.email || "Sans courriel")}</td>${grades}<td>${average(studentData)}</td></tr>`;
+    }).join("");
+    return `<div class="grades-panel" data-official-gradebook>
+      <p class="section-kicker">Carnet officiel</p>
+      <h3 class="h4">Vue d'ensemble du groupe</h3>
+      <p class="section-text mb-3">Consultez les notes enregistrées sans ouvrir les fiches d'édition.</p>
+      <div class="table-wrap"><table class="grades-table"><thead><tr><th>Étudiant</th><th>Courriel</th>${headers}<th>Moyenne</th></tr></thead><tbody>${rows || `<tr><td colspan="${payload.evaluations.length + 3}">Aucun étudiant enregistré.</td></tr>`}</tbody></table></div>
+    </div>`;
+  }
+
+  function manualGradesMarkup() {
+    return `<div class="grades-panel" data-manual-grades>
+      <div class="d-flex flex-wrap justify-content-between align-items-end gap-2 mb-3">
+        <div><p class="section-kicker">Saisie manuelle</p><h3 class="h4 mb-0">Étudiants et notes</h3></div>
+        <button class="btn-soft" id="addStudent" type="button"><i class="bi bi-person-plus-fill"></i> Ajouter un étudiant</button>
+      </div>
+      <label class="gradebook-filter mb-3">Filtrer<input class="form-control" type="search" data-student-filter placeholder="Nom, courriel ou ID"></label>
+      <div id="studentCards"></div>
+    </div>`;
+  }
+
+  function staffReportsMarkup() {
+    return `<div class="grades-panel" data-staff-reports>
+      <p class="section-kicker">Rapports</p>
+      <h3 class="h4">Téléchargements du carnet</h3>
+      <p class="section-text mb-3">Téléchargez le tableau administratif complet. Chaque fiche étudiante reste aussi disponible dans la saisie manuelle.</p>
+      <button class="btn-main" id="adminCsv" type="button"><i class="bi bi-file-earmark-spreadsheet-fill"></i> Téléchargement administratif</button>
+    </div>`;
+  }
+
   function staff() {
     const activeUser = user();
-    root.innerHTML = `<div class="d-flex flex-wrap justify-content-between gap-2 mb-4"><div><p class="section-kicker">Espace ${payload.role === "admin" ? "administrateur" : "enseignant"}</p><h2>${esc(CONFIG.gradebookTitle)}</h2><p>${esc(activeUser.email)} · ${esc(activeUser.provider)}</p><p class="mb-0"><small>Professeures responsables : ${esc(TEACHERS)}. L'administrateur conserve un accès complet de supervision.</small></p></div><div class="d-flex flex-wrap gap-2"><button class="btn-soft" id="addStudent" type="button">Ajouter un étudiant</button><button class="btn-soft" id="adminCsv" type="button">Téléchargement administratif</button><button class="btn-main" id="saveGrades" type="button">Enregistrer tout</button></div></div>${evaluationEditor()}<div class="d-flex flex-wrap justify-content-between align-items-end gap-2"><div><p class="section-kicker">Saisie des notes</p><h3 class="h4 mb-0">Étudiants</h3></div><p id="gradeStatus" class="mb-0 fw-bold"></p></div><div id="studentCards" class="mt-3"></div>`;
+    const tabs = window.JaraGradebookTabs;
+    root.innerHTML = `<div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4"><div><p class="section-kicker">Espace ${payload.role === "admin" ? "administrateur" : "enseignant"}</p><h2>${esc(CONFIG.gradebookTitle)}</h2><p>${esc(activeUser.email)} · ${esc(activeUser.provider)}</p><p class="mb-0"><small>Professeures responsables : ${esc(TEACHERS)}. L'administrateur conserve un accès complet de supervision.</small></p></div><div><button class="btn-main" id="saveGrades" type="button"><i class="bi bi-save-fill"></i> Enregistrer tout</button><p id="gradeStatus" class="mt-2 mb-0 fw-bold"></p></div></div>
+      <div class="staff-tabs" data-gradebook-tabs>
+        <div class="staff-tab-nav" role="tablist" aria-label="Sections administratives du carnet de notes">
+          ${tabs.button("gradebook", "Carnet", "bi-table", { selected: true })}
+          ${tabs.button("evaluations", "Évaluations", "bi-ui-checks-grid", { count: payload.evaluations.length })}
+          ${tabs.button("manual", "Saisie manuelle", "bi-pencil-square", { count: payload.students.length })}
+          ${tabs.button("reports", "Rapports", "bi-file-earmark-bar-graph-fill")}
+        </div>
+        ${tabs.panel("gradebook", staffGradebookMarkup(), true)}
+        ${tabs.panel("evaluations", evaluationEditor(), false)}
+        ${tabs.panel("manual", manualGradesMarkup(), false)}
+        ${tabs.panel("reports", staffReportsMarkup(), false)}
+      </div>`;
     drawStudents();
+    tabs.wire(root);
     const showDraftTotal = () => {
       const total = Array.from(root.querySelectorAll("[data-evaluation-card]")).reduce((sum, card) => {
         if (card.querySelector("[data-delete-evaluation]")?.checked) return sum;
@@ -524,8 +572,8 @@
         </div>
       </details>`;
     }).join("");
-    holder.innerHTML = `<div class="grades-panel"><div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3"><div><p class="section-kicker mb-1">Carnet de groupe</p><h4 class="h5 mb-0">${payload.students.length} étudiant${payload.students.length > 1 ? "s" : ""} · ${payload.evaluations.length} activité${payload.evaluations.length > 1 ? "s" : ""}</h4></div><label class="gradebook-filter">Filtrer<input class="form-control" type="search" data-student-filter placeholder="Nom, courriel ou ID"></label></div>${cards}<p class="section-text mt-3 mb-0">Les champs vides restent en attente. Les notes doivent être comprises entre 0 et 5. Après modification, utilisez <strong>Enregistrer tout</strong>.</p></div>`;
-    const filter = holder.querySelector("[data-student-filter]");
+    holder.innerHTML = `${cards}<p class="section-text mt-3 mb-0">Les champs vides restent en attente. Les notes doivent être comprises entre 0 et 5. Après modification, utilisez <strong>Enregistrer tout</strong>.</p>`;
+    const filter = root.querySelector("[data-student-filter]");
     filter?.addEventListener("input", () => {
       const query = filter.value.trim().toLowerCase();
       holder.querySelectorAll("[data-student-row]").forEach((row) => {

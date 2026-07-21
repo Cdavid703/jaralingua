@@ -556,8 +556,12 @@
         </label>
         <form data-edit-students-form>
           ${adminStudentCards(payload)}
-          <article class="admin-student-card mb-3" data-new-student-card>
-            <h3 class="h5 fw-bold mb-3">Ajouter un etudiant</h3>
+          <details class="admin-student-card mb-3" data-new-student-card>
+            <summary class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+              <span><strong>Ajouter un etudiant</strong><br><small>Creer un nouveau dossier</small></span>
+              <i class="bi bi-plus-lg" aria-hidden="true"></i>
+            </summary>
+            <div class="mt-3">
             <div class="row g-3">
               <div class="col-md-3">
                 <label class="form-label fw-bold">Numero ID</label>
@@ -585,7 +589,8 @@
               </div>
             </div>
             <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, { grades: {} })}</div>
-          </article>
+            </div>
+          </details>
           <button class="btn-main" type="submit"><i class="bi bi-save"></i> Enregistrer les changements</button>
           <p class="section-text mt-3" data-edit-students-status></p>
         </form>
@@ -614,26 +619,13 @@
   }
 
   function renderStaffPanel(payload) {
+    const tabs = window.JaraGradebookTabs;
     const roleLabel = payload.role === "admin" ? "Administrateur" : "Professeur approuve";
     const totalWeight = payload.evaluations.reduce(function (sum, evaluation) {
       return sum + evaluation.weight;
     }, 0);
-    return `
-      <div class="privacy-note mb-4">
-        <i class="bi bi-shield-check"></i>
-        <div>
-          <strong>Vue ${roleLabel}</strong>
-          <p class="mb-0">Cette vue est autorisee par l'API et affiche les donnees completes du groupe.</p>
-        </div>
-      </div>
-      <div class="metric-grid mb-4">
-        <div class="metric-card"><span>Etudiants</span><strong>${payload.students.length}</strong></div>
-        <div class="metric-card"><span>Pourcentage evaluatif</span><strong>${totalWeight}%</strong></div>
-        <div class="metric-card"><span>Bonus</span><strong>Info</strong></div>
-      </div>
-      ${staffDownloadTools(payload)}
-      ${adminStudentEditorMarkup(payload)}
-      <div class="grades-panel mb-4">
+    const studentsMarkup = `
+      <div class="grades-panel" data-staff-students>
         <p class="section-kicker">Donnees privees</p>
         <h2 class="section-title">Liste des etudiants</h2>
         <div class="table-wrap">
@@ -643,7 +635,9 @@
           </table>
         </div>
       </div>
-      <div class="grades-panel mb-4">
+    `;
+    const gradesMarkup = `
+      <div class="grades-panel" data-official-gradebook>
         <p class="section-kicker">Resultats</p>
         <h2 class="section-title">Notes du cours</h2>
         <div class="table-wrap">
@@ -657,6 +651,40 @@
             <tbody>${staffGradeRows(payload)}</tbody>
           </table>
         </div>
+      </div>
+    `;
+    const tabButtons = [
+      tabs.button("grades", "Notes", "bi-table", { selected: true }),
+      tabs.button("students", "Etudiants", "bi-people-fill", { count: payload.students.length })
+    ];
+    const tabPanels = [
+      tabs.panel("grades", gradesMarkup, true),
+      tabs.panel("students", studentsMarkup, false)
+    ];
+    if (payload.role === "admin") {
+      tabButtons.push(tabs.button("reports", "Rapports", "bi-file-earmark-bar-graph-fill"));
+      tabPanels.push(tabs.panel("reports", staffDownloadTools(payload), false));
+    }
+    tabButtons.push(tabs.button("editing", "Edition", "bi-pencil-square"));
+    tabPanels.push(tabs.panel("editing", adminStudentEditorMarkup(payload), false));
+    return `
+      <div class="privacy-note mb-4">
+        <i class="bi bi-shield-check"></i>
+        <div>
+          <strong>Vue ${roleLabel}</strong>
+          <p class="mb-0">Cette vue est autorisee par l'API et affiche les donnees completes du groupe.</p>
+        </div>
+      </div>
+      <div class="metric-grid mb-4">
+        <div class="metric-card"><span>Etudiants</span><strong>${payload.students.length}</strong></div>
+        <div class="metric-card"><span>Pourcentage evaluatif</span><strong>${totalWeight}%</strong></div>
+        <div class="metric-card"><span>Bonus</span><strong>Info</strong></div>
+      </div>
+      <div class="staff-tabs" data-gradebook-tabs>
+        <div class="staff-tab-nav" role="tablist" aria-label="Sections administratives du carnet de notes">
+          ${tabButtons.join("")}
+        </div>
+        ${tabPanels.join("")}
       </div>
     `;
   }
@@ -1240,6 +1268,7 @@
   function renderPayload(root, user, payload) {
     if (payload.role === "admin" || payload.role === "teacher") {
       root.innerHTML = renderStaffPanel(payload);
+      window.JaraGradebookTabs.wire(root);
       bindStaffDownloads(root, payload);
       bindPronunciationAudio(root, user);
       bindHypothesesFeedback(root, user);

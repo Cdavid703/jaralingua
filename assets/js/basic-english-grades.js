@@ -554,8 +554,12 @@
         </label>
         <form data-edit-students-form>
           ${adminStudentCards(payload)}
-          <article class="admin-student-card mb-3" data-new-student-card>
-            <h3 class="h5 fw-bold mb-3">Add a student</h3>
+          <details class="admin-student-card mb-3" data-new-student-card>
+            <summary class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+              <span><strong>Add a student</strong><br><small>Create a new course record</small></span>
+              <i class="bi bi-plus-lg" aria-hidden="true"></i>
+            </summary>
+            <div class="mt-3">
             <div class="row g-3">
               <div class="col-md-3">
                 <label class="form-label fw-bold">ID</label>
@@ -579,7 +583,8 @@
               </div>
             </div>
             <div class="admin-grade-grid mt-3">${adminStudentGradeInputs(payload, { grades: {} })}</div>
-          </article>
+            </div>
+          </details>
           <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save student changes</button>
           <p class="section-text mt-3" data-edit-students-status></p>
         </form>
@@ -595,9 +600,6 @@
           <div class="col-lg-7">
             <label class="form-label fw-bold" for="studentFilter">Filter students by name or email</label>
             <input id="studentFilter" class="form-control" data-student-filter placeholder="Type a name, last name, or email">
-          </div>
-          <div class="col-lg-5 d-flex flex-wrap gap-2">
-            <button class="btn-main" type="button" data-export-excel><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</button>
           </div>
         </div>
       </div>
@@ -638,10 +640,50 @@
     `;
   }
 
+  function staffReportsMarkup(payload) {
+    return `
+      <div class="grades-panel mb-4" data-staff-reports>
+        <p class="section-kicker">Exports and reports</p>
+        <h2 class="section-title">Course reports</h2>
+        <p class="section-text mb-3">Download the complete gradebook or the official PDF reports available for this level.</p>
+        <button class="btn-main" type="button" data-export-excel><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</button>
+      </div>
+      ${staffPdfToolsMarkup(payload)}
+    `;
+  }
+
   function renderStaffPanel(payload, user) {
+    const tabs = window.JaraGradebookTabs;
     const headers = payload.evaluations.map(function (evaluation) {
       return `<th>${escapeHtml(evaluation.title)}<br>${evaluation.weight}%</th>`;
     }).join("");
+    const gradebookMarkup = `
+      ${staffControlsMarkup()}
+      <div class="grades-panel" data-official-gradebook>
+        <p class="section-kicker">Private data</p>
+        <h2 class="section-title">Basic English gradebook</h2>
+        <div class="table-wrap">
+          <table class="grades-table">
+            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
+            <tbody>${staffStudentRows(payload)}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+    const tabButtons = [
+      tabs.button("gradebook", "Gradebook", "bi-table", { selected: true }),
+      tabs.button("reports", "Reports", "bi-file-earmark-bar-graph-fill")
+    ];
+    const tabPanels = [
+      tabs.panel("gradebook", gradebookMarkup, true),
+      tabs.panel("reports", staffReportsMarkup(payload), false)
+    ];
+    if (payload.role === "admin") {
+      tabButtons.push(tabs.button("add-grade", "Add grade", "bi-plus-square-fill"));
+      tabButtons.push(tabs.button("students", "Students & grades", "bi-people-fill", { count: payload.students.length }));
+      tabPanels.push(tabs.panel("add-grade", adminToolsMarkup(payload), false));
+      tabPanels.push(tabs.panel("students", adminStudentEditorMarkup(payload), false));
+    }
     return `
       <div class="privacy-note mb-4">
         <i class="bi bi-shield-check"></i>
@@ -656,19 +698,11 @@
         <div class="metric-card"><span>Assessments</span><strong>${payload.evaluations.length}</strong></div>
         <div class="metric-card"><span>Course</span><strong>Basic English</strong></div>
       </div>
-      ${staffControlsMarkup()}
-      ${staffPdfToolsMarkup(payload)}
-      ${payload.role === "admin" ? adminToolsMarkup(payload) : ""}
-      ${payload.role === "admin" ? adminStudentEditorMarkup(payload) : ""}
-      <div class="grades-panel">
-        <p class="section-kicker">Private data</p>
-        <h2 class="section-title">Basic English gradebook</h2>
-        <div class="table-wrap">
-          <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
-            <tbody>${staffStudentRows(payload)}</tbody>
-          </table>
+      <div class="staff-tabs" data-gradebook-tabs>
+        <div class="staff-tab-nav" role="tablist" aria-label="Gradebook administration sections">
+          ${tabButtons.join("")}
         </div>
+        ${tabPanels.join("")}
       </div>
     `;
   }
@@ -997,6 +1031,7 @@
   function renderPayload(root, payload, user) {
     if (payload.role === "admin" || payload.role === "teacher") {
       root.innerHTML = renderStaffPanel(payload, user);
+      window.JaraGradebookTabs.wire(root);
       wireMicrosoftSignout(root);
       wireStudentFilter(root);
       wireExport(root, payload);
