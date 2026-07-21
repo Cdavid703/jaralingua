@@ -82,6 +82,13 @@ BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGR
 BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
 BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake-submissions.json")
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
+BASIC_FINAL_ORAL_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_DATA", "/var/lib/jaralingua/basic-final-oral.json")
+BASIC_FINAL_ORAL_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_SUBMISSIONS", "/var/lib/jaralingua/basic-final-oral-submissions.json")
+BASIC_FINAL_ORAL_AUDIO_DIR = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_AUDIO_DIR", "/var/lib/jaralingua/basic-final-oral-audio")
+BASIC_FINAL_ORAL_PROMPT_AUDIO_DIR = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_PROMPT_AUDIO_DIR", "/var/lib/jaralingua/basic-final-oral-prompts")
+BASIC_FINAL_ORAL_EVALUATION_ID = "finalOralTask"
+BASIC_FINAL_ORAL_EXAM_VERSION = "basic-final-oral-v1"
+BASIC_FINAL_ORAL_MAX_AUDIO_BYTES = 8 * 1024 * 1024
 BASIC_UNIT6_NEIGHBORHOOD_GALLERY_PATH = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_GALLERY", "/var/lib/jaralingua/basic-unit6-neighborhood-gallery.json")
 BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR = os.environ.get("JARALINGUA_BASIC_UNIT6_NEIGHBORHOOD_IMAGE_DIR", "/var/lib/jaralingua/basic-unit6-neighborhood-images")
 BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS = {
@@ -384,6 +391,14 @@ BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION = {
     "weight": 0,
     "type": "AI image / Speaking follow-up",
     "description": "Seguimiento enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
+}
+
+BASIC_FINAL_ORAL_EVALUATION = {
+    "id": BASIC_FINAL_ORAL_EVALUATION_ID,
+    "title": "BASIC COURSE 1 – FINAL ORAL TASK (20%)",
+    "weight": 20,
+    "type": "Final oral examination",
+    "description": "Official six-unit oral examination. The teacher grades the recorded evidence manually with the institutional rubric over 50 points."
 }
 
 INTERMEDIATE_UNIT2_CATCHING_UP_ANSWERS = [1, 2, 0, 1, 0, 2, 1, 0, 2, 1, 0, 2, 2, 1, 0, 2, 0, 1, 2, 1]
@@ -2180,6 +2195,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
 
 def ensure_basic_gradebook_structure(grades_data):
     changed = ensure_evaluation_template(grades_data, BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION)
+    if ensure_evaluation_template(grades_data, BASIC_FINAL_ORAL_EVALUATION):
+        changed = True
     if grades_data.get("allowStudentIdClaim") is not True:
         grades_data["allowStudentIdClaim"] = True
         changed = True
@@ -6988,6 +7005,1148 @@ def ensure_final_exam_evaluation(grades_data):
 
 
 
+BASIC_FINAL_ORAL_QUESTION_BANK = {
+    "1": [
+        {
+            "variantId": "unit-1-a",
+            "unit": "1",
+            "unitLabel": "All About You",
+            "question": "What is your name? Please spell your last name and tell me where you live.",
+            "promptAudioId": "unit-1-a"
+        },
+        {
+            "variantId": "unit-1-b",
+            "unit": "1",
+            "unitLabel": "All About You",
+            "question": "Please introduce yourself. Spell your first name and tell me your age and city.",
+            "promptAudioId": "unit-1-b"
+        },
+        {
+            "variantId": "unit-1-c",
+            "unit": "1",
+            "unitLabel": "All About You",
+            "question": "Tell me your full name, spell your family name, and tell me your age or one simple number you choose.",
+            "promptAudioId": "unit-1-c"
+        }
+    ],
+    "2": [
+        {
+            "variantId": "unit-2-a",
+            "unit": "2",
+            "unitLabel": "In Class",
+            "question": "Imagine we are in your classroom. Mention two objects, say where one object is, and explain who it belongs to.",
+            "promptAudioId": "unit-2-a"
+        },
+        {
+            "variantId": "unit-2-b",
+            "unit": "2",
+            "unitLabel": "In Class",
+            "question": "Describe two things in your classroom. Where are they, and whose object is one of them?",
+            "promptAudioId": "unit-2-b"
+        },
+        {
+            "variantId": "unit-2-c",
+            "unit": "2",
+            "unitLabel": "In Class",
+            "question": "What objects can you see in a classroom? Choose two, give their locations, and identify the owner of one object.",
+            "promptAudioId": "unit-2-c"
+        }
+    ],
+    "3": [
+        {
+            "variantId": "unit-3-a",
+            "unit": "3",
+            "unitLabel": "Favorite People",
+            "question": "Tell me about a person you admire. Who is this person, and what is he or she like?",
+            "promptAudioId": "unit-3-a"
+        },
+        {
+            "variantId": "unit-3-b",
+            "unit": "3",
+            "unitLabel": "Favorite People",
+            "question": "Describe an important person in your life. What does this person look like, and what is their personality like?",
+            "promptAudioId": "unit-3-b"
+        },
+        {
+            "variantId": "unit-3-c",
+            "unit": "3",
+            "unitLabel": "Favorite People",
+            "question": "Who is one of your favorite people? Explain your relationship and describe this person with several adjectives.",
+            "promptAudioId": "unit-3-c"
+        }
+    ],
+    "4": [
+        {
+            "variantId": "unit-4-a",
+            "unit": "4",
+            "unitLabel": "Everyday Life",
+            "question": "What time do you start your day, and what do you usually do before class or work?",
+            "promptAudioId": "unit-4-a"
+        },
+        {
+            "variantId": "unit-4-b",
+            "unit": "4",
+            "unitLabel": "Everyday Life",
+            "question": "Describe your morning routine. Include times and at least three activities in their usual order.",
+            "promptAudioId": "unit-4-b"
+        },
+        {
+            "variantId": "unit-4-c",
+            "unit": "4",
+            "unitLabel": "Everyday Life",
+            "question": "Tell me about a typical weekday. What do you do in the morning, afternoon, and evening?",
+            "promptAudioId": "unit-4-c"
+        }
+    ],
+    "5": [
+        {
+            "variantId": "unit-5-a",
+            "unit": "5",
+            "unitLabel": "Free Time",
+            "question": "What do you like doing in your free time, and how often do you do it?",
+            "promptAudioId": "unit-5-a"
+        },
+        {
+            "variantId": "unit-5-b",
+            "unit": "5",
+            "unitLabel": "Free Time",
+            "question": "What is your favorite free-time activity? Say when, where, and who you usually do it with.",
+            "promptAudioId": "unit-5-b"
+        },
+        {
+            "variantId": "unit-5-c",
+            "unit": "5",
+            "unitLabel": "Free Time",
+            "question": "Talk about two activities you enjoy in your free time and explain how often you do each one.",
+            "promptAudioId": "unit-5-c"
+        }
+    ],
+    "6": [
+        {
+            "variantId": "unit-6-a",
+            "unit": "6",
+            "unitLabel": "Neighborhoods",
+            "question": "Recommend one place in your neighborhood and explain how I can get there from the bus stop.",
+            "promptAudioId": "unit-6-a"
+        },
+        {
+            "variantId": "unit-6-b",
+            "unit": "6",
+            "unitLabel": "Neighborhoods",
+            "question": "Describe two places near your home. Then give me directions from the park to one of those places.",
+            "promptAudioId": "unit-6-b"
+        },
+        {
+            "variantId": "unit-6-c",
+            "unit": "6",
+            "unitLabel": "Neighborhoods",
+            "question": "Which place should a visitor see in your neighborhood? Describe its location and give clear directions from the supermarket.",
+            "promptAudioId": "unit-6-c"
+        }
+    ]
+}
+
+BASIC_FINAL_ORAL_INTERACTION_QUESTION = {
+    "variantId": "interaction-a",
+    "unit": "interaction",
+    "unitLabel": "Student Interaction",
+    "question": "Now it is your turn. Ask me two different questions: one about my routine or free time and one about a place in my neighborhood.",
+    "promptAudioId": "interaction-a",
+    "requiredStudentQuestions": 2
+}
+
+
+def default_basic_final_oral_bundle():
+    return {
+        "schemaVersion": 1,
+        "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
+        "state": {
+            "isOpen": False,
+            "openedAt": None,
+            "openedBy": "",
+            "closedAt": None,
+            "closedBy": "",
+            "updatedAt": None,
+            "updatedBy": ""
+        }
+    }
+
+
+def read_basic_final_oral_bundle():
+    data = read_json_file(BASIC_FINAL_ORAL_PATH, default_basic_final_oral_bundle())
+    defaults = default_basic_final_oral_bundle()
+    state = data.get("state") if isinstance(data.get("state"), dict) else {}
+    for key, value in defaults["state"].items():
+        state.setdefault(key, value)
+    data["state"] = state
+    data["schemaVersion"] = 1
+    data["examVersion"] = BASIC_FINAL_ORAL_EXAM_VERSION
+    return data
+
+
+def write_basic_final_oral_bundle(data):
+    write_json_file(BASIC_FINAL_ORAL_PATH, data, ".basic-final-oral-")
+
+
+def default_basic_final_oral_store():
+    return {
+        "schemaVersion": 1,
+        "attempts": {},
+        "submissions": {},
+        "idempotency": {},
+        "events": []
+    }
+
+
+def read_basic_final_oral_store():
+    data = read_json_file(BASIC_FINAL_ORAL_SUBMISSIONS_PATH, default_basic_final_oral_store())
+    for key in ("attempts", "submissions", "idempotency"):
+        if not isinstance(data.get(key), dict):
+            data[key] = {}
+    if not isinstance(data.get("events"), list):
+        data["events"] = []
+    data["schemaVersion"] = 1
+    return data
+
+
+def write_basic_final_oral_store(data):
+    write_json_file(BASIC_FINAL_ORAL_SUBMISSIONS_PATH, data, ".basic-final-oral-submissions-")
+
+
+def basic_final_oral_append_event(store, event_type, profile=None, student_id="", detail=None):
+    event = {
+        "id": "BFOE-" + secrets.token_hex(6).upper(),
+        "type": clean_text(event_type, 80),
+        "studentId": clean_text(student_id, 40),
+        "at": now_iso(),
+        "actor": normalize_email((profile or {}).get("email")),
+        "detail": clean_text(detail, 600)
+    }
+    events = store.setdefault("events", [])
+    events.append(event)
+    store["events"] = events[-500:]
+    return event
+
+
+def basic_final_oral_student_identity(student):
+    if not isinstance(student, dict):
+        return None
+    return {
+        "id": clean_text(student.get("id"), 40),
+        "fullName": clean_text(student.get("fullName"), 200),
+        "level": clean_text(student.get("level") or "Basic English Course 1", 120),
+        "email": clean_email(student.get("email"))
+    }
+
+
+def basic_final_oral_assign_questions():
+    assigned = []
+    for sequence, unit in enumerate(("1", "2", "3", "4", "5", "6"), 1):
+        selected = dict(secrets.choice(BASIC_FINAL_ORAL_QUESTION_BANK[unit]))
+        selected["turnId"] = "unit-" + unit
+        selected["sequence"] = sequence
+        assigned.append(selected)
+    interaction = dict(BASIC_FINAL_ORAL_INTERACTION_QUESTION)
+    interaction["turnId"] = "interaction"
+    interaction["sequence"] = 7
+    assigned.append(interaction)
+    return assigned
+
+
+def basic_final_oral_public_question(question):
+    if not isinstance(question, dict):
+        return {}
+    prompt_audio_id = clean_text(question.get("promptAudioId"), 100)
+    public = {
+        "turnId": clean_text(question.get("turnId"), 40),
+        "sequence": int(question.get("sequence", 0) or 0),
+        "variantId": clean_text(question.get("variantId"), 80),
+        "unit": clean_text(question.get("unit"), 40),
+        "unitLabel": clean_text(question.get("unitLabel"), 120),
+        "question": clean_text(question.get("question"), 600),
+        "promptAudioId": prompt_audio_id,
+        "promptAudioUrl": "/api/basic-final-oral/audio?" + urllib.parse.urlencode({"prompt": prompt_audio_id}) if prompt_audio_id else None
+    }
+    if question.get("requiredStudentQuestions") is not None:
+        public["requiredStudentQuestions"] = 2
+    return public
+
+
+def basic_final_oral_audio_url(attempt_id, turn_id):
+    return "/api/basic-final-oral/audio?" + urllib.parse.urlencode({
+        "attemptId": clean_text(attempt_id, 120),
+        "turnId": clean_text(turn_id, 40)
+    })
+
+
+def basic_final_oral_public_turn(turn, attempt_id):
+    if not isinstance(turn, dict):
+        return None
+    audio = turn.get("audio") if isinstance(turn.get("audio"), dict) else None
+    public = {
+        "turnId": clean_text(turn.get("turnId"), 40),
+        "variantId": clean_text(turn.get("variantId"), 80),
+        "transcript": clean_text(turn.get("transcript"), 4000),
+        "durationMs": int(turn.get("durationMs", 0) or 0),
+        "savedAt": clean_text(turn.get("savedAt"), 80),
+        "updatedAt": clean_text(turn.get("updatedAt"), 80),
+        "audioAvailable": bool(audio),
+        "audioUrl": basic_final_oral_audio_url(attempt_id, turn.get("turnId")) if audio else None
+    }
+    if audio:
+        public["audio"] = {
+            "contentType": clean_text(audio.get("contentType"), 80),
+            "size": int(audio.get("size", 0) or 0),
+            "sha256": clean_text(audio.get("sha256"), 80)
+        }
+    return public
+
+
+def basic_final_oral_public_attempt(attempt):
+    if not isinstance(attempt, dict):
+        return None
+    attempt_id = clean_text(attempt.get("attemptId"), 120)
+    turns = attempt.get("turns") if isinstance(attempt.get("turns"), dict) else {}
+    return {
+        "attemptId": attempt_id,
+        "examVersion": clean_text(attempt.get("examVersion"), 80),
+        "status": clean_text(attempt.get("status"), 40),
+        "student": attempt.get("student") if isinstance(attempt.get("student"), dict) else None,
+        "assignedQuestions": [
+            basic_final_oral_public_question(item)
+            for item in attempt.get("assignedQuestions", [])
+            if isinstance(item, dict)
+        ],
+        "turns": {
+            clean_text(turn_id, 40): basic_final_oral_public_turn(turn, attempt_id)
+            for turn_id, turn in turns.items()
+            if isinstance(turn, dict)
+        },
+        "revision": int(attempt.get("revision", 0) or 0),
+        "startedAt": clean_text(attempt.get("startedAt"), 80),
+        "lastSeenAt": clean_text(attempt.get("lastSeenAt"), 80),
+        "submittedAt": clean_text(attempt.get("submittedAt"), 80) or None
+    }
+
+
+def basic_final_oral_public_submission(submission):
+    if not isinstance(submission, dict):
+        return None
+    public = {
+        "receiptId": clean_text(submission.get("receiptId"), 80),
+        "attemptId": clean_text(submission.get("attemptId"), 120),
+        "studentId": clean_text(submission.get("studentId"), 40),
+        "studentName": clean_text(submission.get("studentName"), 200),
+        "email": clean_email(submission.get("email")),
+        "status": clean_text(submission.get("status"), 60),
+        "submittedAt": clean_text(submission.get("submittedAt"), 80),
+        "totalDurationMs": int(submission.get("totalDurationMs", 0) or 0),
+        "assignedQuestions": [
+            basic_final_oral_public_question(item)
+            for item in submission.get("assignedQuestions", [])
+            if isinstance(item, dict)
+        ],
+        "turns": submission.get("turns") if isinstance(submission.get("turns"), list) else [],
+        "rubric": submission.get("rubric") if isinstance(submission.get("rubric"), dict) else None,
+        "score50": submission.get("score50"),
+        "grade": submission.get("grade"),
+        "teacherFeedback": clean_text(submission.get("teacherFeedback"), 5000),
+        "teacherEvidence": submission.get("teacherEvidence") if isinstance(submission.get("teacherEvidence"), dict) else {},
+        "gradedAt": clean_text(submission.get("gradedAt"), 80) or None,
+        "gradedBy": clean_email(submission.get("gradedBy"))
+    }
+    return public
+
+
+def basic_final_oral_state_payload(profile, grades_data, bundle, store):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data) if role == "student" else None
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    attempt = store.get("attempts", {}).get(student_id) if student_id else None
+    submission = store.get("submissions", {}).get(student_id) if student_id else None
+    state = bundle.get("state", {})
+    payload = {
+        "role": role,
+        "state": state,
+        "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
+        "student": basic_final_oral_student_identity(student),
+        "canStart": bool(student_id and state.get("isOpen") is True and not attempt and not submission),
+        "canResume": bool(isinstance(attempt, dict) and attempt.get("status") == "in_progress"),
+        "attempt": basic_final_oral_public_attempt(attempt),
+        "submission": basic_final_oral_public_submission(submission)
+    }
+    if role in ("admin", "teacher"):
+        submissions = [item for item in store.get("submissions", {}).values() if isinstance(item, dict)]
+        attempts = [item for item in store.get("attempts", {}).values() if isinstance(item, dict)]
+        payload["counts"] = {
+            "inProgress": len([item for item in attempts if item.get("status") == "in_progress"]),
+            "submitted": len(submissions),
+            "pendingReview": len([item for item in submissions if item.get("status") == "pending_teacher_review"]),
+            "graded": len([item for item in submissions if item.get("status") == "graded"])
+        }
+        payload["activeAttempts"] = [
+            {
+                "attemptId": clean_text(item.get("attemptId"), 120),
+                "student": item.get("student") if isinstance(item.get("student"), dict) else None,
+                "startedAt": clean_text(item.get("startedAt"), 80),
+                "lastSeenAt": clean_text(item.get("lastSeenAt"), 80),
+                "turnsCompleted": len(item.get("turns", {})) if isinstance(item.get("turns"), dict) else 0,
+                "turnsTotal": len(item.get("assignedQuestions", [])) if isinstance(item.get("assignedQuestions"), list) else 0
+            }
+            for item in attempts
+            if item.get("status") == "in_progress"
+        ]
+        payload["questionBank"] = {
+            unit: [basic_final_oral_public_question(dict(item, turnId="unit-" + unit)) for item in variants]
+            for unit, variants in BASIC_FINAL_ORAL_QUESTION_BANK.items()
+        }
+        payload["interactionQuestion"] = basic_final_oral_public_question(dict(BASIC_FINAL_ORAL_INTERACTION_QUESTION, turnId="interaction", sequence=7))
+    return payload
+
+
+def basic_final_oral_audio_path(filename):
+    raw = str(filename or "").strip()
+    if not raw or raw != safe_filename_token(raw, 180):
+        return ""
+    root = os.path.abspath(BASIC_FINAL_ORAL_AUDIO_DIR)
+    path = os.path.abspath(os.path.join(root, raw))
+    try:
+        if os.path.commonpath((root, path)) != root:
+            return ""
+    except ValueError:
+        return ""
+    return path
+
+
+def basic_final_oral_known_prompt_ids():
+    identifiers = {
+        clean_text(item.get("promptAudioId"), 100)
+        for variants in BASIC_FINAL_ORAL_QUESTION_BANK.values()
+        for item in variants
+        if isinstance(item, dict) and clean_text(item.get("promptAudioId"), 100)
+    }
+    identifiers.add(clean_text(BASIC_FINAL_ORAL_INTERACTION_QUESTION.get("promptAudioId"), 100))
+    return identifiers
+
+
+def basic_final_oral_prompt_audio_path(prompt_id):
+    raw = str(prompt_id or "").strip()
+    if not raw or raw != safe_filename_token(raw, 100) or raw not in basic_final_oral_known_prompt_ids():
+        return ""
+    root = os.path.abspath(BASIC_FINAL_ORAL_PROMPT_AUDIO_DIR)
+    path = os.path.abspath(os.path.join(root, raw + ".mp3"))
+    try:
+        if os.path.commonpath((root, path)) != root:
+            return ""
+    except ValueError:
+        return ""
+    return path
+
+
+def basic_final_oral_audio_signature_valid(content_type, audio_bytes):
+    if len(audio_bytes) < 12:
+        return False
+    if content_type == "audio/webm":
+        return audio_bytes.startswith(b"\x1aE\xdf\xa3")
+    if content_type == "audio/ogg":
+        return audio_bytes.startswith(b"OggS")
+    if content_type == "audio/wav":
+        return audio_bytes.startswith(b"RIFF") and audio_bytes[8:12] == b"WAVE"
+    if content_type == "audio/mpeg":
+        return audio_bytes.startswith(b"ID3") or (audio_bytes[0] == 0xFF and (audio_bytes[1] & 0xE0) == 0xE0)
+    if content_type == "audio/mp4":
+        return b"ftyp" in audio_bytes[:24]
+    return False
+
+
+def decode_basic_final_oral_audio(payload):
+    data_url = payload.get("audioDataUrl")
+    encoded = payload.get("audioBase64")
+    supplied_type = str(payload.get("mimeType") or "").split(";", 1)[0].strip().lower()
+    if isinstance(data_url, str) and data_url:
+        match = re.match(r"^data:([^;,]+)(?:;[^,]*)?;base64,(.+)$", data_url, re.DOTALL | re.IGNORECASE)
+        if not match:
+            raise ValueError("invalid_audio_data_url")
+        supplied_type = match.group(1).strip().lower()
+        encoded = match.group(2)
+    if not isinstance(encoded, str) or not encoded:
+        raise ValueError("missing_audio")
+    aliases = {
+        "video/webm": "audio/webm",
+        "audio/x-wav": "audio/wav",
+        "audio/mp3": "audio/mpeg",
+        "audio/m4a": "audio/mp4",
+        "audio/x-m4a": "audio/mp4"
+    }
+    content_type = aliases.get(supplied_type, supplied_type)
+    if content_type not in {"audio/webm", "audio/ogg", "audio/wav", "audio/mpeg", "audio/mp4"}:
+        raise ValueError("unsupported_audio_type")
+    if len(encoded) > ((BASIC_FINAL_ORAL_MAX_AUDIO_BYTES * 4 // 3) + 16):
+        raise ValueError("audio_too_large")
+    try:
+        audio_bytes = base64.b64decode(encoded, validate=True)
+    except (binascii.Error, ValueError):
+        raise ValueError("invalid_audio_base64")
+    if not audio_bytes:
+        raise ValueError("missing_audio")
+    if len(audio_bytes) > BASIC_FINAL_ORAL_MAX_AUDIO_BYTES:
+        raise ValueError("audio_too_large")
+    if not basic_final_oral_audio_signature_valid(content_type, audio_bytes):
+        raise ValueError("invalid_audio_signature")
+    return audio_bytes, content_type, audio_extension_for_type(content_type)
+
+
+def save_basic_final_oral_audio(attempt_id, turn_id, payload):
+    audio_bytes, content_type, extension = decode_basic_final_oral_audio(payload)
+    filename = safe_filename_token(attempt_id, 90) + "-" + safe_filename_token(turn_id, 30) + "-" + secrets.token_hex(6) + "." + extension
+    path = basic_final_oral_audio_path(filename)
+    if not path:
+        raise ValueError("invalid_audio_path")
+    os.makedirs(BASIC_FINAL_ORAL_AUDIO_DIR, exist_ok=True)
+    fd, temp_path = tempfile.mkstemp(prefix=".basic-final-oral-", suffix="." + extension, dir=BASIC_FINAL_ORAL_AUDIO_DIR)
+    try:
+        with os.fdopen(fd, "wb") as handle:
+            handle.write(audio_bytes)
+        os.replace(temp_path, path)
+        try:
+            os.chmod(path, 0o640)
+        except OSError:
+            pass
+    finally:
+        if os.path.exists(temp_path):
+            os.unlink(temp_path)
+    return {
+        "file": filename,
+        "contentType": content_type,
+        "size": len(audio_bytes),
+        "sha256": hashlib.sha256(audio_bytes).hexdigest()
+    }
+
+
+def remove_basic_final_oral_audio(audio_ref):
+    if not isinstance(audio_ref, dict):
+        return
+    path = basic_final_oral_audio_path(audio_ref.get("file"))
+    if path and os.path.isfile(path):
+        try:
+            os.unlink(path)
+        except OSError:
+            pass
+
+
+def basic_final_oral_find_attempt(store, attempt_id):
+    expected = clean_text(attempt_id, 120)
+    if not expected:
+        return "", None
+    for student_id, attempt in store.get("attempts", {}).items():
+        if isinstance(attempt, dict) and clean_text(attempt.get("attemptId"), 120) == expected:
+            return clean_text(student_id, 40), attempt
+    return "", None
+
+
+def clean_basic_final_oral_rubric(value):
+    if not isinstance(value, dict):
+        return None
+    rubric = {}
+    for key in ("taskCompletion", "interactionDiscourse", "fluency", "vocabularyStructure", "pronunciation"):
+        try:
+            score = float(value.get(key))
+        except (TypeError, ValueError):
+            return None
+        if not math.isfinite(score) or score < 0 or score > 10:
+            return None
+        rubric[key] = round(score, 2)
+    return rubric
+
+
+def clean_basic_final_oral_teacher_evidence(value):
+    if not isinstance(value, dict):
+        return {}
+    evidence = {}
+    for key in ("taskCompletion", "interactionDiscourse", "fluency", "vocabularyStructure", "pronunciation", "general"):
+        text = clean_text(value.get(key), 1200)
+        if text:
+            evidence[key] = text
+    strengths = clean_text_list(value.get("strengths"), 10, 300)
+    priorities = clean_text_list(value.get("priorities"), 10, 300)
+    if strengths:
+        evidence["strengths"] = strengths
+    if priorities:
+        evidence["priorities"] = priorities
+    return evidence
+
+
+def basic_final_oral_gradebook_pending_detail(attempt, submission):
+    return {
+        "evaluationId": BASIC_FINAL_ORAL_EVALUATION_ID,
+        "activityTitle": BASIC_FINAL_ORAL_EVALUATION["title"],
+        "status": "pending_teacher_review",
+        "pendingTeacherReview": True,
+        "manualAssessment": True,
+        "weight": 20,
+        "attemptId": clean_text(attempt.get("attemptId"), 120),
+        "receiptId": clean_text(submission.get("receiptId"), 80),
+        "submittedAt": clean_text(submission.get("submittedAt"), 80),
+        "totalDurationMs": int(submission.get("totalDurationMs", 0) or 0),
+        "turnCount": len(submission.get("turns", [])),
+        "score50": None,
+        "grade": None,
+        "teacherFeedback": ""
+    }
+
+
+def basic_final_oral_gradebook_graded_detail(submission):
+    return {
+        "evaluationId": BASIC_FINAL_ORAL_EVALUATION_ID,
+        "activityTitle": BASIC_FINAL_ORAL_EVALUATION["title"],
+        "status": "graded",
+        "pendingTeacherReview": False,
+        "manualAssessment": True,
+        "weight": 20,
+        "attemptId": clean_text(submission.get("attemptId"), 120),
+        "receiptId": clean_text(submission.get("receiptId"), 80),
+        "submittedAt": clean_text(submission.get("submittedAt"), 80),
+        "gradedAt": clean_text(submission.get("gradedAt"), 80),
+        "gradedBy": clean_email(submission.get("gradedBy")),
+        "totalDurationMs": int(submission.get("totalDurationMs", 0) or 0),
+        "turnCount": len(submission.get("turns", [])),
+        "rubric": submission.get("rubric") if isinstance(submission.get("rubric"), dict) else {},
+        "score50": submission.get("score50"),
+        "grade": submission.get("grade"),
+        "teacherFeedback": clean_text(submission.get("teacherFeedback"), 5000),
+        "teacherEvidence": submission.get("teacherEvidence") if isinstance(submission.get("teacherEvidence"), dict) else {},
+        "evidence": submission.get("turns", []) if isinstance(submission.get("turns"), list) else []
+    }
+
+
+def apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+    """Repair Grades from durable oral submissions after partial writes or restarts."""
+    changed = False
+    students = {
+        clean_text(item.get("id"), 40): item
+        for item in grades_data.get("students", [])
+        if isinstance(item, dict) and clean_text(item.get("id"), 40)
+    }
+    attempts = store.get("attempts", {}) if isinstance(store.get("attempts"), dict) else {}
+    for student_id, submission in store.get("submissions", {}).items():
+        if not isinstance(submission, dict):
+            continue
+        student = students.get(clean_text(student_id, 40))
+        if not isinstance(student, dict):
+            continue
+        grades = student.setdefault("grades", {})
+        if not isinstance(grades, dict):
+            grades = {}
+            student["grades"] = grades
+            changed = True
+        details = student.setdefault("gradeDetails", {})
+        if not isinstance(details, dict):
+            details = {}
+            student["gradeDetails"] = details
+            changed = True
+        if submission.get("status") == "graded" and clean_grade(submission.get("grade")) is not None:
+            grade = clean_grade(submission.get("grade"))
+            next_detail = basic_final_oral_gradebook_graded_detail(submission)
+            if grades.get(BASIC_FINAL_ORAL_EVALUATION_ID) != grade:
+                grades[BASIC_FINAL_ORAL_EVALUATION_ID] = grade
+                changed = True
+        else:
+            if BASIC_FINAL_ORAL_EVALUATION_ID in grades:
+                grades.pop(BASIC_FINAL_ORAL_EVALUATION_ID, None)
+                changed = True
+            attempt = attempts.get(student_id) if isinstance(attempts.get(student_id), dict) else {
+                "attemptId": submission.get("attemptId")
+            }
+            next_detail = basic_final_oral_gradebook_pending_detail(attempt, submission)
+        if details.get(BASIC_FINAL_ORAL_EVALUATION_ID) != next_detail:
+            details[BASIC_FINAL_ORAL_EVALUATION_ID] = next_detail
+            changed = True
+    return changed
+
+
+def basic_final_oral_start(profile):
+    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    if role in ("admin", "teacher"):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "student_only"}
+    student = matched_student_for_profile(profile, grades_data)
+    if not isinstance(student, dict):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "student_not_authorized", "claimAvailable": grades_data.get("allowStudentIdClaim") is True}
+    if profile.get("_studentIdClaim"):
+        grades_changed = True
+    student_id = clean_text(student.get("id"), 40)
+    bundle = read_basic_final_oral_bundle()
+    store = read_basic_final_oral_store()
+    submission = store.get("submissions", {}).get(student_id)
+    if isinstance(submission, dict):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 409, {"error": "already_submitted", "submission": basic_final_oral_public_submission(submission)}
+    attempt = store.get("attempts", {}).get(student_id)
+    if isinstance(attempt, dict) and attempt.get("status") == "in_progress":
+        attempt["lastSeenAt"] = now_iso()
+        write_basic_final_oral_store(store)
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 200, {"ok": True, "resumed": True, "attempt": basic_final_oral_public_attempt(attempt)}
+    if isinstance(attempt, dict):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 409, {"error": "official_attempt_exists", "attempt": basic_final_oral_public_attempt(attempt)}
+    if bundle.get("state", {}).get("isOpen") is not True:
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "exam_closed", "state": bundle.get("state", {})}
+    timestamp = now_iso()
+    attempt = {
+        "attemptId": "BFOA-" + secrets.token_hex(10).upper(),
+        "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
+        "studentId": student_id,
+        "student": basic_final_oral_student_identity(student),
+        "status": "in_progress",
+        "assignedQuestions": basic_final_oral_assign_questions(),
+        "turns": {},
+        "revision": 0,
+        "startedAt": timestamp,
+        "lastSeenAt": timestamp,
+        "submittedAt": None
+    }
+    store.setdefault("attempts", {})[student_id] = attempt
+    basic_final_oral_append_event(store, "attempt_started", profile, student_id, attempt["attemptId"])
+    write_basic_final_oral_store(store)
+    if grades_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {"ok": True, "resumed": False, "attempt": basic_final_oral_public_attempt(attempt)}
+
+
+def basic_final_oral_get_attempt(profile, query):
+    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    store = read_basic_final_oral_store()
+    attempt = None
+    student_id = ""
+    requested_attempt_id = clean_text((query.get("attemptId") or [""])[0], 120)
+    if role in ("admin", "teacher"):
+        student_id, attempt = basic_final_oral_find_attempt(store, requested_attempt_id)
+        if not isinstance(attempt, dict):
+            requested_student_id = clean_text((query.get("studentId") or [""])[0], 40)
+            attempt = store.get("attempts", {}).get(requested_student_id)
+            student_id = requested_student_id if isinstance(attempt, dict) else ""
+    else:
+        student = matched_student_for_profile(profile, grades_data)
+        if isinstance(student, dict):
+            student_id = clean_text(student.get("id"), 40)
+            attempt = store.get("attempts", {}).get(student_id)
+            if profile.get("_studentIdClaim"):
+                grades_changed = True
+    if grades_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    if not isinstance(attempt, dict):
+        return 404, {"error": "attempt_not_found"}
+    if requested_attempt_id and clean_text(attempt.get("attemptId"), 120) != requested_attempt_id:
+        return 404, {"error": "attempt_not_found"}
+    attempt["lastSeenAt"] = now_iso()
+    write_basic_final_oral_store(store)
+    submission = store.get("submissions", {}).get(student_id)
+    return 200, {
+        "ok": True,
+        "attempt": basic_final_oral_public_attempt(attempt),
+        "submission": basic_final_oral_public_submission(submission)
+    }
+
+
+def basic_final_oral_save_turn(profile, payload):
+    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    if role in ("admin", "teacher"):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "student_only"}
+    student = matched_student_for_profile(profile, grades_data)
+    if not isinstance(student, dict):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "student_not_authorized"}
+    if profile.get("_studentIdClaim"):
+        grades_changed = True
+    student_id = clean_text(student.get("id"), 40)
+    store = read_basic_final_oral_store()
+    attempt = store.get("attempts", {}).get(student_id)
+    if not isinstance(attempt, dict):
+        return 404, {"error": "attempt_not_found"}
+    if attempt.get("status") != "in_progress":
+        return 409, {"error": "attempt_not_editable"}
+    attempt_id = clean_text(payload.get("attemptId"), 120)
+    if not attempt_id or attempt_id != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    turn_id = clean_text(payload.get("turnId"), 40)
+    assignment = next(
+        (item for item in attempt.get("assignedQuestions", []) if isinstance(item, dict) and clean_text(item.get("turnId"), 40) == turn_id),
+        None
+    )
+    if not isinstance(assignment, dict):
+        return 400, {"error": "invalid_turn"}
+    supplied_variant = clean_text(payload.get("variantId"), 80)
+    expected_variant = clean_text(assignment.get("variantId"), 80)
+    if supplied_variant and supplied_variant != expected_variant:
+        return 409, {"error": "variant_mismatch"}
+    client_turn_id = clean_text(payload.get("clientTurnId"), 120)
+    if len(client_turn_id) < 8:
+        return 400, {"error": "missing_client_turn_id"}
+    existing = attempt.setdefault("turns", {}).get(turn_id)
+    if isinstance(existing, dict) and clean_text(existing.get("clientTurnId"), 120) == client_turn_id:
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 200, {
+            "ok": True,
+            "idempotent": True,
+            "revision": int(attempt.get("revision", 0) or 0),
+            "turn": basic_final_oral_public_turn(existing, attempt_id)
+        }
+    try:
+        submitted_revision = int(payload.get("revision"))
+    except (TypeError, ValueError):
+        return 400, {"error": "invalid_revision"}
+    current_revision = int(attempt.get("revision", 0) or 0)
+    if submitted_revision != current_revision:
+        return 409, {
+            "error": "stale_attempt",
+            "revision": current_revision,
+            "attempt": basic_final_oral_public_attempt(attempt)
+        }
+    transcript = clean_text(payload.get("transcript"), 4000)
+    try:
+        duration_ms = int(payload.get("durationMs", 0) or 0)
+    except (TypeError, ValueError):
+        return 400, {"error": "invalid_duration"}
+    if duration_ms < 0 or duration_ms > 180000:
+        return 400, {"error": "invalid_duration"}
+    has_new_audio = bool(payload.get("audioDataUrl") or payload.get("audioBase64"))
+    if not has_new_audio and not (isinstance(existing, dict) and isinstance(existing.get("audio"), dict)):
+        return 400, {"error": "missing_audio"}
+    new_audio = None
+    if has_new_audio:
+        try:
+            new_audio = save_basic_final_oral_audio(attempt_id, turn_id, payload)
+        except ValueError as error:
+            return 400, {"error": str(error)}
+    timestamp = now_iso()
+    turn = {
+        "turnId": turn_id,
+        "variantId": expected_variant,
+        "transcript": transcript,
+        "durationMs": duration_ms,
+        "audio": new_audio or existing.get("audio"),
+        "clientTurnId": client_turn_id,
+        "savedAt": existing.get("savedAt") if isinstance(existing, dict) else timestamp,
+        "updatedAt": timestamp
+    }
+    attempt["turns"][turn_id] = turn
+    attempt["revision"] = current_revision + 1
+    attempt["lastSeenAt"] = timestamp
+    write_basic_final_oral_store(store)
+    if new_audio and isinstance(existing, dict):
+        remove_basic_final_oral_audio(existing.get("audio"))
+    if grades_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {
+        "ok": True,
+        "idempotent": False,
+        "revision": attempt["revision"],
+        "turn": basic_final_oral_public_turn(turn, attempt_id)
+    }
+
+
+def basic_final_oral_submit(profile, payload):
+    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    if role in ("admin", "teacher"):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "student_only"}
+    student = matched_student_for_profile(profile, grades_data)
+    if not isinstance(student, dict):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "student_not_authorized"}
+    if profile.get("_studentIdClaim"):
+        grades_changed = True
+    student_id = clean_text(student.get("id"), 40)
+    client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+    if len(client_submission_id) < 8:
+        return 400, {"error": "missing_client_submission_id"}
+    store = read_basic_final_oral_store()
+    idempotency_key = student_id + ":" + client_submission_id
+    previous_receipt = clean_text(store.get("idempotency", {}).get(idempotency_key), 80)
+    existing_submission = store.get("submissions", {}).get(student_id)
+    if previous_receipt and isinstance(existing_submission, dict) and clean_text(existing_submission.get("receiptId"), 80) == previous_receipt:
+        if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+            grades_changed = True
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 200, {"ok": True, "idempotent": True, "submission": basic_final_oral_public_submission(existing_submission)}
+    if isinstance(existing_submission, dict):
+        if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+            grades_changed = True
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 409, {"error": "already_submitted", "submission": basic_final_oral_public_submission(existing_submission)}
+    attempt = store.get("attempts", {}).get(student_id)
+    if not isinstance(attempt, dict):
+        return 404, {"error": "attempt_not_found"}
+    if attempt.get("status") != "in_progress":
+        return 409, {"error": "attempt_not_editable"}
+    attempt_id = clean_text(payload.get("attemptId"), 120)
+    if not attempt_id or attempt_id != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    if payload.get("revision") is not None:
+        try:
+            submitted_revision = int(payload.get("revision"))
+        except (TypeError, ValueError):
+            return 400, {"error": "invalid_revision"}
+        current_revision = int(attempt.get("revision", 0) or 0)
+        if submitted_revision != current_revision:
+            return 409, {"error": "stale_attempt", "revision": current_revision, "attempt": basic_final_oral_public_attempt(attempt)}
+    missing_turns = []
+    turns = attempt.get("turns") if isinstance(attempt.get("turns"), dict) else {}
+    for question in attempt.get("assignedQuestions", []):
+        turn_id = clean_text(question.get("turnId"), 40)
+        turn = turns.get(turn_id)
+        if not isinstance(turn, dict) or not isinstance(turn.get("audio"), dict):
+            missing_turns.append(turn_id)
+    if missing_turns:
+        return 400, {"error": "incomplete_attempt", "missingTurns": missing_turns}
+    submitted_at = now_iso()
+    public_turns = [
+        basic_final_oral_public_turn(turns.get(question.get("turnId")), attempt_id)
+        for question in attempt.get("assignedQuestions", [])
+    ]
+    total_duration = sum(int(item.get("durationMs", 0) or 0) for item in turns.values() if isinstance(item, dict))
+    submission = {
+        "receiptId": "BFO-" + secrets.token_hex(6).upper(),
+        "attemptId": attempt_id,
+        "examVersion": BASIC_FINAL_ORAL_EXAM_VERSION,
+        "studentId": student_id,
+        "studentName": clean_text(student.get("fullName"), 200),
+        "email": normalize_email(profile.get("email")),
+        "status": "pending_teacher_review",
+        "submittedAt": submitted_at,
+        "totalDurationMs": total_duration,
+        "assignedQuestions": [dict(item) for item in attempt.get("assignedQuestions", []) if isinstance(item, dict)],
+        "turns": public_turns,
+        "rubric": None,
+        "score50": None,
+        "grade": None,
+        "teacherFeedback": "",
+        "teacherEvidence": {},
+        "gradedAt": None,
+        "gradedBy": "",
+        "clientSubmissionId": client_submission_id
+    }
+    attempt["status"] = "submitted"
+    attempt["submittedAt"] = submitted_at
+    attempt["lastSeenAt"] = submitted_at
+    store.setdefault("submissions", {})[student_id] = submission
+    store.setdefault("idempotency", {})[idempotency_key] = submission["receiptId"]
+    basic_final_oral_append_event(store, "submitted", profile, student_id, submission["receiptId"])
+    student.setdefault("grades", {}).pop(BASIC_FINAL_ORAL_EVALUATION_ID, None)
+    details = student.setdefault("gradeDetails", {})
+    if not isinstance(details, dict):
+        details = {}
+        student["gradeDetails"] = details
+    details[BASIC_FINAL_ORAL_EVALUATION_ID] = basic_final_oral_gradebook_pending_detail(attempt, submission)
+    write_basic_final_oral_store(store)
+    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {"ok": True, "idempotent": False, "submission": basic_final_oral_public_submission(submission)}
+
+
+def basic_final_oral_submissions_payload(profile):
+    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "forbidden"}
+    store = read_basic_final_oral_store()
+    if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+        grades_changed = True
+    if grades_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    items = [basic_final_oral_public_submission(item) for item in store.get("submissions", {}).values() if isinstance(item, dict)]
+    items.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
+    return 200, {
+        "role": role,
+        "submissions": items,
+        "counts": {
+            "total": len(items),
+            "pendingReview": len([item for item in items if item.get("status") == "pending_teacher_review"]),
+            "graded": len([item for item in items if item.get("status") == "graded"])
+        }
+    }
+
+
+def basic_final_oral_grade(profile, payload):
+    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "forbidden"}
+    rubric = clean_basic_final_oral_rubric(payload.get("rubric"))
+    if rubric is None:
+        return 400, {"error": "invalid_rubric"}
+    student_id = clean_text(payload.get("studentId"), 40)
+    receipt_id = clean_text(payload.get("receiptId"), 80)
+    if not student_id or not receipt_id:
+        return 400, {"error": "missing_submission_identity"}
+    store = read_basic_final_oral_store()
+    submission = store.get("submissions", {}).get(student_id)
+    if not isinstance(submission, dict):
+        return 404, {"error": "submission_not_found"}
+    if clean_text(submission.get("receiptId"), 80) != receipt_id:
+        return 409, {"error": "submission_changed", "submission": basic_final_oral_public_submission(submission)}
+    student = next(
+        (item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id),
+        None
+    )
+    if not isinstance(student, dict):
+        return 404, {"error": "student_not_found"}
+    score50 = round(sum(rubric.values()), 2)
+    grade = round(score50 / 10.0, 2)
+    feedback = clean_text(payload.get("teacherFeedback") or payload.get("feedback"), 5000)
+    evidence = clean_basic_final_oral_teacher_evidence(payload.get("teacherEvidence") or payload.get("evidence"))
+    graded_at = now_iso()
+    submission.update({
+        "status": "graded",
+        "rubric": rubric,
+        "score50": score50,
+        "grade": grade,
+        "teacherFeedback": feedback,
+        "teacherEvidence": evidence,
+        "gradedAt": graded_at,
+        "gradedBy": normalize_email(profile.get("email"))
+    })
+    student.setdefault("grades", {})[BASIC_FINAL_ORAL_EVALUATION_ID] = grade
+    details = student.setdefault("gradeDetails", {})
+    if not isinstance(details, dict):
+        details = {}
+        student["gradeDetails"] = details
+    details[BASIC_FINAL_ORAL_EVALUATION_ID] = basic_final_oral_gradebook_graded_detail(submission)
+    basic_final_oral_append_event(store, "graded", profile, student_id, receipt_id + " score " + str(score50) + "/50")
+    write_basic_final_oral_store(store)
+    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {"ok": True, "submission": basic_final_oral_public_submission(submission)}
+
+
+def basic_final_oral_update_state(profile, payload):
+    grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+    grades_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        if grades_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 403, {"error": "forbidden"}
+    if not isinstance(payload.get("isOpen"), bool):
+        return 400, {"error": "invalid_state"}
+    bundle = read_basic_final_oral_bundle()
+    store = read_basic_final_oral_store()
+    state = bundle.setdefault("state", {})
+    is_open = payload.get("isOpen") is True
+    timestamp = now_iso()
+    actor = normalize_email(profile.get("email"))
+    state["isOpen"] = is_open
+    state["updatedAt"] = timestamp
+    state["updatedBy"] = actor
+    if is_open:
+        state["openedAt"] = timestamp
+        state["openedBy"] = actor
+        state["closedAt"] = None
+        state["closedBy"] = ""
+    else:
+        state["closedAt"] = timestamp
+        state["closedBy"] = actor
+    basic_final_oral_append_event(store, "exam_opened" if is_open else "exam_closed", profile, "", "Official Final Oral Task availability changed")
+    write_basic_final_oral_bundle(bundle)
+    write_basic_final_oral_store(store)
+    if grades_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {
+        "ok": True,
+        "state": state,
+        "message": "The official Final Oral Task is now open." if is_open else "The official Final Oral Task is now closed for new attempts. Active attempts can still be resumed and submitted."
+    }
+
+
+def serve_basic_final_oral_audio(handler, parsed, profile):
+    query = urllib.parse.parse_qs(parsed.query)
+    prompt_id = str((query.get("prompt") or [""])[0] or "").strip()
+    if prompt_id:
+        path = basic_final_oral_prompt_audio_path(prompt_id)
+        if not path:
+            json_response(handler, 404, {"error": "prompt_audio_not_found"})
+            return
+        with data_lock:
+            grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+            role = grade_user_role(profile, grades_data)
+            if role not in ("admin", "teacher"):
+                student = matched_student_for_profile(profile, grades_data)
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                store = read_basic_final_oral_store()
+                attempt = store.get("attempts", {}).get(student_id) if student_id else None
+                assigned = {
+                    clean_text(item.get("promptAudioId"), 100)
+                    for item in attempt.get("assignedQuestions", [])
+                    if isinstance(item, dict)
+                } if isinstance(attempt, dict) else set()
+                if prompt_id not in assigned:
+                    json_response(handler, 403, {"error": "prompt_not_assigned"})
+                    return
+            if not os.path.isfile(path):
+                json_response(handler, 404, {"error": "prompt_audio_not_found"})
+                return
+        with open(path, "rb") as handle:
+            binary_response(handler, 200, handle.read(), "audio/mpeg")
+        return
+
+    attempt_id = clean_text((query.get("attemptId") or [""])[0], 120)
+    turn_id = clean_text((query.get("turnId") or [""])[0], 40)
+    if not attempt_id or not turn_id:
+        json_response(handler, 400, {"error": "missing_audio_identity"})
+        return
+    with data_lock:
+        grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+        role = grade_user_role(profile, grades_data)
+        student = matched_student_for_profile(profile, grades_data) if role == "student" else None
+        store = read_basic_final_oral_store()
+        owner_id, attempt = basic_final_oral_find_attempt(store, attempt_id)
+        if not isinstance(attempt, dict):
+            json_response(handler, 404, {"error": "audio_not_found"})
+            return
+        current_student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+        if role not in ("admin", "teacher") and (not current_student_id or current_student_id != owner_id):
+            json_response(handler, 403, {"error": "forbidden"})
+            return
+        turn = attempt.get("turns", {}).get(turn_id) if isinstance(attempt.get("turns"), dict) else None
+        audio = turn.get("audio") if isinstance(turn, dict) and isinstance(turn.get("audio"), dict) else None
+        path = basic_final_oral_audio_path(audio.get("file")) if audio else ""
+        content_type = clean_text(audio.get("contentType"), 80) if audio else ""
+        if not path or not os.path.isfile(path):
+            json_response(handler, 404, {"error": "audio_not_found"})
+            return
+    with open(path, "rb") as handle:
+        binary_response(handler, 200, handle.read(), content_type or "application/octet-stream")
+
+
 def default_basic_integrated_task_bundle():
     return {
         "state": {"isOpen": False, "openedAt": None, "closedAt": None, "updatedAt": None, "openedBy": None, "reopenUntilEpoch": None, "reopenUntilLabel": "", "reopenStudentIds": [], "reopenResetPlays": False},
@@ -8441,6 +9600,40 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
 
+        if parsed.path == "/api/basic-final-oral/state":
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                grades_changed = ensure_basic_gradebook_structure(grades_data)
+                bundle = read_basic_final_oral_bundle()
+                store = read_basic_final_oral_store()
+                if apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
+                    grades_changed = True
+                response = basic_final_oral_state_payload(profile, grades_data, bundle, store)
+                response["claimAvailable"] = grades_data.get("allowStudentIdClaim") is True
+                if profile.get("_studentIdClaim") and response.get("student"):
+                    grades_changed = True
+                if grades_changed:
+                    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                json_response(self, 200, response)
+            return
+
+        if parsed.path == "/api/basic-final-oral/attempt":
+            query = urllib.parse.parse_qs(parsed.query)
+            with data_lock:
+                status, response = basic_final_oral_get_attempt(profile, query)
+                json_response(self, status, response)
+            return
+
+        if parsed.path == "/api/basic-final-oral/submissions":
+            with data_lock:
+                status, response = basic_final_oral_submissions_payload(profile)
+                json_response(self, status, response)
+            return
+
+        if parsed.path == "/api/basic-final-oral/audio":
+            serve_basic_final_oral_audio(self, parsed, profile)
+            return
+
         if parsed.path == "/api/basic/integrated-task/state":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
@@ -8576,6 +9769,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 gradebook_changed = ensure_basic_gradebook_structure(grades_data)
                 submissions = read_basic_integrated_task_submissions()
                 if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
+                    gradebook_changed = True
+                oral_store = read_basic_final_oral_store()
+                if apply_basic_final_oral_submission_status_to_gradebook(grades_data, oral_store):
                     gradebook_changed = True
                 if gradebook_changed:
                     write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
@@ -10289,6 +11485,18 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
             return
 
+        if parsed.path == "/api/basic-final-oral/start":
+            with data_lock:
+                status, response = basic_final_oral_start(profile)
+                json_response(self, status, response)
+            return
+
+        if parsed.path == "/api/basic-final-oral/submit":
+            with data_lock:
+                status, response = basic_final_oral_submit(profile, payload)
+                json_response(self, status, response)
+            return
+
         if parsed.path == "/api/basic/integrated-task/submit":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
@@ -11140,6 +12348,25 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 write_intermediate_integrated_task_submissions(submissions)
                 write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                 json_response(self, 200, {"ok": True, "result": basic_integrated_submission_public(submission)})
+            return
+
+
+        if parsed.path == "/api/basic-final-oral/state":
+            with data_lock:
+                status, response = basic_final_oral_update_state(profile, payload)
+                json_response(self, status, response)
+            return
+
+        if parsed.path == "/api/basic-final-oral/turn":
+            with data_lock:
+                status, response = basic_final_oral_save_turn(profile, payload)
+                json_response(self, status, response)
+            return
+
+        if parsed.path in ("/api/basic-final-oral/grade", "/api/basic-final-oral/submissions/grade"):
+            with data_lock:
+                status, response = basic_final_oral_grade(profile, payload)
+                json_response(self, status, response)
             return
 
 

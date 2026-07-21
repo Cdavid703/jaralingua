@@ -42,6 +42,13 @@
       "description": "Listening and integrated writing assessment. Writing is reviewed with the institutional rubric."
     },
     {
+      "id": "finalOralTask",
+      "title": "BASIC COURSE 1 – FINAL ORAL TASK (20%)",
+      "weight": 20,
+      "type": "Final oral examination",
+      "description": "Official six-unit oral examination. The teacher grades the recorded evidence manually with the institutional rubric over 50 points."
+    },
+    {
       "id": "unit6NeighborhoodAiImageLab",
       "title": "Unit 6 Follow-up - My Ideal Neighborhood AI Image Lab",
       "weight": 0,
