@@ -823,6 +823,10 @@ FRENCH8_FINAL_EXAM_RUNTIME_STATUS = {
     "schedulerLastSuccessAt": None,
     "schedulerLastError": "",
     "schedulerConsecutiveFailures": 0,
+    "scheduledOpeningGateStatus": "idle",
+    "scheduledOpeningGateCheckedAt": None,
+    "scheduledOpeningBlockingIssues": [],
+    "scheduledOpeningLastError": "",
     "sseConnections": 0,
     "lastHealthAt": None,
 }
@@ -3269,8 +3273,14 @@ def final_exam_schedule_status(state, now=None):
     return "open"
 
 
-def final_exam_refresh_schedule_state(state, now=None):
-    """Materialize a Niveau 8 scheduled window without trusting client clocks."""
+def final_exam_refresh_schedule_state(state, now=None, allow_open=True):
+    """Materialize a scheduled window without trusting client clocks.
+
+    ``allow_open=False`` is the fail-closed read path used by Niveau 8.  It may
+    materialize a due close, but it cannot turn a stored closed state into an
+    open one.  Only the autonomous scheduler (after its opening health gate) or
+    an already validated staff action may do that.
+    """
 
     if not isinstance(state, dict) or state.get("scheduleEnabled") is not True:
         return False
@@ -3282,9 +3292,13 @@ def final_exam_refresh_schedule_state(state, now=None):
         state.get("scheduleStatus"),
     )
     state["scheduleStatus"] = status
-    if status == "open":
+    if status == "open" and (allow_open or state.get("isOpen") is True):
         state["isOpen"] = True
         state["openedAt"] = final_exam_iso_utc(state.get("opensAt"))
+        state["closedAt"] = None
+    elif status == "open":
+        state["isOpen"] = False
+        state["openedAt"] = None
         state["closedAt"] = None
     elif status == "closed":
         state["isOpen"] = False
@@ -3322,6 +3336,7 @@ def default_french8_final_exam_bundle():
             "scheduledAt": None,
             "scheduledBy": None,
             "schedulerObservedStatus": "manual_closed",
+            "openingGate": None,
         },
         "exam": {
             "id": "french8-final-exam",
@@ -3390,7 +3405,7 @@ def read_french8_final_exam_bundle():
     if state["scheduleEnabled"]:
         state["opensAt"] = final_exam_iso_utc(state.get("opensAt"))
         state["closesAt"] = final_exam_iso_utc(state.get("closesAt"))
-        final_exam_refresh_schedule_state(state)
+        final_exam_refresh_schedule_state(state, allow_open=False)
     exam = data["exam"]
     exam.setdefault("sections", [])
     exam.setdefault("totalPoints", 50)
@@ -6879,7 +6894,19 @@ def final_exam_append_event(store, event_type, profile=None, student=None, extra
 
 def final_exam_public_state(state, role, student_id=""):
     schedule_status = final_exam_schedule_status(state)
-    effective_open = schedule_status == "open" if state.get("scheduleEnabled") is True else state.get("isOpen") is True
+    schedule_enabled = state.get("scheduleEnabled") is True
+    effective_open = (
+        schedule_status == "open" and state.get("isOpen") is True
+        if schedule_enabled
+        else state.get("isOpen") is True
+    )
+    opening_gate = state.get("openingGate") if isinstance(state.get("openingGate"), dict) else {}
+    opening_gate_blocked = (
+        schedule_enabled
+        and schedule_status == "open"
+        and not effective_open
+        and opening_gate.get("status") == "blocked"
+    )
     result = {
         "isOpen": effective_open,
         "openedAt": state.get("openedAt"),
@@ -6891,21 +6918,29 @@ def final_exam_public_state(state, role, student_id=""):
         "revision": state.get("revision", 0),
         "serverTime": now_iso(),
     }
-    if state.get("scheduleEnabled") is True or "opensAt" in state or "closesAt" in state:
-        result.update({
-            "scheduleEnabled": state.get("scheduleEnabled") is True,
-            "opensAt": final_exam_iso_utc(state.get("opensAt")),
-            "closesAt": final_exam_iso_utc(state.get("closesAt")),
-            "scheduleStatus": schedule_status,
-            "accessEffective": effective_open,
-            "accessReason": {
+    if schedule_enabled or "opensAt" in state or "closesAt" in state:
+        if schedule_status == "open" and effective_open:
+            access_reason = "scheduled_window_open"
+        elif schedule_status == "open" and opening_gate_blocked:
+            access_reason = "scheduled_open_health_blocked"
+        elif schedule_status == "open":
+            access_reason = "scheduled_open_pending_scheduler"
+        else:
+            access_reason = {
                 "scheduled": "before_scheduled_open",
-                "open": "scheduled_window_open",
                 "closed": "scheduled_window_closed",
                 "invalid": "invalid_schedule",
                 "manual_open": "opened_by_teacher",
                 "manual_closed": "closed_by_teacher",
-            }.get(schedule_status, "closed_by_teacher"),
+            }.get(schedule_status, "closed_by_teacher")
+        result.update({
+            "scheduleEnabled": schedule_enabled,
+            "opensAt": final_exam_iso_utc(state.get("opensAt")),
+            "closesAt": final_exam_iso_utc(state.get("closesAt")),
+            "scheduleStatus": schedule_status,
+            "accessEffective": effective_open,
+            "accessReason": access_reason,
+            "openingGateStatus": clean_text(opening_gate.get("status"), 40) or "idle",
         })
     extras = state.get("extraMinutesByStudent", {})
     if not isinstance(extras, dict):
@@ -6913,6 +6948,20 @@ def final_exam_public_state(state, role, student_id=""):
     if role in ("admin", "teacher"):
         result["openedBy"] = state.get("openedBy")
         result["extraMinutesByStudent"] = extras
+        if opening_gate:
+            result["openingGate"] = {
+                "status": clean_text(opening_gate.get("status"), 40) or "unknown",
+                "checkedAt": opening_gate.get("checkedAt"),
+                "blockedAt": opening_gate.get("blockedAt"),
+                "recoveredAt": opening_gate.get("recoveredAt"),
+                "healthStatus": clean_text(opening_gate.get("healthStatus"), 40),
+                "blockingIssues": [
+                    clean_text(item, 80)
+                    for item in opening_gate.get("blockingIssues", [])
+                    if clean_text(item, 80)
+                ],
+                "lastError": clean_text(opening_gate.get("lastError"), 300),
+            }
     else:
         try:
             result["extraMinutes"] = int(extras.get(student_id, 0) or 0)
@@ -7670,6 +7719,7 @@ def final_exam_put_draft(config, profile, payload):
         "attemptId": attempt.get("attemptId"),
         "draft": attempt["answers"],
         "revision": attempt["revision"],
+        "savedAt": attempt["draftUpdatedAt"],
         "answeredCount": validation["answeredCount"],
         "timing": timing,
     }, save_store=True)
@@ -7858,7 +7908,12 @@ def final_exam_update_state(config, profile, payload):
     bundle = config["readBundle"]()
     state = bundle.setdefault("state", {})
     supports_schedule = config.get("supportsSchedule") is True
-    schedule_refreshed = final_exam_refresh_schedule_state(state) if supports_schedule else False
+    opening_gate_reset_reason = ""
+    schedule_refreshed = (
+        final_exam_refresh_schedule_state(state, allow_open=False)
+        if supports_schedule
+        else False
+    )
     store = config["readStore"]()
     store_changed, due_grades = final_exam_finalize_due_attempts(config, grades_data, bundle, store)
     grades_changed = grades_changed or due_grades
@@ -8020,6 +8075,7 @@ def final_exam_update_state(config, profile, payload):
 
     timestamp = now_iso()
     if schedule_requested:
+        opening_gate_reset_reason = "scheduled_window_reprogrammed"
         state.update({
             "scheduleEnabled": True,
             "opensAt": proposed_schedule.get("opensAt"),
@@ -8027,6 +8083,7 @@ def final_exam_update_state(config, profile, payload):
             "scheduledAt": timestamp,
             "scheduledBy": normalize_email(profile.get("email")),
         })
+        state.pop("openingGate", None)
         final_exam_refresh_schedule_state(state)
         state["schedulerObservedStatus"] = final_exam_schedule_status(state)
         desired_open = state.get("isOpen") is True
@@ -8037,6 +8094,7 @@ def final_exam_update_state(config, profile, payload):
         })
         store_changed = True
     elif supports_schedule and manual_state_requested:
+        opening_gate_reset_reason = "scheduled_window_disabled_by_staff"
         state.update({
             "scheduleEnabled": False,
             "opensAt": None,
@@ -8045,6 +8103,7 @@ def final_exam_update_state(config, profile, payload):
             "scheduledBy": None,
         })
         state.pop("scheduleStatus", None)
+        state.pop("openingGate", None)
         state["schedulerObservedStatus"] = "manual_open" if desired_open else "manual_closed"
         bundle_changed = True
 
@@ -8086,6 +8145,26 @@ def final_exam_update_state(config, profile, payload):
     if grades_changed:
         write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
     if config.get("level") == "french8":
+        if opening_gate_reset_reason:
+            french8_final_exam_sync_opening_gate_alert(
+                config,
+                {},
+                False,
+                resolution=opening_gate_reset_reason,
+            )
+            next_runtime_gate_status = (
+                "pending"
+                if schedule_requested and final_exam_schedule_status(state) == "scheduled"
+                else ("ready" if schedule_requested and state.get("isOpen") is True else "idle")
+            )
+            FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+                "scheduledOpeningGateStatus": next_runtime_gate_status,
+                "scheduledOpeningGateCheckedAt": (
+                    timestamp if next_runtime_gate_status == "ready" else None
+                ),
+                "scheduledOpeningBlockingIssues": [],
+                "scheduledOpeningLastError": "",
+            })
         FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.set()
     return 200, {
         "ok": True,
@@ -8094,10 +8173,92 @@ def final_exam_update_state(config, profile, payload):
     }
 
 
+def french8_final_exam_scheduler_opening_health(config, grades_data, bundle, store):
+    """Run the current-data health gate and normalize failures as closed state."""
+
+    health_check = config.get("healthCheck") if isinstance(config, dict) else None
+    if not callable(health_check):
+        return {
+            "readyToOpen": False,
+            "status": "error",
+            "blockingIssues": ["health_check"],
+            "error": "opening_health_check_unavailable",
+        }
+    try:
+        health = health_check(
+            config, grades_data, bundle, store, record_alerts=True
+        )
+    except Exception as error:
+        return {
+            "readyToOpen": False,
+            "status": "error",
+            "blockingIssues": ["health_check"],
+            "error": clean_text(error, 300) or error.__class__.__name__,
+        }
+    if not isinstance(health, dict):
+        return {
+            "readyToOpen": False,
+            "status": "error",
+            "blockingIssues": ["health_check"],
+            "error": "opening_health_check_invalid_response",
+        }
+    # ``schedulerReady`` is intentionally not required here.  This function is
+    # running inside the scheduler tick; asking its previously persisted
+    # heartbeat to authorize the current tick would create a recursive gate.
+    return health
+
+
+def french8_final_exam_sync_opening_gate_alert(
+    config,
+    gate,
+    blocked,
+    resolution="scheduled_opening_health_recovered",
+):
+    """Best-effort explicit alert in addition to component health alerts."""
+
+    repository_factory = config.get("repository") if isinstance(config, dict) else None
+    if not callable(repository_factory):
+        return
+    try:
+        repository = repository_factory()
+        alert_key = "scheduled_opening_gate"
+        existing = repository.get_alert(alert_key)
+        if blocked:
+            context = {
+                "healthStatus": clean_text(gate.get("healthStatus"), 40),
+                "blockingIssues": list(gate.get("blockingIssues", [])),
+                "lastError": clean_text(gate.get("lastError"), 300),
+            }
+            if (
+                existing is None
+                or existing.get("status") == "resolved"
+                or existing.get("context") != context
+            ):
+                repository.record_alert(
+                    alert_key,
+                    "critical",
+                    message="L'ouverture programmee reste fermee: le controle de sante n'est pas pret.",
+                    context=context,
+                )
+        elif existing and existing.get("status") != "resolved":
+            repository.resolve_alert(
+                alert_key,
+                "system",
+                resolution=clean_text(resolution, 300)
+                or "scheduled_opening_health_recovered",
+            )
+    except Exception:
+        # The persisted bundle/store event remains the authoritative audit.  A
+        # repository failure is itself returned by the health gate and opening
+        # therefore stays fail-closed.
+        return
+
+
 def french8_final_exam_scheduler_tick(config=None, now=None):
     """Materialize scheduled transitions and submissions without HTTP traffic."""
 
     config = config or final_exam_level_config("french8")
+    tick_at = final_exam_iso_utc(now) or now_iso()
     with data_lock:
         grades_data = read_grades_data(config["gradesPath"])
         grades_changed = config["ensureGrades"](grades_data)
@@ -8106,28 +8267,155 @@ def french8_final_exam_scheduler_tick(config=None, now=None):
         store = config["readStore"]()
         previous_observed = clean_text(state.get("schedulerObservedStatus"), 40)
         schedule_status = final_exam_schedule_status(state, now)
-        schedule_changed = final_exam_refresh_schedule_state(state, now)
-        transition = state.get("scheduleEnabled") is True and schedule_status != previous_observed
+        previous_gate = state.get("openingGate") if isinstance(state.get("openingGate"), dict) else {}
+        gate_health = None
+        gate_blocked = False
+        gate_changed = False
+        gate_lifecycle_changed = False
+        opening_requested = (
+            state.get("scheduleEnabled") is True
+            and schedule_status == "open"
+            and state.get("isOpen") is not True
+        )
+
+        if opening_requested:
+            gate_health = french8_final_exam_scheduler_opening_health(
+                config, grades_data, bundle, store
+            )
+            blocking_issues = sorted({
+                clean_text(item, 80)
+                for item in gate_health.get("blockingIssues", [])
+                if clean_text(item, 80)
+            })
+            health_error = clean_text(gate_health.get("error"), 300)
+            if gate_health.get("readyToOpen") is True:
+                schedule_changed = final_exam_refresh_schedule_state(
+                    state, now, allow_open=True
+                )
+                next_gate = {
+                    "status": "ready",
+                    "checkedAt": tick_at,
+                    "blockedAt": previous_gate.get("blockedAt"),
+                    "recoveredAt": tick_at if previous_gate.get("status") == "blocked" else None,
+                    "healthStatus": clean_text(gate_health.get("status"), 40) or "ok",
+                    "blockingIssues": [],
+                    "lastError": "",
+                }
+                gate_changed = next_gate != previous_gate
+                state["openingGate"] = next_gate
+            else:
+                gate_blocked = True
+                if not blocking_issues:
+                    blocking_issues = ["health_check"]
+                schedule_changed = final_exam_refresh_schedule_state(
+                    state, now, allow_open=False
+                )
+                gate_signature = {
+                    "status": "blocked",
+                    "healthStatus": clean_text(gate_health.get("status"), 40) or "blocked",
+                    "blockingIssues": blocking_issues,
+                    "lastError": health_error,
+                }
+                previous_signature = {
+                    key: previous_gate.get(key)
+                    for key in ("status", "healthStatus", "blockingIssues", "lastError")
+                }
+                gate_changed = gate_signature != previous_signature
+                if gate_changed:
+                    state["openingGate"] = dict(
+                        gate_signature,
+                        checkedAt=tick_at,
+                        blockedAt=previous_gate.get("blockedAt") or tick_at,
+                        recoveredAt=None,
+                    )
+                else:
+                    # ``checkedAt`` is operational evidence, not a semantic
+                    # state transition.  Keep the fresh value for this tick;
+                    # the runtime health snapshot retains it without writing
+                    # a new bundle/audit row every five seconds.
+                    state["openingGate"] = dict(previous_gate, checkedAt=tick_at)
+        else:
+            # Scheduled closes are always materialized and never depend on the
+            # opening readiness gate.
+            schedule_changed = final_exam_refresh_schedule_state(
+                state, now, allow_open=True
+            )
+            if (
+                state.get("scheduleEnabled") is True
+                and schedule_status == "closed"
+                and previous_gate.get("status") in ("blocked", "ready")
+            ):
+                # Preserve the useful timestamps but make it explicit that a
+                # previous opening block is historical once the window ends.
+                state["openingGate"] = dict(
+                    previous_gate,
+                    status="closed",
+                    inactiveAt=tick_at,
+                    blockingIssues=[],
+                    lastError="",
+                )
+                gate_lifecycle_changed = state["openingGate"] != previous_gate
+
+        if gate_lifecycle_changed:
+            schedule_changed = True
+
+        observed_status = "open_blocked" if gate_blocked else schedule_status
+        observation_changed = (
+            state.get("scheduleEnabled") is True
+            and observed_status != previous_observed
+        )
+        transition = observation_changed and observed_status != "open_blocked"
         store_changed = False
-        if transition:
+        if observation_changed:
             event_name = {
                 "open": "scheduled_window_opened",
+                "open_blocked": "scheduled_window_open_blocked",
                 "closed": "scheduled_window_closed",
                 "scheduled": "scheduled_window_waiting",
                 "invalid": "scheduled_window_invalid",
-            }.get(schedule_status, "scheduled_window_updated")
-            final_exam_append_event(store, event_name, extra={"scheduleStatus": schedule_status})
-            state["schedulerObservedStatus"] = schedule_status
-            state["updatedAt"] = now_iso()
-            state["revision"] = int(state.get("revision", 0) or 0) + 1
+            }.get(observed_status, "scheduled_window_updated")
+            detail = {
+                "scheduleStatus": schedule_status,
+                "observedStatus": observed_status,
+            }
+            if gate_health is not None:
+                detail.update({
+                    "healthStatus": clean_text(gate_health.get("status"), 40),
+                    "blockingIssues": list(state.get("openingGate", {}).get("blockingIssues", [])),
+                    "healthError": clean_text(gate_health.get("error"), 300),
+                    "recoveredFromHealthBlock": previous_observed == "open_blocked",
+                })
+            final_exam_append_event(store, event_name, extra=detail)
+            state["schedulerObservedStatus"] = observed_status
             store_changed = True
             schedule_changed = True
+        elif gate_changed:
+            final_exam_append_event(store, "scheduled_window_open_block_updated", extra={
+                "scheduleStatus": schedule_status,
+                "healthStatus": clean_text(gate_health.get("status"), 40) if gate_health else "",
+                "blockingIssues": list(state.get("openingGate", {}).get("blockingIssues", [])),
+                "healthError": clean_text(gate_health.get("error"), 300) if gate_health else "",
+            })
+            store_changed = True
+            schedule_changed = True
+        elif gate_lifecycle_changed:
+            final_exam_append_event(store, "scheduled_opening_gate_inactivated", extra={
+                "scheduleStatus": schedule_status,
+                "previousGateStatus": clean_text(previous_gate.get("status"), 40),
+                "gateStatus": clean_text(state.get("openingGate", {}).get("status"), 40),
+            })
+            store_changed = True
+            schedule_changed = True
+
+        if observation_changed or gate_changed or gate_lifecycle_changed:
+            state["updatedAt"] = tick_at
+            state["revision"] = int(state.get("revision", 0) or 0) + 1
         finalized, finalized_grades = final_exam_finalize_due_attempts(
             config, grades_data, bundle, store
         )
         if finalized:
             final_exam_append_event(store, "scheduled_attempts_finalized", extra={
-                "scheduleStatus": schedule_status,
+                "scheduleStatus": observed_status,
                 "submissionCount": len(store.get("submissions", {})),
             })
             store_changed = True
@@ -8143,22 +8431,66 @@ def french8_final_exam_scheduler_tick(config=None, now=None):
             config["writeBundle"](bundle)
         if (store_changed or finalized) and not store_persisted:
             config["writeStore"](store)
+        if (
+            gate_health is not None
+            or gate_lifecycle_changed
+            or (previous_gate.get("status") == "blocked" and not gate_blocked)
+        ):
+            french8_final_exam_sync_opening_gate_alert(
+                config,
+                state.get("openingGate") if isinstance(state.get("openingGate"), dict) else {},
+                gate_blocked,
+                resolution=(
+                    "scheduled_window_ended"
+                    if schedule_status == "closed"
+                    else "scheduled_opening_health_recovered"
+                ),
+            )
         if grades_changed:
             write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
             grades_changed = False
         outbox = french8_final_exam_reconcile_grade_outbox(config, grades_data, store)
         public_state = final_exam_public_state(state, "teacher")
+        persisted_gate = state.get("openingGate") if isinstance(state.get("openingGate"), dict) else {}
     timestamp = now_iso()
     FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
         "schedulerLastTickAt": timestamp,
         "schedulerLastSuccessAt": timestamp,
         "schedulerLastError": "",
         "schedulerConsecutiveFailures": 0,
+        "scheduledOpeningGateStatus": (
+            "blocked"
+            if gate_blocked
+            else (
+                "ready"
+                if gate_health is not None
+                else ("pending" if schedule_status == "scheduled" else "idle")
+            )
+        ),
+        "scheduledOpeningGateCheckedAt": (
+            persisted_gate.get("checkedAt")
+            if persisted_gate.get("status") in ("blocked", "ready")
+            else None
+        ),
+        "scheduledOpeningBlockingIssues": list(
+            persisted_gate.get("blockingIssues", [])
+        ) if gate_blocked else [],
+        "scheduledOpeningLastError": (
+            clean_text(gate_health.get("error"), 300)
+            if gate_blocked and gate_health is not None
+            else ""
+        ),
     })
     return {
         "ok": True,
         "transition": transition,
+        "observationChanged": observation_changed,
         "scheduleStatus": schedule_status,
+        "observedStatus": observed_status,
+        "openingBlocked": gate_blocked,
+        "openingGate": public_state.get("openingGate", {
+            "status": public_state.get("openingGateStatus", "idle")
+        }),
         "finalized": finalized,
         "gradeOutbox": outbox,
         "state": public_state,
@@ -8217,6 +8549,9 @@ def french8_final_exam_scheduler_loop():
                     success=True,
                     state={
                         "scheduleStatus": result.get("scheduleStatus"),
+                        "observedStatus": result.get("observedStatus"),
+                        "openingBlocked": result.get("openingBlocked") is True,
+                        "openingGate": result.get("openingGate", {}),
                         "finalized": result.get("finalized", False),
                         "gradeOutbox": result.get("gradeOutbox", {}),
                     },
@@ -8673,6 +9008,27 @@ def french8_final_exam_health_payload(config=None, grades_data=None, bundle=None
     blocking_issues = [key for key, value in checks.items() if value.get("status") == "blocked"]
     degraded = [key for key, value in checks.items() if value.get("status") in ("warning", "degraded", "error")]
     status = "blocked" if blocking_issues else ("degraded" if degraded else "ok")
+    state_opening_gate = (
+        bundle.get("state", {}).get("openingGate")
+        if isinstance(bundle.get("state", {}).get("openingGate"), dict)
+        else {}
+    )
+    opening_gate_checked_candidates = [
+        value
+        for value in (
+            state_opening_gate.get("checkedAt"),
+            FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("scheduledOpeningGateCheckedAt"),
+        )
+        if final_exam_parse_utc(value) is not None
+    ]
+    opening_gate_checked_at = (
+        final_exam_iso_utc(max(
+            opening_gate_checked_candidates,
+            key=lambda value: final_exam_parse_utc(value),
+        ))
+        if opening_gate_checked_candidates
+        else None
+    )
     payload = {
         "ok": not blocking_issues,
         "status": status,
@@ -8684,6 +9040,23 @@ def french8_final_exam_health_payload(config=None, grades_data=None, bundle=None
         "blockingIssues": blocking_issues,
         "degradedChecks": degraded,
         "storage": storage,
+        "openingGate": {
+            "status": clean_text(
+                state_opening_gate.get("status")
+                or FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("scheduledOpeningGateStatus"),
+                40,
+            ) or "idle",
+            "checkedAt": opening_gate_checked_at,
+            "blockingIssues": list(
+                state_opening_gate.get("blockingIssues", [])
+                or FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("scheduledOpeningBlockingIssues", [])
+            ),
+            "lastError": clean_text(
+                state_opening_gate.get("lastError")
+                or FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("scheduledOpeningLastError"),
+                300,
+            ),
+        },
     }
     FRENCH8_FINAL_EXAM_RUNTIME_STATUS["lastHealthAt"] = payload["serverTime"]
     FRENCH8_FINAL_EXAM_RUNTIME_STATUS["lastHealthStatus"] = status

@@ -307,6 +307,7 @@ class French8FinalExamBackendTests(unittest.TestCase):
             self.assertEqual(status, 200)
             self.assertEqual(draft["revision"], 1)
             self.assertEqual(draft["answeredCount"], 1)
+            self.assertEqual(draft["savedAt"], config["readStore"]()["attempts"]["008"]["draftUpdatedAt"])
 
             status, submitted = API.final_exam_submit_action(config, profile, {
                 "attemptId": session["attemptId"],

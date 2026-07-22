@@ -90,6 +90,14 @@
     .timer-panel{position:sticky;top:84px;z-index:8;display:flex;align-items:center;justify-content:space-between;gap:1rem;background:#fff;border:2px solid rgba(31,78,140,.14);box-shadow:0 12px 30px rgba(21,52,93,.12)}
     .timer-value{font-family:"Montserrat",sans-serif;font-size:1.35rem;font-weight:900;color:var(--blue-dark)}
     .timer-panel.warning{border-color:var(--yellow);background:#fff9e8}.timer-panel.urgent{border-color:var(--red);background:#fff0f1}
+    .timer-feedback{display:grid;justify-items:end;gap:.45rem;min-width:0;text-align:right}
+    .student-save-status{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:.45rem;max-width:100%;border-radius:999px;padding:.42rem .62rem;background:#eef5ff;color:var(--blue-dark);font-size:.86rem;font-weight:900}
+    .student-save-status[data-state="saved"]{background:#e8f7ef;color:#11633b}
+    .student-save-status[data-state="local"]{background:#fff9e8;color:#76520a}
+    .student-save-status[data-state="error"]{background:#fff0f1;color:#9f1d2a}
+    .student-save-summary{display:inline-flex;align-items:center;gap:.4rem;min-width:0}
+    .student-save-retry{border:0;border-radius:999px;background:#fff;color:inherit;padding:.28rem .58rem;font:inherit;line-height:1.2;box-shadow:0 2px 8px rgba(21,52,93,.12);cursor:pointer}
+    .student-save-retry:focus-visible{outline:3px solid rgba(244,123,32,.34);outline-offset:2px}
     .confirm-dialog{width:min(620px,calc(100% - 2rem));border:0;border-radius:24px;padding:0;box-shadow:0 28px 80px rgba(10,30,60,.32)}
     .confirm-dialog::backdrop{background:rgba(5,20,40,.62);backdrop-filter:blur(4px)}
     .confirm-content{padding:1.5rem}.receipt-code{font-family:monospace;font-size:1.15rem;font-weight:900;letter-spacing:.08em}
@@ -101,7 +109,7 @@
     @media(min-width:576px){.french8-final-page .jaralingua-auth{left:auto;right:18px}.french8-final-page .jaralingua-auth .auth-panel{left:auto;right:0}}
     @media(max-width:575px){.institutional-band.top-band{padding-top:105px}}
     @media(max-width:900px){.hero{padding-top:7rem;min-height:580px}.question-grid{grid-template-columns:1fr}.submit-zone{position:static}.timer-panel{top:72px}.schedule-grid{grid-template-columns:1fr}.audit-event{grid-template-columns:1fr}.simulation-toolbar{position:static;align-items:flex-start;flex-direction:column}}
-    @media(max-width:575px){.btn-main,.btn-soft,.btn-danger-soft{width:100%}.access-icon{width:54px;height:54px;font-size:1.55rem}.hero{min-height:540px;padding:6.8rem 0 3.5rem;background-position:62% center}.access-panel,.admin-panel,.exam-section,.submitted-panel{border-radius:20px}.timer-panel{position:static;align-items:flex-start;flex-direction:column}.navbar-brand span{font-size:.88rem}.institutional-band img{min-height:34px;object-fit:cover}.choice{min-height:48px}.question-card{padding:.9rem}.french8-final-page .jaralingua-auth>.auth-trigger{width:46px;min-width:46px;min-height:46px;padding:0 9px;gap:0}.french8-final-page .jaralingua-auth>.auth-trigger>span:last-child{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
+    @media(max-width:575px){.btn-main,.btn-soft,.btn-danger-soft{width:100%}.access-icon{width:54px;height:54px;font-size:1.55rem}.hero{min-height:540px;padding:6.8rem 0 3.5rem;background-position:62% center}.access-panel,.admin-panel,.exam-section,.submitted-panel{border-radius:20px}.timer-panel{position:static;align-items:flex-start;flex-direction:column}.timer-feedback{width:100%;justify-items:start;text-align:left}.student-save-status{width:100%;justify-content:flex-start;border-radius:14px}.student-save-retry{margin-left:auto}.navbar-brand span{font-size:.88rem}.institutional-band img{min-height:34px;object-fit:cover}.choice{min-height:48px}.question-card{padding:.9rem}.french8-final-page .jaralingua-auth>.auth-trigger{width:46px;min-width:46px;min-height:46px;padding:0 9px;gap:0}.french8-final-page .jaralingua-auth>.auth-trigger>span:last-child{position:absolute;width:1px;height:1px;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}
     @media(max-width:359px){.container{padding-left:.75rem;padding-right:.75rem}.hero h1{font-size:2.35rem}.badge-course{font-size:.8rem;padding:.6rem .75rem}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}.choice:active,.btn-main:not(:disabled):active,.btn-soft:not(:disabled):active,.btn-danger-soft:not(:disabled):active{transform:none}}
   </style>
@@ -138,7 +146,7 @@
 
   <section id="access" class="exam-shell">
     <div class="container">
-      <div class="access-panel" id="accessPanel" aria-live="polite"></div>
+      <div class="access-panel" id="accessPanel"></div>
       <div class="admin-panel mt-3" id="adminPanel" hidden></div>
     </div>
   </section>
@@ -225,6 +233,8 @@
       let stablePresentation = {};
       let draftPendingAnswers = null;
       let draftSavePromise = null;
+      let localDraftPersisted = false;
+      let studentSaveAnnounceHandle = 0;
       let restoringDraft = false;
       let pendingExamPayload = null;
       let startGateActive = false;
@@ -252,6 +262,73 @@
         return String(value ?? "").replace(/[&<>"']/g, (character) => ({
           "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
         })[character]);
+      }
+
+      function studentSaveTime(value = new Date()) {
+        const parsed = value instanceof Date ? value : new Date(value);
+        const safe = Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+        return new Intl.DateTimeFormat("fr-FR", { hour: "2-digit", minute: "2-digit", second: "2-digit" }).format(safe);
+      }
+
+      function setStudentSaveState(state, message, allowRetry = false) {
+        if (!examInProgress || simulationMode || ["admin", "teacher"].includes(currentRole)) return;
+        const container = els.form.querySelector("[data-student-save-status]");
+        const text = container?.querySelector("[data-student-save-text]");
+        const icon = container?.querySelector("[data-student-save-icon]");
+        const retry = container?.querySelector("[data-student-save-retry]");
+        const announcer = container?.querySelector("[data-student-save-announcer]");
+        if (!container || !text || !icon || !retry || !announcer) return;
+        const safeState = ["saving", "saved", "local", "error"].includes(state) ? state : "saving";
+        const iconClass = {
+          saving: "bi-cloud-arrow-up-fill",
+          saved: "bi-cloud-check-fill",
+          local: "bi-device-hdd-fill",
+          error: "bi-exclamation-triangle-fill"
+        }[safeState];
+        container.dataset.state = safeState;
+        icon.className = `bi ${iconClass}`;
+        text.textContent = message;
+        retry.hidden = !allowRetry;
+        if (safeState !== "saving") {
+          window.clearTimeout(studentSaveAnnounceHandle);
+          announcer.textContent = "";
+          studentSaveAnnounceHandle = window.setTimeout(() => {
+            if (announcer.isConnected) announcer.textContent = message;
+          }, 30);
+        }
+      }
+
+      function savedOnServerMessage(value = new Date()) {
+        return `Enregistré sur le serveur · ${studentSaveTime(value)}`;
+      }
+
+      function selectedQuestionLabel(input) {
+        const legend = input?.closest?.(".question-card")?.querySelector("legend")?.textContent || "";
+        const number = legend.match(/^\s*(\d+)\./)?.[1];
+        return number ? `Réponse ${number} sélectionnée` : "Réponse sélectionnée";
+      }
+
+      function setStudentDraftFallback(reason = "server") {
+        const copyAvailable = localDraftPersisted;
+        let message = "";
+        if (reason === "auth" && navigator.onLine) {
+          message = copyAvailable
+            ? "Authentification requise pour enregistrer sur le serveur. Une copie est conservée sur cet appareil."
+            : "Authentification requise pour enregistrer sur le serveur. Votre réponse reste dans ce formulaire; ne rechargez pas la page."
+        } else if (reason === "offline" || !navigator.onLine) {
+          message = copyAvailable
+            ? "Enregistré uniquement sur cet appareil / hors connexion"
+            : "Hors connexion. Votre réponse reste dans ce formulaire; ne rechargez pas la page."
+        } else if (reason === "verify") {
+          message = copyAvailable
+            ? "Impossible de vérifier le brouillon du serveur. Une copie est conservée sur cet appareil."
+            : "Impossible de vérifier le brouillon du serveur. Vos réponses restent dans ce formulaire; ne rechargez pas la page."
+        } else {
+          message = copyAvailable
+            ? "Impossible d’enregistrer sur le serveur. Une copie est conservée sur cet appareil."
+            : "Impossible d’enregistrer sur le serveur. Votre réponse reste dans ce formulaire; ne rechargez pas la page."
+        }
+        setStudentSaveState(copyAvailable ? "local" : "error", message, true);
       }
 
       function createClientId(prefix) {
@@ -503,7 +580,7 @@
         }
       }
 
-      function showReconnectNotice(message = "Votre connexion a expiré. Vos réponses restent sur cet appareil; reconnectez le compte qui a commencé l’examen.") {
+      function showReconnectNotice(message = "Votre connexion a expiré. Reconnectez le compte qui a commencé l’examen; ne rechargez pas cette page pendant la reconnexion.") {
         if (!examInProgress) return;
         examAuthInterrupted = true;
         updateSubmitAvailability();
@@ -517,7 +594,12 @@
         }
         notice.hidden = false;
         notice.innerHTML = `<strong>Connexion à renouveler</strong><br>${esc(message)}<br><button class="btn-soft mt-2" type="button" data-reconnect-exam><i class="bi bi-arrow-repeat"></i> Reconnecter et reprendre</button>`;
-        notice.querySelector("[data-reconnect-exam]")?.addEventListener("click", recoverExamAuthentication, { once: true });
+        setStudentDraftFallback(navigator.onLine ? "auth" : "offline");
+        notice.querySelector("[data-reconnect-exam]")?.addEventListener("click", () => {
+          setSubmitStatus("Reconnexion et synchronisation en cours…", "pending");
+          setStudentSaveState("saving", "Reconnexion · Enregistrement…");
+          recoverExamAuthentication();
+        }, { once: true });
       }
 
       function hideReconnectNotice() {
@@ -530,6 +612,20 @@
         if (!trigger) return false;
         trigger.click();
         return true;
+      }
+
+      function recheckStudentAccess(event) {
+        const button = event?.currentTarget;
+        const status = els.access.querySelector("[data-access-action-status], #courseLoginStatus");
+        if (button) {
+          button.disabled = true;
+          button.setAttribute("aria-busy", "true");
+        }
+        if (status) {
+          status.className = "status-message pending mt-2 mb-0";
+          status.textContent = "Vérification de votre accès auprès du serveur…";
+        }
+        window.setTimeout(() => loadState({ force: true }), 0);
       }
 
       function renderLogin(message) {
@@ -551,7 +647,7 @@
                   <label class="fw-bold mb-1" for="coursePassword">Mot de passe</label>
                   <input class="form-control mb-2" id="coursePassword" name="coursePassword" type="password" autocomplete="current-password" placeholder="ID*" required>
                   <button class="btn-main w-100" type="submit"><i class="bi bi-key-fill"></i> Entrer avec le courriel du cours</button>
-                  <p id="courseLoginStatus" class="mt-2 mb-0 fw-bold"></p>
+                  <p id="courseLoginStatus" class="mt-2 mb-0 fw-bold" role="status" aria-live="polite" aria-atomic="true"></p>
                 </form>
                 <div>
                   <p class="section-text mb-3">Utilisez aussi le bouton flottant JaraLingua si votre compte est Google ou Microsoft.</p>
@@ -562,16 +658,27 @@
             </div>
           </div>`;
         els.access.querySelector("[data-open-login]").addEventListener("click", () => {
+          const status = document.getElementById("courseLoginStatus");
+          if (status) {
+            status.className = "status-message pending mt-2 mb-0";
+            status.textContent = "Ouverture du panneau Google / Microsoft…";
+          }
           const opened = openLoginPanel();
           if (!opened) {
-            const status = document.getElementById("courseLoginStatus");
-            if (status) status.textContent = "Le panneau Google / Microsoft n’est pas disponible. Rechargez la page ou utilisez le courriel du cours.";
+            if (status) {
+              status.className = "status-message error mt-2 mb-0";
+              status.textContent = "Le panneau Google / Microsoft n’est pas disponible. Rechargez la page ou utilisez le courriel du cours.";
+            }
             return;
+          }
+          if (status) {
+            status.className = "status-message success mt-2 mb-0";
+            status.textContent = "Panneau ouvert. Choisissez votre compte; l’accès sera vérifié automatiquement.";
           }
           setTimeout(loadState, 1400);
           setTimeout(loadState, 3200);
         });
-        els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
+        els.access.querySelector("[data-recheck]").addEventListener("click", recheckStudentAccess);
         els.access.querySelector("#courseLoginForm").addEventListener("submit", loginCourse);
       }
 
@@ -580,11 +687,13 @@
         const form = event.currentTarget;
         const status = document.getElementById("courseLoginStatus");
         const button = form.querySelector("button[type='submit']");
+        status.className = "status-message pending mt-2 mb-0";
         status.textContent = "Vérification du compte du cours...";
         button.disabled = true;
         button.setAttribute("aria-busy", "true");
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 15000);
+        let responseStatus = 0;
         try {
           const response = await fetch(API.login, {
             method: "POST",
@@ -592,6 +701,7 @@
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: form.courseEmail.value.trim(), password: form.coursePassword.value })
           });
+          responseStatus = response.status;
           const result = await response.json().catch(() => ({}));
           if (!response.ok || !result.token) throw new Error(result.error || "invalid_credentials");
           const signedEmail = String(result.user?.email || form.courseEmail.value || "").trim().toLowerCase();
@@ -608,11 +718,16 @@
           }));
           sessionStorage.removeItem(GOOGLE_KEY);
           sessionStorage.removeItem(MICROSOFT_KEY);
-          status.textContent = "Compte validé.";
+          status.className = "status-message success mt-2 mb-0";
+          status.textContent = "Compte validé. Vérification de l’accès à l’examen…";
           if (examInProgress) await recoverExamAuthentication();
           else await loadState({ force: true });
-        } catch (_error) {
-          status.textContent = "Courriel ou mot de passe incorrect. Mot de passe : numéro ID + astérisque.";
+        } catch (error) {
+          status.className = "status-message error mt-2 mb-0";
+          const technicalFailure = error?.name === "AbortError" || !navigator.onLine || responseStatus === 0 || responseStatus >= 500;
+          status.textContent = technicalFailure
+            ? "Le serveur n’a pas répondu. Vérifiez votre connexion et réessayez; aucune tentative n’a été créée."
+            : "Courriel ou mot de passe incorrect. Mot de passe : numéro ID + astérisque.";
           button.disabled = false;
         } finally {
           window.clearTimeout(timeout);
@@ -724,14 +839,24 @@
         container.querySelector("[data-play-preflight]")?.addEventListener("click", async () => {
           const panel = container.querySelector("[data-preflight]");
           const audio = panel?.querySelector("[data-preflight-audio]");
-          if (!audio?.src) return;
+          const status = panel?.querySelector("[data-preflight-status]");
+          if (!audio?.src) {
+            if (status) {
+              status.className = "status-message error";
+              status.textContent = "L’audio de test n’est pas encore prêt. Relancez le test technique.";
+            }
+            return;
+          }
+          if (status) {
+            status.className = "status-message pending";
+            status.textContent = "Lecture du son test en cours. Confirmez ensuite avec « Je l’entends ».";
+          }
           audio.pause();
           audio.currentTime = 0;
           try {
             await audio.play();
             panel.querySelector("[data-heard-preflight]").disabled = false;
           } catch (_error) {
-            const status = panel.querySelector("[data-preflight-status]");
             status.className = "status-message error";
             status.textContent = "Le navigateur a bloqué la lecture. Utilisez directement le bouton Lecture du lecteur audio.";
           }
@@ -739,7 +864,12 @@
         container.querySelector("[data-heard-preflight]")?.addEventListener("click", () => {
           const panel = container.querySelector("[data-preflight]");
           const cards = panel.querySelectorAll(".check-card");
-          if (panel.dataset.accountOk !== "true" || panel.dataset.connectionOk !== "true" || panel.dataset.audioPrepared !== "true") return;
+          if (panel.dataset.accountOk !== "true" || panel.dataset.connectionOk !== "true" || panel.dataset.audioPrepared !== "true") {
+            const status = panel.querySelector("[data-preflight-status]");
+            status.className = "status-message error";
+            status.textContent = "Le test n’est plus valide. Relancez-le avant de confirmer le son.";
+            return;
+          }
           cards[2].className = "check-card ok";
           cards[2].innerHTML = `<i class="bi bi-check-circle-fill"></i> Audio : entendu`;
           panel.dataset.ready = "true";
@@ -750,6 +880,26 @@
         });
         container.querySelector("[data-preflight-audio]")?.addEventListener("play", () => {
           container.querySelector("[data-heard-preflight]")?.removeAttribute("disabled");
+          const status = container.querySelector("[data-preflight-status]");
+          if (status) {
+            status.className = "status-message pending";
+            status.textContent = "Le son test est en lecture. Si vous l’entendez, confirmez avec « Je l’entends ».";
+          }
+        });
+        container.querySelector("[data-preflight-audio]")?.addEventListener("pause", (event) => {
+          const panel = container.querySelector("[data-preflight]");
+          const audio = event.currentTarget;
+          if (panel?.dataset.audioPrepared !== "true" || audio.ended || audio.currentTime <= 0) return;
+          const status = panel.querySelector("[data-preflight-status]");
+          status.className = "status-message pending";
+          status.textContent = "Lecture du son test en pause. Vous pouvez reprendre ou confirmer si vous l’avez entendu.";
+        });
+        container.querySelector("[data-preflight-audio]")?.addEventListener("ended", () => {
+          const status = container.querySelector("[data-preflight-status]");
+          if (status) {
+            status.className = "status-message pending";
+            status.textContent = "Son test terminé. Confirmez maintenant avec « Je l’entends ».";
+          }
         });
       }
 
@@ -770,12 +920,13 @@
                 ${examWindowIsPending(payload?.state) ? `<span class="pill"><i class="bi bi-calendar-event-fill"></i> Ouverture : ${esc(readableMoment(payload.state.opensAt))}</span>` : ""}
                 ${payload?.state?.updatedAt ? `<span class="pill"><i class="bi bi-clock-history"></i> Dernière mise à jour : ${esc(payload.state.updatedAt)}</span>` : ""}
               </div>
-              <button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier à nouveau</button>
-              <p class="section-text mt-3 mb-0"><i class="bi bi-arrow-repeat"></i> Cette page vérifie aussi automatiquement l’ouverture lorsque l’onglet est visible.</p>
+               <button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier à nouveau</button>
+               <p class="mt-2 mb-0" data-access-action-status role="status" aria-live="polite" aria-atomic="true"></p>
+               <p class="section-text mt-3 mb-0"><i class="bi bi-arrow-repeat"></i> Cette page vérifie aussi automatiquement l’ouverture lorsque l’onglet est visible.</p>
               ${preflightHtml()}
             </div>
           </div>`;
-        els.access.querySelector("[data-recheck]").addEventListener("click", loadState);
+        els.access.querySelector("[data-recheck]").addEventListener("click", recheckStudentAccess);
         bindPreflight();
       }
 
@@ -1589,7 +1740,10 @@
           showReconnectNotice("Une autre identité a été détectée. Le brouillon affiché reste associé au compte qui a commencé cet examen.");
           return false;
         }
-        if (currentDraftKey !== candidate) currentClientSubmissionId = "";
+        if (currentDraftKey !== candidate) {
+          currentClientSubmissionId = "";
+          localDraftPersisted = false;
+        }
         currentStudentId = identity.studentId;
         currentAttemptId = identity.attemptId;
         currentDraftKey = candidate;
@@ -1600,6 +1754,28 @@
         return currentDraftKey;
       }
 
+      function persistDraftLocally(answers) {
+        const key = draftKey();
+        if (!key) {
+          localDraftPersisted = false;
+          return false;
+        }
+        try {
+          const serialized = JSON.stringify({
+            version: currentExam?.version || "",
+            studentId: currentStudentId,
+            attemptId: currentAttemptId,
+            answers,
+            savedAt: new Date().toISOString()
+          });
+          sessionStorage.setItem(key, serialized);
+          localDraftPersisted = sessionStorage.getItem(key) === serialized;
+        } catch (_error) {
+          localDraftPersisted = false;
+        }
+        return localDraftPersisted;
+      }
+
       function selectedAnswerMap() {
         const answers = {};
         els.form.querySelectorAll("input[type='radio']:checked").forEach((input) => {
@@ -1608,25 +1784,37 @@
         return answers;
       }
 
-      function saveDraft() {
+      function saveDraft(sourceInput = null) {
         if (!examInProgress || !currentExam || restoringDraft) return;
         const answers = selectedAnswerMap();
-        try {
-          if (draftKey()) sessionStorage.setItem(draftKey(), JSON.stringify({ version: currentExam.version || "", studentId: currentStudentId, attemptId: currentAttemptId, answers, savedAt: new Date().toISOString() }));
-        } catch (_error) {
-          // Le formulaire reste utilisable même si le stockage du navigateur est indisponible.
-        }
+        persistDraftLocally(answers);
         window.clearTimeout(draftHandle);
+        if (sourceInput) setStudentSaveState("saving", `${selectedQuestionLabel(sourceInput)} · Enregistrement…`);
+        else setStudentSaveState("saving", "Enregistrement…");
+        if (!navigator.onLine) {
+          draftPendingAnswers = Object.assign({}, answers);
+          setStudentDraftFallback("offline");
+          scheduleSessionEvent("progress", Object.keys(answers).length);
+          return;
+        }
         draftHandle = window.setTimeout(() => saveServerDraft(answers), 900);
         scheduleSessionEvent("progress", Object.keys(answers).length);
       }
 
-      async function saveServerDraft(answers) {
-        if (!examInProgress) return;
+      async function saveServerDraft(answers, options = {}) {
+        if (!examInProgress) return false;
         draftPendingAnswers = Object.assign({}, answers);
+        persistDraftLocally(draftPendingAnswers);
+        if (!navigator.onLine) {
+          setStudentDraftFallback("offline");
+          return false;
+        }
+        if (!options.silentStart) setStudentSaveState("saving", "Enregistrement…");
         if (draftSavePromise) return draftSavePromise;
         draftSavePromise = (async () => {
           let retryLater = false;
+          let saveFailed = false;
+          let lastServerSavedAt = null;
           while (draftPendingAnswers) {
             const nextAnswers = draftPendingAnswers;
             draftPendingAnswers = null;
@@ -1640,35 +1828,52 @@
                 const localCurrent = Object.assign({}, nextAnswers, selectedAnswerMap(), queuedNewer || {});
                 const restoredAnswers = Object.assign({}, serverAnswers, localCurrent);
                 applyAnswerMap(restoredAnswers, true);
-                try { if (draftKey()) sessionStorage.setItem(draftKey(), JSON.stringify({ version: currentExam.version || "", studentId: currentStudentId, attemptId: currentAttemptId, answers: restoredAnswers, savedAt: new Date().toISOString() })); } catch (_error) { /* rien */ }
+                persistDraftLocally(restoredAnswers);
                 restoringDraft = false;
                 draftPendingAnswers = restoredAnswers;
                 setSubmitStatus("Le brouillon serveur et vos réponses locales ont été réunis. La version la plus récente de cet appareil reste prioritaire et sera resynchronisée.", "pending");
+                setStudentSaveState("saving", "Réponses réunies · Enregistrement…");
                 continue;
               }
               if (result.ok) {
                 draftRevision = Number(result.data?.revision ?? draftRevision + 1);
+                lastServerSavedAt = result.data?.savedAt || result.data?.updatedAt || new Date();
                 examAuthInterrupted = false;
                 hideReconnectNotice();
                 continue;
               }
               draftPendingAnswers = Object.assign({}, nextAnswers, draftPendingAnswers || {});
               retryLater = result.status >= 500;
+              saveFailed = true;
               if (result.status === 401) showReconnectNotice();
               else if (result.status === 403) showReconnectNotice("Le serveur refuse ce compte pour la tentative affichée. Reconnectez le compte qui a commencé l’examen.");
+              if ([401, 403].includes(result.status)) setStudentDraftFallback(navigator.onLine ? "auth" : "offline");
+              else setStudentDraftFallback(navigator.onLine ? "server" : "offline");
               break;
             } catch (_error) {
               draftPendingAnswers = Object.assign({}, nextAnswers, draftPendingAnswers || {});
               retryLater = true;
+              saveFailed = true;
+              setStudentDraftFallback(navigator.onLine ? "server" : "offline");
               break;
             }
           }
+          if (!saveFailed && !draftPendingAnswers && lastServerSavedAt) {
+            setStudentSaveState("saved", savedOnServerMessage(lastServerSavedAt));
+          }
           if (retryLater && draftPendingAnswers && examInProgress && !examAuthInterrupted) {
             window.clearTimeout(draftHandle);
-            draftHandle = window.setTimeout(() => saveServerDraft(draftPendingAnswers), 5000);
+            draftHandle = window.setTimeout(() => saveServerDraft(draftPendingAnswers, { silentStart: true }), 5000);
           }
+          return !saveFailed && !draftPendingAnswers;
         })().finally(() => { draftSavePromise = null; });
         return draftSavePromise;
+      }
+
+      async function retryStudentDraft() {
+        if (!examInProgress || submitting) return;
+        setStudentSaveState("saving", "Nouvelle tentative · Enregistrement…");
+        await saveServerDraft(selectedAnswerMap());
       }
 
       function applyAnswerMap(answers = {}, replace = false) {
@@ -1686,25 +1891,49 @@
       async function restoreServerDraft() {
         if (!examInProgress || !currentExam) return;
         let mergedForServer = null;
+        let serverVerified = false;
+        let serverSavedAt = null;
+        setStudentSaveState("saving", "Vérification de l’enregistrement sécurisé…");
         try {
           const result = await request(API.draft, {}, 10000, "exam");
           if (result.status === 409 && result.data?.error === "already_submitted" && result.data?.result) return renderSubmitted(result.data.result);
-          if (!result.ok || !result.data?.answers || result.data.version !== (currentExam.version || "")) return;
-          if (result.data.attemptId && currentAttemptId && result.data.attemptId !== currentAttemptId) return;
+          if (!result.ok) {
+            setStudentDraftFallback([401, 403].includes(result.status) && navigator.onLine ? "auth" : (navigator.onLine ? "verify" : "offline"));
+            setSubmitStatus("", "pending");
+            return;
+          }
+          const serverAnswers = result.data?.answers;
+          const compatibleVersion = result.data?.version === (currentExam.version || "");
+          const compatibleAttempt = !result.data?.attemptId || !currentAttemptId || result.data.attemptId === currentAttemptId;
+          if (!serverAnswers || typeof serverAnswers !== "object" || Array.isArray(serverAnswers) || !compatibleVersion || !compatibleAttempt) {
+            const retention = localDraftPersisted
+              ? "Une copie actuelle est conservée sur cet appareil."
+              : "Vos réponses restent dans ce formulaire; ne rechargez pas la page.";
+            setStudentSaveState(localDraftPersisted ? "local" : "error", `Aucun brouillon serveur compatible n’a été confirmé. ${retention}`, true);
+            setSubmitStatus("", "pending");
+            return;
+          }
+          serverVerified = true;
+          serverSavedAt = result.data?.draft?.updatedAt || result.data?.updatedAt || result.data?.savedAt || null;
           draftRevision = Number(result.data.revision || 0);
-          const serverAnswers = result.data.answers || {};
           const localAnswers = selectedAnswerMap();
           const mergedAnswers = Object.assign({}, serverAnswers, localAnswers);
           const restored = applyAnswerMap(mergedAnswers, true);
-          try { if (draftKey()) sessionStorage.setItem(draftKey(), JSON.stringify({ version: currentExam.version || "", studentId: currentStudentId, attemptId: currentAttemptId, answers: mergedAnswers, savedAt: new Date().toISOString() })); } catch (_error) { /* rien */ }
+          persistDraftLocally(mergedAnswers);
           if (JSON.stringify(mergedAnswers) !== JSON.stringify(serverAnswers)) mergedForServer = mergedAnswers;
           setSubmitStatus(restored > 0 ? `Brouillon sécurisé restauré : ${restored} réponse(s). Les réponses plus récentes de cet appareil ont été conservées.` : "Brouillon sécurisé prêt. Vous pouvez commencer à répondre.", "success");
-        } catch (_error) { /* sessionStorage a déjà été tenté. */ }
+        } catch (_error) {
+          setStudentDraftFallback(navigator.onLine ? "verify" : "offline");
+          setSubmitStatus("", "pending");
+        }
         finally {
           restoringDraft = false;
           els.form.querySelectorAll("input[type='radio']").forEach((input) => { input.disabled = false; });
           updateSubmitAvailability();
           if (mergedForServer && examInProgress) saveServerDraft(mergedForServer);
+          else if (serverVerified && examInProgress) {
+            setStudentSaveState("saved", serverSavedAt ? savedOnServerMessage(serverSavedAt) : "Brouillon vérifié sur le serveur");
+          }
         }
       }
 
@@ -1728,9 +1957,14 @@
           if (
             !draft || draft.version !== (currentExam.version || "") || !draft.answers ||
             draft.studentId !== currentStudentId || draft.attemptId !== currentAttemptId
-          ) return 0;
+          ) {
+            localDraftPersisted = false;
+            return 0;
+          }
+          localDraftPersisted = true;
           return applyAnswerMap(draft.answers);
         } catch (_error) {
+          localDraftPersisted = false;
           return 0;
         }
       }
@@ -1744,6 +1978,7 @@
         if (key === currentDraftKey) {
           currentDraftKey = "";
           currentClientSubmissionId = "";
+          localDraftPersisted = false;
         }
       }
 
@@ -1933,10 +2168,12 @@
 
       async function recoverExamAuthentication() {
         if (!examInProgress || !currentAttemptId || !currentExam) return false;
+        setSubmitStatus("Reconnexion et vérification de votre tentative…", "pending");
+        setStudentSaveState("saving", "Reconnexion · Enregistrement…");
         const external = externalUser();
         if (!external) {
           openLoginPanel();
-          showReconnectNotice("Reconnectez le compte qui a commencé l’examen, puis touchez de nouveau « Reconnecter et reprendre ». Vos réponses restent conservées.");
+          showReconnectNotice("Reconnectez le compte qui a commencé l’examen, puis touchez de nouveau « Reconnecter et reprendre ». Les réponses affichées restent dans ce formulaire; ne rechargez pas la page.");
           return false;
         }
         const expectedAttemptId = currentAttemptId;
@@ -2078,7 +2315,7 @@
           </div>`;
         els.form.innerHTML = `
           ${isSimulation ? `<div class="simulation-toolbar" role="status" aria-live="polite"><div><strong><i class="bi bi-eye-fill"></i> SIMULATION PROFESSEUR · MODÈLE ${esc(payload.simulationVariant || "A")}</strong><small>Rien n’est enregistré dans les tentatives, les brouillons ou les notes.</small></div><div class="d-flex flex-wrap gap-2"><button class="btn-soft" type="button" data-reset-simulation><i class="bi bi-arrow-counterclockwise"></i> Réinitialiser</button><button class="btn-danger-soft" type="button" data-exit-simulation><i class="bi bi-x-circle"></i> Quitter</button></div></div><div class="simulation-watermark" aria-hidden="true">SIMULATION · NON ENREGISTRÉE</div>` : ""}
-          ${!isStaff ? `<div class="timer-panel" data-exam-timer><div><span class="section-kicker">Temps restant</span><div class="timer-value" data-timer-value aria-label="Temps restant">--:--</div></div><strong data-timer-message role="status" aria-live="polite">Votre brouillon est enregistré automatiquement.</strong></div>` : ""}
+          ${!isStaff ? `<div class="timer-panel" data-exam-timer><div><span class="section-kicker">Temps restant</span><div class="timer-value" data-timer-value aria-label="Temps restant">--:--</div></div><div class="timer-feedback"><strong data-timer-message role="status" aria-live="polite">Votre brouillon est enregistré automatiquement.</strong><div class="student-save-status" data-student-save-status data-state="saving"><span class="student-save-summary"><i class="bi bi-cloud-arrow-up-fill" data-student-save-icon aria-hidden="true"></i><span data-student-save-text>Enregistrement…</span></span><span class="visually-hidden" data-student-save-announcer role="status" aria-live="polite" aria-atomic="true"></span><button class="student-save-retry" type="button" data-student-save-retry hidden><i class="bi bi-arrow-repeat" aria-hidden="true"></i> Réessayer</button></div></div></div>` : ""}
           ${currentExam.sections.map(renderSection).join("")}
           <div class="submit-zone">
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
@@ -2095,13 +2332,35 @@
         els.form.onchange = (event) => {
           if (!event.target.matches("input[type='radio']")) return;
           updateQuestionCards();
-          saveDraft();
+          saveDraft(event.target);
         };
         els.form.querySelector("[data-audio-retry]")?.addEventListener("click", loadExamAudio);
+        const examAudio = els.form.querySelector("#finalExamAudio");
+        examAudio?.addEventListener("play", () => {
+          if (audioReady) setAudioStatus("Lecture de l’audio de compréhension en cours.", "pending");
+        });
+        examAudio?.addEventListener("pause", () => {
+          if (audioReady && !examAudio.ended && examAudio.currentTime > 0) setAudioStatus("Lecture en pause. Votre position est conservée.", "pending");
+        });
+        examAudio?.addEventListener("ended", () => {
+          if (audioReady) setAudioStatus("Écoute terminée. Vous pouvez réécouter l’audio ou poursuivre vos réponses.", "success");
+        });
+        els.form.querySelector("[data-student-save-retry]")?.addEventListener("click", retryStudentDraft);
         els.form.querySelector("[data-reset-simulation]")?.addEventListener("click", resetStaffSimulation);
         els.form.querySelector("[data-exit-simulation]")?.addEventListener("click", finishStaffSimulation);
-        els.form.querySelector("[data-cancel-submit]")?.addEventListener("click", () => els.form.querySelector("[data-confirm-dialog]")?.close?.());
-        els.form.querySelector("[data-confirm-submit]")?.addEventListener("click", () => { els.form.querySelector("[data-confirm-dialog]")?.close?.(); performSubmit(false); });
+        const confirmationDialog = els.form.querySelector("[data-confirm-dialog]");
+        const cancelConfirmation = () => {
+          confirmationDialog?.close?.();
+          setSubmitStatus("Envoi annulé. Vos réponses restent modifiables et continuent d’être enregistrées.", "success");
+          window.setTimeout(() => submitButton()?.focus(), 0);
+        };
+        els.form.querySelector("[data-cancel-submit]")?.addEventListener("click", cancelConfirmation);
+        confirmationDialog?.addEventListener("cancel", (event) => { event.preventDefault(); cancelConfirmation(); });
+        els.form.querySelector("[data-confirm-submit]")?.addEventListener("click", () => {
+          setSubmitStatus("Confirmation reçue. Enregistrement définitif en cours…", "pending");
+          confirmationDialog?.close?.();
+          performSubmit(false);
+        });
         if (!isStaff && !storedExamAuth()) showReconnectNotice("La session sécurisée de cette tentative doit être renouvelée avant de poursuivre.");
         if (!isStaff) {
           setSubmitStatus("Récupération du brouillon sécurisé avant d’autoriser les réponses…", "pending");
@@ -2178,8 +2437,17 @@
         dialog.querySelector("[data-confirm-time]").textContent = simulationMode ? "Simulation sans chronomètre" : `Temps restant : ${document.querySelector("[data-timer-value]")?.textContent || "non limité"}`;
         const confirmButton = dialog.querySelector("[data-confirm-submit]");
         if (confirmButton) confirmButton.innerHTML = simulationMode ? '<i class="bi bi-check2-square"></i> Valider localement' : '<i class="bi bi-send-check-fill"></i> Confirmer l’envoi';
-        if (typeof dialog.showModal === "function") dialog.showModal();
-        else if (window.confirm("Toutes les réponses sont complètes. Confirmer l’envoi définitif ?")) performSubmit(false);
+        setSubmitStatus("Toutes les réponses sont complètes. Vérifiez la fenêtre de confirmation avant l’envoi définitif.", "success");
+        if (typeof dialog.showModal === "function") {
+          dialog.showModal();
+          window.setTimeout(() => confirmButton?.focus(), 0);
+        } else if (window.confirm("Toutes les réponses sont complètes. Confirmer l’envoi définitif ?")) {
+          setSubmitStatus("Confirmation reçue. Enregistrement définitif en cours…", "pending");
+          performSubmit(false);
+        } else {
+          setSubmitStatus("Envoi annulé. Vos réponses restent modifiables et continuent d’être enregistrées.", "success");
+          submitButton()?.focus();
+        }
       }
 
       async function performSubmit(autoSubmit = false) {
@@ -2190,7 +2458,7 @@
         }
         if (examAuthInterrupted) {
           pendingAutomaticSubmit = autoSubmit || pendingAutomaticSubmit;
-          showReconnectNotice("Rétablissez d’abord la connexion du compte qui a commencé cet examen. Vos réponses restent conservées.");
+          showReconnectNotice("Rétablissez d’abord la connexion du compte qui a commencé cet examen. Les réponses affichées restent dans ce formulaire; ne rechargez pas la page.");
           return;
         }
         const initial = collectAnswers(!autoSubmit);
@@ -2198,6 +2466,7 @@
         let missing = initial.missing;
         const firstMissing = initial.firstMissing;
         if (!autoSubmit && missing > 0) {
+          setSubmitStatus(`Il manque ${missing} réponse(s). Vérifiez les questions indiquées avant de confirmer l’envoi.`, "error");
           firstMissing?.scrollIntoView({ behavior: "smooth", block: "center" });
           return;
         }
@@ -2223,7 +2492,7 @@
             if (result.status === 401) {
               pendingAutomaticSubmit = autoSubmit;
               showReconnectNotice();
-              throw new Error("La connexion doit être renouvelée avant l’envoi. Vos réponses restent conservées.");
+              throw new Error("La connexion doit être renouvelée avant l’envoi. Les réponses affichées restent dans ce formulaire; ne rechargez pas la page.");
             }
             if (result.data?.error === "exam_closed") throw new Error("L’examen est fermé. La soumission n’a pas été enregistrée.");
             if (result.data?.error === "exam_version_changed") throw new Error("L’examen a été mis à jour. Rechargez la page avant de recommencer; cette version ne peut pas être envoyée.");
@@ -2319,7 +2588,13 @@
       async function startExamAttempt() {
         const button = els.access.querySelector("[data-start-exam]");
         const status = els.access.querySelector("[data-start-status]");
-        if (els.access.querySelector("[data-preflight]")?.dataset.ready !== "true" || !pendingExamPayload) return;
+        if (els.access.querySelector("[data-preflight]")?.dataset.ready !== "true" || !pendingExamPayload) {
+          if (status) {
+            status.className = "status-message error";
+            status.textContent = "Le test technique doit être validé avant de commencer. Relancez-le si nécessaire.";
+          }
+          return;
+        }
         const initialPayload = pendingExamPayload;
         const expectedStudentId = String(initialPayload.student?.id || "");
         let sessionRequested = false;
@@ -2461,7 +2736,7 @@
         }
         loading = true;
         try {
-          els.access.innerHTML = `<div class="access-panel"><p class="section-kicker">Vérification</p><h2 class="section-title">Chargement de l’accès...</h2><p class="section-text">Connexion au service de l’examen final.</p></div>`;
+          els.access.innerHTML = `<div class="access-panel" role="status" aria-live="polite" aria-atomic="true"><p class="section-kicker">Vérification</p><h2 class="section-title">Chargement de l’accès...</h2><p class="section-text">Connexion au service de l’examen final.</p></div>`;
           const verifyChangedExternal = Boolean(external && bridge && (
             accountVerificationBlocked ||
             String(external.email || "").trim().toLowerCase() !== String(bridge.email || "").trim().toLowerCase()
@@ -2565,10 +2840,17 @@
           if (!examInProgress && !startGateActive && !stateUpdating) loadState();
         }, 250);
       });
-      window.addEventListener("online", () => startRealtime());
+      window.addEventListener("online", () => {
+        startRealtime();
+        if (examInProgress && !submitting) {
+          setStudentSaveState("saving", "Connexion rétablie · Enregistrement…");
+          window.setTimeout(() => saveServerDraft(selectedAnswerMap()), 0);
+        }
+      });
       window.addEventListener("offline", () => {
         realtimeConnected = false;
         setRealtimeStatus("error", "Hors connexion");
+        if (examInProgress) saveDraft();
         if (["admin", "teacher"].includes(currentRole)) startMonitor();
       });
       window.addEventListener("beforeunload", () => stopRealtime(false));

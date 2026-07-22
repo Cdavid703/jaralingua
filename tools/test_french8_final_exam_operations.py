@@ -78,6 +78,14 @@ def json_runtime(root: pathlib.Path):
     def write(path, payload):
         path.write_text(json.dumps(payload), encoding="utf-8")
 
+    def ready_health(_config, _grades, _bundle, _store, record_alerts=True):
+        return {
+            "readyToOpen": True,
+            "schedulerReady": True,
+            "status": "ok",
+            "blockingIssues": [],
+        }
+
     return {
         "level": "french8",
         "gradesPath": str(grades_path),
@@ -90,7 +98,29 @@ def json_runtime(root: pathlib.Path):
         "evaluation": {"id": "finalExam", "title": "Final", "weight": 20},
         "ensureGrades": lambda _grades: False,
         "supportsSchedule": True,
+        "healthCheck": ready_health,
     }
+
+
+def sqlite_runtime(root: pathlib.Path):
+    runtime = json_runtime(root)
+    repository = API.FinalExamRepository(root / "runtime.sqlite3", level="french8")
+    repository.initialize(
+        root / "bundle.json",
+        root / "bundle.json",
+        root / "store.json",
+        default_bundle=runtime["readBundle"](),
+        default_store=runtime["readStore"](),
+    )
+    runtime.update({
+        "readBundle": repository.read_bundle,
+        "writeBundle": lambda value: repository.put_bundle(value),
+        "readStore": repository.read_store,
+        "writeStore": lambda value: repository.put_store(value),
+        "writeDocuments": lambda bundle, store: repository.replace_documents(bundle, store),
+        "repository": lambda: repository,
+    })
+    return runtime, repository
 
 
 class French8FinalExamOperationsTests(unittest.TestCase):
@@ -156,6 +186,258 @@ class French8FinalExamOperationsTests(unittest.TestCase):
             self.assertTrue(closed["transition"])
             self.assertEqual(closed["scheduleStatus"], "closed")
             self.assertFalse(config["readBundle"]()["state"]["isOpen"])
+
+    def test_scheduler_health_gate_fails_closed_when_check_is_missing_or_raises(self):
+        for failure_mode in ("missing", "exception"):
+            with self.subTest(failure_mode=failure_mode), tempfile.TemporaryDirectory() as temp:
+                config = json_runtime(pathlib.Path(temp))
+                current = datetime.now(timezone.utc)
+                bundle = config["readBundle"]()
+                bundle["state"].update({
+                    "isOpen": False,
+                    "scheduleEnabled": True,
+                    "opensAt": (current - timedelta(minutes=1)).isoformat(),
+                    "closesAt": (current + timedelta(minutes=10)).isoformat(),
+                    "schedulerObservedStatus": "scheduled",
+                })
+                config["writeBundle"](bundle)
+                if failure_mode == "missing":
+                    config.pop("healthCheck")
+                else:
+                    def broken_health(*_args, **_kwargs):
+                        raise RuntimeError("health probe unavailable")
+
+                    config["healthCheck"] = broken_health
+
+                result = API.french8_final_exam_scheduler_tick(config, now=current)
+
+                self.assertFalse(result["transition"])
+                self.assertTrue(result["openingBlocked"])
+                self.assertEqual(result["observedStatus"], "open_blocked")
+                stored_bundle = config["readBundle"]()
+                stored_state = stored_bundle["state"]
+                self.assertFalse(stored_state["isOpen"])
+                self.assertEqual(stored_state["schedulerObservedStatus"], "open_blocked")
+                self.assertEqual(stored_state["openingGate"]["status"], "blocked")
+                self.assertIn("health_check", stored_state["openingGate"]["blockingIssues"])
+                public = API.final_exam_public_state(stored_state, "student", "008")
+                self.assertFalse(public["isOpen"])
+                self.assertFalse(public["accessEffective"])
+                self.assertEqual(public["accessReason"], "scheduled_open_health_blocked")
+                status, session = API.final_exam_session_action(
+                    config, {"email": "ana@example.com", "name": "Ana"}, {}
+                )
+                self.assertEqual(status, 403, session)
+                self.assertEqual(session["error"], "exam_closed")
+                status, audio = API.french8_final_exam_audio_grant(
+                    {"email": "ana@example.com"}, "student",
+                    {"id": "008", "email": "ana@example.com"}, stored_bundle,
+                )
+                self.assertEqual(status, 403, audio)
+                self.assertEqual(audio["error"], "exam_closed")
+                events = config["readStore"]()["events"]
+                self.assertIn(
+                    "scheduled_window_open_blocked",
+                    [item.get("event") for item in events],
+                )
+
+    def test_scheduler_retries_blocked_opening_and_opens_after_health_recovers(self):
+        with tempfile.TemporaryDirectory() as temp:
+            config = json_runtime(pathlib.Path(temp))
+            current = datetime.now(timezone.utc)
+            bundle = config["readBundle"]()
+            bundle["state"].update({
+                "isOpen": False,
+                "scheduleEnabled": True,
+                "opensAt": (current - timedelta(minutes=1)).isoformat(),
+                "closesAt": (current + timedelta(minutes=10)).isoformat(),
+                "schedulerObservedStatus": "scheduled",
+            })
+            config["writeBundle"](bundle)
+            probe = {"ready": False, "calls": []}
+
+            def health_gate(_config, _grades, current_bundle, _store, record_alerts=True):
+                probe["calls"].append(current_bundle["state"].get("isOpen") is True)
+                return {
+                    "readyToOpen": probe["ready"],
+                    "schedulerReady": False,
+                    "status": "ok" if probe["ready"] else "blocked",
+                    "blockingIssues": [] if probe["ready"] else ["audio"],
+                }
+
+            config["healthCheck"] = health_gate
+            first = API.french8_final_exam_scheduler_tick(config, now=current)
+            first_stored_state = config["readBundle"]()["state"]
+            first_revision = first_stored_state["revision"]
+            first_checked_at = first_stored_state["openingGate"]["checkedAt"]
+            first_events = list(config["readStore"]()["events"])
+            second = API.french8_final_exam_scheduler_tick(
+                config, now=current + timedelta(seconds=15)
+            )
+            self.assertTrue(first["openingBlocked"])
+            self.assertFalse(first["transition"])
+            self.assertTrue(second["openingBlocked"])
+            self.assertFalse(second["transition"])
+            second_stored_state = config["readBundle"]()["state"]
+            self.assertFalse(second_stored_state["isOpen"])
+            self.assertEqual(second_stored_state["revision"], first_revision)
+            self.assertEqual(second_stored_state["openingGate"]["checkedAt"], first_checked_at)
+            self.assertEqual(config["readStore"]()["events"], first_events)
+            self.assertEqual(
+                API.FRENCH8_FINAL_EXAM_RUNTIME_STATUS["scheduledOpeningGateCheckedAt"],
+                API.final_exam_iso_utc(current + timedelta(seconds=15)),
+            )
+            self.assertEqual(
+                second["openingGate"]["checkedAt"],
+                API.final_exam_iso_utc(current + timedelta(seconds=15)),
+            )
+
+            probe["ready"] = True
+            recovered = API.french8_final_exam_scheduler_tick(
+                config, now=current + timedelta(seconds=30)
+            )
+
+            self.assertTrue(recovered["transition"])
+            self.assertFalse(recovered["openingBlocked"])
+            self.assertEqual(recovered["observedStatus"], "open")
+            recovered_state = config["readBundle"]()["state"]
+            self.assertTrue(recovered_state["isOpen"])
+            self.assertEqual(recovered_state["openingGate"]["status"], "ready")
+            self.assertIsNotNone(recovered_state["openingGate"]["recoveredAt"])
+            self.assertEqual(probe["calls"], [False, False, False])
+            events = [item.get("event") for item in config["readStore"]()["events"]]
+            self.assertEqual(events.count("scheduled_window_open_blocked"), 1)
+            self.assertEqual(events.count("scheduled_window_opened"), 1)
+
+    def test_scheduler_closes_and_finalizes_without_calling_unhealthy_open_gate(self):
+        with tempfile.TemporaryDirectory() as temp:
+            config = json_runtime(pathlib.Path(temp))
+            current = datetime.now(timezone.utc)
+            bundle = config["readBundle"]()
+            bundle["state"].update({
+                "isOpen": True,
+                "scheduleEnabled": True,
+                "opensAt": (current - timedelta(minutes=20)).isoformat(),
+                "closesAt": (current - timedelta(minutes=1)).isoformat(),
+                "schedulerObservedStatus": "open",
+            })
+            config["writeBundle"](bundle)
+            store = config["readStore"]()
+            store["attempts"]["008"] = {
+                "attemptId": "attempt-closing-008",
+                "attemptSeed": "101",
+                "examVersion": EXAM["version"],
+                "startedAt": (current - timedelta(minutes=10)).isoformat(),
+                "lastSeenAt": current.isoformat(),
+                "answers": {"q1": 0, "q2": True},
+                "revision": 1,
+                "status": "in_progress",
+                "presentation": {},
+            }
+            config["writeStore"](store)
+            probe_calls = []
+
+            def must_not_run(*_args, **_kwargs):
+                probe_calls.append(True)
+                raise RuntimeError("opening health is down")
+
+            config["healthCheck"] = must_not_run
+            result = API.french8_final_exam_scheduler_tick(config, now=current)
+
+            self.assertTrue(result["transition"])
+            self.assertEqual(result["scheduleStatus"], "closed")
+            self.assertFalse(config["readBundle"]()["state"]["isOpen"])
+            submission = config["readStore"]()["submissions"]["008"]
+            self.assertEqual(submission["completionReason"], "scheduled_closed")
+            self.assertEqual(probe_calls, [])
+
+    def test_blocked_opening_gate_becomes_historical_and_alert_resolves_at_window_close(self):
+        with tempfile.TemporaryDirectory() as temp:
+            config, repository = sqlite_runtime(pathlib.Path(temp))
+            current = datetime.now(timezone.utc)
+            bundle = config["readBundle"]()
+            bundle["state"].update({
+                "isOpen": False,
+                "scheduleEnabled": True,
+                "opensAt": (current - timedelta(minutes=1)).isoformat(),
+                "closesAt": (current + timedelta(minutes=1)).isoformat(),
+                "schedulerObservedStatus": "scheduled",
+            })
+            config["writeBundle"](bundle)
+
+            def blocked_health(*_args, **_kwargs):
+                return {
+                    "readyToOpen": False,
+                    "schedulerReady": True,
+                    "status": "blocked",
+                    "blockingIssues": ["audio"],
+                }
+
+            config["healthCheck"] = blocked_health
+            blocked = API.french8_final_exam_scheduler_tick(config, now=current)
+            self.assertTrue(blocked["openingBlocked"])
+            self.assertEqual(repository.get_alert("scheduled_opening_gate")["status"], "open")
+
+            closed = API.french8_final_exam_scheduler_tick(
+                config, now=current + timedelta(minutes=2)
+            )
+
+            self.assertTrue(closed["transition"])
+            self.assertEqual(closed["scheduleStatus"], "closed")
+            closed_gate = config["readBundle"]()["state"]["openingGate"]
+            self.assertEqual(closed_gate["status"], "closed")
+            self.assertEqual(closed_gate["blockingIssues"], [])
+            self.assertEqual(closed_gate["lastError"], "")
+            self.assertIsNotNone(closed_gate["blockedAt"])
+            alert = repository.get_alert("scheduled_opening_gate")
+            self.assertEqual(alert["status"], "resolved")
+            self.assertEqual(alert["resolution"], "scheduled_window_ended")
+            events = [item.get("event") for item in config["readStore"]()["events"]]
+            self.assertEqual(events.count("scheduled_window_open_blocked"), 1)
+            self.assertEqual(events.count("scheduled_window_closed"), 1)
+
+    def test_manual_schedule_disable_clears_blocked_gate_and_resolves_alert(self):
+        with tempfile.TemporaryDirectory() as temp:
+            config, repository = sqlite_runtime(pathlib.Path(temp))
+            current = datetime.now(timezone.utc)
+            bundle = config["readBundle"]()
+            bundle["state"].update({
+                "isOpen": False,
+                "scheduleEnabled": True,
+                "opensAt": (current - timedelta(minutes=1)).isoformat(),
+                "closesAt": (current + timedelta(minutes=10)).isoformat(),
+                "schedulerObservedStatus": "scheduled",
+            })
+            config["writeBundle"](bundle)
+            config["healthCheck"] = lambda *_args, **_kwargs: {
+                "readyToOpen": False,
+                "schedulerReady": True,
+                "status": "blocked",
+                "blockingIssues": ["database"],
+            }
+            API.french8_final_exam_scheduler_tick(config, now=current)
+            self.assertEqual(repository.get_alert("scheduled_opening_gate")["status"], "open")
+
+            status, result = API.final_exam_update_state(
+                config,
+                {"email": "teacher@example.com"},
+                {"action": "close_now", "isOpen": False},
+            )
+
+            self.assertEqual(status, 200, result)
+            state = config["readBundle"]()["state"]
+            self.assertFalse(state["scheduleEnabled"])
+            self.assertNotIn("openingGate", state)
+            alert = repository.get_alert("scheduled_opening_gate")
+            self.assertEqual(alert["status"], "resolved")
+            self.assertEqual(alert["resolution"], "scheduled_window_disabled_by_staff")
+            self.assertEqual(
+                API.FRENCH8_FINAL_EXAM_RUNTIME_STATUS["scheduledOpeningGateStatus"],
+                "idle",
+            )
+            self.assertIsNone(
+                API.FRENCH8_FINAL_EXAM_RUNTIME_STATUS["scheduledOpeningGateCheckedAt"]
+            )
 
     def test_submission_idempotency_returns_same_receipt_and_rejects_reuse(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -243,7 +525,21 @@ class French8FinalExamOperationsTests(unittest.TestCase):
             root = pathlib.Path(temp)
             runtime = json_runtime(root)
             bundle = runtime["readBundle"]()
-            bundle["state"].update({"isOpen": False, "openedAt": None})
+            current = datetime.now(timezone.utc)
+            older_gate_check = API.final_exam_iso_utc(current - timedelta(seconds=30))
+            latest_gate_check = API.final_exam_iso_utc(current)
+            bundle["state"].update({
+                "isOpen": False,
+                "openedAt": None,
+                "openingGate": {
+                    "status": "blocked",
+                    "checkedAt": older_gate_check,
+                    "blockedAt": older_gate_check,
+                    "healthStatus": "blocked",
+                    "blockingIssues": ["audio"],
+                    "lastError": "",
+                },
+            })
             runtime["writeBundle"](bundle)
             repository = API.FinalExamRepository(root / "health.sqlite3", level="french8")
             repository.initialize(
@@ -267,12 +563,17 @@ class French8FinalExamOperationsTests(unittest.TestCase):
                     "schedulerEnabled": True,
                     "schedulerLastSuccessAt": API.now_iso(),
                     "schedulerConsecutiveFailures": 0,
+                    "scheduledOpeningGateStatus": "blocked",
+                    "scheduledOpeningGateCheckedAt": latest_gate_check,
+                    "scheduledOpeningBlockingIssues": ["audio"],
+                    "scheduledOpeningLastError": "",
                 })
                 grades = json.loads((root / "grades.json").read_text(encoding="utf-8"))
                 health = API.french8_final_exam_health_payload(
                     runtime, grades, repository.read_bundle(), repository.read_store()
                 )
                 self.assertTrue(health["readyToOpen"])
+                self.assertEqual(health["openingGate"]["checkedAt"], latest_gate_check)
                 self.assertEqual(
                     set(health["checks"]),
                     {"api", "database", "scheduler", "audio", "sse", "gradebook", "audit"},
