@@ -46,6 +46,7 @@ assert.match(css, /@media \(max-width: 680px\)/, "Mobile layout rules are requir
 assert.match(css, /prefers-reduced-motion/, "Reduced-motion support is required");
 assert.doesNotMatch(html, /unit6-hero-media/, "The Unit 6 hero must follow the established background-image pattern");
 assert.match(css, /\.unit6-hero\s*\{[^}]*linear-gradient\(135deg[^}]*unit-6-future-plans-advice-hero\.webp/s, "The hero must combine its professional image with a readable background overlay");
+assert.match(css, /\.unit6-hero\s*\{[^}]*width:\s*100%;[^}]*max-width:\s*100%;[^}]*margin:\s*0;/s, "The desktop hero background must span the full viewport width");
 assert.match(css, /\.unit6-hero \.lesson-hero-content\s*\{[^}]*max-width:\s*780px/s, "The hero panel must match the established Unit 5 width");
 assert.doesNotMatch(css, /\.unit6-explanation-page \.site-header\s*\{/, "Unit 6 must use the shared course header positioning");
 assert.match(css, /@media \(max-width: 680px\)[\s\S]*\.unit6-hero\s*\{[^}]*padding:\s*36px 12px 40px/s, "The mobile hero must preserve the Unit 5 responsive spacing");
