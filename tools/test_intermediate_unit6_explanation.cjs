@@ -44,6 +44,9 @@ imageSources.forEach((source) => {
 assert.match(js, /\[0\.75, 1, 1\.25\]/, "Audio speed options must be exactly 0.75x, 1x, and 1.25x");
 assert.match(css, /@media \(max-width: 680px\)/, "Mobile layout rules are required");
 assert.match(css, /prefers-reduced-motion/, "Reduced-motion support is required");
+assert.match(css, /\.unit6-explanation-page \.site-header\s*\{[^}]*position:\s*relative/s, "The Unit 6 header must not overlap the hero");
+assert.match(css, /\.unit6-hero \.lesson-hero-content\s*\{[^}]*text-align:\s*center/s, "Hero text must be centered as one stable block");
+assert.match(css, /\.unit6-hero::before\s*\{[^}]*rgba\(7, 31, 79, 0\.78\)/s, "The hero needs a uniform readability overlay");
 assert.match(overview, /id="unit-6"/, "Course Overview must contain Unit 6");
 assert.match(overview, /unit-6-future-plans-advice\.html/, "Course Overview must link to the explanation page");
 
