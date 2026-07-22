@@ -344,12 +344,24 @@
         let response = await fetch(url, Object.assign({}, options, {
           headers: Object.assign({}, headers({}, user), options.headers || {})
         }));
-        if (response.status === 401 && mode === "auto" && user?.isExamBridge) {
+        if ((response.status === 401 || response.status === 403) && (mode === "auto" || mode === "exam")) {
           const fallback = externalUser();
-          if (fallback?.credential && fallback.credential !== user.credential) {
+          if (fallback?.credential && fallback.credential !== user?.credential) {
             response = await fetch(url, Object.assign({}, options, {
               headers: Object.assign({}, headers({}, fallback), options.headers || {})
             }));
+          }
+        }
+        return response;
+      }
+
+      async function examFetchWithExternalFallback(url, options = {}) {
+        let response = await authenticatedFetch(url, options, "exam");
+        if (response.status === 401 || response.status === 403) {
+          const fallback = externalUser();
+          const bridge = storedExamAuth();
+          if (fallback?.credential && fallback.credential !== bridge?.credential) {
+            response = await authenticatedFetch(url, options, "external");
           }
         }
         return response;
@@ -1187,7 +1199,7 @@
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 45000);
         try {
-          const response = await authenticatedFetch(API.audio, { cache: "no-store", signal: controller.signal, headers: { Accept: "audio/mpeg" } }, "exam");
+          const response = await examFetchWithExternalFallback(API.audio, { cache: "no-store", signal: controller.signal, headers: { Accept: "audio/mpeg" } });
           if (!response.ok) {
             if (response.status === 401) showReconnectNotice();
             throw new Error(response.status === 401 ? "audio_authentication" : "audio_unavailable");
