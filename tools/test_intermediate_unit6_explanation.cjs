@@ -46,7 +46,9 @@ assert.match(css, /@media \(max-width: 680px\)/, "Mobile layout rules are requir
 assert.match(css, /prefers-reduced-motion/, "Reduced-motion support is required");
 assert.match(css, /\.unit6-explanation-page \.site-header\s*\{[^}]*position:\s*relative/s, "The Unit 6 header must not overlap the hero");
 assert.match(css, /\.unit6-hero \.lesson-hero-content\s*\{[^}]*text-align:\s*center/s, "Hero text must be centered as one stable block");
-assert.match(css, /\.unit6-hero::before\s*\{[^}]*rgba\(7, 31, 79, 0\.78\)/s, "The hero needs a uniform readability overlay");
+assert.match(html, /<div class="unit6-hero-media">\s*<img/s, "The hero image must be a separate banner, not a text background");
+assert.match(css, /\.unit6-hero-media\s*\{[^}]*aspect-ratio:\s*16 \/ 7/s, "The desktop banner needs a stable aspect ratio");
+assert.doesNotMatch(css, /\.unit6-hero::before/, "The hero must not place an overlay between the banner and the text");
 assert.match(overview, /id="unit-6"/, "Course Overview must contain Unit 6");
 assert.match(overview, /unit-6-future-plans-advice\.html/, "Course Overview must link to the explanation page");
 
