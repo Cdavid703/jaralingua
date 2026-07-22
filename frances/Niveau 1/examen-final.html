@@ -441,7 +441,7 @@
                 </form>
                 <div>
                   <p class="section-text mb-3">Utilisez aussi le bouton flottant JaraLingua si votre compte est Google ou Microsoft.</p>
-                  <button class="btn-soft" type="button" data-open-login><i class="bi bi-google"></i> Google / Microsoft</button>
+                  <button class="btn-soft" type="button" data-open-login data-open-google-login><i class="bi bi-google"></i> Google / Microsoft</button>
                   <button class="btn-soft mt-2" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier mon accès</button>
                 </div>
               </div>
@@ -1781,18 +1781,20 @@
         if (["admin", "teacher"].includes(result.data.role || currentRole)) return renderExam(result.data);
         currentStudentId = String(result.data?.student?.id || currentStudentId || storedExamAuth()?.studentId || "");
         let runtimePayload = result.data;
-        if (result.data?.status === "open" && !storedExamAuth()) {
+        if (result.data?.status === "open" && externalUser()) {
           const resumed = await request(API.session, { method: "POST", body: JSON.stringify({ event: "started", answeredCount: 0, attemptId: result.data?.attemptId || result.data?.session?.attemptId || "", examVersion: result.data?.exam?.version || result.data?.examVersion || "" }) }, 15000, "external");
           if (!resumed.ok) throw new Error(resumed.data?.error || "session_resume_error");
           runtimePayload = Object.assign({}, result.data, resumed.data);
           if (!rememberExamAccess(runtimePayload)) throw new Error("exam_access_missing");
         }
+        if (result.data?.status !== "open") return renderStartGate(result.data);
         const draft = await request(API.draft, {}, 10000, "exam");
         if (draft.ok) {
           Object.assign(runtimePayload, draft.data);
           return renderExam(runtimePayload);
         }
         if (draft.data?.error === "already_submitted" && draft.data.result) return renderSubmitted(draft.data.result);
+        if (result.data?.status === "open" && [401, 403].includes(draft.status)) return renderExam(runtimePayload);
         if (draft.status !== 404 && draft.data?.error !== "attempt_not_started") throw new Error(draft.data?.error || "draft_error");
         renderStartGate(result.data);
       }
