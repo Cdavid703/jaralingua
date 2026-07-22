@@ -6561,9 +6561,7 @@ def final_exam_finalize_attempt(config, grades_data, bundle, store, student, rea
     attempt["status"] = "submitted"
     attempt["submittedAt"] = submitted_at
     attempt["lastSeenAt"] = submitted_at
-    grade_changed = False
-    if bundle.get("state", {}).get("releaseResults") is True:
-        grade_changed = final_exam_apply_grade(grades_data, student, submission, config["evaluation"])
+    grade_changed = final_exam_apply_grade(grades_data, student, submission, config["evaluation"])
     return submission, True, grade_changed
 
 
@@ -6894,8 +6892,7 @@ def final_exam_submit_action(config, profile, payload):
         return finish(*scope_error)
     existing = store.get("submissions", {}).get(student_id)
     if isinstance(existing, dict):
-        if state.get("releaseResults") is True:
-            grades_changed = final_exam_apply_grade(grades_data, student, existing, config["evaluation"]) or grades_changed
+        grades_changed = final_exam_apply_grade(grades_data, student, existing, config["evaluation"]) or grades_changed
         if payload.get("autoSubmit") is True and existing.get("autoSubmitted") is True:
             return finish(200, {"ok": True, "duplicate": True, "autoSubmitted": True, "result": french1_final_exam_submission_public(existing, state)})
         return finish(409, {"error": "already_submitted", "result": french1_final_exam_submission_public(existing, state)})
