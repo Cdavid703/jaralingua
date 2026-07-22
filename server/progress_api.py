@@ -6615,6 +6615,119 @@ def score_final_exam(exam, answers):
     }
 
 
+def final_exam_question_points(question):
+    try:
+        points = float(question.get("points", 1))
+    except (TypeError, ValueError):
+        points = 1
+    return clean_exam_number(points)
+
+
+def final_exam_answer_label(question, value):
+    normalized = normalize_answer(value)
+    if normalized is None:
+        return "Sin respuesta"
+    if question.get("type") == "truefalse":
+        if normalized is True:
+            return "Vrai"
+        if normalized is False:
+            return "Faux"
+        return clean_text(normalized, 120)
+    options = question.get("options", [])
+    if isinstance(normalized, int) and isinstance(options, list) and 0 <= normalized < len(options):
+        return clean_text(options[normalized], 500)
+    return clean_text(normalized, 500)
+
+
+def final_exam_submission_review_payload(exam, store):
+    if not isinstance(exam, dict) or not isinstance(store, dict):
+        return []
+    question_order = []
+    for section_index, section in enumerate(exam.get("sections", []), start=1):
+        if not isinstance(section, dict):
+            continue
+        section_id = clean_text(section.get("id"), 80)
+        section_title = clean_text(section.get("title") or section_id, 200)
+        for question_index, question in enumerate(section.get("questions", []), start=1):
+            if not isinstance(question, dict):
+                continue
+            question_id = clean_text(question.get("id"), 80)
+            if not question_id:
+                continue
+            question_order.append({
+                "sectionIndex": section_index,
+                "sectionId": section_id,
+                "sectionTitle": section_title,
+                "questionIndex": question_index,
+                "question": question,
+            })
+    rows = []
+    submissions = store.get("submissions", {})
+    if not isinstance(submissions, dict):
+        submissions = {}
+    for student_id, submission in submissions.items():
+        if not isinstance(submission, dict):
+            continue
+        answer_details = submission.get("answers", {})
+        if not isinstance(answer_details, dict):
+            answer_details = {}
+        questions = []
+        incorrect_questions = []
+        answered_count = 0
+        for item in question_order:
+            question = item["question"]
+            question_id = clean_text(question.get("id"), 80)
+            detail = answer_details.get(question_id, {})
+            if not isinstance(detail, dict):
+                detail = {}
+            selected_value = normalize_answer(detail.get("answer"))
+            correct_value = normalize_answer(question.get("answer"))
+            is_correct = detail.get("correct") is True
+            if selected_value is not None:
+                answered_count += 1
+            review = {
+                "questionId": question_id,
+                "sectionId": item["sectionId"],
+                "sectionTitle": item["sectionTitle"],
+                "sectionIndex": item["sectionIndex"],
+                "questionIndex": item["questionIndex"],
+                "prompt": clean_text(question.get("prompt"), 1000),
+                "block": clean_text(question.get("block"), 300),
+                "type": clean_text(question.get("type"), 40),
+                "selectedValue": selected_value,
+                "selectedLabel": final_exam_answer_label(question, selected_value),
+                "correctValue": correct_value,
+                "correctLabel": final_exam_answer_label(question, correct_value),
+                "correct": is_correct,
+                "points": clean_exam_number(detail.get("points", 0)),
+                "totalPoints": final_exam_question_points(question),
+            }
+            questions.append(review)
+            if not is_correct:
+                incorrect_questions.append(review)
+        rows.append({
+            "studentId": clean_text(submission.get("studentId") or student_id, 40),
+            "studentName": clean_text(submission.get("studentName"), 200),
+            "email": normalize_email(submission.get("email")),
+            "submittedAt": clean_text(submission.get("submittedAt"), 80),
+            "attemptId": clean_text(submission.get("attemptId"), 120),
+            "receiptCode": clean_text(submission.get("receiptCode"), 120),
+            "autoSubmitted": submission.get("autoSubmitted") is True,
+            "completionReason": clean_text(submission.get("completionReason") or "manual", 80),
+            "scorePoints": submission.get("scorePoints"),
+            "totalPoints": submission.get("totalPoints"),
+            "grade": submission.get("grade"),
+            "sectionScores": submission.get("sectionScores") if isinstance(submission.get("sectionScores"), dict) else {},
+            "answeredCount": answered_count,
+            "questionCount": len(question_order),
+            "incorrectCount": len(incorrect_questions),
+            "incorrectQuestions": incorrect_questions,
+            "questions": questions,
+        })
+    rows.sort(key=lambda item: (item.get("studentName") or "", item.get("studentId") or ""))
+    return rows
+
+
 def clean_exam_number(value):
     try:
         numeric = float(value)
@@ -12538,6 +12651,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                             dict({"questionId": question_id}, **item)
                             for question_id, item in raw_statistics.get("questions", {}).items()
                         ],
+                        "submissionDetails": final_exam_submission_review_payload(bundle.get("exam", {}), store),
                         "raw": raw_statistics,
                         "state": final_exam_public_state(bundle.get("state", {}), role),
                     }

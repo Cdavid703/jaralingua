@@ -1481,6 +1481,17 @@
             ${distribution.map((bucket) => `<div class="metric-card"><strong>${esc(bucket.label || bucket.range || "Tranche")}</strong><br>${esc(bucket.count ?? bucket.students ?? 0)} étudiant(s)</div>`).join("")}
             ${sections.map((section) => `<div class="metric-card"><strong>${esc(section.title || section.id)}</strong><br>${esc(section.averagePercent ?? section.average ?? 0)} %</div>`).join("")}
             ${hardestQuestions.map((question) => { const distractor = question.topDistractor || question.distractors?.[0]?.label || question.distractors?.[0]?.value; return `<div class="metric-card"><strong>${esc(question.prompt || question.id)}</strong><br>${esc(question.correctPercent ?? question.successRate ?? 0)} % de réussite${distractor != null ? `<br><small>Distracteur fréquent : ${esc(distractor)}</small>` : ""}</div>`; }).join("")}`;
+          const reviews = Array.isArray(data.submissionDetails) ? data.submissionDetails : [];
+          if (reviews.length) {
+            list.insertAdjacentHTML("beforeend", `<div class="metric-card" style="grid-column:1/-1"><strong>RÃ©vision individuelle des copies</strong><br><small>Visible uniquement pour le professeur : erreurs, rÃ©ponse marquÃ©e et bonne rÃ©ponse.</small>${reviews.map((student) => {
+              const wrong = Array.isArray(student.incorrectQuestions) ? student.incorrectQuestions : [];
+              const all = Array.isArray(student.questions) ? student.questions : [];
+              const sectionScores = student.sectionScores && typeof student.sectionScores === "object" ? Object.entries(student.sectionScores).map(([id, score]) => `${id}: ${score.score ?? 0}/${score.total ?? 0}`).join(" Â· ") : "";
+              const wrongHtml = wrong.length ? wrong.map((item) => `<li><strong>${esc(item.sectionTitle || item.sectionId)} â€” ${esc(item.questionId)}</strong><br>${esc(item.prompt)}<br><span class="text-danger">RÃ©ponse : ${esc(item.selectedLabel)}</span><br><span class="text-success">Correct : ${esc(item.correctLabel)}</span></li>`).join("") : "<li>Aucune erreur enregistrÃ©e.</li>";
+              const allHtml = all.map((item) => `<li>${item.correct ? "âœ“" : "âœ—"} <strong>${esc(item.questionId)}</strong> â€” ${esc(item.selectedLabel)} / ${esc(item.correctLabel)}</li>`).join("");
+              return `<details class="mt-3"><summary><strong>${esc(student.studentName || student.email || student.studentId)}</strong> â€” ${Number(student.grade || 0).toFixed(2)}/5 Â· ${esc(student.scorePoints)}/${esc(student.totalPoints)} pts Â· ${esc(student.incorrectCount)} erreur(s)</summary><p class="mt-2 mb-1"><small>${esc(student.email || "")} Â· ${esc(student.submittedAt || "")}${sectionScores ? " Â· " + esc(sectionScores) : ""}</small></p><ol>${wrongHtml}</ol><details><summary>Voir toutes les rÃ©ponses</summary><ol>${allHtml}</ol></details></details>`;
+            }).join("")}</div>`);
+          }
           const ambiguous = Array.isArray(data.ambiguousQuestions) ? data.ambiguousQuestions : questions.filter((question) => Number(question.responseCount || 0) >= 3 && Number(question.correctPercent || 0) < 35);
           if (ambiguous.length) {
             list.insertAdjacentHTML("beforeend", ambiguous.map((question) => `<div class="metric-card"><strong>À examiner : ${esc(question.prompt || question.id)}</strong><br><small>${esc(question.reason || "Taux de réussite particulièrement faible")}</small></div>`).join(""));
