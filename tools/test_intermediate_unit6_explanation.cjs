@@ -44,11 +44,11 @@ imageSources.forEach((source) => {
 assert.match(js, /\[0\.75, 1, 1\.25\]/, "Audio speed options must be exactly 0.75x, 1x, and 1.25x");
 assert.match(css, /@media \(max-width: 680px\)/, "Mobile layout rules are required");
 assert.match(css, /prefers-reduced-motion/, "Reduced-motion support is required");
-assert.match(css, /\.unit6-explanation-page \.site-header\s*\{[^}]*position:\s*relative/s, "The Unit 6 header must not overlap the hero");
-assert.match(css, /\.unit6-hero \.lesson-hero-content\s*\{[^}]*text-align:\s*center/s, "Hero text must be centered as one stable block");
-assert.match(html, /<div class="unit6-hero-media">\s*<img/s, "The hero image must be a separate banner, not a text background");
-assert.match(css, /\.unit6-hero-media\s*\{[^}]*aspect-ratio:\s*16 \/ 7/s, "The desktop banner needs a stable aspect ratio");
-assert.doesNotMatch(css, /\.unit6-hero::before/, "The hero must not place an overlay between the banner and the text");
+assert.doesNotMatch(html, /unit6-hero-media/, "The Unit 6 hero must follow the established background-image pattern");
+assert.match(css, /\.unit6-hero\s*\{[^}]*linear-gradient\(135deg[^}]*unit-6-future-plans-advice-hero\.webp/s, "The hero must combine its professional image with a readable background overlay");
+assert.match(css, /\.unit6-hero \.lesson-hero-content\s*\{[^}]*max-width:\s*780px/s, "The hero panel must match the established Unit 5 width");
+assert.doesNotMatch(css, /\.unit6-explanation-page \.site-header\s*\{/, "Unit 6 must use the shared course header positioning");
+assert.match(css, /@media \(max-width: 680px\)[\s\S]*\.unit6-hero\s*\{[^}]*padding:\s*36px 12px 40px/s, "The mobile hero must preserve the Unit 5 responsive spacing");
 assert.match(overview, /id="unit-6"/, "Course Overview must contain Unit 6");
 assert.match(overview, /unit-6-future-plans-advice\.html/, "Course Overview must link to the explanation page");
 
