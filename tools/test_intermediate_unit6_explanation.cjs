@@ -51,7 +51,15 @@ assert.match(css, /\.unit6-hero \.lesson-hero-content\s*\{[^}]*max-width:\s*780p
 assert.match(css, /\.unit6-page\s*\{[^}]*width:\s*100%;[^}]*max-width:\s*100%;/s, "The explanation body must use full-width bands below the hero");
 assert.match(css, /\.unit6-section summary\s*\{[^}]*width:\s*min\(1360px,\s*calc\(100% - 48px\)\)/s, "Topic headers must stay centered inside the full-width bands");
 assert.match(css, /\.section-body\s*\{[^}]*width:\s*min\(1360px,\s*calc\(100% - 48px\)\)/s, "Topic content must stay readable inside the full-width bands");
-assert.match(html, /intermediate-unit6-explanation\.css\?v=20260722f/, "The page must request the latest Unit 6 CSS revision");
+assert.match(html, /intermediate-unit6-explanation\.css\?v=20260722g/, "The page must request the latest Unit 6 CSS revision");
+assert.match(html, /class="future-timeline"/, "Unit 6 must include a visual timeline for future meanings");
+assert.match(html, /class="arrangement-evidence"/, "Unit 6 must include an evidence map for arrangements");
+assert.match(html, /class="advice-ladder"/, "Unit 6 must include a context-based advice strength ladder");
+assert.match(html, /class="language-bank"/, "Unit 6 must include a useful response bank");
+assert.match(html, /What be going to does and does not say/, "Unit 6 must explain the limits of be going to");
+assert.ok(html.match(/Not the same as|Natural context|Grammar note|Common nuance/g)?.length >= 6, "Expressions must include usage nuance, not only literal meaning");
+assert.match(css, /\.future-timeline\s*\{[^}]*grid-template-columns:\s*repeat\(4,/s, "The future timeline must render as a desktop visual sequence");
+assert.match(css, /@media \(max-width: 680px\)[\s\S]*\.future-timeline,[\s\S]*grid-template-columns:\s*1fr;/s, "The future timeline must collapse on mobile");
 assert.doesNotMatch(css, /\.unit6-explanation-page \.site-header\s*\{/, "Unit 6 must use the shared course header positioning");
 assert.match(css, /@media \(max-width: 680px\)[\s\S]*\.unit6-hero\s*\{[^}]*padding:\s*36px 12px 40px/s, "The mobile hero must preserve the Unit 5 responsive spacing");
 assert.match(overview, /id="unit-6"/, "Course Overview must contain Unit 6");
