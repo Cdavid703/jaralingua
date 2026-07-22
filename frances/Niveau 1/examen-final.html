@@ -1081,7 +1081,6 @@
 
       async function restoreServerDraft() {
         if (!examInProgress || !currentExam) return;
-        const localAnswers = selectedAnswerMap();
         let mergedForServer = null;
         try {
           const result = await request(API.draft, {}, 10000, "exam");
@@ -1090,6 +1089,7 @@
           if (result.data.attemptId && currentAttemptId && result.data.attemptId !== currentAttemptId) return;
           draftRevision = Number(result.data.revision || 0);
           const serverAnswers = result.data.answers || {};
+          const localAnswers = selectedAnswerMap();
           const mergedAnswers = Object.assign({}, serverAnswers, localAnswers);
           const restored = applyAnswerMap(mergedAnswers, true);
           try { if (draftKey()) sessionStorage.setItem(draftKey(), JSON.stringify({ version: currentExam.version || "", studentId: currentStudentId, attemptId: currentAttemptId, answers: mergedAnswers, savedAt: new Date().toISOString() })); } catch (_error) { /* rien */ }
@@ -1462,11 +1462,7 @@
         els.form.querySelector("[data-cancel-submit]")?.addEventListener("click", () => els.form.querySelector("[data-confirm-dialog]")?.close?.());
         els.form.querySelector("[data-confirm-submit]")?.addEventListener("click", () => { els.form.querySelector("[data-confirm-dialog]")?.close?.(); performSubmit(false); });
         if (!isStaff && !storedExamAuth()) showReconnectNotice("La session sécurisée de cette tentative doit être renouvelée avant de poursuivre.");
-        if (!isStaff) {
-          restoringDraft = true;
-          els.form.querySelectorAll("input[type='radio']").forEach((input) => { input.disabled = true; });
-          setSubmitStatus("Récupération du brouillon sécurisé avant d’autoriser les réponses…", "pending");
-        }
+        if (!isStaff) setSubmitStatus("Récupération du brouillon sécurisé en arrière-plan. Vous pouvez modifier vos réponses jusqu’à l’envoi final.", "pending");
         const restored = restoreDraft();
         if (restored > 0) {
           setSubmitStatus(`Brouillon restauré : ${restored} réponse(s) récupérée(s) sur cet appareil.`, "success");

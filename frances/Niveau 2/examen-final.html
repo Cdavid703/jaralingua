@@ -1210,7 +1210,7 @@
                 draftRevision = Number(result.data.revision || draftRevision);
                 restoringDraft = true;
                 const serverAnswers = result.data.answers || result.data.draft || {};
-                const restoredAnswers = Object.assign({}, serverAnswers, nextAnswers, queuedNewer || {});
+                const restoredAnswers = Object.assign({}, serverAnswers, nextAnswers, currentAnswerMap(), queuedNewer || {});
                 applyAnswerMap(restoredAnswers, true);
                 writeLocalDraft(restoredAnswers);
                 restoringDraft = false;
@@ -1601,11 +1601,7 @@
         els.form.querySelector("[data-audio-retry]")?.addEventListener("click", loadProtectedAudio);
         els.form.querySelector("[data-cancel-submit]")?.addEventListener("click", () => els.form.querySelector("[data-confirm-dialog]")?.close?.());
         els.form.querySelector("[data-confirm-submit]")?.addEventListener("click", () => { els.form.querySelector("[data-confirm-dialog]")?.close?.(); performSubmit(false); });
-        if (!isStaff) {
-          restoringDraft = true;
-          els.form.querySelectorAll("input[type='radio']").forEach((input) => { input.disabled = true; });
-          setSubmitStatus("Récupération du brouillon sécurisé avant d’autoriser les réponses…", "pending");
-        }
+        if (!isStaff) setSubmitStatus("Récupération du brouillon sécurisé en arrière-plan. Vous pouvez modifier vos réponses jusqu’à l’envoi final.", "pending");
         const restored = restoreDraft();
         if (restored > 0) {
           setSubmitStatus(`Brouillon restauré : ${restored} réponse(s) récupérée(s) sur cet appareil.`, "success");
