@@ -451,7 +451,8 @@ class FinalExamBackendTests(unittest.TestCase):
                     config, grades, bundle, store
                 )
                 self.assertTrue(changed)
-                self.assertFalse(grades_changed)
+                self.assertTrue(grades_changed)
+                self.assertIn("finalExam", grades["students"][0]["grades"])
                 config["writeStore"](store)
 
                 student = grades["students"][0]

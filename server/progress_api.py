@@ -2,13 +2,17 @@
 import json
 import base64
 import binascii
+import csv
 import hashlib
 import hmac
+import io
+import ipaddress
 import math
 import os
 import random
 import re
 import secrets
+import signal
 import sys
 import tempfile
 import threading
@@ -41,6 +45,21 @@ except ImportError:  # Imported as ``server.progress_api`` by the test suite.
         exam_timing,
         submission_receipt_code,
         validate_partial_draft,
+    )
+
+try:
+    from final_exam_storage import (
+        FinalExamConflictError,
+        FinalExamMigrationError,
+        FinalExamRepository,
+        FinalExamStorageError,
+    )
+except ImportError:  # Imported as ``server.progress_api`` by the test suite.
+    from server.final_exam_storage import (
+        FinalExamConflictError,
+        FinalExamMigrationError,
+        FinalExamRepository,
+        FinalExamStorageError,
     )
 
 
@@ -79,6 +98,16 @@ FRENCH1_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH1_FINAL_EXAM_AU
 FRENCH2_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH2_FINAL_EXAM_DATA", "/var/lib/jaralingua/french2-final-exam.json")
 FRENCH2_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH2_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french2-final-exam-submissions.json")
 FRENCH2_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH2_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french2-final-exam-audio.mp3")
+FRENCH8_FINAL_EXAM_PATH = os.environ.get("JARALINGUA_FRENCH8_FINAL_EXAM_DATA", "/var/lib/jaralingua/french8-final-exam.json")
+FRENCH8_FINAL_EXAM_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_FRENCH8_FINAL_EXAM_SUBMISSIONS", "/var/lib/jaralingua/french8-final-exam-submissions.json")
+FRENCH8_FINAL_EXAM_AUDIO_PATH = os.environ.get("JARALINGUA_FRENCH8_FINAL_EXAM_AUDIO", "/var/lib/jaralingua/french8-final-exam-audio.mp3")
+FRENCH8_FINAL_EXAM_DB_PATH = os.environ.get("JARALINGUA_FRENCH8_FINAL_EXAM_DB", "/var/lib/jaralingua/french8-final-exam.sqlite3")
+try:
+    FRENCH8_FINAL_EXAM_AUDIO_GRANT_TTL = int(
+        os.environ.get("JARALINGUA_FRENCH8_FINAL_EXAM_AUDIO_GRANT_TTL", "10800")
+    )
+except (TypeError, ValueError):
+    FRENCH8_FINAL_EXAM_AUDIO_GRANT_TTL = 10800
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
 BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/basic-integrated-task.json")
 BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
@@ -169,6 +198,8 @@ BUNDLED_FRENCH1_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french1-final
 BUNDLED_FRENCH1_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french1-final-exam-audio.mp3")
 BUNDLED_FRENCH2_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french2-final-exam.local.json")
 BUNDLED_FRENCH2_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french2-final-exam-audio.mp3")
+BUNDLED_FRENCH8_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french8-final-exam.local.json")
+BUNDLED_FRENCH8_FINAL_EXAM_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french8-final-exam-audio.mp3")
 FINAL_EXAM_PREFLIGHT_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french-final-exam-preflight-audio.mp3")
 BUNDLED_FRENCH8_QUIZ_PATH = os.path.join(REPO_ROOT, "data", "french8-quiz-ville-intelligente.local.json")
 BUNDLED_FRENCH8_QUIZ_AUDIO_PATH = os.path.join(REPO_ROOT, "server", "private_assets", "french8-quiz-ville-intelligente-energie-batiments.mp3")
@@ -779,6 +810,22 @@ FRENCH1_CORE_EVALUATIONS.pop("evaluationApreciser15", None)
 
 data_lock = threading.Lock()
 token_cache = {}
+file_etag_cache = {}
+FRENCH8_FINAL_EXAM_REPOSITORY = None
+FRENCH8_FINAL_EXAM_REPOSITORY_LOCK = threading.Lock()
+FRENCH8_FINAL_EXAM_SCHEDULER_STOP = threading.Event()
+FRENCH8_FINAL_EXAM_SCHEDULER_WAKE = threading.Event()
+FRENCH8_FINAL_EXAM_SCHEDULER_THREAD = None
+FRENCH8_FINAL_EXAM_RUNTIME_STATUS = {
+    "schedulerEnabled": False,
+    "schedulerStartedAt": None,
+    "schedulerLastTickAt": None,
+    "schedulerLastSuccessAt": None,
+    "schedulerLastError": "",
+    "schedulerConsecutiveFailures": 0,
+    "sseConnections": 0,
+    "lastHealthAt": None,
+}
 
 
 def now_iso():
@@ -790,6 +837,9 @@ def json_response(handler, status, payload):
     handler.send_response(status)
     handler.send_header("Content-Type", "application/json; charset=utf-8")
     handler.send_header("Cache-Control", "no-store")
+    request_id = clean_text(getattr(handler, "request_id", ""), 120)
+    if request_id:
+        handler.send_header("X-Request-ID", request_id)
     handler.send_header("Content-Length", str(len(body)))
     handler.end_headers()
     handler.wfile.write(body)
@@ -799,6 +849,219 @@ def binary_response(handler, status, body, content_type):
     handler.send_response(status)
     handler.send_header("Content-Type", content_type)
     handler.send_header("Cache-Control", "no-store")
+    request_id = clean_text(getattr(handler, "request_id", ""), 120)
+    if request_id:
+        handler.send_header("X-Request-ID", request_id)
+    handler.send_header("Content-Length", str(len(body)))
+    handler.end_headers()
+    handler.wfile.write(body)
+
+
+def parse_http_byte_range(value, total_size):
+    """Parse one RFC 7233 byte range and return an inclusive ``(start, end)``."""
+
+    try:
+        total = int(total_size)
+    except (TypeError, ValueError):
+        raise ValueError("invalid_size")
+    if total < 0:
+        raise ValueError("invalid_size")
+    text = clean_text(value, 200)
+    if not text:
+        return None
+    if not text.startswith("bytes=") or "," in text:
+        raise ValueError("invalid_range")
+    spec = text[6:].strip()
+    if "-" not in spec:
+        raise ValueError("invalid_range")
+    start_text, end_text = spec.split("-", 1)
+    if not start_text:
+        try:
+            suffix = int(end_text)
+        except (TypeError, ValueError):
+            raise ValueError("invalid_range")
+        if suffix <= 0 or total <= 0:
+            raise ValueError("range_not_satisfiable")
+        start = max(0, total - suffix)
+        return start, total - 1
+    try:
+        start = int(start_text)
+    except (TypeError, ValueError):
+        raise ValueError("invalid_range")
+    if start < 0 or start >= total:
+        raise ValueError("range_not_satisfiable")
+    if end_text:
+        try:
+            end = int(end_text)
+        except (TypeError, ValueError):
+            raise ValueError("invalid_range")
+        if end < start:
+            raise ValueError("range_not_satisfiable")
+        end = min(end, total - 1)
+    else:
+        end = total - 1
+    return start, end
+
+
+def file_sha256_etag(path):
+    """Return a stable strong ETag, cached by path, size and mtime."""
+
+    stat = os.stat(path)
+    cache_key = (os.path.abspath(path), int(stat.st_size), int(stat.st_mtime_ns))
+    cached = file_etag_cache.get(cache_key)
+    if cached:
+        return cached
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for chunk in iter(lambda: handle.read(128 * 1024), b""):
+            digest.update(chunk)
+    etag = '"sha256-' + digest.hexdigest() + '"'
+    file_etag_cache.clear()
+    file_etag_cache[cache_key] = etag
+    return etag
+
+
+def ranged_file_response(handler, path, content_type, head_only=False):
+    """Stream a file with GET/HEAD and single-range support without buffering it."""
+
+    if not path or not os.path.isfile(path):
+        json_response(handler, 404, {"error": "audio_not_found"})
+        return
+    total = os.path.getsize(path)
+    etag = file_sha256_etag(path)
+    if clean_text(handler.headers.get("If-None-Match"), 200) == etag and not handler.headers.get("Range"):
+        handler.send_response(304)
+        handler.send_header("ETag", etag)
+        handler.send_header("Cache-Control", "private, no-store")
+        handler.end_headers()
+        return
+    try:
+        byte_range = parse_http_byte_range(handler.headers.get("Range"), total)
+    except ValueError:
+        handler.send_response(416)
+        handler.send_header("Content-Range", "bytes */" + str(total))
+        handler.send_header("Accept-Ranges", "bytes")
+        handler.send_header("Cache-Control", "private, no-store")
+        handler.send_header("Content-Length", "0")
+        handler.end_headers()
+        return
+    start, end = byte_range if byte_range else (0, total - 1)
+    length = max(0, end - start + 1)
+    handler.send_response(206 if byte_range else 200)
+    handler.send_header("Content-Type", content_type)
+    handler.send_header("Content-Length", str(length))
+    handler.send_header("Accept-Ranges", "bytes")
+    handler.send_header("ETag", etag)
+    handler.send_header("Cache-Control", "private, no-store")
+    handler.send_header("X-Content-Type-Options", "nosniff")
+    request_id = clean_text(getattr(handler, "request_id", ""), 120)
+    if request_id:
+        handler.send_header("X-Request-ID", request_id)
+    if byte_range:
+        handler.send_header("Content-Range", f"bytes {start}-{end}/{total}")
+    handler.end_headers()
+    if head_only or not length:
+        return
+    remaining = length
+    with open(path, "rb") as handle:
+        handle.seek(start)
+        while remaining > 0:
+            chunk = handle.read(min(64 * 1024, remaining))
+            if not chunk:
+                break
+            handler.wfile.write(chunk)
+            remaining -= len(chunk)
+
+
+def request_client_ip(handler):
+    """Use X-Forwarded-For only from the local reverse proxy."""
+
+    peer = clean_text((getattr(handler, "client_address", None) or ("",))[0], 100)
+    try:
+        peer_address = ipaddress.ip_address(peer)
+    except ValueError:
+        return "unknown"
+    forwarded = clean_text(handler.headers.get("X-Forwarded-For"), 500)
+    if peer_address.is_loopback and forwarded:
+        candidate = forwarded.split(",", 1)[0].strip()
+        try:
+            return ipaddress.ip_address(candidate).compressed
+        except ValueError:
+            return peer_address.compressed
+    return peer_address.compressed
+
+
+def rate_limit_subject_hash(value):
+    return hmac.new(
+        local_auth_secret(),
+        ("french8-final-exam-rate|" + clean_text(value, 500)).encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+
+
+def rate_limit_response(handler, decision, request_id=""):
+    body = json.dumps({
+        "error": "rate_limited",
+        "retryAfter": decision.retry_after_seconds,
+        "requestId": clean_text(request_id, 120),
+    }, ensure_ascii=False).encode("utf-8")
+    handler.send_response(429)
+    handler.send_header("Content-Type", "application/json; charset=utf-8")
+    handler.send_header("Cache-Control", "no-store")
+    handler.send_header("Retry-After", str(max(1, int(decision.retry_after_seconds or 1))))
+    handler.send_header("X-RateLimit-Limit", str(decision.limit))
+    handler.send_header("X-RateLimit-Remaining", str(decision.remaining))
+    if request_id:
+        handler.send_header("X-Request-ID", clean_text(request_id, 120))
+    handler.send_header("Content-Length", str(len(body)))
+    handler.end_headers()
+    handler.wfile.write(body)
+
+
+def consume_french8_final_exam_rate(handler, bucket, subject, limit, window_seconds):
+    """Consume one durable rate window and emit a structured 429 when denied."""
+
+    decision = french8_final_exam_repository().consume_rate_window(
+        bucket,
+        rate_limit_subject_hash(subject),
+        limit=limit,
+        window_seconds=window_seconds,
+    )
+    if decision.allowed:
+        return True
+    request_id = clean_text(getattr(handler, "request_id", ""), 120)
+    try:
+        french8_final_exam_repository().append_audit(
+            "rate_limited",
+            request_id=request_id,
+            source="security",
+            detail={"bucket": bucket, "retryAfter": decision.retry_after_seconds},
+        )
+    except FinalExamStorageError:
+        pass
+    rate_limit_response(handler, decision, request_id)
+    return False
+
+
+def safe_csv_cell(value):
+    text = str(value if value is not None else "")
+    return "'" + text if text[:1] in ("=", "+", "-", "@") else text
+
+
+def csv_response(handler, filename, fieldnames, rows):
+    buffer = io.StringIO(newline="")
+    writer = csv.DictWriter(buffer, fieldnames=fieldnames, extrasaction="ignore")
+    writer.writeheader()
+    for row in rows:
+        writer.writerow({key: safe_csv_cell(row.get(key, "")) for key in fieldnames})
+    body = ("\ufeff" + buffer.getvalue()).encode("utf-8")
+    handler.send_response(200)
+    handler.send_header("Content-Type", "text/csv; charset=utf-8")
+    handler.send_header("Content-Disposition", 'attachment; filename="' + safe_filename_token(filename, 120) + '"')
+    handler.send_header("Cache-Control", "no-store")
+    request_id = clean_text(getattr(handler, "request_id", ""), 120)
+    if request_id:
+        handler.send_header("X-Request-ID", request_id)
     handler.send_header("Content-Length", str(len(body)))
     handler.end_headers()
     handler.wfile.write(body)
@@ -2959,6 +3222,316 @@ def read_french2_final_exam_submissions():
 
 def write_french2_final_exam_submissions(data):
     write_json_file(FRENCH2_FINAL_EXAM_SUBMISSIONS_PATH, data, ".french2-final-submissions-")
+
+
+def final_exam_parse_utc(value):
+    """Parse a public exam timestamp as an aware UTC datetime."""
+
+    if isinstance(value, datetime):
+        parsed = value
+    elif isinstance(value, (int, float)) and not isinstance(value, bool):
+        try:
+            parsed = datetime.fromtimestamp(float(value), timezone.utc)
+        except (OverflowError, OSError, ValueError):
+            return None
+    else:
+        text = clean_text(value, 80)
+        if not text:
+            return None
+        try:
+            parsed = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        except (TypeError, ValueError):
+            return None
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def final_exam_iso_utc(value):
+    parsed = final_exam_parse_utc(value)
+    return parsed.isoformat().replace("+00:00", "Z") if parsed else None
+
+
+def final_exam_schedule_status(state, now=None):
+    """Return the server-authoritative status of an optional exam window."""
+
+    if not isinstance(state, dict) or state.get("scheduleEnabled") is not True:
+        return "manual_open" if isinstance(state, dict) and state.get("isOpen") is True else "manual_closed"
+    opens_at = final_exam_parse_utc(state.get("opensAt"))
+    closes_at = final_exam_parse_utc(state.get("closesAt"))
+    current = final_exam_parse_utc(now) if now is not None else datetime.now(timezone.utc)
+    if not opens_at or not closes_at or closes_at <= opens_at or not current:
+        return "invalid"
+    if current < opens_at:
+        return "scheduled"
+    if current >= closes_at:
+        return "closed"
+    return "open"
+
+
+def final_exam_refresh_schedule_state(state, now=None):
+    """Materialize a Niveau 8 scheduled window without trusting client clocks."""
+
+    if not isinstance(state, dict) or state.get("scheduleEnabled") is not True:
+        return False
+    status = final_exam_schedule_status(state, now)
+    previous = (
+        state.get("isOpen") is True,
+        state.get("openedAt"),
+        state.get("closedAt"),
+        state.get("scheduleStatus"),
+    )
+    state["scheduleStatus"] = status
+    if status == "open":
+        state["isOpen"] = True
+        state["openedAt"] = final_exam_iso_utc(state.get("opensAt"))
+        state["closedAt"] = None
+    elif status == "closed":
+        state["isOpen"] = False
+        state["closedAt"] = final_exam_iso_utc(state.get("closesAt"))
+    else:
+        state["isOpen"] = False
+        if status == "scheduled":
+            state["openedAt"] = None
+            state["closedAt"] = None
+    current = (
+        state.get("isOpen") is True,
+        state.get("openedAt"),
+        state.get("closedAt"),
+        state.get("scheduleStatus"),
+    )
+    return current != previous
+
+
+def default_french8_final_exam_bundle():
+    return {
+        "state": {
+            "isOpen": False,
+            "openedAt": None,
+            "closedAt": None,
+            "openedBy": None,
+            "updatedAt": None,
+            "durationMinutes": 90,
+            "releaseResults": False,
+            "releasedAt": None,
+            "extraMinutesByStudent": {},
+            "revision": 0,
+            "scheduleEnabled": False,
+            "opensAt": None,
+            "closesAt": None,
+            "scheduledAt": None,
+            "scheduledBy": None,
+            "schedulerObservedStatus": "manual_closed",
+        },
+        "exam": {
+            "id": "french8-final-exam",
+            "title": "Examen final - Niveau 8",
+            "totalPoints": 50,
+            "transcript": "",
+            "sections": [],
+        },
+    }
+
+
+def french8_final_exam_repository():
+    """Return the initialized, fail-closed SQLite repository for Niveau 8."""
+
+    global FRENCH8_FINAL_EXAM_REPOSITORY
+    if FRENCH8_FINAL_EXAM_REPOSITORY is not None:
+        return FRENCH8_FINAL_EXAM_REPOSITORY
+    with FRENCH8_FINAL_EXAM_REPOSITORY_LOCK:
+        if FRENCH8_FINAL_EXAM_REPOSITORY is not None:
+            return FRENCH8_FINAL_EXAM_REPOSITORY
+        repository = FinalExamRepository(FRENCH8_FINAL_EXAM_DB_PATH, level="french8")
+        report = repository.initialize(
+            FRENCH8_FINAL_EXAM_PATH,
+            BUNDLED_FRENCH8_FINAL_EXAM_PATH,
+            FRENCH8_FINAL_EXAM_SUBMISSIONS_PATH,
+            default_bundle=default_french8_final_exam_bundle(),
+            default_store=default_french8_final_exam_store(),
+        )
+        FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+            "storageReady": True,
+            "storageMigrated": report.imported,
+            "storageInitializedAt": report.imported_at,
+            "storageLastError": "",
+        })
+        FRENCH8_FINAL_EXAM_REPOSITORY = repository
+        return repository
+
+
+def reset_french8_final_exam_repository_for_tests():
+    """Drop only the process singleton; test suites can then point at a temp DB."""
+
+    global FRENCH8_FINAL_EXAM_REPOSITORY
+    with FRENCH8_FINAL_EXAM_REPOSITORY_LOCK:
+        FRENCH8_FINAL_EXAM_REPOSITORY = None
+
+
+def read_french8_final_exam_bundle():
+    data = french8_final_exam_repository().read_bundle()
+    defaults = default_french8_final_exam_bundle()
+    if not isinstance(data.get("state"), dict):
+        raise FinalExamStorageError("invalid_bundle_state")
+    if not isinstance(data.get("exam"), dict):
+        raise FinalExamStorageError("invalid_bundle_exam")
+    state = data["state"]
+    for key, value in defaults["state"].items():
+        state.setdefault(key, value)
+    if not isinstance(state.get("extraMinutesByStudent"), dict):
+        state["extraMinutesByStudent"] = {}
+    try:
+        duration = int(state.get("durationMinutes", 90))
+    except (TypeError, ValueError):
+        duration = 90
+    state["durationMinutes"] = duration if 10 <= duration <= 240 else 90
+    state["releaseResults"] = state.get("releaseResults") is True
+    state["scheduleEnabled"] = state.get("scheduleEnabled") is True
+    if state["scheduleEnabled"]:
+        state["opensAt"] = final_exam_iso_utc(state.get("opensAt"))
+        state["closesAt"] = final_exam_iso_utc(state.get("closesAt"))
+        final_exam_refresh_schedule_state(state)
+    exam = data["exam"]
+    exam.setdefault("sections", [])
+    exam.setdefault("totalPoints", 50)
+    exam.setdefault("transcript", "")
+    return data
+
+
+def write_french8_final_exam_bundle(data):
+    repository = french8_final_exam_repository()
+    with repository.transaction(write=True) as transaction:
+        current = transaction.get_bundle()
+        saved = transaction.put_bundle(data, expected_revision=current.revision)
+        transaction.append_audit(
+            "bundle_saved",
+            source="runtime",
+            detail={
+                "documentRevision": saved.revision,
+                "stateRevision": saved.payload.get("state", {}).get("revision", 0),
+            },
+        )
+    return saved.payload
+
+
+def default_french8_final_exam_store():
+    return {
+        "submissions": {},
+        "attempts": {},
+        "preflight": {},
+        "idempotency": {},
+        "events": [],
+    }
+
+
+def read_french8_final_exam_submissions():
+    data = french8_final_exam_repository().read_store()
+    data.setdefault("idempotency", {})
+    for key in ("submissions", "attempts", "preflight", "idempotency"):
+        if not isinstance(data.get(key), dict):
+            raise FinalExamStorageError("invalid_store_schema:" + key)
+    if not isinstance(data.get("events"), list):
+        raise FinalExamStorageError("invalid_store_schema:events")
+    return data
+
+
+def _french8_final_exam_save_store_transaction(transaction, data):
+    current = transaction.get_store()
+    previous_events = current.payload.get("events", [])
+    known_event_ids = {
+        clean_text(item.get("eventId"), 160)
+        for item in previous_events
+        if isinstance(item, dict) and clean_text(item.get("eventId"), 160)
+    }
+    previous_event_fingerprints = {
+        hashlib.sha256(
+            json.dumps(item, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+        for item in previous_events
+        if isinstance(item, dict)
+    }
+    previous_submission_ids = {
+        clean_text(student_id, 80)
+        for student_id, submission in current.payload.get("submissions", {}).items()
+        if isinstance(submission, dict)
+    }
+    saved = transaction.put_store(data, expected_revision=current.revision)
+    for event in saved.payload.get("events", []):
+        if not isinstance(event, dict):
+            continue
+        event_id = clean_text(event.get("eventId"), 160)
+        fingerprint = hashlib.sha256(
+            json.dumps(event, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
+        if (event_id and event_id in known_event_ids) or fingerprint in previous_event_fingerprints:
+            continue
+        standard = {"eventId", "event", "type", "at", "email", "actor", "studentId", "requestId"}
+        detail = {key: value for key, value in event.items() if key not in standard}
+        try:
+            transaction.append_audit(
+                clean_text(event.get("event") or event.get("type"), 160) or "runtime_event",
+                actor_email=event.get("email") or event.get("actor") or "",
+                student_id=event.get("studentId") or "",
+                request_id=event.get("requestId") or "",
+                source="runtime",
+                detail=dict({"eventId": event_id}, **detail),
+                occurred_at=event.get("at") or now_iso(),
+            )
+        except ValueError:
+            transaction.append_audit(
+                "runtime_event",
+                source="runtime",
+                detail={"eventId": event_id, "originalType": clean_text(event.get("event"), 160)},
+            )
+    for student_id, submission in saved.payload.get("submissions", {}).items():
+        student_key = clean_text(student_id, 80)
+        if not student_key or student_key in previous_submission_ids or not isinstance(submission, dict):
+            continue
+        grade = clean_grade(submission.get("grade"))
+        attempt_id = clean_text(submission.get("attemptId"), 160)
+        receipt = clean_text(submission.get("receiptCode"), 160)
+        if grade is None or not attempt_id:
+            continue
+        transaction.enqueue_grade_sync(
+            student_key,
+            grade,
+            attempt_id,
+            evaluation_id="finalExam",
+            idempotency_key="french8:" + (receipt or attempt_id),
+            payload={
+                "receiptCode": receipt,
+                "examVersion": clean_text(submission.get("examVersion"), 80),
+                "submittedAt": clean_text(submission.get("submittedAt"), 80),
+            },
+        )
+    return saved
+
+
+def write_french8_final_exam_submissions(data):
+    repository = french8_final_exam_repository()
+    with repository.transaction(write=True) as transaction:
+        saved = _french8_final_exam_save_store_transaction(transaction, data)
+    return saved.payload
+
+
+def write_french8_final_exam_documents(bundle, store):
+    """Commit state, attempts, audit events and outbox entries in one transaction."""
+
+    repository = french8_final_exam_repository()
+    with repository.transaction(write=True) as transaction:
+        current_bundle = transaction.get_bundle()
+        saved_bundle = transaction.put_bundle(bundle, expected_revision=current_bundle.revision)
+        saved_store = _french8_final_exam_save_store_transaction(transaction, store)
+        transaction.append_audit(
+            "documents_saved",
+            source="runtime",
+            detail={
+                "bundleRevision": saved_bundle.revision,
+                "storeRevision": saved_store.revision,
+                "stateRevision": saved_bundle.payload.get("state", {}).get("revision", 0),
+            },
+        )
+    return {"bundle": saved_bundle.payload, "store": saved_store.payload}
 
 
 def default_french8_quiz_bundle():
@@ -6077,6 +6650,23 @@ def final_exam_level_config(level_key):
             "evaluation": FRENCH2_FINAL_EXAM_EVALUATION,
             "ensureGrades": ensure_french2_gradebook_structure,
         }
+    if level_key == "french8":
+        return {
+            "level": "french8",
+            "gradesPath": FRENCH8_GRADES_PATH,
+            "readBundle": read_french8_final_exam_bundle,
+            "writeBundle": write_french8_final_exam_bundle,
+            "readStore": read_french8_final_exam_submissions,
+            "writeStore": write_french8_final_exam_submissions,
+            "writeDocuments": write_french8_final_exam_documents,
+            "audioPath": FRENCH8_FINAL_EXAM_AUDIO_PATH,
+            "bundledAudioPath": BUNDLED_FRENCH8_FINAL_EXAM_AUDIO_PATH,
+            "evaluation": FRENCH8_BASE_EVALUATIONS["finalExam"],
+            "ensureGrades": ensure_french8_gradebook_structure,
+            "supportsSchedule": True,
+            "repository": french8_final_exam_repository,
+            "healthCheck": french8_final_exam_health_payload,
+        }
     raise ValueError("invalid_exam_level")
 
 
@@ -6156,10 +6746,16 @@ def final_exam_append_event(store, event_type, profile=None, student=None, extra
         events = []
         store["events"] = events
     event = {
+        "eventId": secrets.token_urlsafe(12),
         "at": now_iso(),
         "event": clean_text(event_type, 80),
         "email": normalize_email(profile.get("email")) if isinstance(profile, dict) else "",
         "studentId": clean_text(student.get("id"), 40) if isinstance(student, dict) else "",
+        "requestId": (
+            clean_text((extra or {}).get("requestId"), 120)
+            if isinstance(extra, dict) and (extra or {}).get("requestId")
+            else clean_text((profile or {}).get("_requestId"), 120)
+        ),
     }
     if isinstance(extra, dict):
         for key, value in extra.items():
@@ -6169,8 +6765,10 @@ def final_exam_append_event(store, event_type, profile=None, student=None, extra
 
 
 def final_exam_public_state(state, role, student_id=""):
+    schedule_status = final_exam_schedule_status(state)
+    effective_open = schedule_status == "open" if state.get("scheduleEnabled") is True else state.get("isOpen") is True
     result = {
-        "isOpen": state.get("isOpen") is True,
+        "isOpen": effective_open,
         "openedAt": state.get("openedAt"),
         "closedAt": state.get("closedAt"),
         "updatedAt": state.get("updatedAt"),
@@ -6178,7 +6776,24 @@ def final_exam_public_state(state, role, student_id=""):
         "releaseResults": state.get("releaseResults") is True,
         "releasedAt": state.get("releasedAt"),
         "revision": state.get("revision", 0),
+        "serverTime": now_iso(),
     }
+    if state.get("scheduleEnabled") is True or "opensAt" in state or "closesAt" in state:
+        result.update({
+            "scheduleEnabled": state.get("scheduleEnabled") is True,
+            "opensAt": final_exam_iso_utc(state.get("opensAt")),
+            "closesAt": final_exam_iso_utc(state.get("closesAt")),
+            "scheduleStatus": schedule_status,
+            "accessEffective": effective_open,
+            "accessReason": {
+                "scheduled": "before_scheduled_open",
+                "open": "scheduled_window_open",
+                "closed": "scheduled_window_closed",
+                "invalid": "invalid_schedule",
+                "manual_open": "opened_by_teacher",
+                "manual_closed": "closed_by_teacher",
+            }.get(schedule_status, "closed_by_teacher"),
+        })
     extras = state.get("extraMinutesByStudent", {})
     if not isinstance(extras, dict):
         extras = {}
@@ -6191,6 +6806,94 @@ def final_exam_public_state(state, role, student_id=""):
         except (TypeError, ValueError):
             result["extraMinutes"] = 0
     return result
+
+
+def french8_final_exam_audio_grant(profile, role, student, bundle):
+    """Create a short-lived grant so native audio can use HTTP Range requests."""
+
+    state = bundle.get("state", {}) if isinstance(bundle, dict) else {}
+    exam = bundle.get("exam", {}) if isinstance(bundle, dict) else {}
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    is_staff = role in ("admin", "teacher")
+    public_state = final_exam_public_state(state, role, student_id)
+    if not is_staff and public_state.get("isOpen") is not True:
+        return 403, {"error": "exam_closed", "state": public_state}
+    now_epoch = int(time.time())
+    ttl = max(300, min(int(FRENCH8_FINAL_EXAM_AUDIO_GRANT_TTL or 10800), 21600))
+    expires_at = now_epoch + ttl
+    scheduled_close = final_exam_parse_utc(state.get("closesAt")) if state.get("scheduleEnabled") is True else None
+    if scheduled_close and not is_staff:
+        expires_at = min(expires_at, int(scheduled_close.timestamp()) + 60)
+    claims = {
+        "purpose": "french8-final-exam-audio",
+        "email": normalize_email((profile or {}).get("email")),
+        "studentId": student_id,
+        "staff": is_staff,
+        "examVersion": clean_text(exam.get("version"), 80),
+        "stateRevision": int(state.get("revision", 0) or 0),
+        "iat": now_epoch,
+        "exp": expires_at,
+        "nonce": secrets.token_urlsafe(10),
+    }
+    encoded = base64.urlsafe_b64encode(
+        json.dumps(claims, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).decode("ascii").rstrip("=")
+    signature = hmac.new(
+        local_auth_secret(),
+        ("french8-final-exam-audio|" + encoded).encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+    grant = encoded + "." + signature
+    return 200, {
+        "ok": True,
+        "audioUrl": "/api/french8/final-exam/audio?" + urllib.parse.urlencode({"grant": grant}),
+        "expiresAt": datetime.fromtimestamp(expires_at, timezone.utc).isoformat().replace("+00:00", "Z"),
+        "contentType": "audio/mpeg",
+        "acceptRanges": "bytes",
+    }
+
+
+def french8_final_exam_validate_audio_grant(grant, bundle, now=None):
+    """Validate an opaque native-audio grant without exposing identity data."""
+
+    token = clean_text(grant, 4096)
+    if not token or "." not in token:
+        raise ValueError("audio_grant_missing")
+    encoded, supplied_signature = token.rsplit(".", 1)
+    expected_signature = hmac.new(
+        local_auth_secret(),
+        ("french8-final-exam-audio|" + encoded).encode("utf-8"),
+        hashlib.sha256,
+    ).hexdigest()
+    if not hmac.compare_digest(supplied_signature, expected_signature):
+        raise ValueError("audio_grant_invalid")
+    try:
+        padding = "=" * ((4 - len(encoded) % 4) % 4)
+        claims = json.loads(base64.urlsafe_b64decode((encoded + padding).encode("ascii")).decode("utf-8"))
+    except (ValueError, UnicodeDecodeError, json.JSONDecodeError, binascii.Error) as error:
+        raise ValueError("audio_grant_invalid") from error
+    if not isinstance(claims, dict) or claims.get("purpose") != "french8-final-exam-audio":
+        raise ValueError("audio_grant_invalid")
+    current_epoch = int(time.time() if now is None else now)
+    try:
+        expires_at = int(claims.get("exp", 0))
+    except (TypeError, ValueError):
+        expires_at = 0
+    if expires_at <= current_epoch:
+        raise ValueError("audio_grant_expired")
+    exam = bundle.get("exam", {}) if isinstance(bundle, dict) else {}
+    state = bundle.get("state", {}) if isinstance(bundle, dict) else {}
+    if clean_text(claims.get("examVersion"), 80) != clean_text(exam.get("version"), 80):
+        raise ValueError("audio_grant_stale")
+    try:
+        grant_revision = int(claims.get("stateRevision", -1))
+    except (TypeError, ValueError):
+        grant_revision = -1
+    if grant_revision != int(state.get("revision", 0) or 0):
+        raise ValueError("audio_grant_stale")
+    if claims.get("staff") is not True and final_exam_public_state(state, "student", clean_text(claims.get("studentId"), 40)).get("isOpen") is not True:
+        raise ValueError("exam_closed")
+    return claims
 
 
 def final_exam_runtime_state_payload(profile, grades_data, bundle, store):
@@ -6278,11 +6981,18 @@ def final_exam_bridge_route_allowed(profile, request_path, request_method="GET")
         return True
     path = urllib.parse.urlparse(str(request_path or "")).path
     level = clean_text(profile.get("examLevel"), 40)
-    if level not in ("french1", "french2"):
+    if level not in ("french1", "french2", "french8"):
         return False
     base = "/api/" + level + "/final-exam"
     allowed = {
-        "GET": {base, base + "/state", base + "/audio", base + "/draft"},
+        "GET": {
+            base,
+            base + "/state",
+            base + "/audio",
+            base + "/audio-grant",
+            base + "/draft",
+            base + "/events",
+        },
         "POST": {base + "/session", base + "/submit"},
         "PUT": {base + "/draft"},
     }
@@ -6376,7 +7086,7 @@ def final_exam_get_access_payload(role, student, bundle, store, profile=None, co
     return final_exam_access_payload(role, student, bundle, store, profile, config)
 
 
-def final_exam_audio_access_error(role, student, bundle, store):
+def final_exam_audio_access_error(role, student, bundle, store, require_active_attempt=True):
     """Describe why protected exam audio is unavailable to this student."""
 
     if role in ("admin", "teacher"):
@@ -6384,6 +7094,11 @@ def final_exam_audio_access_error(role, student, bundle, store):
     state = bundle.get("state", {})
     exam = bundle.get("exam", {})
     student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    if require_active_attempt is False:
+        public_state = final_exam_public_state(state, role, student_id)
+        if public_state.get("accessEffective", public_state.get("isOpen")) is not True:
+            return 403, {"error": "exam_closed", "state": public_state}
+        return None
     submission = store.get("submissions", {}).get(student_id) if student_id else None
     if isinstance(submission, dict):
         error = "attempt_expired" if submission.get("completionReason") == "time_expired" else "already_submitted"
@@ -6406,13 +7121,26 @@ def final_exam_audio_access_error(role, student, bundle, store):
 
 def final_exam_attempt_timing(state, attempt, student_id):
     started_at = attempt.get("startedAt") or state.get("openedAt") or now_iso()
-    return exam_timing(
+    timing = exam_timing(
         started_at,
         state.get("durationMinutes", 90),
         student_id,
         state.get("extraMinutesByStudent", {}),
         now=time.time(),
     )
+    if state.get("scheduleEnabled") is True:
+        scheduled_close = final_exam_parse_utc(state.get("closesAt"))
+        attempt_deadline = final_exam_parse_utc(timing.get("deadlineAt"))
+        if scheduled_close and attempt_deadline and scheduled_close < attempt_deadline:
+            current = datetime.now(timezone.utc)
+            timing["deadlineAt"] = final_exam_iso_utc(scheduled_close)
+            timing["remainingSeconds"] = max(
+                0,
+                int(math.ceil(scheduled_close.timestamp() - current.timestamp())),
+            )
+            timing["expired"] = current >= scheduled_close
+            timing["scheduleLimited"] = True
+    return timing
 
 
 def final_exam_presentation(exam, seed):
@@ -6447,6 +7175,34 @@ def final_exam_presentation(exam, seed):
         "questions": question_orders,
         "questionOrder": question_orders,
         "options": option_orders_all,
+    }
+
+
+def french8_final_exam_simulation_payload(profile, role, bundle, variant="A"):
+    """Build an explicit staff-only simulation without creating persisted state."""
+
+    if role not in ("admin", "teacher"):
+        raise PermissionError("forbidden")
+    exam = bundle.get("exam", {}) if isinstance(bundle, dict) else {}
+    safe_variant = clean_text(variant, 40) or "A"
+    seed = deterministic_exam_seed(
+        local_auth_secret(),
+        normalize_email((profile or {}).get("email")) or "staff",
+        clean_text(exam.get("id"), 80) or "french8-final-exam",
+        clean_text(exam.get("version"), 80) + "|simulation|" + safe_variant,
+    )
+    return {
+        "schemaVersion": 1,
+        "mode": "simulation",
+        "persistence": "none",
+        "status": "staff-preview",
+        "role": role,
+        "variant": safe_variant,
+        "state": final_exam_public_state(bundle.get("state", {}), role),
+        "exam": final_exam_public_payload(bundle),
+        "presentation": final_exam_presentation(exam, seed),
+        "attemptSeed": str(seed),
+        "simulation": True,
     }
 
 
@@ -6568,6 +7324,12 @@ def final_exam_finalize_attempt(config, grades_data, bundle, store, student, rea
 def final_exam_finalize_due_attempts(config, grades_data, bundle, store, force=False, reason="time_expired"):
     changed = False
     grades_changed = False
+    state = bundle.get("state", {})
+    schedule_closed = (
+        isinstance(config, dict)
+        and config.get("supportsSchedule") is True
+        and final_exam_schedule_status(state) == "closed"
+    )
     students = {
         clean_text(item.get("id"), 40): item
         for item in grades_data.get("students", [])
@@ -6579,10 +7341,11 @@ def final_exam_finalize_due_attempts(config, grades_data, bundle, store, force=F
         student = students.get(clean_text(student_id, 40))
         if not isinstance(student, dict):
             continue
-        due = force or final_exam_attempt_timing(bundle.get("state", {}), attempt, student_id).get("expired") is True
+        due = force or schedule_closed or final_exam_attempt_timing(state, attempt, student_id).get("expired") is True
         if not due:
             continue
-        _, saved, grade_saved = final_exam_finalize_attempt(config, grades_data, bundle, store, student, reason)
+        completion_reason = "scheduled_closed" if schedule_closed and not force else reason
+        _, saved, grade_saved = final_exam_finalize_attempt(config, grades_data, bundle, store, student, completion_reason)
         changed = changed or saved
         grades_changed = grades_changed or grade_saved
     return changed, grades_changed
@@ -6890,9 +7653,32 @@ def final_exam_submit_action(config, profile, payload):
     )
     if scope_error:
         return finish(*scope_error)
+    client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+    request_hash = hashlib.sha256(json.dumps({
+        "attemptId": clean_text(payload.get("attemptId"), 120),
+        "examVersion": clean_text(payload.get("examVersion") or payload.get("version"), 80),
+        "answers": payload.get("answers") if isinstance(payload.get("answers"), dict) else {},
+        "autoSubmit": payload.get("autoSubmit") is True,
+    }, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+    idempotency = store.setdefault("idempotency", {})
+    if not isinstance(idempotency, dict):
+        idempotency = {}
+        store["idempotency"] = idempotency
+    idempotency_key = student_id + ":" + client_submission_id if client_submission_id else ""
+    prior_idempotency = idempotency.get(idempotency_key) if idempotency_key else None
+    if isinstance(prior_idempotency, dict) and not hmac.compare_digest(
+        clean_text(prior_idempotency.get("requestHash"), 80), request_hash
+    ):
+        return finish(409, {"error": "idempotency_conflict"})
     existing = store.get("submissions", {}).get(student_id)
     if isinstance(existing, dict):
         grades_changed = final_exam_apply_grade(grades_data, student, existing, config["evaluation"]) or grades_changed
+        if isinstance(prior_idempotency, dict) and clean_text(prior_idempotency.get("receiptCode"), 120) == clean_text(existing.get("receiptCode"), 120):
+            return finish(200, {
+                "ok": True,
+                "duplicate": True,
+                "result": french1_final_exam_submission_public(existing, state),
+            })
         if payload.get("autoSubmit") is True and existing.get("autoSubmitted") is True:
             return finish(200, {"ok": True, "duplicate": True, "autoSubmitted": True, "result": french1_final_exam_submission_public(existing, state)})
         return finish(409, {"error": "already_submitted", "result": french1_final_exam_submission_public(existing, state)})
@@ -6936,6 +7722,13 @@ def final_exam_submit_action(config, profile, payload):
     attempt["answers"] = validate_partial_draft(exam, {"answers": payload.get("answers")})["answers"]
     attempt["lastSeenAt"] = now_iso()
     submission, saved, grade_saved = final_exam_finalize_attempt(config, grades_data, bundle, store, student, "manual")
+    if idempotency_key:
+        idempotency[idempotency_key] = {
+            "requestHash": request_hash,
+            "receiptCode": clean_text(submission.get("receiptCode"), 120),
+            "attemptId": clean_text(submission.get("attemptId"), 120),
+            "createdAt": now_iso(),
+        }
     final_exam_append_event(store, "submission_recorded", profile, student, {"attemptId": attempt.get("attemptId"), "receiptCode": submission.get("receiptCode")})
     grades_changed = grades_changed or grade_saved
     return finish(200, {"ok": True, "result": french1_final_exam_submission_public(submission, state)}, save_store=True)
@@ -6951,33 +7744,88 @@ def final_exam_update_state(config, profile, payload):
         return 403, {"error": "forbidden"}
     bundle = config["readBundle"]()
     state = bundle.setdefault("state", {})
+    supports_schedule = config.get("supportsSchedule") is True
+    schedule_refreshed = final_exam_refresh_schedule_state(state) if supports_schedule else False
     store = config["readStore"]()
     store_changed, due_grades = final_exam_finalize_due_attempts(config, grades_data, bundle, store)
     grades_changed = grades_changed or due_grades
-    bundle_changed = False
+    bundle_changed = schedule_refreshed
 
-    desired_open = payload.get("isOpen") if isinstance(payload.get("isOpen"), bool) else state.get("isOpen") is True
+    def persist_documents():
+        nonlocal bundle_changed, store_changed
+        write_documents = config.get("writeDocuments")
+        if bundle_changed and store_changed and callable(write_documents):
+            write_documents(bundle, store)
+            bundle_changed = False
+            store_changed = False
+        if bundle_changed:
+            config["writeBundle"](bundle)
+            bundle_changed = False
+        if store_changed:
+            config["writeStore"](store)
+            store_changed = False
+
+    def fail(status, body):
+        persist_documents()
+        if grades_changed:
+            write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+        return status, body
+
+    action = clean_text(payload.get("action"), 40).lower()
+    has_opens_value = payload.get("opensAt") not in (None, "")
+    has_closes_value = payload.get("closesAt") not in (None, "")
+    schedule_requested = supports_schedule and (
+        action in ("schedule", "program") or has_opens_value or has_closes_value
+    )
+    if schedule_requested and (not has_opens_value or not has_closes_value):
+        return fail(400, {"error": "invalid_schedule", "reason": "opens_and_closes_required"})
+
+    proposed_schedule = None
+    if schedule_requested:
+        opens_at = final_exam_parse_utc(payload.get("opensAt"))
+        closes_at = final_exam_parse_utc(payload.get("closesAt"))
+        if not opens_at or not closes_at or closes_at <= opens_at:
+            return fail(400, {"error": "invalid_schedule", "reason": "invalid_window"})
+        if closes_at <= datetime.now(timezone.utc):
+            return fail(400, {"error": "invalid_schedule", "reason": "window_elapsed"})
+        proposed_schedule = dict(state)
+        proposed_schedule.update({
+            "scheduleEnabled": True,
+            "opensAt": final_exam_iso_utc(opens_at),
+            "closesAt": final_exam_iso_utc(closes_at),
+        })
+        final_exam_refresh_schedule_state(proposed_schedule)
+
+    manual_state_requested = isinstance(payload.get("isOpen"), bool) or action in ("open_now", "close_now", "open", "close")
+    if schedule_requested:
+        desired_open = proposed_schedule.get("isOpen") is True
+    elif action in ("open_now", "open"):
+        desired_open = True
+    elif action in ("close_now", "close"):
+        desired_open = False
+    elif isinstance(payload.get("isOpen"), bool):
+        desired_open = payload.get("isOpen") is True
+    else:
+        desired_open = state.get("isOpen") is True
+
     active_ids = [
         clean_text(student_id, 40)
         for student_id, attempt in store.get("attempts", {}).items()
         if isinstance(attempt, dict) and student_id not in store.get("submissions", {})
     ]
     currently_open = state.get("isOpen") is True
-    if not desired_open and currently_open and active_ids and payload.get("confirmClose") is not True:
-        if store_changed:
-            config["writeStore"](store)
-        if grades_changed:
-            write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
-        return 409, {"error": "active_attempts", "activeAttempts": len(active_ids), "studentIds": active_ids}
+    state_change_requested = schedule_requested or manual_state_requested
+    if state_change_requested and not desired_open and currently_open and active_ids and payload.get("confirmClose") is not True:
+        return fail(409, {"error": "active_attempts", "activeAttempts": len(active_ids), "studentIds": active_ids})
     if "durationMinutes" in payload:
         try:
             duration = int(payload.get("durationMinutes"))
         except (TypeError, ValueError):
-            return 400, {"error": "invalid_duration"}
+            return fail(400, {"error": "invalid_duration"})
         if duration < 10 or duration > 240:
-            return 400, {"error": "invalid_duration"}
+            return fail(400, {"error": "invalid_duration"})
         if active_ids and duration != int(state.get("durationMinutes", 90) or 90):
-            return 409, {"error": "duration_locked", "activeAttempts": len(active_ids)}
+            return fail(409, {"error": "duration_locked", "activeAttempts": len(active_ids)})
         if state.get("durationMinutes") != duration:
             state["durationMinutes"] = duration
             bundle_changed = True
@@ -6988,7 +7836,7 @@ def final_exam_update_state(config, profile, payload):
         try:
             extra_minutes = int(extra_payload.get("extraMinutes"))
         except (TypeError, ValueError):
-            return 400, {"error": "invalid_extra_time"}
+            return fail(400, {"error": "invalid_extra_time"})
         matched_roster_student = next(
             (
                 item for item in grades_data.get("students", [])
@@ -7001,7 +7849,7 @@ def final_exam_update_state(config, profile, payload):
         )
         student_id = clean_text(matched_roster_student.get("id"), 40) if isinstance(matched_roster_student, dict) else ""
         if not student_id or not 0 <= extra_minutes <= 180:
-            return 400, {"error": "invalid_extra_time"}
+            return fail(400, {"error": "invalid_extra_time"})
         extras = state.setdefault("extraMinutesByStudent", {})
         if extra_minutes:
             extras[student_id] = extra_minutes
@@ -7014,15 +7862,15 @@ def final_exam_update_state(config, profile, payload):
     if "releaseResults" in payload:
         requested_release = payload.get("releaseResults") is True
         if state.get("releaseResults") is True and not requested_release:
-            return 409, {"error": "results_release_irreversible"}
+            return fail(409, {"error": "results_release_irreversible"})
         if requested_release and currently_open:
-            return 409, {"error": "exam_active"}
+            return fail(409, {"error": "exam_active"})
         if requested_release and state.get("releaseResults") is not True and not state.get("closedAt"):
-            return 409, {"error": "exam_not_completed"}
+            return fail(409, {"error": "exam_not_completed"})
         if requested_release and state.get("releaseResults") is not True and not any(
             isinstance(item, dict) for item in store.get("submissions", {}).values()
         ):
-            return 409, {"error": "no_submissions"}
+            return fail(409, {"error": "no_submissions"})
         if requested_release and state.get("releaseResults") is not True:
             state["releaseResults"] = True
             state["releasedAt"] = now_iso()
@@ -7031,25 +7879,74 @@ def final_exam_update_state(config, profile, payload):
             final_exam_append_event(store, "results_released", profile)
             store_changed = True
 
-    if desired_open and not currently_open:
+    needs_readiness = schedule_requested or (state_change_requested and desired_open and not currently_open)
+    if needs_readiness:
         if state.get("releaseResults") is True:
-            return 409, {"error": "results_already_released"}
+            return fail(409, {"error": "results_already_released"})
         weighting_issue = final_exam_weighting_issue(grades_data)
         if weighting_issue:
-            return 409, {"error": "gradebook_not_ready", "weightingIssue": weighting_issue}
+            return fail(409, {"error": "gradebook_not_ready", "weightingIssue": weighting_issue})
         integrity = final_exam_integrity(bundle.get("exam", {}), final_exam_audio_path(config))
         if not integrity.get("ok"):
-            return 409, {"error": "exam_not_ready", "integrity": integrity}
+            return fail(409, {"error": "exam_not_ready", "integrity": integrity})
+        health_check = config.get("healthCheck")
+        if callable(health_check):
+            health = health_check(config, grades_data, bundle, store, record_alerts=True)
+            if health.get("readyToOpen") is not True:
+                return fail(409, {
+                    "error": "exam_health_check_failed",
+                    "health": health,
+                    "blockingIssues": health.get("blockingIssues", []),
+                })
+            if schedule_requested and health.get("schedulerReady") is not True:
+                return fail(409, {
+                    "error": "exam_health_check_failed",
+                    "reason": "scheduler_not_ready",
+                    "health": health,
+                })
+
+    timestamp = now_iso()
+    if schedule_requested:
+        state.update({
+            "scheduleEnabled": True,
+            "opensAt": proposed_schedule.get("opensAt"),
+            "closesAt": proposed_schedule.get("closesAt"),
+            "scheduledAt": timestamp,
+            "scheduledBy": normalize_email(profile.get("email")),
+        })
+        final_exam_refresh_schedule_state(state)
+        state["schedulerObservedStatus"] = final_exam_schedule_status(state)
+        desired_open = state.get("isOpen") is True
+        bundle_changed = True
+        final_exam_append_event(store, "exam_scheduled", profile, None, {
+            "opensAt": state.get("opensAt"),
+            "closesAt": state.get("closesAt"),
+        })
+        store_changed = True
+    elif supports_schedule and manual_state_requested:
+        state.update({
+            "scheduleEnabled": False,
+            "opensAt": None,
+            "closesAt": None,
+            "scheduledAt": None,
+            "scheduledBy": None,
+        })
+        state.pop("scheduleStatus", None)
+        state["schedulerObservedStatus"] = "manual_open" if desired_open else "manual_closed"
+        bundle_changed = True
+
+    manual_override = supports_schedule and manual_state_requested and not schedule_requested
+    if desired_open and (not currently_open or manual_override):
         timestamp = now_iso()
         state["isOpen"] = True
-        state["openedAt"] = timestamp
+        state["openedAt"] = state.get("opensAt") if schedule_requested else timestamp
         state["openedBy"] = normalize_email(profile.get("email"))
         state["closedAt"] = None
         state["updatedAt"] = timestamp
         bundle_changed = True
-        final_exam_append_event(store, "exam_opened", profile)
+        final_exam_append_event(store, "exam_opened" if not schedule_requested else "scheduled_window_opened", profile)
         store_changed = True
-    elif not desired_open and currently_open:
+    elif not desired_open and (currently_open or manual_override):
         if active_ids:
             saved, saved_grades = final_exam_finalize_due_attempts(
                 config, grades_data, bundle, store, force=True, reason="teacher_closed"
@@ -7058,7 +7955,10 @@ def final_exam_update_state(config, profile, payload):
             grades_changed = grades_changed or saved_grades
         timestamp = now_iso()
         state["isOpen"] = False
-        state["closedAt"] = timestamp
+        if schedule_requested:
+            final_exam_refresh_schedule_state(state)
+        else:
+            state["closedAt"] = timestamp
         state["updatedAt"] = timestamp
         bundle_changed = True
         final_exam_append_event(store, "exam_closed", profile, None, {"forcedAttempts": len(active_ids)})
@@ -7069,16 +7969,612 @@ def final_exam_update_state(config, profile, payload):
     if bundle_changed:
         state["revision"] = int(state.get("revision", 0) or 0) + 1
         state["updatedAt"] = now_iso()
-        config["writeBundle"](bundle)
-    if store_changed:
-        config["writeStore"](store)
+    persist_documents()
     if grades_changed:
         write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+    if config.get("level") == "french8":
+        FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.set()
     return 200, {
         "ok": True,
         "state": final_exam_public_state(state, role),
         "weightingIssue": final_exam_weighting_issue(grades_data),
     }
+
+
+def french8_final_exam_scheduler_tick(config=None, now=None):
+    """Materialize scheduled transitions and submissions without HTTP traffic."""
+
+    config = config or final_exam_level_config("french8")
+    with data_lock:
+        grades_data = read_grades_data(config["gradesPath"])
+        grades_changed = config["ensureGrades"](grades_data)
+        bundle = config["readBundle"]()
+        state = bundle.setdefault("state", {})
+        store = config["readStore"]()
+        previous_observed = clean_text(state.get("schedulerObservedStatus"), 40)
+        schedule_status = final_exam_schedule_status(state, now)
+        schedule_changed = final_exam_refresh_schedule_state(state, now)
+        transition = state.get("scheduleEnabled") is True and schedule_status != previous_observed
+        store_changed = False
+        if transition:
+            event_name = {
+                "open": "scheduled_window_opened",
+                "closed": "scheduled_window_closed",
+                "scheduled": "scheduled_window_waiting",
+                "invalid": "scheduled_window_invalid",
+            }.get(schedule_status, "scheduled_window_updated")
+            final_exam_append_event(store, event_name, extra={"scheduleStatus": schedule_status})
+            state["schedulerObservedStatus"] = schedule_status
+            state["updatedAt"] = now_iso()
+            state["revision"] = int(state.get("revision", 0) or 0) + 1
+            store_changed = True
+            schedule_changed = True
+        finalized, finalized_grades = final_exam_finalize_due_attempts(
+            config, grades_data, bundle, store
+        )
+        if finalized:
+            final_exam_append_event(store, "scheduled_attempts_finalized", extra={
+                "scheduleStatus": schedule_status,
+                "submissionCount": len(store.get("submissions", {})),
+            })
+            store_changed = True
+        grades_changed = grades_changed or finalized_grades
+        write_documents = config.get("writeDocuments")
+        store_persisted = False
+        if schedule_changed and (store_changed or finalized) and callable(write_documents):
+            write_documents(bundle, store)
+            schedule_changed = False
+            store_changed = False
+            store_persisted = True
+        if schedule_changed:
+            config["writeBundle"](bundle)
+        if (store_changed or finalized) and not store_persisted:
+            config["writeStore"](store)
+        if grades_changed:
+            write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+            grades_changed = False
+        outbox = french8_final_exam_reconcile_grade_outbox(config, grades_data, store)
+        public_state = final_exam_public_state(state, "teacher")
+    timestamp = now_iso()
+    FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+        "schedulerLastTickAt": timestamp,
+        "schedulerLastSuccessAt": timestamp,
+        "schedulerLastError": "",
+        "schedulerConsecutiveFailures": 0,
+    })
+    return {
+        "ok": True,
+        "transition": transition,
+        "scheduleStatus": schedule_status,
+        "finalized": finalized,
+        "gradeOutbox": outbox,
+        "state": public_state,
+    }
+
+
+def french8_final_exam_scheduler_wait_seconds():
+    """Sleep until the next boundary, capped so health remains observable."""
+
+    try:
+        with data_lock:
+            state = final_exam_level_config("french8")["readBundle"]().get("state", {})
+        if state.get("scheduleEnabled") is not True:
+            return 15.0
+        current = datetime.now(timezone.utc)
+        candidates = [
+            value for value in (
+                final_exam_parse_utc(state.get("opensAt")),
+                final_exam_parse_utc(state.get("closesAt")),
+            )
+            if value and value > current
+        ]
+        if not candidates:
+            return 5.0
+        return max(0.25, min(15.0, (min(candidates) - current).total_seconds()))
+    except Exception:
+        return 5.0
+
+
+def french8_final_exam_scheduler_loop():
+    owner = "progress-api-scheduler:" + str(os.getpid())
+    repository = None
+    lease_token = None
+    FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+        "schedulerEnabled": True,
+        "schedulerStartedAt": now_iso(),
+    })
+    try:
+        while not FRENCH8_FINAL_EXAM_SCHEDULER_STOP.is_set():
+            try:
+                repository = french8_final_exam_repository()
+                if not lease_token:
+                    lease_token = repository.acquire_scheduler_lease(owner, lease_seconds=45)
+                    if not lease_token:
+                        FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+                            "schedulerLeaseOwner": "another_process",
+                            "schedulerLastTickAt": now_iso(),
+                        })
+                        FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.wait(5)
+                        FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.clear()
+                        continue
+                result = french8_final_exam_scheduler_tick()
+                scheduler_state = repository.record_scheduler_tick(
+                    owner,
+                    lease_token,
+                    success=True,
+                    state={
+                        "scheduleStatus": result.get("scheduleStatus"),
+                        "finalized": result.get("finalized", False),
+                        "gradeOutbox": result.get("gradeOutbox", {}),
+                    },
+                    lease_seconds=45,
+                )
+                FRENCH8_FINAL_EXAM_RUNTIME_STATUS["schedulerLeaseOwner"] = scheduler_state.get("leaseOwner")
+            except FinalExamConflictError:
+                lease_token = None
+                FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+                    "schedulerLastTickAt": now_iso(),
+                    "schedulerLastError": "scheduler_lease_lost",
+                })
+            except Exception as error:
+                failures = int(FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("schedulerConsecutiveFailures", 0) or 0) + 1
+                FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+                    "schedulerLastTickAt": now_iso(),
+                    "schedulerLastError": clean_text(error, 300) or error.__class__.__name__,
+                    "schedulerConsecutiveFailures": failures,
+                })
+                if repository is not None and lease_token:
+                    try:
+                        repository.record_scheduler_tick(
+                            owner,
+                            lease_token,
+                            success=False,
+                            state={"component": "final_exam_scheduler"},
+                            error=clean_text(error, 1000) or error.__class__.__name__,
+                            lease_seconds=45,
+                        )
+                    except Exception:
+                        lease_token = None
+                if repository is not None:
+                    try:
+                        repository.record_alert(
+                            "scheduler",
+                            "critical" if failures >= 3 else "error",
+                            message="Le planificateur autonome a échoué.",
+                            context={
+                                "consecutiveFailures": failures,
+                                "error": clean_text(error, 500) or error.__class__.__name__,
+                            },
+                        )
+                    except Exception:
+                        pass
+                print(json.dumps({
+                    "level": "french8",
+                    "component": "final_exam_scheduler",
+                    "severity": "critical" if failures >= 3 else "warning",
+                    "error": clean_text(error, 300) or error.__class__.__name__,
+                    "at": now_iso(),
+                }, ensure_ascii=False, sort_keys=True))
+            wait_seconds = french8_final_exam_scheduler_wait_seconds()
+            FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.wait(wait_seconds)
+            FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.clear()
+    finally:
+        if repository is not None and lease_token:
+            try:
+                repository.release_scheduler_lease(owner, lease_token)
+            except Exception:
+                pass
+
+
+def start_french8_final_exam_scheduler():
+    global FRENCH8_FINAL_EXAM_SCHEDULER_THREAD
+    if FRENCH8_FINAL_EXAM_SCHEDULER_THREAD and FRENCH8_FINAL_EXAM_SCHEDULER_THREAD.is_alive():
+        return FRENCH8_FINAL_EXAM_SCHEDULER_THREAD
+    FRENCH8_FINAL_EXAM_SCHEDULER_STOP.clear()
+    FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.clear()
+    thread = threading.Thread(
+        target=french8_final_exam_scheduler_loop,
+        name="french8-final-exam-scheduler",
+        daemon=False,
+    )
+    FRENCH8_FINAL_EXAM_SCHEDULER_THREAD = thread
+    thread.start()
+    return thread
+
+
+def stop_french8_final_exam_scheduler(timeout=10):
+    FRENCH8_FINAL_EXAM_SCHEDULER_STOP.set()
+    FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.set()
+    thread = FRENCH8_FINAL_EXAM_SCHEDULER_THREAD
+    if thread and thread.is_alive() and thread is not threading.current_thread():
+        thread.join(max(0.1, float(timeout)))
+    FRENCH8_FINAL_EXAM_RUNTIME_STATUS["schedulerEnabled"] = False
+
+
+def french8_final_exam_realtime_snapshot(profile):
+    config = final_exam_level_config("french8")
+    grades_data = read_grades_data(config["gradesPath"])
+    grades_changed = config["ensureGrades"](grades_data)
+    role, student = final_exam_authorized(profile, grades_data)
+    if role not in ("admin", "teacher") and not isinstance(student, dict):
+        raise PermissionError("student_not_authorized")
+    bundle = config["readBundle"]()
+    store = config["readStore"]()
+    store_changed, due_grades = final_exam_finalize_due_attempts(config, grades_data, bundle, store)
+    grades_changed = grades_changed or due_grades
+    if store_changed:
+        config["writeStore"](store)
+    if grades_changed:
+        write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    payload = {
+        "schemaVersion": 1,
+        "serverTime": now_iso(),
+        "role": role,
+        "state": final_exam_public_state(bundle.get("state", {}), role, student_id),
+    }
+    if role in ("admin", "teacher"):
+        monitor = final_exam_monitor_payload(config, grades_data, bundle, store)
+        payload["counts"] = monitor.get("counts", {})
+        payload["integrity"] = monitor.get("integrity", {})
+        payload["students"] = monitor.get("students", [])
+        payload["sessions"] = payload["students"]
+    else:
+        attempt = final_exam_matching_attempt(store, student, bundle.get("exam", {}))
+        submission = store.get("submissions", {}).get(student_id)
+        payload["student"] = student_public_view(student)
+        payload["attempt"] = {
+            "status": clean_text(attempt.get("status"), 40) or "in_progress",
+            "answeredCount": len(attempt.get("answers", {})) if isinstance(attempt, dict) and isinstance(attempt.get("answers"), dict) else 0,
+            "revision": int(attempt.get("revision", 0) or 0) if isinstance(attempt, dict) else 0,
+            "timing": final_exam_attempt_timing(bundle.get("state", {}), attempt, student_id) if isinstance(attempt, dict) and not isinstance(submission, dict) else None,
+        } if isinstance(attempt, dict) else None
+        payload["submitted"] = isinstance(submission, dict)
+    return payload
+
+
+def serve_french8_final_exam_sse(handler, profile, cycles=6, interval_seconds=4):
+    """Serve a bounded authenticated SSE stream; clients reconnect automatically."""
+
+    handler.send_response(200)
+    handler.send_header("Content-Type", "text/event-stream; charset=utf-8")
+    handler.send_header("Cache-Control", "no-store")
+    handler.send_header("Connection", "close")
+    handler.send_header("X-Accel-Buffering", "no")
+    request_id = clean_text(getattr(handler, "request_id", ""), 120)
+    if request_id:
+        handler.send_header("X-Request-ID", request_id)
+    handler.end_headers()
+    FRENCH8_FINAL_EXAM_RUNTIME_STATUS["sseConnections"] = int(
+        FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("sseConnections", 0) or 0
+    ) + 1
+    previous_fingerprint = ""
+    try:
+        for sequence in range(max(1, int(cycles))):
+            if FRENCH8_FINAL_EXAM_SCHEDULER_STOP.is_set():
+                break
+            with data_lock:
+                snapshot = french8_final_exam_realtime_snapshot(profile)
+            canonical = json.dumps(snapshot, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+            fingerprint = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+            if sequence == 0 or fingerprint != previous_fingerprint:
+                event_id = str(int(time.time() * 1000)) + "-" + str(sequence)
+                frame = (
+                    "id: " + event_id + "\n"
+                    "event: snapshot\n"
+                    "retry: 3000\n"
+                    "data: " + canonical + "\n\n"
+                ).encode("utf-8")
+                handler.wfile.write(frame)
+                previous_fingerprint = fingerprint
+            else:
+                handler.wfile.write((": heartbeat " + now_iso() + "\n\n").encode("utf-8"))
+            handler.wfile.flush()
+            if sequence + 1 < max(1, int(cycles)):
+                time.sleep(max(1, float(interval_seconds)))
+    except (BrokenPipeError, ConnectionResetError, OSError):
+        pass
+    finally:
+        handler.close_connection = True
+        FRENCH8_FINAL_EXAM_RUNTIME_STATUS["sseConnections"] = max(
+            0, int(FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("sseConnections", 1) or 1) - 1
+        )
+
+
+def french8_final_exam_audit_public(event):
+    detail = event.get("detail", {}) if isinstance(event, dict) else {}
+    if not isinstance(detail, dict):
+        detail = {"value": clean_text(detail, 500)}
+    event_type = clean_text(event.get("eventType"), 160) if isinstance(event, dict) else ""
+    return {
+        "id": event.get("id") if isinstance(event, dict) else None,
+        "type": event_type,
+        "event": event_type,
+        "eventType": event_type,
+        "occurredAt": event.get("occurredAt") if isinstance(event, dict) else None,
+        "actor": event.get("actorEmail") if isinstance(event, dict) else "",
+        "actorEmail": event.get("actorEmail") if isinstance(event, dict) else "",
+        "studentId": event.get("studentId") if isinstance(event, dict) else "",
+        "requestId": event.get("requestId") if isinstance(event, dict) else "",
+        "source": event.get("source") if isinstance(event, dict) else "",
+        "detail": detail,
+        "message": json.dumps(detail, ensure_ascii=False, sort_keys=True) if detail else "",
+    }
+
+
+def french8_final_exam_alert_public(alert):
+    if not isinstance(alert, dict):
+        return {}
+    code = clean_text(alert.get("alertKey"), 160) or "technical_alert"
+    severity = clean_text(alert.get("severity"), 40).lower() or "warning"
+    status = clean_text(alert.get("status"), 40).lower() or "open"
+    return {
+        "id": code,
+        "alertId": code,
+        "code": code,
+        "severity": severity,
+        "status": status,
+        "message": clean_text(alert.get("message"), 1000),
+        "context": alert.get("context") if isinstance(alert.get("context"), dict) else {},
+        "firstSeenAt": alert.get("firstSeenAt"),
+        "lastSeenAt": alert.get("lastSeenAt"),
+        "occurrences": int(alert.get("occurrences", 1) or 1),
+        "acknowledgedAt": alert.get("acknowledgedAt"),
+        "acknowledgedBy": alert.get("acknowledgedBy"),
+        "resolvedAt": alert.get("resolvedAt"),
+        "blocking": status != "resolved" and severity in ("error", "critical"),
+    }
+
+
+def french8_final_exam_grade_sync_diagnostics(grades_data, store):
+    students = {
+        clean_text(item.get("id"), 80): item
+        for item in grades_data.get("students", [])
+        if isinstance(item, dict) and clean_text(item.get("id"), 80)
+    }
+    divergences = []
+    missing_students = []
+    for student_id, submission in store.get("submissions", {}).items():
+        student_key = clean_text(student_id, 80)
+        student = students.get(student_key)
+        if not isinstance(student, dict):
+            missing_students.append(student_key)
+            continue
+        expected = clean_grade(submission.get("grade")) if isinstance(submission, dict) else None
+        actual = clean_grade(student.get("grades", {}).get("finalExam")) if isinstance(student.get("grades"), dict) else None
+        if expected != actual:
+            divergences.append({"studentId": student_key, "expected": expected, "actual": actual})
+    return {
+        "ok": not divergences and not missing_students,
+        "submissionCount": len(store.get("submissions", {})),
+        "divergenceCount": len(divergences),
+        "missingStudentCount": len(missing_students),
+        "divergences": divergences[:20],
+        "missingStudents": missing_students[:20],
+    }
+
+
+def french8_final_exam_seed_grade_outbox(repository, store):
+    seeded = 0
+    for student_id, submission in store.get("submissions", {}).items():
+        if not isinstance(submission, dict):
+            continue
+        student_key = clean_text(student_id, 80)
+        grade = clean_grade(submission.get("grade"))
+        attempt_id = clean_text(submission.get("attemptId"), 160)
+        receipt = clean_text(submission.get("receiptCode"), 160)
+        if not student_key or grade is None or not attempt_id:
+            continue
+        repository.enqueue_grade_sync(
+            student_key,
+            grade,
+            attempt_id,
+            evaluation_id="finalExam",
+            idempotency_key="french8:" + (receipt or attempt_id),
+            payload={
+                "receiptCode": receipt,
+                "examVersion": clean_text(submission.get("examVersion"), 80),
+                "submittedAt": clean_text(submission.get("submittedAt"), 80),
+            },
+        )
+        seeded += 1
+    return seeded
+
+
+def french8_final_exam_reconcile_grade_outbox(config, grades_data, store):
+    repository_factory = config.get("repository") if isinstance(config, dict) else None
+    if not callable(repository_factory):
+        return {"claimed": 0, "completed": 0, "retried": 0, "gradesChanged": False}
+    repository = repository_factory()
+    french8_final_exam_seed_grade_outbox(repository, store)
+    worker_id = "progress-api-grade:" + str(os.getpid())
+    claimed = repository.claim_grade_outbox(worker_id, limit=100, lease_seconds=60)
+    if not claimed:
+        return {"claimed": 0, "completed": 0, "retried": 0, "gradesChanged": False}
+    students = {
+        clean_text(item.get("id"), 80): item
+        for item in grades_data.get("students", [])
+        if isinstance(item, dict) and clean_text(item.get("id"), 80)
+    }
+    ready = []
+    retried = 0
+    grades_changed = False
+    for item in claimed:
+        student = students.get(clean_text(item.get("studentId"), 80))
+        if not isinstance(student, dict):
+            repository.retry_grade_outbox(
+                item["id"], worker_id, item["claimToken"], "student_not_found", retry_after_seconds=300
+            )
+            retried += 1
+            continue
+        grade = clean_grade(item.get("grade"))
+        if grade is None:
+            repository.retry_grade_outbox(
+                item["id"], worker_id, item["claimToken"], "invalid_grade", retry_after_seconds=3600
+            )
+            retried += 1
+            continue
+        if student.setdefault("grades", {}).get("finalExam") != grade:
+            student["grades"]["finalExam"] = grade
+            grades_changed = True
+        ready.append(item)
+    if grades_changed:
+        write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+    for item in ready:
+        repository.complete_grade_outbox(item["id"], worker_id, item["claimToken"])
+    return {
+        "claimed": len(claimed),
+        "completed": len(ready),
+        "retried": retried,
+        "gradesChanged": grades_changed,
+    }
+
+
+def french8_final_exam_sync_operational_alerts(repository, checks):
+    alert_checks = {
+        "database": "Base de données transactionnelle indisponible ou non intègre.",
+        "scheduler": "Le planificateur autonome requiert une intervention.",
+        "audio": "Le fichier audio professionnel ou sa diffusion Range n'est pas prêt.",
+        "gradebook": "Une divergence de notes attend sa conciliation.",
+        "audit": "Le journal d'audit n'est pas disponible.",
+    }
+    for code, fallback_message in alert_checks.items():
+        check = checks.get(code, {}) if isinstance(checks, dict) else {}
+        status = clean_text(check.get("status"), 40).lower()
+        existing = repository.get_alert(code)
+        if status in ("warning", "degraded", "error", "blocked"):
+            severity = "critical" if status == "blocked" else ("error" if status == "error" else "warning")
+            message = clean_text(check.get("message"), 1000) or fallback_message
+            context = check.get("context") if isinstance(check.get("context"), dict) else {}
+            needs_record = (
+                existing is None
+                or existing.get("status") == "resolved"
+                or existing.get("severity") != severity
+                or existing.get("message") != message
+                or existing.get("context") != context
+            )
+            if needs_record:
+                repository.record_alert(code, severity, message=message, context=context)
+        elif existing and existing.get("status") != "resolved":
+            repository.resolve_alert(code, "system", resolution="health_check_recovered")
+
+
+def french8_final_exam_health_payload(config=None, grades_data=None, bundle=None, store=None, record_alerts=True):
+    config = config or final_exam_level_config("french8")
+    repository_factory = config.get("repository") if isinstance(config, dict) else None
+    repository = repository_factory() if callable(repository_factory) else french8_final_exam_repository()
+    storage = repository.health(deep=False)
+    grades_data = grades_data if isinstance(grades_data, dict) else read_grades_data(config["gradesPath"])
+    if callable(config.get("ensureGrades")):
+        config["ensureGrades"](grades_data)
+    bundle = bundle if isinstance(bundle, dict) else config["readBundle"]()
+    store = store if isinstance(store, dict) else config["readStore"]()
+    integrity = final_exam_integrity(bundle.get("exam", {}), final_exam_audio_path(config))
+    weighting_issue = final_exam_weighting_issue(grades_data)
+    grade_sync = french8_final_exam_grade_sync_diagnostics(grades_data, store)
+    scheduler = storage.get("scheduler") if isinstance(storage.get("scheduler"), dict) else {}
+    scheduler_last_success = scheduler.get("lastSuccessAt") or FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("schedulerLastSuccessAt")
+    scheduler_age = None
+    parsed_success = final_exam_parse_utc(scheduler_last_success)
+    if parsed_success:
+        scheduler_age = max(0, int((datetime.now(timezone.utc) - parsed_success).total_seconds()))
+    scheduler_enabled = FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("schedulerEnabled") is True
+    scheduler_failures = max(
+        int(scheduler.get("consecutiveFailures", 0) or 0),
+        int(FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("schedulerConsecutiveFailures", 0) or 0),
+    )
+    scheduler_ok = scheduler_enabled and scheduler_failures == 0 and scheduler_age is not None and scheduler_age <= 45
+    free_bytes = int(storage.get("freeBytes", 0) or 0)
+    database_ok = storage.get("ok") is True and free_bytes >= 100 * 1024 * 1024
+    pending_outbox = int(storage.get("pendingGradeOutbox", 0) or 0)
+    gradebook_ok = grade_sync.get("ok") is True and pending_outbox == 0
+    checks = {
+        "api": {
+            "status": "ok",
+            "ok": True,
+            "message": "API authentifiée disponible; identifiant de requête actif.",
+        },
+        "database": {
+            "status": "ok" if database_ok else "blocked",
+            "ok": database_ok,
+            "message": (
+                "SQLite WAL intègre et espace disque disponible."
+                if database_ok
+                else "SQLite, sa migration ou l'espace disque ne permet pas une ouverture sûre."
+            ),
+            "context": {
+                "schemaVersion": storage.get("schemaVersion"),
+                "freeBytes": free_bytes,
+                "databaseBytes": storage.get("databaseBytes"),
+            },
+        },
+        "scheduler": {
+            "status": "ok" if scheduler_ok else ("error" if scheduler_failures else "degraded"),
+            "ok": scheduler_ok,
+            "message": (
+                "Planificateur autonome actif; dernier passage il y a %s s." % scheduler_age
+                if scheduler_ok
+                else "Planificateur sans battement récent ou avec échec; l'ouverture manuelle reste contrôlée."
+            ),
+            "context": {
+                "enabled": scheduler_enabled,
+                "lastSuccessAt": scheduler_last_success,
+                "ageSeconds": scheduler_age,
+                "consecutiveFailures": scheduler_failures,
+            },
+        },
+        "audio": {
+            "status": "ok" if integrity.get("audioAvailable") else "blocked",
+            "ok": integrity.get("audioAvailable") is True,
+            "message": "Audio professionnel disponible avec requêtes Range." if integrity.get("audioAvailable") else "Audio professionnel absent.",
+            "context": {"acceptRanges": True, "integrityIssues": integrity.get("issues", [])},
+        },
+        "sse": {
+            "status": "ok",
+            "ok": True,
+            "message": "Canal temps réel actif; %s connexion(s)." % int(FRENCH8_FINAL_EXAM_RUNTIME_STATUS.get("sseConnections", 0) or 0),
+        },
+        "gradebook": {
+            "status": "ok" if gradebook_ok and not weighting_issue else ("blocked" if weighting_issue else "degraded"),
+            "ok": gradebook_ok and not weighting_issue,
+            "message": (
+                "Carnet et livraisons synchronisés."
+                if gradebook_ok and not weighting_issue
+                else "Conciliation en attente ou pondération invalide."
+            ),
+            "context": dict(grade_sync, pendingOutbox=pending_outbox, weightingIssue=weighting_issue),
+        },
+        "audit": {
+            "status": "ok" if storage.get("auditEvents") is not None else "error",
+            "ok": storage.get("auditEvents") is not None,
+            "message": "%s événement(s) append-only disponibles." % int(storage.get("auditEvents", 0) or 0),
+        },
+    }
+    if not integrity.get("ok") and integrity.get("audioAvailable"):
+        checks["audio"]["status"] = "blocked"
+        checks["audio"]["ok"] = False
+        checks["audio"]["message"] = "L'intégrité du contenu d'examen doit être corrigée avant l'ouverture."
+    if record_alerts:
+        french8_final_exam_sync_operational_alerts(repository, checks)
+    alerts = [french8_final_exam_alert_public(item) for item in repository.list_alerts(active_only=False, limit=100)]
+    blocking_issues = [key for key, value in checks.items() if value.get("status") == "blocked"]
+    degraded = [key for key, value in checks.items() if value.get("status") in ("warning", "degraded", "error")]
+    status = "blocked" if blocking_issues else ("degraded" if degraded else "ok")
+    payload = {
+        "ok": not blocking_issues,
+        "status": status,
+        "readyToOpen": not blocking_issues,
+        "schedulerReady": scheduler_ok,
+        "serverTime": now_iso(),
+        "checks": checks,
+        "alerts": alerts,
+        "blockingIssues": blocking_issues,
+        "degradedChecks": degraded,
+        "storage": storage,
+    }
+    FRENCH8_FINAL_EXAM_RUNTIME_STATUS["lastHealthAt"] = payload["serverTime"]
+    FRENCH8_FINAL_EXAM_RUNTIME_STATUS["lastHealthStatus"] = status
+    return payload
 
 
 def ensure_final_exam_evaluation(grades_data):
@@ -10449,10 +11945,72 @@ def apply_intermediate_integrated_submission_status_to_gradebook(grades_data, su
 class ProgressHandler(BaseHTTPRequestHandler):
     server_version = "JaraLinguaProgress/1.0"
 
+    def ensure_request_context(self):
+        if not clean_text(getattr(self, "request_id", ""), 120):
+            supplied = clean_text(self.headers.get("X-Request-ID"), 120)
+            self.request_id = supplied if re.fullmatch(r"[A-Za-z0-9_.:-]{8,120}", supplied or "") else secrets.token_urlsafe(18)
+        return self.request_id
+
+    def storage_unavailable(self, error):
+        self.ensure_request_context()
+        message = clean_text(error, 500) or error.__class__.__name__
+        FRENCH8_FINAL_EXAM_RUNTIME_STATUS.update({
+            "storageReady": False,
+            "storageLastError": message,
+            "storageLastErrorAt": now_iso(),
+        })
+        print(json.dumps({
+            "level": "french8",
+            "component": "final_exam_storage",
+            "severity": "critical",
+            "requestId": self.request_id,
+            "error": message,
+            "at": now_iso(),
+        }, ensure_ascii=False, sort_keys=True))
+        json_response(self, 503, {
+            "error": "assessment_storage_unavailable",
+            "retryable": False,
+            "requestId": self.request_id,
+        })
+
     def log_message(self, fmt, *args):
-        print("%s - - [%s] %s" % (self.client_address[0], self.log_date_time_string(), fmt % args))
+        print("%s - - [%s] [%s] %s" % (
+            self.client_address[0],
+            self.log_date_time_string(),
+            clean_text(getattr(self, "request_id", "-"), 120) or "-",
+            fmt % args,
+        ))
+
+    def do_HEAD(self):
+        self.ensure_request_context()
+        parsed = urllib.parse.urlparse(self.path)
+        if parsed.path == "/api/french8/final-exam/audio":
+            query = urllib.parse.parse_qs(parsed.query)
+            grant = clean_text((query.get("grant") or [""])[0], 4096)
+            if grant:
+                try:
+                    if not consume_french8_final_exam_rate(
+                        self, "audio-range", grant, limit=360, window_seconds=60
+                    ):
+                        return
+                    with data_lock:
+                        config = final_exam_level_config("french8")
+                        bundle = config["readBundle"]()
+                        french8_final_exam_validate_audio_grant(grant, bundle)
+                        audio_path = final_exam_audio_path(config)
+                    ranged_file_response(self, audio_path, "audio/mpeg", head_only=True)
+                except ValueError as error:
+                    json_response(self, 403, {"error": clean_text(error, 80) or "audio_grant_invalid"})
+                except FinalExamStorageError as error:
+                    self.storage_unavailable(error)
+                return
+        self.send_response(404)
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", "0")
+        self.end_headers()
 
     def do_OPTIONS(self):
+        self.ensure_request_context()
         self.send_response(204)
         self.send_header("Access-Control-Allow-Origin", "https://www.jaralingua.com")
         self.send_header("Access-Control-Allow-Headers", "Authorization, Content-Type, X-Jaralingua-Auth-Provider, X-Jaralingua-Student-Id-Claim")
@@ -10460,6 +12018,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         self.end_headers()
 
     def do_GET(self):
+        self.ensure_request_context()
         parsed = urllib.parse.urlparse(self.path)
         if parsed.path == "/api/health":
             json_response(self, 200, {"ok": True})
@@ -10511,8 +12070,165 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, payload)
             return
 
+        if parsed.path == "/api/french8/final-exam/audio":
+            query = urllib.parse.parse_qs(parsed.query)
+            grant = clean_text((query.get("grant") or [""])[0], 4096)
+            if grant:
+                try:
+                    if not consume_french8_final_exam_rate(
+                        self, "audio-range", grant, limit=360, window_seconds=60
+                    ):
+                        return
+                    with data_lock:
+                        config = final_exam_level_config("french8")
+                        bundle = config["readBundle"]()
+                        french8_final_exam_validate_audio_grant(grant, bundle)
+                        audio_path = final_exam_audio_path(config)
+                    ranged_file_response(self, audio_path, "audio/mpeg")
+                except ValueError as error:
+                    json_response(self, 403, {"error": clean_text(error, 80) or "audio_grant_invalid"})
+                except FinalExamStorageError as error:
+                    self.storage_unavailable(error)
+                return
+
         profile = self.require_user()
         if not profile:
+            return
+
+        if parsed.path == "/api/french8/final-exam/simulation":
+            query = urllib.parse.parse_qs(parsed.query)
+            variant = clean_text((query.get("variant") or ["A"])[0], 20).upper() or "A"
+            if variant not in ("A", "B", "C"):
+                json_response(self, 400, {"error": "invalid_simulation_variant"})
+                return
+            try:
+                with data_lock:
+                    config = final_exam_level_config("french8")
+                    grades_data = read_grades_data(config["gradesPath"])
+                    role, _student = final_exam_authorized(profile, grades_data)
+                    if role not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    bundle = config["readBundle"]()
+                    result = french8_final_exam_simulation_payload(profile, role, bundle, variant)
+                    french8_final_exam_repository().append_audit(
+                        "simulation_opened",
+                        actor_email=normalize_email(profile.get("email")),
+                        request_id=self.request_id,
+                        source="api",
+                        detail={"variant": variant, "persistence": "none"},
+                    )
+                json_response(self, 200, result)
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
+            return
+
+        if parsed.path == "/api/french8/final-exam/health":
+            try:
+                with data_lock:
+                    config = final_exam_level_config("french8")
+                    grades_data = read_grades_data(config["gradesPath"])
+                    role, _student = final_exam_authorized(profile, grades_data)
+                    if role not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    bundle = config["readBundle"]()
+                    store = config["readStore"]()
+                    result = french8_final_exam_health_payload(
+                        config, grades_data, bundle, store, record_alerts=True
+                    )
+                json_response(self, 200, result)
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
+            return
+
+        if parsed.path == "/api/french8/final-exam/audit":
+            query = urllib.parse.parse_qs(parsed.query)
+            try:
+                with data_lock:
+                    config = final_exam_level_config("french8")
+                    grades_data = read_grades_data(config["gradesPath"])
+                    role, _student = final_exam_authorized(profile, grades_data)
+                    if role not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    try:
+                        limit = max(1, min(1000, int((query.get("limit") or ["100"])[0])))
+                        after_id = max(0, int((query.get("afterId") or ["0"])[0]))
+                    except (TypeError, ValueError):
+                        json_response(self, 400, {"error": "invalid_audit_query"})
+                        return
+                    repository = french8_final_exam_repository()
+                    raw_items = repository.list_audit(after_id=after_id, limit=1000)
+                    selected = raw_items[-limit:]
+                    selected.reverse()
+                    items = [french8_final_exam_audit_public(item) for item in selected]
+                    repository.append_audit(
+                        "audit_exported" if clean_text((query.get("format") or [""])[0], 20).lower() == "csv" else "audit_viewed",
+                        actor_email=normalize_email(profile.get("email")),
+                        request_id=self.request_id,
+                        source="api",
+                        detail={"format": clean_text((query.get("format") or ["json"])[0], 20), "rows": len(items)},
+                    )
+                if clean_text((query.get("format") or [""])[0], 20).lower() == "csv":
+                    csv_rows = [{
+                        "id": item.get("id"),
+                        "occurredAt": item.get("occurredAt"),
+                        "type": item.get("type"),
+                        "actorEmail": item.get("actorEmail"),
+                        "studentId": item.get("studentId"),
+                        "requestId": item.get("requestId"),
+                        "source": item.get("source"),
+                        "detail": json.dumps(item.get("detail", {}), ensure_ascii=False, sort_keys=True),
+                    } for item in items]
+                    csv_response(
+                        self,
+                        "audit-examen-final-francais8.csv",
+                        ["id", "occurredAt", "type", "actorEmail", "studentId", "requestId", "source", "detail"],
+                        csv_rows,
+                    )
+                else:
+                    json_response(self, 200, {"ok": True, "items": items, "count": len(items)})
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
+            return
+
+        if parsed.path == "/api/french8/final-exam/audio-grant":
+            try:
+                with data_lock:
+                    config = final_exam_level_config("french8")
+                    grades_data = read_grades_data(config["gradesPath"])
+                    role, student = final_exam_authorized(profile, grades_data)
+                    if role not in ("admin", "teacher") and not isinstance(student, dict):
+                        json_response(self, 403, {"error": "student_not_authorized"})
+                        return
+                    bundle = config["readBundle"]()
+                    status, result = french8_final_exam_audio_grant(profile, role, student, bundle)
+                    if status == 200:
+                        french8_final_exam_repository().append_audit(
+                            "audio_grant_issued",
+                            actor_email=normalize_email(profile.get("email")),
+                            student_id=clean_text(student.get("id"), 80) if isinstance(student, dict) else "",
+                            request_id=self.request_id,
+                            source="api",
+                            detail={"expiresAt": result.get("expiresAt"), "range": True},
+                        )
+                json_response(self, status, result)
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
+            return
+
+        if parsed.path == "/api/french8/final-exam/events":
+            try:
+                with data_lock:
+                    grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                    role, student = final_exam_authorized(profile, grades_data)
+                    if role not in ("admin", "teacher") and not isinstance(student, dict):
+                        json_response(self, 403, {"error": "student_not_authorized"})
+                        return
+                serve_french8_final_exam_sse(self, profile)
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
             return
 
         if parsed.path == "/api/progress":
@@ -10749,7 +12465,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 binary_response(self, 200, handle.read(), "audio/mpeg")
             return
 
-        runtime_exam_match = re.match(r"^/api/(french1|french2)/final-exam/(preflight|preflight-audio|draft|monitor|analytics)$", parsed.path)
+        runtime_exam_match = re.match(r"^/api/(french1|french2|french8)/final-exam/(preflight|preflight-audio|draft|monitor|analytics)$", parsed.path)
         if runtime_exam_match:
             level_key, action = runtime_exam_match.groups()
             config = final_exam_level_config(level_key)
@@ -10847,6 +12563,97 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if grades_changed:
                     write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
             json_response(self, 200, result)
+            return
+
+        runtime_french8_core_match = re.match(
+            r"^/api/french8/final-exam(?:/(state|audio|transcript))?$",
+            parsed.path,
+        )
+        if runtime_french8_core_match:
+            action = runtime_french8_core_match.group(1) or "exam"
+            config = final_exam_level_config("french8")
+            if action == "transcript":
+                with data_lock:
+                    grades_data = read_grades_data(config["gradesPath"])
+                    grades_changed = config["ensureGrades"](grades_data)
+                    role = grade_user_role(profile, grades_data)
+                    if role not in ("admin", "teacher"):
+                        if grades_changed:
+                            write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    bundle = config["readBundle"]()
+                    if grades_changed:
+                        write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+                    transcript = clean_text(bundle.get("exam", {}).get("transcript"), 5000)
+                    json_response(self, 200, {"transcript": transcript})
+                return
+
+            with data_lock:
+                grades_data = read_grades_data(config["gradesPath"])
+                grades_changed = config["ensureGrades"](grades_data)
+                role, student = final_exam_authorized(profile, grades_data)
+                if role not in ("admin", "teacher") and not isinstance(student, dict):
+                    if grades_changed:
+                        write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                bundle = config["readBundle"]()
+                submissions = config["readStore"]()
+                store_changed, expired_grades = final_exam_finalize_due_attempts(
+                    config, grades_data, bundle, submissions
+                )
+                grades_changed = grades_changed or expired_grades
+                if store_changed:
+                    config["writeStore"](submissions)
+                if grades_changed:
+                    write_json_file(config["gradesPath"], grades_data, ".final-exam-grades-")
+                scope_error = final_exam_bridge_attempt_error(
+                    profile, config, student, bundle, submissions, allow_submission=True
+                )
+                if scope_error:
+                    status, error_payload = scope_error
+                    json_response(self, status, error_payload)
+                    return
+                state = bundle.get("state", {})
+                student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+
+                if action == "state":
+                    result_payload = final_exam_runtime_state_payload(
+                        profile, grades_data, bundle, submissions
+                    )
+                    json_response(self, 200, result_payload)
+                    return
+
+                if action == "exam":
+                    result_payload = final_exam_get_access_payload(
+                        role, student, bundle, submissions, profile, config
+                    )
+                    if result_payload.get("status") == "submitted":
+                        json_response(self, 200, result_payload)
+                        return
+                    if role not in ("admin", "teacher") and state.get("isOpen") is not True:
+                        json_response(self, 403, {
+                            "error": "exam_closed",
+                            "state": final_exam_public_state(state, role, student_id),
+                        })
+                        return
+                    json_response(self, 200, result_payload)
+                    return
+
+                access_error = final_exam_audio_access_error(
+                    role,
+                    student,
+                    bundle,
+                    submissions,
+                    require_active_attempt=False,
+                )
+                if access_error:
+                    status, error_payload = access_error
+                    json_response(self, status, error_payload)
+                    return
+                audio_path = final_exam_audio_path(config)
+            ranged_file_response(self, audio_path, "audio/mpeg")
             return
 
         if parsed.path == "/api/french1/final-exam/state":
@@ -11546,6 +13353,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         json_response(self, 404, {"error": "not_found"})
 
     def do_POST(self):
+        self.ensure_request_context()
         parsed = urllib.parse.urlparse(self.path)
         local_login_target = gradebook_path_for_login(parsed.path)
         if local_login_target:
@@ -11629,7 +13437,38 @@ class ProgressHandler(BaseHTTPRequestHandler):
             profile = dict(profile)
             profile["_studentIdClaim"] = payload.get("studentIdClaim") or payload.get("studentId") or payload.get("idClaim") or ""
 
-        runtime_session_match = re.match(r"^/api/(french1|french2)/final-exam/session$", parsed.path)
+        if parsed.path == "/api/french8/final-exam/alerts/ack":
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
+            try:
+                with data_lock:
+                    grades_data = read_grades_data(FRENCH8_GRADES_PATH)
+                    role, _student = final_exam_authorized(profile, grades_data)
+                    if role not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    alert_id = clean_text(payload.get("alertId") or payload.get("alertKey"), 160)
+                    if not alert_id:
+                        json_response(self, 400, {"error": "alert_id_required"})
+                        return
+                    repository = french8_final_exam_repository()
+                    alert = repository.acknowledge_alert(alert_id, normalize_email(profile.get("email")))
+                    repository.append_audit(
+                        "alert_acknowledgement_requested",
+                        actor_email=normalize_email(profile.get("email")),
+                        request_id=clean_text(payload.get("requestId"), 120) or self.request_id,
+                        source="api",
+                        detail={"alertId": alert_id, "reason": clean_text(payload.get("reason"), 500)},
+                    )
+                json_response(self, 200, {"ok": True, "alert": french8_final_exam_alert_public(alert)})
+            except KeyError:
+                json_response(self, 404, {"error": "alert_not_found"})
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
+            return
+
+        runtime_session_match = re.match(r"^/api/(french1|french2|french8)/final-exam/session$", parsed.path)
         if runtime_session_match:
             if not isinstance(payload, dict):
                 json_response(self, 400, {"error": "invalid_payload"})
@@ -11640,7 +13479,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, result)
             return
 
-        runtime_submit_match = re.match(r"^/api/(french1|french2)/final-exam/submit$", parsed.path)
+        runtime_submit_match = re.match(r"^/api/(french1|french2|french8)/final-exam/submit$", parsed.path)
         if runtime_submit_match:
             if not isinstance(payload, dict):
                 json_response(self, 400, {"error": "invalid_payload"})
@@ -13669,6 +15508,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         json_response(self, 404, {"error": "not_found"})
 
     def do_PUT(self):
+        self.ensure_request_context()
         parsed = urllib.parse.urlparse(self.path)
         profile = self.require_user()
         if not profile:
@@ -13677,7 +15517,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if payload is None:
             return
 
-        runtime_draft_match = re.match(r"^/api/(french1|french2)/final-exam/draft$", parsed.path)
+        runtime_draft_match = re.match(r"^/api/(french1|french2|french8)/final-exam/draft$", parsed.path)
         if runtime_draft_match:
             if not isinstance(payload, dict):
                 json_response(self, 400, {"error": "invalid_payload"})
@@ -13688,7 +15528,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, result)
             return
 
-        runtime_state_match = re.match(r"^/api/(french1|french2)/final-exam/state$", parsed.path)
+        runtime_state_match = re.match(r"^/api/(french1|french2|french8)/final-exam/state$", parsed.path)
         if runtime_state_match:
             if not isinstance(payload, dict):
                 json_response(self, 400, {"error": "invalid_payload"})
@@ -14307,6 +16147,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         json_response(self, 404, {"error": "not_found"})
 
     def do_DELETE(self):
+        self.ensure_request_context()
         parsed = urllib.parse.urlparse(self.path)
         profile = self.require_user()
         if not profile:
@@ -14327,6 +16168,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
         json_response(self, 404, {"error": "not_found"})
 
     def require_user(self):
+        self.ensure_request_context()
+        parsed_path = urllib.parse.urlparse(self.path).path
+        is_french8_final = parsed_path.startswith("/api/french8/final-exam")
+        client_ip = request_client_ip(self)
+        if is_french8_final:
+            try:
+                if not consume_french8_final_exam_rate(
+                    self, "auth-ip", client_ip, limit=300, window_seconds=60
+                ):
+                    return None
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
+                return None
         token = bearer_token(self.headers)
         if not token:
             json_response(self, 401, {"error": "missing_token"})
@@ -14342,6 +16196,33 @@ class ProgressHandler(BaseHTTPRequestHandler):
             if not final_exam_bridge_route_allowed(profile, self.path, self.command):
                 json_response(self, 403, {"error": "token_scope_invalid"})
                 return None
+            profile = dict(profile)
+            profile["_requestId"] = self.request_id
+            if is_french8_final:
+                subject = normalize_email(profile.get("email")) or client_ip
+                method = clean_text(self.command, 12).upper()
+                if parsed_path.endswith("/submit"):
+                    bucket, limit, window = "submit-user", 12, 300
+                elif parsed_path.endswith("/draft") and method == "PUT":
+                    bucket, limit, window = "draft-user", 180, 60
+                elif parsed_path.endswith("/session"):
+                    bucket, limit, window = "session-user", 30, 60
+                elif parsed_path.endswith("/state") and method == "PUT":
+                    bucket, limit, window = "state-admin", 30, 60
+                elif parsed_path.endswith("/events"):
+                    bucket, limit, window = "sse-user", 30, 60
+                elif parsed_path.endswith("/audio-grant"):
+                    bucket, limit, window = "audio-grant-user", 90, 60
+                else:
+                    bucket, limit, window = "api-user", 300, 60
+                try:
+                    if not consume_french8_final_exam_rate(
+                        self, bucket, subject, limit=limit, window_seconds=window
+                    ):
+                        return None
+                except FinalExamStorageError as error:
+                    self.storage_unavailable(error)
+                    return None
             student_id_claim = "".join(ch for ch in str(self.headers.get("X-Jaralingua-Student-Id-Claim", "")) if ch.isdigit())
             if student_id_claim:
                 profile["_studentIdClaim"] = student_id_claim
@@ -14369,8 +16250,24 @@ def main():
     if not CLIENT_ID:
         raise SystemExit("JARALINGUA_GOOGLE_CLIENT_ID is required")
     server = ThreadingHTTPServer((HOST, PORT), ProgressHandler)
+    def request_shutdown(_signum=None, _frame=None):
+        FRENCH8_FINAL_EXAM_SCHEDULER_STOP.set()
+        FRENCH8_FINAL_EXAM_SCHEDULER_WAKE.set()
+        threading.Thread(target=server.shutdown, name="progress-api-shutdown", daemon=True).start()
+    for signal_name in ("SIGTERM", "SIGINT"):
+        signal_value = getattr(signal, signal_name, None)
+        if signal_value is not None:
+            try:
+                signal.signal(signal_value, request_shutdown)
+            except (ValueError, OSError):
+                pass
+    start_french8_final_exam_scheduler()
     print(f"JaraLingua progress API listening on {HOST}:{PORT}")
-    server.serve_forever()
+    try:
+        server.serve_forever()
+    finally:
+        stop_french8_final_exam_scheduler(10)
+        server.server_close()
 
 
 if __name__ == "__main__":
