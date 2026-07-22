@@ -1717,7 +1717,7 @@
             latest.firstMissing?.scrollIntoView({ behavior: "smooth", block: "center" });
             return;
           }
-          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers, examVersion: currentExam?.version || "", attemptId: currentAttemptId, revision: draftRevision, autoSubmit }) }, 30000, "exam");
+          const result = await request(API.submit, { method: "POST", body: JSON.stringify({ answers, examVersion: currentExam?.version || "", attemptId: currentAttemptId, autoSubmit }) }, 30000, "exam");
           if (!result.ok) {
             if (result.data?.error === "already_submitted" && result.data.result) return renderSubmitted(result.data.result);
             if (result.data?.error === "exam_closed") throw new Error("L’examen est fermé. La soumission n’a pas été enregistrée.");
