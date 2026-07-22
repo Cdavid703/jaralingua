@@ -48,6 +48,10 @@ assert.doesNotMatch(html, /unit6-hero-media/, "The Unit 6 hero must follow the e
 assert.match(css, /\.unit6-hero\s*\{[^}]*linear-gradient\(135deg[^}]*unit-6-future-plans-advice-hero\.webp/s, "The hero must combine its professional image with a readable background overlay");
 assert.match(css, /\.unit6-hero\s*\{[^}]*width:\s*100%;[^}]*max-width:\s*100%;[^}]*margin:\s*0;/s, "The desktop hero background must span the full viewport width");
 assert.match(css, /\.unit6-hero \.lesson-hero-content\s*\{[^}]*max-width:\s*780px/s, "The hero panel must match the established Unit 5 width");
+assert.match(css, /\.unit6-page\s*\{[^}]*width:\s*100%;[^}]*max-width:\s*100%;/s, "The explanation body must use full-width bands below the hero");
+assert.match(css, /\.unit6-section summary\s*\{[^}]*width:\s*min\(1360px,\s*calc\(100% - 48px\)\)/s, "Topic headers must stay centered inside the full-width bands");
+assert.match(css, /\.section-body\s*\{[^}]*width:\s*min\(1360px,\s*calc\(100% - 48px\)\)/s, "Topic content must stay readable inside the full-width bands");
+assert.match(html, /intermediate-unit6-explanation\.css\?v=20260722f/, "The page must request the latest Unit 6 CSS revision");
 assert.doesNotMatch(css, /\.unit6-explanation-page \.site-header\s*\{/, "Unit 6 must use the shared course header positioning");
 assert.match(css, /@media \(max-width: 680px\)[\s\S]*\.unit6-hero\s*\{[^}]*padding:\s*36px 12px 40px/s, "The mobile hero must preserve the Unit 5 responsive spacing");
 assert.match(overview, /id="unit-6"/, "Course Overview must contain Unit 6");
