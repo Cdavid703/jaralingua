@@ -1700,7 +1700,8 @@
       }
 
       function questionHtml(question, index) {
-        const block = question.block ? `<span class="pill mb-2">${esc(question.block)}</span>` : "";
+        const blockLabel = String(question.block || "").match(/^Thème\s+\d+/u)?.[0] || "";
+        const block = blockLabel ? `<span class="pill mb-2">${esc(blockLabel)}</span>` : "";
         const choices = shuffledOptionEntries(question).map((entry) => `
           <label class="choice"><input type="radio" name="${esc(question.id)}" value="${esc(entry.value)}" required><span>${esc(entry.label)}</span></label>`).join("");
         return `<fieldset class="question-card" data-question="${esc(question.id)}">${block}<legend>${index + 1}. ${esc(question.prompt)}</legend>${choices}</fieldset>`;

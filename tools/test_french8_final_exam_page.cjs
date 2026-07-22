@@ -142,6 +142,7 @@ assert.match(page, /accessEffective/);
 assert.match(page, /serverTime/);
 assert.match(page, /question\.type === "truefalse"/);
 assert.match(page, /section\.readingText\.map/);
+assert.match(page, /const blockLabel = String\(question\.block \|\| ""\)\.match\(\/\^Thème\\s\+\\d\+\/u\)\?\.\[0\] \|\| "";/, "student question labels must expose the theme number without revealing the exact grammar rule");
 
 assert.doesNotMatch(page, /<textarea\b/i);
 assert.doesNotMatch(page, /contenteditable\s*=/i);

@@ -71,6 +71,56 @@ class French8FinalExamContentTests(unittest.TestCase):
             self.assertEqual(sum(block.startswith(f"Thème {theme} ·") for block in blocks), 5)
         self.assertFalse(any(re.search(r"Thème\s+[4-9]", block) for block in blocks))
 
+    def test_subjunctive_past_distractors_test_auxiliaries_and_agreement(self):
+        questions = {
+            question["id"]: question
+            for question in self.sections["grammaire"]["questions"]
+        }
+        expected = {
+            "g11": (["aient transmis", "aient transmises", "soient transmises"], 0),
+            "g12": (["aient arrivé", "soient arrivées", "soient arrivés"], 1),
+            "g13": (["aient été installés", "soient été installés", "aient été installées"], 0),
+            "g14": (["ait complètement effacées", "ait complètement effacé", "ait complètement effacés"], 0),
+            "g15": (["se soient parlé", "se soient parlés", "s’aient parlé"], 0),
+        }
+        for question_id, (options, answer) in expected.items():
+            self.assertEqual(questions[question_id]["options"], options)
+            self.assertEqual(questions[question_id]["answer"], answer)
+
+        combined = " ".join(
+            option
+            for question_id in expected
+            for option in questions[question_id]["options"]
+        )
+        self.assertNotIn("a consulté", combined)
+        self.assertNotIn("ait consulter", combined)
+
+    def test_revised_items_are_unambiguous_and_semantically_close(self):
+        questions = {
+            question["id"]: question
+            for section in self.exam["sections"]
+            for question in section["questions"]
+        }
+        self.assertIn("reconnaît son erreur", questions["g1"]["prompt"])
+        self.assertNotIn("avait dû consulter", questions["g1"]["options"])
+        self.assertEqual(
+            questions["g8"]["options"],
+            [
+                "Si nous aurions consulté les riverains, nous aurions évité le conflit.",
+                "Si nous avions consulté les riverains, nous aurions évité le conflit.",
+                "Si nous avions consulté les riverains, nous avions évité le conflit.",
+            ],
+        )
+        self.assertEqual(
+            questions["v5"]["options"][questions["v5"]["answer"]],
+            "le droit au respect de la vie privée",
+        )
+        self.assertEqual(
+            questions["l7"]["options"][questions["l7"]["answer"]],
+            "Qu’ils aient été lancés sans que les usagers comprennent clairement l’usage de leurs données",
+        )
+        self.assertNotIn("parce que", questions["r8"]["prompt"])
+
     def test_reading_true_false_is_balanced(self):
         answers = [question["answer"] for question in self.sections["lecture"]["questions"]]
         self.assertEqual(answers.count(True), 5)

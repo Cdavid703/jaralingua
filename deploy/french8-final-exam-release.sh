@@ -19,6 +19,7 @@ readonly -a PAYLOAD_FILES=(
   "frances/Niveau 8/img/examen-final/examen-final-niveau8-ville-intelligente-hero-v1.png"
   "server/final_exam_runtime.py"
   "server/final_exam_storage.py"
+  "server/french8_exam_publisher.py"
   "server/progress_api.py"
   "server/private_assets/french8-final-exam-audio.mp3"
   "deploy/jaralingua-progress-api-french8-final.conf"
@@ -32,6 +33,7 @@ readonly -a INSTALL_SOURCES=(
   "frances/Niveau 8/img/examen-final/examen-final-niveau8-ville-intelligente-hero-v1.png"
   "server/final_exam_runtime.py"
   "server/final_exam_storage.py"
+  "server/french8_exam_publisher.py"
   "server/progress_api.py"
   "server/private_assets/french8-final-exam-audio.mp3"
   "deploy/jaralingua-progress-api-french8-final.conf"
@@ -44,6 +46,7 @@ readonly -a INSTALL_TARGETS=(
   "$WEB_ROOT/frances/Niveau 8/img/examen-final/examen-final-niveau8-ville-intelligente-hero-v1.png"
   "$WEB_ROOT/server/final_exam_runtime.py"
   "$WEB_ROOT/server/final_exam_storage.py"
+  "$WEB_ROOT/server/french8_exam_publisher.py"
   "$WEB_ROOT/server/progress_api.py"
   "$WEB_ROOT/server/private_assets/french8-final-exam-audio.mp3"
   "$SERVICE_OVERRIDE"
@@ -56,12 +59,14 @@ readonly -a INSTALL_KEYS=(
   "hero-image"
   "runtime-module"
   "storage-module"
+  "exam-bank-publisher"
   "progress-api"
   "bundled-audio"
   "systemd-override"
 )
 
 readonly -a INSTALL_OWNERS=(
+  "www-data:www-data"
   "www-data:www-data"
   "www-data:www-data"
   "www-data:www-data"
@@ -78,6 +83,7 @@ readonly -a INSTALL_MODES=(
   "0644"
   "0644"
   "0644"
+  "0640"
   "0640"
   "0640"
   "0640"
@@ -106,6 +112,8 @@ BACKUP_READY=0
 FILES_MUTATED=0
 CREATED_IMAGE_DIR=0
 CREATED_OVERRIDE_DIR=0
+DATABASE_WAS_PRESENT=0
+DATABASE_BACKUP_SHA256=""
 declare -a PENDING_TEMP_FILES=()
 
 log() {
@@ -230,7 +238,6 @@ PY
 validate_exam_locked() {
   local path="$1"
   python3 - "$path" <<'PY'
-from datetime import datetime, timezone
 import json
 import sqlite3
 import sys
@@ -251,20 +258,12 @@ if not isinstance(state, dict):
 if state.get("isOpen") is True:
     raise SystemExit("French 8 exam must remain locked after this release")
 if state.get("scheduleEnabled") is True:
-    def parsed(value):
-        try:
-            return datetime.fromisoformat(str(value).replace("Z", "+00:00")).astimezone(timezone.utc)
-        except (TypeError, ValueError):
-            return None
-    opens_at, closes_at = parsed(state.get("opensAt")), parsed(state.get("closesAt"))
-    now = datetime.now(timezone.utc)
-    if opens_at and closes_at and opens_at <= now < closes_at:
-        raise SystemExit("French 8 scheduled window is currently open")
+    raise SystemExit("French 8 scheduling must remain disabled during bank publication")
 PY
 }
 
 backup_sqlite() {
-  local destination="$BACKUP_DIR/files/database.sqlite3"
+  local destination="$BACKUP_DIR/files/database.sqlite3" digest_line
   if [[ -L "$DB_PATH" ]]; then
     fail "refusing symlink database: $DB_PATH"
   elif [[ -e "$DB_PATH" ]]; then
@@ -288,24 +287,137 @@ finally:
     source_connection.close()
 os.chmod(destination_path, 0o600)
 PY
+    digest_line="$(sha256sum -- "$destination")"
+    DATABASE_BACKUP_SHA256="${digest_line%% *}"
+    [[ "$DATABASE_BACKUP_SHA256" =~ ^[0-9a-f]{64}$ ]] \
+      || fail "invalid SQLite backup SHA-256"
+    printf '%s\n' "$DATABASE_BACKUP_SHA256" >"$BACKUP_DIR/meta/database.sha256"
+    DATABASE_WAS_PRESENT=1
     printf 'present\n' >"$BACKUP_DIR/meta/database.state"
   else
+    DATABASE_WAS_PRESENT=0
+    DATABASE_BACKUP_SHA256=""
     printf 'absent\n' >"$BACKUP_DIR/meta/database.state"
   fi
+}
+
+publish_persistent_exam_bank() {
+  local publisher="$WEB_ROOT/server/french8_exam_publisher.py"
+  local bundle="$WEB_ROOT/data/french8-final-exam.local.json"
+  local backup="$BACKUP_DIR/files/database.sqlite3"
+  local -a plan_values=()
+  [[ "$DATABASE_WAS_PRESENT" -eq 1 ]] || return 0
+  [[ -f "$publisher" && ! -L "$publisher" ]] || fail "exam-bank publisher is unavailable"
+  [[ -f "$bundle" && ! -L "$bundle" ]] || fail "installed exam bank is unavailable"
+  [[ -f "$DB_PATH" && ! -L "$DB_PATH" ]] || fail "French 8 database disappeared before publication"
+
+  runuser -u www-data -- python3 "$publisher" \
+    --database "$DB_PATH" \
+    --bundle "$bundle" \
+    --dry-run \
+    >"$BACKUP_DIR/meta/exam-bank-dry-run.json"
+
+  mapfile -t plan_values < <(
+    python3 - "$BACKUP_DIR/meta/exam-bank-dry-run.json" <<'PY'
+import json
+import pathlib
+import sys
+
+plan = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+if plan.get("ok") is not True or not isinstance(plan.get("bundleRevisionBefore"), int):
+    raise SystemExit("invalid exam-bank dry-run report")
+print(plan["bundleRevisionBefore"])
+print(plan.get("oldVersion") or "")
+PY
+  )
+  [[ "${#plan_values[@]}" -eq 2 && "${plan_values[0]}" =~ ^[0-9]+$ && -n "${plan_values[1]}" ]] \
+    || fail "invalid exam-bank publication plan"
+
+  runuser -u www-data -- python3 "$publisher" \
+    --database "$DB_PATH" \
+    --bundle "$bundle" \
+    --apply \
+    --release-id "$release_id" \
+    --actor "release@jaralingua.local" \
+    --backup-path "$backup" \
+    --backup-sha256 "$DATABASE_BACKUP_SHA256" \
+    --expected-bundle-revision "${plan_values[0]}" \
+    --expected-current-version "${plan_values[1]}" \
+    >"$BACKUP_DIR/meta/exam-bank-publication.json"
+}
+
+verify_persistent_exam_bank() {
+  local publisher="$WEB_ROOT/server/french8_exam_publisher.py"
+  local bundle="$WEB_ROOT/data/french8-final-exam.local.json"
+  local publication="$BACKUP_DIR/meta/exam-bank-publication.json"
+  local postflight="$BACKUP_DIR/meta/exam-bank-postflight.json"
+  runuser -u www-data -- python3 "$publisher" \
+    --database "$DB_PATH" \
+    --bundle "$bundle" \
+    --dry-run \
+    --require-unchanged \
+    >"$postflight"
+
+  if [[ "$DATABASE_WAS_PRESENT" -eq 1 ]]; then
+    [[ -f "$publication" && ! -L "$publication" ]] \
+      || fail "exam-bank publication report is unavailable"
+    python3 - "$publication" "$postflight" <<'PY'
+import json
+import pathlib
+import sys
+
+publication = json.loads(pathlib.Path(sys.argv[1]).read_text(encoding="utf-8"))
+postflight = json.loads(pathlib.Path(sys.argv[2]).read_text(encoding="utf-8"))
+if publication.get("ok") is not True or postflight.get("ok") is not True:
+    raise SystemExit("exam-bank report is not successful")
+if postflight.get("changed") is not False:
+    raise SystemExit("exam-bank postflight still proposes a change")
+for field in (
+    "stateSha256",
+    "storeSha256",
+    "storePayloadSha256",
+    "storeRevision",
+):
+    if publication.get(field) != postflight.get(field):
+        raise SystemExit("exam-bank postflight mismatch: " + field)
+if publication.get("bundleRevisionAfter") != postflight.get("bundleRevisionBefore"):
+    raise SystemExit("exam-bank postflight mismatch: bundle revision")
+PY
+  fi
+}
+
+verify_database_backup_sha256() {
+  local backup="$BACKUP_DIR/files/database.sqlite3"
+  local metadata="$BACKUP_DIR/meta/database.sha256"
+  local expected digest_line actual
+  [[ -f "$backup" && ! -L "$backup" ]] \
+    || { fail "SQLite rollback backup is unavailable"; return 1; }
+  [[ -f "$metadata" && ! -L "$metadata" ]] \
+    || { fail "SQLite rollback SHA-256 metadata is unavailable"; return 1; }
+  IFS= read -r expected <"$metadata" \
+    || { fail "SQLite rollback SHA-256 metadata cannot be read"; return 1; }
+  [[ "$expected" =~ ^[0-9a-f]{64}$ ]] \
+    || { fail "invalid SQLite rollback SHA-256 metadata"; return 1; }
+  digest_line="$(sha256sum -- "$backup")" \
+    || { fail "SQLite rollback backup cannot be hashed"; return 1; }
+  actual="${digest_line%% *}"
+  [[ "$actual" == "$expected" ]] \
+    || { fail "SQLite rollback backup SHA-256 mismatch"; return 1; }
 }
 
 restore_sqlite() {
   local state temp
   state="$(<"$BACKUP_DIR/meta/database.state")"
-  rm -f -- "$DB_PATH-wal" "$DB_PATH-shm" "$DB_PATH-journal"
   if [[ "$state" == "present" ]]; then
+    verify_database_backup_sha256 || return 1
+    rm -f -- "$DB_PATH-wal" "$DB_PATH-shm" "$DB_PATH-journal"
     temp="$STATE_DIR/.french8-final-exam-rollback-$$.sqlite3"
     PENDING_TEMP_FILES+=("$temp")
     install -o www-data -g www-data -m 0640 -- "$BACKUP_DIR/files/database.sqlite3" "$temp"
     mv -fT -- "$temp" "$DB_PATH"
     validate_sqlite "$DB_PATH" 0
   elif [[ "$state" == "absent" ]]; then
-    rm -f -- "$DB_PATH"
+    rm -f -- "$DB_PATH" "$DB_PATH-wal" "$DB_PATH-shm" "$DB_PATH-journal"
   else
     fail "invalid database backup marker"
   fi
@@ -425,7 +537,8 @@ main() {
   python3 - \
     "$STAGE_DIR/server/progress_api.py" \
     "$STAGE_DIR/server/final_exam_runtime.py" \
-    "$STAGE_DIR/server/final_exam_storage.py" <<'PY'
+    "$STAGE_DIR/server/final_exam_storage.py" \
+    "$STAGE_DIR/server/french8_exam_publisher.py" <<'PY'
 import pathlib
 import sys
 
@@ -459,6 +572,11 @@ payload = json.loads(
 if not isinstance(payload, dict) or not isinstance(payload.get("exam"), dict):
     raise SystemExit("invalid French 8 exam bundle")
 PY
+
+  python3 "$STAGE_DIR/server/french8_exam_publisher.py" \
+    --bundle "$STAGE_DIR/data/french8-final-exam.local.json" \
+    --validate-only \
+    >/dev/null
 
   [[ -s "$STAGE_DIR/server/private_assets/french8-final-exam-audio.mp3" ]] || fail "exam audio is empty"
   [[ -s "$STAGE_DIR/frances/Niveau 8/img/examen-final/examen-final-niveau8-ville-intelligente-hero-v1.png" ]] \
@@ -520,6 +638,13 @@ PY
     "www-data:www-data" \
     "0640"
 
+  if [[ "$DATABASE_WAS_PRESENT" -eq 1 ]]; then
+    log "publishing the staged exam bank transactionally"
+    publish_persistent_exam_bank
+  else
+    log "database is new; startup migration will initialize the staged exam bank"
+  fi
+
   systemctl daemon-reload
   if command -v nginx >/dev/null 2>&1; then
     nginx -t
@@ -550,6 +675,7 @@ PY
   [[ -f "$DB_PATH" && ! -L "$DB_PATH" ]] || fail "SQLite database was not initialized"
   validate_sqlite "$DB_PATH" 1
   validate_exam_locked "$DB_PATH"
+  verify_persistent_exam_bank
 
   DEPLOYMENT_STARTED=0
   cleanup_pending_files
