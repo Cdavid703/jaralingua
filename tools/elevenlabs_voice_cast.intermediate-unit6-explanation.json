@@ -1,0 +1,22 @@
+{
+  "speakers": {
+    "Narrator": {
+      "voice_id": "SAz9YHcvj6GT2YYXdXww",
+      "name": "River - Neutral US Narrator",
+      "profile": "english-us",
+      "gender": "neutral"
+    },
+    "Olivia": {
+      "voice_id": "EXAVITQu4vr4xnSDxMaL",
+      "name": "Sarah - Confident US",
+      "profile": "english-us",
+      "gender": "female"
+    },
+    "Marcus": {
+      "voice_id": "iP95p4xoKVk53GoZ742B",
+      "name": "Chris - Conversational US",
+      "profile": "english-us",
+      "gender": "male"
+    }
+  }
+}

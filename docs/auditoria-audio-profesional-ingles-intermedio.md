@@ -8,7 +8,7 @@ Verificar que las actividades de ingles intermedio no dependan de voces del nave
 
 ## Resultado ejecutivo
 
-- Archivos revisados contra voz del navegador: 58.
+- Archivos revisados contra voz del navegador: 67.
 - Referencias MP3 revisadas: 49.
 - Patrones prohibidos encontrados: 0.
 - MP3 faltantes o sospechosamente pequenos: 0.
