@@ -10,52 +10,62 @@ window.JaraLinguaUnit6VideoListeningData = {
     {
       skill: "Main idea",
       question: "What is the main purpose of the video conversation?",
-      options: ["To cancel Olivia's music project", "To organize Olivia's busy week before filming and recording", "To choose a restaurant for family dinner"]
+      options: ["To cancel Olivia's music project", "To organize Olivia's busy week before filming and recording", "To choose a restaurant for family dinner"],
+      feedback: "Listen for the overall problem. Olivia and Marcus are organizing a busy week, not cancelling the project or planning a restaurant visit."
     },
     {
       skill: "Fixed event",
       question: "What confirmed event is Olivia protecting on Wednesday afternoon?",
-      options: ["A radio interview", "A family dinner", "A recording session with the producer"]
+      options: ["A radio interview", "A family dinner", "A recording session with the producer"],
+      feedback: "The confirmed Wednesday event is described with present continuous. Focus on what is already arranged with the producer."
     },
     {
       skill: "Grammar noticing",
       question: "Why does Olivia say 'I am recording...' instead of only 'I want to record...'?",
-      options: ["Because the recording is already arranged", "Because she dislikes the producer", "Because it happened yesterday"]
+      options: ["Because the recording is already arranged", "Because she dislikes the producer", "Because it happened yesterday"],
+      feedback: "Present continuous for future is used when a future event is arranged. It is not about dislike or past time."
     },
     {
       skill: "Unconfirmed plan",
       question: "Which plan is still up in the air?",
-      options: ["The producer meeting", "The band rehearsal", "The radio interview"]
+      options: ["The producer meeting", "The band rehearsal", "The radio interview"],
+      feedback: "Up in the air means not confirmed. Listen for the flexible item that still needs a decision."
     },
     {
       skill: "Advice",
       question: "Why does Marcus suggest putting off the interview until Friday morning?",
-      options: ["Because Friday morning is impossible", "Because it would free up Thursday after rehearsal", "Because Olivia should cancel family dinner"]
+      options: ["Because Friday morning is impossible", "Because it would free up Thursday after rehearsal", "Because Olivia should cancel family dinner"],
+      feedback: "Connect put off with free up. Marcus wants to move one plan so Thursday has more usable time."
     },
     {
       skill: "Idiom",
       question: "What does 'I have a lot on my plate' mean here?",
-      options: ["Olivia has many responsibilities", "Olivia is eating too much", "Olivia is preparing a recipe"]
+      options: ["Olivia has many responsibilities", "Olivia is eating too much", "Olivia is preparing a recipe"],
+      feedback: "This idiom is about workload and responsibilities. It is not literal food language."
     },
     {
       skill: "Complication",
       question: "What should Olivia do before changing the photo session?",
-      options: ["Ignore the photographer", "Cancel the recording session", "Confirm whether the photographer is available"]
+      options: ["Ignore the photographer", "Cancel the recording session", "Confirm whether the photographer is available"],
+      feedback: "Marcus does not tell her to cancel. He tells her to confirm availability before changing another part of the schedule."
     },
     {
       skill: "Shared planning",
       question: "Why does Marcus say the team needs to be on the same page?",
-      options: ["They need to read one book together", "They need shared understanding of the final agenda", "They need to use the same laptop"]
+      options: ["They need to read one book together", "They need shared understanding of the final agenda", "They need to use the same laptop"],
+      feedback: "On the same page means shared understanding. In this video, it refers to everyone knowing the final agenda."
     },
     {
       skill: "Mixed forms",
       question: "Which sentence uses a confirmed arrangement and an intention correctly?",
-      options: ["I am meeting the producer on Wednesday, and I am going to call the photographer today.", "I am going to met the producer yesterday.", "I should meeting the producer at two."]
+      options: ["I am meeting the producer on Wednesday, and I am going to call the photographer today.", "I am going to met the producer yesterday.", "I should meeting the producer at two."],
+      feedback: "Check the form after each structure. Present continuous can show an arrangement; be going to uses the base verb."
     },
     {
       skill: "Synthesis",
       question: "What is Marcus's final advice?",
-      options: ["Add more tasks to the same day", "Keep all flexible tasks unchanged", "Protect fixed arrangements, move flexible tasks, and communicate the decision"]
+      options: ["Add more tasks to the same day", "Keep all flexible tasks unchanged", "Protect fixed arrangements, move flexible tasks, and communicate the decision"],
+      feedback: "Use the final sentence. Marcus summarizes a planning strategy, not an instruction to add more tasks."
     }
   ]
 };
@@ -153,6 +163,7 @@ window.JaraLinguaUnit6VideoListeningData = {
             <span>${escapeHtml(option)}</span>
           </label>
         `).join("")}
+        <div class="u6v-question-feedback" data-question-feedback="${index}" aria-live="polite"></div>
       </article>
     `).join("");
   }
@@ -160,9 +171,18 @@ window.JaraLinguaUnit6VideoListeningData = {
   function markCards(result) {
     const incorrectSet = new Set(result.incorrect);
     elements.quizForm.querySelectorAll("[data-question-card]").forEach(card => {
-      const number = Number(card.dataset.questionCard) + 1;
-      card.classList.toggle("is-review", incorrectSet.has(number));
-      card.classList.toggle("is-correct", !incorrectSet.has(number));
+      const index = Number(card.dataset.questionCard);
+      const number = index + 1;
+      const feedback = card.querySelector("[data-question-feedback]");
+      const isWrong = incorrectSet.has(number);
+      card.classList.toggle("is-review", isWrong);
+      card.classList.toggle("is-correct", !isWrong);
+      if (feedback) {
+        feedback.className = "u6v-question-feedback " + (isWrong ? "is-review" : "is-correct");
+        feedback.textContent = isWrong
+          ? "Review: " + data.questions[index].feedback
+          : "Correct. This answer matches the video evidence.";
+      }
     });
   }
 
@@ -173,6 +193,11 @@ window.JaraLinguaUnit6VideoListeningData = {
     elements.sendButton.textContent = "Send to teacher";
     elements.quizForm.querySelectorAll("[data-question-card]").forEach(card => {
       card.classList.remove("is-review", "is-correct");
+      const feedback = card.querySelector("[data-question-feedback]");
+      if (feedback) {
+        feedback.className = "u6v-question-feedback";
+        feedback.textContent = "";
+      }
     });
     setStatus(elements.quizFeedback, "Choose all answers, then check the video quiz. You can change answers and check again before sending.", "");
     setDelivery("", "");
@@ -314,10 +339,11 @@ window.JaraLinguaUnit6VideoListeningData = {
     state.submitted = false;
     state.result = result;
     markCards(result);
+    const correctCount = result.total - result.incorrect.length;
     if (result.incorrect.length) {
-      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Questions marked for review: ${result.incorrect.join(", ")}. Correct answers are not shown.`, "error");
+      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${correctCount} / ${result.total}. Questions marked for review: ${result.incorrect.join(", ")}. Read the feedback under each red card before sending. Correct answers are not shown.`, "error");
     } else {
-      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. All video-listening decisions are accurate.`, "success");
+      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${correctCount} / ${result.total}. All video-listening decisions are accurate.`, "success");
     }
     updateSendState();
   });

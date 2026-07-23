@@ -22,7 +22,13 @@
     .quiz-item label{display:block;margin:.35rem 0;color:#334155;font-weight:700}
     .quiz-item.incorrect{background:#fff1f2;border-color:#fecaca}
     .quiz-item.incorrect h3::after{content:" - review";color:#b91c1c;font-size:.85rem}
+    .quiz-item.correct{background:#ecfdf5;border-color:#86efac}
+    .quiz-item.correct h3::after{content:" - correct";color:#047857;font-size:.85rem}
     .quiz-item.locked label{cursor:not-allowed;opacity:.75}
+    .question-feedback{display:none;margin-top:.65rem;border-radius:8px;padding:.72rem .8rem;font-weight:850;line-height:1.5}
+    .question-feedback.show{display:block}
+    .question-feedback.correct{background:#dcfce7;color:#065f46;border:1px solid #86efac}
+    .question-feedback.review{background:#fff7ed;color:#7c2d12;border:1px solid #fed7aa}
     .result-box{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900}
     .result-box.show{display:block}
     .result-box.error{background:#fff1f2;color:#7f1d1d}
@@ -68,7 +74,7 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Reading Check</p><h2>Answer and Explain</h2></div></div>
         <form id="quizForm" class="quiz-list"></form>
-        <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Submit to teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
+        <div class="hero-actions"><button type="button" class="btn btn-primary" id="checkQuiz">Check answers</button><button type="button" class="btn btn-primary" id="submitQuiz" disabled>Send to teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
         <div id="resultBox" class="result-box"></div>
       </article>
 
@@ -100,8 +106,27 @@
     ];
     const form = document.getElementById("quizForm");
     const resultBox = document.getElementById("resultBox");
+    const checkButton = document.getElementById("checkQuiz");
     const submitButton = document.getElementById("submitQuiz");
     const resetButton = document.getElementById("resetQuiz");
+    const answerKey = [1,2,1,2,0,0,1,1,2,1,2,0,2,2];
+    const reviewFeedback = [
+      "Find the object Rosa asks Leo to bring from the living room shelf.",
+      "Return to the first paragraph and identify the list of objects inside the box.",
+      "Rosa explains her purpose directly: remembering and deciding, not blaming.",
+      "Look for the repeated Sunday habit introduced with used to.",
+      "The story before dinner is Rosa's old role in the family routine.",
+      "Rosa corrects Leo's idealized view of the past. The past was useful, not perfect.",
+      "The key protected item is family time, not a restaurant or a rule for children.",
+      "Maya's present responsibility is connected to school presentations.",
+      "Ana's present responsibility is her clinic work.",
+      "Rosa's new rule has three parts: phone-free time, shared responsibility, and one story or question.",
+      "Leo likes the rule because it is short and clear.",
+      "The agreement becomes fair because adults follow it too.",
+      "Ana writes the new agreement card and puts it in the box.",
+      "The final message is about using the past to improve the present."
+    ];
+    let checkedAnswers = null;
 
     function readStoredUser(key){
       try{
@@ -157,32 +182,105 @@
       return answers;
     }
 
+    function evaluateAnswers(answers){
+      const incorrect=[];
+      answers.forEach((answer,index)=>{
+        if(answer!==answerKey[index])incorrect.push(index+1);
+      });
+      return {
+        incorrect,
+        score: answers.length-incorrect.length,
+        total: answerKey.length,
+        grade: ((answers.length-incorrect.length)/answerKey.length)*5
+      };
+    }
+
+    function markQuiz(incorrectQuestions){
+      const incorrectSet=new Set(incorrectQuestions||[]);
+      document.querySelectorAll(".quiz-item").forEach((item)=>{
+        const number=Number(item.dataset.questionNumber);
+        const feedback=item.querySelector("[data-question-feedback]");
+        const isWrong=incorrectSet.has(number);
+        item.classList.toggle("incorrect",isWrong);
+        item.classList.toggle("correct",!isWrong);
+        if(feedback){
+          feedback.className="question-feedback show "+(isWrong?"review":"correct");
+          feedback.textContent=isWrong ? "Review: "+reviewFeedback[number-1] : "Correct. This answer matches the reading evidence.";
+        }
+      });
+    }
+
+    function clearCheckState(){
+      checkedAnswers=null;
+      submitButton.disabled=true;
+      document.querySelectorAll(".quiz-item").forEach((item)=>{
+        item.classList.remove("incorrect","correct");
+        const feedback=item.querySelector("[data-question-feedback]");
+        if(feedback){
+          feedback.className="question-feedback";
+          feedback.textContent="";
+        }
+      });
+      showResult("Answers changed. Check again before sending to the teacher.", "");
+    }
+
     function lockQuiz(incorrectQuestions){
       const incorrectSet=new Set(incorrectQuestions||[]);
       document.querySelectorAll(".quiz-item").forEach((item)=>{
         const number=Number(item.dataset.questionNumber);
         item.classList.toggle("incorrect",incorrectSet.has(number));
+        item.classList.toggle("correct",!incorrectSet.has(number));
         item.classList.add("locked");
         item.querySelectorAll("input").forEach((input)=>{input.disabled=true;});
       });
+      checkButton.disabled=true;
       submitButton.disabled=true;
     }
 
     function resetQuiz(){
       form.reset();
       document.querySelectorAll(".quiz-item").forEach((item)=>{
-        item.classList.remove("incorrect","locked");
+        item.classList.remove("incorrect","correct","locked");
+        const feedback=item.querySelector("[data-question-feedback]");
+        if(feedback){
+          feedback.className="question-feedback";
+          feedback.textContent="";
+        }
         item.querySelectorAll("input").forEach((input)=>{input.disabled=false;});
       });
-      submitButton.disabled=false;
+      checkedAnswers=null;
+      checkButton.disabled=false;
+      submitButton.disabled=true;
       resultBox.className="result-box";
       resultBox.textContent="";
+    }
+
+    function checkQuiz(){
+      const answers=selectedAnswers();
+      if(!answers){
+        showResult("Answer all 14 questions before checking.", "error");
+        return;
+      }
+      checkedAnswers=answers.slice();
+      const result=evaluateAnswers(answers);
+      markQuiz(result.incorrect);
+      if(result.incorrect.length){
+        showResult(`Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${result.score} / ${result.total}. Questions marked for review: ${result.incorrect.join(", ")}. Read the feedback under each red card before sending. Correct answers are not shown.`, "error");
+      }else{
+        showResult(`Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${result.score} / ${result.total}. All reading decisions are accurate. You can send this follow-up to the teacher.`, "success");
+      }
+      submitButton.disabled=false;
     }
 
     function submitQuiz(){
       const answers=selectedAnswers();
       if(!answers){
         showResult("Answer all 14 questions before submitting.", "error");
+        return;
+      }
+      if(!checkedAnswers || checkedAnswers.some((answer,index)=>answer!==answers[index])){
+        showResult("Check your answers first. You need to see your grade, correct answers, and review feedback before sending to the teacher.", "error");
+        submitButton.disabled=true;
         return;
       }
       const headers=authHeaders();
@@ -219,7 +317,9 @@
       });
     }
 
-    form.innerHTML=questions.map((q,index)=>`<div class="quiz-item" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
+    form.innerHTML=questions.map((q,index)=>`<div class="quiz-item" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}<div class="question-feedback" data-question-feedback="${index}" aria-live="polite"></div></div>`).join("");
+    form.addEventListener("change",clearCheckState);
+    checkButton.addEventListener("click",checkQuiz);
     submitButton.addEventListener("click",submitQuiz);
     resetButton.addEventListener("click",resetQuiz);
   </script>

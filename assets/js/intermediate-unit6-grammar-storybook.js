@@ -209,13 +209,26 @@ window.JaraLinguaUnit6GrammarStorybookData = {
 
   function updateReviewList() {
     const incorrect = incorrectIndexes();
-    if (!state.checked || !incorrect.length) {
+    if (!state.checked) {
       elements.reviewList.classList.remove("is-visible");
       elements.reviewList.innerHTML = "";
       return;
     }
-    const items = incorrect.map(index => `<li>${escapeHtml(data.blanks[index].review)}</li>`).join("");
-    elements.reviewList.innerHTML = `<strong>Review these decisions. Correct answers stay hidden.</strong><ul>${items}</ul>`;
+    const correctIndexes = state.answers
+      .map((answer, index) => answer === data.blanks[index].correct ? index + 1 : null)
+      .filter(index => index !== null);
+    const items = incorrect.map(index => `<li><strong>Blank ${index + 1}:</strong> ${escapeHtml(data.blanks[index].review.replace(/^Blank \d+:\s*/, ""))}</li>`).join("");
+    elements.reviewList.classList.toggle("is-success", incorrect.length === 0);
+    elements.reviewList.innerHTML = `
+      <strong>Checked story decisions</strong>
+      <div class="review-summary">
+        <span>Reference grade: ${currentGrade().toFixed(2)} / 5.0</span>
+        <span>Correct: ${correctIndexes.length} / ${data.blanks.length}</span>
+        <span>Review: ${incorrect.length}</span>
+      </div>
+      <p class="review-correct-list">Correct blanks: ${correctIndexes.join(", ") || "none yet"}.</p>
+      ${incorrect.length ? `<p>Feedback for blanks marked in red. Correct answers stay hidden so you can revise before sending.</p><ul>${items}</ul>` : "<p>All blanks are correct. You can write the final note and send the storybook to the teacher.</p>"}
+    `;
     elements.reviewList.classList.add("is-visible");
   }
 
@@ -345,10 +358,11 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     state.checked = true;
     renderPage();
     const incorrect = incorrectIndexes();
+    const correctCount = data.blanks.length - incorrect.length;
     if (incorrect.length) {
-      setFeedback(`Story checked. ${incorrect.length} decision(s) are marked for review. Choose another option on those blanks; correct answers are not revealed.`, "error");
+      setFeedback(`Story checked. Reference grade: ${currentGrade().toFixed(2)} / 5.0. Correct: ${correctCount} / ${data.blanks.length}. ${incorrect.length} decision(s) are marked for review. Read the feedback list before sending. Correct answers are not revealed.`, "error");
     } else {
-      setFeedback("Story checked. All grammar decisions are accurate. Write the final note and send it to the teacher.", "success");
+      setFeedback(`Story checked. Reference grade: ${currentGrade().toFixed(2)} / 5.0. Correct: ${correctCount} / ${data.blanks.length}. All grammar decisions are accurate. Write the final note and send it to the teacher.`, "success");
     }
   });
 

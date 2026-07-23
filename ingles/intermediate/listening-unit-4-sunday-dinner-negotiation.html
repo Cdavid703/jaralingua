@@ -29,7 +29,13 @@
     .q-card label{display:block;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.58rem .65rem;margin:.45rem 0;color:#334155;font-weight:700;cursor:pointer}
     .q-card.incorrect{background:#fff1f2;border-color:#fecaca}
     .q-card.incorrect h3::after{content:" - review";color:#b91c1c;font-size:.85rem}
+    .q-card.correct{background:#ecfdf5;border-color:#86efac}
+    .q-card.correct h3::after{content:" - correct";color:#047857;font-size:.85rem}
     .q-card.locked label{cursor:not-allowed;opacity:.75}
+    .question-feedback{display:none;margin-top:.65rem;border-radius:8px;padding:.72rem .8rem;font-weight:850;line-height:1.5}
+    .question-feedback.show{display:block}
+    .question-feedback.correct{background:#dcfce7;color:#065f46;border:1px solid #86efac}
+    .question-feedback.review{background:#fff7ed;color:#7c2d12;border:1px solid #fed7aa}
     .result-box{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;line-height:1.55}
     .result-box.show{display:block}
     .result-box.error{background:#fff1f2;color:#7f1d1d}
@@ -79,7 +85,7 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Comprehension</p><h2>Answer the 18 Questions</h2></div></div>
         <form id="quizForm" class="quiz-grid"></form>
-        <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Submit to teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
+        <div class="hero-actions"><button type="button" class="btn btn-primary" id="checkQuiz">Check answers</button><button type="button" class="btn btn-primary" id="submitQuiz" disabled>Send to teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
         <div id="resultBox" class="result-box"></div>
       </article>
 
@@ -136,11 +142,34 @@
     ];
     const form = document.getElementById("quizForm");
     const resultBox = document.getElementById("resultBox");
+    const checkButton = document.getElementById("checkQuiz");
     const submitButton = document.getElementById("submitQuiz");
     const resetButton = document.getElementById("resetQuiz");
     const transcriptButton = document.getElementById("loadTranscript");
     const transcriptStatus = document.getElementById("transcriptStatus");
     const scriptBox = document.getElementById("scriptBox");
+    const answerKey = [1,2,2,0,1,2,0,1,2,1,0,2,1,0,2,0,1,2];
+    const reviewFeedback = [
+      "Listen to the opening context. The conversation happens at home before Sunday dinner.",
+      "Focus on Ana's responsibility phrase. She says everyone has to help for twenty minutes.",
+      "Track Leo's completed action before new tasks are assigned.",
+      "Maya gives a reason connected to school work, not sleep or dinner preference.",
+      "The phone rule is shared and concrete. Listen for where the phones go.",
+      "Leo's objection is about fairness: adults and teenagers should follow the same rule.",
+      "Carlos accepts a limit and delays his work message until after dinner.",
+      "Rosa's memory is a repeated past habit with used to.",
+      "Listen for Carlos's later responsibility after the meal.",
+      "Maya asks for a specific amount of time after dinner.",
+      "Leo wants support with English homework, not a phone or cooking.",
+      "The final rule applies to everyone, including the adult with work messages.",
+      "Rosa connects fair rules with adult participation.",
+      "Leo's final job is the table responsibility.",
+      "Maya's final task is food preparation, not a call or a car chore.",
+      "Carlos takes the dishwashing responsibility.",
+      "After used to, use the base verb: used to cook.",
+      "The whole listening practices respectful negotiation and agreement."
+    ];
+    let checkedAnswers = null;
 
     function readStoredUser(key){
       try{
@@ -196,32 +225,105 @@
       return answers;
     }
 
+    function evaluateAnswers(answers){
+      const incorrect=[];
+      answers.forEach((answer,index)=>{
+        if(answer!==answerKey[index])incorrect.push(index+1);
+      });
+      return {
+        incorrect,
+        score: answers.length-incorrect.length,
+        total: answerKey.length,
+        grade: ((answers.length-incorrect.length)/answerKey.length)*5
+      };
+    }
+
+    function markQuiz(incorrectQuestions){
+      const incorrectSet=new Set(incorrectQuestions||[]);
+      document.querySelectorAll(".q-card").forEach((card)=>{
+        const number=Number(card.dataset.questionNumber);
+        const feedback=card.querySelector("[data-question-feedback]");
+        const isWrong=incorrectSet.has(number);
+        card.classList.toggle("incorrect",isWrong);
+        card.classList.toggle("correct",!isWrong);
+        if(feedback){
+          feedback.className="question-feedback show "+(isWrong?"review":"correct");
+          feedback.textContent=isWrong ? "Review: "+reviewFeedback[number-1] : "Correct. This answer matches the listening evidence.";
+        }
+      });
+    }
+
+    function clearCheckState(){
+      checkedAnswers=null;
+      submitButton.disabled=true;
+      document.querySelectorAll(".q-card").forEach((card)=>{
+        card.classList.remove("incorrect","correct");
+        const feedback=card.querySelector("[data-question-feedback]");
+        if(feedback){
+          feedback.className="question-feedback";
+          feedback.textContent="";
+        }
+      });
+      showResult("Answers changed. Check again before sending to the teacher.", "");
+    }
+
     function lockQuiz(incorrectQuestions){
       const incorrectSet=new Set(incorrectQuestions||[]);
       document.querySelectorAll(".q-card").forEach((card)=>{
         const number=Number(card.dataset.questionNumber);
         card.classList.toggle("incorrect",incorrectSet.has(number));
+        card.classList.toggle("correct",!incorrectSet.has(number));
         card.classList.add("locked");
         card.querySelectorAll("input").forEach((input)=>{input.disabled=true;});
       });
+      checkButton.disabled=true;
       submitButton.disabled=true;
     }
 
     function resetQuiz(){
       form.reset();
       document.querySelectorAll(".q-card").forEach((card)=>{
-        card.classList.remove("incorrect","locked");
+        card.classList.remove("incorrect","correct","locked");
+        const feedback=card.querySelector("[data-question-feedback]");
+        if(feedback){
+          feedback.className="question-feedback";
+          feedback.textContent="";
+        }
         card.querySelectorAll("input").forEach((input)=>{input.disabled=false;});
       });
-      submitButton.disabled=false;
+      checkedAnswers=null;
+      checkButton.disabled=false;
+      submitButton.disabled=true;
       resultBox.className="result-box";
       resultBox.textContent="";
+    }
+
+    function checkQuiz(){
+      const answers=selectedAnswers();
+      if(!answers){
+        showResult("Answer all 18 questions before checking.", "error");
+        return;
+      }
+      checkedAnswers=answers.slice();
+      const result=evaluateAnswers(answers);
+      markQuiz(result.incorrect);
+      if(result.incorrect.length){
+        showResult(`Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${result.score} / ${result.total}. Questions marked for review: ${result.incorrect.join(", ")}. Read the feedback under each red card before sending. Correct answers are not shown.`, "error");
+      }else{
+        showResult(`Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${result.score} / ${result.total}. All listening decisions are accurate. You can send this follow-up to the teacher.`, "success");
+      }
+      submitButton.disabled=false;
     }
 
     function submitQuiz(){
       const answers=selectedAnswers();
       if(!answers){
         showResult("Answer all 18 questions before submitting.", "error");
+        return;
+      }
+      if(!checkedAnswers || checkedAnswers.some((answer,index)=>answer!==answers[index])){
+        showResult("Check your answers first. You need to see your grade, correct answers, and review feedback before sending to the teacher.", "error");
+        submitButton.disabled=true;
         return;
       }
       const headers=authHeaders();
@@ -308,7 +410,9 @@
       audio.insertAdjacentElement("afterend",controls);
     });
 
-    form.innerHTML=questions.map((q,index)=>`<div class="q-card" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
+    form.innerHTML=questions.map((q,index)=>`<div class="q-card" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}<div class="question-feedback" data-question-feedback="${index}" aria-live="polite"></div></div>`).join("");
+    form.addEventListener("change",clearCheckState);
+    checkButton.addEventListener("click",checkQuiz);
     submitButton.addEventListener("click",submitQuiz);
     resetButton.addEventListener("click",resetQuiz);
     transcriptButton.addEventListener("click",loadTeacherTranscript);

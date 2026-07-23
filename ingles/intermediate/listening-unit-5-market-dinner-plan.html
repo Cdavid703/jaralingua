@@ -26,7 +26,13 @@
     .q-card label{display:block;border:1px solid rgba(7,31,79,.12);border-radius:8px;padding:.58rem .65rem;margin:.45rem 0;color:#334155;font-weight:700;cursor:pointer}
     .q-card.incorrect{background:#fff1f2;border-color:#fecaca}
     .q-card.incorrect h3::after{content:" - review";color:#b91c1c;font-size:.85rem}
+    .q-card.correct{background:#ecfdf5;border-color:#86efac}
+    .q-card.correct h3::after{content:" - correct";color:#047857;font-size:.85rem}
     .q-card.locked label{cursor:not-allowed;opacity:.75}
+    .question-feedback{display:none;margin-top:.65rem;border-radius:8px;padding:.72rem .8rem;font-weight:850;line-height:1.5}
+    .question-feedback.show{display:block}
+    .question-feedback.correct{background:#dcfce7;color:#065f46;border:1px solid #86efac}
+    .question-feedback.review{background:#fff7ed;color:#7c2d12;border:1px solid #fed7aa}
     .result-box{display:none;margin-top:1rem;padding:1rem;border-radius:8px;background:#eef5ff;color:var(--intermediate-navy);font-weight:900;line-height:1.55}
     .result-box.show{display:block}
     .result-box.error{background:#fff1f2;color:#7f1d1d}
@@ -115,7 +121,7 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Comprehension</p><h2>Answer the 10 Questions</h2></div></div>
         <form id="quizForm" class="quiz-grid"></form>
-        <div class="hero-actions"><button type="button" class="btn btn-primary" id="submitQuiz">Send to Teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
+        <div class="hero-actions"><button type="button" class="btn btn-primary" id="checkQuiz">Check answers</button><button type="button" class="btn btn-primary" id="submitQuiz" disabled>Send to Teacher</button><button type="button" class="btn btn-secondary" id="resetQuiz">Reset full quiz</button></div>
         <div id="resultBox" class="result-box"></div>
       </article>
 
@@ -145,6 +151,7 @@
   <script>
     const GOOGLE_USER_KEY = "jaralingua_google_user";
     const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
+    const LOCAL_USER_KEY = "jaralingua_local_user";
     const SUBMIT_ENDPOINT = "/api/intermediate/unit5-market-dinner/submit";
     const TRANSCRIPT_ENDPOINT = "/api/intermediate/unit5-market-dinner/transcript";
     const audio = document.getElementById("mainAudio");
@@ -162,25 +169,46 @@
     ];
     const form = document.getElementById("quizForm");
     const resultBox = document.getElementById("resultBox");
+    const checkButton = document.getElementById("checkQuiz");
     const submitButton = document.getElementById("submitQuiz");
     const resetButton = document.getElementById("resetQuiz");
     const transcriptButton = document.getElementById("loadTranscript");
     const transcriptStatus = document.getElementById("transcriptStatus");
     const scriptBox = document.getElementById("scriptBox");
+    const answerKey = [1,0,0,1,0,0,0,0,0,0];
+    const reviewFeedback = [
+      "Listen for the purpose of the planning conversation. They are building one dinner for six people.",
+      "Track who introduces the first dinner idea before the group adds details.",
+      "The connection is cultural but adapted: familiar Colombian ingredients in a lighter format.",
+      "Listen for the exact measure attached to cooked rice.",
+      "Rice is treated as uncountable, so the speaker uses a quantity phrase instead of many.",
+      "Separate what they already have from what they still need to buy.",
+      "The shopping list names lettuce, carrots, and lime juice.",
+      "The dressing uses lime, oil, salt, and cilantro.",
+      "The dessert is a light fruit salad, not a heavy rice dessert.",
+      "A few is used with countable plural strawberries."
+    ];
+    let checkedAnswers = null;
     function setSpeed(value){audio.playbackRate=Number(value);document.querySelectorAll(".speed-button").forEach((button)=>button.classList.toggle("active",button.dataset.speed===String(value)));}
     document.querySelectorAll(".speed-button").forEach((button)=>button.addEventListener("click",()=>setSpeed(button.dataset.speed)));
     function readStoredUser(key){try{const saved=JSON.parse(sessionStorage.getItem(key)||"null");if(!saved||!saved.exp||Date.now()/1000>saved.exp){sessionStorage.removeItem(key);return null;}return saved;}catch(error){sessionStorage.removeItem(key);return null;}}
-    function readUser(){const googleUser=readStoredUser(GOOGLE_USER_KEY);if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);return null;}
+    function readUser(){const googleUser=readStoredUser(GOOGLE_USER_KEY);if(googleUser&&googleUser.credential)return Object.assign({provider:"google"},googleUser);const microsoftUser=readStoredUser(MICROSOFT_USER_KEY);if(microsoftUser&&microsoftUser.credential)return Object.assign({provider:"microsoft"},microsoftUser);const localUser=readStoredUser(LOCAL_USER_KEY);if(localUser&&localUser.credential)return Object.assign({provider:"local"},localUser);return null;}
     function authHeaders(){const user=readUser();if(!user||!user.credential)return null;return {Authorization:"Bearer "+user.credential,"X-Jaralingua-Auth-Provider":user.provider||"google","Content-Type":"application/json"};}
     function openLoginPanel(){const trigger=document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");if(trigger)trigger.click();}
     function showResult(message,type){resultBox.className="result-box show "+(type||"");resultBox.textContent=message;}
     function wordCount(text){return (text||"").trim().split(/\s+/).filter(Boolean).length;}
     function selectedAnswers(){const answers=[];for(let index=0;index<questions.length;index+=1){const selected=form.querySelector(`input[name="q${index}"]:checked`);if(!selected)return null;answers.push(Number(selected.value));}return answers;}
-    function lockQuiz(incorrectQuestions){const incorrectSet=new Set(incorrectQuestions||[]);document.querySelectorAll(".q-card").forEach((card)=>{const number=Number(card.dataset.questionNumber);card.classList.toggle("incorrect",incorrectSet.has(number));card.classList.add("locked");card.querySelectorAll("input").forEach((input)=>{input.disabled=true;});});submitButton.disabled=true;}
-    function resetQuiz(){form.reset();document.querySelectorAll(".q-card").forEach((card)=>{card.classList.remove("incorrect","locked");card.querySelectorAll("input").forEach((input)=>{input.disabled=false;});});submitButton.disabled=false;resultBox.className="result-box";resultBox.textContent="";}
-    function submitQuiz(){const answers=selectedAnswers();if(!answers){showResult("Answer all 10 questions before submitting.","error");return;}const headers=authHeaders();if(!headers){showResult("Sign in first. Your listening follow-up must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showResult("Sending your listening follow-up to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({answers:answers,activity:"Market Dinner Plan",clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{if(!ok){submitButton.disabled=false;showResult(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":"The submission could not be saved. Please reload and try again.","error");return;}lockQuiz(data.incorrectQuestions||[]);const wrong=(data.incorrectQuestions||[]).length;const reviewText=wrong?"Questions marked for review: "+data.incorrectQuestions.join(", ")+". Reset the full quiz if you want to change your answers.":"No questions were marked wrong.";showResult(`Sent to teacher. Reference grade: ${Number(data.grade).toFixed(2)} / 5.0. Score: ${data.score} / ${data.total}. ${reviewText} This follow-up appears in the grade grid with weight 0.`, "success");}).catch(()=>{submitButton.disabled=false;showResult("Network error. The activity was not submitted.","error");});}
+    function evaluateAnswers(answers){const incorrect=[];answers.forEach((answer,index)=>{if(answer!==answerKey[index])incorrect.push(index+1);});return {incorrect:incorrect,score:answers.length-incorrect.length,total:answerKey.length,grade:((answers.length-incorrect.length)/answerKey.length)*5};}
+    function markQuiz(incorrectQuestions){const incorrectSet=new Set(incorrectQuestions||[]);document.querySelectorAll(".q-card").forEach((card)=>{const number=Number(card.dataset.questionNumber);const feedback=card.querySelector("[data-question-feedback]");const isWrong=incorrectSet.has(number);card.classList.toggle("incorrect",isWrong);card.classList.toggle("correct",!isWrong);if(feedback){feedback.className="question-feedback show "+(isWrong?"review":"correct");feedback.textContent=isWrong?"Review: "+reviewFeedback[number-1]:"Correct. This answer matches the listening evidence.";}});}
+    function clearCheckState(){checkedAnswers=null;submitButton.disabled=true;document.querySelectorAll(".q-card").forEach((card)=>{card.classList.remove("incorrect","correct");const feedback=card.querySelector("[data-question-feedback]");if(feedback){feedback.className="question-feedback";feedback.textContent="";}});showResult("Answers changed. Check again before sending to the teacher.","");}
+    function lockQuiz(incorrectQuestions){const incorrectSet=new Set(incorrectQuestions||[]);document.querySelectorAll(".q-card").forEach((card)=>{const number=Number(card.dataset.questionNumber);card.classList.toggle("incorrect",incorrectSet.has(number));card.classList.toggle("correct",!incorrectSet.has(number));card.classList.add("locked");card.querySelectorAll("input").forEach((input)=>{input.disabled=true;});});checkButton.disabled=true;submitButton.disabled=true;}
+    function resetQuiz(){form.reset();checkedAnswers=null;document.querySelectorAll(".q-card").forEach((card)=>{card.classList.remove("incorrect","correct","locked");const feedback=card.querySelector("[data-question-feedback]");if(feedback){feedback.className="question-feedback";feedback.textContent="";}card.querySelectorAll("input").forEach((input)=>{input.disabled=false;});});checkButton.disabled=false;submitButton.disabled=true;resultBox.className="result-box";resultBox.textContent="";}
+    function checkQuiz(){const answers=selectedAnswers();if(!answers){showResult("Answer all 10 questions before checking.","error");return;}checkedAnswers=answers.slice();const result=evaluateAnswers(answers);markQuiz(result.incorrect);if(result.incorrect.length){showResult(`Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${result.score} / ${result.total}. Questions marked for review: ${result.incorrect.join(", ")}. Read the feedback under each red card before sending. Correct answers are not shown.`,"error");}else{showResult(`Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${result.score} / ${result.total}. All listening decisions are accurate. You can send this follow-up to the teacher.`,"success");}submitButton.disabled=false;}
+    function submitQuiz(){const answers=selectedAnswers();if(!answers){showResult("Answer all 10 questions before submitting.","error");return;}if(!checkedAnswers||checkedAnswers.some((answer,index)=>answer!==answers[index])){showResult("Check your answers first. You need to see your grade, correct answers, and review feedback before sending to the teacher.","error");submitButton.disabled=true;return;}const headers=authHeaders();if(!headers){showResult("Sign in first. Your listening follow-up must be linked to your student record before it can be sent to the teacher.","error");openLoginPanel();return;}submitButton.disabled=true;showResult("Sending your listening follow-up to the teacher...","");fetch(SUBMIT_ENDPOINT,{method:"POST",headers:headers,body:JSON.stringify({answers:answers,activity:"Market Dinner Plan",clientDate:new Date().toISOString().slice(0,10)})}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{if(!ok){submitButton.disabled=false;showResult(status===403?"Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.":"The submission could not be saved. Please reload and try again.","error");return;}lockQuiz(data.incorrectQuestions||[]);const wrong=(data.incorrectQuestions||[]).length;const reviewText=wrong?"Questions marked for review: "+data.incorrectQuestions.join(", ")+". Reset the full quiz if you want to change your answers.":"No questions were marked wrong.";showResult(`Sent to teacher. Reference grade: ${Number(data.grade).toFixed(2)} / 5.0. Score: ${data.score} / ${data.total}. ${reviewText} This follow-up appears in the grade grid with weight 0.`, "success");}).catch(()=>{submitButton.disabled=false;showResult("Network error. The activity was not submitted.","error");});}
     function loadTranscript(){const headers=authHeaders();if(!headers){transcriptStatus.textContent="Sign in with a teacher or administrator account first.";openLoginPanel();return;}transcriptButton.disabled=true;transcriptStatus.textContent="Checking teacher access...";fetch(TRANSCRIPT_ENDPOINT,{headers:headers}).then((response)=>response.json().then((data)=>({ok:response.ok,status:response.status,data:data}))).then(({ok,status,data})=>{transcriptButton.disabled=false;if(!ok){transcriptStatus.textContent=status===403?"This transcript is only available for approved teacher or administrator accounts.":"Transcript could not be loaded.";return;}scriptBox.textContent=data.transcript||"";scriptBox.classList.add("show");transcriptStatus.textContent="Teacher transcript loaded.";}).catch(()=>{transcriptButton.disabled=false;transcriptStatus.textContent="Network error. Transcript could not be loaded.";});}
-    form.innerHTML=questions.map((q,index)=>`<div class="q-card" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}</div>`).join("");
+    form.innerHTML=questions.map((q,index)=>`<div class="q-card" data-index="${index}" data-question-number="${index+1}"><h3>${index+1}. ${q[0]}</h3>${q[1].map((option,i)=>`<label><input type="radio" name="q${index}" value="${i}" /> ${option}</label>`).join("")}<div class="question-feedback" data-question-feedback="${index}" aria-live="polite"></div></div>`).join("");
+    form.addEventListener("change",clearCheckState);
+    checkButton.addEventListener("click",checkQuiz);
     submitButton.addEventListener("click",submitQuiz);
     resetButton.addEventListener("click",resetQuiz);
     transcriptButton.addEventListener("click",loadTranscript);

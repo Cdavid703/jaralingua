@@ -269,6 +269,33 @@ body.unit6-reading-page {
   font-size: 0.85rem;
 }
 
+.q-feedback {
+  display: none;
+  margin-top: 0.7rem;
+  border-radius: 8px;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.q-feedback.is-correct,
+.q-feedback.is-review {
+  display: block;
+}
+
+.q-feedback.is-correct {
+  border: 1px solid #86efac;
+  background: #dcfce7;
+  color: #065f46;
+}
+
+.q-feedback.is-review {
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  color: #7f1d1d;
+}
+
 .u6r-button,
 .btn.u6r-anchor {
   min-height: 44px;

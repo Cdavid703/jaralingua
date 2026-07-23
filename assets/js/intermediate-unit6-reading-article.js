@@ -7,52 +7,62 @@ window.JaraLinguaUnit6ReadingArticleData = {
     {
       skill: "Main idea",
       question: "What is the main purpose of the article?",
-      options: ["To announce a new album release", "To show how Olivia reorganizes an overloaded week", "To compare different music studios"]
+      options: ["To announce a new album release", "To show how Olivia reorganizes an overloaded week", "To compare different music studios"],
+      feedback: "Look at the article as a whole. The central idea is the schedule problem and how Olivia reorganizes it."
     },
     {
       skill: "Prior plan",
       question: "What is Olivia going to do on Saturday morning?",
-      options: ["Record the acoustic track", "Interview a photographer", "Have dinner with her parents"]
+      options: ["Record the acoustic track", "Interview a photographer", "Have dinner with her parents"],
+      feedback: "Find the sentence that introduces Olivia's planned Saturday. Be going to points to her intended action."
     },
     {
       skill: "Confirmed arrangement",
       question: "Which arrangement is confirmed for Tuesday at ten?",
-      options: ["She is visiting the doctor", "She is rehearsing with the band", "She is meeting the producer"]
+      options: ["She is visiting the doctor", "She is rehearsing with the band", "She is meeting the producer"],
+      feedback: "Scan for Tuesday at ten and notice the present continuous. That form marks a confirmed arrangement."
     },
     {
       skill: "Flexible plan",
       question: "Which item is still up in the air at the start of the article?",
-      options: ["The Saturday recording", "The photo session", "The producer meeting"]
+      options: ["The Saturday recording", "The photo session", "The producer meeting"],
+      feedback: "Up in the air means not confirmed. Identify which plan still depends on another confirmation."
     },
     {
       skill: "Reason",
       question: "Why does Marcus suggest moving the radio interview?",
-      options: ["To free up Friday afternoon", "To avoid speaking in public", "To replace the producer meeting"]
+      options: ["To free up Friday afternoon", "To avoid speaking in public", "To replace the producer meeting"],
+      feedback: "Connect the suggestion with the time it creates. The reason is practical scheduling, not fear or replacement."
     },
     {
       skill: "Advice",
       question: "What does the article say Olivia should protect?",
-      options: ["A new shopping plan", "A second interview", "Her recording time and rest before it"]
+      options: ["A new shopping plan", "A second interview", "Her recording time and rest before it"],
+      feedback: "Look for the sentence with should. The advice protects Olivia's priority and her energy."
     },
     {
       skill: "Phrasal verb",
       question: "In the article, what does put off mean?",
-      options: ["Accept immediately", "Delay or postpone", "Add more people"]
+      options: ["Accept immediately", "Delay or postpone", "Add more people"],
+      feedback: "Put off is a phrasal verb for postponing something. It does not mean adding people or accepting a task."
     },
     {
       skill: "Idiom",
       question: "What does on the same page mean in the final schedule?",
-      options: ["Everyone reads the same magazine", "Everyone writes the same song", "Everyone has the same updated information"]
+      options: ["Everyone reads the same magazine", "Everyone writes the same song", "Everyone has the same updated information"],
+      feedback: "This idiom is about shared understanding. In a schedule, it means everyone receives the same updated plan."
     },
     {
       skill: "Final decision",
       question: "Which plan becomes final by the end of the article?",
-      options: ["The radio interview will move to Monday", "The family dinner will be cancelled", "The band rehearsal will happen at midnight"]
+      options: ["The radio interview will move to Monday", "The family dinner will be cancelled", "The band rehearsal will happen at midnight"],
+      feedback: "Return to the final paragraph and compare each option with the actual final schedule. Avoid choosing a detail that the article rejects."
     },
     {
       skill: "Synthesis",
       question: "What lesson does the article suggest about organizing life?",
-      options: ["Accept every invitation quickly", "Separate fixed commitments from flexible tasks before adding more", "Keep plans unclear until the last minute"]
+      options: ["Accept every invitation quickly", "Separate fixed commitments from flexible tasks before adding more", "Keep plans unclear until the last minute"],
+      feedback: "Use the conclusion. The lesson is about separating fixed commitments from flexible tasks before making decisions."
     }
   ]
 };
@@ -130,6 +140,7 @@ window.JaraLinguaUnit6ReadingArticleData = {
             <span>${escapeHtml(option)}</span>
           </label>
         `).join("")}
+        <div class="q-feedback" data-question-feedback="${index}" aria-live="polite"></div>
       </article>
     `).join("");
   }
@@ -137,9 +148,18 @@ window.JaraLinguaUnit6ReadingArticleData = {
   function markCards(result) {
     const incorrectSet = new Set(result.incorrect);
     document.querySelectorAll("[data-question-card]").forEach(card => {
-      const number = Number(card.dataset.questionCard) + 1;
-      card.classList.toggle("is-review", incorrectSet.has(number));
-      card.classList.toggle("is-correct", !incorrectSet.has(number));
+      const index = Number(card.dataset.questionCard);
+      const number = index + 1;
+      const feedback = card.querySelector("[data-question-feedback]");
+      const isWrong = incorrectSet.has(number);
+      card.classList.toggle("is-review", isWrong);
+      card.classList.toggle("is-correct", !isWrong);
+      if (feedback) {
+        feedback.className = "q-feedback " + (isWrong ? "is-review" : "is-correct");
+        feedback.textContent = isWrong
+          ? "Review: " + data.questions[index].feedback
+          : "Correct. This answer matches the reading evidence.";
+      }
     });
   }
 
@@ -150,6 +170,11 @@ window.JaraLinguaUnit6ReadingArticleData = {
     elements.sendButton.textContent = "Send to teacher";
     document.querySelectorAll("[data-question-card]").forEach(card => {
       card.classList.remove("is-review", "is-correct");
+      const feedback = card.querySelector("[data-question-feedback]");
+      if (feedback) {
+        feedback.className = "q-feedback";
+        feedback.textContent = "";
+      }
     });
     setStatus(elements.quizFeedback, "Answer all 10 questions, then check the reading quiz. You can change answers and check again before sending.", "");
     setStatus(elements.deliveryStatus, "", "");
@@ -223,10 +248,11 @@ window.JaraLinguaUnit6ReadingArticleData = {
     state.checked = true;
     state.result = result;
     markCards(result);
+    const correctCount = result.total - result.incorrect.length;
     if (result.incorrect.length) {
-      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Questions marked for review: ${result.incorrect.join(", ")}. Correct answers are not shown.`, "error");
+      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${correctCount} / ${result.total}. Questions marked for review: ${result.incorrect.join(", ")}. Read the feedback under each red card before sending. Correct answers are not shown.`, "error");
     } else {
-      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. All reading decisions are accurate.`, "success");
+      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${correctCount} / ${result.total}. All reading decisions are accurate.`, "success");
     }
     updateSendState();
   });

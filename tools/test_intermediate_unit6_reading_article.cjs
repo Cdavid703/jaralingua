@@ -41,6 +41,7 @@ data.questions.forEach((item, index) => {
   assert.equal(item.options.length, 3, `question ${index + 1} must have three options`);
   assert.ok(item.skill && item.skill.length > 3, `question ${index + 1} skill missing`);
   assert.ok(item.question.endsWith("?"), `question ${index + 1} should be phrased as a question`);
+  assert.ok(item.feedback && item.feedback.length > 35, `question ${index + 1} feedback cue missing`);
 });
 
 const articleText = html
@@ -55,6 +56,12 @@ assert.ok(articleWords >= 520 && articleWords <= 760, `article should be substan
   "Teacher delivery",
   "Send to teacher",
   "Correct answers are not shown",
+  "Reference grade:",
+  "Correct:",
+  "Review:",
+  "Read the feedback under each red card",
+  "data-question-feedback",
+  "q-feedback",
   "Submitted to teacher",
   "Gradebook weight: 0%",
   "Answer the 10 Reading Questions"

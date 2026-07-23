@@ -8,52 +8,62 @@ window.JaraLinguaUnit6ScheduleListeningData = {
     {
       skill: "Main idea",
       question: "What is the main purpose of the call?",
-      options: ["To cancel Olivia's whole Thursday", "To reorganize a crowded schedule before recording", "To choose songs for a concert"]
+      options: ["To cancel Olivia's whole Thursday", "To reorganize a crowded schedule before recording", "To choose songs for a concert"],
+      feedback: "Listen for the problem and the final decision. The call is about managing a crowded schedule, not cancelling everything."
     },
     {
       skill: "Prior plan",
       question: "What is Olivia going to do this week?",
-      options: ["Record the acoustic track", "Visit the radio host", "Move her family dinner"]
+      options: ["Record the acoustic track", "Visit the radio host", "Move her family dinner"],
+      feedback: "Focus on the phrase with be going to. It introduces Olivia's original intention for the week."
     },
     {
       skill: "Confirmed arrangement",
       question: "What confirmed arrangement does Olivia have at ten?",
-      options: ["She is seeing the doctor", "She is calling the radio host", "She is meeting the producer"]
+      options: ["She is seeing the doctor", "She is calling the radio host", "She is meeting the producer"],
+      feedback: "Listen for the present continuous form. The time at ten is connected to an arrangement already on the calendar."
     },
     {
       skill: "Detail",
       question: "Who is arriving at noon?",
-      options: ["The band", "The photographer", "Olivia's parents"]
+      options: ["The band", "The photographer", "Olivia's parents"],
+      feedback: "Track the noon detail separately from the interview and family dinner. The speaker names who comes to the studio."
     },
     {
       skill: "Reason",
       question: "Why does Marcus suggest putting off the radio interview?",
-      options: ["Because the host cancelled", "Because it would free up Thursday afternoon", "Because Olivia forgot the questions"]
+      options: ["Because the host cancelled", "Because it would free up Thursday afternoon", "Because Olivia forgot the questions"],
+      feedback: "Connect put off with free up. Marcus suggests changing one flexible task to create time on Thursday."
     },
     {
       skill: "Idiom",
       question: "What does Olivia mean when she says the photo session is still up in the air?",
-      options: ["It is outside", "It is too expensive", "It is not confirmed yet"]
+      options: ["It is outside", "It is too expensive", "It is not confirmed yet"],
+      feedback: "Up in the air describes uncertainty. It is not literal; it means the plan still needs confirmation."
     },
     {
       skill: "Advice",
       question: "What does Marcus say they should do first?",
-      options: ["Call the photographer", "Cancel the producer meeting", "Move the family dinner"]
+      options: ["Call the photographer", "Cancel the producer meeting", "Move the family dinner"],
+      feedback: "Listen for should. Marcus gives the first practical step before they can move the interview."
     },
     {
       skill: "Phrasal verb",
       question: "What does fit in the interview at ten mean?",
-      options: ["Make the interview shorter", "Find space for the interview in the schedule", "Invite the interviewer to dinner"]
+      options: ["Make the interview shorter", "Find space for the interview in the schedule", "Invite the interviewer to dinner"],
+      feedback: "Fit in is about finding a possible space in a busy schedule, not changing the length of the interview."
     },
     {
       skill: "Final action",
       question: "What will Marcus send after the call?",
-      options: ["A new song file", "A doctor's note", "The updated schedule"]
+      options: ["A new song file", "A doctor's note", "The updated schedule"],
+      feedback: "Listen for will. Marcus makes an immediate decision about what he is going to send after the conversation."
     },
     {
       skill: "Synthesis",
       question: "What final decision does Olivia make?",
-      options: ["She will cancel the family dinner", "She is going to keep Thursday focused on recording", "She will add another rehearsal"]
+      options: ["She will cancel the family dinner", "She is going to keep Thursday focused on recording", "She will add another rehearsal"],
+      feedback: "Use the final summary. Olivia protects the most important fixed work instead of adding more commitments."
     }
   ]
 };
@@ -137,6 +147,7 @@ window.JaraLinguaUnit6ScheduleListeningData = {
             <span>${escapeHtml(option)}</span>
           </label>
         `).join("")}
+        <div class="q-feedback" data-question-feedback="${index}" aria-live="polite"></div>
       </article>
     `).join("");
   }
@@ -144,9 +155,18 @@ window.JaraLinguaUnit6ScheduleListeningData = {
   function markCards(result) {
     const incorrectSet = new Set(result.incorrect);
     document.querySelectorAll("[data-question-card]").forEach(card => {
-      const number = Number(card.dataset.questionCard) + 1;
+      const index = Number(card.dataset.questionCard);
+      const number = index + 1;
+      const feedback = card.querySelector("[data-question-feedback]");
+      const isWrong = incorrectSet.has(number);
       card.classList.toggle("is-review", incorrectSet.has(number));
       card.classList.toggle("is-correct", !incorrectSet.has(number));
+      if (feedback) {
+        feedback.className = "q-feedback " + (isWrong ? "is-review" : "is-correct");
+        feedback.textContent = isWrong
+          ? "Review: " + data.questions[index].feedback
+          : "Correct. This answer matches the listening evidence.";
+      }
     });
   }
 
@@ -157,6 +177,11 @@ window.JaraLinguaUnit6ScheduleListeningData = {
     elements.sendButton.textContent = "Send to teacher";
     document.querySelectorAll("[data-question-card]").forEach(card => {
       card.classList.remove("is-review", "is-correct");
+      const feedback = card.querySelector("[data-question-feedback]");
+      if (feedback) {
+        feedback.className = "q-feedback";
+        feedback.textContent = "";
+      }
     });
     setStatus(elements.quizFeedback, "Choose all answers, then check the quiz. You can change answers and check again before sending.", "");
     setStatus(elements.deliveryStatus, "", "");
@@ -253,10 +278,11 @@ window.JaraLinguaUnit6ScheduleListeningData = {
     state.checked = true;
     state.result = result;
     markCards(result);
+    const correctCount = result.total - result.incorrect.length;
     if (result.incorrect.length) {
-      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Questions marked for review: ${result.incorrect.join(", ")}. Correct answers are not shown.`, "error");
+      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${correctCount} / ${result.total}. Questions marked for review: ${result.incorrect.join(", ")}. Read the feedback under each red card before sending. Correct answers are not shown.`, "error");
     } else {
-      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. All listening decisions are accurate.`, "success");
+      setStatus(elements.quizFeedback, `Reference grade: ${result.grade.toFixed(2)} / 5.0. Correct: ${correctCount} / ${result.total}. All listening decisions are accurate.`, "success");
     }
     updateSendState();
   });
