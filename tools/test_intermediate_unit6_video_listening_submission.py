@@ -48,8 +48,8 @@ def submit_payload(answers):
     return {
         "answers": answers,
         "clientDate": "2026-07-23",
-        "videoStatus": "youtube-link-pending",
-        "youtubeVideoId": "",
+        "videoStatus": "youtube-linked",
+        "youtubeVideoId": "pFTWPJ13wKc",
     }
 
 
@@ -163,7 +163,8 @@ def main():
             assert detail["doesNotAffectAverage"] is True
             assert detail["weight"] == 0
             assert detail["attemptCount"] == 2
-            assert detail["videoStatus"] == "youtube-link-pending"
+            assert detail["videoStatus"] == "youtube-linked"
+            assert detail["youtubeVideoId"] == "pFTWPJ13wKc"
             assert detail["activity"] == "Olivia's Week in 90 Seconds"
             assert detail["activityType"] == "Video listening follow-up"
             print("PASS Unit 6 video listening delivery: auth, transcript roles, grading, resubmit, Grades visibility, and weight 0")

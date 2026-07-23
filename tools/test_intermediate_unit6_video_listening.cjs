@@ -27,7 +27,7 @@ assert.ok(html.includes("intermediate-unit6-video-listening.css"), "CSS link mis
 assert.ok(html.includes("intermediate-unit6-video-listening.js"), "JS link missing");
 assert.equal(data.submitEndpoint, "/api/intermediate/unit6-video-listening/submit", "submit endpoint mismatch");
 assert.equal(data.transcriptEndpoint, "/api/intermediate/unit6-video-listening/transcript", "transcript endpoint mismatch");
-assert.equal(data.youtubeVideoId, "", "YouTube ID should remain pending until the teacher provides the link");
+assert.equal(data.youtubeVideoId, "pFTWPJ13wKc", "YouTube ID should match the teacher-provided video link");
 assert.equal(data.questions.length, 10, "expected ten video-listening questions");
 assert.deepEqual(Array.from(data.answers), [1, 2, 0, 2, 1, 0, 2, 1, 0, 2], "answer key mismatch");
 
@@ -46,7 +46,8 @@ data.questions.forEach((item, index) => {
 });
 
 [
-  "YouTube link pending",
+  "YouTube video linked",
+  "https://www.youtube.com/watch?v=pFTWPJ13wKc",
   'data-youtube-speed="0.75"',
   'data-youtube-speed="1"',
   'data-youtube-speed="1.25"',
