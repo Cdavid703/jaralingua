@@ -22,6 +22,8 @@ assert.match(page, /prefers-reduced-motion:reduce/);
 assert.match(page, /@media\(max-width:900px\)/);
 assert.match(page, /@media\(max-width:575px\)/);
 assert.match(page, /min-height:4[6-9]px/);
+assert.match(page, /\.submit-zone\{position:static;/, "the final submission area must stay in normal flow and never cover questions");
+assert.doesNotMatch(page, /\.submit-zone\{[^}]*position:sticky[^}]*bottom:/, "the final submission area must not float at the bottom of the viewport");
 assert.match(page, /examen-final-niveau8-ville-intelligente-hero-v1\.png/);
 assert.match(page, /iue-header\.png/);
 assert.match(page, /iue-footer\.png/);
