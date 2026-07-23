@@ -119,7 +119,7 @@ assert.doesNotMatch(script, /\bSpeaker\s*:/i, "ElevenLabs pronunciation script m
   assert.ok(content.includes("Pronunciation: Future Plans and Advice"), `navigation title missing in file ${index}`);
 });
 
-assert.ok(practiceLab.includes("42 activities"), "Practice Lab total count should be 42");
-assert.ok(practiceLab.includes("Unit 6 - 4 activities"), "Unit 6 quick count should be 4");
+assert.ok(practiceLab.includes("44 activities"), "Practice Lab total count should be 44");
+assert.ok(practiceLab.includes("Unit 6 - 6 activities"), "Unit 6 quick count should be 6");
 
 console.log("PASS Unit 6 pronunciation static audit");
