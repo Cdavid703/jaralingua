@@ -73,8 +73,6 @@ window.JaraLinguaUnit6ScheduleListeningData = {
     checkButton: document.querySelector("[data-check-answers]"),
     resetButton: document.querySelector("[data-reset-quiz]"),
     quizFeedback: document.querySelector("[data-quiz-feedback]"),
-    finalNote: document.querySelector("[data-final-note]"),
-    wordCount: document.querySelector("[data-word-count]"),
     sendButton: document.querySelector("[data-send-teacher]"),
     deliveryStatus: document.querySelector("[data-delivery-status]"),
     transcriptButton: document.querySelector("[data-load-transcript]"),
@@ -90,11 +88,6 @@ window.JaraLinguaUnit6ScheduleListeningData = {
       "\"": "&quot;",
       "'": "&#39;"
     }[char]));
-  }
-
-  function wordCount(value) {
-    const cleaned = String(value || "").trim();
-    return cleaned ? cleaned.split(/\s+/).length : 0;
   }
 
   function selectedAnswers() {
@@ -129,8 +122,7 @@ window.JaraLinguaUnit6ScheduleListeningData = {
   }
 
   function updateSendState() {
-    const words = wordCount(elements.finalNote.value);
-    const ready = state.checked && words >= 35 && words <= 100 && !state.submitted;
+    const ready = state.checked && !state.submitted;
     elements.sendButton.disabled = !ready;
   }
 
@@ -271,32 +263,14 @@ window.JaraLinguaUnit6ScheduleListeningData = {
 
   elements.resetButton.addEventListener("click", () => {
     elements.quizForm.reset();
-    elements.finalNote.value = "";
-    elements.wordCount.textContent = "0 words - write 35 to 100 words";
     clearCheckState();
     document.querySelector("#quiz").scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
-  elements.finalNote.addEventListener("input", () => {
-    const words = wordCount(elements.finalNote.value);
-    elements.wordCount.textContent = `${words} words - write 35 to 100 words`;
-    if (state.submitted) {
-      state.submitted = false;
-      elements.sendButton.textContent = "Send to teacher";
-      setDelivery("Your note changed. Send the updated version when you are ready.", "");
-    }
-    updateSendState();
-  });
-
   elements.sendButton.addEventListener("click", () => {
     const answers = selectedAnswers();
-    const words = wordCount(elements.finalNote.value);
     if (!state.checked || !state.result || !answers) {
       setDelivery("Check the complete quiz before sending it to the teacher.", "error");
-      return;
-    }
-    if (words < 35 || words > 100) {
-      setDelivery("Your listening note must be between 35 and 100 words.", "error");
       return;
     }
     const headers = authHeaders();
@@ -312,7 +286,6 @@ window.JaraLinguaUnit6ScheduleListeningData = {
       headers,
       body: JSON.stringify({
         answers,
-        finalNote: elements.finalNote.value.trim(),
         clientDate: new Date().toISOString().slice(0, 10)
       })
     }).then(response => response.json().then(body => ({ ok: response.ok, status: response.status, body })))
@@ -321,10 +294,6 @@ window.JaraLinguaUnit6ScheduleListeningData = {
           elements.sendButton.disabled = false;
           if (result.status === 403) {
             setDelivery("Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.", "error");
-          } else if (result.body && result.body.error === "text_too_short") {
-            setDelivery("Your note is too short. Write at least 35 words before sending.", "error");
-          } else if (result.body && result.body.error === "text_too_long") {
-            setDelivery("Your note is too long. Keep it under 100 words before sending.", "error");
           } else {
             setDelivery("The listening follow-up could not be saved. Please reload and try again.", "error");
           }

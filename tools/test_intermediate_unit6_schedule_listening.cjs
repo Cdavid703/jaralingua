@@ -49,6 +49,7 @@ data.questions.forEach((item, index) => {
   'data-audio-speed="1"',
   'data-audio-speed="1.25"',
   "Teacher transcript",
+  "Teacher delivery",
   "Send to teacher",
   "Correct answers are not shown",
   "Submitted to teacher",
@@ -57,6 +58,9 @@ data.questions.forEach((item, index) => {
 
 assert.ok(!js.includes("speechSynthesis"), "activity must not use browser speech synthesis");
 assert.ok(!html.includes("Your reading response"), "page must not carry copied reading labels");
+assert.ok(!html.includes("data-final-note"), "listening activity must not require a written note");
+assert.ok(!html.includes("Your listening note"), "listening activity must not expose a writing field");
+assert.ok(!js.includes("finalNote"), "listening JavaScript must not submit a written note");
 assert.ok(css.includes("@media (max-width: 980px)"), "tablet breakpoint missing");
 assert.ok(css.includes("@media (max-width: 680px)"), "mobile breakpoint missing");
 

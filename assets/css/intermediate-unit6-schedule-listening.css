@@ -363,6 +363,29 @@ body.unit6-listening-page {
   opacity: 0.52;
 }
 
+.delivery-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  padding: 1rem;
+  background: linear-gradient(145deg, #eff6ff, #fff8e8);
+}
+
+.delivery-panel h3 {
+  margin: 0 0 0.35rem;
+  color: var(--u6l-navy);
+}
+
+.delivery-panel p {
+  margin: 0;
+  color: #29445f;
+  line-height: 1.55;
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
@@ -444,7 +467,8 @@ body.unit6-listening-page {
 @media (max-width: 980px) {
   .u6l-grid,
   .quiz-grid,
-  .product-grid {
+  .product-grid,
+  .delivery-panel {
     grid-template-columns: 1fr;
   }
 

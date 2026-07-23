@@ -14978,12 +14978,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 try:
                     result = score_intermediate_unit6_listening(payload)
-                    final_note, word_count = clean_intermediate_text_followup(payload, "finalNote", 35, 100)
                 except ValueError as error:
                     if changed:
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
-                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("finalNote"))})
+                    json_response(self, 400, {"error": str(error)})
                     return
+                listening_response = ""
+                word_count = 0
                 previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT6_LISTENING_ID) if isinstance(student.get("gradeDetails"), dict) else None
                 try:
                     attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
@@ -15000,7 +15001,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "grade": result["grade"],
                     "incorrectQuestions": result["incorrect"],
                     "answers": result["answers"],
-                    "response": final_note,
+                    "response": listening_response,
                     "wordCount": word_count,
                     "attemptCount": attempt_count,
                     "status": "submitted",

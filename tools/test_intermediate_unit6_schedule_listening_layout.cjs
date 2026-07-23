@@ -185,6 +185,7 @@ async function assertLayout(client, viewport) {
       heroHeight: Math.round(hero.height),
       buttons: document.querySelectorAll("button").length,
       questions: document.querySelectorAll("[data-question-card]").length,
+      textareas: document.querySelectorAll("textarea").length,
       speedButtons: Array.from(document.querySelectorAll("[data-audio-speed]")).map(button => button.dataset.audioSpeed).join(","),
       teacherTranscript: document.querySelector("[data-script-box]").textContent.trim()
     };
@@ -195,6 +196,7 @@ async function assertLayout(client, viewport) {
   assert.ok(layout.heroHeight > 260, `${viewport.label}: hero image area too short`);
   assert.ok(layout.buttons >= 6, `${viewport.label}: expected audio, quiz, delivery, and transcript buttons`);
   assert.equal(layout.questions, 10, `${viewport.label}: expected ten questions`);
+  assert.equal(layout.textareas, 0, `${viewport.label}: listening activity should not include a writing box`);
   assert.equal(layout.speedButtons, "0.75,1,1.25", `${viewport.label}: speed buttons mismatch`);
   assert.equal(layout.teacherTranscript, "", `${viewport.label}: transcript should not be exposed`);
 }
@@ -240,7 +242,7 @@ async function completeAndSubmitMocked(client) {
           total: 10,
           grade: 5,
           incorrectQuestions: [],
-          wordCount: 49,
+          wordCount: 0,
           attemptCount: 1,
           followUpOnly: true,
           weight: 0
@@ -252,9 +254,6 @@ async function completeAndSubmitMocked(client) {
       credential: 'layout-test-token',
       exp: Math.floor(Date.now() / 1000) + 3600
     }));
-    const note = document.querySelector('[data-final-note]');
-    note.value = "Olivia is meeting the producer at ten, and the band is arriving at noon. Marcus suggests she should put off the radio interview because that would free up Thursday afternoon. Olivia will confirm the photo session first and keep Thursday focused on recording.";
-    note.dispatchEvent(new Event('input', { bubbles: true }));
     return true;
   })()`);
   await waitFor(() => evaluate(client, "!document.querySelector('[data-send-teacher]').disabled"), 4000, "send button enabled");
