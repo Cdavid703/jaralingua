@@ -1444,6 +1444,12 @@
     }
   }
 
+  function enableOfficialStartIfAllowed() {
+    if (role !== "student" || submission) return;
+    if (attempt) setDisabled(elements.resume || elements.start, false);
+    else if (serverState?.isOpen) setDisabled(elements.start, false);
+  }
+
   function startAdminPreview() {
     if (!(role === "admin" || role === "teacher") || adminPreviewMode) return;
     const questions = buildAdminPreviewQuestions();
@@ -1556,7 +1562,7 @@
     if (currentIndex < 0) currentIndex = assignedQuestions.length;
     const resumeControl = elements.resume || elements.start;
     setHidden(resumeControl, currentIndex >= assignedQuestions.length);
-    setDisabled(resumeControl, !preflightPassed);
+    setDisabled(resumeControl, false);
     if (!elements.resume && elements.start && currentIndex < assignedQuestions.length) elements.start.innerHTML = '<i class="bi bi-arrow-repeat"></i> Resume official interview';
     else setHidden(elements.start, true);
     if (currentIndex >= assignedQuestions.length && assignedQuestions.length === REQUIRED_TURNS) renderReadyToSubmit();
@@ -1564,7 +1570,7 @@
     else {
       setHidden(elements.exam, true);
       setHidden(elements.onboarding, false);
-      showAccess(`${Object.keys(saved).length} of ${REQUIRED_TURNS} responses are already saved. Complete the microphone check, then resume.`, "resume");
+      showAccess(`${Object.keys(saved).length} of ${REQUIRED_TURNS} responses are already saved. You may resume now; the microphone will be requested again when you answer.`, "resume");
     }
     refreshQueuedAudioCount().then(() => drainAudioQueue()).catch(() => {});
   }
@@ -1751,10 +1757,10 @@
       setHidden(elements.access, false);
       setHidden(elements.onboarding, false);
       if (payload.canStart) {
-        showAccess("Access confirmed. Complete the microphone check before starting the official exam.", "success");
+        showAccess("Access confirmed. You may begin the official exam now. The microphone test is available but no longer blocks the start button.", "success");
         if (elements.start) elements.start.innerHTML = '<i class="bi bi-play-fill"></i> Begin official interview';
         setHidden(elements.start, false);
-        setDisabled(elements.start, !preflightPassed);
+        setDisabled(elements.start, false);
       } else {
         showAccess("The Final Oral Task is closed. The teacher must activate it before you can start a new attempt.", "closed");
         setDisabled(elements.start, true);
@@ -1772,10 +1778,7 @@
       setText(elements.preflightStatus, "Reconnect to the internet before starting the official attempt.");
       return;
     }
-    if (!preflightPassed) {
-      setText(elements.preflightStatus, "Complete and confirm the microphone check before starting.");
-      return;
-    }
+    if (!preflightPassed) setText(elements.preflightStatus, "Microphone test skipped. The browser will request microphone access when you answer.");
     const requestSession = sessionGeneration;
     const requestCredential = user?.credential || "";
     attemptRequestBusy = true;
@@ -1814,10 +1817,7 @@
 
   async function resumeAttempt() {
     if (attemptRequestBusy) return;
-    if (!preflightPassed) {
-      setText(elements.preflightStatus, "Complete and confirm the microphone check before resuming.");
-      return;
-    }
+    if (!preflightPassed) setText(elements.preflightStatus, "Microphone test skipped. The browser will request microphone access when you answer.");
     const requestSession = sessionGeneration;
     const requestCredential = user?.credential || "";
     attemptRequestBusy = true;
@@ -2164,6 +2164,7 @@
         setDisabled(elements.preflight, false);
         setDisabled(elements.preflightMicrophoneSelect, false);
         setDisabled(elements.microphoneSelect, false);
+        enableOfficialStartIfAllowed();
         if (!preflightSampleReady && elements.preflightConfirm?.type === "checkbox") elements.preflightConfirm.checked = false;
       }, { once: true });
       preflightRecorder.start(200);
@@ -2173,6 +2174,7 @@
       setDisabled(elements.preflight, false);
       setDisabled(elements.preflightMicrophoneSelect, false);
       setDisabled(elements.microphoneSelect, false);
+      enableOfficialStartIfAllowed();
       setText(elements.preflightStatus, error.name === "NotAllowedError" ? "Microphone permission was denied. Allow access in the browser settings and retry." : error.name === "TimeoutError" ? "The browser did not finish the microphone request. Close the permission prompt, check browser settings, and retry." : "The microphone could not start. Select another microphone or browser and retry.");
     }
   }
@@ -2180,14 +2182,13 @@
   function confirmPreflight() {
     if (!preflightSampleReady || !preflightPlaybackConfirmed || !verifiedMicrophoneId) {
       preflightPassed = false;
-      setDisabled(elements.start, true);
+      enableOfficialStartIfAllowed();
       setText(elements.preflightStatus, "Record a clear voice sample and play it before confirming readiness.");
       return;
     }
     if (elements.preflightConfirm?.type === "checkbox" && !elements.preflightConfirm.checked) {
       preflightPassed = false;
-      setDisabled(elements.start, true);
-      setDisabled(elements.resume, true);
+      enableOfficialStartIfAllowed();
       return;
     }
     preflightPassed = true;
@@ -3244,8 +3245,7 @@
     verifiedMicrophoneId = "";
     if (elements.preflightConfirm?.type === "checkbox") elements.preflightConfirm.checked = false;
     setDisabled(elements.preflightConfirm, true);
-    setDisabled(elements.start, true);
-    setDisabled(elements.resume, true);
+    enableOfficialStartIfAllowed();
     setText(elements.preflightStatus, message);
   }
 
