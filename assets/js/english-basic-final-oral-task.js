@@ -182,11 +182,12 @@
 
   const isRecord = (value) => Boolean(value) && typeof value === "object" && !Array.isArray(value);
   const hasText = (value) => typeof value === "string" && value.trim().length > 0;
+  const hasExpiryValue = (value) => hasText(value) || (typeof value === "number" && Number.isFinite(value) && value > 0);
   const isAttemptContract = (value) => isRecord(value) && hasText(value.attemptId) && Array.isArray(value.assignedQuestions) && isRecord(value.turns || {});
   const hasAssignedQuestionContract = (value) => isRecord(value) && hasText(value.turnId) && hasText(value.variantId)
     && hasText(value.unit) && hasText(value.question) && hasText(value.promptAudioUrl) && Number(value.sequence) >= 1;
   const isScopedAttemptContract = (value) => isAttemptContract(value) && hasText(value.attemptScopeToken)
-    && hasText(value.transcriberScopeToken) && hasText(value.transcriberScopeExpiresAt)
+    && hasText(value.transcriberScopeToken) && hasExpiryValue(value.transcriberScopeExpiresAt)
     && value.assignedQuestions.length === REQUIRED_TURNS && value.assignedQuestions.every(hasAssignedQuestionContract)
     && new Set(value.assignedQuestions.map((question) => question.turnId)).size === REQUIRED_TURNS
     && Object.keys(value.turns || {}).every((turnId) => value.assignedQuestions.some((question) => question.turnId === turnId));
@@ -2326,7 +2327,10 @@
 
   async function requestTranscription(blob, allowScopeRefresh = true) {
     const officialStudent = role === "student" && !adminPreviewMode;
-    const expiresAt = Date.parse(attempt?.transcriberScopeExpiresAt || "");
+    const rawExpiry = attempt?.transcriberScopeExpiresAt;
+    const expiresAt = typeof rawExpiry === "number" && Number.isFinite(rawExpiry)
+      ? (rawExpiry < 100000000000 ? rawExpiry * 1000 : rawExpiry)
+      : Date.parse(String(rawExpiry || ""));
     if (officialStudent && (!attempt?.transcriberScopeToken || (Number.isFinite(expiresAt) && expiresAt <= Date.now() + 30000))) await refreshAttemptSecurityScope();
     if (officialStudent) requireContract(hasText(attempt?.transcriberScopeToken), "missing_transcriber_scope", attempt);
     const scopeHeaders = attempt?.transcriberScopeToken ? { "X-Jaralingua-Exam-Scope": attempt.transcriberScopeToken } : {};

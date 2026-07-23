@@ -9741,6 +9741,7 @@ def basic_final_oral_transcriber_scope(attempt):
     if not BASIC_FINAL_ORAL_INTERNAL_TOKEN or not isinstance(attempt, dict):
         return "", None
     expires_at = int(time.time()) + 10 * 60
+    expires_iso = datetime.fromtimestamp(expires_at, timezone.utc).isoformat().replace("+00:00", "Z")
     claims = {
         "aud": "jaralingua-pronunciation-transcriber",
         "purpose": "basic-final-oral",
@@ -9751,7 +9752,7 @@ def basic_final_oral_transcriber_scope(attempt):
     }
     body = b64url_encode(json.dumps(claims, sort_keys=True, separators=(",", ":")).encode("utf-8"))
     signature = b64url_encode(hmac.new(BASIC_FINAL_ORAL_INTERNAL_TOKEN.encode("utf-8"), body.encode("ascii"), hashlib.sha256).digest())
-    return body + "." + signature, expires_at
+    return body + "." + signature, expires_iso
 
 
 def basic_final_oral_device_hash(device_id):
