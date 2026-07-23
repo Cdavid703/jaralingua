@@ -2498,18 +2498,39 @@
     };
   }
 
-  window.addEventListener("load", function () {
+  let authRuntimeStarted = false;
+
+  function renderAuthEntryPoint() {
+    if (!document.body || document.querySelector("[data-jaralingua-auth]")) return;
+    renderWidget();
+  }
+
+  function startAuthRuntime() {
+    if (authRuntimeStarted) return;
+    authRuntimeStarted = true;
     initStudentIdClaimRetry();
     initGoogle();
     if (currentUser) {
       trackPageVisit();
       syncCloudData();
     }
-    renderWidget();
+    renderAuthEntryPoint();
     renderDashboard();
     protectDownloads();
     initActivityAutosave();
-  });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", renderAuthEntryPoint, { once: true });
+  } else {
+    renderAuthEntryPoint();
+  }
+
+  if (document.readyState === "complete") {
+    startAuthRuntime();
+  } else {
+    window.addEventListener("load", startAuthRuntime, { once: true });
+  }
 
   document.addEventListener("click", function (event) {
     const root = document.querySelector("[data-jaralingua-auth]");

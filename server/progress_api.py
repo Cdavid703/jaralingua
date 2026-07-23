@@ -1391,6 +1391,8 @@ def gradebook_path_for_login(path):
         return ("french1", "Français Niveau 1", FRENCH1_GRADES_PATH)
     if path == "/api/french2/grades/login":
         return ("french2", "Français Niveau 2", FRENCH2_GRADES_PATH)
+    if path == "/api/french8/grades/login":
+        return ("french8", "Français Niveau 8", FRENCH8_GRADES_PATH)
     return None
 
 

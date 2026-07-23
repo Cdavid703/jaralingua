@@ -58,6 +58,27 @@ EXAM = {
 
 
 class French8FinalExamBackendTests(unittest.TestCase):
+    def test_level8_course_login_accepts_a_registered_email_alias(self):
+        target = API.gradebook_path_for_login("/api/french8/grades/login")
+        self.assertEqual(target, ("french8", "Français Niveau 8", API.FRENCH8_GRADES_PATH))
+        grades = {
+            "students": [{
+                "id": "1001",
+                "fullName": "Étudiant test",
+                "email": "student@school.example",
+                "emailAliases": ["student.one@gmail.com"],
+                "grades": {},
+            }],
+        }
+        result = API.local_gradebook_login(
+            {"email": "student.one@gmail.com", "password": "1001*"},
+            grades,
+            "french8",
+            "Français Niveau 8",
+        )
+        self.assertTrue(result["token"])
+        self.assertEqual(result["user"]["email"], "student.one@gmail.com")
+
     def runtime_config(self, root):
         root = pathlib.Path(root)
         grades_path = root / "grades.json"

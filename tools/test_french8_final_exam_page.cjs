@@ -7,8 +7,10 @@ const path = require("node:path");
 const root = path.resolve(__dirname, "..");
 const pagePath = path.join(root, "frances", "Niveau 8", "examen-final.html");
 const indexPath = path.join(root, "frances", "Niveau 8", "index.html");
+const authScriptPath = path.join(root, "assets", "js", "google-auth.js");
 const page = fs.readFileSync(pagePath, "utf8");
 const index = fs.readFileSync(indexPath, "utf8");
+const authScript = fs.readFileSync(authScriptPath, "utf8");
 
 assert.match(page, /<html lang="fr">/);
 assert.match(page, /<meta name="viewport"/);
@@ -88,6 +90,10 @@ assert.match(page, /data-student-save-retry[^]*?addEventListener\("click", retry
 assert.match(page, /courseLoginStatus"[^>]*role="status" aria-live="polite" aria-atomic="true"/);
 assert.match(page, /error\?\.name === "AbortError"[\s\S]*?responseStatus >= 500/, "technical login failures must not be mislabeled as bad credentials");
 assert.match(page, /data-open-login[\s\S]*?Ouverture du panneau Google \/ Microsoft/);
+assert.ok(page.includes("google-auth.js?v=20260722-exam-login-ready"), "the exam must invalidate the cached sign-in widget");
+assert.doesNotMatch(page, /<script src="https:\/\/alcdn\.msauth\.net\/browser\/2\.37\.0\/js\/msal-browser\.min\.js"><\/script>/, "Microsoft must load on demand instead of blocking the exam and its login control");
+assert.match(authScript, /DOMContentLoaded", renderAuthEntryPoint/, "the floating sign-in control must render before slow external resources finish loading");
+assert.match(authScript, /document\.readyState === "complete"[\s\S]*?startAuthRuntime\(\)/, "dynamically loaded auth must still initialize after the load event");
 assert.match(page, /function recheckStudentAccess\(event\)[\s\S]*?aria-busy[\s\S]*?Vérification de votre accès auprès du serveur/);
 assert.match(page, /data-run-preflight[\s\S]*?Vérification en cours/);
 assert.match(page, /data-play-preflight[\s\S]*?Lecture du son test en cours/);
