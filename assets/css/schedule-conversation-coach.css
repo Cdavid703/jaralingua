@@ -1,0 +1,104 @@
+.schedule-coach-page {
+  --restaurant-teal: #1e8a6a;
+  --restaurant-teal-dark: #12674f;
+  --restaurant-gold: #d7b45c;
+  --restaurant-coral: #d94767;
+  --restaurant-ink: #0f2545;
+  --restaurant-soft: #edf7f2;
+}
+
+.schedule-coach-page .restaurant-hero {
+  min-height: clamp(480px, 45vw, 560px);
+  background: #0b1933;
+}
+
+.schedule-coach-page .restaurant-hero::before {
+  background:
+    linear-gradient(90deg, rgba(7, 21, 45, .98) 0%, rgba(7, 21, 45, .93) 43%, rgba(7, 21, 45, .58) 68%, rgba(7, 21, 45, .18) 100%),
+    linear-gradient(0deg, rgba(11, 94, 79, .36), transparent 46%);
+}
+
+.schedule-coach-page .restaurant-hero .coach-hero-visual img {
+  object-position: center 42%;
+}
+
+.schedule-coach-page .coach-outcomes article:nth-child(1) i,
+.schedule-coach-page .coach-sidebar section:first-child .coach-kicker {
+  color: var(--restaurant-teal);
+}
+
+.schedule-coach-page .restaurant-stage-list {
+  display: grid;
+  gap: .65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.schedule-coach-page .restaurant-stage-list li {
+  display: grid;
+  grid-template-columns: 2.1rem minmax(0, 1fr);
+  gap: .55rem;
+  align-items: start;
+}
+
+.schedule-coach-page .restaurant-stage-list span {
+  display: inline-grid;
+  width: 2.1rem;
+  height: 2.1rem;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--restaurant-soft);
+  color: var(--restaurant-teal-dark);
+  font-size: .8rem;
+  font-weight: 900;
+}
+
+.schedule-coach-page .restaurant-stage-list strong {
+  display: block;
+  color: var(--coach-ink);
+  font-size: .9rem;
+}
+
+.schedule-coach-page .restaurant-stage-list small {
+  display: block;
+  color: var(--coach-muted);
+  line-height: 1.35;
+}
+
+.schedule-coach-page .restaurant-dish-category {
+  background: rgba(15, 37, 69, .92);
+}
+
+.schedule-coach-page .restaurant-dish-heading strong {
+  color: var(--restaurant-teal-dark);
+}
+
+.schedule-coach-page .restaurant-dish-listen {
+  color: var(--restaurant-teal-dark);
+}
+
+.schedule-coach-page .restaurant-delivery-icon {
+  background: linear-gradient(135deg, var(--restaurant-teal), var(--restaurant-ink));
+}
+
+@media (max-width: 860px) {
+  .schedule-coach-page .restaurant-hero {
+    min-height: auto;
+  }
+
+  .schedule-coach-page .restaurant-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .schedule-coach-page .restaurant-hero::before {
+    background:
+      linear-gradient(180deg, rgba(7, 21, 45, .98) 0%, rgba(7, 21, 45, .84) 58%, rgba(7, 21, 45, .46) 100%);
+  }
+
+  .schedule-coach-page .restaurant-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
