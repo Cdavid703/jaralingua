@@ -1918,6 +1918,13 @@
   line-height: 1.45;
 }
 
+.official-button.compact {
+  min-height: 34px;
+  padding: .38rem .58rem;
+  border-radius: 7px;
+  font-size: .68rem;
+}
+
 .official-exam-sidebar {
   display: grid;
   gap: .75rem;
@@ -2103,6 +2110,25 @@
 
 .submission-unit-grid article.is-secure > i {
   color: var(--oral-green);
+}
+
+.submission-review-button {
+  grid-column: 1 / -1;
+  justify-self: start;
+  min-height: 34px;
+  border: 1px solid #a9c8d8;
+  border-radius: 7px;
+  padding: .38rem .58rem;
+  background: #fff;
+  color: var(--oral-navy);
+  font-size: .68rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.submission-review-button:disabled {
+  cursor: not-allowed;
+  opacity: .58;
 }
 
 .final-submit-confirmation {

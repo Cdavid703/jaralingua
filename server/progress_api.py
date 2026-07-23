@@ -11016,9 +11016,7 @@ def basic_final_oral_turn_preflight(profile, payload):
         return 400, {"error": "missing_audio"}
     replacement_authorized = False
     if has_audio and isinstance(existing, dict) and not existing_client:
-        replacement_authorized = basic_final_oral_turn_unlock(attempt, turn_id) is not None
-        if not replacement_authorized:
-            return 409, {"error": "turn_locked", "turnId": turn_id, "turn": basic_final_oral_public_turn(existing, attempt_id)}
+        replacement_authorized = True
     return 200, {"ok": True, "existingClient": existing_client, "replacementAuthorized": replacement_authorized, "attemptId": attempt_id, "turnId": turn_id}
 
 
@@ -11097,8 +11095,6 @@ def basic_final_oral_save_turn(profile, payload, prepared_audio=None, prepared_a
     replacement_unlock = None
     if has_new_audio and isinstance(existing, dict) and isinstance(existing.get("audio"), dict):
         replacement_unlock = basic_final_oral_turn_unlock(attempt, turn_id)
-        if not isinstance(replacement_unlock, dict):
-            return 409, {"error": "turn_locked", "turnId": turn_id, "turn": basic_final_oral_public_turn(existing, attempt_id)}
     try:
         submitted_revision = int(payload.get("revision"))
     except (TypeError, ValueError):
@@ -11187,6 +11183,8 @@ def basic_final_oral_save_turn(profile, payload, prepared_audio=None, prepared_a
             store, "turn_replaced_authorized", profile, student_id,
             turn_id + ": " + clean_text(replacement_unlock.get("reason"), 400), client_turn_id,
         )
+    elif new_audio and isinstance(existing, dict) and isinstance(existing.get("audio"), dict):
+        basic_final_oral_append_event(store, "turn_replaced_by_student", profile, student_id, turn_id + " r" + str(attempt["revision"]), client_turn_id)
     basic_final_oral_append_event(store, "turn_saved", profile, student_id, turn_id + " r" + str(attempt["revision"]), client_turn_id)
     write_basic_final_oral_store(store)
     if grades_changed:

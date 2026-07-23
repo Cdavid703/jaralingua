@@ -1451,6 +1451,59 @@
     else if (serverState?.isOpen) setDisabled(elements.start, false);
   }
 
+  function renderCapturedNotice(savedView = false) {
+    if (!elements.answerCaptured) return;
+    if (adminPreviewMode) {
+      elements.answerCaptured.innerHTML = '<i class="bi bi-eye-fill"></i><div><strong>Administrator rehearsal captured for this preview</strong><p>The transcript may be processed temporarily, but the response never enters Grades or student submissions.</p></div>';
+      return;
+    }
+    elements.answerCaptured.innerHTML = `
+      <i class="bi bi-check2-circle"></i>
+      <div>
+        <strong>${savedView ? "This answer is already saved" : "Answer captured securely"}</strong>
+        <p>${savedView ? "You may continue or record this answer again before the final submission." : "Your response was saved. You may continue or record this answer again before the final submission."}</p>
+        <button class="official-button secondary compact" type="button" data-repeat-current-answer><i class="bi bi-arrow-repeat"></i> Record this answer again</button>
+      </div>`;
+  }
+
+  function repeatCurrentAnswer() {
+    const question = currentQuestion();
+    if (!question || adminPreviewMode || submission || analyzing || reactionBusy || recordingStartPending || recordingFinalizing || mediaRecorder?.state === "recording") return;
+    if (currentQueueId) {
+      showTechnicalRecovery("Wait for the current protected recording to finish uploading before recording another version.");
+      return;
+    }
+    if (!attempt?.turns?.[question.turnId]) return;
+    currentBlob = null;
+    currentTranscript = "";
+    currentClientTurnId = "";
+    recordingDurationMs = 0;
+    if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = ""; }
+    if (elements.studentAudio) { elements.studentAudio.removeAttribute("src"); elements.studentAudio.hidden = true; }
+    savedCurrentTurn = false;
+    questionHeard = true;
+    setHidden(elements.answerCaptured, true);
+    setHidden(elements.next, true);
+    setDisabled(elements.next, true);
+    setHidden(elements.reaction, true);
+    setText(elements.recordStatus, "Record another version of this same answer. The previous saved answer stays protected until the new one is verified.");
+    setText(elements.saveStatus, `Replacing response ${currentIndex + 1} of ${REQUIRED_TURNS}.`);
+    setPipeline("queued", "active");
+    setWorkflowMessage("Ready to replace this answer", "Record again; the server will keep only the latest verified version for grading.", "bi-arrow-repeat");
+    setDanielState("ready", "Daniel is ready");
+    updateRecordingControls(false);
+  }
+
+  function revisitSavedAnswer(turnId) {
+    if (!attempt || submission || submissionBusy) return;
+    const index = assignedQuestions.findIndex((question) => String(question.turnId || "") === String(turnId || ""));
+    if (index < 0) return;
+    currentIndex = index;
+    if (elements.submitConfirmation) elements.submitConfirmation.checked = false;
+    setHidden(elements.ready, true);
+    renderCurrentTurn();
+  }
+
   function startAdminPreview() {
     if (!(role === "admin" || role === "teacher") || adminPreviewMode) return;
     const questions = buildAdminPreviewQuestions();
@@ -1912,18 +1965,15 @@
     setHidden(elements.dock, false);
     setText(elements.answerState, "Ready");
     if (elements.answerState) elements.answerState.className = "answer-state ready";
-    setHidden(elements.answerCaptured, true);
-    if (elements.answerCaptured) {
-      elements.answerCaptured.innerHTML = adminPreviewMode
-        ? '<i class="bi bi-eye-fill"></i><div><strong>Administrator rehearsal captured for this preview</strong><p>The transcript may be processed temporarily, but the response never enters Grades or student submissions.</p></div>'
-        : '<i class="bi bi-check2-circle"></i><div><strong>Answer captured securely</strong><p>Your response was saved. No score or feedback is shown during the official exam.</p></div>';
-    }
+    renderCapturedNotice(savedCurrentTurn);
+    setHidden(elements.answerCaptured, !savedCurrentTurn);
     setDisabled(elements.questionPlay, savedCurrentTurn);
     setDisabled(elements.mic, true);
     setDisabled(elements.dockMic, true);
     setDisabled(elements.stop, true);
     setDisabled(elements.dockStop, true);
-    setHidden(elements.next, true);
+    setHidden(elements.next, !savedCurrentTurn);
+    setDisabled(elements.next, !savedCurrentTurn);
     setDanielState("ready", "Daniel is ready");
     setText(elements.sessionCode, adminPreviewMode ? "ADMIN PREVIEW · NOT SAVED" : attempt?.attemptId || "Pending");
     setHidden(elements.adminPreviewToolbar, !adminPreviewMode);
@@ -2531,6 +2581,7 @@
     setText(elements.transcript, currentTranscript ? "Recovered transcript stored privately for teacher review." : "Transcript pending. The recovered audio is already verified.");
     setText(elements.recordStatus, "Your queued answer was recovered and verified by the server. You may continue.");
     setText(elements.saveStatus, `Recovered securely · response ${currentIndex + 1} of ${REQUIRED_TURNS}`);
+    if (typeof renderCapturedNotice === "function") renderCapturedNotice(false);
     setHidden(elements.answerCaptured, false);
     setHidden(elements.recovery, true);
     setHidden(elements.next, false);
@@ -2596,6 +2647,7 @@
       setHidden(elements.transcript, false);
       setText(elements.recordStatus, "Administrator rehearsal completed for this question.");
       setText(elements.saveStatus, "PREVIEW ONLY · response kept temporarily in this tab · not saved or graded");
+      if (typeof renderCapturedNotice === "function") renderCapturedNotice(false);
       setHidden(elements.answerCaptured, false);
       if (elements.saveState) { elements.saveState.className = "exam-save-state saved"; elements.saveState.innerHTML = '<i class="bi bi-eye-fill"></i><span>Preview only · not saved</span>'; }
       setHidden(elements.next, false);
@@ -2666,6 +2718,7 @@
       setText(elements.transcript, currentTranscript ? "Transcript stored privately for teacher review." : "Transcript pending. Your verified audio is already saved.");
       setText(elements.recordStatus, "Official audio saved and verified. You may continue.");
       setText(elements.saveStatus, `Audio saved securely · response ${currentIndex + 1} of ${REQUIRED_TURNS} · transcript ${currentTranscript ? "complete" : "pending"}`);
+      if (typeof renderCapturedNotice === "function") renderCapturedNotice(false);
       setHidden(elements.answerCaptured, false);
       if (elements.saveState) { elements.saveState.className = "exam-save-state saved"; elements.saveState.innerHTML = '<i class="bi bi-cloud-check-fill"></i><span>Progress saved</span>'; }
       setPipeline(currentTranscript ? "transcript" : "audio", currentTranscript ? "complete" : "active");
@@ -2756,10 +2809,22 @@
       const turnId = unit === "interaction" ? "interaction" : `unit-${unit}`;
       const saved = Boolean(attempt?.turns?.[turnId]);
       card.classList.toggle("is-saved", saved);
+      card.classList.toggle("is-secure", saved);
       const small = card.querySelector("small");
-      if (small) small.textContent = saved ? "Answer saved securely" : "Answer not saved";
+      if (small) small.textContent = saved ? "Answer saved securely. You can record it again before submitting." : "Answer not saved";
       const icon = card.querySelector(":scope > i");
       if (icon) icon.className = `bi ${saved ? "bi-check2-circle" : "bi-exclamation-circle"}`;
+      let repeatButton = card.querySelector("[data-review-answer]");
+      if (!repeatButton) {
+        repeatButton = document.createElement("button");
+        repeatButton.type = "button";
+        repeatButton.className = "submission-review-button";
+        repeatButton.innerHTML = '<i class="bi bi-arrow-repeat"></i> Review / record again';
+        card.appendChild(repeatButton);
+      }
+      repeatButton.dataset.reviewAnswer = turnId;
+      repeatButton.hidden = !saved;
+      repeatButton.disabled = submissionBusy;
     });
     const confirmed = !elements.submitConfirmation || elements.submitConfirmation.checked;
     setDisabled(elements.submitConfirmation, submissionBusy);
@@ -3321,9 +3386,17 @@
     elements.dockStop?.addEventListener("click", stopRecording);
     elements.retry?.addEventListener("click", processCapturedTurn);
     elements.recordAgain?.addEventListener("click", resetFailedRecording);
+    elements.answerCaptured?.addEventListener("click", (event) => {
+      const button = event.target.closest?.("[data-repeat-current-answer]");
+      if (button) repeatCurrentAnswer();
+    });
     elements.next?.addEventListener("click", nextTurn);
     elements.submit?.addEventListener("click", submitExam);
     elements.submitConfirmation?.addEventListener("change", renderReadyToSubmit);
+    elements.submissionGrid?.addEventListener("click", (event) => {
+      const button = event.target.closest?.("[data-review-answer]");
+      if (button) revisitSavedAnswer(button.dataset.reviewAnswer);
+    });
     elements.adminOpen?.addEventListener("click", () => updateAdminState(true));
     elements.adminClose?.addEventListener("click", () => updateAdminState(false));
     elements.adminSaveWindow?.addEventListener("click", saveAdminWindow);

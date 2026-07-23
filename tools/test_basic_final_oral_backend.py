@@ -373,33 +373,25 @@ def main():
                 "audioDataUrl": replacement_audio_url,
                 "transcript": "Authorized replacement answer.",
             })
-            status, locked_replacement = request(base_url, "/api/basic-final-oral/turn", "PUT", replacement_payload, student_token)
-            assert status == 409 and locked_replacement["error"] == "turn_locked", locked_replacement
-            status, unlocked = request(
-                base_url, "/api/basic-final-oral/student-action", "PUT",
-                {"studentId": "S001", "action": "unlock_turn", "turnId": first["turnId"], "reason": "Student reported a microphone interruption", "requestId": "unlock-turn-s001-001"},
-                teacher_token,
-            )
-            assert status == 200 and unlocked["usesRemaining"] == 1, unlocked
             status, replaced = request(base_url, "/api/basic-final-oral/turn", "PUT", replacement_payload, student_token)
             assert status == 200 and replaced["revision"] == 2, replaced
             second_replacement = dict(replacement_payload)
             second_replacement.update({"clientTurnId": "turn-unit-1-replacement-003", "revision": 2})
-            status, relocked = request(base_url, "/api/basic-final-oral/turn", "PUT", second_replacement, student_token)
-            assert status == 409 and relocked["error"] == "turn_locked", relocked
+            status, replaced_again = request(base_url, "/api/basic-final-oral/turn", "PUT", second_replacement, student_token)
+            assert status == 200 and replaced_again["revision"] == 3, replaced_again
 
             updated_first = dict(first_payload)
             updated_first.pop("audioDataUrl")
             updated_first["clientTurnId"] = "turn-unit-1-text-004"
-            updated_first["revision"] = 2
+            updated_first["revision"] = 3
             updated_first["transcript"] = "My name is Alex Perez and I live in Medellin. P E R E Z."
             status, updated = request(base_url, "/api/basic-final-oral/turn", "PUT", updated_first, student_token)
-            assert status == 200 and updated["revision"] == 3 and updated["turn"]["audioAvailable"] is True
+            assert status == 200 and updated["revision"] == 4 and updated["turn"]["audioAvailable"] is True
 
             stale_payload = dict(updated_first)
             stale_payload["clientTurnId"] = "turn-unit-1-stale-003"
             status, stale = request(base_url, "/api/basic-final-oral/turn", "PUT", stale_payload, student_token)
-            assert status == 409 and stale["error"] == "stale_attempt" and stale["revision"] == 3
+            assert status == 409 and stale["error"] == "stale_attempt" and stale["revision"] == 4
 
             status, closed = request(
                 base_url,
@@ -420,13 +412,13 @@ def main():
                 base_url,
                 "/api/basic-final-oral/submit",
                 "POST",
-                {"attemptId": attempt_id, "attemptScopeToken": attempt_scope_token, "leaseId": lease_id, "deviceId": "device-student-1", "revision": 3, "clientSubmissionId": "submission-official-001"},
+                {"attemptId": attempt_id, "attemptScopeToken": attempt_scope_token, "leaseId": lease_id, "deviceId": "device-student-1", "revision": 4, "clientSubmissionId": "submission-official-001"},
                 student_token,
             )
             assert status == 400 and incomplete["error"] == "incomplete_attempt"
             assert len(incomplete["missingTurns"]) == 6
 
-            revision = 3
+            revision = 4
             for index, question in enumerate(assigned[1:], 2):
                 audio_data_url, _audio_bytes = ogg_data_url(index)
                 turn_payload = {
@@ -445,7 +437,7 @@ def main():
                 status, saved = request(base_url, "/api/basic-final-oral/turn", "PUT", turn_payload, student_token)
                 assert status == 200, saved
                 revision = saved["revision"]
-            assert revision == 9
+            assert revision == 10
 
             status, current_attempt = request(
                 base_url,
@@ -628,8 +620,8 @@ def main():
             stored_audio = stored_attempt["turns"]["unit-1"]["audio"]
             assert ".." not in stored_audio["file"] and "/" not in stored_audio["file"] and "\\" not in stored_audio["file"]
             assert API.basic_final_oral_audio_path("../../grades.json") == ""
-            assert len(list(audio_dir.iterdir())) == 8
-            assert len(stored_attempt["turns"]["unit-1"]["versions"]) == 1
+            assert len(list(audio_dir.iterdir())) == 9
+            assert len(stored_attempt["turns"]["unit-1"]["versions"]) == 2
 
             # Published grades use optimistic revisions and request-level idempotency.
             revised_grade = dict(grade_payload)
@@ -826,21 +818,14 @@ def main():
                 "clientTurnId": "other-turn-replacement-002", "revision": second_revision,
                 "durationMs": 8000, "transcript": "Replacement recording", "audioDataUrl": replacement_other_audio,
             }
-            status, other_turn_locked = request(base_url, "/api/basic-final-oral/turn", "PUT", replacement_other_payload, other_token)
-            assert status == 409 and other_turn_locked["error"] == "turn_locked"
-            status, other_turn_unlock = request(
-                base_url, "/api/basic-final-oral/student-action", "PUT",
-                {"studentId": "S002", "action": "unlock_turn", "turnId": first_other["turnId"], "reason": "Verified microphone failure", "requestId": "unlock-turn-s002-001"},
-                teacher_token,
-            )
-            assert status == 200, other_turn_unlock
             status, other_turn_replaced = request(base_url, "/api/basic-final-oral/turn", "PUT", replacement_other_payload, other_token)
             assert status == 200, other_turn_replaced
             second_revision = other_turn_replaced["revision"]
             second_replacement_other = dict(replacement_other_payload)
             second_replacement_other.update({"clientTurnId": "other-turn-replacement-003", "revision": second_revision})
-            status, other_turn_relocked = request(base_url, "/api/basic-final-oral/turn", "PUT", second_replacement_other, other_token)
-            assert status == 409 and other_turn_relocked["error"] == "turn_locked"
+            status, other_turn_replaced_again = request(base_url, "/api/basic-final-oral/turn", "PUT", second_replacement_other, other_token)
+            assert status == 200, other_turn_replaced_again
+            second_revision = other_turn_replaced_again["revision"]
 
             overlong_question = second_attempt["assignedQuestions"][1]
             overlong_audio, _ = ogg_data_url(61)
