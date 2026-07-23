@@ -190,6 +190,7 @@ INTERMEDIATE_UNIT5_SNACK_REVIEW_ID = "unit5GlobalSnackReview"
 INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID = "unit5RestaurantConversationCoach"
 INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ID = "unit6OliviaScheduleGrammar"
 INTERMEDIATE_UNIT6_LISTENING_ID = "unit6ScheduleChangeCallListening"
+INTERMEDIATE_UNIT6_READING_ID = "unit6OliviaOverloadedWeekReading"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
@@ -418,6 +419,14 @@ INTERMEDIATE_UNIT6_LISTENING_EVALUATION = {
     "description": "Seguimiento de listening enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
 }
 
+INTERMEDIATE_UNIT6_READING_EVALUATION = {
+    "id": INTERMEDIATE_UNIT6_READING_ID,
+    "title": "Unit 6 Reading - Olivia's Overloaded Week",
+    "weight": 0,
+    "type": "Reading follow-up",
+    "description": "Seguimiento de lectura enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
+}
+
 INTERMEDIATE_INTEGRATED_TASK_EVALUATION = {
     "id": INTERMEDIATE_INTEGRATED_TASK_ID,
     "title": "INTERMEDIATE COURSE 1 - INTEGRATED TASK (20%)",
@@ -491,6 +500,7 @@ INTERMEDIATE_UNIT5_LISTENING_ANSWERS = [1, 0, 0, 1, 0, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT5_READING_ANSWERS = [0, 1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS = [0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 1]
 INTERMEDIATE_UNIT6_LISTENING_ANSWERS = [1, 0, 2, 0, 1, 2, 0, 1, 2, 1]
+INTERMEDIATE_UNIT6_READING_ANSWERS = [1, 0, 2, 1, 0, 2, 1, 2, 0, 1]
 INTERMEDIATE_UNIT4_EXPRESSION_ITEMS = [
     {
         "id": "bring-up",
@@ -2592,6 +2602,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_LISTENING_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_READING_EVALUATION):
+        changed = True
     return changed
 
 
@@ -2635,6 +2647,10 @@ def score_intermediate_unit6_grammar_storybook(payload):
 
 def score_intermediate_unit6_listening(payload):
     return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT6_LISTENING_ANSWERS)
+
+
+def score_intermediate_unit6_reading(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT6_READING_ANSWERS)
 
 
 def intermediate_unit5_market_basket_review(result):
@@ -15015,6 +15031,67 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": INTERMEDIATE_UNIT6_LISTENING_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "wordCount": word_count,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit6-reading-overloaded-week/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit6_reading(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                reading_response = ""
+                word_count = 0
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT6_READING_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT6_READING_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT6_READING_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "response": reading_response,
+                    "wordCount": word_count,
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Olivia's Overloaded Week",
+                    "activityType": "Reading follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT6_READING_ID,
                     "score": result["score"],
                     "total": result["total"],
                     "grade": result["grade"],
