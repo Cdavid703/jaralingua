@@ -165,7 +165,7 @@
   <script>window.JARALINGUA_MICROSOFT_CLIENT_ID=window.JARALINGUA_MICROSOFT_CLIENT_ID||"4e729f8a-d101-4c5d-af68-609d749bc95a";</script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/transcript-pdf.js"></script>
-  <script src="../../assets/js/google-auth.js?v=20260722-exam-login-ready"></script>
+  <script src="../../assets/js/google-auth.js?v=20260722-exam-auth-sync"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
   <script>
     (() => {
@@ -2798,6 +2798,28 @@
 
       loadState();
       window.setInterval(pollScheduledAccess, 15000);
+      window.addEventListener("jaralingua:auth-changed", (event) => {
+        const authenticated = event?.detail?.authenticated === true;
+        if (!authenticated) {
+          if (!examInProgress) {
+            clearExamAccess();
+            accountVerificationBlocked = false;
+            renderLogin("Connectez-vous pour savoir si l’examen est ouvert pour votre compte.");
+          }
+          return;
+        }
+        const status = els.access.querySelector("[data-access-action-status], #courseLoginStatus");
+        if (status) {
+          status.className = "status-message pending mt-2 mb-0";
+          status.textContent = "Compte détecté. Vérification et ouverture de l’examen…";
+        }
+        if (examInProgress) {
+          window.setTimeout(recoverExamAuthentication, 0);
+          return;
+        }
+        accountVerificationBlocked = false;
+        window.setTimeout(() => loadState({ force: true }), 0);
+      });
       document.addEventListener("click", (event) => {
         if (!event.target?.closest?.("[data-auth-signout]")) return;
         stopRealtime(true);

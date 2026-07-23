@@ -767,6 +767,20 @@
     saveAllActivityFields();
     syncCloudData();
     updateDownloadLocks();
+    notifyAuthChange(true);
+  }
+
+  function notifyAuthChange(authenticated) {
+    try {
+      window.dispatchEvent(new CustomEvent("jaralingua:auth-changed", {
+        detail: {
+          authenticated: authenticated === true,
+          provider: authenticated === true && currentUser ? currentUser.provider || "google" : ""
+        }
+      }));
+    } catch (_error) {
+      /* Les pages peuvent toujours relire la session au prochain focus. */
+    }
   }
 
   function signOut() {
@@ -794,6 +808,7 @@
     renderWidget();
     renderDashboard();
     updateDownloadLocks();
+    notifyAuthChange(false);
   }
 
   window.jaralinguaHandleGoogleCredential = function (response) {

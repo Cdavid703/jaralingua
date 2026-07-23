@@ -90,10 +90,13 @@ assert.match(page, /data-student-save-retry[^]*?addEventListener\("click", retry
 assert.match(page, /courseLoginStatus"[^>]*role="status" aria-live="polite" aria-atomic="true"/);
 assert.match(page, /error\?\.name === "AbortError"[\s\S]*?responseStatus >= 500/, "technical login failures must not be mislabeled as bad credentials");
 assert.match(page, /data-open-login[\s\S]*?Ouverture du panneau Google \/ Microsoft/);
-assert.ok(page.includes("google-auth.js?v=20260722-exam-login-ready"), "the exam must invalidate the cached sign-in widget");
+assert.ok(page.includes("google-auth.js?v=20260722-exam-auth-sync"), "the exam must invalidate the cached sign-in and access synchronization logic");
 assert.doesNotMatch(page, /<script src="https:\/\/alcdn\.msauth\.net\/browser\/2\.37\.0\/js\/msal-browser\.min\.js"><\/script>/, "Microsoft must load on demand instead of blocking the exam and its login control");
 assert.match(authScript, /DOMContentLoaded", renderAuthEntryPoint/, "the floating sign-in control must render before slow external resources finish loading");
 assert.match(authScript, /document\.readyState === "complete"[\s\S]*?startAuthRuntime\(\)/, "dynamically loaded auth must still initialize after the load event");
+assert.match(authScript, /function notifyAuthChange\(authenticated\)[\s\S]*?CustomEvent\("jaralingua:auth-changed"/, "successful provider login must notify the active page without exposing the credential");
+assert.match(authScript, /updateDownloadLocks\(\);\s*notifyAuthChange\(true\);/, "the login event must fire after the account is persisted and rendered");
+assert.match(page, /window\.addEventListener\("jaralingua:auth-changed"[\s\S]*?Compte détecté\. Vérification et ouverture de l’examen…[\s\S]*?loadState\(\{ force: true \}\)/, "the exam must automatically recheck access as soon as login succeeds");
 assert.match(page, /function recheckStudentAccess\(event\)[\s\S]*?aria-busy[\s\S]*?Vérification de votre accès auprès du serveur/);
 assert.match(page, /data-run-preflight[\s\S]*?Vérification en cours/);
 assert.match(page, /data-play-preflight[\s\S]*?Lecture du son test en cours/);
