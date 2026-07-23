@@ -41,21 +41,21 @@ for (const endpoint of [
   "/api/french8/final-exam/health",
   "/api/french8/final-exam/audit",
   "/api/french8/final-exam/alerts/ack",
-  "/api/french8/final-exam/audio-grant",
 ]) {
   assert.ok(page.includes(endpoint), `missing secure runtime endpoint: ${endpoint}`);
 }
 
 assert.match(page, /authenticatedFetch\(API\.audio[\s\S]*?"external"/);
-assert.doesNotMatch(page, /(?<!authenticated)fetch\(API\.audio/);
 assert.match(
   page,
   /draft = storedExamAuth\(\)\s*\?\s*await request\(API\.draft, \{\}, 10000, "exam"\)\s*:\s*await request\(API\.draft, \{\}, 10000, "external"\)/,
   "draft recovery must use the attempt bridge when available and the primary account otherwise"
 );
-assert.match(page, /API\.audioGrant[\s\S]*?purpose=[\s\S]*?examVersion=/);
-assert.match(page, /audio\.src = parsedAudioUrl\.pathname \+ parsedAudioUrl\.search/);
-assert.match(page, /rangeReady[\s\S]*?authenticatedFetch\(API\.audio/, "audio grant must retain the authenticated Blob compatibility fallback");
+assert.doesNotMatch(page, /API\.audioGrant|audio-grant|grantedAudioUrl|rangeReady/, "the student player must not depend on an authenticated range grant");
+assert.match(page, /const publicAudioUrl = `\$\{API\.audio\}\?v=\$\{encodeURIComponent\(currentExam\?\.version \|\| "current"\)\}`/);
+assert.match(page, /let response = await fetch\(publicAudioUrl, fetchOptions\)/, "open Niveau 8 audio must load without a credential");
+assert.match(page, /response\.blob\(\)[\s\S]*?URL\.createObjectURL\(blob\)[\s\S]*?waitForAudioMetadata/, "the small MP3 must be fully buffered before playback");
+assert.match(page, /examAudio\?\.addEventListener\("error"[\s\S]*?audioReady = false[\s\S]*?data-audio-retry|examAudio\?\.addEventListener\("error"[\s\S]*?setAudioStatus\([^]*?true\)/, "a playback failure must expose a working retry state");
 
 assert.match(page, /let runtimeMode = "student-gate"/);
 assert.match(page, /let simulationMode = false/);

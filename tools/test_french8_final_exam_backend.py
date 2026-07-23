@@ -474,8 +474,10 @@ class French8FinalExamBackendTests(unittest.TestCase):
             )
             self.assertEqual(status, 403)
             self.assertEqual(error["error"], "exam_closed")
+            self.assertFalse(API.french8_final_exam_audio_is_public(bundle))
 
             bundle["state"].update({"isOpen": True, "openedAt": API.now_iso()})
+            self.assertTrue(API.french8_final_exam_audio_is_public(bundle))
             self.assertIsNone(API.final_exam_audio_access_error(
                 "student", student, bundle, store, require_active_attempt=False
             ))
@@ -505,13 +507,17 @@ class French8FinalExamBackendTests(unittest.TestCase):
             )
             self.assertEqual(status, 403)
             self.assertEqual(error["error"], "exam_closed")
+            self.assertFalse(API.french8_final_exam_audio_is_public(bundle))
 
-    def test_audio_route_uses_authenticated_grant_issuance_or_bearer_fallback(self):
+    def test_audio_route_is_public_during_open_window_and_keeps_closed_fallback(self):
         source = (ROOT / "server" / "progress_api.py").read_text(encoding="utf-8")
         do_get = source.index("    def do_GET(self):")
         auth_gate = source.index("profile = self.require_user()", do_get)
         capability_block = source[do_get:auth_gate]
         self.assertIn('parsed.path == "/api/french8/final-exam/audio"', capability_block)
+        self.assertIn("french8_final_exam_audio_is_public(bundle)", capability_block)
+        self.assertIn('"audio-public"', capability_block)
+        self.assertIn('ranged_file_response(self, audio_path, "audio/mpeg")', capability_block)
         self.assertIn("if grant:", capability_block)
         self.assertIn("french8_final_exam_validate_audio_grant", capability_block)
         self.assertIn("consume_french8_final_exam_rate", capability_block)

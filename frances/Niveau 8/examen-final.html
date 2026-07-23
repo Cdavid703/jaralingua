@@ -194,8 +194,7 @@
         events: "/api/french8/final-exam/events",
         health: "/api/french8/final-exam/health",
         audit: "/api/french8/final-exam/audit",
-        alertsAck: "/api/french8/final-exam/alerts/ack",
-        audioGrant: "/api/french8/final-exam/audio-grant"
+        alertsAck: "/api/french8/final-exam/alerts/ack"
       };
       const els = {
         access: document.getElementById("accessPanel"),
@@ -1930,51 +1929,33 @@
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 45000);
         try {
-          let rangeReady = false;
-          try {
-            const purpose = simulationMode ? "simulation" : "exam";
-            const grantUrl = `${API.audioGrant}?purpose=${encodeURIComponent(purpose)}&examVersion=${encodeURIComponent(currentExam?.version || "")}`;
-            const grant = await request(grantUrl, { method: "GET" }, 12000, "auto");
-            const grantedAudioUrl = grant.data?.audioUrl || grant.data?.url;
-            if (grant.ok && grantedAudioUrl) {
-              const parsedAudioUrl = new URL(grantedAudioUrl, window.location.origin);
-              if (parsedAudioUrl.origin !== window.location.origin || !parsedAudioUrl.pathname.startsWith(API.audio)) throw new Error("invalid_audio_grant");
-              if (audioObjectUrl) {
-                URL.revokeObjectURL(audioObjectUrl);
-                audioObjectUrl = null;
-              }
-              audio.src = parsedAudioUrl.pathname + parsedAudioUrl.search;
-              const metadataReady = waitForAudioMetadata(audio, 15000);
-              audio.load();
-              await metadataReady;
-              rangeReady = true;
-            }
-          } catch (_grantError) {
-            rangeReady = false;
+          const publicAudioUrl = `${API.audio}?v=${encodeURIComponent(currentExam?.version || "current")}`;
+          const fetchOptions = { cache: "no-store", signal: controller.signal, headers: { Accept: "audio/mpeg" } };
+          let response = await fetch(publicAudioUrl, fetchOptions);
+          if (!response.ok) {
+            const fallbackMode = ["admin", "teacher"].includes(currentRole) ? "external" : "auto";
+            response = await authenticatedFetch(API.audio, fetchOptions, fallbackMode);
           }
-          if (!rangeReady) {
-            const response = await authenticatedFetch(API.audio, { cache: "no-store", signal: controller.signal, headers: { Accept: "audio/mpeg" } }, "auto");
-            if (!response.ok) {
-              if (response.status === 401) showReconnectNotice();
-              throw new Error(response.status === 401 ? "audio_authentication" : "audio_unavailable");
-            }
-            const blob = await response.blob();
-            if (blob.size < 1024) throw new Error("audio_empty");
-            if (token !== audioLoadToken) return;
-            if (audioObjectUrl) URL.revokeObjectURL(audioObjectUrl);
-            audioObjectUrl = URL.createObjectURL(blob);
-            audio.src = audioObjectUrl;
-            const metadataReady = waitForAudioMetadata(audio);
-            audio.load();
-            await metadataReady;
+          if (!response.ok) {
+            if (response.status === 401) showReconnectNotice();
+            throw new Error(response.status === 401 ? "audio_authentication" : "audio_unavailable");
           }
+          const blob = await response.blob();
+          if (blob.size < 1024 || !String(blob.type || "audio/mpeg").toLowerCase().startsWith("audio/")) throw new Error("audio_empty");
+          if (token !== audioLoadToken) return;
+          if (audioObjectUrl) URL.revokeObjectURL(audioObjectUrl);
+          audioObjectUrl = URL.createObjectURL(blob);
+          audio.src = audioObjectUrl;
+          const metadataReady = waitForAudioMetadata(audio);
+          audio.load();
+          await metadataReady;
           if (token !== audioLoadToken) return;
           // Le reportage B1+/B2 est présenté à son débit professionnel naturel.
           audio.defaultPlaybackRate = 1;
           audio.playbackRate = 1;
           audio.preservesPitch = true;
           audioReady = true;
-          setAudioStatus(rangeReady ? "Audio prêt en diffusion progressive. Écoutez-le avant de répondre à la compréhension orale." : "Audio prêt. Mode de compatibilité activé pour ce serveur.", "success");
+          setAudioStatus("Audio prêt. Appuyez sur lecture pour commencer l’écoute.", "success");
           recordSession("audio_ready", allQuestions().length - collectAnswers(false).missing);
           updateSubmitAvailability();
         } catch (_error) {
@@ -2226,6 +2207,11 @@
         });
         examAudio?.addEventListener("ended", () => {
           if (audioReady) setAudioStatus("Écoute terminée. Vous pouvez réécouter l’audio ou poursuivre vos réponses.", "success");
+        });
+        examAudio?.addEventListener("error", () => {
+          audioReady = false;
+          setAudioStatus("La lecture a été interrompue. Appuyez sur Réessayer pour recharger l’audio.", "error", true);
+          updateSubmitAvailability();
         });
         els.form.querySelector("[data-student-save-retry]")?.addEventListener("click", retryStudentDraft);
         els.form.querySelector("[data-reset-simulation]")?.addEventListener("click", resetStaffSimulation);

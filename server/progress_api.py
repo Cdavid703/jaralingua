@@ -6969,6 +6969,14 @@ def final_exam_public_state(state, role, student_id=""):
     return result
 
 
+def french8_final_exam_audio_is_public(bundle):
+    """Allow the listening file without a credential only during the effective exam window."""
+
+    state = bundle.get("state", {}) if isinstance(bundle, dict) else {}
+    public_state = final_exam_public_state(state, "student", "")
+    return public_state.get("accessEffective", public_state.get("isOpen")) is True
+
+
 def french8_final_exam_audio_grant(profile, role, student, bundle):
     """Create a short-lived grant so native audio can use HTTP Range requests."""
 
@@ -12480,23 +12488,26 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/french8/final-exam/audio":
             query = urllib.parse.parse_qs(parsed.query)
             grant = clean_text((query.get("grant") or [""])[0], 4096)
-            if grant:
-                try:
-                    if not consume_french8_final_exam_rate(
-                        self, "audio-range", grant, limit=360, window_seconds=60
-                    ):
-                        return
-                    with data_lock:
-                        config = final_exam_level_config("french8")
-                        bundle = config["readBundle"]()
+            try:
+                with data_lock:
+                    config = final_exam_level_config("french8")
+                    bundle = config["readBundle"]()
+                    public_audio = french8_final_exam_audio_is_public(bundle)
+                    if not public_audio:
+                        if not grant:
+                            self.send_response(404)
+                            self.send_header("Cache-Control", "no-store")
+                            self.send_header("Content-Length", "0")
+                            self.end_headers()
+                            return
                         french8_final_exam_validate_audio_grant(grant, bundle)
-                        audio_path = final_exam_audio_path(config)
-                    ranged_file_response(self, audio_path, "audio/mpeg", head_only=True)
-                except ValueError as error:
-                    json_response(self, 403, {"error": clean_text(error, 80) or "audio_grant_invalid"})
-                except FinalExamStorageError as error:
-                    self.storage_unavailable(error)
-                return
+                    audio_path = final_exam_audio_path(config)
+                ranged_file_response(self, audio_path, "audio/mpeg", head_only=True)
+            except ValueError as error:
+                json_response(self, 403, {"error": clean_text(error, 80) or "audio_grant_invalid"})
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
+            return
         self.send_response(404)
         self.send_header("Cache-Control", "no-store")
         self.send_header("Content-Length", "0")
@@ -12566,22 +12577,40 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/french8/final-exam/audio":
             query = urllib.parse.parse_qs(parsed.query)
             grant = clean_text((query.get("grant") or [""])[0], 4096)
-            if grant:
-                try:
+            try:
+                public_audio = False
+                audio_path = ""
+                with data_lock:
+                    config = final_exam_level_config("french8")
+                    bundle = config["readBundle"]()
+                    public_audio = french8_final_exam_audio_is_public(bundle)
+                    if public_audio or grant:
+                        audio_path = final_exam_audio_path(config)
+                if public_audio:
+                    if not consume_french8_final_exam_rate(
+                        self,
+                        "audio-public",
+                        request_client_ip(self),
+                        limit=180,
+                        window_seconds=60,
+                    ):
+                        return
+                    ranged_file_response(self, audio_path, "audio/mpeg")
+                    return
+                if grant:
                     if not consume_french8_final_exam_rate(
                         self, "audio-range", grant, limit=360, window_seconds=60
                     ):
                         return
                     with data_lock:
-                        config = final_exam_level_config("french8")
-                        bundle = config["readBundle"]()
                         french8_final_exam_validate_audio_grant(grant, bundle)
-                        audio_path = final_exam_audio_path(config)
                     ranged_file_response(self, audio_path, "audio/mpeg")
-                except ValueError as error:
-                    json_response(self, 403, {"error": clean_text(error, 80) or "audio_grant_invalid"})
-                except FinalExamStorageError as error:
-                    self.storage_unavailable(error)
+                    return
+            except ValueError as error:
+                json_response(self, 403, {"error": clean_text(error, 80) or "audio_grant_invalid"})
+                return
+            except FinalExamStorageError as error:
+                self.storage_unavailable(error)
                 return
 
         profile = self.require_user()
