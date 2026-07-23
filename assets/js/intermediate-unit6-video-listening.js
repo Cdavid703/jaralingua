@@ -282,6 +282,9 @@ window.JaraLinguaUnit6VideoListeningData = {
     const script = document.createElement("script");
     script.src = "https://www.youtube.com/iframe_api";
     script.dataset.youtubeApi = "true";
+    script.onerror = function () {
+      setStatus(elements.speedStatus, "The video is available. If the speed buttons do not respond, use the YouTube settings menu.", "");
+    };
     document.head.appendChild(script);
   }
 
@@ -300,17 +303,36 @@ window.JaraLinguaUnit6VideoListeningData = {
     });
   }
 
+  function getYouTubeEmbedUrl() {
+    const params = new URLSearchParams({
+      rel: "0",
+      modestbranding: "1",
+      playsinline: "1",
+      enablejsapi: "1"
+    });
+    if (window.location?.origin) params.set("origin", window.location.origin);
+    return `https://www.youtube-nocookie.com/embed/${encodeURIComponent(data.youtubeVideoId)}?${params.toString()}`;
+  }
+
   function renderYouTubePlayer() {
     if (!data.youtubeVideoId || !elements.videoFrame) {
       setStatus(elements.speedStatus, "Video link pending. The quiz and teacher delivery are ready now; the YouTube embed will be added when the link is provided.", "");
       return;
     }
-    elements.videoFrame.innerHTML = `<div id="unit6VideoPlayer"></div>`;
+    elements.videoFrame.innerHTML = `
+      <iframe
+        id="unit6VideoPlayer"
+        title="${escapeHtml(data.youtubeTitle || "Unit 6 video listening")}"
+        src="${getYouTubeEmbedUrl()}"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+        referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
     if (elements.watchLink) {
       elements.watchLink.href = `https://www.youtube.com/watch?v=${encodeURIComponent(data.youtubeVideoId)}`;
       elements.watchLink.hidden = false;
     }
     if (elements.pendingAction) elements.pendingAction.hidden = true;
+    setStatus(elements.speedStatus, "YouTube video loaded. Use 0.75x, 1x, or 1.25x when the player is ready.", "");
 
     window.onYouTubeIframeAPIReady = function () {
       initializeYouTubePlayer();
