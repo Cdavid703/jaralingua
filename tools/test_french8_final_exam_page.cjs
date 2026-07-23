@@ -44,6 +44,11 @@ for (const endpoint of [
 
 assert.match(page, /authenticatedFetch\(API\.audio[\s\S]*?"external"/);
 assert.doesNotMatch(page, /(?<!authenticated)fetch\(API\.audio/);
+assert.match(
+  page,
+  /const draft = storedExamAuth\(\)\s*\?\s*await request\(API\.draft, \{\}, 10000, "exam"\)\s*:\s*await request\(API\.draft, \{\}, 10000, "external"\)/,
+  "the start gate must read a pre-attempt draft with the primary account instead of a missing exam bridge"
+);
 assert.match(page, /API\.audioGrant[\s\S]*?purpose=[\s\S]*?examVersion=/);
 assert.match(page, /audio\.src = parsedAudioUrl\.pathname \+ parsedAudioUrl\.search/);
 assert.match(page, /rangeReady[\s\S]*?authenticatedFetch\(API\.audio/, "audio grant must retain the authenticated Blob compatibility fallback");

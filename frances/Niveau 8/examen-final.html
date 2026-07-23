@@ -2710,7 +2710,9 @@
           runtimePayload = Object.assign({}, result.data, resumed.data);
           if (!rememberExamAccess(runtimePayload)) throw new Error("exam_access_missing");
         }
-        const draft = await request(API.draft, {}, 10000, "exam");
+        const draft = storedExamAuth()
+          ? await request(API.draft, {}, 10000, "exam")
+          : await request(API.draft, {}, 10000, "external");
         if (draft.ok) {
           Object.assign(runtimePayload, draft.data);
           return renderExam(runtimePayload);
