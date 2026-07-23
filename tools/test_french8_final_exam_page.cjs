@@ -99,7 +99,9 @@ assert.match(page, /data-student-save-retry[^]*?addEventListener\("click", retry
 assert.match(page, /courseLoginStatus"[^>]*role="status" aria-live="polite" aria-atomic="true"/);
 assert.match(page, /error\?\.name === "AbortError"[\s\S]*?responseStatus >= 500/, "technical login failures must not be mislabeled as bad credentials");
 assert.match(page, /data-open-login[\s\S]*?Ouverture du panneau Google \/ Microsoft/);
-assert.ok(page.includes("google-auth.js?v=20260722-exam-auth-sync"), "the exam must invalidate the cached sign-in and access synchronization logic");
+assert.ok(page.includes("google-auth.js?v=20260723-exam-radio-fix"), "the exam must invalidate cached generic radio restoration logic");
+assert.match(page, /<form id="examForm" novalidate data-jaralingua-managed-draft>/, "the exam must opt out of the generic activity draft because it owns a secure draft lifecycle");
+assert.match(authScript, /element\.closest\("\[data-jaralingua-auth\], \[data-jaralingua-dashboard\], \[data-jaralingua-managed-draft\]"\)\) return false;/, "the global activity draft must ignore forms with their own draft manager");
 assert.doesNotMatch(page, /<script src="https:\/\/alcdn\.msauth\.net\/browser\/2\.37\.0\/js\/msal-browser\.min\.js"><\/script>/, "Microsoft must load on demand instead of blocking the exam and its login control");
 assert.match(authScript, /DOMContentLoaded", renderAuthEntryPoint/, "the floating sign-in control must render before slow external resources finish loading");
 assert.match(authScript, /document\.readyState === "complete"[\s\S]*?startAuthRuntime\(\)/, "dynamically loaded auth must still initialize after the load event");
@@ -141,6 +143,9 @@ assert.match(page, /confirmationDialog\?\.addEventListener\("cancel"[\s\S]*?even
 assert.match(page, /Envoi annulé\. Vos réponses restent modifiables/);
 assert.match(page, /data-confirm-submit[^]*?Confirmation reçue\. Enregistrement définitif en cours/);
 assert.match(page, /data-reconnect-exam[^]*?Reconnexion et synchronisation en cours/);
+const questionRenderer = page.match(/function questionHtml\(question, index\) \{([\s\S]*?)\n      \}\n\n      function orderedQuestions/);
+assert.ok(questionRenderer, "could not isolate the question renderer");
+assert.doesNotMatch(questionRenderer[1], /\bchecked\b/, "no answer may be preselected by the question renderer");
 
 assert.match(page, /authenticatedFetch\(API\.events/);
 assert.match(page, /Accept: "text\/event-stream"/);

@@ -2153,7 +2153,7 @@
 
   function isActivityField(element) {
     if (!element || element.disabled) return false;
-    if (element.closest("[data-jaralingua-auth], [data-jaralingua-dashboard]")) return false;
+    if (element.closest("[data-jaralingua-auth], [data-jaralingua-dashboard], [data-jaralingua-managed-draft]")) return false;
     if (element.hasAttribute("contenteditable") && element.getAttribute("contenteditable") === "false") return false;
     const tagName = element.tagName.toLowerCase();
     const type = tagName === "input" ? (element.type || "text").toLowerCase() : tagName;

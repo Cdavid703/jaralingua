@@ -427,10 +427,30 @@ class French8FinalExamBackendTests(unittest.TestCase):
             self.assertEqual(draft["answeredCount"], 1)
             self.assertEqual(draft["savedAt"], config["readStore"]()["attempts"]["008"]["draftUpdatedAt"])
 
-            status, submitted = API.final_exam_submit_action(config, profile, {
+            status, changed_draft = API.final_exam_put_draft(config, profile, {
                 "attemptId": session["attemptId"],
                 "examVersion": EXAM["version"],
                 "revision": 1,
+                "answers": {"g1": 2},
+            })
+            self.assertEqual(status, 200)
+            self.assertEqual(changed_draft["revision"], 2)
+            self.assertEqual(config["readStore"]()["attempts"]["008"]["answers"]["g1"], 2)
+
+            status, restored_draft = API.final_exam_put_draft(config, profile, {
+                "attemptId": session["attemptId"],
+                "examVersion": EXAM["version"],
+                "revision": 2,
+                "answers": {"g1": 0},
+            })
+            self.assertEqual(status, 200)
+            self.assertEqual(restored_draft["revision"], 3)
+            self.assertEqual(config["readStore"]()["attempts"]["008"]["answers"]["g1"], 0)
+
+            status, submitted = API.final_exam_submit_action(config, profile, {
+                "attemptId": session["attemptId"],
+                "examVersion": EXAM["version"],
+                "revision": 3,
                 "answers": {"g1": 0, "g2": True},
             })
             self.assertEqual(status, 200)
