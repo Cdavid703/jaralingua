@@ -14,6 +14,9 @@ const authScript = fs.readFileSync(authScriptPath, "utf8");
 
 assert.match(page, /<html lang="fr">/);
 assert.match(page, /<meta name="viewport"/);
+assert.match(page, /http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0"/);
+assert.match(page, /http-equiv="Pragma" content="no-cache"/);
+assert.match(page, /http-equiv="Expires" content="0"/);
 assert.match(page, /Aller à l’accès à l’examen/);
 assert.match(page, /prefers-reduced-motion:reduce/);
 assert.match(page, /@media\(max-width:900px\)/);
@@ -25,7 +28,6 @@ assert.match(page, /iue-footer\.png/);
 
 for (const endpoint of [
   "/api/french8/final-exam/state",
-  "/api/french8/final-exam/preflight",
   "/api/french8/final-exam/session",
   "/api/french8/final-exam/draft",
   "/api/french8/final-exam/audio",
@@ -46,8 +48,8 @@ assert.match(page, /authenticatedFetch\(API\.audio[\s\S]*?"external"/);
 assert.doesNotMatch(page, /(?<!authenticated)fetch\(API\.audio/);
 assert.match(
   page,
-  /const draft = storedExamAuth\(\)\s*\?\s*await request\(API\.draft, \{\}, 10000, "exam"\)\s*:\s*await request\(API\.draft, \{\}, 10000, "external"\)/,
-  "the start gate must read a pre-attempt draft with the primary account instead of a missing exam bridge"
+  /draft = storedExamAuth\(\)\s*\?\s*await request\(API\.draft, \{\}, 10000, "exam"\)\s*:\s*await request\(API\.draft, \{\}, 10000, "external"\)/,
+  "draft recovery must use the attempt bridge when available and the primary account otherwise"
 );
 assert.match(page, /API\.audioGrant[\s\S]*?purpose=[\s\S]*?examVersion=/);
 assert.match(page, /audio\.src = parsedAudioUrl\.pathname \+ parsedAudioUrl\.search/);
@@ -103,10 +105,34 @@ assert.match(authScript, /function notifyAuthChange\(authenticated\)[\s\S]*?Cust
 assert.match(authScript, /updateDownloadLocks\(\);\s*notifyAuthChange\(true\);/, "the login event must fire after the account is persisted and rendered");
 assert.match(page, /window\.addEventListener\("jaralingua:auth-changed"[\s\S]*?Compte détecté\. Vérification et ouverture de l’examen…[\s\S]*?loadState\(\{ force: true \}\)/, "the exam must automatically recheck access as soon as login succeeds");
 assert.match(page, /function recheckStudentAccess\(event\)[\s\S]*?aria-busy[\s\S]*?Vérification de votre accès auprès du serveur/);
-assert.match(page, /data-run-preflight[\s\S]*?Vérification en cours/);
-assert.match(page, /data-play-preflight[\s\S]*?Lecture du son test en cours/);
-assert.match(page, /data-heard-preflight[\s\S]*?Votre appareil est prêt pour l’examen/);
-assert.match(page, /async function startExamAttempt\(\)[\s\S]*?Création sécurisée de votre tentative/);
+assert.doesNotMatch(page, /\/api\/french8\/final-exam\/preflight(?:-audio)?/);
+assert.doesNotMatch(page, /Test technique|test technique|Je l’entends|Commencer l’examen|data-preflight|data-start-exam/);
+assert.match(page, /async function startExamAttempt\(initialPayload\)[\s\S]*?Création ou reprise automatique de votre tentative/);
+assert.match(page, /result\.data\?\.status === "ready"\) return startExamAttempt\(result\.data\)/, "a new authorized student must start automatically");
+assert.match(page, /result\.data\?\.status === "open" && !storedExamAuth\(\)[\s\S]*?return startExamAttempt\(result\.data\)/, "an active attempt without a persisted bridge must resume automatically");
+assert.match(page, /request\(API\.state, \{\}, 15000, "external"\)[\s\S]*?String\(identityCheck\.data\?\.student\?\.id[\s\S]*?request\(API\.session/, "automatic start must revalidate the external student identity before creating the attempt");
+assert.match(page, /const expectedExternalEmail = String\(startingExternal\?\.email[\s\S]*?externalAccountUnchanged[\s\S]*?request\(API\.session[\s\S]*?if \(!externalAccountUnchanged\(\)\) throw new Error\("account_changed_after_start"\)/, "the account email must remain unchanged across session creation");
+assert.match(page, /account_changed_after_start[\s\S]*?accountVerificationBlocked = true[\s\S]*?La tentative reste protégée/, "an account switch after session creation must preserve and protect the original attempt");
+assert.match(page, /La réponse a été interrompue[\s\S]*?request\(API\.exam, \{\}, 15000, "external"\)[\s\S]*?status === "open"[\s\S]*?request\(API\.session[\s\S]*?request\(API\.draft[\s\S]*?renderExam/, "an interrupted session response must recover and display the same attempt without another click");
+assert.match(page, /request\(API\.exam, \{\}, 15000, "external"\)[\s\S]*?if \(!externalAccountUnchanged\(\)\) throw new Error\("account_changed_before_start"\)[\s\S]*?request\(API\.draft/, "recovery must keep checking the external account before exposing a recovered attempt");
+assert.match(page, /examCheck\.data\?\.error === "exam_closed"[\s\S]*?renderLocked/, "recovery must render the closed state when the teacher has closed the exam");
+assert.match(page, /draftCheck\.data\?\.error === "already_submitted"[\s\S]*?renderSubmitted/, "recovery must display the receipt for an already submitted attempt");
+assert.match(page, /sessionCheck\.data\?\.error === "already_submitted" && sessionCheck\.data\.result[\s\S]*?renderSubmitted\(sessionCheck\.data\.result\)/, "a submission finalized between recovery requests must display its receipt");
+assert.match(page, /let memoryExamAuth = null/);
+assert.match(page, /memoryExamAuth = Object\.assign\(\{ isExamBridge: true \}, savedAccess\)[\s\S]*?sessionStorage\.setItem\(EXAM_AUTH_KEY/, "the bridge must be usable in memory before best-effort sessionStorage persistence");
+assert.match(page, /if \(isValid\(memoryExamAuth\)\) return Object\.assign\(\{ provider: "local", isExamBridge: true \}, memoryExamAuth\)/, "storedExamAuth must fall back to the in-memory bridge");
+assert.match(page, /function clearExamAccess\(\) \{\s*memoryExamAuth = null;/, "sign-out must clear the in-memory bridge too");
+assert.match(page, /if \(loading\) \{\s*if \(options\.force === true\) forcedStateReloadQueued = true;/, "a login event arriving during a state request must be queued");
+assert.match(page, /if \(forcedStateReloadQueued\)[\s\S]*?loadState\(\{ force: true \}\)/, "the queued forced access check must run after the active request");
+assert.match(page, /renderAutomaticStartError\(message, retryAutomatically = false\)[\s\S]*?Nouvelle vérification automatique dans quelques secondes[\s\S]*?automaticOpenRetryHandle = window\.setTimeout[\s\S]*?loadState\(\{ force: true \}\)/, "an uncertain post-session state must retry automatically without a second click");
+assert.match(page, /else if \(activeUser\(\)\) renderAutomaticStartError\("Impossible de vérifier l’accès pour le moment\.[\s\S]*?", true\)/, "a temporary state failure must not send an authenticated student back to login");
+assert.match(page, /catch \(error\) \{\s*if \(runtimePayload\.exam && storedExamAuth\(\)\) return renderExam\(runtimePayload\)/, "a temporary draft read failure must not hide an already running attempt");
+assert.match(page, /if \(runtimePayload\.exam && storedExamAuth\(\)\) return renderExam\(runtimePayload\);\s*if \(draft\.status/, "a non-success draft response must not hide an already running attempt");
+assert.match(page, /function renderExam\(payload\) \{\s*window\.clearTimeout\(automaticOpenRetryHandle\)[\s\S]*?automaticOpenRetryCount = 0/);
+assert.match(page, /data-hero-access/);
+assert.match(page, /data-hero-access-status role="status" aria-live="polite"/);
+assert.match(page, /function handleHeroAccess\(event\)[\s\S]*?examInProgress[\s\S]*?els\.root\.scrollIntoView[\s\S]*?!activeUser\(\)[\s\S]*?courseEmail[\s\S]*?loadState\(\{ force: true \}\)/, "the hero action must open, resume or route to login with visible feedback");
+assert.match(page, /querySelector\("\[data-hero-access\]"\)\?\.addEventListener\("click", handleHeroAccess\)/);
 assert.match(page, /data-audio-retry[^]*?addEventListener\("click", loadExamAudio\)/);
 assert.match(page, /examAudio\?\.addEventListener\("play"[\s\S]*?addEventListener\("pause"[\s\S]*?addEventListener\("ended"/);
 assert.match(page, /confirmationDialog\?\.addEventListener\("cancel"[\s\S]*?event\.preventDefault\(\)[\s\S]*?cancelConfirmation\(\)/);

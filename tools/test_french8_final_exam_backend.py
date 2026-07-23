@@ -129,6 +129,7 @@ class French8FinalExamBackendTests(unittest.TestCase):
             "evaluation": {"id": "finalExam", "title": "Final", "weight": 20},
             "ensureGrades": lambda _grades: False,
             "supportsSchedule": True,
+            "requiresPreflight": False,
         }
 
     def test_level_config_registers_secure_niveau8_runtime(self):
@@ -138,6 +139,102 @@ class French8FinalExamBackendTests(unittest.TestCase):
         self.assertEqual(config["evaluation"]["weight"], 20)
         self.assertIs(config["ensureGrades"], API.ensure_french8_gradebook_structure)
         self.assertTrue(config["supportsSchedule"])
+        self.assertFalse(config["requiresPreflight"])
+        self.assertTrue(API.final_exam_level_config("french1")["requiresPreflight"])
+        self.assertTrue(API.final_exam_level_config("french2")["requiresPreflight"])
+
+    def test_started_session_creates_secure_attempt_without_preflight(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = self.runtime_config(temp_dir)
+            bundle = config["readBundle"]()
+            bundle["state"].update({"isOpen": True, "openedAt": API.now_iso()})
+            config["writeBundle"](bundle)
+            store = config["readStore"]()
+            store["preflight"] = {}
+            config["writeStore"](store)
+            profile = {
+                "sub": "google-ana",
+                "email": "ana@example.com",
+                "name": "Ana",
+                "provider": "google",
+            }
+
+            status, session = API.final_exam_session_action(
+                config, profile, {"event": "started"}
+            )
+
+            self.assertEqual(status, 200)
+            self.assertTrue(session["ok"])
+            self.assertEqual(session["examAccessUser"]["level"], "french8")
+            stored = config["readStore"]()
+            self.assertEqual(stored["preflight"], {})
+            self.assertIn("008", stored["attempts"])
+            self.assertEqual(stored["attempts"]["008"]["attemptId"], session["attemptId"])
+            self.assertEqual(stored["events"][-1]["event"], "session_started")
+            token_profile = API.validate_local_token(session["examAccessToken"])
+            self.assertEqual(token_profile["examLevel"], "french8")
+            self.assertEqual(token_profile["tokenPurpose"], "final-exam")
+            self.assertEqual(token_profile["email"], "ana@example.com")
+            self.assertEqual(token_profile["examAttemptId"], session["attemptId"])
+
+            repeated_status, repeated_session = API.final_exam_session_action(
+                config, profile, {"event": "started"}
+            )
+            self.assertEqual(repeated_status, 200)
+            self.assertEqual(repeated_session["attemptId"], session["attemptId"])
+            repeated_store = config["readStore"]()
+            self.assertEqual(set(repeated_store["attempts"]), {"008"})
+            self.assertEqual(
+                repeated_store["attempts"]["008"]["startedAt"],
+                stored["attempts"]["008"]["startedAt"],
+            )
+            self.assertEqual(
+                sum(
+                    1
+                    for event in repeated_store["events"]
+                    if event.get("event") == "session_started"
+                ),
+                1,
+            )
+
+            denied_status, denied = API.final_exam_session_action(
+                config,
+                {"sub": "outsider", "email": "outsider@example.com", "provider": "google"},
+                {"event": "started"},
+            )
+            self.assertEqual(denied_status, 403)
+            self.assertEqual(denied["error"], "student_not_authorized")
+            self.assertEqual(set(config["readStore"]()["attempts"]), {"008"})
+
+    def test_monitor_treats_disabled_preflight_as_ready_without_false_alert(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config = self.runtime_config(temp_dir)
+            grades = json.loads(pathlib.Path(config["gradesPath"]).read_text(encoding="utf-8"))
+            bundle = config["readBundle"]()
+            store = config["readStore"]()
+            store["preflight"] = {}
+
+            monitor = API.final_exam_monitor_payload(config, grades, bundle, store)
+
+            self.assertFalse(monitor["preflightRequired"])
+            self.assertFalse(monitor["students"][0]["preflightRequired"])
+            self.assertTrue(monitor["students"][0]["preflightReady"])
+            preflight = API.final_exam_preflight_payload(
+                config,
+                {"email": "ana@example.com", "provider": "google"},
+                grades,
+                bundle,
+                store,
+            )
+            self.assertFalse(preflight["preflightRequired"])
+            self.assertTrue(preflight["preflightReady"])
+            self.assertFalse(preflight["audioReady"])
+
+            config["requiresPreflight"] = True
+            required_monitor = API.final_exam_monitor_payload(config, grades, bundle, store)
+            self.assertTrue(required_monitor["preflightRequired"])
+            self.assertTrue(required_monitor["students"][0]["preflightRequired"])
+            self.assertFalse(required_monitor["students"][0]["preflightReady"])
 
     def test_default_is_locked_and_public_state_exposes_safe_server_window(self):
         state = API.default_french8_final_exam_bundle()["state"]

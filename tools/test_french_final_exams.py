@@ -610,7 +610,6 @@ class FrenchFinalExamTests(unittest.TestCase):
             "clé de brouillon versionnée": "const DRAFT_PREFIX =",
             "restauration du brouillon": "function restoreDraft()",
             "brouillon serveur": "async function saveServerDraft(answers)",
-            "test technique préalable": "function preflightHtml()",
             "ordre stable individualisé": "attemptSeed",
             "temporisateur serveur": "function startTimer(timing = {}",
             "confirmation de fermeture active": "confirmClose: true",
@@ -630,15 +629,31 @@ class FrenchFinalExamTests(unittest.TestCase):
             with self.subTest(level=level):
                 for feature, fragment in required_fragments.items():
                     self.assertIn(fragment, html, f"Fonction technique absente: {feature}")
+                if level != "french8":
+                    self.assertIn(
+                        "function preflightHtml()",
+                        html,
+                        "Le test technique reste obligatoire pour Français 1 et 2",
+                    )
+                else:
+                    self.assertNotIn("function preflightHtml()", html)
+                    self.assertIn("async function startExamAttempt(initialPayload)", html)
                 self.assertTrue(
                     "sessionStorage.setItem(draftKey()" in html or "function writeLocalDraft(answers)" in html,
                     "La page doit conserver un brouillon local avant la synchronisation serveur",
                 )
-                self.assertRegex(
-                    html,
-                    r"function loadState\(options = \{\}\) \{\s*if \(loading \|\| \(examInProgress && options\.force !== true\)\) return;",
-                    "loadState doit refuser une recharge silencieuse pendant l'examen",
-                )
+                if level == "french8":
+                    self.assertRegex(
+                        html,
+                        r"function loadState\(options = \{\}\) \{\s*if \(loading\) \{\s*if \(options\.force === true\) forcedStateReloadQueued = true;",
+                        "Niveau 8 doit mettre en file la revalidation reçue pendant une ouverture",
+                    )
+                else:
+                    self.assertRegex(
+                        html,
+                        r"function loadState\(options = \{\}\) \{\s*if \(loading \|\| \(examInProgress && options\.force !== true\)\) return;",
+                        "loadState doit refuser une recharge silencieuse pendant l'examen",
+                    )
 
     def test_exam_pages_include_scoped_long_session_auth_contract(self) -> None:
         """Le token du fournisseur ne doit pas être un point unique de panne."""
@@ -693,8 +708,11 @@ class FrenchFinalExamTests(unittest.TestCase):
                     "L’audio étudiant doit utiliser la crédential limitée à la tentative",
                 )
 
+                submitted_boundary = (
+                    r"renderAutomaticStartLoading" if level == "french8" else r"renderStartGate"
+                )
                 submitted_block = re.search(
-                    r"function renderSubmitted\(result\) \{(?P<body>[\s\S]+?)\n\s*function renderStartGate",
+                    rf"function renderSubmitted\(result\) \{{(?P<body>[\s\S]+?)\n\s*function {submitted_boundary}",
                     html,
                 )
                 self.assertIsNotNone(submitted_block)
@@ -736,11 +754,14 @@ class FrenchFinalExamTests(unittest.TestCase):
                     r"request\(API\.session,[\s\S]{0,420}?\"exam\"\)",
                     "Les événements d’une tentative active doivent utiliser le bridge",
                 )
-                self.assertRegex(
-                    html,
-                    r"request\(API\.preflight,[^\n]+\"external\"\)",
-                    "El preflight debe exigir la identidad primaria",
-                )
+                if level != "french8":
+                    self.assertRegex(
+                        html,
+                        r"request\(API\.preflight,[^\n]+\"external\"\)",
+                        "El preflight debe exigir la identidad primaria",
+                    )
+                else:
+                    self.assertNotIn("API.preflight", html)
 
     def test_exam_pages_do_not_embed_answer_keys_or_question_banks(self) -> None:
         forbidden_key_patterns = (

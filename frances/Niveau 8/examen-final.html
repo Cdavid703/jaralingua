@@ -3,6 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <title>Examen final | Français Niveau 8</title>
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
@@ -73,10 +76,9 @@
     .status-message.success{background:#e8f7ef;color:#11633b}
     .status-message.error{background:#fff0f1;color:#9f1d2a}
     .status-message.pending{background:#eef5ff;color:var(--blue-dark)}
-    .preflight-panel,.timer-panel,.monitor-panel,.analytics-panel,.operations-panel,.simulation-panel{margin-top:1rem;border-radius:20px;background:#f8fbff;border:1px solid rgba(31,78,140,.12);padding:1rem}
-    .preflight-grid,.monitor-grid,.analytics-grid,.health-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem}
-    .check-card,.monitor-card,.metric-card{border-radius:16px;background:#fff;border:1px solid rgba(31,78,140,.1);padding:.8rem;font-weight:800}
-    .check-card.ok{border-color:rgba(31,157,117,.35);color:#11633b}.check-card.error{border-color:rgba(214,40,57,.3);color:#9f1d2a}
+    .timer-panel,.monitor-panel,.analytics-panel,.operations-panel,.simulation-panel,.schedule-panel{margin-top:1rem;border-radius:20px;background:#f8fbff;border:1px solid rgba(31,78,140,.12);padding:1rem}
+    .monitor-grid,.analytics-grid,.health-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.75rem}
+    .monitor-card,.metric-card{border-radius:16px;background:#fff;border:1px solid rgba(31,78,140,.1);padding:.8rem;font-weight:800}
     .health-card{border-radius:16px;background:#fff;border:2px solid rgba(31,78,140,.1);padding:.85rem;min-height:100px}
     .health-card strong,.health-card small{display:block}.health-card small{margin-top:.35rem;color:var(--muted);line-height:1.35}
     .health-card[data-status="ok"]{border-color:rgba(31,157,117,.35)}.health-card[data-status="warning"],.health-card[data-status="degraded"]{border-color:rgba(243,179,61,.55)}.health-card[data-status="error"],.health-card[data-status="blocked"]{border-color:rgba(214,40,57,.45)}
@@ -140,7 +142,8 @@
       <h1>Examen final</h1>
       <p class="hero-lead">La ville intelligente : comprendre, nuancer et analyser.</p>
       <p class="hero-text">Cette évaluation porte exclusivement sur les thèmes 01 à 03 : conditionnel passé, hypothèses irréelles du passé et subjonctif passé. Elle comprend 50 questions fermées de vocabulaire, grammaire, lecture et écoute, sans production écrite.</p>
-      <div class="d-flex flex-wrap gap-3 mt-4"><a href="#access" class="btn-main"><i class="bi bi-play-circle-fill"></i> Accéder</a><a href="notes-evaluation.html" class="btn-soft"><i class="bi bi-bar-chart-fill"></i> Notes</a></div>
+      <div class="d-flex flex-wrap gap-3 mt-4"><a href="#access" class="btn-main" data-hero-access><i class="bi bi-play-circle-fill"></i> Accéder</a><a href="notes-evaluation.html" class="btn-soft"><i class="bi bi-bar-chart-fill"></i> Notes</a></div>
+      <p class="mt-3 mb-0 fw-bold" data-hero-access-status role="status" aria-live="polite" aria-atomic="true"></p>
     </div></div>
   </header>
 
@@ -183,8 +186,6 @@
         audio: "/api/french8/final-exam/audio",
         transcript: "/api/french8/final-exam/transcript",
         submit: "/api/french8/final-exam/submit",
-        preflight: "/api/french8/final-exam/preflight",
-        preflightAudio: "/api/french8/final-exam/preflight-audio",
         draft: "/api/french8/final-exam/draft",
         session: "/api/french8/final-exam/session",
         monitor: "/api/french8/final-exam/monitor",
@@ -205,8 +206,10 @@
       let currentRole = "student";
       let currentExam = null;
       let audioObjectUrl = null;
-      let preflightObjectUrl = null;
       let loading = false;
+      let forcedStateReloadQueued = false;
+      let automaticOpenRetryHandle = 0;
+      let automaticOpenRetryCount = 0;
       let stateUpdating = false;
       let examInProgress = false;
       let audioReady = false;
@@ -230,12 +233,12 @@
       let currentClientSubmissionId = "";
       let draftRevision = 0;
       let stablePresentation = {};
+      let memoryExamAuth = null;
       let draftPendingAnswers = null;
       let draftSavePromise = null;
       let localDraftPersisted = false;
       let studentSaveAnnounceHandle = 0;
       let restoringDraft = false;
-      let pendingExamPayload = null;
       let startGateActive = false;
       let examAuthInterrupted = false;
       let pendingAutomaticSubmit = false;
@@ -438,20 +441,24 @@
       }
 
       function storedExamAuth() {
+        const isValid = (saved) => Boolean(
+          saved && saved.credential && Number(saved.exp || 0) > Date.now() / 1000 &&
+          saved.level === EXAM_LEVEL && saved.studentId && saved.attemptId && saved.examVersion
+        );
         try {
           const saved = JSON.parse(sessionStorage.getItem(EXAM_AUTH_KEY) || "null");
-          if (
-            !saved || !saved.credential || Number(saved.exp || 0) <= Date.now() / 1000 ||
-            saved.level !== EXAM_LEVEL || !saved.studentId || !saved.attemptId || !saved.examVersion
-          ) {
+          if (!isValid(saved)) {
             sessionStorage.removeItem(EXAM_AUTH_KEY);
-            return null;
+          } else {
+            memoryExamAuth = Object.assign({ provider: "local", isExamBridge: true }, saved);
+            return memoryExamAuth;
           }
-          return Object.assign({ provider: "local", isExamBridge: true }, saved);
         } catch (_error) {
-          sessionStorage.removeItem(EXAM_AUTH_KEY);
-          return null;
+          try { sessionStorage.removeItem(EXAM_AUTH_KEY); } catch (_storageError) { /* mémoire uniquement */ }
         }
+        if (isValid(memoryExamAuth)) return Object.assign({ provider: "local", isExamBridge: true }, memoryExamAuth);
+        memoryExamAuth = null;
+        return null;
       }
 
       function activeUser() {
@@ -512,22 +519,20 @@
           return false;
         }
         const examUser = payload.examAccessUser || {};
-        try {
-          sessionStorage.setItem(EXAM_AUTH_KEY, JSON.stringify({
-            provider: "local",
-            authProvider: "local-gradebook",
-            credential: payload.examAccessToken,
-            exp: Number(payload.examAccessExp),
-            email: String(examUser.email || "").trim().toLowerCase(),
-            name: String(examUser.name || examUser.email || "Étudiant"),
-            level: EXAM_LEVEL,
-            studentId: identity.studentId,
-            attemptId: identity.attemptId,
-            examVersion: identity.examVersion
-          }));
-        } catch (_error) {
-          return false;
-        }
+        const savedAccess = {
+          provider: "local",
+          authProvider: "local-gradebook",
+          credential: payload.examAccessToken,
+          exp: Number(payload.examAccessExp),
+          email: String(examUser.email || "").trim().toLowerCase(),
+          name: String(examUser.name || examUser.email || "Étudiant"),
+          level: EXAM_LEVEL,
+          studentId: identity.studentId,
+          attemptId: identity.attemptId,
+          examVersion: identity.examVersion
+        };
+        memoryExamAuth = Object.assign({ isExamBridge: true }, savedAccess);
+        try { sessionStorage.setItem(EXAM_AUTH_KEY, JSON.stringify(savedAccess)); } catch (_error) { /* le pont reste disponible en mémoire */ }
         currentStudentId = identity.studentId;
         currentAttemptId = identity.attemptId;
         establishDraftIdentity(payload);
@@ -538,6 +543,7 @@
       }
 
       function clearExamAccess() {
+        memoryExamAuth = null;
         try { sessionStorage.removeItem(EXAM_AUTH_KEY); } catch (_error) { /* rien */ }
       }
 
@@ -627,7 +633,41 @@
         window.setTimeout(() => loadState({ force: true }), 0);
       }
 
+      async function handleHeroAccess(event) {
+        event.preventDefault();
+        const button = event.currentTarget;
+        const status = document.querySelector("[data-hero-access-status]");
+        const announce = (message) => { if (status) status.textContent = message; };
+        if (examInProgress && !els.root.hidden) {
+          announce("Examen déjà ouvert. Retour aux questions.");
+          els.root.scrollIntoView({ behavior: "smooth", block: "start" });
+          return;
+        }
+        if (!activeUser()) {
+          announce("Connexion requise. Le formulaire d’accès est affiché ci-dessous.");
+          document.getElementById("access")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          window.setTimeout(() => document.getElementById("courseEmail")?.focus(), 350);
+          return;
+        }
+        button.setAttribute("aria-busy", "true");
+        announce("Compte détecté. Vérification et ouverture automatique de l’examen…");
+        await loadState({ force: true });
+        window.setTimeout(() => {
+          button.removeAttribute("aria-busy");
+          if (examInProgress && !els.root.hidden) {
+            announce("Examen ouvert. Vos questions sont affichées.");
+            els.root.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else {
+            announce(startGateActive ? "Ouverture sécurisée de votre tentative en cours…" : "Accès vérifié. Consultez le message affiché ci-dessous.");
+            document.getElementById("access")?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 100);
+      }
+
       function renderLogin(message) {
+        window.clearTimeout(automaticOpenRetryHandle);
+        automaticOpenRetryHandle = 0;
+        automaticOpenRetryCount = 0;
         startGateActive = false;
         examInProgress = false;
         els.root.hidden = true;
@@ -717,6 +757,7 @@
           }));
           sessionStorage.removeItem(GOOGLE_KEY);
           sessionStorage.removeItem(MICROSOFT_KEY);
+          automaticOpenRetryCount = 0;
           status.className = "status-message success mt-2 mb-0";
           status.textContent = "Compte validé. Vérification de l’accès à l’examen…";
           if (examInProgress) await recoverExamAuthentication();
@@ -741,170 +782,15 @@
         monitorGeneration += 1;
         window.clearTimeout(draftHandle);
         window.clearTimeout(sessionHandle);
+        window.clearTimeout(automaticOpenRetryHandle);
         timerHandle = timingSyncHandle = monitorHandle = draftHandle = sessionHandle = 0;
-        if (preflightObjectUrl) {
-          URL.revokeObjectURL(preflightObjectUrl);
-          preflightObjectUrl = null;
-        }
-      }
-
-      function preflightHtml() {
-        return `<div class="preflight-panel" data-preflight>
-          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-            <div><h3 class="h5 fw-bold mb-1">Test technique avant l’examen</h3><p class="section-text mb-0">Vérifiez votre compte, la connexion et le son sans accéder aux questions.</p></div>
-            <button class="btn-soft" type="button" data-run-preflight><i class="bi bi-activity"></i> Lancer le test</button>
-          </div>
-          <div class="preflight-grid" data-preflight-results>
-            <div class="check-card"><i class="bi bi-person-check"></i> Compte : en attente</div>
-            <div class="check-card"><i class="bi bi-wifi"></i> Connexion : en attente</div>
-            <div class="check-card"><i class="bi bi-volume-up"></i> Audio : en attente</div>
-          </div>
-          <div class="mt-3" data-preflight-audio-zone hidden>
-            <audio class="w-100" data-preflight-audio controls preload="metadata" aria-label="Audio de test technique"></audio>
-            <div class="d-flex flex-wrap gap-2 mt-2"><button class="btn-soft" type="button" data-play-preflight><i class="bi bi-play-fill"></i> Écouter le test</button><button class="btn-main" type="button" data-heard-preflight disabled><i class="bi bi-ear-fill"></i> Je l’entends</button></div>
-          </div>
-          <p class="mt-3 mb-0" data-preflight-status aria-live="polite"></p>
-        </div>`;
-      }
-
-      async function runPreflight(container = els.access) {
-        const panel = container.querySelector("[data-preflight]");
-        if (!panel) return;
-        const button = panel.querySelector("[data-run-preflight]");
-        const cards = panel.querySelectorAll(".check-card");
-        const status = panel.querySelector("[data-preflight-status]");
-        button.disabled = true;
-        button.setAttribute("aria-busy", "true");
-        cards.forEach((card) => { card.className = "check-card"; });
-        if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl);
-        preflightObjectUrl = null;
-        status.className = "status-message pending";
-        status.textContent = "Vérification en cours...";
-        let accountOk = false;
-        let connectionOk = false;
-        panel.dataset.ready = "false";
-        panel.dataset.accountOk = "false";
-        panel.dataset.connectionOk = "false";
-        panel.dataset.audioPrepared = "false";
-        container.querySelector("[data-start-exam]")?.setAttribute("disabled", "");
-        const sample = panel.querySelector("[data-preflight-audio]");
-        sample.pause();
-        sample.removeAttribute("src");
-        sample.load();
-        panel.querySelector("[data-preflight-audio-zone]").hidden = true;
-        panel.querySelector("[data-heard-preflight]").disabled = true;
-        try {
-          const result = await request(API.preflight, { method: "GET" }, 15000, "external");
-          connectionOk = result.ok;
-          accountOk = result.ok && result.data?.accountReady !== false && result.data?.accountOk !== false && result.data?.authorized !== false;
-          connectionOk = result.ok && result.data?.serverReady !== false;
-          panel.dataset.accountOk = accountOk ? "true" : "false";
-          panel.dataset.connectionOk = connectionOk ? "true" : "false";
-          cards[0].className = `check-card ${accountOk ? "ok" : "error"}`;
-          cards[0].innerHTML = `<i class="bi ${accountOk ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i> Compte : ${accountOk ? "autorisé" : "à vérifier"}`;
-          cards[1].className = `check-card ${connectionOk ? "ok" : "error"}`;
-          cards[1].innerHTML = `<i class="bi ${connectionOk ? "bi-check-circle-fill" : "bi-x-circle-fill"}"></i> Connexion : ${connectionOk ? "serveur disponible" : "indisponible"}`;
-          if (result.ok) {
-            const controller = new AbortController();
-            const timeout = window.setTimeout(() => controller.abort(), 15000);
-            try {
-              const response = await authenticatedFetch(API.preflightAudio, { cache: "no-store", signal: controller.signal, headers: { Accept: "audio/mpeg" } }, "external");
-              if (!response.ok) throw new Error("audio_preflight");
-              const blob = await response.blob();
-              if (blob.size < 256) throw new Error("audio_preflight_empty");
-              if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl);
-              preflightObjectUrl = URL.createObjectURL(blob);
-              sample.src = preflightObjectUrl;
-              sample.load();
-              panel.querySelector("[data-preflight-audio-zone]").hidden = false;
-              panel.dataset.audioPrepared = "true";
-            } finally { window.clearTimeout(timeout); }
-          }
-        } catch (_error) {
-          cards[0].classList.add(accountOk ? "ok" : "error");
-          cards[1].classList.add(connectionOk ? "ok" : "error");
-        }
-        const prepared = accountOk && connectionOk && Boolean(preflightObjectUrl);
-        cards[2].className = "check-card";
-        cards[2].innerHTML = `<i class="bi bi-volume-up"></i> Audio : ${prepared ? "prêt à écouter" : "non disponible"}`;
-        status.className = `status-message ${prepared ? "pending" : "error"}`;
-        status.textContent = prepared ? "Touchez « Écouter le test », puis confirmez avec « Je l’entends »." : "Au moins un contrôle a échoué. Corrigez-le et relancez le test.";
-        button.disabled = false;
-        button.removeAttribute("aria-busy");
-      }
-
-      function bindPreflight(container = els.access) {
-        container.querySelector("[data-run-preflight]")?.addEventListener("click", () => runPreflight(container));
-        container.querySelector("[data-play-preflight]")?.addEventListener("click", async () => {
-          const panel = container.querySelector("[data-preflight]");
-          const audio = panel?.querySelector("[data-preflight-audio]");
-          const status = panel?.querySelector("[data-preflight-status]");
-          if (!audio?.src) {
-            if (status) {
-              status.className = "status-message error";
-              status.textContent = "L’audio de test n’est pas encore prêt. Relancez le test technique.";
-            }
-            return;
-          }
-          if (status) {
-            status.className = "status-message pending";
-            status.textContent = "Lecture du son test en cours. Confirmez ensuite avec « Je l’entends ».";
-          }
-          audio.pause();
-          audio.currentTime = 0;
-          try {
-            await audio.play();
-            panel.querySelector("[data-heard-preflight]").disabled = false;
-          } catch (_error) {
-            status.className = "status-message error";
-            status.textContent = "Le navigateur a bloqué la lecture. Utilisez directement le bouton Lecture du lecteur audio.";
-          }
-        });
-        container.querySelector("[data-heard-preflight]")?.addEventListener("click", () => {
-          const panel = container.querySelector("[data-preflight]");
-          const cards = panel.querySelectorAll(".check-card");
-          if (panel.dataset.accountOk !== "true" || panel.dataset.connectionOk !== "true" || panel.dataset.audioPrepared !== "true") {
-            const status = panel.querySelector("[data-preflight-status]");
-            status.className = "status-message error";
-            status.textContent = "Le test n’est plus valide. Relancez-le avant de confirmer le son.";
-            return;
-          }
-          cards[2].className = "check-card ok";
-          cards[2].innerHTML = `<i class="bi bi-check-circle-fill"></i> Audio : entendu`;
-          panel.dataset.ready = "true";
-          const status = panel.querySelector("[data-preflight-status]");
-          status.className = "status-message success";
-          status.textContent = "Votre appareil est prêt pour l’examen.";
-          container.querySelector("[data-start-exam]")?.removeAttribute("disabled");
-        });
-        container.querySelector("[data-preflight-audio]")?.addEventListener("play", () => {
-          container.querySelector("[data-heard-preflight]")?.removeAttribute("disabled");
-          const status = container.querySelector("[data-preflight-status]");
-          if (status) {
-            status.className = "status-message pending";
-            status.textContent = "Le son test est en lecture. Si vous l’entendez, confirmez avec « Je l’entends ».";
-          }
-        });
-        container.querySelector("[data-preflight-audio]")?.addEventListener("pause", (event) => {
-          const panel = container.querySelector("[data-preflight]");
-          const audio = event.currentTarget;
-          if (panel?.dataset.audioPrepared !== "true" || audio.ended || audio.currentTime <= 0) return;
-          const status = panel.querySelector("[data-preflight-status]");
-          status.className = "status-message pending";
-          status.textContent = "Lecture du son test en pause. Vous pouvez reprendre ou confirmer si vous l’avez entendu.";
-        });
-        container.querySelector("[data-preflight-audio]")?.addEventListener("ended", () => {
-          const status = container.querySelector("[data-preflight-status]");
-          if (status) {
-            status.className = "status-message pending";
-            status.textContent = "Son test terminé. Confirmez maintenant avec « Je l’entends ».";
-          }
-        });
+        automaticOpenRetryHandle = 0;
       }
 
       function renderLocked(message, payload) {
         startGateActive = false;
         stopRuntimeLoops();
+        automaticOpenRetryCount = 0;
         examInProgress = false;
         els.root.hidden = true;
         els.access.innerHTML = `
@@ -922,11 +808,9 @@
                <button class="btn-soft" type="button" data-recheck><i class="bi bi-arrow-repeat"></i> Vérifier à nouveau</button>
                <p class="mt-2 mb-0" data-access-action-status role="status" aria-live="polite" aria-atomic="true"></p>
                <p class="section-text mt-3 mb-0"><i class="bi bi-arrow-repeat"></i> Cette page vérifie aussi automatiquement l’ouverture lorsque l’onglet est visible.</p>
-              ${preflightHtml()}
             </div>
           </div>`;
         els.access.querySelector("[data-recheck]").addEventListener("click", recheckStudentAccess);
-        bindPreflight();
       }
 
       function renderStaffDashboardAccess(payload = staffDashboardPayload || {}) {
@@ -1055,7 +939,7 @@
               </div>
             </div>
           </section>
-          <section class="preflight-panel" aria-labelledby="scheduleTitle">
+          <section class="schedule-panel" aria-labelledby="scheduleTitle">
             <div class="d-flex flex-wrap justify-content-between align-items-start gap-2"><div><h3 class="h5 fw-bold mb-1" id="scheduleTitle">Fenêtre automatique</h3><p class="section-text mb-0">Programmez une heure d’ouverture et une heure de fermeture. L’accès reste bloqué jusqu’à l’heure prévue.</p></div><span class="pill"><i class="bi bi-clock-fill"></i> Heure du serveur</span></div>
             <p class="schedule-summary mt-3 mb-3" data-schedule-summary>${esc(scheduledWindowMessage(payload?.state))}</p>
             <div class="schedule-grid">
@@ -2247,7 +2131,7 @@
           }
           return true;
         } catch (error) {
-          const wrongAccount = ["account_mismatch", "student_not_authorized", "preflight_required", "attempt_mismatch", "attempt_not_started", "token_scope_invalid"].includes(error.message);
+          const wrongAccount = ["account_mismatch", "student_not_authorized", "attempt_mismatch", "attempt_not_started", "token_scope_invalid"].includes(error.message);
           if (wrongAccount) clearExamAccess();
           showReconnectNotice(wrongAccount
             ? "Ce compte ne correspond pas à la tentative affichée. Reconnectez le compte qui a commencé cet examen."
@@ -2257,17 +2141,15 @@
       }
 
       function renderExam(payload) {
+        window.clearTimeout(automaticOpenRetryHandle);
+        automaticOpenRetryHandle = 0;
+        automaticOpenRetryCount = 0;
         startGateActive = false;
         window.clearInterval(timerHandle);
         window.clearInterval(timingSyncHandle);
         window.clearTimeout(draftHandle);
         window.clearTimeout(sessionHandle);
         audioLoadToken += 1;
-        els.access.querySelector("[data-preflight-audio]")?.pause();
-        if (preflightObjectUrl) {
-          URL.revokeObjectURL(preflightObjectUrl);
-          preflightObjectUrl = null;
-        }
         if (audioObjectUrl) {
           URL.revokeObjectURL(audioObjectUrl);
           audioObjectUrl = null;
@@ -2509,6 +2391,9 @@
       }
 
       function renderSubmitted(result) {
+        window.clearTimeout(automaticOpenRetryHandle);
+        automaticOpenRetryHandle = 0;
+        automaticOpenRetryCount = 0;
         const resultStudentId = String(result?.studentId || "");
         const resultAttemptId = String(result?.attemptId || "");
         const resultVersion = String(result?.examVersion || "");
@@ -2573,120 +2458,152 @@
         els.form.innerHTML = "";
       }
 
-      function renderStartGate(payload) {
+      function renderAutomaticStartLoading(payload, message = "Ouverture sécurisée de votre examen…") {
         stopRuntimeLoops();
-        pendingExamPayload = payload;
         currentStudentId = String(payload?.student?.id || currentStudentId || "");
         startGateActive = true;
         examInProgress = false;
         els.root.hidden = true;
-        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="access-icon"><i class="bi bi-clipboard-check-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">Avant de commencer</p><h2 class="section-title">Préparez votre appareil</h2><p class="section-text">Le chronomètre ne commencera qu’après le test technique et votre confirmation explicite. Une fois commencé, l’examen devra être remis dans le temps prévu.</p>${preflightHtml()}<button class="btn-main mt-3" type="button" data-start-exam disabled><i class="bi bi-play-circle-fill"></i> Commencer l’examen</button><p class="mt-2 mb-0" data-start-status aria-live="polite"></p></div></div>`;
-        bindPreflight();
-        els.access.querySelector("[data-start-exam]").addEventListener("click", startExamAttempt);
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3" role="status" aria-live="polite" aria-atomic="true"><div class="access-icon"><i class="bi bi-arrow-repeat"></i></div><div class="flex-grow-1"><p class="section-kicker">Accès autorisé</p><h2 class="section-title">Chargement de l’examen…</h2><p class="section-text" data-auto-start-status>${esc(message)}</p><p class="status-message pending mb-0">Votre tentative et votre brouillon sont vérifiés avant l’affichage des questions.</p></div></div>`;
       }
 
-      async function startExamAttempt() {
-        const button = els.access.querySelector("[data-start-exam]");
-        const status = els.access.querySelector("[data-start-status]");
-        if (els.access.querySelector("[data-preflight]")?.dataset.ready !== "true" || !pendingExamPayload) {
-          if (status) {
-            status.className = "status-message error";
-            status.textContent = "Le test technique doit être validé avant de commencer. Relancez-le si nécessaire.";
-          }
-          return;
+      function renderAutomaticStartError(message, retryAutomatically = false) {
+        startGateActive = false;
+        examInProgress = false;
+        els.root.hidden = true;
+        window.clearTimeout(automaticOpenRetryHandle);
+        automaticOpenRetryHandle = 0;
+        els.access.innerHTML = `<div class="d-flex flex-wrap align-items-start gap-3"><div class="access-icon"><i class="bi bi-exclamation-triangle-fill"></i></div><div class="flex-grow-1"><p class="section-kicker">Ouverture interrompue</p><h2 class="section-title">L’examen n’a pas encore pu s’afficher</h2><p class="status-message error" data-access-action-status role="status" aria-live="polite" aria-atomic="true">${esc(message)}</p>${retryAutomatically ? `<p class="section-text" data-auto-retry-status>Nouvelle vérification automatique dans quelques secondes; aucune action n’est nécessaire.</p>` : ""}<button class="btn-soft" type="button" data-retry-auto-open><i class="bi bi-arrow-repeat"></i> Réessayer maintenant</button></div></div>`;
+        els.access.querySelector("[data-retry-auto-open]")?.addEventListener("click", (event) => {
+          const button = event.currentTarget;
+          const status = els.access.querySelector("[data-access-action-status]");
+          window.clearTimeout(automaticOpenRetryHandle);
+          automaticOpenRetryHandle = 0;
+          button.disabled = true;
+          button.setAttribute("aria-busy", "true");
+          status.className = "status-message pending";
+          status.textContent = "Nouvelle vérification de votre compte et de votre tentative…";
+          loadState({ force: true });
+        });
+        if (retryAutomatically) {
+          const delay = Math.min(30000, 2500 * (2 ** Math.min(automaticOpenRetryCount, 4)));
+          automaticOpenRetryCount += 1;
+          automaticOpenRetryHandle = window.setTimeout(() => {
+            automaticOpenRetryHandle = 0;
+            if (examInProgress || !activeUser()) return;
+            const retryStatus = els.access.querySelector("[data-auto-retry-status]");
+            if (retryStatus) retryStatus.textContent = navigator.onLine
+              ? "Nouvelle vérification automatique en cours…"
+              : "Connexion interrompue. La vérification reprendra automatiquement dès le retour du réseau.";
+            if (navigator.onLine) loadState({ force: true });
+            else renderAutomaticStartError(message, true);
+          }, delay);
         }
-        const initialPayload = pendingExamPayload;
+      }
+
+      async function startExamAttempt(initialPayload) {
+        if (!initialPayload) {
+          renderAutomaticStartError("Les informations de l’examen sont incomplètes. Vérifiez de nouveau votre accès.");
+          return false;
+        }
+        renderAutomaticStartLoading(initialPayload, "Création ou reprise automatique de votre tentative…");
+        const status = els.access.querySelector("[data-auto-start-status]");
         const expectedStudentId = String(initialPayload.student?.id || "");
+        const startingExternal = externalUser();
+        const expectedExternalEmail = String(startingExternal?.email || "").trim().toLowerCase();
+        const externalAccountUnchanged = () => {
+          const activeExternal = externalUser();
+          return Boolean(expectedExternalEmail && activeExternal?.credential && String(activeExternal.email || "").trim().toLowerCase() === expectedExternalEmail);
+        };
         let sessionRequested = false;
-        button.disabled = true;
-        button.setAttribute("aria-busy", "true");
-        els.access.querySelector("[data-preflight-audio]")?.pause();
-        status.className = "status-message pending";
-        status.textContent = "Création sécurisée de votre tentative…";
         try {
           const identityCheck = await request(API.state, {}, 15000, "external");
           if (
             !identityCheck.ok || !expectedStudentId ||
             String(identityCheck.data?.student?.id || "") !== expectedStudentId ||
-            ["admin", "teacher"].includes(identityCheck.data?.role)
+            ["admin", "teacher"].includes(identityCheck.data?.role) || !externalAccountUnchanged()
           ) throw new Error("account_changed_before_start");
           sessionRequested = true;
           const session = await request(API.session, { method: "POST", body: JSON.stringify({ event: "started", answeredCount: 0, examVersion: initialPayload.exam?.version || initialPayload.examVersion || "" }) }, 15000, "external");
+          if (!externalAccountUnchanged()) throw new Error("account_changed_after_start");
           if (!session.ok) {
             if (session.data?.error === "already_submitted" && session.data.result) {
               if (String(session.data.result.studentId || "") !== expectedStudentId) throw new Error("account_changed_before_start");
-              return renderSubmitted(session.data.result);
+              renderSubmitted(session.data.result);
+              return true;
             }
             throw new Error(session.data?.error || "session_error");
           }
           const payload = Object.assign({}, initialPayload, session.data);
           if (!rememberExamAccess(payload)) throw new Error("exam_access_missing");
-          pendingExamPayload = null;
           renderExam(payload);
+          return true;
         } catch (error) {
+          if (error.message === "account_changed_after_start" || (sessionRequested && !externalAccountUnchanged())) {
+            accountVerificationBlocked = true;
+            renderAutomaticStartError("Le compte a changé pendant l’ouverture. La tentative reste protégée; reconnectez le compte étudiant qui vient de la commencer.");
+            return false;
+          }
           if (!sessionRequested || error.message === "account_changed_before_start") {
-            const panel = els.access.querySelector("[data-preflight]");
-            if (panel) panel.dataset.ready = "false";
-            status.className = "status-message error";
-            status.textContent = error.message === "account_changed_before_start"
-              ? "Le compte a changé depuis le test technique. Vérifiez l’accès et relancez le test avec le compte étudiant correct."
-              : "Impossible de confirmer l’identité avant le démarrage. Aucune tentative n’a été créée; vérifiez la connexion et réessayez.";
-            button.disabled = true;
-            button.removeAttribute("aria-busy");
-            return;
+            renderAutomaticStartError(error.message === "account_changed_before_start"
+              ? "Le compte connecté a changé pendant la vérification. Reconnectez le compte étudiant autorisé puis réessayez."
+              : "Impossible de confirmer l’identité. Aucune tentative n’a été créée; vérifiez la connexion puis réessayez.");
+            return false;
           }
-          if (error.message === "preflight_required") {
-            const panel = els.access.querySelector("[data-preflight]");
-            if (panel) panel.dataset.ready = "false";
-            status.className = "status-message error";
-            status.textContent = "Le serveur demande un nouveau test technique. Relancez le test, écoutez l’audio et confirmez avant de commencer.";
-            button.disabled = true;
-            button.removeAttribute("aria-busy");
-            els.access.querySelector("[data-run-preflight]")?.focus();
-            return;
-          }
-          status.className = "status-message pending";
-          status.textContent = "La réponse du serveur a été interrompue. Vérification de votre tentative en cours…";
+          if (status) status.textContent = "La réponse a été interrompue. Recherche de votre tentative sur le serveur…";
           try {
             const examCheck = await request(API.exam, {}, 15000, "external");
+            if (!externalAccountUnchanged()) throw new Error("account_changed_before_start");
+            if (!examCheck.ok && examCheck.data?.error === "exam_closed") {
+              renderLocked(lockedAccessMessage(examCheck.data?.state), examCheck.data);
+              return false;
+            }
             if (examCheck.ok && String(examCheck.data?.student?.id || examCheck.data?.result?.studentId || "") !== expectedStudentId) {
               throw new Error("account_changed_before_start");
             }
-            if (examCheck.ok && examCheck.data?.status === "submitted" && examCheck.data.result) return renderSubmitted(examCheck.data.result);
+            if (examCheck.ok && examCheck.data?.status === "submitted" && examCheck.data.result) {
+              renderSubmitted(examCheck.data.result);
+              return true;
+            }
             let resumed = examCheck.data || {};
             if (examCheck.ok && examCheck.data?.status === "open") {
               const sessionCheck = await request(API.session, { method: "POST", body: JSON.stringify({ event: "started", answeredCount: 0, attemptId: examCheck.data?.attemptId || examCheck.data?.session?.attemptId || "", examVersion: examCheck.data?.exam?.version || examCheck.data?.examVersion || "" }) }, 15000, "external");
-              if (!sessionCheck.ok) throw new Error(sessionCheck.data?.error || "session_recovery_failed");
-              resumed = Object.assign({}, examCheck.data, sessionCheck.data);
-              if (!rememberExamAccess(Object.assign({}, pendingExamPayload || {}, resumed))) throw new Error("exam_access_missing");
-            }
-            const draftCheck = await request(API.draft, {}, 10000, "exam");
-            if (draftCheck.ok) {
-              const recovered = Object.assign({}, pendingExamPayload || {}, examCheck.ok ? resumed : {}, draftCheck.data);
-              if (recovered.exam) {
-                pendingExamPayload = null;
-                return renderExam(recovered);
+              if (sessionCheck.data?.error === "already_submitted" && sessionCheck.data.result) {
+                renderSubmitted(sessionCheck.data.result);
+                return true;
               }
-              status.className = "status-message pending";
-              status.textContent = "Le serveur confirme que la tentative existe. Touchez de nouveau Commencer pour reprendre cette même tentative, sans en créer une autre.";
-              button.disabled = false;
-              button.removeAttribute("aria-busy");
-              return;
+              if (!sessionCheck.ok) throw new Error(sessionCheck.data?.error || "session_recovery_failed");
+              if (!externalAccountUnchanged()) throw new Error("account_changed_before_start");
+              resumed = Object.assign({}, examCheck.data, sessionCheck.data);
+              if (!rememberExamAccess(Object.assign({}, initialPayload, resumed))) throw new Error("exam_access_missing");
             }
-            if (draftCheck.data?.error === "already_submitted" && draftCheck.data.result) return renderSubmitted(draftCheck.data.result);
-            if (draftCheck.status === 404 || draftCheck.data?.error === "attempt_not_started") {
-              status.className = "status-message error";
-              status.textContent = "Le serveur confirme que la tentative n’a pas commencé et qu’aucune minute n’a été décomptée. Vous pouvez réessayer.";
-            } else {
-              status.className = "status-message error";
-              status.textContent = "Impossible de confirmer l’état de la tentative. Réessayez : la création est idempotente et ne démarrera pas un second examen.";
+            const draftCheck = await request(API.draft, {}, 10000, storedExamAuth() ? "exam" : "external");
+            if (draftCheck.ok) {
+              if (!externalAccountUnchanged()) throw new Error("account_changed_before_start");
+              const recovered = Object.assign({}, initialPayload, examCheck.ok ? resumed : {}, draftCheck.data);
+              if (recovered.exam) {
+                renderExam(recovered);
+                return true;
+              }
             }
-          } catch (_recoveryError) {
-            status.className = "status-message error";
-            status.textContent = "Impossible de confirmer l’état de la tentative. Réessayez : aucun second examen ne sera créé.";
+            if (draftCheck.data?.error === "already_submitted" && draftCheck.data.result) {
+              renderSubmitted(draftCheck.data.result);
+              return true;
+            }
+            if (storedExamAuth() && resumed.exam) {
+              renderExam(Object.assign({}, initialPayload, resumed));
+              return true;
+            }
+            const attemptNotStarted = draftCheck.status === 404 || draftCheck.data?.error === "attempt_not_started";
+            renderAutomaticStartError(attemptNotStarted
+              ? "La tentative n’a pas encore commencé et aucune minute n’a été décomptée. Réessayez l’ouverture."
+              : "Impossible de confirmer l’état de la tentative. Le serveur recherchera automatiquement le même examen.", !attemptNotStarted);
+          } catch (recoveryError) {
+            renderAutomaticStartError(recoveryError.message === "account_changed_before_start"
+              ? "Ce compte ne correspond pas à la tentative retrouvée. Reconnectez le compte étudiant correct."
+              : "Impossible de confirmer l’état de la tentative. Le serveur recherchera automatiquement le même examen.", recoveryError.message !== "account_changed_before_start");
           }
-          button.disabled = false;
-          button.removeAttribute("aria-busy");
+          return false;
         }
       }
 
@@ -2703,27 +2620,36 @@
         }
         if (["admin", "teacher"].includes(result.data.role || currentRole)) return renderExam(result.data);
         currentStudentId = String(result.data?.student?.id || currentStudentId || storedExamAuth()?.studentId || "");
+        if (result.data?.status === "ready") return startExamAttempt(result.data);
         let runtimePayload = result.data;
         if (result.data?.status === "open" && !storedExamAuth()) {
-          const resumed = await request(API.session, { method: "POST", body: JSON.stringify({ event: "started", answeredCount: 0, attemptId: result.data?.attemptId || result.data?.session?.attemptId || "", examVersion: result.data?.exam?.version || result.data?.examVersion || "" }) }, 15000, "external");
-          if (!resumed.ok) throw new Error(resumed.data?.error || "session_resume_error");
-          runtimePayload = Object.assign({}, result.data, resumed.data);
-          if (!rememberExamAccess(runtimePayload)) throw new Error("exam_access_missing");
+          return startExamAttempt(result.data);
         }
-        const draft = storedExamAuth()
-          ? await request(API.draft, {}, 10000, "exam")
-          : await request(API.draft, {}, 10000, "external");
+        let draft;
+        try {
+          draft = storedExamAuth()
+            ? await request(API.draft, {}, 10000, "exam")
+            : await request(API.draft, {}, 10000, "external");
+        } catch (error) {
+          if (runtimePayload.exam && storedExamAuth()) return renderExam(runtimePayload);
+          throw error;
+        }
         if (draft.ok) {
           Object.assign(runtimePayload, draft.data);
           return renderExam(runtimePayload);
         }
         if (draft.data?.error === "already_submitted" && draft.data.result) return renderSubmitted(draft.data.result);
+        if (runtimePayload.exam && storedExamAuth()) return renderExam(runtimePayload);
         if (draft.status !== 404 && draft.data?.error !== "attempt_not_started") throw new Error(draft.data?.error || "draft_error");
-        renderStartGate(result.data);
+        return startExamAttempt(result.data);
       }
 
       async function loadState(options = {}) {
-        if (loading || (examInProgress && options.force !== true)) return;
+        if (loading) {
+          if (options.force === true) forcedStateReloadQueued = true;
+          return;
+        }
+        if (examInProgress && options.force !== true) return;
         const external = externalUser();
         const bridge = storedExamAuth();
         const user = activeUser();
@@ -2779,9 +2705,17 @@
         } catch (error) {
           if (examInProgress) showReconnectNotice();
           else if (error.message === "external_identity_check_failed") renderLogin("Le nouveau compte n’a pas pu être vérifié. La tentative précédente et son brouillon restent protégés; reconnectez le compte étudiant qui l’a commencée.");
+          else if (activeUser()) renderAutomaticStartError("Impossible de vérifier l’accès pour le moment. Une nouvelle vérification va se faire automatiquement.", true);
           else renderLogin("Impossible de vérifier l’accès. Rechargez la page ou reconnectez-vous.");
         } finally {
           loading = false;
+          if (forcedStateReloadQueued) {
+            forcedStateReloadQueued = false;
+            window.setTimeout(() => {
+              if (examInProgress) recoverExamAuthentication();
+              else loadState({ force: true });
+            }, 0);
+          }
         }
       }
 
@@ -2798,6 +2732,7 @@
         } catch (_error) { /* La vérification manuelle reste disponible. */ }
       }
 
+      document.querySelector("[data-hero-access]")?.addEventListener("click", handleHeroAccess);
       loadState();
       window.setInterval(pollScheduledAccess, 15000);
       window.addEventListener("jaralingua:auth-changed", (event) => {
@@ -2810,6 +2745,7 @@
           }
           return;
         }
+        automaticOpenRetryCount = 0;
         const status = els.access.querySelector("[data-access-action-status], #courseLoginStatus");
         if (status) {
           status.className = "status-message pending mt-2 mb-0";

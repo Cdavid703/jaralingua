@@ -6760,6 +6760,7 @@ def final_exam_level_config(level_key):
             "bundledAudioPath": BUNDLED_FRENCH1_FINAL_EXAM_AUDIO_PATH,
             "evaluation": FRENCH1_CORE_EVALUATIONS["finalExam"],
             "ensureGrades": ensure_french1_gradebook_structure,
+            "requiresPreflight": True,
         }
     if level_key == "french2":
         return {
@@ -6773,6 +6774,7 @@ def final_exam_level_config(level_key):
             "bundledAudioPath": BUNDLED_FRENCH2_FINAL_EXAM_AUDIO_PATH,
             "evaluation": FRENCH2_FINAL_EXAM_EVALUATION,
             "ensureGrades": ensure_french2_gradebook_structure,
+            "requiresPreflight": True,
         }
     if level_key == "french8":
         return {
@@ -6788,6 +6790,7 @@ def final_exam_level_config(level_key):
             "evaluation": FRENCH8_BASE_EVALUATIONS["finalExam"],
             "ensureGrades": ensure_french8_gradebook_structure,
             "supportsSchedule": True,
+            "requiresPreflight": False,
             "repository": french8_final_exam_repository,
             "healthCheck": french8_final_exam_health_payload,
         }
@@ -7533,6 +7536,8 @@ def final_exam_preflight_payload(config, profile, grades_data, bundle, store):
         raise PermissionError("student_not_authorized")
     student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
     check = store.setdefault("preflight", {}).get(student_id, {}) if student_id else {}
+    preflight_required = config.get("requiresPreflight", True) is True
+    preflight_completed = check.get("audioReady") is True
     integrity = final_exam_integrity(bundle.get("exam", {}), final_exam_audio_path(config))
     return {
         "ok": True,
@@ -7543,8 +7548,10 @@ def final_exam_preflight_payload(config, profile, grades_data, bundle, store):
         "student": student_public_view(student) if isinstance(student, dict) else None,
         "serverTime": now_iso(),
         "examVersion": clean_text(bundle.get("exam", {}).get("version"), 80),
-        "audioReady": check.get("audioReady") is True,
+        "audioReady": preflight_completed,
         "audioCheckedAt": check.get("audioCheckedAt"),
+        "preflightRequired": preflight_required,
+        "preflightReady": not preflight_required or preflight_completed,
         "preflightAudioUrl": "/api/%s/final-exam/preflight-audio" % config["level"],
         "state": final_exam_public_state(bundle.get("state", {}), role, student_id),
         "integrity": integrity if role in ("admin", "teacher") else {"ok": integrity.get("ok")},
@@ -7587,9 +7594,10 @@ def final_exam_session_action(config, profile, payload):
     exam = bundle.get("exam", {})
     attempt = final_exam_matching_attempt(store, student, exam)
     if not isinstance(attempt, dict):
-        preflight = store.setdefault("preflight", {}).get(student_id)
-        if not isinstance(preflight, dict) or preflight.get("audioReady") is not True:
-            return finish(409, {"error": "preflight_required"})
+        if config.get("requiresPreflight", True) is True:
+            preflight = store.setdefault("preflight", {}).get(student_id)
+            if not isinstance(preflight, dict) or preflight.get("audioReady") is not True:
+                return finish(409, {"error": "preflight_required"})
         # ``audioReady`` in the session payload refers to the protected exam
         # audio and must never be trusted to bypass or impersonate preflight.
         attempt = final_exam_create_attempt(exam, state, student, False)
@@ -7724,6 +7732,7 @@ def final_exam_put_draft(config, profile, payload):
 def final_exam_monitor_payload(config, grades_data, bundle, store):
     state = bundle.get("state", {})
     total_questions = final_exam_question_count(bundle.get("exam", {}))
+    preflight_required = config.get("requiresPreflight", True) is True
     rows = []
     for student in grades_data.get("students", []):
         if not isinstance(student, dict):
@@ -7753,7 +7762,8 @@ def final_exam_monitor_payload(config, grades_data, bundle, store):
                 else "started" if isinstance(attempt, dict)
                 else "pending"
             ),
-            "preflightReady": preflight.get("audioReady") is True,
+            "preflightRequired": preflight_required,
+            "preflightReady": not preflight_required or preflight.get("audioReady") is True,
             "audioReady": attempt.get("audioReady") is True if isinstance(attempt, dict) else False,
             "answeredCount": len(answers),
             "totalQuestions": total_questions,
@@ -7779,6 +7789,7 @@ def final_exam_monitor_payload(config, grades_data, bundle, store):
     return {
         "ok": True,
         "serverTime": now_iso(),
+        "preflightRequired": preflight_required,
         "state": final_exam_public_state(state, "teacher"),
         "counts": counts,
         "students": rows,
