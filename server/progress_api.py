@@ -189,6 +189,7 @@ INTERMEDIATE_UNIT5_PRONUNCIATION_ID = "unit5FoodQuantitiesPronunciation"
 INTERMEDIATE_UNIT5_SNACK_REVIEW_ID = "unit5GlobalSnackReview"
 INTERMEDIATE_UNIT5_RESTAURANT_COACH_ID = "unit5RestaurantConversationCoach"
 INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ID = "unit6OliviaScheduleGrammar"
+INTERMEDIATE_UNIT6_LISTENING_ID = "unit6ScheduleChangeCallListening"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
@@ -409,6 +410,14 @@ INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_EVALUATION = {
     "description": "Historia gramatical enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
 }
 
+INTERMEDIATE_UNIT6_LISTENING_EVALUATION = {
+    "id": INTERMEDIATE_UNIT6_LISTENING_ID,
+    "title": "Unit 6 Listening - The Schedule Change Call",
+    "weight": 0,
+    "type": "Listening follow-up",
+    "description": "Seguimiento de listening enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
+}
+
 INTERMEDIATE_INTEGRATED_TASK_EVALUATION = {
     "id": INTERMEDIATE_INTEGRATED_TASK_ID,
     "title": "INTERMEDIATE COURSE 1 - INTEGRATED TASK (20%)",
@@ -481,6 +490,7 @@ INTERMEDIATE_UNIT5_QUANTITY_MISSION_ANSWERS = [1, 0, 0, 0, 0, 1, 1, 0, 0, 1]
 INTERMEDIATE_UNIT5_LISTENING_ANSWERS = [1, 0, 0, 1, 0, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT5_READING_ANSWERS = [0, 1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS = [0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 1]
+INTERMEDIATE_UNIT6_LISTENING_ANSWERS = [1, 0, 2, 0, 1, 2, 0, 1, 2, 1]
 INTERMEDIATE_UNIT4_EXPRESSION_ITEMS = [
     {
         "id": "bring-up",
@@ -618,6 +628,26 @@ Nina: Should we add something sweet?
 Sara: Maybe a fruit salad. We can use some mango, a few strawberries, and a little yogurt. It gives color without too much sugar.
 
 Narrator: Their shorter plan includes quantities, countable and uncountable nouns, healthy ingredients, and a simple cultural connection."""
+
+INTERMEDIATE_UNIT6_LISTENING_TRANSCRIPT = """Olivia: Marcus, I am looking at Thursday again, and it is getting messy. I am going to record the acoustic track this week, but Thursday has too many pieces.
+
+Marcus: Right. You are meeting the producer at ten, and the band is arriving at noon. The radio host is calling at two thirty, and your parents are expecting you for dinner at six.
+
+Olivia: I also promised my doctor I would confirm the appointment by today. I do not have to do the interview on Thursday, but I do not want to lose it.
+
+Marcus: You could put off the radio interview until Friday morning. That would free up the afternoon for lunch, travel, and a short rest.
+
+Olivia: Friday might work, but the photo session is still up in the air.
+
+Marcus: Then we should call the photographer first. If Friday afternoon is confirmed, we can fit in the interview at ten.
+
+Olivia: Good. I will text the photographer now. If she confirms Friday, I will call the radio host after this.
+
+Marcus: Great. I will send the updated schedule to the band, the producer, and your family, so everyone is on the same page.
+
+Olivia: Please add one note: I have a lot on my plate, so I am going to keep Thursday focused on recording.
+
+Marcus: That is the right decision. Protect the important work, move the flexible interview, and keep the family dinner."""
 
 FRENCH8_BASE_EVALUATIONS = {
     "finalExam": {
@@ -2560,6 +2590,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_LISTENING_EVALUATION):
+        changed = True
     return changed
 
 
@@ -2599,6 +2631,10 @@ def score_intermediate_unit5_quantity_mission(payload):
 
 def score_intermediate_unit6_grammar_storybook(payload):
     return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS)
+
+
+def score_intermediate_unit6_listening(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT6_LISTENING_ANSWERS)
 
 
 def intermediate_unit5_market_basket_review(result):
@@ -13889,6 +13925,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 })
             return
 
+        if parsed.path == "/api/intermediate/unit6-schedule-change-call/transcript":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                json_response(self, 200, {
+                    "title": "The Schedule Change Call",
+                    "transcript": INTERMEDIATE_UNIT6_LISTENING_TRANSCRIPT
+                })
+            return
+
         json_response(self, 404, {"error": "not_found"})
 
     def do_POST(self):
@@ -14905,6 +14954,66 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "wordCount": word_count,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit6-schedule-change-call/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit6_listening(payload)
+                    final_note, word_count = clean_intermediate_text_followup(payload, "finalNote", 35, 100)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error), "wordCount": simple_word_count(payload.get("finalNote"))})
+                    return
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT6_LISTENING_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT6_LISTENING_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT6_LISTENING_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "response": final_note,
+                    "wordCount": word_count,
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "The Schedule Change Call",
+                    "activityType": "Listening follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT6_LISTENING_ID,
                     "score": result["score"],
                     "total": result["total"],
                     "grade": result["grade"],
