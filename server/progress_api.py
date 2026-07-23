@@ -193,6 +193,7 @@ INTERMEDIATE_UNIT6_LISTENING_ID = "unit6ScheduleChangeCallListening"
 INTERMEDIATE_UNIT6_READING_ID = "unit6OliviaOverloadedWeekReading"
 INTERMEDIATE_UNIT6_PRONUNCIATION_ID = "unit6FuturePlansPronunciation"
 INTERMEDIATE_UNIT6_SCHEDULE_COACH_ID = "unit6ScheduleRescueConversationCoach"
+INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID = "unit6OliviasWeekVideoListening"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
@@ -445,6 +446,14 @@ INTERMEDIATE_UNIT6_SCHEDULE_COACH_EVALUATION = {
     "description": "Seguimiento oral enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
 }
 
+INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION = {
+    "id": INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID,
+    "title": "Unit 6 Video Listening - Olivia's Week in 90 Seconds",
+    "weight": 0,
+    "type": "Video listening follow-up",
+    "description": "Seguimiento de video listening enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
+}
+
 INTERMEDIATE_INTEGRATED_TASK_EVALUATION = {
     "id": INTERMEDIATE_INTEGRATED_TASK_ID,
     "title": "INTERMEDIATE COURSE 1 - INTEGRATED TASK (20%)",
@@ -519,6 +528,7 @@ INTERMEDIATE_UNIT5_READING_ANSWERS = [0, 1, 0, 2, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0]
 INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS = [0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 2, 0, 0, 1]
 INTERMEDIATE_UNIT6_LISTENING_ANSWERS = [1, 0, 2, 0, 1, 2, 0, 1, 2, 1]
 INTERMEDIATE_UNIT6_READING_ANSWERS = [1, 0, 2, 1, 0, 2, 1, 2, 0, 1]
+INTERMEDIATE_UNIT6_VIDEO_LISTENING_ANSWERS = [1, 2, 0, 2, 1, 0, 2, 1, 0, 2]
 INTERMEDIATE_UNIT4_EXPRESSION_ITEMS = [
     {
         "id": "bring-up",
@@ -676,6 +686,24 @@ Marcus: Great. I will send the updated schedule to the band, the producer, and y
 Olivia: Please add one note: I have a lot on my plate, so I am going to keep Thursday focused on recording.
 
 Marcus: That is the right decision. Protect the important work, move the flexible interview, and keep the family dinner."""
+
+INTERMEDIATE_UNIT6_VIDEO_LISTENING_TRANSCRIPT = """Marcus: Olivia, before we record the video, let's fix your week. What are you going to protect first?
+
+Olivia: I am going to protect Wednesday afternoon because I am recording the acoustic track with the producer. That is already confirmed.
+
+Marcus: Good. You are meeting the producer at two, and the band is rehearsing on Thursday evening. What is still flexible?
+
+Olivia: The radio interview is still up in the air, and the photo session might move. I also want to fit in family dinner, but I have a lot on my plate.
+
+Marcus: Then you should put off the interview until Friday morning. That will free up Thursday after rehearsal.
+
+Olivia: Could I move the photo session instead?
+
+Marcus: You could, but confirm it first. If the photographer is not available, keep Friday open. The team needs to be on the same page.
+
+Olivia: So the final agenda is this: I am meeting the producer on Wednesday at two, and the band is rehearsing on Thursday evening. I am going to call the photographer today, and I will send my family the dinner time after I confirm.
+
+Marcus: Exactly. Protect fixed arrangements, move flexible tasks, and communicate the final decision."""
 
 FRENCH8_BASE_EVALUATIONS = {
     "finalExam": {
@@ -2626,6 +2654,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_SCHEDULE_COACH_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION):
+        changed = True
     return changed
 
 
@@ -2673,6 +2703,10 @@ def score_intermediate_unit6_listening(payload):
 
 def score_intermediate_unit6_reading(payload):
     return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT6_READING_ANSWERS)
+
+
+def score_intermediate_unit6_video_listening(payload):
+    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT6_VIDEO_LISTENING_ANSWERS)
 
 
 def intermediate_unit5_market_basket_review(result):
@@ -14086,6 +14120,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 })
             return
 
+        if parsed.path == "/api/intermediate/unit6-video-listening/transcript":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                if role not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                json_response(self, 200, {
+                    "title": "Olivia's Week in 90 Seconds",
+                    "transcript": INTERMEDIATE_UNIT6_VIDEO_LISTENING_TRANSCRIPT
+                })
+            return
+
         json_response(self, 404, {"error": "not_found"})
 
     def do_POST(self):
@@ -15347,6 +15394,64 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "grade": result["grade"],
                     "incorrectQuestions": result["incorrect"],
                     "wordCount": word_count,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/intermediate/unit6-video-listening/submit":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                changed = ensure_intermediate_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    result = score_intermediate_unit6_video_listening(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                previous = student.get("gradeDetails", {}).get(INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID] = result["grade"]
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                student["gradeDetails"][INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID] = {
+                    "submittedAt": submitted_at,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
+                    "answers": result["answers"],
+                    "videoStatus": clean_text(payload.get("videoStatus"), 80),
+                    "youtubeVideoId": clean_text(payload.get("youtubeVideoId"), 80),
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Olivia's Week in 90 Seconds",
+                    "activityType": "Video listening follow-up"
+                }
+                write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID,
+                    "score": result["score"],
+                    "total": result["total"],
+                    "grade": result["grade"],
+                    "incorrectQuestions": result["incorrect"],
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
