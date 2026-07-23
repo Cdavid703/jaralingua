@@ -12,6 +12,9 @@ evaluation = progress_api.FRENCH8_PRONUNCIATION_EVALUATIONS["pronunciation04d"]
 assert evaluation["id"] == "pronunciation04d"
 assert evaluation["weight"] == 5
 assert evaluation["type"] == "Prononciation"
+assert evaluation["date"] == ""
+assert evaluation["displayDate"] == "Envoi ouvert actuellement"
+assert "pronunciation04d" not in progress_api.FRENCH8_PRONUNCIATION_DEADLINES
 assert "pronunciation04d" in progress_api.FRENCH8_PRONUNCIATION_AUDIO_REQUIRED
 
 for score100, expected_grade in ((0, 0.0), (20, 1.0), (60, 3.0), (86, 4.3), (100, 5.0)):

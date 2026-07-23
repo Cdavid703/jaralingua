@@ -17,8 +17,9 @@
       label: "mercredi 15 juillet 2026 jusqu'à 23 h 59 (heure de Bogota)"
     },
     pronunciation04d: {
-      at: "2026-07-14T05:00:00Z",
-      label: "lundi 13 juillet 2026 jusqu'à 23 h 59 (heure de Bogota)"
+      at: null,
+      label: "envoi ouvert actuellement",
+      notice: "Envoi ouvert maintenant. Le professeur annoncera la date et l'heure de fermeture."
     },
     pronunciation09d: {
       at: "2026-07-27T05:00:00Z",
@@ -49,9 +50,9 @@
     const deadline = DEADLINES[config.evaluationId] || DEADLINES.pronunciation01d;
     const label = deadline.label;
     return {
-      at: Date.parse(deadline.at),
+      at: typeof deadline.at === "string" ? Date.parse(deadline.at) : Number.NaN,
       label,
-      notice: "Date limite d'envoi : " + label + ". Après cette heure, l'envoi au professeur ne sera plus possible."
+      notice: deadline.notice || "Date limite d'envoi : " + label + ". Après cette heure, l'envoi au professeur ne sera plus possible."
     };
   }
 

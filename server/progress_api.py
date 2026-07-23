@@ -230,12 +230,6 @@ FRENCH8_PRONUNCIATION_DEADLINES = {
         "epoch": 1784178000,
         "label": "mercredi 15 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
     },
-    "pronunciation04d": {
-        "date": "2026-07-13",
-        "utc": "2026-07-14T05:00:00Z",
-        "epoch": 1784005200,
-        "label": "lundi 13 juillet 2026 jusqu'a 23 h 59 (heure de Bogota)"
-    },
     "pronunciation09d": {
         "date": "2026-07-26",
         "utc": "2026-07-27T05:00:00Z",
@@ -277,9 +271,9 @@ FRENCH8_PRONUNCIATION_EVALUATIONS = {
         "title": "Prononciation 04D - Discours rapporte",
         "weight": 5,
         "type": "Prononciation",
-        "date": FRENCH8_PRONUNCIATION_DEADLINES["pronunciation04d"]["date"],
-        "displayDate": "Date limite : " + FRENCH8_PRONUNCIATION_DEADLINES["pronunciation04d"]["label"],
-        "description": "Defi final de prononciation. Apres la date limite, l'envoi au professeur ne sera plus possible."
+        "date": "",
+        "displayDate": "Envoi ouvert actuellement",
+        "description": "Defi final de prononciation avec audio obligatoire. La fermeture sera annoncee par le professeur."
     },
     "pronunciation09d": {
         "id": "pronunciation09d",

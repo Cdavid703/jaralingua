@@ -9,12 +9,14 @@ const assessment = require("../assets/js/french8-pronunciation-assessment.js");
 const ROOT = path.resolve(__dirname, "..");
 const PAGE_PATH = path.join(ROOT, "frances", "Niveau 8", "ateliers", "prononciation-04d-discours-rapporte.html");
 const CONTROLLER_PATH = path.join(ROOT, "assets", "js", "french8-pronunciation-theme04.js");
+const GRADE_SUBMIT_PATH = path.join(ROOT, "assets", "js", "french8-pronunciation-grade-submit.js");
 const LIAISON_PATH = path.join(ROOT, "assets", "js", "french8-pronunciation-liaisons.js");
 const SCRIPT_PATH = path.join(ROOT, "frances", "Niveau 8", "audio", "pronunciation-discours-rapporte-script.md");
 const AUDIO_DIR = path.join(ROOT, "frances", "Niveau 8", "audio", "pronunciation", "theme-04");
 
 const page = fs.readFileSync(PAGE_PATH, "utf8");
 const controller = fs.readFileSync(CONTROLLER_PATH, "utf8");
+const gradeSubmit = fs.readFileSync(GRADE_SUBMIT_PATH, "utf8");
 const liaisonSource = fs.readFileSync(LIAISON_PATH, "utf8");
 const script = fs.readFileSync(SCRIPT_PATH, "utf8");
 
@@ -101,16 +103,25 @@ sections.forEach((section, index) => {
   assert.ok(page.includes("ne forcez pas un /t/"), "04D must not make the rare aient-été liaison mandatory");
   assert.ok(page.includes("estimation automatique provisoire"), "The score must be presented as provisional");
   assert.ok(page.includes("L'audio final est obligatoire"), "The page must explain the final audio requirement");
+  assert.ok(page.includes("pendant que l'envoi est ouvert"), "04D must explain that low scores remain submittable while the activity is open");
+  assert.ok(page.includes("20260722-pronunciation04-open"), "04D must invalidate the cached expired deadline script");
   assert.ok(page.includes("bootstrap/bootstrap.bundle.min.js"), "The mobile navigation must load Bootstrap behavior");
   assert.ok(!page.includes("<strong>avis aient</strong>"), "A forbidden noun-to-verb liaison must not be taught");
+}
+
+{
+  const openConfig = gradeSubmit.match(/pronunciation04d:\s*\{([\s\S]*?)\n\s*\}/);
+  assert.ok(openConfig, "The shared submission module must configure 04D");
+  assert.match(openConfig[1], /at:\s*null/, "04D must not be blocked by the expired July 13 deadline");
+  assert.match(openConfig[1], /Envoi ouvert maintenant/, "04D must clearly confirm that teacher submission is open");
 }
 
 {
   assert.match(controller, /evaluationId:\s*"pronunciation04d"/, "04D must keep its gradebook identifier");
   assert.match(controller, /getFinalScore:\s*\(\) => finalSubmissionAttempt \|\| stageScores\[4\]/, "The sent score and audio must belong to the same final attempt");
   assert.match(controller, /requireFinalAudio:\s*true/, "04D must require final audio");
-  assert.ok(!controller.includes("showRecordingIssue"), "04D must not turn a completed doubtful attempt into an unscored state");
-  assert.ok(!controller.includes("recordingEvidence(payload)"), "04D must pass empty recognition to the approved evaluator");
+  assert.ok(controller.includes("validateRecordingEvidence"), "04D must reject recordings without usable speech before scoring");
+  assert.ok(controller.indexOf("showRecordingIssue(evidence)") < controller.indexOf("const attempt = evaluate"), "04D must validate the recording before storing a score");
   assert.match(controller, /liveTranscript\.textContent = transcript \|\| "Aucun mot n’a été reconnu dans cet essai\.";/, "04D must explain empty recognition");
   assert.match(controller, /fetch\(API_PATH, \{ method: "POST", headers: \{ "Content-Type": blob\.type \|\| "audio\/webm" \}, body: blob \}\)/, "Recognition must receive raw audio bytes");
   assert.ok(!/localStorage\.removeItem\(STORAGE_KEY\);\s*saveProgress\(\);/.test(controller), "A full reset must not immediately recreate erased progress");
