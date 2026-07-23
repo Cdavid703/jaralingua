@@ -72,7 +72,11 @@ assert.deepEqual(Object.keys(answerDistribution).sort(), ["0", "1", "2"], "answe
   "Send to teacher",
   "Submitted to teacher",
   "Gradebook weight: 0%",
-  "correct answers will not be shown"
+  "correct answers will not be shown",
+  "Open the book",
+  "book-cover",
+  "storybook-card is-cover",
+  "storybook-card is-open"
 ].forEach(marker => assert.ok((html + js).includes(marker), `missing UI marker: ${marker}`));
 
 assert.ok(!js.includes("speechSynthesis"), "activity must not use browser speech synthesis");

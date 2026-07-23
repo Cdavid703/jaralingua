@@ -72,7 +72,7 @@ window.JaraLinguaUnit6GrammarStorybookData = {
 (() => {
   const data = window.JaraLinguaUnit6GrammarStorybookData;
   const state = {
-    page: 0,
+    page: -1,
     answers: Array(data.blanks.length).fill(null),
     checked: false,
     submitted: false
@@ -135,8 +135,38 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     return `<p>${paragraph.replace(/\{\{(\d+)\}\}/g, (_, id) => blankSelectMarkup(Number(id)))}</p>`;
   }
 
+  function renderCover() {
+    elements.bookCard.className = "storybook-card is-cover";
+    elements.bookCard.innerHTML = `
+      <div class="book-cover" role="group" aria-label="Olivia's Schedule Storybook cover">
+        <div class="book-cover-edge" aria-hidden="true"></div>
+        <div class="book-cover-content">
+          <span class="book-series">Unit 6 Grammar Mini-Book</span>
+          <h3>Olivia's Schedule Storybook</h3>
+          <p>Open the book, read four short pages, choose each grammar decision, revise marked blanks, and send the final note to the teacher.</p>
+          <div class="book-cover-tags">
+            <span>17 dropdown blanks</span>
+            <span>4 story pages</span>
+            <span>teacher follow-up 0%</span>
+          </div>
+          <button type="button" class="u6g-button primary" data-cover-open>Open the book</button>
+        </div>
+      </div>
+    `;
+    elements.previousButton.disabled = true;
+    elements.nextButton.disabled = false;
+    elements.nextButton.textContent = "Open book";
+    elements.pageCounter.textContent = "Cover";
+    update();
+  }
+
   function renderPage() {
+    if (state.page < 0) {
+      renderCover();
+      return;
+    }
     const page = data.pages[state.page];
+    elements.bookCard.className = "storybook-card is-open";
     elements.bookCard.innerHTML = `
       <figure class="storybook-figure">
         <img src="${page.image}" alt="${escapeHtml(page.alt)}" />
@@ -151,6 +181,7 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     `;
     elements.previousButton.disabled = state.page === 0;
     elements.nextButton.disabled = state.page === data.pages.length - 1;
+    elements.nextButton.textContent = "Next page";
     elements.pageCounter.textContent = `Page ${state.page + 1} of ${data.pages.length}`;
     update();
   }
@@ -284,6 +315,14 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     renderPage();
   });
 
+  elements.bookCard.addEventListener("click", event => {
+    const coverButton = event.target.closest("[data-cover-open]");
+    if (!coverButton) return;
+    state.page = 0;
+    renderPage();
+    setFeedback("The book is open. Complete the dropdowns on each page, then check the full story.", "");
+  });
+
   elements.previousButton.addEventListener("click", () => {
     if (state.page > 0) {
       state.page -= 1;
@@ -319,11 +358,11 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     state.answers = Array(data.blanks.length).fill(null);
     state.checked = false;
     state.submitted = false;
-    state.page = 0;
+    state.page = -1;
     elements.reflection.value = "";
     elements.wordCount.textContent = "0 words - write 30 to 120 words";
     elements.deliveryStatus.className = "delivery-status";
-    setFeedback("Start by completing the blanks. You can move page by page and check the full story when all decisions are filled.", "");
+    setFeedback("Start from the cover. Open the book, complete the dropdowns, and check the full story when all decisions are filled.", "");
     renderPage();
     document.querySelector("#storybook").scrollIntoView({ behavior: "smooth", block: "start" });
   });

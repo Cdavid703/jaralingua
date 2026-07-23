@@ -155,7 +155,7 @@ async function openPage(client, viewport) {
   const load = client.once("Page.loadEventFired");
   await client.send("Page.navigate", { url: BASE_URL });
   await load;
-  await waitFor(() => evaluate(client, "Boolean(document.querySelector('[data-storybook-card] img') && document.querySelector('[data-storybook-card] img').complete)"), 8000, "storybook image");
+  await waitFor(() => evaluate(client, "Boolean(document.querySelector('[data-storybook-card].is-cover .book-cover'))"), 8000, "storybook cover");
 }
 
 async function assertLayout(client, viewport) {
@@ -176,7 +176,7 @@ async function assertLayout(client, viewport) {
         left: Math.round(item.rect.left),
         right: Math.round(item.rect.right)
       }));
-    const visuals = Array.from(document.querySelectorAll(".storybook-figure img, .u6g-hero"))
+    const visuals = Array.from(document.querySelectorAll(".storybook-figure img, .book-cover, .u6g-hero"))
       .map(element => {
         const rect = element.getBoundingClientRect();
         return { width: Math.round(rect.width), height: Math.round(rect.height) };
@@ -186,13 +186,18 @@ async function assertLayout(client, viewport) {
       outside,
       visuals,
       buttons: document.querySelectorAll("button").length,
-      selects: document.querySelectorAll("select").length
+      selects: document.querySelectorAll("select").length,
+      cover: Boolean(document.querySelector(".storybook-card.is-cover")),
+      openBook: Boolean(document.querySelector(".storybook-card.is-open")),
+      openBookButton: Boolean(document.querySelector("[data-cover-open]"))
     };
   })()`);
   assert.ok(layout.overflow <= 1, `${viewport.label}: horizontal overflow ${layout.overflow}px`);
   assert.deepEqual(layout.outside, [], `${viewport.label}: visible elements exceed the viewport`);
   assert.ok(layout.buttons >= 6, `${viewport.label}: expected activity buttons`);
-  assert.ok(layout.selects >= 2, `${viewport.label}: expected visible dropdown blanks`);
+  assert.equal(layout.cover, true, `${viewport.label}: expected a visible book cover first`);
+  assert.equal(layout.openBookButton, true, `${viewport.label}: expected an Open the book button`);
+  assert.equal(layout.selects, 0, `${viewport.label}: cover should not expose dropdown blanks`);
   layout.visuals.forEach((visual, index) => {
     assert.ok(visual.width > 250, `${viewport.label}: visual ${index} too narrow`);
     assert.ok(visual.height > 160, `${viewport.label}: visual ${index} too short`);
@@ -213,6 +218,8 @@ async function fillVisiblePage(client) {
 }
 
 async function completeStory(client) {
+  await evaluate(client, "document.querySelector('[data-cover-open]').click()");
+  await waitFor(() => evaluate(client, "Boolean(document.querySelector('.storybook-card.is-open [data-blank]'))"), 4000, "open book first page");
   for (let pageIndex = 0; pageIndex < 4; pageIndex += 1) {
     await fillVisiblePage(client);
     if (pageIndex < 3) {
