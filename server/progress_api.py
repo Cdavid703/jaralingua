@@ -112,6 +112,8 @@ BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA
 BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/basic-integrated-task.json")
 BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
 BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
+BASIC_FINAL_WRITING_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_WRITING_DATA", "/var/lib/jaralingua/basic-final-writing.json")
+BASIC_FINAL_WRITING_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_WRITING_SUBMISSIONS", "/var/lib/jaralingua/basic-final-writing-submissions.json")
 BASIC_ANDRES_RETAKE_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake-submissions.json")
 BASIC_ANDRES_RETAKE_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_ANDRES_RETAKE_AUDIO", "/var/lib/jaralingua/basic-integrated-task-andres-munoz-retake.mp3")
 BASIC_FINAL_ORAL_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_DATA", "/var/lib/jaralingua/basic-final-oral.json")
@@ -119,6 +121,7 @@ BASIC_FINAL_ORAL_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_
 BASIC_FINAL_ORAL_AUDIO_DIR = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_AUDIO_DIR", "/var/lib/jaralingua/basic-final-oral-audio")
 BASIC_FINAL_ORAL_PROMPT_AUDIO_DIR = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_PROMPT_AUDIO_DIR", "/var/lib/jaralingua/basic-final-oral-prompts")
 BASIC_FINAL_ORAL_AUDIT_PATH = os.environ.get("JARALINGUA_BASIC_FINAL_ORAL_AUDIT", "/var/lib/jaralingua/basic-final-oral-audit.jsonl")
+BASIC_FINAL_WRITING_EVALUATION_ID = "finalWritingTask"
 BASIC_FINAL_ORAL_EVALUATION_ID = "finalOralTask"
 BASIC_FINAL_ORAL_EXAM_VERSION = "basic-final-oral-v1"
 BASIC_FINAL_ORAL_MAX_AUDIO_BYTES = 8 * 1024 * 1024
@@ -507,6 +510,14 @@ BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION = {
     "weight": 0,
     "type": "AI image / Speaking follow-up",
     "description": "Seguimiento enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
+}
+
+BASIC_FINAL_WRITING_EVALUATION = {
+    "id": BASIC_FINAL_WRITING_EVALUATION_ID,
+    "title": "BASIC COURSE 1 - FINAL WRITING TASK (20%)",
+    "weight": 20,
+    "type": "Final writing examination",
+    "description": "Official e-mail writing examination. The teacher grades the submitted text manually with the institutional rubric over 50 points."
 }
 
 BASIC_FINAL_ORAL_EVALUATION = {
@@ -1189,10 +1200,11 @@ def write_store(data):
 def apply_existing_file_metadata(fd, existing_stat):
     if existing_stat is None:
         return
-    try:
-        os.fchmod(fd, existing_stat.st_mode & 0o777)
-    except OSError:
-        pass
+    if hasattr(os, "fchmod"):
+        try:
+            os.fchmod(fd, existing_stat.st_mode & 0o777)
+        except OSError:
+            pass
     if hasattr(os, "fchown"):
         try:
             os.fchown(fd, existing_stat.st_uid, existing_stat.st_gid)
@@ -2633,6 +2645,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
 
 def ensure_basic_gradebook_structure(grades_data):
     changed = ensure_evaluation_template(grades_data, BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION)
+    if ensure_evaluation_template(grades_data, BASIC_FINAL_WRITING_EVALUATION):
+        changed = True
     if ensure_evaluation_template(grades_data, BASIC_FINAL_ORAL_EVALUATION):
         changed = True
     if grades_data.get("allowStudentIdClaim") is not True:
@@ -12308,6 +12322,642 @@ def clean_basic_rubric(value):
     return rubric
 
 
+def default_basic_final_writing_bundle():
+    return {
+        "schemaVersion": 1,
+        "state": {
+            "isOpen": False,
+            "openedAt": None,
+            "closedAt": None,
+            "updatedAt": None,
+            "openedBy": None,
+            "reopenUntilEpoch": None,
+            "reopenUntilLabel": "",
+            "reopenStudentIds": []
+        },
+        "exam": {
+            "id": "basic-course-1-final-writing-task",
+            "title": "BASIC COURSE 1 - FINAL WRITING TASK (20%)",
+            "topic": "Indoor-outdoor activities",
+            "taskType": "e-mail",
+            "audience": "best friend",
+            "purpose": "describe indoor and outdoor activities",
+            "durationMinutes": 50,
+            "targetWords": 80,
+            "softMinimumWords": 40,
+            "softMaximumWords": 140,
+            "prompt": "You have noticed that your best friend is feeling sad and tired. You want to help your friend feel happier and healthier, so you decide to write an e-mail suggesting some indoor and outdoor activities that can help your friend feel better, have more energy, and improve their health.",
+            "instructions": [
+                "Start your email with a friendly greeting.",
+                "Suggest some indoor and outdoor activities to your friend.",
+                "Give examples of activities that can help your friend feel better and stay healthy, for example yoga, walking, cycling, or cooking.",
+                "Finish your email with a proper closing.",
+                "Spend 50 minutes on this task.",
+                "Write around 80 words."
+            ],
+            "fixedGreeting": "Hi dear friend,",
+            "fixedClosing": "Always here for you!",
+            "totalPoints": 50
+        }
+    }
+
+
+def read_basic_final_writing_bundle():
+    data = read_basic_final_oral_json(BASIC_FINAL_WRITING_PATH, default_basic_final_writing_bundle())
+    defaults = default_basic_final_writing_bundle()
+    if not isinstance(data.get("state"), dict):
+        raise BasicFinalOralStorageError("invalid_final_writing_state")
+    if not isinstance(data.get("exam"), dict):
+        raise BasicFinalOralStorageError("invalid_final_writing_exam")
+    for key, value in defaults["state"].items():
+        data["state"].setdefault(key, value)
+    for key, value in defaults["exam"].items():
+        data["exam"].setdefault(key, value)
+    data["schemaVersion"] = 1
+    return data
+
+
+def write_basic_final_writing_bundle(data):
+    write_json_file(BASIC_FINAL_WRITING_PATH, data, ".basic-final-writing-")
+
+
+def default_basic_final_writing_store():
+    return {
+        "schemaVersion": 1,
+        "attempts": {},
+        "submissions": {},
+        "events": [],
+        "idempotency": {}
+    }
+
+
+def read_basic_final_writing_store():
+    data = read_basic_final_oral_json(BASIC_FINAL_WRITING_SUBMISSIONS_PATH, default_basic_final_writing_store())
+    for key in ("attempts", "submissions", "idempotency"):
+        if key not in data:
+            data[key] = {}
+        elif not isinstance(data.get(key), dict):
+            raise BasicFinalOralStorageError("invalid_final_writing_store:" + key)
+    if not isinstance(data.get("events"), list):
+        data["events"] = []
+    data["schemaVersion"] = 1
+    return data
+
+
+def write_basic_final_writing_store(data):
+    write_json_file(BASIC_FINAL_WRITING_SUBMISSIONS_PATH, data, ".basic-final-writing-submissions-")
+
+
+def basic_final_writing_append_event(store, event_type, profile=None, student_id="", detail=None):
+    events = store.setdefault("events", [])
+    if not isinstance(events, list):
+        events = []
+        store["events"] = events
+    events.append({
+        "type": clean_text(event_type, 80),
+        "studentId": clean_text(student_id, 40),
+        "actor": normalize_email((profile or {}).get("email")),
+        "detail": clean_text(detail, 500),
+        "at": now_iso()
+    })
+    store["events"] = events[-600:]
+
+
+def basic_final_writing_event_public(event):
+    if not isinstance(event, dict):
+        return None
+    return {
+        "type": clean_text(event.get("type"), 80),
+        "studentId": clean_text(event.get("studentId"), 40),
+        "actor": clean_text(event.get("actor"), 180),
+        "detail": clean_text(event.get("detail"), 500),
+        "at": clean_text(event.get("at"), 80)
+    }
+
+
+def basic_final_writing_student_identity(student):
+    return basic_integrated_student_identity(student)
+
+
+def basic_final_writing_public_exam(bundle):
+    exam = bundle.get("exam", {})
+    return {
+        "id": clean_text(exam.get("id"), 100),
+        "title": clean_text(exam.get("title"), 200),
+        "topic": clean_text(exam.get("topic"), 160),
+        "taskType": clean_text(exam.get("taskType"), 80),
+        "audience": clean_text(exam.get("audience"), 160),
+        "purpose": clean_text(exam.get("purpose"), 240),
+        "durationMinutes": int(exam.get("durationMinutes", 50) or 50),
+        "targetWords": int(exam.get("targetWords", 80) or 80),
+        "softMinimumWords": int(exam.get("softMinimumWords", 40) or 40),
+        "softMaximumWords": int(exam.get("softMaximumWords", 140) or 140),
+        "prompt": clean_text(exam.get("prompt"), 1500),
+        "instructions": [clean_text(item, 500) for item in exam.get("instructions", []) if clean_text(item, 500)],
+        "fixedGreeting": clean_text(exam.get("fixedGreeting"), 120),
+        "fixedClosing": clean_text(exam.get("fixedClosing"), 120),
+        "totalPoints": clean_exam_number(exam.get("totalPoints", 50))
+    }
+
+
+def basic_final_writing_reopen_active(state):
+    return basic_integrated_reopen_active(state)
+
+
+def basic_final_writing_student_has_reopen(state, student_id):
+    return basic_integrated_student_has_reopen(state, student_id)
+
+
+def basic_final_writing_can_start(role, state, student_id):
+    if role in ("admin", "teacher"):
+        return True
+    if isinstance(state, dict) and state.get("isOpen") is True:
+        return True
+    return basic_final_writing_student_has_reopen(state, student_id)
+
+
+def basic_final_writing_public_attempt(attempt):
+    if not isinstance(attempt, dict):
+        return None
+    draft = attempt.get("draft") if isinstance(attempt.get("draft"), dict) else {}
+    return {
+        "attemptId": clean_text(attempt.get("attemptId"), 120),
+        "status": clean_text(attempt.get("status"), 60),
+        "studentId": clean_text(attempt.get("studentId"), 40),
+        "studentName": clean_text(attempt.get("studentName"), 200),
+        "email": normalize_email(attempt.get("email")),
+        "courseCode": clean_text(attempt.get("courseCode"), 40),
+        "startedAt": clean_text(attempt.get("startedAt"), 80),
+        "expiresAt": clean_text(attempt.get("expiresAt"), 80),
+        "lastSavedAt": clean_text(attempt.get("lastSavedAt"), 80),
+        "submittedAt": clean_text(attempt.get("submittedAt"), 80),
+        "revision": int(attempt.get("revision", 0) or 0),
+        "draft": {
+            "from": clean_text(draft.get("from"), 160),
+            "to": clean_text(draft.get("to"), 160),
+            "subject": clean_text(draft.get("subject"), 240),
+            "body": clean_basic_writing(draft.get("body")),
+            "wordCount": basic_word_count(draft.get("body")),
+            "updatedAt": clean_text(draft.get("updatedAt"), 80)
+        }
+    }
+
+
+def basic_final_writing_submission_public(submission, viewer_role="student"):
+    if not isinstance(submission, dict):
+        return None
+    public = {
+        "receiptId": clean_text(submission.get("receiptId"), 100),
+        "attemptId": clean_text(submission.get("attemptId"), 120),
+        "studentId": clean_text(submission.get("studentId"), 40),
+        "studentName": clean_text(submission.get("studentName"), 200),
+        "email": normalize_email(submission.get("email")),
+        "courseCode": clean_text(submission.get("courseCode"), 40),
+        "submittedAt": clean_text(submission.get("submittedAt"), 80),
+        "status": clean_text(submission.get("status"), 80),
+        "workflowStatus": clean_text(submission.get("workflowStatus") or submission.get("status"), 80),
+        "wordCount": int(submission.get("wordCount", 0) or 0),
+        "from": clean_text(submission.get("from"), 160),
+        "to": clean_text(submission.get("to"), 160),
+        "subject": clean_text(submission.get("subject"), 240),
+        "body": clean_basic_writing(submission.get("body")),
+        "rubric": None,
+        "score50": None,
+        "grade": None,
+        "teacherComments": "",
+        "gradedAt": None,
+        "gradedBy": ""
+    }
+    is_staff = viewer_role in ("admin", "teacher", "staff")
+    is_published = submission.get("workflowStatus") == "published" or submission.get("status") == "graded"
+    if is_staff or is_published:
+        public.update({
+            "rubric": submission.get("rubric") if isinstance(submission.get("rubric"), dict) else None,
+            "score50": submission.get("score50"),
+            "grade": submission.get("grade"),
+            "teacherComments": clean_text(submission.get("teacherComments"), 5000),
+            "gradedAt": clean_text(submission.get("gradedAt"), 80),
+            "gradedBy": normalize_email(submission.get("gradedBy"))
+        })
+    return public
+
+
+def basic_final_writing_state_payload(profile, grades_data, bundle, store):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    state = bundle.get("state", {})
+    attempt = store.get("attempts", {}).get(student_id) if student_id else None
+    submission = store.get("submissions", {}).get(student_id) if student_id else None
+    can_take = basic_final_writing_can_start(role, state, student_id)
+    return {
+        "role": role,
+        "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True,
+        "state": state,
+        "exam": basic_final_writing_public_exam(bundle) if role in ("admin", "teacher") else None,
+        "student": basic_final_writing_student_identity(student),
+        "attempt": basic_final_writing_public_attempt(attempt),
+        "submission": basic_final_writing_submission_public(submission, role),
+        "canStart": bool(student_id and can_take and not isinstance(submission, dict) and not isinstance(attempt, dict)),
+        "canResume": bool(student_id and can_take and isinstance(attempt, dict) and attempt.get("status") == "in_progress"),
+        "reopenActive": basic_final_writing_student_has_reopen(state, student_id)
+    }
+
+
+def basic_final_writing_health_payload(grades_data, bundle, store):
+    state = bundle.get("state", {})
+    attempts = store.get("attempts", {}) if isinstance(store.get("attempts"), dict) else {}
+    submissions = store.get("submissions", {}) if isinstance(store.get("submissions"), dict) else {}
+    students = []
+    counts = {"total": 0, "notStarted": 0, "inProgress": 0, "submitted": 0, "pendingReview": 0, "graded": 0, "reopenActive": 0}
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        attempt = attempts.get(student_id)
+        submission = submissions.get(student_id)
+        grade = (student.get("grades") or {}).get(BASIC_FINAL_WRITING_EVALUATION_ID) if isinstance(student.get("grades"), dict) else None
+        detail = (student.get("gradeDetails") or {}).get(BASIC_FINAL_WRITING_EVALUATION_ID) if isinstance(student.get("gradeDetails"), dict) else None
+        status = "not-started"
+        if isinstance(submission, dict):
+            status = "graded" if submission.get("status") == "graded" else "pending-review"
+        elif isinstance(attempt, dict):
+            status = "in-progress"
+        elif isinstance(grade, (int, float)):
+            status = "graded"
+        counts["total"] += 1
+        if status == "not-started":
+            counts["notStarted"] += 1
+        elif status == "in-progress":
+            counts["inProgress"] += 1
+        elif status == "pending-review":
+            counts["submitted"] += 1
+            counts["pendingReview"] += 1
+        elif status == "graded":
+            counts["submitted"] += 1
+            counts["graded"] += 1
+        reopen_active = basic_final_writing_student_has_reopen(state, student_id)
+        if reopen_active:
+            counts["reopenActive"] += 1
+        students.append({
+            "id": student_id,
+            "fullName": clean_text(student.get("fullName"), 200),
+            "email": normalize_email(student.get("email")),
+            "status": status,
+            "grade": grade if isinstance(grade, (int, float)) else None,
+            "detail": detail if isinstance(detail, dict) else None,
+            "attempt": basic_final_writing_public_attempt(attempt) if isinstance(attempt, dict) else None,
+            "submission": basic_final_writing_submission_public(submission, "teacher") if isinstance(submission, dict) else None,
+            "canTake": basic_final_writing_can_start("student", state, student_id),
+            "reopenActive": reopen_active
+        })
+    events = [basic_final_writing_event_public(item) for item in store.get("events", [])[-100:] if isinstance(item, dict)]
+    events = [item for item in events if item]
+    events.reverse()
+    return {"state": state, "counts": counts, "students": students, "events": events}
+
+
+def apply_basic_final_writing_status_to_gradebook(grades_data, store):
+    if not isinstance(grades_data, dict) or not isinstance(store, dict):
+        return False
+    changed = ensure_evaluation_template(grades_data, BASIC_FINAL_WRITING_EVALUATION)
+    submissions = store.get("submissions", {}) if isinstance(store.get("submissions"), dict) else {}
+    students = grades_data.get("students", [])
+    if not isinstance(students, list):
+        return changed
+    for student in students:
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        submission = submissions.get(student_id)
+        if not isinstance(submission, dict):
+            continue
+        details = student.setdefault("gradeDetails", {})
+        if not isinstance(details, dict):
+            details = {}
+            student["gradeDetails"] = details
+        if submission.get("status") == "graded" and isinstance(submission.get("grade"), (int, float)):
+            grades = student.setdefault("grades", {})
+            if not isinstance(grades, dict):
+                grades = {}
+                student["grades"] = grades
+            if grades.get(BASIC_FINAL_WRITING_EVALUATION_ID) != submission.get("grade"):
+                grades[BASIC_FINAL_WRITING_EVALUATION_ID] = submission.get("grade")
+                changed = True
+        next_detail = {
+            "evaluationId": BASIC_FINAL_WRITING_EVALUATION_ID,
+            "activityTitle": BASIC_FINAL_WRITING_EVALUATION["title"],
+            "status": clean_text(submission.get("status") or "submitted", 80),
+            "submittedAt": clean_text(submission.get("submittedAt"), 80),
+            "gradedAt": clean_text(submission.get("gradedAt"), 80),
+            "receiptId": clean_text(submission.get("receiptId"), 100),
+            "score50": clean_exam_number(submission.get("score50")) if submission.get("score50") is not None else None,
+            "grade": submission.get("grade") if isinstance(submission.get("grade"), (int, float)) else None,
+            "pendingTeacherReview": submission.get("status") != "graded",
+            "weight": 20
+        }
+        if details.get(BASIC_FINAL_WRITING_EVALUATION_ID) != next_detail:
+            details[BASIC_FINAL_WRITING_EVALUATION_ID] = next_detail
+            changed = True
+    return changed
+
+
+def clean_basic_final_writing_rubric(value):
+    if not isinstance(value, dict):
+        return None
+    rubric = {}
+    for key in ("content", "composing", "vocabulary", "structure", "mechanics"):
+        try:
+            score = int(value.get(key))
+        except (TypeError, ValueError):
+            return None
+        if score < 1 or score > 10:
+            return None
+        rubric[key] = score
+    return rubric
+
+
+def basic_final_writing_start(profile, payload=None):
+    grades_data = read_basic_final_oral_grades_data()
+    gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+    bundle = read_basic_final_writing_bundle()
+    store = read_basic_final_writing_store()
+    if apply_basic_final_writing_status_to_gradebook(grades_data, store):
+        gradebook_changed = True
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    if role not in ("admin", "teacher") and not isinstance(student, dict):
+        return 403, {"error": "student_not_authorized"}
+    if not isinstance(student, dict):
+        student = {"id": "STAFF", "fullName": clean_text(profile.get("name"), 200) or normalize_email(profile.get("email")), "email": normalize_email(profile.get("email"))}
+    student_id = clean_text(student.get("id"), 40)
+    state = bundle.get("state", {})
+    submission = store.get("submissions", {}).get(student_id)
+    if isinstance(submission, dict):
+        return 409, {"error": "already_submitted", "submission": basic_final_writing_submission_public(submission, role)}
+    if not basic_final_writing_can_start(role, state, student_id):
+        return 403, {"error": "exam_closed", "state": state}
+    attempt = store.setdefault("attempts", {}).get(student_id)
+    if isinstance(attempt, dict) and attempt.get("status") == "in_progress":
+        attempt["lastSeenAt"] = now_iso()
+        write_basic_final_writing_store(store)
+        if gradebook_changed:
+            write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+        return 200, {"ok": True, "resumed": True, "attempt": basic_final_writing_public_attempt(attempt), "exam": basic_final_writing_public_exam(bundle)}
+    exam = bundle.get("exam", {})
+    duration_minutes = max(5, min(180, int(exam.get("durationMinutes", 50) or 50)))
+    started = datetime.now(timezone.utc)
+    attempt = {
+        "attemptId": "BFW-" + secrets.token_hex(8).upper(),
+        "studentId": student_id,
+        "studentName": clean_text(student.get("fullName"), 200),
+        "email": normalize_email(profile.get("email") or student.get("email")),
+        "courseCode": clean_text((payload or {}).get("courseCode"), 40) or "BASIC-C1",
+        "status": "in_progress",
+        "startedAt": started.isoformat().replace("+00:00", "Z"),
+        "expiresAt": (started + timedelta(minutes=duration_minutes)).isoformat().replace("+00:00", "Z"),
+        "lastSeenAt": started.isoformat().replace("+00:00", "Z"),
+        "lastSavedAt": None,
+        "submittedAt": None,
+        "revision": 0,
+        "draft": {"from": "", "to": "", "subject": "", "body": "", "updatedAt": None}
+    }
+    store.setdefault("attempts", {})[student_id] = attempt
+    basic_final_writing_append_event(store, "attempt_started", profile, student_id, attempt["attemptId"])
+    write_basic_final_writing_store(store)
+    if gradebook_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {"ok": True, "resumed": False, "attempt": basic_final_writing_public_attempt(attempt), "exam": basic_final_writing_public_exam(bundle)}
+
+
+def basic_final_writing_save_draft(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    if role not in ("admin", "teacher") and not isinstance(student, dict):
+        return 403, {"error": "student_not_authorized"}
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else clean_text(payload.get("studentId"), 40)
+    store = read_basic_final_writing_store()
+    attempt = store.get("attempts", {}).get(student_id)
+    if not isinstance(attempt, dict) or attempt.get("status") != "in_progress":
+        return 404, {"error": "attempt_not_found"}
+    attempt_id = clean_text(payload.get("attemptId"), 120)
+    if attempt_id and attempt_id != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    body = clean_basic_writing(payload.get("body"))
+    draft = {
+        "from": clean_text(payload.get("from"), 160),
+        "to": clean_text(payload.get("to"), 160),
+        "subject": clean_text(payload.get("subject"), 240),
+        "body": body,
+        "updatedAt": now_iso()
+    }
+    attempt["draft"] = draft
+    attempt["courseCode"] = clean_text(payload.get("courseCode"), 40) or attempt.get("courseCode") or "BASIC-C1"
+    attempt["lastSavedAt"] = draft["updatedAt"]
+    attempt["lastSeenAt"] = draft["updatedAt"]
+    attempt["revision"] = int(attempt.get("revision", 0) or 0) + 1
+    write_basic_final_writing_store(store)
+    return 200, {"ok": True, "attempt": basic_final_writing_public_attempt(attempt)}
+
+
+def basic_final_writing_submit(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    if role not in ("admin", "teacher") and not isinstance(student, dict):
+        return 403, {"error": "student_not_authorized"}
+    if not isinstance(student, dict):
+        return 403, {"error": "student_required"}
+    student_id = clean_text(student.get("id"), 40)
+    bundle = read_basic_final_writing_bundle()
+    state = bundle.get("state", {})
+    if not basic_final_writing_can_start(role, state, student_id):
+        return 403, {"error": "exam_closed", "state": state}
+    store = read_basic_final_writing_store()
+    existing = store.get("submissions", {}).get(student_id)
+    if isinstance(existing, dict):
+        return 409, {"error": "already_submitted", "submission": basic_final_writing_submission_public(existing, role)}
+    attempt = store.get("attempts", {}).get(student_id)
+    if not isinstance(attempt, dict) or attempt.get("status") != "in_progress":
+        return 404, {"error": "attempt_not_found"}
+    attempt_id = clean_text(payload.get("attemptId"), 120)
+    if attempt_id and attempt_id != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    body = clean_basic_writing(payload.get("body"))
+    if not body:
+        return 400, {"error": "empty_writing"}
+    submitted_at = now_iso()
+    submission = {
+        "receiptId": "BFW-" + secrets.token_hex(5).upper(),
+        "attemptId": clean_text(attempt.get("attemptId"), 120),
+        "studentId": student_id,
+        "studentName": clean_text(student.get("fullName"), 200),
+        "email": normalize_email(profile.get("email") or student.get("email")),
+        "courseCode": clean_text(payload.get("courseCode"), 40) or clean_text(attempt.get("courseCode"), 40) or "BASIC-C1",
+        "submittedAt": submitted_at,
+        "status": "pending_teacher_review",
+        "workflowStatus": "pending_teacher_review",
+        "wordCount": basic_word_count(body),
+        "from": clean_text(payload.get("from"), 160),
+        "to": clean_text(payload.get("to"), 160),
+        "subject": clean_text(payload.get("subject"), 240),
+        "body": body,
+        "rubric": None,
+        "score50": None,
+        "grade": None,
+        "teacherComments": "",
+        "gradedAt": None,
+        "gradedBy": ""
+    }
+    store.setdefault("submissions", {})[student_id] = submission
+    attempt["status"] = "submitted"
+    attempt["submittedAt"] = submitted_at
+    attempt["lastSeenAt"] = submitted_at
+    basic_final_writing_append_event(store, "submitted", profile, student_id, submission["receiptId"])
+    if apply_basic_final_writing_status_to_gradebook(grades_data, store):
+        gradebook_changed = True
+    write_basic_final_writing_store(store)
+    if gradebook_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {"ok": True, "submission": basic_final_writing_submission_public(submission, role)}
+
+
+def basic_final_writing_grade(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    rubric = clean_basic_final_writing_rubric(payload.get("rubric"))
+    if rubric is None:
+        return 400, {"error": "invalid_rubric"}
+    student_id = clean_text(payload.get("studentId"), 40)
+    store = read_basic_final_writing_store()
+    submission = store.get("submissions", {}).get(student_id)
+    if not isinstance(submission, dict):
+        return 404, {"error": "submission_not_found"}
+    student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+    if not isinstance(student, dict):
+        return 404, {"error": "student_not_found"}
+    score50 = sum(rubric.values())
+    grade = round(float(score50) / 10.0, 2)
+    submission["rubric"] = rubric
+    submission["score50"] = score50
+    submission["grade"] = grade
+    submission["status"] = "graded"
+    submission["workflowStatus"] = "published"
+    submission["teacherComments"] = clean_text(payload.get("teacherComments"), 5000)
+    submission["gradedAt"] = now_iso()
+    submission["gradedBy"] = normalize_email(profile.get("email"))
+    ensure_evaluation_template(grades_data, BASIC_FINAL_WRITING_EVALUATION)
+    grades = student.setdefault("grades", {})
+    if not isinstance(grades, dict):
+        grades = {}
+        student["grades"] = grades
+    grades[BASIC_FINAL_WRITING_EVALUATION_ID] = grade
+    details = student.setdefault("gradeDetails", {})
+    if not isinstance(details, dict):
+        details = {}
+        student["gradeDetails"] = details
+    details[BASIC_FINAL_WRITING_EVALUATION_ID] = {
+        "evaluationId": BASIC_FINAL_WRITING_EVALUATION_ID,
+        "activityTitle": BASIC_FINAL_WRITING_EVALUATION["title"],
+        "status": "graded",
+        "submittedAt": clean_text(submission.get("submittedAt"), 80),
+        "gradedAt": clean_text(submission.get("gradedAt"), 80),
+        "receiptId": clean_text(submission.get("receiptId"), 100),
+        "score50": score50,
+        "grade": grade,
+        "pendingTeacherReview": False,
+        "weight": 20
+    }
+    basic_final_writing_append_event(store, "graded", profile, student_id, "Teacher saved /50 rubric")
+    write_basic_final_writing_store(store)
+    write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {"ok": True, "submission": basic_final_writing_submission_public(submission, role)}
+
+
+def basic_final_writing_submissions_payload(profile):
+    grades_data = read_basic_final_oral_grades_data()
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    bundle = read_basic_final_writing_bundle()
+    store = read_basic_final_writing_store()
+    gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+    if apply_basic_final_writing_status_to_gradebook(grades_data, store):
+        gradebook_changed = True
+    if gradebook_changed:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    submissions = [
+        basic_final_writing_submission_public(item, role)
+        for item in store.get("submissions", {}).values()
+        if isinstance(item, dict)
+    ]
+    submissions.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
+    return 200, {"role": role, "submissions": submissions, "health": basic_final_writing_health_payload(grades_data, bundle, store)}
+
+
+def basic_final_writing_student_action(profile, payload):
+    grades_data = read_basic_final_oral_grades_data()
+    role = grade_user_role(profile, grades_data)
+    if role not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    student_id = clean_text(payload.get("studentId"), 40)
+    action = clean_text(payload.get("action"), 80)
+    student = next((item for item in grades_data.get("students", []) if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id), None)
+    if not isinstance(student, dict):
+        return 404, {"error": "student_not_found"}
+    bundle = read_basic_final_writing_bundle()
+    state = bundle.setdefault("state", {})
+    store = read_basic_final_writing_store()
+    detail = ""
+    changed_grades = False
+    if action in ("reset", "reset-and-reopen"):
+        store.setdefault("attempts", {}).pop(student_id, None)
+        store.setdefault("submissions", {}).pop(student_id, None)
+        if isinstance(student.get("grades"), dict):
+            student["grades"].pop(BASIC_FINAL_WRITING_EVALUATION_ID, None)
+        if isinstance(student.get("gradeDetails"), dict):
+            student["gradeDetails"].pop(BASIC_FINAL_WRITING_EVALUATION_ID, None)
+        changed_grades = True
+        detail = "Final Writing Task state reset"
+        basic_final_writing_append_event(store, "student_reset", profile, student_id, detail)
+    if action in ("reopen", "reset-and-reopen"):
+        try:
+            hours = max(1, min(168, int(payload.get("hours", 48))))
+        except (TypeError, ValueError):
+            hours = 48
+        allowed_ids = state.setdefault("reopenStudentIds", [])
+        if not isinstance(allowed_ids, list):
+            allowed_ids = []
+        normalized = {clean_text(item, 40) for item in allowed_ids}
+        if student_id not in normalized:
+            allowed_ids.append(student_id)
+        state["reopenStudentIds"] = allowed_ids
+        state["reopenUntilEpoch"] = int(time.time()) + hours * 3600
+        state["reopenUntilLabel"] = "Available only for selected students for " + str(hours) + " hours from " + now_iso()
+        state["updatedAt"] = now_iso()
+        state["openedBy"] = normalize_email(profile.get("email"))
+        detail = "Student reopened for " + str(hours) + " hours"
+        basic_final_writing_append_event(store, "student_reopened", profile, student_id, detail)
+    if action == "close-reopen":
+        allowed_ids = state.get("reopenStudentIds", [])
+        if isinstance(allowed_ids, list):
+            state["reopenStudentIds"] = [item for item in allowed_ids if clean_text(item, 40) != student_id]
+        state["updatedAt"] = now_iso()
+        detail = "Student removed from individual reopen list"
+        basic_final_writing_append_event(store, "student_reopen_closed", profile, student_id, detail)
+    if action not in ("reset", "reopen", "reset-and-reopen", "close-reopen"):
+        return 400, {"error": "invalid_action"}
+    write_basic_final_writing_store(store)
+    write_basic_final_writing_bundle(bundle)
+    if changed_grades:
+        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+    return 200, {"ok": True, "detail": detail, "health": basic_final_writing_health_payload(grades_data, bundle, store)}
+
+
 def default_intermediate_integrated_task_bundle():
     return {
         "state": {
@@ -13711,6 +14361,65 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, basic_integrated_state_payload(profile, grades_data, bundle, submissions))
             return
 
+        if parsed.path == "/api/basic/final-writing/state":
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+                    bundle = read_basic_final_writing_bundle()
+                    store = read_basic_final_writing_store()
+                    if apply_basic_final_writing_status_to_gradebook(grades_data, store):
+                        gradebook_changed = True
+                    if gradebook_changed:
+                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                    json_response(self, 200, basic_final_writing_state_payload(profile, grades_data, bundle, store))
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/final-writing":
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    gradebook_changed = ensure_basic_gradebook_structure(grades_data)
+                    bundle = read_basic_final_writing_bundle()
+                    store = read_basic_final_writing_store()
+                    if apply_basic_final_writing_status_to_gradebook(grades_data, store):
+                        gradebook_changed = True
+                    role = grade_user_role(profile, grades_data)
+                    student = matched_student_for_profile(profile, grades_data)
+                    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+                    submission = store.get("submissions", {}).get(student_id) if student_id else None
+                    attempt = store.get("attempts", {}).get(student_id) if student_id else None
+                    state = bundle.get("state", {})
+                    if role not in ("admin", "teacher") and not isinstance(student, dict):
+                        json_response(self, 403, {"error": "not_authorized"})
+                        return
+                    if gradebook_changed:
+                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                    if isinstance(submission, dict):
+                        json_response(self, 200, {"status": "submitted", "role": role, "state": state, "exam": basic_final_writing_public_exam(bundle), "submission": basic_final_writing_submission_public(submission, role)})
+                        return
+                    if isinstance(attempt, dict) and attempt.get("status") == "in_progress":
+                        json_response(self, 200, {"status": "in_progress", "role": role, "state": state, "student": basic_final_writing_student_identity(student), "exam": basic_final_writing_public_exam(bundle), "attempt": basic_final_writing_public_attempt(attempt)})
+                        return
+                    if not basic_final_writing_can_start(role, state, student_id):
+                        json_response(self, 403, {"error": "exam_closed", "state": state})
+                        return
+                    json_response(self, 200, {"status": "open", "role": role, "state": state, "student": basic_final_writing_student_identity(student), "exam": basic_final_writing_public_exam(bundle)})
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/final-writing/submissions":
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_submissions_payload(profile)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
         if parsed.path == "/api/basic/integrated-task":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
@@ -13837,6 +14546,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     gradebook_changed = ensure_basic_gradebook_structure(grades_data)
                     submissions = read_basic_integrated_task_submissions()
                     if apply_basic_integrated_submission_status_to_gradebook(grades_data, submissions):
+                        gradebook_changed = True
+                    writing_store = read_basic_final_writing_store()
+                    if apply_basic_final_writing_status_to_gradebook(grades_data, writing_store):
                         gradebook_changed = True
                     oral_store = read_basic_final_oral_store()
                     if apply_basic_final_oral_submission_status_to_gradebook(grades_data, oral_store):
@@ -17025,6 +17737,80 @@ class ProgressHandler(BaseHTTPRequestHandler):
             try:
                 with data_lock:
                     status, response = basic_final_oral_student_action(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+
+        if parsed.path == "/api/basic/final-writing/state":
+            try:
+                with data_lock:
+                    grades_data = read_basic_final_oral_grades_data()
+                    if grade_user_role(profile, grades_data) != "admin":
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    bundle = read_basic_final_writing_bundle()
+                    state = bundle.setdefault("state", {})
+                    desired_open = payload.get("isOpen") is True
+                    timestamp = now_iso()
+                    state["isOpen"] = desired_open
+                    state["updatedAt"] = timestamp
+                    if desired_open:
+                        state["openedAt"] = timestamp
+                        state["openedBy"] = normalize_email(profile.get("email"))
+                        state["closedAt"] = None
+                    else:
+                        state["closedAt"] = timestamp
+                    write_basic_final_writing_bundle(bundle)
+                    store = read_basic_final_writing_store()
+                    basic_final_writing_append_event(store, "exam_opened" if desired_open else "exam_closed", profile, "", "Global Final Writing availability changed")
+                    write_basic_final_writing_store(store)
+                    json_response(self, 200, {"ok": True, "state": state})
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/final-writing/start":
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_start(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/final-writing/draft":
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_save_draft(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/final-writing/submit":
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_submit(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path in ("/api/basic/final-writing/grade", "/api/basic/final-writing/submissions/grade"):
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_grade(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/final-writing/student-action":
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_student_action(profile, payload)
                     json_response(self, status, response)
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})

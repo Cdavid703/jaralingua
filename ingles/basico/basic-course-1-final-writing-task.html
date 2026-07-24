@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Official Basic Course 1 Final Writing Task with secure access, autosave, teacher review, and institutional /50 rubric." />
+  <title>BASIC COURSE 1 - FINAL WRITING TASK (20%) | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
+  <link rel="stylesheet" href="../../assets/css/basic-final-writing-task.css?v=20260724-final-writing-v1" />
+</head>
+<body class="english-basic-page final-writing-page" data-exam-code="basic-course-1-final-writing-task">
+  <div class="institutional-band writing-institutional-band">
+    <img src="../../assets/img/english-basic/institutional/itm-integrated-task-header.jpg" width="1123" height="154" alt="ITM Institución Universitaria, 80 años, Hacia una era de Universidad y Humanidad" />
+  </div>
+
+  <div class="global-course-switcher" aria-label="Courses">
+    <details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../index.html">English</a><a href="./index.html">Basic English</a><a href="../intermediate/index.html">Intermediate English</a></nav></details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="../../index.html" class="logo"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="notas.html">Grades</a></li>
+      </ul>
+      <button class="auth-nav-toggle" type="button" data-auth-nav-toggle><span class="auth-avatar">J</span><span class="auth-label">Sign in</span></button>
+    </nav>
+  </header>
+
+  <main id="finalWritingApp">
+    <section class="writing-hero">
+      <div class="writing-hero-copy">
+        <span class="writing-pill"><i class="bi bi-shield-lock-fill"></i> Official assessment</span>
+        <p class="writing-kicker">BASIC COURSE 1</p>
+        <h1>FINAL WRITING TASK (20%)</h1>
+        <p>Write a short e-mail to a best friend about indoor and outdoor activities. Your work is saved while you write and submitted for teacher review with the institutional /50 rubric.</p>
+        <div class="writing-hero-actions">
+          <a class="writing-button secondary" href="index.html"><i class="bi bi-arrow-left"></i> Course home</a>
+          <button class="writing-button primary" type="button" data-scroll-access><i class="bi bi-fingerprint"></i> Verify access</button>
+        </div>
+      </div>
+      <figure class="writing-hero-image">
+        <img src="../../assets/img/english-basic/final-writing-task/hero-v1.png" width="1792" height="1024" alt="Adult English learner writing a short e-mail in a professional study room" />
+      </figure>
+    </section>
+
+    <section class="writing-shell access-shell" id="accessPanel" aria-labelledby="accessTitle">
+      <div class="access-card">
+        <div class="access-icon"><i class="bi bi-fingerprint"></i></div>
+        <div>
+          <p class="writing-kicker">Secure access</p>
+          <h2 id="accessTitle">Verify your exam access</h2>
+          <p id="accessStatus">Sign in with the Google, Microsoft, or course account linked to Basic Course 1. The teacher must activate the official exam before students can begin.</p>
+          <div class="account-chip" id="accountChip" hidden><span id="accountAvatar">ST</span><div><strong id="accountName">Verified student</strong><small id="accountEmail">Verified account</small></div></div>
+          <div class="writing-button-row">
+            <button class="writing-button primary" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Sign in</button>
+            <button class="writing-button secondary" type="button" id="checkAccessButton"><i class="bi bi-arrow-clockwise"></i> Check availability</button>
+            <button class="writing-button danger ghost" type="button" id="resetLoginButton"><i class="bi bi-box-arrow-right"></i> Reset login</button>
+          </div>
+          <div class="claim-panel" id="claimPanel" hidden>
+            <label><span>Document number / registered ID</span><input id="claimStudentId" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter your document number" /></label>
+            <button class="writing-button secondary" type="button" id="claimButton"><i class="bi bi-person-vcard"></i> Link account by ID</button>
+          </div>
+          <p class="access-message neutral" id="accessMessage" role="status" aria-live="polite"><i class="bi bi-info-circle"></i><span>Waiting for login.</span></p>
+          <div id="loginMount" data-login-mount></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="writing-shell admin-panel" id="adminPanel" hidden aria-labelledby="adminTitle">
+      <div class="section-heading">
+        <div><p class="writing-kicker">Administrator control room</p><h2 id="adminTitle">Final Writing Task availability</h2><p>Open or close the official assessment and monitor writing submissions.</p></div>
+        <span class="state-badge locked" id="adminStateBadge"><i class="bi bi-lock-fill"></i> Locked</span>
+      </div>
+      <div class="admin-grid">
+        <button class="writing-button success" type="button" id="activateWritingButton"><i class="bi bi-unlock-fill"></i> Activate exam</button>
+        <button class="writing-button danger" type="button" id="closeWritingButton"><i class="bi bi-lock-fill"></i> Close exam</button>
+        <button class="writing-button secondary" type="button" id="refreshReviewButton"><i class="bi bi-arrow-clockwise"></i> Refresh monitor</button>
+      </div>
+      <p class="admin-feedback" id="adminFeedback" role="status" aria-live="polite">No administrative action is pending.</p>
+      <div id="reviewPanel"></div>
+    </section>
+
+    <section class="writing-shell readiness-panel" id="readinessPanel" hidden aria-labelledby="readyTitle">
+      <div class="section-heading">
+        <div><p class="writing-kicker">Before you begin</p><h2 id="readyTitle">Final check</h2><p>Once you begin, the 50-minute timer is linked to your server attempt. If you leave the page, return with the same account and continue.</p></div>
+        <span class="timer-badge"><i class="bi bi-clock-history"></i> 50 minutes</span>
+      </div>
+      <div class="readiness-grid">
+        <article><strong>1. Stable connection</strong><span>Your writing is auto-saved, but keep the tab open when possible.</span></article>
+        <article><strong>2. Own work</strong><span>Write with your own Basic Course 1 English.</span></article>
+        <article><strong>3. Final submission</strong><span>After submitting, the teacher reviews and publishes the grade.</span></article>
+      </div>
+      <label class="integrity-check"><input id="integrityCheck" type="checkbox" /><span>I understand this is an official writing exam and I will submit my own work.</span></label>
+      <div class="writing-button-row">
+        <button class="writing-button primary large" type="button" id="beginButton" disabled><i class="bi bi-play-fill"></i> Begin final writing task</button>
+      </div>
+    </section>
+
+    <section class="writing-shell exam-panel" id="examPanel" hidden aria-labelledby="examTitle">
+      <div class="exam-topbar">
+        <div><p class="writing-kicker">Official e-mail task</p><h2 id="examTitle">BASIC COURSE 1 - FINAL WRITING TASK (20%)</h2></div>
+        <div class="timer-card" id="timerCard"><span>Time left</span><strong id="timerDisplay">50:00</strong></div>
+      </div>
+
+      <form id="writingForm">
+        <section class="institutional-paper">
+          <div class="paper-title">
+            <h3>BASIC COURSE 1 - FINAL WRITING TASK (20%)</h3>
+            <p>" Indoor-outdoor activities"</p>
+          </div>
+          <div class="identity-grid">
+            <label><span>Name</span><input id="studentName" readonly /></label>
+            <label><span>ID</span><input id="studentId" readonly /></label>
+            <label><span>Course code</span><input id="courseCode" value="BASIC-C1" maxlength="40" /></label>
+            <label><span>Date</span><input id="examDate" readonly /></label>
+          </div>
+          <div class="task-meta">
+            <p><strong>TYPE OF TASK:</strong> e-mail</p>
+            <p><strong>AUDIENCE:</strong> best friend</p>
+            <p><strong>PURPOSE:</strong> describe indoor and outdoor activities</p>
+          </div>
+          <p class="prompt"><strong>PROMPT:</strong> You have noticed that your best friend is feeling sad and tired. You want to help your friend feel happier and healthier, so you decide to write an e-mail suggesting some indoor and outdoor activities that can help your friend feel better, have more energy, and improve their health.</p>
+          <div class="instructions">
+            <strong>INSTRUCTIONS: In your email you must,</strong>
+            <ol type="a">
+              <li>Start your email with a friendly greeting.</li>
+              <li>Suggest some indoor and outdoor activities to your friend.</li>
+              <li>Give examples of activities that can help your friend feel better and stay healthy, for example yoga, walking, cycling, or cooking.</li>
+              <li>Finish your email with a proper closing.</li>
+              <li>Spend 50 minutes on this task.</li>
+              <li>Write around 80 words.</li>
+            </ol>
+          </div>
+
+          <div class="email-grid">
+            <label><span>From</span><input id="emailFrom" autocomplete="off" /></label>
+            <label><span>To</span><input id="emailTo" autocomplete="off" placeholder="Example: my best friend" /></label>
+            <label><span>Subject</span><input id="emailSubject" autocomplete="off" placeholder="Example: Activities to feel better" /></label>
+          </div>
+          <div class="email-body-card">
+            <p class="fixed-line">Hi dear friend,</p>
+            <label for="emailBody">Write your e-mail body here</label>
+            <textarea id="emailBody" rows="15" required spellcheck="true" autocomplete="off"></textarea>
+            <p class="fixed-line">Always here for you!</p>
+          </div>
+        </section>
+
+        <aside class="writing-tools">
+          <div class="tool-card">
+            <span>Words</span>
+            <strong id="wordCounter">0</strong>
+            <small id="wordAdvice">Target: around 80 words. This is guidance, not a blocking check.</small>
+          </div>
+          <div class="tool-card">
+            <span>Save status</span>
+            <strong id="saveStatus">Not saved yet</strong>
+            <small>Server autosave runs while you type. A local emergency copy is also kept in this browser.</small>
+          </div>
+          <label class="integrity-check final"><input id="submitCheck" type="checkbox" /><span>I reviewed my e-mail and want to submit it to the teacher.</span></label>
+          <button class="writing-button primary full" type="submit" id="submitButton" disabled><i class="bi bi-send-check-fill"></i> Submit final writing task</button>
+          <p class="submit-status" id="submitStatus" role="status" aria-live="polite"></p>
+        </aside>
+      </form>
+    </section>
+
+    <section class="writing-shell submitted-panel" id="submittedPanel" hidden aria-labelledby="submittedTitle">
+      <div class="section-heading">
+        <div><p class="writing-kicker">Submission receipt</p><h2 id="submittedTitle">Your writing task was submitted</h2><p id="submittedSummary">Waiting for teacher review.</p></div>
+        <span class="state-badge open"><i class="bi bi-check-circle-fill"></i> Submitted</span>
+      </div>
+      <div id="submittedContent"></div>
+    </section>
+  </main>
+
+  <div class="institutional-footer writing-institutional-footer">
+    <img src="../../assets/img/english-basic/institutional/itm-integrated-task-footer.jpg" width="1123" height="135" alt="ITM institutional contact information and Alcaldía de Medellín" />
+  </div>
+
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260707-basic-claims"></script>
+  <script src="../../assets/js/basic-final-writing-task.js?v=20260724-final-writing-v1"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
