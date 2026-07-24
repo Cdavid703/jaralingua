@@ -1169,8 +1169,14 @@ def read_store():
 def write_store(data):
     directory = os.path.dirname(DATA_PATH)
     os.makedirs(directory, exist_ok=True)
+    existing_stat = None
+    try:
+        existing_stat = os.stat(DATA_PATH)
+    except OSError:
+        existing_stat = None
     fd, temp_path = tempfile.mkstemp(prefix=".progress-", suffix=".json", dir=directory)
     try:
+        apply_existing_file_metadata(fd, existing_stat)
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             json.dump(data, handle, ensure_ascii=False, indent=2, sort_keys=True)
             handle.write("\n")
@@ -1180,11 +1186,31 @@ def write_store(data):
             os.unlink(temp_path)
 
 
+def apply_existing_file_metadata(fd, existing_stat):
+    if existing_stat is None:
+        return
+    try:
+        os.fchmod(fd, existing_stat.st_mode & 0o777)
+    except OSError:
+        pass
+    if hasattr(os, "fchown"):
+        try:
+            os.fchown(fd, existing_stat.st_uid, existing_stat.st_gid)
+        except OSError:
+            pass
+
+
 def write_json_file(path, data, prefix):
     directory = os.path.dirname(path)
     os.makedirs(directory, exist_ok=True)
+    existing_stat = None
+    try:
+        existing_stat = os.stat(path)
+    except OSError:
+        existing_stat = None
     fd, temp_path = tempfile.mkstemp(prefix=prefix, suffix=".json", dir=directory)
     try:
+        apply_existing_file_metadata(fd, existing_stat)
         with os.fdopen(fd, "w", encoding="utf-8") as handle:
             json.dump(data, handle, ensure_ascii=False, indent=2)
             handle.write("\n")
