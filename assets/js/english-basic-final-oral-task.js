@@ -47,7 +47,7 @@
     "lease_required", "lease_expired", "lease_conflict"
   ]);
   // The seven caps add up to exactly 180 seconds, the official upper limit.
-  const TURN_LIMIT_SECONDS = Object.freeze({ "1": 20, "2": 22, "3": 24, "4": 28, "5": 26, "6": 32, interaction: 28 });
+  const TURN_LIMIT_SECONDS = Object.freeze({ "1": 45, "2": 45, "3": 45, "4": 45, "5": 45, "6": 45, interaction: 45 });
   const RUBRIC = Object.freeze([
     { key: "taskCompletion", label: "Task completion" },
     { key: "interactionDiscourse", label: "Interaction and discourse" },
@@ -1453,6 +1453,14 @@
       : 'Next question <i class="bi bi-arrow-right"></i>';
   }
 
+  function renderStudentTranscript(text, fallback = "Your transcription will appear here after you finish your answer.") {
+    if (!elements.transcript) return;
+    const value = String(text || "").trim();
+    setHidden(elements.transcript, false);
+    setText(elements.transcript, value || fallback);
+    elements.transcript.classList.toggle("has-text", Boolean(value));
+  }
+
   function enableOfficialStartIfAllowed() {
     if (role !== "student" || submission) return;
     if (attempt) setDisabled(elements.resume || elements.start, false);
@@ -1469,7 +1477,7 @@
       <i class="bi bi-check2-circle"></i>
       <div>
         <strong>${savedView ? "This answer is already saved" : "Answer captured securely"}</strong>
-        <p>${savedView ? "You may continue or record this answer again before the final submission." : "Your response was saved. You may continue or record this answer again before the final submission."}</p>
+        <p>${savedView ? "Use Next question when you are ready, or record this answer again before the final submission." : "Your response was saved. Use Next question when you are ready, or record this answer again before the final submission."}</p>
         <button class="official-button secondary compact" type="button" data-repeat-current-answer><i class="bi bi-arrow-repeat"></i> Record this answer again</button>
       </div>`;
   }
@@ -1949,9 +1957,10 @@
     setHidden(elements.reaction, true);
     setHidden(elements.recovery, true);
     questionHeard = false;
-    savedCurrentTurn = adminPreviewMode ? false : Boolean(attempt?.turns?.[question.turnId]);
+    const savedTurn = adminPreviewMode ? null : attempt?.turns?.[question.turnId];
+    savedCurrentTurn = Boolean(savedTurn);
     currentBlob = null;
-    currentTranscript = "";
+    currentTranscript = String(savedTurn?.transcript || "");
     currentClientTurnId = "";
     recordingDurationMs = 0;
     if (objectUrl) { URL.revokeObjectURL(objectUrl); objectUrl = ""; }
@@ -1964,10 +1973,9 @@
     setText(elements.recordHelp, adminPreviewMode
       ? "Preview only. You may rehearse with the microphone or use the administrator controls to browse without recording."
       : question.unit === "interaction" ? "Record both questions in one response. No answer model or hint is shown during the exam." : "No answer model, vocabulary hint, or correction is shown during the exam.");
-    setText(elements.transcript, adminPreviewMode ? "Your private preview transcript will appear here after recording." : "Your transcript is stored privately for teacher review after the recording is saved.");
-    setHidden(elements.transcript, !adminPreviewMode);
+    if (typeof renderStudentTranscript === "function") renderStudentTranscript(currentTranscript, savedCurrentTurn ? "Transcript pending. Your verified audio is already saved." : "Your transcription will appear here after you finish your answer.");
     setText(elements.saveStatus, adminPreviewMode ? "ADMIN PREVIEW · nothing is saved" : savedCurrentTurn ? "Response already saved." : "Not saved yet.");
-    setText(elements.timer, `0:00 / 0:${String(TURN_LIMIT_SECONDS[question.unit] || 28).padStart(2, "0")}`);
+    setText(elements.timer, `0:00 / 0:${String(TURN_LIMIT_SECONDS[question.unit] || 45).padStart(2, "0")}`);
     setText(elements.dockLabel, `Response ${currentIndex + 1} of ${REQUIRED_TURNS}`);
     setText(elements.dockTimer, "0:00");
     setHidden(elements.dock, false);
@@ -1990,7 +1998,6 @@
     setHidden(elements.adminPreviewToolbar, !adminPreviewMode);
     updateAdminPreviewNavigation();
     if (!adminPreviewMode) {
-      const savedTurn = attempt?.turns?.[question.turnId];
       const transcriptState = String(savedTurn?.transcriptStatus || (savedTurn?.transcript ? "complete" : "pending"));
       setPipeline(savedCurrentTurn ? (transcriptState === "complete" ? "transcript" : "audio") : "queued", savedCurrentTurn && transcriptState === "complete" ? "complete" : "active");
       setWorkflowMessage(savedCurrentTurn ? "Audio saved" : "Ready to record", savedCurrentTurn ? (transcriptState === "complete" ? "Audio and transcript are secured." : "Transcript is pending and does not block your exam.") : "The recording will be protected locally, then verified by the server.");
@@ -2283,7 +2290,7 @@
 
   function updateRecordingTimer() {
     const elapsed = Date.now() - recordingStartedAt;
-    const limit = (TURN_LIMIT_SECONDS[currentQuestion()?.unit] || 28) * 1000;
+    const limit = (TURN_LIMIT_SECONDS[currentQuestion()?.unit] || 45) * 1000;
     setText(elements.timer, `${formatDuration(elapsed)} / ${formatDuration(limit)}`);
     setText(elements.dockTimer, formatDuration(elapsed));
   }
@@ -2329,7 +2336,7 @@
       updateRecordingControls(true);
       updateRecordingTimer();
       timerHandle = window.setInterval(updateRecordingTimer, 200);
-      const limit = (TURN_LIMIT_SECONDS[currentQuestion()?.unit] || 28) * 1000;
+      const limit = (TURN_LIMIT_SECONDS[currentQuestion()?.unit] || 45) * 1000;
       autoStopHandle = window.setTimeout(stopRecording, limit);
     } catch (error) {
       if (recordingSession !== sessionGeneration) return;
@@ -2563,14 +2570,16 @@
         if (jobSession !== sessionGeneration) return;
         if (currentQuestion()?.turnId === record.turnId) {
           currentTranscript = transcript;
-          setText(elements.transcript, "Transcript completed and stored privately for teacher review.");
+          if (typeof renderStudentTranscript === "function") renderStudentTranscript(transcript);
+          else setText(elements.transcript, transcript);
           setPipeline("transcript", "complete");
-          setWorkflowMessage("Audio and transcript secured", "You may continue. The recording remains the primary evidence.");
+          setWorkflowMessage("Audio and transcript secured", "Use Next question when you are ready. The recording remains the primary evidence.");
         }
         return turn;
       } catch {
         if (jobSession === sessionGeneration && currentQuestion()?.turnId === record.turnId) {
-          setText(elements.transcript, "Transcript pending. Your verified audio is already saved and you may continue.");
+          if (typeof renderStudentTranscript === "function") renderStudentTranscript("", "Transcript pending. Your verified audio is already saved. Use Next question when you are ready.");
+          else setText(elements.transcript, "Transcript pending. Your verified audio is already saved. Use Next question when you are ready.");
           setPipeline("transcript", "active");
           setWorkflowMessage("Audio saved", "Transcription is pending and will not block this exam.", "bi-cloud-check-fill");
         }
@@ -2590,7 +2599,8 @@
       objectUrl = URL.createObjectURL(record.blob);
       if (elements.studentAudio) { elements.studentAudio.src = objectUrl; elements.studentAudio.hidden = false; }
     }
-    setText(elements.transcript, currentTranscript ? "Recovered transcript stored privately for teacher review." : "Transcript pending. The recovered audio is already verified.");
+    if (typeof renderStudentTranscript === "function") renderStudentTranscript(currentTranscript, currentTranscript ? "" : "Transcript pending. The recovered audio is already verified.");
+    else setText(elements.transcript, currentTranscript || "Transcript pending. The recovered audio is already verified.");
     setText(elements.recordStatus, "Your queued answer was recovered and verified by the server. Use Next question when you are ready.");
     setText(elements.saveStatus, `Recovered securely · response ${currentIndex + 1} of ${REQUIRED_TURNS}`);
     if (typeof renderCapturedNotice === "function") renderCapturedNotice(false);
@@ -2728,7 +2738,8 @@
       savedCurrentTurn = true;
       currentQueueId = "";
       currentTranscript = String(savedTurn.transcript || "");
-      setText(elements.transcript, currentTranscript ? "Transcript stored privately for teacher review." : "Transcript pending. Your verified audio is already saved.");
+      if (typeof renderStudentTranscript === "function") renderStudentTranscript(currentTranscript, "Transcript pending. Your verified audio is already saved.");
+      else setText(elements.transcript, currentTranscript || "Transcript pending. Your verified audio is already saved.");
       setText(elements.recordStatus, "Official audio saved and verified. Use Next question when you are ready.");
       setText(elements.saveStatus, `Audio saved securely · response ${currentIndex + 1} of ${REQUIRED_TURNS} · transcript ${currentTranscript ? "complete" : "pending"}`);
       if (typeof renderCapturedNotice === "function") renderCapturedNotice(false);
@@ -2828,7 +2839,7 @@
     stopExamClock();
     const savedCount = Object.keys(attempt?.turns || {}).length;
     const duration = totalRecordedDuration();
-    setText(elements.duration, `${savedCount} of ${REQUIRED_TURNS} responses saved · recorded speaking time ${formatDuration(duration)} · official target 2:30–3:00`);
+    setText(elements.duration, `${savedCount} of ${REQUIRED_TURNS} responses saved · recorded speaking time ${formatDuration(duration)} · maximum allowed time 5:15`);
     elements.submissionGrid?.querySelectorAll("[data-submission-unit]").forEach((card) => {
       const unit = card.dataset.submissionUnit;
       const turnId = unit === "interaction" ? "interaction" : `unit-${unit}`;

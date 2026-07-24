@@ -89,7 +89,7 @@ const publishMutation = api.buildGradeMutation("publish", { studentId: "S1", rec
 assert.strictEqual(publishMutation.action, "publish");
 assert.strictEqual(publishMutation.expectedRevision, 5, "Publish must compare the latest grade revision");
 assert.strictEqual(publishMutation.reason, "Correction reason", "Published-grade corrections need an auditable reason");
-assert.strictEqual(Object.values(api.TURN_LIMIT_SECONDS).reduce((sum, value) => sum + value, 0), 180, "Seven recording caps must total the official three-minute maximum");
+assert.strictEqual(Object.values(api.TURN_LIMIT_SECONDS).reduce((sum, value) => sum + value, 0), 315, "Seven recording caps must allow up to 45 seconds per answer");
 assert.deepStrictEqual(Array.from(api.RUBRIC, (item) => item.key), [
   "taskCompletion", "interactionDiscourse", "fluency", "vocabularyStructure", "pronunciation"
 ]);

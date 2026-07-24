@@ -1918,6 +1918,27 @@
   line-height: 1.45;
 }
 
+.official-live-transcript {
+  min-height: 58px;
+  margin-top: .85rem;
+  padding: .85rem .95rem;
+  border-radius: 12px;
+  border: 1px solid rgba(12, 44, 74, .1);
+  background: #f5f9fc;
+  color: #5d7489;
+  text-align: left;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  box-shadow: inset 4px 0 0 rgba(8, 126, 136, .2);
+}
+
+.official-live-transcript.has-text {
+  color: var(--oral-ink);
+  background: #f2fbf9;
+  border-color: rgba(8, 126, 136, .22);
+  box-shadow: inset 4px 0 0 var(--oral-cyan-dark), 0 10px 24px rgba(8, 126, 136, .08);
+}
+
 .official-button.compact {
   min-height: 34px;
   padding: .38rem .58rem;

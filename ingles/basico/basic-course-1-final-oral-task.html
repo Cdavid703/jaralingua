@@ -181,7 +181,7 @@
             <div class="recorder-header"><div><p class="official-kicker">Your official answer</p><h2>Speak when you are ready</h2></div><span class="answer-state ready" id="answerState"><i class="bi bi-circle-fill"></i> Ready</span></div>
             <div class="recorder-device-row"><label class="microphone-picker"><span><i class="bi bi-mic"></i> Microphone verified in preflight</span><select id="microphoneSelect"><option value="">Default microphone</option></select></label><div class="official-level"><span>Voice level</span><div id="levelMeterTrack" role="progressbar" aria-label="Microphone input level" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div></div>
             <button class="official-mic-button" id="micButton" type="button" aria-label="Start recording your official answer"><span class="mic-rings" aria-hidden="true"><i></i><i></i></span><i class="bi bi-mic-fill"></i><strong>Tap to answer</strong></button>
-            <p class="record-status" id="recordStatus">Your response has not started.</p><span class="record-timer" id="recordTimer">00:00 / 00:30</span>
+            <p class="record-status" id="recordStatus">Your response has not started.</p><span class="record-timer" id="recordTimer">00:00 / 00:45</span>
             <div class="voice-waveform" id="voiceWaveform" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
             <div class="recorder-actions"><button class="official-button secondary" id="previousTurnButton" type="button" hidden><i class="bi bi-arrow-left"></i> Previous answer</button><button class="official-button danger" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish answer</button><button class="official-button primary" id="nextTurnButton" type="button" disabled>Next question <i class="bi bi-arrow-right"></i></button></div>
             <audio id="studentAudio" controls hidden></audio>
@@ -189,7 +189,7 @@
             <ol class="response-security-pipeline" id="responseSecurityPipeline" aria-label="Response security status">
               <li data-pipeline-step="queued"><i class="bi bi-device-ssd"></i><span>Protected on this device</span></li><li data-pipeline-step="audio"><i class="bi bi-cloud-check"></i><span>Audio verified by server</span></li><li data-pipeline-step="transcript"><i class="bi bi-card-text"></i><span>Transcript pending</span></li>
             </ol>
-            <div id="liveTranscript" hidden></div>
+            <div class="official-live-transcript" id="liveTranscript" aria-live="polite">Your transcription will appear here after you finish your answer.</div>
             <div class="technical-recovery" id="technicalRecovery" hidden><i class="bi bi-wifi-off"></i><div><strong>We could not process this answer yet</strong><p id="technicalRecoveryMessage">Your recording remains on this screen. Retry the technical process without recording a new answer.</p><div class="official-button-row"><button class="official-button secondary" id="retryProcessingButton" type="button"><i class="bi bi-arrow-clockwise"></i> Retry secure processing</button><button class="official-button secondary" id="recordAgainButton" type="button"><i class="bi bi-mic"></i> Record again after technical failure</button></div></div></div>
             <div class="unsupported-message" id="unsupportedMessage" hidden></div>
           </section>
@@ -267,7 +267,7 @@
       <section class="teacher-feedback-panel"><label><span><i class="bi bi-chat-heart-fill"></i><strong>Teacher feedback for the student</strong><small>Highlight specific strengths, corrections, and one achievable next step.</small></span><textarea id="teacherFeedback" rows="7" placeholder="Write clear, direct feedback to the student…"></textarea></label><div class="publish-grade-card"><div><small>Official result</small><strong><span id="publishScore">0</span><em>/50</em></strong><p>Equivalent grade: <b id="publishGrade">0.0 / 5.0</b></p></div><div class="grade-action-row"><button class="official-button secondary large" id="saveGradeDraftButton" type="button" disabled><i class="bi bi-floppy-fill"></i> Save private draft</button><button class="official-button success large" id="publishGradeButton" type="button" disabled><i class="bi bi-patch-check-fill"></i> Publish grade and feedback</button></div><p id="publishStatus" role="status" aria-live="polite">Complete the five criteria and feedback before publishing.</p><details class="grade-history"><summary><i class="bi bi-clock-history"></i> Grade history and revisions</summary><ol id="gradeHistoryList"><li>No grade revision has been recorded.</li></ol></details></div></section>
     </section>
 
-    <div class="floating-mic-dock" id="floatingMicDock" data-state="ready" role="region" aria-label="Floating official recording controls" hidden><div class="floating-copy"><span id="floatingTurnLabel">Unit 1 · Question 1</span><strong id="floatingStatus" aria-live="polite">Ready to answer</strong></div><span class="floating-timer" id="floatingTimer">00:00 / 00:30</span><button class="floating-action" id="floatingMicButton" type="button" aria-label="Start official answer"><i class="bi bi-mic-fill"></i><span>Answer</span></button><button class="floating-action stop" id="floatingStopButton" type="button" aria-label="Finish official answer" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
+    <div class="floating-mic-dock" id="floatingMicDock" data-state="ready" role="region" aria-label="Floating official recording controls" hidden><div class="floating-copy"><span id="floatingTurnLabel">Unit 1 · Question 1</span><strong id="floatingStatus" aria-live="polite">Ready to answer</strong></div><span class="floating-timer" id="floatingTimer">00:00 / 00:45</span><button class="floating-action" id="floatingMicButton" type="button" aria-label="Start official answer"><i class="bi bi-mic-fill"></i><span>Answer</span></button><button class="floating-action stop" id="floatingStopButton" type="button" aria-label="Finish official answer" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
     <div class="official-toast" id="officialToast" role="status" aria-live="polite" hidden></div>
     <div class="official-busy-overlay" id="busyOverlay" role="status" aria-live="assertive" aria-modal="true" tabindex="-1" hidden><span aria-hidden="true"><i></i><i></i><i></i></span><strong id="busyMessage">Securing your response…</strong></div>
   </main>
@@ -279,7 +279,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
-  <script src="../../assets/js/english-basic-final-oral-task.js?v=20260723-repeat-answers-v3"></script>
+  <script src="../../assets/js/english-basic-final-oral-task.js?v=20260723-45s-transcript-v1"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>
