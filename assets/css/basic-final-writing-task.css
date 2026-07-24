@@ -50,6 +50,8 @@ textarea{resize:vertical;min-height:280px;line-height:1.55}
 .readiness-grid article,.tool-card{padding:1rem;border:1px solid var(--fw-line);border-radius:20px;background:var(--fw-soft)}
 .readiness-grid strong,.readiness-grid span{display:block}
 .readiness-grid span,.tool-card small{color:var(--fw-muted);line-height:1.45;margin-top:.35rem}
+.pre-exam-identity{display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:.75rem;margin:1rem 0;padding:1rem;border:1px solid var(--fw-line);border-radius:20px;background:#fff}
+.pre-exam-identity input{background:#f8fbfe;font-weight:800}
 .integrity-check{display:flex;gap:.75rem;align-items:flex-start;margin:1rem 0;padding:1rem;border-radius:18px;background:#f8fbfe;border:1px solid var(--fw-line);font-weight:800}
 .integrity-check input{width:auto;margin-top:.25rem}
 .exam-topbar{position:sticky;top:.5rem;z-index:5;background:rgba(255,255,255,.92);backdrop-filter:blur(12px);border:1px solid var(--fw-line);border-radius:22px;padding:1rem}
@@ -100,13 +102,13 @@ textarea{resize:vertical;min-height:280px;line-height:1.55}
 @media (max-width:980px){
   .writing-hero{grid-template-columns:1fr;padding:1rem}.writing-hero-image{min-height:260px}
   #writingForm{grid-template-columns:1fr}.writing-tools{position:static}
-  .identity-grid,.readiness-grid,.admin-grid,.submitted-grid,.rubric-grid{grid-template-columns:1fr 1fr}
+  .identity-grid,.readiness-grid,.admin-grid,.submitted-grid,.rubric-grid,.pre-exam-identity{grid-template-columns:1fr 1fr}
 }
 @media (max-width:720px){
   .writing-shell,.writing-hero{width:min(100% - .75rem,1180px);border-radius:20px}
   .access-card,.claim-panel{grid-template-columns:1fr}
   .section-heading,.exam-topbar{display:grid}
-  .readiness-grid,.admin-grid,.submitted-grid,.rubric-grid,.identity-grid{grid-template-columns:1fr}
+  .readiness-grid,.admin-grid,.submitted-grid,.rubric-grid,.identity-grid,.pre-exam-identity{grid-template-columns:1fr}
   .email-grid label{grid-template-columns:82px 1fr}
   .institutional-paper{padding:.8rem}
   .email-body-card textarea{min-height:380px;font-size:1rem}

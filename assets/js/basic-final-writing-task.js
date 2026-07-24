@@ -16,7 +16,7 @@
     access:$("accessPanel"),accessStatus:$("accessStatus"),accessMessage:$("accessMessage"),account:$("accountChip"),accountAvatar:$("accountAvatar"),accountName:$("accountName"),accountEmail:$("accountEmail"),
     claimPanel:$("claimPanel"),claimInput:$("claimStudentId"),claimButton:$("claimButton"),check:$("checkAccessButton"),reset:$("resetLoginButton"),
     admin:$("adminPanel"),adminBadge:$("adminStateBadge"),adminFeedback:$("adminFeedback"),activate:$("activateWritingButton"),close:$("closeWritingButton"),preview:$("previewWritingButton"),refreshReview:$("refreshReviewButton"),review:$("reviewPanel"),
-    ready:$("readinessPanel"),integrity:$("integrityCheck"),begin:$("beginButton"),
+    ready:$("readinessPanel"),integrity:$("integrityCheck"),begin:$("beginButton"),readyName:$("readyStudentName"),readyId:$("readyStudentId"),readyDate:$("readyExamDate"),
     exam:$("examPanel"),form:$("writingForm"),studentName:$("studentName"),studentId:$("studentId"),courseCode:$("courseCode"),examDate:$("examDate"),from:$("emailFrom"),to:$("emailTo"),subject:$("emailSubject"),body:$("emailBody"),words:$("wordCounter"),wordAdvice:$("wordAdvice"),saveStatus:$("saveStatus"),submit:$("submitButton"),submitStatus:$("submitStatus"),timer:$("timerDisplay"),timerCard:$("timerCard"),backToAdmin:$("backToAdminButton"),
     submitted:$("submittedPanel"),submittedSummary:$("submittedSummary"),submittedContent:$("submittedContent")
   };
@@ -37,7 +37,7 @@
   function wordCount(text){return (String(text||"").trim().match(/\b[\w'-]+\b/g)||[]).length}
   function setPanels(active){["access","admin","ready","exam","submitted"].forEach(name=>setHidden(els[name],name!==active));if(active==="access")setHidden(els.access,false)}
   function fillAccount(identity){const name=(identity&&identity.fullName)||user&&user.name||user&&user.email||"Verified account";const email=user&&user.email||identity&&identity.email||"Verified account";const initials=name.split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join("").toUpperCase()||"ST";els.accountAvatar.textContent=initials;els.accountName.textContent=name;els.accountEmail.textContent=email;setHidden(els.account,false)}
-  function fillIdentity(identity){identity=identity||student||{};els.studentName.value=identity.fullName||identity.name||user&&user.name||"";els.studentId.value=identity.id||"";els.examDate.value=today();if(!els.courseCode.value)els.courseCode.value="BASIC-C1";fillAccount(identity)}
+  function fillIdentity(identity){identity=identity||student||{};const name=identity.fullName||identity.name||user&&user.name||"";const id=identity.id||"";const date=today();els.studentName.value=name;els.studentId.value=id;els.examDate.value=date;if(els.readyName)els.readyName.value=name;if(els.readyId)els.readyId.value=id;if(els.readyDate)els.readyDate.value=date;if(!els.courseCode.value)els.courseCode.value="BASIC-C1";fillAccount(identity)}
   function collectDraft(){return{attemptId:attempt&&attempt.attemptId||"",courseCode:els.courseCode.value||"BASIC-C1",from:els.from.value,to:els.to.value,subject:els.subject.value,body:els.body.value,updatedAt:new Date().toISOString()}}
   function localDraftKey(){return KEY.localDraft+"_"+accountScope()}
   function saveLocalDraft(){try{localStorage.setItem(localDraftKey(),JSON.stringify(collectDraft()))}catch{}}
