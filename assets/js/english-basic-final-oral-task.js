@@ -187,7 +187,7 @@
   const hasAssignedQuestionContract = (value) => isRecord(value) && hasText(value.turnId) && hasText(value.variantId)
     && hasText(value.unit) && hasText(value.question) && hasText(value.promptAudioUrl) && Number(value.sequence) >= 1;
   const isScopedAttemptContract = (value) => isAttemptContract(value) && hasText(value.attemptScopeToken)
-    && hasText(value.transcriberScopeToken) && hasExpiryValue(value.transcriberScopeExpiresAt)
+    && (!value.transcriberScopeToken || (hasText(value.transcriberScopeToken) && hasExpiryValue(value.transcriberScopeExpiresAt)))
     && value.assignedQuestions.length === REQUIRED_TURNS && value.assignedQuestions.every(hasAssignedQuestionContract)
     && new Set(value.assignedQuestions.map((question) => question.turnId)).size === REQUIRED_TURNS
     && Object.keys(value.turns || {}).every((turnId) => value.assignedQuestions.some((question) => question.turnId === turnId));
