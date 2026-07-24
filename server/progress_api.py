@@ -771,17 +771,6 @@ FRENCH8_BASE_EVALUATIONS = {
     }
 }
 
-FRENCH8_EXCHANGE_STUDENT = {
-    "id": "23209116",
-    "fullName": "Javier Armando Malpica Vega",
-    "level": "Niveau 8",
-    "email": "23209116@uan.edu.mx",
-    "emailAliases": [],
-    "contact": "Alumno de Mexico de intercambio",
-    "bookDate": None,
-    "grades": {}
-}
-
 FRENCH1_PRONUNCIATION_EVALUATIONS = {
     "pronunciationTheme1": {
         "id": "pronunciationTheme1",
@@ -2123,52 +2112,9 @@ def normalize_french8_base_evaluation_weights(grades_data):
     return changed
 
 
-def ensure_french8_exchange_student(grades_data):
-    students = grades_data.setdefault("students", [])
-    if not isinstance(students, list):
-        students = []
-        grades_data["students"] = students
-
-    target_email = normalize_email(FRENCH8_EXCHANGE_STUDENT["email"])
-    target_id = FRENCH8_EXCHANGE_STUDENT["id"]
-    student = next(
-        (
-            item for item in students
-            if isinstance(item, dict)
-            and (
-                str(item.get("id", "")).strip() == target_id
-                or email_matches_student(item, target_email)
-            )
-        ),
-        None
-    )
-    if not student:
-        students.append(dict(FRENCH8_EXCHANGE_STUDENT))
-        return True
-
-    changed = False
-    for key in ("id", "fullName", "level", "email", "contact"):
-        expected = FRENCH8_EXCHANGE_STUDENT[key]
-        if student.get(key) != expected:
-            student[key] = expected
-            changed = True
-    if not isinstance(student.get("emailAliases"), list):
-        student["emailAliases"] = []
-        changed = True
-    if "bookDate" not in student:
-        student["bookDate"] = None
-        changed = True
-    if not isinstance(student.get("grades"), dict):
-        student["grades"] = {}
-        changed = True
-    return changed
-
-
 def ensure_french8_gradebook_structure(grades_data):
     changed = ensure_french8_pronunciation_evaluations(grades_data)
     if normalize_french8_base_evaluation_weights(grades_data):
-        changed = True
-    if ensure_french8_exchange_student(grades_data):
         changed = True
     return changed
 

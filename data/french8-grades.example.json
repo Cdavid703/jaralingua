@@ -6,18 +6,7 @@
     "teacher@example.com"
   ],
   "allowStudentIdClaim": false,
-  "students": [
-    {
-      "id": "23209116",
-      "fullName": "Javier Armando Malpica Vega",
-      "level": "Niveau 8",
-      "email": "23209116@uan.edu.mx",
-      "emailAliases": [],
-      "contact": "Alumno de Mexico de intercambio",
-      "bookDate": null,
-      "grades": {}
-    }
-  ],
+  "students": [],
   "evaluations": [
     {
       "id": "pronunciation01d",
