@@ -87,6 +87,24 @@
     return typeof value === "number" ? value.toFixed(2) : "En attente";
   }
 
+  function hasGradeWeight(evaluation) {
+    return Number(evaluation && evaluation.weight) > 0;
+  }
+
+  function gradedEvaluations(evaluations) {
+    return (Array.isArray(evaluations) ? evaluations : []).filter(hasGradeWeight);
+  }
+
+  function gradebookEvaluations(payload) {
+    return gradedEvaluations(payload && payload.evaluations);
+  }
+
+  function visibleGradeIds(payload) {
+    return new Set(gradebookEvaluations(payload).map(function (evaluation) {
+      return evaluation.id;
+    }));
+  }
+
   function formatDetailScore(value, suffix) {
     const number = Number(value);
     if (!Number.isFinite(number)) return "";
@@ -178,6 +196,7 @@
     let earned = 0;
     const grades = student.grades || {};
     evaluations.forEach(function (evaluation) {
+      if (!hasGradeWeight(evaluation)) return;
       const grade = grades[evaluation.id];
       if (typeof grade !== "number") return;
       completedWeight += evaluation.weight;
@@ -191,7 +210,7 @@
   }
 
   function obligationItems(student, payload) {
-    const events = payload.bonusEvent ? payload.evaluations.concat([payload.bonusEvent]) : payload.evaluations;
+    const events = gradebookEvaluations(payload);
     const grades = student.grades || {};
     return events.map(function (evaluation) {
       const dateValue = dateForEvaluation(evaluation, student);
@@ -324,7 +343,7 @@
 
   function studentGradesRows(student, evaluations) {
     const grades = student.grades || {};
-    return evaluations.map(function (evaluation) {
+    return gradedEvaluations(evaluations).map(function (evaluation) {
       const status = gradeStatus(evaluation, student);
       return `
         <tr>
@@ -404,9 +423,10 @@
   }
 
   function staffGradeRows(payload) {
+    const evaluations = gradebookEvaluations(payload);
     return payload.students.map(function (student) {
       const grades = student.grades || {};
-      const gradeCells = payload.evaluations.map(function (evaluation) {
+      const gradeCells = evaluations.map(function (evaluation) {
         const status = gradeStatus(evaluation, student);
         return `
           <td>
@@ -484,7 +504,7 @@
 
   function adminStudentGradeInputs(payload, student) {
     const grades = student && student.grades ? student.grades : {};
-    return payload.evaluations.map(function (evaluation) {
+    return gradebookEvaluations(payload).map(function (evaluation) {
       const value = typeof grades[evaluation.id] === "number" ? grades[evaluation.id] : "";
       return `
         <div>
@@ -599,7 +619,7 @@
   }
 
   function staffCalendarMarkup(payload) {
-    const events = payload.bonusEvent ? payload.evaluations.concat([payload.bonusEvent]) : payload.evaluations;
+    const events = gradebookEvaluations(payload);
     return events.map(function (evaluation) {
       const display = evaluation.id === "bookPresentation" ? "Date individuelle" : evaluation.displayDate;
       return `
@@ -621,7 +641,8 @@
   function renderStaffPanel(payload) {
     const tabs = window.JaraGradebookTabs;
     const roleLabel = payload.role === "admin" ? "Administrateur" : "Professeur approuve";
-    const totalWeight = payload.evaluations.reduce(function (sum, evaluation) {
+    const evaluations = gradebookEvaluations(payload);
+    const totalWeight = evaluations.reduce(function (sum, evaluation) {
       return sum + evaluation.weight;
     }, 0);
     const studentsMarkup = `
@@ -645,7 +666,7 @@
             <thead>
               <tr>
                 <th>Etudiant</th>
-                ${payload.evaluations.map(function (evaluation) { return `<th>${escapeHtml(evaluation.title)}<br>${evaluation.weight}%</th>`; }).join("")}
+                ${evaluations.map(function (evaluation) { return `<th>${escapeHtml(evaluation.title)}<br>${evaluation.weight}%</th>`; }).join("")}
               </tr>
             </thead>
             <tbody>${staffGradeRows(payload)}</tbody>
@@ -942,14 +963,15 @@
           { label: "Moyenne des notes saisies", width: 1.1 },
           { label: "Pourcentage evalue", width: 1.0 }
         ];
-    return base.concat(payload.evaluations.map(function (evaluation) {
+    return base.concat(gradebookEvaluations(payload).map(function (evaluation) {
       return { label: evaluation.title + " " + evaluation.weight + "%", width: 1.05 };
     })).concat([{ label: "Total pondere", width: 1 }]);
   }
 
   function reportRows(payload, audience) {
+    const evaluations = gradebookEvaluations(payload);
     return payload.students.map(function (student) {
-      const summary = gradeSummary(student, payload.evaluations);
+      const summary = gradeSummary(student, evaluations);
       const base = audience === "directives"
         ? [
             student.id,
@@ -963,9 +985,9 @@
             summary.average == null ? "En attente" : summary.average.toFixed(2),
             summary.completedWeight + "%"
           ];
-      return base.concat(payload.evaluations.map(function (evaluation) {
+      return base.concat(evaluations.map(function (evaluation) {
         return gradeValueForPdf(student, evaluation);
-      })).concat([totalValueForPdf(student, payload.evaluations)]);
+      })).concat([totalValueForPdf(student, evaluations)]);
     });
   }
 
@@ -1130,9 +1152,19 @@
     return grades;
   }
 
+  function mergeEditedGrades(originalGrades, editedGrades, payload) {
+    const visibleIds = visibleGradeIds(payload);
+    const grades = {};
+    Object.keys(originalGrades || {}).forEach(function (id) {
+      if (!visibleIds.has(id)) grades[id] = originalGrades[id];
+    });
+    return Object.assign(grades, editedGrades);
+  }
+
   function studentFromEditorCard(card, payload) {
     if (card.querySelector("[data-student-delete]") && card.querySelector("[data-student-delete]").checked) return null;
     const original = payload.students[Number(card.getAttribute("data-student-index"))] || {};
+    const editedGrades = gradesFromCard(card);
     const id = cardField(card, "id");
     const fullName = cardField(card, "fullName");
     if (!id || !fullName) return null;
@@ -1144,7 +1176,7 @@
       emailAliases: original.emailAliases || [],
       contact: cardField(card, "contact"),
       bookDate: cardField(card, "bookDate") || null,
-      grades: gradesFromCard(card),
+      grades: mergeEditedGrades(original.grades || {}, editedGrades, payload),
       gradeDetails: original.gradeDetails || {}
     };
   }
