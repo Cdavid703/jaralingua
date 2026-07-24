@@ -44,7 +44,7 @@ textarea{resize:vertical;min-height:280px;line-height:1.55}
 .state-badge.locked{background:#fff0ee;color:#8b2a22}
 .state-badge.open,.state-badge.graded{background:#e9f8ef;color:#146342}
 .timer-badge,.timer-card{background:#eff6ff;color:#08436f}
-.admin-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.admin-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
 .admin-feedback,.submit-status{min-height:1.5rem;color:var(--fw-muted);font-weight:700}
 .readiness-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
 .readiness-grid article,.tool-card{padding:1rem;border:1px solid var(--fw-line);border-radius:20px;background:var(--fw-soft)}

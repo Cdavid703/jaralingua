@@ -84,6 +84,7 @@
       <div class="admin-grid">
         <button class="writing-button success" type="button" id="activateWritingButton"><i class="bi bi-unlock-fill"></i> Activate exam</button>
         <button class="writing-button danger" type="button" id="closeWritingButton"><i class="bi bi-lock-fill"></i> Close exam</button>
+        <button class="writing-button primary" type="button" id="previewWritingButton"><i class="bi bi-eye-fill"></i> Preview exam model</button>
         <button class="writing-button secondary" type="button" id="refreshReviewButton"><i class="bi bi-arrow-clockwise"></i> Refresh monitor</button>
       </div>
       <p class="admin-feedback" id="adminFeedback" role="status" aria-live="polite">No administrative action is pending.</p>
@@ -109,7 +110,7 @@
     <section class="writing-shell exam-panel" id="examPanel" hidden aria-labelledby="examTitle">
       <div class="exam-topbar">
         <div><p class="writing-kicker">Official e-mail task</p><h2 id="examTitle">BASIC COURSE 1 - FINAL WRITING TASK (20%)</h2></div>
-        <div class="timer-card" id="timerCard"><span>Time left</span><strong id="timerDisplay">50:00</strong></div>
+        <div class="writing-button-row"><button class="writing-button secondary" type="button" id="backToAdminButton" hidden><i class="bi bi-arrow-left"></i> Back to admin</button><div class="timer-card" id="timerCard"><span>Time left</span><strong id="timerDisplay">50:00</strong></div></div>
       </div>
 
       <form id="writingForm">
