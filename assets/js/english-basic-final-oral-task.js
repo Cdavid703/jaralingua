@@ -204,6 +204,11 @@
     turnId: String(turn?.turnId || ""),
     sha256: String(turn?.audio?.sha256 || "").toLowerCase()
   })).filter((item) => item.turnId && /^[0-9a-f]{64}$/.test(item.sha256));
+
+  if (window.location?.hostname === "jaralingua.com") {
+    window.location.replace("https://www.jaralingua.com" + window.location.pathname + window.location.search + window.location.hash);
+    return;
+  }
   function buildGradeMutation(action, selected, rubric, teacherFeedback, reason, requestId) {
     const reviewedAudioEvidence = reviewedAudioEvidenceFor(selected);
     return {
@@ -1249,14 +1254,33 @@
 
   function showAccessRecoveryAction(message) {
     showAccess(message, "error");
-    if (elements.accessMessage && !elements.accessMessage.querySelector("[data-hard-refresh-final-oral]")) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "access-inline-action";
-      button.dataset.hardRefreshFinalOral = "true";
-      button.innerHTML = '<i class="bi bi-arrow-repeat"></i> Reload exam safely';
-      button.addEventListener("click", () => window.location.replace(window.location.pathname + "?v=" + Date.now()));
-      elements.accessMessage.appendChild(button);
+    if (elements.accessMessage && !elements.accessMessage.querySelector("[data-final-oral-recovery-actions]")) {
+      const actions = document.createElement("span");
+      actions.className = "access-recovery-actions";
+      actions.dataset.finalOralRecoveryActions = "true";
+
+      const reloadButton = document.createElement("button");
+      reloadButton.type = "button";
+      reloadButton.className = "access-inline-action";
+      reloadButton.dataset.hardRefreshFinalOral = "true";
+      reloadButton.innerHTML = '<i class="bi bi-arrow-repeat"></i> Reload exam safely';
+      reloadButton.addEventListener("click", () => window.location.replace("https://www.jaralingua.com" + window.location.pathname + "?v=" + Date.now()));
+
+      const resetButton = document.createElement("button");
+      resetButton.type = "button";
+      resetButton.className = "access-inline-action danger";
+      resetButton.dataset.resetFinalOralLogin = "true";
+      resetButton.innerHTML = '<i class="bi bi-box-arrow-right"></i> Reset login';
+      resetButton.addEventListener("click", () => {
+        [GOOGLE_USER_KEY, MICROSOFT_USER_KEY, LOCAL_USER_KEY, CLAIM_KEY].forEach((key) => {
+          try { sessionStorage.removeItem(key); } catch { /* ignore storage cleanup */ }
+          try { localStorage.removeItem(key); } catch { /* ignore storage cleanup */ }
+        });
+        window.location.replace("https://www.jaralingua.com" + window.location.pathname + "?login=reset&v=" + Date.now());
+      });
+
+      actions.append(reloadButton, resetButton);
+      elements.accessMessage.appendChild(actions);
     }
   }
 
@@ -1863,7 +1887,8 @@
       }
     } catch (error) {
       if (loadGeneration !== stateLoadGeneration || readUser()?.credential !== requestedCredential) return;
-      const message = error.status === 401 ? "Your session expired. Please sign in again." : error.name === "ContractError" ? "The server answered, but its exam confirmation was incomplete. Nothing was marked as saved; refresh and contact the teacher if this continues." : "The exam server did not answer. Reload the page and try again.";
+      const detail = error.status ? `Status ${error.status}` : error.name ? error.name : "";
+      const message = error.status === 401 ? "Your session expired. Please sign in again." : error.name === "ContractError" ? "The server answered, but its exam confirmation was incomplete. Nothing was marked as saved; refresh and contact the teacher if this continues." : `The exam server did not answer. Reload the page and try again.${detail ? " Technical detail: " + detail + "." : ""}`;
       if (error.status === 401) showAccess(message, "error");
       else showAccessRecoveryAction(message);
       if (error.status === 401) openLogin();

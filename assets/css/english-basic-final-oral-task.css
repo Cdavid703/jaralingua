@@ -824,6 +824,21 @@
   white-space: nowrap;
 }
 
+.access-recovery-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+  margin-left: auto;
+}
+
+.access-recovery-actions .access-inline-action {
+  margin-left: 0;
+}
+
+.access-inline-action.danger {
+  background: #5d1f18;
+}
+
 .access-inline-action:focus-visible {
   outline: 3px solid rgba(155, 57, 45, .24);
   outline-offset: 2px;
