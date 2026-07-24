@@ -310,6 +310,7 @@
     recoveryMessage: byId("finalOralTechnicalRecoveryMessage", "technicalRecoveryMessage"),
     retry: byId("finalOralRetryButton", "retryTechnicalButton", "retryProcessingButton"),
     recordAgain: byId("finalOralRecordAgainButton", "recordAgainButton"),
+    previous: byId("finalOralPreviousButton", "previousTurnButton"),
     next: byId("finalOralNextButton", "nextTurnButton"),
     ready: byId("finalOralReadyPanel", "readyToSubmitPanel", "submissionPanel"),
     duration: byId("finalOralTotalDuration", "totalRecordedDuration"),
@@ -1974,6 +1975,8 @@
     setDisabled(elements.dockStop, true);
     setHidden(elements.next, !savedCurrentTurn);
     setDisabled(elements.next, !savedCurrentTurn);
+    setHidden(elements.previous, currentIndex <= 0);
+    setDisabled(elements.previous, currentIndex <= 0);
     setDanielState("ready", "Daniel is ready");
     setText(elements.sessionCode, adminPreviewMode ? "ADMIN PREVIEW · NOT SAVED" : attempt?.attemptId || "Pending");
     setHidden(elements.adminPreviewToolbar, !adminPreviewMode);
@@ -2260,6 +2263,7 @@
     setDisabled(elements.microphoneSelect, controlsBusy);
     setDisabled(elements.preflightMicrophoneSelect, controlsBusy);
     setDisabled(elements.questionPlay, leaseReadOnly || controlsBusy || reactionBusy || savedCurrentTurn || questionAudioLoading || questionAudioPlaying);
+    setDisabled(elements.previous, currentIndex <= 0 || leaseReadOnly || controlsBusy || reactionBusy || Boolean(currentBlob && !savedCurrentTurn));
     elements.mic?.classList.toggle("is-recording", recording);
     elements.dock?.classList.toggle("is-recording", recording);
     updateAdminPreviewNavigation();
@@ -2782,6 +2786,17 @@
       else renderReadyToSubmit();
     }
     else renderCurrentTurn();
+  }
+
+  function previousTurn() {
+    if (currentIndex <= 0 || reactionBusy || analyzing || recordingStartPending || recordingFinalizing || mediaRecorder?.state === "recording") return;
+    if (currentBlob && !savedCurrentTurn) {
+      setText(elements.recordStatus, "Save or resolve this current recording before going back.");
+      return;
+    }
+    clearQuestionAudio();
+    currentIndex -= 1;
+    renderCurrentTurn();
   }
 
   function renderSubmissionWorkflow(value = attempt) {
@@ -3390,6 +3405,7 @@
       const button = event.target.closest?.("[data-repeat-current-answer]");
       if (button) repeatCurrentAnswer();
     });
+    elements.previous?.addEventListener("click", previousTurn);
     elements.next?.addEventListener("click", nextTurn);
     elements.submit?.addEventListener("click", submitExam);
     elements.submitConfirmation?.addEventListener("change", renderReadyToSubmit);
