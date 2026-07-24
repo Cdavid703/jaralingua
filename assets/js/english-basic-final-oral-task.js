@@ -1446,6 +1446,13 @@
     }
   }
 
+  function updateOfficialNextButtonLabel() {
+    if (!elements.next || adminPreviewMode) return;
+    elements.next.innerHTML = currentIndex >= assignedQuestions.length - 1
+      ? 'Review and submit <i class="bi bi-check2-circle"></i>'
+      : 'Next question <i class="bi bi-arrow-right"></i>';
+  }
+
   function enableOfficialStartIfAllowed() {
     if (role !== "student" || submission) return;
     if (attempt) setDisabled(elements.resume || elements.start, false);
@@ -1967,6 +1974,7 @@
     setText(elements.answerState, "Ready");
     if (elements.answerState) elements.answerState.className = "answer-state ready";
     renderCapturedNotice(savedCurrentTurn);
+    if (typeof updateOfficialNextButtonLabel === "function") updateOfficialNextButtonLabel();
     setHidden(elements.answerCaptured, !savedCurrentTurn);
     setDisabled(elements.questionPlay, savedCurrentTurn);
     setDisabled(elements.mic, true);
@@ -2583,9 +2591,10 @@
       if (elements.studentAudio) { elements.studentAudio.src = objectUrl; elements.studentAudio.hidden = false; }
     }
     setText(elements.transcript, currentTranscript ? "Recovered transcript stored privately for teacher review." : "Transcript pending. The recovered audio is already verified.");
-    setText(elements.recordStatus, "Your queued answer was recovered and verified by the server. You may continue.");
+    setText(elements.recordStatus, "Your queued answer was recovered and verified by the server. Use Next question when you are ready.");
     setText(elements.saveStatus, `Recovered securely · response ${currentIndex + 1} of ${REQUIRED_TURNS}`);
     if (typeof renderCapturedNotice === "function") renderCapturedNotice(false);
+    if (typeof updateOfficialNextButtonLabel === "function") updateOfficialNextButtonLabel();
     setHidden(elements.answerCaptured, false);
     setHidden(elements.recovery, true);
     setHidden(elements.next, false);
@@ -2720,9 +2729,10 @@
       currentQueueId = "";
       currentTranscript = String(savedTurn.transcript || "");
       setText(elements.transcript, currentTranscript ? "Transcript stored privately for teacher review." : "Transcript pending. Your verified audio is already saved.");
-      setText(elements.recordStatus, "Official audio saved and verified. You may continue.");
+      setText(elements.recordStatus, "Official audio saved and verified. Use Next question when you are ready.");
       setText(elements.saveStatus, `Audio saved securely · response ${currentIndex + 1} of ${REQUIRED_TURNS} · transcript ${currentTranscript ? "complete" : "pending"}`);
       if (typeof renderCapturedNotice === "function") renderCapturedNotice(false);
+      if (typeof updateOfficialNextButtonLabel === "function") updateOfficialNextButtonLabel();
       setHidden(elements.answerCaptured, false);
       if (elements.saveState) { elements.saveState.className = "exam-save-state saved"; elements.saveState.innerHTML = '<i class="bi bi-cloud-check-fill"></i><span>Progress saved</span>'; }
       setPipeline(currentTranscript ? "transcript" : "audio", currentTranscript ? "complete" : "active");
