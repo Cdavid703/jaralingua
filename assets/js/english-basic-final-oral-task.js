@@ -1240,7 +1240,33 @@
       target.textContent = message;
       elements.accessMessage.className = `access-message ${type || "neutral"}`;
     }
+    if (elements.refreshAccess) {
+      elements.refreshAccess.disabled = false;
+      elements.refreshAccess.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Check availability';
+    }
     setHidden(elements.signIn, Boolean(user));
+  }
+
+  function showAccessRecoveryAction(message) {
+    showAccess(message, "error");
+    if (elements.accessMessage && !elements.accessMessage.querySelector("[data-hard-refresh-final-oral]")) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "access-inline-action";
+      button.dataset.hardRefreshFinalOral = "true";
+      button.innerHTML = '<i class="bi bi-arrow-repeat"></i> Reload exam safely';
+      button.addEventListener("click", () => window.location.replace(window.location.pathname + "?v=" + Date.now()));
+      elements.accessMessage.appendChild(button);
+    }
+  }
+
+  async function refreshAccessNow() {
+    showAccess("Checking your exam access. Please wait...", "neutral");
+    if (elements.refreshAccess) {
+      elements.refreshAccess.disabled = true;
+      elements.refreshAccess.innerHTML = '<i class="bi bi-arrow-repeat"></i> Checking...';
+    }
+    await loadState(true);
   }
 
   function renderAdminState() {
@@ -1837,7 +1863,9 @@
       }
     } catch (error) {
       if (loadGeneration !== stateLoadGeneration || readUser()?.credential !== requestedCredential) return;
-      showAccess(error.status === 401 ? "Your session expired. Please sign in again." : error.name === "ContractError" ? "The server answered, but its exam confirmation was incomplete. Nothing was marked as saved; refresh and contact the teacher if this continues." : "The exam server did not answer. Reload the page and try again.", "error");
+      const message = error.status === 401 ? "Your session expired. Please sign in again." : error.name === "ContractError" ? "The server answered, but its exam confirmation was incomplete. Nothing was marked as saved; refresh and contact the teacher if this continues." : "The exam server did not answer. Reload the page and try again.";
+      if (error.status === 401) showAccess(message, "error");
+      else showAccessRecoveryAction(message);
       if (error.status === 401) openLogin();
     }
   }
@@ -3407,7 +3435,9 @@
     elements.welcomePlay?.addEventListener("click", () => playClip(elements.welcomeAudio, AUDIO_ROOT + "daniel-welcome.mp3").catch(() => toast("Daniel's welcome audio could not play.", "error")));
     elements.instructionsPlay?.addEventListener("click", () => playClip(elements.instructionsAudio, AUDIO_ROOT + "exam-instructions.mp3").catch(() => toast("The instruction audio could not play.", "error")));
     elements.signIn?.addEventListener("click", openLogin);
-    elements.refreshAccess?.addEventListener("click", () => loadState(true));
+    elements.refreshAccess?.addEventListener("click", () => refreshAccessNow().catch((error) => {
+      showAccessRecoveryAction(error?.message || "The exam server did not answer. Reload the page and try again.");
+    }));
     elements.claim?.addEventListener("click", submitStudentClaim);
     elements.claimInput?.addEventListener("keydown", (event) => { if (event.key === "Enter") submitStudentClaim(); });
     elements.claimPairingCode?.addEventListener("keydown", (event) => { if (event.key === "Enter") submitStudentClaim(); });

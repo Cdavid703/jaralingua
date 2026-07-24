@@ -807,6 +807,28 @@
   color: #9b392d;
 }
 
+.access-inline-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .35rem;
+  margin-left: auto;
+  border: 0;
+  border-radius: 999px;
+  padding: .42rem .65rem;
+  background: #9b392d;
+  color: #fff;
+  font: inherit;
+  font-size: .72rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.access-inline-action:focus-visible {
+  outline: 3px solid rgba(155, 57, 45, .24);
+  outline-offset: 2px;
+}
+
 .access-checklist {
   padding: 1.35rem;
   border-left: 1px solid var(--oral-line);
