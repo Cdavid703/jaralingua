@@ -14903,6 +14903,24 @@ class ProgressHandler(BaseHTTPRequestHandler):
             profile = dict(profile)
             profile["_studentIdClaim"] = payload.get("studentIdClaim") or payload.get("studentId") or payload.get("idClaim") or ""
 
+        if parsed.path == "/api/basic/final-writing/start":
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_start(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/final-writing/submit":
+            try:
+                with data_lock:
+                    status, response = basic_final_writing_submit(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
         if parsed.path == "/api/french8/final-exam/alerts/ack":
             if not isinstance(payload, dict):
                 json_response(self, 400, {"error": "invalid_payload"})
