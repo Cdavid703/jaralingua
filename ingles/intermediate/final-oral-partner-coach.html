@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Intermediate English Course 1 final oral partner coach with professional audio, problem-solving cards, floating microphone, formative feedback, and teacher follow-up outside the official gradebook." />
+  <title>Advice Exchange: Final Oral Partner Coach | Intermediate English Course 1</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css?v=20260718-intermediate" />
+  <link rel="stylesheet" href="../../assets/css/conversation-coach-v2.css?v=20260724-final-oral" />
+  <link rel="stylesheet" href="../../assets/css/restaurant-conversation-coach.css?v=20260724-final-oral" />
+  <link rel="stylesheet" href="../../assets/css/final-oral-partner-coach.css?v=20260724-final-oral-v1" />
+</head>
+<body class="english-intermediate-page conversation-coach-page restaurant-coach-page final-oral-partner-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="course-overview.html">Course Overview</a></li><li><a href="practice-lab.html" aria-current="page">Practice Lab</a></li></ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="coach-hero restaurant-hero final-oral-hero" aria-labelledby="pageTitle">
+      <div class="coach-hero-copy">
+        <p class="coach-kicker">Intermediate Course 1 | Final Oral Task Practice</p>
+        <h1 id="pageTitle">Advice Exchange: Final Oral Partner Coach</h1>
+        <p>Sophie Bennett is your exam partner. You will present a problem, answer follow-up questions, receive advice, ask Sophie questions, give advice back, and close with a shared decision.</p>
+        <div class="coach-meta"><span>Pair problem-solving task</span><span>4-6 minute target</span><span>Professional partner voice</span><span>American English</span><span>Unlimited attempts</span><span>Reference /50 and /5</span><span>Teacher follow-up only</span></div>
+        <div class="coach-actions"><a class="coach-link-button primary" href="#conversationCoachApp"><i class="bi bi-play-fill"></i> Start with Sophie</a><a class="coach-link-button secondary" href="unit-6-future-plans-advice.html">Review Unit 6</a><a class="coach-link-button secondary" href="practice-lab.html#unit-6-folder">Back to Unit 6 folder</a></div>
+        <p class="restaurant-privacy-note"><i class="bi bi-shield-check"></i><span>Your audio is processed temporarily for transcription. The teacher receives the written report only when you choose <strong>Send to teacher</strong>; this follow-up stays out of the official gradebook.</span></p>
+      </div>
+      <figure class="coach-hero-visual">
+        <img src="../../assets/img/english-intermediate/unit-6/final-oral-partner-coach/final-oral-partner-hero-v1.webp" width="1536" height="864" fetchpriority="high" decoding="async" alt="Sophie Bennett and an adult English learner practicing a paired problem-solving oral exam" />
+      </figure>
+    </section>
+
+    <section class="coach-outcomes" aria-label="Conversation design">
+      <article><i class="bi bi-people-fill"></i><div><strong>Exam-pair simulation</strong><span>The activity follows the official pair format: each person has a problem and advice is negotiated.</span></div></article>
+      <article><i class="bi bi-chat-dots-fill"></i><div><strong>Follow-up before advice</strong><span>You must ask questions before giving suggestions, just like in the oral task rubric.</span></div></article>
+      <article><i class="bi bi-inbox-fill"></i><div><strong>Teacher follow-up</strong><span>The written report is sent for review, but it does not create an official gradebook column.</span></div></article>
+    </section>
+
+    <section class="coach-shell" id="conversationCoachApp">
+      <div class="coach-layout">
+        <section class="coach-main" aria-live="polite">
+          <div id="onboardingPanel">
+            <section class="coach-companion-welcome restaurant-welcome final-oral-welcome">
+              <figure><img src="../../assets/img/english-intermediate/unit-6/final-oral-partner-coach/sophie-bennett-portrait-v1.webp" width="720" height="960" loading="eager" decoding="sync" alt="Sophie Bennett, the final oral partner coach" /></figure>
+              <div><p class="coach-kicker">Meet your partner</p><h2>Hi, I'm Sophie Bennett</h2><p>I will be your partner for a realistic problem-solving exchange. We will both present a problem, ask follow-up questions, give advice, compare options, and decide the best next step.</p>
+                <div class="coach-audio-row"><button class="coach-audio-button" id="welcomePlayButton" type="button"><i class="bi bi-play-fill"></i><span>Hear Sophie's welcome</span></button><button class="coach-audio-button" id="instructionsPlayButton" type="button"><i class="bi bi-volume-up-fill"></i><span>Hear exam instructions</span></button><div class="coach-speed" aria-label="Audio speed"><span>Speed</span><button type="button" data-coach-speed="0.75">0.75x</button><button type="button" data-coach-speed="1" class="is-active">1x</button><button type="button" data-coach-speed="1.25">1.25x</button></div></div>
+                <audio id="welcomeAudio" preload="metadata"></audio><audio id="instructionsAudio" preload="metadata"></audio>
+              </div>
+            </section>
+
+            <ol class="coach-steps restaurant-steps final-oral-steps">
+              <li><span>1</span><div><strong>Present</strong><small>Your problem and context.</small></div></li>
+              <li><span>2</span><div><strong>Respond</strong><small>Answer follow-up questions.</small></div></li>
+              <li><span>3</span><div><strong>Advise</strong><small>Ask Sophie and give advice.</small></div></li>
+              <li><span>4</span><div><strong>Decide</strong><small>Choose realistic next steps.</small></div></li>
+            </ol>
+
+            <section class="coach-mode-panel" aria-labelledby="modeTitle">
+              <div class="coach-section-heading"><div><p class="coach-kicker">Conversation mode</p><h3 id="modeTitle">Choose the level of support</h3></div></div>
+              <div class="coach-mode-grid">
+                <label class="coach-mode-card"><input id="guidedMode" type="radio" name="coachMode" value="guided" checked /><span><i class="bi bi-lightbulb-fill"></i><strong>Guided Rehearsal</strong><small>Use frames, vocabulary, grammar support, and feedback after each response.</small><b>Recommended first</b></span></label>
+                <label class="coach-mode-card"><input id="realMode" type="radio" name="coachMode" value="real" /><span><i class="bi bi-stopwatch-fill"></i><strong>Realistic Exam Simulation</strong><small>Keep support closed and receive feedback at the end of the full exchange.</small><b>Exam-like rhythm</b></span></label>
+              </div>
+            </section>
+
+            <section class="restaurant-menu final-problem-bank" aria-labelledby="menuTitle">
+              <div class="coach-section-heading"><div><p class="coach-kicker">Problem bank</p><h3 id="menuTitle">Choose the problem you will present</h3><p>Select one official-style problem. It gives the first half of the exchange a real communicative purpose; it is not a quiz answer.</p></div><div class="restaurant-selected-pill" id="selectedDishLabel"><i class="bi bi-bookmark"></i> No problem selected</div></div>
+              <div class="restaurant-menu-grid" id="menuPreviewGrid"><p class="restaurant-menu-loading">Loading the problem cards...</p></div>
+            </section>
+
+            <section class="coach-notes" aria-labelledby="notesTitle">
+              <div class="coach-section-heading"><div><p class="coach-kicker">Short-note planner</p><h3 id="notesTitle">Prepare keywords, not a script</h3><p>Use short notes only. The real exam does not allow reading a full prepared text.</p></div></div>
+              <div class="coach-note-grid"><label><span>What is happening?</span><input type="text" placeholder="deadlines, money, health habits..." /></label><label><span>How does it affect you?</span><input type="text" placeholder="I feel tired / I lose confidence..." /></label><label><span>What have you tried?</span><input type="text" placeholder="I have tried a planner..." /></label><label><span>Advice language</span><input type="text" placeholder="you should / you could / if I were you..." /></label></div>
+            </section>
+
+            <section class="coach-preflight" aria-label="Microphone check">
+              <div><strong><i class="bi bi-mic-fill"></i> Microphone and playback check</strong><p id="preflightStatus">Record a short three-second test and listen to it before entering the partner exchange.</p><audio id="preflightPlayback" controls hidden></audio></div>
+              <button class="coach-button secondary" id="preflightButton" type="button"><i class="bi bi-soundwave"></i> Test microphone</button>
+            </section>
+
+            <div class="coach-start-row"><button class="coach-button primary" id="startConversationButton" type="button"><i class="bi bi-play-fill"></i> Begin partner exchange</button><button class="coach-button secondary" id="reviewPreviousButton" type="button" hidden>Review latest report</button></div>
+            <p class="coach-resume-note" id="resumeNote" hidden></p>
+          </div>
+
+          <div id="interviewPanel" hidden>
+            <header class="coach-progress-header"><div class="coach-progress-copy"><span id="turnCounter">Stage 1 of 8</span><strong id="turnTopic">Present your problem</strong></div><div class="coach-progress-track" aria-hidden="true"><i id="turnProgress"></i></div></header>
+
+            <section class="coach-stage restaurant-stage final-oral-stage" id="coachStage" data-state="ready" aria-labelledby="questionText">
+              <figure class="coach-avatar"><img src="../../assets/img/english-intermediate/unit-6/final-oral-partner-coach/sophie-bennett-portrait-v1.webp" width="720" height="960" loading="eager" decoding="sync" alt="Sophie Bennett" /></figure>
+              <div><span class="coach-stage-status" id="coachStageStatus"><i class="bi bi-person-video3"></i> Sophie is ready</span><p class="restaurant-context-line" id="conversationContext">You and Sophie are two friends preparing the final oral task.</p><h2 id="questionText"></h2><div class="coach-audio-row"><button class="coach-audio-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Listen to Sophie</span></button><div class="coach-speed" aria-label="Question and response audio speed"><span>Speed</span><button type="button" data-coach-speed="0.75">0.75x</button><button type="button" data-coach-speed="1" class="is-active">1x</button><button type="button" data-coach-speed="1.25">1.25x</button></div></div><audio id="questionAudio" preload="metadata"></audio><audio id="reactionAudio" preload="metadata"></audio></div>
+            </section>
+
+            <section class="restaurant-menu restaurant-active-menu final-active-bank" id="activeMenuPanel" hidden aria-labelledby="activeMenuTitle">
+              <div class="coach-section-heading"><div><p class="coach-kicker">Problem bank</p><h3 id="activeMenuTitle">Choose or review your problem</h3><p>Your spoken answer must name or clearly describe the selected problem.</p></div><div class="restaurant-selected-pill" id="activeSelectedDishLabel"><i class="bi bi-bookmark"></i> No problem selected</div></div>
+              <div class="restaurant-menu-grid" id="activeMenuGrid"></div>
+            </section>
+
+            <details class="coach-support" id="answerSupport" open>
+              <summary><span>Final oral language support</span><span id="supportSummaryLabel">Open during Guided Rehearsal</span></summary>
+              <div class="coach-frame-grid" id="answerFrames"></div>
+              <div class="coach-language-grid"><section class="coach-language-panel"><strong>Useful vocabulary</strong><div class="coach-vocabulary" id="vocabularyBank"></div></section><section class="coach-language-panel"><strong>Grammar focus</strong><p class="coach-grammar" id="grammarClue"></p></section></div>
+            </details>
+
+            <section class="coach-recorder" aria-label="Record your response">
+              <div class="coach-recorder-top"><label><span><i class="bi bi-mic"></i> Microphone in use</span><select class="coach-microphone-select" id="microphoneSelect"><option value="">Default microphone</option></select></label><div class="coach-level"><span>Level</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div></div>
+              <button class="coach-mic-button" id="micButton" type="button" aria-label="Start oral response"><i class="bi bi-mic-fill"></i></button>
+              <p class="coach-record-status" id="recordStatus">Ready for your response</p><p class="coach-record-help" id="recordHelp">Tap the microphone and speak in English.</p><span class="coach-timer" id="recordTimer">00:00 / 00:50</span>
+              <div class="coach-recorder-actions"><button class="coach-button danger" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish response</button><button class="coach-button secondary" id="recordAgainButton" type="button" disabled><i class="bi bi-arrow-repeat"></i> Record again</button></div>
+              <audio class="coach-student-audio" id="studentAudio" controls hidden></audio>
+              <div class="coach-transcript" id="liveTranscript" aria-live="polite">Your transcript will appear after temporary Whisper analysis.</div>
+              <div class="coach-feedback" id="turnFeedback" hidden></div>
+              <div class="coach-recovery" id="transcriptionRecovery" hidden><p>Your recording remains available on this screen, but the transcription service did not finish. Nothing has been scored.</p><div class="coach-button-row"><button class="coach-button secondary" id="retryTranscriptionButton" type="button">Retry analysis</button><button class="coach-button secondary" id="continueUnscoredButton" type="button">Continue without a score</button><button class="coach-button secondary" id="recoveryRecordAgainButton" type="button">Record again</button></div></div>
+              <div class="coach-unsupported" id="unsupportedMessage" hidden></div>
+            </section>
+
+            <section class="coach-reaction" id="coachReaction" hidden><span class="coach-identity-icon"><i class="bi bi-chat-heart-fill"></i></span><div><h3>Sophie responds</h3><p id="coachReactionText"></p></div></section>
+            <div class="coach-navigation"><button class="coach-button primary" id="nextTurnButton" type="button" disabled>Continue <i class="bi bi-arrow-right"></i></button></div>
+          </div>
+
+          <div id="summaryPanel" hidden>
+            <header class="coach-summary-head"><i class="bi bi-check2-circle"></i><p class="coach-kicker">Final oral follow-up ready</p><h2>Your Advice Exchange report</h2><p id="summaryLead"></p></header>
+            <section class="coach-score-report"><div class="coach-score-ring"><div><strong id="summaryScore">--</strong><span>out of 50</span></div></div><div class="coach-score-copy"><p class="coach-kicker">Practice Readiness Score</p><h3 id="summaryReadiness">Practice report</h3><p id="summaryComparison"></p><small id="summaryCoverage">Complete all eight analyzed stages to unlock teacher delivery.</small></div></section>
+            <section class="restaurant-delivery-panel final-delivery-panel" id="teacherDeliveryPanel" aria-labelledby="teacherDeliveryTitle">
+              <div class="restaurant-delivery-heading"><span class="restaurant-delivery-icon"><i class="bi bi-send-check-fill"></i></span><div><p class="coach-kicker">Teacher follow-up</p><h3 id="teacherDeliveryTitle">Send your written partner-practice report</h3><p>The teacher receives your transcript, rubric estimate, problem route, and stage evidence. This does not create an official gradebook column.</p></div></div>
+              <div class="restaurant-delivery-metrics" aria-label="Delivery summary"><span><strong id="deliveryScore">--</strong><small>Report /50</small></span><span><strong id="deliveryGrade">--</strong><small>Reference /5</small></span><span><strong>Outside</strong><small>Official gradebook</small></span></div>
+              <div class="restaurant-delivery-actions"><button class="coach-button primary" id="deliveryButton" type="button" disabled><i class="bi bi-send-fill"></i> Send to teacher</button><a class="coach-link-button secondary" href="notas.html"><i class="bi bi-inbox"></i> Open teacher area</a></div>
+              <p class="restaurant-delivery-status pending" id="deliveryStatus" role="status" aria-live="polite">Complete the eight analyzed stages to prepare this delivery.</p>
+            </section>
+            <div class="coach-summary-metrics" id="summaryMetrics"></div>
+            <div class="coach-guidance-grid"><section><p class="coach-kicker">Strengths</p><h3>What worked</h3><ul id="summaryStrengths"></ul></section><section><p class="coach-kicker">Priorities</p><h3>Practice next</h3><ul id="summaryPriorities"></ul></section></div>
+            <section class="coach-report-section"><div class="coach-section-heading"><div><p class="coach-kicker">Pronunciation clarity</p><h3>Words to repeat</h3></div></div><div class="coach-word-list" id="summaryWords"></div><p class="coach-disclaimer"><i class="bi bi-info-circle"></i> Lower Whisper confidence may come from pronunciation, background noise, microphone quality, or proper names. It is not a phonetic diagnosis.</p></section>
+            <section class="coach-report-section"><div class="coach-section-heading"><div><p class="coach-kicker">Unlimited attempts</p><h3>Recent practice on this device</h3></div><button class="coach-button secondary" id="clearHistoryButton" type="button">Clear history</button></div><div class="coach-history" id="attemptHistory"></div></section>
+            <section class="coach-report-section"><div class="coach-section-heading"><div><p class="coach-kicker">Stage by stage</p><h3>Review the partner exchange</h3></div></div><div class="coach-answer-review" id="summaryAnswers"></div></section>
+            <div class="coach-summary-actions"><button class="coach-button primary" id="restartConversationButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> New full partner exchange</button><button class="coach-button secondary" id="weakPracticeButton" type="button"><i class="bi bi-bullseye"></i> Practice priority stage</button><button class="coach-button secondary" id="closingPlayButton" type="button"><i class="bi bi-volume-up-fill"></i> Hear Sophie's closing</button><a class="coach-link-button secondary" href="practice-lab.html#unit-6-folder">Back to Unit 6 folder</a></div>
+          </div>
+        </section>
+
+        <aside class="coach-sidebar">
+          <section><p class="coach-kicker">Official format</p><h2>Problem-solving pair task</h2><ol class="restaurant-stage-list"><li><span>1</span><div><strong>Student A problem</strong><small>Present one problem clearly</small></div></li><li><span>2</span><div><strong>Follow-up questions</strong><small>Clarify causes and effects</small></div></li><li><span>3</span><div><strong>Advice and reasons</strong><small>Use should, could, might, why don't you</small></div></li><li><span>4</span><div><strong>Role switch</strong><small>Ask Sophie before advising her</small></div></li><li><span>5</span><div><strong>Decision</strong><small>Choose the most realistic advice</small></div></li></ol></section>
+          <section><p class="coach-kicker">Rubric - 50 points</p><h3>Institutional criteria</h3><ul class="coach-sidebar-list"><li><i class="bi bi-bullseye"></i><span>Task completion - 10</span></li><li><i class="bi bi-arrow-left-right"></i><span>Interaction and discourse - 10</span></li><li><i class="bi bi-speedometer2"></i><span>Fluency - 10</span></li><li><i class="bi bi-spellcheck"></i><span>Vocabulary and structures - 10</span></li><li><i class="bi bi-soundwave"></i><span>Pronunciation - 10</span></li></ul></section>
+          <section><p class="coach-kicker">Advice toolkit</p><h3>Required expressions</h3><div class="sidebar-language"><span>you should</span><span>you should not</span><span>why don't you...?</span><span>if I were you...</span><span>you could</span><span>you might want to</span><span>because</span><span>that would help</span></div></section>
+          <section><p class="coach-kicker">Privacy and delivery</p><h3>Teacher follow-up only</h3><p>Audio is processed temporarily by JaraLingua's English transcription service and is not stored. You decide whether to send the written evidence to the teacher.</p></section>
+        </aside>
+      </div>
+    </section>
+
+    <div class="coach-floating-dock" id="floatingMicDock" role="region" aria-label="Floating recording controls" hidden><div class="coach-floating-copy"><span id="floatingTurnLabel">Stage 1</span><strong id="floatingStatus" aria-live="polite">Ready to respond</strong></div><span class="coach-floating-timer" id="floatingTimer">00:00 / 00:50</span><button class="coach-icon-button" id="floatingMicButton" type="button" aria-label="Start oral response from the floating microphone"><i class="bi bi-mic-fill"></i><span>Respond</span></button><button class="coach-icon-button stop" id="floatingStopButton" type="button" aria-label="Finish oral response from the floating microphone" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
+    <div class="coach-toast" id="coachToast" role="status" aria-live="polite" hidden></div>
+  </main>
+
+  <footer class="site-footer"><p>Intermediate English Course 1 - Final Oral Partner Coach - Teacher follow-up only</p></footer>
+  <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../../assets/js/conversation-coach-data/english-intermediate-1-final-oral-partner-coach.js?v=20260724-final-oral-v1"></script>
+  <script src="../../assets/js/schedule-conversation-coach.js?v=20260724-final-oral-v1"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>

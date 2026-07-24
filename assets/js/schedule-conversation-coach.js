@@ -10,6 +10,65 @@
   const storageKey = config.storageKey || "jaralingua:schedule-conversation-coach:v1";
   const apiPath = config.apiPath || "/api/english-intermediate/pronunciation-assessment";
   const submitPath = config.submitPath || "/api/intermediate/unit6-schedule-coach/submit";
+  const ui = Object.assign({
+    coachName: config.character?.name || "Marcus",
+    selectedItemLabel: "Selected strategy",
+    noItemSelected: "No strategy selected",
+    itemListenTitle: "Hear the strategy name",
+    itemChooseText: "Choose this strategy",
+    itemSelectedText: "Selected",
+    itemContextStatus: "Strategy selected",
+    itemContextDetail: "{name} is now the context for your advice and final schedule.",
+    itemToast: "{name} selected for this schedule rescue.",
+    itemAudioToast: "{name} model audio is playing.",
+    defaultContext: "You are advising Marcus about Olivia's schedule.",
+    incidentContextPrefix: "New complication",
+    promptAudioToast: "{name}'s schedule prompt is playing.",
+    clarificationAudioToast: "{name}'s clarification is playing.",
+    stageReadyLabel: "{name} is ready",
+    stageClarifyingLabel: "{name} is clarifying",
+    stageSpeakingLabel: "{name} is speaking",
+    missingItemStatus: "Choose a strategy first",
+    missingItemHelp: "Select one strategy card before you record your advice.",
+    missingItemStage: "{name} is waiting for your strategy choice",
+    unavailableToast: "The schedule conversation is unavailable.",
+    startToast: "{mode} started. You are advising Marcus.",
+    preflightSentence: "I am going to help organize the schedule.",
+    recordingStatus: "Recording your schedule response",
+    recordingHelp: "Speak naturally. Finish when your message is complete.",
+    tooShortStage: "{name} did not hear a complete response",
+    incompleteMessage: "Build the response again with a complete schedule message{missing}.",
+    addExpressionMessage: "Add one precise Unit 6 expression next time.",
+    responseStatus: "{name} is responding",
+    responseHelp: "Listen to {name}, then continue the schedule meeting.",
+    clarificationHelp: "Listen to the focused clarification, then record one more response.",
+    needsDetailStage: "{name} needs one detail",
+    completeStage: "Schedule conversation complete",
+    readyNextStage: "{name} is ready for the next stage",
+    analyzedToast: "Response analyzed successfully. {name} is continuing the conversation.",
+    clarificationAnalyzedToast: "Clarification recorded. {name} will continue and the missing evidence remains in your report.",
+    noSpeechStage: "{name} could not hear a complete response",
+    historyEmpty: "No previous schedule attempts are stored on this device.",
+    historyRealLabel: "Real Meeting",
+    historyGuidedLabel: "Guided Rehearsal",
+    reportLead: "You completed the schedule rescue route{item}. Review the evidence before your next unlimited attempt.",
+    reportComparison: "This formative estimate summarizes your latest analyzed response in each schedule stage.",
+    reportCoverageReady: "{analyzed} of {total} stages analyzed. The written report is ready for optional teacher delivery.",
+    reportCoverageIncomplete: "{analyzed} of {total} stages analyzed. Complete all stages to unlock teacher delivery.",
+    fallbackStrength: "You completed the schedule route and preserved your practice evidence.",
+    fallbackPriority: "Repeat the full exchange with more precise Unit 6 language.",
+    deliveryIncompleteStatus: "This report has {analyzed} of {total} analyzed stages. Complete a new full conversation before sending it.",
+    deliveryIncompleteToast: "The full conversation must be analyzed before delivery.",
+    deliveryReadyStatus: "Report ready. Sign in with your Intermediate English account and send it when you are ready.",
+    deliveryBusyStatus: "Sending the written report to your teacher...",
+    deliverySuccessStatus: "Submitted to teacher. Reference grade: {grade}/5. Gradebook weight: 0%. This result does not affect your course average.",
+    deliverySuccessToast: "Submitted to teacher. Reference grade recorded with weight 0%.",
+    deliveryIncompleteServer: "The server could not verify all analyzed stages. Complete a new full conversation and try again.",
+    summaryRouteName: "selected route",
+    payloadItemKey: "selectedStrategy",
+    payloadIncidentKey: "scheduleScenario"
+  }, config.ui || {});
+  const uiText = (template, values = {}) => String(template || "").replace(/\{(\w+)\}/g, (_match, key) => values[key] ?? "");
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const LOCAL_USER_KEY = "jaralingua_local_user";
@@ -189,8 +248,9 @@
   }
 
   function createSubmissionId() {
-    if (window.crypto?.randomUUID) return `schedule-coach-${window.crypto.randomUUID()}`;
-    return `schedule-coach-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
+    const prefix = String(config.id || "schedule-coach").replace(/[^a-z0-9-]+/gi, "-").toLowerCase();
+    if (window.crypto?.randomUUID) return `${prefix}-${window.crypto.randomUUID()}`;
+    return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 12)}`;
   }
 
   function ensureReportSubmissionId(report) {
@@ -309,7 +369,7 @@
     audioBusy = true;
     audio.src = audioPath(file);
     audio.playbackRate = playbackSpeed;
-    if (options.stageState) setStageState(options.stageState, options.stageLabel || `${config.character?.name || "Marcus"} is speaking`);
+    if (options.stageState) setStageState(options.stageState, options.stageLabel || `${ui.coachName} is speaking`);
     if (options.menuId) {
       document.querySelectorAll(`[data-dish-audio="${options.menuId}"]`).forEach((button) => button.setAttribute("aria-pressed", "true"));
     }
@@ -336,7 +396,7 @@
     } finally {
       audioBusy = false;
       document.querySelectorAll("[data-dish-audio]").forEach((button) => button.setAttribute("aria-pressed", "false"));
-      if (options.restoreStage !== false && !analyzing && mediaRecorder?.state !== "recording") setStageState("ready", `${config.character?.name || "Marcus"} is ready`);
+      if (options.restoreStage !== false && !analyzing && mediaRecorder?.state !== "recording") setStageState("ready", uiText(ui.stageReadyLabel, { name: ui.coachName }));
       updateControls();
     }
   }
@@ -362,10 +422,14 @@
       showToast("This stage has no professional prompt audio configured.");
       return;
     }
-    showToast(session.phase === "clarify" ? "Marcus's clarification is playing." : "Marcus's schedule prompt is playing.");
+    showToast(session.phase === "clarify"
+      ? uiText(ui.clarificationAudioToast, { name: ui.coachName })
+      : uiText(ui.promptAudioToast, { name: ui.coachName }));
     await playAudio(elements.questionAudio, file, {
       stageState: "speaking",
-      stageLabel: session.phase === "clarify" ? "Marcus is clarifying" : "Marcus is speaking"
+      stageLabel: session.phase === "clarify"
+        ? uiText(ui.stageClarifyingLabel, { name: ui.coachName })
+        : uiText(ui.stageSpeakingLabel, { name: ui.coachName })
     });
   }
 
@@ -395,8 +459,8 @@
   function dishCard(dish) {
     const selected = dish.id === session.selectedDishId;
     return `<article class="restaurant-dish-card${selected ? " is-selected" : ""}" data-dish-card="${escapeHtml(dish.id)}">
-      <div class="restaurant-dish-photo"><img src="${escapeHtml(imagePath(dish.image))}" width="960" height="720" decoding="async" alt="${escapeHtml(dish.name)}" /><span class="restaurant-dish-category">${escapeHtml(dish.category)}</span></div>
-      <div class="restaurant-dish-copy"><div class="restaurant-dish-heading"><h4>${escapeHtml(dish.name)}</h4><strong>${escapeHtml(dish.price)}</strong></div><p>${escapeHtml(dish.description)}</p><div></div><div class="restaurant-dish-actions"><button class="restaurant-dish-listen" type="button" data-dish-audio="${escapeHtml(dish.id)}" aria-pressed="false" title="Hear the strategy name" aria-label="Hear ${escapeHtml(dish.name)}"><i class="bi bi-volume-up-fill"></i></button><button class="restaurant-dish-select" type="button" data-dish-select="${escapeHtml(dish.id)}">${selected ? "Selected" : "Choose this strategy"}</button></div></div>
+      <div class="restaurant-dish-photo"><img src="${escapeHtml(imagePath(dish.image))}" width="960" height="720" loading="eager" decoding="sync" alt="${escapeHtml(dish.name)}" /><span class="restaurant-dish-category">${escapeHtml(dish.category)}</span></div>
+      <div class="restaurant-dish-copy"><div class="restaurant-dish-heading"><h4>${escapeHtml(dish.name)}</h4><strong>${escapeHtml(dish.price)}</strong></div><p>${escapeHtml(dish.description)}</p><div></div><div class="restaurant-dish-actions"><button class="restaurant-dish-listen" type="button" data-dish-audio="${escapeHtml(dish.id)}" aria-pressed="false" title="${escapeHtml(ui.itemListenTitle)}" aria-label="Hear ${escapeHtml(dish.name)}"><i class="bi bi-volume-up-fill"></i></button><button class="restaurant-dish-select" type="button" data-dish-select="${escapeHtml(dish.id)}">${selected ? escapeHtml(ui.itemSelectedText) : escapeHtml(ui.itemChooseText)}</button></div></div>
     </article>`;
   }
 
@@ -405,7 +469,7 @@
     elements.menuPreviewGrid.innerHTML = markup;
     elements.activeMenuGrid.innerHTML = markup;
     const dish = selectedDish();
-    const label = dish ? `<i class="bi bi-bookmark-check-fill"></i> ${escapeHtml(dish.name)}` : '<i class="bi bi-bookmark"></i> No strategy selected';
+    const label = dish ? `<i class="bi bi-bookmark-check-fill"></i> ${escapeHtml(dish.name)}` : `<i class="bi bi-bookmark"></i> ${escapeHtml(ui.noItemSelected)}`;
     elements.selectedDishLabel.innerHTML = label;
     elements.activeSelectedDishLabel.innerHTML = label;
     updateControls();
@@ -418,14 +482,14 @@
     savePersistent();
     renderMenus();
     const dish = selectedDish();
-    setRecordStatus("Strategy selected", `${dish.name} is now the context for your advice and final schedule.`);
-    showToast(`${dish.name} selected for this schedule rescue.`);
+    setRecordStatus(ui.itemContextStatus, uiText(ui.itemContextDetail, { name: dish.name }));
+    showToast(uiText(ui.itemToast, { name: dish.name }));
   }
 
   async function playDishName(dishId) {
     const dish = dishById.get(dishId);
     if (!dish) return;
-    showToast(`${dish.name} model audio is playing.`);
+    showToast(uiText(ui.itemAudioToast, { name: dish.name }));
     await playAudio(menuAudio, dish.audio, { menuId: dish.id });
   }
 
@@ -441,9 +505,9 @@
   }
 
   function stageContext(stage) {
-    if ((stage.requiresDish || stage.showStrategyBoard) && selectedDish()) return `Selected strategy: ${selectedDish().name}.`;
-    if (stage.id === "schedule-pushback" && selectedIncident()) return `New complication: ${selectedIncident().prompt}`;
-    return "You are advising Marcus about Olivia's schedule.";
+    if ((stage.requiresDish || stage.showStrategyBoard) && selectedDish()) return `${ui.selectedItemLabel}: ${selectedDish().name}.`;
+    if ((stage.id === "schedule-pushback" || stage.id === "service-problem") && selectedIncident()) return `${ui.incidentContextPrefix}: ${selectedIncident().prompt}`;
+    return ui.defaultContext;
   }
 
   function renderStage(autoplay = true) {
@@ -480,15 +544,15 @@
     elements.next.innerHTML = 'Continue <i class="bi bi-arrow-right"></i>';
     resetTimer();
     const missingDish = stage.requiresDish && !selectedDish();
-    setRecordStatus(missingDish ? "Choose a strategy first" : "Ready for your response", missingDish ? "Select one strategy card before you record your advice." : "Tap the microphone and respond in English.");
-    setStageState("ready", missingDish ? "Marcus is waiting for your strategy choice" : "Marcus is ready");
+    setRecordStatus(missingDish ? ui.missingItemStatus : "Ready for your response", missingDish ? ui.missingItemHelp : "Tap the microphone and respond in English.");
+    setStageState("ready", missingDish ? uiText(ui.missingItemStage, { name: ui.coachName }) : uiText(ui.stageReadyLabel, { name: ui.coachName }));
     updateControls();
     if (autoplay && promptAudio()) window.setTimeout(playQuestion, 250);
   }
 
   function beginConversation(forcedMode = null) {
     if (!stages.length) {
-      showToast("The schedule conversation is unavailable.");
+      showToast(ui.unavailableToast);
       return;
     }
     const mode = forcedMode || (elements.realMode.checked ? "real" : "guided");
@@ -497,7 +561,7 @@
     showPanel("interview");
     renderStage(true);
     elements.interview.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast(`${mode === "guided" ? "Guided Rehearsal" : "Real Meeting"} started. You are advising Marcus.`);
+    showToast(uiText(ui.startToast, { mode: mode === "guided" ? "Guided Rehearsal" : "Real Meeting", name: ui.coachName }));
   }
 
   async function refreshMicrophones() {
@@ -556,7 +620,7 @@
   async function testMicrophone() {
     if (elements.preflight.disabled) return;
     elements.preflight.disabled = true;
-      elements.preflightStatus.textContent = "Recording a three-second microphone test. Say: I am going to help organize the schedule.";
+      elements.preflightStatus.textContent = `Recording a three-second microphone test. Say: ${ui.preflightSentence}`;
     try {
       const stream = await requestStream("");
       const chunks = [];
@@ -645,7 +709,7 @@
     const stage = currentStage();
     if (!stage || analyzing || audioBusy || session.awaitingContinue) return;
     if (stage.requiresDish && !selectedDish()) {
-      showToast("Choose one strategy card before recording your advice.");
+      showToast(ui.missingItemHelp);
       elements.activeMenuPanel.scrollIntoView({ behavior: "smooth", block: "center" });
       return;
     }
@@ -669,8 +733,8 @@
       autoStopHandle = window.setTimeout(stopRecording, recordingLimit() * 1000);
       startLevelMeter(mediaStream);
       elements.mic.classList.add("is-recording");
-      setRecordStatus("Recording your schedule response", "Speak naturally. Finish when your message is complete.");
-      setStageState("listening", "Marcus is listening");
+      setRecordStatus(ui.recordingStatus, ui.recordingHelp);
+      setStageState("listening", `${ui.coachName} is listening`);
       updateControls();
       showToast("Recording started.");
     } catch (error) {
@@ -678,7 +742,7 @@
       elements.unsupported.hidden = false;
       elements.unsupported.innerHTML = `<strong>Microphone unavailable</strong><br>${escapeHtml(message)}`;
       setRecordStatus("Microphone unavailable", message);
-      setStageState("ready", "Marcus is waiting while you check the microphone");
+      setStageState("ready", `${ui.coachName} is waiting while you check the microphone`);
       stopTracks();
       updateControls();
     }
@@ -706,7 +770,7 @@
     if (currentBlob.size < 700 || recordingDurationMs < 700) {
       currentBlob = null;
       setRecordStatus("The recording was too short", "Record a complete response of several seconds before finishing.");
-      setStageState("ready", "Marcus did not hear a complete response");
+      setStageState("ready", uiText(ui.tooShortStage, { name: ui.coachName }));
       updateControls();
       return;
     }
@@ -819,10 +883,10 @@
     const lowConfidence = whisperEvidence.filter((item) => item.probability < .68).slice(0, 8);
     const missing = checks.filter((check) => !check.met).map((check) => check.label);
     const message = total >= 43
-      ? "Your response is relevant, detailed, and ready for the next part of the schedule meeting."
+      ? (ui.successMessage || "Your response is relevant, detailed, and ready for the next part of the conversation.")
       : total >= 34
-        ? `Your message communicates the main idea. ${missing.length ? `Add ${missing[0]} to make it complete.` : "Add one precise Unit 6 expression next time."}`
-        : `Build the response again with a complete schedule message${missing.length ? ` and include ${missing[0]}` : " and one specific detail"}.`;
+        ? `Your message communicates the main idea. ${missing.length ? `Add ${missing[0]} to make it complete.` : ui.addExpressionMessage}`
+        : uiText(ui.incompleteMessage, { missing: missing.length ? ` and include ${missing[0]}` : " and one specific detail" });
     return { total, metrics, checks, wordCount, durationSeconds: Math.round(seconds), wordsPerMinute: Math.round(wordsPerMinute), lowConfidence, message };
   }
 
@@ -858,10 +922,10 @@
       : nextAction === "finish"
         ? 'View private report <i class="bi bi-clipboard2-check"></i>'
         : 'Continue conversation <i class="bi bi-arrow-right"></i>';
-    setRecordStatus("Marcus is responding", nextAction === "clarify" ? "Listen to the focused clarification, then record one more response." : "Listen to Marcus, then continue the schedule meeting.");
+    setRecordStatus(uiText(ui.responseStatus, { name: ui.coachName }), nextAction === "clarify" ? ui.clarificationHelp : uiText(ui.responseHelp, { name: ui.coachName }));
     updateControls();
-    await playAudio(elements.reactionAudio, entry.file, { stageState: "responding", stageLabel: "Marcus is responding", restoreStage: false });
-    setStageState(nextAction === "finish" ? "complete" : "ready", nextAction === "clarify" ? "Marcus needs one detail" : nextAction === "finish" ? "Schedule conversation complete" : "Marcus is ready for the next stage");
+    await playAudio(elements.reactionAudio, entry.file, { stageState: "responding", stageLabel: uiText(ui.responseStatus, { name: ui.coachName }), restoreStage: false });
+    setStageState(nextAction === "finish" ? "complete" : "ready", nextAction === "clarify" ? uiText(ui.needsDetailStage, { name: ui.coachName }) : nextAction === "finish" ? ui.completeStage : uiText(ui.readyNextStage, { name: ui.coachName }));
     updateControls();
   }
 
@@ -869,13 +933,13 @@
     const stage = currentStage();
     const complete = answerIsComplete(answer, stage);
     if (!complete && session.phase === "main" && stage.clarify) {
-      showToast("Marcus selected one clarification from the missing evidence.");
+      showToast(`${ui.coachName} selected one clarification from the missing evidence.`);
       await presentResponse(stage.clarify, "clarify");
       return;
     }
     const response = completeResponse(stage);
     const action = session.currentIndex === stages.length - 1 ? "finish" : "advance";
-    showToast(session.phase === "clarify" && !complete ? "Clarification recorded. Marcus will continue and the missing evidence remains in your report." : "Response analyzed successfully. Marcus is continuing the conversation.");
+    showToast(session.phase === "clarify" && !complete ? uiText(ui.clarificationAnalyzedToast, { name: ui.coachName }) : uiText(ui.analyzedToast, { name: ui.coachName }));
     await presentResponse(response, action);
   }
 
@@ -886,7 +950,7 @@
     elements.feedback.hidden = true;
     elements.transcript.textContent = "Analyzing your temporary recording. Please wait.";
     setRecordStatus("Checking your English response", "Whisper is transcribing the recording. No score is created without usable speech.");
-    setStageState("analyzing", "Marcus is checking your response");
+    setStageState("analyzing", `${ui.coachName} is checking your response`);
     updateControls();
     try {
       const payload = await requestTranscription(currentBlob);
@@ -922,10 +986,10 @@
       elements.transcript.classList.remove("has-text");
       elements.recovery.hidden = false;
       setRecordStatus("Analysis not completed", "Retry the same recording, record again, or preserve this stage as not analyzed.");
-      setStageState("ready", "Marcus is waiting while you recover the response");
+      setStageState("ready", `${ui.coachName} is waiting while you recover the response`);
       showToast("No score was created for this recording.");
       if (/silent|no clear english words|too short/i.test(message)) {
-        playAudio(elements.reactionAudio, config.audio?.noSpeech?.file, { stageState: "responding", stageLabel: "Marcus could not hear a complete response" });
+        playAudio(elements.reactionAudio, config.audio?.noSpeech?.file, { stageState: "responding", stageLabel: uiText(ui.noSpeechStage, { name: ui.coachName }) });
       } else {
         playAudio(elements.reactionAudio, config.audio?.serviceRecovery?.file, { stageState: "responding", stageLabel: "The transcription service is unavailable" });
       }
@@ -951,7 +1015,7 @@
     elements.transcript.textContent = "This response was preserved as not analyzed. No score was created.";
     elements.transcript.classList.remove("has-text");
     if (session.phase === "main" && stage.clarify) {
-      showToast("The response was preserved without a score. Marcus will ask one clarification.");
+      showToast(`The response was preserved without a score. ${ui.coachName} will ask one clarification.`);
       await presentResponse(stage.clarify, "clarify");
       return;
     }
@@ -993,7 +1057,7 @@
     elements.transcript.classList.remove("has-text");
     elements.next.disabled = true;
     setRecordStatus("Ready to record again", "Replace this response before continuing.");
-    setStageState("ready", "Marcus is ready to listen again");
+    setStageState("ready", `${ui.coachName} is ready to listen again`);
     resetTimer();
     updateControls();
     showToast("The stage is ready for a new recording.");
@@ -1006,7 +1070,7 @@
       session.phase = "clarify";
       renderStage(false);
       elements.stage.scrollIntoView({ behavior: "smooth", block: "start" });
-      showToast("Clarification ready. Record one more schedule response.");
+      showToast(ui.clarificationReadyToast || "Clarification ready. Record one more response.");
       return;
     }
     if (session.nextAction === "finish") {
@@ -1051,9 +1115,10 @@
 
   function readinessLabel(score) {
     if (score == null) return "Practice recorded without a score";
-    if (score >= 43) return "Ready for an independent schedule meeting";
-    if (score >= 34) return "Communicative with a few priorities";
-    return "Rehearse the schedule sequence again";
+    const labels = ui.readinessLabels || {};
+    if (score >= 43) return labels.high || "Ready for an independent schedule meeting";
+    if (score >= 34) return labels.mid || "Communicative with a few priorities";
+    return labels.low || "Rehearse the schedule sequence again";
   }
 
   function buildReport() {
@@ -1082,8 +1147,8 @@
       stageScores,
       weakStageIndex,
       lowConfidence: aggregateLowConfidence(answers),
-      strengths: strengths.length ? strengths : ["You completed the schedule route and preserved your practice evidence."],
-      priorities: priorities.length ? priorities.slice(0, 3) : ["Repeat the full exchange with more precise Unit 6 language."],
+      strengths: strengths.length ? strengths : [ui.fallbackStrength],
+      priorities: priorities.length ? priorities.slice(0, 3) : [ui.fallbackPriority],
       answers: session.answers,
       selectedDishId: session.selectedDishId,
       incidentId: session.incidentId,
@@ -1119,7 +1184,7 @@
     if (!reportIsDeliverable(report)) {
       elements.deliveryButton.disabled = true;
       elements.deliveryButton.innerHTML = '<i class="bi bi-send-fill"></i> Send to teacher';
-      setDeliveryStatus(`This report has ${Number(report.analyzedCount) || 0} of ${stages.length} analyzed stages. Complete a new full schedule conversation before sending it.`, "error");
+      setDeliveryStatus(uiText(ui.deliveryIncompleteStatus, { analyzed: Number(report.analyzedCount) || 0, total: stages.length }), "error");
       return;
     }
 
@@ -1129,14 +1194,14 @@
       elements.deliveryButton.innerHTML = '<i class="bi bi-check-circle-fill"></i> Submitted to teacher';
       const submittedGrade = Number(report.submission.grade);
       const gradeText = Number.isFinite(submittedGrade) ? submittedGrade.toFixed(2) : grade.toFixed(2);
-      setDeliveryStatus(`Submitted to teacher. Reference grade: ${gradeText}/5. Gradebook weight: 0%. This result does not affect your course average.`, "success");
+      setDeliveryStatus(uiText(ui.deliverySuccessStatus, { grade: gradeText }), "success");
       return;
     }
 
     elements.deliveryPanel.classList.remove("is-submitted");
     elements.deliveryButton.disabled = submissionBusy;
     elements.deliveryButton.innerHTML = submissionBusy ? '<i class="bi bi-hourglass-split"></i> Sending to teacher...' : '<i class="bi bi-send-fill"></i> Send to teacher';
-    setDeliveryStatus(submissionBusy ? "Sending the written report to your teacher..." : "Report ready. Sign in with your Intermediate English account and send it when you are ready.", submissionBusy ? "pending" : "ready");
+    setDeliveryStatus(submissionBusy ? ui.deliveryBusyStatus : ui.deliveryReadyStatus, submissionBusy ? "pending" : "ready");
   }
 
   function deliveryTurns(report) {
@@ -1157,8 +1222,8 @@
   async function submitReport() {
     const report = persistent.lastReport;
     if (!report || !reportIsDeliverable(report)) {
-      setDeliveryStatus("Complete all eight analyzed stages before sending this activity.", "error");
-      showToast("The full conversation must be analyzed before delivery.");
+      setDeliveryStatus(uiText(ui.deliveryIncompleteStatus, { analyzed: Number(report?.analyzedCount) || 0, total: stages.length }), "error");
+      showToast(ui.deliveryIncompleteToast);
       return;
     }
     const user = readUser();
@@ -1186,8 +1251,8 @@
           clientSubmissionId: ensureReportSubmissionId(report),
           clientDate: new Date().toISOString().slice(0, 10),
           mode: report.mode,
-          selectedStrategy: dish?.name || "",
-          scheduleScenario: incident?.prompt || "",
+          [ui.payloadItemKey]: dish?.name || "",
+          [ui.payloadIncidentKey]: incident?.prompt || "",
           metrics: report.metrics,
           analyzedCount: report.analyzedCount,
           totalStages: report.totalStages,
@@ -1199,7 +1264,7 @@
       if (!response.ok) {
         if (response.status === 401) throw new Error("Your session expired. Sign in again before sending this report.");
         if (payload.error === "student_not_authorized") throw new Error("This account is signed in but is not linked to an Intermediate English student record.");
-        if (payload.error === "incomplete_conversation") throw new Error("The server could not verify all eight analyzed stages. Complete a new full schedule conversation and try again.");
+        if (payload.error === "incomplete_conversation") throw new Error(ui.deliveryIncompleteServer);
         throw new Error("The report could not be submitted. Please try again.");
       }
       report.submission = {
@@ -1210,7 +1275,7 @@
       };
       persistent.lastReport = report;
       savePersistent();
-      showToast("Submitted to teacher. Reference grade recorded with weight 0%.");
+      showToast(ui.deliverySuccessToast);
     } catch (error) {
       failureMessage = error.message || "The report could not be submitted.";
       showToast(failureMessage);
@@ -1223,13 +1288,13 @@
 
   function renderHistory() {
     if (!persistent.history.length) {
-      elements.attemptHistory.innerHTML = "<p>No previous schedule attempts are stored on this device.</p>";
+      elements.attemptHistory.innerHTML = `<p>${escapeHtml(ui.historyEmpty)}</p>`;
       return;
     }
     elements.attemptHistory.innerHTML = [...persistent.history].reverse().map((item) => {
       const date = new Date(item.createdAt).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
       const score = item.score == null ? "Not scored" : `${item.score}/50`;
-      return `<article><div><strong>${escapeHtml(score)}</strong><span>${escapeHtml(item.mode === "real" ? "Real Meeting" : "Guided Rehearsal")}</span></div><span>${escapeHtml(date)}</span></article>`;
+      return `<article><div><strong>${escapeHtml(score)}</strong><span>${escapeHtml(item.mode === "real" ? ui.historyRealLabel : ui.historyGuidedLabel)}</span></div><span>${escapeHtml(date)}</span></article>`;
     }).join("");
   }
 
@@ -1239,11 +1304,13 @@
     savePersistent();
     const dish = dishById.get(report.selectedDishId);
     const incident = incidentById.get(report.incidentId);
-    elements.summaryLead.textContent = `You completed the schedule rescue route${dish ? ` with ${dish.name}` : ""}. Review the evidence before your next unlimited attempt.`;
+    elements.summaryLead.textContent = uiText(ui.reportLead, { item: dish ? ` with ${dish.name}` : "", name: ui.coachName });
     elements.summaryScore.textContent = report.score == null ? "--" : report.score;
     elements.summaryReadiness.textContent = readinessLabel(report.score);
-    elements.summaryComparison.textContent = report.score == null ? "No automatic score was created because no usable English transcription was available." : "This formative estimate summarizes your latest analyzed response in each schedule stage.";
-    elements.summaryCoverage.textContent = reportIsDeliverable(report) ? `${report.analyzedCount} of ${report.totalStages} stages analyzed. The written report is ready for optional teacher delivery.` : `${report.analyzedCount} of ${report.totalStages} stages analyzed. Complete all eight stages to unlock teacher delivery.`;
+    elements.summaryComparison.textContent = report.score == null ? "No automatic score was created because no usable English transcription was available." : ui.reportComparison;
+    elements.summaryCoverage.textContent = reportIsDeliverable(report)
+      ? uiText(ui.reportCoverageReady, { analyzed: report.analyzedCount, total: report.totalStages })
+      : uiText(ui.reportCoverageIncomplete, { analyzed: report.analyzedCount, total: report.totalStages });
     elements.summaryMetrics.innerHTML = (config.rubric || []).map((criterion) => `<article class="coach-summary-metric"><strong>${report.metrics[criterion.key] ?? "--"}</strong><span>${escapeHtml(criterion.label)} /10</span><p>${escapeHtml(criterion.description)}</p></article>`).join("");
     elements.summaryStrengths.innerHTML = report.strengths.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
     elements.summaryPriorities.innerHTML = report.priorities.map((item) => `<li>${escapeHtml(item)}</li>`).join("");
@@ -1253,9 +1320,9 @@
       const attemptsMarkup = attempts.length ? attempts.map((answer) => {
         const label = answer.phase === "clarify" ? "Clarification response" : "Initial response";
         const score = answer.analysis ? `${Math.round(answer.analysis.total)}/50` : "Not analyzed";
-        return `<div class="coach-answer-phase"><div class="coach-answer-phase-heading"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(score)}</span></div><p><strong>Marcus:</strong> ${escapeHtml(answer.prompt)}</p><p><strong>You:</strong> ${escapeHtml(answer.transcript)}</p></div>`;
+        return `<div class="coach-answer-phase"><div class="coach-answer-phase-heading"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(score)}</span></div><p><strong>${escapeHtml(ui.coachName)}:</strong> ${escapeHtml(answer.prompt)}</p><p><strong>You:</strong> ${escapeHtml(answer.transcript)}</p></div>`;
       }).join("") : '<p>No analyzed or preserved response for this stage.</p>';
-      const context = stage.id === "schedule-pushback" && incident ? `<p><strong>Scenario:</strong> ${escapeHtml(incident.prompt)}</p>` : "";
+      const context = (stage.id === "schedule-pushback" || stage.id === "service-problem") && incident ? `<p><strong>Scenario:</strong> ${escapeHtml(incident.prompt)}</p>` : "";
       return `<article><h3><span class="coach-answer-score">${report.stageScores[stageIndex] == null ? "--" : `${report.stageScores[stageIndex]}/50`}</span>Stage ${stageIndex + 1}: ${escapeHtml(stage.topic)}</h3>${context}${attemptsMarkup}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(stage.improved || "")}</p></article>`;
     }).join("");
     renderHistory();
@@ -1278,7 +1345,7 @@
     renderReport(report);
     showPanel("summary");
     elements.summary.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast("Schedule report ready. Nothing is sent until you choose Send to teacher.");
+    showToast(ui.reportReadyToast || "Report ready. Nothing is sent until you choose Send to teacher.");
   }
 
   function reviewLatest() {
@@ -1286,21 +1353,21 @@
     renderReport(persistent.lastReport);
     showPanel("summary");
     elements.summary.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast("Latest schedule report opened.");
+    showToast(ui.latestReportToast || "Latest report opened.");
   }
 
   function clearHistory() {
     persistent.history = [];
     savePersistent();
     renderHistory();
-    showToast("Schedule attempt history cleared from this device.");
+    showToast(ui.historyClearedToast || "Attempt history cleared from this device.");
   }
 
   function restartGuided() {
     showPanel("onboarding");
     elements.guidedMode.checked = true;
     elements.onboarding.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast("Guided Rehearsal is selected for your next full schedule conversation.");
+    showToast(ui.guidedRestartToast || "Guided Rehearsal is selected for your next full conversation.");
   }
 
   document.addEventListener("click", (event) => {

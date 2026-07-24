@@ -1,0 +1,138 @@
+.final-oral-partner-page {
+  --restaurant-teal: #0f766e;
+  --restaurant-teal-dark: #0b5f59;
+  --restaurant-gold: #d7a84c;
+  --restaurant-coral: #d94a68;
+  --restaurant-ink: #0d2346;
+  --restaurant-soft: #eef8f5;
+}
+
+.final-oral-partner-page .final-oral-hero {
+  min-height: clamp(520px, 46vw, 620px);
+  background: #071a34;
+}
+
+.final-oral-partner-page .final-oral-hero::before {
+  background:
+    linear-gradient(90deg, rgba(5, 18, 39, .98) 0%, rgba(5, 18, 39, .94) 42%, rgba(5, 18, 39, .56) 68%, rgba(5, 18, 39, .16) 100%),
+    linear-gradient(0deg, rgba(15, 118, 110, .28), transparent 44%);
+}
+
+.final-oral-partner-page .final-oral-hero .coach-hero-visual img {
+  object-position: center 48%;
+}
+
+.final-oral-partner-page .final-oral-welcome figure,
+.final-oral-partner-page .final-oral-stage .coach-avatar {
+  background: linear-gradient(135deg, #e8f5f2, #ffffff);
+}
+
+.final-oral-partner-page .final-oral-welcome figure img,
+.final-oral-partner-page .final-oral-stage .coach-avatar img {
+  object-position: center 18%;
+}
+
+.final-oral-partner-page .restaurant-menu-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.final-oral-partner-page .restaurant-dish-card {
+  min-height: 100%;
+}
+
+.final-oral-partner-page .restaurant-dish-heading {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.final-oral-partner-page .restaurant-dish-heading strong {
+  width: max-content;
+  padding: .22rem .45rem;
+  border-radius: 6px;
+  background: #fff7e3;
+  color: #8a5c12;
+  font-size: .72rem;
+}
+
+.final-oral-partner-page .restaurant-dish-copy p {
+  min-height: 4.8rem;
+}
+
+.final-oral-partner-page .restaurant-dish-actions {
+  align-items: stretch;
+}
+
+.final-oral-partner-page .restaurant-dish-select {
+  min-height: 44px;
+}
+
+.final-oral-partner-page .final-delivery-panel {
+  border-color: rgba(15, 118, 110, .24);
+}
+
+.final-oral-partner-page .final-delivery-panel .restaurant-delivery-metrics strong {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+}
+
+.final-oral-partner-page .coach-sidebar .sidebar-language {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .45rem;
+}
+
+.final-oral-partner-page .coach-sidebar .sidebar-language span {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: .36rem .55rem;
+  border: 1px solid rgba(15, 118, 110, .18);
+  border-radius: 999px;
+  background: #eef8f5;
+  color: var(--restaurant-ink);
+  font-size: .82rem;
+  font-weight: 850;
+}
+
+@media (max-width: 1180px) {
+  .final-oral-partner-page .restaurant-menu-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .final-oral-partner-page .final-oral-hero {
+    min-height: auto;
+  }
+
+  .final-oral-partner-page .restaurant-menu-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .final-oral-partner-page .final-oral-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 560px) {
+  .final-oral-partner-page .final-oral-hero {
+    padding-top: 1.35rem;
+    padding-bottom: 1.35rem;
+  }
+
+  .final-oral-partner-page .final-oral-hero::before {
+    background:
+      linear-gradient(180deg, rgba(5, 18, 39, .98) 0%, rgba(5, 18, 39, .88) 62%, rgba(5, 18, 39, .5) 100%);
+  }
+
+  .final-oral-partner-page .restaurant-menu-grid,
+  .final-oral-partner-page .final-oral-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .final-oral-partner-page .restaurant-dish-copy p {
+    min-height: 0;
+  }
+
+  .final-oral-partner-page .coach-hero h1 {
+    font-size: clamp(2.25rem, 13vw, 3.25rem);
+  }
+}

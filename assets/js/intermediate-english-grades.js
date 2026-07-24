@@ -648,14 +648,21 @@
   function followUpSubmissionRows(payload) {
     const rows = [];
     payload.students.forEach(function (student) {
-      const details = student.gradeDetails || {};
-      Object.keys(details).forEach(function (key) {
-        const detail = details[key];
-        if (!detail || detail.followUpOnly !== true) return;
-        rows.push({
-          student: student,
-          id: key,
-          detail: detail
+      const detailSources = [
+        { name: "gradeDetails", details: student.gradeDetails || {} },
+        { name: "teacherFollowUps", details: student.teacherFollowUps || {} }
+      ];
+      detailSources.forEach(function (source) {
+        const details = source.details || {};
+        Object.keys(details).forEach(function (key) {
+          const detail = details[key];
+          if (!detail || detail.followUpOnly !== true) return;
+          rows.push({
+            student: student,
+            id: key,
+            detail: detail,
+            source: source.name
+          });
         });
       });
     });
@@ -671,9 +678,12 @@
       const scoreText = detail.score == null || detail.total == null ? (detail.score100 != null ? detail.score100 + " / 100" : (detail.wordCount ? detail.wordCount + " words" : "")) : detail.score + " / " + detail.total;
       const responseText = detail.blogText || detail.response || detail.transcript || "";
       const followupNotes = [
+        detail.gradebookExcluded ? "Gradebook: teacher follow-up only. It does not create a percentage column." : "",
         detail.team ? "Team: " + detail.team : "",
         detail.dishName ? "Dish: " + detail.dishName : "",
         detail.shoppingList ? "Shopping list: " + detail.shoppingList : "",
+        detail.selectedProblem ? "Student problem: " + detail.selectedProblem : "",
+        detail.partnerProblem ? "Partner problem: " + detail.partnerProblem : "",
         Array.isArray(detail.reviewSummary) && detail.reviewSummary.length ? "Teacher review: " + detail.reviewSummary.join(" ") : ""
       ].filter(Boolean).join("\n");
       const audioButton = detail.audio ? `<button class="btn-soft btn-sm" type="button" data-followup-audio data-student-id="${escapeHtml(item.student.id)}" data-evaluation-id="${escapeHtml(item.id)}"><i class="bi bi-play-circle"></i> Load audio</button><div data-followup-audio-player="${escapeHtml(item.student.id)}-${escapeHtml(item.id)}" style="margin-top:.55rem;"></div>` : "";
@@ -694,10 +704,12 @@
 
   function followUpSubmissionCount(payload) {
     return payload.students.reduce(function (total, student) {
-      const details = student.gradeDetails || {};
-      return total + Object.keys(details).filter(function (key) {
-        return details[key] && details[key].followUpOnly === true;
-      }).length;
+      const detailSources = [student.gradeDetails || {}, student.teacherFollowUps || {}];
+      return total + detailSources.reduce(function (sourceTotal, details) {
+        return sourceTotal + Object.keys(details).filter(function (key) {
+          return details[key] && details[key].followUpOnly === true;
+        }).length;
+      }, 0);
     }, 0);
   }
 
