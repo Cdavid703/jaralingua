@@ -212,7 +212,14 @@ window.JaraLinguaScheduleCoachConfig = {
       unitTerms: ["problem", "because", "already tried", "affects"],
       minWords: 18,
       maxSeconds: 50,
-      improved: "I chose School and Work Stress because I have deadlines at college and at work. It affects me because I feel tired, and I have already tried making a list."
+      improved: "I chose School and Work Stress because I have deadlines at college and at work. It affects me because I feel tired, and I have already tried making a list.",
+      improvedByDish: {
+        "school-work-stress": "I chose School and Work Stress because I have deadlines at college and at work. It affects me because I feel tired, and I have already tried making a list.",
+        "english-learning": "I chose English Learning Difficulty because I understand grammar in class, but I freeze when I have to speak. It affects my confidence, and I have already tried studying vocabulary alone.",
+        "health-habits": "I chose Health Habits because I want to sleep better and exercise more, but I keep leaving healthy routines for later. It affects my energy, and I have already tried changing everything at once.",
+        "money-management": "I chose Money Problems because I spend small amounts too quickly and I need to save for something important. It affects my plans, and I have already tried avoiding expensive places.",
+        "free-time": "I chose No Free Time because I have responsibilities almost every day and I do not make time for rest, friends, or hobbies. It affects my energy, and I have already tried organizing my week."
+      }
     },
     {
       id: "follow-up-answer-1",
@@ -229,7 +236,14 @@ window.JaraLinguaScheduleCoachConfig = {
       unitTerms: ["because", "main reason", "cause"],
       minWords: 12,
       maxSeconds: 40,
-      improved: "The biggest cause is time pressure because I work during the day and study at night, so I do not have enough energy."
+      improved: "The biggest cause is time pressure because I work during the day and study at night, so I do not have enough energy.",
+      improvedByDish: {
+        "school-work-stress": "The biggest cause is time pressure because I work during the day and study at night, so I do not have enough energy.",
+        "english-learning": "The biggest cause is confidence because I understand some English, but I get nervous when I have to answer quickly.",
+        "health-habits": "The biggest cause is habit because I plan healthy routines, but I usually go to bed late and postpone exercise.",
+        "money-management": "The biggest cause is small daily spending because I do not notice how much money I use until the end of the week.",
+        "free-time": "The biggest cause is my schedule because I say yes to too many responsibilities, so I do not protect time to rest."
+      }
     },
     {
       id: "follow-up-answer-2",
@@ -246,7 +260,14 @@ window.JaraLinguaScheduleCoachConfig = {
       unitTerms: ["would", "if", "next week"],
       minWords: 12,
       maxSeconds: 40,
-      improved: "If this improved next week, I would feel less stressed because I could organize my tasks before the weekend."
+      improved: "If this improved next week, I would feel less stressed because I could organize my tasks before the weekend.",
+      improvedByDish: {
+        "school-work-stress": "If this improved next week, I would feel less stressed because I could organize my tasks before the weekend.",
+        "english-learning": "If this improved next week, I would speak with more confidence because I could practice short answers every day.",
+        "health-habits": "If this improved next week, I would have more energy because I could sleep earlier and exercise twice.",
+        "money-management": "If this improved next week, I would save more money because I could control small expenses before they become a problem.",
+        "free-time": "If this improved next week, I would feel more balanced because I could rest, see my friends, and still finish my responsibilities."
+      }
     },
     {
       id: "advice-plan",
@@ -264,6 +285,13 @@ window.JaraLinguaScheduleCoachConfig = {
       minWords: 18,
       maxSeconds: 50,
       improved: "The best suggestion is making a short weekly plan because it is realistic. I am not sure studying every night would work, but I could practice three times a week.",
+      improvedByDish: {
+        "school-work-stress": "The best suggestion is making a short weekly plan because it is realistic. I am not sure studying every night would work, but I could protect three work blocks.",
+        "english-learning": "The best suggestion is recording short answers because it is realistic. I am not sure speaking for an hour would work, but I could practice five minutes a day.",
+        "health-habits": "The best suggestion is starting with one small habit because it is realistic. I am not sure changing everything would work, but I could sleep earlier twice this week.",
+        "money-management": "The best suggestion is writing down daily expenses because it is realistic. I am not sure cutting everything would work, but I could reduce one spending habit.",
+        "free-time": "The best suggestion is blocking free time before the week becomes full because it is realistic. I am not sure cancelling everything would work, but I could say no to one optional task."
+      },
       complete: {
         file: "stage-04-complete.mp3",
         text: "Good. You reacted to my advice and made a decision. Now I will present my own problem. Listen carefully because you need to ask follow-up questions before you advise me."
@@ -284,6 +312,11 @@ window.JaraLinguaScheduleCoachConfig = {
       minWords: 10,
       maxSeconds: 45,
       improved: "How long have you felt this way? Have you tried practicing with one short answer every day?",
+      improvedByIncident: {
+        "sophie-language-learning": "How long have you felt this way? Have you tried practicing with one short answer every day?",
+        "sophie-money": "How much do you usually spend every day? Have you tried writing down your small expenses for one week?",
+        "sophie-free-time": "Which responsibility takes most of your time? Have you tried blocking one hour for rest before the week becomes full?"
+      },
       complete: {
         file: "stage-05-complete.mp3",
         text: "Those questions help me explain the problem. I have tried making plans, but I do not always follow them. Now give me advice with at least two advice expressions and reasons."
@@ -310,6 +343,11 @@ window.JaraLinguaScheduleCoachConfig = {
       minWords: 22,
       maxSeconds: 55,
       improved: "If I were you, I would start with one small change because it is easier to continue. You could also ask a friend to check your progress twice a week.",
+      improvedByIncident: {
+        "sophie-language-learning": "If I were you, I would practice one short answer every day because it is easier than speaking for a long time. You could also record yourself and repeat the unclear sentence.",
+        "sophie-money": "If I were you, I would set a small daily spending limit because small expenses add up quickly. You could also save first and spend only what is left.",
+        "sophie-free-time": "If I were you, I would choose one optional task to put off because you need time to rest. You could also block free time on your calendar before people ask for help."
+      },
       complete: {
         file: "stage-06-complete.mp3",
         text: "That advice is useful. Now let's decide together. Which advice is the best option for my problem, and why?"
@@ -336,6 +374,11 @@ window.JaraLinguaScheduleCoachConfig = {
       minWords: 18,
       maxSeconds: 50,
       improved: "The best option is practicing one short answer every day because it is more realistic than studying for two hours once a week.",
+      improvedByIncident: {
+        "sophie-language-learning": "The best option is practicing one short answer every day because it is more realistic than studying for two hours once a week.",
+        "sophie-money": "The best option is tracking small expenses every day because it is more realistic than trying to stop all spending at once.",
+        "sophie-free-time": "The best option is protecting one rest block each week because it is more realistic than cancelling every responsibility."
+      },
       complete: {
         file: "stage-07-complete.mp3",
         text: "I agree. That sounds realistic and respectful. Finish the exchange by summarizing what each person should do after the conversation."
@@ -362,6 +405,19 @@ window.JaraLinguaScheduleCoachConfig = {
       minWords: 18,
       maxSeconds: 50,
       improved: "I should organize my problem with a simple weekly plan, and you should practice one small habit every day. We could follow up next week after class.",
+      combineImprovedModels: true,
+      improvedByDish: {
+        "school-work-stress": "I should organize my school and work deadlines with a simple weekly plan.",
+        "english-learning": "I should practice short English answers every day instead of waiting for a long study session.",
+        "health-habits": "I should start with one healthy habit this week, such as sleeping earlier or exercising twice.",
+        "money-management": "I should track small expenses and decide how much money I can save each week.",
+        "free-time": "I should block time for rest before my schedule becomes full, and I should say no to one optional task."
+      },
+      improvedByIncident: {
+        "sophie-language-learning": "Sophie should practice one short English answer every day, and we could follow up next week after class.",
+        "sophie-money": "Sophie should track small expenses for one week, and we could follow up next class to compare her spending plan.",
+        "sophie-free-time": "Sophie should protect one rest block this week, and we could follow up next class to see if the plan worked."
+      },
       complete: {
         file: "stage-08-complete.mp3",
         text: "Excellent. Your final oral partner practice is complete. Review your report, then send it to the teacher if you are ready."

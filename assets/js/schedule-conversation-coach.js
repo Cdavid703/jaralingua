@@ -890,11 +890,22 @@
     return { total, metrics, checks, wordCount, durationSeconds: Math.round(seconds), wordsPerMinute: Math.round(wordsPerMinute), lowConfidence, message };
   }
 
+  function strongerModel(stage, context = {}) {
+    const dishId = context.selectedDishId || session.selectedDishId;
+    const incidentId = context.incidentId || session.incidentId;
+    const dishModel = stage.improvedByDish && dishId ? stage.improvedByDish[dishId] : "";
+    const incidentModel = stage.improvedByIncident && incidentId ? stage.improvedByIncident[incidentId] : "";
+    if (stage.combineImprovedModels && dishModel && incidentModel) return `${dishModel} ${incidentModel}`;
+    if (dishModel) return dishModel;
+    if (incidentModel) return incidentModel;
+    return stage.improved || "";
+  }
+
   function feedbackMarkup(answer, stage) {
     const metrics = (config.rubric || []).map((criterion) => `<div class="coach-feedback-metric"><strong>${answer.analysis.metrics[criterion.key]}</strong><span>${escapeHtml(criterion.label)} /10</span></div>`).join("");
     const checks = answer.analysis.checks.map((check) => `<span class="coach-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i> ${escapeHtml(check.label)}</span>`).join("");
     const lowWords = answer.analysis.lowConfidence.length ? `<p class="coach-feedback-copy"><strong>Repeat more clearly:</strong> ${answer.analysis.lowConfidence.map((item) => escapeHtml(item.word)).join(", ")}. This is only a transcription-confidence signal.</p>` : "";
-    return `<div class="coach-feedback-grid">${metrics}</div><div class="coach-checks">${checks}</div><p class="coach-feedback-copy">${escapeHtml(answer.analysis.message)}</p>${lowWords}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(stage.improved || "")}</p>`;
+    return `<div class="coach-feedback-grid">${metrics}</div><div class="coach-checks">${checks}</div><p class="coach-feedback-copy">${escapeHtml(answer.analysis.message)}</p>${lowWords}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(strongerModel(stage))}</p>`;
   }
 
   function answerIsComplete(answer, stage) {
@@ -1323,7 +1334,7 @@
         return `<div class="coach-answer-phase"><div class="coach-answer-phase-heading"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(score)}</span></div><p><strong>${escapeHtml(ui.coachName)}:</strong> ${escapeHtml(answer.prompt)}</p><p><strong>You:</strong> ${escapeHtml(answer.transcript)}</p></div>`;
       }).join("") : '<p>No analyzed or preserved response for this stage.</p>';
       const context = (stage.id === "schedule-pushback" || stage.id === "service-problem") && incident ? `<p><strong>Scenario:</strong> ${escapeHtml(incident.prompt)}</p>` : "";
-      return `<article><h3><span class="coach-answer-score">${report.stageScores[stageIndex] == null ? "--" : `${report.stageScores[stageIndex]}/50`}</span>Stage ${stageIndex + 1}: ${escapeHtml(stage.topic)}</h3>${context}${attemptsMarkup}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(stage.improved || "")}</p></article>`;
+      return `<article><h3><span class="coach-answer-score">${report.stageScores[stageIndex] == null ? "--" : `${report.stageScores[stageIndex]}/50`}</span>Stage ${stageIndex + 1}: ${escapeHtml(stage.topic)}</h3>${context}${attemptsMarkup}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(strongerModel(stage, { selectedDishId: report.selectedDishId, incidentId: report.incidentId }))}</p></article>`;
     }).join("");
     renderHistory();
     updateDelivery(report);

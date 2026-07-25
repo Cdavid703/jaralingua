@@ -43,6 +43,15 @@ assert(config.maxRecordingSeconds === 50, "Expected 50-second recording window."
 assert(config.ui && config.ui.payloadItemKey === "selectedProblem", "Payload must store selectedProblem.");
 assert(config.ui && config.ui.payloadIncidentKey === "partnerProblem", "Payload must store partnerProblem.");
 
+const firstStage = config.stages.find((stage) => stage.id === "choose-strategy");
+assert(firstStage && firstStage.improvedByDish, "First stage must define context-specific stronger models.");
+assert(firstStage.improvedByDish["free-time"], "No Free Time must have its own stronger model.");
+assert(!/School and Work Stress/i.test(firstStage.improvedByDish["free-time"]), "No Free Time stronger model must not reuse School and Work Stress.");
+assert(/free time|rest|responsibilities/i.test(firstStage.improvedByDish["free-time"]), "No Free Time stronger model must match the selected problem.");
+assert(engineJs.includes("function strongerModel"), "Engine must resolve contextual stronger models.");
+assert(engineJs.includes("improvedByDish"), "Engine must support stronger models by selected problem.");
+assert(engineJs.includes("improvedByIncident"), "Engine must support stronger models by partner problem.");
+
 const requiredIds = [
   "onboardingPanel", "interviewPanel", "summaryPanel", "welcomePlayButton", "instructionsPlayButton",
   "welcomeAudio", "instructionsAudio", "guidedMode", "realMode", "menuPreviewGrid", "activeMenuPanel",
@@ -111,7 +120,7 @@ const explanation = read(path.join(root, "ingles", "intermediate", "unit-6-futur
 for (const source of [practiceLab, overview, explanation]) {
   assert(source.includes("final-oral-partner-coach.html"), "Missing final oral partner coach navigation link.");
 }
-assert(practiceLab.includes("45 activities"), "Practice Lab total count was not updated.");
-assert(practiceLab.includes("Unit 6 - 7 activities"), "Practice Lab Unit 6 count was not updated.");
+assert(practiceLab.includes("46 activities"), "Practice Lab total count was not updated.");
+assert(practiceLab.includes("Unit 6 - 8 activities"), "Practice Lab Unit 6 count was not updated.");
 
 console.log("PASS final oral partner coach: page, config, responsive assets, professional audio, backend follow-up endpoint, and navigation.");
