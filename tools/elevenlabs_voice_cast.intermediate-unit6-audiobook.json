@@ -1,0 +1,10 @@
+{
+  "speakers": {
+    "Narrator": {
+      "voice_id": "SAz9YHcvj6GT2YYXdXww",
+      "name": "River - Neutral US Narrator",
+      "profile": "english-us",
+      "gender": "neutral"
+    }
+  }
+}
