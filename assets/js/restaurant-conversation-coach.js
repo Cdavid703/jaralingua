@@ -125,6 +125,8 @@
   let toastTimer = null;
   let preflightObjectUrl = "";
   let submissionBusy = false;
+  let authRefreshNeeded = false;
+  let deliveryWaitingForAuth = false;
 
   function escapeHtml(value) {
     return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -167,10 +169,13 @@
   function readStoredUser(key, provider) {
     try {
       const saved = JSON.parse(sessionStorage.getItem(key) || "null");
-      if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
+      if (!saved) return null;
+      if (saved.exp && Date.now() / 1000 > saved.exp) {
+        authRefreshNeeded = true;
         sessionStorage.removeItem(key);
         return null;
       }
+      if (!saved.credential) return null;
       return Object.assign({ provider }, saved);
     } catch {
       sessionStorage.removeItem(key);
@@ -178,13 +183,31 @@
     }
   }
 
+  function readRuntimeUser() {
+    const runtimeUser = typeof window.JaraLinguaAuth?.getUser === "function"
+      ? window.JaraLinguaAuth.getUser()
+      : window.JaraLinguaCurrentUser;
+    if (!runtimeUser || !runtimeUser.credential) return null;
+    if (runtimeUser.exp && Date.now() / 1000 > Number(runtimeUser.exp)) {
+      authRefreshNeeded = true;
+      return null;
+    }
+    return Object.assign({ provider: runtimeUser.provider || "google" }, runtimeUser);
+  }
+
   function readUser() {
+    authRefreshNeeded = false;
     return readStoredUser(GOOGLE_USER_KEY, "google") ||
       readStoredUser(MICROSOFT_USER_KEY, "microsoft") ||
-      readStoredUser(LOCAL_USER_KEY, "local");
+      readStoredUser(LOCAL_USER_KEY, "local") ||
+      readRuntimeUser();
   }
 
   function openLoginPanel() {
+    if (typeof window.JaraLinguaAuth?.openPanel === "function") {
+      window.JaraLinguaAuth.openPanel();
+      return;
+    }
     document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]")?.click();
   }
 
@@ -1164,8 +1187,12 @@
     }
     const user = readUser();
     if (!user?.credential) {
-      setDeliveryStatus("Sign in first with the account registered in Intermediate English.", "error");
-      showToast("Sign in before sending the report.");
+      const message = authRefreshNeeded
+        ? "Your sign-in expired while you were working. Sign in again, then press Send to teacher; your report is still saved here."
+        : "Sign in first with the account registered in Intermediate English.";
+      deliveryWaitingForAuth = true;
+      setDeliveryStatus(message, "error");
+      showToast(authRefreshNeeded ? "Sign in again, then press Send to teacher." : "Sign in before sending the report.");
       openLoginPanel();
       return;
     }
@@ -1215,6 +1242,10 @@
     } catch (error) {
       failureMessage = error.message || "The report could not be submitted.";
       showToast(failureMessage);
+      if (/session expired|sign in/i.test(failureMessage)) {
+        deliveryWaitingForAuth = true;
+        openLoginPanel();
+      }
     } finally {
       submissionBusy = false;
       updateDelivery(report);
@@ -1339,6 +1370,13 @@
   elements.closingPlay.addEventListener("click", () => playAudio(elements.reactionAudio, stages.at(-1)?.complete?.file));
   elements.clearHistory.addEventListener("click", clearHistory);
   elements.deliveryButton.addEventListener("click", submitReport);
+  window.addEventListener("jaralingua:auth-changed", (event) => {
+    if (!deliveryWaitingForAuth || event.detail?.authenticated !== true || !persistent.lastReport) return;
+    deliveryWaitingForAuth = false;
+    updateDelivery(persistent.lastReport);
+    setDeliveryStatus("Sign-in refreshed. Press Send to teacher again.", "ready");
+    showToast("Sign-in refreshed. Press Send to teacher again.");
+  });
   elements.microphoneSelect.addEventListener("change", () => showToast(elements.microphoneSelect.value ? "Selected microphone ready." : "Default microphone selected."));
 
   navigator.mediaDevices?.addEventListener?.("devicechange", refreshMicrophones);

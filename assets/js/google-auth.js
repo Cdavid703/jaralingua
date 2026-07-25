@@ -753,6 +753,7 @@
   function saveUser(user) {
     const provider = user && user.provider === "microsoft" ? "microsoft" : (user && user.provider === "local" ? "local" : "google");
     currentUser = Object.assign({}, user, { provider: provider });
+    publishAuthState();
     cloudProgressLoaded = false;
     pendingProgressSync = false;
     pendingActivitySync = {};
@@ -768,6 +769,20 @@
     syncCloudData();
     updateDownloadLocks();
     notifyAuthChange(true);
+  }
+
+  function publishAuthState() {
+    window.JaraLinguaCurrentUser = currentUser ? Object.assign({}, currentUser) : null;
+    window.JaraLinguaAuth = Object.assign(window.JaraLinguaAuth || {}, {
+      getUser: function () {
+        return currentUser ? Object.assign({}, currentUser) : null;
+      },
+      isAuthenticated: function () {
+        return !!(currentUser && currentUser.credential);
+      },
+      openPanel: openPanel,
+      closePanel: closePanel
+    });
   }
 
   function notifyAuthChange(authenticated) {
@@ -791,6 +806,7 @@
     sessionStorage.removeItem(MICROSOFT_USER_KEY);
     sessionStorage.removeItem(LOCAL_USER_KEY);
     currentUser = null;
+    publishAuthState();
     buttonRendered = false;
     cloudProgressLoaded = false;
     pendingProgressSync = false;
@@ -2523,6 +2539,7 @@
   function startAuthRuntime() {
     if (authRuntimeStarted) return;
     authRuntimeStarted = true;
+    publishAuthState();
     initStudentIdClaimRetry();
     initGoogle();
     if (currentUser) {
