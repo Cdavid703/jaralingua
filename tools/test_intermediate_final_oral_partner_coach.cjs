@@ -55,6 +55,10 @@ assert(engineJs.includes("improvedByIncident"), "Engine must support stronger mo
 assert(engineJs.includes("function fallbackResponse"), "Engine must provide a safe transition when a stage has no configured response.");
 assert(engineJs.includes("usesSelectedItemResponse"), "Engine must support explicit selected-card response stages.");
 assert(engineJs.includes("useSelectedItemResponseOnChooseStrategy"), "Engine must allow final oral to disable premature selected-card responses.");
+assert(engineJs.includes("activeSession"), "Engine must autosave an active partner-coach session.");
+assert(engineJs.includes("function resumeActiveSession"), "Engine must resume saved partner-coach progress after reload.");
+assert(engineJs.includes("function markCurrentStageNotRecorded"), "Continue must preserve a not-recorded stage instead of freezing.");
+assert(engineJs.includes("function goPrevious"), "Engine must support going back to a previous stage.");
 
 const stageOne = config.stages.find((stage) => stage.id === "choose-strategy");
 const stageTwo = config.stages.find((stage) => stage.id === "follow-up-answer-1");
@@ -73,7 +77,7 @@ const requiredIds = [
   "microphoneSelect", "levelMeterBar", "levelMeterValue", "micButton", "stopButton", "recordAgainButton",
   "recordStatus", "recordHelp", "recordTimer", "studentAudio", "liveTranscript", "turnFeedback",
   "transcriptionRecovery", "retryTranscriptionButton", "continueUnscoredButton", "recoveryRecordAgainButton",
-  "unsupportedMessage", "coachReaction", "coachReactionText", "nextTurnButton", "summaryLead", "summaryScore",
+  "unsupportedMessage", "coachReaction", "coachReactionText", "previousTurnButton", "nextTurnButton", "summaryLead", "summaryScore",
   "summaryReadiness", "summaryComparison", "summaryCoverage", "teacherDeliveryPanel", "deliveryScore",
   "deliveryGrade", "deliveryButton", "deliveryStatus", "summaryMetrics", "summaryStrengths",
   "summaryPriorities", "summaryWords", "attemptHistory", "summaryAnswers", "clearHistoryButton",
@@ -90,6 +94,7 @@ assert(html.includes("english-intermediate-1-final-oral-partner-coach.js"), "Mis
 assert(html.includes("schedule-conversation-coach.js"), "Missing reusable conversation coach engine.");
 assert(html.includes("Send to teacher"), "Missing English teacher delivery button.");
 assert(html.includes("Gradebook weight 20%"), "Missing visible 20% gradebook delivery note.");
+assert(!html.includes('id="nextTurnButton" type="button" disabled'), "Continue must not be disabled by default.");
 assert((html.match(/data-coach-speed="0\.75"/g) || []).length >= 2, "Missing 0.75x speed buttons.");
 assert((html.match(/data-coach-speed="1"/g) || []).length >= 2, "Missing 1x speed buttons.");
 assert((html.match(/data-coach-speed="1\.25"/g) || []).length >= 2, "Missing 1.25x speed buttons.");

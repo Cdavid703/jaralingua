@@ -52,7 +52,7 @@ const requiredIds = [
   "micButton", "stopButton", "recordAgainButton", "recordStatus", "recordHelp", "recordTimer",
   "studentAudio", "liveTranscript", "turnFeedback", "transcriptionRecovery", "retryTranscriptionButton",
   "continueUnscoredButton", "recoveryRecordAgainButton", "unsupportedMessage", "coachReaction",
-  "coachReactionText", "nextTurnButton", "summaryLead", "summaryScore", "summaryReadiness",
+  "coachReactionText", "previousTurnButton", "nextTurnButton", "summaryLead", "summaryScore", "summaryReadiness",
   "summaryComparison", "summaryCoverage", "teacherDeliveryPanel", "deliveryScore", "deliveryGrade",
   "deliveryButton", "deliveryStatus", "summaryMetrics", "summaryStrengths", "summaryPriorities",
   "summaryWords", "attemptHistory", "summaryAnswers", "clearHistoryButton", "restartConversationButton",
@@ -68,6 +68,11 @@ assert(html.includes("english-intermediate-1-unit-6-schedule.js"), "Missing Unit
 assert(html.includes("schedule-conversation-coach.js"), "Missing Unit 6 schedule engine script.");
 assert(html.includes("Send to teacher"), "Missing English teacher delivery button.");
 assert(html.includes("Gradebook weight 0%"), "Missing visible gradebook weight note.");
+assert(engineJs.includes("activeSession"), "Engine must autosave an active schedule-coach session.");
+assert(engineJs.includes("function resumeActiveSession"), "Engine must resume saved schedule-coach progress after reload.");
+assert(engineJs.includes("function markCurrentStageNotRecorded"), "Continue must preserve a not-recorded stage instead of freezing.");
+assert(engineJs.includes("function goPrevious"), "Engine must support going back to a previous stage.");
+assert(!html.includes('id="nextTurnButton" type="button" disabled'), "Continue must not be disabled by default.");
 assert((html.match(/data-coach-speed="0\.75"/g) || []).length >= 2, "Missing 0.75x speed buttons.");
 assert((html.match(/data-coach-speed="1"/g) || []).length >= 2, "Missing 1x speed buttons.");
 assert((html.match(/data-coach-speed="1\.25"/g) || []).length >= 2, "Missing 1.25x speed buttons.");

@@ -272,7 +272,9 @@ try {
   await foreign.page.locator("#stopButton").click();
   await foreign.page.waitForSelector("#transcriptionRecovery:not([hidden])", { timeout: 15000 });
   assert.match(await foreign.page.locator("#liveTranscript").innerText(), /did not return English analysis/i, "A French transcription response must be rejected");
-  assert.equal(await foreign.page.locator("#nextTurnButton").isDisabled(), true, "Rejected foreign analysis must not advance");
+  assert.equal(await foreign.page.locator("#nextTurnButton").isDisabled(), false, "Continue must stay available after failed analysis");
+  await foreign.page.locator("#nextTurnButton").click();
+  await foreign.page.waitForFunction(() => document.getElementById("turnCounter").textContent.includes("Stage 2"), null, { timeout: 5000 });
   assert.equal(foreign.errors.length, 0, "Foreign-language rejection must not produce runtime errors");
   await foreign.page.close();
 

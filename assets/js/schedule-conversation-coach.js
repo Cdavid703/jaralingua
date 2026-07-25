@@ -133,6 +133,7 @@
     unsupported: $("unsupportedMessage"),
     reaction: $("coachReaction"),
     reactionText: $("coachReactionText"),
+    previous: $("previousTurnButton"),
     next: $("nextTurnButton"),
     summaryLead: $("summaryLead"),
     summaryScore: $("summaryScore"),
@@ -208,10 +209,11 @@
       return {
         history: Array.isArray(parsed.history) ? parsed.history.slice(-8) : [],
         lastReport: parsed.lastReport && typeof parsed.lastReport === "object" ? parsed.lastReport : null,
-        selectedDishId: dishById.has(parsed.selectedDishId) ? parsed.selectedDishId : ""
+        selectedDishId: dishById.has(parsed.selectedDishId) ? parsed.selectedDishId : "",
+        activeSession: sanitizeSessionDraft(parsed.activeSession)
       };
     } catch {
-      return { history: [], lastReport: null, selectedDishId: "" };
+      return { history: [], lastReport: null, selectedDishId: "", activeSession: null };
     }
   }
 
@@ -270,8 +272,72 @@
       awaitingContinue: false,
       nextAction: "",
       pendingEntryAudio: "",
+      pendingResponseText: "",
       startedAt: ""
     };
+  }
+
+  function sanitizeAnswerDraft(answer) {
+    if (!answer || typeof answer !== "object") return null;
+    const stageIndex = Math.max(0, Math.min(stages.length - 1, Number(answer.stageIndex) || 0));
+    return {
+      stageId: String(answer.stageId || stages[stageIndex]?.id || ""),
+      stageIndex,
+      phase: answer.phase === "clarify" ? "clarify" : "main",
+      prompt: String(answer.prompt || ""),
+      transcript: String(answer.transcript || ""),
+      durationMs: Math.max(0, Number(answer.durationMs) || 0),
+      analysis: answer.analysis && typeof answer.analysis === "object" ? answer.analysis : null,
+      unavailable: Boolean(answer.unavailable),
+      skipped: Boolean(answer.skipped),
+      savedAt: String(answer.savedAt || "")
+    };
+  }
+
+  function sanitizeAudioMap(value) {
+    if (!value || typeof value !== "object") return {};
+    return Object.fromEntries(Object.entries(value)
+      .filter(([key, file]) => stages.some((stage) => stage.id === key) && typeof file === "string")
+      .map(([key, file]) => [key, file]));
+  }
+
+  function sanitizeSessionDraft(value) {
+    if (!value || typeof value !== "object" || !stages.length) return null;
+    const index = Math.max(0, Math.min(stages.length - 1, Number(value.currentIndex) || 0));
+    const nextAction = ["advance", "clarify", "finish"].includes(value.nextAction) ? value.nextAction : "";
+    return {
+      mode: value.mode === "real" ? "real" : "guided",
+      currentIndex: index,
+      phase: value.phase === "clarify" ? "clarify" : "main",
+      answers: Array.isArray(value.answers) ? value.answers.map(sanitizeAnswerDraft).filter(Boolean).slice(-40) : [],
+      selectedDishId: dishById.has(value.selectedDishId) ? value.selectedDishId : "",
+      incidentId: incidentById.has(value.incidentId) ? value.incidentId : "",
+      entryAudioByStage: sanitizeAudioMap(value.entryAudioByStage),
+      awaitingContinue: Boolean(value.awaitingContinue && nextAction),
+      nextAction,
+      pendingEntryAudio: typeof value.pendingEntryAudio === "string" ? value.pendingEntryAudio : "",
+      pendingResponseText: typeof value.pendingResponseText === "string" ? value.pendingResponseText : "",
+      startedAt: typeof value.startedAt === "string" ? value.startedAt : "",
+      savedAt: typeof value.savedAt === "string" ? value.savedAt : ""
+    };
+  }
+
+  function conversationIsActive() {
+    return elements.interview && !elements.interview.hidden;
+  }
+
+  function saveActiveSession() {
+    if (!conversationIsActive()) return;
+    persistent.activeSession = sanitizeSessionDraft({
+      ...session,
+      savedAt: new Date().toISOString()
+    });
+    savePersistent();
+  }
+
+  function clearActiveSession() {
+    persistent.activeSession = null;
+    savePersistent();
   }
 
   function randomIndex(length) {
@@ -294,6 +360,35 @@
 
   function selectedIncident() {
     return incidentById.get(session.incidentId) || null;
+  }
+
+  function latestAnswerFor(stageIndex = session.currentIndex, phase = session.phase) {
+    return session.answers
+      .filter((answer) => answer.stageIndex === stageIndex && answer.phase === phase)
+      .slice(-1)[0] || null;
+  }
+
+  function latestAnswerForCurrentStage() {
+    return latestAnswerFor(session.currentIndex, session.phase);
+  }
+
+  function renderSavedAnswer(answer, stage) {
+    if (!answer) return;
+    const hasAnalysis = Boolean(answer.analysis);
+    const status = answer.skipped
+      ? "This stage was marked as not recorded."
+      : answer.unavailable
+        ? "This response was preserved without a score."
+        : "A saved response is available for this stage.";
+    elements.transcript.textContent = answer.transcript || status;
+    elements.transcript.classList.toggle("has-text", Boolean(answer.transcript && !answer.skipped));
+    if (session.mode === "guided") {
+      elements.feedback.hidden = false;
+      elements.feedback.innerHTML = hasAnalysis
+        ? feedbackMarkup(answer, stage)
+        : `<p class="coach-feedback-copy"><strong>${escapeHtml(status)}</strong> You can record again to replace it, go back, or continue to another question.</p>`;
+    }
+    setRecordStatus("Saved stage ready", "Continue, go back, or record again to replace this response.");
   }
 
   function audioPath(file) {
@@ -479,7 +574,8 @@
     if (!dishById.has(dishId)) return;
     session.selectedDishId = dishId;
     persistent.selectedDishId = dishId;
-    savePersistent();
+    if (conversationIsActive()) saveActiveSession();
+    else savePersistent();
     renderMenus();
     const dish = selectedDish();
     setRecordStatus(ui.itemContextStatus, uiText(ui.itemContextDetail, { name: dish.name }));
@@ -497,8 +593,22 @@
     elements.welcomeAudio.src = audioPath(config.audio?.welcome);
     elements.instructionsAudio.src = audioPath(config.audio?.instructions);
     renderMenus();
+    elements.reviewPrevious.hidden = true;
+    elements.reviewPrevious.dataset.action = "";
+    elements.resumeNote.hidden = true;
+    elements.resumeNote.textContent = "";
+    if (persistent.activeSession) {
+      elements.reviewPrevious.hidden = false;
+      elements.reviewPrevious.dataset.action = "resume";
+      elements.reviewPrevious.innerHTML = '<i class="bi bi-arrow-clockwise"></i> Resume saved exchange';
+      elements.resumeNote.hidden = false;
+      elements.resumeNote.textContent = `Saved progress on this device: stage ${persistent.activeSession.currentIndex + 1} of ${stages.length}. You can resume, go back, or continue forward.`;
+      return;
+    }
     if (!persistent.lastReport) return;
     elements.reviewPrevious.hidden = false;
+    elements.reviewPrevious.dataset.action = "review";
+    elements.reviewPrevious.textContent = "Review latest report";
     elements.resumeNote.hidden = false;
     const score = persistent.lastReport.score == null ? "not scored" : `${persistent.lastReport.score}/50`;
     elements.resumeNote.textContent = `Latest private result on this device: ${score}. You can review it or begin another unlimited attempt.`;
@@ -540,12 +650,12 @@
     elements.transcript.textContent = "Your transcript will appear after temporary Whisper analysis.";
     elements.transcript.classList.remove("has-text");
     elements.unsupported.hidden = true;
-    elements.next.disabled = true;
     elements.next.innerHTML = 'Continue <i class="bi bi-arrow-right"></i>';
     resetTimer();
     const missingDish = stage.requiresDish && !selectedDish();
     setRecordStatus(missingDish ? ui.missingItemStatus : "Ready for your response", missingDish ? ui.missingItemHelp : "Tap the microphone and respond in English.");
     setStageState("ready", missingDish ? uiText(ui.missingItemStage, { name: ui.coachName }) : uiText(ui.stageReadyLabel, { name: ui.coachName }));
+    renderSavedAnswer(latestAnswerForCurrentStage(), stage);
     updateControls();
     if (autoplay && promptAudio()) window.setTimeout(playQuestion, 250);
   }
@@ -560,6 +670,7 @@
     session.startedAt = new Date().toISOString();
     showPanel("interview");
     renderStage(true);
+    saveActiveSession();
     elements.interview.scrollIntoView({ behavior: "smooth", block: "start" });
     showToast(uiText(ui.startToast, { mode: mode === "guided" ? "Guided Rehearsal" : "Real Meeting", name: ui.coachName }));
   }
@@ -700,9 +811,10 @@
     elements.dock.classList.toggle("is-recording", recording);
     elements.dock.dataset.state = recording ? "recording" : analyzing ? "analyzing" : canRecord ? "ready" : "waiting";
     elements.questionPlay.disabled = recording || analyzing || audioBusy || !promptAudio();
-    elements.recordAgain.disabled = recording || analyzing || (!currentBlob && !session.awaitingContinue);
+    elements.recordAgain.disabled = recording || analyzing || (!currentBlob && !session.awaitingContinue && !latestAnswerForCurrentStage());
     elements.microphoneSelect.disabled = recording || analyzing;
-    elements.next.disabled = !session.awaitingContinue;
+    if (elements.previous) elements.previous.disabled = recording || analyzing || (session.currentIndex === 0 && session.phase === "main");
+    elements.next.disabled = recording || analyzing;
   }
 
   async function startRecording() {
@@ -934,7 +1046,8 @@
     session.awaitingContinue = true;
     session.nextAction = nextAction;
     session.pendingEntryAudio = responseEntry.file || "";
-    elements.reactionText.textContent = responseEntry.text || fallbackResponse(nextAction).text;
+    session.pendingResponseText = responseEntry.text || fallbackResponse(nextAction).text;
+    elements.reactionText.textContent = session.pendingResponseText;
     elements.reaction.hidden = false;
     elements.next.innerHTML = nextAction === "clarify"
       ? 'Answer clarification <i class="bi bi-arrow-repeat"></i>'
@@ -943,9 +1056,11 @@
         : 'Continue conversation <i class="bi bi-arrow-right"></i>';
     setRecordStatus(uiText(ui.responseStatus, { name: ui.coachName }), nextAction === "clarify" ? ui.clarificationHelp : uiText(ui.responseHelp, { name: ui.coachName }));
     updateControls();
+    saveActiveSession();
     await playAudio(elements.reactionAudio, responseEntry.file, { stageState: "responding", stageLabel: uiText(ui.responseStatus, { name: ui.coachName }), restoreStage: false });
     setStageState(nextAction === "finish" ? "complete" : "ready", nextAction === "clarify" ? uiText(ui.needsDetailStage, { name: ui.coachName }) : nextAction === "finish" ? ui.completeStage : uiText(ui.readyNextStage, { name: ui.coachName }));
     updateControls();
+    saveActiveSession();
   }
 
   async function processAnswer(answer) {
@@ -989,7 +1104,9 @@
         transcript,
         durationMs: recordingDurationMs,
         analysis,
-        unavailable: false
+        unavailable: false,
+        skipped: false,
+        savedAt: new Date().toISOString()
       };
       session.answers.push(answer);
       elements.transcript.textContent = transcript;
@@ -1028,7 +1145,9 @@
       transcript: "Response preserved as not analyzed.",
       durationMs: recordingDurationMs,
       analysis: null,
-      unavailable: true
+      unavailable: true,
+      skipped: false,
+      savedAt: new Date().toISOString()
     });
     elements.recovery.hidden = true;
     elements.transcript.textContent = "This response was preserved as not analyzed. No score was created.";
@@ -1069,25 +1188,109 @@
     session.awaitingContinue = false;
     session.nextAction = "";
     session.pendingEntryAudio = "";
+    session.pendingResponseText = "";
     elements.feedback.hidden = true;
     elements.recovery.hidden = true;
     elements.reaction.hidden = true;
     elements.transcript.textContent = "Your replacement transcript will appear after temporary Whisper analysis.";
     elements.transcript.classList.remove("has-text");
-    elements.next.disabled = true;
     setRecordStatus("Ready to record again", "Replace this response before continuing.");
     setStageState("ready", `${ui.coachName} is ready to listen again`);
     resetTimer();
     updateControls();
+    saveActiveSession();
     showToast("The stage is ready for a new recording.");
   }
 
+  function markCurrentStageNotRecorded() {
+    if (latestAnswerForCurrentStage()) return false;
+    const stage = currentStage();
+    if (!stage) return false;
+    session.answers.push({
+      stageId: stage.id,
+      stageIndex: session.currentIndex,
+      phase: session.phase,
+      prompt: promptText(),
+      transcript: "No response recorded before continuing.",
+      durationMs: 0,
+      analysis: null,
+      unavailable: true,
+      skipped: true,
+      savedAt: new Date().toISOString()
+    });
+    return true;
+  }
+
+  function advanceToNextStage(toastMessage = "") {
+    const nextStage = stages[session.currentIndex + 1];
+    if (!nextStage) {
+      completeConversation();
+      return;
+    }
+    if (session.pendingEntryAudio) session.entryAudioByStage[nextStage.id] = session.pendingEntryAudio;
+    session.currentIndex += 1;
+    session.phase = "main";
+    session.awaitingContinue = false;
+    session.nextAction = "";
+    session.pendingEntryAudio = "";
+    session.pendingResponseText = "";
+    renderStage(false);
+    saveActiveSession();
+    elements.stage.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast(toastMessage || `Stage ${session.currentIndex + 1} is ready.`);
+  }
+
+  function goPrevious() {
+    if (mediaRecorder?.state === "recording") {
+      showToast("Finish the current recording before going back.");
+      return;
+    }
+    if (analyzing) {
+      showToast("Wait for the analysis to finish before going back.");
+      return;
+    }
+    if (session.currentIndex === 0 && session.phase === "main") {
+      showToast("You are already on the first question.");
+      return;
+    }
+    stopCoachAudio();
+    if (session.phase === "clarify") {
+      session.phase = "main";
+    } else {
+      session.currentIndex = Math.max(0, session.currentIndex - 1);
+      session.phase = "main";
+    }
+    session.awaitingContinue = false;
+    session.nextAction = "";
+    session.pendingEntryAudio = "";
+    session.pendingResponseText = "";
+    renderStage(false);
+    saveActiveSession();
+    elements.stage.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast(`Moved back to stage ${session.currentIndex + 1}.`);
+  }
+
   function goNext() {
-    if (!session.awaitingContinue) return;
+    if (mediaRecorder?.state === "recording") {
+      showToast("Finish the current recording before continuing.");
+      return;
+    }
+    if (analyzing) {
+      showToast("Wait for the analysis to finish before continuing.");
+      return;
+    }
+    const stage = currentStage();
+    if (!stage) return;
+    if (stage.requiresDish && !selectedDish()) {
+      showToast(ui.missingItemHelp);
+      elements.activeMenuPanel.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
     stopCoachAudio();
     if (session.nextAction === "clarify") {
       session.phase = "clarify";
       renderStage(false);
+      saveActiveSession();
       elements.stage.scrollIntoView({ behavior: "smooth", block: "start" });
       showToast(ui.clarificationReadyToast || "Clarification ready. Record one more response.");
       return;
@@ -1096,17 +1299,11 @@
       completeConversation();
       return;
     }
-    const nextStage = stages[session.currentIndex + 1];
-    if (!nextStage) {
-      completeConversation();
-      return;
-    }
-    session.entryAudioByStage[nextStage.id] = session.pendingEntryAudio;
-    session.currentIndex += 1;
-    session.phase = "main";
-    renderStage(false);
-    elements.stage.scrollIntoView({ behavior: "smooth", block: "start" });
-    showToast(`Stage ${session.currentIndex + 1} is ready.`);
+    const stageNumber = session.currentIndex + 1;
+    const skippedNow = !session.awaitingContinue && markCurrentStageNotRecorded();
+    advanceToNextStage(skippedNow
+      ? `Stage ${stageNumber} was saved as not recorded. Continue with the next question.`
+      : `Stage ${session.currentIndex + 2} is ready.`);
   }
 
   function criterionAverage(answers, key) {
@@ -1360,6 +1557,7 @@
       analyzedCount: report.analyzedCount
     }].slice(-8);
     persistent.selectedDishId = report.selectedDishId || persistent.selectedDishId;
+    persistent.activeSession = null;
     savePersistent();
     renderReport(report);
     showPanel("summary");
@@ -1373,6 +1571,31 @@
     showPanel("summary");
     elements.summary.scrollIntoView({ behavior: "smooth", block: "start" });
     showToast(ui.latestReportToast || "Latest report opened.");
+  }
+
+  function resumeActiveSession() {
+    const draft = sanitizeSessionDraft(persistent.activeSession);
+    if (!draft) {
+      persistent.activeSession = null;
+      savePersistent();
+      refreshOnboarding();
+      showToast("No saved exchange was found on this device.");
+      return;
+    }
+    session = { ...freshSession(draft.mode), ...draft };
+    showPanel("interview");
+    renderStage(false);
+    saveActiveSession();
+    elements.interview.scrollIntoView({ behavior: "smooth", block: "start" });
+    showToast(`Saved exchange restored at stage ${session.currentIndex + 1}.`);
+  }
+
+  function handleSavedAction() {
+    if (elements.reviewPrevious.dataset.action === "resume" && persistent.activeSession) {
+      resumeActiveSession();
+      return;
+    }
+    reviewLatest();
   }
 
   function clearHistory() {
@@ -1408,7 +1631,7 @@
   elements.instructionsPlay.addEventListener("click", () => playAudio(elements.instructionsAudio, config.audio?.instructions));
   elements.preflight.addEventListener("click", testMicrophone);
   elements.start.addEventListener("click", () => beginConversation());
-  elements.reviewPrevious.addEventListener("click", reviewLatest);
+  elements.reviewPrevious.addEventListener("click", handleSavedAction);
   elements.questionPlay.addEventListener("click", playQuestion);
   elements.mic.addEventListener("click", startRecording);
   elements.floatingMic.addEventListener("click", startRecording);
@@ -1418,6 +1641,7 @@
   elements.recoveryRecordAgain.addEventListener("click", recordAgain);
   elements.retryTranscription.addEventListener("click", transcribeCurrentRecording);
   elements.continueUnscored.addEventListener("click", continueWithoutScore);
+  if (elements.previous) elements.previous.addEventListener("click", goPrevious);
   elements.next.addEventListener("click", goNext);
   elements.restart.addEventListener("click", () => beginConversation(session.mode));
   elements.weakPractice.addEventListener("click", restartGuided);

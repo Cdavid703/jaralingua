@@ -467,7 +467,8 @@
 .coach-reaction h3 { margin: 0; color: var(--coach-navy); font-size: 1rem; }
 .coach-reaction p { margin: .3rem 0 0; color: var(--coach-muted); line-height: 1.5; }
 
-.coach-navigation { display: flex; justify-content: flex-end; margin-top: 1rem; }
+.coach-navigation { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .65rem; margin-top: 1rem; }
+.coach-navigation .coach-button { min-width: 150px; }
 
 .coach-summary-head { text-align: center; }
 .coach-summary-head > i { color: var(--coach-green); font-size: 2.5rem; }
