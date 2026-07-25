@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css?v=20260718-intermediate" />
   <link rel="stylesheet" href="../../assets/css/conversation-coach-v2.css?v=20260725-nav-autosave" />
   <link rel="stylesheet" href="../../assets/css/restaurant-conversation-coach.css?v=20260725-final-oral-20" />
-  <link rel="stylesheet" href="../../assets/css/final-oral-partner-coach.css?v=20260725-final-oral-20" />
+  <link rel="stylesheet" href="../../assets/css/final-oral-partner-coach.css?v=20260725-teacher-panel-v1" />
 </head>
 <body class="english-intermediate-page conversation-coach-page restaurant-coach-page final-oral-partner-page">
   <div class="global-course-switcher" aria-label="Courses">
@@ -156,6 +156,60 @@
       </div>
     </section>
 
+    <section class="final-oral-teacher-studio" id="finalOralTeacherStudio" aria-labelledby="finalOralTeacherTitle">
+      <header class="final-oral-teacher-header">
+        <div>
+          <p class="coach-kicker">Teacher evaluation studio</p>
+          <h2 id="finalOralTeacherTitle">Final Oral Partner Coach panel</h2>
+          <p>Review the official 20% submissions from this activity: selected problem, partner problem, stage evidence, transcripts, automatic rubric estimate, and gradebook status.</p>
+        </div>
+        <div class="final-oral-teacher-actions">
+          <button class="coach-button secondary" id="finalOralReviewLoginButton" type="button" data-open-login data-open-google-login><i class="bi bi-box-arrow-in-right"></i> Teacher sign in</button>
+          <button class="coach-button secondary" id="finalOralRefreshReviewButton" type="button"><i class="bi bi-arrow-clockwise"></i> Refresh submissions</button>
+          <a class="coach-link-button secondary" href="notas.html#reports"><i class="bi bi-journal-check"></i> Open Grades</a>
+        </div>
+      </header>
+
+      <div class="final-oral-review-status" id="finalOralReviewStatus" role="status" aria-live="polite">
+        Sign in with a teacher or administrator account to load the review panel.
+      </div>
+
+      <div class="final-oral-review-dashboard" id="finalOralReviewDashboard" hidden>
+        <div class="final-oral-review-metrics" id="finalOralReviewMetrics" aria-label="Final oral submission summary"></div>
+        <div class="final-oral-review-layout">
+          <aside class="final-oral-review-list">
+            <label for="finalOralSubmissionSelector"><span>Student submission</span><select id="finalOralSubmissionSelector"><option value="">Select a student</option></select></label>
+            <div class="final-oral-review-roster" id="finalOralReviewRoster"></div>
+          </aside>
+          <section class="final-oral-review-detail" aria-live="polite">
+            <div class="final-oral-student-banner" id="finalOralStudentBanner">
+              <span id="finalOralReviewInitials">ST</span>
+              <div><small>Selected candidate</small><h3 id="finalOralReviewName">No submission selected</h3><p id="finalOralReviewMeta">Choose a student to review the evidence portfolio.</p></div>
+              <em id="finalOralReviewBadge">Pending</em>
+            </div>
+            <div class="final-oral-route-card" id="finalOralRouteCard"></div>
+            <div class="final-oral-review-grid">
+              <section class="final-oral-evidence-card">
+                <div class="final-oral-evidence-heading"><div><p class="coach-kicker">Evidence portfolio</p><h3>Stage-by-stage transcript</h3></div><span id="finalOralEvidenceCoverage">0 of 8</span></div>
+                <div class="final-oral-evidence-tabs" id="finalOralEvidenceTabs" role="tablist" aria-label="Final oral stages"></div>
+                <article class="final-oral-evidence-player" id="finalOralEvidencePlayer">
+                  <span id="finalOralEvidenceBadge">Stage --</span>
+                  <h3 id="finalOralEvidenceTopic">Select a stage</h3>
+                  <p id="finalOralEvidencePrompt">The prompt will appear here.</p>
+                  <div id="finalOralEvidenceResponses" class="final-oral-evidence-responses"></div>
+                </article>
+              </section>
+              <aside class="final-oral-rubric-card">
+                <div class="final-oral-rubric-heading"><div><p class="coach-kicker">Rubric profile</p><h3>Automatic estimate</h3></div><strong><span id="finalOralRubricTotal">--</span>/50</strong></div>
+                <div class="final-oral-rubric-bars" id="finalOralRubricBars"></div>
+                <p class="final-oral-review-note">Manual grade changes and official reports remain available in Grades. This panel is for fast evidence review inside the activity.</p>
+              </aside>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+
     <div class="coach-floating-dock" id="floatingMicDock" role="region" aria-label="Floating recording controls" hidden><div class="coach-floating-copy"><span id="floatingTurnLabel">Stage 1</span><strong id="floatingStatus" aria-live="polite">Ready to respond</strong></div><span class="coach-floating-timer" id="floatingTimer">00:00 / 00:50</span><button class="coach-icon-button" id="floatingMicButton" type="button" aria-label="Start oral response from the floating microphone"><i class="bi bi-mic-fill"></i><span>Respond</span></button><button class="coach-icon-button stop" id="floatingStopButton" type="button" aria-label="Finish oral response from the floating microphone" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
     <div class="coach-toast" id="coachToast" role="status" aria-live="polite" hidden></div>
   </main>
@@ -167,6 +221,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
+  <script src="../../assets/js/intermediate-final-oral-partner-review.js?v=20260725-teacher-panel-v1"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

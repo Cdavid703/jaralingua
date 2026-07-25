@@ -6,6 +6,7 @@ const root = path.resolve(__dirname, "..");
 const htmlPath = path.join(root, "ingles", "intermediate", "final-oral-partner-coach.html");
 const dataPath = path.join(root, "assets", "js", "conversation-coach-data", "english-intermediate-1-final-oral-partner-coach.js");
 const enginePath = path.join(root, "assets", "js", "schedule-conversation-coach.js");
+const reviewPath = path.join(root, "assets", "js", "intermediate-final-oral-partner-review.js");
 const serverPath = path.join(root, "server", "progress_api.py");
 const imageDir = path.join(root, "assets", "img", "english-intermediate", "unit-6", "final-oral-partner-coach");
 const audioDir = path.join(root, "ingles", "intermediate", "audio", "conversation-coach", "final-oral-partner");
@@ -24,6 +25,7 @@ function read(file) {
 const html = read(htmlPath);
 const dataJs = read(dataPath);
 const engineJs = read(enginePath);
+const reviewJs = read(reviewPath);
 const server = read(serverPath);
 const scripts = read(scriptsPath);
 
@@ -89,11 +91,27 @@ for (const id of requiredIds) {
   assert(html.includes(`id="${id}"`), `Missing required DOM id: ${id}`);
 }
 
+const teacherPanelIds = [
+  "finalOralTeacherStudio", "finalOralTeacherTitle", "finalOralReviewLoginButton",
+  "finalOralRefreshReviewButton", "finalOralReviewStatus", "finalOralReviewDashboard",
+  "finalOralReviewMetrics", "finalOralSubmissionSelector", "finalOralReviewRoster",
+  "finalOralReviewInitials", "finalOralReviewName", "finalOralReviewMeta",
+  "finalOralReviewBadge", "finalOralRouteCard", "finalOralEvidenceCoverage",
+  "finalOralEvidenceTabs", "finalOralEvidencePlayer", "finalOralEvidenceBadge",
+  "finalOralEvidenceTopic", "finalOralEvidencePrompt", "finalOralEvidenceResponses",
+  "finalOralRubricTotal", "finalOralRubricBars"
+];
+for (const id of teacherPanelIds) {
+  assert(html.includes(`id="${id}"`), `Missing final oral teacher panel DOM id: ${id}`);
+}
+
 assert(html.includes("final-oral-partner-coach.css"), "Missing final oral visual CSS.");
 assert(html.includes("english-intermediate-1-final-oral-partner-coach.js"), "Missing final oral data script.");
 assert(html.includes("schedule-conversation-coach.js"), "Missing reusable conversation coach engine.");
+assert(html.includes("intermediate-final-oral-partner-review.js"), "Missing final oral teacher review panel script.");
 assert(html.includes("Send to teacher"), "Missing English teacher delivery button.");
 assert(html.includes("Gradebook weight 20%"), "Missing visible 20% gradebook delivery note.");
+assert(html.includes("Teacher evaluation studio"), "Missing teacher evaluation studio heading.");
 assert(!html.includes('id="nextTurnButton" type="button" disabled'), "Continue must not be disabled by default.");
 assert((html.match(/data-coach-speed="0\.75"/g) || []).length >= 2, "Missing 0.75x speed buttons.");
 assert((html.match(/data-coach-speed="1"/g) || []).length >= 2, "Missing 1x speed buttons.");
@@ -101,6 +119,11 @@ assert((html.match(/data-coach-speed="1\.25"/g) || []).length >= 2, "Missing 1.2
 
 assert(!/speechSynthesis/i.test(engineJs + dataJs + html), "Browser speech synthesis must not be used.");
 assert(!/\b(Narrator|Speaker|Sophie)\s*:/i.test(scripts), "Audio scripts must not include speaker labels.");
+assert(reviewJs.includes('EVALUATION_ID = "finalOralPartnerCoachFollowUp"'), "Teacher panel must read the final oral partner coach evaluation.");
+assert(reviewJs.includes('API_PATH = "/api/intermediate/grades"'), "Teacher panel must use the Intermediate English grades API.");
+assert(reviewJs.includes("Teacher access confirmed"), "Teacher panel must visibly confirm staff access.");
+assert(reviewJs.includes("selectedProblem") && reviewJs.includes("partnerProblem"), "Teacher panel must display the problem route.");
+assert(reviewJs.includes("metrics") && reviewJs.includes("responses"), "Teacher panel must display rubric metrics and stage evidence.");
 
 for (const file of [
   "final-oral-partner-hero-v1.webp",
