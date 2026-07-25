@@ -2694,7 +2694,37 @@ def score_intermediate_unit5_quantity_mission(payload):
 
 
 def score_intermediate_unit6_grammar_storybook(payload):
-    return score_intermediate_fixed_answers(payload, INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS)
+    raw_answers = payload.get("answers")
+    if not isinstance(raw_answers, list):
+        raw_answers = []
+    answers = []
+    score = 0
+    incorrect = []
+    max_answer = max([2] + [int(answer) for answer in INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS])
+    for index, correct in enumerate(INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS):
+        raw_answer = raw_answers[index] if index < len(raw_answers) else None
+        answer = None
+        try:
+            if raw_answer is not None and raw_answer != "":
+                parsed = int(raw_answer)
+                if 0 <= parsed <= max_answer:
+                    answer = parsed
+        except (TypeError, ValueError):
+            answer = None
+        answers.append(answer)
+        if answer == correct:
+            score += 1
+        else:
+            incorrect.append(index + 1)
+    total = len(INTERMEDIATE_UNIT6_GRAMMAR_STORYBOOK_ANSWERS)
+    grade = round((score / total) * 5, 2)
+    return {
+        "answers": answers,
+        "score": score,
+        "total": total,
+        "grade": grade,
+        "incorrect": incorrect
+    }
 
 
 def score_intermediate_unit6_future_forms_lab(payload):
@@ -16740,7 +16770,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 try:
                     result = score_intermediate_unit6_grammar_storybook(payload)
-                    final_reflection, word_count = clean_intermediate_text_followup(payload, "finalReflection", 30, 120)
+                    final_reflection = clean_text(payload.get("finalReflection"), 5000)
+                    word_count = simple_word_count(final_reflection)
                 except ValueError as error:
                     if changed:
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")

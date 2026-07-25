@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
-  <link rel="stylesheet" href="../../assets/css/intermediate-unit6-grammar-storybook.css?v=20260725-always-send" />
+  <link rel="stylesheet" href="../../assets/css/intermediate-unit6-grammar-storybook.css?v=20260725-open-submit" />
 </head>
 <body class="english-intermediate-page unit6-grammar-page">
   <div class="global-course-switcher" aria-label="Courses">
@@ -118,7 +118,7 @@
               <button type="button" class="u6g-button soft" data-next-page>Next page</button>
             </div>
             <div class="storybook-actions">
-              <button type="button" class="u6g-button navy" data-check-story disabled>Check story</button>
+              <button type="button" class="u6g-button navy" data-check-story>Check story</button>
               <button type="button" class="u6g-button soft" data-review-marked disabled>Review marked blanks</button>
               <button type="button" class="u6g-button ghost" data-reset-story>Reset story</button>
             </div>
@@ -135,9 +135,9 @@
         <div class="u6g-panel-head">
           <div>
             <p class="kicker">Final product</p>
-            <h2>Send a short grammar note to the teacher</h2>
+            <h2>Send the activity to the teacher</h2>
             <p>
-              This note turns the grammar check into a real follow-up product. The teacher can read the response and see
+              The teacher can review the grammar decisions, see the reference grade, and read an optional note if the student writes one.
               the reference grade. The gradebook weight is 0%, so it does not affect the accumulated course average.
             </p>
           </div>
@@ -145,8 +145,8 @@
         <div class="u6g-panel-body">
           <div class="reflection-grid">
             <aside class="reflection-brief">
-              <h3>What to explain</h3>
-              <p>Write 3 or 4 connected sentences about Olivia's final schedule.</p>
+              <h3>Optional note ideas</h3>
+              <p>Students may add a short note about Olivia's final schedule, but the activity can be sent without it.</p>
               <ul>
                 <li>Mention one confirmed arrangement.</li>
                 <li>Mention one decision or change she makes.</li>
@@ -165,13 +165,12 @@
 
             <form class="delivery-form" data-delivery-form novalidate>
               <div class="field">
-                <label for="finalReflection">Your final note</label>
-                <textarea id="finalReflection" data-reflection maxlength="1500" placeholder="Example: Olivia is meeting the producer at ten, so Thursday is already busy. She will call the radio host because the interview creates a conflict. Marcus thinks she should protect her recording day..." required></textarea>
-                <div class="word-count" data-word-count>0 words - write 30 to 120 words</div>
+                <label for="finalReflection">Your optional final note</label>
+                <textarea id="finalReflection" data-reflection maxlength="1500" placeholder="Optional: Olivia is meeting the producer at ten, so Thursday is already busy. She will call the radio host because the interview creates a conflict. Marcus thinks she should protect her recording day..."></textarea>
+                <div class="word-count" data-word-count>0 words - optional teacher note</div>
               </div>
               <p class="delivery-note">
-                Submit only after checking the complete story. Incorrect grammar decisions will be marked for the teacher,
-                but correct answers will not be shown to the student.
+                You may send the activity even if the story or teacher note is incomplete. Missing grammar decisions count as review items for the teacher.
               </p>
               <div class="delivery-actions">
                 <button type="submit" class="u6g-button primary" data-send-teacher>Send to teacher</button>
@@ -192,6 +191,6 @@
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
-  <script src="../../assets/js/intermediate-unit6-grammar-storybook.js?v=20260725-always-send"></script>
+  <script src="../../assets/js/intermediate-unit6-grammar-storybook.js?v=20260725-open-submit"></script>
 </body>
 </html>

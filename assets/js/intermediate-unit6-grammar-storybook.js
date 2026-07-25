@@ -245,7 +245,8 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     elements.progressBar.style.width = percentage + "%";
     elements.blankCounter.textContent = `${complete} of ${data.blanks.length} blanks complete`;
     elements.scoreText.textContent = state.checked ? `Reference grade: ${currentGrade().toFixed(2)} / 5.0` : "Reference grade: -- / 5.0";
-    elements.checkButton.disabled = complete !== data.blanks.length;
+    elements.checkButton.disabled = false;
+    elements.checkButton.setAttribute("aria-disabled", "false");
     elements.reviewButton.disabled = !state.checked || !incorrectIndexes().length;
     updateReviewList();
     updateSendState();
@@ -353,16 +354,13 @@ window.JaraLinguaUnit6GrammarStorybookData = {
   });
 
   elements.checkButton.addEventListener("click", () => {
-    if (completionCount() !== data.blanks.length) {
-      setFeedback("Complete every blank before checking the story.", "error");
-      return;
-    }
     state.checked = true;
     renderPage();
     const incorrect = incorrectIndexes();
     const correctCount = data.blanks.length - incorrect.length;
+    const missing = data.blanks.length - completionCount();
     if (incorrect.length) {
-      setFeedback(`Story checked. Reference grade: ${currentGrade().toFixed(2)} / 5.0. Correct: ${correctCount} / ${data.blanks.length}. ${incorrect.length} decision(s) are marked for review. Read the feedback list before sending. Correct answers are not revealed.`, "error");
+      setFeedback(`Story checked. Reference grade: ${currentGrade().toFixed(2)} / 5.0. Correct: ${correctCount} / ${data.blanks.length}. ${incorrect.length} decision(s) are marked for review${missing ? `, including ${missing} blank(s) not answered` : ""}. Correct answers are not revealed.`, "error");
     } else {
       setFeedback(`Story checked. Reference grade: ${currentGrade().toFixed(2)} / 5.0. Correct: ${correctCount} / ${data.blanks.length}. All grammar decisions are accurate. Write the final note and send it to the teacher.`, "success");
     }
@@ -377,7 +375,7 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     state.sending = false;
     state.page = -1;
     elements.reflection.value = "";
-    elements.wordCount.textContent = "0 words - write 30 to 120 words";
+    elements.wordCount.textContent = "0 words - optional teacher note";
     elements.deliveryStatus.className = "delivery-status";
     setFeedback("Start from the cover. Open the book, complete the dropdowns, and check the full story when all decisions are filled.", "");
     renderPage();
@@ -386,7 +384,7 @@ window.JaraLinguaUnit6GrammarStorybookData = {
 
   elements.reflection.addEventListener("input", () => {
     const words = wordCount(elements.reflection.value);
-    elements.wordCount.textContent = `${words} words - write 30 to 120 words`;
+    elements.wordCount.textContent = `${words} words - optional teacher note`;
     if (state.submitted) {
       state.submitted = false;
       state.sending = false;
@@ -407,20 +405,15 @@ window.JaraLinguaUnit6GrammarStorybookData = {
       updateSendState();
       return;
     }
-    const words = wordCount(elements.reflection.value);
-    if (!state.checked || completionCount() !== data.blanks.length) {
-      setDelivery("Check the complete story before sending it to the teacher.", "error");
-      return;
-    }
-    if (words < 30 || words > 120) {
-      setDelivery("Your final note must be between 30 and 120 words.", "error");
-      return;
-    }
     const headers = authHeaders();
     if (!headers) {
       setDelivery("Sign in first. Your grammar storybook must be linked to your student record before it can be sent to the teacher.", "error");
       requestSignIn();
       return;
+    }
+    if (!state.checked) {
+      state.checked = true;
+      renderPage();
     }
     state.sending = true;
     updateSendState();
