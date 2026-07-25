@@ -106,6 +106,90 @@ body.decision-room-page {
   padding: 2rem 0 4rem;
 }
 
+.how-to-play {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 2rem auto 0;
+  padding: 1.35rem;
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: var(--dr-shadow);
+}
+
+.how-to-header {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 920px;
+  margin-bottom: 1rem;
+}
+
+.how-to-header h2 {
+  margin: 0;
+  color: var(--dr-navy);
+  font-size: clamp(1.8rem, 3vw, 2.7rem);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.how-to-header p:not(.decision-kicker),
+.how-to-card p,
+.answer-model-strip p {
+  margin: 0;
+  color: var(--dr-muted);
+  line-height: 1.62;
+}
+
+.how-to-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+.how-to-card {
+  min-height: 190px;
+  display: grid;
+  align-content: start;
+  gap: 0.7rem;
+  padding: 1rem;
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.step-number {
+  width: 44px;
+  height: 44px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--dr-navy);
+  color: #fff;
+  font-weight: 950;
+}
+
+.how-to-card h3 {
+  margin: 0;
+  color: var(--dr-navy);
+  font-size: 1.05rem;
+  line-height: 1.2;
+}
+
+.answer-model-strip {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #eef8f7, #fff8e7);
+  border: 1px solid #cde6df;
+}
+
+.answer-model-strip strong {
+  color: var(--dr-navy);
+}
+
 .decision-layout {
   display: grid;
   grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
@@ -488,8 +572,14 @@ body.decision-room-page {
 
 @media (max-width: 1020px) {
   .decision-layout,
+  .how-to-grid,
   .game-guides {
     grid-template-columns: 1fr;
+  }
+
+  .answer-model-strip {
+    align-items: stretch;
+    flex-direction: column;
   }
 }
 
@@ -500,8 +590,17 @@ body.decision-room-page {
   }
 
   .decision-hero-content,
+  .how-to-play,
   .decision-shell {
     width: min(100% - 1rem, 1180px);
+  }
+
+  .how-to-play {
+    padding: 1rem;
+  }
+
+  .how-to-card {
+    min-height: auto;
   }
 
   .join-row,

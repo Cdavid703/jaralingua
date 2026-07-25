@@ -39,6 +39,10 @@ assert(page.includes("> Join</button>"), "Student join button missing.");
 assert(page.includes("Send decision"), "Student submit button missing.");
 assert(page.includes("Open class vote"), "Teacher vote button missing.");
 assert(page.includes("Reset all rooms"), "Teacher reset-all button missing.");
+assert(page.includes("How The Decision Room Works"), "Visible game instructions missing.");
+assert(page.includes("Teacher creates the room"), "Teacher instructions missing.");
+assert(page.includes("Students write one decision"), "Student production instructions missing.");
+assert(page.includes("Strong answer model"), "Strong answer model missing.");
 
 assert(css.includes("decision-room-hero-v1.webp"), "Professional hero image not used in CSS.");
 assert(/@media\s*\(max-width:\s*680px\)/.test(css), "Mobile media query missing.");
