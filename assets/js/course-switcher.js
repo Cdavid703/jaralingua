@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const VERSION = "20260703";
+  const VERSION = "20260724";
   const COURSES = [
     { group: "JaraLingua", label: "Accueil général", href: "/index.html", match: /^\/(?:index\.html)?$/i },
     { group: "Français", label: "Portail français", href: "/frances/index.html", match: /^\/frances\/(?:index\.html)?$/i },
@@ -10,7 +10,8 @@
     { group: "Français", label: "Français · Niveau 7", href: "/frances/Niveau%207/index.html", match: /\/frances\/Niveau%207\//i },
     { group: "Français", label: "Français · Niveau 8", href: "/frances/Niveau%208/index.html", match: /\/frances\/Niveau%208\//i },
     { group: "English", label: "English portal", href: "/ingles/index.html", match: /^\/ingles\/(?:index\.html)?$/i },
-    { group: "English", label: "Basic English", href: "/ingles/basico/index.html", match: /\/ingles\/basico\//i },
+    { group: "English", label: "Basic English Course 1", href: "/ingles/basico/index.html", match: /\/ingles\/basico\//i },
+    { group: "English", label: "Basic English Course 2", href: "/ingles/basico-2/index.html", match: /\/ingles\/basico-2\//i },
     { group: "English", label: "Intermediate English", href: "/ingles/intermediate/index.html", match: /\/ingles\/intermediate\//i }
   ];
 
