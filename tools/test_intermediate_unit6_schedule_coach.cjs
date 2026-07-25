@@ -72,6 +72,8 @@ assert(engineJs.includes("activeSession"), "Engine must autosave an active sched
 assert(engineJs.includes("function resumeActiveSession"), "Engine must resume saved schedule-coach progress after reload.");
 assert(engineJs.includes("function markCurrentStageNotRecorded"), "Continue must preserve a not-recorded stage instead of freezing.");
 assert(engineJs.includes("function goPrevious"), "Engine must support going back to a previous stage.");
+assert(engineJs.includes("function reportDeliveryScore"), "Teacher delivery must calculate a partial score instead of blocking incomplete reports.");
+assert(engineJs.includes("partialSubmission"), "Teacher delivery must mark incomplete reports as partial submissions.");
 assert(!html.includes('id="nextTurnButton" type="button" disabled'), "Continue must not be disabled by default.");
 assert((html.match(/data-coach-speed="0\.75"/g) || []).length >= 2, "Missing 0.75x speed buttons.");
 assert((html.match(/data-coach-speed="1"/g) || []).length >= 2, "Missing 1x speed buttons.");

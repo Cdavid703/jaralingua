@@ -155,6 +155,18 @@ def main():
             assert retry["idempotent"] is True
             assert retry["attemptCount"] == 1
 
+            incomplete = coach_payload("oral-submit-003")
+            incomplete["analyzedCount"] = 7
+            incomplete["stageScores"] = incomplete["stageScores"][:-1]
+            incomplete["turns"] = incomplete["turns"][:-1]
+            status, incomplete_result = request_json(base_url, endpoint, "POST", incomplete, token)
+            assert status == 200, incomplete_result
+            assert incomplete_result["score"] == 37.38
+            assert incomplete_result["grade"] == 3.74
+            assert incomplete_result["attemptCount"] == 2
+            assert incomplete_result["partialSubmission"] is True
+            assert incomplete_result["completeConversation"] is False
+
             second_payload = coach_payload(
                 "oral-submit-002",
                 {"task": 10, "interaction": 9, "language": 9, "fluency": 9, "clarity": 8},
@@ -163,13 +175,7 @@ def main():
             assert status == 200, second
             assert second["score"] == 45
             assert second["grade"] == 4.5
-            assert second["attemptCount"] == 2
-
-            incomplete = coach_payload("oral-submit-003")
-            incomplete["stageScores"] = incomplete["stageScores"][:-1]
-            status, incomplete_result = request_json(base_url, endpoint, "POST", incomplete, token)
-            assert status == 400, incomplete_result
-            assert incomplete_result["error"] == "incomplete_conversation"
+            assert second["attemptCount"] == 3
 
             invalid_metrics = coach_payload("oral-submit-004")
             invalid_metrics["metrics"]["task"] = -1
@@ -189,15 +195,18 @@ def main():
             assert "gradebookExcluded" not in detail
             assert "doesNotAffectAverage" not in detail
             assert detail["weight"] == 20
-            assert detail["attemptCount"] == 2
+            assert detail["attemptCount"] == 3
             assert detail["clientSubmissionId"] == "oral-submit-002"
-            assert len(detail["submissionHistory"]) == 1
+            assert detail["partialSubmission"] is False
+            assert detail["completeConversation"] is True
+            assert detail["completionStatus"] == "complete"
+            assert len(detail["submissionHistory"]) == 2
             assert "Stage 1 - Present your problem" in detail["transcript"]
             assert "Stage 8 - Close the oral task" in detail["transcript"]
             assert "Sophie:" in detail["transcript"]
             assert "Student:" in detail["transcript"]
             assert "audio" not in json.dumps(detail).lower()
-            print("PASS Final Oral Partner Coach delivery: auth, idempotency, resubmit, official 20% gradebook storage, teacher-readable transcript, and no audio storage")
+            print("PASS Final Oral Partner Coach delivery: auth, idempotency, partial send-anytime delivery, resubmit, official 20% gradebook storage, teacher-readable transcript, and no audio storage")
         finally:
             server.shutdown()
             server.server_close()

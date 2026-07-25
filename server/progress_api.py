@@ -3017,7 +3017,7 @@ def clean_intermediate_unit5_restaurant_coach(payload):
     }
 
 
-def clean_intermediate_unit6_schedule_coach(payload):
+def clean_intermediate_partial_coach_report(payload, stage_topics):
     metric_keys = ("task", "interaction", "language", "fluency", "clarity")
     raw_metrics = payload.get("metrics")
     if not isinstance(raw_metrics, dict):
@@ -3026,28 +3026,102 @@ def clean_intermediate_unit6_schedule_coach(payload):
         key: strict_finite_number(raw_metrics.get(key), 0, 10, "invalid_metrics")
         for key in metric_keys
     }
-    score = round(sum(metrics.values()), 2)
-    grade = round(score / 10.0, 2)
+    stage_count = len(stage_topics)
 
     try:
-        analyzed_count = int(payload.get("analyzedCount"))
-        total_stages = int(payload.get("totalStages"))
+        analyzed_count = int(payload.get("analyzedCount") or 0)
     except (TypeError, ValueError):
-        raise ValueError("incomplete_conversation")
-    if analyzed_count != 8 or total_stages != 8:
-        raise ValueError("incomplete_conversation")
+        analyzed_count = 0
+    analyzed_count = max(0, min(stage_count, analyzed_count))
+    total_stages = stage_count
 
     raw_stage_scores = payload.get("stageScores")
-    if not isinstance(raw_stage_scores, list) or len(raw_stage_scores) != 8:
-        raise ValueError("incomplete_conversation")
-    stage_scores = [
-        strict_finite_number(value, 0, 50, "invalid_stage_scores")
-        for value in raw_stage_scores
-    ]
+    if not isinstance(raw_stage_scores, list):
+        raw_stage_scores = []
+    stage_scores = []
+    for index in range(stage_count):
+        value = raw_stage_scores[index] if index < len(raw_stage_scores) else None
+        if value in (None, ""):
+            stage_scores.append(None)
+            continue
+        stage_scores.append(strict_finite_number(value, 0, 50, "invalid_stage_scores"))
 
     raw_turns = payload.get("turns")
-    if not isinstance(raw_turns, list) or len(raw_turns) < 8 or len(raw_turns) > 16:
-        raise ValueError("incomplete_conversation")
+    if not isinstance(raw_turns, list):
+        raw_turns = []
+    raw_turns = raw_turns[:stage_count * 2]
+    turns = []
+    scored_stages = set()
+    for raw_turn in raw_turns:
+        if not isinstance(raw_turn, dict):
+            continue
+        try:
+            stage_index = int(raw_turn.get("stageIndex"))
+        except (TypeError, ValueError):
+            continue
+        if stage_index < 0 or stage_index >= stage_count:
+            continue
+        phase = "clarify" if raw_turn.get("phase") == "clarify" else "main"
+        prompt = clean_text(raw_turn.get("prompt"), 900) or stage_topics[stage_index]
+        transcript = clean_text(raw_turn.get("transcript"), 1800) or "No response recorded before continuing."
+        turn_score = None
+        if raw_turn.get("score") is not None:
+            turn_score = strict_finite_number(raw_turn.get("score"), 0, 50, "invalid_turns")
+            scored_stages.add(stage_index)
+            if stage_scores[stage_index] is None:
+                stage_scores[stage_index] = turn_score
+        turns.append({
+            "stageIndex": stage_index,
+            "topic": stage_topics[stage_index],
+            "phase": phase,
+            "prompt": prompt,
+            "transcript": transcript,
+            "score": turn_score,
+        })
+    present_stages = {turn["stageIndex"] for turn in turns}
+    for stage_index in range(stage_count):
+        if stage_index in present_stages:
+            continue
+        turns.append({
+            "stageIndex": stage_index,
+            "topic": stage_topics[stage_index],
+            "phase": "main",
+            "prompt": stage_topics[stage_index],
+            "transcript": "No response recorded before continuing.",
+            "score": None,
+        })
+    turns.sort(key=lambda turn: (turn["stageIndex"], 1 if turn["phase"] == "clarify" else 0))
+
+    complete_conversation = (
+        analyzed_count == stage_count
+        and scored_stages == set(range(stage_count))
+        and all(isinstance(value, (int, float)) and math.isfinite(value) for value in stage_scores)
+    )
+    if complete_conversation:
+        score = round(sum(metrics.values()), 2)
+    else:
+        scored_values = [
+            stage_scores[index]
+            for index in range(stage_count)
+            if index in scored_stages and isinstance(stage_scores[index], (int, float)) and math.isfinite(stage_scores[index])
+        ]
+        score = round(sum(scored_values) / stage_count, 2) if scored_values else 0
+    grade = round(score / 10.0, 2)
+    return {
+        "score": score,
+        "total": 50,
+        "grade": grade,
+        "metrics": metrics,
+        "analyzedCount": analyzed_count,
+        "totalStages": total_stages,
+        "stageScores": stage_scores,
+        "turns": turns,
+        "partialSubmission": not complete_conversation,
+        "completeConversation": complete_conversation,
+    }
+
+
+def clean_intermediate_unit6_schedule_coach(payload):
     stage_topics = (
         "Priorities and intentions",
         "Plans and confirmed arrangements",
@@ -3058,36 +3132,7 @@ def clean_intermediate_unit6_schedule_coach(payload):
         "Confirm the final agenda",
         "Ask a follow-up question",
     )
-    turns = []
-    scored_stages = set()
-    for raw_turn in raw_turns:
-        if not isinstance(raw_turn, dict):
-            raise ValueError("invalid_turns")
-        try:
-            stage_index = int(raw_turn.get("stageIndex"))
-        except (TypeError, ValueError):
-            raise ValueError("invalid_turns")
-        if stage_index < 0 or stage_index >= 8:
-            raise ValueError("invalid_turns")
-        phase = "clarify" if raw_turn.get("phase") == "clarify" else "main"
-        prompt = clean_text(raw_turn.get("prompt"), 900)
-        transcript = clean_text(raw_turn.get("transcript"), 1800)
-        if len(prompt) < 3 or len(transcript) < 3:
-            raise ValueError("invalid_turns")
-        turn_score = None
-        if raw_turn.get("score") is not None:
-            turn_score = strict_finite_number(raw_turn.get("score"), 0, 50, "invalid_turns")
-            scored_stages.add(stage_index)
-        turns.append({
-            "stageIndex": stage_index,
-            "topic": stage_topics[stage_index],
-            "phase": phase,
-            "prompt": prompt,
-            "transcript": transcript,
-            "score": turn_score,
-        })
-    if scored_stages != set(range(8)):
-        raise ValueError("incomplete_conversation")
+    report = clean_intermediate_partial_coach_report(payload, stage_topics)
 
     mode = clean_text(payload.get("mode"), 20)
     if mode not in ("guided", "real"):
@@ -3096,11 +3141,12 @@ def clean_intermediate_unit6_schedule_coach(payload):
     schedule_scenario = clean_text(payload.get("scheduleScenario"), 500)
     transcript_lines = [
         "Mode: " + ("Real Meeting" if mode == "real" else "Guided Rehearsal"),
+        "Submission status: " + ("Complete conversation." if report["completeConversation"] else f'Partial submission - {report["analyzedCount"]} of {report["totalStages"]} stages analyzed. Missing stages count as 0 in the reference grade.'),
         "Selected strategy: " + (selected_strategy or "Not specified"),
         "Schedule scenario: " + (schedule_scenario or "Not specified"),
         "",
     ]
-    for turn in turns:
+    for turn in report["turns"]:
         phase_label = "Clarification" if turn["phase"] == "clarify" else "Initial response"
         score_label = "Not analyzed" if turn["score"] is None else f'{turn["score"]:g}/50'
         transcript_lines.extend([
@@ -3112,14 +3158,16 @@ def clean_intermediate_unit6_schedule_coach(payload):
         ])
 
     return {
-        "score": score,
-        "total": 50,
-        "grade": grade,
-        "metrics": metrics,
-        "analyzedCount": analyzed_count,
-        "totalStages": total_stages,
-        "stageScores": stage_scores,
-        "turns": turns,
+        "score": report["score"],
+        "total": report["total"],
+        "grade": report["grade"],
+        "metrics": report["metrics"],
+        "analyzedCount": report["analyzedCount"],
+        "totalStages": report["totalStages"],
+        "stageScores": report["stageScores"],
+        "turns": report["turns"],
+        "partialSubmission": report["partialSubmission"],
+        "completeConversation": report["completeConversation"],
         "mode": mode,
         "selectedStrategy": selected_strategy,
         "scheduleScenario": schedule_scenario,
@@ -3128,36 +3176,6 @@ def clean_intermediate_unit6_schedule_coach(payload):
 
 
 def clean_intermediate_final_oral_partner_coach(payload):
-    metric_keys = ("task", "interaction", "language", "fluency", "clarity")
-    raw_metrics = payload.get("metrics")
-    if not isinstance(raw_metrics, dict):
-        raise ValueError("invalid_metrics")
-    metrics = {
-        key: strict_finite_number(raw_metrics.get(key), 0, 10, "invalid_metrics")
-        for key in metric_keys
-    }
-    score = round(sum(metrics.values()), 2)
-    grade = round(score / 10.0, 2)
-
-    try:
-        analyzed_count = int(payload.get("analyzedCount"))
-        total_stages = int(payload.get("totalStages"))
-    except (TypeError, ValueError):
-        raise ValueError("incomplete_conversation")
-    if analyzed_count != 8 or total_stages != 8:
-        raise ValueError("incomplete_conversation")
-
-    raw_stage_scores = payload.get("stageScores")
-    if not isinstance(raw_stage_scores, list) or len(raw_stage_scores) != 8:
-        raise ValueError("incomplete_conversation")
-    stage_scores = [
-        strict_finite_number(value, 0, 50, "invalid_stage_scores")
-        for value in raw_stage_scores
-    ]
-
-    raw_turns = payload.get("turns")
-    if not isinstance(raw_turns, list) or len(raw_turns) < 8 or len(raw_turns) > 16:
-        raise ValueError("incomplete_conversation")
     stage_topics = (
         "Present your problem",
         "Answer a follow-up question",
@@ -3168,36 +3186,7 @@ def clean_intermediate_final_oral_partner_coach(payload):
         "Make a joint decision",
         "Close the oral task",
     )
-    turns = []
-    scored_stages = set()
-    for raw_turn in raw_turns:
-        if not isinstance(raw_turn, dict):
-            raise ValueError("invalid_turns")
-        try:
-            stage_index = int(raw_turn.get("stageIndex"))
-        except (TypeError, ValueError):
-            raise ValueError("invalid_turns")
-        if stage_index < 0 or stage_index >= 8:
-            raise ValueError("invalid_turns")
-        phase = "clarify" if raw_turn.get("phase") == "clarify" else "main"
-        prompt = clean_text(raw_turn.get("prompt"), 900)
-        transcript = clean_text(raw_turn.get("transcript"), 1800)
-        if len(prompt) < 3 or len(transcript) < 3:
-            raise ValueError("invalid_turns")
-        turn_score = None
-        if raw_turn.get("score") is not None:
-            turn_score = strict_finite_number(raw_turn.get("score"), 0, 50, "invalid_turns")
-            scored_stages.add(stage_index)
-        turns.append({
-            "stageIndex": stage_index,
-            "topic": stage_topics[stage_index],
-            "phase": phase,
-            "prompt": prompt,
-            "transcript": transcript,
-            "score": turn_score,
-        })
-    if scored_stages != set(range(8)):
-        raise ValueError("incomplete_conversation")
+    report = clean_intermediate_partial_coach_report(payload, stage_topics)
 
     mode = clean_text(payload.get("mode"), 20)
     if mode not in ("guided", "real"):
@@ -3206,11 +3195,12 @@ def clean_intermediate_final_oral_partner_coach(payload):
     partner_problem = clean_text(payload.get("partnerProblem"), 500)
     transcript_lines = [
         "Mode: " + ("Real Exam Simulation" if mode == "real" else "Guided Exam Rehearsal"),
+        "Submission status: " + ("Complete conversation." if report["completeConversation"] else f'Partial submission - {report["analyzedCount"]} of {report["totalStages"]} stages analyzed. Missing stages count as 0 in the official reference grade.'),
         "Student problem: " + (selected_problem or "Not specified"),
         "Partner problem: " + (partner_problem or "Not specified"),
         "",
     ]
-    for turn in turns:
+    for turn in report["turns"]:
         phase_label = "Clarification" if turn["phase"] == "clarify" else "Initial response"
         score_label = "Not analyzed" if turn["score"] is None else f'{turn["score"]:g}/50'
         transcript_lines.extend([
@@ -3222,14 +3212,16 @@ def clean_intermediate_final_oral_partner_coach(payload):
         ])
 
     return {
-        "score": score,
-        "total": 50,
-        "grade": grade,
-        "metrics": metrics,
-        "analyzedCount": analyzed_count,
-        "totalStages": total_stages,
-        "stageScores": stage_scores,
-        "turns": turns,
+        "score": report["score"],
+        "total": report["total"],
+        "grade": report["grade"],
+        "metrics": report["metrics"],
+        "analyzedCount": report["analyzedCount"],
+        "totalStages": report["totalStages"],
+        "stageScores": report["stageScores"],
+        "turns": report["turns"],
+        "partialSubmission": report["partialSubmission"],
+        "completeConversation": report["completeConversation"],
         "mode": mode,
         "selectedProblem": selected_problem,
         "partnerProblem": partner_problem,
@@ -16216,6 +16208,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         "attemptCount": previous.get("attemptCount", 1),
                         "clientSubmissionId": client_submission_id,
                         "followUpOnly": True,
+                        "partialSubmission": bool(previous.get("partialSubmission")),
+                        "completeConversation": bool(previous.get("completeConversation", not previous.get("partialSubmission"))),
                         "weight": 0,
                     })
                     return
@@ -16270,6 +16264,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "clientDate": clean_text(payload.get("clientDate"), 40),
                     "attemptCount": attempt_count,
                     "status": "submitted",
+                    "completionStatus": "complete" if result["completeConversation"] else "partial",
+                    "partialSubmission": result["partialSubmission"],
+                    "completeConversation": result["completeConversation"],
                     "weight": 0,
                     "doesNotAffectAverage": True,
                     "followUpOnly": True,
@@ -16289,6 +16286,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "attemptCount": attempt_count,
                     "clientSubmissionId": client_submission_id,
                     "followUpOnly": True,
+                    "partialSubmission": result["partialSubmission"],
+                    "completeConversation": result["completeConversation"],
                     "weight": 0,
                 })
             return
@@ -16348,6 +16347,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         "clientSubmissionId": client_submission_id,
                         "teacherSubmission": True,
                         "officialAssessment": True,
+                        "partialSubmission": bool(previous.get("partialSubmission")),
+                        "completeConversation": bool(previous.get("completeConversation", not previous.get("partialSubmission"))),
                         "weight": 20,
                     })
                     return
@@ -16398,6 +16399,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "clientDate": clean_text(payload.get("clientDate"), 40),
                     "attemptCount": attempt_count,
                     "status": "submitted",
+                    "completionStatus": "complete" if result["completeConversation"] else "partial",
+                    "partialSubmission": result["partialSubmission"],
+                    "completeConversation": result["completeConversation"],
                     "weight": 20,
                     "teacherSubmission": True,
                     "officialAssessment": True,
@@ -16420,6 +16424,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "clientSubmissionId": client_submission_id,
                     "teacherSubmission": True,
                     "officialAssessment": True,
+                    "partialSubmission": result["partialSubmission"],
+                    "completeConversation": result["completeConversation"],
                     "weight": 20,
                 })
             return

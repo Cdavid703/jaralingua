@@ -54,16 +54,16 @@
     reportLead: "You completed the schedule rescue route{item}. Review the evidence before your next unlimited attempt.",
     reportComparison: "This formative estimate summarizes your latest analyzed response in each schedule stage.",
     reportCoverageReady: "{analyzed} of {total} stages analyzed. The written report is ready for optional teacher delivery.",
-    reportCoverageIncomplete: "{analyzed} of {total} stages analyzed. Complete all stages to unlock teacher delivery.",
+    reportCoverageIncomplete: "{analyzed} of {total} stages analyzed. You can still send the report; missing stages will be visible to the teacher.",
     fallbackStrength: "You completed the schedule route and preserved your practice evidence.",
     fallbackPriority: "Repeat the full exchange with more precise Unit 6 language.",
-    deliveryIncompleteStatus: "This report has {analyzed} of {total} analyzed stages. Complete a new full conversation before sending it.",
-    deliveryIncompleteToast: "The full conversation must be analyzed before delivery.",
+    deliveryIncompleteStatus: "This report has {analyzed} of {total} analyzed stages. You can send it now; missing stages count as 0 in the reference grade.",
+    deliveryIncompleteToast: "Partial report ready to send. Missing stages will be visible to the teacher.",
     deliveryReadyStatus: "Report ready. Sign in with your Intermediate English account and send it when you are ready.",
     deliveryBusyStatus: "Sending the written report to your teacher...",
     deliverySuccessStatus: "Submitted to teacher. Reference grade: {grade}/5. Gradebook weight: 0%. This result does not affect your course average.",
     deliverySuccessToast: "Submitted to teacher. Reference grade recorded with weight 0%.",
-    deliveryIncompleteServer: "The server could not verify all analyzed stages. Complete a new full conversation and try again.",
+    deliveryIncompleteServer: "The server could not save this report. Try signing in again or refresh the page.",
     summaryRouteName: "selected route",
     payloadItemKey: "selectedStrategy",
     payloadIncidentKey: "scheduleScenario"
@@ -1385,6 +1385,30 @@
       report.stageScores.every(Number.isFinite);
   }
 
+  function reportDeliveryScore(report) {
+    if (!report) return null;
+    if (reportIsDeliverable(report)) return Number(report.score);
+    const scores = Array.isArray(report.stageScores) ? report.stageScores.slice(0, stages.length) : [];
+    const total = scores.reduce((sum, value) => {
+      const score = Number(value);
+      return Number.isFinite(score) ? sum + score : sum;
+    }, 0);
+    return Math.round(total * 100 / Math.max(stages.length, 1)) / 100;
+  }
+
+  function normalizedDeliveryMetrics(report) {
+    const raw = report?.metrics || {};
+    const keys = new Set(["task", "interaction", "language", "fluency", "clarity"]);
+    (config.rubric || []).forEach((criterion) => {
+      if (criterion?.key) keys.add(criterion.key);
+    });
+    return [...keys].reduce((metrics, key) => {
+      const value = Number(raw[key]);
+      metrics[key] = Number.isFinite(value) ? value : 0;
+      return metrics;
+    }, {});
+  }
+
   function setDeliveryStatus(message, type = "pending") {
     elements.deliveryStatus.textContent = message;
     elements.deliveryStatus.className = `restaurant-delivery-status ${type}`;
@@ -1393,23 +1417,18 @@
   function updateDelivery(report) {
     if (!elements.deliveryPanel) return;
     ensureReportSubmissionId(report);
-    const grade = referenceGrade(report.score);
-    elements.deliveryScore.textContent = Number.isFinite(report.score) ? `${report.score}/50` : "--";
+    const completeReport = reportIsDeliverable(report);
+    const deliveryScore = reportDeliveryScore(report);
+    const grade = referenceGrade(deliveryScore);
+    elements.deliveryScore.textContent = Number.isFinite(deliveryScore) ? `${deliveryScore}/50` : "--";
     elements.deliveryGrade.textContent = grade == null ? "--" : `${grade.toFixed(2)}/5`;
-
-    if (!reportIsDeliverable(report)) {
-      elements.deliveryButton.disabled = true;
-      elements.deliveryButton.innerHTML = '<i class="bi bi-send-fill"></i> Send to teacher';
-      setDeliveryStatus(uiText(ui.deliveryIncompleteStatus, { analyzed: Number(report.analyzedCount) || 0, total: stages.length }), "error");
-      return;
-    }
 
     if (report.submission?.clientSubmissionId === report.clientSubmissionId) {
       elements.deliveryPanel.classList.add("is-submitted");
       elements.deliveryButton.disabled = true;
       elements.deliveryButton.innerHTML = '<i class="bi bi-check-circle-fill"></i> Submitted to teacher';
       const submittedGrade = Number(report.submission.grade);
-      const gradeText = Number.isFinite(submittedGrade) ? submittedGrade.toFixed(2) : grade.toFixed(2);
+      const gradeText = Number.isFinite(submittedGrade) ? submittedGrade.toFixed(2) : (grade == null ? "0.00" : grade.toFixed(2));
       setDeliveryStatus(uiText(ui.deliverySuccessStatus, { grade: gradeText }), "success");
       return;
     }
@@ -1417,7 +1436,10 @@
     elements.deliveryPanel.classList.remove("is-submitted");
     elements.deliveryButton.disabled = submissionBusy;
     elements.deliveryButton.innerHTML = submissionBusy ? '<i class="bi bi-hourglass-split"></i> Sending to teacher...' : '<i class="bi bi-send-fill"></i> Send to teacher';
-    setDeliveryStatus(submissionBusy ? ui.deliveryBusyStatus : ui.deliveryReadyStatus, submissionBusy ? "pending" : "ready");
+    setDeliveryStatus(
+      submissionBusy ? ui.deliveryBusyStatus : uiText(completeReport ? ui.deliveryReadyStatus : ui.deliveryIncompleteStatus, { analyzed: Number(report.analyzedCount) || 0, total: stages.length }),
+      submissionBusy ? "pending" : "ready"
+    );
   }
 
   function deliveryTurns(report) {
@@ -1437,9 +1459,9 @@
 
   async function submitReport() {
     const report = persistent.lastReport;
-    if (!report || !reportIsDeliverable(report)) {
-      setDeliveryStatus(uiText(ui.deliveryIncompleteStatus, { analyzed: Number(report?.analyzedCount) || 0, total: stages.length }), "error");
-      showToast(ui.deliveryIncompleteToast);
+    if (!report) {
+      setDeliveryStatus("Create a report first, then send it to the teacher.", "error");
+      showToast("Create a report first.");
       return;
     }
     const user = readUser();
@@ -1456,6 +1478,7 @@
     try {
       const dish = dishById.get(report.selectedDishId);
       const incident = incidentById.get(report.incidentId);
+      const completeConversation = reportIsDeliverable(report);
       const response = await fetch(submitPath, {
         method: "POST",
         headers: {
@@ -1469,11 +1492,13 @@
           mode: report.mode,
           [ui.payloadItemKey]: dish?.name || "",
           [ui.payloadIncidentKey]: incident?.prompt || "",
-          metrics: report.metrics,
+          metrics: normalizedDeliveryMetrics(report),
           analyzedCount: report.analyzedCount,
           totalStages: report.totalStages,
           stageScores: report.stageScores,
-          turns: deliveryTurns(report)
+          turns: deliveryTurns(report),
+          completeConversation,
+          partialSubmission: !completeConversation
         })
       });
       const payload = await response.json().catch(() => ({}));
@@ -1487,7 +1512,8 @@
         submittedAt: payload.submittedAt,
         grade: Number(payload.grade),
         attemptCount: payload.attemptCount,
-        clientSubmissionId: payload.clientSubmissionId || report.clientSubmissionId
+        clientSubmissionId: payload.clientSubmissionId || report.clientSubmissionId,
+        partialSubmission: Boolean(payload.partialSubmission)
       };
       persistent.lastReport = report;
       savePersistent();

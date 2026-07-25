@@ -61,6 +61,8 @@ assert(engineJs.includes("activeSession"), "Engine must autosave an active partn
 assert(engineJs.includes("function resumeActiveSession"), "Engine must resume saved partner-coach progress after reload.");
 assert(engineJs.includes("function markCurrentStageNotRecorded"), "Continue must preserve a not-recorded stage instead of freezing.");
 assert(engineJs.includes("function goPrevious"), "Engine must support going back to a previous stage.");
+assert(engineJs.includes("function reportDeliveryScore"), "Teacher delivery must calculate a partial score instead of blocking incomplete reports.");
+assert(engineJs.includes("partialSubmission"), "Teacher delivery must mark incomplete reports as partial submissions.");
 
 const stageOne = config.stages.find((stage) => stage.id === "choose-strategy");
 const stageTwo = config.stages.find((stage) => stage.id === "follow-up-answer-1");
@@ -111,6 +113,7 @@ assert(html.includes("schedule-conversation-coach.js"), "Missing reusable conver
 assert(html.includes("intermediate-final-oral-partner-review.js"), "Missing final oral teacher review panel script.");
 assert(html.includes("Send to teacher"), "Missing English teacher delivery button.");
 assert(html.includes("Gradebook weight 20%"), "Missing visible 20% gradebook delivery note.");
+assert(!config.ui.deliveryIncompleteStatus.includes("before sending it"), "Final oral delivery text must allow partial send-anytime reports.");
 assert(html.includes("Teacher evaluation studio"), "Missing teacher evaluation studio heading.");
 assert(!html.includes('id="nextTurnButton" type="button" disabled'), "Continue must not be disabled by default.");
 assert((html.match(/data-coach-speed="0\.75"/g) || []).length >= 2, "Missing 0.75x speed buttons.");
