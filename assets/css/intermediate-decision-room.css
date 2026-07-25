@@ -1,0 +1,523 @@
+:root {
+  --dr-navy: #071f4f;
+  --dr-teal: #0f766e;
+  --dr-green: #17785f;
+  --dr-gold: #d9a441;
+  --dr-red: #be3144;
+  --dr-ink: #182235;
+  --dr-muted: #526176;
+  --dr-paper: #ffffff;
+  --dr-soft: #f4f8fb;
+  --dr-border: #d8e4e0;
+  --dr-shadow: 0 16px 38px rgba(7, 31, 79, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.decision-room-page {
+  overflow-x: hidden;
+  background: #f4f7fb;
+  color: var(--dr-ink);
+}
+
+.decision-hero {
+  min-height: clamp(520px, 76vh, 720px);
+  display: grid;
+  align-items: end;
+  width: 100%;
+  padding: 5.5rem 1.25rem 2.3rem;
+  color: #fff;
+  background:
+    linear-gradient(115deg, rgba(7, 31, 79, 0.96) 0%, rgba(7, 31, 79, 0.78) 48%, rgba(15, 118, 110, 0.34) 100%),
+    url("../img/english-intermediate/games/decision-room/decision-room-hero-v1.webp") center / cover no-repeat;
+}
+
+.decision-hero-content,
+.decision-shell {
+  width: min(1180px, calc(100% - 2rem));
+  margin: 0 auto;
+}
+
+.decision-hero .eyebrow,
+.decision-kicker {
+  display: inline-flex;
+  width: fit-content;
+  margin: 0 0 0.85rem;
+  border-radius: 999px;
+  padding: 0.42rem 0.76rem;
+  background: rgba(255, 255, 255, 0.94);
+  color: var(--dr-navy);
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+}
+
+.decision-hero h1 {
+  max-width: 850px;
+  margin: 0 0 1rem;
+  font-size: clamp(2.35rem, 6vw, 4.9rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.decision-hero p:not(.eyebrow) {
+  max-width: 760px;
+  margin: 0;
+  color: #f8fbff;
+  font-size: clamp(1rem, 2vw, 1.18rem);
+  line-height: 1.58;
+}
+
+.decision-meta,
+.decision-actions,
+.decision-button-row,
+.scenario-tabs,
+.tag-row,
+.response-actions,
+.vote-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.decision-meta {
+  margin: 1.25rem 0;
+}
+
+.decision-meta span,
+.tag-row span {
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  font-weight: 850;
+  line-height: 1.15;
+}
+
+.decision-meta span {
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
+.decision-shell {
+  padding: 2rem 0 4rem;
+}
+
+.decision-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.8fr) minmax(0, 1.2fr);
+  gap: 1rem;
+  align-items: start;
+}
+
+.decision-panel,
+.scenario-card,
+.response-card,
+.student-card,
+.result-card {
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  background: var(--dr-paper);
+  box-shadow: var(--dr-shadow);
+  overflow: hidden;
+}
+
+.panel-head {
+  padding: 1rem 1.15rem;
+  background: linear-gradient(135deg, var(--dr-navy), var(--dr-teal));
+  color: #fff;
+}
+
+.panel-head h2,
+.panel-head h3 {
+  margin: 0;
+  color: #fff;
+  letter-spacing: 0;
+  line-height: 1.12;
+}
+
+.panel-body {
+  display: grid;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.room-code {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  align-items: center;
+  padding: 1rem;
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.room-code strong {
+  color: var(--dr-navy);
+  font-size: clamp(2rem, 7vw, 3.2rem);
+  letter-spacing: 0.12em;
+  line-height: 1;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.status-card {
+  padding: 0.75rem;
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.status-card span {
+  display: block;
+  color: var(--dr-muted);
+  font-size: 0.75rem;
+  font-weight: 850;
+}
+
+.status-card strong {
+  display: block;
+  color: var(--dr-navy);
+  font-size: 1.25rem;
+}
+
+.decision-button,
+.scenario-tabs button,
+.copy-link {
+  min-height: 42px;
+  border-radius: 999px;
+  border: 1px solid var(--dr-border);
+  padding: 0.62rem 0.9rem;
+  font-weight: 900;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.42rem;
+  color: var(--dr-navy);
+  background: #fff;
+}
+
+.decision-button.primary {
+  background: var(--dr-teal);
+  color: #fff;
+  border-color: var(--dr-teal);
+}
+
+.decision-button.danger {
+  background: #fff1f2;
+  color: #7f1d1d;
+  border-color: #fecaca;
+}
+
+.decision-button:disabled,
+.scenario-tabs button:disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.decision-button:not(:disabled):active,
+.scenario-tabs button:not(:disabled):active {
+  transform: translateY(1px);
+}
+
+.teacher-tools {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.scenario-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.scenario-tabs button {
+  border-radius: 8px;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.scenario-tabs button.is-active {
+  background: #eef8f7;
+  color: var(--dr-teal);
+  border-color: var(--dr-teal);
+}
+
+.join-form {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.join-form[hidden],
+.teacher-panel[hidden],
+.auth-gate[hidden],
+.connection-status[hidden] {
+  display: none !important;
+}
+
+.join-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 0.65fr) minmax(160px, 1fr) minmax(110px, 0.45fr);
+  gap: 0.55rem;
+}
+
+.join-row input,
+.student-response textarea {
+  width: 100%;
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  padding: 0.82rem 1rem;
+  font: inherit;
+  color: var(--dr-navy);
+  background: #fff;
+}
+
+.student-response textarea {
+  min-height: 150px;
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.status-message,
+.auth-gate,
+.connection-status,
+.teacher-next {
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  font-weight: 850;
+  line-height: 1.55;
+}
+
+.status-message {
+  margin: 0 0 1rem;
+  background: #eef5ff;
+  color: var(--dr-navy);
+}
+
+.status-message.success,
+.connection-status {
+  background: #ecfdf5;
+  color: #064e3b;
+  border: 1px solid #99f6e4;
+}
+
+.status-message.error {
+  background: #fff1f2;
+  color: #7f1d1d;
+}
+
+.teacher-next {
+  background: #fff7e7;
+  color: #6b4e16;
+  border: 1px solid rgba(217, 164, 65, 0.42);
+}
+
+.auth-gate {
+  background: #eef5ff;
+  color: var(--dr-navy);
+  border: 1px solid var(--dr-border);
+}
+
+.scenario-card {
+  padding: 1rem;
+  box-shadow: none;
+  background: #f8fbff;
+}
+
+.scenario-card h3,
+.response-card h3,
+.student-card h3,
+.result-card h3 {
+  margin: 0 0 0.55rem;
+  color: var(--dr-navy);
+  letter-spacing: 0;
+}
+
+.scenario-card p,
+.response-card p,
+.student-card p,
+.result-card p,
+.players-list,
+.empty-state {
+  color: var(--dr-muted);
+  line-height: 1.6;
+}
+
+.target-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.8rem;
+}
+
+.target-list span,
+.tag-row span {
+  background: #eef5ff;
+  color: var(--dr-navy);
+}
+
+.response-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.response-card {
+  padding: 0.95rem;
+  box-shadow: none;
+  border-color: #cfddd8;
+  position: relative;
+}
+
+.response-card.is-finalist {
+  border-color: var(--dr-gold);
+  background: #fffaf0;
+}
+
+.response-card p {
+  margin: 0.4rem 0 0.7rem;
+  color: #26344a;
+  font-size: 1.02rem;
+}
+
+.response-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  color: var(--dr-muted);
+  font-weight: 850;
+  font-size: 0.86rem;
+}
+
+.response-actions {
+  margin-top: 0.7rem;
+}
+
+.players-list {
+  display: grid;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.players-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.7rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  background: #f8fbff;
+}
+
+.student-card,
+.result-card {
+  padding: 1rem;
+}
+
+.student-response label {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--dr-navy);
+  font-weight: 900;
+}
+
+.vote-options {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.vote-options button {
+  justify-content: flex-start;
+  text-align: left;
+  border-radius: 8px;
+  min-height: auto;
+  line-height: 1.45;
+}
+
+.vote-options button.is-selected {
+  background: #ecfdf5;
+  color: #064e3b;
+  border-color: #10b981;
+}
+
+.empty-state {
+  padding: 1rem;
+  border: 1px dashed #b9c9d8;
+  border-radius: 8px;
+  background: #fff;
+  font-weight: 850;
+}
+
+.game-guides {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.game-guides article {
+  padding: 1rem;
+  border: 1px solid var(--dr-border);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: var(--dr-shadow);
+}
+
+.game-guides h3 {
+  margin: 0.2rem 0 0.55rem;
+  color: var(--dr-navy);
+}
+
+.game-guides ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  color: var(--dr-muted);
+  line-height: 1.6;
+}
+
+@media (max-width: 1020px) {
+  .decision-layout,
+  .game-guides {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .decision-hero {
+    min-height: 560px;
+    padding: 5rem 1rem 1.8rem;
+  }
+
+  .decision-hero-content,
+  .decision-shell {
+    width: min(100% - 1rem, 1180px);
+  }
+
+  .join-row,
+  .status-grid,
+  .scenario-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .decision-actions .btn,
+  .decision-button,
+  .copy-link {
+    width: 100%;
+  }
+
+  .room-code {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

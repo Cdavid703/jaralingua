@@ -173,6 +173,7 @@ INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_INTERMEDIAT
 INTERMEDIATE_MOCK_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_MOCK_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/intermediate-mock-integrated-task.json")
 INTERMEDIATE_UNIT4_EXPRESSION_WALL_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_EXPRESSION_WALL_DATA", "/var/lib/jaralingua/intermediate-unit4-expression-wall.json")
 INTERMEDIATE_UNIT4_IMPOSTOR_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4_IMPOSTOR_DATA", "/var/lib/jaralingua/intermediate-unit4-impostor-games.json")
+INTERMEDIATE_DECISION_ROOM_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_DECISION_ROOM_DATA", "/var/lib/jaralingua/intermediate-decision-room-games.json")
 INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_DATA", "/var/lib/jaralingua/intermediate-unit5-market-basket-live.json")
 INTERMEDIATE_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_INTERMEDIATE_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/intermediate-pronunciation-audio")
 INTERMEDIATE_UNIT2_CATCHING_UP_ID = "unit2CatchingUpListening"
@@ -6779,6 +6780,499 @@ def intermediate_unit4_impostor_action(payload):
         return 403, {"error": str(error)}
 
     write_intermediate_unit4_impostor_store(store)
+    return 400, {"error": "invalid_action"}
+
+
+INTERMEDIATE_DECISION_ROOM_SCENARIOS = [
+    {
+        "id": "overbooked-saturday",
+        "title": "Olivia's Overbooked Saturday",
+        "unit": "Unit 6",
+        "situation": "Olivia is meeting her producer at 10:00, rehearsing with the band at 2:00, and going to visit her mother in the evening. The producer asks for one extra hour.",
+        "challenge": "Write the best class decision. Protect one fixed arrangement, move one flexible plan, and give one piece of advice.",
+        "targetLanguage": ["is meeting", "is going to", "should", "could", "will"],
+        "teacherFocus": "Listen for a real priority, not just a generic sentence. Strong answers explain what is fixed and what can change.",
+        "model": "Olivia should protect the rehearsal because it is already confirmed. She could ask the producer to finish at eleven, and she will call her mother if the evening plan changes."
+    },
+    {
+        "id": "final-exam-week",
+        "title": "The Final Exam Week",
+        "unit": "Unit 6",
+        "situation": "A student is taking an oral exam on Friday, working late on Wednesday, and meeting a study partner on Thursday. A family dinner is suddenly moved to Thursday night.",
+        "challenge": "Decide what the student should do and explain the plan respectfully.",
+        "targetLanguage": ["has to", "is meeting", "should", "might", "will"],
+        "teacherFocus": "Strong answers balance obligation, advice, and a realistic communication step.",
+        "model": "The student should keep the study meeting because the exam is on Friday. He might join dinner later, and he will tell his family that he has to prepare first."
+    },
+    {
+        "id": "group-project-conflict",
+        "title": "The Group Project Conflict",
+        "unit": "Unit 6",
+        "situation": "Three classmates are presenting on Monday. One person is going to design the slides, another is meeting the teacher tomorrow, and the third says he cannot practice this weekend.",
+        "challenge": "Create a fair decision that keeps the presentation organized.",
+        "targetLanguage": ["is going to", "is meeting", "should", "could", "will"],
+        "teacherFocus": "Strong answers assign one clear action to each person and avoid blaming one student.",
+        "model": "They should divide the work clearly. Ana is going to finish the slides, Leo is meeting the teacher tomorrow, and Carlos will record his part before Sunday night."
+    },
+    {
+        "id": "weather-change-plan",
+        "title": "The Weather Change Plan",
+        "unit": "Unit 6",
+        "situation": "The class is going to record a short outdoor video tomorrow, but the forecast says it will rain. The room for indoor recording is free only at 9:00.",
+        "challenge": "Choose the strongest Plan B and explain why it works.",
+        "targetLanguage": ["is going to", "will", "should", "could", "simple present"],
+        "teacherFocus": "Strong answers use evidence now for the change and include the official room schedule.",
+        "model": "The class should move the recording indoors because it is going to rain. The room opens at nine, so they will meet earlier and record the first scene there."
+    },
+    {
+        "id": "family-schedule-negotiation",
+        "title": "Family Schedule Negotiation",
+        "unit": "Unit 6 + Unit 4 review",
+        "situation": "Maya is going to visit her grandmother on Sunday, but her brother wants her to help with a family lunch. Their parents expect both of them to pitch in.",
+        "challenge": "Make a decision that uses advice and respects both responsibilities.",
+        "targetLanguage": ["is going to", "has to", "should", "could", "pitch in"],
+        "teacherFocus": "Strong answers connect Unit 6 future forms with Unit 4 family-responsibility language.",
+        "model": "Maya should visit her grandmother in the morning and pitch in before lunch. Her brother could prepare the table, and Maya will help clean up when she returns."
+    },
+    {
+        "id": "club-event-decision",
+        "title": "The Club Event Decision",
+        "unit": "Unit 6",
+        "situation": "The English club is planning a movie night. The projector is reserved for Friday, but many students are taking a quiz that afternoon. Saturday is free, but the room is smaller.",
+        "challenge": "Decide which day is better and justify the trade-off.",
+        "targetLanguage": ["is reserved", "are taking", "should", "could", "will"],
+        "teacherFocus": "Strong answers compare options and choose a realistic compromise.",
+        "model": "The club should move the event to Saturday because many students are taking a quiz on Friday. They could use the smaller room and will limit the number of seats."
+    }
+]
+
+
+def default_intermediate_decision_room_store():
+    return {"rooms": {}}
+
+
+def read_intermediate_decision_room_store():
+    data = read_json_file(INTERMEDIATE_DECISION_ROOM_PATH, default_intermediate_decision_room_store())
+    if not isinstance(data.get("rooms"), dict):
+        data["rooms"] = {}
+    return data
+
+
+def write_intermediate_decision_room_store(data):
+    write_json_file(INTERMEDIATE_DECISION_ROOM_PATH, data, ".intermediate-decision-room-")
+
+
+def intermediate_decision_room_scenario_by_id(scenario_id):
+    scenario_id = clean_text(scenario_id, 80)
+    for scenario in INTERMEDIATE_DECISION_ROOM_SCENARIOS:
+        if scenario.get("id") == scenario_id:
+            return scenario
+    return None
+
+
+def intermediate_decision_room_public_scenario(scenario):
+    if not isinstance(scenario, dict):
+        return None
+    return {
+        "id": clean_text(scenario.get("id"), 80),
+        "title": clean_text(scenario.get("title"), 160),
+        "unit": clean_text(scenario.get("unit"), 80),
+        "situation": clean_text(scenario.get("situation"), 700),
+        "challenge": clean_text(scenario.get("challenge"), 500),
+        "targetLanguage": [clean_text(item, 80) for item in scenario.get("targetLanguage", []) if isinstance(item, str)][:8],
+        "teacherFocus": clean_text(scenario.get("teacherFocus"), 500),
+        "model": clean_text(scenario.get("model"), 700)
+    }
+
+
+def intermediate_decision_room_response_public(response, is_teacher=False):
+    if not isinstance(response, dict):
+        return None
+    public = {
+        "id": clean_text(response.get("id"), 40),
+        "playerId": clean_text(response.get("playerId"), 40),
+        "playerName": clean_imposteur_name(response.get("playerName")),
+        "text": clean_text(response.get("text"), 620),
+        "wordCount": int(response.get("wordCount") or 0),
+        "languageHits": [clean_text(item, 80) for item in response.get("languageHits", []) if isinstance(item, str)][:8],
+        "teacherTag": clean_text(response.get("teacherTag"), 80),
+        "submittedAt": response.get("submittedAt")
+    }
+    if is_teacher:
+        public["playerToken"] = clean_text(response.get("playerToken"), 80)
+    return public
+
+
+def intermediate_decision_language_hits(text):
+    normalized = normalize_text(text)
+    checks = [
+        ("be going to", r"\b(am|is|are)\s+going\s+to\b"),
+        ("present continuous arrangement", r"\b(am|is|are)\s+\w+ing\b"),
+        ("will", r"\bwill\b|'ll\b"),
+        ("should", r"\bshould(?:n't| not)?\b"),
+        ("could", r"\bcould\b"),
+        ("might", r"\bmight\b"),
+        ("has to / have to", r"\b(has|have)\s+to\b"),
+        ("simple present schedule", r"\b(starts|opens|closes|begins|ends|takes)\b")
+    ]
+    return [label for label, pattern in checks if re.search(pattern, normalized)]
+
+
+def intermediate_decision_vote_summary(room):
+    responses = room.get("responses") if isinstance(room.get("responses"), dict) else {}
+    finalists = [clean_text(item, 40) for item in room.get("finalists", []) if clean_text(item, 40)]
+    votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    counts = {response_id: 0 for response_id in finalists}
+    for vote in votes.values():
+        response_id = clean_text(vote.get("responseId") if isinstance(vote, dict) else vote, 40)
+        if response_id in counts:
+            counts[response_id] += 1
+    summary = []
+    for response_id in finalists:
+        response = responses.get(response_id)
+        if not isinstance(response, dict):
+            continue
+        summary.append({
+            "responseId": response_id,
+            "votes": counts.get(response_id, 0),
+            "response": intermediate_decision_room_response_public(response)
+        })
+    summary.sort(key=lambda item: (-int(item.get("votes") or 0), item.get("response", {}).get("submittedAt") or ""))
+    return summary
+
+
+def intermediate_decision_room_payload(room, player_token="", teacher_token=""):
+    players = french8_imposteur_players(room)
+    current = french8_imposteur_find_player(room, player_token)
+    is_teacher = clean_text(teacher_token, 200) and hmac.compare_digest(
+        clean_text(teacher_token, 200),
+        clean_text(room.get("teacherToken"), 200)
+    )
+    status = clean_text(room.get("status"), 40) or "waiting"
+    scenario = intermediate_decision_room_public_scenario(room.get("scenario"))
+    responses_map = room.get("responses") if isinstance(room.get("responses"), dict) else {}
+    responses = [
+        intermediate_decision_room_response_public(response, is_teacher)
+        for response in responses_map.values()
+        if isinstance(response, dict)
+    ]
+    responses = [item for item in responses if item]
+    responses.sort(key=lambda item: item.get("submittedAt") or "")
+    finalists = [clean_text(item, 40) for item in room.get("finalists", []) if clean_text(item, 40)]
+    votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    current_vote = None
+    if current:
+        vote = votes.get(clean_text(current.get("id"), 40))
+        if isinstance(vote, dict):
+            current_vote = clean_text(vote.get("responseId"), 40)
+    public_players = []
+    for player in players:
+        item = french8_imposteur_player_public(player, room, status == "revealed")
+        if item:
+            item["responseId"] = clean_text(player.get("responseId"), 40)
+            public_players.append(item)
+    return {
+        "room": {
+            "code": clean_imposteur_room_code(room.get("code")),
+            "status": status,
+            "round": french8_imposteur_current_round(room),
+            "playerCount": len(players),
+            "responseCount": len(responses),
+            "finalistCount": len(finalists),
+            "voteCount": sum(1 for vote in votes.values() if isinstance(vote, dict) and clean_text(vote.get("responseId"), 40)),
+            "createdAt": room.get("createdAt"),
+            "updatedAt": room.get("updatedAt")
+        },
+        "scenarios": [intermediate_decision_room_public_scenario(item) for item in INTERMEDIATE_DECISION_ROOM_SCENARIOS],
+        "scenario": scenario,
+        "players": public_players,
+        "responses": responses,
+        "finalists": finalists,
+        "currentPlayer": french8_imposteur_player_public(current, room, status == "revealed") if current else None,
+        "currentVote": current_vote,
+        "teacher": {"ok": True} if is_teacher else None,
+        "result": {
+            "votes": intermediate_decision_vote_summary(room),
+            "winningResponseId": intermediate_decision_vote_summary(room)[0]["responseId"] if intermediate_decision_vote_summary(room) else None
+        } if status == "revealed" else None
+    }
+
+
+def intermediate_decision_room_get_state(query):
+    room_code = clean_imposteur_room_code((query.get("room") or [""])[0])
+    player_token = clean_text((query.get("playerToken") or [""])[0], 200)
+    teacher_token = clean_text((query.get("teacherToken") or [""])[0], 200)
+    store = read_intermediate_decision_room_store()
+    french8_imposteur_prune_rooms(store)
+    room = store.get("rooms", {}).get(room_code)
+    if not room:
+        write_intermediate_decision_room_store(store)
+        return 404, {"error": "room_not_found"}
+    french8_imposteur_touch(room)
+    write_intermediate_decision_room_store(store)
+    return 200, intermediate_decision_room_payload(room, player_token, teacher_token)
+
+
+def intermediate_decision_room_require_teacher(room, payload):
+    token = clean_text(payload.get("teacherToken"), 200)
+    stored = clean_text(room.get("teacherToken"), 200)
+    if not token or not stored or not hmac.compare_digest(token, stored):
+        raise PermissionError("teacher_required")
+
+
+def intermediate_decision_room_action(payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_json"}
+    action = clean_text(payload.get("action"), 40)
+    store = read_intermediate_decision_room_store()
+    rooms = store.setdefault("rooms", {})
+    french8_imposteur_prune_rooms(store)
+    timestamp = now_iso()
+
+    if action == "create":
+        room_code = french8_imposteur_new_room_code(rooms)
+        teacher_token = secrets.token_urlsafe(24)
+        room = {
+            "code": room_code,
+            "teacherToken": teacher_token,
+            "status": "waiting",
+            "round": 1,
+            "players": [],
+            "scenario": None,
+            "responses": {},
+            "finalists": [],
+            "votes": {},
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "updatedAtEpoch": int(time.time())
+        }
+        rooms[room_code] = room
+        write_intermediate_decision_room_store(store)
+        return 200, {"ok": True, "roomCode": room_code, "teacherToken": teacher_token, "state": intermediate_decision_room_payload(room, teacher_token=teacher_token)}
+
+    if action == "reset-all":
+        room_refs = payload.get("rooms")
+        if not isinstance(room_refs, list) or not room_refs:
+            write_intermediate_decision_room_store(store)
+            return 400, {"error": "invalid_room_list"}
+        cleared_codes = []
+        ignored_count = 0
+        for reference in room_refs[:30]:
+            if not isinstance(reference, dict):
+                ignored_count += 1
+                continue
+            reference_code = clean_imposteur_room_code(reference.get("roomCode") or reference.get("room"))
+            reference_token = clean_text(reference.get("teacherToken"), 200)
+            referenced_room = rooms.get(reference_code)
+            stored_token = clean_text(referenced_room.get("teacherToken"), 200) if isinstance(referenced_room, dict) else ""
+            if not referenced_room or not reference_token or not stored_token or not hmac.compare_digest(reference_token, stored_token):
+                ignored_count += 1
+                continue
+            rooms.pop(reference_code, None)
+            cleared_codes.append(reference_code)
+        write_intermediate_decision_room_store(store)
+        return 200, {"ok": True, "resetAll": True, "clearedRooms": len(cleared_codes), "ignoredRooms": ignored_count}
+
+    room_code = clean_imposteur_room_code(payload.get("roomCode") or payload.get("room"))
+    room = rooms.get(room_code)
+    if not room:
+        write_intermediate_decision_room_store(store)
+        return 404, {"error": "room_not_found"}
+    players = french8_imposteur_players(room)
+
+    try:
+        if action == "join":
+            name = clean_imposteur_name(payload.get("name"))
+            if len(name) < 2:
+                return 400, {"error": "name_required"}
+            player_token = clean_text(payload.get("playerToken"), 200)
+            existing = french8_imposteur_find_player(room, player_token)
+            if existing:
+                existing["name"] = name
+                existing["lastSeenAt"] = timestamp
+            else:
+                normalized = normalize_name(name)
+                if any(normalize_name(player.get("name")) == normalized for player in players):
+                    return 409, {"error": "name_taken"}
+                if len(players) >= FRENCH8_IMPOSTEUR_MAX_PLAYERS:
+                    return 409, {"error": "room_full"}
+                player_token = secrets.token_urlsafe(24)
+                players.append({
+                    "id": french8_imposteur_new_player_id(room),
+                    "name": name,
+                    "token": player_token,
+                    "joinedAt": timestamp,
+                    "lastSeenAt": timestamp
+                })
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "roomCode": room_code, "playerToken": player_token, "state": intermediate_decision_room_payload(room, player_token=player_token)}
+
+        if action == "launch":
+            intermediate_decision_room_require_teacher(room, payload)
+            scenario_id = clean_text(payload.get("scenarioId"), 80)
+            scenario = intermediate_decision_room_scenario_by_id(scenario_id) if scenario_id else secrets.choice(INTERMEDIATE_DECISION_ROOM_SCENARIOS)
+            if not scenario:
+                return 400, {"error": "invalid_scenario"}
+            room["status"] = "writing"
+            room["scenario"] = scenario
+            room["responses"] = {}
+            room["finalists"] = []
+            room["votes"] = {}
+            room["launchedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "state": intermediate_decision_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "submit-response":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) not in ("writing", "reviewing"):
+                return 409, {"error": "responses_closed"}
+            text = clean_text(payload.get("text"), 620)
+            word_count = basic_word_count(text)
+            if word_count < 12:
+                return 400, {"error": "response_too_short", "wordCount": word_count}
+            if word_count > 75:
+                return 400, {"error": "response_too_long", "wordCount": word_count}
+            hits = intermediate_decision_language_hits(text)
+            if not hits:
+                return 400, {"error": "unit6_language_missing"}
+            player_id = clean_text(player.get("id"), 40)
+            responses = room.setdefault("responses", {})
+            if not isinstance(responses, dict):
+                responses = {}
+                room["responses"] = responses
+            existing_id = clean_text(player.get("responseId"), 40)
+            response_id = existing_id if existing_id in responses else secrets.token_hex(8)
+            responses[response_id] = {
+                "id": response_id,
+                "playerId": player_id,
+                "playerToken": clean_text(player.get("token"), 80),
+                "playerName": clean_imposteur_name(player.get("name")),
+                "text": text,
+                "wordCount": word_count,
+                "languageHits": hits,
+                "submittedAt": timestamp
+            }
+            player["responseId"] = response_id
+            player["lastSeenAt"] = timestamp
+            if clean_text(room.get("status"), 40) == "writing":
+                room["status"] = "reviewing"
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "responseId": response_id, "state": intermediate_decision_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "nominate":
+            intermediate_decision_room_require_teacher(room, payload)
+            response_id = clean_text(payload.get("responseId"), 40)
+            tag = clean_text(payload.get("tag"), 80)
+            responses = room.get("responses") if isinstance(room.get("responses"), dict) else {}
+            if response_id not in responses:
+                return 400, {"error": "invalid_response"}
+            finalists = [clean_text(item, 40) for item in room.get("finalists", []) if clean_text(item, 40)]
+            if response_id in finalists:
+                finalists = [item for item in finalists if item != response_id]
+                responses[response_id]["teacherTag"] = tag or ""
+            else:
+                if len(finalists) >= 4:
+                    return 409, {"error": "too_many_finalists"}
+                finalists.append(response_id)
+                responses[response_id]["teacherTag"] = tag or "Finalist"
+            room["finalists"] = finalists
+            room["status"] = "reviewing"
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "state": intermediate_decision_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "open-vote":
+            intermediate_decision_room_require_teacher(room, payload)
+            finalists = [clean_text(item, 40) for item in room.get("finalists", []) if clean_text(item, 40)]
+            if len(finalists) < 2:
+                return 409, {"error": "not_enough_finalists"}
+            room["status"] = "voting"
+            room["votes"] = {}
+            room["voteOpenedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "state": intermediate_decision_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "vote":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) != "voting":
+                return 409, {"error": "vote_closed"}
+            response_id = clean_text(payload.get("responseId"), 40)
+            finalists = [clean_text(item, 40) for item in room.get("finalists", []) if clean_text(item, 40)]
+            if response_id not in finalists:
+                return 400, {"error": "invalid_finalist"}
+            votes = room.setdefault("votes", {})
+            if not isinstance(votes, dict):
+                votes = {}
+                room["votes"] = votes
+            votes[clean_text(player.get("id"), 40)] = {
+                "responseId": response_id,
+                "round": french8_imposteur_current_round(room),
+                "votedAt": timestamp
+            }
+            player["lastSeenAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "state": intermediate_decision_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "reveal":
+            intermediate_decision_room_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) not in ("reviewing", "voting"):
+                return 409, {"error": "reveal_not_available"}
+            room["status"] = "revealed"
+            room["revealedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "state": intermediate_decision_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "reset":
+            intermediate_decision_room_require_teacher(room, payload)
+            room["status"] = "waiting"
+            room["round"] = int(room.get("round") or 1) + 1
+            room["scenario"] = None
+            room["responses"] = {}
+            room["finalists"] = []
+            room["votes"] = {}
+            for player in players:
+                player.pop("responseId", None)
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "state": intermediate_decision_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "close-room":
+            intermediate_decision_room_require_teacher(room, payload)
+            rooms.pop(room_code, None)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True, "closed": True}
+
+        if action == "leave":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            player_id = clean_text(player.get("id"), 40)
+            response_id = clean_text(player.get("responseId"), 40)
+            room["players"] = [item for item in players if clean_text(item.get("id"), 40) != player_id]
+            responses = room.get("responses") if isinstance(room.get("responses"), dict) else {}
+            responses.pop(response_id, None)
+            room["responses"] = responses
+            room["finalists"] = [item for item in room.get("finalists", []) if clean_text(item, 40) != response_id]
+            votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+            votes.pop(player_id, None)
+            room["votes"] = {voter: vote_value for voter, vote_value in votes.items() if clean_text(vote_value.get("responseId") if isinstance(vote_value, dict) else "", 40) != response_id}
+            french8_imposteur_touch(room)
+            write_intermediate_decision_room_store(store)
+            return 200, {"ok": True}
+    except PermissionError as error:
+        return 403, {"error": str(error)}
+
+    write_intermediate_decision_room_store(store)
     return 400, {"error": "invalid_action"}
 
 
@@ -13557,6 +14051,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, payload)
             return
 
+        if parsed.path == "/api/intermediate/decision-room/state":
+            query = urllib.parse.parse_qs(parsed.query)
+            with data_lock:
+                status, payload = intermediate_decision_room_get_state(query)
+            json_response(self, status, payload)
+            return
+
         if parsed.path == "/api/french8/final-exam/audio":
             query = urllib.parse.parse_qs(parsed.query)
             grant = clean_text((query.get("grant") or [""])[0], 4096)
@@ -15018,6 +15519,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 return
             with data_lock:
                 status, result = intermediate_unit4_impostor_action(payload)
+            json_response(self, status, result)
+            return
+
+        if parsed.path == "/api/intermediate/decision-room":
+            payload = self.read_json_body()
+            if payload is None:
+                return
+            with data_lock:
+                status, result = intermediate_decision_room_action(payload)
             json_response(self, status, result)
             return
 

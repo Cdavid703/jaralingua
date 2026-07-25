@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The Decision Room is an original live classroom game for Intermediate English Unit 6. Students submit advice and future-plan decisions, the teacher nominates finalists, and the class votes." />
+  <title>The Decision Room | Intermediate English Course 1 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../../assets/css/intermediate-decision-room.css?v=20260725" />
+</head>
+<body class="english-intermediate-page decision-room-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="games.html">Games</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="decision-hero">
+      <div class="decision-hero-content">
+        <p class="eyebrow">Original Live Game - Unit 6</p>
+        <h1>The Decision Room</h1>
+        <p>
+          The teacher opens a real-life problem. Students submit a decision in English,
+          the strongest answers become finalists, and the class votes for the best solution.
+        </p>
+        <div class="decision-meta">
+          <span>live room</span>
+          <span>whole group</span>
+          <span>future plans</span>
+          <span>advice</span>
+          <span>class vote</span>
+        </div>
+        <div class="decision-actions">
+          <a href="#decisionRoom" class="btn btn-primary">Open game room</a>
+          <a href="games.html" class="btn btn-secondary">Back to Games</a>
+          <a href="practice-lab.html#unit-6-folder" class="btn btn-secondary">Back to Unit 6</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="decision-shell" id="decisionRoom">
+      <div id="statusMessage" class="status-message" role="status" aria-live="polite">Sign in, then create or join a room.</div>
+
+      <div class="decision-layout">
+        <aside class="decision-panel teacher-panel" id="teacherPanel" hidden>
+          <div class="panel-head"><h2>Teacher Control Room</h2></div>
+          <div class="panel-body">
+            <div class="room-code">
+              <div><p class="decision-kicker">Room code</p><strong id="roomCodeDisplay">----</strong></div>
+              <button class="decision-button" id="copyCodeBtn" type="button"><i class="bi bi-copy"></i> Copy code</button>
+            </div>
+            <a class="copy-link" id="studentRoomLink" href="#" target="_blank" rel="noopener"><i class="bi bi-link-45deg"></i> Student room link</a>
+            <div class="status-grid">
+              <div class="status-card"><span>Players</span><strong id="playerCount">0</strong></div>
+              <div class="status-card"><span>Answers</span><strong id="responseCount">0</strong></div>
+              <div class="status-card"><span>Finalists</span><strong id="finalistCount">0</strong></div>
+              <div class="status-card"><span>Votes</span><strong id="voteCount">0</strong></div>
+            </div>
+
+            <div class="teacher-next" id="teacherNext">Next step: create a room and share the code.</div>
+
+            <div class="teacher-tools">
+              <button class="decision-button primary" id="createRoomBtn" type="button"><i class="bi bi-plus-circle"></i> Create room</button>
+              <div>
+                <p class="decision-kicker">Choose a scenario</p>
+                <div class="scenario-tabs" id="scenarioTabs"></div>
+              </div>
+              <button class="decision-button primary" id="launchScenarioBtn" type="button"><i class="bi bi-play-fill"></i> Launch scenario</button>
+              <button class="decision-button" id="openVoteBtn" type="button"><i class="bi bi-check2-square"></i> Open class vote</button>
+              <button class="decision-button primary" id="revealBtn" type="button"><i class="bi bi-trophy-fill"></i> Reveal class decision</button>
+              <button class="decision-button" id="resetRoundBtn" type="button"><i class="bi bi-arrow-counterclockwise"></i> New round, same room</button>
+              <button class="decision-button danger" id="closeRoomBtn" type="button"><i class="bi bi-x-circle"></i> Close room</button>
+              <button class="decision-button danger" id="resetAllRoomsBtn" type="button"><i class="bi bi-exclamation-triangle"></i> Reset all rooms</button>
+            </div>
+
+            <div>
+              <p class="decision-kicker">Players</p>
+              <ul class="players-list" id="playersList"></ul>
+            </div>
+          </div>
+        </aside>
+
+        <section class="decision-panel">
+          <div class="panel-head"><h2>Class Decision Board</h2></div>
+          <div class="panel-body">
+            <section class="auth-gate" id="authGate" hidden>
+              <strong>Sign-in required</strong>
+              <p>Students must sign in before joining the room so the live answer is connected to a real class participant.</p>
+              <button class="decision-button primary" id="openAuthBtn" type="button"><i class="bi bi-person-circle"></i> Sign in</button>
+            </section>
+
+            <section class="connection-status" id="connectionStatus" hidden>
+              <span id="connectionText"></span>
+              <button class="decision-button" id="leaveRoomBtn" type="button"><i class="bi bi-box-arrow-left"></i> Leave room</button>
+            </section>
+
+            <form class="join-form" id="joinForm" hidden>
+              <div class="join-row">
+                <input id="roomCode" maxlength="6" autocomplete="off" placeholder="Room code" />
+                <input id="playerName" maxlength="80" autocomplete="name" placeholder="Your name" />
+                <button class="decision-button primary" id="joinSubmitBtn" type="submit"><i class="bi bi-box-arrow-in-right"></i> Join</button>
+              </div>
+            </form>
+
+            <article class="scenario-card" id="scenarioCard">
+              <p class="decision-kicker">Scenario</p>
+              <h3>Waiting for the teacher</h3>
+              <p>The teacher will launch one situation. Read it, decide what the person should do, and submit one complete decision.</p>
+            </article>
+
+            <article class="student-card student-response" id="studentResponseCard">
+              <p class="decision-kicker">Your decision</p>
+              <h3>Write one strong answer</h3>
+              <p>Use Unit 6 language: future plans, confirmed arrangements, decisions with will, and advice with should or could.</p>
+              <label for="studentDecision">Your answer</label>
+              <textarea id="studentDecision" maxlength="620" placeholder="Example: Olivia should protect the rehearsal because it is already confirmed. She could ask the producer to finish earlier, and she will call her mother if the evening plan changes."></textarea>
+              <div class="tag-row"><span id="wordCounter">0 words</span><span id="languageCounter">No Unit 6 marker yet</span></div>
+              <div class="decision-button-row">
+                <button class="decision-button primary" id="submitDecisionBtn" type="button"><i class="bi bi-send-fill"></i> Send decision</button>
+                <button class="decision-button" id="clearDecisionBtn" type="button"><i class="bi bi-eraser"></i> Clear</button>
+              </div>
+            </article>
+
+            <div>
+              <p class="decision-kicker">Live answers</p>
+              <div class="response-list" id="responseList"></div>
+            </div>
+
+            <div id="votePanel"></div>
+            <div id="resultPanel"></div>
+          </div>
+        </section>
+      </div>
+
+      <section class="game-guides" aria-label="Decision Room classroom guide">
+        <article><p class="decision-kicker">Teacher flow</p><h3>How to run it</h3><ul><li>Create one room.</li><li>Choose and launch a scenario.</li><li>Read answers aloud.</li><li>Nominate 2-4 finalists.</li><li>Open voting and reveal the class decision.</li></ul></article>
+        <article><p class="decision-kicker">Student language</p><h3>What students produce</h3><ul><li>A real decision, not one word.</li><li>At least one Unit 6 marker.</li><li>A reason or trade-off.</li><li>A clear final action.</li></ul></article>
+        <article><p class="decision-kicker">Pedagogical product</p><h3>Final class result</h3><ul><li>The class compares ideas.</li><li>The teacher can discuss grammar live.</li><li>The winning answer becomes the class recommendation.</li><li>No gradebook pressure.</li></ul></article>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
+  <script src="../../assets/js/english-intermediate-decision-room.js?v=20260725"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
