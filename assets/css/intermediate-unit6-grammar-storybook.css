@@ -101,6 +101,7 @@ body.unit6-grammar-page {
   width: min(1180px, calc(100% - 2rem));
   margin: 0 auto;
   padding: 2rem 0 4rem;
+  scroll-margin-top: 96px;
 }
 
 .u6g-panel {
@@ -791,14 +792,19 @@ body.unit6-grammar-page {
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 820px) {
+  .unit6-grammar-page .site-header {
+    position: static;
+    top: auto;
+  }
+
   .unit6-grammar-page .navbar {
     flex-direction: column;
     align-items: center;
     gap: 0.55rem;
     width: 100%;
     max-width: 100vw;
-    padding: 8px 10px;
+    padding: 8px 10px 6px;
     overflow: hidden;
   }
 
@@ -807,13 +813,7 @@ body.unit6-grammar-page {
   }
 
   .unit6-grammar-page .nav-links {
-    display: grid !important;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: 100%;
-    max-width: 100% !important;
-    gap: 6px !important;
-    padding: 2px 0;
-    overflow-x: hidden !important;
+    display: none !important;
   }
 
   .unit6-grammar-page .nav-links li {
@@ -862,12 +862,48 @@ body.unit6-grammar-page {
 
   .u6g-hero {
     min-height: auto;
-    padding: 5.25rem 1rem 1.35rem;
+    padding: 1rem 1rem 1.05rem;
+    align-items: start;
+    background-position: center top;
+  }
+
+  .u6g-hero h1 {
+    max-width: 100%;
+    margin-bottom: 0.65rem;
+    font-size: clamp(2rem, 10vw, 3rem);
+    line-height: 1.04;
+  }
+
+  .u6g-hero p:not(.eyebrow) {
+    display: none;
+  }
+
+  .u6g-meta {
+    margin: 0.7rem 0;
+    gap: 0.42rem;
+  }
+
+  .u6g-meta span {
+    padding: 0.38rem 0.58rem;
+    font-size: 0.78rem;
+  }
+
+  .u6g-meta span:nth-child(n+4) {
+    display: none;
+  }
+
+  .u6g-actions {
+    gap: 0.48rem;
+  }
+
+  .u6g-actions .btn:not(:first-child) {
+    display: none;
   }
 
   .u6g-shell {
     width: min(100% - 1rem, 1180px);
     padding-top: 1rem;
+    scroll-margin-top: 12px;
   }
 
   .u6g-panel-head,
@@ -937,7 +973,7 @@ body.unit6-grammar-page {
 
 @media (max-width: 460px) {
   .u6g-hero h1 {
-    font-size: clamp(2rem, 11vw, 3.1rem);
+    font-size: clamp(1.9rem, 10vw, 2.65rem);
   }
 
   .u6g-meta {
