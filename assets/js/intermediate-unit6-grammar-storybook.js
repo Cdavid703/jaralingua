@@ -405,15 +405,16 @@ window.JaraLinguaUnit6GrammarStorybookData = {
       updateSendState();
       return;
     }
+    if (!state.checked) {
+      setDelivery("Check the story first. The Check story button works even if blanks are incomplete. After reviewing the reference grade, you can send it without writing a final note.", "error");
+      elements.checkButton.focus();
+      return;
+    }
     const headers = authHeaders();
     if (!headers) {
       setDelivery("Sign in first. Your grammar storybook must be linked to your student record before it can be sent to the teacher.", "error");
       requestSignIn();
       return;
-    }
-    if (!state.checked) {
-      state.checked = true;
-      renderPage();
     }
     state.sending = true;
     updateSendState();
@@ -433,10 +434,6 @@ window.JaraLinguaUnit6GrammarStorybookData = {
           updateSendState();
           if (result.status === 403) {
             setDelivery("Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.", "error");
-          } else if (result.body && result.body.error === "text_too_short") {
-            setDelivery("Your final note is too short. Write at least 30 words before sending.", "error");
-          } else if (result.body && result.body.error === "text_too_long") {
-            setDelivery("Your final note is too long. Keep it under 120 words before sending.", "error");
           } else {
             setDelivery("The grammar storybook could not be saved. Please reload and try again.", "error");
           }
