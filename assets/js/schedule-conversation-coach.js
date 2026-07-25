@@ -913,7 +913,9 @@
   }
 
   function completeResponse(stage) {
-    if (stage.id === "choose-strategy") return selectedDish()?.response || stage.clarify;
+    const useSelectedItemResponse = stage.usesSelectedItemResponse ||
+      (stage.id === "choose-strategy" && config.useSelectedItemResponseOnChooseStrategy !== false);
+    if (useSelectedItemResponse) return selectedDish()?.response || stage.complete || stage.clarify;
     if (stage.id === "advice-plan") {
       if (!selectedIncident() && incidents.length) session.incidentId = incidents[randomIndex(incidents.length)].id;
       return selectedIncident() || stage.clarify;
@@ -921,12 +923,18 @@
     return stage.complete || null;
   }
 
+  function fallbackResponse(nextAction) {
+    if (nextAction === "clarify") return { text: "Add one more clear detail before we continue." };
+    if (nextAction === "finish") return { text: "Good. The exchange is complete. Open your report when you are ready." };
+    return { text: "Good. Continue to the next part of the exchange." };
+  }
+
   async function presentResponse(entry, nextAction) {
-    if (!entry) return;
+    const responseEntry = entry || fallbackResponse(nextAction);
     session.awaitingContinue = true;
     session.nextAction = nextAction;
-    session.pendingEntryAudio = entry.file || "";
-    elements.reactionText.textContent = entry.text;
+    session.pendingEntryAudio = responseEntry.file || "";
+    elements.reactionText.textContent = responseEntry.text || fallbackResponse(nextAction).text;
     elements.reaction.hidden = false;
     elements.next.innerHTML = nextAction === "clarify"
       ? 'Answer clarification <i class="bi bi-arrow-repeat"></i>'
@@ -935,7 +943,7 @@
         : 'Continue conversation <i class="bi bi-arrow-right"></i>';
     setRecordStatus(uiText(ui.responseStatus, { name: ui.coachName }), nextAction === "clarify" ? ui.clarificationHelp : uiText(ui.responseHelp, { name: ui.coachName }));
     updateControls();
-    await playAudio(elements.reactionAudio, entry.file, { stageState: "responding", stageLabel: uiText(ui.responseStatus, { name: ui.coachName }), restoreStage: false });
+    await playAudio(elements.reactionAudio, responseEntry.file, { stageState: "responding", stageLabel: uiText(ui.responseStatus, { name: ui.coachName }), restoreStage: false });
     setStageState(nextAction === "finish" ? "complete" : "ready", nextAction === "clarify" ? uiText(ui.needsDetailStage, { name: ui.coachName }) : nextAction === "finish" ? ui.completeStage : uiText(ui.readyNextStage, { name: ui.coachName }));
     updateControls();
   }

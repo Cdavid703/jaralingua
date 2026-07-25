@@ -40,6 +40,7 @@ assert(Array.isArray(config.stages) && config.stages.length === 8, "Expected eig
 assert(Array.isArray(config.dishes) && config.dishes.length === 5, "Expected five official-style problem cards.");
 assert(Array.isArray(config.incidents) && config.incidents.length === 3, "Expected three adaptive partner problems.");
 assert(config.maxRecordingSeconds === 50, "Expected 50-second recording window.");
+assert(config.useSelectedItemResponseOnChooseStrategy === false, "Final oral problem cards must not inject advice immediately after stage 1.");
 assert(config.ui && config.ui.payloadItemKey === "selectedProblem", "Payload must store selectedProblem.");
 assert(config.ui && config.ui.payloadIncidentKey === "partnerProblem", "Payload must store partnerProblem.");
 
@@ -51,6 +52,16 @@ assert(/free time|rest|responsibilities/i.test(firstStage.improvedByDish["free-t
 assert(engineJs.includes("function strongerModel"), "Engine must resolve contextual stronger models.");
 assert(engineJs.includes("improvedByDish"), "Engine must support stronger models by selected problem.");
 assert(engineJs.includes("improvedByIncident"), "Engine must support stronger models by partner problem.");
+assert(engineJs.includes("function fallbackResponse"), "Engine must provide a safe transition when a stage has no configured response.");
+assert(engineJs.includes("usesSelectedItemResponse"), "Engine must support explicit selected-card response stages.");
+assert(engineJs.includes("useSelectedItemResponseOnChooseStrategy"), "Engine must allow final oral to disable premature selected-card responses.");
+
+const stageOne = config.stages.find((stage) => stage.id === "choose-strategy");
+const stageTwo = config.stages.find((stage) => stage.id === "follow-up-answer-1");
+const stageThree = config.stages.find((stage) => stage.id === "follow-up-answer-2");
+assert(stageOne && stageOne.usesSelectedItemResponse !== true, "Stage 1 must only present the problem, not Sophie's advice.");
+assert(stageTwo && !stageTwo.complete, "Stage 2 intentionally uses the engine fallback so Continue cannot freeze.");
+assert(stageThree && stageThree.usesSelectedItemResponse === true, "Stage 3 must trigger Sophie's selected-problem advice before the advice reaction stage.");
 
 const requiredIds = [
   "onboardingPanel", "interviewPanel", "summaryPanel", "welcomePlayButton", "instructionsPlayButton",

@@ -11,6 +11,7 @@ window.JaraLinguaScheduleCoachConfig = {
   audioRoot: "audio/conversation-coach/final-oral-partner/",
   imageRoot: "../../assets/img/english-intermediate/unit-6/final-oral-partner-coach/",
   maxRecordingSeconds: 50,
+  useSelectedItemResponseOnChooseStrategy: false,
   character: {
     name: "Sophie Bennett",
     role: "exam partner and university friend",
@@ -260,6 +261,7 @@ window.JaraLinguaScheduleCoachConfig = {
       unitTerms: ["would", "if", "next week"],
       minWords: 12,
       maxSeconds: 40,
+      usesSelectedItemResponse: true,
       improved: "If this improved next week, I would feel less stressed because I could organize my tasks before the weekend.",
       improvedByDish: {
         "school-work-stress": "If this improved next week, I would feel less stressed because I could organize my tasks before the weekend.",

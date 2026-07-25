@@ -107,7 +107,7 @@ const explanation = read(path.join(root, "ingles", "intermediate", "unit-6-futur
 for (const source of [practiceLab, overview, explanation]) {
   assert(source.includes("unit-conversation-coach-unit-6-schedule.html"), "Missing schedule coach navigation link.");
 }
-assert(practiceLab.includes("44 activities"), "Practice Lab total count was not updated.");
-assert(practiceLab.includes("Unit 6 - 6 activities"), "Practice Lab Unit 6 count was not updated.");
+assert(practiceLab.includes("47 activities"), "Practice Lab total count was not updated.");
+assert(practiceLab.includes("Unit 6 - 9 activities"), "Practice Lab Unit 6 count was not updated.");
 
 console.log("PASS Unit 6 schedule coach static coverage: page, data, professional assets, no speech synthesis, backend markers, and navigation.");
