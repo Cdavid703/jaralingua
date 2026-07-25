@@ -857,7 +857,8 @@ body.unit6-grammar-page {
   }
 
   .unit6-grammar-page .jaralingua-auth {
-    display: none !important;
+    z-index: 1300;
+    pointer-events: auto;
   }
 
   .u6g-hero {
