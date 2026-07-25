@@ -1,6 +1,8 @@
 :root{--fw-navy:#061d37;--fw-blue:#0b4f86;--fw-teal:#0f7f83;--fw-muted:#64748b;--fw-line:#dbe5ef;--fw-soft:#f4f8fb;--fw-danger:#a7342b;--fw-success:#147a50;--fw-shadow:0 20px 50px rgba(7,29,55,.14)}
 *{box-sizing:border-box}
 .final-writing-page{background:linear-gradient(180deg,#f6f9fc 0,#eef5f9 44%,#fff 100%);color:var(--fw-navy);font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.final-writing-page .site-header .logo{display:inline-flex;align-items:center;flex:0 0 auto}
+.final-writing-page .site-header .logo img{display:block;width:46px;height:46px;max-width:46px;object-fit:contain}
 .writing-institutional-band,.writing-institutional-footer{background:#fff;text-align:center}
 .writing-institutional-band img,.writing-institutional-footer img{display:block;width:min(1123px,100%);height:auto;margin:0 auto}
 .writing-hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(360px,48%);gap:2rem;align-items:center;width:min(1180px,calc(100% - 2rem));margin:1.5rem auto;padding:1.25rem;border-radius:30px;background:#fff;box-shadow:var(--fw-shadow);overflow:hidden}
