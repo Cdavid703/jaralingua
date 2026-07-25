@@ -117,10 +117,12 @@ assert(server.includes('student.setdefault("grades", {})[INTERMEDIATE_FINAL_ORAL
 const practiceLab = read(path.join(root, "ingles", "intermediate", "practice-lab.html"));
 const overview = read(path.join(root, "ingles", "intermediate", "course-overview.html"));
 const explanation = read(path.join(root, "ingles", "intermediate", "unit-6-future-plans-advice.html"));
-for (const source of [practiceLab, overview, explanation]) {
-  assert(source.includes("final-oral-partner-coach.html"), "Missing final oral partner coach navigation link.");
-}
-assert(practiceLab.includes("48 activities"), "Practice Lab total count was not updated.");
-assert(practiceLab.includes("Unit 6 - 10 activities"), "Practice Lab Unit 6 count was not updated.");
+assert(!practiceLab.includes("final-oral-partner-coach.html"), "Final oral evaluation must not appear inside Practice Lab activities.");
+assert(!explanation.includes("final-oral-partner-coach.html"), "Final oral evaluation must not appear inside Unit 6 practice bridges.");
+assert(overview.includes('id="final-assessments"'), "Missing final assessment section in Course Overview.");
+assert(overview.includes("final-oral-partner-coach.html"), "Missing final oral partner coach link in Course Overview final assessment section.");
+assert(practiceLab.includes("47 activities"), "Practice Lab total count was not updated.");
+assert(practiceLab.includes("Unit 6 - 9 activities"), "Practice Lab Unit 6 count was not updated.");
+assert(server.includes('"type": "Final oral evaluation"'), "Backend evaluation type must identify this as a final oral evaluation.");
 
-console.log("PASS final oral partner coach: page, config, responsive assets, professional audio, backend 20% official endpoint, and navigation.");
+console.log("PASS final oral partner coach: page, config, responsive assets, professional audio, backend 20% official endpoint, and final assessment navigation.");

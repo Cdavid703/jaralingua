@@ -462,10 +462,10 @@ INTERMEDIATE_UNIT6_SCHEDULE_COACH_EVALUATION = {
 
 INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_EVALUATION = {
     "id": INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID,
-    "title": "Final Oral Practice - Advice Exchange Partner Coach (20%)",
+    "title": "Final Oral Evaluation - Advice Exchange Partner Coach (20%)",
     "weight": 20,
-    "type": "Final oral practice",
-    "description": "Actividad oral oficial enviable al profesor. La nota aparece en la grilla con peso 20% y afecta el promedio acumulado."
+    "type": "Final oral evaluation",
+    "description": "Evaluacion oral final enviable al profesor. La nota aparece en la grilla con peso 20% y afecta el promedio acumulado."
 }
 
 INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION = {

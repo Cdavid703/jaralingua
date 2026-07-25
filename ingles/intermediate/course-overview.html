@@ -225,6 +225,89 @@
       font-weight: 900;
     }
 
+    .final-assessment-panel {
+      display: grid;
+      grid-template-columns: minmax(260px, 0.42fr) minmax(0, 1fr);
+      gap: 1.4rem;
+      padding: 1.25rem;
+      border: 1px solid rgba(18, 59, 143, 0.16);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #f7fbff 0%, #ffffff 100%);
+      box-shadow: 0 16px 34px rgba(20, 64, 130, 0.1);
+    }
+
+    .final-assessment-panel figure {
+      margin: 0;
+      min-height: 240px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #eaf2ff;
+    }
+
+    .final-assessment-panel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .final-assessment-content {
+      align-self: center;
+      display: grid;
+      gap: 0.85rem;
+      padding: 0.35rem;
+    }
+
+    .final-assessment-kicker {
+      display: inline-flex;
+      width: fit-content;
+      padding: 0.42rem 0.8rem;
+      border-radius: 999px;
+      background: #dc2626;
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .final-assessment-content h2 {
+      color: #102033;
+      font-size: clamp(1.7rem, 3vw, 2.45rem);
+      line-height: 1.08;
+      margin: 0;
+    }
+
+    .final-assessment-content p {
+      color: #52657d;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .final-assessment-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+    }
+
+    .final-assessment-meta span {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0 0.75rem;
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #123b8f;
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .final-assessment-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
     @media (max-width: 900px) {
       .intermediate-overview-hero {
         grid-template-columns: 1fr;
@@ -275,6 +358,14 @@
 
       .overview-unit-details {
         padding: 1.3rem 1.25rem 1.5rem;
+      }
+
+      .final-assessment-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .final-assessment-panel figure {
+        min-height: 190px;
       }
     }
   </style>
@@ -609,12 +700,36 @@
             <a href="pronunciation-unit-6-future-plans-advice.html">Pronunciation: Future Plans and Advice</a>
             <a href="unit-conversation-coach-unit-6-schedule.html">Conversation Coach: Schedule Rescue</a>
             <a href="video-listening-unit-6-olivias-week.html">Video Listening: Olivia's Week in 90 Seconds</a>
-            <a href="final-oral-partner-coach.html">Final Oral Partner Coach</a>
             <a href="audiobook-unit-6-little-red-riding-hood.html">Read-along Audiobook</a>
             <a href="game-decision-room.html">Game: The Decision Room</a>
           </div>
         </div>
       </details>
+
+      <article class="final-assessment-panel" id="final-assessments" aria-labelledby="finalAssessmentTitle">
+        <figure>
+          <img src="../../assets/img/english-intermediate/unit-6/final-oral-partner-coach/final-oral-partner-hero-v1.webp" alt="Two adult English learners completing a final oral partner assessment in a campus lounge" />
+        </figure>
+        <div class="final-assessment-content" id="final-oral-evaluation">
+          <span class="final-assessment-kicker">Final evaluation</span>
+          <h2 id="finalAssessmentTitle">Final Oral Partner Coach (20%)</h2>
+          <p>
+            This is not a regular unit activity. It is the final oral assessment for
+            Intermediate English Course 1: a partner-style advice exchange with Sophie
+            Bennett, teacher delivery, an official /50 rubric, and a 20% gradebook weight.
+          </p>
+          <div class="final-assessment-meta" aria-label="Final oral assessment details">
+            <span>Official assessment</span>
+            <span>20% gradebook weight</span>
+            <span>Teacher reviewed</span>
+            <span>Pair problem-solving format</span>
+          </div>
+          <div class="final-assessment-actions">
+            <a class="btn btn-primary" href="final-oral-partner-coach.html">Open final oral evaluation</a>
+            <a class="btn btn-secondary" href="notas.html">Open Grades</a>
+          </div>
+        </div>
+      </article>
 
     </section>
 
