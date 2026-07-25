@@ -75,7 +75,8 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     page: -1,
     answers: Array(data.blanks.length).fill(null),
     checked: false,
-    submitted: false
+    submitted: false,
+    sending: false
   };
 
   const elements = {
@@ -233,9 +234,9 @@ window.JaraLinguaUnit6GrammarStorybookData = {
   }
 
   function updateSendState() {
-    const words = wordCount(elements.reflection.value);
-    const ready = state.checked && completionCount() === data.blanks.length && words >= 30 && words <= 120 && !state.submitted;
-    elements.sendButton.disabled = !ready;
+    elements.sendButton.disabled = false;
+    elements.sendButton.setAttribute("aria-disabled", "false");
+    elements.sendButton.setAttribute("aria-busy", state.sending ? "true" : "false");
   }
 
   function update() {
@@ -324,6 +325,7 @@ window.JaraLinguaUnit6GrammarStorybookData = {
       setFeedback("Decision updated. Check the story again before sending it to the teacher.", "");
     }
     state.submitted = false;
+    state.sending = false;
     elements.sendButton.textContent = "Send to teacher";
     renderPage();
   });
@@ -372,6 +374,7 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     state.answers = Array(data.blanks.length).fill(null);
     state.checked = false;
     state.submitted = false;
+    state.sending = false;
     state.page = -1;
     elements.reflection.value = "";
     elements.wordCount.textContent = "0 words - write 30 to 120 words";
@@ -386,6 +389,7 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     elements.wordCount.textContent = `${words} words - write 30 to 120 words`;
     if (state.submitted) {
       state.submitted = false;
+      state.sending = false;
       elements.sendButton.textContent = "Send to teacher";
       setDelivery("Your note changed. Send the updated version when you are ready.", "");
     }
@@ -394,6 +398,15 @@ window.JaraLinguaUnit6GrammarStorybookData = {
 
   elements.deliveryForm.addEventListener("submit", event => {
     event.preventDefault();
+    if (state.sending) {
+      setDelivery("Your grammar storybook is already being sent. Please wait for the confirmation message.", "");
+      return;
+    }
+    if (state.submitted) {
+      setDelivery("This version was already submitted to the teacher. Edit your final note if you need to send an updated version.", "success");
+      updateSendState();
+      return;
+    }
     const words = wordCount(elements.reflection.value);
     if (!state.checked || completionCount() !== data.blanks.length) {
       setDelivery("Check the complete story before sending it to the teacher.", "error");
@@ -409,7 +422,8 @@ window.JaraLinguaUnit6GrammarStorybookData = {
       requestSignIn();
       return;
     }
-    elements.sendButton.disabled = true;
+    state.sending = true;
+    updateSendState();
     setDelivery("Sending your grammar storybook to the teacher...", "");
     fetch(data.endpoint, {
       method: "POST",
@@ -422,7 +436,8 @@ window.JaraLinguaUnit6GrammarStorybookData = {
     }).then(response => response.json().then(body => ({ ok: response.ok, status: response.status, body })))
       .then(result => {
         if (!result.ok) {
-          elements.sendButton.disabled = false;
+          state.sending = false;
+          updateSendState();
           if (result.status === 403) {
             setDelivery("Your account is signed in, but it is not linked to an Intermediate English student record. Ask the teacher to check your email in the gradebook.", "error");
           } else if (result.body && result.body.error === "text_too_short") {
@@ -435,13 +450,15 @@ window.JaraLinguaUnit6GrammarStorybookData = {
           return;
         }
         state.submitted = true;
+        state.sending = false;
         const incorrect = Array.isArray(result.body.incorrectQuestions) ? result.body.incorrectQuestions : [];
         setDelivery(`Submitted to teacher. Reference grade: ${Number(result.body.grade).toFixed(2)} / 5.0. ${incorrect.length ? "Decisions marked for review: " + incorrect.join(", ") + "." : "All decisions were accurate."} Gradebook weight: 0%.`, "success");
         elements.sendButton.textContent = "Submitted to teacher";
         updateSendState();
       })
       .catch(() => {
-        elements.sendButton.disabled = false;
+        state.sending = false;
+        updateSendState();
         setDelivery("Network error. The activity was not submitted.", "error");
       });
   });
