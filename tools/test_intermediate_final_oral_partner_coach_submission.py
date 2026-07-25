@@ -146,9 +146,9 @@ def main():
             assert first["total"] == 50
             assert first["grade"] == 4.2
             assert first["attemptCount"] == 1
-            assert first["weight"] == 0
-            assert first["followUpOnly"] is True
-            assert first["gradebookExcluded"] is True
+            assert first["weight"] == 20
+            assert first["teacherSubmission"] is True
+            assert first["officialAssessment"] is True
 
             status, retry = request_json(base_url, endpoint, "POST", first_payload, token)
             assert status == 200, retry
@@ -179,14 +179,16 @@ def main():
 
             saved = json.loads(grades_path.read_text(encoding="utf-8"))
             student = saved["students"][0]
-            assert api.INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID not in student.get("grades", {})
-            assert api.INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID not in student.get("gradeDetails", {})
-            detail = student["teacherFollowUps"][api.INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID]
+            assert student["grades"][api.INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] == 4.5
+            assert api.INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID not in student.get("teacherFollowUps", {})
+            detail = student["gradeDetails"][api.INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID]
             assert detail["status"] == "submitted"
-            assert detail["followUpOnly"] is True
-            assert detail["gradebookExcluded"] is True
-            assert detail["doesNotAffectAverage"] is True
-            assert detail["weight"] == 0
+            assert detail["teacherSubmission"] is True
+            assert detail["officialAssessment"] is True
+            assert "followUpOnly" not in detail
+            assert "gradebookExcluded" not in detail
+            assert "doesNotAffectAverage" not in detail
+            assert detail["weight"] == 20
             assert detail["attemptCount"] == 2
             assert detail["clientSubmissionId"] == "oral-submit-002"
             assert len(detail["submissionHistory"]) == 1
@@ -195,7 +197,7 @@ def main():
             assert "Sophie:" in detail["transcript"]
             assert "Student:" in detail["transcript"]
             assert "audio" not in json.dumps(detail).lower()
-            print("PASS Final Oral Partner Coach delivery: auth, idempotency, resubmit, teacherFollowUps storage, no gradebook column, and no audio storage")
+            print("PASS Final Oral Partner Coach delivery: auth, idempotency, resubmit, official 20% gradebook storage, teacher-readable transcript, and no audio storage")
         finally:
             server.shutdown()
             server.server_close()

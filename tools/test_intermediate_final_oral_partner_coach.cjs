@@ -78,7 +78,7 @@ assert(html.includes("final-oral-partner-coach.css"), "Missing final oral visual
 assert(html.includes("english-intermediate-1-final-oral-partner-coach.js"), "Missing final oral data script.");
 assert(html.includes("schedule-conversation-coach.js"), "Missing reusable conversation coach engine.");
 assert(html.includes("Send to teacher"), "Missing English teacher delivery button.");
-assert(html.includes("outside the official gradebook"), "Missing visible non-gradebook delivery note.");
+assert(html.includes("Gradebook weight 20%"), "Missing visible 20% gradebook delivery note.");
 assert((html.match(/data-coach-speed="0\.75"/g) || []).length >= 2, "Missing 0.75x speed buttons.");
 assert((html.match(/data-coach-speed="1"/g) || []).length >= 2, "Missing 1x speed buttons.");
 assert((html.match(/data-coach-speed="1\.25"/g) || []).length >= 2, "Missing 1.25x speed buttons.");
@@ -111,8 +111,8 @@ for (const file of audioHeadings) {
 assert(server.includes('INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID = "finalOralPartnerCoachFollowUp"'), "Missing final oral partner coach id.");
 assert(server.includes('"/api/intermediate/final-oral-partner-coach/submit"'), "Missing final oral partner coach submit endpoint.");
 assert(server.includes("clean_intermediate_final_oral_partner_coach"), "Missing final oral partner coach payload cleaner.");
-assert(server.includes('"gradebookExcluded": True'), "Backend must save coach outside percentage gradebook.");
-assert(!server.includes('student["grades"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID]'), "Final oral partner coach must not create a gradebook grade column.");
+assert(server.includes('"weight": 20'), "Backend must save coach as a 20% gradebook assessment.");
+assert(server.includes('student.setdefault("grades", {})[INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = result["grade"]'), "Final oral partner coach must create a gradebook grade column.");
 
 const practiceLab = read(path.join(root, "ingles", "intermediate", "practice-lab.html"));
 const overview = read(path.join(root, "ingles", "intermediate", "course-overview.html"));
@@ -120,7 +120,7 @@ const explanation = read(path.join(root, "ingles", "intermediate", "unit-6-futur
 for (const source of [practiceLab, overview, explanation]) {
   assert(source.includes("final-oral-partner-coach.html"), "Missing final oral partner coach navigation link.");
 }
-assert(practiceLab.includes("46 activities"), "Practice Lab total count was not updated.");
-assert(practiceLab.includes("Unit 6 - 8 activities"), "Practice Lab Unit 6 count was not updated.");
+assert(practiceLab.includes("48 activities"), "Practice Lab total count was not updated.");
+assert(practiceLab.includes("Unit 6 - 10 activities"), "Practice Lab Unit 6 count was not updated.");
 
-console.log("PASS final oral partner coach: page, config, responsive assets, professional audio, backend follow-up endpoint, and navigation.");
+console.log("PASS final oral partner coach: page, config, responsive assets, professional audio, backend 20% official endpoint, and navigation.");

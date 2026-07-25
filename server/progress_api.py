@@ -462,10 +462,10 @@ INTERMEDIATE_UNIT6_SCHEDULE_COACH_EVALUATION = {
 
 INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_EVALUATION = {
     "id": INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID,
-    "title": "Final Oral Practice - Advice Exchange Partner Coach",
-    "weight": 0,
-    "type": "Conversation follow-up",
-    "description": "Seguimiento oral enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
+    "title": "Final Oral Practice - Advice Exchange Partner Coach (20%)",
+    "weight": 20,
+    "type": "Final oral practice",
+    "description": "Actividad oral oficial enviable al profesor. La nota aparece en la grilla con peso 20% y afecta el promedio acumulado."
 }
 
 INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION = {
@@ -2623,28 +2623,38 @@ def migrate_intermediate_final_oral_partner_followups(grades_data):
     for student in grades_data.get("students", []):
         if not isinstance(student, dict):
             continue
-        teacher_follow_ups = student.get("teacherFollowUps")
-        if not isinstance(teacher_follow_ups, dict):
-            continue
-        legacy_detail = teacher_follow_ups.get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
-        if not isinstance(legacy_detail, dict):
-            continue
         if not isinstance(student.get("gradeDetails"), dict):
             student["gradeDetails"] = {}
+        teacher_follow_ups = student.get("teacherFollowUps") if isinstance(student.get("teacherFollowUps"), dict) else {}
+        legacy_detail = teacher_follow_ups.get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
         current_detail = student["gradeDetails"].get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
-        use_legacy = not isinstance(current_detail, dict) or str(legacy_detail.get("submittedAt", "")) >= str(current_detail.get("submittedAt", ""))
-        if use_legacy:
-            next_detail = dict(legacy_detail)
-            next_detail.pop("gradebookExcluded", None)
-            next_detail["doesNotAffectAverage"] = True
-            next_detail["followUpOnly"] = True
-            next_detail["weight"] = 0
+        source_detail = current_detail if isinstance(current_detail, dict) else None
+        if isinstance(legacy_detail, dict) and (
+            source_detail is None or str(legacy_detail.get("submittedAt", "")) >= str(source_detail.get("submittedAt", ""))
+        ):
+            source_detail = legacy_detail
+        if not isinstance(source_detail, dict):
+            continue
+        next_detail = dict(source_detail)
+        before_detail = dict(next_detail)
+        next_detail.pop("gradebookExcluded", None)
+        next_detail.pop("doesNotAffectAverage", None)
+        next_detail.pop("followUpOnly", None)
+        next_detail["teacherSubmission"] = True
+        next_detail["officialAssessment"] = True
+        next_detail["weight"] = 20
+        if student["gradeDetails"].get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID) != next_detail:
             student["gradeDetails"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = next_detail
-            grade = clean_grade(next_detail.get("grade"))
-            if grade is not None:
-                student.setdefault("grades", {})[INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = grade
-        teacher_follow_ups.pop(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID, None)
-        changed = True
+            changed = True
+        grade = clean_grade(next_detail.get("grade"))
+        if grade is not None and student.setdefault("grades", {}).get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID) != grade:
+            student["grades"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = grade
+            changed = True
+        if isinstance(teacher_follow_ups, dict) and INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID in teacher_follow_ups:
+            teacher_follow_ups.pop(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID, None)
+            changed = True
+        if before_detail != next_detail:
+            changed = True
     return changed
 
 
@@ -16308,16 +16318,20 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     previous = teacher_follow_ups.get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
                     previous_source = "teacherFollowUps"
                 if isinstance(previous, dict) and clean_text(previous.get("clientSubmissionId"), 120) == client_submission_id:
-                    if previous_source == "teacherFollowUps":
-                        migrated_previous = dict(previous)
-                        migrated_previous.pop("gradebookExcluded", None)
-                        migrated_previous["doesNotAffectAverage"] = True
-                        migrated_previous["followUpOnly"] = True
-                        migrated_previous["weight"] = 0
+                    migrated_previous = dict(previous)
+                    migrated_previous.pop("gradebookExcluded", None)
+                    migrated_previous.pop("doesNotAffectAverage", None)
+                    migrated_previous.pop("followUpOnly", None)
+                    migrated_previous["teacherSubmission"] = True
+                    migrated_previous["officialAssessment"] = True
+                    migrated_previous["weight"] = 20
+                    if previous_source == "teacherFollowUps" or student["gradeDetails"].get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID) != migrated_previous:
                         student["gradeDetails"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = migrated_previous
-                        if isinstance(previous.get("grade"), (int, float)):
-                            student.setdefault("grades", {})[INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = previous.get("grade")
                         teacher_follow_ups.pop(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID, None)
+                        changed = True
+                    grade = clean_grade(migrated_previous.get("grade"))
+                    if grade is not None and student.setdefault("grades", {}).get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID) != grade:
+                        student["grades"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = grade
                         changed = True
                     if changed:
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
@@ -16332,9 +16346,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         "submittedAt": previous.get("submittedAt"),
                         "attemptCount": previous.get("attemptCount", 1),
                         "clientSubmissionId": client_submission_id,
-                        "followUpOnly": True,
-                        "doesNotAffectAverage": True,
-                        "weight": 0,
+                        "teacherSubmission": True,
+                        "officialAssessment": True,
+                        "weight": 20,
                     })
                     return
                 try:
@@ -16384,11 +16398,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "clientDate": clean_text(payload.get("clientDate"), 40),
                     "attemptCount": attempt_count,
                     "status": "submitted",
-                    "weight": 0,
-                    "doesNotAffectAverage": True,
-                    "followUpOnly": True,
+                    "weight": 20,
+                    "teacherSubmission": True,
+                    "officialAssessment": True,
                     "activity": "Advice Exchange: Final Oral Partner Coach",
-                    "activityType": "Conversation follow-up",
+                    "activityType": "Final oral practice",
                     "submissionHistory": submission_history[-10:],
                 }
                 if isinstance(student.get("teacherFollowUps"), dict):
@@ -16404,9 +16418,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "clientSubmissionId": client_submission_id,
-                    "followUpOnly": True,
-                    "doesNotAffectAverage": True,
-                    "weight": 0,
+                    "teacherSubmission": True,
+                    "officialAssessment": True,
+                    "weight": 20,
                 })
             return
 

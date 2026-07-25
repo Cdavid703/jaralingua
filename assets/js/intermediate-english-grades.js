@@ -656,7 +656,7 @@
         const details = source.details || {};
         Object.keys(details).forEach(function (key) {
           const detail = details[key];
-          if (!detail || detail.followUpOnly !== true) return;
+          if (!detail || (detail.followUpOnly !== true && detail.teacherSubmission !== true)) return;
           rows.push({
             student: student,
             id: key,
@@ -678,6 +678,7 @@
       const scoreText = detail.score == null || detail.total == null ? (detail.score100 != null ? detail.score100 + " / 100" : (detail.wordCount ? detail.wordCount + " words" : "")) : detail.score + " / " + detail.total;
       const responseText = detail.blogText || detail.response || detail.transcript || "";
       const followupNotes = [
+        detail.officialAssessment ? "Gradebook: official assessment with weight " + (detail.weight || 0) + "%." : "",
         detail.gradebookExcluded ? "Gradebook: teacher follow-up only. It does not create a percentage column." : "",
         detail.team ? "Team: " + detail.team : "",
         detail.dishName ? "Dish: " + detail.dishName : "",
@@ -707,7 +708,7 @@
       const detailSources = [student.gradeDetails || {}, student.teacherFollowUps || {}];
       return total + detailSources.reduce(function (sourceTotal, details) {
         return sourceTotal + Object.keys(details).filter(function (key) {
-          return details[key] && details[key].followUpOnly === true;
+          return details[key] && (details[key].followUpOnly === true || details[key].teacherSubmission === true);
         }).length;
       }, 0);
     }, 0);
@@ -716,9 +717,9 @@
   function followUpSubmissionsMarkup(payload) {
     return `
       <div class="grades-panel" data-followup-disclosure>
-          <p class="section-kicker">Weight 0% · tracking only</p>
-          <h2 class="section-title">Follow-up submissions</h2>
-          <p class="section-text mb-3">Reference results are kept here for delivery tracking and do not affect the accumulated course grade.</p>
+          <p class="section-kicker">Teacher evidence</p>
+          <h2 class="section-title">Activity submissions</h2>
+          <p class="section-text mb-3">Follow-up activities with weight 0% do not affect the accumulated grade. Official submissions with positive weight are included in the course average.</p>
           <div class="table-wrap">
             <table class="grades-table">
               <thead><tr><th>Student</th><th>Email</th><th>Activity</th><th>Type</th><th>Reference grade</th><th>Score / words</th><th>Submitted</th><th>Response</th></tr></thead>
