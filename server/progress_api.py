@@ -460,6 +460,14 @@ INTERMEDIATE_UNIT6_SCHEDULE_COACH_EVALUATION = {
     "description": "Seguimiento oral enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
 }
 
+INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_EVALUATION = {
+    "id": INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID,
+    "title": "Final Oral Practice - Advice Exchange Partner Coach",
+    "weight": 0,
+    "type": "Conversation follow-up",
+    "description": "Seguimiento oral enviable al profesor. La nota de referencia aparece en la grilla con peso 0 y no afecta el promedio acumulado."
+}
+
 INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION = {
     "id": INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID,
     "title": "Unit 6 Video Listening - Olivia's Week in 90 Seconds",
@@ -2610,6 +2618,36 @@ def migrate_french2_final_exam_weights(grades_data):
     return True
 
 
+def migrate_intermediate_final_oral_partner_followups(grades_data):
+    changed = False
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        teacher_follow_ups = student.get("teacherFollowUps")
+        if not isinstance(teacher_follow_ups, dict):
+            continue
+        legacy_detail = teacher_follow_ups.get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
+        if not isinstance(legacy_detail, dict):
+            continue
+        if not isinstance(student.get("gradeDetails"), dict):
+            student["gradeDetails"] = {}
+        current_detail = student["gradeDetails"].get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
+        use_legacy = not isinstance(current_detail, dict) or str(legacy_detail.get("submittedAt", "")) >= str(current_detail.get("submittedAt", ""))
+        if use_legacy:
+            next_detail = dict(legacy_detail)
+            next_detail.pop("gradebookExcluded", None)
+            next_detail["doesNotAffectAverage"] = True
+            next_detail["followUpOnly"] = True
+            next_detail["weight"] = 0
+            student["gradeDetails"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = next_detail
+            grade = clean_grade(next_detail.get("grade"))
+            if grade is not None:
+                student.setdefault("grades", {})[INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = grade
+        teacher_follow_ups.pop(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID, None)
+        changed = True
+    return changed
+
+
 def ensure_intermediate_gradebook_structure(grades_data):
     changed = ensure_evaluation_template(grades_data, INTERMEDIATE_INTEGRATED_TASK_EVALUATION)
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT2_CATCHING_UP_EVALUATION):
@@ -2652,7 +2690,11 @@ def ensure_intermediate_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_SCHEDULE_COACH_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_EVALUATION):
+        changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION):
+        changed = True
+    if migrate_intermediate_final_oral_partner_followups(grades_data):
         changed = True
     return changed
 
@@ -16257,10 +16299,26 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                     json_response(self, 400, {"error": "missing_client_submission_id"})
                     return
-                if not isinstance(student.get("teacherFollowUps"), dict):
-                    student["teacherFollowUps"] = {}
-                previous = student["teacherFollowUps"].get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                teacher_follow_ups = student.get("teacherFollowUps") if isinstance(student.get("teacherFollowUps"), dict) else {}
+                previous = student["gradeDetails"].get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
+                previous_source = "gradeDetails"
+                if not isinstance(previous, dict):
+                    previous = teacher_follow_ups.get(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID)
+                    previous_source = "teacherFollowUps"
                 if isinstance(previous, dict) and clean_text(previous.get("clientSubmissionId"), 120) == client_submission_id:
+                    if previous_source == "teacherFollowUps":
+                        migrated_previous = dict(previous)
+                        migrated_previous.pop("gradebookExcluded", None)
+                        migrated_previous["doesNotAffectAverage"] = True
+                        migrated_previous["followUpOnly"] = True
+                        migrated_previous["weight"] = 0
+                        student["gradeDetails"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = migrated_previous
+                        if isinstance(previous.get("grade"), (int, float)):
+                            student.setdefault("grades", {})[INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = previous.get("grade")
+                        teacher_follow_ups.pop(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID, None)
+                        changed = True
                     if changed:
                         write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                     json_response(self, 200, {
@@ -16275,7 +16333,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         "attemptCount": previous.get("attemptCount", 1),
                         "clientSubmissionId": client_submission_id,
                         "followUpOnly": True,
-                        "gradebookExcluded": True,
+                        "doesNotAffectAverage": True,
                         "weight": 0,
                     })
                     return
@@ -16307,7 +16365,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 except (TypeError, ValueError):
                     attempt_count = 1
                 submitted_at = now_iso()
-                student["teacherFollowUps"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = {
+                student.setdefault("grades", {})[INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = result["grade"]
+                student["gradeDetails"][INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID] = {
                     "submittedAt": submitted_at,
                     "score": result["score"],
                     "total": result["total"],
@@ -16326,13 +16385,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "attemptCount": attempt_count,
                     "status": "submitted",
                     "weight": 0,
-                    "gradebookExcluded": True,
                     "doesNotAffectAverage": True,
                     "followUpOnly": True,
                     "activity": "Advice Exchange: Final Oral Partner Coach",
                     "activityType": "Conversation follow-up",
                     "submissionHistory": submission_history[-10:],
                 }
+                if isinstance(student.get("teacherFollowUps"), dict):
+                    student["teacherFollowUps"].pop(INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID, None)
                 write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, grades_data, ".intermediate-grades-")
                 json_response(self, 200, {
                     "ok": True,
@@ -16345,7 +16405,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "attemptCount": attempt_count,
                     "clientSubmissionId": client_submission_id,
                     "followUpOnly": True,
-                    "gradebookExcluded": True,
+                    "doesNotAffectAverage": True,
                     "weight": 0,
                 })
             return
