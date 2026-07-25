@@ -354,12 +354,6 @@
       setStatus("Answer all ten listening questions before submitting the exam.", "error");
       return null;
     }
-    var count = wordCount();
-    if (count < 100 || count > 140) {
-      setStatus("Your food review must contain 100 to 140 words. It currently has " + count + ".", "error");
-      els.writing.focus();
-      return null;
-    }
     return answers;
   }
 

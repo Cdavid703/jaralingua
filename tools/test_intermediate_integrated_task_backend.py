@@ -154,7 +154,7 @@ def main():
 
             questions = bundle["exam"]["questions"]
             complete_answers = {item["id"]: item["answer"] for item in questions}
-            writing = " ".join(["food"] * 100)
+            writing = "food"
             invalid_payload = {"answers": {questions[0]["id"]: questions[0]["answer"]}, "writing": writing, "audioPlays": 4, "clientSubmissionId": "client-attempt-1"}
             status, invalid = request(base_url, "/api/intermediate/integrated-task/submit", "POST", invalid_payload, student_token)
             assert status == 400 and invalid["error"] == "invalid_answers" and invalid["answered"] == 1
@@ -203,6 +203,7 @@ def main():
             second_payload = dict(valid_payload)
             second_payload["clientSubmissionId"] = "client-attempt-2"
             second_payload["audioPlays"] = 2
+            second_payload["writing"] = " ".join(["food"] * 180)
             status, second = request(base_url, "/api/intermediate/integrated-task/submit", "POST", second_payload, student_token)
             assert status == 200 and second["result"]["attemptNumber"] == 2
             assert second["result"]["receiptId"] != submitted["result"]["receiptId"]

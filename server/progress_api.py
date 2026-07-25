@@ -17621,13 +17621,6 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 400, {"error": "invalid_answers", **answer_status})
                     return
                 writing = clean_basic_writing(payload.get("writing"))
-                word_count = basic_word_count(writing)
-                if word_count < 100:
-                    json_response(self, 400, {"error": "writing_too_short", "wordCount": word_count})
-                    return
-                if word_count > 140:
-                    json_response(self, 400, {"error": "writing_too_long", "wordCount": word_count})
-                    return
                 result = basic_integrated_score(bundle.get("exam", {}), payload.get("answers"))
                 try:
                     audio_plays = max(0, int(payload.get("audioPlays", 0)))
