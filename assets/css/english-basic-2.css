@@ -1,0 +1,412 @@
+.basic2-page {
+  --basic2-blue: #123b8f;
+  --basic2-ink: #071f4f;
+  --basic2-red: #c1121f;
+  --basic2-green: #17623c;
+  --basic2-muted: #526173;
+  --basic2-soft: #f6f9ff;
+  --basic2-warm: #fff7e8;
+}
+
+.basic2-page .lesson-hero,
+.basic2-page .overview-hero {
+  background-attachment: scroll;
+}
+
+.basic2-route-grid,
+.basic2-unit-list,
+.basic2-topic-grid,
+.weather-card-grid,
+.expression-grid,
+.comparison-grid,
+.mistake-grid,
+.pattern-grid,
+.summary-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.basic2-route-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 22px;
+}
+
+.basic2-route-item,
+.basic2-unit-card,
+.basic2-topic-card,
+.weather-card,
+.expression-card,
+.basic2-info-card,
+.mistake-card,
+.pattern-card,
+.summary-card {
+  border-radius: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.07);
+  color: var(--basic2-muted);
+}
+
+.basic2-route-item {
+  min-height: 132px;
+  padding: 18px;
+  text-decoration: none;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+
+.basic2-route-item span,
+.basic2-mini-label {
+  color: var(--basic2-red);
+  font-weight: 900;
+  font-size: 0.77rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.basic2-route-item strong,
+.basic2-topic-card h3,
+.weather-card h3,
+.expression-card h3,
+.basic2-info-card h3,
+.mistake-card h3,
+.pattern-card h3,
+.summary-card h3 {
+  color: var(--basic2-ink);
+}
+
+.basic2-unit-list {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 20px 70px;
+}
+
+.basic2-unit-card {
+  overflow: hidden;
+}
+
+.basic2-unit-card summary {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  padding: clamp(1rem, 2.5vw, 1.6rem);
+  list-style: none;
+}
+
+.basic2-unit-card summary::-webkit-details-marker {
+  display: none;
+}
+
+.basic2-unit-thumb {
+  aspect-ratio: 16 / 10;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #e7edf8;
+}
+
+.basic2-unit-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.basic2-unit-title {
+  min-width: 0;
+}
+
+.basic2-unit-title h3 {
+  color: var(--basic2-ink);
+  font-size: clamp(1.35rem, 2.5vw, 2.1rem);
+  line-height: 1.12;
+  margin: 6px 0 8px;
+}
+
+.basic2-unit-title p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.basic2-unit-toggle {
+  border-radius: 999px;
+  padding: 9px 13px;
+  background: #eef4ff;
+  color: var(--basic2-blue);
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.basic2-unit-body {
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+  padding: clamp(1.1rem, 3vw, 2rem);
+  display: grid;
+  gap: 20px;
+  background: linear-gradient(180deg, #ffffff, var(--basic2-soft));
+}
+
+.basic2-objective {
+  border-left: 7px solid var(--basic2-blue);
+  border-radius: 20px;
+  padding: 18px;
+  background: #eef4ff;
+  color: #26354a;
+  line-height: 1.7;
+}
+
+.basic2-topic {
+  border-radius: 20px;
+  border: 1px solid rgba(18, 59, 143, 0.12);
+  background: #ffffff;
+  padding: 0;
+  overflow: hidden;
+}
+
+.basic2-topic summary {
+  cursor: pointer;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 18px 20px;
+  color: var(--basic2-ink);
+  font-weight: 900;
+  line-height: 1.35;
+  list-style: none;
+}
+
+.basic2-topic summary::-webkit-details-marker {
+  display: none;
+}
+
+.basic2-topic summary b {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(18, 59, 143, 0.09);
+  color: var(--basic2-blue);
+  flex: 0 0 auto;
+}
+
+.basic2-topic-body {
+  padding: 0 20px 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.basic2-topic-task {
+  border-radius: 18px;
+  padding: 15px 16px;
+  background: var(--basic2-warm);
+  color: #744705;
+  line-height: 1.65;
+}
+
+.basic2-topic-grid,
+.comparison-grid,
+.pattern-grid,
+.summary-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.weather-card-grid,
+.expression-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.weather-card {
+  overflow: hidden;
+}
+
+.weather-card img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.weather-card-content,
+.expression-card,
+.basic2-info-card,
+.mistake-card,
+.pattern-card,
+.summary-card {
+  padding: 18px;
+}
+
+.weather-card h3,
+.expression-card h3 {
+  margin-bottom: 8px;
+  font-size: 1.16rem;
+}
+
+.weather-card p,
+.expression-card p,
+.basic2-info-card p,
+.mistake-card p,
+.pattern-card p,
+.summary-card p {
+  margin: 0;
+  line-height: 1.65;
+}
+
+.basic2-example-list {
+  display: grid;
+  gap: 10px;
+}
+
+.basic2-example-list p {
+  margin: 0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #f8fbff;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.basic2-formula {
+  display: block;
+  margin-top: 10px;
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: #eef4ff;
+  color: var(--basic2-ink);
+  font-weight: 900;
+}
+
+.expression-card {
+  display: grid;
+  gap: 10px;
+}
+
+.expression-card .spanish-meaning {
+  border-radius: 999px;
+  padding: 8px 12px;
+  background: #eef4ff;
+  color: var(--basic2-blue);
+  font-weight: 850;
+  width: fit-content;
+}
+
+.expression-card .expression-type {
+  color: var(--basic2-red);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mistake-card {
+  border-left: 6px solid var(--basic2-red);
+}
+
+.mistake-card strong {
+  color: var(--basic2-red);
+}
+
+.conversation-model {
+  border-radius: 24px;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  background: var(--basic2-ink);
+  color: #ffffff;
+  display: grid;
+  gap: 10px;
+}
+
+.conversation-model p {
+  margin: 0;
+  border-radius: 16px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.1);
+  line-height: 1.55;
+}
+
+.conversation-model strong {
+  color: #ffd166;
+}
+
+.basic2-resource-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.basic2-resource-links a,
+.basic2-resource-links span {
+  border-radius: 999px;
+  padding: 10px 14px;
+  text-decoration: none;
+  background: #eef4ff;
+  color: var(--basic2-blue);
+  font-weight: 850;
+}
+
+.basic2-resource-links span {
+  background: #e9edf3;
+  color: #5d6674;
+}
+
+@media (max-width: 1020px) {
+  .basic2-route-grid,
+  .weather-card-grid,
+  .expression-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .basic2-unit-card summary {
+    grid-template-columns: 132px minmax(0, 1fr);
+  }
+
+  .basic2-unit-toggle {
+    grid-column: 1 / -1;
+    width: fit-content;
+  }
+}
+
+@media (max-width: 720px) {
+  .basic2-route-grid,
+  .basic2-topic-grid,
+  .comparison-grid,
+  .pattern-grid,
+  .summary-grid,
+  .weather-card-grid,
+  .expression-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .basic2-unit-list {
+    padding-inline: 14px;
+  }
+
+  .basic2-unit-card summary {
+    grid-template-columns: 1fr;
+  }
+
+  .basic2-unit-thumb {
+    max-height: 220px;
+  }
+
+  .basic2-page .lesson-hero,
+  .basic2-page .overview-hero {
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    background-attachment: scroll;
+  }
+
+  .basic2-page .lesson-hero-content,
+  .basic2-page .overview-hero-content,
+  .basic2-page .lesson-hero-image,
+  .basic2-page .overview-hero-image {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .basic2-page .hero-actions .btn {
+    width: 100%;
+  }
+}
