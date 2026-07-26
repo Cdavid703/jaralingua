@@ -273,6 +273,21 @@
   line-height: 1.65;
 }
 
+.weather-card .weather-usage-note {
+  margin-top: 12px;
+  border-left: 3px solid rgba(37, 99, 235, 0.26);
+  padding: 10px 11px;
+  border-radius: 0 12px 12px 0;
+  background: #f8fbff;
+  color: #475569;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.weather-card .weather-usage-note strong {
+  color: var(--basic2-blue);
+}
+
 .weather-audio-hint {
   display: inline-flex;
   width: fit-content;
