@@ -470,6 +470,18 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.weather-round-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.weather-decision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
 .weather-callout-card {
   overflow: hidden;
   border-radius: 24px;
@@ -477,6 +489,47 @@
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 14px 30px rgba(15, 23, 42, 0.07);
   display: grid;
+}
+
+.weather-round-card,
+.weather-decision-card {
+  border-radius: 22px;
+  padding: 17px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.07);
+  display: grid;
+  gap: 10px;
+}
+
+.weather-round-card h3,
+.weather-decision-card h3 {
+  margin: 0;
+  color: var(--basic2-ink);
+}
+
+.weather-round-card p,
+.weather-decision-card p {
+  margin: 0;
+  color: var(--basic2-muted);
+  line-height: 1.55;
+}
+
+.weather-round-card strong,
+.weather-decision-card strong {
+  color: var(--basic2-blue);
+}
+
+.weather-round-badge {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 7px 10px;
+  background: #fff0f0;
+  color: var(--basic2-red);
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .weather-callout-card img {
@@ -512,12 +565,30 @@
   border-left: 4px solid var(--basic2-green);
 }
 
+.weather-decision-answer {
+  display: none;
+  border-radius: 16px;
+  padding: 12px;
+  background: #f8fbff;
+  border-left: 4px solid var(--basic2-green);
+  color: var(--basic2-muted);
+  line-height: 1.55;
+}
+
 .weather-callout-card.is-revealed .weather-answer-panel {
   display: grid;
   gap: 6px;
 }
 
+.weather-decision-card.is-revealed .weather-decision-answer {
+  display: block;
+}
+
 .weather-answer-panel strong {
+  color: var(--basic2-green);
+}
+
+.weather-decision-answer strong {
   color: var(--basic2-green);
 }
 
@@ -552,6 +623,8 @@
   .basic2-route-grid,
   .weather-card-grid,
   .weather-callout-grid,
+  .weather-round-grid,
+  .weather-decision-grid,
   .expression-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -574,6 +647,8 @@
   .summary-grid,
   .weather-card-grid,
   .weather-callout-grid,
+  .weather-round-grid,
+  .weather-decision-grid,
   .expression-grid {
     grid-template-columns: 1fr;
   }
