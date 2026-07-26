@@ -40,7 +40,7 @@
   </header>
 
   <main>
-    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic-2/unit-1-going-out/weather-pouring.webp');">
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic-2/unit-1-going-out/video-listening-going-out-staying-in.webp');">
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab &middot; Unit 1 &middot; Activity 03</p>
         <h1>Video Listening: Going Out or Staying In?</h1>
@@ -52,7 +52,7 @@
           <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
         </div>
       </div>
-      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-1-going-out/weather-pouring.webp" alt="Heavy rain before a going-out plan" /></aside>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-1-going-out/video-listening-going-out-staying-in.webp" alt="Two friends in a cafe checking the weather before changing their plan" /></aside>
     </section>
 
     <section class="lesson-outcome">
@@ -66,19 +66,34 @@
       <article class="premium-topic-card">
         <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Before You Watch</p><h2>Language for the Video</h2></div></div>
         <p class="lesson-text">Review the key language before watching. Listen especially for weather words, actions happening now, and expressions for changing a plan.</p>
-        <div class="basic2-listening-chip-grid" aria-label="Video vocabulary">
-          <div class="basic2-listening-chip">cloudy<small>weather</small></div>
-          <div class="basic2-listening-chip">windy<small>weather</small></div>
-          <div class="basic2-listening-chip">raining<small>weather now</small></div>
-          <div class="basic2-listening-chip">pouring<small>heavy rain</small></div>
-          <div class="basic2-listening-chip">checking<small>action now</small></div>
-          <div class="basic2-listening-chip">looking outside<small>action now</small></div>
-          <div class="basic2-listening-chip">warming up<small>sports action</small></div>
-          <div class="basic2-listening-chip">going inside<small>action now</small></div>
-          <div class="basic2-listening-chip">calling off<small>canceling a plan</small></div>
-          <div class="basic2-listening-chip">meeting up<small>seeing someone</small></div>
-          <div class="basic2-listening-chip">changing the plan<small>new decision</small></div>
-          <div class="basic2-listening-chip">staying dry<small>weather decision</small></div>
+        <div class="basic2-listening-vocab-groups" aria-label="Video vocabulary">
+          <div class="basic2-listening-vocab-group">
+            <h3>Weather</h3>
+            <div class="basic2-listening-chip-grid">
+              <div class="basic2-listening-chip">cloudy<small>weather</small></div>
+              <div class="basic2-listening-chip">windy<small>weather</small></div>
+              <div class="basic2-listening-chip">raining<small>weather now</small></div>
+              <div class="basic2-listening-chip">pouring<small>heavy rain</small></div>
+            </div>
+          </div>
+          <div class="basic2-listening-vocab-group">
+            <h3>Actions now</h3>
+            <div class="basic2-listening-chip-grid">
+              <div class="basic2-listening-chip">checking<small>action now</small></div>
+              <div class="basic2-listening-chip">looking outside<small>action now</small></div>
+              <div class="basic2-listening-chip">warming up<small>sports action</small></div>
+              <div class="basic2-listening-chip">going inside<small>action now</small></div>
+            </div>
+          </div>
+          <div class="basic2-listening-vocab-group">
+            <h3>Phrasal verbs / plan changes</h3>
+            <div class="basic2-listening-chip-grid">
+              <div class="basic2-listening-chip">calling off<small>canceling a plan</small></div>
+              <div class="basic2-listening-chip">meeting up<small>seeing someone</small></div>
+              <div class="basic2-listening-chip">changing the plan<small>new decision</small></div>
+              <div class="basic2-listening-chip">staying dry<small>weather decision</small></div>
+            </div>
+          </div>
         </div>
         <div class="basic2-listening-focus">
           <h3>Listen for these present continuous forms</h3>
@@ -104,15 +119,15 @@
           </div>
           <div class="basic2-video-frame" id="videoFrame">
             <div class="basic2-video-pending" id="videoPending">
-              <img src="../../assets/img/english-basic-2/unit-1-going-out/weather-pouring.webp" alt="" />
+              <img src="../../assets/img/english-basic-2/unit-1-going-out/video-listening-going-out-staying-in.webp" alt="" />
               <div class="basic2-video-pending-content"><h3>Video link pending</h3><p>The listening activity, production script, and questions are ready. Add the YouTube video ID after the final video is uploaded.</p></div>
             </div>
           </div>
           <div class="youtube-speed-panel" id="youtubeSpeedPanel" role="group" aria-label="Video speed controls">
             <span>Video speed</span>
-            <button type="button" class="youtube-speed-btn" data-youtube-speed="0.75" aria-pressed="false">0.75x</button>
-            <button type="button" class="youtube-speed-btn is-active" data-youtube-speed="1" aria-pressed="true">1x</button>
-            <button type="button" class="youtube-speed-btn" data-youtube-speed="1.25" aria-pressed="false">1.25x</button>
+            <button type="button" class="youtube-speed-btn" data-youtube-speed="0.75" aria-pressed="false" disabled>0.75x</button>
+            <button type="button" class="youtube-speed-btn is-active" data-youtube-speed="1" aria-pressed="true" disabled>1x</button>
+            <button type="button" class="youtube-speed-btn" data-youtube-speed="1.25" aria-pressed="false" disabled>1.25x</button>
             <small class="youtube-speed-status" id="youtubeSpeedStatus">Video controls will activate when the YouTube player is ready.</small>
           </div>
         </div>
@@ -132,19 +147,19 @@
         <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Comprehension Check</p><h2>Answer the Questions</h2></div></div>
         <p class="lesson-text">Choose the best answer. These questions check weather, present continuous, and the speakers' plan.</p>
         <form id="quizForm" class="listening-quiz">
-          <div class="quiz-question-card"><h3>1. What is Daniel doing at the beginning?</h3><label><input type="radio" name="q1" value="A" /> He is checking the weather.</label><label><input type="radio" name="q1" value="B" /> He is playing soccer.</label><label><input type="radio" name="q1" value="C" /> He is waiting at the cafe.</label></div>
-          <div class="quiz-question-card"><h3>2. What is the weather like at first?</h3><label><input type="radio" name="q2" value="A" /> It is sunny and boiling.</label><label><input type="radio" name="q2" value="B" /> It is cloudy and getting windy.</label><label><input type="radio" name="q2" value="C" /> It is freezing and snowing.</label></div>
-          <div class="quiz-question-card"><h3>3. What does Emma see outside?</h3><label><input type="radio" name="q3" value="A" /> People are walking in the park.</label><label><input type="radio" name="q3" value="B" /> Players are swimming.</label><label><input type="radio" name="q3" value="C" /> Laura is running home.</label></div>
-          <div class="quiz-question-card"><h3>4. Where is it raining?</h3><label><input type="radio" name="q4" value="A" /> Near the sports center.</label><label><input type="radio" name="q4" value="B" /> Inside the cafe.</label><label><input type="radio" name="q4" value="C" /> At Daniel's house.</label></div>
-          <div class="quiz-question-card"><h3>5. Are they still playing soccer?</h3><label><input type="radio" name="q5" value="A" /> Yes, they are playing outside.</label><label><input type="radio" name="q5" value="B" /> No, they are not.</label><label><input type="radio" name="q5" value="C" /> No, they are watching a movie.</label></div>
-          <div class="quiz-question-card"><h3>6. What is the coach doing?</h3><label><input type="radio" name="q6" value="A" /> The coach is warming up.</label><label><input type="radio" name="q6" value="B" /> The coach is calling off the game.</label><label><input type="radio" name="q6" value="C" /> The coach is waiting at the cafe.</label></div>
-          <div class="quiz-question-card"><h3>7. What are some players doing before going inside?</h3><label><input type="radio" name="q7" value="A" /> They are warming up.</label><label><input type="radio" name="q7" value="B" /> They are cooking dinner.</label><label><input type="radio" name="q7" value="C" /> They are checking homework.</label></div>
-          <div class="quiz-question-card"><h3>8. What plan are Emma and Daniel changing?</h3><label><input type="radio" name="q8" value="A" /> They are not going to the park.</label><label><input type="radio" name="q8" value="B" /> They are not meeting Laura.</label><label><input type="radio" name="q8" value="C" /> They are not bringing jackets.</label></div>
-          <div class="quiz-question-card"><h3>9. Where are they going instead?</h3><label><input type="radio" name="q9" value="A" /> To a cafe near Daniel's house.</label><label><input type="radio" name="q9" value="B" /> To the sports center.</label><label><input type="radio" name="q9" value="C" /> To the park.</label></div>
-          <div class="quiz-question-card"><h3>10. Why does Daniel tell Emma to bring an umbrella?</h3><label><input type="radio" name="q10" value="A" /> It is starting to pour.</label><label><input type="radio" name="q10" value="B" /> It is boiling.</label><label><input type="radio" name="q10" value="C" /> It is sunny.</label></div>
+          <div class="quiz-question-card"><h3>1. What is Daniel doing at the beginning?</h3><label for="q1-a"><input id="q1-a" type="radio" name="q1" value="A" /> He is checking the weather.</label><label for="q1-b"><input id="q1-b" type="radio" name="q1" value="B" /> He is playing soccer.</label><label for="q1-c"><input id="q1-c" type="radio" name="q1" value="C" /> He is waiting at the cafe.</label></div>
+          <div class="quiz-question-card"><h3>2. What is the weather like at first?</h3><label for="q2-a"><input id="q2-a" type="radio" name="q2" value="A" /> It is sunny and boiling.</label><label for="q2-b"><input id="q2-b" type="radio" name="q2" value="B" /> It is cloudy and getting windy.</label><label for="q2-c"><input id="q2-c" type="radio" name="q2" value="C" /> It is freezing and snowing.</label></div>
+          <div class="quiz-question-card"><h3>3. What does Emma see outside?</h3><label for="q3-a"><input id="q3-a" type="radio" name="q3" value="A" /> People are walking in the park.</label><label for="q3-b"><input id="q3-b" type="radio" name="q3" value="B" /> Players are swimming.</label><label for="q3-c"><input id="q3-c" type="radio" name="q3" value="C" /> Laura is running home.</label></div>
+          <div class="quiz-question-card"><h3>4. Where is it raining?</h3><label for="q4-a"><input id="q4-a" type="radio" name="q4" value="A" /> Near the sports center.</label><label for="q4-b"><input id="q4-b" type="radio" name="q4" value="B" /> Inside the cafe.</label><label for="q4-c"><input id="q4-c" type="radio" name="q4" value="C" /> At Daniel's house.</label></div>
+          <div class="quiz-question-card"><h3>5. Are they still playing soccer?</h3><label for="q5-a"><input id="q5-a" type="radio" name="q5" value="A" /> Yes, they are playing outside.</label><label for="q5-b"><input id="q5-b" type="radio" name="q5" value="B" /> No, they are not.</label><label for="q5-c"><input id="q5-c" type="radio" name="q5" value="C" /> No, they are watching a movie.</label></div>
+          <div class="quiz-question-card"><h3>6. What is the coach doing?</h3><label for="q6-a"><input id="q6-a" type="radio" name="q6" value="A" /> The coach is warming up.</label><label for="q6-b"><input id="q6-b" type="radio" name="q6" value="B" /> The coach is calling off the game.</label><label for="q6-c"><input id="q6-c" type="radio" name="q6" value="C" /> The coach is waiting at the cafe.</label></div>
+          <div class="quiz-question-card"><h3>7. What are some players doing before going inside?</h3><label for="q7-a"><input id="q7-a" type="radio" name="q7" value="A" /> They are warming up.</label><label for="q7-b"><input id="q7-b" type="radio" name="q7" value="B" /> They are cooking dinner.</label><label for="q7-c"><input id="q7-c" type="radio" name="q7" value="C" /> They are checking homework.</label></div>
+          <div class="quiz-question-card"><h3>8. What plan are Emma and Daniel changing?</h3><label for="q8-a"><input id="q8-a" type="radio" name="q8" value="A" /> They are not going to the park.</label><label for="q8-b"><input id="q8-b" type="radio" name="q8" value="B" /> They are not meeting Laura.</label><label for="q8-c"><input id="q8-c" type="radio" name="q8" value="C" /> They are not bringing jackets.</label></div>
+          <div class="quiz-question-card"><h3>9. Where are they going instead?</h3><label for="q9-a"><input id="q9-a" type="radio" name="q9" value="A" /> To a cafe near Daniel's house.</label><label for="q9-b"><input id="q9-b" type="radio" name="q9" value="B" /> To the sports center.</label><label for="q9-c"><input id="q9-c" type="radio" name="q9" value="C" /> To the park.</label></div>
+          <div class="quiz-question-card"><h3>10. Why does Daniel tell Emma to bring an umbrella?</h3><label for="q10-a"><input id="q10-a" type="radio" name="q10" value="A" /> It is starting to pour.</label><label for="q10-b"><input id="q10-b" type="radio" name="q10" value="B" /> It is boiling.</label><label for="q10-c"><input id="q10-c" type="radio" name="q10" value="C" /> It is sunny.</label></div>
           <button type="button" class="practice-submit-btn" onclick="checkAnswers()">Check Answers</button>
         </form>
-        <div id="result-box" class="quiz-result-box" aria-live="polite"></div>
+        <div id="result-box" class="quiz-result-box" aria-live="polite" tabindex="-1"></div>
       </article>
     </section>
   </main>
@@ -154,6 +169,7 @@
     let youtubePlayer = null;
     let pendingYouTubeSpeed = 1;
     let youtubeApiRequested = false;
+    let quizCompleteAttempts = 0;
     const dialogueText = `Title: Going Out or Staying In?
 
 Characters:
@@ -221,6 +237,13 @@ Daniel: Let's go, but slowly. The street is wet.`;
       q9: ["A", "They are going to a cafe near Daniel's house."],
       q10: ["A", "Daniel tells Emma to bring an umbrella because it is starting to pour."]
     };
+    function showQuizResult() {
+      const box = document.getElementById("result-box");
+      if (!box) return;
+      box.style.display = "block";
+      box.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(function () { box.focus({ preventScroll: true }); }, 250);
+    }
     function checkAnswers() {
       let score = 0;
       let complete = true;
@@ -230,21 +253,29 @@ Daniel: Let's go, but slowly. The street is wet.`;
         if (selected === answerDetails[key][0]) score++;
       });
       const box = document.getElementById("result-box");
-      box.style.display = "block";
       if (!complete) {
         box.className = "quiz-result-box incorrect";
         box.textContent = "Please answer all 10 questions before checking.";
+        showQuizResult();
         return;
       }
+      quizCompleteAttempts += 1;
       if (score === 10) {
         box.className = "quiz-result-box correct";
         box.textContent = "Excellent. You got 10 out of 10 correct.";
+        showQuizResult();
         return;
       }
       box.className = "quiz-result-box incorrect";
+      if (quizCompleteAttempts < 2) {
+        box.textContent = "You got " + score + " out of 10 correct. Watch the video again and try one more time. Correct answers will appear after your second complete attempt.";
+        showQuizResult();
+        return;
+      }
       box.innerHTML = "You got " + score + " out of 10 correct.<br><br><strong>Correct Answers:</strong><br>" + Object.keys(answerDetails).map(function (key, index) {
         return (index + 1) + ": " + answerDetails[key][0] + " - " + answerDetails[key][1];
       }).join("<br>");
+      showQuizResult();
     }
     function updateYouTubeSpeedButtons(speed) {
       document.querySelectorAll("[data-youtube-speed]").forEach(function (button) {
@@ -253,7 +284,13 @@ Daniel: Let's go, but slowly. The street is wet.`;
         button.setAttribute("aria-pressed", active ? "true" : "false");
       });
     }
+    function setYouTubeSpeedControlsEnabled(enabled) {
+      document.querySelectorAll("[data-youtube-speed]").forEach(function (button) {
+        button.disabled = !enabled;
+      });
+    }
     function setYouTubeSpeed(speed) {
+      if (!youtubeVideoId) return;
       const next = Number(speed);
       if (![0.75, 1, 1.25].includes(next)) return;
       pendingYouTubeSpeed = next;
@@ -323,9 +360,11 @@ Daniel: Let's go, but slowly. The street is wet.`;
       bindYouTubeSpeedButtons();
       const status = document.getElementById("youtubeSpeedStatus");
       if (!youtubeVideoId) {
+        setYouTubeSpeedControlsEnabled(false);
         if (status) status.textContent = "Video link pending. The activity is ready for the final YouTube ID.";
         return;
       }
+      setYouTubeSpeedControlsEnabled(true);
       renderYouTubeIframe();
       if (window.YT && window.YT.Player) createYouTubePlayer();
       else loadYouTubeIframeApi();

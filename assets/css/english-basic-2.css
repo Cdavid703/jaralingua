@@ -681,10 +681,28 @@
   line-height: 1.6;
 }
 
+.basic2-listening-vocab-groups,
 .basic2-listening-chip-grid,
 .basic2-listening-focus-list {
   display: grid;
   gap: 12px;
+}
+
+.basic2-listening-vocab-groups {
+  gap: 16px;
+}
+
+.basic2-listening-vocab-group {
+  border-radius: 22px;
+  padding: 16px;
+  background: #f8fbff;
+  border: 1px solid rgba(18, 59, 143, 0.1);
+}
+
+.basic2-listening-vocab-group h3 {
+  margin: 0 0 12px;
+  color: var(--basic2-ink);
+  font-size: 1rem;
 }
 
 .basic2-listening-chip-grid {
@@ -763,6 +781,21 @@
 .basic2-video-page .quiz-question-card label:hover {
   background: #eef4ff;
   border-color: rgba(18, 59, 143, 0.22);
+}
+
+.basic2-video-page .quiz-question-card input {
+  accent-color: var(--basic2-blue);
+}
+
+.basic2-video-page .quiz-result-box:focus {
+  outline: 3px solid rgba(18, 59, 143, 0.32);
+  outline-offset: 4px;
+}
+
+.basic2-video-page .youtube-speed-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
 }
 
 .basic2-script-note {
