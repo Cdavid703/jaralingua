@@ -85,11 +85,14 @@ This situation reuses the Unit 1 topic but is not the same script as the video l
    - Clear statement of what the student is training.
 
 3. **Before You Listen**
-   - Vocabulary grouped into Weather, Actions now, and Phrasal verbs / plan changes.
+   - Vocabulary must be a compact list, not large cards or chips.
+   - Use three short lines only: Weather, Actions now, and Phrasal verbs / idioms.
+   - This section should support listening preparation without visually dominating the page.
 
 4. **Audio Practice**
    - HTML audio player.
    - Speed controls: `0.75x`, `1.0x`, `1.25x`.
+   - Speed buttons must be visually prominent inside the listening player area, not hidden as plain unstyled buttons.
    - Visible status feedback when speed changes.
 
 5. **Listening Focus**
@@ -119,6 +122,7 @@ This same standard applies to the Unit 1 video listening and audio listening pag
 - The old floating Sign in control must not cover activities; it is only a fallback for pages without a navigation bar.
 - Listening speed controls must visibly include `0.75x`, `1.0x`, and `1.25x`.
 - Speed status text must also use `1.0x` instead of `1x` for consistency.
+- The vocabulary preview in listening activities must stay compact and listed; avoid large vocabulary cards in this activity type.
 
 ## Questions
 
