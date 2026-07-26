@@ -10,7 +10,7 @@
 
 .basic2-page .lesson-hero,
 .basic2-page .overview-hero {
-  background-attachment: scroll;
+  background-attachment: scroll !important;
 }
 
 .basic2-route-grid,
@@ -534,9 +534,6 @@
 }
 
 .ing-quiz-toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 5;
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
@@ -548,7 +545,6 @@
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(15, 23, 42, 0.08);
   box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(10px);
 }
 
 .ing-score-pill {
