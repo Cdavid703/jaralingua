@@ -798,6 +798,40 @@
   box-shadow: none;
 }
 
+.basic2-audio-player-card {
+  overflow: hidden;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+}
+
+.basic2-audio-player-card > img {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  object-fit: cover;
+  display: block;
+}
+
+.basic2-audio-player-content {
+  display: grid;
+  gap: 16px;
+  padding: clamp(1rem, 2.5vw, 1.4rem);
+}
+
+.basic2-audio-player-content h3 {
+  margin: 0;
+  color: var(--basic2-ink);
+}
+
+.basic2-audio-player-content audio {
+  width: 100%;
+}
+
+.basic2-audio-speed-panel {
+  margin-top: 0;
+}
+
 .basic2-script-note {
   border-left: 6px solid var(--basic2-red);
   border-radius: 20px;
