@@ -871,6 +871,8 @@
       .jaralingua-auth-nav {
         display: inline-flex;
         align-items: center;
+        position: relative;
+        z-index: 1300;
         font-family: Arial, Helvetica, sans-serif;
       }
 
@@ -903,6 +905,12 @@
         box-shadow: none;
         border: 1px solid rgba(18, 59, 143, 0.14);
         background: #f8fbff;
+      }
+
+      .jaralingua-auth-nav .auth-panel {
+        left: auto;
+        right: 0;
+        top: calc(100% + 10px);
       }
 
       .auth-trigger:hover {
@@ -954,6 +962,21 @@
 
       .auth-panel[hidden] {
         display: none;
+      }
+
+      @media (max-width: 680px) {
+        .jaralingua-auth-nav .auth-trigger {
+          max-width: 168px;
+        }
+
+        .jaralingua-auth-nav .auth-panel {
+          position: fixed;
+          left: 12px;
+          right: 12px;
+          top: 74px;
+          width: auto;
+          max-height: calc(100vh - 94px);
+        }
       }
 
       .auth-panel h2 {
@@ -1448,6 +1471,13 @@
     let root = document.querySelector("[data-jaralingua-auth]");
     if (root) return root;
 
+    const navRoot = createNavAccess();
+    if (navRoot) {
+      navRoot.classList.add("jaralingua-auth-nav");
+      navRoot.setAttribute("data-jaralingua-auth", "");
+      return navRoot;
+    }
+
     root = document.createElement("div");
     root.className = "jaralingua-auth";
     root.setAttribute("data-jaralingua-auth", "");
@@ -1671,7 +1701,7 @@
       });
     });
 
-    renderNavAccess();
+    if (!root.matches("[data-jaralingua-auth-nav]")) renderNavAccess();
   }
 
   function renderNavAccess() {

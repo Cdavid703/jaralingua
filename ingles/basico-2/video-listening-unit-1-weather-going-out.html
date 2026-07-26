@@ -126,12 +126,12 @@
           <div class="youtube-speed-panel" id="youtubeSpeedPanel" role="group" aria-label="Video speed controls">
             <span>Video speed</span>
             <button type="button" class="youtube-speed-btn" data-youtube-speed="0.75" aria-pressed="false" disabled>0.75x</button>
-            <button type="button" class="youtube-speed-btn is-active" data-youtube-speed="1" aria-pressed="true" disabled>1x</button>
+            <button type="button" class="youtube-speed-btn is-active" data-youtube-speed="1" aria-pressed="true" disabled>1.0x</button>
             <button type="button" class="youtube-speed-btn" data-youtube-speed="1.25" aria-pressed="false" disabled>1.25x</button>
             <small class="youtube-speed-status" id="youtubeSpeedStatus">Video controls will activate when the YouTube player is ready.</small>
           </div>
         </div>
-        <div class="basic2-script-note teacher-only-transcript" hidden><strong>Teacher use:</strong> The production script is available as a PDF for recording, accommodations, and feedback after the listening activity.</div>
+        <div class="basic2-script-note teacher-only-transcript" hidden><strong>Administrator use:</strong> The production script is available as a PDF for recording, accommodations, and feedback after the listening activity.</div>
       </article>
 
       <article class="premium-topic-card">
@@ -289,6 +289,9 @@ Daniel: Let's go, but slowly. The street is wet.`;
         button.disabled = !enabled;
       });
     }
+    function speedLabel(speed) {
+      return Number(speed) === 1 ? "1.0x" : String(speed) + "x";
+    }
     function setYouTubeSpeed(speed) {
       if (!youtubeVideoId) return;
       const next = Number(speed);
@@ -304,7 +307,7 @@ Daniel: Let's go, but slowly. The street is wet.`;
               const actual = Number(youtubePlayer.getPlaybackRate && youtubePlayer.getPlaybackRate()) || next;
               pendingYouTubeSpeed = actual;
               updateYouTubeSpeedButtons(actual);
-              if (status) status.textContent = "Video speed set to " + actual + "x.";
+              if (status) status.textContent = "Video speed set to " + speedLabel(actual) + ".";
             } catch (error) {}
           }, 250);
         } else if (status) {
@@ -349,7 +352,7 @@ Daniel: Let's go, but slowly. The street is wet.`;
       youtubePlayer = new YT.Player("youtubePlayer", { events: { onReady: function (event) {
         try { event.target.setPlaybackRate(pendingYouTubeSpeed); } catch (error) {}
         const status = document.getElementById("youtubeSpeedStatus");
-        if (status) status.textContent = "Video controls ready. Choose 0.75x, 1x, or 1.25x.";
+        if (status) status.textContent = "Video controls ready. Choose 0.75x, 1.0x, or 1.25x.";
         updateYouTubeSpeedButtons(pendingYouTubeSpeed);
       }, onPlaybackRateChange: function (event) {
         pendingYouTubeSpeed = Number(event.data) || 1;
@@ -377,22 +380,11 @@ Daniel: Let's go, but slowly. The street is wet.`;
         return saved;
       } catch (error) { return null; }
     }
-    function readTeacherRoleRequests() {
-      try {
-        const saved = JSON.parse(localStorage.getItem("jaralingua_role_requests") || "[]");
-        return Array.isArray(saved) ? saved : [];
-      } catch (error) { return []; }
-    }
     function normalizeTeacherEmail(value) { return String(value || "").trim().toLowerCase(); }
     function canDownloadTeacherTranscript() {
       const user = readTeacherUser();
       if (!user) return false;
-      if (normalizeTeacherEmail(user.email) === "cdavid.jaramillo@gmail.com" || normalizeTeacherEmail(user.email) === "cdavid.jaramillo@hotmail.com") return true;
-      const id = user.sub || user.email || "";
-      return readTeacherRoleRequests().some(function (request) {
-        const sameUser = request.id === id || normalizeTeacherEmail(request.email) === normalizeTeacherEmail(user.email);
-        return sameUser && request.role === "teacher" && request.status === "approved";
-      });
+      return normalizeTeacherEmail(user.email) === "cdavid.jaramillo@gmail.com";
     }
     function updateTeacherTranscriptAccess() {
       document.querySelectorAll(".teacher-only-transcript").forEach(function (element) {
@@ -401,7 +393,7 @@ Daniel: Let's go, but slowly. The street is wet.`;
     }
     function downloadTeacherTranscript() {
       if (!canDownloadTeacherTranscript()) {
-        alert("This script is only available for approved teacher accounts.");
+        alert("This script is only available for administrator accounts.");
         updateTeacherTranscriptAccess();
         return;
       }
@@ -419,7 +411,7 @@ Daniel: Let's go, but slowly. The street is wet.`;
   <script src="../../assets/js/transcript-pdf.js"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
-  <script src="../../assets/js/google-auth.js"></script>
+  <script src="../../assets/js/google-auth.js?v=20260726-nav-auth-listening"></script>
   <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
 </body>
 </html>

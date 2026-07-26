@@ -89,7 +89,7 @@ This situation reuses the Unit 1 topic but is not the same script as the video l
 
 4. **Audio Practice**
    - HTML audio player.
-   - Speed controls: `0.75x`, `1x`, `1.25x`.
+   - Speed controls: `0.75x`, `1.0x`, `1.25x`.
    - Visible status feedback when speed changes.
 
 5. **Listening Focus**
@@ -107,7 +107,18 @@ This situation reuses the Unit 1 topic but is not the same script as the video l
    - Perfect attempt: show completion message.
 
 7. **Teacher transcript**
-   - Transcript download is available only to approved teacher/admin accounts.
+   - Transcript download is available only when the administrator is signed in with the administrator account.
+   - The transcript control must remain hidden for students, public visitors, and approved non-admin teacher roles.
+
+## Shared listening access standard
+
+This same standard applies to the Unit 1 video listening and audio listening pages:
+
+- Transcript buttons are present in both listening activities, but they are administrator-only controls.
+- The Sign in control must be mounted in the top navigation beside the course links when a page has a navigation bar.
+- The old floating Sign in control must not cover activities; it is only a fallback for pages without a navigation bar.
+- Listening speed controls must visibly include `0.75x`, `1.0x`, and `1.25x`.
+- Speed status text must also use `1.0x` instead of `1x` for consistency.
 
 ## Questions
 
@@ -143,6 +154,7 @@ This situation reuses the Unit 1 topic but is not the same script as the video l
 - Audio file must return HTTP 200 after deployment.
 - No `speechSynthesis` or `SpeechSynthesisUtterance`.
 - Buttons must be at least mobile-friendly and visually communicate active speed.
+- Authentication controls must not be fixed over the learning content on mobile, tablet, or desktop.
 - All quiz radios must have explicit `id` and matching `label for`.
 
 ## Pedagogical acceptance checklist
