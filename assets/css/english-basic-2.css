@@ -916,6 +916,25 @@
   line-height: 1.65;
 }
 
+.basic2-reading-text {
+  display: grid;
+  gap: 16px;
+  padding: clamp(1.05rem, 3vw, 1.65rem);
+  border-radius: 24px;
+  background:
+    linear-gradient(135deg, rgba(248, 251, 255, 0.95), rgba(255, 255, 255, 0.98)),
+    linear-gradient(135deg, rgba(18, 59, 143, 0.08), rgba(193, 18, 31, 0.06));
+  border: 1px solid rgba(18, 59, 143, 0.12);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.07);
+}
+
+.basic2-reading-text p {
+  margin: 0;
+  color: var(--basic2-ink);
+  font-size: clamp(1rem, 2vw, 1.08rem);
+  line-height: 1.85;
+}
+
 .teacher-only-transcript[hidden] {
   display: none !important;
 }
