@@ -133,7 +133,7 @@
     readingText.innerHTML = currentStage().text.split(/(\s+)/).map((part) => {
       if (/^\s+$/.test(part)) return part;
       const state = states[index++] || "";
-      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${spokenWord(part)}" title="Show pronunciation note">${part}</button>`;
+      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${spokenWord(part)}" title="Listen to this word">${part}</button>`;
     }).join("");
   }
 
@@ -210,6 +210,30 @@
     if (!word) return;
     wordHelp.hidden = false;
     wordHelp.innerHTML = `<strong><i class="bi bi-info-circle"></i> ${word}</strong><span>${pronunciationTip(word)} Listen to the professional model for the full audio reference.</span>`;
+  }
+
+  function speakWord(word) {
+    if (!word) return;
+    const cleanWord = spokenWord(word);
+    if (!cleanWord) return;
+    modelAudio.pause();
+    modelButton.querySelector("i").className = "bi bi-play-fill";
+    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {
+      showWordHelp(cleanWord);
+      return;
+    }
+    speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(cleanWord);
+    const voices = speechSynthesis.getVoices();
+    const englishVoice = voices.find((voice) => voice.lang.toLowerCase() === "en-us")
+      || voices.find((voice) => voice.lang.toLowerCase().startsWith("en"));
+    utterance.lang = "en-US";
+    if (englishVoice) utterance.voice = englishVoice;
+    utterance.rate = 0.78;
+    utterance.pitch = 1;
+    speechSynthesis.speak(utterance);
+    wordHelp.hidden = false;
+    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> ${cleanWord}</strong><span>${pronunciationTip(cleanWord)} Listen, repeat slowly, and then try the section again.</span>`;
   }
 
   function startLevelMeter(stream) {
@@ -795,7 +819,7 @@
   resetButton.addEventListener("click", () => resetAttempt(true));
   nextButton.addEventListener("click", advanceStage);
   retryButton.addEventListener("click", () => resetAttempt(true));
-  readingText.addEventListener("click", (event) => { const word = event.target.closest(".reading-word")?.dataset.spoken; if (word) showWordHelp(word); });
+  readingText.addEventListener("click", (event) => { const word = event.target.closest(".reading-word")?.dataset.spoken; if (word) speakWord(word); });
 
   submitPanelController = createSubmitPanel();
   submitMount.appendChild(submitPanelController.panel);
