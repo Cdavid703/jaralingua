@@ -90,14 +90,11 @@
         <p class="lesson-text">Watch once for the main idea. Watch again for the weather, the soccer game, and the new plan.</p>
         <div class="listening-panel">
           <div class="listening-audio-card">
-            <div><span class="listening-label">Video pending</span><h3>Going Out or Staying In?</h3><p>Two speakers: Emma and Daniel talk about the weather and change their plan.</p></div>
+            <div><span class="listening-label">YouTube video</span><h3>Going Out or Staying In?</h3><p>Two speakers: Emma and Daniel talk about the weather and change their plan.</p></div>
             <div class="audio-actions teacher-only-transcript" hidden><button type="button" class="audio-btn play" onclick="downloadTeacherTranscript()">Download production script PDF</button></div>
           </div>
           <div class="basic2-video-frame" id="videoFrame">
-            <div class="basic2-video-pending" id="videoPending">
-              <img src="../../assets/img/english-basic-2/unit-1-going-out/video-listening-going-out-staying-in.webp" alt="" />
-              <div class="basic2-video-pending-content"><h3>Video link pending</h3><p>The listening activity, production script, and questions are ready. Add the YouTube video ID after the final video is uploaded.</p></div>
-            </div>
+            <iframe id="youtubePlayer" src="https://www.youtube-nocookie.com/embed/qdWFQs4MD_Y?enablejsapi=1&amp;rel=0&amp;modestbranding=1&amp;playsinline=1&amp;origin=https%3A%2F%2Fwww.jaralingua.com" title="Video Listening: Going Out or Staying In?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
           <div class="youtube-speed-panel" id="youtubeSpeedPanel" role="group" aria-label="Video speed controls">
             <span>Video speed</span>
@@ -105,6 +102,7 @@
             <button type="button" class="youtube-speed-btn is-active" data-youtube-speed="1" aria-pressed="true" disabled>1.0x</button>
             <button type="button" class="youtube-speed-btn" data-youtube-speed="1.25" aria-pressed="false" disabled>1.25x</button>
             <small class="youtube-speed-status" id="youtubeSpeedStatus">Video controls will activate when the YouTube player is ready.</small>
+            <a class="card-link" href="https://www.youtube.com/watch?v=qdWFQs4MD_Y" target="_blank" rel="noopener noreferrer">Open video on YouTube</a>
           </div>
         </div>
         <div class="basic2-script-note teacher-only-transcript" hidden><strong>Administrator use:</strong> The production script is available as a PDF for recording, accommodations, and feedback after the listening activity.</div>
@@ -287,7 +285,7 @@ Daniel: Let's go, but slowly. The street is wet.`;
             } catch (error) {}
           }, 250);
         } else if (status) {
-          status.textContent = youtubeVideoId ? "Video player is loading. Speed will apply when ready." : "Video link pending. Speed controls are ready for the final video.";
+          status.textContent = youtubeVideoId ? "Video player is loading. Speed will apply when ready." : "Video link is not available yet.";
         }
       } catch (error) {
         if (status) status.textContent = "This browser did not allow changing YouTube speed yet. Try again after pressing play.";
@@ -301,7 +299,7 @@ Daniel: Let's go, but slowly. The street is wet.`;
     function youtubeEmbedUrl() {
       const params = new URLSearchParams({ enablejsapi: "1", rel: "0", modestbranding: "1", playsinline: "1" });
       try { if (/^https?:/.test(window.location.origin)) params.set("origin", window.location.origin); } catch (error) {}
-      return "https://www.youtube.com/embed/" + encodeURIComponent(youtubeVideoId) + "?" + params.toString();
+      return "https://www.youtube-nocookie.com/embed/" + encodeURIComponent(youtubeVideoId) + "?" + params.toString();
     }
     function renderYouTubeIframe() {
       const frame = document.getElementById("videoFrame");
@@ -340,7 +338,7 @@ Daniel: Let's go, but slowly. The street is wet.`;
       const status = document.getElementById("youtubeSpeedStatus");
       if (!youtubeVideoId) {
         setYouTubeSpeedControlsEnabled(false);
-        if (status) status.textContent = "Video link pending. The activity is ready for the final YouTube ID.";
+        if (status) status.textContent = "Video link is not available yet.";
         return;
       }
       setYouTubeSpeedControlsEnabled(true);
