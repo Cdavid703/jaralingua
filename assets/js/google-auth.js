@@ -971,11 +971,16 @@
 
         .jaralingua-auth-nav .auth-panel {
           position: fixed;
-          left: 12px;
-          right: 12px;
-          top: 74px;
+          left: max(12px, env(safe-area-inset-left));
+          right: max(12px, env(safe-area-inset-right));
+          top: max(76px, calc(env(safe-area-inset-top) + 14px));
+          bottom: max(12px, env(safe-area-inset-bottom));
           width: auto;
-          max-height: calc(100vh - 94px);
+          max-width: none;
+          max-height: none;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
         }
       }
 
@@ -1445,9 +1450,17 @@
         }
 
         .auth-panel {
-          top: auto;
-          bottom: calc(100% + 8px);
-          max-height: calc(100vh - 92px);
+          position: fixed;
+          left: max(12px, env(safe-area-inset-left));
+          right: max(12px, env(safe-area-inset-right));
+          top: max(76px, calc(env(safe-area-inset-top) + 14px));
+          bottom: max(12px, env(safe-area-inset-bottom));
+          width: auto;
+          max-width: none;
+          max-height: none;
+          overflow-y: auto;
+          overscroll-behavior: contain;
+          -webkit-overflow-scrolling: touch;
         }
 
         .student-dashboard-grid,
