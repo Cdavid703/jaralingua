@@ -357,14 +357,19 @@
 
   function readStoredUser(key, provider) {
     try {
-      const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+      const sessionRaw = sessionStorage.getItem(key);
+      const localRaw = localStorage.getItem(key);
+      const saved = JSON.parse(sessionRaw || localRaw || "null");
       if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
         sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
         return null;
       }
+      if (!sessionRaw && localRaw) sessionStorage.setItem(key, JSON.stringify(saved));
       return Object.assign({ provider: provider }, saved);
     } catch (error) {
       sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
       return null;
     }
   }
@@ -753,6 +758,7 @@
   function saveUser(user) {
     const provider = user && user.provider === "microsoft" ? "microsoft" : (user && user.provider === "local" ? "local" : "google");
     currentUser = Object.assign({}, user, { provider: provider });
+    const key = provider === "microsoft" ? MICROSOFT_USER_KEY : (provider === "local" ? LOCAL_USER_KEY : GOOGLE_USER_KEY);
     publishAuthState();
     cloudProgressLoaded = false;
     pendingProgressSync = false;
@@ -760,7 +766,11 @@
     sessionStorage.removeItem(GOOGLE_USER_KEY);
     sessionStorage.removeItem(MICROSOFT_USER_KEY);
     sessionStorage.removeItem(LOCAL_USER_KEY);
-    sessionStorage.setItem(provider === "microsoft" ? MICROSOFT_USER_KEY : (provider === "local" ? LOCAL_USER_KEY : GOOGLE_USER_KEY), JSON.stringify(currentUser));
+    localStorage.removeItem(GOOGLE_USER_KEY);
+    localStorage.removeItem(MICROSOFT_USER_KEY);
+    localStorage.removeItem(LOCAL_USER_KEY);
+    sessionStorage.setItem(key, JSON.stringify(currentUser));
+    localStorage.setItem(key, JSON.stringify(currentUser));
     trackPageVisit();
     renderWidget();
     renderDashboard();
@@ -805,6 +815,9 @@
     sessionStorage.removeItem(GOOGLE_USER_KEY);
     sessionStorage.removeItem(MICROSOFT_USER_KEY);
     sessionStorage.removeItem(LOCAL_USER_KEY);
+    localStorage.removeItem(GOOGLE_USER_KEY);
+    localStorage.removeItem(MICROSOFT_USER_KEY);
+    localStorage.removeItem(LOCAL_USER_KEY);
     currentUser = null;
     publishAuthState();
     buttonRendered = false;
@@ -1874,7 +1887,7 @@
         redirectUri: microsoftRedirectUri()
       },
       cache: {
-        cacheLocation: "sessionStorage"
+        cacheLocation: "localStorage"
       }
     };
   }
@@ -2521,7 +2534,9 @@
 
     function savedClaim(course) {
       const config = courseConfig[course];
-      return String(sessionStorage.getItem(config.claimKey) || "").replace(/\D+/g, "");
+      const claim = String(sessionStorage.getItem(config.claimKey) || localStorage.getItem(config.claimKey) || "").replace(/\D+/g, "");
+      if (claim && !sessionStorage.getItem(config.claimKey)) sessionStorage.setItem(config.claimKey, claim);
+      return claim;
     }
 
     async function unauthorizedStudent(response) {
@@ -2543,7 +2558,10 @@
         "\n\nNo encontramos tu correo en la grilla de " + config.spanishLabel + ". Escribe tu documento/ID para validar tu entrega:",
         ""
       ) || "").replace(/\D+/g, "");
-      if (claim) sessionStorage.setItem(config.claimKey, claim);
+      if (claim) {
+        sessionStorage.setItem(config.claimKey, claim);
+        localStorage.setItem(config.claimKey, claim);
+      }
       return claim;
     }
 
@@ -2564,6 +2582,7 @@
       const sentHeaderClaim = String(new Headers((requestInit && requestInit.headers) || {}).get("X-Jaralingua-Student-Id-Claim") || "").replace(/\D+/g, "");
       if ((alreadyClaimed && (alreadyClaimed.studentIdClaim || alreadyClaimed.studentId)) || sentHeaderClaim) {
         sessionStorage.removeItem(courseConfig[course].claimKey);
+        localStorage.removeItem(courseConfig[course].claimKey);
         return firstResponse;
       }
       const claim = promptForClaim(course);

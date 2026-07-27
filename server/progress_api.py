@@ -1488,7 +1488,7 @@ def local_auth_secret():
 
 def sign_local_profile(profile):
     payload = dict(profile)
-    payload["exp"] = int(time.time()) + 12 * 60 * 60
+    payload["exp"] = int(time.time()) + 30 * 24 * 60 * 60
     body = b64url_encode(json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
     signature = hmac.new(local_auth_secret(), body.encode("ascii"), hashlib.sha256).digest()
     return body + "." + b64url_encode(signature), payload["exp"]

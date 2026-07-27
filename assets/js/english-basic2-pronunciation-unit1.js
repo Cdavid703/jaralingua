@@ -570,14 +570,19 @@
 
   function readStoredUser(key, provider) {
     try {
-      const saved = JSON.parse(sessionStorage.getItem(key) || "null");
+      const sessionRaw = sessionStorage.getItem(key);
+      const localRaw = localStorage.getItem(key);
+      const saved = JSON.parse(sessionRaw || localRaw || "null");
       if (!saved || !saved.exp || Date.now() / 1000 > saved.exp) {
         sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
         return null;
       }
+      if (!sessionRaw && localRaw) sessionStorage.setItem(key, JSON.stringify(saved));
       return Object.assign({ provider }, saved);
     } catch (_error) {
       sessionStorage.removeItem(key);
+      localStorage.removeItem(key);
       return null;
     }
   }
