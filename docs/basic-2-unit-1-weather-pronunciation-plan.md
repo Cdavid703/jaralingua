@@ -17,7 +17,7 @@
 4. -ing endings: checking, waiting, leaving, raining, changing, meeting, sitting, packing.
 5. Changing plans: changing the plan, staying inside, meeting up, calling off a game.
 6. Unit expressions: going out, meeting up, called off, raining cats and dogs, stay dry.
-7. Final challenge: integrated short paragraph using weather + present continuous + plan changes.
+7. Final challenge: complete read-through of the six guided sections concatenated, matching the established pronunciation pattern used in previous activities.
 
 ## Interaction
 
