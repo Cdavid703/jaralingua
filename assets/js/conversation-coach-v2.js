@@ -9,6 +9,9 @@
   const audioRoot = config.audioRoot || "";
   const maxRecordingSeconds = Number(config.maxRecordingSeconds) || 40;
   const transcriptionTimeoutMs = 30000;
+  const coachName = config.character?.name || "Maya Brooks";
+  const coachFirstName = coachName.split(/\s+/)[0] || "Maya";
+  const unitShortLabel = config.unitLabel || "the unit";
   const $ = (id) => document.getElementById(id);
 
   const elements = {
@@ -268,7 +271,7 @@
     audioBusy = true;
     audio.src = audioPath(file);
     audio.playbackRate = playbackSpeed;
-    if (options.stageState) setStage(options.stageState, options.stageLabel || "Maya is speaking");
+    if (options.stageState) setStage(options.stageState, options.stageLabel || `${coachFirstName} is speaking`);
     updateControls();
     try {
       await audio.play();
@@ -291,7 +294,7 @@
       return false;
     } finally {
       audioBusy = false;
-      if (options.restoreStage !== false && !analyzing && mediaRecorder?.state !== "recording") setStage("ready", "Maya is ready");
+      if (options.restoreStage !== false && !analyzing && mediaRecorder?.state !== "recording") setStage("ready", `${coachFirstName} is ready`);
       updateControls();
     }
   }
@@ -299,15 +302,15 @@
   async function playQuestion() {
     const prompt = currentPrompt();
     if (!prompt || audioBusy || mediaRecorder?.state === "recording") return;
-    showToast(session.phase === "followup" ? "Maya's follow-up is playing." : "Maya's question is playing.");
-    await playAudio(elements.questionAudio, prompt.audio, { stageState: "speaking", stageLabel: session.phase === "followup" ? "Maya is asking a follow-up" : "Maya is asking the question" });
+    showToast(session.phase === "followup" ? `${coachFirstName}'s follow-up is playing.` : `${coachFirstName}'s question is playing.`);
+    await playAudio(elements.questionAudio, prompt.audio, { stageState: "speaking", stageLabel: session.phase === "followup" ? `${coachFirstName} is asking a follow-up` : `${coachFirstName} is asking the question` });
   }
 
   async function playAudioQueue(entries) {
     for (const entry of entries) {
-      await playAudio(elements.reactionAudio, entry.file, { stageState: "responding", stageLabel: "Maya is responding", restoreStage: false });
+      await playAudio(elements.reactionAudio, entry.file, { stageState: "responding", stageLabel: `${coachFirstName} is responding`, restoreStage: false });
     }
-    setStage("ready", "Maya is ready for the next turn");
+    setStage("ready", `${coachFirstName} is ready for the next turn`);
   }
 
   function formatTime(seconds) {
@@ -374,8 +377,8 @@
     elements.next.disabled = true;
     elements.recordAgain.disabled = true;
     resetTimer();
-    setRecordStatus("Ready for your answer", question.interaction ? "Ask two different food questions in English." : "Tap the microphone and answer in English.");
-    setStage("ready", "Maya is ready");
+    setRecordStatus("Ready for your answer", question.interaction ? (config.ui?.interactionRecordHelp || `Ask ${coachFirstName} two different questions in English.`) : "Tap the microphone and answer in English.");
+    setStage("ready", `${coachFirstName} is ready`);
     updateControls();
     if (autoplay) window.setTimeout(playQuestion, 250);
   }
@@ -451,7 +454,7 @@
   async function testMicrophone() {
     if (elements.preflight.disabled) return;
     elements.preflight.disabled = true;
-    elements.preflightStatus.textContent = "Recording a three-second microphone test. Say: This is my food conversation test.";
+    elements.preflightStatus.textContent = config.ui?.preflightRecording || "Recording a three-second microphone test. Say: This is my conversation test.";
     try {
       const stream = await requestStream("");
       const chunks = [];
@@ -554,7 +557,7 @@
       recordingDurationMs = 0;
       mediaRecorder.start();
       elements.mic.classList.add("is-recording");
-      setStage("listening", "Maya is listening");
+      setStage("listening", `${coachFirstName} is listening`);
       setRecordStatus("Recording your answer", "Speak naturally. Finish before the timer reaches the limit.");
       timerHandle = window.setInterval(updateTimer, 250);
       autoStopHandle = window.setTimeout(stopRecording, recordingLimit() * 1000);
@@ -566,7 +569,7 @@
       elements.unsupported.hidden = false;
       elements.unsupported.innerHTML = `<strong>Microphone unavailable</strong><br>${escapeHtml(message)}`;
       setRecordStatus("Microphone unavailable", message);
-      setStage("ready", "Maya is waiting while you check the microphone");
+      setStage("ready", `${coachFirstName} is waiting while you check the microphone`);
       stopTracks();
       updateControls();
     }
@@ -594,7 +597,7 @@
     if (currentBlob.size < 700 || recordingDurationMs < 700) {
       currentBlob = null;
       setRecordStatus("The recording was too short", "Record a complete answer of several seconds before finishing.");
-      setStage("ready", "Maya did not hear a complete answer");
+      setStage("ready", `${coachFirstName} did not hear a complete answer`);
       updateControls();
       return;
     }
@@ -724,7 +727,7 @@
     const message = total >= 43
       ? "Your answer is detailed, relevant, and ready for a more independent attempt."
       : total >= 34
-        ? `Your answer communicates the main idea. ${missing.length ? `Add ${missing[0]} next time.` : "Add one more precise Unit 5 expression next time."}`
+        ? `Your answer communicates the main idea. ${missing.length ? `Add ${missing[0]} next time.` : `Add one more precise ${unitShortLabel} expression next time.`}`
         : `Build the answer again with a complete structure${missing.length ? ` and include ${missing[0]}` : " and one specific detail"}.`;
     return { total, metrics, checks, wordCount, durationSeconds: Math.round(seconds), wordsPerMinute: Math.round(wordsPerMinute), lowConfidence, message };
   }
@@ -743,9 +746,17 @@
     return config.defaultInteractionResponse ? [config.defaultInteractionResponse] : [];
   }
 
+  function evidenceResponses(transcript, entries = []) {
+    const normalized = normalize(transcript);
+    const matches = entries.filter((entry) => (entry.terms || []).some((term) => normalized.includes(normalize(term))));
+    return matches.length ? matches.slice(0, 2) : [];
+  }
+
   function responseEntries(answer, question, evaluatedPrompt = question) {
     if (question.interaction) return roleReversalResponses(answer.transcript);
     const complete = answer.analysis.checks.every((check) => check.met) && answer.analysis.wordCount >= Number(evaluatedPrompt.minWords || 0);
+    const evidenceMatched = evidenceResponses(answer.transcript, question.reactionResponses || config.reactionResponses || []);
+    if (complete && evidenceMatched.length) return evidenceMatched;
     return [complete && question.reaction ? question.reaction : config.audio.needDetail].filter(Boolean);
   }
 
@@ -754,7 +765,7 @@
     if (!entries.length) return;
     elements.reactionText.textContent = entries.map((entry) => entry.text).join(" ");
     elements.reaction.hidden = false;
-    setRecordStatus("Answer analyzed", question.interaction ? "Listen to Maya answer the food topics she recognized." : "Listen to Maya's response, then continue.");
+    setRecordStatus("Answer analyzed", question.interaction ? `Listen to ${coachFirstName} answer the topics she recognized.` : `Listen to ${coachFirstName}'s response, then continue.`);
     await playAudioQueue(entries);
   }
 
@@ -774,7 +785,7 @@
     const total = session.questionIds.length;
     elements.counter.textContent = `Turn ${session.currentIndex + 1} of ${total} - Follow-up`;
     elements.floatingTurn.textContent = `Turn ${session.currentIndex + 1} follow-up`;
-    elements.topic.textContent = `${currentQuestion().topic} - Maya's follow-up`;
+    elements.topic.textContent = `${currentQuestion().topic} - ${coachFirstName}'s follow-up`;
     elements.questionText.textContent = followUp.text;
     elements.questionAudio.src = audioPath(followUp.audio);
     elements.questionAudio.playbackRate = playbackSpeed;
@@ -794,8 +805,8 @@
     elements.next.disabled = true;
     elements.recordAgain.disabled = true;
     resetTimer();
-    setRecordStatus("Maya has a follow-up", "Listen, then give a short second response in English.");
-    setStage("speaking", "Maya is asking a follow-up");
+    setRecordStatus(`${coachFirstName} has a follow-up`, "Listen, then give a short second response in English.");
+    setStage("speaking", `${coachFirstName} is asking a follow-up`);
     updateControls();
   }
 
@@ -806,9 +817,9 @@
       return;
     }
     renderAdaptiveFollowUp(followUp);
-    showToast("Maya selected a follow-up from your answer evidence.");
+    showToast(`${coachFirstName} selected a follow-up from your answer evidence.`);
     await playQuestion();
-    setRecordStatus("Ready for the follow-up", "Answer Maya's new question in approximately fifteen to twenty seconds.");
+    setRecordStatus("Ready for the follow-up", `Answer ${coachFirstName}'s new question in approximately fifteen to twenty seconds.`);
     updateControls();
   }
 
@@ -819,7 +830,7 @@
     elements.feedback.hidden = true;
     elements.transcript.textContent = "Analyzing your temporary recording. Please wait.";
     setRecordStatus("Checking your English answer", "Whisper is transcribing the recording. No score is created without usable speech.");
-    setStage("analyzing", "Maya is checking your answer");
+    setStage("analyzing", `${coachFirstName} is checking your answer`);
     updateControls();
     try {
       const payload = await requestTranscription(currentBlob);
@@ -847,7 +858,7 @@
         elements.feedback.innerHTML = feedbackMarkup(answer, prompt);
         elements.feedback.hidden = false;
       }
-      showToast(session.phase === "followup" ? "Follow-up transcribed successfully. Maya is responding." : "Answer transcribed successfully. Maya is responding.");
+      showToast(session.phase === "followup" ? `Follow-up transcribed successfully. ${coachFirstName} is responding.` : `Answer transcribed successfully. ${coachFirstName} is responding.`);
       analyzing = false;
       if (session.phase === "main" && question.followUpSet && !question.interaction) await presentAdaptiveFollowUp(answer, question);
       else await presentMayaResponse(answer, question, prompt);
@@ -857,7 +868,7 @@
       elements.transcript.textContent = message;
       elements.recovery.hidden = false;
       setRecordStatus("Analysis did not finish", "Retry the analysis, record again, or continue without a score for this turn.");
-      setStage("ready", "Maya is waiting for your decision");
+      setStage("ready", `${coachFirstName} is waiting for your decision`);
       showToast("No score was created for this recording.");
       if (noSpeechIssue && config.audio?.noSpeech) {
         analyzing = false;
@@ -932,7 +943,7 @@
     elements.next.disabled = true;
     resetTimer();
     setRecordStatus("Ready for a new recording", "Tap the microphone and give a complete answer.");
-    setStage("ready", "Maya is ready for your new answer");
+    setStage("ready", `${coachFirstName} is ready for your new answer`);
     updateControls();
     elements.mic.focus();
     showToast("Previous recording cleared. You can answer again.");
@@ -990,17 +1001,17 @@
   }
 
   const strengthMessages = {
-    task: "You addressed the food task with relevant information.",
-    interaction: "You maintained the exchange and responded to Maya's communicative purpose.",
-    language: "You used useful Unit 5 vocabulary and structures.",
+    task: config.ui?.taskStrength || "You addressed the conversation task with relevant information.",
+    interaction: config.ui?.interactionStrength || `You maintained the exchange and responded to ${coachFirstName}'s communicative purpose.`,
+    language: config.ui?.languageStrength || `You used useful ${unitShortLabel} vocabulary and structures.`,
     fluency: "Your answer had a workable speaking pace and enough development.",
     clarity: "Most recorded words had useful transcription confidence."
   };
 
   const priorityMessages = {
     task: "Answer every requested part before adding optional details.",
-    interaction: "Use connectors in normal turns and ask Maya two clearly different questions.",
-    language: "Include precise Unit 5 expressions such as made with, a few, a little, or a container of.",
+    interaction: config.ui?.interactionPriority || `Use connectors in normal turns and ask ${coachFirstName} two clearly different questions.`,
+    language: config.ui?.languagePriority || `Include precise ${unitShortLabel} expressions from the activity support.`,
     fluency: "Prepare short thought groups and keep speaking without rushing.",
     clarity: "Move closer to the microphone and repeat lower-confidence words in a complete sentence."
   };
@@ -1090,7 +1101,7 @@
     const score = answer.analysis ? `${answer.analysis.total}/50` : "Not analyzed";
     const transcript = answer.transcript || "No transcript was available for this response.";
     const feedback = answer.analysis?.message || "No automatic feedback was created because there was no usable transcription.";
-    return `<section class="coach-answer-phase"><div class="coach-answer-phase-heading"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(score)}</span></div><p><strong>Maya asked:</strong> ${escapeHtml(prompt || answer.prompt || "")}</p><p><strong>You said:</strong> ${escapeHtml(transcript)}</p><p><strong>Feedback:</strong> ${escapeHtml(feedback)}</p><p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(improved || "")}</p></section>`;
+    return `<section class="coach-answer-phase"><div class="coach-answer-phase-heading"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(score)}</span></div><p><strong>${escapeHtml(coachFirstName)} asked:</strong> ${escapeHtml(prompt || answer.prompt || "")}</p><p><strong>You said:</strong> ${escapeHtml(transcript)}</p><p><strong>Feedback:</strong> ${escapeHtml(feedback)}</p><p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(improved || "")}</p></section>`;
   }
 
   function renderReport(report) {
@@ -1099,7 +1110,7 @@
     const reportLowConfidence = (report.lowConfidence || []).filter((item) => isUsefulEnglishFeedbackWord(item.word));
     elements.summaryScore.textContent = report.score == null ? "--" : report.score;
     elements.summaryReadiness.textContent = report.readiness;
-    elements.summaryLead.textContent = report.score != null ? "You completed a balanced four-turn, seven-response food conversation with Maya." : "You completed the conversation, but at least one response could not be analyzed.";
+    elements.summaryLead.textContent = report.score != null ? (config.ui?.summaryLeadComplete || `You completed a balanced conversation with ${coachFirstName}.`) : "You completed the conversation, but at least one response could not be analyzed.";
     elements.summaryComparison.textContent = report.comparison;
     elements.summaryCoverage.textContent = `${report.analyzedCount} of ${totalResponses} responses analyzed. This formative estimate is not a grade and is never sent to your teacher.`;
     elements.summaryMetrics.innerHTML = (config.rubric || []).map((criterion) => `<article class="coach-summary-metric"><strong>${report.criteria[criterion.key] == null ? "--" : report.criteria[criterion.key]}</strong><span>/10 - ${escapeHtml(criterion.label)}</span><p>${escapeHtml(criterion.description)}</p></article>`).join("");
