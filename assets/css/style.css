@@ -7694,3 +7694,73 @@ iframe {
     padding: 18px;
   }
 }
+
+/* BASIC ENGLISH COURSE 2 INDEX DASHBOARD */
+
+.basic2-index-page .basic-intro-section,
+.basic2-index-page .course-dashboard {
+  max-width: 1360px;
+}
+
+.basic2-index-page .course-dashboard {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.basic2-index-page .course-section-card {
+  border-radius: 24px;
+}
+
+.basic2-index-page .course-section-image {
+  height: 158px;
+}
+
+.basic2-index-page .course-section-content {
+  padding: 22px;
+}
+
+.basic2-index-page .section-number {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+}
+
+.basic2-index-page .course-section-content .course-status {
+  margin-bottom: 12px;
+  font-size: 0.72rem;
+}
+
+.basic2-index-page .course-section-content h3 {
+  font-size: clamp(1.18rem, 1.45vw, 1.45rem);
+  margin-bottom: 10px;
+}
+
+.basic2-index-page .course-section-content p {
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 1180px) {
+  .basic2-index-page .course-dashboard {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .basic2-index-page .course-dashboard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (max-width: 620px) {
+  .basic2-index-page .course-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .basic2-index-page .course-section-image {
+    height: 220px;
+  }
+}
