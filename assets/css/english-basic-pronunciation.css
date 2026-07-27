@@ -17,4 +17,34 @@
 @keyframes pron-pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,90,95,.38)}50%{box-shadow:0 0 0 16px rgba(255,90,95,0)}}
 @media(max-width:900px){.pronunciation-layout{grid-template-columns:1fr}.pronunciation-main{padding-top:1.25rem}}
 @media(max-width:600px){.pronunciation-main{width:min(100% - 1.25rem,1180px)}.pronunciation-panel{padding:1rem;border-radius:14px}.pronunciation-hero .lesson-hero-image img{height:240px}.stage-panel-copy{display:grid}.stage-panel-copy strong{text-align:left}.stage-progress{gap:.3rem}.stage-dot{min-height:38px;font-size:.7rem}.reading-text{padding:.85rem;font-size:1.2rem}.record-zone{padding:1rem .7rem}.actions{display:grid;grid-template-columns:1fr}.action-button{width:100%;min-height:48px}.microphone-picker select{min-height:48px}.level-meter{grid-template-columns:1fr}.metrics{gap:.35rem}.metric{padding:.6rem .2rem}.metric span{font-size:.64rem}.final-summary>div{grid-template-columns:1fr}}
+
+.pronunciation-page-basic2 .lesson-hero{background-attachment:scroll}
+.pronunciation-page-basic2 .stage-progress{grid-template-columns:repeat(7,minmax(0,1fr))}
+.playback-tools{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin:.85rem 0 1rem;padding:.75rem;border-radius:16px;background:#f7fbfc;border:1px solid rgba(13,59,102,.1)}
+.playback-tools span{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--pron-muted)}
+.playback-tools button{border:0;border-radius:999px;padding:.5rem .85rem;background:#fff;color:var(--pron-navy);font-weight:900;box-shadow:0 8px 18px rgba(13,59,102,.09);cursor:pointer}
+.playback-tools button.is-active{background:var(--pron-navy);color:#fff}
+.shadow-mode-row{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;margin-bottom:1rem}
+.shadow-mode-row span{font-size:.85rem;font-weight:800;color:var(--pron-muted)}
+.shadow-mode-row .is-active{background:var(--pron-coral);color:#fff}
+.pronunciation-submit-mount{margin-top:1rem}
+.pronunciation-submit-panel{padding:1rem;border-radius:18px;background:linear-gradient(135deg,#0d3b66,#155886);color:#fff;box-shadow:0 18px 40px rgba(13,59,102,.18)}
+.pronunciation-submit-panel h3{margin:.15rem 0 .45rem;color:#fff}
+.pronunciation-submit-panel p{color:rgba(255,255,255,.82)}
+.pronunciation-submit-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem;margin:1rem 0}
+.pronunciation-submit-metrics span,.pronunciation-delivery-preview{display:grid;gap:.2rem;padding:.8rem;border-radius:14px;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.14)}
+.pronunciation-submit-metrics b{font-size:1.35rem;color:#fff}
+.pronunciation-submit-metrics small,.pronunciation-delivery-preview span{color:rgba(255,255,255,.72);font-weight:800}
+.pronunciation-submit-actions{display:grid;gap:.6rem}
+.pronunciation-submit-status{margin:.8rem 0 0;font-weight:800}
+.pronunciation-submit-status.success{color:#c9f7df}
+.pronunciation-submit-status.error{color:#ffd0c7}
+.pronunciation-submit-status.pending{color:#ffe8a8}
+.pronunciation-submit-panel.is-submitted{background:linear-gradient(135deg,#116149,#0d3b66)}
+
+@media(max-width:760px){
+  .pronunciation-page-basic2 .stage-progress{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .pronunciation-submit-metrics{grid-template-columns:1fr}
+  .playback-tools button{min-height:44px;min-width:64px}
+}
 @media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}

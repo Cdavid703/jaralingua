@@ -202,6 +202,7 @@ INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID = "unit6OliviasWeekVideoListening"
 INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID = "finalOralPartnerCoachFollowUp"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
+BASIC2_UNIT1_PRONUNCIATION_ID = "basic2Unit1WeatherGoingOutPronunciation"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -529,6 +530,14 @@ BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION = {
     "weight": 0,
     "type": "AI image / Speaking follow-up",
     "description": "Seguimiento enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
+}
+
+BASIC2_UNIT1_PRONUNCIATION_EVALUATION = {
+    "id": BASIC2_UNIT1_PRONUNCIATION_ID,
+    "title": "Basic 2 Unit 1 Follow-up - Weather and Going Out Pronunciation",
+    "weight": 0,
+    "type": "Pronunciation follow-up",
+    "description": "Reporte de pronunciacion enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
 }
 
 BASIC_FINAL_WRITING_EVALUATION = {
@@ -2711,6 +2720,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
 
 def ensure_basic_gradebook_structure(grades_data):
     changed = ensure_evaluation_template(grades_data, BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION)
+    if ensure_evaluation_template(grades_data, BASIC2_UNIT1_PRONUNCIATION_EVALUATION):
+        changed = True
     if ensure_evaluation_template(grades_data, BASIC_FINAL_WRITING_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC_FINAL_ORAL_EVALUATION):
@@ -2830,6 +2841,50 @@ def intermediate_pronunciation_grade_from_payload(payload):
         raise ValueError("invalid_score")
     grade = round((score100 / 20.0) * 100) / 100
     return int(round(score100)), grade
+
+
+def basic2_unit1_pronunciation_report_from_payload(payload):
+    raw_scores = payload.get("stageScores")
+    if not isinstance(raw_scores, list) or len(raw_scores) != 7:
+        raise ValueError("incomplete_pronunciation_report")
+    stage_scores = []
+    total_score = 0.0
+    for index, item in enumerate(raw_scores):
+        if not isinstance(item, dict):
+            raise ValueError("invalid_pronunciation_stage")
+        overall = clean_score_metric(item.get("overall"))
+        if overall is None:
+            raise ValueError("invalid_pronunciation_score")
+        accuracy = clean_score_metric(item.get("accuracy"))
+        completeness = clean_score_metric(item.get("completeness"))
+        fluency = clean_score_metric(item.get("fluency"))
+        wpm = clean_score_metric(item.get("wpm"), 0, 300)
+        total_score += overall
+        stage_scores.append({
+            "stage": clean_text(item.get("stage") or item.get("stageLabel"), 120) or ("Section " + str(index + 1)),
+            "overall": overall,
+            "accuracy": accuracy,
+            "completeness": completeness,
+            "fluency": fluency,
+            "wpm": wpm,
+            "transcript": clean_text(item.get("transcript"), 3000),
+            "referenceText": clean_text(item.get("referenceText"), 3000),
+            "missedWords": clean_text_list(item.get("missedWords"), 40, 80),
+            "final": bool(item.get("final")) or index == 6,
+            "at": clean_text(item.get("at"), 80)
+        })
+    score100 = int(round(total_score / len(stage_scores)))
+    grade = round((score100 / 20.0) * 100) / 100
+    final_stage = stage_scores[-1]
+    return {
+        "score100": score100,
+        "grade": grade,
+        "stageScores": stage_scores,
+        "finalTranscript": final_stage.get("transcript", ""),
+        "finalReferenceText": final_stage.get("referenceText", ""),
+        "finalMissedWords": final_stage.get("missedWords", []),
+        "clientSubmissionId": clean_text(payload.get("clientSubmissionId"), 120)
+    }
 
 
 def score_intermediate_fixed_answers(payload, answer_key):
@@ -15631,6 +15686,67 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, status, response)
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic/basic2-unit1-pronunciation-weather/submit":
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
+            with data_lock:
+                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
+                changed = ensure_basic_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    report = basic2_unit1_pronunciation_report_from_payload(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                previous = student["gradeDetails"].get(BASIC2_UNIT1_PRONUNCIATION_ID)
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[BASIC2_UNIT1_PRONUNCIATION_ID] = report["grade"]
+                student["gradeDetails"][BASIC2_UNIT1_PRONUNCIATION_ID] = {
+                    "evaluationId": BASIC2_UNIT1_PRONUNCIATION_ID,
+                    "activityTitle": BASIC2_UNIT1_PRONUNCIATION_EVALUATION["title"],
+                    "submittedAt": submitted_at,
+                    "score100": report["score100"],
+                    "grade": report["grade"],
+                    "stageScores": report["stageScores"],
+                    "finalTranscript": report["finalTranscript"],
+                    "finalReferenceText": report["finalReferenceText"],
+                    "finalMissedWords": report["finalMissedWords"],
+                    "clientSubmissionId": report["clientSubmissionId"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Weather and Going Out Pronunciation",
+                    "activityType": "Pronunciation follow-up"
+                }
+                write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": BASIC2_UNIT1_PRONUNCIATION_ID,
+                    "score100": report["score100"],
+                    "grade": report["grade"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
             return
 
         if parsed.path == "/api/french8/final-exam/alerts/ack":

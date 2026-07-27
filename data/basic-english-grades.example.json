@@ -61,6 +61,13 @@
       "weight": 0,
       "type": "AI image / Speaking follow-up",
       "description": "Submitted follow-up visible in the gradebook. Weight 0, so it does not affect the course average."
+    },
+    {
+      "id": "basic2Unit1WeatherGoingOutPronunciation",
+      "title": "Basic 2 Unit 1 Follow-up - Weather and Going Out Pronunciation",
+      "weight": 0,
+      "type": "Pronunciation follow-up",
+      "description": "Submitted pronunciation report visible in the gradebook. Weight 0, so it does not affect the course average."
     }
   ],
   "bonusEvent": null
