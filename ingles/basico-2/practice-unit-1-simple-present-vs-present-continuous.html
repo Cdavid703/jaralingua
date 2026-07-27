@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simple Present vs. Present Continuous | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260724-basic-2-index" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260727-simple-present-continuous" />
+</head>
+<body class="english-basic-page basic2-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="unit-1-going-out.html">Unit 1</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic-2/unit-1-going-out/simple-present-vs-present-continuous.png');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 1 &middot; Activity 03</p>
+        <h1>Simple Present vs. Present Continuous</h1>
+        <p>Transform routine sentences into actions happening now, and transform current actions into simple present routines or facts.</p>
+        <div class="lesson-meta"><span>Grammar Workshop</span><span>A / B / C</span><span>10 questions</span><span>Instant feedback</span></div>
+        <div class="hero-actions">
+          <a href="#quiz" class="btn btn-primary">Start workshop</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-1-going-out/simple-present-vs-present-continuous.png" alt="English grammar workshop with A, B, and C answer cards" /></aside>
+    </section>
+
+    <section class="basic2-practice-shell">
+      <section class="basic2-practice-panel">
+        <p class="eyebrow">Activity objective</p>
+        <h2>Choose the correct tense transformation</h2>
+        <p>Students compare the time meaning of each sentence, choose the correct A, B, or C answer, and receive short feedback about subject agreement, the verb to be, and the -ing form.</p>
+        <div class="basic2-practice-kpis">
+          <span>Simple Present to Present Continuous</span>
+          <span>Present Continuous to Simple Present</span>
+          <span>No open writing</span>
+          <span>Score: 0 / 10</span>
+        </div>
+      </section>
+
+      <section class="basic2-practice-panel">
+        <p class="eyebrow">Quick grammar reminder</p>
+        <h2>Before you choose</h2>
+        <div class="ing-rule-grid">
+          <article class="ing-rule-card">
+            <span class="ing-rule-chip">Simple Present</span>
+            <h3>Routines and facts</h3>
+            <p>Use the base verb with <strong>I, you, we, they</strong>. Add <code>-s</code> or <code>-es</code> with <strong>he, she, it</strong>.</p>
+          </article>
+          <article class="ing-rule-card">
+            <span class="ing-rule-chip">Present Continuous</span>
+            <h3>Actions happening now</h3>
+            <p>Use <strong>am / is / are</strong> + the <code>-ing</code> form of the main verb.</p>
+          </article>
+          <article class="ing-rule-card">
+            <span class="ing-rule-chip">Spelling</span>
+            <h3>Watch the -ing form</h3>
+            <p>Examples: <code>make -> making</code>, <code>run -> running</code>, <code>study -> studying</code>.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="basic2-practice-panel" id="quiz">
+        <div class="ing-quiz-toolbar">
+          <div>
+            <p class="eyebrow">Grammar Workshop</p>
+            <h2>Choose A, B, or C</h2>
+          </div>
+          <div class="weather-callout-actions">
+            <span class="ing-score-pill" id="tenseScore">Score: 0 / 10</span>
+            <button class="weather-callout-btn secondary" type="button" id="tenseReset">Reset</button>
+          </div>
+        </div>
+        <div class="ing-question-grid" id="tenseQuestionGrid" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    (function () {
+      const questions = [
+        {
+          direction: "Simple Present -> Present Continuous",
+          prompt: "She checks the weather every morning.",
+          instruction: "Choose the best present continuous sentence.",
+          options: [
+            { label: "A", text: "She checking the weather right now." },
+            { label: "B", text: "She is checking the weather right now." },
+            { label: "C", text: "She are checking the weather right now." }
+          ],
+          answer: "B",
+          feedback: "Use is with she, then add the -ing form: is checking."
+        },
+        {
+          direction: "Simple Present -> Present Continuous",
+          prompt: "They play soccer on Fridays.",
+          instruction: "Choose the best present continuous sentence.",
+          options: [
+            { label: "A", text: "They is playing soccer now." },
+            { label: "B", text: "They are play soccer now." },
+            { label: "C", text: "They are playing soccer now." }
+          ],
+          answer: "C",
+          feedback: "Use are with they, then add the -ing form: are playing."
+        },
+        {
+          direction: "Present Continuous -> Simple Present",
+          prompt: "He is wearing a jacket today.",
+          instruction: "Choose the best simple present sentence.",
+          options: [
+            { label: "A", text: "He wears a jacket on cold days." },
+            { label: "B", text: "He wear a jacket on cold days." },
+            { label: "C", text: "He is wears a jacket on cold days." }
+          ],
+          answer: "A",
+          feedback: "Use wears with he in the simple present."
+        },
+        {
+          direction: "Present Continuous -> Simple Present",
+          prompt: "We are staying inside now.",
+          instruction: "Choose the best simple present sentence.",
+          options: [
+            { label: "A", text: "We stays inside when it rains." },
+            { label: "B", text: "We stay inside when it rains." },
+            { label: "C", text: "We are stay inside when it rains." }
+          ],
+          answer: "B",
+          feedback: "Use the base verb with we in the simple present: stay."
+        },
+        {
+          direction: "Simple Present -> Present Continuous",
+          prompt: "Daniel watches a movie every weekend.",
+          instruction: "Choose the best present continuous sentence.",
+          options: [
+            { label: "A", text: "Daniel are watching a movie now." },
+            { label: "B", text: "Daniel is watch a movie now." },
+            { label: "C", text: "Daniel is watching a movie now." }
+          ],
+          answer: "C",
+          feedback: "Use is with Daniel, then the -ing form: is watching."
+        },
+        {
+          direction: "Present Continuous -> Simple Present",
+          prompt: "Emma is carrying an umbrella now.",
+          instruction: "Choose the best simple present sentence.",
+          options: [
+            { label: "A", text: "Emma carries an umbrella when it rains." },
+            { label: "B", text: "Emma carry an umbrella when it rains." },
+            { label: "C", text: "Emma is carries an umbrella when it rains." }
+          ],
+          answer: "A",
+          feedback: "Use carries with Emma in the simple present."
+        },
+        {
+          direction: "Simple Present -> Present Continuous",
+          prompt: "I study English after class.",
+          instruction: "Choose the best present continuous sentence.",
+          options: [
+            { label: "A", text: "I is studying English right now." },
+            { label: "B", text: "I am studying English right now." },
+            { label: "C", text: "I am study English right now." }
+          ],
+          answer: "B",
+          feedback: "Use am with I, and keep y before -ing: studying."
+        },
+        {
+          direction: "Present Continuous -> Simple Present",
+          prompt: "The students are writing sentences now.",
+          instruction: "Choose the best simple present sentence.",
+          options: [
+            { label: "A", text: "The students writes sentences in class." },
+            { label: "B", text: "The students are write sentences in class." },
+            { label: "C", text: "The students write sentences in class." }
+          ],
+          answer: "C",
+          feedback: "Use the base verb with plural subjects: write."
+        },
+        {
+          direction: "Simple Present -> Present Continuous",
+          prompt: "It rains in the afternoon.",
+          instruction: "Choose the best present continuous sentence.",
+          options: [
+            { label: "A", text: "It is raining right now." },
+            { label: "B", text: "It raining right now." },
+            { label: "C", text: "It are raining right now." }
+          ],
+          answer: "A",
+          feedback: "Use is with it, then add -ing: is raining."
+        },
+        {
+          direction: "Present Continuous -> Simple Present",
+          prompt: "Mia is making coffee now.",
+          instruction: "Choose the best simple present sentence.",
+          options: [
+            { label: "A", text: "Mia make coffee every morning." },
+            { label: "B", text: "Mia makes coffee every morning." },
+            { label: "C", text: "Mia is makes coffee every morning." }
+          ],
+          answer: "B",
+          feedback: "Use makes with Mia in the simple present."
+        }
+      ];
+
+      const grid = document.getElementById("tenseQuestionGrid");
+      const score = document.getElementById("tenseScore");
+      const answered = new Map();
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function updateScore() {
+        const correct = Array.from(answered.values()).filter(Boolean).length;
+        score.textContent = "Score: " + correct + " / " + questions.length;
+      }
+
+      function renderQuestions() {
+        grid.innerHTML = "";
+        questions.forEach(function (question, index) {
+          const card = document.createElement("article");
+          card.className = "ing-question-card";
+          card.dataset.index = String(index);
+          card.innerHTML = [
+            '<span class="ing-rule-chip">' + escapeHtml(question.direction) + '</span>',
+            '<h3>' + (index + 1) + '. <code>' + escapeHtml(question.prompt) + '</code></h3>',
+            '<p>' + escapeHtml(question.instruction) + '</p>',
+            '<div class="ing-option-list">' + question.options.map(function (option) {
+              return '<button type="button" class="ing-option" data-option="' + escapeHtml(option.label) + '"><strong>' + escapeHtml(option.label) + '.</strong> ' + escapeHtml(option.text) + '</button>';
+            }).join("") + '</div>',
+            '<div class="ing-feedback">Choose one answer.</div>'
+          ].join("");
+          grid.appendChild(card);
+        });
+      }
+
+      function answerQuestion(card, optionLabel) {
+        const index = Number(card.dataset.index);
+        const question = questions[index];
+        const buttons = Array.from(card.querySelectorAll(".ing-option"));
+        const feedback = card.querySelector(".ing-feedback");
+        const isCorrect = optionLabel === question.answer;
+        answered.set(index, isCorrect);
+
+        buttons.forEach(function (button) {
+          const buttonOption = button.getAttribute("data-option");
+          button.classList.remove("is-selected", "is-correct", "is-incorrect");
+          if (buttonOption === optionLabel) button.classList.add("is-selected");
+          if (buttonOption === question.answer) button.classList.add("is-correct");
+          if (buttonOption === optionLabel && !isCorrect) button.classList.add("is-incorrect");
+        });
+
+        feedback.className = "ing-feedback " + (isCorrect ? "is-correct" : "is-incorrect");
+        feedback.textContent = (isCorrect ? "Correct. " : "Try again. ") + question.feedback;
+        updateScore();
+      }
+
+      grid.addEventListener("click", function (event) {
+        const button = event.target.closest(".ing-option");
+        if (!button) return;
+        const card = button.closest(".ing-question-card");
+        answerQuestion(card, button.getAttribute("data-option"));
+      });
+
+      document.getElementById("tenseReset").addEventListener("click", function () {
+        answered.clear();
+        renderQuestions();
+        updateScore();
+      });
+
+      renderQuestions();
+      updateScore();
+    })();
+  </script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
