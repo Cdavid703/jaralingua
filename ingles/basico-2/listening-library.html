@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Listening Library | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic-2-listening-library" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260707-basic-responsive-b" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260726-listening-controls-b" />
+  <style>
+    .basic2-listening-library .listening-library-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+
+    .basic2-listening-library .listening-card {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, .1);
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 18px 36px rgba(15, 23, 42, .08);
+    }
+
+    .basic2-listening-library .listening-card-image {
+      position: relative;
+      aspect-ratio: 16 / 10;
+      overflow: hidden;
+      background: #eaf3ff;
+    }
+
+    .basic2-listening-library .listening-card-image img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .basic2-listening-library .listening-card-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: .85rem;
+      padding: 1.25rem;
+    }
+
+    .basic2-listening-library .listening-card-body h3 {
+      margin: 0;
+      color: #071f4f;
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .basic2-listening-library .listening-card-body p {
+      margin: 0;
+      color: #334155;
+      line-height: 1.65;
+    }
+
+    .basic2-listening-library .listening-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .5rem;
+    }
+
+    .basic2-listening-library .listening-card-meta span {
+      border-radius: 999px;
+      background: #eef5ff;
+      color: #071f4f;
+      font-size: .82rem;
+      font-weight: 850;
+      padding: .38rem .68rem;
+    }
+
+    .basic2-listening-library .listening-note {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      border: 1px solid rgba(37, 99, 235, .16);
+      border-radius: 8px;
+      background: #f7fbff;
+      color: #1e293b;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body class="english-basic-page basic2-page basic2-listening-library">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="games.html">Games</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic-2/listening-library-banner.webp');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Basic English Course 2</p>
+        <h1>Listening Library</h1>
+        <p>Find the complete listening activities for this level. Unit 1 is open now with one video listening and one audio listening.</p>
+        <div class="lesson-meta"><span>2 listenings</span><span>Unit 1</span><span>Video + audio</span><span>10 questions each</span></div>
+        <div class="hero-actions">
+          <a href="#unit-1-listenings" class="btn btn-primary">Open Unit 1 listenings</a>
+          <a href="index.html" class="btn btn-secondary">Back to Course 2</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/listening-library-banner.webp" alt="Basic English Course 2 listening library" /></aside>
+    </section>
+
+    <section class="quick-access-panel compact" aria-label="Quick navigation">
+      <div class="quick-access-header"><h2>Listening folders</h2><span>Basic 2</span></div>
+      <details class="quick-access-dropdown" open>
+        <summary>Choose a listening folder</summary>
+        <div class="quick-link-list">
+          <a href="#unit-1-listenings"><b>01</b><span>Unit 1: Going Out - 2 listenings</span></a>
+          <a href="#future-listenings"><b>02-06</b><span>More listening folders reserved</span></a>
+        </div>
+      </details>
+    </section>
+
+    <section class="basic-intro-section" id="unit-1-listenings">
+      <div class="section-heading">
+        <p class="eyebrow">Unit 1: Going Out</p>
+        <h2>Weather, plans, and actions happening now</h2>
+        <p>These activities train listening comprehension with weather language, present continuous forms, and simple plan changes.</p>
+      </div>
+
+      <div class="listening-library-grid">
+        <article class="listening-card">
+          <div class="listening-card-image">
+            <img src="../../assets/img/english-basic-2/unit-1-going-out/video-listening-going-out-staying-in.webp" alt="Video listening about going out or staying in because of the weather" />
+          </div>
+          <div class="listening-card-body">
+            <div class="listening-card-meta"><span>Unit 1</span><span>Video listening</span><span>10 questions</span></div>
+            <h3>Going Out or Staying In?</h3>
+            <p>Students watch Emma and Daniel talk about the weather, current actions, and a change of plan.</p>
+            <a href="video-listening-unit-1-weather-going-out.html" class="card-link">Open video listening</a>
+          </div>
+        </article>
+
+        <article class="listening-card">
+          <div class="listening-card-image">
+            <img src="../../assets/img/english-basic-2/unit-1-going-out/audio-listening-weather-plan-change.webp" alt="Audio listening about changing plans because of the weather" />
+          </div>
+          <div class="listening-card-body">
+            <div class="listening-card-meta"><span>Unit 1</span><span>Audio listening</span><span>10 questions</span></div>
+            <h3>Changing Plans Because of the Weather</h3>
+            <p>Students listen without video support and identify weather details, present continuous forms, and the speakers' final plan.</p>
+            <a href="audio-listening-unit-1-weather-plan-change.html" class="card-link">Open audio listening</a>
+          </div>
+        </article>
+      </div>
+
+      <div class="listening-note">
+        <strong>Library rule:</strong> this page collects complete listening activities only. Vocabulary pronunciation clips, pronunciation drills, and conversation-coach audios stay in their own sections.
+      </div>
+    </section>
+
+    <section class="basic-intro-section" id="future-listenings">
+      <div class="section-heading">
+        <p class="eyebrow">Reserved folders</p>
+        <h2>Units 2-6 will open as their listenings are created</h2>
+        <p>Shopping, travel, busy lives, memories, and food listenings will be added here when each unit receives a complete activity.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. Basic English Course 2 Listening Library.</p>
+  </footer>
+
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260726-nav-auth-listening-library"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
