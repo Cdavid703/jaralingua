@@ -45,6 +45,13 @@ body.phonetic-page .site-header {
   z-index: 20;
 }
 
+body.basic2-page .site-header,
+body.basic2-index-page .site-header {
+  position: fixed;
+  top: 0;
+  z-index: 1000;
+}
+
 body.english-basic-page .premium-lesson-container,
 body.english-basic-page .lesson-outcome,
 body.english-basic-page .pronunciation-main,

@@ -1512,7 +1512,7 @@
   }
 
   function createNavAccess() {
-    const navTarget = document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar");
+    const navTarget = document.querySelector(".site-header [data-auth-nav-slot], .site-header .nav-links, .site-header .navbar-nav, .site-header .navbar");
     if (!navTarget) return null;
 
     let navRoot = document.querySelector("[data-jaralingua-auth-nav]");

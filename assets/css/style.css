@@ -7524,6 +7524,11 @@ iframe {
     position: sticky;
   }
 
+  .basic2-page .site-header,
+  .basic2-index-page .site-header {
+    position: fixed;
+  }
+
   .navbar {
     align-items: stretch;
     padding: 10px 14px;
