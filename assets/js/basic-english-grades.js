@@ -1,14 +1,31 @@
 (function () {
+  const PAGE_CONFIG = Object.assign({
+    apiPath: "/api/basic/grades",
+    courseTitle: "Basic English",
+    courseFullTitle: "Basic English Course 1",
+    courseGradebookTitle: "Basic English gradebook",
+    studentRecordName: "Basic English student record",
+    excelTitle: "Basic English Course 1 - Grades",
+    excelFileName: "basic-english-grades.xls",
+    reportCourseLabel: "Basic English",
+    reportFilePrefix: "basic-english-grades",
+    microsoftRedirectPath: "/ingles/basico/notas.html",
+    studentIdClaimKey: "jaralingua_basic_student_id_claim",
+    emptyGradeGrid: false,
+    disableAdminEditing: false,
+    hidePdfReports: false,
+    emptyAssessmentsMessage: "No assessments have been created for this level yet."
+  }, window.JARALINGUA_BASIC_GRADES_CONFIG || {});
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const LOCAL_USER_KEY = "jaralingua_local_user";
-  const API_PATH = "/api/basic/grades";
-  const STUDENT_ID_CLAIM_KEY = "jaralingua_basic_student_id_claim";
+  const API_PATH = PAGE_CONFIG.apiPath;
+  const STUDENT_ID_CLAIM_KEY = PAGE_CONFIG.studentIdClaimKey;
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
   const MICROSOFT_CLIENT_ID = (window.JARALINGUA_MICROSOFT_CLIENT_ID || "4e729f8a-d101-4c5d-af68-609d749bc95a").trim();
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
   const MICROSOFT_AUTHORITY = window.JARALINGUA_MICROSOFT_AUTHORITY || "https://login.microsoftonline.com/consumers";
-  const MICROSOFT_REDIRECT_URI = window.JARALINGUA_MICROSOFT_REDIRECT_URI || (window.location.origin + "/ingles/basico/notas.html");
+  const MICROSOFT_REDIRECT_URI = window.JARALINGUA_MICROSOFT_REDIRECT_URI || (window.location.origin + PAGE_CONFIG.microsoftRedirectPath);
   const MICROSOFT_SCOPES = Array.isArray(window.JARALINGUA_MICROSOFT_SCOPES) ? window.JARALINGUA_MICROSOFT_SCOPES : ["User.Read"];
 
   let lastSignature = "";
@@ -94,6 +111,24 @@
     return { label: "Pending", className: "pending" };
   }
 
+  function emptyGradeStudent(student) {
+    return Object.assign({}, student || {}, {
+      level: PAGE_CONFIG.courseFullTitle,
+      grades: {},
+      gradeDetails: {}
+    });
+  }
+
+  function normalizeGradesPayload(payload) {
+    if (!PAGE_CONFIG.emptyGradeGrid || !payload || typeof payload !== "object") return payload;
+    const next = Object.assign({}, payload, {
+      evaluations: [],
+      students: Array.isArray(payload.students) ? payload.students.map(emptyGradeStudent) : []
+    });
+    if (payload.student) next.student = emptyGradeStudent(payload.student);
+    return next;
+  }
+
   function gradeSummary(student, evaluations) {
     let completedWeight = 0;
     let earned = 0;
@@ -149,9 +184,9 @@
   function promptStudentIdClaim(user) {
     const activeEmail = user && user.email ? "\nSigned in as: " + user.email : "";
     const claim = String(window.prompt(
-      "We could not find your email in the Basic English gradebook." + activeEmail +
+      "We could not find your email in the " + PAGE_CONFIG.courseTitle + " gradebook." + activeEmail +
       "\n\nPlease type your ID/document number to link this account to your student record." +
-      "\n\nNo encontramos tu correo en la grilla de Inglés Básico. Escribe tu documento/ID para validar tu acceso:",
+      "\n\nNo encontramos tu correo en la grilla del curso. Escribe tu documento/ID para validar tu acceso:",
       ""
     ) || "").replace(/\D+/g, "");
     if (claim) sessionStorage.setItem(STUDENT_ID_CLAIM_KEY, claim);
@@ -320,7 +355,7 @@
         <i class="bi bi-shield-lock-fill"></i>
         <h2 class="section-title">Sign in required</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          Sign in with your Google or Microsoft account to see only your own Basic English grades.
+          Sign in with your Google or Microsoft account to see only your own ${escapeHtml(PAGE_CONFIG.courseTitle)} grades.
         </p>
         <div class="d-flex flex-wrap justify-content-center align-items-center gap-3 mt-4">
           <div>
@@ -360,7 +395,7 @@
         <i class="bi bi-person-check-fill"></i>
         <h2 class="section-title">No grade record linked</h2>
         <p class="section-text mx-auto" style="max-width: 720px;">
-          Your signed-in email is not linked to a Basic English student record yet. Contact the teacher to review the email in the grade list.
+          Your signed-in email is not linked to a ${escapeHtml(PAGE_CONFIG.studentRecordName)} yet. Contact the teacher to review the email in the grade list.
         </p>
       </div>
     `;
@@ -406,7 +441,7 @@
         <div class="col-lg-5">
           <div class="grades-panel h-100">
             <p class="section-kicker">Individual progress</p>
-            <h2 class="section-title">My Basic English grades</h2>
+            <h2 class="section-title">My ${escapeHtml(PAGE_CONFIG.courseTitle)} grades</h2>
             <p class="section-text">Review your current scores and the percentage already evaluated in the course.</p>
             ${studentMetricsMarkup(student, payload.evaluations)}
           </div>
@@ -418,7 +453,7 @@
             <div class="table-wrap">
               <table class="grades-table">
                 <thead><tr><th>Assessment</th><th>Type</th><th>Weight</th><th>Grade</th><th>Status</th></tr></thead>
-                <tbody>${studentGradesRows(student, payload.evaluations)}</tbody>
+                <tbody>${studentGradesRows(student, payload.evaluations) || `<tr><td colspan="5">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</td></tr>`}</tbody>
               </table>
             </div>
           </div>
@@ -571,7 +606,7 @@
               </div>
               <div class="col-md-4">
                 <label class="form-label fw-bold">Level</label>
-                <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || "Basic English Course 1")}" data-new-student-field="level">
+                <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || PAGE_CONFIG.courseFullTitle)}" data-new-student-field="level">
               </div>
               <div class="col-md-6">
                 <label class="form-label fw-bold">Email</label>
@@ -607,7 +642,7 @@
   }
 
   function staffPdfToolsMarkup(payload) {
-    if (payload.role !== "admin" || !window.JaraEnglishGradeReports) return "";
+    if (PAGE_CONFIG.hidePdfReports || payload.role !== "admin" || !window.JaraEnglishGradeReports) return "";
     const levels = window.JaraEnglishGradeReports.levels(payload);
     const directorsButtons = levels.map(function (level) {
       return `
@@ -645,7 +680,7 @@
       <div class="grades-panel mb-4" data-staff-reports>
         <p class="section-kicker">Exports and reports</p>
         <h2 class="section-title">Course reports</h2>
-        <p class="section-text mb-3">Download the complete gradebook or the official PDF reports available for this level.</p>
+        <p class="section-text mb-3">${PAGE_CONFIG.hidePdfReports ? "Download the current gradebook as an Excel file." : "Download the complete gradebook or the official PDF reports available for this level."}</p>
         <button class="btn-main" type="button" data-export-excel><i class="bi bi-file-earmark-spreadsheet"></i> Download Excel</button>
       </div>
       ${staffPdfToolsMarkup(payload)}
@@ -661,7 +696,8 @@
       ${staffControlsMarkup()}
       <div class="grades-panel" data-official-gradebook>
         <p class="section-kicker">Private data</p>
-        <h2 class="section-title">Basic English gradebook</h2>
+        <h2 class="section-title">${escapeHtml(PAGE_CONFIG.courseGradebookTitle)}</h2>
+        ${PAGE_CONFIG.emptyGradeGrid ? `<p class="section-text mb-3">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</p>` : ""}
         <div class="table-wrap">
           <table class="grades-table">
             <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
@@ -678,7 +714,7 @@
       tabs.panel("gradebook", gradebookMarkup, true),
       tabs.panel("reports", staffReportsMarkup(payload), false)
     ];
-    if (payload.role === "admin") {
+    if (payload.role === "admin" && !PAGE_CONFIG.disableAdminEditing) {
       tabButtons.push(tabs.button("add-grade", "Add grade", "bi-plus-square-fill"));
       tabButtons.push(tabs.button("students", "Students & grades", "bi-people-fill", { count: payload.students.length }));
       tabPanels.push(tabs.panel("add-grade", adminToolsMarkup(payload), false));
@@ -696,7 +732,7 @@
       <div class="metric-grid mb-4">
         <div class="metric-card"><span>Students</span><strong>${payload.students.length}</strong></div>
         <div class="metric-card"><span>Assessments</span><strong>${payload.evaluations.length}</strong></div>
-        <div class="metric-card"><span>Course</span><strong>Basic English</strong></div>
+        <div class="metric-card"><span>Course</span><strong>${escapeHtml(PAGE_CONFIG.courseTitle)}</strong></div>
       </div>
       <div class="staff-tabs" data-gradebook-tabs>
         <div class="staff-tab-nav" role="tablist" aria-label="Gradebook administration sections">
@@ -790,7 +826,7 @@
         </head>
         <body>
           <table>
-            <tr><td class="title" colspan="${payload.evaluations.length + 5}">Basic English Course 1 - Grades</td></tr>
+            <tr><td class="title" colspan="${payload.evaluations.length + 5}">${excelCell(PAGE_CONFIG.excelTitle)}</td></tr>
             <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr>
             ${rows}
           </table>
@@ -800,7 +836,7 @@
     const blob = new Blob(["\ufeff", html], { type: "application/vnd.ms-excel;charset=utf-8" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);
-    link.download = "basic-english-grades.xls";
+    link.download = PAGE_CONFIG.excelFileName;
     document.body.appendChild(link);
     link.click();
     setTimeout(function () {
@@ -824,8 +860,8 @@
           payload,
           button.dataset.downloadPdfAudience,
           button.dataset.downloadPdfLevel,
-          "Basic English",
-          "basic-english-grades",
+          PAGE_CONFIG.reportCourseLabel,
+          PAGE_CONFIG.reportFilePrefix,
           { directorDetail: "level" }
         );
       });
@@ -911,7 +947,7 @@
     return {
       id: id,
       fullName: fullName,
-      level: cardField(card, "level") || "Basic English Course 1",
+      level: cardField(card, "level") || PAGE_CONFIG.courseFullTitle,
       email: cardField(card, "email"),
       emailAliases: original.emailAliases || [],
       contact: cardField(card, "contact"),
@@ -929,7 +965,7 @@
     return {
       id: id,
       fullName: fullName,
-      level: newStudentField(card, "level") || "Basic English Course 1",
+      level: newStudentField(card, "level") || PAGE_CONFIG.courseFullTitle,
       email: newStudentField(card, "email"),
       emailAliases: [],
       contact: newStudentField(card, "contact"),
@@ -1006,6 +1042,8 @@
     }).then(function (response) {
       if (!response.ok) throw new Error("The API rejected the request: " + response.status);
       return response.json();
+    }).then(function (payload) {
+      return normalizeGradesPayload(payload);
     });
   }
 

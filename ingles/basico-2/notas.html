@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Grades | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <link href="../../assets/css/gradebook-tabs.css?v=20260721" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #202938;
+      --muted: #64748b;
+      --blue: #2563eb;
+      --green: #16805f;
+      --surface: #f5f7fb;
+      --white: #ffffff;
+      --line: rgba(32, 41, 56, 0.12);
+      --shadow: 0 22px 55px rgba(21, 34, 62, 0.13);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--ink);
+      background: var(--surface);
+      overflow-x: hidden;
+    }
+
+    h1,
+    h2,
+    h3,
+    .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 34, 62, 0.08);
+    }
+
+    .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .brand-logo {
+      height: 42px;
+      width: auto;
+    }
+
+    .nav-link {
+      color: var(--ink);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    .hero {
+      min-height: min(640px, 82vh);
+      display: flex;
+      align-items: center;
+      padding: 6.25rem 0 4rem;
+      color: var(--white);
+      background:
+        linear-gradient(110deg, rgba(17, 24, 39, 0.92), rgba(37, 99, 235, 0.66), rgba(22, 128, 95, 0.48)),
+        url("../../assets/img/english-basic-2/basic-course-2-banner.webp") center / cover no-repeat;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 900;
+      line-height: 0.98;
+      font-size: clamp(2.65rem, 6vw, 5rem);
+      text-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-text {
+      max-width: 820px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.12rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-main,
+    .btn-soft {
+      min-height: 46px;
+      border-radius: 999px;
+      font-weight: 900;
+      padding: 0.78rem 1.15rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border: 0;
+    }
+
+    .btn-main {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .btn-soft {
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(12px);
+    }
+
+    .grades-panel .btn-soft {
+      background: #eef4ff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      backdrop-filter: none;
+    }
+
+    .global-course-switcher {
+      position: fixed;
+      right: 1rem;
+      top: 5.25rem;
+      z-index: 1200;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .global-course-switcher summary {
+      list-style: none;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 1rem;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 900;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.18);
+      cursor: pointer;
+    }
+
+    .global-course-switcher summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .global-course-switcher summary::after {
+      content: "v";
+      font-size: 0.8rem;
+    }
+
+    .global-course-switcher nav {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 0.5rem);
+      width: min(265px, calc(100vw - 2rem));
+      display: grid;
+      gap: 0.35rem;
+      padding: 0.65rem;
+      border-radius: 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+    }
+
+    .global-course-switcher a {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 0.85rem;
+      border-radius: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .global-course-switcher a:hover {
+      background: #eef4ff;
+      color: var(--blue);
+    }
+
+    .grades-shell {
+      width: min(1180px, calc(100% - 2rem));
+      margin: -2.2rem auto 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .grades-card,
+    .grades-panel,
+    .locked-card,
+    .privacy-note {
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .grades-card {
+      padding: clamp(1.1rem, 2.6vw, 2rem);
+    }
+
+    .grades-panel,
+    .locked-card,
+    .privacy-note {
+      padding: 1.2rem;
+    }
+
+    .locked-card {
+      text-align: center;
+    }
+
+    .locked-card i {
+      font-size: 2.4rem;
+      color: var(--blue);
+    }
+
+    .section-kicker {
+      color: var(--green);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.35rem;
+    }
+
+    .section-title {
+      font-weight: 900;
+      margin-bottom: 0.65rem;
+    }
+
+    .section-text {
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .privacy-note i {
+      color: var(--green);
+      font-size: 1.6rem;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1rem;
+    }
+
+    .metric-card {
+      padding: 1rem;
+      border-radius: 18px;
+      background: #eef4ff;
+      border: 1px solid rgba(37, 99, 235, 0.12);
+    }
+
+    .metric-card span {
+      display: block;
+      color: var(--muted);
+      font-weight: 800;
+      font-size: 0.84rem;
+    }
+
+    .metric-card strong {
+      display: block;
+      margin-top: 0.25rem;
+      font-size: 1.45rem;
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    .grades-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+    }
+
+    .grades-table th,
+    .grades-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid var(--line);
+      vertical-align: middle;
+    }
+
+    .grades-table th {
+      color: var(--muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 0.28rem 0.65rem;
+      background: #eef4ff;
+      color: var(--blue);
+      font-weight: 900;
+      font-size: 0.78rem;
+    }
+
+    .footer {
+      color: var(--muted);
+      padding: 2rem 0;
+    }
+
+    .footer a {
+      color: var(--blue);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        min-height: auto;
+        padding: 5.6rem 0 3.2rem;
+      }
+
+      .global-course-switcher {
+        top: 4.7rem;
+        right: 0.75rem;
+      }
+
+      .hero-actions .btn-main,
+      .hero-actions .btn-soft {
+        width: 100%;
+      }
+
+      .privacy-note {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="index.html" aria-current="page">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+      </nav>
+    </details>
+  </div>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua">
+        <span>Basic English 2</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Show menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Portal</a></li>
+          <li class="nav-item"><a class="nav-link" href="course-overview.html">Course</a></li>
+          <li class="nav-item"><a class="nav-link" href="practice-lab.html">Practice Lab</a></li>
+          <li class="nav-item"><a class="nav-link" href="games.html">Games</a></li>
+          <li class="nav-item"><a class="nav-link active" href="notas.html">Grades</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <span class="badge-course"><i class="bi bi-clipboard-data-fill"></i> Private academic progress</span>
+      <h1>Basic English Course 2 grades</h1>
+      <p class="hero-text">
+        This initial gradebook uses the same registered student roster from Basic English Course 1.
+        The assessment grid is intentionally empty until Course 2 evaluations are officially created.
+      </p>
+      <div class="hero-actions">
+        <a href="#grades" class="btn-main"><i class="bi bi-bar-chart-line-fill"></i> Check grades</a>
+        <a href="index.html" class="btn-soft"><i class="bi bi-arrow-left-circle"></i> Back to Basic 2</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="grades">
+    <div class="grades-shell">
+      <div id="basicEnglishGradesApp" class="grades-card" aria-live="polite">
+        <div class="locked-card">
+          <i class="bi bi-hourglass-split"></i>
+          <h2 class="section-title">Loading grades</h2>
+          <p class="section-text">We are verifying your session before showing course information.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container d-flex flex-wrap justify-content-between gap-3">
+      <span>&copy; 2026 JaraLingua</span>
+      <a href="../index.html">Back to English</a>
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script>
+    window.JARALINGUA_BASIC_GRADES_CONFIG = {
+      courseTitle: "Basic English Course 2",
+      courseFullTitle: "Basic English Course 2",
+      courseGradebookTitle: "Basic English Course 2 gradebook",
+      studentRecordName: "Basic English Course 2 student record",
+      excelTitle: "Basic English Course 2 - Grades",
+      excelFileName: "basic-english-course-2-grades.xls",
+      reportCourseLabel: "Basic English Course 2",
+      reportFilePrefix: "basic-english-course-2-grades",
+      microsoftRedirectPath: "/ingles/basico-2/notas.html",
+      studentIdClaimKey: "jaralingua_basic2_student_id_claim",
+      emptyGradeGrid: true,
+      disableAdminEditing: true,
+      hidePdfReports: true,
+      emptyAssessmentsMessage: "No Basic English Course 2 assessments have been created yet. The student roster is ready."
+    };
+  </script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
+  <script src="../../assets/js/google-auth.js?v=20260707-basic-claims"></script>
+  <script src="../../assets/js/english-grade-report-pdf.js?v=20260608-3"></script>
+  <script src="../../assets/js/gradebook-tabs.js?v=20260721"></script>
+  <script src="../../assets/js/basic-english-grades.js?v=20260727-basic2-empty-grid"></script>
+  <script src="../../assets/js/jaralingua-back-button.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260727-basic2-grades"></script>
+</body>
+</html>
