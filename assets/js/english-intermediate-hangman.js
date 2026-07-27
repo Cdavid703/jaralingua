@@ -1,9 +1,10 @@
 (function () {
   "use strict";
 
-  var DATA = window.JaraLinguaEnglishIntermediateHangman || { categories: [], expectedEntries: 0 };
-  var STORAGE_KEY = "english-intermediate-hangman-game-v2";
-  var SOUND_KEY = "english-intermediate-hangman-sound-v1";
+  var GAME_CONFIG = window.JaraLinguaHangmanConfig || {};
+  var DATA = GAME_CONFIG.data || window.JaraLinguaEnglishBasic2Hangman || window.JaraLinguaEnglishIntermediateHangman || { categories: [], expectedEntries: 0 };
+  var STORAGE_KEY = GAME_CONFIG.storageKey || "english-intermediate-hangman-game-v2";
+  var SOUND_KEY = GAME_CONFIG.soundKey || "english-intermediate-hangman-sound-v1";
   var GOOGLE_USER_KEY = "jaralingua_google_user";
   var MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   var LOCAL_USER_KEY = "jaralingua_local_user";
@@ -11,10 +12,12 @@
   var ADMIN_EMAILS = ["cdavid.jaramillo@gmail.com"];
   var MAX_ERRORS = 6;
   var BASE_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
-  var SFX_BASE = "audio/sfx/hangman/";
-  var ALPHABET_AUDIO_BASE = "/ingles/basico/audio/alphabet/";
-  var ANSWER_AUDIO_BASE = "/ingles/intermediate/audio/hangman/answers/";
-  var AUDIO_VERSION = "?v=20260718-hangman";
+  var SFX_BASE = GAME_CONFIG.sfxBase || "audio/sfx/hangman/";
+  var ALPHABET_AUDIO_BASE = GAME_CONFIG.alphabetAudioBase || "/ingles/basico/audio/alphabet/";
+  var ANSWER_AUDIO_BASE = GAME_CONFIG.answerAudioBase || "/ingles/intermediate/audio/hangman/answers/";
+  var ANSWER_AUDIO_ENABLED = GAME_CONFIG.answerAudioEnabled !== false;
+  var ALLOW_ALL_CATEGORIES = GAME_CONFIG.allowAllCategories !== false;
+  var AUDIO_VERSION = GAME_CONFIG.audioVersion || "?v=20260718-hangman";
   var SFX = {
     start: "game-start.mp3",
     correct: "correct-letter.mp3",
@@ -442,6 +445,13 @@
 
   function populateCategories() {
     var select = $("#categorySelect");
+    select.innerHTML = "";
+    if (ALLOW_ALL_CATEGORIES) {
+      var allOption = document.createElement("option");
+      allOption.value = "all";
+      allOption.textContent = GAME_CONFIG.allCategoriesLabel || "All course categories";
+      select.appendChild(allOption);
+    }
     (DATA.categories || []).forEach(function (category) {
       var option = document.createElement("option");
       option.value = category.id;
@@ -452,6 +462,9 @@
 
   function hydrateSetup() {
     $("#studentNamesInput").value = (state.roster || []).join("\n");
+    if (!ALLOW_ALL_CATEGORIES && (state.category === "all" || !state.category)) {
+      state.category = (DATA.categories[0] && DATA.categories[0].id) || "";
+    }
     $("#categorySelect").value = state.category || "all";
     $("#answerTypeSelect").value = state.answerType || "all";
     $("#targetScoreInput").value = state.targetScore || 10;
@@ -587,14 +600,16 @@
     titleWrap.appendChild(eyebrow);
     titleWrap.appendChild(solution);
 
-    var audioButton = document.createElement("button");
-    audioButton.type = "button";
-    audioButton.className = "games-btn-soft answer-audio-btn";
-    audioButton.dataset.answerAudio = entry.id;
-    audioButton.innerHTML = '<i class="bi bi-volume-up-fill"></i> Hear the answer';
-    audioButton.setAttribute("aria-label", "Hear the pronunciation of " + entry.answer);
     header.appendChild(titleWrap);
-    header.appendChild(audioButton);
+    if (ANSWER_AUDIO_ENABLED) {
+      var audioButton = document.createElement("button");
+      audioButton.type = "button";
+      audioButton.className = "games-btn-soft answer-audio-btn";
+      audioButton.dataset.answerAudio = entry.id;
+      audioButton.innerHTML = '<i class="bi bi-volume-up-fill"></i> Hear the answer';
+      audioButton.setAttribute("aria-label", "Hear the pronunciation of " + entry.answer);
+      header.appendChild(audioButton);
+    }
     result.appendChild(header);
 
     var recap = document.createElement("div");
@@ -1037,7 +1052,7 @@
       return /^[a-z]$/.test(key) ? ALPHABET_AUDIO_BASE + key + ".mp3" + AUDIO_VERSION : "";
     },
     answerAudioUrl: function (entryId) {
-      return entryById[entryId] ? ANSWER_AUDIO_BASE + entryId + ".mp3" + AUDIO_VERSION : "";
+      return ANSWER_AUDIO_ENABLED && entryById[entryId] ? ANSWER_AUDIO_BASE + entryId + ".mp3" + AUDIO_VERSION : "";
     }
   };
 

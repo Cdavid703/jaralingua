@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather Hangman | Basic English Course 2 | JaraLingua</title>
+  <meta name="description" content="Teacher-led Basic English Course 2 hangman game for Unit 1 weather vocabulary, weather sentences, present continuous actions, and weather idioms.">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96">
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../../assets/css/english-intermediate-games.css?v=20260727-basic2-weather-hangman">
+</head>
+<body class="games-page hangman-page" data-back-fallback="games.html">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <nav class="navbar navbar-expand-lg site-header">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua">
+        <span>Basic English Course 2</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#hangmanNav" aria-controls="hangmanNav" aria-expanded="false" aria-label="Open navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="hangmanNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Course Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="course-overview.html">Course Overview</a></li>
+          <li class="nav-item"><a class="nav-link" href="practice-lab.html">Practice Lab</a></li>
+          <li class="nav-item"><a class="nav-link active" href="games.html">Games</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="games-hero hangman-hero" style="--hero-image:url('../../assets/img/english-basic-2/games/weather-hangman-hero.png')">
+    <div class="container">
+      <div class="games-hero-content">
+        <span class="games-badge"><i class="bi bi-cloud-sun-fill"></i> Unit 1 classroom game</span>
+        <h1>Weather Hangman</h1>
+        <p class="lead">Reconstruct weather words, weather sentences, present continuous actions, and weather idioms with progressive English clues.</p>
+        <div class="games-actions">
+          <a class="games-btn" href="#game"><i class="bi bi-play-fill"></i> Set up the game</a>
+          <a class="games-btn-soft" href="games.html"><i class="bi bi-arrow-left"></i> All games</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="games-section white" id="how-it-works">
+      <div class="container">
+        <div class="hangman-intro-grid">
+          <article class="history-copy">
+            <p class="games-kicker">Spelling with context</p>
+            <h2 class="games-title">Four clean challenges, no mixed bank</h2>
+            <p>This Unit 1 version keeps each challenge separate: single weather words, complete weather sentences, present continuous action phrases, and weather idioms. The teacher can also filter by answer format when the class needs only single words or only multi-word answers.</p>
+            <p class="mb-0">The teacher controls the board and scoreboard. Game points stay inside this match and are not sent to the course gradebook.</p>
+          </article>
+          <aside class="history-note" aria-label="Audio information">
+            <h3><i class="bi bi-volume-up-fill"></i> Letter audio</h3>
+            <p>Each letter button plays its recorded American English name. The browser's synthetic voice is never used for the alphabet.</p>
+            <p class="mb-0"><strong>Z is pronounced "zee"</strong> in this course.</p>
+          </aside>
+        </div>
+
+        <div class="rules-strip" aria-label="Game rules">
+          <article class="rule-step"><span>1</span><h3>Choose</h3><p>Select the Unit 1 challenge, answer format, participants, and target score.</p></article>
+          <article class="rule-step"><span>2</span><h3>Listen</h3><p>Choose a letter and hear its American English name before the result appears.</p></article>
+          <article class="rule-step"><span>3</span><h3>Reason</h3><p>Use progressive English clues to discover the answer.</p></article>
+          <article class="rule-step"><span>4</span><h3>Review</h3><p>Read the meaning, example, usage note, and course connection after each round.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="games-section" id="game">
+      <div class="container">
+        <p class="games-kicker">Teacher-led match</p>
+        <h2 class="games-title">Game board</h2>
+        <p class="games-copy">A correct letter earns one point. A complete solution earns three points with one clue, two points with two clues, or one point with all three clues.</p>
+
+        <div id="statusMessage" class="status-message" role="status" aria-live="assertive" hidden></div>
+
+        <section class="teacher-gate" id="teacherGate">
+          <div>
+            <h3><i class="bi bi-lock-fill"></i> Teacher access required</h3>
+            <p>Sign in with an approved teacher or administrator account to prepare and control the match.</p>
+          </div>
+          <button class="games-btn" type="button" id="openAuthButton"><i class="bi bi-person-circle"></i> Sign in</button>
+        </section>
+
+        <section class="spectator-note" id="spectatorNote" hidden>
+          <h3><i class="bi bi-eye-fill"></i> Student account detected</h3>
+          <p class="mb-0">This is a teacher-controlled classroom board. Follow the shared screen and give your letter or solution when your name appears.</p>
+        </section>
+
+        <section class="teacher-setup" id="teacherSetup" hidden>
+          <div class="setup-head">
+            <h2><i class="bi bi-sliders"></i> Teacher setup</h2>
+            <span>The roster and game progress stay in this browser.</span>
+          </div>
+          <div class="setup-body">
+            <div class="setup-grid">
+              <div class="form-stack">
+                <div class="form-field">
+                  <label for="studentNamesInput">Participants</label>
+                  <textarea id="studentNamesInput" placeholder="One name per line&#10;Ana&#10;Paul&#10;Sofia&#10;Lucas"></textarea>
+                  <input type="file" id="studentFileInput" accept=".xlsx,.csv,.txt,.tsv" hidden>
+                  <p class="roster-import-status" id="rosterImportStatus" aria-live="polite"></p>
+                </div>
+                <div class="setup-actions">
+                  <button class="games-btn-soft" type="button" id="importStudentsButton"><i class="bi bi-file-earmark-spreadsheet"></i> Import Excel/CSV</button>
+                  <button class="games-btn-soft" type="button" id="sampleStudentsButton"><i class="bi bi-people"></i> Load sample names</button>
+                </div>
+              </div>
+
+              <div class="form-stack">
+                <div class="setup-options">
+                  <div class="form-field">
+                    <label for="categorySelect">Challenge</label>
+                    <select id="categorySelect"></select>
+                  </div>
+                  <div class="form-field">
+                    <label for="answerTypeSelect">Answer format</label>
+                    <select id="answerTypeSelect">
+                      <option value="all">Words and expressions</option>
+                      <option value="word">Single words</option>
+                      <option value="expression">Multi-word answers</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-field">
+                  <label for="targetScoreInput">Target score</label>
+                  <input id="targetScoreInput" type="number" min="3" max="100" step="1" value="10" inputmode="numeric">
+                </div>
+                <div class="setup-summary">
+                  <i class="bi bi-lightbulb-fill"></i>
+                  <span>Clue 1 is included. Extra clues reduce only the complete-solution bonus; they never remove earned points.</span>
+                </div>
+                <div class="setup-actions">
+                  <button class="games-btn" type="button" id="startGameButton"><i class="bi bi-play-fill"></i> Start game</button>
+                  <button class="games-danger-btn" type="button" id="clearSavedButton"><i class="bi bi-trash3"></i> Reset everything</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="game-console" id="gameConsole" hidden>
+          <div class="console-head">
+            <div>
+              <h2><i class="bi bi-controller"></i> Match in progress</h2>
+              <span id="modeSummary">Weather Words | 10 points</span>
+            </div>
+            <div class="console-head-actions">
+              <div class="sound-control">
+                <button class="games-icon-btn sound-button" type="button" id="soundToggleButton" title="Mute sound effects and letter pronunciation" aria-label="Mute sound effects and letter pronunciation"><i class="bi bi-volume-up-fill"></i></button>
+                <input id="soundVolumeInput" type="range" min="0" max="100" value="70" aria-label="Sound and letter volume">
+              </div>
+              <div class="reset-controls">
+                <button class="games-btn-soft" type="button" id="resetMatchButton" title="Reset scores and keep these participants"><i class="bi bi-arrow-counterclockwise"></i> New match, same names</button>
+                <button class="games-danger-btn" type="button" id="resetAllButton" title="Delete names, scores, history, and saved progress"><i class="bi bi-trash3"></i> Reset everything</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="game-layout">
+            <div class="game-stage">
+              <div class="turn-banner">
+                <div><small>Current turn</small><strong id="currentPlayerName">-</strong></div>
+                <span class="round-counter" id="roundCounter">Round 1</span>
+              </div>
+
+              <div class="puzzle-grid">
+                <div class="gallows-wrap">
+                  <div>
+                    <div class="gallows" id="gallows" data-errors="0" aria-label="No mistakes out of six">
+                      <span class="base"></span><span class="post"></span><span class="beam"></span><span class="brace"></span><span class="rope"></span>
+                      <div class="chalk-person" aria-hidden="true"><span class="head"></span><span class="body"></span><span class="arm-left"></span><span class="arm-right"></span><span class="leg-left"></span><span class="leg-right"></span></div>
+                    </div>
+                    <div class="mistake-meter"><span id="mistakeCount">0</span> / 6 mistakes</div>
+                  </div>
+                </div>
+
+                <div class="puzzle-panel">
+                  <span class="category-chip" id="currentCategory"><i class="bi bi-collection-fill"></i> Challenge</span>
+                  <div class="word-board" id="wordBoard" aria-live="polite" aria-label="Hidden word or expression"></div>
+                  <div class="clue-panel" id="cluePanel" aria-live="polite"><strong>Clue 1:</strong> The definition will appear when the round begins.</div>
+                </div>
+              </div>
+
+              <div class="keyboard" id="letterKeyboard" aria-label="English letter keyboard with recorded pronunciation">
+                <div class="keyboard-row" id="baseKeyboard"></div>
+              </div>
+              <div class="round-actions">
+                <button class="games-btn" type="button" id="solveButton"><i class="bi bi-lightbulb-fill"></i> Solve the answer</button>
+                <button class="games-btn-soft" type="button" id="hintButton"><i class="bi bi-search"></i> Reveal clue 2</button>
+                <button class="games-btn-soft" type="button" id="nextRoundButton" hidden><i class="bi bi-skip-forward-fill"></i> Next round</button>
+              </div>
+              <div id="roundResult" class="round-result" aria-live="polite" hidden></div>
+              <div id="winnerPanel" class="winner-panel" aria-live="assertive" hidden></div>
+            </div>
+
+            <aside class="scoreboard" aria-label="Participant scoreboard">
+              <h3><i class="bi bi-trophy-fill"></i> Scoreboard</h3>
+              <p class="scoreboard-meta">Target: <strong id="scoreTargetLabel">10 points</strong></p>
+              <div class="score-list" id="scoreList"></div>
+              <div class="history-block">
+                <h3><i class="bi bi-clock-history"></i> Rounds</h3>
+                <ol class="round-history" id="roundHistory"><li>No completed rounds yet.</li></ol>
+              </div>
+            </aside>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="games-dialog" id="solveDialog">
+    <form method="dialog" id="solveForm">
+      <div class="dialog-head">
+        <h2>Solve the complete answer</h2>
+        <button class="dialog-close" type="button" id="closeSolveDialog" aria-label="Close"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="dialog-body">
+        <div class="form-field">
+          <label for="solutionInput">Word or expression</label>
+          <input id="solutionInput" autocomplete="off" maxlength="80" placeholder="Type the complete answer in English">
+        </div>
+        <p class="games-copy mb-0" id="solutionBonusText">A correct solution currently earns 3 points. An incorrect solution adds one mistake and passes the turn.</p>
+        <div class="dialog-actions">
+          <button class="games-btn-soft" type="button" id="cancelSolveButton">Cancel</button>
+          <button class="games-btn" value="submit" type="submit"><i class="bi bi-check-lg"></i> Check solution</button>
+        </div>
+      </div>
+    </form>
+  </dialog>
+
+  <footer class="games-footer">
+    <div class="container d-flex flex-wrap align-items-center justify-content-between gap-3">
+      <div>
+        <strong>Weather Hangman | Basic English Course 2</strong>
+        <p class="mb-0 opacity-75">Unit 1 vocabulary, weather sentences, present continuous, and idioms.</p>
+      </div>
+      <a href="games.html"><i class="bi bi-arrow-left"></i> Back to games</a>
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/jaralingua-back-button.js?v=20260717-language"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
+  <script src="../../assets/js/roster-import.js"></script>
+  <script src="../../assets/js/english-basic-2-unit1-hangman-data.js?v=20260727-weather-hangman"></script>
+  <script src="../../assets/js/english-intermediate-hangman.js?v=20260727-configurable-hangman"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
