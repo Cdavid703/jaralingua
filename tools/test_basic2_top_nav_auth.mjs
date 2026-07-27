@@ -7,6 +7,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require("C:\\Users\\USER\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\node_modules\\playwright");
 
 const directory = join(process.cwd(), "ingles", "basico-2");
+const baseUrl = process.env.BASIC2_AUTH_TEST_BASE_URL || "http://127.0.0.1:8020";
 const pages = [];
 
 for (const file of await readdir(directory)) {
@@ -32,7 +33,7 @@ try {
     const context = await browser.newContext({ viewport });
     for (const path of pages) {
       const page = await context.newPage();
-      await page.goto(`http://127.0.0.1:8020${path}`, { waitUntil: "domcontentloaded" });
+      await page.goto(`${baseUrl}${path}`, { waitUntil: "domcontentloaded" });
       await page.waitForSelector(".site-header [data-jaralingua-auth-nav]", { timeout: 5000 });
       const navAuthCount = await page.locator(".site-header [data-jaralingua-auth-nav]").count();
       const floatingAuthCount = await page.locator("body > .jaralingua-auth").count();
