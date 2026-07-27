@@ -18,7 +18,21 @@
 @media(max-width:900px){.pronunciation-layout{grid-template-columns:1fr}.pronunciation-main{padding-top:1.25rem}}
 @media(max-width:600px){.pronunciation-main{width:min(100% - 1.25rem,1180px)}.pronunciation-panel{padding:1rem;border-radius:14px}.pronunciation-hero .lesson-hero-image img{height:240px}.stage-panel-copy{display:grid}.stage-panel-copy strong{text-align:left}.stage-progress{gap:.3rem}.stage-dot{min-height:38px;font-size:.7rem}.reading-text{padding:.85rem;font-size:1.2rem}.record-zone{padding:1rem .7rem}.actions{display:grid;grid-template-columns:1fr}.action-button{width:100%;min-height:48px}.microphone-picker select{min-height:48px}.level-meter{grid-template-columns:1fr}.metrics{gap:.35rem}.metric{padding:.6rem .2rem}.metric span{font-size:.64rem}.final-summary>div{grid-template-columns:1fr}}
 
-.pronunciation-page-basic2 .lesson-hero{background-attachment:scroll}
+.pronunciation-page-basic2 .lesson-hero{position:relative!important;min-height:auto!important;background-attachment:scroll!important}
+
+@media(max-width:980px){
+  .pronunciation-page-basic2 .lesson-hero{padding:32px 20px 38px!important}
+  .pronunciation-page-basic2 .lesson-hero-content{padding:clamp(1.35rem,4vw,2rem)!important}
+  .pronunciation-page-basic2 .lesson-hero-image{min-height:260px!important}
+  .pronunciation-page-basic2 .lesson-hero-image img{min-height:260px!important;max-height:320px!important}
+}
+
+@media(max-width:640px){
+  .pronunciation-page-basic2 .lesson-hero{padding:20px 14px 26px!important;border-radius:22px}
+  .pronunciation-page-basic2 .lesson-hero-content{padding:1.2rem!important;border-radius:22px}
+  .pronunciation-page-basic2 .lesson-hero-image{display:none!important;min-height:0!important}
+  .pronunciation-page-basic2 .lesson-hero-image img{min-height:0!important;max-height:0!important;height:0!important}
+}
 .pronunciation-page-basic2 .stage-progress{grid-template-columns:repeat(7,minmax(0,1fr))}
 .playback-tools{display:flex;flex-wrap:wrap;align-items:center;gap:.55rem;margin:.85rem 0 1rem;padding:.75rem;border-radius:16px;background:#f7fbfc;border:1px solid rgba(13,59,102,.1)}
 .playback-tools span{font-size:.78rem;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--pron-muted)}

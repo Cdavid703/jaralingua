@@ -76,6 +76,16 @@
 }
 
 @media (max-width: 980px) {
+  .basic2-conversation-coach-page .coach-hero {
+    position: relative !important;
+    grid-template-columns: 1fr !important;
+    padding: 1.6rem !important;
+  }
+
+  .basic2-conversation-coach-page .coach-hero-visual img {
+    max-height: 340px !important;
+  }
+
   .basic2-weather-planner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -84,7 +94,16 @@
 @media (max-width: 640px) {
   .basic2-conversation-coach-page .coach-hero {
     margin-top: .75rem;
+    padding: 1rem !important;
     border-radius: 20px;
+  }
+
+  .basic2-conversation-coach-page .coach-hero h1 {
+    font-size: clamp(2rem, 11vw, 2.9rem);
+  }
+
+  .basic2-conversation-coach-page .coach-hero-visual {
+    display: none !important;
   }
 
   .basic2-weather-planner {
@@ -92,6 +111,18 @@
   }
 
   .basic2-conversation-coach-page .coach-meta span {
+    width: auto;
+    font-size: .72rem;
+    padding: .35rem .5rem;
+  }
+
+  .basic2-conversation-coach-page .coach-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .basic2-conversation-coach-page .coach-link-button {
     width: 100%;
+    justify-content: center;
   }
 }
