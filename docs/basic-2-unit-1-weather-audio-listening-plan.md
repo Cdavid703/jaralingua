@@ -119,7 +119,7 @@ This same standard applies to the Unit 1 video listening and audio listening pag
 
 - Transcript buttons are present in both listening activities, but they are administrator-only controls.
 - The Sign in control must be mounted in the top navigation beside the course links when a page has a navigation bar.
-- The old floating Sign in control must not cover activities; it is only a fallback for pages without a navigation bar.
+- The Sign in control must not be floating in new pages. From now on it belongs in the fixed course header/top navigation beside links such as `Basic English 2`, `Portal`, `Course`, `Practice Lab`, and `Games`, so students can always connect there without covering activity content.
 - Listening speed controls must visibly include `0.75x`, `1.0x`, and `1.25x`.
 - Speed status text must also use `1.0x` instead of `1x` for consistency.
 - The vocabulary preview in listening activities must stay compact and listed; avoid large vocabulary cards in this activity type.

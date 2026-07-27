@@ -569,6 +569,24 @@ Debe reutilizar el header del curso correspondiente e incluir, según aplique:
 - menú flotante Courses;
 - sistema de autenticación cuando el curso lo utilice.
 
+### 19.1.1 Ubicación obligatoria del Sign in
+
+Desde Basic English Course 2 en adelante, el botón o control de `Sign in` no debe implementarse como botón flotante. Debe permanecer integrado en la barra superior del curso, junto a enlaces como `Portal`, `Course`, `Practice Lab`, `Games` o el nombre del curso/nivel.
+
+Esta regla aplica a todas las páginas nuevas que se creen desde este momento:
+
+- índices de curso;
+- Course Overview;
+- Practice Lab, actividades y talleres;
+- Games;
+- Listening Library, video listenings y audio listenings;
+- actividades de pronunciación;
+- conversation coaches;
+- Grades;
+- futuras evaluaciones o simulacros.
+
+El objetivo es que el estudiante siempre se conecte desde el encabezado principal y que ningún control flotante de autenticación tape tarjetas, preguntas, reproductores, transcripciones, grabadoras o feedback en celular, tablet o computador. Si una página no tiene barra superior, primero debe agregarse o reutilizarse el header del curso antes de colocar el acceso de autenticación.
+
 No se deben cambiar arbitrariamente colores, tamaños, tipografía o distribución.
 
 ### 19.2 Hero o banner

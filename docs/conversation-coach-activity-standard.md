@@ -87,7 +87,7 @@ For long or multi-section Conversation Coaches, the active turn must provide a f
 - Keep it fixed and visible while the learner scrolls, including during recording and analysis.
 - Mirror the main recorder state exactly: start, stop, disabled, busy, timer, stage label, and visible status.
 - Reserve enough page space for the full dock height plus the device safe area. It must never cover the final content on the page.
-- Keep the floating sign-in control, authentication panel, status toast, navigation, and recorder clear of the dock on mobile.
+- Keep the top-navigation Sign in control, authentication panel, status toast, navigation, and recorder clear of the dock on mobile. Do not add a floating Sign in button; authentication must live in the course header.
 - Use a visible recording state and immediate confirmation when recording starts or stops.
 - Test the actual behavior by starting a recording, scrolling to distant content, stopping from the floating dock, and confirming that the same response is analyzed.
 
