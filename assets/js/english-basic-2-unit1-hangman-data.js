@@ -322,13 +322,13 @@
 
   window.JaraLinguaHangmanConfig = {
     data: window.JaraLinguaEnglishBasic2Hangman,
-    storageKey: "english-basic-2-unit-1-hangman-game-v1",
+    storageKey: "english-basic-2-hangman-game-v1",
     soundKey: "english-basic-2-hangman-sound-v1",
     sfxBase: "/ingles/intermediate/audio/sfx/hangman/",
     alphabetAudioBase: "/ingles/basico/audio/alphabet/",
     answerAudioBase: "/ingles/basico-2/audio/hangman/answers/",
     answerAudioEnabled: false,
     allowAllCategories: false,
-    audioVersion: "?v=20260727-basic2-weather-hangman"
+    audioVersion: "?v=20260727-basic2-hangman"
   };
 })();
