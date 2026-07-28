@@ -52,6 +52,21 @@ body.basic2-index-page .site-header {
   z-index: 1000;
 }
 
+body.basic2-page :is(.basic-course-hero, .overview-hero, .lesson-hero, .immersive-basic-hero, .coach-hero, .games-hero),
+body.basic2-index-page :is(.basic-course-hero, .overview-hero, .lesson-hero, .immersive-basic-hero) {
+  position: relative !important;
+  top: auto !important;
+  background-attachment: scroll !important;
+  transform: none !important;
+  will-change: auto !important;
+}
+
+body.basic2-page :is(.basic-hero-image, .overview-hero-image, .lesson-hero-image, .coach-hero-visual),
+body.basic2-index-page :is(.basic-hero-image, .overview-hero-image, .lesson-hero-image) {
+  position: relative !important;
+  background-attachment: scroll !important;
+}
+
 body.english-basic-page .premium-lesson-container,
 body.english-basic-page .lesson-outcome,
 body.english-basic-page .pronunciation-main,

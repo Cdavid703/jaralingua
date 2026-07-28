@@ -107,9 +107,13 @@ body.games-page textarea { font: inherit; }
   display: flex;
   align-items: end;
   padding: 8rem 0 4.5rem;
-  position: relative;
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+  will-change: auto !important;
   isolation: isolate;
   background: var(--hero-image) center / cover no-repeat;
+  background-attachment: scroll !important;
   overflow: hidden;
 }
 

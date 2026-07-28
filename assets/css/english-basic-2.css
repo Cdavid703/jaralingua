@@ -10,6 +10,14 @@
 
 .basic2-page .lesson-hero,
 .basic2-page .overview-hero {
+  position: relative !important;
+  top: auto !important;
+  transform: none !important;
+  will-change: auto !important;
+  background-attachment: scroll !important;
+}
+
+.basic2-page :is(.lesson-hero, .overview-hero, .immersive-basic-hero, .lesson-hero-image, .overview-hero-image) {
   background-attachment: scroll !important;
 }
 

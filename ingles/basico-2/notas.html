@@ -70,6 +70,8 @@
     }
 
     .hero {
+      position: relative !important;
+      top: auto !important;
       min-height: min(640px, 82vh);
       display: flex;
       align-items: center;
@@ -78,6 +80,9 @@
       background:
         linear-gradient(110deg, rgba(17, 24, 39, 0.92), rgba(37, 99, 235, 0.66), rgba(22, 128, 95, 0.48)),
         url("../../assets/img/english-basic-2/basic-course-2-banner.webp") center / cover no-repeat;
+      background-attachment: scroll !important;
+      transform: none !important;
+      will-change: auto !important;
     }
 
     .badge-course {
@@ -370,7 +375,7 @@
     }
   </style>
 </head>
-<body>
+<body class="basic2-page">
   <div class="global-course-switcher" aria-label="Courses">
     <details>
       <summary><span>Courses</span></summary>

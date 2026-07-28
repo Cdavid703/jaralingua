@@ -9,6 +9,11 @@
 }
 
 .basic2-conversation-coach-page .coach-hero {
+  position: relative !important;
+  top: auto !important;
+  background-attachment: scroll !important;
+  transform: none !important;
+  will-change: auto !important;
   border-radius: 28px;
   background:
     radial-gradient(circle at 20% 0%, rgba(37, 99, 235, .11), transparent 34%),
