@@ -529,3 +529,110 @@ body.english-basic-page .youtube-growth-panel {
     transform: scale(0.92);
   }
 }
+
+/* Basic English Course 2: keep the fixed top bar compact on phones/tablets.
+   The auth control stays visible, while course links scroll horizontally instead
+   of wrapping into a tall fixed banner. */
+@media (max-width: 980px) {
+  body.basic2-page .site-header,
+  body.basic2-index-page .site-header {
+    max-height: 76px;
+    overflow: visible;
+  }
+
+  body.basic2-page .navbar,
+  body.basic2-index-page .navbar {
+    min-height: 64px;
+    max-height: 76px;
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    padding: 0.45rem 0.65rem !important;
+    overflow: visible;
+  }
+
+  body.basic2-page .brand,
+  body.basic2-index-page .brand {
+    flex: 0 0 auto;
+    justify-content: flex-start;
+  }
+
+  body.basic2-page .brand img,
+  body.basic2-index-page .brand img {
+    width: auto !important;
+    max-width: 108px !important;
+    max-height: 40px !important;
+  }
+
+  body.basic2-page .nav-links,
+  body.basic2-index-page .nav-links {
+    flex: 1 1 auto;
+    min-width: 0;
+    width: auto !important;
+    display: flex !important;
+    grid-template-columns: none !important;
+    flex-wrap: nowrap !important;
+    justify-content: flex-start !important;
+    gap: 0.35rem !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    padding: 0.15rem 0 !important;
+    scrollbar-width: none;
+  }
+
+  body.basic2-page .nav-links::-webkit-scrollbar,
+  body.basic2-index-page .nav-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  body.basic2-page .nav-links li,
+  body.basic2-index-page .nav-links li {
+    flex: 0 0 auto;
+    min-width: auto;
+  }
+
+  body.basic2-page .nav-links a,
+  body.basic2-index-page .nav-links a {
+    width: auto !important;
+    min-height: 36px !important;
+    padding: 0 0.65rem !important;
+    white-space: nowrap !important;
+    font-size: 0.78rem !important;
+    overflow-wrap: normal !important;
+  }
+
+  body.basic2-page .site-header .jaralingua-auth-nav,
+  body.basic2-index-page .site-header .jaralingua-auth-nav {
+    flex: 0 0 auto;
+    margin-left: 0.2rem;
+  }
+
+  body.basic2-page .site-header .jaralingua-auth-nav .auth-trigger,
+  body.basic2-index-page .site-header .jaralingua-auth-nav .auth-trigger {
+    min-height: 36px !important;
+    max-width: 118px !important;
+    padding: 0 0.65rem !important;
+    font-size: 0.78rem !important;
+  }
+
+  body.basic2-page .site-header .jaralingua-auth-nav .auth-initial,
+  body.basic2-index-page .site-header .jaralingua-auth-nav .auth-initial {
+    width: 24px !important;
+    height: 24px !important;
+    flex-basis: 24px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  body.basic2-page .brand img,
+  body.basic2-index-page .brand img {
+    max-width: 82px !important;
+  }
+
+  body.basic2-page .site-header .jaralingua-auth-nav .auth-trigger,
+  body.basic2-index-page .site-header .jaralingua-auth-nav .auth-trigger {
+    max-width: 96px !important;
+  }
+}

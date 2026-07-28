@@ -354,6 +354,54 @@
     }
 
     @media (max-width: 760px) {
+      .site-header {
+        max-height: 76px;
+        overflow: visible;
+      }
+
+      .site-header .container {
+        min-height: 64px;
+        max-height: 76px;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 0.4rem;
+        padding-inline: 0.65rem;
+      }
+
+      .navbar-brand {
+        flex: 0 1 auto;
+        min-width: 0;
+        margin-right: 0;
+      }
+
+      .navbar-brand span {
+        display: none;
+      }
+
+      .brand-logo {
+        height: 34px;
+      }
+
+      [data-auth-nav-slot] {
+        flex: 0 0 auto;
+        margin-left: auto !important;
+        margin-right: 0.3rem !important;
+      }
+
+      .site-header .jaralingua-auth-nav .auth-trigger {
+        min-height: 34px !important;
+        max-width: 96px !important;
+        padding: 0 0.6rem !important;
+        font-size: 0.78rem !important;
+      }
+
+      .navbar-toggler {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0.25rem 0.45rem;
+      }
+
       .hero {
         min-height: auto;
         padding: 5.6rem 0 3.2rem;
@@ -469,7 +517,7 @@
   </script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
-  <script src="../../assets/js/google-auth.js?v=20260727-basic2-top-nav-auth-visible"></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
   <script src="../../assets/js/english-grade-report-pdf.js?v=20260608-3"></script>
   <script src="../../assets/js/gradebook-tabs.js?v=20260721"></script>
   <script src="../../assets/js/basic-english-grades.js?v=20260727-basic2-empty-grid"></script>

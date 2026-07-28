@@ -1512,7 +1512,11 @@
   }
 
   function createNavAccess() {
-    const navTarget = document.querySelector(".site-header [data-auth-nav-slot], .site-header .nav-links, .site-header .navbar-nav, .site-header .navbar");
+    const explicitSlot = document.querySelector(".site-header [data-auth-nav-slot]");
+    const isBasic2 = document.body && document.body.matches(".basic2-page, .basic2-index-page");
+    const navTarget = explicitSlot || (isBasic2
+      ? document.querySelector(".site-header .navbar")
+      : document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar"));
     if (!navTarget) return null;
 
     let navRoot = document.querySelector("[data-jaralingua-auth-nav]");

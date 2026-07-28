@@ -37,10 +37,18 @@ try {
       await page.waitForSelector(".site-header [data-jaralingua-auth-nav]", { timeout: 5000 });
       const navAuthCount = await page.locator(".site-header [data-jaralingua-auth-nav]").count();
       const floatingAuthCount = await page.locator("body > .jaralingua-auth").count();
-      const headerPosition = await page.locator(".site-header").evaluate((node) => getComputedStyle(node).position);
+      const header = await page.locator(".site-header").evaluate((node) => {
+        const rect = node.getBoundingClientRect();
+        return {
+          position: getComputedStyle(node).position,
+          height: rect.height,
+          bottom: rect.bottom
+        };
+      });
       assert.equal(navAuthCount, 1, `${path} ${viewport.label}: expected one top-nav auth control`);
       assert.equal(floatingAuthCount, 0, `${path} ${viewport.label}: floating auth control must not exist`);
-      assert.equal(headerPosition, "fixed", `${path} ${viewport.label}: header must stay fixed`);
+      assert.equal(header.position, "fixed", `${path} ${viewport.label}: header must stay fixed`);
+      assert.ok(header.height <= 92, `${path} ${viewport.label}: fixed header is too tall (${header.height}px)`);
       await page.close();
     }
     await context.close();

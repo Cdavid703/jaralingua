@@ -117,6 +117,56 @@ body.games-page textarea { font: inherit; }
   overflow: hidden;
 }
 
+@media (max-width: 991px) {
+  .hangman-page .site-header {
+    max-height: 76px;
+    overflow: visible;
+  }
+
+  .hangman-page .site-header .container {
+    min-height: 64px;
+    max-height: 76px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: .4rem;
+    padding-inline: .65rem;
+  }
+
+  .hangman-page .navbar-brand {
+    flex: 0 1 auto;
+    min-width: 0;
+    margin-right: 0;
+  }
+
+  .hangman-page .navbar-brand .brand-logo {
+    height: 34px;
+  }
+
+  .hangman-page .navbar-brand span {
+    display: none;
+  }
+
+  .hangman-page [data-auth-nav-slot] {
+    flex: 0 0 auto;
+    margin-left: auto !important;
+    margin-right: .3rem !important;
+  }
+
+  .hangman-page .site-header .jaralingua-auth-nav .auth-trigger {
+    min-height: 34px !important;
+    max-width: 96px !important;
+    padding: 0 .6rem !important;
+    font-size: .78rem !important;
+  }
+
+  .hangman-page .navbar-toggler {
+    flex: 0 0 auto;
+    margin: 0;
+    padding: .25rem .45rem;
+  }
+}
+
 .games-hero::before {
   content: "";
   position: absolute;
