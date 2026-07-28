@@ -79,4 +79,4 @@ By the end of the activity, students should be able to:
 - [x] Teacher report delivery is available after all sections are completed.
 - [x] Practice Lab Unit 2 includes Activity 05.
 - [x] Unit 2 teaching page links to the pronunciation activity.
-- [ ] Production checks pass after deployment.
+- [x] Production checks pass after deployment.

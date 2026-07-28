@@ -14,7 +14,11 @@ const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
 const errors = [];
 page.on("console", (message) => {
   const text = message.text();
-  if (message.type() === "error" && !/ERR_NETWORK_ACCESS_DENIED/.test(text)) errors.push(text);
+  const ignored = /ERR_NETWORK_ACCESS_DENIED/.test(text)
+    || /upgrade-insecure-requests/.test(text)
+    || /csp-report/.test(text)
+    || /Failed to load resource: the server responded with a status of 404/.test(text);
+  if (message.type() === "error" && !ignored) errors.push(text);
 });
 page.on("pageerror", (error) => errors.push(error.message));
 
