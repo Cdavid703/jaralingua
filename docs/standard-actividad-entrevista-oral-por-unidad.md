@@ -608,6 +608,36 @@ Ejemplo:
 > Unit Conversation Coach: All About You  
 > Practice introductions, names, spelling, countries, occupations, and personal information.
 
+### 19.2.1 Regla obligatoria anti-banner fijo
+
+Desde Basic English Course 2 en adelante, ninguna pagina explicativa, indice, biblioteca, juego o actividad puede dejar el hero/banner principal fijo en celular o tablet. El hero debe desplazarse con el contenido cuando el estudiante hace scroll.
+
+Esta regla aplica a:
+
+- paginas principales del curso o nivel;
+- paginas de explicacion de unidad;
+- Course Overview;
+- Practice Lab;
+- Listening Library;
+- Games;
+- Grades;
+- video listenings y audio listenings;
+- readings;
+- actividades de gramatica;
+- actividades de pronunciacion;
+- conversation coaches;
+- juegos por unidad;
+- futuras evaluaciones o simulacros.
+
+Si el header superior debe permanecer fijo para conservar el acceso a navegacion y `Sign in`, debe ser compacto en dispositivos pequenos:
+
+- no debe expandirse como banner;
+- no debe cubrir tarjetas, preguntas, reproductores, transcripciones, grabadoras, feedback ni botones;
+- debe tener altura controlada en celular y tablet;
+- si los enlaces no caben, la navegacion debe resolverse con scroll horizontal interno, menu compacto o colapso real, no con filas apiladas que tapen la pantalla.
+
+Una pagina nueva no se considera terminada si al probarla en celular o tablet el hero, el header o cualquier barra fija tapa el contenido principal.
+
 ### 19.3 Imagen única por actividad
 
 Cada actividad debe tener una imagen profesional diferente.
@@ -685,6 +715,8 @@ La actividad debe funcionar en:
 ### 20.1 Celular
 
 - ancho de referencia: 360 a 430 px;
+- header superior compacto, sin expandirse como banner;
+- hero/banner desplazandose con el contenido;
 - hero en una columna;
 - imagen debajo del texto cuando sea necesario;
 - botones principales de ancho completo;
@@ -698,6 +730,8 @@ La actividad debe funcionar en:
 ### 20.2 Tableta vertical
 
 - referencia: aproximadamente 768 × 1024;
+- header superior compacto, sin cubrir el primer bloque de contenido;
+- hero/banner desplazandose con el contenido;
 - panel de entrevista en una columna;
 - barra lateral debajo de la actividad;
 - imágenes legibles;
@@ -707,6 +741,7 @@ La actividad debe funcionar en:
 
 - referencia: aproximadamente 1024 × 768;
 - header sin cubrir contenido;
+- hero/banner no fijo;
 - grillas sin comprimir palabras;
 - botones de audio completos;
 - panel de entrevista aprovechando el ancho;
