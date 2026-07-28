@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>This, That, These, Those | Unit 2 | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260728-basic2-unit2-demonstratives" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .demonstratives-page{--shopping-blue:#1d4ed8;--shopping-ink:#153b55;--shopping-gold:#f4c95d;--shopping-green:#0f9f6e;overflow-x:hidden}
+    .demonstratives-shell{width:min(1360px,calc(100% - 32px));margin:34px auto 74px;display:grid;gap:22px}
+    .demo-panel{background:#fff;border-radius:26px;box-shadow:0 18px 42px rgba(15,23,42,.09);padding:clamp(18px,3vw,28px)}
+    .demo-toolbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .demo-toolbar h2,.demo-panel h2{color:var(--shopping-ink);margin:.15rem 0 .55rem}
+    .demo-toolbar p,.demo-panel p{color:#475569;line-height:1.62}
+    .demo-kpis{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .demo-kpis span{display:inline-flex;align-items:center;gap:7px;border-radius:999px;background:#eef7ff;color:var(--shopping-ink);font-weight:900;padding:.55rem .8rem}
+    .demo-rule-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+    .demo-rule{border-radius:20px;background:linear-gradient(145deg,#eef7ff,#f8fafc);border:1px solid rgba(29,78,216,.14);padding:16px;color:var(--shopping-ink)}
+    .demo-rule strong{display:block;font-size:1.15rem}.demo-rule span{color:#64748b;font-weight:800}
+    .demo-action-row{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:flex-end}
+    .demo-score{display:inline-flex;min-height:46px;align-items:center;border-radius:999px;background:#153b55;color:#fff;font-weight:950;padding:0 18px}
+    .demo-btn{min-height:46px;border:0;border-radius:999px;padding:0 18px;background:var(--shopping-blue);color:#fff;font-weight:950;cursor:pointer;display:inline-flex;align-items:center;gap:8px;box-shadow:0 12px 24px rgba(29,78,216,.18)}
+    .demo-btn.secondary{background:#e2e8f0;color:#153b55;box-shadow:none}.demo-btn:hover{transform:translateY(-2px)}
+    .demo-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+    .demo-card{border:1px solid rgba(15,23,42,.09);border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#fff,#f8fbff);box-shadow:0 14px 30px rgba(15,23,42,.08);display:grid;grid-template-rows:auto 1fr}
+    .demo-card.correct{border-color:rgba(15,159,110,.55);box-shadow:0 0 0 3px rgba(15,159,110,.12),0 14px 30px rgba(15,23,42,.08)}
+    .demo-card.incorrect{border-color:rgba(239,68,68,.55);box-shadow:0 0 0 3px rgba(239,68,68,.12),0 14px 30px rgba(15,23,42,.08)}
+    .demo-image-btn{position:relative;width:100%;border:0;padding:0;cursor:zoom-in;background:#e2e8f0;aspect-ratio:1/1;overflow:hidden}
+    .demo-image-btn img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .24s ease}.demo-image-btn:hover img{transform:scale(1.035)}
+    .demo-zoom-badge{position:absolute;right:10px;bottom:10px;display:inline-flex;align-items:center;gap:6px;border-radius:999px;background:rgba(21,59,85,.88);color:#fff;font-size:.78rem;font-weight:900;padding:.42rem .68rem}
+    .demo-card-body{padding:16px;display:grid;gap:12px}
+    .demo-card-header{display:flex;justify-content:space-between;gap:10px;align-items:start}
+    .demo-number{width:38px;height:38px;border-radius:14px;background:#153b55;color:#fff;display:grid;place-items:center;font-weight:950}
+    .demo-focus{border-radius:999px;background:#eef7ff;color:#1d4ed8;font-size:.72rem;font-weight:950;text-transform:uppercase;letter-spacing:.04em;padding:.45rem .7rem;white-space:nowrap}
+    .demo-prompt{font-weight:950;color:#153b55;margin:0}
+    .demo-options{display:grid;gap:8px}
+    .demo-option{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start;border:2px solid #e2e8f0;border-radius:16px;background:#fff;padding:10px;cursor:pointer;color:#153b55;font-weight:850;transition:.18s ease}
+    .demo-option:hover{border-color:#93c5fd;background:#eff6ff}.demo-option input{margin-top:3px;accent-color:#1d4ed8}
+    .demo-option-letter{font-weight:950;color:#1d4ed8}.demo-option:has(input:checked){border-color:#1d4ed8;background:#eef7ff}
+    .demo-feedback{display:none;border-radius:16px;padding:11px 12px;line-height:1.45;font-weight:850}
+    .demo-feedback.show{display:block}.demo-card.correct .demo-feedback{background:#ecfdf5;color:#065f46}.demo-card.incorrect .demo-feedback{background:#fef2f2;color:#991b1b}
+    .demo-result{display:none;border-radius:22px;padding:16px;background:#eef7ff;color:#153b55;font-weight:900;line-height:1.5}.demo-result.show{display:block}
+    .image-modal{position:fixed;inset:0;z-index:2200;display:none;place-items:center;background:rgba(3,12,32,.86);padding:18px;backdrop-filter:blur(8px)}
+    .image-modal.show{display:grid}.image-modal-card{width:min(980px,100%);background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.42)}
+    .image-modal-header{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 14px;background:#153b55;color:#fff}
+    .image-modal-header strong{font-size:1rem}.image-modal-close{width:42px;height:42px;border:0;border-radius:14px;background:rgba(255,255,255,.14);color:#fff;font-size:1.35rem;cursor:pointer}
+    .image-modal img{width:100%;max-height:78vh;object-fit:contain;background:#f8fafc;display:block}
+    @media(max-width:1180px){.demo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.demo-rule-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:720px){.demonstratives-shell{width:min(100% - 18px,1360px);margin-top:22px}.demo-grid{grid-template-columns:1fr}.demo-toolbar{align-items:flex-start}.demo-action-row{justify-content:flex-start;width:100%}.demo-rule-strip{grid-template-columns:1fr}.demo-card-body{padding:14px}.demo-focus{white-space:normal}.image-modal{padding:10px}.image-modal img{max-height:72vh}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+  </style>
+</head>
+<body class="english-basic-page basic2-page demonstratives-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="unit-2-shopping-experiences.html">Unit 2</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-basic-2/unit-2-shopping-experiences/demonstratives/q01-this-jacket-near.webp')">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 2 &middot; Activity 02</p>
+        <h1>This, That, These, Those</h1>
+        <p>Look carefully at each shopping scene. Decide if the item is near or far, singular or plural, and choose the best sentence.</p>
+        <div class="lesson-meta"><span>Grammar Practice</span><span>15 images</span><span>A / B / C</span><span>Zoom enabled</span></div>
+        <div class="hero-actions">
+          <a href="#quiz" class="btn btn-primary">Start activity</a>
+          <a href="practice-lab.html#unit-2-folder" class="btn btn-secondary">Back to Practice Lab</a>
+          <a href="unit-2-shopping-experiences.html" class="btn btn-secondary">Review Unit 2</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/demonstratives/q01-this-jacket-near.webp" alt="A learner standing close to a jacket in a clothing store" /></aside>
+    </section>
+
+    <section class="demonstratives-shell">
+      <section class="demo-panel">
+        <p class="eyebrow">Activity objective</p>
+        <h2>Use distance and number to choose the correct demonstrative</h2>
+        <p>Students use the image context to choose between <strong>this</strong>, <strong>that</strong>, <strong>these</strong>, and <strong>those</strong>. The activity also checks <strong>is</strong> for singular items and <strong>are</strong> for plural items.</p>
+        <div class="demo-kpis">
+          <span><i class="bi bi-image-fill"></i> 15 visual questions</span>
+          <span><i class="bi bi-arrows-fullscreen"></i> Click to enlarge</span>
+          <span><i class="bi bi-ui-checks"></i> No open writing</span>
+          <span><i class="bi bi-stars"></i> Instant review</span>
+        </div>
+      </section>
+
+      <section class="demo-panel">
+        <p class="eyebrow">Quick reminder</p>
+        <h2>Before you answer</h2>
+        <div class="demo-rule-strip" aria-label="Demonstrative grammar reminder">
+          <article class="demo-rule"><strong>this</strong><span>near + singular</span></article>
+          <article class="demo-rule"><strong>that</strong><span>far + singular</span></article>
+          <article class="demo-rule"><strong>these</strong><span>near + plural</span></article>
+          <article class="demo-rule"><strong>those</strong><span>far + plural</span></article>
+        </div>
+      </section>
+
+      <section class="demo-panel" id="quiz">
+        <div class="demo-toolbar">
+          <div>
+            <p class="eyebrow">Grammar Practice</p>
+            <h2>Choose A, B, or C</h2>
+          </div>
+          <div class="demo-action-row">
+            <span class="demo-score" id="demoScore">Score: 0 / 15</span>
+            <button class="demo-btn" type="button" id="checkAnswers"><i class="bi bi-check2-circle"></i> Check answers</button>
+            <button class="demo-btn secondary" type="button" id="resetQuiz"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+          </div>
+        </div>
+        <p class="demo-result" id="quizResult" tabindex="-1"></p>
+        <div class="demo-grid" id="questionGrid" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <div class="image-modal" id="imageModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="image-modal-card">
+      <div class="image-modal-header">
+        <strong id="modalTitle">Image preview</strong>
+        <button class="image-modal-close" type="button" id="closeModal" aria-label="Close image preview"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <img id="modalImage" src="" alt="" />
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    (function () {
+      const assetBase = "../../assets/img/english-basic-2/unit-2-shopping-experiences/demonstratives/";
+      const questions = [
+        {
+          image: "q01-this-jacket-near.webp",
+          alt: "A learner standing close to one jacket in a clothing store.",
+          focus: "near + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "That jacket is nice." },
+            { label: "B", text: "This jacket is nice." },
+            { label: "C", text: "These jacket are nice." }
+          ],
+          answer: "B",
+          feedback: "The jacket is near and singular, so use this + is."
+        },
+        {
+          image: "q02-that-jacket-far.webp",
+          alt: "A learner looking at one jacket far away in a clothing store.",
+          focus: "far + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "That jacket is over there." },
+            { label: "B", text: "These jacket are over there." },
+            { label: "C", text: "This jacket is here." }
+          ],
+          answer: "A",
+          feedback: "The jacket is far and singular, so use that + is."
+        },
+        {
+          image: "q03-these-jeans-near.webp",
+          alt: "A learner standing close to several pairs of jeans.",
+          focus: "near + plural",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "This jeans is blue." },
+            { label: "B", text: "That jeans are blue." },
+            { label: "C", text: "These jeans are blue." }
+          ],
+          answer: "C",
+          feedback: "The jeans are near and plural, so use these + are."
+        },
+        {
+          image: "q04-those-jeans-far.webp",
+          alt: "A learner looking toward several pairs of jeans far away.",
+          focus: "far + plural",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "This jeans is on the table." },
+            { label: "B", text: "Those jeans are over there." },
+            { label: "C", text: "That jeans is over there." }
+          ],
+          answer: "B",
+          feedback: "The jeans are far and plural, so use those + are."
+        },
+        {
+          image: "q05-this-sweater-near.webp",
+          alt: "A learner standing close to one sweater.",
+          focus: "near + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "This sweater is soft." },
+            { label: "B", text: "Those sweater are soft." },
+            { label: "C", text: "These sweater is soft." }
+          ],
+          answer: "A",
+          feedback: "The sweater is near and singular, so use this + is."
+        },
+        {
+          image: "q06-that-dress-far.webp",
+          alt: "A learner looking at one red dress far away.",
+          focus: "far + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "These dress are red." },
+            { label: "B", text: "This dress is near me." },
+            { label: "C", text: "That dress is red." }
+          ],
+          answer: "C",
+          feedback: "The dress is far and singular, so use that + is."
+        },
+        {
+          image: "q07-these-sunglasses-near.webp",
+          alt: "A learner standing close to several pairs of sunglasses.",
+          focus: "near + plural",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "This sunglasses is cool." },
+            { label: "B", text: "These sunglasses are cool." },
+            { label: "C", text: "That sunglasses are cool." }
+          ],
+          answer: "B",
+          feedback: "Sunglasses takes a plural verb here. They are near, so use these + are."
+        },
+        {
+          image: "q08-those-hats-far.webp",
+          alt: "A learner pointing toward several hats far away.",
+          focus: "far + plural",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "These hats are here." },
+            { label: "B", text: "That hats is over there." },
+            { label: "C", text: "Those hats are over there." }
+          ],
+          answer: "C",
+          feedback: "The hats are far and plural, so use those + are."
+        },
+        {
+          image: "q09-this-scarf-near.webp",
+          alt: "A learner standing close to one scarf.",
+          focus: "near + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "This scarf is beautiful." },
+            { label: "B", text: "Those scarf are beautiful." },
+            { label: "C", text: "That scarf is over there." }
+          ],
+          answer: "A",
+          feedback: "The scarf is near and singular, so use this + is."
+        },
+        {
+          image: "q10-that-watch-far.webp",
+          alt: "A learner looking at one watch far away.",
+          focus: "far + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "These watch are expensive." },
+            { label: "B", text: "That watch is expensive." },
+            { label: "C", text: "This watch is in my hand." }
+          ],
+          answer: "B",
+          feedback: "The watch is far and singular, so use that + is."
+        },
+        {
+          image: "q11-these-shoes-near.webp",
+          alt: "A learner standing close to several pairs of shoes.",
+          focus: "near + plural",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "That shoes are nice." },
+            { label: "B", text: "This shoes is nice." },
+            { label: "C", text: "These shoes are nice." }
+          ],
+          answer: "C",
+          feedback: "The shoes are near and plural, so use these + are."
+        },
+        {
+          image: "q12-those-boots-far.webp",
+          alt: "A learner pointing toward several pairs of boots far away.",
+          focus: "far + plural",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "Those boots are black." },
+            { label: "B", text: "This boots is black." },
+            { label: "C", text: "That boots are black." }
+          ],
+          answer: "A",
+          feedback: "The boots are far and plural, so use those + are."
+        },
+        {
+          image: "q13-this-tshirt-near.webp",
+          alt: "A learner standing close to one T-shirt.",
+          focus: "near + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "Those T-shirt are plain." },
+            { label: "B", text: "This T-shirt is plain." },
+            { label: "C", text: "These T-shirt is plain." }
+          ],
+          answer: "B",
+          feedback: "The T-shirt is near and singular, so use this + is."
+        },
+        {
+          image: "q14-these-pants-near.webp",
+          alt: "A learner standing close to several pairs of pants.",
+          focus: "near + plural",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "That pants is comfortable." },
+            { label: "B", text: "These pants are comfortable." },
+            { label: "C", text: "This pants are comfortable." }
+          ],
+          answer: "B",
+          feedback: "Pants takes a plural verb here. They are near, so use these + are."
+        },
+        {
+          image: "q15-that-skirt-far.webp",
+          alt: "A learner looking at one green skirt far away.",
+          focus: "far + singular",
+          prompt: "Choose the best sentence.",
+          options: [
+            { label: "A", text: "That skirt is green." },
+            { label: "B", text: "These skirt are green." },
+            { label: "C", text: "This skirt is next to me." }
+          ],
+          answer: "A",
+          feedback: "The skirt is far and singular, so use that + is."
+        }
+      ];
+
+      const grid = document.getElementById("questionGrid");
+      const score = document.getElementById("demoScore");
+      const result = document.getElementById("quizResult");
+      const modal = document.getElementById("imageModal");
+      const modalImage = document.getElementById("modalImage");
+      const modalTitle = document.getElementById("modalTitle");
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function render() {
+        grid.innerHTML = questions.map(function (question, index) {
+          const options = question.options.map(function (option) {
+            const id = "q" + index + "-" + option.label.toLowerCase();
+            return '<label class="demo-option" for="' + id + '"><input id="' + id + '" type="radio" name="q' + index + '" value="' + option.label + '" /><span class="demo-option-letter">' + option.label + '.</span><span>' + escapeHtml(option.text) + '</span></label>';
+          }).join("");
+          return '<article class="demo-card" data-index="' + index + '">' +
+            '<button class="demo-image-btn" type="button" data-index="' + index + '" aria-label="Enlarge image for question ' + (index + 1) + '">' +
+              '<img src="' + assetBase + question.image + '" alt="' + escapeHtml(question.alt) + '" loading="lazy" />' +
+              '<span class="demo-zoom-badge"><i class="bi bi-arrows-fullscreen"></i> Enlarge</span>' +
+            '</button>' +
+            '<div class="demo-card-body">' +
+              '<div class="demo-card-header"><span class="demo-number">' + String(index + 1).padStart(2, "0") + '</span><span class="demo-focus">' + escapeHtml(question.focus) + '</span></div>' +
+              '<p class="demo-prompt">' + escapeHtml(question.prompt) + '</p>' +
+              '<div class="demo-options">' + options + '</div>' +
+              '<p class="demo-feedback" id="feedback' + index + '"></p>' +
+            '</div>' +
+          '</article>';
+        }).join("");
+      }
+
+      function selectedValue(index) {
+        const selected = document.querySelector('input[name="q' + index + '"]:checked');
+        return selected ? selected.value : "";
+      }
+
+      function checkAnswers() {
+        let answered = 0;
+        let correct = 0;
+        questions.forEach(function (question, index) {
+          const value = selectedValue(index);
+          const card = document.querySelector('.demo-card[data-index="' + index + '"]');
+          const feedback = document.getElementById("feedback" + index);
+          card.classList.remove("correct", "incorrect");
+          feedback.classList.remove("show");
+          if (!value) return;
+          answered++;
+          const isCorrect = value === question.answer;
+          if (isCorrect) correct++;
+          card.classList.add(isCorrect ? "correct" : "incorrect");
+          feedback.textContent = isCorrect ? "Correct. " + question.feedback : "Review this one. " + question.feedback;
+          feedback.classList.add("show");
+        });
+        score.textContent = "Score: " + correct + " / " + questions.length;
+        result.classList.add("show");
+        if (answered < questions.length) {
+          result.textContent = "Please answer all 15 questions. Current score: " + correct + " / " + questions.length + ".";
+        } else if (correct === questions.length) {
+          result.textContent = "Excellent. You got 15 out of 15 correct.";
+        } else {
+          result.textContent = "You got " + correct + " out of 15. Review the cards marked in red and compare distance + number.";
+        }
+        result.focus({ preventScroll: true });
+        result.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+
+      function resetQuiz() {
+        document.querySelectorAll('input[type="radio"]').forEach(function (input) { input.checked = false; });
+        document.querySelectorAll(".demo-card").forEach(function (card) { card.classList.remove("correct", "incorrect"); });
+        document.querySelectorAll(".demo-feedback").forEach(function (feedback) { feedback.classList.remove("show"); feedback.textContent = ""; });
+        score.textContent = "Score: 0 / 15";
+        result.classList.remove("show");
+        result.textContent = "";
+      }
+
+      function openModal(index) {
+        const question = questions[index];
+        modalImage.src = assetBase + question.image;
+        modalImage.alt = question.alt;
+        modalTitle.textContent = "Question " + (index + 1) + " image";
+        modal.classList.add("show");
+        document.body.style.overflow = "hidden";
+        document.getElementById("closeModal").focus();
+      }
+
+      function closeModal() {
+        modal.classList.remove("show");
+        modalImage.src = "";
+        document.body.style.overflow = "";
+      }
+
+      render();
+      document.getElementById("checkAnswers").addEventListener("click", checkAnswers);
+      document.getElementById("resetQuiz").addEventListener("click", resetQuiz);
+      document.getElementById("closeModal").addEventListener("click", closeModal);
+      modal.addEventListener("click", function (event) { if (event.target === modal) closeModal(); });
+      document.addEventListener("click", function (event) {
+        const button = event.target.closest(".demo-image-btn");
+        if (button) openModal(Number(button.dataset.index));
+      });
+      document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape" && modal.classList.contains("show")) closeModal();
+      });
+    }());
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
