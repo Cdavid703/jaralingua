@@ -63,4 +63,4 @@ Conversation progression:
 - [x] Full attempt has 5 connected turns.
 - [x] Student role-reversal turn is mandatory.
 - [x] Activity remains private and formative.
-- [ ] Local and production checks pass after deployment.
+- [x] Local and production checks pass after deployment.
