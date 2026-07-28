@@ -51,7 +51,7 @@ Reglas obligatorias:
 
 ## 4. Imagen profesional
 
-Cada actividad importante debe tener imagen profesional propia cuando el contexto lo requiera.
+Cada actividad nueva de Basic English Course 2 debe tener una imagen profesional propia cuando se entregue como pagina final. Esta regla aplica especialmente a reading, listening, video listening, pronunciacion, conversation coach, grammar practice, vocabulary activities y juegos por unidad.
 
 No se permite:
 
@@ -60,7 +60,7 @@ No se permite:
 - usar capturas de pantalla como hero;
 - usar imagen generica sin relacion con la unidad.
 
-La imagen puede compartirse entre la tarjeta de la actividad y su hero, pero dos actividades diferentes no deben compartir la misma imagen principal.
+La imagen puede compartirse entre la tarjeta de la actividad y su hero, pero dos actividades diferentes no deben compartir la misma imagen principal. Si una actividad se crea primero con imagen temporal, no se considera terminada hasta reemplazarla por una imagen profesional unica.
 
 ## 5. Checklist antes de terminar una pagina
 
@@ -108,4 +108,3 @@ Se considera terminada cuando cumple:
 8. cache busting actualizado;
 9. commit realizado;
 10. despliegue y verificacion en produccion cuando el usuario haya pedido publicar.
-
