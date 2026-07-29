@@ -12,6 +12,8 @@ const server = fs.readFileSync(path.join(ROOT, "server/progress_api.py"), "utf8"
 
 assert.match(basic2Grades, /apiPath:\s*"\/api\/basic2\/grades"/, "Basic English Course 2 must use its own gradebook API");
 assert.match(basic2Grades, /showRosterExport:\s*true/, "Basic English Course 2 must enable the roster export tab");
+assert.match(basic2Grades, /showStudentProfile:\s*true/, "Basic English Course 2 must enable the student profile tab");
+assert.match(basic2Grades, /studentProfileApiPath:\s*"\/api\/basic2\/student-profile"/, "Basic English Course 2 must save student profiles to its own endpoint");
 assert.match(
   basic2Grades,
   /rosterExcelFileName:\s*"basic-english-course-2-student-roster\.xls"/,
@@ -24,6 +26,12 @@ assert.match(gradesEngine, /Download current student Excel/, "The roster tab mus
 assert.doesNotMatch(gradesEngine, /Preview shows the first records only/, "The roster tab should not render a student preview");
 assert.doesNotMatch(gradesEngine, /payload\.students\.slice\(0,\s*6\)/, "The roster tab should not use a preview subset");
 assert.match(gradesEngine, /function exportRosterExcel/, "The gradebook engine must generate the roster Excel file");
+assert.match(gradesEngine, /function studentProfileMarkup/, "The gradebook engine must render the student profile form");
+assert.match(gradesEngine, /data-student-profile-field="email"/, "The student profile form must include email");
+assert.match(gradesEngine, /data-student-profile-field="documentId"/, "The student profile form must include ID/cédula");
+assert.match(gradesEngine, /data-student-profile-field="age"/, "The student profile form must include age");
+assert.match(gradesEngine, /data-student-profile-field="phone"/, "The student profile form must include phone");
+assert.match(gradesEngine, /data-student-profile-field="backupPhone"/, "The student profile form must include backup phone");
 assert.match(
   gradesEngine,
   /<th>ID \/ Document<\/th><th>Student<\/th><th>Primary email<\/th><th>Alternate emails<\/th><th>Contact<\/th><th>Level<\/th>/,
@@ -33,5 +41,7 @@ assert.match(googleAuth, /\/api\/basic2\/grades\/login/, "Basic English Course 2
 assert.match(server, /BASIC2_ENGLISH_GRADES_PATH/, "The backend must define a separate Basic English Course 2 gradebook file");
 assert.match(server, /path == "\/api\/basic2\/grades\/login"/, "The backend must route Basic English Course 2 local login separately");
 assert.match(server, /parsed\.path == "\/api\/basic2\/grades"/, "The backend must serve Basic English Course 2 grades separately");
+assert.match(server, /parsed\.path == "\/api\/basic2\/student-profile"/, "The backend must save Basic English Course 2 student profile data separately");
+assert.match(server, /studentProfile/, "The backend must persist the student profile payload");
 
 console.log("PASS basic2 grades roster export");

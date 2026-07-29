@@ -17,6 +17,8 @@
     showRosterExport: false,
     rosterExcelTitle: "Student roster",
     rosterExcelFileName: "student-roster.xls",
+    showStudentProfile: false,
+    studentProfileApiPath: "",
     emptyAssessmentsMessage: "No assessments have been created for this level yet."
   }, window.JARALINGUA_BASIC_GRADES_CONFIG || {});
   const GOOGLE_USER_KEY = "jaralingua_google_user";
@@ -430,16 +432,8 @@
     }).join("");
   }
 
-  function renderStudentPanel(student, payload, user) {
+  function studentGradesMarkup(student, payload) {
     return `
-      <div class="privacy-note mb-4">
-        <i class="bi bi-shield-check"></i>
-        <div>
-          <strong>Private student view</strong>
-          <p class="mb-0">This page shows only the grades linked to your signed-in email.</p>
-          ${authActionsMarkup(user)}
-        </div>
-      </div>
       <div class="row g-4">
         <div class="col-lg-5">
           <div class="grades-panel h-100">
@@ -462,6 +456,77 @@
           </div>
         </div>
       </div>
+    `;
+  }
+
+  function studentProfileValue(student, field, fallback) {
+    const details = student && student.gradeDetails && typeof student.gradeDetails === "object" ? student.gradeDetails : {};
+    const profile = details.studentProfile && typeof details.studentProfile === "object" ? details.studentProfile : {};
+    return profile[field] || fallback || "";
+  }
+
+  function studentProfileMarkup(student, user) {
+    return `
+      <div class="grades-panel" data-student-profile-panel>
+        <p class="section-kicker">Student information</p>
+        <h2 class="section-title">My student profile</h2>
+        <p class="section-text mb-3">
+          Complete this information with your current contact details. It will be saved in the Basic English Course 2 gradebook for future reports.
+        </p>
+        <form data-student-profile-form>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label fw-bold" for="studentProfileEmail">Email address</label>
+              <input id="studentProfileEmail" class="form-control" type="email" autocomplete="email" data-student-profile-field="email" value="${escapeHtml(studentProfileValue(student, "email", student.email || user.email || ""))}">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label fw-bold" for="studentProfileDocument">ID / Cédula</label>
+              <input id="studentProfileDocument" class="form-control" inputmode="numeric" autocomplete="off" data-student-profile-field="documentId" value="${escapeHtml(studentProfileValue(student, "documentId", student.id || ""))}">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold" for="studentProfileAge">Age</label>
+              <input id="studentProfileAge" class="form-control" type="number" min="0" max="120" step="1" inputmode="numeric" data-student-profile-field="age" value="${escapeHtml(studentProfileValue(student, "age", ""))}">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold" for="studentProfilePhone">Phone number</label>
+              <input id="studentProfilePhone" class="form-control" type="tel" autocomplete="tel" data-student-profile-field="phone" value="${escapeHtml(studentProfileValue(student, "phone", student.contact || ""))}">
+            </div>
+            <div class="col-md-4">
+              <label class="form-label fw-bold" for="studentProfileBackupPhone">Backup phone</label>
+              <input id="studentProfileBackupPhone" class="form-control" type="tel" autocomplete="tel" data-student-profile-field="backupPhone" value="${escapeHtml(studentProfileValue(student, "backupPhone", ""))}">
+            </div>
+          </div>
+          <div class="hero-actions mt-4">
+            <button class="btn-main" type="submit"><i class="bi bi-save-fill"></i> Save my profile</button>
+          </div>
+          <p class="section-text mt-3 mb-0" data-student-profile-status aria-live="polite"></p>
+        </form>
+      </div>
+    `;
+  }
+
+  function renderStudentPanel(student, payload, user) {
+    const tabs = window.JaraGradebookTabs;
+    const tabsMarkup = PAGE_CONFIG.showStudentProfile && tabs ? `
+      <div class="staff-tabs" data-gradebook-tabs>
+        <div class="staff-tab-nav" role="tablist" aria-label="Student gradebook sections">
+          ${tabs.button("student-grades", "Grades", "bi-table", { selected: true })}
+          ${tabs.button("student-profile", "Student profile", "bi-person-vcard-fill")}
+        </div>
+        ${tabs.panel("student-grades", studentGradesMarkup(student, payload), true)}
+        ${tabs.panel("student-profile", studentProfileMarkup(student, user), false)}
+      </div>
+    ` : studentGradesMarkup(student, payload);
+    return `
+      <div class="privacy-note mb-4">
+        <i class="bi bi-shield-check"></i>
+        <div>
+          <strong>Private student view</strong>
+          <p class="mb-0">This page shows only the grades and profile linked to your signed-in email.</p>
+          ${authActionsMarkup(user)}
+        </div>
+      </div>
+      ${tabsMarkup}
     `;
   }
 
@@ -798,6 +863,52 @@
     }).then(function (response) {
       if (!response.ok) throw new Error("The API rejected the update: " + response.status);
       return response.json();
+    });
+  }
+
+  function studentProfilePayload(root) {
+    const data = {};
+    root.querySelectorAll("[data-student-profile-field]").forEach(function (input) {
+      data[input.getAttribute("data-student-profile-field")] = input.value.trim();
+    });
+    return data;
+  }
+
+  function saveStudentProfile(user, data) {
+    const path = PAGE_CONFIG.studentProfileApiPath;
+    if (!path) return Promise.reject(new Error("profile_api_missing"));
+    const headers = {
+      Authorization: "Bearer " + user.credential,
+      "X-Jaralingua-Auth-Provider": user.provider || "google",
+      "Content-Type": "application/json"
+    };
+    const claim = savedStudentIdClaim();
+    if (claim) headers["X-Jaralingua-Student-Id-Claim"] = claim;
+    return fetch(path, {
+      method: "PUT",
+      headers: headers,
+      body: JSON.stringify(data)
+    }).then(function (response) {
+      if (!response.ok) throw new Error("The API rejected the profile update: " + response.status);
+      return response.json();
+    });
+  }
+
+  function wireStudentProfile(root, payload, user) {
+    const form = root.querySelector("[data-student-profile-form]");
+    if (!form) return;
+    const status = root.querySelector("[data-student-profile-status]");
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      if (status) status.textContent = "Saving your profile...";
+      saveStudentProfile(user, studentProfilePayload(form))
+        .then(function (result) {
+          if (result && result.student) payload.student = result.student;
+          if (status) status.textContent = "Profile saved. Your information is now updated for Basic English Course 2.";
+        })
+        .catch(function () {
+          if (status) status.textContent = "Could not save your profile. Check the information and try again.";
+        });
     });
   }
 
@@ -1155,6 +1266,8 @@
       return;
     }
     root.innerHTML = payload.student ? renderStudentPanel(payload.student, payload, user) : renderNoRecord();
+    if (payload.student && window.JaraGradebookTabs) window.JaraGradebookTabs.wire(root);
+    if (payload.student) wireStudentProfile(root, payload, user);
     wireMicrosoftSignout(root);
   }
 

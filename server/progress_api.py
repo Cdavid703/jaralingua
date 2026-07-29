@@ -1956,6 +1956,47 @@ def clean_gradebook_payload(payload, existing):
     }
 
 
+def clean_student_profile_payload(payload):
+    if not isinstance(payload, dict):
+        raise ValueError("invalid_payload")
+    age_raw = str(payload.get("age") or "").strip()
+    age = ""
+    if age_raw:
+        try:
+            age_value = int(float(age_raw))
+        except (TypeError, ValueError):
+            raise ValueError("invalid_age")
+        if age_value < 0 or age_value > 120:
+            raise ValueError("invalid_age")
+        age = str(age_value)
+    def clean_phone(value):
+        text = clean_text(value, 40)
+        return re.sub(r"[^0-9+() .-]", "", text)[:40]
+    document_id = re.sub(r"\D+", "", str(payload.get("documentId") or ""))[:40]
+    return {
+        "email": clean_email(payload.get("email")),
+        "documentId": document_id,
+        "age": age,
+        "phone": clean_phone(payload.get("phone")),
+        "backupPhone": clean_phone(payload.get("backupPhone")),
+    }
+
+
+def update_student_profile_record(student, profile_payload, actor_profile):
+    details = student.get("gradeDetails") if isinstance(student.get("gradeDetails"), dict) else {}
+    next_details = dict(details)
+    current_profile = next_details.get("studentProfile") if isinstance(next_details.get("studentProfile"), dict) else {}
+    next_profile = dict(current_profile)
+    next_profile.update(profile_payload)
+    next_profile["updatedAt"] = now_iso()
+    next_profile["updatedBy"] = normalize_email(actor_profile.get("email"))
+    next_details["studentProfile"] = next_profile
+    student["gradeDetails"] = next_details
+    if profile_payload.get("phone"):
+        student["contact"] = profile_payload["phone"]
+    return student
+
+
 def grade_user_role(profile, grades_data):
     email = normalize_email(profile.get("email"))
     if email in GLOBAL_ADMIN_EMAILS:
@@ -1979,7 +2020,10 @@ def public_grade_details(student):
 def student_public_view(student):
     return {
         "id": student.get("id", ""),
+        "fullName": student.get("fullName", ""),
         "level": student.get("level", ""),
+        "email": student.get("email", ""),
+        "contact": student.get("contact", ""),
         "bookDate": student.get("bookDate"),
         "grades": student.get("grades", {}),
         "gradeDetails": public_grade_details(student)
@@ -15354,6 +15398,24 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 200, grade_payload_for(profile, grades_data, query))
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic2/student-profile":
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                if ensure_basic2_gradebook_structure(grades_data):
+                    write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    profile_payload = clean_student_profile_payload(payload)
+                    update_student_profile_record(student, profile_payload, profile)
+                    write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 200, {"ok": True, "student": student_public_view(student), "updatedAt": now_iso()})
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
             return
 
         if parsed.path == "/api/basic2/grades":
