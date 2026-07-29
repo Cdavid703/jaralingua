@@ -21,6 +21,7 @@ html { scroll-behavior: smooth; }
 body { margin: 0; color: var(--ink); background: var(--surface); font-family: "Nunito", "Segoe UI", sans-serif; }
 button, input, textarea, select { font: inherit; }
 button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid rgba(15, 118, 110, .35); outline-offset: 3px; }
+body, main, section, form, article, div, nav, header, footer { min-width: 0; }
 
 .institutional-band { padding: .7rem 1rem; background: #fff; border-bottom: 1px solid #e5e7eb; }
 .institutional-band img { display: block; width: min(1123px, 100%); height: auto; margin: 0 auto; }
@@ -40,11 +41,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 .hero-copy-wrap { width: min(670px, 100%); }
 .eyebrow, .section-kicker { margin: 0 0 .35rem; color: var(--intermediate-gold); text-transform: uppercase; letter-spacing: .1em; font-size: .79rem; font-weight: 900; }
 .exam-hero h1 { max-width: 780px; margin: .65rem 0 1rem; color: #fff; font: 900 clamp(2.15rem, 5vw, 4.3rem) / 1.04 "Montserrat", "Segoe UI", sans-serif; letter-spacing: 0; }
+.exam-hero h1 span { display: block; }
 .hero-copy { max-width: 650px; margin: 0; color: rgba(255, 255, 255, .92); font-size: 1.08rem; line-height: 1.7; }
 .pill { display: inline-flex; align-items: center; gap: .45rem; padding: .48rem .72rem; border-radius: 8px; background: #fff; color: var(--itm-purple); font-weight: 900; }
 
-.btn-row { display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.15rem; }
-.btn-main, .btn-soft, .btn-danger { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .72rem 1rem; border-radius: 8px; border: 0; cursor: pointer; text-decoration: none; font-weight: 900; }
+.btn-row { min-width: 0; display: flex; flex-wrap: wrap; gap: .7rem; margin-top: 1.15rem; }
+.btn-main, .btn-soft, .btn-danger { max-width: 100%; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; padding: .72rem 1rem; border-radius: 8px; border: 0; cursor: pointer; text-align: center; text-decoration: none; overflow-wrap: anywhere; font-weight: 900; }
 .btn-main { background: var(--intermediate-teal); color: #fff; box-shadow: 0 10px 22px rgba(15, 118, 110, .2); }
 .btn-main:hover { background: #0b5f59; color: #fff; }
 .btn-soft { background: #fff; color: var(--intermediate-navy); border: 2px solid #cbd5e1; }
@@ -57,7 +59,7 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 .access-grid { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1rem; align-items: center; }
 .access-icon { width: 62px; aspect-ratio: 1; display: grid; place-items: center; border-radius: 8px; background: var(--itm-purple-soft); color: var(--itm-purple); font-size: 1.6rem; }
 .section-title { margin: .15rem 0 .65rem; color: var(--intermediate-navy); font: 900 clamp(1.45rem, 3vw, 2.2rem) / 1.12 "Montserrat", "Segoe UI", sans-serif; letter-spacing: 0; }
-.section-copy { color: var(--muted); line-height: 1.68; }
+.section-copy { color: var(--muted); line-height: 1.68; overflow-wrap: anywhere; }
 
 .identity-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1.25fr; gap: .75rem; }
 .field { display: grid; gap: .35rem; }
@@ -70,12 +72,12 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 
 .audio-card { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem; align-items: center; padding: 1rem; background: #eef8f7; border: 1px solid #b9ddd9; border-radius: 8px; }
 .audio-card audio { width: 100%; min-width: 0; }
-.audio-speed-row { grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin: 0; }
+.audio-speed-row { min-width: 0; grid-column: 1 / -1; display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin: 0; }
 .speed-label { color: var(--intermediate-navy); font-weight: 900; margin-right: .25rem; }
 .speed-btn { min-width: 62px; min-height: 40px; border: 2px solid #bad1d0; border-radius: 8px; background: #fff; color: var(--intermediate-navy); cursor: pointer; font-weight: 900; }
 .speed-btn.active { background: var(--intermediate-teal); border-color: var(--intermediate-teal); color: #fff; }
 .speed-btn:active, .btn-main:active, .btn-soft:active, .btn-danger:active { transform: translateY(1px); }
-.inline-action-feedback { grid-column: 1 / -1; min-height: 1.5rem; padding: .55rem .7rem; border-radius: 8px; background: #f7f9fc; border: 1px solid var(--line); color: var(--muted); font-weight: 800; }
+.inline-action-feedback { min-width: 0; grid-column: 1 / -1; min-height: 1.5rem; padding: .55rem .7rem; border-radius: 8px; background: #f7f9fc; border: 1px solid var(--line); color: var(--muted); overflow-wrap: anywhere; font-weight: 800; }
 .inline-action-feedback.success { background: #e8f6ef; border-color: #b5dfc8; color: var(--success); }
 .inline-action-feedback.pending { background: #fff8df; border-color: #ead477; color: var(--warning); }
 .inline-action-feedback.error { background: #fff0f1; border-color: #efbdc5; color: var(--danger); }
@@ -268,13 +270,16 @@ button:disabled { opacity: .56; cursor: not-allowed; }
 @media (max-width: 560px) {
   .exam-hero { min-height: 530px; background-position: 57% center; }
   .exam-hero::before { background: rgba(7, 25, 57, .79); }
-  .exam-hero-inner { padding-top: 3rem; }
-  .exam-hero h1 { font-size: 2.15rem; }
+  .exam-hero-inner { padding: 3rem 1rem 3.25rem; }
+  .hero-copy-wrap, .hero-copy, .exam-hero h1, .eyebrow { max-width: 100%; overflow-wrap: anywhere; }
+  .exam-hero h1 { font-size: clamp(1.72rem, 8vw, 1.95rem); line-height: 1.08; }
+  .hero-copy { font-size: 1rem; line-height: 1.62; }
   .access-grid, .identity-grid, .rubric-strip, .rubric-grid, .result-grid, .submitted-receipt { grid-template-columns: 1fr; }
   .submitted-receipt strong { grid-column: auto; }
   .rubric-item { border-right: 0; }
+  .btn-row { display: grid; grid-template-columns: 1fr; gap: .75rem; width: 100%; }
   .btn-main, .btn-soft, .btn-danger { width: 100%; }
-  .audio-speed-row { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .audio-speed-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .45rem; width: 100%; }
   .speed-label { grid-column: 1 / -1; }
   .speed-btn { min-width: 0; }
   .word-row { flex-direction: column; gap: .2rem; }
