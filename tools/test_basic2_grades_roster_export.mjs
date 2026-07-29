@@ -20,6 +20,9 @@ assert.match(
 assert.doesNotMatch(basic1Grades, /showRosterExport:\s*true/, "Basic English Course 1 should not inherit the Course 2 roster export tab");
 assert.match(gradesEngine, /function staffRosterExportMarkup/, "The gradebook engine must render the roster export tab");
 assert.match(gradesEngine, /data-export-roster-excel/, "The gradebook engine must expose a roster export button");
+assert.match(gradesEngine, /Download current student Excel/, "The roster tab must present the current-list download button");
+assert.doesNotMatch(gradesEngine, /Preview shows the first records only/, "The roster tab should not render a student preview");
+assert.doesNotMatch(gradesEngine, /payload\.students\.slice\(0,\s*6\)/, "The roster tab should not use a preview subset");
 assert.match(gradesEngine, /function exportRosterExcel/, "The gradebook engine must generate the roster Excel file");
 assert.match(
   gradesEngine,

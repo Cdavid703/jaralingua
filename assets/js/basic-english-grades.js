@@ -691,39 +691,19 @@
   }
 
   function staffRosterExportMarkup(payload) {
-    const sampleRows = payload.students.slice(0, 6).map(function (student) {
-      const aliases = Array.isArray(student.emailAliases) ? student.emailAliases.join(", ") : "";
-      return `
-        <tr>
-          <td>${escapeHtml(student.id || "")}</td>
-          <td>${escapeHtml(student.fullName || "")}</td>
-          <td>${escapeHtml(student.email || "")}</td>
-          <td>${escapeHtml(aliases)}</td>
-        </tr>
-      `;
-    }).join("");
     return `
       <div class="grades-panel mb-4" data-staff-roster-export>
         <p class="section-kicker">Student roster</p>
         <h2 class="section-title">Basic English Course 2 student list</h2>
         <p class="section-text mb-3">
-          Download the complete registered roster for this level. The file includes document/ID, student name,
-          primary email, alternate emails, contact and level. No assessments or grade percentages are included.
+          Download the current registered roster for this level directly from the Basic English Course 2 gradebook.
+          The file includes document/ID, student name, primary email, alternate emails, contact and level.
+          No assessments or grade percentages are included.
         </p>
         <button class="btn-main" type="button" data-export-roster-excel>
-          <i class="bi bi-file-earmark-spreadsheet"></i> Download complete student Excel
+          <i class="bi bi-file-earmark-spreadsheet"></i> Download current student Excel
         </button>
-      </div>
-      <div class="grades-panel">
-        <p class="section-kicker">Preview</p>
-        <h2 class="section-title">${escapeHtml(payload.students.length)} registered students</h2>
-        <div class="table-wrap">
-          <table class="grades-table">
-            <thead><tr><th>ID</th><th>Student</th><th>Email</th><th>Alternate emails</th></tr></thead>
-            <tbody>${sampleRows || `<tr><td colspan="4">No students registered yet.</td></tr>`}</tbody>
-          </table>
-        </div>
-        <p class="section-text mt-3 mb-0">Preview shows the first records only. Use the Excel button for the complete list.</p>
+        <p class="section-text mt-3 mb-0">${escapeHtml(payload.students.length)} students are currently available in the download.</p>
       </div>
     `;
   }
