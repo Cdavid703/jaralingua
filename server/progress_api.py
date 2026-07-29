@@ -109,6 +109,7 @@ try:
 except (TypeError, ValueError):
     FRENCH8_FINAL_EXAM_AUDIO_GRANT_TTL = 10800
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
+BASIC2_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC2_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic2-english-grades.json")
 BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/basic-integrated-task.json")
 BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
 BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
@@ -1546,6 +1547,8 @@ def validate_local_token(token):
 def gradebook_path_for_login(path):
     if path == "/api/basic/grades/login":
         return ("basic", "Basic English Course 1", BASIC_ENGLISH_GRADES_PATH)
+    if path == "/api/basic2/grades/login":
+        return ("basic2", "Basic English Course 2", BASIC2_ENGLISH_GRADES_PATH)
     if path == "/api/intermediate/grades/login":
         return ("intermediate", "Intermediate English Course 1", INTERMEDIATE_ENGLISH_GRADES_PATH)
     if path == "/api/french1/grades/login":
@@ -2740,6 +2743,27 @@ def ensure_basic_gradebook_structure(grades_data):
     if grades_data.get("allowStudentIdClaim") is not True:
         grades_data["allowStudentIdClaim"] = True
         changed = True
+    return changed
+
+
+def ensure_basic2_gradebook_structure(grades_data):
+    changed = False
+    if not isinstance(grades_data.get("adminEmails"), list):
+        grades_data["adminEmails"] = []
+        changed = True
+    if not isinstance(grades_data.get("teacherEmails"), list):
+        grades_data["teacherEmails"] = []
+        changed = True
+    if not isinstance(grades_data.get("students"), list):
+        grades_data["students"] = []
+        changed = True
+    if grades_data.get("evaluations") != []:
+        grades_data["evaluations"] = []
+        changed = True
+    if grades_data.get("allowStudentIdClaim") is not True:
+        grades_data["allowStudentIdClaim"] = True
+        changed = True
+    grades_data.setdefault("bonusEvent", None)
     return changed
 
 
@@ -15332,6 +15356,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path == "/api/basic2/grades":
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                if ensure_basic2_gradebook_structure(grades_data):
+                    write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                query = urllib.parse.parse_qs(parsed.query)
+                json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
         if parsed.path == "/api/basic/unit6-neighborhood-gallery":
             with data_lock:
                 grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
@@ -19093,6 +19126,23 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 400, {"error": str(error)})
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/basic2/grades":
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                if ensure_basic2_gradebook_structure(grades_data):
+                    write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                try:
+                    next_data = clean_gradebook_payload(payload, grades_data)
+                    ensure_basic2_gradebook_structure(next_data)
+                    write_json_file(BASIC2_ENGLISH_GRADES_PATH, next_data, ".basic2-grades-")
+                    json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
             return
 
         if parsed.path == "/api/intermediate/grades":

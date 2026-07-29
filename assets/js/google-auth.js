@@ -1570,7 +1570,10 @@
 
   function localLoginPath() {
     const path = window.location.pathname || "";
-    if (path.indexOf("/ingles/basico/") !== -1 || path.indexOf("/ingles/basico-2/") !== -1 || /\/ingles\/basico$/i.test(path) || /\/ingles\/basico-2$/i.test(path)) {
+    if (path.indexOf("/ingles/basico-2/") !== -1 || /\/ingles\/basico-2$/i.test(path)) {
+      return "/api/basic2/grades/login";
+    }
+    if (path.indexOf("/ingles/basico/") !== -1 || /\/ingles\/basico$/i.test(path)) {
       return "/api/basic/grades/login";
     }
     if (path.indexOf("/ingles/intermediate/") !== -1 || /\/ingles\/intermediate$/i.test(path)) {

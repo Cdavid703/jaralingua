@@ -7,7 +7,10 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const basic2Grades = fs.readFileSync(path.join(ROOT, "ingles/basico-2/notas.html"), "utf8");
 const basic1Grades = fs.readFileSync(path.join(ROOT, "ingles/basico/notas.html"), "utf8");
 const gradesEngine = fs.readFileSync(path.join(ROOT, "assets/js/basic-english-grades.js"), "utf8");
+const googleAuth = fs.readFileSync(path.join(ROOT, "assets/js/google-auth.js"), "utf8");
+const server = fs.readFileSync(path.join(ROOT, "server/progress_api.py"), "utf8");
 
+assert.match(basic2Grades, /apiPath:\s*"\/api\/basic2\/grades"/, "Basic English Course 2 must use its own gradebook API");
 assert.match(basic2Grades, /showRosterExport:\s*true/, "Basic English Course 2 must enable the roster export tab");
 assert.match(
   basic2Grades,
@@ -23,5 +26,9 @@ assert.match(
   /<th>ID \/ Document<\/th><th>Student<\/th><th>Primary email<\/th><th>Alternate emails<\/th><th>Contact<\/th><th>Level<\/th>/,
   "The roster Excel must include the full student identity columns"
 );
+assert.match(googleAuth, /\/api\/basic2\/grades\/login/, "Basic English Course 2 local login must use its own gradebook login endpoint");
+assert.match(server, /BASIC2_ENGLISH_GRADES_PATH/, "The backend must define a separate Basic English Course 2 gradebook file");
+assert.match(server, /path == "\/api\/basic2\/grades\/login"/, "The backend must route Basic English Course 2 local login separately");
+assert.match(server, /parsed\.path == "\/api\/basic2\/grades"/, "The backend must serve Basic English Course 2 grades separately");
 
 console.log("PASS basic2 grades roster export");
