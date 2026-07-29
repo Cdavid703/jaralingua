@@ -14,6 +14,9 @@
     emptyGradeGrid: false,
     disableAdminEditing: false,
     hidePdfReports: false,
+    showRosterExport: false,
+    rosterExcelTitle: "Student roster",
+    rosterExcelFileName: "student-roster.xls",
     emptyAssessmentsMessage: "No assessments have been created for this level yet."
   }, window.JARALINGUA_BASIC_GRADES_CONFIG || {});
   const GOOGLE_USER_KEY = "jaralingua_google_user";
@@ -687,6 +690,44 @@
     `;
   }
 
+  function staffRosterExportMarkup(payload) {
+    const sampleRows = payload.students.slice(0, 6).map(function (student) {
+      const aliases = Array.isArray(student.emailAliases) ? student.emailAliases.join(", ") : "";
+      return `
+        <tr>
+          <td>${escapeHtml(student.id || "")}</td>
+          <td>${escapeHtml(student.fullName || "")}</td>
+          <td>${escapeHtml(student.email || "")}</td>
+          <td>${escapeHtml(aliases)}</td>
+        </tr>
+      `;
+    }).join("");
+    return `
+      <div class="grades-panel mb-4" data-staff-roster-export>
+        <p class="section-kicker">Student roster</p>
+        <h2 class="section-title">Basic English Course 2 student list</h2>
+        <p class="section-text mb-3">
+          Download the complete registered roster for this level. The file includes document/ID, student name,
+          primary email, alternate emails, contact and level. No assessments or grade percentages are included.
+        </p>
+        <button class="btn-main" type="button" data-export-roster-excel>
+          <i class="bi bi-file-earmark-spreadsheet"></i> Download complete student Excel
+        </button>
+      </div>
+      <div class="grades-panel">
+        <p class="section-kicker">Preview</p>
+        <h2 class="section-title">${escapeHtml(payload.students.length)} registered students</h2>
+        <div class="table-wrap">
+          <table class="grades-table">
+            <thead><tr><th>ID</th><th>Student</th><th>Email</th><th>Alternate emails</th></tr></thead>
+            <tbody>${sampleRows || `<tr><td colspan="4">No students registered yet.</td></tr>`}</tbody>
+          </table>
+        </div>
+        <p class="section-text mt-3 mb-0">Preview shows the first records only. Use the Excel button for the complete list.</p>
+      </div>
+    `;
+  }
+
   function renderStaffPanel(payload, user) {
     const tabs = window.JaraGradebookTabs;
     const headers = payload.evaluations.map(function (evaluation) {
@@ -714,6 +755,10 @@
       tabs.panel("gradebook", gradebookMarkup, true),
       tabs.panel("reports", staffReportsMarkup(payload), false)
     ];
+    if (PAGE_CONFIG.showRosterExport) {
+      tabButtons.push(tabs.button("roster", "Roster", "bi-person-lines-fill", { count: payload.students.length }));
+      tabPanels.push(tabs.panel("roster", staffRosterExportMarkup(payload), false));
+    }
     if (payload.role === "admin" && !PAGE_CONFIG.disableAdminEditing) {
       tabButtons.push(tabs.button("add-grade", "Add grade", "bi-plus-square-fill"));
       tabButtons.push(tabs.button("students", "Students & grades", "bi-people-fill", { count: payload.students.length }));
@@ -845,10 +890,61 @@
     }, 0);
   }
 
+  function exportRosterExcel(payload) {
+    const rows = payload.students.map(function (student) {
+      const aliases = Array.isArray(student.emailAliases) ? student.emailAliases.join(", ") : "";
+      return `
+        <tr>
+          <td>${excelCell(student.id)}</td>
+          <td>${excelCell(student.fullName)}</td>
+          <td>${excelCell(student.email)}</td>
+          <td>${excelCell(aliases)}</td>
+          <td>${excelCell(student.contact || "")}</td>
+          <td>${excelCell(student.level || PAGE_CONFIG.courseFullTitle)}</td>
+        </tr>
+      `;
+    }).join("");
+    const html = `
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            table { border-collapse: collapse; font-family: Arial, sans-serif; }
+            th { background: #1f4e8c; color: #ffffff; font-weight: bold; }
+            th, td { border: 1px solid #c8d3e1; padding: 8px; }
+            tr:nth-child(even) td { background: #eef5ff; }
+            .title { background: #16805f; color: #ffffff; font-size: 18px; font-weight: bold; }
+          </style>
+        </head>
+        <body>
+          <table>
+            <tr><td class="title" colspan="6">${excelCell(PAGE_CONFIG.rosterExcelTitle)}</td></tr>
+            <tr><th>ID / Document</th><th>Student</th><th>Primary email</th><th>Alternate emails</th><th>Contact</th><th>Level</th></tr>
+            ${rows}
+          </table>
+        </body>
+      </html>
+    `;
+    const blob = new Blob(["\ufeff", html], { type: "application/vnd.ms-excel;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = PAGE_CONFIG.rosterExcelFileName;
+    document.body.appendChild(link);
+    link.click();
+    setTimeout(function () {
+      URL.revokeObjectURL(link.href);
+      link.remove();
+    }, 0);
+  }
+
   function wireExport(root, payload) {
     const button = root.querySelector("[data-export-excel]");
     if (button) button.addEventListener("click", function () {
       exportExcel(payload);
+    });
+    const rosterButton = root.querySelector("[data-export-roster-excel]");
+    if (rosterButton) rosterButton.addEventListener("click", function () {
+      exportRosterExcel(payload);
     });
   }
 
