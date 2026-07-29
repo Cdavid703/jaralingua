@@ -19,6 +19,10 @@ const source = fs.readFileSync(pagePath, "utf8");
 assert.match(source, /Weather Action Roulette/);
 assert.doesNotMatch(source, /\bCorrect\b|\bNeeds Help\b|\bExcellent\b/);
 assert.doesNotMatch(source, /Advanced Challenge|activity level|speaking level/i);
+assert.doesNotMatch(source, /no model answer/i);
+assert.match(source, /Useful model answer/);
+assert.match(source, /It&apos;s cloudy, so I&apos;m wearing a jacket and I&apos;m walking to a cafe\./);
+assert.match(source, /It&apos;s sunny, so I&apos;m wearing sunglasses and I&apos;m going for a walk\./);
 assert.match(source, /weather-action-roulette-hero\.webp/);
 
 const browser = await chromium.launch({
@@ -40,6 +44,7 @@ page.on("pageerror", (error) => errors.push(error.message));
 
 await page.goto(`${BASE_URL}/ingles/basico-2/practice-unit-1-weather-action-roulette.html`, { waitUntil: "networkidle" });
 await assert.doesNotReject(async () => page.locator("h1", { hasText: "Weather Action Roulette" }).waitFor());
+await assert.doesNotReject(async () => page.locator(".weather-model-answer", { hasText: "It's cloudy, so I'm wearing a jacket" }).first().waitFor());
 
 const heroPosition = await page.locator(".lesson-hero").evaluate((node) => getComputedStyle(node).position);
 assert.notEqual(heroPosition, "fixed", "Hero must not be fixed on mobile");

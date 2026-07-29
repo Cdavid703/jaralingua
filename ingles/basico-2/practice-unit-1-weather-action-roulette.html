@@ -544,6 +544,34 @@
       font-size: 0.88rem;
     }
 
+    .weather-model-answer {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #ecfeff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.14);
+    }
+
+    .weather-model-answer small {
+      display: block;
+      color: var(--weather-green);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 900;
+      margin-bottom: 8px;
+    }
+
+    .weather-model-answer p {
+      margin: 0;
+      color: #334155;
+      line-height: 1.65;
+    }
+
+    .weather-model-answer strong {
+      color: var(--weather-ink);
+      font-weight: 900;
+    }
+
     .weather-table-container {
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
@@ -703,8 +731,8 @@
       </article>
 
       <article class="premium-topic-card">
-        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Language Reminder</p><h2>Minimal support, no model answer</h2></div></div>
-        <p class="lesson-text">These patterns are reminders. They should not limit the student&apos;s answer.</p>
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Language Reminder</p><h2>Useful model answer</h2></div></div>
+        <p class="lesson-text">Students can use the model first, then change the clothing, activity, or place according to the weather card.</p>
         <div class="weather-language-grid">
           <span>It&apos;s + weather.</span>
           <span>I&apos;m + verb-ing.</span>
@@ -712,6 +740,12 @@
           <span>We&apos;re + verb-ing.</span>
           <span>They&apos;re + verb-ing.</span>
           <span>now / right now / today</span>
+        </div>
+        <div class="weather-model-answer" aria-label="Model answer for students">
+          <small>Model answer</small>
+          <p><strong>It&apos;s sunny, so I&apos;m wearing sunglasses and I&apos;m going for a walk.</strong></p>
+          <p><strong>It&apos;s cloudy, so I&apos;m wearing a jacket and I&apos;m walking to a cafe.</strong></p>
+          <p><strong>It&apos;s raining, so I&apos;m carrying an umbrella and I&apos;m staying inside.</strong></p>
         </div>
       </article>
 
@@ -786,6 +820,10 @@ Maria"></textarea>
               <div class="weather-speaking-prompt">
                 <strong>Say at least one sentence.</strong>
                 <p>Use present continuous and choose any activity that makes sense with the weather.</p>
+                <div class="weather-model-answer">
+                  <small>Student model</small>
+                  <p><strong>It&apos;s cloudy, so I&apos;m wearing a jacket and I&apos;m walking to a cafe.</strong></p>
+                </div>
               </div>
               <div class="weather-round-actions">
                 <button type="button" class="weather-btn secondary" id="saveRoundBtn" onclick="saveRound()" disabled><i class="bi bi-arrow-right-circle"></i> Save Round / Next Round</button>
@@ -830,7 +868,7 @@ Maria"></textarea>
         <small>Revealed weather card</small>
         <h2 id="weatherModalTitle">Sunny</h2>
         <p id="weatherModalNote">Use present continuous and choose any activity that makes sense with the weather.</p>
-        <p><strong>Student task:</strong> say at least one sentence. The teacher gives oral feedback.</p>
+        <p><strong>Student task:</strong> say at least one sentence. Model: <strong>It&apos;s sunny, so I&apos;m wearing sunglasses and I&apos;m going for a walk.</strong></p>
         <div class="weather-card-modal-actions">
           <button type="button" class="weather-btn" onclick="closeWeatherModal()"><i class="bi bi-check2-circle"></i> Continue</button>
           <button type="button" class="weather-btn secondary" onclick="spinStudentRoulette()" id="modalSpinStudentBtn" disabled><i class="bi bi-play-circle"></i> Spin Student</button>
