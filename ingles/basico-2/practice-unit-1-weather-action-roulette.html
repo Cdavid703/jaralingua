@@ -296,6 +296,103 @@
       font-weight: 800;
     }
 
+    .weather-card-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 3vw, 34px);
+      background: rgba(7, 31, 79, 0.82);
+      backdrop-filter: blur(8px);
+    }
+
+    .weather-card-modal.is-open {
+      display: flex;
+    }
+
+    body.weather-modal-open {
+      overflow: hidden;
+    }
+
+    .weather-card-modal-panel {
+      width: min(1120px, 96vw);
+      max-height: 94vh;
+      border-radius: 32px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
+      border: 1px solid rgba(255, 255, 255, 0.42);
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    }
+
+    .weather-card-modal-visual {
+      min-height: min(70vh, 620px);
+      background: #dbeafe;
+    }
+
+    .weather-card-modal-visual img {
+      width: 100%;
+      height: 100%;
+      min-height: min(70vh, 620px);
+      object-fit: cover;
+      display: block;
+    }
+
+    .weather-card-modal-content {
+      padding: clamp(22px, 4vw, 42px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .weather-card-modal-content small {
+      color: var(--weather-red);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 900;
+    }
+
+    .weather-card-modal-content h2 {
+      color: var(--weather-ink);
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      line-height: 0.95;
+      margin: 0;
+    }
+
+    .weather-card-modal-content p {
+      color: #475569;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .weather-card-modal-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .weather-card-modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--weather-ink);
+      font-size: 1.4rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+    }
+
     .weather-play-grid {
       display: grid;
       grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
@@ -496,8 +593,30 @@
     @media (max-width: 720px) {
       .weather-hidden-deck,
       .weather-step-grid,
-      .weather-language-grid {
+      .weather-language-grid,
+      .weather-card-modal-panel {
         grid-template-columns: 1fr;
+      }
+
+      .weather-card-modal {
+        padding: 12px;
+      }
+
+      .weather-card-modal-panel {
+        width: 96vw;
+        max-height: 92vh;
+        overflow-y: auto;
+        border-radius: 24px;
+      }
+
+      .weather-card-modal-visual,
+      .weather-card-modal-visual img {
+        min-height: 42vh;
+        max-height: 54vh;
+      }
+
+      .weather-card-modal-content {
+        padding: 20px;
       }
 
       .weather-tool-actions,
@@ -701,6 +820,25 @@ Maria"></textarea>
     </section>
   </main>
 
+  <div class="weather-card-modal" id="weatherCardModal" role="dialog" aria-modal="true" aria-labelledby="weatherModalTitle" aria-hidden="true">
+    <button type="button" class="weather-card-modal-close" onclick="closeWeatherModal()" aria-label="Close expanded weather card">&times;</button>
+    <div class="weather-card-modal-panel" role="document">
+      <div class="weather-card-modal-visual">
+        <img id="weatherModalImage" src="../../assets/img/english-basic-2/unit-1-going-out/weather-sunny.webp" alt="" />
+      </div>
+      <div class="weather-card-modal-content">
+        <small>Revealed weather card</small>
+        <h2 id="weatherModalTitle">Sunny</h2>
+        <p id="weatherModalNote">Use present continuous and choose any activity that makes sense with the weather.</p>
+        <p><strong>Student task:</strong> say at least one sentence. The teacher gives oral feedback.</p>
+        <div class="weather-card-modal-actions">
+          <button type="button" class="weather-btn" onclick="closeWeatherModal()"><i class="bi bi-check2-circle"></i> Continue</button>
+          <button type="button" class="weather-btn secondary" onclick="spinStudentRoulette()" id="modalSpinStudentBtn" disabled><i class="bi bi-play-circle"></i> Spin Student</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
 
   <script src="../../assets/js/roster-import.js"></script>
@@ -739,6 +877,7 @@ Maria"></textarea>
           onNamesLoaded: function() { loadStudentNames(); }
         });
       }
+      setupWeatherModal();
       renderGame();
     });
 
@@ -824,6 +963,7 @@ Maria"></textarea>
     }
 
     function resetWeatherDeck() {
+      closeWeatherModal();
       gameState.usedWeatherIds = [];
       gameState.selectedWeather = null;
       renderGame();
@@ -831,6 +971,7 @@ Maria"></textarea>
 
     function resetActivity() {
       stopRouletteSound(false);
+      closeWeatherModal();
       gameState.originalNames = [];
       gameState.studentPool = [];
       gameState.usedWeatherIds = [];
@@ -845,15 +986,21 @@ Maria"></textarea>
 
     function selectWeatherCard(weatherId) {
       if (gameState.spinning || gameState.currentStudent) return;
+      if (gameState.selectedWeather && gameState.selectedWeather.id === weatherId) {
+        openWeatherModal(gameState.selectedWeather);
+        return;
+      }
       if (gameState.usedWeatherIds.includes(weatherId)) return;
       const card = weatherCards.find(function(item) { return item.id === weatherId; });
       if (!card) return;
       gameState.selectedWeather = card;
       renderGame();
+      openWeatherModal(card);
     }
 
     function hideSelectedWeather() {
       if (gameState.currentStudent) return;
+      closeWeatherModal();
       gameState.selectedWeather = null;
       renderGame();
     }
@@ -881,7 +1028,7 @@ Maria"></textarea>
         button.onclick = function() { selectWeatherCard(card.id); };
 
         if (isSelected) {
-          button.innerHTML = '<div class="weather-card-front"><img src="' + card.image + '" alt="' + card.label + ' weather" /><div><strong>' + card.label + '</strong><small>Speak freely.</small></div></div>';
+          button.innerHTML = '<div class="weather-card-front"><img src="' + card.image + '" alt="' + card.label + ' weather" /><div><strong>' + card.label + '</strong><small>Click to expand again.</small></div></div>';
         } else {
           button.innerHTML = '<div class="weather-card-back"><span>' + (isUsed ? "Used" : "Weather Card") + '</span></div>';
         }
@@ -976,6 +1123,7 @@ Maria"></textarea>
       document.getElementById("spinStudentBtn").disabled = gameState.spinning || !hasNames || !hasWeather || hasStudent;
       document.getElementById("saveRoundBtn").disabled = !hasWeather || !hasStudent;
       document.getElementById("cancelRoundBtn").disabled = !hasWeather && !hasStudent;
+      document.getElementById("modalSpinStudentBtn").disabled = gameState.spinning || !hasNames || !hasWeather || hasStudent;
 
       const weatherStatus = document.getElementById("weatherStatus");
       if (weatherCardsRemaining < 1 && !hasWeather) {
@@ -1004,6 +1152,7 @@ Maria"></textarea>
 
     function spinStudentRoulette() {
       if (gameState.spinning || !gameState.selectedWeather || gameState.currentStudent || gameState.studentPool.length < 1) return;
+      closeWeatherModal();
       gameState.spinning = true;
       startRouletteSound();
       updateControls();
@@ -1030,6 +1179,7 @@ Maria"></textarea>
       });
       gameState.studentPool = gameState.studentPool.filter(function(name) { return name !== student; });
       if (!gameState.usedWeatherIds.includes(weather.id)) gameState.usedWeatherIds.push(weather.id);
+      closeWeatherModal();
       gameState.selectedWeather = null;
       gameState.currentStudent = null;
       renderGame();
@@ -1037,10 +1187,41 @@ Maria"></textarea>
 
     function cancelCurrentRound() {
       stopRouletteSound(false);
+      closeWeatherModal();
       gameState.currentStudent = null;
       gameState.selectedWeather = null;
       gameState.spinning = false;
       renderGame();
+    }
+
+    function setupWeatherModal() {
+      const modal = document.getElementById("weatherCardModal");
+      modal.addEventListener("click", function(event) {
+        if (event.target === modal) closeWeatherModal();
+      });
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") closeWeatherModal();
+      });
+    }
+
+    function openWeatherModal(card) {
+      if (!card) return;
+      document.getElementById("weatherModalImage").src = card.image;
+      document.getElementById("weatherModalImage").alt = card.label + " weather card enlarged";
+      document.getElementById("weatherModalTitle").textContent = card.label;
+      document.getElementById("weatherModalNote").textContent = card.note;
+      const modal = document.getElementById("weatherCardModal");
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("weather-modal-open");
+      updateControls();
+    }
+
+    function closeWeatherModal() {
+      const modal = document.getElementById("weatherCardModal");
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("weather-modal-open");
     }
   </script>
   <script src="../../assets/js/google-auth-config.js"></script>

@@ -44,6 +44,8 @@ The deck uses Unit 1 professional weather assets:
 
 Cards are face down before selection. A revealed card shows only the weather label and image, not a model answer. This preserves free production.
 
+When the teacher reveals a card, the activity opens a full-screen enlarged view of the weather image. The modal exists so the teacher can project or show the weather clearly on mobile, tablet, laptop, or classroom screen. The teacher can close it, click outside it, press Escape, or spin the student directly from the modal.
+
 ## Technical requirements documented for future Basic 2 pages
 
 - The sign-in control must remain in the top navigation/header area, not as a floating button.
@@ -59,3 +61,4 @@ Cards are face down before selection. A revealed card shows only the weather lab
 - Roulette logic removes students only when the teacher saves the round.
 - Weather cards are marked used only after saving the round.
 - Canceling a round returns the activity to a neutral state without recording participation.
+- Revealed weather cards open in an enlarged modal and can be expanded again by clicking the revealed card.

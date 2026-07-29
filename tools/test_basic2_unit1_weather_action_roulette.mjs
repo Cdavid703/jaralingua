@@ -62,6 +62,25 @@ await page.locator("button", { hasText: "Use Sample Names" }).click();
 await assert.doesNotReject(async () => page.locator("#studentPoolList", { hasText: "Alex" }).waitFor());
 
 await hiddenCards.first().click();
+await assert.doesNotReject(async () => page.locator("#weatherCardModal.is-open").waitFor());
+const modalState = await page.locator("#weatherCardModal").evaluate((modal) => {
+  const panel = modal.querySelector(".weather-card-modal-panel");
+  const image = modal.querySelector("#weatherModalImage");
+  const bodyOverflow = getComputedStyle(document.body).overflow;
+  const rect = panel.getBoundingClientRect();
+  return {
+    ariaHidden: modal.getAttribute("aria-hidden"),
+    bodyOverflow,
+    width: rect.width,
+    imageLoaded: image.complete && image.naturalWidth > 0
+  };
+});
+assert.equal(modalState.ariaHidden, "false");
+assert.equal(modalState.bodyOverflow, "hidden");
+assert.ok(modalState.width >= 340, `Expanded weather modal is too narrow: ${modalState.width}`);
+assert.equal(modalState.imageLoaded, true, "Expanded weather card image did not load");
+await page.keyboard.press("Escape");
+await assert.doesNotReject(async () => page.locator("#weatherCardModal").waitFor({ state: "hidden" }));
 await assert.doesNotReject(async () => page.locator("#currentWeatherName").waitFor());
 const selectedWeather = (await page.locator("#currentWeatherName").innerText()).trim();
 assert.notEqual(selectedWeather, "-", "Weather card was not revealed");
