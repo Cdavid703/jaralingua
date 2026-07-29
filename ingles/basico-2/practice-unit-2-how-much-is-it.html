@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Much Is It? | Unit 2 | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260729-basic2-unit2-prices" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .price-page {
+      --price-blue: #123b8f;
+      --price-ink: #071f4f;
+      --price-green: #0f9f6e;
+      --price-orange: #f97316;
+      --price-soft: #eef7ff;
+      overflow-x: hidden;
+    }
+
+    .price-shell {
+      width: min(1320px, calc(100% - 32px));
+      margin: 34px auto 70px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .price-panel,
+    .price-card,
+    .price-example-card {
+      border-radius: 24px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .price-panel {
+      padding: 22px;
+    }
+
+    .price-panel h2,
+    .price-panel h3,
+    .price-card h3,
+    .price-example-card h3 {
+      color: var(--price-ink);
+      margin-top: 0;
+    }
+
+    .price-panel p,
+    .price-card p,
+    .price-example-card p {
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .price-flow-grid,
+    .price-pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .price-flow-grid article,
+    .price-pattern-card {
+      border-radius: 18px;
+      background: linear-gradient(145deg, #f8fbff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      padding: 16px;
+    }
+
+    .price-flow-grid b {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--price-blue);
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+
+    .price-pattern-card strong,
+    .price-example-line strong {
+      color: var(--price-blue);
+    }
+
+    .price-example-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .price-example-card {
+      padding: 18px;
+      background: linear-gradient(145deg, #ffffff, #f8fbff);
+    }
+
+    .price-example-line {
+      border-radius: 16px;
+      padding: 12px;
+      background: var(--price-soft);
+      margin: 10px 0;
+      color: #334155;
+      font-weight: 850;
+    }
+
+    .price-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .price-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 15px;
+      font-weight: 900;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--price-blue), #2563eb);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 10px 22px rgba(18, 59, 143, 0.18);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .price-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .price-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+    }
+
+    .price-btn.secondary {
+      background: linear-gradient(135deg, var(--price-green), #16a34a);
+    }
+
+    .price-btn.light {
+      color: var(--price-ink);
+      background: var(--price-soft);
+      box-shadow: none;
+    }
+
+    .price-toolbar {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .price-toolbar span {
+      border-radius: 999px;
+      padding: 8px 12px;
+      background: var(--price-soft);
+      color: var(--price-blue);
+      font-weight: 950;
+    }
+
+    .price-card-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .price-card {
+      display: grid;
+      grid-template-rows: 190px 1fr;
+      min-height: 100%;
+    }
+
+    .price-card-image {
+      position: relative;
+      background: #eaf1ff;
+      overflow: hidden;
+    }
+
+    .price-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .price-tag {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      border-radius: 18px;
+      padding: 10px 14px;
+      background: #ffffff;
+      color: var(--price-ink);
+      font-size: 1.45rem;
+      font-weight: 950;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
+    }
+
+    .price-card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .price-card-body h3 {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+
+    .price-question {
+      border-radius: 15px;
+      padding: 10px;
+      background: var(--price-soft);
+      color: var(--price-blue);
+      font-weight: 950;
+    }
+
+    .price-answer {
+      display: none;
+      border-radius: 15px;
+      padding: 10px;
+      background: #ecfdf5;
+      color: #047857;
+      font-weight: 950;
+    }
+
+    .price-card.show-answer .price-answer {
+      display: block;
+    }
+
+    .price-card .price-actions {
+      margin-top: auto;
+    }
+
+    .price-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(16px, 3vw, 34px);
+      background: rgba(7, 31, 79, 0.82);
+      backdrop-filter: blur(8px);
+    }
+
+    .price-modal.is-open {
+      display: flex;
+    }
+
+    body.price-modal-open {
+      overflow: hidden;
+    }
+
+    .price-modal-panel {
+      width: min(1120px, 96vw);
+      max-height: 94vh;
+      border-radius: 32px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.38);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(300px, 0.9fr);
+    }
+
+    .price-modal-visual {
+      min-height: min(70vh, 620px);
+      background: #dbeafe;
+      position: relative;
+    }
+
+    .price-modal-visual img {
+      width: 100%;
+      height: 100%;
+      min-height: min(70vh, 620px);
+      object-fit: cover;
+      display: block;
+    }
+
+    .price-modal-tag {
+      position: absolute;
+      left: 24px;
+      bottom: 24px;
+      border-radius: 24px;
+      padding: 14px 20px;
+      background: #ffffff;
+      color: var(--price-ink);
+      font-size: clamp(2.3rem, 7vw, 5.5rem);
+      font-weight: 950;
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.28);
+    }
+
+    .price-modal-content {
+      padding: clamp(22px, 4vw, 42px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+
+    .price-modal-content small {
+      color: var(--price-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 950;
+    }
+
+    .price-modal-content h2 {
+      color: var(--price-ink);
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1;
+      margin: 0;
+    }
+
+    .price-modal-question,
+    .price-modal-answer {
+      border-radius: 18px;
+      padding: 14px;
+      font-weight: 950;
+    }
+
+    .price-modal-question {
+      background: var(--price-soft);
+      color: var(--price-blue);
+    }
+
+    .price-modal-answer {
+      display: none;
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .price-modal.show-answer .price-modal-answer {
+      display: block;
+    }
+
+    .price-modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--price-ink);
+      font-size: 1.4rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+    }
+
+    .price-status {
+      min-height: 1.5em;
+      color: #475569;
+      font-weight: 850;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 1060px) {
+      .price-card-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 900px) {
+      .price-flow-grid,
+      .price-pattern-grid,
+      .price-example-grid,
+      .price-modal-panel {
+        grid-template-columns: 1fr;
+      }
+
+      .price-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .price-shell {
+        width: min(100% - 16px, 1320px);
+      }
+
+      .price-card-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .price-toolbar,
+      .price-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .price-btn {
+        width: 100%;
+      }
+
+      .price-modal {
+        padding: 12px;
+      }
+
+      .price-modal-panel {
+        width: 96vw;
+        max-height: 92vh;
+        overflow-y: auto;
+        border-radius: 24px;
+      }
+
+      .price-modal-visual,
+      .price-modal-visual img {
+        min-height: 42vh;
+        max-height: 54vh;
+      }
+
+      .price-modal-tag {
+        left: 14px;
+        bottom: 14px;
+      }
+    }
+  </style>
+</head>
+<body class="english-basic-page basic2-page price-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="unit-2-shopping-experiences.html">Unit 2</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-basic-2/unit-2-shopping-experiences/how-much-is-it-hero.webp')">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 2 &middot; Activity 07</p>
+        <h1>How Much Is It?</h1>
+        <p>The teacher shows a clothing item with a price. Students answer aloud using dollars, numbers, and shopping vocabulary.</p>
+        <div class="lesson-meta"><span>Prices</span><span>Numbers</span><span>Clothes</span><span>ElevenLabs example</span></div>
+        <div class="hero-actions">
+          <a href="#activity" class="btn btn-primary">Start price practice</a>
+          <a href="unit-2-shopping-experiences.html" class="btn btn-secondary">Review Unit 2</a>
+          <a href="practice-lab.html#unit-2-folder" class="btn btn-secondary">Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/how-much-is-it-hero.webp" alt="Adult English learners practicing clothing prices in class" /></aside>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Activity Objective</span>
+        <p>Students will ask and answer prices naturally using <strong>How much is...?</strong>, <strong>How much are...?</strong>, <strong>It's...</strong>, and <strong>They're...</strong> with clothing and accessory vocabulary.</p>
+      </div>
+    </section>
+
+    <section class="price-shell">
+      <article class="price-panel">
+        <p class="eyebrow">Teacher Flow</p>
+        <h2>How to run the activity</h2>
+        <p>Show one price card, ask the question aloud, let the student answer, then reveal the model answer only after the attempt.</p>
+        <div class="price-flow-grid">
+          <article><b>1</b><h3>Show the item</h3><p>The card displays a clothing item or accessory with a dollar price.</p></article>
+          <article><b>2</b><h3>Ask the price</h3><p>Use <strong>How much is...?</strong> for singular items and <strong>How much are...?</strong> for plural items.</p></article>
+          <article><b>3</b><h3>Student answers</h3><p>The student says the price aloud using <strong>It's</strong> or <strong>They're</strong>.</p></article>
+        </div>
+      </article>
+
+      <article class="price-panel">
+        <p class="eyebrow">Language Model</p>
+        <h2>Natural question and answer patterns</h2>
+        <div class="price-pattern-grid">
+          <div class="price-pattern-card"><h3>Singular item</h3><p><strong>How much is the jacket?</strong><br />It's forty-eight dollars.</p></div>
+          <div class="price-pattern-card"><h3>Plural item</h3><p><strong>How much are the sunglasses?</strong><br />They're twenty-eight dollars.</p></div>
+          <div class="price-pattern-card"><h3>Short question</h3><p><strong>How much is it?</strong><br />It's thirty-five dollars.</p></div>
+        </div>
+      </article>
+
+      <article class="price-panel">
+        <p class="eyebrow">ElevenLabs Example</p>
+        <h2>Listen before starting</h2>
+        <div class="price-example-grid">
+          <div class="price-example-card">
+            <h3>Singular example</h3>
+            <p class="price-example-line"><strong>Teacher:</strong> How much is the jacket?</p>
+            <p class="price-example-line"><strong>Student:</strong> It's forty-eight dollars.</p>
+            <div class="price-actions"><button type="button" class="price-btn" onclick="playExample('singular')"><i class="bi bi-volume-up"></i> Listen to singular example</button></div>
+          </div>
+          <div class="price-example-card">
+            <h3>Plural example</h3>
+            <p class="price-example-line"><strong>Teacher:</strong> How much are the sunglasses?</p>
+            <p class="price-example-line"><strong>Student:</strong> They're twenty-eight dollars.</p>
+            <div class="price-actions"><button type="button" class="price-btn" onclick="playExample('plural')"><i class="bi bi-volume-up"></i> Listen to plural example</button></div>
+          </div>
+        </div>
+        <p class="price-status" id="exampleStatus" aria-live="polite">Choose an example to hear the professional model.</p>
+      </article>
+
+      <article class="price-panel" id="activity">
+        <div class="price-toolbar">
+          <div>
+            <p class="eyebrow">Activity 07</p>
+            <h2>Price cards</h2>
+            <p>Click a card to enlarge it. Reveal the model answer after the student speaks.</p>
+          </div>
+          <span>12 cards</span>
+        </div>
+        <div class="price-card-grid" id="priceCardGrid"></div>
+      </article>
+    </section>
+  </main>
+
+  <div class="price-modal" id="priceModal" role="dialog" aria-modal="true" aria-labelledby="priceModalTitle" aria-hidden="true">
+    <button type="button" class="price-modal-close" onclick="closePriceModal()" aria-label="Close expanded price card">&times;</button>
+    <div class="price-modal-panel" role="document">
+      <div class="price-modal-visual">
+        <img id="priceModalImage" src="../../assets/img/english-basic-2/unit-2-shopping-experiences/cards/jacket.webp" alt="" />
+        <strong class="price-modal-tag" id="priceModalTag">$48</strong>
+      </div>
+      <div class="price-modal-content">
+        <small>Price card</small>
+        <h2 id="priceModalTitle">Jacket</h2>
+        <p class="price-modal-question" id="priceModalQuestion">How much is the jacket?</p>
+        <p class="price-modal-answer" id="priceModalAnswer">It's forty-eight dollars.</p>
+        <div class="price-actions">
+          <button type="button" class="price-btn secondary" onclick="toggleModalAnswer()"><i class="bi bi-eye"></i> Show / Hide Answer</button>
+          <button type="button" class="price-btn light" onclick="playItemWord()"><i class="bi bi-volume-up"></i> Play item word</button>
+          <button type="button" class="price-btn" onclick="closePriceModal()"><i class="bi bi-check2-circle"></i> Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
+  <script>
+    const priceItems = [
+      { slug: "jacket", label: "jacket", display: "Jacket", price: 48, words: "forty-eight", plural: false },
+      { slug: "sweater", label: "sweater", display: "Sweater", price: 35, words: "thirty-five", plural: false },
+      { slug: "t-shirt", label: "T-shirt", display: "T-shirt", price: 18, words: "eighteen", plural: false },
+      { slug: "shirt", label: "shirt", display: "Shirt", price: 26, words: "twenty-six", plural: false },
+      { slug: "jeans", label: "jeans", display: "Jeans", price: 42, words: "forty-two", plural: true },
+      { slug: "pants", label: "pants", display: "Pants", price: 39, words: "thirty-nine", plural: true },
+      { slug: "skirt", label: "skirt", display: "Skirt", price: 32, words: "thirty-two", plural: false },
+      { slug: "dress", label: "dress", display: "Dress", price: 55, words: "fifty-five", plural: false },
+      { slug: "scarf", label: "scarf", display: "Scarf", price: 24, words: "twenty-four", plural: false },
+      { slug: "hat", label: "hat", display: "Hat", price: 16, words: "sixteen", plural: false },
+      { slug: "watch", label: "watch", display: "Watch", price: 72, words: "seventy-two", plural: false },
+      { slug: "sunglasses", label: "sunglasses", display: "Sunglasses", price: 28, words: "twenty-eight", plural: true }
+    ];
+
+    const exampleAudio = {
+      singular: ["audio/unit2/how-much/example-singular-question.mp3", "audio/unit2/how-much/example-singular-answer.mp3"],
+      plural: ["audio/unit2/how-much/example-plural-question.mp3", "audio/unit2/how-much/example-plural-answer.mp3"]
+    };
+
+    let activeAudio = null;
+    let activeModalItem = null;
+
+    document.addEventListener("DOMContentLoaded", function() {
+      renderPriceCards();
+      setupPriceModal();
+    });
+
+    function imagePath(item) {
+      return "../../assets/img/english-basic-2/unit-2-shopping-experiences/cards/" + item.slug + ".webp";
+    }
+
+    function questionFor(item) {
+      return item.plural ? "How much are the " + item.label + "?" : "How much is the " + item.label + "?";
+    }
+
+    function answerFor(item) {
+      return item.plural ? "They're " + item.words + " dollars." : "It's " + item.words + " dollars.";
+    }
+
+    function renderPriceCards() {
+      const grid = document.getElementById("priceCardGrid");
+      grid.innerHTML = "";
+      priceItems.forEach(function(item, index) {
+        const article = document.createElement("article");
+        article.className = "price-card";
+        article.dataset.slug = item.slug;
+        article.innerHTML = '<div class="price-card-image"><img src="' + imagePath(item) + '" alt="' + item.display + ' price card" /><strong class="price-tag">$' + item.price + '</strong></div><div class="price-card-body"><h3>' + item.display + '</h3><p class="price-question">' + questionFor(item) + '</p><p class="price-answer">' + answerFor(item) + '</p><div class="price-actions"><button type="button" class="price-btn" data-action="expand"><i class="bi bi-arrows-fullscreen"></i> Enlarge</button><button type="button" class="price-btn secondary" data-action="answer"><i class="bi bi-eye"></i> Show answer</button><button type="button" class="price-btn light" data-action="word"><i class="bi bi-volume-up"></i> Word</button></div></div>';
+        article.querySelector('[data-action="expand"]').addEventListener("click", function() { openPriceModal(item); });
+        article.querySelector('[data-action="answer"]').addEventListener("click", function(event) {
+          article.classList.toggle("show-answer");
+          event.currentTarget.innerHTML = article.classList.contains("show-answer") ? '<i class="bi bi-eye-slash"></i> Hide answer' : '<i class="bi bi-eye"></i> Show answer';
+        });
+        article.querySelector('[data-action="word"]').addEventListener("click", function() { playAudio("audio/unit2/shopping-memory/cards/" + item.slug + ".mp3"); });
+        article.querySelector(".price-card-image").addEventListener("click", function() { openPriceModal(item); });
+        article.querySelector(".price-card-image").setAttribute("role", "button");
+        article.querySelector(".price-card-image").setAttribute("tabindex", "0");
+        article.querySelector(".price-card-image").setAttribute("aria-label", "Enlarge " + item.display + " price card");
+        article.querySelector(".price-card-image").addEventListener("keydown", function(event) {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openPriceModal(item);
+          }
+        });
+        grid.appendChild(article);
+      });
+    }
+
+    function setupPriceModal() {
+      const modal = document.getElementById("priceModal");
+      modal.addEventListener("click", function(event) {
+        if (event.target === modal) closePriceModal();
+      });
+      document.addEventListener("keydown", function(event) {
+        if (event.key === "Escape") closePriceModal();
+      });
+    }
+
+    function openPriceModal(item) {
+      activeModalItem = item;
+      const modal = document.getElementById("priceModal");
+      modal.classList.remove("show-answer");
+      document.getElementById("priceModalImage").src = imagePath(item);
+      document.getElementById("priceModalImage").alt = item.display + " with price";
+      document.getElementById("priceModalTag").textContent = "$" + item.price;
+      document.getElementById("priceModalTitle").textContent = item.display;
+      document.getElementById("priceModalQuestion").textContent = questionFor(item);
+      document.getElementById("priceModalAnswer").textContent = answerFor(item);
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+      document.body.classList.add("price-modal-open");
+    }
+
+    function closePriceModal() {
+      const modal = document.getElementById("priceModal");
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("price-modal-open");
+    }
+
+    function toggleModalAnswer() {
+      document.getElementById("priceModal").classList.toggle("show-answer");
+    }
+
+    function playItemWord() {
+      if (!activeModalItem) return;
+      playAudio("audio/unit2/shopping-memory/cards/" + activeModalItem.slug + ".mp3");
+    }
+
+    function playExample(type) {
+      const files = exampleAudio[type] || [];
+      if (!files.length) return;
+      stopAudio();
+      document.getElementById("exampleStatus").textContent = type === "plural" ? "Playing plural example." : "Playing singular example.";
+      playSequence(files, 0, function() {
+        document.getElementById("exampleStatus").textContent = "Example complete. Students answer aloud after the teacher asks.";
+      });
+    }
+
+    function playSequence(files, index, onComplete) {
+      if (index >= files.length) {
+        if (onComplete) onComplete();
+        return;
+      }
+      activeAudio = new Audio(files[index]);
+      activeAudio.playbackRate = 0.92;
+      activeAudio.addEventListener("ended", function() {
+        window.setTimeout(function() { playSequence(files, index + 1, onComplete); }, 350);
+      }, { once: true });
+      activeAudio.addEventListener("error", function() {
+        document.getElementById("exampleStatus").textContent = "Audio file could not be played. Check the MP3 file.";
+      }, { once: true });
+      activeAudio.play().catch(function() {
+        document.getElementById("exampleStatus").textContent = "Audio playback was blocked. Click the button again.";
+      });
+    }
+
+    function playAudio(source) {
+      stopAudio();
+      activeAudio = new Audio(source);
+      activeAudio.playbackRate = 0.92;
+      activeAudio.play().catch(function() {
+        document.getElementById("exampleStatus").textContent = "Audio playback was blocked or unavailable.";
+      });
+    }
+
+    function stopAudio() {
+      if (!activeAudio) return;
+      activeAudio.pause();
+      activeAudio.currentTime = 0;
+      activeAudio = null;
+    }
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
