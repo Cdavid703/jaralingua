@@ -25,6 +25,103 @@
   color: var(--intermediate-ink);
 }
 
+.intermediate-index-page .basic-intro-section,
+.intermediate-index-page .course-dashboard {
+  max-width: 1360px;
+}
+
+.intermediate-index-page .course-dashboard {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.intermediate-index-page .course-section-card {
+  border-radius: 24px;
+}
+
+.intermediate-index-page .course-section-image {
+  height: 158px;
+}
+
+.intermediate-index-page .course-section-content {
+  padding: 22px;
+}
+
+.intermediate-index-page .section-number {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 12px;
+  font-size: 0.92rem;
+}
+
+.intermediate-index-page .course-section-content h3 {
+  font-size: clamp(1.18rem, 1.45vw, 1.45rem);
+  margin-bottom: 10px;
+}
+
+.intermediate-index-page .course-section-content p {
+  margin-bottom: 18px;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+
+.intermediate-index-page .basic-hero-content h1 span {
+  display: block;
+}
+
+.intermediate-index-page .basic-course-hero,
+.intermediate-index-page .basic-hero-content,
+.intermediate-index-page .basic-hero-image,
+.intermediate-index-page .course-dashboard,
+.intermediate-index-page .course-section-card {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.intermediate-index-page .basic-hero-content h1,
+.intermediate-index-page .section-heading h2,
+.intermediate-index-page .course-section-content h3,
+.intermediate-index-page .course-section-content p {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 1180px) {
+  .intermediate-index-page .course-dashboard {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .intermediate-index-page .course-dashboard {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+  }
+}
+
+@media (max-width: 620px) {
+  .intermediate-index-page {
+    overflow-x: hidden;
+  }
+
+  .intermediate-index-page .basic-course-hero {
+    width: 100%;
+  }
+
+  .intermediate-index-page .basic-hero-content h1 {
+    font-size: clamp(1.65rem, 7.2vw, 1.9rem);
+    line-height: 1.12;
+  }
+
+  .intermediate-index-page .course-dashboard {
+    grid-template-columns: 1fr;
+  }
+
+  .intermediate-index-page .course-section-image {
+    height: 220px;
+  }
+}
+
 .intermediate-shell {
   width: min(var(--intermediate-max-width), calc(100% - 2rem));
   margin: 0 auto;
