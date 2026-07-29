@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unit 3: Around the World | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260729-basic2-unit3-world" />
+  <style>
+    .world-page {
+      --world-blue: #123b8f;
+      --world-ink: #071f4f;
+      --world-green: #0f9f6e;
+      --world-orange: #f97316;
+      --world-soft: #eef7ff;
+      overflow-x: hidden;
+    }
+
+    .world-card-grid,
+    .world-place-grid,
+    .world-rule-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    .world-card-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .world-place-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .world-rule-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .world-country-card,
+    .world-place-card,
+    .world-rule-card,
+    .world-table-card {
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      box-shadow: 0 14px 30px rgba(15, 23, 42, 0.07);
+      padding: 16px;
+    }
+
+    .world-country-card {
+      background: linear-gradient(145deg, #ffffff, #f8fbff);
+    }
+
+    .world-country-card h3,
+    .world-place-card h3,
+    .world-rule-card h3 {
+      color: var(--world-ink);
+      margin: 0 0 8px;
+      font-size: 1.08rem;
+    }
+
+    .world-country-card span,
+    .world-place-card span {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 6px 10px;
+      background: var(--world-soft);
+      color: var(--world-blue);
+      font-weight: 950;
+      font-size: 0.82rem;
+      margin-bottom: 8px;
+    }
+
+    .world-country-card p,
+    .world-place-card p,
+    .world-rule-card p {
+      color: #475569;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .world-rule-card strong {
+      color: var(--world-blue);
+    }
+
+    .world-rule-card.warning {
+      background: linear-gradient(145deg, #fff7ed, #ffffff);
+      border-color: rgba(249, 115, 22, 0.25);
+    }
+
+    .world-comparison-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    .world-table-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 18px;
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      background: #ffffff;
+    }
+
+    .world-comparison-table th,
+    .world-comparison-table td {
+      text-align: left;
+      padding: 13px 14px;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      color: #334155;
+      vertical-align: top;
+    }
+
+    .world-comparison-table th {
+      color: var(--world-ink);
+      background: var(--world-soft);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .world-formula {
+      display: block;
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: var(--world-soft);
+      color: var(--world-blue);
+      font-weight: 950;
+      margin: 8px 0;
+    }
+
+    .world-note {
+      border-radius: 20px;
+      padding: 16px;
+      background: linear-gradient(145deg, #ecfdf5, #ffffff);
+      border: 1px solid rgba(15, 159, 110, 0.18);
+      color: #334155;
+      line-height: 1.6;
+      margin-top: 16px;
+    }
+
+    .world-note strong {
+      color: #047857;
+    }
+
+    @media (max-width: 1100px) {
+      .world-card-grid,
+      .world-place-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .world-rule-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .world-card-grid,
+      .world-place-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="english-basic-page basic2-page world-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="idioms-phrasal-verbs.html">Expressions</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Basic English Course 2</p>
+        <h1>Unit 3: Around the World</h1>
+        <p>Learn how to talk about countries, nationalities, famous places, travel opinions, and simple comparisons using comparative and superlative language.</p>
+        <div class="lesson-meta"><span>Countries</span><span>Nationalities</span><span>Comparatives</span><span>Superlatives</span></div>
+        <div class="hero-actions">
+          <a href="#lesson-content" class="btn btn-primary">Start explanation</a>
+          <a href="course-overview.html" class="btn btn-secondary">Back to overview</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="Adult English learners studying countries, landmarks, and a world map" /></aside>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Unit Objective</span>
+        <p>By the end of this unit, students will understand how to name countries and nationalities, describe famous places, compare cities or countries, and use basic superlatives to talk about important places around the world.</p>
+        <div class="basic2-route-grid">
+          <a href="#countries" class="basic2-route-item"><span>01</span><strong>Countries and nationalities</strong><small>Country names, nationality adjectives, and origin.</small></a>
+          <a href="#places" class="basic2-route-item"><span>02</span><strong>Famous places</strong><small>Landmarks, cities, nature, and travel adjectives.</small></a>
+          <a href="#comparatives" class="basic2-route-item"><span>03</span><strong>Simple comparisons</strong><small>Comparative adjectives and than.</small></a>
+          <a href="#superlatives" class="basic2-route-item"><span>04</span><strong>Superlatives</strong><small>The biggest, the most famous, one of the most.</small></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="lesson-content">
+      <details class="basic2-unit-card" open id="countries">
+        <summary>
+          <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="World map and country lesson" /></div>
+          <div class="basic2-unit-title">
+            <span class="basic2-mini-label">Topic cluster 1</span>
+            <h3>Countries, Nationalities, and Origin</h3>
+            <p>Students begin with the basic words they need before describing places around the world.</p>
+          </div>
+          <span class="basic2-unit-toggle">Open topics</span>
+        </summary>
+        <div class="basic2-unit-body">
+          <details class="basic2-topic" open>
+            <summary><b>01</b> Country vs. nationality</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn the difference between a country name, a nationality adjective, and a sentence about origin.</div>
+              <div class="comparison-grid">
+                <div class="basic2-info-card">
+                  <h3>Country</h3>
+                  <p>A country is a place.</p>
+                  <span class="world-formula">I live in Colombia.</span>
+                  <span class="world-formula">Japan is in Asia.</span>
+                  <span class="world-formula">France is in Europe.</span>
+                </div>
+                <div class="basic2-info-card">
+                  <h3>Nationality</h3>
+                  <p>A nationality describes a person, language, culture, or product.</p>
+                  <span class="world-formula">She is Colombian.</span>
+                  <span class="world-formula">Japanese food is popular.</span>
+                  <span class="world-formula">French museums are famous.</span>
+                </div>
+              </div>
+              <div class="world-note"><strong>Teacher note:</strong> At A2 level, keep the first goal simple: students should not memorize every country. They should understand the pattern and use a practical set of examples.</div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>02</b> Practical country and nationality set</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn a controlled set of countries and nationality forms that students can use in travel descriptions.</div>
+              <div class="world-card-grid">
+                <article class="world-country-card"><span>South America</span><h3>Colombia / Colombian</h3><p>Colombia is beautiful. Colombian coffee is famous.</p></article>
+                <article class="world-country-card"><span>South America</span><h3>Brazil / Brazilian</h3><p>Brazil is big. Brazilian music is popular.</p></article>
+                <article class="world-country-card"><span>North America</span><h3>Mexico / Mexican</h3><p>Mexico is colorful. Mexican food is delicious.</p></article>
+                <article class="world-country-card"><span>North America</span><h3>Canada / Canadian</h3><p>Canada is cold. Canadian cities are modern.</p></article>
+                <article class="world-country-card"><span>North America</span><h3>The United States / American</h3><p>The United States is large. American movies are famous.</p></article>
+                <article class="world-country-card"><span>Europe</span><h3>France / French</h3><p>France is famous for Paris. French fashion is elegant.</p></article>
+                <article class="world-country-card"><span>Europe</span><h3>Italy / Italian</h3><p>Italy is old and beautiful. Italian food is popular.</p></article>
+                <article class="world-country-card"><span>Europe</span><h3>Spain / Spanish</h3><p>Spain is warm. Spanish cities are interesting.</p></article>
+                <article class="world-country-card"><span>Asia</span><h3>Japan / Japanese</h3><p>Japan is modern. Japanese technology is famous.</p></article>
+                <article class="world-country-card"><span>Asia</span><h3>China / Chinese</h3><p>China is very large. Chinese history is important.</p></article>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>03</b> Asking where someone is from</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn how to ask and answer about origin without confusing country and nationality.</div>
+              <div class="pattern-grid">
+                <div class="pattern-card"><h3>Question</h3><p>Where are you from?<br />Where is she from?<br />Where are they from?</p></div>
+                <div class="pattern-card"><h3>Country answer</h3><p>I am from Colombia.<br />She is from Japan.<br />They are from Brazil.</p></div>
+                <div class="pattern-card"><h3>Nationality answer</h3><p>I am Colombian.<br />She is Japanese.<br />They are Brazilian.</p></div>
+                <div class="pattern-card"><h3>Common correction</h3><p>Not: <em>I am from Colombian.</em><br />Use: <strong>I am from Colombia</strong> or <strong>I am Colombian</strong>.</p></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details class="basic2-unit-card" open id="places">
+        <summary>
+          <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="Landmark cards and travel descriptions" /></div>
+          <div class="basic2-unit-title">
+            <span class="basic2-mini-label">Topic cluster 2</span>
+            <h3>Famous Places and Travel Descriptions</h3>
+            <p>This cluster gives students the vocabulary they need before comparing places.</p>
+          </div>
+          <span class="basic2-unit-toggle">Open topics</span>
+        </summary>
+        <div class="basic2-unit-body">
+          <details class="basic2-topic" open>
+            <summary><b>04</b> Types of places</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn useful words for city, nature, and landmark descriptions.</div>
+              <div class="world-place-grid">
+                <article class="world-place-card"><span>City</span><h3>capital</h3><p>Bogot&aacute; is the capital of Colombia.</p></article>
+                <article class="world-place-card"><span>City</span><h3>museum</h3><p>A museum is a place for art, history, or science.</p></article>
+                <article class="world-place-card"><span>Landmark</span><h3>monument</h3><p>A monument is an important structure or statue.</p></article>
+                <article class="world-place-card"><span>Landmark</span><h3>tower</h3><p>A tower is a tall structure, like the Eiffel Tower.</p></article>
+                <article class="world-place-card"><span>Nature</span><h3>beach</h3><p>A beach is a place next to the sea.</p></article>
+                <article class="world-place-card"><span>Nature</span><h3>mountain</h3><p>A mountain is a very high natural place.</p></article>
+                <article class="world-place-card"><span>Nature</span><h3>river</h3><p>A river is a long body of water.</p></article>
+                <article class="world-place-card"><span>Nature</span><h3>forest</h3><p>A forest is a large area with many trees.</p></article>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>05</b> Describing places with adjectives</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn adjectives that make travel descriptions clear and useful.</div>
+              <div class="pattern-grid">
+                <div class="pattern-card"><h3>General opinion</h3><p>beautiful<br />amazing<br />interesting<br />famous<br />important</p></div>
+                <div class="pattern-card"><h3>Size and age</h3><p>big<br />small<br />old<br />modern<br />ancient</p></div>
+                <div class="pattern-card"><h3>Weather and feeling</h3><p>hot<br />cold<br />warm<br />quiet<br />crowded</p></div>
+                <div class="pattern-card"><h3>Price and travel</h3><p>cheap<br />expensive<br />safe<br />popular<br />touristic</p></div>
+              </div>
+              <div class="basic2-example-list">
+                <p>Cartagena is beautiful and warm.</p>
+                <p>Tokyo is modern and crowded.</p>
+                <p>The Amazon is important and amazing.</p>
+                <p>Paris is famous, but it is expensive.</p>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>06</b> Famous for...</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn a simple structure for connecting a place with a famous thing.</div>
+              <div class="comparison-grid">
+                <div class="basic2-info-card">
+                  <h3>Main structure</h3>
+                  <span class="world-formula">Place + is famous for + noun.</span>
+                  <span class="world-formula">Country + is famous for + activity.</span>
+                  <span class="world-formula">City + is famous for + landmark.</span>
+                </div>
+                <div class="basic2-info-card">
+                  <h3>Examples</h3>
+                  <span class="world-formula">Paris is famous for the Eiffel Tower.</span>
+                  <span class="world-formula">Brazil is famous for beaches and soccer.</span>
+                  <span class="world-formula">Japan is famous for technology and temples.</span>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details class="basic2-unit-card" open id="comparatives">
+        <summary>
+          <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="Comparing countries and cities" /></div>
+          <div class="basic2-unit-title">
+            <span class="basic2-mini-label">Topic cluster 3</span>
+            <h3>Simple Comparisons</h3>
+            <p>Comparatives are the new grammar foundation for talking about two places.</p>
+          </div>
+          <span class="basic2-unit-toggle">Open topics</span>
+        </summary>
+        <div class="basic2-unit-body">
+          <details class="basic2-topic" open>
+            <summary><b>07</b> Comparative meaning</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn how to compare two countries, cities, or places.</div>
+              <div class="comparison-grid">
+                <div class="basic2-info-card">
+                  <h3>Two things</h3>
+                  <p>A comparative says that one thing has more of a quality than another thing.</p>
+                  <span class="world-formula">A + is + comparative + than + B.</span>
+                </div>
+                <div class="basic2-info-card">
+                  <h3>Examples</h3>
+                  <span class="world-formula">Canada is colder than Colombia.</span>
+                  <span class="world-formula">Tokyo is bigger than my city.</span>
+                  <span class="world-formula">Paris is more expensive than Bogot&aacute;.</span>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>08</b> Comparative forms</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn when to use <strong>-er</strong> and when to use <strong>more</strong>.</div>
+              <div class="world-table-wrap">
+                <table class="world-comparison-table">
+                  <thead><tr><th>Adjective type</th><th>Rule</th><th>Examples</th><th>Sentence</th></tr></thead>
+                  <tbody>
+                    <tr><td>Short adjective</td><td>Add <strong>-er</strong></td><td>cold &rarr; colder<br />small &rarr; smaller<br />old &rarr; older</td><td>Canada is colder than Colombia.</td></tr>
+                    <tr><td>Short adjective ending in e</td><td>Add <strong>-r</strong></td><td>large &rarr; larger<br />nice &rarr; nicer</td><td>Mexico City is larger than my town.</td></tr>
+                    <tr><td>Consonant-vowel-consonant</td><td>Double the final consonant + <strong>-er</strong></td><td>big &rarr; bigger<br />hot &rarr; hotter</td><td>Brazil is bigger than Spain.</td></tr>
+                    <tr><td>Long adjective</td><td>Use <strong>more + adjective</strong></td><td>beautiful &rarr; more beautiful<br />expensive &rarr; more expensive<br />interesting &rarr; more interesting</td><td>Paris is more expensive than Bogot&aacute;.</td></tr>
+                    <tr><td>Irregular adjective</td><td>Change the word</td><td>good &rarr; better<br />bad &rarr; worse<br />far &rarr; farther / further</td><td>This hotel is better than that hotel.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="world-note"><strong>Common correction:</strong> Do not say <em>more cold</em> for basic short adjectives. Say <strong>colder</strong>. Do not say <em>beautifuler</em>. Say <strong>more beautiful</strong>.</div>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details class="basic2-unit-card" open id="superlatives">
+        <summary>
+          <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="Superlatives for world places" /></div>
+          <div class="basic2-unit-title">
+            <span class="basic2-mini-label">Topic cluster 4</span>
+            <h3>Superlatives for World Places</h3>
+            <p>This section adapts the intermedio superlative work into an A2-friendly explanation.</p>
+          </div>
+          <span class="basic2-unit-toggle">Open topics</span>
+        </summary>
+        <div class="basic2-unit-body">
+          <details class="basic2-topic" open>
+            <summary><b>09</b> Comparative vs. superlative</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn the difference between comparing two things and identifying one thing at the top of a group.</div>
+              <div class="comparison-grid">
+                <div class="basic2-info-card">
+                  <h3>Comparative</h3>
+                  <p>Use it for two places, people, or things.</p>
+                  <span class="world-formula">A is bigger than B.</span>
+                  <span class="world-formula">Japan is smaller than China.</span>
+                </div>
+                <div class="basic2-info-card">
+                  <h3>Superlative</h3>
+                  <p>Use it for number one inside a group.</p>
+                  <span class="world-formula">A is the biggest in the group.</span>
+                  <span class="world-formula">Mount Everest is the highest mountain in the world.</span>
+                </div>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>10</b> Superlative forms: -est and the most</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn the main superlative rules used for travel and world descriptions.</div>
+              <div class="world-rule-grid">
+                <article class="world-rule-card"><h3>Short adjectives</h3><p><strong>the + adjective + -est</strong><br />big &rarr; the biggest<br />cold &rarr; the coldest<br />old &rarr; the oldest</p></article>
+                <article class="world-rule-card"><h3>Long adjectives</h3><p><strong>the most + adjective</strong><br />beautiful &rarr; the most beautiful<br />expensive &rarr; the most expensive<br />interesting &rarr; the most interesting</p></article>
+                <article class="world-rule-card"><h3>Irregular forms</h3><p>good &rarr; the best<br />bad &rarr; the worst<br />far &rarr; the farthest / the furthest</p></article>
+              </div>
+              <div class="world-table-wrap" style="margin-top: 16px;">
+                <table class="world-comparison-table">
+                  <thead><tr><th>Base adjective</th><th>Comparative</th><th>Superlative</th><th>Example</th></tr></thead>
+                  <tbody>
+                    <tr><td>big</td><td>bigger</td><td>the biggest</td><td>Brazil is one of the biggest countries in South America.</td></tr>
+                    <tr><td>cold</td><td>colder</td><td>the coldest</td><td>Canada is one of the coldest countries in this unit.</td></tr>
+                    <tr><td>hot</td><td>hotter</td><td>the hottest</td><td>The Sahara is one of the hottest deserts in the world.</td></tr>
+                    <tr><td>beautiful</td><td>more beautiful</td><td>the most beautiful</td><td>Cartagena is one of the most beautiful cities in Colombia.</td></tr>
+                    <tr><td>famous</td><td>more famous</td><td>the most famous</td><td>The Eiffel Tower is one of the most famous landmarks in the world.</td></tr>
+                    <tr><td>good</td><td>better</td><td>the best</td><td>This is the best place for a short trip.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="world-note"><strong>Adapted from Intermedio:</strong> In the intermediate course, students use superlatives with world records and measurements. In this A2 unit, the same grammar is simplified for countries, cities, landmarks, and basic travel opinions.</div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>11</b> Spelling rules for short superlatives</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn spelling changes before adding <strong>-est</strong>.</div>
+              <div class="world-rule-grid">
+                <article class="world-rule-card"><h3>Normal short adjective</h3><p>Add <strong>-est</strong>.<br />small &rarr; the smallest<br />old &rarr; the oldest<br />cold &rarr; the coldest</p></article>
+                <article class="world-rule-card"><h3>Ends in e</h3><p>Add only <strong>-st</strong>.<br />large &rarr; the largest<br />nice &rarr; the nicest</p></article>
+                <article class="world-rule-card"><h3>Consonant-vowel-consonant</h3><p>Double the final consonant.<br />big &rarr; the biggest<br />hot &rarr; the hottest</p></article>
+                <article class="world-rule-card"><h3>Consonant + y</h3><p>Change <strong>y</strong> to <strong>i</strong> + <strong>-est</strong>.<br />busy &rarr; the busiest<br />pretty &rarr; the prettiest</p></article>
+                <article class="world-rule-card warning"><h3>Do not overuse -est</h3><p>Long adjectives use <strong>the most</strong>, not <strong>-est</strong>.<br />Not: beautifulest<br />Use: <strong>the most beautiful</strong></p></article>
+                <article class="world-rule-card warning"><h3>Always use the</h3><p>Superlatives normally need <strong>the</strong>.<br />Not: Paris is most famous city.<br />Use: <strong>Paris is one of the most famous cities.</strong></p></article>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>12</b> One of the most...</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn a useful travel structure for saying that something belongs to an important group, even if it is not exactly number one.</div>
+              <div class="comparison-grid">
+                <div class="basic2-info-card">
+                  <h3>Main structure</h3>
+                  <span class="world-formula">Subject + is + one of the most + adjective + plural noun + complement.</span>
+                  <p>The noun after this expression is plural because the sentence talks about one item inside a group.</p>
+                </div>
+                <div class="basic2-info-card">
+                  <h3>Examples</h3>
+                  <span class="world-formula">Cartagena is one of the most beautiful cities in Colombia.</span>
+                  <span class="world-formula">The Amazon is one of the most important forests in the world.</span>
+                  <span class="world-formula">The Eiffel Tower is one of the most famous landmarks in Europe.</span>
+                </div>
+              </div>
+              <div class="world-note"><strong>Common correction:</strong> Use a plural noun: <strong>one of the most beautiful cities</strong>, not <em>one of the most beautiful city</em>.</div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>13</b> In vs. of with superlatives</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn when to use <strong>in</strong> and when to use <strong>of</strong> after superlatives.</div>
+              <div class="world-table-wrap">
+                <table class="world-comparison-table">
+                  <thead><tr><th>Use</th><th>Meaning</th><th>Examples</th></tr></thead>
+                  <tbody>
+                    <tr><td><strong>in</strong></td><td>Use for places, areas, or groups with location.</td><td>in the world<br />in Colombia<br />in South America<br />in my city</td></tr>
+                    <tr><td><strong>of</strong></td><td>Use for a group, a period, or a personal experience.</td><td>of all the places<br />of the three cities<br />of my life<br />of the year</td></tr>
+                    <tr><td>Example with <strong>in</strong></td><td>Location group</td><td>The Amazon is one of the most important forests <strong>in the world</strong>.</td></tr>
+                    <tr><td>Example with <strong>of</strong></td><td>Experience group</td><td>That was the best trip <strong>of my life</strong>.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>14</b> Superlative questions</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn questions students can use to talk about places and travel opinions.</div>
+              <div class="pattern-grid">
+                <div class="pattern-card"><h3>What is the most...?</h3><p>What is the most beautiful city in Colombia?<br />What is the most famous place in France?</p></div>
+                <div class="pattern-card"><h3>What is the + -est...?</h3><p>What is the tallest mountain in the world?<br />What is the biggest city in your country?</p></div>
+                <div class="pattern-card"><h3>Which place is...?</h3><p>Which place is more expensive?<br />Which city is the most interesting?</p></div>
+                <div class="pattern-card"><h3>Opinion answer</h3><p>I think Cartagena is the most beautiful city.<br />For me, Japan is the most interesting country.</p></div>
+              </div>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <details class="basic2-unit-card" open id="travel-opinions">
+        <summary>
+          <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="Travel opinions and world map" /></div>
+          <div class="basic2-unit-title">
+            <span class="basic2-mini-label">Topic cluster 5</span>
+            <h3>Travel Opinions and Useful Expressions</h3>
+            <p>This final cluster connects the grammar to real travel preferences.</p>
+          </div>
+          <span class="basic2-unit-toggle">Open topics</span>
+        </summary>
+        <div class="basic2-unit-body">
+          <details class="basic2-topic" open>
+            <summary><b>15</b> I want to visit...</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn simple travel opinion patterns without introducing a new verb tense.</div>
+              <div class="pattern-grid">
+                <div class="pattern-card"><h3>Want to</h3><p>I want to visit Japan.<br />She wants to visit Italy.<br />We want to visit Canada.</p></div>
+                <div class="pattern-card"><h3>Would like to</h3><p>I would like to go to France.<br />We would like to travel to Brazil.</p></div>
+                <div class="pattern-card"><h3>Think / prefer</h3><p>I think Spain is beautiful.<br />I prefer warm countries.<br />I don't like crowded cities.</p></div>
+                <div class="pattern-card"><h3>Favorite</h3><p>My favorite country is Colombia.<br />My favorite city is Cartagena.</p></div>
+              </div>
+            </div>
+          </details>
+
+          <details class="basic2-topic">
+            <summary><b>16</b> Phrasal verbs and idioms for travel</summary>
+            <div class="basic2-topic-body">
+              <div class="basic2-topic-task"><strong>What we will learn:</strong> We will learn travel expressions with approximate Spanish meaning, short explanation, and examples.</div>
+              <div class="expression-grid">
+                <article class="expression-card"><span class="expression-type">phrasal verb</span><h3>travel around</h3><span class="spanish-meaning">viajar por diferentes lugares</span><p>Visit several places in one area or trip. <strong>I want to travel around Europe.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">phrasal verb</span><h3>go abroad</h3><span class="spanish-meaning">ir al extranjero</span><p>Travel to another country. <strong>She wants to go abroad next year.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">phrasal verb</span><h3>get around</h3><span class="spanish-meaning">moverse por un lugar</span><p>Move from place to place in a city or country. <strong>It is easy to get around by train.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">phrasal verb</span><h3>check in</h3><span class="spanish-meaning">registrarse</span><p>Register at a hotel or airport. <strong>We need to check in at the hotel.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">phrasal verb</span><h3>check out</h3><span class="spanish-meaning">salir del hotel / mirar algo</span><p>Leave a hotel or look at something interesting. <strong>Let's check out the museum.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">phrasal verb</span><h3>take off</h3><span class="spanish-meaning">despegar</span><p>Use it when a plane leaves the ground. <strong>The plane takes off at 8 a.m.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">phrasal verb</span><h3>come back</h3><span class="spanish-meaning">regresar</span><p>Return to a place. <strong>I want to come back to Mexico.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">idiom</span><h3>travel light</h3><span class="spanish-meaning">viajar con poco equipaje</span><p>Travel with few things. <strong>I travel light when I visit hot countries.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">idiom</span><h3>hit the road</h3><span class="spanish-meaning">ponerse en camino</span><p>Start a trip or leave. <strong>It's early. Let's hit the road.</strong></p></article>
+                <article class="expression-card"><span class="expression-type">idiom</span><h3>a change of scenery</h3><span class="spanish-meaning">cambiar de ambiente</span><p>Go somewhere different to feel refreshed. <strong>I need a change of scenery.</strong></p></article>
+              </div>
+            </div>
+          </details>
+        </div>
+      </details>
+
+      <article class="premium-topic-card linked-practice-card">
+        <div class="topic-heading"><span class="topic-number">17</span><div><p class="topic-label">Language Model</p><h2>Travel description model for reading and analysis</h2></div></div>
+        <div class="conversation-model">
+          <p><strong>A:</strong> Where would you like to go?</p>
+          <p><strong>B:</strong> I would like to visit Japan.</p>
+          <p><strong>A:</strong> Why?</p>
+          <p><strong>B:</strong> I think Japan is one of the most interesting countries in Asia. Tokyo is bigger than my city, and Japanese food is very popular.</p>
+          <p><strong>A:</strong> What place would you like to see?</p>
+          <p><strong>B:</strong> I would like to check out Tokyo and visit some famous temples.</p>
+        </div>
+      </article>
+
+      <article class="premium-topic-card linked-practice-card">
+        <div class="topic-heading"><span class="topic-number">18</span><div><p class="topic-label">Unit Summary</p><h2>What this explanation covers</h2></div></div>
+        <div class="summary-grid">
+          <div class="summary-card"><h3>Countries</h3><p>Students separate country names from nationality adjectives and use origin patterns correctly.</p></div>
+          <div class="summary-card"><h3>Places</h3><p>Students describe cities, capitals, museums, monuments, beaches, mountains, rivers, and forests.</p></div>
+          <div class="summary-card"><h3>Comparatives</h3><p>Students compare two places with <strong>-er than</strong>, <strong>more... than</strong>, and irregular forms such as <strong>better</strong>.</p></div>
+          <div class="summary-card"><h3>Superlatives</h3><p>Students use <strong>the biggest</strong>, <strong>the most famous</strong>, <strong>the best</strong>, and <strong>one of the most...</strong> in travel contexts.</p></div>
+        </div>
+        <div class="basic2-resource-links">
+          <a href="course-overview.html">Back to Course Overview</a>
+          <a href="practice-lab.html">Open Practice Lab</a>
+          <a href="listening-library.html">Open Listening Library</a>
+          <a href="idioms-phrasal-verbs.html">Open expression bank</a>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
