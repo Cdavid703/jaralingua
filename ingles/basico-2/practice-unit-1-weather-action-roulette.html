@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Action Roulette | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260727-basic2-hero-scroll" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .weather-action-page {
+      --weather-blue: #123b8f;
+      --weather-sky: #e8f3ff;
+      --weather-ink: #071f4f;
+      --weather-orange: #f97316;
+      --weather-green: #0f9f6e;
+      --weather-red: #c1121f;
+    }
+
+    .weather-action-shell {
+      display: grid;
+      gap: 22px;
+    }
+
+    .weather-action-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(320px, 0.95fr);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .weather-action-card,
+    .weather-deck-card,
+    .weather-round-card,
+    .weather-history-card {
+      border-radius: 24px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .weather-action-card {
+      padding: 20px;
+    }
+
+    .weather-action-card h3,
+    .weather-deck-card h3,
+    .weather-round-card h3,
+    .weather-history-card h3 {
+      color: var(--weather-ink);
+      margin-bottom: 8px;
+    }
+
+    .weather-action-card p,
+    .weather-deck-card p,
+    .weather-round-card p,
+    .weather-history-card p {
+      color: #475569;
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    .weather-step-grid,
+    .weather-language-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .weather-step-grid article,
+    .weather-language-grid span {
+      border-radius: 18px;
+      background: #f8fbff;
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      padding: 15px;
+      color: #334155;
+      font-weight: 800;
+    }
+
+    .weather-step-grid b {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--weather-blue);
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .weather-step-grid h3 {
+      margin: 0 0 6px;
+      font-size: 1rem;
+    }
+
+    .weather-tool-panel {
+      border-radius: 28px;
+      background: linear-gradient(135deg, #f8fbff, #ffffff);
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+      padding: 20px;
+    }
+
+    .weather-setup {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+      gap: 16px;
+      align-items: stretch;
+      margin-bottom: 18px;
+    }
+
+    .weather-setup textarea {
+      min-height: 150px;
+    }
+
+    .weather-tool-actions,
+    .weather-round-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .weather-btn {
+      border: 0;
+      border-radius: 999px;
+      padding: 11px 15px;
+      font-weight: 900;
+      color: #ffffff;
+      background: linear-gradient(135deg, var(--weather-blue), #2563eb);
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 10px 22px rgba(18, 59, 143, 0.18);
+    }
+
+    .weather-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .weather-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.48;
+      box-shadow: none;
+    }
+
+    .weather-btn.secondary {
+      background: linear-gradient(135deg, #0f9f6e, #16a34a);
+    }
+
+    .weather-btn.light {
+      color: var(--weather-ink);
+      background: #e8f3ff;
+      box-shadow: none;
+    }
+
+    .weather-btn.warning {
+      color: #ffffff;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+    }
+
+    .weather-deck-card,
+    .weather-round-card,
+    .weather-history-card {
+      padding: 18px;
+    }
+
+    .weather-deck-header,
+    .weather-wheel-header,
+    .weather-history-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: start;
+      margin-bottom: 14px;
+    }
+
+    .weather-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      border-radius: 999px;
+      padding: 7px 10px;
+      background: var(--weather-sky);
+      color: var(--weather-blue);
+      font-weight: 900;
+      font-size: 0.86rem;
+    }
+
+    .weather-hidden-deck {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .weather-hidden-card {
+      border: 0;
+      position: relative;
+      min-height: 178px;
+      border-radius: 20px;
+      padding: 0;
+      overflow: hidden;
+      cursor: pointer;
+      background: linear-gradient(135deg, #123b8f, #2563eb);
+      box-shadow: 0 14px 28px rgba(18, 59, 143, 0.18);
+      color: #ffffff;
+      transform: translateY(0);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .weather-hidden-card:hover:not(:disabled),
+    .weather-hidden-card:focus-visible:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px rgba(18, 59, 143, 0.24);
+      outline: none;
+    }
+
+    .weather-hidden-card.is-revealed {
+      background: #ffffff;
+      color: var(--weather-ink);
+      border: 2px solid rgba(249, 115, 22, 0.5);
+    }
+
+    .weather-hidden-card.is-used {
+      opacity: 0.42;
+      cursor: not-allowed;
+      filter: grayscale(0.45);
+    }
+
+    .weather-card-back,
+    .weather-card-front {
+      min-height: 178px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .weather-card-back::before {
+      content: "";
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background:
+        radial-gradient(circle at 30% 35%, #ffffff 0 6px, transparent 7px),
+        radial-gradient(circle at 56% 44%, #ffffff 0 9px, transparent 10px),
+        radial-gradient(circle at 70% 58%, #ffffff 0 7px, transparent 8px),
+        linear-gradient(135deg, rgba(255,255,255,0.25), rgba(255,255,255,0.08));
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .weather-card-back span {
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+    }
+
+    .weather-card-front {
+      padding: 0;
+      justify-content: stretch;
+      gap: 0;
+    }
+
+    .weather-card-front img {
+      width: 100%;
+      height: 116px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .weather-card-front div {
+      width: 100%;
+      padding: 10px;
+      background: #ffffff;
+    }
+
+    .weather-card-front strong {
+      display: block;
+      color: var(--weather-ink);
+      font-size: 1.02rem;
+      margin-bottom: 3px;
+    }
+
+    .weather-card-front small {
+      color: #64748b;
+      font-weight: 800;
+    }
+
+    .weather-play-grid {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+
+    .weather-wheel-card {
+      border-radius: 24px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+      padding: 18px;
+    }
+
+    .weather-wheel-zone {
+      position: relative;
+      display: grid;
+      justify-items: center;
+      gap: 14px;
+    }
+
+    .weather-wheel {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 10px solid #ffffff;
+      box-shadow: inset 0 0 0 2px rgba(18, 59, 143, 0.16), 0 16px 34px rgba(15, 23, 42, 0.16);
+      transition: transform 2.45s cubic-bezier(0.17, 0.67, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .weather-pointer {
+      width: 0;
+      height: 0;
+      border-left: 16px solid transparent;
+      border-right: 16px solid transparent;
+      border-top: 30px solid var(--weather-red);
+      filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.18));
+      z-index: 2;
+      margin-bottom: -12px;
+    }
+
+    .weather-wheel-center {
+      position: absolute;
+      inset: 50%;
+      width: 104px;
+      height: 104px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: #ffffff;
+      color: var(--weather-blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 900;
+      z-index: 4;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.16);
+    }
+
+    .weather-wheel-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 86px;
+      margin-left: -43px;
+      margin-top: -9px;
+      transform-origin: 43px 9px;
+      text-align: center;
+      font-weight: 900;
+      color: #071f4f;
+      font-size: 0.72rem;
+      line-height: 1.15;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .weather-status {
+      color: #475569;
+      font-weight: 800;
+      min-height: 1.5em;
+      text-align: center;
+    }
+
+    .weather-current-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .weather-result-box {
+      border-radius: 20px;
+      background: #f8fbff;
+      border: 1px solid rgba(18, 59, 143, 0.1);
+      padding: 16px;
+    }
+
+    .weather-result-box small {
+      display: block;
+      color: var(--weather-red);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 900;
+      font-size: 0.74rem;
+      margin-bottom: 8px;
+    }
+
+    .weather-result-box strong {
+      display: block;
+      color: var(--weather-ink);
+      font-size: clamp(1.15rem, 2vw, 1.55rem);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .weather-speaking-prompt {
+      border-radius: 22px;
+      padding: 18px;
+      margin-top: 14px;
+      background: linear-gradient(135deg, #fff7ed, #ffffff);
+      border: 1px solid rgba(249, 115, 22, 0.22);
+    }
+
+    .weather-speaking-prompt strong {
+      display: block;
+      color: var(--weather-ink);
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+      margin-bottom: 8px;
+    }
+
+    .weather-chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .weather-chip {
+      border-radius: 999px;
+      padding: 8px 11px;
+      background: var(--weather-sky);
+      color: #123b8f;
+      font-weight: 900;
+      font-size: 0.88rem;
+    }
+
+    .weather-table-container {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .weather-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 560px;
+      margin-top: 10px;
+    }
+
+    .weather-table th,
+    .weather-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      color: #334155;
+    }
+
+    .weather-table th {
+      color: var(--weather-ink);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    .weather-empty-row {
+      color: #64748b;
+      font-style: italic;
+    }
+
+    @media (max-width: 980px) {
+      .weather-action-grid,
+      .weather-setup,
+      .weather-play-grid,
+      .weather-current-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .weather-step-grid,
+      .weather-language-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .weather-hidden-deck,
+      .weather-step-grid,
+      .weather-language-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .weather-tool-actions,
+      .weather-round-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .weather-btn {
+        width: 100%;
+      }
+
+      .weather-wheel {
+        width: min(280px, 78vw);
+        height: min(280px, 78vw);
+      }
+
+      .weather-wheel-label {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body class="english-basic-page basic2-page weather-action-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="unit-1-going-out.html">Unit 1</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic-2/unit-1-going-out/weather-action-roulette-hero.webp');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 1 &middot; Activity 09</p>
+        <h1>Weather Action Roulette</h1>
+        <p>The teacher reveals a hidden weather card, the roulette selects a student, and the student speaks freely using present continuous.</p>
+        <div class="lesson-meta"><span>Speaking</span><span>Weather</span><span>Present continuous</span><span>Teacher-led</span></div>
+        <div class="hero-actions">
+          <a href="#activity" class="btn btn-primary">Start activity</a>
+          <a href="practice-lab.html#unit-1-folder" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-1-going-out/weather-action-roulette-hero.webp" alt="Teacher leading a weather card activity with an English student roulette" /></aside>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Activity Objective</span>
+        <p>Students will produce a natural sentence about an activity happening now, based on a weather condition selected by the teacher. The goal is oral fluency, not a written task.</p>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container weather-action-shell">
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Teacher Flow</p><h2>How the activity works</h2></div></div>
+        <p class="lesson-text">The card stays face down until the teacher reveals it. After the weather is visible, spin the student roulette. The selected student says at least one sentence with present continuous. The teacher gives oral feedback only.</p>
+        <div class="weather-step-grid">
+          <article><b>1</b><h3>Reveal weather</h3><p>Open one hidden card so the class can see the weather situation.</p></article>
+          <article><b>2</b><h3>Spin student</h3><p>The roulette chooses who speaks for the round.</p></article>
+          <article><b>3</b><h3>Speak freely</h3><p>The student says one or more natural sentences using present continuous.</p></article>
+        </div>
+      </article>
+
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Language Reminder</p><h2>Minimal support, no model answer</h2></div></div>
+        <p class="lesson-text">These patterns are reminders. They should not limit the student&apos;s answer.</p>
+        <div class="weather-language-grid">
+          <span>It&apos;s + weather.</span>
+          <span>I&apos;m + verb-ing.</span>
+          <span>He&apos;s / She&apos;s + verb-ing.</span>
+          <span>We&apos;re + verb-ing.</span>
+          <span>They&apos;re + verb-ing.</span>
+          <span>now / right now / today</span>
+        </div>
+      </article>
+
+      <article class="premium-topic-card" id="activity">
+        <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Interactive Tool</p><h2>Hidden cards and student roulette</h2></div></div>
+
+        <div class="weather-tool-panel">
+          <div class="weather-setup">
+            <div class="weather-action-card">
+              <h3>Load Student Names</h3>
+              <p>Type, paste, or import the student names. The roulette uses each student once before the teacher resets or reloads the list.</p>
+              <div class="weather-tool-actions">
+                <button type="button" class="weather-btn light" onclick="openExcelPicker()"><i class="bi bi-upload"></i> Import Excel/CSV</button>
+                <button type="button" class="weather-btn" onclick="loadStudentNames()"><i class="bi bi-person-check"></i> Load Names</button>
+                <button type="button" class="weather-btn secondary" onclick="useSampleNames()"><i class="bi bi-people"></i> Use Sample Names</button>
+                <button type="button" class="weather-btn warning" onclick="resetActivity()"><i class="bi bi-arrow-counterclockwise"></i> Reset Activity</button>
+              </div>
+              <input type="file" id="studentExcelInput" accept=".xlsx,.csv,.txt,.tsv" hidden />
+              <p class="roster-import-status" id="rosterImportStatus" aria-live="polite"></p>
+            </div>
+            <textarea id="studentNamesInput" class="guesswho-textarea" placeholder="Example:
+Alex
+Sarah
+David
+Emma
+Liam
+Maria"></textarea>
+          </div>
+
+          <div class="weather-action-grid">
+            <div class="weather-deck-card">
+              <div class="weather-deck-header">
+                <div>
+                  <h3>Hidden Weather Cards</h3>
+                  <p>Click one card to reveal the weather for the round.</p>
+                </div>
+                <span class="weather-pill" id="weatherLeftCount">8</span>
+              </div>
+              <div class="weather-hidden-deck" id="weatherDeck" aria-label="Hidden weather card deck"></div>
+              <div class="weather-tool-actions">
+                <button type="button" class="weather-btn light" onclick="hideSelectedWeather()" id="hideWeatherBtn" disabled><i class="bi bi-eye-slash"></i> Hide Card</button>
+                <button type="button" class="weather-btn light" onclick="resetWeatherDeck()"><i class="bi bi-shuffle"></i> Reset Weather Cards</button>
+              </div>
+              <p class="weather-status" id="weatherStatus">Reveal a weather card to start a round.</p>
+            </div>
+
+            <div class="weather-wheel-card">
+              <div class="weather-wheel-header">
+                <div>
+                  <h3>Student Roulette</h3>
+                  <p>Spin after the weather card is visible.</p>
+                </div>
+                <span class="weather-pill" id="studentsLeftCount">0</span>
+              </div>
+              <div class="weather-wheel-zone">
+                <div class="weather-pointer"></div>
+                <div class="weather-wheel" id="studentWheel"><div class="weather-wheel-center">STUDENT</div></div>
+                <button type="button" class="weather-btn" id="spinStudentBtn" onclick="spinStudentRoulette()" disabled><i class="bi bi-play-circle"></i> Spin Student</button>
+                <p class="weather-status" id="studentStatus">Load names and reveal one card.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="weather-play-grid">
+            <div class="weather-round-card">
+              <h3>Current Round</h3>
+              <p>Use this as the teacher&apos;s screen. The student speaks aloud; nothing is typed here.</p>
+              <div class="weather-current-grid">
+                <div class="weather-result-box"><small>Weather</small><strong id="currentWeatherName">-</strong><p id="currentWeatherNote">Choose a hidden card.</p></div>
+                <div class="weather-result-box"><small>Student</small><strong id="currentStudentName">-</strong><p>Spin the roulette after revealing the card.</p></div>
+              </div>
+              <div class="weather-speaking-prompt">
+                <strong>Say at least one sentence.</strong>
+                <p>Use present continuous and choose any activity that makes sense with the weather.</p>
+              </div>
+              <div class="weather-round-actions">
+                <button type="button" class="weather-btn secondary" id="saveRoundBtn" onclick="saveRound()" disabled><i class="bi bi-arrow-right-circle"></i> Save Round / Next Round</button>
+                <button type="button" class="weather-btn light" id="cancelRoundBtn" onclick="cancelCurrentRound()" disabled><i class="bi bi-x-circle"></i> Cancel Current Round</button>
+              </div>
+            </div>
+
+            <div class="weather-round-card">
+              <h3>Students Left</h3>
+              <p>Students disappear from this list after their round is saved.</p>
+              <div class="weather-chip-list" id="studentPoolList"><span class="weather-chip">No students loaded yet.</span></div>
+            </div>
+          </div>
+
+          <div class="weather-history-card">
+            <div class="weather-history-header">
+              <div>
+                <h3>Participation History</h3>
+                <p>This only records who participated and which weather card appeared.</p>
+              </div>
+              <span class="weather-pill" id="roundCount">0</span>
+            </div>
+            <div class="weather-table-container">
+              <table class="weather-table">
+                <thead><tr><th>Round</th><th>Weather</th><th>Student</th><th>Instruction</th></tr></thead>
+                <tbody id="weatherHistoryBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+
+  <script src="../../assets/js/roster-import.js"></script>
+  <script>
+    const weatherCards = [
+      { id: "sunny", label: "Sunny", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-sunny.webp", note: "Bright weather. The student chooses the activity." },
+      { id: "cloudy", label: "Cloudy", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-cloudy.webp", note: "Cloudy weather. The student chooses the activity." },
+      { id: "raining", label: "Raining", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-rainy.webp", note: "Rain happening now. The student chooses the activity." },
+      { id: "pouring", label: "Pouring", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-pouring.webp", note: "Very heavy rain. The student chooses the activity." },
+      { id: "windy", label: "Windy", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-windy.webp", note: "Strong wind. The student chooses the activity." },
+      { id: "stormy", label: "Stormy", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-stormy.webp", note: "Storm conditions. The student chooses the activity." },
+      { id: "freezing", label: "Freezing", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-cold.webp", note: "Very cold weather. The student chooses the activity." },
+      { id: "really-hot", label: "Really Hot", image: "../../assets/img/english-basic-2/unit-1-going-out/weather-hot.webp", note: "Very hot weather. The student chooses the activity." }
+    ];
+
+    const gameState = {
+      originalNames: [],
+      studentPool: [],
+      usedWeatherIds: [],
+      selectedWeather: null,
+      currentStudent: null,
+      history: [],
+      studentRotation: 0,
+      spinning: false
+    };
+
+    const wheelColors = ["#f6d365", "#60a5fa", "#34d399", "#f97316", "#f9a8d4", "#a7f3d0", "#facc15", "#93c5fd", "#fb7185", "#c4b5fd"];
+    const soundState = { audioContext: null, tickTimer: null, active: false };
+
+    document.addEventListener("DOMContentLoaded", function() {
+      if (window.JaraLinguaRosterImport) {
+        window.JaraLinguaRosterImport.setup({
+          fileInputId: "studentExcelInput",
+          textAreaId: "studentNamesInput",
+          statusId: "rosterImportStatus",
+          onNamesLoaded: function() { loadStudentNames(); }
+        });
+      }
+      renderGame();
+    });
+
+    function getAudioContext() {
+      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContextClass) return null;
+      if (!soundState.audioContext) soundState.audioContext = new AudioContextClass();
+      if (soundState.audioContext.state === "suspended") soundState.audioContext.resume().catch(function() {});
+      return soundState.audioContext;
+    }
+
+    function playTone(frequency, duration, volume, type) {
+      const ctx = getAudioContext();
+      if (!ctx) return;
+      const oscillator = ctx.createOscillator();
+      const gain = ctx.createGain();
+      oscillator.type = type || "sine";
+      oscillator.frequency.setValueAtTime(frequency, ctx.currentTime);
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(volume || 0.05, ctx.currentTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + duration);
+      oscillator.connect(gain);
+      gain.connect(ctx.destination);
+      oscillator.start();
+      oscillator.stop(ctx.currentTime + duration + 0.02);
+    }
+
+    function startRouletteSound() {
+      if (soundState.active) return;
+      soundState.active = true;
+      playTone(392, 0.08, 0.06, "square");
+      soundState.tickTimer = window.setInterval(function() {
+        playTone(440 + Math.random() * 280, 0.045, 0.04, "square");
+      }, 95);
+    }
+
+    function stopRouletteSound(success) {
+      soundState.active = false;
+      if (soundState.tickTimer) window.clearInterval(soundState.tickTimer);
+      soundState.tickTimer = null;
+      if (!success) return;
+      playTone(659, 0.08, 0.08, "sine");
+      window.setTimeout(function() { playTone(784, 0.11, 0.075, "sine"); }, 90);
+      window.setTimeout(function() { playTone(988, 0.16, 0.07, "sine"); }, 185);
+    }
+
+    function openExcelPicker() {
+      document.getElementById("studentExcelInput").click();
+    }
+
+    function getUniqueNames(rawText) {
+      const names = rawText.split(/\n|,|;/).map(function(name) { return name.trim(); }).filter(function(name) { return name.length > 0; });
+      const seen = new Set();
+      const uniqueNames = [];
+      names.forEach(function(name) {
+        const key = name.toLowerCase();
+        if (!seen.has(key)) {
+          seen.add(key);
+          uniqueNames.push(name);
+        }
+      });
+      return uniqueNames;
+    }
+
+    function loadStudentNames() {
+      const names = getUniqueNames(document.getElementById("studentNamesInput").value);
+      if (names.length < 1) {
+        alert("Please enter at least one student name.");
+        return;
+      }
+      gameState.originalNames = names.slice();
+      gameState.studentPool = names.slice();
+      gameState.currentStudent = null;
+      gameState.studentRotation = 0;
+      gameState.history = [];
+      renderGame();
+    }
+
+    function useSampleNames() {
+      const sampleNames = ["Alex", "Sarah", "David", "Emma", "Liam", "Maria", "Sofia", "Daniel", "Camila", "Mateo"];
+      document.getElementById("studentNamesInput").value = sampleNames.join("\n");
+      loadStudentNames();
+    }
+
+    function resetWeatherDeck() {
+      gameState.usedWeatherIds = [];
+      gameState.selectedWeather = null;
+      renderGame();
+    }
+
+    function resetActivity() {
+      stopRouletteSound(false);
+      gameState.originalNames = [];
+      gameState.studentPool = [];
+      gameState.usedWeatherIds = [];
+      gameState.selectedWeather = null;
+      gameState.currentStudent = null;
+      gameState.history = [];
+      gameState.studentRotation = 0;
+      gameState.spinning = false;
+      document.getElementById("studentNamesInput").value = "";
+      renderGame();
+    }
+
+    function selectWeatherCard(weatherId) {
+      if (gameState.spinning || gameState.currentStudent) return;
+      if (gameState.usedWeatherIds.includes(weatherId)) return;
+      const card = weatherCards.find(function(item) { return item.id === weatherId; });
+      if (!card) return;
+      gameState.selectedWeather = card;
+      renderGame();
+    }
+
+    function hideSelectedWeather() {
+      if (gameState.currentStudent) return;
+      gameState.selectedWeather = null;
+      renderGame();
+    }
+
+    function renderGame() {
+      renderWeatherDeck();
+      renderWheel("studentWheel", gameState.studentPool, gameState.studentRotation, "STUDENT", 20);
+      renderCurrentRound();
+      renderStudentPool();
+      renderHistory();
+      updateControls();
+    }
+
+    function renderWeatherDeck() {
+      const deck = document.getElementById("weatherDeck");
+      deck.innerHTML = "";
+      weatherCards.forEach(function(card, index) {
+        const isUsed = gameState.usedWeatherIds.includes(card.id);
+        const isSelected = gameState.selectedWeather && gameState.selectedWeather.id === card.id;
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "weather-hidden-card" + (isSelected ? " is-revealed" : "") + (isUsed ? " is-used" : "");
+        button.disabled = isUsed || Boolean(gameState.currentStudent) || gameState.spinning;
+        button.setAttribute("aria-label", isSelected ? "Selected weather card: " + card.label : "Reveal weather card " + String(index + 1));
+        button.onclick = function() { selectWeatherCard(card.id); };
+
+        if (isSelected) {
+          button.innerHTML = '<div class="weather-card-front"><img src="' + card.image + '" alt="' + card.label + ' weather" /><div><strong>' + card.label + '</strong><small>Speak freely.</small></div></div>';
+        } else {
+          button.innerHTML = '<div class="weather-card-back"><span>' + (isUsed ? "Used" : "Weather Card") + '</span></div>';
+        }
+        deck.appendChild(button);
+      });
+      const remaining = weatherCards.length - gameState.usedWeatherIds.length - (gameState.selectedWeather ? 1 : 0);
+      document.getElementById("weatherLeftCount").textContent = String(Math.max(remaining, 0));
+    }
+
+    function renderWheel(wheelId, items, rotation, centerText, maxLength) {
+      const wheel = document.getElementById(wheelId);
+      wheel.innerHTML = '<div class="weather-wheel-center">' + centerText + '</div>';
+      const safeItems = items.length ? items : ["-"];
+      const slice = 360 / safeItems.length;
+      const gradient = safeItems.map(function(_, index) {
+        const start = index * slice;
+        const end = (index + 1) * slice;
+        return wheelColors[index % wheelColors.length] + " " + start + "deg " + end + "deg";
+      }).join(", ");
+      wheel.style.background = "conic-gradient(" + gradient + ")";
+      wheel.style.transform = "rotate(" + rotation + "deg)";
+      safeItems.slice(0, Math.min(safeItems.length, 24)).forEach(function(item, index) {
+        const angle = index * slice + slice / 2;
+        const label = document.createElement("span");
+        label.className = "weather-wheel-label";
+        label.textContent = shortenLabel(String(item), maxLength || 20);
+        label.style.transform = "rotate(" + angle + "deg) translateY(-106px) rotate(-" + angle + "deg)";
+        wheel.appendChild(label);
+      });
+    }
+
+    function shortenLabel(label, maxLength) {
+      return label.length > maxLength ? label.slice(0, maxLength - 1) + "..." : label;
+    }
+
+    function renderCurrentRound() {
+      document.getElementById("currentWeatherName").textContent = gameState.selectedWeather ? gameState.selectedWeather.label : "-";
+      document.getElementById("currentWeatherNote").textContent = gameState.selectedWeather ? gameState.selectedWeather.note : "Choose a hidden card.";
+      document.getElementById("currentStudentName").textContent = gameState.currentStudent || "-";
+    }
+
+    function renderStudentPool() {
+      document.getElementById("studentsLeftCount").textContent = String(gameState.studentPool.length);
+      const container = document.getElementById("studentPoolList");
+      container.innerHTML = "";
+      if (gameState.studentPool.length < 1) {
+        const empty = document.createElement("span");
+        empty.className = "weather-chip";
+        empty.textContent = gameState.originalNames.length ? "No students left." : "No students loaded yet.";
+        container.appendChild(empty);
+        return;
+      }
+      gameState.studentPool.forEach(function(name) {
+        const chip = document.createElement("span");
+        chip.className = "weather-chip";
+        chip.textContent = name;
+        container.appendChild(chip);
+      });
+    }
+
+    function renderHistory() {
+      document.getElementById("roundCount").textContent = String(gameState.history.length);
+      const body = document.getElementById("weatherHistoryBody");
+      body.innerHTML = "";
+      if (gameState.history.length < 1) {
+        const row = document.createElement("tr");
+        const cell = document.createElement("td");
+        cell.colSpan = 4;
+        cell.className = "weather-empty-row";
+        cell.textContent = "No rounds saved yet.";
+        row.appendChild(cell);
+        body.appendChild(row);
+        return;
+      }
+      gameState.history.forEach(function(round) {
+        const row = document.createElement("tr");
+        [round.round, round.weather, round.student, round.instruction].forEach(function(value) {
+          const cell = document.createElement("td");
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        body.appendChild(row);
+      });
+    }
+
+    function updateControls() {
+      const hasNames = gameState.studentPool.length > 0;
+      const hasWeather = Boolean(gameState.selectedWeather);
+      const hasStudent = Boolean(gameState.currentStudent);
+      const weatherCardsRemaining = weatherCards.length - gameState.usedWeatherIds.length;
+      document.getElementById("hideWeatherBtn").disabled = !hasWeather || hasStudent || gameState.spinning;
+      document.getElementById("spinStudentBtn").disabled = gameState.spinning || !hasNames || !hasWeather || hasStudent;
+      document.getElementById("saveRoundBtn").disabled = !hasWeather || !hasStudent;
+      document.getElementById("cancelRoundBtn").disabled = !hasWeather && !hasStudent;
+
+      const weatherStatus = document.getElementById("weatherStatus");
+      if (weatherCardsRemaining < 1 && !hasWeather) {
+        weatherStatus.textContent = "All weather cards have been used. Reset the weather cards to continue.";
+      } else if (hasStudent) {
+        weatherStatus.textContent = "Round in progress. Save or cancel before choosing another card.";
+      } else if (hasWeather) {
+        weatherStatus.textContent = "Weather revealed. Spin the student roulette.";
+      } else {
+        weatherStatus.textContent = "Reveal a weather card to start a round.";
+      }
+
+      const studentStatus = document.getElementById("studentStatus");
+      if (!hasNames && gameState.originalNames.length) {
+        studentStatus.textContent = "All loaded students have participated. Reload names or reset the activity.";
+      } else if (!hasNames) {
+        studentStatus.textContent = "Load names and reveal one card.";
+      } else if (!hasWeather) {
+        studentStatus.textContent = "Reveal one weather card first.";
+      } else if (hasStudent) {
+        studentStatus.textContent = "Student selected. The student can speak now.";
+      } else {
+        studentStatus.textContent = "Ready. Spin the student roulette.";
+      }
+    }
+
+    function spinStudentRoulette() {
+      if (gameState.spinning || !gameState.selectedWeather || gameState.currentStudent || gameState.studentPool.length < 1) return;
+      gameState.spinning = true;
+      startRouletteSound();
+      updateControls();
+      gameState.studentRotation += 1440 + Math.floor(Math.random() * 720);
+      document.getElementById("studentWheel").style.transform = "rotate(" + gameState.studentRotation + "deg)";
+      window.setTimeout(function() {
+        const index = Math.floor(Math.random() * gameState.studentPool.length);
+        gameState.currentStudent = gameState.studentPool[index];
+        stopRouletteSound(true);
+        gameState.spinning = false;
+        renderGame();
+      }, 2450);
+    }
+
+    function saveRound() {
+      if (!gameState.selectedWeather || !gameState.currentStudent) return;
+      const weather = gameState.selectedWeather;
+      const student = gameState.currentStudent;
+      gameState.history.push({
+        round: gameState.history.length + 1,
+        weather: weather.label,
+        student: student,
+        instruction: "One or more present continuous sentences."
+      });
+      gameState.studentPool = gameState.studentPool.filter(function(name) { return name !== student; });
+      if (!gameState.usedWeatherIds.includes(weather.id)) gameState.usedWeatherIds.push(weather.id);
+      gameState.selectedWeather = null;
+      gameState.currentStudent = null;
+      renderGame();
+    }
+
+    function cancelCurrentRound() {
+      stopRouletteSound(false);
+      gameState.currentStudent = null;
+      gameState.selectedWeather = null;
+      gameState.spinning = false;
+      renderGame();
+    }
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>
