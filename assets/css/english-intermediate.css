@@ -65,6 +65,20 @@
   line-height: 1.55;
 }
 
+.intermediate-index-page .course-section-content .card-link {
+  width: fit-content;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.intermediate-index-page .course-section-content .card-link + .card-link {
+  margin-top: 10px;
+}
+
 .intermediate-index-page .basic-hero-content h1 span {
   display: block;
 }
