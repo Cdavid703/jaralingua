@@ -2776,10 +2776,6 @@ def ensure_intermediate_gradebook_structure(grades_data):
 
 def ensure_basic_gradebook_structure(grades_data):
     changed = ensure_evaluation_template(grades_data, BASIC_UNIT6_NEIGHBORHOOD_AI_EVALUATION)
-    if ensure_evaluation_template(grades_data, BASIC2_UNIT1_PRONUNCIATION_EVALUATION):
-        changed = True
-    if ensure_evaluation_template(grades_data, BASIC2_UNIT2_PRONUNCIATION_EVALUATION):
-        changed = True
     if ensure_evaluation_template(grades_data, BASIC_FINAL_WRITING_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC_FINAL_ORAL_EVALUATION):
@@ -15772,7 +15768,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
         payload = self.read_json_body()
         if payload is None:
             return
-        if (parsed.path.startswith("/api/intermediate/") or parsed.path.startswith("/api/basic/")) and isinstance(payload, dict):
+        if (parsed.path.startswith("/api/intermediate/") or parsed.path.startswith("/api/basic/") or parsed.path.startswith("/api/basic2/")) and isinstance(payload, dict):
             profile = dict(profile)
             profile["_studentIdClaim"] = payload.get("studentIdClaim") or payload.get("studentId") or payload.get("idClaim") or ""
 
@@ -15794,24 +15790,24 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
-        if parsed.path == "/api/basic/basic2-unit1-pronunciation-weather/submit":
+        if parsed.path in ("/api/basic2/unit1-pronunciation-weather/submit", "/api/basic/basic2-unit1-pronunciation-weather/submit"):
             if not isinstance(payload, dict):
                 json_response(self, 400, {"error": "invalid_payload"})
                 return
             with data_lock:
-                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
-                changed = ensure_basic_gradebook_structure(grades_data)
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                changed = ensure_basic2_gradebook_structure(grades_data)
                 student = matched_student_for_profile(profile, grades_data)
                 if not isinstance(student, dict):
                     if changed:
-                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
                 try:
                     report = basic2_unit1_pronunciation_report_from_payload(payload)
                 except ValueError as error:
                     if changed:
-                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                     json_response(self, 400, {"error": str(error)})
                     return
                 if not isinstance(student.get("gradeDetails"), dict):
@@ -15842,7 +15838,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "activity": "Weather and Going Out Pronunciation",
                     "activityType": "Pronunciation follow-up"
                 }
-                write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": BASIC2_UNIT1_PRONUNCIATION_ID,
@@ -15855,24 +15851,24 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 })
             return
 
-        if parsed.path == "/api/basic/basic2-unit2-pronunciation-shopping-concert/submit":
+        if parsed.path in ("/api/basic2/unit2-pronunciation-shopping-concert/submit", "/api/basic/basic2-unit2-pronunciation-shopping-concert/submit"):
             if not isinstance(payload, dict):
                 json_response(self, 400, {"error": "invalid_payload"})
                 return
             with data_lock:
-                grades_data = read_grades_data(BASIC_ENGLISH_GRADES_PATH)
-                changed = ensure_basic_gradebook_structure(grades_data)
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                changed = ensure_basic2_gradebook_structure(grades_data)
                 student = matched_student_for_profile(profile, grades_data)
                 if not isinstance(student, dict):
                     if changed:
-                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
                 try:
                     report = basic2_unit1_pronunciation_report_from_payload(payload)
                 except ValueError as error:
                     if changed:
-                        write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                     json_response(self, 400, {"error": str(error)})
                     return
                 if not isinstance(student.get("gradeDetails"), dict):
@@ -15903,7 +15899,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "activity": "Shopping and Concert Pronunciation",
                     "activityType": "Pronunciation follow-up"
                 }
-                write_json_file(BASIC_ENGLISH_GRADES_PATH, grades_data, ".basic-grades-")
+                write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": BASIC2_UNIT2_PRONUNCIATION_ID,

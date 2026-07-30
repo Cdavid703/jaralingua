@@ -14,7 +14,7 @@
   const GUIDED_COUNT = 6;
   const FINAL_INDEX = STAGES.length - 1;
   const API_PATH = "/api/english-basic/pronunciation-assessment";
-  const SUBMIT_PATH = "/api/basic/basic2-unit2-pronunciation-shopping-concert/submit";
+  const SUBMIT_PATH = "/api/basic2/unit2-pronunciation-shopping-concert/submit";
   const STORAGE_KEY = "jaralingua:english-basic2:pronunciation-unit2-shopping-concert:v1";
   const SUBMISSION_KEY = "jaralingua:english-basic2:pronunciation-unit2-shopping-concert:submission:v1";
   const LOCAL_URL = "http://127.0.0.1:8020/ingles/basico-2/pronunciation-unit-2-shopping-concert.html";
