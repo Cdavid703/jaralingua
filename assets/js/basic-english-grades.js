@@ -674,7 +674,7 @@
           <div class="mt-3">
             <label class="form-check fw-bold text-danger mb-3">
               <input class="form-check-input" type="checkbox" data-student-delete>
-              Delete
+              Remove this student from this course
             </label>
             <div class="row g-3">
             <div class="col-md-3">
