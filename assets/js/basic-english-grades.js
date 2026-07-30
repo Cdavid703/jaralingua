@@ -124,6 +124,29 @@
     });
   }
 
+  function evaluationWeight(evaluation) {
+    const weight = Number(evaluation && evaluation.weight);
+    return Number.isFinite(weight) ? weight : 0;
+  }
+
+  function weightedEvaluations(evaluations) {
+    return (Array.isArray(evaluations) ? evaluations : []).filter(function (evaluation) {
+      return evaluationWeight(evaluation) > 0;
+    });
+  }
+
+  function deliverableEvaluations(evaluations) {
+    return (Array.isArray(evaluations) ? evaluations : []).filter(function (evaluation) {
+      return evaluationWeight(evaluation) <= 0;
+    });
+  }
+
+  function payloadWithEvaluations(payload, evaluations) {
+    return Object.assign({}, payload || {}, {
+      evaluations: Array.isArray(evaluations) ? evaluations : []
+    });
+  }
+
   function normalizeGradesPayload(payload) {
     if (!PAGE_CONFIG.emptyGradeGrid || !payload || typeof payload !== "object") return payload;
     const next = Object.assign({}, payload, {
@@ -432,28 +455,60 @@
     }).join("");
   }
 
+  function studentDeliverableRows(student, evaluations) {
+    return evaluations.map(function (evaluation) {
+      const status = evaluationStatus(student, evaluation);
+      return `
+        <tr>
+          <td>${escapeHtml(evaluation.title)}</td>
+          <td>${escapeHtml(evaluation.type || "Deliverable")}</td>
+          <td>${escapeHtml(formatEvaluationResult(student, evaluation))}</td>
+          <td><span class="status-pill ${status.className}">${status.label}</span></td>
+        </tr>
+      `;
+    }).join("");
+  }
+
   function studentGradesMarkup(student, payload) {
+    const weightedPayload = payloadWithEvaluations(payload, weightedEvaluations(payload.evaluations));
     return `
       <div class="row g-4">
         <div class="col-lg-5">
           <div class="grades-panel h-100">
             <p class="section-kicker">Individual progress</p>
             <h2 class="section-title">My ${escapeHtml(PAGE_CONFIG.courseTitle)} grades</h2>
-            <p class="section-text">Review your current scores and the percentage already evaluated in the course.</p>
-            ${studentMetricsMarkup(student, payload.evaluations)}
+            <p class="section-text">Review your current scores only for assessments that have an official course percentage.</p>
+            ${studentMetricsMarkup(student, weightedPayload.evaluations)}
           </div>
         </div>
         <div class="col-lg-7">
           <div class="grades-panel h-100">
             <p class="section-kicker">Results</p>
-            <h2 class="section-title">Course assessments</h2>
+            <h2 class="section-title">Percentage assessments</h2>
             <div class="table-wrap">
               <table class="grades-table">
                 <thead><tr><th>Assessment</th><th>Type</th><th>Weight</th><th>Grade</th><th>Status</th></tr></thead>
-                <tbody>${studentGradesRows(student, payload.evaluations) || `<tr><td colspan="5">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</td></tr>`}</tbody>
+                <tbody>${studentGradesRows(student, weightedPayload.evaluations) || `<tr><td colspan="5">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</td></tr>`}</tbody>
               </table>
             </div>
           </div>
+        </div>
+      </div>
+    `;
+  }
+
+  function studentDeliverablesMarkup(student, payload) {
+    const deliverables = deliverableEvaluations(payload.evaluations);
+    return `
+      <div class="grades-panel" data-student-deliverables>
+        <p class="section-kicker">Non-percentage work</p>
+        <h2 class="section-title">Deliverables and follow-ups</h2>
+        <p class="section-text mb-3">These items can show completion, submission or reference feedback, but they do not add percentage to the official course average.</p>
+        <div class="table-wrap">
+          <table class="grades-table">
+            <thead><tr><th>Deliverable</th><th>Type</th><th>Result</th><th>Status</th></tr></thead>
+            <tbody>${studentDeliverableRows(student, deliverables) || `<tr><td colspan="4">No non-percentage deliverables have been created for this level yet.</td></tr>`}</tbody>
+          </table>
         </div>
       </div>
     `;
@@ -507,14 +562,18 @@
 
   function renderStudentPanel(student, payload, user) {
     const tabs = window.JaraGradebookTabs;
-    const tabsMarkup = PAGE_CONFIG.showStudentProfile && tabs ? `
+    const hasDeliverables = deliverableEvaluations(payload.evaluations).length > 0;
+    const useTabs = tabs && (PAGE_CONFIG.showStudentProfile || hasDeliverables);
+    const tabsMarkup = useTabs ? `
       <div class="staff-tabs" data-gradebook-tabs>
         <div class="staff-tab-nav" role="tablist" aria-label="Student gradebook sections">
           ${tabs.button("student-grades", "Grades", "bi-table", { selected: true })}
-          ${tabs.button("student-profile", "Student profile", "bi-person-vcard-fill")}
+          ${hasDeliverables ? tabs.button("student-deliverables", "Deliverables", "bi-clipboard-check-fill", { count: deliverableEvaluations(payload.evaluations).length }) : ""}
+          ${PAGE_CONFIG.showStudentProfile ? tabs.button("student-profile", "Student profile", "bi-person-vcard-fill") : ""}
         </div>
         ${tabs.panel("student-grades", studentGradesMarkup(student, payload), true)}
-        ${tabs.panel("student-profile", studentProfileMarkup(student, user), false)}
+        ${hasDeliverables ? tabs.panel("student-deliverables", studentDeliverablesMarkup(student, payload), false) : ""}
+        ${PAGE_CONFIG.showStudentProfile ? tabs.panel("student-profile", studentProfileMarkup(student, user), false) : ""}
       </div>
     ` : studentGradesMarkup(student, payload);
     return `
@@ -743,6 +802,47 @@
     `;
   }
 
+  function staffDeliverableRows(payload) {
+    const deliverables = deliverableEvaluations(payload.evaluations);
+    if (!deliverables.length) {
+      return `<tr><td colspan="4">No non-percentage deliverables have been created for this level yet.</td></tr>`;
+    }
+    return payload.students.map(function (student) {
+      const cells = deliverables.map(function (evaluation) {
+        const status = evaluationStatus(student, evaluation);
+        return `<td>${escapeHtml(formatEvaluationResult(student, evaluation))}<br><span class="status-pill ${status.className}">${status.label}</span></td>`;
+      }).join("");
+      return `
+        <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
+          <td>${escapeHtml(student.fullName)}<br><span class="status-pill">${escapeHtml(student.level)}</span></td>
+          <td>${escapeHtml(student.email || "No email")}</td>
+          ${cells}
+        </tr>
+      `;
+    }).join("");
+  }
+
+  function staffDeliverablesMarkup(payload) {
+    const deliverables = deliverableEvaluations(payload.evaluations);
+    const headers = deliverables.map(function (evaluation) {
+      return `<th>${escapeHtml(evaluation.title)}<br>0%</th>`;
+    }).join("");
+    return `
+      ${staffControlsMarkup()}
+      <div class="grades-panel" data-non-percentage-deliverables>
+        <p class="section-kicker">Non-percentage work</p>
+        <h2 class="section-title">Deliverables and follow-ups</h2>
+        <p class="section-text mb-3">This grid is separated from the official percentage gradebook. These items do not affect the course average.</p>
+        <div class="table-wrap">
+          <table class="grades-table">
+            <thead><tr><th>Student</th><th>Email</th>${headers}</tr></thead>
+            <tbody>${staffDeliverableRows(payload)}</tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
   function staffReportsMarkup(payload) {
     return `
       <div class="grades-panel mb-4" data-staff-reports>
@@ -775,7 +875,9 @@
 
   function renderStaffPanel(payload, user) {
     const tabs = window.JaraGradebookTabs;
-    const headers = payload.evaluations.map(function (evaluation) {
+    const weightedPayload = payloadWithEvaluations(payload, weightedEvaluations(payload.evaluations));
+    const deliverablesPayload = payloadWithEvaluations(payload, deliverableEvaluations(payload.evaluations));
+    const headers = weightedPayload.evaluations.map(function (evaluation) {
       return `<th>${escapeHtml(evaluation.title)}<br>${evaluation.weight}%</th>`;
     }).join("");
     const gradebookMarkup = `
@@ -783,22 +885,24 @@
       <div class="grades-panel" data-official-gradebook>
         <p class="section-kicker">Private data</p>
         <h2 class="section-title">${escapeHtml(PAGE_CONFIG.courseGradebookTitle)}</h2>
-        ${PAGE_CONFIG.emptyGradeGrid ? `<p class="section-text mb-3">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</p>` : ""}
+        ${!weightedPayload.evaluations.length ? `<p class="section-text mb-3">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</p>` : ""}
         <div class="table-wrap">
           <table class="grades-table">
             <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
-            <tbody>${staffStudentRows(payload)}</tbody>
+            <tbody>${staffStudentRows(weightedPayload)}</tbody>
           </table>
         </div>
       </div>
     `;
     const tabButtons = [
       tabs.button("gradebook", "Gradebook", "bi-table", { selected: true }),
+      tabs.button("deliverables", "Deliverables", "bi-clipboard-check-fill", { count: deliverablesPayload.evaluations.length }),
       tabs.button("reports", "Reports", "bi-file-earmark-bar-graph-fill")
     ];
     const tabPanels = [
       tabs.panel("gradebook", gradebookMarkup, true),
-      tabs.panel("reports", staffReportsMarkup(payload), false)
+      tabs.panel("deliverables", staffDeliverablesMarkup(deliverablesPayload), false),
+      tabs.panel("reports", staffReportsMarkup(weightedPayload), false)
     ];
     if (PAGE_CONFIG.showRosterExport) {
       tabButtons.push(tabs.button("roster", "Roster", "bi-person-lines-fill", { count: payload.students.length }));
@@ -821,7 +925,8 @@
       </div>
       <div class="metric-grid mb-4">
         <div class="metric-card"><span>Students</span><strong>${payload.students.length}</strong></div>
-        <div class="metric-card"><span>Assessments</span><strong>${payload.evaluations.length}</strong></div>
+        <div class="metric-card"><span>Percentage assessments</span><strong>${weightedPayload.evaluations.length}</strong></div>
+        <div class="metric-card"><span>Deliverables</span><strong>${deliverablesPayload.evaluations.length}</strong></div>
         <div class="metric-card"><span>Course</span><strong>${escapeHtml(PAGE_CONFIG.courseTitle)}</strong></div>
       </div>
       <div class="staff-tabs" data-gradebook-tabs>
@@ -1259,8 +1364,8 @@
       window.JaraGradebookTabs.wire(root);
       wireMicrosoftSignout(root);
       wireStudentFilter(root);
-      wireExport(root, payload);
-      wirePdfExport(root, payload);
+      wireExport(root, payloadWithEvaluations(payload, weightedEvaluations(payload.evaluations)));
+      wirePdfExport(root, payloadWithEvaluations(payload, weightedEvaluations(payload.evaluations)));
       wireAdminTools(root, payload, user);
       wireStudentEditor(root, payload, user);
       return;

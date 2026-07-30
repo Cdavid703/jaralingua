@@ -2797,8 +2797,12 @@ def ensure_basic2_gradebook_structure(grades_data):
     if not isinstance(grades_data.get("students"), list):
         grades_data["students"] = []
         changed = True
-    if grades_data.get("evaluations") != []:
+    if not isinstance(grades_data.get("evaluations"), list):
         grades_data["evaluations"] = []
+        changed = True
+    if ensure_evaluation_template(grades_data, BASIC2_UNIT1_PRONUNCIATION_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, BASIC2_UNIT2_PRONUNCIATION_EVALUATION):
         changed = True
     if grades_data.get("allowStudentIdClaim") is not True:
         grades_data["allowStudentIdClaim"] = True
