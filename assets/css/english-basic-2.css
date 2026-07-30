@@ -338,6 +338,20 @@
   gap: 10px;
 }
 
+.expression-card[data-expression-audio] {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.expression-card[data-expression-audio]:hover,
+.expression-card[data-expression-audio]:focus-visible,
+.expression-card[data-expression-audio].is-playing {
+  border-color: rgba(18, 59, 143, 0.28);
+  box-shadow: 0 20px 42px rgba(18, 59, 143, 0.14);
+  transform: translateY(-3px);
+  outline: none;
+}
+
 .expression-card .spanish-meaning {
   border-radius: 999px;
   padding: 8px 12px;
@@ -353,6 +367,23 @@
   font-weight: 900;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.expression-audio-hint {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 2px;
+  border-radius: 999px;
+  padding: 8px 11px;
+  background: #eef4ff;
+  color: var(--basic2-blue);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.expression-card[data-expression-audio].is-playing .expression-audio-hint {
+  background: var(--basic2-blue);
+  color: #ffffff;
 }
 
 .mistake-card {
