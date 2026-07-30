@@ -672,14 +672,15 @@
 
   function countQuestionStarters(text) {
     const normalized = normalize(text);
-    const whStarters = normalized.match(/\b(?:what|how|where|why|which|who)\b/g) || [];
-    if (whStarters.length) return whStarters.length;
-    return /^(?:do|does|is|are|can|would|could)\b/.test(normalized) ? 1 : 0;
+    const auxiliary = "(?:is|are|do|does|did|can|would|could|should|will|have|has)";
+    const starterPattern = new RegExp(`\\b(?:what'?s|what\\s+${auxiliary}|how\\s+(?:${auxiliary}|much|many|old|far|long|often)|where\\s+${auxiliary}|why\\s+${auxiliary}|who\\s+${auxiliary}|which\\s+\\w+|${auxiliary}\\s+(?:i|you|we|they|he|she|it))\\b`, "g");
+    return (normalized.match(starterPattern) || []).length;
   }
 
   function evaluateCheck(transcript, check) {
     const normalized = normalize(transcript);
-    if (check.kind === "question-starters") {
+    const checkType = check.kind || check.type;
+    if (checkType === "question-starters" || checkType === "questionStarters") {
       const matches = countQuestionStarters(normalized);
       const needed = Number(check.minMatches) || 2;
       return { label: check.label, met: matches >= needed, matches };
