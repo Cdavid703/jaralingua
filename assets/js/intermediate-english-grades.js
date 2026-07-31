@@ -14,6 +14,7 @@
   let microsoftClient = null;
   let googleInlineReady = false;
   let activeStaffTab = "gradebook";
+  let staffEmailsVisible = false;
 
   function readStoredUser(key) {
     try {
@@ -429,7 +430,7 @@
       return `
         <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
           <td>${escapeHtml(student.fullName)}<br><span class="gradebook-student-id">${escapeHtml(student.id || "")}</span></td>
-          <td>${escapeHtml(student.email || "No email")}</td>
+          <td class="gradebook-email-cell">${escapeHtml(student.email || "No email")}</td>
           ${gradeCells}
           <td>${summary.average == null ? "Pending" : summary.average.toFixed(2)}</td>
           <td>${summary.completedWeight}%</td>
@@ -640,6 +641,12 @@
             <label class="form-label fw-bold" for="studentFilter">Filter students by name or email</label>
             <input id="studentFilter" class="form-control" data-student-filter placeholder="Type a name, last name, or email">
           </div>
+          <div class="col-lg-5">
+            <button class="btn-soft w-100" type="button" data-toggle-gradebook-email aria-pressed="${staffEmailsVisible ? "true" : "false"}">
+              <i class="bi ${staffEmailsVisible ? "bi-eye-slash" : "bi-eye"}"></i>
+              <span>${staffEmailsVisible ? "Hide emails" : "Show emails"}</span>
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -799,13 +806,13 @@
     const followUpCount = followUpSubmissionCount(payload);
     const gradebookContent = `
       ${staffControlsMarkup()}
-      <div class="grades-panel mb-4" data-official-gradebook>
+      <div class="grades-panel mb-4" data-official-gradebook data-show-emails="${staffEmailsVisible ? "true" : "false"}">
         <p class="section-kicker">Official course record</p>
         <h2 class="section-title">Intermediate English gradebook</h2>
         <p class="section-text mb-3">Only assessments with a course weight appear in this table.</p>
         <div class="table-wrap">
           <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
+            <thead><tr><th>Student</th><th class="gradebook-email-cell">Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
             <tbody>${officialEvaluations.length ? staffStudentRows(payload, officialEvaluations) : emptyOfficialRow}</tbody>
           </table>
         </div>
@@ -928,6 +935,21 @@
         const search = row.getAttribute("data-student-search") || "";
         row.hidden = query && search.indexOf(query) === -1;
       });
+    });
+  }
+
+  function wireGradebookEmailToggle(root) {
+    const button = root.querySelector("[data-toggle-gradebook-email]");
+    const gradebook = root.querySelector("[data-official-gradebook]");
+    if (!button || !gradebook) return;
+    button.addEventListener("click", function () {
+      staffEmailsVisible = !staffEmailsVisible;
+      gradebook.setAttribute("data-show-emails", staffEmailsVisible ? "true" : "false");
+      button.setAttribute("aria-pressed", staffEmailsVisible ? "true" : "false");
+      button.innerHTML = `
+        <i class="bi ${staffEmailsVisible ? "bi-eye-slash" : "bi-eye"}"></i>
+        <span>${staffEmailsVisible ? "Hide emails" : "Show emails"}</span>
+      `;
     });
   }
 
@@ -1285,6 +1307,7 @@
       wireStaffTabs(root);
       wireMicrosoftSignout(root);
       wireStudentFilter(root);
+      wireGradebookEmailToggle(root);
       wireFollowUpAudio(root, user);
       wireExport(root, payload);
       wirePdfExport(root, payload);
