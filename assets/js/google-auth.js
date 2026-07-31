@@ -889,6 +889,10 @@
         font-family: Arial, Helvetica, sans-serif;
       }
 
+      body.jl-intermediate-auth-nav .jaralingua-auth {
+        display: none;
+      }
+
       .jaralingua-auth button,
       .jaralingua-auth-nav button,
       .jaralingua-student-dashboard button {
@@ -1539,9 +1543,12 @@
     const explicitSlot = document.querySelector(".site-header [data-auth-nav-slot]");
     const isBasic2 = document.body && document.body.matches(".basic2-page, .basic2-index-page");
     const isIntermediate = /\/ingles\/intermediate\//i.test(location.pathname);
+    if (isIntermediate && document.body) document.body.classList.add("jl-intermediate-auth-nav");
     const navTarget = explicitSlot || (isBasic2
       ? document.querySelector(".site-header .navbar")
-      : document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar"));
+      : (isIntermediate
+        ? document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .navbar .navbar-nav, .site-header .navbar, .navbar")
+        : document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar")));
     if (!navTarget) return null;
 
     let navRoot = document.querySelector("[data-jaralingua-auth-nav]");
