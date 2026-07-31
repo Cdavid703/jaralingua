@@ -1544,11 +1544,25 @@
     const isBasic2 = document.body && document.body.matches(".basic2-page, .basic2-index-page");
     const isIntermediate = /\/ingles\/intermediate\//i.test(location.pathname);
     if (isIntermediate && document.body) document.body.classList.add("jl-intermediate-auth-nav");
+    let intermediateBootstrapSlot = null;
+    if (isIntermediate && !explicitSlot) {
+      const bootstrapContainer = document.querySelector(".navbar .container, .navbar .container-fluid");
+      const toggler = bootstrapContainer && bootstrapContainer.querySelector(".navbar-toggler");
+      if (bootstrapContainer && toggler) {
+        intermediateBootstrapSlot = bootstrapContainer.querySelector("[data-auth-nav-slot]");
+        if (!intermediateBootstrapSlot) {
+          intermediateBootstrapSlot = document.createElement("div");
+          intermediateBootstrapSlot.className = "ms-auto me-2 d-flex align-items-center";
+          intermediateBootstrapSlot.setAttribute("data-auth-nav-slot", "");
+          bootstrapContainer.insertBefore(intermediateBootstrapSlot, toggler);
+        }
+      }
+    }
     const navTarget = explicitSlot || (isBasic2
       ? document.querySelector(".site-header .navbar")
-      : (isIntermediate
+      : (intermediateBootstrapSlot || (isIntermediate
         ? document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .navbar .navbar-nav, .site-header .navbar, .navbar")
-        : document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar")));
+        : document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar"))));
     if (!navTarget) return null;
 
     let navRoot = document.querySelector("[data-jaralingua-auth-nav]");
