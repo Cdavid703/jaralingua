@@ -351,7 +351,9 @@
       font-weight: 700;
     }
 
-    [data-official-gradebook][data-show-emails="false"] .gradebook-email-cell {
+    [data-official-gradebook]:not([data-show-emails="true"]) .gradebook-email-cell,
+    [data-official-gradebook]:not([data-show-emails="true"]) .grades-table th:nth-child(2),
+    [data-official-gradebook]:not([data-show-emails="true"]) .grades-table td:nth-child(2) {
       display: none;
     }
 
@@ -824,7 +826,7 @@
   <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
   <script src="../../assets/js/google-auth.js?v=20260711-local-username"></script>
   <script src="../../assets/js/english-grade-report-pdf.js?v=20260608-3"></script>
-  <script src="../../assets/js/intermediate-english-grades.js?v=20260725-official-teacher-submissions"></script>
+  <script src="../../assets/js/intermediate-english-grades.js?v=20260731-hide-gradebook-email"></script>
   <script src="../../assets/js/jaralingua-back-button.js"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
