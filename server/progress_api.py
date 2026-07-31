@@ -201,6 +201,7 @@ INTERMEDIATE_UNIT6_PRONUNCIATION_ID = "unit6FuturePlansPronunciation"
 INTERMEDIATE_UNIT6_SCHEDULE_COACH_ID = "unit6ScheduleRescueConversationCoach"
 INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID = "unit6OliviasWeekVideoListening"
 INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID = "finalOralPartnerCoachFollowUp"
+INTERMEDIATE_FINAL_WRITING_TEST_ID = "intermediateFinalWritingTest20"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 BASIC2_UNIT1_PRONUNCIATION_ID = "basic2Unit1WeatherGoingOutPronunciation"
@@ -469,6 +470,14 @@ INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_EVALUATION = {
     "weight": 20,
     "type": "Final oral evaluation",
     "description": "Evaluacion oral final enviable al profesor. La nota aparece en la grilla con peso 20% y afecta el promedio acumulado."
+}
+
+INTERMEDIATE_FINAL_WRITING_TEST_EVALUATION = {
+    "id": INTERMEDIATE_FINAL_WRITING_TEST_ID,
+    "title": "INTERMEDIATE COURSE 1 - FINAL WRITING TEST (20%)",
+    "weight": 20,
+    "type": "Final writing evaluation",
+    "description": "Evaluacion escrita final. El profesor registrara la nota manualmente despues de revisar la produccion escrita."
 }
 
 INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION = {
@@ -2766,6 +2775,8 @@ def ensure_intermediate_gradebook_structure(grades_data):
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_SCHEDULE_COACH_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, INTERMEDIATE_FINAL_WRITING_TEST_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, INTERMEDIATE_UNIT6_VIDEO_LISTENING_EVALUATION):
         changed = True

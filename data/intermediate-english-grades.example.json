@@ -37,6 +37,27 @@
       "description": "MIDTERM ORAL TASK (20%)"
     },
     {
+      "id": "intermediateIntegratedTask20",
+      "title": "INTERMEDIATE COURSE 1 - INTEGRATED TASK (20%)",
+      "weight": 20,
+      "type": "Integrated task",
+      "description": "Protected listening and integrated food-review assessment. Listening is scored automatically and writing is graded by the teacher with the institutional rubric."
+    },
+    {
+      "id": "finalOralPartnerCoachFollowUp",
+      "title": "Final Oral Evaluation - Advice Exchange Partner Coach (20%)",
+      "weight": 20,
+      "type": "Final oral evaluation",
+      "description": "Evaluacion oral final enviable al profesor. La nota aparece en la grilla con peso 20% y afecta el promedio acumulado."
+    },
+    {
+      "id": "intermediateFinalWritingTest20",
+      "title": "INTERMEDIATE COURSE 1 - FINAL WRITING TEST (20%)",
+      "weight": 20,
+      "type": "Final writing evaluation",
+      "description": "Evaluacion escrita final. El profesor registrara la nota manualmente despues de revisar la produccion escrita."
+    },
+    {
       "id": "unit4SundayDinnerListening",
       "title": "Unit 4 Listening - Sunday Dinner Negotiation",
       "weight": 0,
