@@ -920,6 +920,30 @@
         background: #f8fbff;
       }
 
+      .jaralingua-auth-nav.is-course-nav .auth-trigger {
+        min-height: auto;
+        max-width: 220px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+      }
+
+      .jaralingua-auth-nav.is-course-nav .auth-trigger:hover {
+        color: #d7193f;
+      }
+
+      .jaralingua-auth-nav.is-course-nav .auth-initial,
+      .jaralingua-auth-nav.is-course-nav .auth-trigger img {
+        width: 24px;
+        height: 24px;
+        flex-basis: 24px;
+      }
+
       .jaralingua-auth-nav .auth-panel {
         left: auto;
         right: 0;
@@ -1514,6 +1538,7 @@
   function createNavAccess() {
     const explicitSlot = document.querySelector(".site-header [data-auth-nav-slot]");
     const isBasic2 = document.body && document.body.matches(".basic2-page, .basic2-index-page");
+    const isIntermediate = /\/ingles\/intermediate\//i.test(location.pathname);
     const navTarget = explicitSlot || (isBasic2
       ? document.querySelector(".site-header .navbar")
       : document.querySelector(".site-header .nav-links, .site-header .navbar-nav, .site-header .navbar"));
@@ -1525,6 +1550,7 @@
     navRoot = document.createElement("div");
     navRoot.className = "jaralingua-auth-nav";
     navRoot.setAttribute("data-jaralingua-auth-nav", "");
+    if (isIntermediate) navRoot.classList.add("is-course-nav");
 
     if (navTarget.matches("ul, ol")) {
       const item = document.createElement("li");
@@ -1744,6 +1770,9 @@
     navRoot.innerHTML = triggerMarkup().replace("data-auth-toggle", "data-auth-nav-toggle");
     const toggle = navRoot.querySelector("[data-auth-nav-toggle]");
     if (!toggle) return;
+    if (navRoot.classList.contains("is-course-nav") && navRoot.closest(".navbar-nav")) {
+      toggle.classList.add("nav-link");
+    }
 
     toggle.addEventListener("click", function (event) {
       event.stopPropagation();
