@@ -14064,7 +14064,7 @@ def default_intermediate_final_writing_bundle():
                 "Describe two Colombian traditional dishes, including their region of origin and importance for the region.",
                 "Provide information about their main ingredients, quantities, and nutritional value.",
                 "Write the recipes clearly and in an organized way.",
-                "Write a 170-word text.",
+                "Aim for around 170 words. This target guides quality, but it never blocks delivery.",
                 "Spend 50 minutes on this task."
             ],
             "totalPoints": 50

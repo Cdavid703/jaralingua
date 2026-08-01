@@ -190,6 +190,12 @@
     return (String(text || "").trim().match(/\b[\w'-]+\b/g) || []).length;
   }
 
+  function keepSubmitAvailable() {
+    if (els.submit && !staffPreview && !submission) {
+      els.submit.disabled = submitInFlight;
+    }
+  }
+
   function setPanels(active) {
     ["access", "admin", "ready", "exam", "submitted"].forEach((name) => {
       setHidden(els[name], name !== active);
@@ -280,7 +286,7 @@
     card.classList.toggle("warning", count > 0 && (count < 130 || count > 220));
     card.classList.toggle("good", count >= 130 && count <= 220);
     if (!staffPreview) {
-      els.submit.disabled = submitInFlight;
+      keepSubmitAvailable();
       saveLocalDraft();
       queueSave();
     }
@@ -527,10 +533,14 @@
     if (!staffPreview && restoreLocalDraft()) updateWordCounter();
     startClock();
     setHidden(els.backToAdmin, !staffPreview);
-    els.submit.disabled = staffPreview || submitInFlight;
+    if (staffPreview) {
+      els.submit.disabled = true;
+    } else {
+      keepSubmitAvailable();
+    }
     els.submitStatus.textContent = staffPreview
       ? "Teacher preview only. This screen does not save or submit."
-      : "Send to Teacher remains available. Wait for the receipt after pressing it.";
+      : "Send to Teacher remains available. The 170-word target is guidance only.";
     setSaveStatus(
       staffPreview ? "Preview mode" : attempt && attempt.lastSavedAt ? "Saved draft restored" : "Ready to write",
       staffPreview ? "" : attempt && attempt.lastSavedAt ? "good" : ""
@@ -646,7 +656,7 @@
       throw new Error(result.data && result.data.error || "submit_failed");
     } catch (error) {
       submitInFlight = false;
-      els.submit.disabled = false;
+      keepSubmitAvailable();
       els.submitStatus.textContent = "Not submitted yet. Your publication is preserved. Press Send to Teacher again.";
       toast("The submission did not reach the server. Your text was preserved.", "error");
     }
