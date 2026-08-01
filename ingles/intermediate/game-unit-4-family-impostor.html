@@ -83,6 +83,9 @@
     .ready-note{font-weight:900;color:#047857!important;margin:1rem 0 0}
     .vote-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.65rem}
     .vote-options label{display:flex;align-items:center;gap:.55rem;border:1px solid var(--intermediate-border);background:#f8fbff;border-radius:8px;padding:.75rem;font-weight:900;color:var(--intermediate-navy);cursor:pointer}
+    .vote-options label.is-selected{border-color:#0f766e;background:#ecfdf5;box-shadow:0 0 0 3px rgba(15,118,110,.14)}
+    .vote-options input{accent-color:#0f766e}
+    .vote-choice-note{grid-column:1/-1;margin:.25rem 0 0!important}
     .vote-options button{grid-column:1/-1}
     .result-box-final{margin-top:1rem;padding:1rem}
     .vote-summary{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.5rem}
@@ -221,7 +224,7 @@
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260801-unit5-food-deck"></script>
+  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260801-vote-selection-fix"></script>
   <script src="../../assets/js/jaralingua-back-button.js?v=20260717-language"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

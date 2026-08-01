@@ -32,6 +32,7 @@
   var sfxCache = {};
   var pollTimer = null;
   var lastPayload = null;
+  var voteDraft = { round: 0, suspectId: "" };
   var authPollTimer = null;
   var GOOGLE_USER_KEY = "jaralingua_google_user";
   var MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
@@ -57,6 +58,10 @@
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(localState));
     } catch (_error) {}
+  }
+
+  function cleanPlayerId(value) {
+    return String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
   }
 
   function readTrackedTeacherRooms() {
@@ -788,6 +793,7 @@
     stopPolling();
     localState = {};
     lastPayload = null;
+    voteDraft = { round: 0, suspectId: "" };
     saveLocalState();
     if (!keepTrackedRoom) forgetTeacherRoom(previousRoomCode);
     clearRoomUrl();
@@ -963,10 +969,21 @@
       setHtml("#votePanel", "");
       return;
     }
+    var currentRound = Number(room.round || 1);
+    if (voteDraft.round !== currentRound) {
+      voteDraft = { round: currentRound, suspectId: "" };
+    }
+    var savedSuspectId = cleanPlayerId(player.voteSuspectId);
+    var selectedSuspectId = savedSuspectId || voteDraft.suspectId;
+    var voteGroupName = "suspect-" + cleanRoomCode(room.code || localState.roomCode) + "-r" + currentRound;
     var options = (payload.players || []).filter(function (item) { return item.id !== player.id; }).map(function (item) {
-      var checked = player.voteSuspectId === item.id ? " checked" : "";
-      return '<label><input type="radio" name="suspect" value="' + escapeHtml(item.id) + '"' + checked + '><span>' + escapeHtml(item.name) + '</span></label>';
+      var checked = selectedSuspectId === item.id ? " checked" : "";
+      return '<label class="' + (checked ? "is-selected" : "") + '"><input type="radio" name="' + escapeHtml(voteGroupName) + '" data-suspect-option value="' + escapeHtml(item.id) + '"' + checked + ' autocomplete="off"><span>' + escapeHtml(item.name) + '</span></label>';
     }).join("");
+    var selectedName = playerNameById(payload.players || [], selectedSuspectId);
+    var selectionNote = selectedSuspectId
+      ? '<p class="ready-note vote-choice-note" id="voteChoiceNote"><i class="bi bi-person-check"></i> Selected: ' + escapeHtml(selectedName) + '. Tap submit to send this vote.</p>'
+      : '<p class="muted-line vote-choice-note" id="voteChoiceNote">No suspect selected yet. Tap one classmate before sending.</p>';
     var savedNote = player.hasVoted
       ? '<p class="ready-note"><i class="bi bi-check2-circle"></i> Your vote is saved. You may change it until the teacher reveals the result.</p>'
       : "";
@@ -974,8 +991,31 @@
     setHtml("#votePanel", '<section class="vote-box active"><img src="../../assets/img/english-intermediate/unit-4/impostor/vote.png" alt="Impostor vote">' +
       '<div><p class="section-kicker">Secret vote</p><h3>Who is the impostor?</h3>' +
       '<p>Choose the person who seemed not to know the hidden item from ' + escapeHtml(room.deckShortLabel || "the selected unit") + '.</p>' + savedNote +
-      '<form id="voteForm" class="vote-options">' + options +
+      '<form id="voteForm" class="vote-options" autocomplete="off" data-vote-round="' + currentRound + '">' + options + selectionNote +
       '<button type="submit" class="btn-main"><i class="bi bi-send-check-fill"></i> ' + buttonLabel + '</button></form></div></section>');
+  }
+
+  function playerNameById(players, id) {
+    var cleanId = cleanPlayerId(id);
+    var found = (players || []).find(function (item) { return cleanPlayerId(item && item.id) === cleanId; });
+    return found && found.name ? found.name : "that classmate";
+  }
+
+  function handleVoteSelection(input) {
+    var form = input.closest("#voteForm");
+    var round = Number((form && form.getAttribute("data-vote-round")) || (lastPayload && lastPayload.room && lastPayload.room.round) || 1);
+    voteDraft = { round: round, suspectId: cleanPlayerId(input.value) };
+    if (form) {
+      Array.prototype.forEach.call(form.querySelectorAll("label"), function (label) {
+        label.classList.toggle("is-selected", label.contains(input));
+      });
+    }
+    var note = $("#voteChoiceNote");
+    if (note) {
+      note.className = "ready-note vote-choice-note";
+      note.innerHTML = '<i class="bi bi-person-check"></i> Selected: ' + escapeHtml(playerNameById((lastPayload && lastPayload.players) || [], input.value)) + '. Tap submit to send this vote.';
+    }
+    showMessage("Selection ready. Tap Submit my vote to send it.", "info");
   }
 
   function renderResult(payload) {
@@ -1125,6 +1165,7 @@
         var requestPayload = { roomCode: localState.roomCode, teacherToken: localState.teacherToken };
         if (action === "distribute") requestPayload.deck = selectedVocabDeck();
         var result = await request(action, requestPayload);
+        if (action === "distribute" || action === "reset") voteDraft = { round: 0, suspectId: "" };
         lastPayload = result.state;
         render(lastPayload);
         var actionMessage = {
@@ -1224,11 +1265,16 @@
 
   async function submitVote(event) {
     event.preventDefault();
-    var selected = document.querySelector('input[name="suspect"]:checked');
+    var form = event.target;
+    var selected = form && form.querySelector('input[data-suspect-option]:checked');
     if (!selected) {
       showMessage("Choose a suspect before submitting your vote.", "error");
       return;
     }
+    voteDraft = {
+      round: Number((form && form.getAttribute("data-vote-round")) || (lastPayload && lastPayload.room && lastPayload.room.round) || 1),
+      suspectId: cleanPlayerId(selected.value)
+    };
     var button = event.submitter || (event.target && event.target.querySelector("button[type='submit']"));
     return withButtonWorking(button, '<i class="bi bi-hourglass-split"></i> Sending...', async function () {
       try {
@@ -1259,6 +1305,10 @@
     $("#closeRoomBtn") && $("#closeRoomBtn").addEventListener("click", closeOrLeaveRoom);
     $("#studentLeaveRoomBtn") && $("#studentLeaveRoomBtn").addEventListener("click", closeOrLeaveRoom);
     $("#resetAllRoomsBtn") && $("#resetAllRoomsBtn").addEventListener("click", resetAllRooms);
+    document.addEventListener("change", function (event) {
+      var option = event.target && event.target.closest ? event.target.closest("[data-suspect-option]") : null;
+      if (option) handleVoteSelection(option);
+    });
     $("#soundToggle") && $("#soundToggle").addEventListener("change", function (event) {
       soundEnabled = Boolean(event.target.checked);
       saveSoundPreference();
