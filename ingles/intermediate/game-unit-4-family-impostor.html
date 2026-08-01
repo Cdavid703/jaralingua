@@ -49,7 +49,7 @@
     .teacher-actions{grid-template-columns:1fr}
     .vocabulary-finish-box{display:grid;gap:.65rem;margin:.2rem 0;padding:.85rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
     .vocabulary-finish-box p{margin:0;color:var(--intermediate-muted);font-weight:800;line-height:1.45}
-    .vocab-button-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+    .vocab-button-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:.5rem}
     .vocab-unit-btn{border-radius:999px;padding:.62rem .7rem;text-align:center;text-decoration:none;background:#fff;color:var(--intermediate-navy);border:1px solid var(--intermediate-border);font-weight:900;cursor:pointer}
     .vocab-unit-btn:hover,.vocab-unit-btn.active{background:#eef5ff;color:#0f766e;border-color:#0f766e}
     .selected-deck-note{margin:.15rem 0 0!important;color:#0f766e!important;font-weight:900!important}
@@ -112,7 +112,7 @@
     .auth-gate p{margin:0 0 .8rem;color:var(--intermediate-muted);line-height:1.55;font-weight:800}
     body.student-only .game-layout{grid-template-columns:1fr}
     body.student-only .teacher-panel{display:none!important}
-    @media(max-width:1000px){.game-layout,.support-grid{grid-template-columns:1fr}.private-card,.vote-box{grid-template-columns:1fr}.private-card img,.vote-box img{height:280px;min-height:0}.join-row{grid-template-columns:1fr}}
+    @media(max-width:1000px){.game-layout,.support-grid{grid-template-columns:1fr}.private-card,.vote-box{grid-template-columns:1fr}.private-card img,.vote-box img{height:280px;min-height:0}.join-row{grid-template-columns:1fr}.vocab-button-grid{grid-template-columns:repeat(2,1fr)}}
     @media(max-width:560px){
       .english-intermediate-page{max-width:100%;overflow-x:hidden}
       .site-header .navbar{flex-direction:column;align-items:center;gap:.55rem;width:100%;max-width:100vw;padding:8px 10px;overflow:hidden;box-sizing:border-box}
@@ -152,8 +152,8 @@
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab - Vocabulary Speaking Game</p>
         <h1>The Vocabulary Impostor</h1>
-        <p>A live hidden-role conversation game. The teacher chooses Unit 2, Unit 3, or Unit 4 vocabulary. Most students receive one secret word or expression; the impostor receives no item and must infer it from the discussion.</p>
-        <div class="lesson-meta"><span>Units 2-4</span><span>Vocabulary</span><span>Hidden role</span><span>Live speaking</span></div>
+        <p>A live hidden-role conversation game. The teacher chooses Unit 2, Unit 3, Unit 4, or Unit 5 vocabulary. Most students receive one secret word or expression; the impostor receives no item and must infer it from the discussion.</p>
+        <div class="lesson-meta"><span>Units 2-5</span><span>Vocabulary</span><span>Hidden role</span><span>Live speaking</span></div>
         <div class="hero-actions"><a href="#game" class="btn btn-primary">Open game room</a><a href="practice-lab.html#unit-4-folder" class="btn btn-secondary">Back to Unit 4 folder</a></div>
       </div>
     </section>
@@ -186,6 +186,7 @@
                     <button class="vocab-unit-btn" type="button" data-vocab-deck="unit2">Unit 2 vocab</button>
                     <button class="vocab-unit-btn" type="button" data-vocab-deck="unit3">Unit 3 vocab</button>
                     <button class="vocab-unit-btn active" type="button" data-vocab-deck="unit4">Unit 4 vocab</button>
+                    <button class="vocab-unit-btn" type="button" data-vocab-deck="unit5">Unit 5 food</button>
                   </div>
                   <p class="selected-deck-note" id="selectedDeckNote">Selected: Unit 4 vocabulary</p>
                 </div>
@@ -214,13 +215,13 @@
 
       <section class="support-grid">
         <article class="support-card"><p class="topic-label">Rules</p><h3>Do not reveal the secret item</h3><ul><li>Ask and answer in English.</li><li>Use examples from the selected unit.</li><li>Do not say the exact word or expression.</li><li>Vote only when the teacher opens the phase.</li></ul></article>
-        <article class="support-card"><p class="topic-label">Decks</p><h3>Vocabulary in this game</h3><ul><li>Unit 2: hopes, dreams, experiences</li><li>Unit 3: wonders, records, measurements</li><li>Unit 4: family phrasal verbs and idioms</li></ul></article>
+        <article class="support-card"><p class="topic-label">Decks</p><h3>Vocabulary in this game</h3><ul><li>Unit 2: hopes, dreams, experiences</li><li>Unit 3: wonders, records, measurements</li><li>Unit 4: family phrasal verbs and idioms</li><li>Unit 5: food, quantities, containers, and made with/from</li></ul></article>
         <article class="support-card"><p class="topic-label">Speaking moves</p><h3>Useful discussion language</h3><ul><li>I think it is connected to...</li><li>In this unit, people usually...</li><li>Your answer sounds too general.</li><li>I suspect this person because...</li></ul></article>
       </section>
     </section>
   </main>
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
-  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260717-multiround-audit2"></script>
+  <script src="../../assets/js/english-intermediate-unit4-impostor.js?v=20260801-unit5-food-deck"></script>
   <script src="../../assets/js/jaralingua-back-button.js?v=20260717-language"></script>
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

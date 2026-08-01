@@ -6717,6 +6717,130 @@ INTERMEDIATE_UNIT3_IMPOSTOR_CARDS = [
 ]
 
 
+INTERMEDIATE_UNIT5_IMPOSTOR_CARDS = [
+    {
+        "id": "a-little",
+        "term": "a little",
+        "type": "Quantifier",
+        "category": "Unit 5 food quantities",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/market-basket-foods/oil.webp",
+        "brief": "A small amount of an uncountable food or liquid.",
+        "familyContext": "Someone adds a small amount of oil, sauce, rice, soup, water, or cheese to a recipe.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it with uncountable nouns when the amount is small but positive.",
+        "clues": ["small amount", "uncountable food", "not much", "recipe quantity"],
+        "taboo": ["little", "small", "amount", "uncountable"]
+    },
+    {
+        "id": "a-few",
+        "term": "a few",
+        "type": "Quantifier",
+        "category": "Unit 5 countable food",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/market-basket-foods/eggs.webp",
+        "brief": "A small number of countable items.",
+        "familyContext": "A student says the group needs a small number of eggs, apples, tomatoes, cupcakes, or avocados.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it with plural countable nouns when the number is small but enough.",
+        "clues": ["small number", "plural foods", "countable items", "more than one"],
+        "taboo": ["few", "number", "countable", "plural"]
+    },
+    {
+        "id": "much",
+        "term": "much",
+        "type": "Quantifier",
+        "category": "Unit 5 uncountable questions",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/market-basket-foods/rice.webp",
+        "brief": "A quantifier used mainly in questions and negative sentences with uncountable nouns.",
+        "familyContext": "A cooking team asks about rice, water, cheese, soup, oil, flour, or lemonade.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it to ask or say that there is not a large amount of an uncountable food.",
+        "clues": ["questions", "negative sentences", "uncountable food", "amount"],
+        "taboo": ["much", "many", "amount", "uncountable"]
+    },
+    {
+        "id": "many",
+        "term": "many",
+        "type": "Quantifier",
+        "category": "Unit 5 countable questions",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/market-basket-foods/tomatoes.webp",
+        "brief": "A quantifier used with plural countable nouns.",
+        "familyContext": "A shopping team asks about tomatoes, carrots, apples, eggs, portions, plates, or cans.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it when you can count the items one by one.",
+        "clues": ["plural items", "count one by one", "shopping list", "question quantity"],
+        "taboo": ["many", "much", "count", "plural"]
+    },
+    {
+        "id": "a-bowl-of",
+        "term": "a bowl of",
+        "type": "Partitive phrase",
+        "category": "Unit 5 containers and servings",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/restaurant-coach/butternut-squash-soup-v1.webp",
+        "brief": "A container or serving phrase used to make an uncountable food measurable.",
+        "familyContext": "A customer orders soup, rice, salad, noodles, or another food served inside a bowl.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it before food when the container or serving is what makes the quantity clear.",
+        "clues": ["container", "serving", "soup or rice", "one portion"],
+        "taboo": ["bowl", "container", "serving", "portion"]
+    },
+    {
+        "id": "a-can-of",
+        "term": "a can of",
+        "type": "Partitive phrase",
+        "category": "Unit 5 packaged food",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/market-basket-foods/cans-of-beans.webp",
+        "brief": "A package phrase used for food or drinks sold in metal containers.",
+        "familyContext": "A food-fair team buys beans, tomatoes, corn, tuna, soup, or soda in this type of package.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it to count packaged food even when the food inside is not counted directly.",
+        "clues": ["metal package", "beans or tomatoes", "supermarket item", "count the package"],
+        "taboo": ["can", "package", "metal", "beans"]
+    },
+    {
+        "id": "made-with",
+        "term": "made with",
+        "type": "Food structure",
+        "category": "Unit 5 ingredients",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/restaurant-coach/lemon-herb-salmon-wild-rice-v1.webp",
+        "brief": "Used to name ingredients included in a dish or product.",
+        "familyContext": "A student describes a dish prepared with salmon, rice, herbs, vegetables, cheese, or sauce.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it when the ingredient is part of the dish and may still be recognized.",
+        "clues": ["ingredients", "recipe", "dish contains", "prepared using"],
+        "taboo": ["made", "with", "ingredient", "recipe"]
+    },
+    {
+        "id": "made-from",
+        "term": "made from",
+        "type": "Food structure",
+        "category": "Unit 5 transformation",
+        "unit": "unit5",
+        "unitLabel": "Unit 5: food, quantities, and culture",
+        "image": "/assets/img/english-intermediate/unit-5/made-of-from-with-grammar-lab-v1.webp",
+        "brief": "Used when the original material or ingredient changes into a new product.",
+        "familyContext": "A student explains that cheese comes from milk, bread comes from flour, or juice comes from fruit.",
+        "contextLabel": "Unit 5 context",
+        "speakingHelp": "Use it when the source changes form and becomes something different.",
+        "clues": ["transformation", "source changes", "new product", "original ingredient"],
+        "taboo": ["made", "from", "change", "source"]
+    }
+]
+
+
 INTERMEDIATE_IMPOSTOR_DECKS = {
     "unit2": {
         "label": "Unit 2: wishes, hopes, dreams, and experiences",
@@ -6732,6 +6856,11 @@ INTERMEDIATE_IMPOSTOR_DECKS = {
         "label": "Unit 4: family phrasal verbs and idioms",
         "shortLabel": "Unit 4 vocabulary",
         "cards": INTERMEDIATE_UNIT4_IMPOSTOR_CARDS
+    },
+    "unit5": {
+        "label": "Unit 5: food, quantities, and culture",
+        "shortLabel": "Unit 5 vocabulary",
+        "cards": INTERMEDIATE_UNIT5_IMPOSTOR_CARDS
     }
 }
 

@@ -23,7 +23,8 @@
   var VOCAB_DECK_LABELS = {
     unit2: "Unit 2 vocabulary",
     unit3: "Unit 3 vocabulary",
-    unit4: "Unit 4 vocabulary"
+    unit4: "Unit 4 vocabulary",
+    unit5: "Unit 5 vocabulary"
   };
 
   var localState = loadLocalState();
