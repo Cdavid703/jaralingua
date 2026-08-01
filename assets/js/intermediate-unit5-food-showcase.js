@@ -4,7 +4,7 @@
   const audio = document.querySelector("[data-workshop-audio]");
   const dialogue = Array.from(document.querySelectorAll("[data-dialogue] [data-audio]"));
   const modelStatus = document.querySelector("[data-model-status]");
-  const storageKey = "jaralingua:intermediate:unit6:colombian-food-showcase:v1";
+  const storageKey = "jaralingua:intermediate:unit5:colombian-food-showcase:v1";
   let speed = 1;
   let playlistIndex = -1;
   let playingSequence = false;
@@ -140,3 +140,4 @@
   checks.forEach((check) => check.addEventListener("change", updateProgress));
   updateProgress();
 })();
+

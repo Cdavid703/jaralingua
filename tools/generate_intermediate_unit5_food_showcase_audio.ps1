@@ -6,7 +6,7 @@ param(
 $ErrorActionPreference = "Stop"
 $root = Split-Path -Parent $PSScriptRoot
 $envFile = Join-Path $root "elevenlabs.local.env"
-$audioRoot = Join-Path $root "ingles\intermediate\audio\unit-6-food-showcase"
+$audioRoot = Join-Path $root "ingles\intermediate\audio\unit-5-food-showcase"
 $scriptPath = Join-Path $audioRoot "scripts.md"
 $voiceIds = @{
   Emma = "XrExE9yKIg1WjnnlVkGX"
@@ -65,3 +65,4 @@ foreach ($item in $items) {
   Write-Output "CREATED $($item.FileName) voice=$($item.Voice)"
 }
 Write-Output "SUMMARY created=$created skipped=$skipped total=$($items.Count)"
+
