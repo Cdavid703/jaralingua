@@ -8,7 +8,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
 
-  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260801-course-search" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
 
@@ -433,6 +433,15 @@
       <div class="quick-access-header"><h2>Course units</h2><span>Course Overview</span></div>
       <details class="quick-access-dropdown"><summary>Choose a unit</summary><div class="quick-link-list"><a href="#unit-1"><b>01</b><span>The Way We Are</span></a><a href="#unit-2"><b>02</b><span>Wishes, Dreams and Experiences</span></a><a href="#unit-3"><b>03</b><span>Human and Natural Wonders</span></a><a href="#unit-4"><b>04</b><span>Family Problems and Memories</span></a><a href="#unit-5"><b>05</b><span>Food, Quantities and Culture</span></a><a href="#unit-6"><b>06</b><span>Future Plans and Advice</span></a><a href="notas.html"><b>07</b><span>Intermediate English Grades</span></a></div></details>
     </section>
+    <section class="course-search-panel" data-course-search-panel data-search-target="#intermediate-units" data-search-groups=".overview-unit-card, .final-assessment-panel" data-search-items=".overview-unit-card, .final-assessment-panel" data-search-group-items=".overview-resource-links a" aria-label="Search course units">
+      <label class="course-search-label" for="courseOverviewSearch">Search Course Overview</label>
+      <div class="course-search-row">
+        <input id="courseOverviewSearch" type="search" data-course-search-input placeholder="Search by unit, topic, grammar, skill, or activity..." autocomplete="off" />
+        <button class="course-search-clear" type="button" data-course-search-clear hidden>Clear</button>
+      </div>
+      <p class="course-search-meta"><span data-course-search-count></span><span>Try: unidad 4, food, future plans, listening, pronunciation.</span></p>
+    </section>
+    <p class="course-search-empty" data-course-search-empty hidden>No matching unit or evaluation was found.</p>
 
 
     <!-- COURSE INTRO -->
@@ -749,6 +758,7 @@
       const topics = Array.from(document.querySelectorAll(".overview-unit-card"));
       topics.forEach(function (topic) {
         topic.addEventListener("toggle", function () {
+          if (document.documentElement.classList.contains("course-search-active")) return;
           if (!topic.open) return;
           topics.forEach(function (otherTopic) {
             if (otherTopic !== topic) otherTopic.open = false;
@@ -760,6 +770,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260731-intermediate-nav-auth3"></script>
+  <script src="../../assets/js/course-search.js?v=20260801-course-search"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

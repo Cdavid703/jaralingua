@@ -8,7 +8,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
 
-  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260801-course-search" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css" />
   <style>
     .practice-skill-tag {
@@ -90,6 +90,15 @@
         </div>
       </details>
     </section>
+    <section class="course-search-panel" data-course-search-panel data-search-target="#practice-sections" data-search-groups=".practice-unit-folder" data-search-items=".course-section-card" data-search-group-items=".course-section-card" aria-label="Search practice activities">
+      <label class="course-search-label" for="practiceLabSearch">Search Practice Lab</label>
+      <div class="course-search-row">
+        <input id="practiceLabSearch" type="search" data-course-search-input placeholder="Search by unit, activity, topic, grammar, listening, reading, pronunciation..." autocomplete="off" />
+        <button class="course-search-clear" type="button" data-course-search-clear hidden>Clear</button>
+      </div>
+      <p class="course-search-meta"><span data-course-search-count></span><span>Try: Unit 6, quantifiers, Memory Box, restaurant, pronunciation.</span></p>
+    </section>
+    <p class="course-search-empty" data-course-search-empty hidden>No matching activity was found.</p>
 
     <section class="basic-intro-section">
       <div class="section-heading">
@@ -353,6 +362,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260731-intermediate-nav-auth3"></script>
+  <script src="../../assets/js/course-search.js?v=20260801-course-search"></script>
   <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
 </body>
 </html>

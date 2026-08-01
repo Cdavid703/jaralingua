@@ -7,7 +7,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
   <link rel="stylesheet" href="assets/vendor/bootstrap-icons/bootstrap-icons.css" />
-  <link rel="stylesheet" href="assets/css/style.css?v=20260713-home-platform-6" />
+  <link rel="stylesheet" href="assets/css/style.css?v=20260801-course-search" />
 </head>
 <body class="home-page">
   <div class="global-course-switcher" aria-label="Cursos"><details><summary><span>Cursos</span></summary><nav><a href="./index.html">Inicio</a><a href="./frances/index.html">Francés</a><a href="./frances/Niveau%208/index.html">Francés Niveau 8</a><a href="./frances/Niveau%207/index.html">Francés Niveau 7</a><a href="./ingles/index.html">Inglés</a><a href="./ingles/basico/index.html">Inglés básico</a><a href="./ingles/intermediate/index.html">Inglés intermedio</a></nav></details></div>
@@ -67,6 +67,15 @@
       <div class="quick-access-header"><h2>Acceso rápido</h2><span>Rutas principales</span></div>
       <details class="quick-access-dropdown"><summary>Ver acceso rápido</summary><div class="quick-link-list"><a href="frances/index.html"><b>01</b><span>Francés</span></a><a href="ingles/index.html"><b>02</b><span>Inglés</span></a><a href="frances/Niveau%208/index.html"><b>03</b><span>Francés Niveau 8</span></a><a href="frances/Niveau%207/index.html"><b>04</b><span>Francés Niveau 7</span></a><a href="ingles/basico/index.html"><b>05</b><span>Inglés básico</span></a><a href="ingles/intermediate/index.html"><b>06</b><span>Inglés intermedio</span></a></div></details>
     </section>
+    <section class="course-search-panel" data-course-search-panel data-search-target="#homeRoutes" data-search-items=".route-card" aria-label="Buscar rutas principales">
+      <label class="course-search-label" for="homeRouteSearch">Buscar una ruta</label>
+      <div class="course-search-row">
+        <input id="homeRouteSearch" type="search" data-course-search-input placeholder="Busca ingles intermedio, unidad 5, frances, notas, pronunciacion..." autocomplete="off" />
+        <button class="course-search-clear" type="button" data-course-search-clear hidden>Limpiar</button>
+      </div>
+      <p class="course-search-meta"><span data-course-search-count></span><span>Prueba: ingles intermedio, unit 5, frances 8, pronunciacion.</span></p>
+    </section>
+    <p class="course-search-empty" data-course-search-empty hidden>No se encontro una ruta relacionada.</p>
 
     <section class="ecosystem-counter-section" aria-label="Dimensión del ecosistema JaraLingua">
       <div class="counter-strip">
@@ -218,32 +227,32 @@
         </p>
       </div>
 
-      <div class="route-grid">
-        <a class="route-card route-featured" href="frances/Niveau%208/index.html">
+      <div class="route-grid" id="homeRoutes">
+        <a class="route-card route-featured" href="frances/Niveau%208/index.html" data-search-keywords="frances niveau 8 avanzado b2 notas pronunciacion quizzes proyectos">
           <img src="frances/Niveau 8/img/themes/regrets-reproches-bilans-hero.png" alt="Francés Niveau 8" />
           <span>Francés avanzado</span>
           <h3>Niveau 8</h3>
           <p>B2, ciudad inteligente, pronunciación, quizzes, proyectos y notas.</p>
         </a>
-        <a class="route-card" href="frances/Niveau%207/index.html">
+        <a class="route-card" href="frances/Niveau%207/index.html" data-search-keywords="frances niveau 7 b1 argumentacion relatos cultura lecturas evaluacion">
           <img src="frances/Niveau 7/img/imagen-principal-index.jpg" alt="Francés Niveau 7" />
           <span>Francés B1+</span>
           <h3>Niveau 7</h3>
           <p>Argumentación, relatos, cultura, lecturas y preparación evaluativa.</p>
         </a>
-        <a class="route-card" href="frances/index.html">
+        <a class="route-card" href="frances/index.html" data-search-keywords="frances cursos niveles 1 2 7 8 rutas">
           <img src="frances/Niveau 7/img/themes-du-cours.jpg" alt="Portal de francés" />
           <span>Francés</span>
           <h3>Niveles 1, 2, 7 y 8</h3>
           <p>Una ruta en crecimiento para acompañar desde bases hasta B2.</p>
         </a>
-        <a class="route-card" href="ingles/basico/index.html">
+        <a class="route-card" href="ingles/basico/index.html" data-search-keywords="ingles basico basic course 1 unidad 1 unidad 2 unidad 3 unidad 4 unidad 5 unidad 6 listening reading pronunciation grammar">
           <img src="assets/img/english-basic/course-overview/unit-6-neighborhoods-banner.png" alt="Inglés básico" />
           <span>English Basic</span>
           <h3>Primer ciclo</h3>
           <p>Vocabulario, escucha, lectura, pronunciación y práctica guiada.</p>
         </a>
-        <a class="route-card" href="ingles/intermediate/index.html">
+        <a class="route-card" href="ingles/intermediate/index.html" data-search-keywords="ingles intermedio intermediate unit 1 unidad 1 unit 2 unidad 2 unit 3 unidad 3 unit 4 unidad 4 unit 5 unidad 5 food quantities unit 6 unidad 6 future plans advice practice lab course overview games grades notas">
           <img src="assets/img/english-basic/integrated-task/real-integrated-task-v1.png" alt="Inglés intermedio" />
           <span>English Intermediate</span>
           <h3>Producción y fluidez</h3>
@@ -368,5 +377,6 @@
   <script src="./assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="./assets/js/google-auth.js"></script>
+  <script src="./assets/js/course-search.js?v=20260801-course-search"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
-  <link rel="stylesheet" href="../assets/css/style.css?v=20260724-basic-2-index" />
+  <link rel="stylesheet" href="../assets/css/style.css?v=20260801-course-search" />
 </head>
 <body>
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../index.html">Home</a><a href="../frances/index.html">French</a><a href="../frances/Niveau%207/index.html">French Level 7</a><a href="./index.html">English</a><a href="./basico/index.html">Basic English Course 1</a><a href="./basico-2/index.html">Basic English Course 2</a><a href="./intermediate/index.html">Intermediate English</a></nav></details></div>
@@ -49,6 +49,15 @@
       <div class="quick-access-header"><h2>English quick access</h2><span>Levels</span></div>
       <details class="quick-access-dropdown"><summary>Show English quick access</summary><div class="quick-link-list"><a href="basico/index.html"><b>01</b><span>Basic English Course 1</span></a><a href="basico-2/index.html"><b>02</b><span>Basic English Course 2</span></a><a href="intermediate/index.html"><b>03</b><span>Intermediate English</span></a><a href="basico/course-overview.html"><b>04</b><span>Basic Course 1 Overview</span></a><a href="basico/practice-lab.html"><b>05</b><span>Basic Course 1 Practice Lab</span></a><a href="intermediate/course-overview.html"><b>06</b><span>Intermediate Overview</span></a><a href="intermediate/practice-lab.html"><b>07</b><span>Intermediate Practice Lab</span></a></div></details>
     </section>
+    <section class="course-search-panel" data-course-search-panel data-search-target="#programs" data-search-items=".english-program-card" aria-label="Search English levels">
+      <label class="course-search-label" for="englishHomeSearch">Search English levels</label>
+      <div class="course-search-row">
+        <input id="englishHomeSearch" type="search" data-course-search-input placeholder="Search basic, intermediate, practice, course overview, food, future plans..." autocomplete="off" />
+        <button class="course-search-clear" type="button" data-course-search-clear hidden>Clear</button>
+      </div>
+      <p class="course-search-meta"><span data-course-search-count></span><span>Try: intermediate, unit 5, pronunciation, basic 2.</span></p>
+    </section>
+    <p class="course-search-empty" data-course-search-empty hidden>No matching English level was found.</p>
 
 
     <section class="english-program-section" id="programs">
@@ -62,7 +71,7 @@
       </div>
 
       <div class="english-program-grid has-three-levels">
-        <article class="english-program-card">
+        <article class="english-program-card" data-search-keywords="basic 1 basico course overview practice lab unit 1 unit 2 unit 3 unit 4 unit 5 unit 6 pronunciation listening reading grammar">
           <div class="english-program-image">
             <img src="../assets/img/english-basic/basic-course-banner.jpg" alt="Basic English Course 1" />
           </div>
@@ -82,7 +91,7 @@
           </div>
         </article>
 
-        <article class="english-program-card">
+        <article class="english-program-card" data-search-keywords="basic 2 basico dos weather shopping travel past memories food pronunciation practice lab course overview">
           <div class="english-program-image">
             <img src="../assets/img/english-basic-2/basic-course-2-banner.webp" alt="Basic English Course 2" />
           </div>
@@ -102,7 +111,7 @@
           </div>
         </article>
 
-        <article class="english-program-card">
+        <article class="english-program-card" data-search-keywords="intermediate intermedio course overview practice lab unit 1 unidad 1 personality unit 2 unidad 2 dreams unit 3 unidad 3 wonders unit 4 unidad 4 family memories unit 5 unidad 5 food quantities unit 6 unidad 6 future plans advice games grades evaluations">
           <div class="english-program-image">
             <img src="../assets/img/english-intermediate/unit-1-stereotypes-behavior.jpg" alt="Intermediate English course" />
           </div>
@@ -160,5 +169,6 @@
   <script src="../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../assets/js/google-auth.js"></script>
+  <script src="../assets/js/course-search.js?v=20260801-course-search"></script>
 </body>
 </html>

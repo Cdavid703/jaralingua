@@ -8,7 +8,7 @@
   <link rel="icon" href="/favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
 
-  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260801-course-search" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css?v=20260729-index-card-buttons" />
 </head>
 <body class="english-intermediate-page intermediate-index-page">
@@ -57,6 +57,15 @@
       <div class="quick-access-header"><h2>Intermediate menu</h2><span>Sections</span></div>
       <details class="quick-access-dropdown"><summary>Show intermediate menu</summary><div class="quick-link-list"><a href="course-overview.html"><b>01</b><span>Course Overview</span></a><a href="practice-lab.html"><b>02</b><span>Practice Lab</span></a><a href="games.html"><b>03</b><span>Games</span></a><a href="listening-library.html"><b>04</b><span>Listening Library</span></a><a href="idioms.html"><b>05</b><span>Idioms</span></a><a href="../basico/phonetic-rules.html"><b>06</b><span>Phonetic Rules</span></a><a href="english-learning-links.html"><b>07</b><span>Free English Links</span></a><a href="notas.html"><b>08</b><span>Grades</span></a><a href="evaluations.html"><b>09</b><span>Evaluations and Mock Exams</span></a><a href="the-way-we-are.html"><b>10</b><span>The Way We Are</span></a><a href="superhero-vs-supervillain.html"><b>11</b><span>Superhero Activity</span></a><a href="unit-4-family-problems-memories.html"><b>12</b><span>Unit 4 Family Memories</span></a></div></details>
     </section>
+    <section class="course-search-panel" data-course-search-panel data-search-target="#course-sections" data-search-items=".course-section-card" aria-label="Search intermediate sections">
+      <label class="course-search-label" for="intermediateHomeSearch">Search Intermediate English</label>
+      <div class="course-search-row">
+        <input id="intermediateHomeSearch" type="search" data-course-search-input placeholder="Search by unit, topic, skill, activity, or section..." autocomplete="off" />
+        <button class="course-search-clear" type="button" data-course-search-clear hidden>Clear</button>
+      </div>
+      <p class="course-search-meta"><span data-course-search-count></span><span>Try: Unit 5, food, pronunciation, grades, games.</span></p>
+    </section>
+    <p class="course-search-empty" data-course-search-empty hidden>No matching section was found.</p>
 
 
     <!-- COURSE INTRO -->
@@ -74,7 +83,7 @@
     <!-- COURSE SECTIONS -->
     <section class="course-dashboard" id="course-sections">
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="unit 1 unidad 1 personality stereotypes behavior unit 2 unidad 2 wishes hopes dreams experiences unit 3 unidad 3 wonders records unit 4 unidad 4 family memories unit 5 unidad 5 food quantities culture unit 6 unidad 6 future plans advice">
         <div class="course-section-image">
           <img src="../../assets/img/english-basic/course-overview-banner.jpg" alt="Course Overview" />
         </div>
@@ -94,7 +103,7 @@
         </div>
       </article>
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="unit 1 unidad 1 grammar listening reading pronunciation unit 2 unidad 2 unit 3 unidad 3 unit 4 unidad 4 impostor unit 5 unidad 5 food games unit 6 unidad 6 practice activities">
         <div class="course-section-image">
           <img src="../../assets/img/english-basic/practice-lab-banner.jpg" alt="Practice Lab" />
         </div>
@@ -114,7 +123,7 @@
         </div>
       </article>
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="games juego juegos vocabulary impostor guess who adivina quien hangman ahorcado unit 4 unidad 4 unit 5 unidad 5 food">
         <div class="course-section-image">
           <img src="../../assets/img/english-basic/practice-lab/guess-who-game-banner.png" alt="Intermediate English classroom games" />
         </div>
@@ -129,7 +138,7 @@
         </div>
       </article>
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="listening audio library biblioteca escucha unit 3 unidad 3 unit 4 unidad 4 unit 5 unidad 5 unit 6 unidad 6">
         <div class="course-section-image">
           <img src="../../assets/img/english-intermediate/listening-library/intermediate-listening-library-hero.png" alt="Listening Library" />
         </div>
@@ -144,7 +153,7 @@
         </div>
       </article>
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="idioms phrasal verbs expressions expresiones unit 4 unidad 4 unit 6 unidad 6">
         <div class="course-section-image">
           <img src="../../assets/img/english-basic/idioms-banner.jpg" alt="Speak Like a Local: Intermediate Idioms" />
         </div>
@@ -164,7 +173,7 @@
         </div>
       </article>
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="pronunciation phonetic sounds audio mic microphone pronunciation rules">
         <div class="course-section-image">
           <img src="../../assets/img/english-basic/phonetics-english-hero.png" alt="Phonetic Rules: Mastering English Sounds" />
         </div>
@@ -184,7 +193,7 @@
       </article>
 
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="resources links dictionary listening grammar pronunciation autonomous study">
         <div class="course-section-image">
           <img src="../../assets/img/english-basic/english-learning-resources-banner.png" alt="Free English Learning Links" />
         </div>
@@ -200,7 +209,7 @@
         </div>
       </article>
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="grades notas gradebook teacher student report scores promedio">
         <div class="course-section-image">
           <img src="../../assets/img/english-basic/course-overview-banner.jpg" alt="Intermediate English Grades" />
         </div>
@@ -216,7 +225,7 @@
         </div>
       </article>
 
-      <article class="course-section-card">
+      <article class="course-section-card" data-search-keywords="evaluations exams mock integrated task final oral final writing unit 5 unidad 5 unit 6 unidad 6">
         <div class="course-section-image">
           <img src="../../assets/img/english-intermediate/integrated-task/integrated-task-real-global-food.webp" alt="Intermediate English evaluations and mock exams" />
         </div>
@@ -238,6 +247,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260731-intermediate-nav-auth3"></script>
+  <script src="../../assets/js/course-search.js?v=20260801-course-search"></script>
   <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
 </body>
 </html>

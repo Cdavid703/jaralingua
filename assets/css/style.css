@@ -3944,6 +3944,114 @@ a {
   font-size: 0.82rem;
 }
 
+.course-search-panel {
+  width: min(1180px, calc(100% - 48px));
+  margin: 28px auto 0;
+  padding: 18px;
+  border: 1px solid rgba(18, 59, 143, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.09);
+}
+
+.quick-access-panel.compact + .course-search-panel {
+  margin-top: 18px;
+}
+
+.course-search-label {
+  display: block;
+  color: var(--blue-dark);
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
+.course-search-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+}
+
+.course-search-row input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(18, 59, 143, 0.16);
+  border-radius: 999px;
+  padding: 0 18px;
+  color: var(--blue-dark);
+  background: #f8fbff;
+  font: inherit;
+  font-weight: 800;
+}
+
+.course-search-row input:focus {
+  outline: 3px solid rgba(37, 99, 235, 0.18);
+  border-color: #2563eb;
+  background: var(--white);
+}
+
+.course-search-clear {
+  min-height: 44px;
+  border: 1px solid rgba(18, 59, 143, 0.16);
+  border-radius: 999px;
+  padding: 0 16px;
+  background: #eef4ff;
+  color: var(--blue-dark);
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.course-search-clear:hover,
+.course-search-clear:focus-visible {
+  background: #dceaff;
+}
+
+.course-search-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 12px 0 0;
+  color: #52657d;
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
+.course-search-empty {
+  width: min(1180px, calc(100% - 48px));
+  margin: 16px auto 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: #fff7ed;
+  color: #7c2d12;
+  font-weight: 900;
+}
+
+.search-hidden {
+  display: none !important;
+}
+
+@media (max-width: 560px) {
+  .course-search-panel,
+  .course-search-empty {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .course-search-panel {
+    margin-top: 16px;
+    padding: 14px;
+  }
+
+  .course-search-row {
+    grid-template-columns: 1fr;
+  }
+
+  .course-search-clear {
+    width: 100%;
+  }
+}
+
 .activity-steps {
   display: grid;
   gap: 14px;
