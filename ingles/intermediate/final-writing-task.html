@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="Official Intermediate Course 1 Final Writing Task with teacher activation, autosave, protected review, and gradebook delivery." />
+  <title>INTERMEDIATE COURSE 1 - FINAL WRITING TASK (20%) | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate.css?v=20260731-final-writing-v1" />
+  <link rel="stylesheet" href="../../assets/css/basic-final-writing-task.css?v=20260731-final-writing-shared-v1" />
+  <link rel="stylesheet" href="../../assets/css/intermediate-final-writing-task.css?v=20260731-final-writing-v1" />
+</head>
+<body class="english-intermediate-page final-writing-page intermediate-final-writing-page" data-exam-code="intermediate-course-1-final-writing-task">
+  <div class="institutional-band writing-institutional-band">
+    <img src="../../assets/img/english-basic/institutional/itm-integrated-task-header.jpg" width="1123" height="154" alt="ITM Institucion Universitaria, 80 anos, Hacia una era de Universidad y Humanidad" />
+  </div>
+
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="../basico-2/index.html">Basic English Course 2</a>
+        <a href="./index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar" aria-label="Main navigation">
+      <a href="../../index.html" class="logo"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Intermediate Course</a></li>
+        <li><a href="evaluations.html">Evaluations</a></li>
+        <li><a href="notas.html">Grades</a></li>
+      </ul>
+      <div class="exam-auth-slot" data-auth-nav-slot></div>
+    </nav>
+  </header>
+
+  <main id="finalWritingApp">
+    <section class="writing-hero">
+      <div class="writing-hero-copy">
+        <span class="writing-pill"><i class="bi bi-shield-lock-fill"></i> Official assessment</span>
+        <p class="writing-kicker">INTERMEDIATE COURSE 1</p>
+        <h1>FINAL WRITING TASK (20%)</h1>
+        <p>Write an Internet publication for the ITM community about two Colombian traditional dishes. Your work is protected with server and local autosave before it is sent to the teacher.</p>
+        <div class="writing-hero-actions">
+          <a class="writing-button secondary" href="evaluations.html"><i class="bi bi-arrow-left"></i> Evaluations</a>
+          <button class="writing-button primary" type="button" data-scroll-access><i class="bi bi-fingerprint"></i> Verify access</button>
+        </div>
+      </div>
+      <figure class="writing-hero-image">
+        <img src="../../assets/img/english-intermediate/final-writing-task/master-chef-colombian-table-v1.webp" width="1672" height="941" alt="Professional presentation of Colombian traditional dishes from different regions" />
+      </figure>
+    </section>
+
+    <section class="writing-shell access-shell" id="accessPanel" aria-labelledby="accessTitle">
+      <div class="access-card">
+        <div class="access-icon"><i class="bi bi-fingerprint"></i></div>
+        <div>
+          <p class="writing-kicker">Secure access</p>
+          <h2 id="accessTitle">Verify your exam access</h2>
+          <p id="accessStatus">Sign in with the Google, Microsoft, or course account linked to Intermediate English. The teacher must activate the official exam before students can begin.</p>
+          <div class="account-chip" id="accountChip" hidden>
+            <span id="accountAvatar">ST</span>
+            <div><strong id="accountName">Verified student</strong><small id="accountEmail">Verified account</small></div>
+          </div>
+          <div class="writing-button-row">
+            <button class="writing-button primary" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Sign in</button>
+            <button class="writing-button secondary" type="button" id="checkAccessButton"><i class="bi bi-arrow-clockwise"></i> Check availability</button>
+            <button class="writing-button danger ghost" type="button" id="resetLoginButton"><i class="bi bi-box-arrow-right"></i> Reset login</button>
+          </div>
+          <div class="claim-panel" id="claimPanel" hidden>
+            <label><span>Document number / registered ID</span><input id="claimStudentId" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter your document number" /></label>
+            <button class="writing-button secondary" type="button" id="claimButton"><i class="bi bi-person-vcard"></i> Link account by ID</button>
+          </div>
+          <p class="access-message neutral" id="accessMessage" role="status" aria-live="polite"><i class="bi bi-info-circle"></i><span>Waiting for login.</span></p>
+          <div id="loginMount" data-login-mount></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="writing-shell admin-panel" id="adminPanel" hidden aria-labelledby="adminTitle">
+      <div class="section-heading">
+        <div>
+          <p class="writing-kicker">Teacher control room</p>
+          <h2 id="adminTitle">Final Writing Task administration</h2>
+          <p>Activate the exam, monitor saved attempts, review submissions, and publish the official 20% grade.</p>
+        </div>
+        <span class="state-badge locked" id="adminStateBadge"><i class="bi bi-lock-fill"></i> Locked</span>
+      </div>
+      <div class="admin-grid">
+        <button class="writing-button success" type="button" id="activateWritingButton"><i class="bi bi-unlock-fill"></i> Activate exam</button>
+        <button class="writing-button danger" type="button" id="closeWritingButton"><i class="bi bi-lock-fill"></i> Close exam</button>
+        <button class="writing-button primary" type="button" id="previewWritingButton"><i class="bi bi-eye-fill"></i> Preview exam</button>
+        <button class="writing-button secondary" type="button" id="refreshReviewButton"><i class="bi bi-arrow-clockwise"></i> Refresh monitor</button>
+      </div>
+      <p class="admin-feedback" id="adminFeedback" role="status" aria-live="polite">No administrative action is pending.</p>
+      <div id="reviewPanel"></div>
+    </section>
+
+    <section class="writing-shell readiness-panel" id="readinessPanel" hidden aria-labelledby="readyTitle">
+      <div class="section-heading">
+        <div>
+          <p class="writing-kicker">Before you begin</p>
+          <h2 id="readyTitle">Final check</h2>
+          <p>Once you begin, the 50-minute timer is linked to your server attempt. Reloading the page will not erase your saved publication.</p>
+        </div>
+        <span class="timer-badge"><i class="bi bi-clock-history"></i> 50 minutes</span>
+      </div>
+      <div class="readiness-grid">
+        <article><strong>1. Keep this account</strong><span>Return with the same account if you need to reload or reconnect.</span></article>
+        <article><strong>2. Write your own publication</strong><span>Use your Intermediate Course 1 English and your own ideas.</span></article>
+        <article><strong>3. Wait for the receipt</strong><span>Your exam is delivered only when the submission receipt appears.</span></article>
+      </div>
+      <div class="pre-exam-identity" aria-label="Verified student information">
+        <label><span>Name</span><input id="readyStudentName" readonly /></label>
+        <label><span>ID</span><input id="readyStudentId" readonly /></label>
+        <label><span>Date</span><input id="readyExamDate" readonly /></label>
+      </div>
+      <label class="integrity-check"><input id="integrityCheck" type="checkbox" /><span>I understand this is an official writing exam and I will submit my own work.</span></label>
+      <div class="writing-button-row">
+        <button class="writing-button primary large" type="button" id="beginButton" disabled><i class="bi bi-play-fill"></i> Begin final writing task</button>
+      </div>
+    </section>
+
+    <section class="writing-shell exam-panel" id="examPanel" hidden aria-labelledby="examTitle">
+      <div class="exam-topbar">
+        <div><p class="writing-kicker">Official Internet publication</p><h2 id="examTitle">INTERMEDIATE COURSE 1 - FINAL WRITING TASK (20%)</h2></div>
+        <div class="writing-button-row">
+          <button class="writing-button secondary" type="button" id="backToAdminButton" hidden><i class="bi bi-arrow-left"></i> Back to admin</button>
+          <div class="timer-card" id="timerCard"><span>Time left</span><strong id="timerDisplay">50:00</strong></div>
+        </div>
+      </div>
+
+      <form id="writingForm">
+        <section class="institutional-paper">
+          <div class="paper-title">
+            <h3>INTERMEDIATE COURSE 1 - FINAL WRITING TASK (20%)</h3>
+            <p>"Master Chef"</p>
+          </div>
+          <div class="identity-grid">
+            <label><span>Name</span><input id="studentName" readonly /></label>
+            <label><span>ID</span><input id="studentId" readonly /></label>
+            <label><span>Course code</span><input id="courseCode" value="INTERMEDIATE-C1" maxlength="40" /></label>
+            <label><span>Date</span><input id="examDate" readonly /></label>
+          </div>
+          <div class="task-meta">
+            <p><strong>TYPE OF TASK:</strong> Internet Publication</p>
+            <p><strong>AUDIENCE:</strong> ITM Community</p>
+            <p><strong>PURPOSE:</strong> to share information related to Colombian traditional dishes</p>
+          </div>
+          <p class="prompt"><strong>PROMPT:</strong> Next month, the ITM and the Language Center are celebrating the international "Master Chef" Colombia. Because of this celebration, they have decided to invite the ITM community to participate in a cooking competition to select the best representatives of the ITM for "Master Chef." However, before they can decide who will participate in the selection process, they have decided to first test how much those potential competitors know about Colombian traditional food and its cooking methods.</p>
+          <div class="instructions">
+            <strong>INSTRUCTIONS: In your text, you must:</strong>
+            <ol type="a">
+              <li>Begin with an engaging introduction that presents the topic of Colombian traditional food.</li>
+              <li>Describe two Colombian traditional dishes, including their region of origin and importance for the region.</li>
+              <li>Provide information about their main ingredients, quantities, and nutritional value.</li>
+              <li>Write the recipes clearly and in an organized way.</li>
+              <li>Write a 170-word text.</li>
+              <li>Spend 50 minutes on this task.</li>
+            </ol>
+          </div>
+
+          <details class="orientation-guide">
+            <summary><i class="bi bi-lightbulb-fill"></i> How can I begin?</summary>
+            <div class="orientation-layout">
+              <img src="../../assets/img/english-intermediate/final-writing-task/recipe-writing-orientation-v1.webp" width="1536" height="1024" alt="Adult learner measuring ingredients while preparing notes for a traditional recipe" />
+              <div>
+                <p class="orientation-label">Opening example</p>
+                <blockquote>Traditional Colombian dishes are more than meals: they represent the history, geography, and traditions of different regions. In this publication, I will present two dishes that show how Colombian communities transform local ingredients into meaningful recipes.</blockquote>
+                <p>This opening presents the general topic, connects food with culture, and announces the two-dish focus. Continue with your own dishes, evidence, and organization.</p>
+                <div class="weak-opening"><strong>Avoid a very general opening:</strong> "Colombia has many traditional dishes. They are delicious and popular."</div>
+              </div>
+            </div>
+          </details>
+
+          <div class="publication-body-card">
+            <label for="publicationBody">Write your Internet publication here</label>
+            <textarea id="publicationBody" rows="20" spellcheck="true" autocomplete="off" aria-describedby="wordAdvice"></textarea>
+          </div>
+        </section>
+
+        <aside class="writing-tools">
+          <div class="tool-card">
+            <span>Words</span>
+            <strong id="wordCounter">0</strong>
+            <small id="wordAdvice">Target: around 170 words. This is guidance and never blocks delivery.</small>
+          </div>
+          <div class="tool-card">
+            <span>Save status</span>
+            <strong id="saveStatus">Not saved yet</strong>
+            <small>Server autosave and a local emergency copy protect your publication.</small>
+          </div>
+          <button class="writing-button primary full teacher-submit" type="submit" id="submitButton"><i class="bi bi-send-check-fill"></i> Send to Teacher</button>
+          <p class="submit-status" id="submitStatus" role="status" aria-live="polite">The button remains available throughout the exam.</p>
+        </aside>
+      </form>
+    </section>
+
+    <section class="writing-shell submitted-panel" id="submittedPanel" hidden aria-labelledby="submittedTitle">
+      <div class="section-heading">
+        <div>
+          <p class="writing-kicker">Submission receipt</p>
+          <h2 id="submittedTitle">Your exam was sent to the teacher</h2>
+          <p id="submittedSummary">Submitted - pending teacher review.</p>
+        </div>
+        <span class="state-badge open"><i class="bi bi-check-circle-fill"></i> Submitted</span>
+      </div>
+      <div id="submittedContent"></div>
+    </section>
+  </main>
+
+  <div class="institutional-footer writing-institutional-footer">
+    <img src="../../assets/img/english-basic/institutional/itm-integrated-task-footer.jpg" width="1123" height="135" alt="ITM institutional contact information and Alcaldia de Medellin" />
+  </div>
+
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260731-intermediate-nav-auth3"></script>
+  <script src="../../assets/js/intermediate-final-writing-task.js?v=20260731-final-writing-v1"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>

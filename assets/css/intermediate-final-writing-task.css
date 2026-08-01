@@ -1,0 +1,280 @@
+:root {
+  --ifw-navy: #082243;
+  --ifw-teal: #087f7a;
+  --ifw-coral: #c34e43;
+  --ifw-gold: #d8a62e;
+  --ifw-green: #18784d;
+}
+
+.intermediate-final-writing-page {
+  background: #f4f7f9;
+}
+
+.intermediate-final-writing-page .writing-hero {
+  grid-template-columns: minmax(0, 47%) minmax(420px, 53%);
+  padding: 0;
+  border-radius: 8px;
+}
+
+.intermediate-final-writing-page .writing-hero-copy {
+  padding: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.intermediate-final-writing-page .writing-hero-image {
+  min-height: 500px;
+  border-radius: 0;
+}
+
+.intermediate-final-writing-page .writing-hero-image img {
+  object-position: 72% center;
+}
+
+.intermediate-final-writing-page .writing-shell {
+  border-radius: 8px;
+}
+
+.intermediate-final-writing-page .writing-button,
+.intermediate-final-writing-page .state-badge,
+.intermediate-final-writing-page .timer-badge,
+.intermediate-final-writing-page .writing-pill {
+  border-radius: 8px;
+}
+
+.intermediate-final-writing-page .writing-button.primary {
+  background: var(--ifw-navy);
+}
+
+.intermediate-final-writing-page .exam-auth-slot {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  margin-left: auto;
+}
+
+.intermediate-final-writing-page .teacher-submit {
+  min-height: 58px;
+  background: var(--ifw-green);
+  font-size: 1.05rem;
+  box-shadow: 0 14px 28px rgba(24, 120, 77, .2);
+}
+
+.intermediate-final-writing-page .teacher-submit:not(:disabled):hover {
+  transform: translateY(-1px);
+}
+
+.intermediate-final-writing-page .institutional-paper {
+  min-width: 0;
+}
+
+.orientation-guide {
+  margin: 1.25rem 0;
+  border: 1px solid #b9ccd8;
+  background: #f4faf9;
+}
+
+.orientation-guide summary {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: 1rem;
+  color: var(--ifw-navy);
+  font-family: Inter, system-ui, sans-serif;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.orientation-guide summary::marker {
+  color: var(--ifw-teal);
+}
+
+.orientation-guide[open] summary {
+  border-bottom: 1px solid #b9ccd8;
+}
+
+.orientation-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 38%) minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1rem;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.orientation-layout img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 330px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.orientation-label {
+  margin: 0 0 .45rem;
+  color: var(--ifw-teal);
+  font-size: .78rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.orientation-layout blockquote {
+  margin: 0 0 .8rem;
+  padding: .9rem 1rem;
+  border-left: 5px solid var(--ifw-gold);
+  background: #fff;
+  color: var(--ifw-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.04rem;
+  line-height: 1.55;
+}
+
+.orientation-layout p,
+.weak-opening {
+  color: #46596b;
+  line-height: 1.55;
+}
+
+.weak-opening {
+  padding: .8rem;
+  border: 1px solid #efc5bf;
+  background: #fff4f2;
+}
+
+.publication-body-card {
+  border: 1px solid #111;
+  margin-top: 1rem;
+  padding: .8rem;
+}
+
+.publication-body-card label {
+  font-family: Inter, system-ui, sans-serif;
+  color: #334155;
+  font-size: .85rem;
+}
+
+.publication-body-card textarea {
+  min-height: 620px;
+  border: 0;
+  border-radius: 0;
+  padding: .35rem .1rem;
+  background: repeating-linear-gradient(#fff, #fff 31px, #cbd5e1 32px);
+  color: #111;
+  font-family: "Times New Roman", serif;
+  font-size: 1.08rem;
+  line-height: 32px;
+}
+
+.submission-confirmation {
+  padding: 1rem;
+  border: 2px solid #8fd2ae;
+  background: #eefaf3;
+  color: #125d3c;
+  font-weight: 800;
+}
+
+.review-tabs {
+  display: flex;
+  gap: .5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding-bottom: .2rem;
+}
+
+.review-tab {
+  flex: 0 0 auto;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: .65rem .85rem;
+  background: #fff;
+  color: var(--ifw-navy);
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.review-tab[aria-selected="true"] {
+  border-color: var(--ifw-navy);
+  background: var(--ifw-navy);
+  color: #fff;
+}
+
+.review-pane[hidden] {
+  display: none;
+}
+
+.intermediate-final-writing-page .review-card .rubric-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.rubric-descriptor {
+  display: block;
+  min-height: 5.8em;
+  margin: .3rem 0 .65rem;
+  color: #526579;
+  font-size: .82rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 980px) {
+  .intermediate-final-writing-page .writing-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .intermediate-final-writing-page .writing-hero-image {
+    min-height: 360px;
+  }
+
+  .orientation-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .orientation-layout img {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 720px) {
+  .intermediate-final-writing-page .writing-hero {
+    width: 100%;
+    margin-top: 0;
+  }
+
+  .intermediate-final-writing-page .writing-hero-copy {
+    padding: 1.15rem;
+  }
+
+  .intermediate-final-writing-page .writing-hero h1 {
+    font-size: 2.15rem;
+    line-height: 1.06;
+  }
+
+  .intermediate-final-writing-page .writing-hero-image {
+    min-height: 245px;
+  }
+
+  .intermediate-final-writing-page .writing-shell {
+    width: calc(100% - .75rem);
+  }
+
+  .intermediate-final-writing-page .site-header .navbar {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+
+  .orientation-layout {
+    padding: .75rem;
+  }
+
+  .orientation-layout img {
+    max-height: 240px;
+  }
+
+  .publication-body-card textarea {
+    min-height: 500px;
+    font-size: 1rem;
+  }
+
+  .intermediate-final-writing-page .exam-topbar {
+    position: static;
+  }
+}
