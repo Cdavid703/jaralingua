@@ -999,6 +999,8 @@
         background: rgba(255, 255, 255, 0.98);
         border: 1px solid rgba(18, 59, 143, 0.12);
         box-shadow: 0 24px 52px rgba(15, 23, 42, 0.2);
+        box-sizing: border-box;
+        z-index: 2500;
       }
 
       .auth-panel[hidden] {
@@ -1016,6 +1018,8 @@
           right: max(12px, env(safe-area-inset-right));
           top: max(76px, calc(env(safe-area-inset-top) + 14px));
           bottom: max(12px, env(safe-area-inset-bottom));
+          height: calc(100vh - 88px);
+          height: calc(100dvh - 88px);
           width: auto;
           max-width: none;
           max-height: none;
@@ -1540,7 +1544,7 @@
   }
 
   function createNavAccess() {
-    const explicitSlot = document.querySelector(".site-header [data-auth-nav-slot]");
+    const explicitSlot = document.querySelector(".site-header [data-auth-nav-slot], [data-auth-nav-slot]");
     const isBasic2 = document.body && document.body.matches(".basic2-page, .basic2-index-page");
     const isIntermediate = /\/ingles\/intermediate\//i.test(location.pathname);
     if (isIntermediate && document.body) document.body.classList.add("jl-intermediate-auth-nav");
