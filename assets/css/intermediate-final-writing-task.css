@@ -51,6 +51,26 @@
   margin-left: auto;
 }
 
+.top-login-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  margin: 1rem 0;
+  padding: .9rem 1rem;
+  border: 1px solid #abc7d4;
+  border-left: 5px solid var(--ifw-teal);
+  border-radius: 6px;
+  background: #eef8f8;
+  color: var(--ifw-navy);
+  line-height: 1.5;
+}
+
+.top-login-notice i {
+  flex: 0 0 auto;
+  color: var(--ifw-teal);
+  font-size: 1.25rem;
+}
+
 .intermediate-final-writing-page .teacher-submit {
   min-height: 58px;
   background: var(--ifw-green);

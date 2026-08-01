@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=contrast-20260521b" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate.css?v=20260731-final-writing-v1" />
   <link rel="stylesheet" href="../../assets/css/basic-final-writing-task.css?v=20260731-final-writing-shared-v1" />
-  <link rel="stylesheet" href="../../assets/css/intermediate-final-writing-task.css?v=20260731-final-writing-v1" />
+  <link rel="stylesheet" href="../../assets/css/intermediate-final-writing-task.css?v=20260731-final-writing-v2" />
 </head>
 <body class="english-intermediate-page final-writing-page intermediate-final-writing-page" data-exam-code="intermediate-course-1-final-writing-task">
   <div class="institutional-band writing-institutional-band">
@@ -70,22 +70,23 @@
         <div>
           <p class="writing-kicker">Secure access</p>
           <h2 id="accessTitle">Verify your exam access</h2>
-          <p id="accessStatus">Sign in with the Google, Microsoft, or course account linked to Intermediate English. The teacher must activate the official exam before students can begin.</p>
+          <p id="accessStatus">Authenticate with the account registered in Intermediate English by using the sign-in control in the top navigation. The teacher must activate the official exam before students can begin.</p>
           <div class="account-chip" id="accountChip" hidden>
             <span id="accountAvatar">ST</span>
             <div><strong id="accountName">Verified student</strong><small id="accountEmail">Verified account</small></div>
           </div>
+          <div class="top-login-notice" role="note">
+            <i class="bi bi-arrow-up-circle-fill" aria-hidden="true"></i>
+            <span><strong>Sign in at the top of this page.</strong> Use the account control in the main navigation, then return here and check availability.</span>
+          </div>
           <div class="writing-button-row">
-            <button class="writing-button primary" type="button" data-open-login><i class="bi bi-box-arrow-in-right"></i> Sign in</button>
             <button class="writing-button secondary" type="button" id="checkAccessButton"><i class="bi bi-arrow-clockwise"></i> Check availability</button>
-            <button class="writing-button danger ghost" type="button" id="resetLoginButton"><i class="bi bi-box-arrow-right"></i> Reset login</button>
           </div>
           <div class="claim-panel" id="claimPanel" hidden>
             <label><span>Document number / registered ID</span><input id="claimStudentId" type="text" inputmode="numeric" autocomplete="off" placeholder="Enter your document number" /></label>
             <button class="writing-button secondary" type="button" id="claimButton"><i class="bi bi-person-vcard"></i> Link account by ID</button>
           </div>
-          <p class="access-message neutral" id="accessMessage" role="status" aria-live="polite"><i class="bi bi-info-circle"></i><span>Waiting for login.</span></p>
-          <div id="loginMount" data-login-mount></div>
+          <p class="access-message neutral" id="accessMessage" role="status" aria-live="polite"><i class="bi bi-info-circle"></i><span>Waiting for authentication from the top navigation.</span></p>
         </div>
       </div>
     </section>
@@ -229,7 +230,7 @@
   <script src="../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script src="../../assets/js/google-auth.js?v=20260731-intermediate-nav-auth3"></script>
-  <script src="../../assets/js/intermediate-final-writing-task.js?v=20260731-final-writing-v1"></script>
+  <script src="../../assets/js/intermediate-final-writing-task.js?v=20260731-final-writing-v2"></script>
   <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
 </body>
 </html>

@@ -32,7 +32,6 @@
     claimInput: $("claimStudentId"),
     claimButton: $("claimButton"),
     check: $("checkAccessButton"),
-    reset: $("resetLoginButton"),
     admin: $("adminPanel"),
     adminBadge: $("adminStateBadge"),
     adminFeedback: $("adminFeedback"),
@@ -181,12 +180,6 @@
     if (!els.accessMessage) return;
     els.accessMessage.className = "access-message " + (type || "neutral");
     els.accessMessage.innerHTML = '<i class="bi bi-info-circle"></i><span>' + esc(text) + "</span>";
-  }
-
-  function openLogin() {
-    const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
-    if (trigger) trigger.click();
-    else toast("The sign-in panel is still loading. Try again in a moment.", "error");
   }
 
   function today() {
@@ -675,7 +668,7 @@
     if (!user) {
       lastCredential = "";
       setHidden(els.account, true);
-      showAccess("Please sign in with Google, Microsoft, or your course account before opening the Final Writing Task.", "neutral");
+      showAccess("Use the sign-in control in the top navigation, then return here and press Check availability.", "neutral");
       return;
     }
     fillAccount();
@@ -736,17 +729,6 @@
     }
   }
 
-  function resetLogin() {
-    [KEY.google, KEY.microsoft, KEY.local, KEY.claim].forEach((key) => sessionStorage.removeItem(key));
-    lastCredential = "";
-    user = null;
-    attempt = null;
-    submission = null;
-    toast("Login session reset. Sign in again.", "success");
-    loadState(true);
-    openLogin();
-  }
-
   els.body.addEventListener("input", updateWordCounter);
   els.body.addEventListener("blur", () => {
     saveLocalDraft();
@@ -759,7 +741,6 @@
   els.begin.addEventListener("click", beginExam);
   els.form.addEventListener("submit", submitExam);
   els.check.addEventListener("click", () => loadState(true));
-  els.reset.addEventListener("click", resetLogin);
   els.claimButton.addEventListener("click", () => {
     const claim = String(els.claimInput.value || "").replace(/\D+/g, "");
     if (!claim) {
@@ -770,7 +751,6 @@
     toast("ID saved for this session. Checking the student record...", "success");
     loadState(true);
   });
-  document.querySelectorAll("[data-open-login]").forEach((button) => button.addEventListener("click", openLogin));
   document.querySelectorAll("[data-scroll-access]").forEach((button) => {
     button.addEventListener("click", () => els.access.scrollIntoView({ behavior: "smooth", block: "start" }));
   });

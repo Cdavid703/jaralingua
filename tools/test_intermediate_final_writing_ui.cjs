@@ -52,6 +52,13 @@ assert(
   "The responsive top-navigation login slot is missing"
 );
 assert(
+  html.includes("Sign in at the top of this page")
+    && !html.includes("data-open-login")
+    && !html.includes("data-jaralingua-inline-login")
+    && !html.includes('id="resetLoginButton"'),
+  "Authentication must remain exclusively in the top navigation"
+);
+assert(
   !/criteria for assessing|rubric-grid|data-rubric/i.test(html),
   "Teacher rubric controls must not be present in student-facing HTML"
 );
