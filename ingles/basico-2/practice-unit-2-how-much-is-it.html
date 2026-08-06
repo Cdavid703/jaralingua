@@ -207,6 +207,22 @@
       box-shadow: 0 10px 24px rgba(15, 23, 42, 0.2);
     }
 
+    .price-currency-badge {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      padding: 7px 11px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--price-ink);
+      font-size: 0.82rem;
+      font-weight: 950;
+      box-shadow: 0 8px 18px rgba(15, 23, 42, 0.16);
+    }
+
     .price-card-body {
       padding: 16px;
       display: flex;
@@ -297,8 +313,11 @@
       padding: 14px 20px;
       background: #ffffff;
       color: var(--price-ink);
-      font-size: clamp(2.3rem, 7vw, 5.5rem);
+      font-size: clamp(1.35rem, 4vw, 3.2rem);
       font-weight: 950;
+      line-height: 1;
+      max-width: calc(100% - 48px);
+      overflow-wrap: anywhere;
       box-shadow: 0 18px 42px rgba(15, 23, 42, 0.28);
     }
 
@@ -465,7 +484,7 @@
       <div class="lesson-hero-content">
         <p class="eyebrow">Practice Lab &middot; Unit 2 &middot; Activity 07</p>
         <h1>How Much Is It?</h1>
-        <p>The teacher shows a clothing item with a price. Students answer aloud using dollars, numbers, and shopping vocabulary.</p>
+        <p>The teacher shows a clothing item with a price. Students answer aloud using dollars, Colombian pesos, numbers, and shopping vocabulary.</p>
         <div class="lesson-meta"><span>Prices</span><span>Numbers</span><span>Clothes</span><span>ElevenLabs example</span></div>
         <div class="hero-actions">
           <a href="#activity" class="btn btn-primary">Start price practice</a>
@@ -479,7 +498,7 @@
     <section class="lesson-outcome">
       <div class="outcome-card">
         <span class="outcome-label">Activity Objective</span>
-        <p>Students will ask and answer prices naturally using <strong>How much is...?</strong>, <strong>How much are...?</strong>, <strong>It's...</strong>, and <strong>They're...</strong> with clothing and accessory vocabulary.</p>
+        <p>Students will ask and answer prices naturally using <strong>How much is...?</strong>, <strong>How much are...?</strong>, <strong>It's...</strong>, and <strong>They're...</strong> with clothing, accessories, dollars, and Colombian pesos.</p>
       </div>
     </section>
 
@@ -489,7 +508,7 @@
         <h2>How to run the activity</h2>
         <p>Show one price card, ask the question aloud, let the student answer, then reveal the model answer only after the attempt.</p>
         <div class="price-flow-grid">
-          <article><b>1</b><h3>Show the item</h3><p>The card displays a clothing item or accessory with a dollar price.</p></article>
+          <article><b>1</b><h3>Show the item</h3><p>The card displays a clothing item or accessory with a price in dollars or Colombian pesos.</p></article>
           <article><b>2</b><h3>Ask the price</h3><p>Use <strong>How much is...?</strong> for singular items and <strong>How much are...?</strong> for plural items.</p></article>
           <article><b>3</b><h3>Student answers</h3><p>The student says the price aloud using <strong>It's</strong> or <strong>They're</strong>.</p></article>
         </div>
@@ -499,9 +518,9 @@
         <p class="eyebrow">Language Model</p>
         <h2>Natural question and answer patterns</h2>
         <div class="price-pattern-grid">
-          <div class="price-pattern-card"><h3>Singular item</h3><p><strong>How much is the jacket?</strong><br />It's forty-eight dollars.</p></div>
-          <div class="price-pattern-card"><h3>Plural item</h3><p><strong>How much are the sunglasses?</strong><br />They're twenty-eight dollars.</p></div>
-          <div class="price-pattern-card"><h3>Short question</h3><p><strong>How much is it?</strong><br />It's thirty-five dollars.</p></div>
+          <div class="price-pattern-card"><h3>Singular item</h3><p><strong>How much is the jacket?</strong><br />It's forty-eight dollars.<br />It's one hundred eighty-five thousand Colombian pesos.</p></div>
+          <div class="price-pattern-card"><h3>Plural item</h3><p><strong>How much are the sunglasses?</strong><br />They're twenty-eight dollars.<br />They're ninety thousand Colombian pesos.</p></div>
+          <div class="price-pattern-card"><h3>Currency clue</h3><p><strong>🇺🇸 USD</strong> = dollars<br /><strong>🇨🇴 COP</strong> = Colombian pesos</p></div>
         </div>
       </article>
 
@@ -564,18 +583,18 @@
 
   <script>
     const priceItems = [
-      { slug: "jacket", label: "jacket", display: "Jacket", price: 48, words: "forty-eight", plural: false },
-      { slug: "sweater", label: "sweater", display: "Sweater", price: 35, words: "thirty-five", plural: false },
-      { slug: "t-shirt", label: "T-shirt", display: "T-shirt", price: 18, words: "eighteen", plural: false },
-      { slug: "shirt", label: "shirt", display: "Shirt", price: 26, words: "twenty-six", plural: false },
-      { slug: "jeans", label: "jeans", display: "Jeans", price: 42, words: "forty-two", plural: true },
-      { slug: "pants", label: "pants", display: "Pants", price: 39, words: "thirty-nine", plural: true },
-      { slug: "skirt", label: "skirt", display: "Skirt", price: 32, words: "thirty-two", plural: false },
-      { slug: "dress", label: "dress", display: "Dress", price: 55, words: "fifty-five", plural: false },
-      { slug: "scarf", label: "scarf", display: "Scarf", price: 24, words: "twenty-four", plural: false },
-      { slug: "hat", label: "hat", display: "Hat", price: 16, words: "sixteen", plural: false },
-      { slug: "watch", label: "watch", display: "Watch", price: 72, words: "seventy-two", plural: false },
-      { slug: "sunglasses", label: "sunglasses", display: "Sunglasses", price: 28, words: "twenty-eight", plural: true }
+      { slug: "jacket", label: "jacket", display: "Jacket", amount: "$48", currency: "USD", flag: "🇺🇸", words: "forty-eight dollars", plural: false },
+      { slug: "sweater", label: "sweater", display: "Sweater", amount: "$120,000", currency: "COP", flag: "🇨🇴", words: "one hundred twenty thousand Colombian pesos", plural: false },
+      { slug: "t-shirt", label: "T-shirt", display: "T-shirt", amount: "$18", currency: "USD", flag: "🇺🇸", words: "eighteen dollars", plural: false },
+      { slug: "shirt", label: "shirt", display: "Shirt", amount: "$95,000", currency: "COP", flag: "🇨🇴", words: "ninety-five thousand Colombian pesos", plural: false },
+      { slug: "jeans", label: "jeans", display: "Jeans", amount: "$42", currency: "USD", flag: "🇺🇸", words: "forty-two dollars", plural: true },
+      { slug: "pants", label: "pants", display: "Pants", amount: "$150,000", currency: "COP", flag: "🇨🇴", words: "one hundred fifty thousand Colombian pesos", plural: true },
+      { slug: "skirt", label: "skirt", display: "Skirt", amount: "$32", currency: "USD", flag: "🇺🇸", words: "thirty-two dollars", plural: false },
+      { slug: "dress", label: "dress", display: "Dress", amount: "$210,000", currency: "COP", flag: "🇨🇴", words: "two hundred ten thousand Colombian pesos", plural: false },
+      { slug: "scarf", label: "scarf", display: "Scarf", amount: "$24", currency: "USD", flag: "🇺🇸", words: "twenty-four dollars", plural: false },
+      { slug: "hat", label: "hat", display: "Hat", amount: "$60,000", currency: "COP", flag: "🇨🇴", words: "sixty thousand Colombian pesos", plural: false },
+      { slug: "watch", label: "watch", display: "Watch", amount: "$72", currency: "USD", flag: "🇺🇸", words: "seventy-two dollars", plural: false },
+      { slug: "sunglasses", label: "sunglasses", display: "Sunglasses", amount: "$90,000", currency: "COP", flag: "🇨🇴", words: "ninety thousand Colombian pesos", plural: true }
     ];
 
     const exampleAudio = {
@@ -600,7 +619,7 @@
     }
 
     function answerFor(item) {
-      return item.plural ? "They're " + item.words + " dollars." : "It's " + item.words + " dollars.";
+      return item.plural ? "They're " + item.words + "." : "It's " + item.words + ".";
     }
 
     function renderPriceCards() {
@@ -610,7 +629,7 @@
         const article = document.createElement("article");
         article.className = "price-card";
         article.dataset.slug = item.slug;
-        article.innerHTML = '<div class="price-card-image"><img src="' + imagePath(item) + '" alt="' + item.display + ' price card" /><strong class="price-tag">$' + item.price + '</strong></div><div class="price-card-body"><h3>' + item.display + '</h3><p class="price-question">' + questionFor(item) + '</p><p class="price-answer">' + answerFor(item) + '</p><div class="price-actions"><button type="button" class="price-btn" data-action="expand"><i class="bi bi-arrows-fullscreen"></i> Enlarge</button><button type="button" class="price-btn secondary" data-action="answer"><i class="bi bi-eye"></i> Show answer</button><button type="button" class="price-btn light" data-action="word"><i class="bi bi-volume-up"></i> Word</button></div></div>';
+        article.innerHTML = '<div class="price-card-image"><img src="' + imagePath(item) + '" alt="' + item.display + ' price card" /><span class="price-currency-badge">' + item.flag + ' ' + item.currency + '</span><strong class="price-tag">' + item.amount + '</strong></div><div class="price-card-body"><h3>' + item.display + '</h3><p class="price-question">' + questionFor(item) + '</p><p class="price-answer">' + answerFor(item) + '</p><div class="price-actions"><button type="button" class="price-btn" data-action="expand"><i class="bi bi-arrows-fullscreen"></i> Enlarge</button><button type="button" class="price-btn secondary" data-action="answer"><i class="bi bi-eye"></i> Show answer</button><button type="button" class="price-btn light" data-action="word"><i class="bi bi-volume-up"></i> Word</button></div></div>';
         article.querySelector('[data-action="expand"]').addEventListener("click", function() { openPriceModal(item); });
         article.querySelector('[data-action="answer"]').addEventListener("click", function(event) {
           article.classList.toggle("show-answer");
@@ -647,7 +666,7 @@
       modal.classList.remove("show-answer");
       document.getElementById("priceModalImage").src = imagePath(item);
       document.getElementById("priceModalImage").alt = item.display + " with price";
-      document.getElementById("priceModalTag").textContent = "$" + item.price;
+      document.getElementById("priceModalTag").textContent = item.flag + " " + item.amount + " " + item.currency;
       document.getElementById("priceModalTitle").textContent = item.display;
       document.getElementById("priceModalQuestion").textContent = questionFor(item);
       document.getElementById("priceModalAnswer").textContent = answerFor(item);
