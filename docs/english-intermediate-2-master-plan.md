@@ -882,6 +882,40 @@ El calendario del curso solo indicará:
 
 No describirá las actividades de clase, porque serán planeadas por la docente.
 
+### 11.4 Estándar obligatorio de diseño para cada actividad
+
+Antes de construir una actividad de Intermediate English Course 2 se revisarán al menos dos actividades comparables de Intermediate English Course 1. La nueva página no se diseñará de memoria ni con una estructura genérica. La revisión debe identificar qué patrón de banner, instrucciones, apoyos, modelos, interacción y cierre funciona para el mismo tipo de práctica.
+
+Toda actividad aprobada deberá incluir, según corresponda:
+
+1. un banner o hero propio con imagen profesional directamente relacionada con la dinámica;
+2. nombre de la unidad, tipo de actividad, título, descripción breve, metadatos útiles y una acción clara para comenzar;
+3. buscador de la actividad inmediatamente después del banner;
+4. objetivo, language target y producto oral, escrito o digital esperado;
+5. instrucciones visibles organizadas en pasos;
+6. apoyo lingüístico suficiente para realizar la actividad;
+7. ejemplo completo de producción o interacción, incluyendo las intervenciones del docente y de los estudiantes cuando sea una dinámica de aula;
+8. desarrollo Pre-task, Task y Post-task;
+9. cierre, confirmación, checklist o autoevaluación;
+10. navegación de regreso a la unidad o a Practice Lab;
+11. comportamiento táctil, legible y sin overflow en 360, 390 y 430 px.
+
+Si la dinámica usa personajes, roles, objetos, escenarios o categorías que el estudiante debe escoger, cada opción tendrá una tarjeta visual pequeña con su propia imagen pertinente. No se sustituirán estas imágenes por tarjetas compuestas únicamente de texto. Las tarjetas deben ser compactas en celular para que la página conserve ritmo y no obligue a recorrer bloques innecesariamente altos.
+
+El banner no será fijo ni se mantendrá sobre el contenido durante el scroll. En celular tendrá altura automática, recorte controlado, texto corto y acceso rápido a la acción. La imagen principal no se repetirá inmediatamente debajo del banner.
+
+La actividad `Secret Social Circle` fija el primer precedente de este estándar para Course 2:
+
+- banner profesional de estudiantes jugando a adivinar una relación;
+- nueve tarjetas visuales: `neighbor`, `close friend`, `old friend`, `classmate`, `coworker`, `new contact`, `person I met online`, `person I lost contact with` y `person I get on well with`;
+- selección táctil de una tarjeta;
+- construcción de pistas con `who`, `that` y lenguaje diplomático;
+- preguntas de adivinanza;
+- ejemplo completo de interacción docente-estudiantes;
+- confirmación final y checklist de la ronda.
+
+No se implementará una nueva actividad sin dejar primero en este Markdown su especificación aprobada o la actualización del estándar que corresponda.
+
 ---
 
 ## 12. Ciclo TBL obligatorio en cada actividad
@@ -1664,6 +1698,8 @@ Cada vez que se realice una sección, una actividad, una página o una fase de I
 No se debe empezar una nueva sección, actividad o página si la fase anterior quedó sin commit o sin despliegue, salvo que el usuario pida explícitamente trabajar localmente sin publicar.
 
 Esta regla aplica también a correcciones pequeñas. Si una corrección modifica una página, recurso, script, estilo, evaluación, audio, imagen o documento del curso, debe cerrar con commit y despliegue.
+
+Las validaciones técnicas de este proyecto no levantarán servidores locales. Se harán mediante revisión estática de HTML, CSS, JavaScript, enlaces, recursos, responsive y diferencias de Git. La comprobación navegable se realizará después del despliegue en producción, donde la docente hará su propia prueba visual.
 
 ### Fase 0 — Fundaciones
 

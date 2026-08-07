@@ -900,59 +900,59 @@
 }
 
 .ie2-speaking-hero {
-  width: min(1180px, calc(100% - 36px));
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
-  gap: 1rem;
-  align-items: stretch;
-  margin: 1.2rem auto 0;
-  padding: clamp(1.2rem, 3vw, 2.1rem);
-  border: 1px solid var(--ie2-line);
-  border-radius: 8px;
+  width: 100%;
+  min-height: clamp(410px, 52vw, 600px);
+  display: flex;
+  align-items: end;
+  margin: 0;
+  padding: clamp(4.2rem, 8vw, 7rem) 0 clamp(2rem, 5vw, 3.5rem);
   background:
-    radial-gradient(circle at 92% 8%, rgba(217, 164, 65, 0.2), transparent 26%),
-    linear-gradient(135deg, #ffffff 0%, #edf5ff 100%);
-  box-shadow: var(--ie2-shadow);
+    linear-gradient(90deg, rgba(3, 12, 32, 0.96) 0%, rgba(3, 12, 32, 0.84) 38%, rgba(3, 12, 32, 0.26) 72%, rgba(3, 12, 32, 0.08) 100%),
+    url("../img/english-intermediate-2/unit-1/secret-social-circle/secret-social-circle-hero-v1.webp") center / cover no-repeat;
+  color: #ffffff;
+}
+
+.ie2-speaking-hero-content {
+  width: min(1180px, calc(100% - 36px));
+  margin-inline: auto;
 }
 
 .ie2-speaking-hero h1 {
   max-width: 12ch;
   margin: 0;
-  color: var(--ie2-navy);
+  color: #ffffff;
   font-size: clamp(2.2rem, 6vw, 4.6rem);
   line-height: 0.98;
 }
 
 .ie2-speaking-hero p:not(.intermediate2-kicker) {
-  max-width: 760px;
+  max-width: 660px;
   margin: 0.85rem 0 0;
-  color: var(--ie2-muted);
+  color: rgba(255, 255, 255, 0.92);
   font-size: clamp(1rem, 2vw, 1.12rem);
   line-height: 1.58;
 }
 
-.ie2-speaking-quick-rules {
-  display: grid;
-  align-content: center;
+.ie2-speaking-hero p strong {
+  color: #ffffff;
+}
+
+.ie2-speaking-hero-chips {
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.5rem;
-  padding: 1rem;
-  border: 1px solid rgba(7, 31, 79, 0.1);
-  border-radius: 8px;
-  background: #ffffff;
+  margin-top: 1rem;
 }
 
-.ie2-speaking-quick-rules strong {
-  color: var(--ie2-navy);
-  font-size: 1.05rem;
-}
-
-.ie2-speaking-quick-rules span {
-  display: block;
-  padding: 0.45rem 0.55rem;
+.ie2-speaking-hero-chips span {
+  padding: 0.42rem 0.66rem;
+  border: 1px solid rgba(255, 255, 255, 0.34);
   border-radius: 999px;
-  background: #eef7f6;
-  color: var(--ie2-teal);
+  background: rgba(3, 12, 32, 0.34);
+  color: #ffffff;
+  font-size: 0.86rem;
   font-weight: 900;
+  backdrop-filter: blur(8px);
 }
 
 .ie2-speaking-shell {
@@ -997,27 +997,88 @@
 }
 
 .ie2-speaking-block code,
-.ie2-speaking-quick-rules code {
+.ie2-activity-targets code {
   color: var(--ie2-blue);
   font-weight: 950;
+}
+
+.ie2-activity-targets {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.ie2-activity-targets article {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.55rem;
+  align-items: center;
+  min-width: 0;
+  padding: 0.72rem;
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  border-radius: 8px;
+  background: #eef8f6;
+}
+
+.ie2-activity-targets article > strong {
+  color: var(--ie2-teal);
+  font-size: 1.4rem;
+}
+
+.ie2-activity-targets span {
+  color: var(--ie2-ink);
+  line-height: 1.35;
 }
 
 .ie2-secret-card-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 0.65rem;
+  gap: 0.75rem;
   margin-top: 1rem;
 }
 
-.ie2-secret-card-grid article {
+.ie2-secret-card {
   min-width: 0;
-  padding: 0.85rem;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  padding: 0;
+  overflow: hidden;
   border: 1px solid rgba(15, 118, 110, 0.18);
   border-radius: 8px;
   background: linear-gradient(180deg, #fbfffe 0%, #eef8f6 100%);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
 
-.ie2-secret-card-grid strong {
+.ie2-secret-card:hover,
+.ie2-secret-card:focus-visible {
+  border-color: var(--ie2-teal);
+  box-shadow: 0 12px 26px rgba(7, 31, 79, 0.12);
+  transform: translateY(-2px);
+}
+
+.ie2-secret-card.is-selected {
+  border-color: var(--ie2-gold);
+  box-shadow: 0 0 0 3px rgba(217, 164, 65, 0.22);
+}
+
+.ie2-secret-card img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  display: block;
+  object-fit: cover;
+}
+
+.ie2-secret-card-copy {
+  display: block;
+  padding: 0.78rem;
+}
+
+.ie2-secret-card strong {
   display: block;
   color: var(--ie2-teal);
   font-size: 1rem;
@@ -1025,11 +1086,21 @@
   text-transform: lowercase;
 }
 
-.ie2-secret-card-grid span {
+.ie2-secret-card-copy > span {
   display: block;
   margin-top: 0.45rem;
   color: var(--ie2-muted);
   line-height: 1.42;
+}
+
+.ie2-secret-card-status {
+  margin: 0.75rem 0 0;
+  padding: 0.72rem 0.85rem;
+  border-left: 4px solid var(--ie2-gold);
+  border-radius: 8px;
+  background: #fff7df;
+  color: var(--ie2-navy) !important;
+  font-weight: 900;
 }
 
 .ie2-clue-builder,
@@ -1100,6 +1171,29 @@
   background: #fbfdff;
 }
 
+.ie2-round-check {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 0.75rem;
+}
+
+.ie2-round-check span {
+  min-width: 0;
+  padding: 0.72rem 0.8rem;
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  border-radius: 8px;
+  background: #eef8f6;
+  color: var(--ie2-ink);
+}
+
+.ie2-round-check span::before {
+  content: "✓";
+  margin-right: 0.45rem;
+  color: var(--ie2-teal);
+  font-weight: 950;
+}
+
 @media (max-width: 980px) {
   .intermediate2-dashboard,
   .intermediate2-unit-grid,
@@ -1107,6 +1201,7 @@
   .ie2-route-list,
   .ie2-vocab-grid,
   .ie2-practice-grid,
+  .ie2-activity-targets,
   .ie2-secret-card-grid,
   .ie2-clue-builder,
   .ie2-question-grid {
@@ -1114,10 +1209,6 @@
   }
 
   .ie2-unit-passport {
-    grid-template-columns: 1fr;
-  }
-
-  .ie2-speaking-hero {
     grid-template-columns: 1fr;
   }
 
@@ -1253,7 +1344,6 @@
   .intermediate2-unit-band,
   .intermediate2-schedule,
   .ie2-overview-shell,
-  .ie2-speaking-hero,
   .ie2-speaking-shell {
     width: min(100% - 24px, 1180px);
   }
@@ -1267,9 +1357,10 @@
   .ie2-before-after,
   .ie2-vocab-grid,
   .ie2-practice-grid,
-  .ie2-secret-card-grid,
+  .ie2-activity-targets,
   .ie2-clue-builder,
-  .ie2-question-grid {
+  .ie2-question-grid,
+  .ie2-round-check {
     grid-template-columns: 1fr;
   }
 
@@ -1284,13 +1375,40 @@
   }
 
   .ie2-speaking-hero {
-    margin-top: 0.8rem;
-    padding: 1rem;
+    width: 100%;
+    min-height: auto;
+    margin: 0;
+    padding: 5.25rem 0 1.4rem;
+    background:
+      linear-gradient(180deg, rgba(3, 12, 32, 0.22) 0%, rgba(3, 12, 32, 0.76) 48%, rgba(3, 12, 32, 0.96) 100%),
+      url("../img/english-intermediate-2/unit-1/secret-social-circle/secret-social-circle-hero-v1.webp") 61% center / cover no-repeat;
+  }
+
+  .ie2-speaking-hero-content {
+    width: min(100% - 24px, 1180px);
   }
 
   .ie2-speaking-hero h1 {
-    max-width: 10ch;
-    font-size: clamp(2rem, 10vw, 3rem);
+    max-width: 11ch;
+    font-size: clamp(2rem, 10vw, 3.15rem);
+  }
+
+  .ie2-speaking-hero p:not(.intermediate2-kicker) {
+    max-width: 34rem;
+    font-size: 0.94rem;
+    line-height: 1.45;
+  }
+
+  .ie2-speaking-hero-chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .ie2-speaking-hero-chips span {
+    padding: 0.36rem 0.5rem;
+    font-size: 0.76rem;
+    text-align: center;
   }
 
   .ie2-speaking-block {
@@ -1298,8 +1416,26 @@
     padding: 1rem;
   }
 
-  .ie2-speaking-quick-rules {
-    align-content: start;
+  .ie2-secret-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+  }
+
+  .ie2-secret-card img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .ie2-secret-card-copy {
+    padding: 0.62rem;
+  }
+
+  .ie2-secret-card strong {
+    font-size: 0.86rem;
+  }
+
+  .ie2-secret-card-copy > span {
+    font-size: 0.78rem;
+    line-height: 1.32;
   }
 
   .ie2-lesson-lead {
