@@ -621,11 +621,291 @@
   margin-top: 1rem;
 }
 
+.ie2-lesson-block {
+  margin-top: 0.9rem;
+  padding: clamp(1.15rem, 3vw, 2rem);
+  border: 1px solid var(--ie2-line);
+  border-radius: 8px;
+  background: var(--ie2-paper);
+  box-shadow: 0 12px 30px rgba(7, 31, 79, 0.08);
+}
+
+.ie2-lesson-block:first-child {
+  margin-top: 0;
+}
+
+.ie2-lesson-block .intermediate2-kicker {
+  background: #fff6dd;
+  color: #8a5f09;
+}
+
+.ie2-lesson-block h2 {
+  margin: 0;
+  color: var(--ie2-navy);
+  font-size: clamp(1.55rem, 3.1vw, 2.65rem);
+  line-height: 1.08;
+}
+
+.ie2-lesson-block h3 {
+  margin: 0;
+  color: var(--ie2-navy);
+  line-height: 1.18;
+}
+
+.ie2-lesson-block p,
+.ie2-lesson-block li,
+.ie2-lesson-block td {
+  color: var(--ie2-muted);
+  line-height: 1.58;
+}
+
+.ie2-lesson-block code {
+  color: var(--ie2-blue);
+  font-weight: 900;
+}
+
+.ie2-lesson-lead {
+  max-width: 880px;
+  margin: 0.8rem 0 0;
+  font-size: 1.03rem;
+}
+
+.ie2-rule-grid,
+.ie2-note-grid,
+.ie2-practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.ie2-rule-grid article,
+.ie2-note-grid article,
+.ie2-practice-grid article,
+.ie2-formula-card,
+.ie2-production-model {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.ie2-rule-label {
+  display: inline-flex;
+  margin-bottom: 0.55rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: 999px;
+  background: #eef7f6;
+  color: var(--ie2-teal);
+  font-size: 0.76rem;
+  font-weight: 950;
+  text-transform: uppercase;
+}
+
+.ie2-model {
+  padding: 0.58rem 0.68rem;
+  border-left: 4px solid var(--ie2-teal);
+  border-radius: 0 8px 8px 0;
+  background: #f0fbf8;
+  color: var(--ie2-ink) !important;
+}
+
+.ie2-error {
+  padding: 0.58rem 0.68rem;
+  border-left: 4px solid var(--ie2-coral);
+  border-radius: 0 8px 8px 0;
+  background: #fff5f3;
+  color: var(--ie2-ink) !important;
+}
+
+.ie2-before-after {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 1rem;
+}
+
+.ie2-before-after div {
+  padding: 1rem;
+  border-radius: 8px;
+  background: #f7faff;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+}
+
+.ie2-before-after div:first-child {
+  background: #fff8f2;
+}
+
+.ie2-before-after span {
+  color: var(--ie2-navy);
+  font-weight: 950;
+}
+
+.ie2-before-after p {
+  margin: 0.45rem 0 0;
+}
+
+.ie2-pattern-stack {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 1rem;
+}
+
+.ie2-pattern-stack article {
+  display: grid;
+  grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.8rem 1rem;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.ie2-pattern-stack strong {
+  color: var(--ie2-navy);
+}
+
+.ie2-pattern-stack p {
+  margin: 0;
+}
+
+.ie2-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.ie2-vocab-grid article {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fbfdff 0%, #f4f8ff 100%);
+}
+
+.ie2-vocab-grid strong {
+  display: block;
+  color: var(--ie2-teal);
+  font-size: 1.02rem;
+}
+
+.ie2-vocab-grid span {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--ie2-navy);
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
+.ie2-vocab-grid p {
+  margin: 0.55rem 0 0;
+}
+
+.ie2-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 1rem;
+  border: 1px solid var(--ie2-line);
+  border-radius: 8px;
+}
+
+.ie2-lesson-table {
+  width: 100%;
+  min-width: 680px;
+  border-collapse: collapse;
+  background: #ffffff;
+}
+
+.ie2-lesson-table th,
+.ie2-lesson-table td {
+  padding: 0.85rem;
+  border-bottom: 1px solid rgba(7, 31, 79, 0.1);
+  text-align: left;
+  vertical-align: top;
+}
+
+.ie2-lesson-table th {
+  background: #eef4ff;
+  color: var(--ie2-navy);
+  font-weight: 950;
+}
+
+.ie2-formula-card,
+.ie2-production-model {
+  margin-top: 1rem;
+}
+
+.ie2-formula-card strong,
+.ie2-production-model h3 {
+  color: var(--ie2-navy);
+}
+
+.ie2-timeline-list {
+  display: grid;
+  gap: 0.65rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  counter-reset: relationship-step;
+}
+
+.ie2-timeline-list li {
+  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(150px, 0.35fr) minmax(0, 0.4fr) minmax(0, 0.8fr);
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.ie2-timeline-list strong {
+  color: var(--ie2-teal);
+}
+
+.ie2-timeline-list span {
+  color: var(--ie2-navy);
+  font-weight: 800;
+}
+
+.ie2-timeline-list em {
+  color: var(--ie2-muted);
+  font-style: normal;
+}
+
+.ie2-practice-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ie2-practice-grid details {
+  margin-top: 0.75rem;
+  padding: 0.72rem;
+  border-radius: 8px;
+  background: #eef7f6;
+}
+
+.ie2-practice-grid summary {
+  color: var(--ie2-teal);
+  cursor: pointer;
+  font-weight: 950;
+}
+
+.ie2-practice-grid details p {
+  margin-bottom: 0;
+  color: var(--ie2-ink);
+}
+
 @media (max-width: 980px) {
   .intermediate2-dashboard,
   .intermediate2-unit-grid,
   .ie2-overview-grid,
-  .ie2-route-list {
+  .ie2-route-list,
+  .ie2-vocab-grid,
+  .ie2-practice-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
@@ -771,8 +1051,28 @@
   .intermediate2-dashboard,
   .intermediate2-unit-grid,
   .ie2-overview-grid,
-  .ie2-route-list {
+  .ie2-route-list,
+  .ie2-rule-grid,
+  .ie2-note-grid,
+  .ie2-before-after,
+  .ie2-vocab-grid,
+  .ie2-practice-grid {
     grid-template-columns: 1fr;
+  }
+
+  .ie2-pattern-stack article,
+  .ie2-timeline-list li {
+    grid-template-columns: 1fr;
+  }
+
+  .ie2-lesson-block {
+    margin-top: 0.75rem;
+    padding: 1rem;
+  }
+
+  .ie2-lesson-lead {
+    font-size: 0.98rem;
+    line-height: 1.5;
   }
 
   .ie2-unit-visual img {
