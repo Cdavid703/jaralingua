@@ -310,6 +310,11 @@
   color: var(--ie2-teal);
 }
 
+.intermediate2-status.available {
+  background: #ecfdf5;
+  color: var(--ie2-green);
+}
+
 .intermediate2-section-card h3 {
   margin: 0;
   color: var(--ie2-navy);
@@ -385,10 +390,247 @@
   line-height: 1.35;
 }
 
+.ie2-overview-hero {
+  min-height: min(560px, 68vh);
+  display: grid;
+  align-items: end;
+  padding: 92px max(18px, calc((100% - 1180px) / 2)) 44px;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(3, 12, 32, 0.9) 0%, rgba(7, 31, 79, 0.7) 46%, rgba(7, 31, 79, 0.2) 100%),
+    url("../img/english-intermediate-2/units/unit-1-relationships-hero-v1.webp") center / cover no-repeat;
+}
+
+.ie2-overview-hero-copy {
+  width: min(720px, 100%);
+  color: var(--ie2-paper);
+}
+
+.ie2-overview-hero h1 {
+  max-width: 12ch;
+  margin: 0;
+  color: var(--ie2-paper);
+  font-size: clamp(2.35rem, 6.4vw, 5rem);
+  line-height: 1.02;
+  text-shadow: 0 3px 24px rgba(0, 0, 0, 0.45);
+}
+
+.ie2-overview-hero p:not(.intermediate2-kicker) {
+  max-width: 660px;
+  margin: 1rem 0 0;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.62;
+}
+
+.ie2-overview-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.ie2-overview-chips span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.38rem 0.58rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.94);
+  font-size: 0.82rem;
+  font-weight: 850;
+  backdrop-filter: blur(10px);
+}
+
+.ie2-overview-shell {
+  width: min(1180px, calc(100% - 36px));
+  margin: 1.4rem auto 4rem;
+}
+
+.ie2-unit-passport,
+.ie2-overview-panel,
+.ie2-teaching-route,
+.ie2-course-map {
+  border: 1px solid var(--ie2-line);
+  border-radius: 8px;
+  background: var(--ie2-paper);
+  box-shadow: 0 12px 30px rgba(7, 31, 79, 0.08);
+}
+
+.ie2-unit-passport {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.1fr);
+  gap: 0;
+  overflow: hidden;
+}
+
+.ie2-unit-visual {
+  min-height: 100%;
+  margin: 0;
+  background: #dfe8f2;
+}
+
+.ie2-unit-visual img {
+  width: 100%;
+  height: 100%;
+  min-height: 330px;
+  display: block;
+  object-fit: cover;
+}
+
+.ie2-unit-main {
+  display: grid;
+  align-content: center;
+  padding: clamp(1.25rem, 4vw, 2.6rem);
+}
+
+.ie2-unit-main .intermediate2-kicker,
+.ie2-teaching-route .intermediate2-kicker,
+.ie2-course-map .intermediate2-kicker {
+  background: #fff6dd;
+  color: #8a5f09;
+}
+
+.ie2-unit-main h2,
+.ie2-teaching-route h2,
+.ie2-course-map h2 {
+  margin: 0;
+  color: var(--ie2-navy);
+  font-size: clamp(1.65rem, 3.4vw, 3rem);
+  line-height: 1.08;
+}
+
+.ie2-unit-main p {
+  margin: 0.85rem 0 0;
+  color: var(--ie2-muted);
+  line-height: 1.65;
+}
+
+.ie2-unit-main .ie2-unit-big-idea {
+  color: var(--ie2-ink);
+  font-size: clamp(1.08rem, 2vw, 1.25rem);
+  font-weight: 900;
+}
+
+.ie2-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 0.9rem;
+}
+
+.ie2-overview-panel {
+  min-width: 0;
+  padding: 1.15rem;
+}
+
+.ie2-overview-panel h3 {
+  margin: 0;
+  color: var(--ie2-navy);
+  font-size: clamp(1.12rem, 2vw, 1.35rem);
+  line-height: 1.15;
+}
+
+.ie2-overview-panel p,
+.ie2-overview-panel li {
+  color: var(--ie2-muted);
+  line-height: 1.58;
+}
+
+.ie2-overview-panel p {
+  margin: 0.65rem 0 0;
+}
+
+.ie2-overview-panel ul {
+  margin: 0.75rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.ie2-overview-panel code,
+.ie2-route-list code {
+  color: var(--ie2-blue);
+  font-weight: 900;
+}
+
+.ie2-expression-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.ie2-expression-list span {
+  padding: 0.48rem 0.62rem;
+  border-radius: 999px;
+  background: #eef7f6;
+  color: var(--ie2-teal);
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.ie2-teaching-route,
+.ie2-course-map {
+  margin-top: 0.9rem;
+  padding: clamp(1.15rem, 3vw, 2rem);
+}
+
+.ie2-route-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.ie2-route-list article {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.ie2-route-list span {
+  display: inline-grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--ie2-navy);
+  color: var(--ie2-paper);
+  font-size: 0.86rem;
+  font-weight: 950;
+}
+
+.ie2-route-list h3 {
+  margin: 0.65rem 0 0;
+  color: var(--ie2-navy);
+  font-size: 1.02rem;
+  line-height: 1.18;
+}
+
+.ie2-route-list p {
+  margin: 0.5rem 0 0;
+  color: var(--ie2-muted);
+  line-height: 1.55;
+}
+
+.ie2-course-map .intermediate2-unit-grid {
+  margin-top: 1rem;
+}
+
 @media (max-width: 980px) {
   .intermediate2-dashboard,
-  .intermediate2-unit-grid {
+  .intermediate2-unit-grid,
+  .ie2-overview-grid,
+  .ie2-route-list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .ie2-unit-passport {
+    grid-template-columns: 1fr;
   }
 
 }
@@ -439,6 +681,40 @@
       url("../img/english-intermediate-2/intermediate-2-home-hero-v1.png") 57% center / cover no-repeat;
   }
 
+  .ie2-overview-hero {
+    min-height: auto;
+    align-items: end;
+    padding: 34px 18px 30px;
+    background:
+      linear-gradient(180deg, rgba(3, 12, 32, 0.18) 0%, rgba(3, 12, 32, 0.78) 48%, rgba(3, 12, 32, 0.95) 100%),
+      url("../img/english-intermediate-2/units/unit-1-relationships-hero-v1.webp") 58% center / cover no-repeat;
+  }
+
+  .ie2-overview-hero h1 {
+    max-width: 10ch;
+    font-size: clamp(2rem, 10.5vw, 3rem);
+  }
+
+  .ie2-overview-hero p:not(.intermediate2-kicker) {
+    margin-top: 0.75rem;
+    font-size: 0.96rem;
+    line-height: 1.45;
+  }
+
+  .ie2-overview-chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .ie2-overview-chips span {
+    justify-content: center;
+    min-height: 32px;
+    padding: 0.34rem 0.48rem;
+    font-size: 0.76rem;
+    text-align: center;
+  }
+
   .intermediate2-hero h1 {
     max-width: 9.5ch;
     font-size: clamp(2rem, 11vw, 3rem);
@@ -487,13 +763,27 @@
   .intermediate2-section-head,
   .intermediate2-dashboard,
   .intermediate2-unit-band,
-  .intermediate2-schedule {
+  .intermediate2-schedule,
+  .ie2-overview-shell {
     width: min(100% - 24px, 1180px);
   }
 
   .intermediate2-dashboard,
-  .intermediate2-unit-grid {
+  .intermediate2-unit-grid,
+  .ie2-overview-grid,
+  .ie2-route-list {
     grid-template-columns: 1fr;
+  }
+
+  .ie2-unit-visual img {
+    min-height: 235px;
+  }
+
+  .ie2-unit-main,
+  .ie2-overview-panel,
+  .ie2-teaching-route,
+  .ie2-course-map {
+    padding: 1rem;
   }
 
   .intermediate2-timeline article {
