@@ -39,7 +39,7 @@
 }
 
 .intermediate2-hero {
-  min-height: min(720px, 78vh);
+  min-height: min(690px, 76vh);
   display: grid;
   align-items: end;
   padding: 96px max(18px, calc((100% - 1180px) / 2)) 54px;
@@ -83,6 +83,45 @@
   color: rgba(255, 255, 255, 0.93);
   font-size: clamp(1rem, 2vw, 1.18rem);
   line-height: 1.65;
+}
+
+.intermediate2-hero-insights {
+  max-width: 720px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.intermediate2-hero-insights span {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.58rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.15;
+  backdrop-filter: blur(10px);
+}
+
+.intermediate2-hero-insights strong {
+  color: #ffda81;
+  font-weight: 950;
+}
+
+.intermediate2-hero .intermediate2-hero-note {
+  max-width: 620px;
+  margin-top: 0.7rem;
+  padding-left: 0.75rem;
+  border-left: 3px solid rgba(217, 164, 65, 0.78);
+  color: rgba(255, 255, 255, 0.86);
+  font-size: 0.92rem;
+  line-height: 1.45;
 }
 
 .intermediate2-actions {
@@ -145,8 +184,6 @@
   margin-top: -26px;
 }
 
-.intermediate2-status-strip,
-.intermediate2-alert,
 .intermediate2-section-head,
 .intermediate2-dashboard,
 .intermediate2-unit-band,
@@ -155,15 +192,6 @@
   margin-inline: auto;
 }
 
-.intermediate2-status-strip {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.8rem;
-  padding: 1.1rem 0 0;
-}
-
-.intermediate2-status-strip article,
-.intermediate2-alert,
 .intermediate2-section-card,
 .intermediate2-unit-grid article,
 .intermediate2-timeline article {
@@ -173,42 +201,11 @@
   box-shadow: 0 12px 30px rgba(7, 31, 79, 0.08);
 }
 
-.intermediate2-status-strip article {
-  padding: 1rem;
-}
-
-.intermediate2-status-strip span {
-  display: block;
-  color: var(--ie2-navy);
-  font-size: 1.35rem;
-  font-weight: 950;
-  line-height: 1.1;
-}
-
-.intermediate2-status-strip p {
-  margin: 0.35rem 0 0;
-  color: var(--ie2-muted);
-  font-weight: 800;
-  line-height: 1.35;
-}
-
-.intermediate2-alert {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  align-items: center;
-  margin-top: 1rem;
-  padding: 1.2rem;
-  border-left: 6px solid var(--ie2-coral);
-}
-
-.intermediate2-alert .intermediate2-kicker,
 .intermediate2-section-head .intermediate2-kicker {
   background: #fff6dd;
   color: #8a5f09;
 }
 
-.intermediate2-alert h2,
 .intermediate2-section-head h2 {
   margin: 0;
   color: var(--ie2-navy);
@@ -216,7 +213,6 @@
   line-height: 1.08;
 }
 
-.intermediate2-alert p,
 .intermediate2-section-head p {
   max-width: 760px;
   margin: 0.6rem 0 0;
@@ -236,6 +232,7 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
+  margin-top: 1rem;
 }
 
 .intermediate2-section-card {
@@ -394,13 +391,6 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .intermediate2-status-strip {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .intermediate2-alert {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {
@@ -441,9 +431,9 @@
   }
 
   .intermediate2-hero {
-    min-height: 600px;
+    min-height: auto;
     align-items: end;
-    padding: 48px 18px 42px;
+    padding: 30px 18px 30px;
     background:
       linear-gradient(180deg, rgba(3, 12, 32, 0.24) 0%, rgba(3, 12, 32, 0.86) 54%, rgba(3, 12, 32, 0.94) 100%),
       url("../img/english-intermediate-2/intermediate-2-home-hero-v1.png") 57% center / cover no-repeat;
@@ -451,21 +441,49 @@
 
   .intermediate2-hero h1 {
     max-width: 9.5ch;
-    font-size: clamp(2.15rem, 13vw, 3.35rem);
+    font-size: clamp(2rem, 11vw, 3rem);
+  }
+
+  .intermediate2-hero p:not(.intermediate2-kicker) {
+    margin-top: 0.75rem;
+    font-size: 0.96rem;
+    line-height: 1.45;
   }
 
   .intermediate2-actions {
     display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin-top: 1rem;
   }
 
   .intermediate2-button,
   .intermediate2-card-action {
     width: 100%;
+    min-height: 42px;
+    padding: 0.58rem 0.72rem;
+  }
+
+  .intermediate2-hero-insights {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+
+  .intermediate2-hero-insights span {
+    min-height: 32px;
+    align-items: center;
+    padding: 0.34rem 0.48rem;
+    font-size: 0.76rem;
+  }
+
+  .intermediate2-hero .intermediate2-hero-note {
+    margin-top: 0.55rem;
+    font-size: 0.84rem;
+    line-height: 1.35;
   }
 
   .intermediate2-search.course-search-panel,
-  .intermediate2-status-strip,
-  .intermediate2-alert,
   .intermediate2-section-head,
   .intermediate2-dashboard,
   .intermediate2-unit-band,
@@ -473,7 +491,6 @@
     width: min(100% - 24px, 1180px);
   }
 
-  .intermediate2-status-strip,
   .intermediate2-dashboard,
   .intermediate2-unit-grid {
     grid-template-columns: 1fr;
