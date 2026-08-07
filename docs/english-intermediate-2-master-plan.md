@@ -918,6 +918,28 @@ La actividad `Secret Social Circle` fija el primer precedente de este estándar 
 
 No se implementará una nueva actividad sin dejar primero en este Markdown su especificación aprobada o la actualización del estándar que corresponda.
 
+### 11.5 Registro obligatorio de personajes y nombres
+
+Intermediate English Course 2 mantendrá un registro de personajes por unidad y actividad. Antes de crear una historia, diálogo, coach o juego se comprobará que el nombre no pertenezca a otro personaje sin relación narrativa.
+
+Reglas:
+
+- no reutilizar nombres por costumbre;
+- no usar como nombres genéricos recurrentes a `Maya`, `Emma`, `Daniel`, `Olivia` o `Marcus`;
+- un personaje puede reaparecer únicamente cuando exista continuidad narrativa intencional;
+- conservar nombre completo, actividad, función, edad aproximada, relación y recurso visual;
+- evitar que dos personajes distintos compartan nombre dentro del mismo curso;
+- escoger nombres pronunciables, variados y libres de asociaciones estereotipadas.
+
+Registro inicial de Unit 1:
+
+| Personaje | Actividad | Función |
+| --- | --- | --- |
+| Nora Salcedo | The Saturday Table | nueva residente y protagonista |
+| Mr. Okafor | The Saturday Table | vecino y organizador comunitario |
+| Iris Chen | The Saturday Table | antigua compañera de Nora |
+| Gabriel Costa | The Saturday Table | nuevo contacto de Nora |
+
 ---
 
 ## 12. Ciclo TBL obligatorio en cada actividad
@@ -1003,6 +1025,37 @@ Accesibilidad:
 - contraste AA;
 - ancho de lectura aproximado de 65–75 caracteres;
 - opción de escuchar el texto cuando exista audiobook.
+
+### 13.1 Reading aprobado para Unit 1 — The Saturday Table
+
+Título completo: `The Saturday Table: New Faces, Old Connections`.
+
+La actividad desarrolla una historia original de 650–750 palabras dividida en cinco capítulos:
+
+1. `A quiet first week`;
+2. `The invitation`;
+3. `A familiar face`;
+4. `First impressions`;
+5. `Keeping in touch`.
+
+Nora Salcedo llega a un edificio nuevo. Mr. Okafor la invita a una cena comunitaria, donde conoce a Gabriel Costa y se reencuentra con Iris Chen. La lectura entrena relaciones sociales, primeras impresiones, evidencia textual, `who`, `that`, comas en cláusulas adicionales y las expresiones `hit it off`, `get back in touch`, `keep in touch` y `get on well`.
+
+La página incluye:
+
+- banner editorial propio, compacto y no fijo;
+- buscador;
+- cuatro tarjetas horizontales con miniaturas de 64–76 px;
+- predicción Pre-task;
+- ocho expresiones de vocabulary preview;
+- texto completo en cinco secciones;
+- pausas de lectura;
+- Language Detective con cuatro contrastes de cláusulas relativas;
+- ocho preguntas literales, inferenciales, de secuencia, referente y evidencia;
+- retroalimentación formativa local;
+- ejemplo completo de interacción en parejas;
+- respuesta final de 80–100 palabras con checklist y borrador local.
+
+La actividad tiene peso `0%` y no envía información al docente. No incorpora audio en su primera versión. Si posteriormente se aprueba `Listen after reading`, todo archivo será producido con ElevenLabs y la actividad se catalogará como read-along para Listening Library.
 
 ---
 
