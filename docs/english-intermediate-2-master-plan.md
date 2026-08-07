@@ -902,6 +902,8 @@ Toda actividad aprobada deberá incluir, según corresponda:
 
 Si la dinámica usa personajes, roles, objetos, escenarios o categorías que el estudiante debe escoger, cada opción tendrá una tarjeta visual pequeña con su propia imagen pertinente. No se sustituirán estas imágenes por tarjetas compuestas únicamente de texto. Las tarjetas deben ser compactas en celular para que la página conserve ritmo y no obligue a recorrer bloques innecesariamente altos.
 
+En tarjetas de selección como personajes o relaciones, la imagen será una miniatura lateral, no una portada. Su tamaño objetivo será de 64–76 px y nunca superará 88 px en su lado visible. La miniatura no ocupará todo el ancho de la tarjeta. En celular se usará una tarjeta horizontal baja, con la miniatura a la izquierda y el nombre y la definición a la derecha. Una imagen grande en proporción 3:2 o 4:3 dentro de estas tarjetas se considera un incumplimiento de la instrucción `tarjeta pequeña`.
+
 El banner no será fijo ni se mantendrá sobre el contenido durante el scroll. En celular tendrá altura automática, recorte controlado, texto corto y acceso rápido a la acción. La imagen principal no se repetirá inmediatamente debajo del banner.
 
 La actividad `Secret Social Circle` fija el primer precedente de este estándar para Course 2:
