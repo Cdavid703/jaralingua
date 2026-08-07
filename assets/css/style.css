@@ -1260,6 +1260,23 @@ a {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.english-program-grid.has-four-levels {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.english-program-grid.has-four-levels .english-program-image {
+  height: 210px;
+}
+
+.english-program-grid.has-four-levels .english-program-content {
+  padding: 24px;
+}
+
+.english-program-grid.has-four-levels .english-program-content h3 {
+  font-size: clamp(1.35rem, 1.65vw, 1.75rem);
+}
+
 .english-program-card {
   background: var(--white);
   border-radius: 30px;
@@ -1409,6 +1426,10 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .english-program-grid.has-four-levels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .english-method-content {
     max-width: 100%;
   }
@@ -1448,6 +1469,10 @@ a {
 
   .english-program-content {
     padding: 26px;
+  }
+
+  .english-program-grid.has-four-levels {
+    grid-template-columns: 1fr;
   }
 
   .english-method-band {
