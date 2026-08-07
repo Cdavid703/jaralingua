@@ -546,6 +546,26 @@ Cada unidad será un `details` con:
 
 Los contadores se generarán desde el catálogo y no se escribirán manualmente.
 
+### 9.1.1 Regla anti-redundancia para Course Overview y páginas de unidad
+
+Las páginas de unidad deben enseñar contenido desde el primer bloque útil. No deben repetir varias veces la misma información visual o textual antes de llegar a la explicación.
+
+Reglas obligatorias:
+
+- Si el banner/hero ya muestra la imagen principal, el título de la unidad, el número de unidad y el contexto, no se debe repetir inmediatamente abajo otra tarjeta con la misma imagen, el mismo número de unidad y el mismo título.
+- En celular, después del hero compacto y del buscador, el estudiante debe llegar rápido al contenido enseñable: explicación gramatical, ejemplos, vocabulario, modelos de uso o práctica guiada.
+- El bloque de identidad de la unidad debe ser breve. No debe convertirse en una segunda portada.
+- Una página de Course Overview o unidad no puede quedarse en "cómo se va a enseñar"; debe enseñar realmente: reglas, usos, ejemplos, contrastes, errores comunes y producción modelo.
+- Las imágenes se usan para contextualizar, no para alargar la entrada. Si una imagen ya cumplió su función en el hero, no se repite salvo que tenga una función pedagógica diferente.
+- En la revisión móvil se debe medir cuántas pantallas debe desplazar el estudiante antes de llegar al primer contenido de aprendizaje. Si el estudiante debe pasar por dos portadas, la página falla.
+
+Aplicación inmediata para Unit 1:
+
+- El hero puede presentar "Relationships: Neighbors, Friends and Meeting People".
+- Debajo del hero no debe aparecer otro bloque con la misma imagen y el mismo título de Unit 1.
+- La primera sección posterior al buscador debe comenzar con la enseñanza de relative clauses, tactful descriptions, relationship expressions o phrasal verbs.
+- El antiguo bloque "Teaching Route / How Unit 1 will be taught" se considera insuficiente si no se transforma en explicación para el estudiante.
+
 ### 9.2 Mapa oficial por unidad
 
 #### Unit 1 — Relationships: Neighbors, Friends and Meeting People
@@ -2253,6 +2273,27 @@ Ningún hero, banner, imagen principal o panel introductorio podrá usar:
 - Se limitará el espacio inicial para que el estudiante vea el comienzo del contenido sin desplazarse varias pantallas.
 - Los botones no permanecerán flotando sobre texto.
 - Solo se permitirán controles fijos pequeños y justificados, como accesibilidad o retorno, después de verificar que no cubren contenido.
+
+### 36.2.1 Regla de no repetición antes del contenido
+
+En celular, el inicio de una página no puede funcionar como una secuencia de portadas repetidas.
+
+Queda prohibido:
+
+- mostrar una imagen hero y luego repetir la misma imagen en una tarjeta introductoria inmediata;
+- repetir "Unit 1", "Lesson 1", el título de la unidad o el mismo resumen si ya apareció en el banner;
+- poner una segunda presentación visual antes de la primera explicación real;
+- usar bloques decorativos que obliguen al estudiante a hacer scroll varias veces antes de encontrar contenido enseñable.
+
+Orden obligatorio recomendado para páginas explicativas de unidad:
+
+1. Header compacto.
+2. Hero breve con imagen o fondo, título y una frase clara.
+3. Buscador o navegación corta, si aplica.
+4. Primer contenido de aprendizaje: regla, explicación, ejemplo o vocabulario.
+5. Expansión visual o mapa de unidad solo si aporta una función distinta.
+
+La auditoría móvil debe confirmar que el primer contenido enseñable aparece rápidamente en 360, 390 y 430 px. Si la página repite hero, unidad, imagen y título antes de enseñar, debe rediseñarse.
 
 ### 36.3 Prueba obligatoria de scroll móvil
 
