@@ -2867,3 +2867,43 @@ Esta actividad es entregable al profesor, pero queda deliberadamente fuera de `I
 ### Regla operativa aplicada
 
 La actividad, su documentación, los modelos ElevenLabs, el catálogo, la recepción del profesor y los accesos desde Home/Course Overview forman una sola sección desplegable. Al finalizar se debe ejecutar validación sin servidor local, commit, push, despliegue y verificación directa en producción, conforme a la regla general de este plan.
+
+## Implementación confirmada — Conversation Coach Unit 1: Coffee with Gabriel
+
+La primera conversación guiada de Course 2 continúa el universo narrativo de `The Saturday Table` y usa a Gabriel, el fotógrafo comunitario, como interlocutor. No empieza con una instrucción abstracta sobre el círculo social: Gabriel pregunta directamente `Tell me about your best friend. What's their name, and what are they like?`, una entrada concreta que cualquier estudiante puede comprender y responder.
+
+### Ruta conversacional aprobada
+
+1. presentar al mejor amigo o a la mejor amiga y describir su personalidad;
+2. explicar cómo se conocieron;
+3. decir por qué se llevan bien y qué tienen en común;
+4. explicar cómo mantienen el contacto y qué hacen juntos;
+5. invertir los roles: el estudiante formula una pregunta sobre el mejor amigo de Gabriel y Gabriel responde.
+
+La conversación entrena `who` y `that`, `hit it off`, `get on well`, `have in common`, `keep in touch`, `kind of` y `a bit`. Cada turno incluye una pregunta audible, tres marcos de respuesta, vocabulario útil, un foco lingüístico breve, grabación máxima de treinta segundos, reproducción de la propia voz y transcripción temporal. La transcripción mantiene visible el hilo y, en el quinto turno, permite elegir una respuesta pertinente de Gabriel; no se usa para puntuar ni corregir automáticamente al estudiante.
+
+### Excepción pedagógica: práctica sin evaluación
+
+Aunque se conserva la base técnica útil de los Conversation Coaches de Intermediate English Course 1, esta actividad elimina deliberadamente sus modos evaluativos:
+
+- no existe modo evaluado ni cambio entre modos;
+- no hay nota sobre 50, rúbrica, porcentaje, puntos ni comparación de intentos;
+- no se crea entrega al profesor, comprobante, historial ni registro en Grades;
+- no se guarda la grabación ni la transcripción en almacenamiento local;
+- la grabación permanece únicamente en la pantalla actual y el audio se envía temporalmente al servicio existente de transcripción;
+- si la transcripción falla, el estudiante puede volver a intentarlo o continuar con la grabación disponible, sin inventar texto ni penalizarlo.
+
+### Audio, identidad visual y experiencia móvil
+
+- todos los mensajes audibles —bienvenida, instrucciones, cinco preguntas, cuatro reacciones, cuatro respuestas posibles del cambio de roles, cierre y dos recuperaciones— son dieciocho archivos generados con ElevenLabs;
+- Gabriel usa una sola voz profesional y consistente: `Sean — Expressive and Conversational`, ID `DwwuoY7Uz8AP8zrY5TAo`;
+- el guion canónico y los metadatos de cada MP3 quedan junto a los audios;
+- el banner profesional presenta a Gabriel en una cafetería con su cámara y se recorta de forma compacta en celular;
+- la misma imagen solo reaparece como avatar pequeño y funcional del interlocutor, no como un segundo banner;
+- el banner permanece en el flujo normal: nunca es fijo ni cubre el contenido al hacer scroll;
+- el buscador aparece inmediatamente después del banner y localiza contenido por tema o palabra clave;
+- en celular se priorizan pregunta, ayuda, botón de micrófono y avance, con una sola columna y sin desplazamiento horizontal.
+
+### Regla operativa aplicada
+
+`Coffee with Gabriel`, sus dieciocho audios ElevenLabs, imagen profesional, catálogo, accesos desde Home y Course Overview, documentación y pruebas forman una sola sección. Se valida sin levantar servidor local; después se realiza commit, push, despliegue y comprobación directa en producción.

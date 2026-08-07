@@ -1,0 +1,31 @@
+{
+  "activityId": "intermediate2Unit1CoffeeWithGabrielConversationCoach",
+  "provider": "ElevenLabs",
+  "voice": {
+    "name": "Sean — Expressive and Conversational",
+    "voiceId": "DwwuoY7Uz8AP8zrY5TAo",
+    "modelId": "eleven_multilingual_v2",
+    "outputFormat": "mp3_44100_128"
+  },
+  "generatedOn": "2026-08-07",
+  "files": [
+    { "file": "welcome.mp3", "bytes": 213621, "durationSeconds": 13.348 },
+    { "file": "instructions.mp3", "bytes": 299720, "durationSeconds": 18.73 },
+    { "file": "turn-1-best-friend.mp3", "bytes": 61066, "durationSeconds": 3.814 },
+    { "file": "reaction-1-introduction.mp3", "bytes": 87397, "durationSeconds": 5.46 },
+    { "file": "turn-2-how-you-met.mp3", "bytes": 27629, "durationSeconds": 1.724 },
+    { "file": "reaction-2-meeting.mp3", "bytes": 143822, "durationSeconds": 8.986 },
+    { "file": "turn-3-common.mp3", "bytes": 46437, "durationSeconds": 2.9 },
+    { "file": "reaction-3-common.mp3", "bytes": 87815, "durationSeconds": 5.486 },
+    { "file": "turn-4-contact.mp3", "bytes": 54378, "durationSeconds": 3.396 },
+    { "file": "reaction-4-contact.mp3", "bytes": 117072, "durationSeconds": 7.314 },
+    { "file": "turn-5-ask-gabriel.mp3", "bytes": 77784, "durationSeconds": 4.859 },
+    { "file": "answer-how-we-met.mp3", "bytes": 183946, "durationSeconds": 11.494 },
+    { "file": "answer-personality.mp3", "bytes": 157196, "durationSeconds": 9.822 },
+    { "file": "answer-keep-in-touch.mp3", "bytes": 162212, "durationSeconds": 10.135 },
+    { "file": "answer-general.mp3", "bytes": 169735, "durationSeconds": 10.606 },
+    { "file": "closing.mp3", "bytes": 227831, "durationSeconds": 14.237 },
+    { "file": "recovery-no-speech.mp3", "bytes": 106623, "durationSeconds": 6.661 },
+    { "file": "recovery-service.mp3", "bytes": 167645, "durationSeconds": 10.475 }
+  ]
+}
