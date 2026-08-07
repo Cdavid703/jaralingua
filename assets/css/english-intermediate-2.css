@@ -243,16 +243,52 @@
   display: grid;
   align-content: start;
   gap: 0.65rem;
-  padding: 1.15rem;
+  overflow: hidden;
+  padding: 0;
 }
 
 .intermediate2-section-card.important {
   border-top: 5px solid var(--ie2-coral);
 }
 
+.intermediate2-card-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  margin: 0;
+  overflow: hidden;
+  background: #dfe8f2;
+}
+
+.intermediate2-card-image::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(7, 31, 79, 0.02), rgba(7, 31, 79, 0.22)),
+    radial-gradient(circle at 88% 12%, rgba(217, 164, 65, 0.16), transparent 28%);
+  pointer-events: none;
+}
+
+.intermediate2-card-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.intermediate2-section-card > :not(.intermediate2-card-image) {
+  margin-left: 1.15rem;
+  margin-right: 1.15rem;
+}
+
+.intermediate2-section-card > :last-child {
+  margin-bottom: 1.15rem;
+}
+
 .intermediate2-number {
   width: 38px;
   height: 38px;
+  margin-top: 1.15rem;
   display: grid;
   place-items: center;
   border-radius: 8px;
