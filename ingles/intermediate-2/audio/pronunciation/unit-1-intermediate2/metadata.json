@@ -1,0 +1,26 @@
+{
+  "activityId": "intermediate2Unit1PeopleWhoChangedMyCirclePronunciation",
+  "version": "2026.1",
+  "provider": "ElevenLabs",
+  "voice": {
+    "name": "Sarah",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "accent": "General American English"
+  },
+  "model": "eleven_multilingual_v2",
+  "format": "mp3_44100_128",
+  "settings": {
+    "stability": 0.64,
+    "similarityBoost": 0.82,
+    "style": 0.14,
+    "speakerBoost": true
+  },
+  "source": "../unit-1-people-who-changed-my-circle-script.md",
+  "files": [
+    { "name": "section-1.mp3", "durationSeconds": 4.284, "bytes": 68589 },
+    { "name": "section-2.mp3", "durationSeconds": 5.538, "bytes": 88651 },
+    { "name": "section-3.mp3", "durationSeconds": 3.866, "bytes": 61902 },
+    { "name": "section-4.mp3", "durationSeconds": 3.396, "bytes": 54378 },
+    { "name": "people-who-changed-my-circle-model-us.mp3", "durationSeconds": 17.894, "bytes": 286346 }
+  ]
+}

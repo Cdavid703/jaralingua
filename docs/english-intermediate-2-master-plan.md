@@ -2837,3 +2837,33 @@ Un entregable estará listo para producción cuando:
 8. Publicar evaluaciones únicamente después del ensayo completo con cuentas reales de prueba.
 
 No se copiará el JavaScript histórico de cada examen como una solución independiente. Course 2 reutilizará un solo motor y añadirá políticas declarativas por actividad.
+
+## Implementación confirmada — Pronunciation Unit 1: People Who Changed My Circle
+
+La primera actividad de pronunciación de Course 2 toma como base funcional el laboratorio de Intermediate English Course 1: modelo profesional, control de velocidad, Shadow Mode, grabación por secciones, análisis de transcripción, resaltado de palabras, métricas de claridad y reto final. El contenido se adapta completamente a la Unidad 1: cláusulas relativas para personas, diferencia auditiva entre `who` y `that`, pausa de la cláusula no definitoria y expresiones de relaciones.
+
+### Producto oral
+
+- cuatro fragmentos breves antes del producto completo;
+- cinco audios modelo generados oficialmente con ElevenLabs;
+- práctica de `neighbor_who`, `that_I`, la pausa en `Iris, who...`, `get_back_in_touch`, `get_on_well` y `keep_in_touch`;
+- grabación final: **People Who Changed My Circle**;
+- banner profesional propio, compacto, no fijo y con recorte específico para celular;
+- buscador por contenido y palabra clave al inicio de la actividad.
+
+### Excepción explícita de entrega formativa
+
+Esta actividad es entregable al profesor, pero queda deliberadamente fuera de `Intermediate English Grades`:
+
+- no crea evaluación en la grilla;
+- no escribe en `grades` ni en `gradeDetails`;
+- no tiene nota de 1 a 5, peso cero ni porcentaje oculto;
+- no afecta el promedio;
+- usa una bandeja independiente con audio, transcripción, métricas formativas, fecha, intento y comprobante `JLF`;
+- conserva varios intentos y aplica idempotencia mediante `clientSubmissionId` para evitar entregas duplicadas;
+- ante una interrupción de red, el cliente consulta el comprobante antes de indicar fallo y permite reintentar sin duplicar;
+- el estudiante ve el comprobante; el profesor autenticado ve la bandeja y puede cargar cada audio de forma protegida.
+
+### Regla operativa aplicada
+
+La actividad, su documentación, los modelos ElevenLabs, el catálogo, la recepción del profesor y los accesos desde Home/Course Overview forman una sola sección desplegable. Al finalizar se debe ejecutar validación sin servidor local, commit, push, despliegue y verificación directa en producción, conforme a la regla general de este plan.

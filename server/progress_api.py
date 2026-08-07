@@ -179,6 +179,14 @@ INTERMEDIATE_UNIT4_IMPOSTOR_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT4
 INTERMEDIATE_DECISION_ROOM_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_DECISION_ROOM_DATA", "/var/lib/jaralingua/intermediate-decision-room-games.json")
 INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_UNIT5_MARKET_BASKET_LIVE_DATA", "/var/lib/jaralingua/intermediate-unit5-market-basket-live.json")
 INTERMEDIATE_PRONUNCIATION_AUDIO_DIR = os.environ.get("JARALINGUA_INTERMEDIATE_PRONUNCIATION_AUDIO_DIR", "/var/lib/jaralingua/intermediate-pronunciation-audio")
+INTERMEDIATE2_UNIT1_PRONUNCIATION_SUBMISSIONS_PATH = os.environ.get(
+    "JARALINGUA_INTERMEDIATE2_UNIT1_PRONUNCIATION_SUBMISSIONS",
+    "/var/lib/jaralingua/intermediate2-unit1-pronunciation-submissions.json"
+)
+INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR = os.environ.get(
+    "JARALINGUA_INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR",
+    "/var/lib/jaralingua/intermediate2-pronunciation-audio"
+)
 INTERMEDIATE_UNIT2_CATCHING_UP_ID = "unit2CatchingUpListening"
 INTERMEDIATE_UNIT2_TIMELINE_ID = "unit2TimelineCatchUpWriting"
 INTERMEDIATE_UNIT2_READING_ID = "unit2LetterNeverSentReading"
@@ -203,6 +211,14 @@ INTERMEDIATE_UNIT6_READING_ID = "unit6OliviaOverloadedWeekReading"
 INTERMEDIATE_UNIT6_PRONUNCIATION_ID = "unit6FuturePlansPronunciation"
 INTERMEDIATE_UNIT6_SCHEDULE_COACH_ID = "unit6ScheduleRescueConversationCoach"
 INTERMEDIATE_UNIT6_VIDEO_LISTENING_ID = "unit6OliviasWeekVideoListening"
+INTERMEDIATE2_UNIT1_PRONUNCIATION_ID = "intermediate2Unit1PeopleWhoChangedMyCirclePronunciation"
+INTERMEDIATE2_UNIT1_PRONUNCIATION_VERSION = "2026.1"
+INTERMEDIATE2_UNIT1_PRONUNCIATION_REFERENCE = (
+    "Mr. Okafor is the neighbor who lives across the hall and brings people together. "
+    "Iris, who was in my evening class, is the old classmate that I recently got back in touch with. "
+    "Gabriel is a photographer who became a new contact after dinner. "
+    "They are people I get on well with, and I want to keep in touch."
+)
 INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID = "finalOralPartnerCoachFollowUp"
 INTERMEDIATE_FINAL_WRITING_TEST_ID = "intermediateFinalWritingTest20"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
@@ -2473,6 +2489,167 @@ def save_pronunciation_audio(audio_dir, student, evaluation_id, payload):
         "bytes": len(audio_bytes),
         "uploadedAt": now_iso()
     }
+
+
+def read_intermediate2_unit1_pronunciation_submissions():
+    default = {
+        "schemaVersion": 1,
+        "activityId": INTERMEDIATE2_UNIT1_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT1_PRONUNCIATION_VERSION,
+        "submissions": []
+    }
+    path = INTERMEDIATE2_UNIT1_PRONUNCIATION_SUBMISSIONS_PATH
+    if not os.path.exists(path):
+        return default
+    try:
+        with open(path, "r", encoding="utf-8-sig") as handle:
+            data = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return default
+    if not isinstance(data, dict):
+        return default
+    submissions = data.get("submissions")
+    if not isinstance(submissions, list):
+        submissions = []
+    data["schemaVersion"] = 1
+    data["activityId"] = INTERMEDIATE2_UNIT1_PRONUNCIATION_ID
+    data["activityVersion"] = INTERMEDIATE2_UNIT1_PRONUNCIATION_VERSION
+    data["submissions"] = [item for item in submissions if isinstance(item, dict)]
+    return data
+
+
+def intermediate2_pronunciation_student_key(profile):
+    return normalize_email(profile.get("email")) or clean_text(profile.get("sub"), 160)
+
+
+def intermediate2_unit1_pronunciation_public_item(item, include_student=False):
+    result = {
+        "receiptId": clean_text(item.get("receiptId"), 80),
+        "clientSubmissionId": clean_text(item.get("clientSubmissionId"), 120),
+        "submittedAt": clean_text(item.get("submittedAt"), 80),
+        "attemptNumber": item.get("attemptNumber"),
+        "status": "received",
+        "overall": clean_score_metric(item.get("overall")),
+        "accuracy": clean_score_metric(item.get("accuracy")),
+        "completeness": clean_score_metric(item.get("completeness")),
+        "fluency": clean_score_metric(item.get("fluency")),
+        "wpm": clean_score_metric(item.get("wpm"), 0, 300),
+        "transcript": clean_text(item.get("transcript"), 3000),
+        "referenceText": clean_text(item.get("referenceText"), 3000),
+        "missedWords": clean_text_list(item.get("missedWords"), 30, 80),
+        "audioAvailable": isinstance(item.get("audio"), dict),
+        "gradebookProjected": False,
+        "affectsAverage": False
+    }
+    if include_student:
+        result.update({
+            "studentName": clean_text(item.get("studentName"), 180),
+            "studentEmail": normalize_email(item.get("studentEmail"))
+        })
+    return result
+
+
+def intermediate2_unit1_pronunciation_audio_path(audio_ref):
+    if not isinstance(audio_ref, dict):
+        return "", ""
+    filename = safe_filename_token(audio_ref.get("file"), 160)
+    if not filename:
+        return "", ""
+    root = os.path.abspath(INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR)
+    path = os.path.abspath(os.path.join(root, filename))
+    if not path.startswith(root + os.sep):
+        return "", ""
+    return path, clean_text(audio_ref.get("contentType"), 80) or "audio/webm"
+
+
+def submit_intermediate2_unit1_pronunciation(profile, payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_payload"}
+    student_key = intermediate2_pronunciation_student_key(profile)
+    if not student_key:
+        return 403, {"error": "student_identity_missing"}
+    client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+    if len(client_submission_id) < 8:
+        return 400, {"error": "invalid_client_submission_id"}
+    details = payload.get("details") if isinstance(payload.get("details"), dict) else {}
+    reference_text = clean_text(details.get("referenceText"), 3000)
+    if reference_text != INTERMEDIATE2_UNIT1_PRONUNCIATION_REFERENCE:
+        return 400, {"error": "reference_text_mismatch"}
+
+    store = read_intermediate2_unit1_pronunciation_submissions()
+    submissions = store.setdefault("submissions", [])
+    existing = next((
+        item for item in submissions
+        if item.get("studentKey") == student_key
+        and item.get("clientSubmissionId") == client_submission_id
+    ), None)
+    if isinstance(existing, dict):
+        response = intermediate2_unit1_pronunciation_public_item(existing)
+        response.update({"ok": True, "idempotentReplay": True})
+        return 200, response
+
+    metrics = {
+        "overall": clean_score_metric(details.get("overall")),
+        "accuracy": clean_score_metric(details.get("accuracy")),
+        "completeness": clean_score_metric(details.get("completeness")),
+        "fluency": clean_score_metric(details.get("fluency")),
+        "wpm": clean_score_metric(details.get("wpm"), 0, 300)
+    }
+    if any(metrics[key] is None for key in ("overall", "accuracy", "completeness", "fluency")):
+        return 400, {"error": "invalid_metrics"}
+    audio_ref = save_pronunciation_audio(
+        INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR,
+        {"id": student_key, "email": student_key},
+        INTERMEDIATE2_UNIT1_PRONUNCIATION_ID,
+        payload
+    )
+    if not audio_ref:
+        return 400, {"error": "missing_audio"}
+
+    submitted_at = now_iso()
+    attempt_number = 1 + sum(1 for item in submissions if item.get("studentKey") == student_key)
+    receipt_id = submission_receipt_code(
+        local_auth_secret(),
+        INTERMEDIATE2_UNIT1_PRONUNCIATION_ID,
+        INTERMEDIATE2_UNIT1_PRONUNCIATION_VERSION,
+        student_key,
+        submitted_at,
+        client_submission_id
+    )
+    submission = {
+        "activityId": INTERMEDIATE2_UNIT1_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT1_PRONUNCIATION_VERSION,
+        "clientSubmissionId": client_submission_id,
+        "receiptId": receipt_id,
+        "studentKey": student_key,
+        "studentName": clean_text(profile.get("name") or profile.get("fullName") or profile.get("displayName"), 180) or student_key,
+        "studentEmail": normalize_email(profile.get("email")),
+        "submittedAt": submitted_at,
+        "attemptNumber": attempt_number,
+        "overall": metrics["overall"],
+        "accuracy": metrics["accuracy"],
+        "completeness": metrics["completeness"],
+        "fluency": metrics["fluency"],
+        "wpm": metrics["wpm"],
+        "transcript": clean_text(details.get("transcript"), 3000),
+        "referenceText": reference_text,
+        "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
+        "stageLabel": clean_text(details.get("stageLabel"), 120),
+        "audio": audio_ref,
+        "status": "received",
+        "teacherInboxOnly": True,
+        "gradebookProjected": False,
+        "affectsAverage": False
+    }
+    submissions.append(submission)
+    write_json_file(
+        INTERMEDIATE2_UNIT1_PRONUNCIATION_SUBMISSIONS_PATH,
+        store,
+        ".intermediate2-unit1-pronunciation-"
+    )
+    response = intermediate2_unit1_pronunciation_public_item(submission)
+    response.update({"ok": True, "idempotentReplay": False})
+    return 200, response
 
 
 def attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, audio_dir):
@@ -15455,6 +15632,58 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if not profile:
             return
 
+        if parsed.path in (
+            "/api/intermediate2/unit1-pronunciation/submissions",
+            "/api/intermediate2/unit1-pronunciation/audio"
+        ):
+            query = urllib.parse.parse_qs(parsed.query)
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                role = grade_user_role(profile, grades_data)
+                is_staff = role in ("admin", "teacher")
+                student_key = intermediate2_pronunciation_student_key(profile)
+                store = read_intermediate2_unit1_pronunciation_submissions()
+                submissions = store.get("submissions", [])
+
+                if parsed.path.endswith("/audio"):
+                    receipt_id = clean_text((query.get("receipt") or [""])[0], 80)
+                    submission = next((item for item in submissions if item.get("receiptId") == receipt_id), None)
+                    if not isinstance(submission, dict):
+                        json_response(self, 404, {"error": "submission_not_found"})
+                        return
+                    if not is_staff and submission.get("studentKey") != student_key:
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    audio_path, content_type = intermediate2_unit1_pronunciation_audio_path(submission.get("audio"))
+                    if not audio_path or not os.path.isfile(audio_path):
+                        json_response(self, 404, {"error": "audio_not_found"})
+                        return
+                else:
+                    client_submission_id = clean_text((query.get("clientSubmissionId") or [""])[0], 120)
+                    visible = submissions if is_staff else [
+                        item for item in submissions if item.get("studentKey") == student_key
+                    ]
+                    if client_submission_id:
+                        visible = [
+                            item for item in visible
+                            if item.get("clientSubmissionId") == client_submission_id
+                        ]
+                    visible = sorted(visible, key=lambda item: item.get("submittedAt", ""), reverse=True)
+                    json_response(self, 200, {
+                        "ok": True,
+                        "role": role,
+                        "teacherInbox": is_staff,
+                        "gradebookProjected": False,
+                        "affectsAverage": False,
+                        "items": [
+                            intermediate2_unit1_pronunciation_public_item(item, include_student=is_staff)
+                            for item in visible
+                        ]
+                    })
+                    return
+            ranged_file_response(self, audio_path, content_type)
+            return
+
         if parsed.path == "/api/french8/final-exam/simulation":
             query = urllib.parse.parse_qs(parsed.query)
             variant = clean_text((query.get("variant") or ["A"])[0], 20).upper() or "A"
@@ -16981,6 +17210,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 or profile.get("_studentIdClaim")
                 or ""
             )
+
+        if parsed.path == "/api/intermediate2/unit1-pronunciation/submit":
+            with data_lock:
+                status, response = submit_intermediate2_unit1_pronunciation(profile, payload)
+            json_response(self, status, response)
+            return
 
         if parsed.path == "/api/intermediate/final-writing/start":
             try:
