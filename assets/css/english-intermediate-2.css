@@ -2117,3 +2117,504 @@
     line-height: 1.68;
   }
 }
+
+.ie2-listening-hero {
+  width: 100%;
+  min-height: clamp(400px, 47vw, 560px);
+  display: flex;
+  align-items: end;
+  padding: clamp(4.5rem, 8vw, 6.5rem) 0 clamp(1.6rem, 4vw, 2.8rem);
+  background:
+    linear-gradient(90deg, rgba(3, 12, 32, 0.98) 0%, rgba(3, 12, 32, 0.9) 35%, rgba(3, 12, 32, 0.38) 66%, rgba(3, 12, 32, 0.08) 100%),
+    url("../img/english-intermediate-2/unit-1/noras-voice-note-listening/noras-voice-note-listening-hero-v1.png") center / cover no-repeat;
+  color: #ffffff;
+}
+
+.ie2-listening-hero-content {
+  width: min(1180px, calc(100% - 36px));
+  margin-inline: auto;
+}
+
+.ie2-listening-hero h1 {
+  max-width: 10ch;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.35rem, 6vw, 4.8rem);
+  line-height: 0.96;
+}
+
+.ie2-listening-hero p:not(.intermediate2-kicker) {
+  max-width: 610px;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.52;
+}
+
+.ie2-listening-hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.48rem;
+  margin-top: 0.9rem;
+}
+
+.ie2-listening-hero-chips span {
+  padding: 0.4rem 0.64rem;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(3, 12, 32, 0.36);
+  color: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 900;
+  backdrop-filter: blur(8px);
+}
+
+.ie2-listening-shell {
+  width: min(1180px, calc(100% - 36px));
+  margin: 1.35rem auto 4rem;
+}
+
+.ie2-listening-block {
+  margin-top: 0.9rem;
+  padding: clamp(1.1rem, 3vw, 1.8rem);
+  border: 1px solid var(--ie2-line);
+  border-radius: 8px;
+  background: var(--ie2-paper);
+  box-shadow: 0 12px 30px rgba(7, 31, 79, 0.08);
+}
+
+.ie2-listening-block:first-child {
+  margin-top: 0;
+}
+
+.ie2-listening-block .intermediate2-kicker {
+  background: #e8f7f5;
+  color: var(--ie2-teal);
+}
+
+.ie2-listening-block h2 {
+  margin: 0;
+  color: var(--ie2-navy);
+  font-size: clamp(1.5rem, 3vw, 2.45rem);
+  line-height: 1.08;
+}
+
+.ie2-listening-block h3 {
+  color: var(--ie2-navy);
+}
+
+.ie2-listening-block > p {
+  color: var(--ie2-muted);
+  line-height: 1.6;
+}
+
+.ie2-listening-block code {
+  color: var(--ie2-blue);
+  font-weight: 950;
+}
+
+.ie2-listening-focus-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin-top: 1rem;
+}
+
+.ie2-listening-focus-grid article {
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  border-radius: 8px;
+  background: linear-gradient(180deg, #fbfffe 0%, #eef8f6 100%);
+}
+
+.ie2-listening-focus-grid article > span {
+  color: var(--ie2-teal);
+  font-size: 0.8rem;
+  font-weight: 950;
+}
+
+.ie2-listening-focus-grid h3,
+.ie2-listening-focus-grid p {
+  margin: 0.3rem 0 0;
+}
+
+.ie2-listening-focus-grid p {
+  color: var(--ie2-muted);
+  line-height: 1.48;
+}
+
+.ie2-listening-vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.ie2-listening-vocab-grid details {
+  min-width: 0;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.ie2-listening-vocab-grid summary {
+  padding: 0.72rem 0.82rem;
+  color: var(--ie2-navy);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.ie2-listening-vocab-grid details p {
+  margin: 0;
+  padding: 0 0.82rem 0.78rem;
+  color: var(--ie2-muted);
+  line-height: 1.5;
+}
+
+.ie2-listening-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: end;
+}
+
+.ie2-listening-heading > span {
+  flex: 0 0 auto;
+  padding: 0.42rem 0.65rem;
+  border-radius: 999px;
+  background: #eef8f6;
+  color: var(--ie2-teal);
+  font-weight: 950;
+}
+
+.ie2-audio-card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(36, 84, 166, 0.16);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #071f4f 0%, #123b79 100%);
+  color: #ffffff;
+}
+
+.ie2-speaker-row {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.ie2-speaker-row img {
+  width: 64px;
+  height: 64px;
+  display: block;
+  border: 2px solid rgba(255, 255, 255, 0.82);
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.ie2-speaker-row strong,
+.ie2-speaker-row span {
+  display: block;
+}
+
+.ie2-speaker-row strong {
+  font-size: 1.05rem;
+}
+
+.ie2-speaker-row span {
+  margin-top: 0.18rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.86rem;
+}
+
+.ie2-audio-card audio {
+  width: 100%;
+  display: block;
+  margin-top: 0.85rem;
+}
+
+.ie2-audio-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.ie2-audio-controls > span {
+  margin-right: 0.2rem;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.84rem;
+  font-weight: 900;
+}
+
+.ie2-audio-controls button {
+  min-width: 58px;
+  min-height: 42px;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.ie2-audio-controls button:hover,
+.ie2-audio-controls button:focus-visible,
+.ie2-audio-controls button.is-active {
+  border-color: #ffda81;
+  background: #ffda81;
+  color: var(--ie2-navy);
+}
+
+.ie2-audio-status {
+  margin: 0.7rem 0 0 !important;
+  color: rgba(255, 255, 255, 0.86) !important;
+  font-size: 0.88rem;
+  font-weight: 850;
+}
+
+.ie2-listen-pass-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem;
+  margin-top: 0.8rem;
+}
+
+.ie2-listen-pass-grid article {
+  min-width: 0;
+  padding: 0.9rem;
+  border: 1px solid rgba(7, 31, 79, 0.11);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.ie2-listen-pass-grid h3,
+.ie2-listen-pass-grid p {
+  margin: 0;
+}
+
+.ie2-listen-pass-grid p {
+  margin-top: 0.4rem;
+  color: var(--ie2-muted);
+  line-height: 1.5;
+}
+
+.ie2-listen-pass-grid button {
+  margin-top: 0.75rem;
+}
+
+.ie2-listen-pass-grid button.is-complete {
+  border-color: var(--ie2-teal);
+  background: #eef8f6;
+  color: var(--ie2-teal);
+}
+
+.ie2-listening-progress {
+  margin: 0.75rem 0 0 !important;
+  padding: 0.7rem 0.8rem;
+  border-left: 4px solid var(--ie2-teal);
+  border-radius: 8px;
+  background: #eef8f6;
+  color: var(--ie2-navy) !important;
+  font-weight: 900;
+}
+
+.ie2-transcript {
+  margin-top: 1rem;
+  border: 1px solid rgba(7, 31, 79, 0.12);
+  border-radius: 8px;
+  background: #fffefa;
+}
+
+.ie2-transcript summary {
+  padding: 0.85rem;
+  color: var(--ie2-blue);
+  font-weight: 950;
+  cursor: pointer;
+}
+
+.ie2-transcript > div {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: 0 1rem 1rem;
+}
+
+.ie2-transcript p {
+  color: #26384e;
+  font-size: 1.02rem;
+  line-height: 1.7;
+}
+
+.ie2-speaking-prompt-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.6rem;
+  margin-top: 1rem;
+}
+
+.ie2-speaking-prompt-grid article {
+  min-width: 0;
+  padding: 0.78rem;
+  border: 1px solid rgba(15, 118, 110, 0.16);
+  border-radius: 8px;
+  background: #eef8f6;
+}
+
+.ie2-speaking-prompt-grid strong,
+.ie2-speaking-prompt-grid span {
+  display: block;
+}
+
+.ie2-speaking-prompt-grid strong {
+  color: var(--ie2-navy);
+}
+
+.ie2-speaking-prompt-grid span {
+  margin-top: 0.28rem;
+  color: var(--ie2-muted);
+  line-height: 1.45;
+}
+
+.ie2-listening-dialogue {
+  display: grid;
+  gap: 0.48rem;
+  margin-top: 1rem;
+  padding: 0.9rem;
+  border: 1px solid rgba(7, 31, 79, 0.1);
+  border-radius: 8px;
+  background: #fbfdff;
+}
+
+.ie2-listening-dialogue h3 {
+  margin: 0 0 0.15rem;
+}
+
+.ie2-listening-dialogue p {
+  margin: 0;
+  padding: 0.6rem 0.68rem;
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ie2-muted);
+  line-height: 1.5;
+}
+
+.ie2-listening-dialogue strong {
+  color: var(--ie2-navy);
+}
+
+.ie2-rehearsal-timer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.8rem;
+  padding: 0.82rem;
+  border: 1px solid rgba(217, 164, 65, 0.26);
+  border-radius: 8px;
+  background: #fff7df;
+}
+
+.ie2-rehearsal-timer > div {
+  min-width: 110px;
+  margin-right: auto;
+}
+
+.ie2-rehearsal-timer span,
+.ie2-rehearsal-timer strong {
+  display: block;
+}
+
+.ie2-rehearsal-timer span {
+  color: #8a5f09;
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+
+.ie2-rehearsal-timer strong {
+  margin-top: 0.1rem;
+  color: var(--ie2-navy);
+  font-size: 1.55rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.ie2-private-note {
+  margin: 0.65rem 0 0 !important;
+  color: var(--ie2-muted) !important;
+  font-size: 0.86rem;
+  font-weight: 850;
+}
+
+@media (max-width: 900px) {
+  .ie2-listening-focus-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .ie2-listening-hero {
+    min-height: auto;
+    padding: 5rem 0 1.35rem;
+    background:
+      linear-gradient(180deg, rgba(3, 12, 32, 0.12) 0%, rgba(3, 12, 32, 0.68) 44%, rgba(3, 12, 32, 0.98) 100%),
+      url("../img/english-intermediate-2/unit-1/noras-voice-note-listening/noras-voice-note-listening-hero-v1.png") 67% center / cover no-repeat;
+  }
+
+  .ie2-listening-hero-content,
+  .ie2-listening-shell {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .ie2-listening-hero h1 {
+    max-width: 9ch;
+    font-size: clamp(2.05rem, 11vw, 3.2rem);
+  }
+
+  .ie2-listening-hero p:not(.intermediate2-kicker) {
+    font-size: 0.94rem;
+    line-height: 1.44;
+  }
+
+  .ie2-listening-hero-chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.4rem;
+  }
+
+  .ie2-listening-hero-chips span {
+    padding: 0.36rem 0.42rem;
+    font-size: 0.73rem;
+    text-align: center;
+  }
+
+  .ie2-listening-block {
+    padding: 1rem;
+  }
+
+  .ie2-listening-vocab-grid,
+  .ie2-listen-pass-grid,
+  .ie2-speaking-prompt-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ie2-listening-heading {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .ie2-listening-heading > span {
+    width: fit-content;
+  }
+
+  .ie2-listen-pass-grid .intermediate2-button,
+  .ie2-rehearsal-timer .intermediate2-button {
+    width: 100%;
+  }
+
+  .ie2-rehearsal-timer {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

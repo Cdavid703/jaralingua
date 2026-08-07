@@ -1,0 +1,27 @@
+{
+  "audioProvider": "elevenlabs",
+  "voiceProfileId": "ie2-nora-salcedo-us-01",
+  "voiceName": "Matilda - Professional US",
+  "voiceId": "XrExE9yKIg1WjnnlVkGX",
+  "character": "Nora Salcedo",
+  "language": "en",
+  "accent": "General American English",
+  "model": "eleven_multilingual_v2",
+  "generationMode": "tts",
+  "generationSettings": {
+    "speed": 0.83,
+    "stability": 0.5,
+    "similarityBoost": 0.75,
+    "outputFormat": "mp3_44100_128",
+    "speakerBoost": true
+  },
+  "audioVersion": "2026.1",
+  "scriptHref": "/ingles/intermediate-2/audio/unit-1-saturday-table-listening-scripts.md",
+  "audioHref": "/ingles/intermediate-2/audio/unit-1/noras-voice-note-after-the-saturday-table.mp3",
+  "duration": "01:17",
+  "durationSeconds": 77.375,
+  "fileBytes": 1238039,
+  "generatedAt": "2026-08-07",
+  "licenseNote": "Generated for JaraLingua course use",
+  "qualityStatus": "approved"
+}

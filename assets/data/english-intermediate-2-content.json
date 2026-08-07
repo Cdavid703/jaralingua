@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "course": "intermediate-2",
+  "items": [
+    {
+      "id": "unit-1-noras-voice-note",
+      "unit": 1,
+      "type": "listening",
+      "title": "Nora's Voice Note",
+      "subtitle": "After the Saturday Table",
+      "summary": "Nora explains how a neighbor, an old classmate and a new contact changed her social circle after one community dinner.",
+      "image": "/assets/img/english-intermediate-2/unit-1/noras-voice-note-listening/noras-voice-note-listening-hero-v1.png",
+      "media": "/ingles/intermediate-2/audio/unit-1/noras-voice-note-after-the-saturday-table.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "ie2-nora-salcedo-us-01",
+      "audioVersion": "2026.1",
+      "scriptHref": "/ingles/intermediate-2/audio/unit-1-saturday-table-listening-scripts.md",
+      "workshopHref": "/ingles/intermediate-2/listening-unit-1-noras-voice-note.html",
+      "duration": "01:17",
+      "durationSeconds": 77.375,
+      "questionCount": 10,
+      "speakers": ["Nora Salcedo"],
+      "accent": "General American English",
+      "transcriptPolicy": "after-two-listens",
+      "status": "published",
+      "teacherSubmission": false,
+      "gradebookWeight": 0,
+      "searchKeywords": [
+        "Unit 1",
+        "relationships",
+        "neighbor",
+        "old classmate",
+        "new contact",
+        "who",
+        "that",
+        "hit it off",
+        "get back in touch",
+        "keep in touch"
+      ]
+    }
+  ]
+}

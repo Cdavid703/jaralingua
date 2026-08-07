@@ -1083,6 +1083,67 @@ No se usará `speechSynthesis` del navegador para audios pedagógicos.
 
 Todo botón de audio dentro de Listening, Video Listening, Reading con audiobook, explicaciones, pronunciation support, Conversation Coach o repaso de vocabulario debe reproducir un archivo producido y aprobado desde ElevenLabs. No se aceptarán voces del navegador, audios improvisados ni grabaciones sin control de calidad.
 
+### 14.1.1 Listening aprobado para Unit 1 — Nora's Voice Note
+
+Título completo: `Nora's Voice Note: After the Saturday Table`.
+
+La actividad continúa deliberadamente la historia y los personajes de `The Saturday Table`; no introduce nombres genéricos nuevos. Nora Salcedo graba una nota de voz después de la cena comunitaria y explica:
+
+- quién es Mr. Okafor y cómo cambia su primera impresión;
+- por qué Iris es una antigua compañera con quien vuelve a tener contacto;
+- quién es Gabriel y por qué ambos conectan fácilmente;
+- cómo una cena amplía su círculo social.
+
+Especificación de producción:
+
+- monólogo natural de aproximadamente 1 minuto y 20 segundos;
+- 192 palabras habladas;
+- audio exclusivamente ElevenLabs;
+- personaje: Nora Salcedo;
+- voz asignada: `Matilda - Professional US`;
+- perfil estable: `ie2-nora-salcedo-us-01`;
+- modelo: `eleven_multilingual_v2`;
+- modo: TTS de una sola voz;
+- inglés estadounidense general;
+- velocidad de generación `0.83` para conservar dicción natural y comprensible en nivel intermedio;
+- estabilidad `0.50`, similitud `0.75`, speaker boost activo y salida `MP3 44.1 kHz (128 kbps)`;
+- guion canónico: `ingles/intermediate-2/audio/unit-1-saturday-table-listening-scripts.md`;
+- wrapper de producción: `tools/generate_intermediate2_unit1_nora_voice_note_audio.ps1`;
+- metadatos: `ingles/intermediate-2/audio/unit-1/noras-voice-note-after-the-saturday-table.elevenlabs.json`;
+- no se permite `speechSynthesis`, voz del navegador ni audio provisional.
+
+Estado de producción (7 de agosto de 2026): audio definitivo generado con ElevenLabs, integrado en el reproductor y aprobado técnicamente. Duración real: `01:17` (`77.375` segundos); tamaño: `1,238,039` bytes; formato validado: MP3 con encabezado ID3.
+
+Objetivos lingüísticos integrados en el audio:
+
+- cláusulas identificativas con `who` y `that`;
+- cláusula adicional con nombre propio, comas y `who`;
+- diferencia funcional entre identificar una persona y agregar información;
+- vocabulario `neighbor`, `old classmate` y `new contact`;
+- descripciones prudentes con `a bit` y `kind of`;
+- `hit it off`, `get back in touch`, `get on well` y `keep in touch`.
+
+La página incluye:
+
+- banner profesional propio de Nora grabando la nota de voz, compacto y no fijo;
+- buscador inmediatamente después del banner;
+- ruta visible de primera escucha, segunda escucha y producción oral;
+- seis expresiones de vocabulary preview;
+- reproductor HTML nativo con `preload="metadata"`;
+- velocidades 0.75x, 1x y 1.25x;
+- estado accesible de reproducción;
+- dos objetivos de escucha marcables sin bloquear la actividad;
+- diez preguntas de idea global, detalle, inferencia y language noticing;
+- retroalimentación local por pregunta;
+- contraste explícito entre `who`, `that` y la cláusula entre comas;
+- transcript accesible después de escuchar;
+- reto de producción oral de 60 segundos;
+- ejemplo completo de interacción entre estudiantes y docente;
+- temporizador local;
+- cero grabación, cero envío y peso `0%`.
+
+La actividad se registra en Practice Lab y Listening Library desde la misma entrada del catálogo. No se publicará una página cuyo MP3 no exista o no haya sido generado realmente por ElevenLabs.
+
 ### 14.2 Video Listening
 
 Cada video tendrá:
