@@ -691,7 +691,7 @@
             </div>
             <div class="col-md-6">
               <label class="form-label fw-bold">Email</label>
-              <input class="form-control" type="email" value="${escapeHtml(student.email || "")}" data-student-field="email">
+              <input class="form-control" type="text" inputmode="email" autocomplete="email" value="${escapeHtml(student.email || "")}" data-student-field="email">
             </div>
             <div class="col-md-6">
               <label class="form-label fw-bold">Contact</label>
@@ -714,7 +714,7 @@
         <label class="form-label fw-bold w-100 mb-3">Find a student
           <input class="form-control" type="search" data-student-editor-filter placeholder="Name, email or ID">
         </label>
-        <form data-edit-students-form>
+        <form data-edit-students-form novalidate>
           ${adminStudentCards(payload)}
           <details class="admin-student-card mb-3" data-new-student-card>
             <summary class="d-flex flex-wrap justify-content-between align-items-center gap-2">
@@ -737,7 +737,7 @@
               </div>
               <div class="col-md-6">
                 <label class="form-label fw-bold">Email</label>
-                <input class="form-control" type="email" data-new-student-field="email">
+                <input class="form-control" type="text" inputmode="email" autocomplete="email" data-new-student-field="email">
               </div>
               <div class="col-md-6">
                 <label class="form-label fw-bold">Contact</label>
@@ -1218,14 +1218,18 @@
     return input ? input.value.trim() : "";
   }
 
-  function gradesFromCard(card) {
-    const grades = {};
+  function gradesFromCard(card, originalGrades) {
+    const grades = Object.assign({}, originalGrades || {});
     card.querySelectorAll("[data-student-grade]").forEach(function (input) {
+      const evaluationId = input.getAttribute("data-student-grade");
       const value = input.value.trim();
-      if (!value) return;
+      if (!value) {
+        delete grades[evaluationId];
+        return;
+      }
       const grade = Number(value);
       if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
-      grades[input.getAttribute("data-student-grade")] = Math.round(grade * 100) / 100;
+      grades[evaluationId] = Math.round(grade * 100) / 100;
     });
     return grades;
   }
@@ -1244,7 +1248,7 @@
       emailAliases: original.emailAliases || [],
       contact: cardField(card, "contact"),
       bookDate: original.bookDate || null,
-      grades: gradesFromCard(card)
+      grades: gradesFromCard(card, original.grades)
     };
   }
 
@@ -1262,7 +1266,7 @@
       emailAliases: [],
       contact: newStudentField(card, "contact"),
       bookDate: null,
-      grades: gradesFromCard(card)
+      grades: gradesFromCard(card, {})
     };
   }
 
