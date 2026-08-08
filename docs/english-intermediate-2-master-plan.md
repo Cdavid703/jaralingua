@@ -2907,3 +2907,246 @@ Aunque se conserva la base técnica útil de los Conversation Coaches de Interme
 ### Regla operativa aplicada
 
 `Coffee with Gabriel`, sus dieciocho audios ElevenLabs, imagen profesional, catálogo, accesos desde Home y Course Overview, documentación y pruebas forman una sola sección. Se valida sin levantar servidor local; después se realiza commit, push, despliegue y comprobación directa en producción.
+
+## 40. Auditoría comparativa obligatoria — Course Overview y Practice Lab
+
+### 40.1 Motivo de esta auditoría
+
+Esta auditoría corrige una interpretación equivocada aplicada durante la primera construcción de Unit 1: se publicaron accesos a prácticas y talleres dentro de `course-overview.html` porque Intermediate English Course 2 todavía no tenía una página `practice-lab.html` implementada.
+
+La ausencia temporal de Practice Lab no autoriza a Course Overview a asumir sus funciones. Desde este punto queda establecida una separación obligatoria:
+
+> **Course Overview explica el curso y organiza las unidades. Practice Lab contiene, organiza y publica todas las actividades de práctica.**
+
+La auditoría se realizó sobre las páginas reales de Basic English Course 1, Basic English Course 2 e Intermediate English Course 1. Se documenta tanto el patrón funcional que debe conservarse como las inconsistencias históricas que no deben copiarse.
+
+### 40.2 Archivos principales inspeccionados
+
+| Nivel | Home | Course Overview | Practice Lab |
+| --- | --- | --- | --- |
+| Basic English Course 1 | `ingles/basico/index.html` | `ingles/basico/course-overview.html` | `ingles/basico/practice-lab.html` |
+| Basic English Course 2 | `ingles/basico-2/index.html` | `ingles/basico-2/course-overview.html` | `ingles/basico-2/practice-lab.html` |
+| Intermediate English Course 1 | `ingles/intermediate/index.html` | `ingles/intermediate/course-overview.html` | `ingles/intermediate/practice-lab.html` |
+| Intermediate English Course 2 | `ingles/intermediate-2/index.html` | `ingles/intermediate-2/course-overview.html` | **No existe todavía; es una deuda arquitectónica prioritaria** |
+
+También se inspeccionaron páginas representativas de práctica controlada, taller, juego oral, reading, listening, pronunciation y Conversation Coach:
+
+- Basic 1: `practice-unit-4-everyday-life.html`, `workshop-unit-4-two-truths-one-lie.html`, `reading-unit-4-healthy-wednesday.html`, `listening-unit-4-routine-check-in.html`, `pronunciation-unit-4-my-healthy-day.html` y `unit-conversation-coach-unit-4.html`;
+- Basic 2: `practice-unit-1-weather-action-roulette.html`, `reading-unit-1-rainy-afternoon-plan.html`, `audio-listening-unit-1-weather-plan-change.html`, `pronunciation-unit-1-weather-going-out.html` y `conversation-coach-unit-1-weather-going-out.html`;
+- Intermediate 1: `stereotype-guessing-game.html`, `workshop-unit-2-goal-support-interview.html`, `listening-the-mirror-guardian.html`, `reading-the-wall-of-names.html`, `pronunciation-unit-1-beyond-first-impressions.html` y `unit-conversation-coach-unit-5.html`.
+
+### 40.3 Arquitectura real encontrada
+
+#### Home del curso
+
+Los tres niveles anteriores usan el Home como menú de secciones. Sus tarjetas conducen a páginas de primer nivel como:
+
+- Course Overview;
+- Practice Lab;
+- Games;
+- Listening Library;
+- Speak Like a Local o Idioms;
+- Phonetic Rules;
+- Free English Learning Links;
+- Grades;
+- Evaluations, cuando corresponda.
+
+El Home no debe elegir arbitrariamente una actividad individual como destino del botón `Open Practice Lab`. Su destino canónico es `practice-lab.html`.
+
+#### Course Overview
+
+Su función válida es:
+
+- explicar el propósito y alcance del curso;
+- presentar las unidades y su secuencia;
+- mostrar temas, grammar targets, vocabulary, outcomes y relación con sesiones;
+- enlazar a la explicación completa de cada unidad;
+- enlazar a la carpeta correspondiente de Practice Lab;
+- mostrar alertas de evaluaciones sin incorporar el examen dentro de la explicación;
+- orientar al estudiante sobre qué aprenderá antes de practicar.
+
+Course Overview puede contener ejemplos breves y comprobaciones inmediatas que sean parte de la explicación, pero no una actividad independiente con título, producto, taller, juego, entrega o página propia.
+
+#### Practice Lab
+
+En los tres cursos auditados, Practice Lab es el catálogo operativo de actividades. El patrón dominante es:
+
+1. hero propio de Practice Lab;
+2. navegación o accesos rápidos por unidad;
+3. buscador de actividades —ya presente de forma explícita en Intermediate 1—;
+4. carpetas desplegables `<details>` por unidad;
+5. título, resumen y contador de actividades en cada carpeta;
+6. cuadrícula de tarjetas dentro de cada unidad;
+7. una imagen, número, skill o tipo, título, descripción y acción por tarjeta;
+8. enlace desde cada tarjeta hacia una página individual de actividad.
+
+La unidad puede contener en una sola carpeta:
+
+- grammar practice;
+- vocabulary practice;
+- speaking game;
+- workshop;
+- reading;
+- listening;
+- video listening;
+- pronunciation;
+- Conversation Coach;
+- writing;
+- project;
+- review.
+
+### 40.4 Comparación por nivel
+
+#### Basic English Course 1
+
+`practice-lab.html` organiza seis carpetas desplegables y presenta aproximadamente sesenta accesos de actividad. Cada tarjeta usa el patrón `course-section-card`, imagen, número, título, descripción y CTA. Sus carpetas reúnen Conversation Coach, grammar, juegos, readings, listenings, pronunciation y talleres comunicativos.
+
+Es el ejemplo más completo para comprender la variedad admitida dentro de Practice Lab. Unit 4, por ejemplo, combina sentence builder, fill-in-the-blanks, timeline, comic strip, dos listenings, juego de verdades y mentiras, video listening, práctica de deportes, conversación en parejas, roulette, reading y pronunciation.
+
+Su `course-overview.html` contiene treinta y tres enlaces a páginas de actividad. Esto demuestra una duplicación histórica entre Overview y Practice Lab; no se tomará como arquitectura correcta para Course 2.
+
+#### Basic English Course 2
+
+`practice-lab.html` usa carpetas desplegables visuales, miniatura de unidad, contador y tarjetas. Unit 1 contiene nueve actividades y Unit 2 contiene siete. La mezcla incluye práctica gramatical, roulette, reading, audio listening, video listening, pronunciation y Conversation Coach.
+
+Es el Course Overview más cercano a la separación deseada: presenta las unidades, enlaza a las explicaciones completas y ofrece CTAs hacia Practice Lab y Listening Library. Aun conserva algunos accesos directos a actividades —cuatro en la auditoría—; se consideran fugas menores que tampoco se copiarán.
+
+#### Intermediate English Course 1
+
+`practice-lab.html` contiene seis carpetas con actividades variadas. La auditoría encontró cuarenta y cuatro enlaces funcionales a páginas de actividad. Intermediate 1 añade buscador real con `data-course-search-panel`, búsqueda por unidad, tema, grammar, listening, reading y pronunciation.
+
+Las tarjetas de unidades más desarrolladas añaden `practice-skill-tag`, lo que permite distinguir visual grammar, grammar mission, pair speaking, listening, reading, pronunciation, game o Conversation Coach.
+
+Su `course-overview.html` también duplica treinta y siete accesos a actividades. Esta duplicación explica parte de la confusión inicial, pero contradice la existencia y finalidad de `practice-lab.html`. Course 2 conservará el mapa de unidades de este nivel, no la duplicación de talleres.
+
+### 40.5 Conclusión de la comparación
+
+El patrón que se repite en los tres niveles y que tiene sentido arquitectónico es el siguiente:
+
+```text
+Course Home
+├── Course Overview
+│   ├── mapa del curso
+│   ├── explicación de las unidades
+│   ├── resultados y calendario
+│   └── CTA a la carpeta de Practice Lab
+├── Practice Lab
+│   ├── Unit 1 folder
+│   │   ├── grammar / vocabulary practice
+│   │   ├── speaking game / workshop
+│   │   ├── reading
+│   │   ├── listening / video listening
+│   │   ├── pronunciation
+│   │   └── Conversation Coach
+│   └── Units 2–6 folders
+├── Games
+├── Listening Library
+├── Grades
+└── Evaluations
+```
+
+La duplicación histórica de enlaces de actividad en Course Overview es una deuda de los cursos anteriores, no una autorización para repetirla.
+
+### 40.6 Propiedad obligatoria de cada página en Course 2
+
+| Contenido o función | Página propietaria | Puede aparecer en otra sección |
+| --- | --- | --- |
+| Propósito, resultados, unidades, sesiones y temas | Course Overview | Home puede mostrar un resumen muy corto |
+| Explicación teórica de grammar y vocabulary | Página explicativa de la unidad, accesible desde Course Overview | Course Overview puede mostrar el índice del contenido |
+| Ejemplo breve integrado a una explicación | Página explicativa de la unidad | No se registra como actividad independiente |
+| Práctica controlada | Practice Lab | Solo un enlace contextual desde la explicación completa de la unidad |
+| Juego oral o digital | Practice Lab | Games puede ofrecer un segundo índice si es un juego reutilizable |
+| Taller o dinámica de aula | Practice Lab | No aparece como bloque en Course Overview |
+| Reading | Practice Lab | Puede indexarse además en Library si se crea una biblioteca de lectura |
+| Listening, video listening o audiobook | Practice Lab | También aparece en Listening Library desde el mismo catálogo |
+| Pronunciation | Practice Lab | Phonetic Rules enseña reglas generales, no almacena talleres de unidad |
+| Conversation Coach | Practice Lab | Nunca dentro de Course Overview |
+| Actividad entregable formativa | Practice Lab | Teacher Activity Center muestra la recepción |
+| Evaluación oficial o simulacro | Evaluations | Grades muestra solamente el resultado correspondiente |
+
+### 40.7 Anatomía mapeada de las páginas individuales
+
+| Tipo | Patrón útil encontrado | Norma para Course 2 |
+| --- | --- | --- |
+| Práctica controlada | banner, objetivo, constructor o ejercicio, feedback y continuación | Debe enseñar qué hacer, permitir practicar y cerrar con resultado; vive en Practice Lab |
+| Juego o taller oral | meta lingüística, reglas, pasos, modelo de interacción, apoyos y producto oral | Debe producir conversación real; no puede limitarse a mostrar instrucciones |
+| Reading | banner, pre-reading, texto HTML, vocabulary, preguntas y post-reading | Debe mantener ancho legible, evidencia textual y producción conectada |
+| Listening | banner, contexto, vocabulary, reproductor, varias escuchas, preguntas, feedback y transcript según política | Todo audio pedagógico se produce con ElevenLabs y se indexa también en Listening Library |
+| Pronunciation | banner, modelos profesionales, fragmentos, velocidad, micrófono, playback, transcripción y reto final | Modelos ElevenLabs; la política de entrega se declara por actividad |
+| Conversation Coach | personaje definido, bienvenida audible, niveles de ayuda, turnos conectados, micrófono, transcripción, reacciones y cierre | Debe sentirse como conversación, no como cuestionario; su condición evaluativa o no evaluativa debe ser explícita |
+
+No se copiará literalmente una página antigua. Varias actividades históricas carecen de buscador, tienen banners demasiado altos o repiten información. Se conservará su lógica pedagógica útil y se aplicará el estándar móvil, visual y de accesibilidad de Course 2.
+
+### 40.8 Estado incorrecto detectado en Intermediate English Course 2
+
+En la fecha de esta auditoría se comprobaron estas desviaciones:
+
+1. no existe `ingles/intermediate-2/practice-lab.html`;
+2. la tarjeta `Practice Lab` del Home enlaza directamente a `conversation-coach-unit-1-coffee-with-gabriel.html`;
+3. `course-overview.html` contiene una cuadrícula de práctica controlada;
+4. el mismo Course Overview contiene bloques completos de acceso a `Secret Social Circle`, reading, listening, pronunciation y Conversation Coach;
+5. las páginas individuales existen y funcionan, pero su descubrimiento está ubicado en la sección equivocada;
+6. el catálogo central todavía no funciona como fuente visible de una página Practice Lab.
+
+No se corregirá este problema añadiendo más tarjetas a Course Overview. La corrección consiste en construir la página propietaria que falta.
+
+### 40.9 Corrección arquitectónica requerida antes de una nueva actividad
+
+La siguiente fase de implementación deberá:
+
+1. crear `ingles/intermediate-2/practice-lab.html` tomando como base estructural las carpetas de Intermediate 1 y las mejoras visuales de Basic 2;
+2. añadir buscador al inicio y filtros por unidad y skill;
+3. crear la carpeta `Unit 1` con contador calculado desde el catálogo;
+4. registrar allí las actividades existentes:
+   - `Secret Social Circle` — speaking game;
+   - `The Saturday Table` — reading;
+   - `Nora's Voice Note` — listening;
+   - `People Who Changed My Circle` — pronunciation entregable 0%;
+   - `Coffee with Gabriel` — Conversation Coach no evaluativo;
+5. cambiar el CTA de Practice Lab en Home para que abra `practice-lab.html`;
+6. retirar de Course Overview los bloques que funcionan como tarjetas de actividad;
+7. conservar en Course Overview únicamente explicación, ejemplos breves, mapa, outcomes y un CTA `Practice Unit 1` hacia `practice-lab.html#unit-1-folder`;
+8. hacer que cada actividad regrese a `practice-lab.html#unit-1-folder`, además de permitir volver a la explicación de la unidad;
+9. usar el catálogo como fuente única para contadores, tarjetas, buscador y sincronización con Listening Library;
+10. validar 360, 390 y 430 px sin banner fijo, repetición de portadas ni overflow horizontal.
+
+Esta corrección se diseñará y aprobará como una fase independiente. La presente auditoría no autoriza todavía cambios de navegación o de código.
+
+### 40.10 Regla para cualquier actividad nueva
+
+Antes de diseñar una nueva actividad se debe declarar:
+
+- unidad;
+- skill;
+- objetivo;
+- tipo de interacción;
+- producto final;
+- duración;
+- estado evaluativo;
+- uso de ElevenLabs;
+- imagen requerida;
+- entrada de catálogo;
+- carpeta exacta de Practice Lab.
+
+Después de su aprobación:
+
+1. se construye la página individual;
+2. se añade una tarjeta únicamente a la carpeta correspondiente de Practice Lab;
+3. si es listening, video listening o audiobook, el catálogo la refleja también en Listening Library;
+4. Course Overview no recibe una tarjeta de la actividad;
+5. se documenta, prueba sin servidor local, hace commit, despliega y verifica en producción.
+
+La actividad lúdica de conversación propuesta después de `Coffee with Gabriel` deberá aparecer como una nueva tarjeta de Unit 1 en Practice Lab. No se implementará ni se enlazará desde Course Overview hasta que esta corrección arquitectónica sea aprobada y ejecutada.
+
+### 40.11 Checklist de aceptación
+
+- [ ] Existe una página Practice Lab propia de Intermediate English Course 2.
+- [ ] Home abre Practice Lab y no una actividad individual.
+- [ ] Course Overview no contiene tarjetas de talleres, juegos ni laboratorios.
+- [ ] Las explicaciones de unidad siguen siendo contenido enseñable, no simples rutas docentes.
+- [ ] Todas las actividades de Unit 1 aparecen dentro de su carpeta de Practice Lab.
+- [ ] El contador coincide con el catálogo real.
+- [ ] Listening Library deriva sus entradas del mismo catálogo.
+- [ ] Cada actividad tiene skill, imagen, objetivo, producto, estado y enlace correctos.
+- [ ] Los accesos de regreso conducen a Practice Lab y, cuando sirve, a la explicación de unidad.
+- [ ] El comportamiento móvil se verifica en producción sin levantar servidores locales.
