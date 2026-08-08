@@ -918,6 +918,8 @@ La actividad `Secret Social Circle` fija el primer precedente de este estándar 
 
 **Ajuste definitivo de legibilidad aprobado — 7 de agosto de 2026:** las tarjetas de `Secret Social Circle` conservan su formato horizontal, pero sus personajes deben verse con claridad. En celular usarán una miniatura de 96 px y una altura mínima de tarjeta de 108 px; en tablet y escritorio usarán una miniatura de 104 px y una altura mínima de 116 px. El nombre y la descripción también tendrán un aumento proporcional en celular. Estas medidas sustituyen el ajuste anterior de 72/84 px y el antiguo límite de 88 px; la imagen sigue funcionando como miniatura lateral y no como portada.
 
+**Corrección posterior a la auditoría lingüística y funcional — 7 de agosto de 2026:** la actividad debe conservar siempre en mayúscula el pronombre `I`; ninguna regla CSS podrá forzar a minúsculas los nombres de las tarjetas. Los rótulos usarán sentence case, las definiciones y los modelos serán naturales, `on my street` sustituirá el uso incorrecto de `in my street`, y las instrucciones hablarán de identificar la relación, no la identidad de la persona. El cierre recordará que `who` es la opción más clara para personas y que `that` solo se practicará en cláusulas definitorias sin comas. La actividad incorporará `Hide my choice` para ocultar el resaltado y el nombre de la tarjeta, usará textos accesibles sin repetir descripciones visuales innecesarias y repetirá el ciclo hasta que cada estudiante haya descrito una persona al menos una vez.
+
 No se implementará una nueva actividad sin dejar primero en este Markdown su especificación aprobada o la actualización del estándar que corresponda.
 
 ### 11.5 Registro obligatorio de personajes y nombres

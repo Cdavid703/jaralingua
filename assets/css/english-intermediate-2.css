@@ -1087,7 +1087,6 @@
   color: var(--ie2-teal);
   font-size: 1rem;
   line-height: 1.15;
-  text-transform: lowercase;
 }
 
 .ie2-secret-card-copy > span {
@@ -1105,6 +1104,32 @@
   background: #fff7df;
   color: var(--ie2-navy) !important;
   font-weight: 900;
+}
+
+.ie2-secret-card-privacy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 0.65rem;
+  padding: 0.62rem 0.9rem;
+  border: 1px solid var(--ie2-teal);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ie2-teal);
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.ie2-secret-card-privacy:hover,
+.ie2-secret-card-privacy:focus-visible {
+  background: #eef8f6;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.16);
+}
+
+.ie2-secret-card-privacy[hidden] {
+  display: none;
 }
 
 .ie2-clue-builder,
