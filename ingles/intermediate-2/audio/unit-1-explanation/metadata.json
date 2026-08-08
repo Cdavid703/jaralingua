@@ -1,0 +1,30 @@
+{
+  "lessonId": "intermediate2Unit1RelationshipsMeetingPeople",
+  "version": "2026.1",
+  "provider": "ElevenLabs",
+  "voice": {
+    "name": "Sarah",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "accent": "General American English"
+  },
+  "model": "eleven_multilingual_v2",
+  "format": "mp3_44100_128",
+  "settings": {
+    "stability": 0.64,
+    "similarityBoost": 0.82,
+    "style": 0.14,
+    "speakerBoost": true
+  },
+  "source": "scripts.md",
+  "files": [
+    { "name": "relative-clauses-who-that.mp3", "durationSecondsApprox": 29.5, "bytes": 472337 },
+    { "name": "social-circle-vocabulary.mp3", "durationSecondsApprox": 23.1, "bytes": 369519 },
+    { "name": "tactful-descriptions.mp3", "durationSecondsApprox": 19.8, "bytes": 316857 },
+    { "name": "dating-meeting-people.mp3", "durationSecondsApprox": 30.7, "bytes": 490728 },
+    { "name": "relationship-phrasal-verbs.mp3", "durationSecondsApprox": 18.7, "bytes": 298466 },
+    { "name": "fixed-relationship-expressions.mp3", "durationSecondsApprox": 19.2, "bytes": 307244 },
+    { "name": "relationship-idioms.mp3", "durationSecondsApprox": 19.2, "bytes": 306408 },
+    { "name": "unit-1-sound-practice.mp3", "durationSecondsApprox": 25.3, "bytes": 404628 },
+    { "name": "unit-1-integrated-model.mp3", "durationSecondsApprox": 39.3, "bytes": 629490 }
+  ]
+}

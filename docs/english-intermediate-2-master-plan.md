@@ -553,9 +553,9 @@ Las páginas de unidad deben enseñar contenido desde el primer bloque útil. No
 Reglas obligatorias:
 
 - Si el banner/hero ya muestra la imagen principal, el título de la unidad, el número de unidad y el contexto, no se debe repetir inmediatamente abajo otra tarjeta con la misma imagen, el mismo número de unidad y el mismo título.
-- En celular, después del hero compacto y del buscador, el estudiante debe llegar rápido al contenido enseñable: explicación gramatical, ejemplos, vocabulario, modelos de uso o práctica guiada.
+- En una página explicativa de unidad, después del hero compacto y del buscador, el estudiante debe llegar rápido al contenido enseñable: explicación gramatical, ejemplos, vocabulario y modelos de uso. En Course Overview debe llegar directamente al mapa desplegable de unidades.
 - El bloque de identidad de la unidad debe ser breve. No debe convertirse en una segunda portada.
-- Una página de Course Overview o unidad no puede quedarse en "cómo se va a enseñar"; debe enseñar realmente: reglas, usos, ejemplos, contrastes, errores comunes y producción modelo.
+- Una página explicativa de unidad no puede quedarse en "cómo se va a enseñar"; debe enseñar realmente: reglas, usos, ejemplos, contrastes, errores comunes y producción modelo. Course Overview organiza el curso y enlaza esas páginas explicativas; no absorbe su teoría.
 - Las imágenes se usan para contextualizar, no para alargar la entrada. Si una imagen ya cumplió su función en el hero, no se repite salvo que tenga una función pedagógica diferente.
 - En la revisión móvil se debe medir cuántas pantallas debe desplazar el estudiante antes de llegar al primer contenido de aprendizaje. Si el estudiante debe pasar por dos portadas, la página falla.
 
@@ -563,7 +563,7 @@ Aplicación inmediata para Unit 1:
 
 - El hero puede presentar "Relationships: Neighbors, Friends and Meeting People".
 - Debajo del hero no debe aparecer otro bloque con la misma imagen y el mismo título de Unit 1.
-- La primera sección posterior al buscador debe comenzar con la enseñanza de relative clauses, tactful descriptions, relationship expressions o phrasal verbs.
+- En la página explicativa de Unit 1, la primera sección posterior al buscador debe comenzar con la enseñanza de relative clauses, tactful descriptions, relationship expressions o phrasal verbs.
 - El antiguo bloque "Teaching Route / How Unit 1 will be taught" se considera insuficiente si no se transforma en explicación para el estudiante.
 
 ### 9.2 Mapa oficial por unidad
@@ -3109,7 +3109,7 @@ La fase de reorganización ejecutó estas acciones:
    - `Coffee with Gabriel` — Conversation Coach no evaluativo;
 5. cambiar el CTA de Practice Lab en Home para que abra `practice-lab.html`;
 6. retirar de Course Overview los bloques que funcionan como tarjetas de actividad;
-7. conservar en Course Overview únicamente explicación, ejemplos breves, mapa, outcomes y un CTA `Practice Unit 1` hacia `practice-lab.html#unit-1-folder`;
+7. conservar en Course Overview únicamente el mapa, outcomes, sesiones, temas, alertas de evaluación, un CTA hacia la página explicativa completa y un CTA contextual `Practice Unit 1` hacia `practice-lab.html#unit-1-folder`;
 8. hacer que cada actividad regrese a `practice-lab.html#unit-1-folder`, además de permitir volver a la explicación de la unidad;
 9. usar el catálogo como fuente única para contadores, tarjetas, buscador y sincronización con Listening Library;
 10. validar 360, 390 y 430 px sin banner fijo, repetición de portadas ni overflow horizontal.
@@ -3201,7 +3201,7 @@ Se retiraron de Course Overview:
 - las tarjetas y descripciones de talleres;
 - los enlaces individuales a speaking, reading, listening, pronunciation y Conversation Coach.
 
-El cierre de la explicación de Unit 1 conserva únicamente un puente de navegación hacia `practice-lab.html#unit-1-folder` y el Easy Guide. La explicación gramatical, vocabulario, lenguaje diplomático y phrasal verbs permanecen como contenido enseñable.
+Course Overview conserva únicamente el mapa de las seis unidades, outcomes, sesiones, focos de lengua, alertas y enlaces de navegación. La explicación gramatical, vocabulario, lenguaje diplomático, phrasal verbs, expresiones fijas e idioms se trasladan a `unit-1-relationships-meeting-people.html`, que termina con un puente hacia `practice-lab.html#unit-1-folder`, Course Overview y el Easy Guide.
 
 ### 41.4 Listening Library sincronizada
 
@@ -3211,7 +3211,7 @@ Se creó `ingles/intermediate-2/listening-library.html`. La biblioteca filtra au
 
 - Home abre Practice Lab y Listening Library como secciones independientes;
 - las cinco actividades regresan a la carpeta Unit 1 de Practice Lab;
-- Course Overview permanece disponible para revisar la teoría;
+- Course Overview permanece disponible como mapa y conduce a la página independiente donde se revisa la teoría;
 - una actividad ya no funciona como sustituto de una sección completa;
 - la actividad lúdica futura deberá registrarse como la siguiente tarjeta del catálogo y de Unit 1 Practice Lab, nunca dentro de Course Overview.
 
@@ -3228,3 +3228,178 @@ Después del primer despliegue se verificó directamente en producción:
 - Course Overview con cero enlaces individuales de actividad y cero bloques de práctica;
 - Listening Library con `Nora's Voice Note` derivada del catálogo;
 - cero errores o advertencias en la consola durante la revisión.
+
+## 42. Reconstrucción confirmada — Course Overview y explicación completa de Unit 1
+
+### 42.1 Corrección definitiva de arquitectura
+
+La auditoría comparativa con Intermediate English Course 1 y Basic English Course 2 confirmó que la versión inicial mezclaba dos productos distintos en `course-overview.html`:
+
+1. el mapa general de las seis unidades;
+2. la explicación teórica de Unit 1.
+
+La arquitectura canónica queda así:
+
+```text
+Course Overview
+├── mapa desplegable de seis unidades
+├── outcomes, sesiones, temas y evaluaciones
+├── enlace a la explicación completa de cada unidad
+└── CTA contextual hacia Practice Lab
+
+Página explicativa de Unit 1
+├── reglas, significados y formas
+├── contrastes y decisiones de uso
+├── vocabulario y registro
+├── errores comunes
+├── modelos ElevenLabs
+└── puente final hacia Practice Lab
+
+Practice Lab
+└── actividades, talleres, juegos, lecturas, listenings, pronunciación y Conversation Coach
+```
+
+Course Overview no volverá a funcionar como página teórica ni como carpeta de actividades.
+
+### 42.2 Course Overview reconstruido
+
+`ingles/intermediate-2/course-overview.html` se reconstruyó como dashboard desplegable con:
+
+- hero general compacto, en flujo normal y no fijo;
+- métricas útiles integradas en el hero: 64 horas, seis unidades, 22 sesiones y cinco evaluaciones;
+- buscador inmediatamente después del hero;
+- seis carpetas desplegables con resultado, lenguaje, calendario y alerta relacionada;
+- acceso directo a la explicación completa de Unit 1;
+- acceso contextual a `practice-lab.html#unit-1-folder` únicamente para Unit 1, que es la unidad publicada;
+- bloque separado de cinco evaluaciones oficiales;
+- bloque final de reciclaje de Sessions 17–22, sin inventar una Unit 7.
+
+Cada unidad usa una imagen profesional distinta y temática:
+
+- `assets/img/english-intermediate-2/units/unit-1-relationships-hero-v1.webp`;
+- `assets/img/english-intermediate-2/units/unit-2-wishes-dilemmas-v1.webp`;
+- `assets/img/english-intermediate-2/units/unit-3-technology-safety-v1.webp`;
+- `assets/img/english-intermediate-2/units/unit-4-movies-music-v1.webp`;
+- `assets/img/english-intermediate-2/units/unit-5-impressions-satire-v1.webp`;
+- `assets/img/english-intermediate-2/units/unit-6-news-disasters-v1.webp`.
+
+Las cinco imágenes nuevas se generaron específicamente para el curso, se recortaron a proporción 16:9 y se optimizaron a WebP de 1280 × 720 para proteger la carga móvil.
+
+### 42.3 Página explicativa completa de Unit 1
+
+Se creó `ingles/intermediate-2/unit-1-relationships-meeting-people.html`. Después del hero compacto y el buscador, el primer contenido es la enseñanza real; no se repite la imagen, el número, el título ni una segunda portada.
+
+La página contiene nueve secciones desplegables:
+
+1. relative clauses para personas;
+2. people in your social circle y vocabulario de convivencia;
+3. descripciones diplomáticas con `kind of`, `a bit` y `a little bit`;
+4. dating and meeting people;
+5. relationship phrasal verbs;
+6. fixed relationship expressions;
+7. relationship idioms;
+8. sound practice;
+9. modelo integrado completo.
+
+Cada bloque incluye, cuando corresponde:
+
+- significado;
+- forma;
+- situación de uso;
+- situación donde no se usa;
+- contraste;
+- registro o matiz;
+- ejemplos completos;
+- errores comunes con explicación;
+- modelo de audio profesional.
+
+No contiene ejercicios independientes, puntuación, entregables ni tarjetas de actividad.
+
+### 42.4 Respuesta pedagógica explícita para `who` y `that`
+
+La explicación corrige directamente la confusión detectada por la docente:
+
+> `Sofia is the neighbor who helped me` y `He is the classmate that invited me` no usan pronombres distintos porque una acción sea `helped` y la otra `invited`. Ambos verbos describen acciones y ambas oraciones pueden ser cláusulas definitorias.
+
+La decisión se enseña así:
+
+- persona + cláusula definitoria sin comas: `who` o `that`; `who` es la opción más clara y segura para personas;
+- persona ya identificada + información extra entre comas: únicamente `who`, nunca `that`;
+- cosa o aplicación: `that` o `which`, no `who`;
+- pronombre relativo como sujeto: no se omite;
+- pronombre relativo como objeto en una cláusula definitoria: puede omitirse.
+
+La página explica además cómo las comas cambian el significado y por qué el estudiante no debe repetir un segundo sujeto después de `who` o `that`.
+
+### 42.5 Clasificación corregida de expresiones
+
+No se presenta una lista plana bajo el título `Phrasal verbs`.
+
+**Phrasal verbs y phrasal-prepositional verbs:**
+
+- `catch up (with)`;
+- `get on well with`;
+- `hit it off (with)`;
+- `ask someone out`;
+- `meet up (with)`.
+
+**Fixed / multiword relationship expressions:**
+
+- `get to know someone`;
+- `have a lot in common`;
+- `keep / stay in touch`;
+- `get back in touch`;
+- `lose touch`.
+
+**Idioms:**
+
+- `see eye to eye`;
+- `through thick and thin`;
+- `a shoulder to cry on`;
+- `a fair-weather friend`.
+
+Cada tarjeta muestra su tipo, aproximación en español, significado, uso, patrón o matiz y dos ejemplos. Esto cumple tanto el Easy Guide como la instrucción adicional de incluir y diferenciar idioms.
+
+### 42.6 Audio ElevenLabs para la explicación
+
+Se generaron nueve audios nuevos con ElevenLabs Text to Speech:
+
+- voz: Sarah;
+- voice ID: `EXAVITQu4vr4xnSDxMaL`;
+- acento: General American English;
+- modelo: `eleven_multilingual_v2`;
+- salida: MP3 44.1 kHz, 128 kbps.
+
+Fuentes canónicas:
+
+- `ingles/intermediate-2/audio/unit-1-explanation/scripts.md`;
+- `ingles/intermediate-2/audio/unit-1-explanation/metadata.json`;
+- `tools/generate_intermediate2_unit1_explanation_audio.ps1`.
+
+Los nueve modelos cubren relative clauses, vocabulario social, tactful descriptions, dating, phrasal verbs, expresiones fijas, idioms, sound practice y el modelo integrado. Todo botón o reproductor de audio de esta página apunta a un MP3 real de ElevenLabs; no se usa `speechSynthesis`, voz del navegador ni audio provisional.
+
+### 42.7 Diseño móvil obligatorio
+
+- Ningún hero, banner, imagen o navegación queda fijo durante el scroll.
+- En celular, el hero pasa a altura automática y el buscador aparece inmediatamente después.
+- Las imágenes del Course Overview se mantienen visibles en miniaturas de 104 × 104 px, sin ocupar toda la pantalla.
+- Los títulos largos, contadores y botones no fuerzan overflow horizontal.
+- Los desplegables tienen áreas táctiles amplias y muestran una sección por vez sin segunda portada.
+- Las cuadrículas teóricas pasan a una columna y los reproductores ocupan el ancho disponible.
+
+### 42.8 Navegación corregida
+
+Los enlaces `Review language` y `Learn Unit 1 first` de Practice Lab, Listening Library y Reading apuntan ahora a `unit-1-relationships-meeting-people.html`. Los enlaces generales `Course Overview` continúan abriendo el mapa de las seis unidades.
+
+### 42.9 Regla operativa de cierre
+
+Esta reconstrucción no se considera terminada solo por modificar archivos locales. Igual que cualquier sección, actividad o página futura, debe cerrar con el flujo completo:
+
+1. documentar el cambio en este Markdown;
+2. validar estáticamente sin levantar un servidor local;
+3. hacer commit;
+4. hacer push;
+5. desplegar en producción;
+6. comprobar las rutas y los recursos directamente en producción.
+
+Esta regla es obligatoria para cada sección, actividad y página de Intermediate English Course 2, sin excepción.
