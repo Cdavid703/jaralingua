@@ -1041,10 +1041,10 @@
 .ie2-secret-card {
   min-width: 0;
   display: grid;
-  grid-template-columns: 84px minmax(0, 1fr);
+  grid-template-columns: 104px minmax(0, 1fr);
   align-items: center;
-  min-height: 96px;
-  padding: 0.38rem;
+  min-height: 116px;
+  padding: 0.42rem;
   overflow: hidden;
   border: 1px solid rgba(15, 118, 110, 0.18);
   border-radius: 8px;
@@ -1069,8 +1069,8 @@
 }
 
 .ie2-secret-card img {
-  width: 84px;
-  height: 84px;
+  width: 104px;
+  height: 104px;
   display: block;
   border-radius: 6px;
   object-fit: cover;
@@ -1426,14 +1426,14 @@
   }
 
   .ie2-secret-card img {
-    width: 72px;
-    height: 72px;
+    width: 96px;
+    height: 96px;
   }
 
   .ie2-secret-card {
-    grid-template-columns: 72px minmax(0, 1fr);
-    min-height: 84px;
-    padding: 0.3rem;
+    grid-template-columns: 96px minmax(0, 1fr);
+    min-height: 108px;
+    padding: 0.35rem;
   }
 
   .ie2-secret-card-copy {
@@ -1441,11 +1441,11 @@
   }
 
   .ie2-secret-card strong {
-    font-size: 0.9rem;
+    font-size: 0.96rem;
   }
 
   .ie2-secret-card-copy > span {
-    font-size: 0.82rem;
+    font-size: 0.86rem;
     line-height: 1.32;
   }
 

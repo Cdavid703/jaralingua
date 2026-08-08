@@ -902,7 +902,7 @@ Toda actividad aprobada deberá incluir, según corresponda:
 
 Si la dinámica usa personajes, roles, objetos, escenarios o categorías que el estudiante debe escoger, cada opción tendrá una tarjeta visual pequeña con su propia imagen pertinente. No se sustituirán estas imágenes por tarjetas compuestas únicamente de texto. Las tarjetas deben ser compactas en celular para que la página conserve ritmo y no obligue a recorrer bloques innecesariamente altos.
 
-En tarjetas de selección como personajes o relaciones, la imagen será una miniatura lateral, no una portada. Su tamaño objetivo será de 64–76 px y nunca superará 88 px en su lado visible. La miniatura no ocupará todo el ancho de la tarjeta. En celular se usará una tarjeta horizontal baja, con la miniatura a la izquierda y el nombre y la definición a la derecha. Una imagen grande en proporción 3:2 o 4:3 dentro de estas tarjetas se considera un incumplimiento de la instrucción `tarjeta pequeña`.
+En tarjetas de selección como personajes o relaciones, la imagen será una miniatura lateral, no una portada. El tamaño se ajustará a la legibilidad real de la dinámica y podrá llegar hasta 104 px cuando una miniatura menor no permita reconocer bien al personaje. La miniatura no ocupará todo el ancho de la tarjeta. En celular se usará una tarjeta horizontal baja, con la miniatura a la izquierda y el nombre y la definición a la derecha. Una imagen grande en proporción 3:2 o 4:3 dentro de estas tarjetas se considera un incumplimiento de la instrucción `tarjeta pequeña`.
 
 El banner no será fijo ni se mantendrá sobre el contenido durante el scroll. En celular tendrá altura automática, recorte controlado, texto corto y acceso rápido a la acción. La imagen principal no se repetirá inmediatamente debajo del banner.
 
@@ -916,7 +916,7 @@ La actividad `Secret Social Circle` fija el primer precedente de este estándar 
 - ejemplo completo de interacción docente-estudiantes;
 - confirmación final y checklist de la ronda.
 
-**Ajuste de legibilidad aprobado — 7 de agosto de 2026:** las tarjetas de `Secret Social Circle` conservan su formato horizontal compacto, pero sus miniaturas no deben verse diminutas. En celular usarán una miniatura de 72 px y una altura mínima de tarjeta de 84 px; en tablet y escritorio usarán una miniatura de 84 px y una altura mínima de 96 px. El nombre y la descripción también aumentarán levemente en celular. Este ajuste mantiene las imágenes por debajo del límite de 88 px y no convierte las tarjetas en portadas grandes.
+**Ajuste definitivo de legibilidad aprobado — 7 de agosto de 2026:** las tarjetas de `Secret Social Circle` conservan su formato horizontal, pero sus personajes deben verse con claridad. En celular usarán una miniatura de 96 px y una altura mínima de tarjeta de 108 px; en tablet y escritorio usarán una miniatura de 104 px y una altura mínima de 116 px. El nombre y la descripción también tendrán un aumento proporcional en celular. Estas medidas sustituyen el ajuste anterior de 72/84 px y el antiguo límite de 88 px; la imagen sigue funcionando como miniatura lateral y no como portada.
 
 No se implementará una nueva actividad sin dejar primero en este Markdown su especificación aprobada o la actualización del estándar que corresponda.
 
