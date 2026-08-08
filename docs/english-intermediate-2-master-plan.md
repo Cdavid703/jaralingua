@@ -2927,7 +2927,7 @@ La auditoría se realizó sobre las páginas reales de Basic English Course 1, B
 | Basic English Course 1 | `ingles/basico/index.html` | `ingles/basico/course-overview.html` | `ingles/basico/practice-lab.html` |
 | Basic English Course 2 | `ingles/basico-2/index.html` | `ingles/basico-2/course-overview.html` | `ingles/basico-2/practice-lab.html` |
 | Intermediate English Course 1 | `ingles/intermediate/index.html` | `ingles/intermediate/course-overview.html` | `ingles/intermediate/practice-lab.html` |
-| Intermediate English Course 2 | `ingles/intermediate-2/index.html` | `ingles/intermediate-2/course-overview.html` | **No existe todavía; es una deuda arquitectónica prioritaria** |
+| Intermediate English Course 2 | `ingles/intermediate-2/index.html` | `ingles/intermediate-2/course-overview.html` | `ingles/intermediate-2/practice-lab.html` — implementado después de esta auditoría |
 
 También se inspeccionaron páginas representativas de práctica controlada, taller, juego oral, reading, listening, pronunciation y Conversation Coach:
 
@@ -3077,9 +3077,9 @@ La duplicación histórica de enlaces de actividad en Course Overview es una deu
 
 No se copiará literalmente una página antigua. Varias actividades históricas carecen de buscador, tienen banners demasiado altos o repiten información. Se conservará su lógica pedagógica útil y se aplicará el estándar móvil, visual y de accesibilidad de Course 2.
 
-### 40.8 Estado incorrecto detectado en Intermediate English Course 2
+### 40.8 Estado incorrecto detectado antes de la corrección
 
-En la fecha de esta auditoría se comprobaron estas desviaciones:
+En la fecha inicial de esta auditoría se comprobaron estas desviaciones, posteriormente corregidas en la fase de reorganización:
 
 1. no existe `ingles/intermediate-2/practice-lab.html`;
 2. la tarjeta `Practice Lab` del Home enlaza directamente a `conversation-coach-unit-1-coffee-with-gabriel.html`;
@@ -3090,9 +3090,9 @@ En la fecha de esta auditoría se comprobaron estas desviaciones:
 
 No se corregirá este problema añadiendo más tarjetas a Course Overview. La corrección consiste en construir la página propietaria que falta.
 
-### 40.9 Corrección arquitectónica requerida antes de una nueva actividad
+### 40.9 Corrección arquitectónica implementada antes de una nueva actividad
 
-La siguiente fase de implementación deberá:
+La fase de reorganización ejecutó estas acciones:
 
 1. crear `ingles/intermediate-2/practice-lab.html` tomando como base estructural las carpetas de Intermediate 1 y las mejoras visuales de Basic 2;
 2. añadir buscador al inicio y filtros por unidad y skill;
@@ -3110,7 +3110,7 @@ La siguiente fase de implementación deberá:
 9. usar el catálogo como fuente única para contadores, tarjetas, buscador y sincronización con Listening Library;
 10. validar 360, 390 y 430 px sin banner fijo, repetición de portadas ni overflow horizontal.
 
-Esta corrección se diseñará y aprobará como una fase independiente. La presente auditoría no autoriza todavía cambios de navegación o de código.
+Esta corrección fue aprobada por la instrucción de organizar el contenido según la arquitectura auditada. No se creó una actividad pedagógica nueva durante esta fase.
 
 ### 40.10 Regla para cualquier actividad nueva
 
@@ -3140,13 +3140,75 @@ La actividad lúdica de conversación propuesta después de `Coffee with Gabriel
 
 ### 40.11 Checklist de aceptación
 
-- [ ] Existe una página Practice Lab propia de Intermediate English Course 2.
-- [ ] Home abre Practice Lab y no una actividad individual.
-- [ ] Course Overview no contiene tarjetas de talleres, juegos ni laboratorios.
-- [ ] Las explicaciones de unidad siguen siendo contenido enseñable, no simples rutas docentes.
-- [ ] Todas las actividades de Unit 1 aparecen dentro de su carpeta de Practice Lab.
-- [ ] El contador coincide con el catálogo real.
-- [ ] Listening Library deriva sus entradas del mismo catálogo.
-- [ ] Cada actividad tiene skill, imagen, objetivo, producto, estado y enlace correctos.
-- [ ] Los accesos de regreso conducen a Practice Lab y, cuando sirve, a la explicación de unidad.
+- [x] Existe una página Practice Lab propia de Intermediate English Course 2.
+- [x] Home abre Practice Lab y no una actividad individual.
+- [x] Course Overview no contiene tarjetas de talleres, juegos ni laboratorios.
+- [x] Las explicaciones de unidad siguen siendo contenido enseñable, no simples rutas docentes.
+- [x] Todas las actividades de Unit 1 aparecen dentro de su carpeta de Practice Lab.
+- [x] El contador coincide con el catálogo real.
+- [x] Listening Library deriva sus entradas del mismo catálogo.
+- [x] Cada actividad tiene skill, imagen, objetivo, producto, estado y enlace correctos.
+- [x] Los accesos de regreso conducen a Practice Lab y, cuando sirve, a la explicación de unidad.
 - [ ] El comportamiento móvil se verifica en producción sin levantar servidores locales.
+
+## 41. Implementación confirmada — reorganización de Unit 1
+
+### 41.1 Practice Lab como página propietaria
+
+Se creó `ingles/intermediate-2/practice-lab.html` con:
+
+- banner profesional compacto y no fijo;
+- buscador inmediatamente después del banner;
+- filtros por skill;
+- carpeta desplegable de Unit 1;
+- secuencia pedagógica recomendada;
+- tarjetas generadas desde el catálogo;
+- carpetas futuras claramente separadas para Units 2–6;
+- diseño de tarjetas horizontal y compacto en celular.
+
+El orden publicado de Unit 1 es:
+
+1. `Secret Social Circle` — Speaking game;
+2. `The Saturday Table` — Reading;
+3. `Nora's Voice Note` — Listening;
+4. `People Who Changed My Circle` — Pronunciation;
+5. `Coffee with Gabriel` — Conversation Coach.
+
+### 41.2 Catálogo como fuente única
+
+`assets/data/english-intermediate-2-content.json` contiene ahora las cinco actividades con:
+
+- `unit` y `order`;
+- tipo y etiqueta de skill;
+- título, subtítulo y resumen;
+- imagen y ruta de actividad;
+- duración y producto final;
+- política de entrega;
+- relación con Grades;
+- palabras clave y estado de publicación.
+
+Los contadores de Home, Practice Lab y Listening Library se calculan desde este catálogo. No se mantendrán sumas independientes que puedan quedar desactualizadas.
+
+### 41.3 Course Overview limpio
+
+Se retiraron de Course Overview:
+
+- la cuadrícula de práctica controlada;
+- las tarjetas y descripciones de talleres;
+- los enlaces individuales a speaking, reading, listening, pronunciation y Conversation Coach.
+
+El cierre de la explicación de Unit 1 conserva únicamente un puente de navegación hacia `practice-lab.html#unit-1-folder` y el Easy Guide. La explicación gramatical, vocabulario, lenguaje diplomático y phrasal verbs permanecen como contenido enseñable.
+
+### 41.4 Listening Library sincronizada
+
+Se creó `ingles/intermediate-2/listening-library.html`. La biblioteca filtra automáticamente del catálogo los tipos `listening`, `video-listening` y `audiobook`. `Nora's Voice Note` sigue perteneciendo a Practice Lab y aparece además en Listening Library sin una segunda entrada manual.
+
+### 41.5 Navegación corregida
+
+- Home abre Practice Lab y Listening Library como secciones independientes;
+- las cinco actividades regresan a la carpeta Unit 1 de Practice Lab;
+- Course Overview permanece disponible para revisar la teoría;
+- una actividad ya no funciona como sustituto de una sección completa;
+- la actividad lúdica futura deberá registrarse como la siguiente tarjeta del catálogo y de Unit 1 Practice Lab, nunca dentro de Course Overview.
+
+La implementación se validó estáticamente sin servidor local: nueve páginas, cinco entradas publicadas, orden único 1–5, cero enlaces de actividades en Course Overview y cinco rutas de regreso a Practice Lab.
