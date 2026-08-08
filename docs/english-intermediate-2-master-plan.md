@@ -916,6 +916,8 @@ La actividad `Secret Social Circle` fija el primer precedente de este estándar 
 - ejemplo completo de interacción docente-estudiantes;
 - confirmación final y checklist de la ronda.
 
+**Ajuste de legibilidad aprobado — 7 de agosto de 2026:** las tarjetas de `Secret Social Circle` conservan su formato horizontal compacto, pero sus miniaturas no deben verse diminutas. En celular usarán una miniatura de 72 px y una altura mínima de tarjeta de 84 px; en tablet y escritorio usarán una miniatura de 84 px y una altura mínima de 96 px. El nombre y la descripción también aumentarán levemente en celular. Este ajuste mantiene las imágenes por debajo del límite de 88 px y no convierte las tarjetas en portadas grandes.
+
 No se implementará una nueva actividad sin dejar primero en este Markdown su especificación aprobada o la actualización del estándar que corresponda.
 
 ### 11.5 Registro obligatorio de personajes y nombres
