@@ -3149,7 +3149,7 @@ La actividad lúdica de conversación propuesta después de `Coffee with Gabriel
 - [x] Listening Library deriva sus entradas del mismo catálogo.
 - [x] Cada actividad tiene skill, imagen, objetivo, producto, estado y enlace correctos.
 - [x] Los accesos de regreso conducen a Practice Lab y, cuando sirve, a la explicación de unidad.
-- [ ] El comportamiento móvil se verifica en producción sin levantar servidores locales.
+- [x] El comportamiento móvil se verifica en producción sin levantar servidores locales.
 
 ## 41. Implementación confirmada — reorganización de Unit 1
 
@@ -3212,3 +3212,15 @@ Se creó `ingles/intermediate-2/listening-library.html`. La biblioteca filtra au
 - la actividad lúdica futura deberá registrarse como la siguiente tarjeta del catálogo y de Unit 1 Practice Lab, nunca dentro de Course Overview.
 
 La implementación se validó estáticamente sin servidor local: nueve páginas, cinco entradas publicadas, orden único 1–5, cero enlaces de actividades en Course Overview y cinco rutas de regreso a Practice Lab.
+
+Después del primer despliegue se verificó directamente en producción:
+
+- 360, 390 y 430 px sin overflow horizontal;
+- banner en flujo normal y fotografía limitada a 135 px en celular;
+- cinco tarjetas visibles y ordenadas;
+- filtro Listening con un único resultado correcto;
+- búsqueda `Gabriel` con resultados pertinentes;
+- Home con destinos canónicos hacia Practice Lab y Listening Library;
+- Course Overview con cero enlaces individuales de actividad y cero bloques de práctica;
+- Listening Library con `Nora's Voice Note` derivada del catálogo;
+- cero errores o advertencias en la consola durante la revisión.
