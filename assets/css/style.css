@@ -794,11 +794,18 @@ a {
 
 .card-link {
   width: fit-content;
+  max-width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
   background: var(--white);
   color: var(--blue-dark);
   padding: 13px 20px;
   border-radius: 999px;
   font-weight: 800;
+  line-height: 1.25;
+  text-align: center;
   transition: transform 0.2s ease, background 0.2s ease;
 }
 
@@ -1270,7 +1277,16 @@ a {
 }
 
 .english-program-grid.has-four-levels .english-program-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
   padding: 24px;
+}
+
+.english-program-grid.has-four-levels .english-program-card {
+  display: flex;
+  flex-direction: column;
 }
 
 .english-program-grid.has-four-levels .english-program-content h3 {
@@ -1365,6 +1381,21 @@ a {
 .english-program-content .card-link {
   background: var(--blue-dark);
   color: var(--white);
+}
+
+.english-program-grid.has-four-levels .english-program-content .card-link {
+  width: 100%;
+  min-height: 54px;
+  align-self: stretch;
+  margin-top: auto;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: clamp(0.9rem, 1.05vw, 1rem);
+  line-height: 1.25;
+  white-space: normal;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-wrap: balance;
 }
 
 .english-program-content .card-link:hover {

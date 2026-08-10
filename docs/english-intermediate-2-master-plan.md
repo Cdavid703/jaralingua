@@ -3403,3 +3403,20 @@ Esta reconstrucción no se considera terminada solo por modificar archivos local
 6. comprobar las rutas y los recursos directamente en producción.
 
 Esta regla es obligatoria para cada sección, actividad y página de Intermediate English Course 2, sin excepción.
+
+## 43. Corrección responsiva — botones del index general de inglés
+
+La revisión visual del index `ingles/index.html` detectó que los cuatro CTA `Open ... Course ...` heredaban `.card-link` como elemento en línea. Cuando el nombre necesitaba dos renglones, el fondo y el radio se fragmentaban por línea: la segunda línea quedaba fuera del rectángulo principal y producía una forma irregular.
+
+Corrección aplicada:
+
+- `.card-link` funciona como `inline-flex`, con centrado vertical y horizontal, ancho máximo seguro y `box-sizing: border-box`;
+- en la cuadrícula de cuatro niveles, cada tarjeta y su contenido usan un flujo flex vertical;
+- los cuatro CTA ocupan el ancho disponible de su tarjeta, conservan altura automática y permiten dos líneas dentro del mismo fondo;
+- el radio se reduce a 14 px para que un botón de dos líneas mantenga una silueta estable;
+- el texto usa tamaño responsivo, interlineado controlado y balance de renglones;
+- `margin-top: auto` alinea los CTA al cierre de las cuatro tarjetas;
+- el mismo comportamiento se conserva cuando la cuadrícula pasa a dos columnas y a una columna en celular;
+- se actualiza la versión de `style.css` en `ingles/index.html` para evitar que producción conserve el estilo defectuoso en caché.
+
+Esta corrección se valida sin servidor local y debe cerrar con commit, push, despliegue y comprobación directa del index en producción.
