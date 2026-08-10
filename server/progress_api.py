@@ -168,6 +168,7 @@ BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS = {
 }
 OPENAI_IMAGES_MODEL = os.environ.get("JARALINGUA_OPENAI_IMAGES_MODEL", "gpt-image-2").strip() or "gpt-image-2"
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
+INTERMEDIATE2_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE2_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate2-english-grades.json")
 INTERMEDIATE_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/intermediate-integrated-task.json")
 INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/intermediate-integrated-task-submissions.json")
 INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/intermediate-integrated-task-real-us.mp3")
@@ -1632,6 +1633,8 @@ def gradebook_path_for_login(path):
         return ("basic2", "Basic English Course 2", BASIC2_ENGLISH_GRADES_PATH)
     if path == "/api/intermediate/grades/login":
         return ("intermediate", "Intermediate English Course 1", INTERMEDIATE_ENGLISH_GRADES_PATH)
+    if path == "/api/intermediate2/grades/login":
+        return ("intermediate2", "Intermediate English Course 2", INTERMEDIATE2_ENGLISH_GRADES_PATH)
     if path == "/api/french1/grades/login":
         return ("french1", "Français Niveau 1", FRENCH1_GRADES_PATH)
     if path == "/api/french2/grades/login":
@@ -17132,6 +17135,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/intermediate2/grades":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                query = urllib.parse.parse_qs(parsed.query)
+                json_response(self, 200, grade_payload_for(profile, grades_data, query))
+            return
+
         if parsed.path == "/api/intermediate/pronunciation-audio":
             query = urllib.parse.parse_qs(parsed.query)
             student_id = clean_text((query.get("studentId") or [""])[0], 40)
@@ -21001,6 +21011,20 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 apply_intermediate_integrated_submission_status_to_gradebook(next_data, submissions)
                 write_json_file(INTERMEDIATE_ENGLISH_GRADES_PATH, next_data, ".intermediate-grades-")
                 json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+            return
+
+        if parsed.path == "/api/intermediate2/grades":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "forbidden"})
+                    return
+                try:
+                    next_data = clean_gradebook_payload(payload, grades_data)
+                    write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, next_data, ".intermediate2-grades-")
+                    json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
             return
 
         if parsed.path == "/api/french1/final-exam/state":
