@@ -15451,6 +15451,128 @@ def apply_intermediate_integrated_submission_status_to_gradebook(grades_data, su
     return changed
 
 
+def sync_intermediate_manual_grade_edits(existing, next_data, profile):
+    """Keep manual gradebook edits authoritative across exam submission stores."""
+    existing_students = {
+        clean_text(student.get("id"), 40): student
+        for student in existing.get("students", [])
+        if isinstance(student, dict) and clean_text(student.get("id"), 40)
+    }
+    actor = normalize_email(profile.get("email"))
+    changed_at = now_iso()
+    integrated_store = None
+    writing_store = None
+    integrated_changed = False
+    writing_changed = False
+
+    for student in next_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        previous = existing_students.get(student_id)
+        if not isinstance(previous, dict):
+            continue
+        previous_grades = previous.get("grades") if isinstance(previous.get("grades"), dict) else {}
+        next_grades = student.get("grades") if isinstance(student.get("grades"), dict) else {}
+        evaluation_ids = set(previous_grades) | set(next_grades)
+        for evaluation_id in evaluation_ids:
+            previous_grade = clean_grade(previous_grades.get(evaluation_id))
+            next_grade = clean_grade(next_grades.get(evaluation_id))
+            if previous_grade == next_grade:
+                continue
+
+            details = student.setdefault("gradeDetails", {})
+            if not isinstance(details, dict):
+                details = {}
+                student["gradeDetails"] = details
+            detail = details.get(evaluation_id)
+            detail = dict(detail) if isinstance(detail, dict) else {}
+            detail.update({
+                "manualGradeOverride": True,
+                "manualUpdatedAt": changed_at,
+                "manualUpdatedBy": actor,
+            })
+            if next_grade is None:
+                detail.pop("grade", None)
+                detail["status"] = "submitted" if detail.get("submittedAt") else "pending"
+                detail["pendingTeacherReview"] = bool(detail.get("submittedAt"))
+            else:
+                detail.update({
+                    "grade": next_grade,
+                    "status": "graded",
+                    "pendingTeacherReview": False,
+                    "manualTeacherEntry": True,
+                })
+            if evaluation_id == INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID:
+                if next_grade is None:
+                    detail.pop("score", None)
+                else:
+                    detail["score"] = round(next_grade * 10, 2)
+                    detail["total"] = 50
+            details[evaluation_id] = detail
+
+            if evaluation_id == INTERMEDIATE_INTEGRATED_TASK_ID:
+                if integrated_store is None:
+                    integrated_store = read_intermediate_integrated_task_submissions()
+                submission = integrated_store.get("submissions", {}).get(student_id)
+                if isinstance(submission, dict):
+                    submission["manualGradeOverride"] = True
+                    submission["manualUpdatedAt"] = changed_at
+                    submission["manualUpdatedBy"] = actor
+                    if next_grade is None:
+                        for key in ("grade", "finalPoints", "gradedAt", "gradedBy"):
+                            submission.pop(key, None)
+                        submission["status"] = "pending-writing"
+                    else:
+                        submission["grade"] = next_grade
+                        submission["finalPoints"] = round(next_grade * 10, 2)
+                        submission["status"] = "graded"
+                        submission["gradedAt"] = changed_at
+                        submission["gradedBy"] = actor
+                    basic_integrated_append_event(
+                        integrated_store,
+                        "manual_grade_updated",
+                        profile,
+                        student_id,
+                        "Administrator updated the final grade from Intermediate Grades",
+                    )
+                    integrated_changed = True
+
+            if evaluation_id == INTERMEDIATE_FINAL_WRITING_TEST_ID:
+                if writing_store is None:
+                    writing_store = read_intermediate_final_writing_store()
+                submission = writing_store.get("submissions", {}).get(student_id)
+                if isinstance(submission, dict):
+                    submission["manualGradeOverride"] = True
+                    submission["manualUpdatedAt"] = changed_at
+                    submission["manualUpdatedBy"] = actor
+                    if next_grade is None:
+                        for key in ("grade", "score50", "gradedAt", "gradedBy"):
+                            submission.pop(key, None)
+                        submission["status"] = "pending_teacher_review"
+                        submission["workflowStatus"] = "pending_teacher_review"
+                    else:
+                        submission["grade"] = next_grade
+                        submission["score50"] = round(next_grade * 10, 2)
+                        submission["status"] = "graded"
+                        submission["workflowStatus"] = "published"
+                        submission["gradedAt"] = changed_at
+                        submission["gradedBy"] = actor
+                    intermediate_final_writing_append_event(
+                        writing_store,
+                        "manual_grade_updated",
+                        profile,
+                        student_id,
+                        "Administrator updated the final grade from Intermediate Grades",
+                    )
+                    writing_changed = True
+
+    if integrated_changed:
+        write_intermediate_integrated_task_submissions(integrated_store)
+    if writing_changed:
+        write_intermediate_final_writing_store(writing_store)
+
+
 class ProgressHandler(BaseHTTPRequestHandler):
     server_version = "JaraLinguaProgress/1.0"
 
@@ -20869,6 +20991,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 except ValueError as error:
                     json_response(self, 400, {"error": str(error)})
                     return
+                sync_intermediate_manual_grade_edits(
+                    grades_data,
+                    next_data,
+                    profile,
+                )
                 ensure_intermediate_gradebook_structure(next_data)
                 submissions = read_intermediate_integrated_task_submissions()
                 apply_intermediate_integrated_submission_status_to_gradebook(next_data, submissions)

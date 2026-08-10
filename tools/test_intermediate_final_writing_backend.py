@@ -320,6 +320,28 @@ def main():
                 API.INTERMEDIATE_FINAL_WRITING_TEST_ID
             ]["pendingTeacherReview"] is False
 
+            current = json.loads(grades_path.read_text(encoding="utf-8"))
+            manually_edited = json.loads(json.dumps(current))
+            edited_student = next(item for item in manually_edited["students"] if item["id"] == "S001")
+            edited_student["grades"][API.INTERMEDIATE_FINAL_WRITING_TEST_ID] = 4.6
+            API.sync_intermediate_manual_grade_edits(
+                current,
+                manually_edited,
+                {"email": "admin@example.com"},
+            )
+            write_json(grades_path, manually_edited)
+            synced_store = API.read_intermediate_final_writing_store()
+            assert synced_store["submissions"]["S001"]["grade"] == 4.6
+            assert synced_store["submissions"]["S001"]["score50"] == 46
+
+            status, manually_updated = request(
+                base_url,
+                "/api/intermediate/final-writing/state",
+                token=student_token,
+            )
+            assert status == 200
+            assert manually_updated["submission"]["grade"] == 4.6
+
             status, reopened_claim = request(
                 base_url,
                 "/api/intermediate/final-writing/student-action",

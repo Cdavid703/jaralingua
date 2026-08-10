@@ -444,7 +444,7 @@
       return `
         <label class="admin-grade-row">
           <span>${escapeHtml(student.fullName)}</span>
-          <input class="form-control" type="number" min="0" max="5" step="0.1" data-new-grade-student="${escapeHtml(student.id)}" placeholder="0.0 - 5.0">
+          <input class="form-control" type="number" min="0" max="5" step="0.01" data-new-grade-student="${escapeHtml(student.id)}" placeholder="0.00 - 5.00">
         </label>
       `;
     }).join("");
@@ -459,7 +459,7 @@
         return `
           <label class="admin-grade-row">
             <span>${escapeHtml(evaluation.title)}</span>
-            <input class="form-control" type="number" min="0" max="5" step="0.1" value="${escapeHtml(value)}" data-edit-grade-student="${escapeHtml(student.id)}" data-edit-grade-evaluation="${escapeHtml(evaluation.id)}" placeholder="Pending">
+            <input class="form-control" type="number" min="0" max="5" step="0.01" value="${escapeHtml(value)}" data-edit-grade-student="${escapeHtml(student.id)}" data-edit-grade-evaluation="${escapeHtml(evaluation.id)}" placeholder="Pending">
           </label>
         `;
       }).join("");
@@ -522,10 +522,10 @@
           <label class="form-label fw-bold w-100 mb-3">Find a student
             <input class="form-control" type="search" data-grade-editor-filter placeholder="Name, email or ID">
           </label>
-          <form data-edit-grades-form>
+          <form data-edit-grades-form novalidate>
             ${adminExistingGradeRows(payload)}
-            <button class="btn-main" type="submit"><i class="bi bi-save"></i> Save grade changes</button>
-            <p class="section-text mt-3" data-edit-grade-status></p>
+            <button class="btn-main" type="submit" data-save-grade-changes><i class="bi bi-save"></i> Save grade changes</button>
+            <p class="section-text mt-3" role="status" aria-live="polite" data-edit-grade-status></p>
           </form>
       </div>
     `;
@@ -538,7 +538,7 @@
       return `
         <label class="admin-grade-row">
           <span>${escapeHtml(evaluation.title)}</span>
-          <input class="form-control" type="number" min="0" max="5" step="0.1" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="Pending">
+          <input class="form-control" type="number" min="0" max="5" step="0.01" value="${escapeHtml(value)}" data-student-grade="${escapeHtml(evaluation.id)}" placeholder="Pending">
         </label>
       `;
     }).join("");
@@ -1083,6 +1083,32 @@
     });
   }
 
+  function showGradeSaveNotice(root, message, isError) {
+    let notice = root.querySelector("[data-grade-save-notice]");
+    if (!notice) {
+      notice = document.createElement("div");
+      notice.setAttribute("data-grade-save-notice", "");
+      notice.setAttribute("role", isError ? "alert" : "status");
+      notice.setAttribute("aria-live", "polite");
+      const tabs = root.querySelector("[data-staff-tabs]");
+      if (tabs) tabs.insertAdjacentElement("beforebegin", notice);
+      else root.prepend(notice);
+    }
+    notice.className = "alert " + (isError ? "alert-danger" : "alert-success") + " fw-bold mb-4";
+    notice.textContent = message;
+  }
+
+  function readGradeInput(input) {
+    const rawValue = input.value.trim();
+    if (!rawValue) return { empty: true, grade: null };
+    const normalized = rawValue.replace(",", ".");
+    const grade = Number(normalized);
+    if (!Number.isFinite(grade) || grade < 0 || grade > 5) {
+      return { empty: false, grade: null, invalid: true };
+    }
+    return { empty: false, grade: Math.round(grade * 100) / 100, invalid: false };
+  }
+
   function wireAdminTools(root, payload, user) {
     const form = root.querySelector("[data-add-grade-form]");
     const editForm = root.querySelector("[data-edit-grades-form]");
@@ -1138,37 +1164,61 @@
           if (status) status.textContent = "Could not save the new grade.";
         });
     });
-    if (editForm) editForm.addEventListener("submit", function (event) {
-      event.preventDefault();
-      const editStatus = root.querySelector("[data-edit-grade-status]");
-      const nextPayload = JSON.parse(JSON.stringify(payload));
-      root.querySelectorAll("[data-edit-grade-student]").forEach(function (input) {
-        const evaluationId = input.getAttribute("data-edit-grade-evaluation");
-        const value = input.value.trim();
-        const student = nextPayload.students.find(function (item) {
-          return item.id === input.getAttribute("data-edit-grade-student");
+    if (editForm) {
+      const saveButton = editForm.querySelector("[data-save-grade-changes]");
+      editForm.addEventListener("keydown", function (event) {
+        if (event.key !== "Enter" || !event.target.matches("[data-edit-grade-student]")) return;
+        event.preventDefault();
+        editForm.requestSubmit(saveButton || undefined);
+      });
+      editForm.addEventListener("submit", function (event) {
+        event.preventDefault();
+        const editStatus = root.querySelector("[data-edit-grade-status]");
+        const nextPayload = JSON.parse(JSON.stringify(payload));
+        let invalidInput = null;
+        root.querySelectorAll("[data-edit-grade-student]").forEach(function (input) {
+          if (invalidInput) return;
+          const evaluationId = input.getAttribute("data-edit-grade-evaluation");
+          const result = readGradeInput(input);
+          const student = nextPayload.students.find(function (item) {
+            return item.id === input.getAttribute("data-edit-grade-student");
+          });
+          if (!student) return;
+          student.grades = student.grades && typeof student.grades === "object" ? student.grades : {};
+          input.removeAttribute("aria-invalid");
+          if (result.invalid) {
+            invalidInput = input;
+            input.setAttribute("aria-invalid", "true");
+            return;
+          }
+          if (result.empty) {
+            delete student.grades[evaluationId];
+            return;
+          }
+          student.grades[evaluationId] = result.grade;
         });
-        if (!student) return;
-        student.grades = student.grades && typeof student.grades === "object" ? student.grades : {};
-        if (!value) {
-          delete student.grades[evaluationId];
+        if (invalidInput) {
+          const card = invalidInput.closest("details");
+          if (card) card.open = true;
+          invalidInput.focus();
+          if (editStatus) editStatus.textContent = "Use a grade from 0.00 to 5.00. Two decimal places are accepted.";
           return;
         }
-        const grade = Number(value);
-        if (Number.isNaN(grade) || grade < 0 || grade > 5) return;
-        student.grades[evaluationId] = Math.round(grade * 100) / 100;
+        if (saveButton) saveButton.disabled = true;
+        if (editStatus) editStatus.textContent = "Saving grade changes...";
+        saveGradebook(user, nextPayload)
+          .then(function () {
+            lastSignature = "";
+            renderPayload(root, nextPayload, user);
+            showGradeSaveNotice(root, "Grade changes saved successfully.", false);
+          })
+          .catch(function () {
+            if (saveButton) saveButton.disabled = false;
+            if (editStatus) editStatus.textContent = "Could not save grade changes. Your entries remain on screen; please try again.";
+            showGradeSaveNotice(root, "The grade changes were not saved.", true);
+          });
       });
-      if (editStatus) editStatus.textContent = "Saving...";
-      saveGradebook(user, nextPayload)
-        .then(function () {
-          lastSignature = "";
-          if (editStatus) editStatus.textContent = "Saved.";
-          renderPayload(root, nextPayload, user);
-        })
-        .catch(function () {
-          if (editStatus) editStatus.textContent = "Could not save grade changes.";
-        });
-    });
+    }
   }
 
   function cardField(card, name) {

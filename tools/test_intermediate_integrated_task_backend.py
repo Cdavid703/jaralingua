@@ -242,6 +242,21 @@ def main():
             assert repaired["student"]["gradeDetails"][API.INTERMEDIATE_INTEGRATED_TASK_ID]["grade"] == 4.8
 
             current = json.loads(grades_path.read_text(encoding="utf-8"))
+            manually_edited = json.loads(json.dumps(current))
+            edited_student = next(item for item in manually_edited["students"] if item["id"] == "S001")
+            edited_student["grades"][API.INTERMEDIATE_INTEGRATED_TASK_ID] = 4.2
+            API.sync_intermediate_manual_grade_edits(
+                current,
+                manually_edited,
+                {"email": "admin@example.com"},
+            )
+            synced_submissions = API.read_intermediate_integrated_task_submissions()
+            assert synced_submissions["submissions"]["S001"]["grade"] == 4.2
+            API.apply_intermediate_integrated_submission_status_to_gradebook(manually_edited, synced_submissions)
+            assert edited_student["grades"][API.INTERMEDIATE_INTEGRATED_TASK_ID] == 4.2
+            assert edited_student["gradeDetails"][API.INTERMEDIATE_INTEGRATED_TASK_ID]["grade"] == 4.2
+
+            current = json.loads(grades_path.read_text(encoding="utf-8"))
             sanitized = API.clean_gradebook_payload({"evaluations": current["evaluations"], "students": current["students"]}, current)
             sanitized_student = next(item for item in sanitized["students"] if item["id"] == "S001")
             assert sanitized_student["localUsername"] == "student-one"

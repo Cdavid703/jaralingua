@@ -151,6 +151,14 @@ async function testAdmin(browser) {
         email: "student@test.local",
         grades: { intermediateIntegratedTask20: 4.5, unit5DishHistoryReading: 5 },
         gradeDetails: { unit5DishHistoryReading: { status: "submitted", followUpOnly: true, grade: 5, activity: "A Dish with a History" } }
+      },
+      {
+        id: "S002",
+        fullName: "Two Decimal Student",
+        level: "Intermediate English Course 1",
+        email: "decimal@test.local",
+        grades: { intermediateIntegratedTask20: 3.85 },
+        gradeDetails: {}
       }
     ],
     bonusEvent: null
@@ -173,22 +181,25 @@ async function testAdmin(browser) {
   assert.equal(await page.locator('[data-staff-tab="edit-grades"]').getAttribute("aria-selected"), "true");
   assert.equal(await page.locator("[data-official-gradebook]").isHidden(), true);
   assert.equal(await page.locator("[data-admin-edit-tools]").isVisible(), true);
-  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").count(), 1);
-  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").evaluate(node => node.open), false);
+  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").count(), 2);
+  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").first().evaluate(node => node.open), false);
   assert.doesNotMatch(await page.locator("[data-admin-edit-tools]").innerText(), /A Dish with a History/);
   await page.locator("[data-grade-editor-filter]").fill("no matching student");
-  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").evaluate(node => node.hidden), true);
+  assert.equal(await page.locator("[data-admin-edit-tools] .admin-student-card").first().evaluate(node => node.hidden), true);
   await page.locator("[data-grade-editor-filter]").fill("");
-  await page.locator("[data-admin-edit-tools] .admin-student-card > summary").click();
-  assert.equal(await page.locator("[data-admin-edit-tools] [data-edit-grade-student]").count(), 1);
-  await page.locator("[data-admin-edit-tools] [data-edit-grade-student]").fill("4.4");
+  await page.locator("[data-admin-edit-tools] .admin-student-card > summary").first().click();
+  assert.equal(await page.locator("[data-admin-edit-tools] [data-edit-grade-student]").count(), 2);
+  const editedGrade = page.locator("[data-admin-edit-tools] [data-edit-grade-student]").first();
+  await editedGrade.fill("4.4");
   await Promise.all([
     page.waitForRequest(request => request.method() === "PUT" && request.url().endsWith("/api/intermediate/grades")),
-    page.locator("[data-admin-edit-tools] [data-edit-grades-form] button[type=submit]").click()
+    editedGrade.press("Enter")
   ]);
   assert.ok(savedPayload, "the edited gradebook should be sent to the API");
   assert.equal(savedPayload.students[0].grades.intermediateIntegratedTask20, 4.4);
   assert.equal(savedPayload.students[0].grades.unit5DishHistoryReading, 5, "hidden 0% tracking grades must be preserved");
+  assert.equal(savedPayload.students[1].grades.intermediateIntegratedTask20, 3.85, "an existing two-decimal grade must not block the form");
+  assert.match(await page.locator("[data-grade-save-notice]").innerText(), /saved successfully/i);
   assert.equal(await page.locator('[data-staff-tab="edit-grades"]').getAttribute("aria-selected"), "true", "active tab should survive a save and rerender");
   await page.locator('[data-staff-tab="edit-grades"]').press("End");
   assert.equal(await page.locator('[data-staff-tab="students"]').getAttribute("aria-selected"), "true", "keyboard navigation should activate the final tab");
