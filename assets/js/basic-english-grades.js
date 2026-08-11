@@ -174,6 +174,22 @@
     };
   }
 
+  function approvalStatus(student, evaluations) {
+    if (student && student.approvalStatus) return String(student.approvalStatus);
+    const weighted = weightedEvaluations(evaluations);
+    const summary = gradeSummary(student, weighted);
+    const grades = student && student.grades ? student.grades : {};
+    const pendingCount = weighted.filter(function (evaluation) {
+      return typeof grades[evaluation.id] !== "number";
+    }).length;
+    if (pendingCount > 2 || summary.average == null || summary.average < 3) return "Reprobado";
+    return "Aprobado";
+  }
+
+  function approvalClass(status) {
+    return String(status || "").toLowerCase().indexOf("aprob") !== -1 ? "done" : "pending";
+  }
+
   function slugify(value) {
     return String(value || "")
       .toLowerCase()
@@ -592,6 +608,7 @@
   function staffStudentRows(payload) {
     return payload.students.map(function (student) {
       const summary = gradeSummary(student, payload.evaluations);
+      const approval = approvalStatus(student, payload.evaluations);
       const gradeCells = payload.evaluations.map(function (evaluation) {
         return `<td>${escapeHtml(formatEvaluationResult(student, evaluation))}</td>`;
       }).join("");
@@ -602,6 +619,7 @@
           ${gradeCells}
           <td>${summary.average == null ? "Pending" : summary.average.toFixed(2)}</td>
           <td>${summary.completedWeight}%</td>
+          <td><span class="status-pill ${approvalClass(approval)}">${escapeHtml(approval)}</span></td>
         </tr>
       `;
     }).join("");
@@ -888,7 +906,7 @@
         ${!weightedPayload.evaluations.length ? `<p class="section-text mb-3">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</p>` : ""}
         <div class="table-wrap">
           <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr></thead>
+            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Aprobado</th></tr></thead>
             <tbody>${staffStudentRows(weightedPayload)}</tbody>
           </table>
         </div>
@@ -1039,6 +1057,7 @@
     }).join("");
     const rows = payload.students.map(function (student) {
       const summary = gradeSummary(student, payload.evaluations);
+      const approval = approvalStatus(student, payload.evaluations);
       const gradeCells = payload.evaluations.map(function (evaluation) {
         return `<td style="text-align:center;">${excelCell(formatEvaluationResult(student, evaluation))}</td>`;
       }).join("");
@@ -1050,6 +1069,7 @@
           ${gradeCells}
           <td style="text-align:center;">${summary.average == null ? "Pending" : summary.average.toFixed(2)}</td>
           <td style="text-align:center;">${summary.completedWeight}%</td>
+          <td style="text-align:center;">${excelCell(approval)}</td>
         </tr>
       `;
     }).join("");
@@ -1067,8 +1087,8 @@
         </head>
         <body>
           <table>
-            <tr><td class="title" colspan="${payload.evaluations.length + 5}">${excelCell(PAGE_CONFIG.excelTitle)}</td></tr>
-            <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr>
+            <tr><td class="title" colspan="${payload.evaluations.length + 6}">${excelCell(PAGE_CONFIG.excelTitle)}</td></tr>
+            <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Aprobado</th></tr>
             ${rows}
           </table>
         </body>
