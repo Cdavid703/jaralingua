@@ -32,6 +32,7 @@
   const MICROSOFT_AUTHORITY = window.JARALINGUA_MICROSOFT_AUTHORITY || "https://login.microsoftonline.com/consumers";
   const MICROSOFT_REDIRECT_URI = window.JARALINGUA_MICROSOFT_REDIRECT_URI || (window.location.origin + PAGE_CONFIG.microsoftRedirectPath);
   const MICROSOFT_SCOPES = Array.isArray(window.JARALINGUA_MICROSOFT_SCOPES) ? window.JARALINGUA_MICROSOFT_SCOPES : ["User.Read"];
+  const EMAIL_COLUMNS_HIDDEN_KEY = "jaralingua_basic_english_grades_hide_email_columns";
 
   let lastSignature = "";
   let microsoftClient = null;
@@ -615,7 +616,7 @@
       return `
         <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
           <td>${escapeHtml(student.fullName)}<br><span class="status-pill">${escapeHtml(student.level)}</span></td>
-          <td>${escapeHtml(student.email || "No email")}</td>
+          <td data-email-column>${escapeHtml(student.email || "No email")}</td>
           ${gradeCells}
           <td>${summary.average == null ? "Pending" : summary.average.toFixed(2)}</td>
           <td>${summary.completedWeight}%</td>
@@ -781,6 +782,11 @@
             <label class="form-label fw-bold" for="studentFilter">Filter students by name or email</label>
             <input id="studentFilter" class="form-control" data-student-filter placeholder="Type a name, last name, or email">
           </div>
+          <div class="col-lg-5 d-grid">
+            <button class="btn-soft" type="button" data-toggle-email-columns aria-pressed="false">
+              <i class="bi bi-eye-slash"></i> Hide email column
+            </button>
+          </div>
         </div>
       </div>
     `;
@@ -833,7 +839,7 @@
       return `
         <tr data-student-row data-student-search="${escapeHtml((student.fullName + " " + student.email).toLowerCase())}">
           <td>${escapeHtml(student.fullName)}<br><span class="status-pill">${escapeHtml(student.level)}</span></td>
-          <td>${escapeHtml(student.email || "No email")}</td>
+          <td data-email-column>${escapeHtml(student.email || "No email")}</td>
           ${cells}
         </tr>
       `;
@@ -853,7 +859,7 @@
         <p class="section-text mb-3">This grid is separated from the official percentage gradebook. These items do not affect the course average.</p>
         <div class="table-wrap">
           <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th>${headers}</tr></thead>
+            <thead><tr><th>Student</th><th data-email-column>Email</th>${headers}</tr></thead>
             <tbody>${staffDeliverableRows(payload)}</tbody>
           </table>
         </div>
@@ -906,7 +912,7 @@
         ${!weightedPayload.evaluations.length ? `<p class="section-text mb-3">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</p>` : ""}
         <div class="table-wrap">
           <table class="grades-table">
-            <thead><tr><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Aprobado</th></tr></thead>
+            <thead><tr><th>Student</th><th data-email-column>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Aprobado</th></tr></thead>
             <tbody>${staffStudentRows(weightedPayload)}</tbody>
           </table>
         </div>
@@ -1382,12 +1388,44 @@
     });
   }
 
+  function emailColumnsAreHidden() {
+    try {
+      return localStorage.getItem(EMAIL_COLUMNS_HIDDEN_KEY) === "1";
+    } catch (error) {
+      return false;
+    }
+  }
+
+  function setEmailColumnsHidden(root, hidden) {
+    if (!root) return;
+    root.classList.toggle("hide-email-columns", !!hidden);
+    root.querySelectorAll("[data-toggle-email-columns]").forEach(function (button) {
+      button.setAttribute("aria-pressed", hidden ? "true" : "false");
+      button.innerHTML = hidden
+        ? '<i class="bi bi-eye"></i> Show email column'
+        : '<i class="bi bi-eye-slash"></i> Hide email column';
+    });
+    try {
+      localStorage.setItem(EMAIL_COLUMNS_HIDDEN_KEY, hidden ? "1" : "0");
+    } catch (error) {}
+  }
+
+  function wireEmailColumnToggle(root) {
+    setEmailColumnsHidden(root, emailColumnsAreHidden());
+    root.querySelectorAll("[data-toggle-email-columns]").forEach(function (button) {
+      button.addEventListener("click", function () {
+        setEmailColumnsHidden(root, !root.classList.contains("hide-email-columns"));
+      });
+    });
+  }
+
   function renderPayload(root, payload, user) {
     if (payload.role === "admin" || payload.role === "teacher") {
       root.innerHTML = renderStaffPanel(payload, user);
       window.JaraGradebookTabs.wire(root);
       wireMicrosoftSignout(root);
       wireStudentFilter(root);
+      wireEmailColumnToggle(root);
       wireExport(root, payloadWithEvaluations(payload, weightedEvaluations(payload.evaluations)));
       wirePdfExport(root, payloadWithEvaluations(payload, weightedEvaluations(payload.evaluations)));
       wireAdminTools(root, payload, user);
