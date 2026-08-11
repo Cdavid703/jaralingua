@@ -1223,10 +1223,10 @@
       });
       if (status) status.textContent = "Saving...";
       saveGradebook(user, nextPayload)
-        .then(function () {
+        .then(function (result) {
           lastSignature = "";
           if (status) status.textContent = "Saved.";
-          renderPayload(root, nextPayload, user);
+          renderPayload(root, normalizeGradesPayload(result && result.students ? result : nextPayload), user);
         })
         .catch(function () {
           if (status) status.textContent = "Could not save the new grade.";
@@ -1341,10 +1341,10 @@
       nextPayload.students = students;
       if (status) status.textContent = "Saving...";
       saveGradebook(user, nextPayload)
-        .then(function () {
+        .then(function (result) {
           lastSignature = "";
           if (status) status.textContent = "Saved.";
-          renderPayload(root, nextPayload, user);
+          renderPayload(root, normalizeGradesPayload(result && result.students ? result : nextPayload), user);
         })
         .catch(function () {
           if (status) status.textContent = "Could not save student changes.";

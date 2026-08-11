@@ -2020,6 +2020,30 @@ def clean_gradebook_payload(payload, existing):
         }
         if isinstance(original.get("gradeDetails"), dict):
             clean_student["gradeDetails"] = original["gradeDetails"]
+        original_grades = original.get("grades") if isinstance(original.get("grades"), dict) else {}
+        grade_details = clean_student.setdefault("gradeDetails", {}) if isinstance(clean_student.get("gradeDetails"), dict) else {}
+        clean_student["gradeDetails"] = grade_details
+        for evaluation in clean_evaluations:
+            eval_id = evaluation.get("id")
+            if eval_id not in grades:
+                continue
+            previous_grade = clean_grade(original_grades.get(eval_id))
+            next_grade = clean_grade(grades.get(eval_id))
+            if next_grade is not None and previous_grade != next_grade:
+                previous_detail = grade_details.get(eval_id) if isinstance(grade_details.get(eval_id), dict) else {}
+                grade_details[eval_id] = {
+                    **previous_detail,
+                    "evaluationId": eval_id,
+                    "activityTitle": evaluation.get("title"),
+                    "status": "manual",
+                    "grade": next_grade,
+                    "weight": clean_weight(evaluation.get("weight")),
+                    "manualOverride": True,
+                    "manualUpdatedAt": now_iso()
+                }
+        for metadata_key in ("approvalStatus", "approvalUpdatedAt", "approvalPendingBeforeZeroFill"):
+            if metadata_key in original:
+                clean_student[metadata_key] = original.get(metadata_key)
         for private_key in ("username", "login", "localUsername", "localPassword"):
             private_value = original.get(private_key)
             if isinstance(private_value, str) and private_value:
@@ -11999,6 +12023,9 @@ def apply_basic_final_oral_submission_status_to_gradebook(grades_data, store):
             details = {}
             student["gradeDetails"] = details
             changed = True
+        existing_detail = details.get(BASIC_FINAL_ORAL_EVALUATION_ID)
+        if isinstance(existing_detail, dict) and existing_detail.get("manualOverride") is True:
+            continue
         published = submission.get("workflowStatus") == "published" or bool(submission.get("publishedAt"))
         if published and clean_grade(submission.get("grade")) is not None:
             grade = clean_grade(submission.get("grade"))
@@ -13884,6 +13911,9 @@ def apply_basic_final_writing_status_to_gradebook(grades_data, store):
         if not isinstance(details, dict):
             details = {}
             student["gradeDetails"] = details
+        existing_detail = details.get(BASIC_FINAL_WRITING_EVALUATION_ID)
+        if isinstance(existing_detail, dict) and existing_detail.get("manualOverride") is True:
+            continue
         if submission.get("status") == "graded" and isinstance(submission.get("grade"), (int, float)):
             grades = student.setdefault("grades", {})
             if not isinstance(grades, dict):
@@ -20965,8 +20995,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         json_response(self, 403, {"error": "forbidden"})
                         return
                     next_data = clean_gradebook_payload(payload, grades_data)
+                    ensure_basic_gradebook_structure(next_data)
+                    writing_store = read_basic_final_writing_store()
+                    apply_basic_final_writing_status_to_gradebook(next_data, writing_store)
+                    oral_store = read_basic_final_oral_store()
+                    apply_basic_final_oral_submission_status_to_gradebook(next_data, oral_store)
                     write_json_file(BASIC_ENGLISH_GRADES_PATH, next_data, ".basic-grades-")
-                    json_response(self, 200, {"ok": True, "updatedAt": now_iso()})
+                    json_response(self, 200, {"ok": True, "updatedAt": now_iso(), **grade_payload_for(profile, next_data, {})})
             except ValueError as error:
                 json_response(self, 400, {"error": str(error)})
             except BasicFinalOralStorageError:
