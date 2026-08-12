@@ -110,6 +110,7 @@ except (TypeError, ValueError):
     FRENCH8_FINAL_EXAM_AUDIO_GRANT_TTL = 10800
 BASIC_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic-english-grades.json")
 BASIC2_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_BASIC2_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/basic2-english-grades.json")
+BASIC2_IMPOSTOR_PATH = os.environ.get("JARALINGUA_BASIC2_IMPOSTOR_DATA", "/var/lib/jaralingua/basic2-impostor-games.json")
 BASIC_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/basic-integrated-task.json")
 BASIC_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/basic-integrated-task-submissions.json")
 BASIC_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_BASIC_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/basic-integrated-task-real.mp3")
@@ -7430,6 +7431,723 @@ def intermediate_unit4_impostor_action(payload):
         return 403, {"error": str(error)}
 
     write_intermediate_unit4_impostor_store(store)
+    return 400, {"error": "invalid_action"}
+
+
+BASIC2_UNIT1_IMPOSTOR_CARDS = [
+    {
+        "id": "its-sunny",
+        "term": "It's sunny",
+        "type": "Weather sentence",
+        "category": "Unit 1 weather",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-sunny.webp",
+        "brief": "The weather is bright, clear, and full of sunlight.",
+        "familyContext": "People often wear sunglasses, go outside, or play sports when the day is sunny.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it to describe a bright day and suggest an outdoor activity.",
+        "clues": ["bright day", "good for sunglasses", "good for outdoor plans"],
+        "taboo": ["sunny", "sun", "bright", "weather"]
+    },
+    {
+        "id": "its-cloudy",
+        "term": "It's cloudy",
+        "type": "Weather sentence",
+        "category": "Unit 1 weather",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-cloudy.webp",
+        "brief": "There are many clouds in the sky, but it is not necessarily raining.",
+        "familyContext": "A cloudy day can be good for a walk, but people may check the forecast before going out.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it when the sky is gray or covered with clouds.",
+        "clues": ["gray sky", "not much sunlight", "maybe rain later"],
+        "taboo": ["cloudy", "clouds", "gray", "sky"]
+    },
+    {
+        "id": "its-raining",
+        "term": "It's raining",
+        "type": "Weather sentence",
+        "category": "Unit 1 weather",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-rainy.webp",
+        "brief": "Water is falling from the sky right now.",
+        "familyContext": "People usually take an umbrella, wear a jacket, or stay inside when it is raining.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it with present continuous to describe rain happening now.",
+        "clues": ["umbrella needed", "wet streets", "water from the sky"],
+        "taboo": ["raining", "rain", "water", "umbrella"]
+    },
+    {
+        "id": "its-windy",
+        "term": "It's windy",
+        "type": "Weather sentence",
+        "category": "Unit 1 weather",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-windy.webp",
+        "brief": "The air is moving strongly outside.",
+        "familyContext": "A windy day can make it difficult to use an umbrella or keep a hat on.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it when the wind affects clothing, plans, or outdoor activities.",
+        "clues": ["strong air", "bad for hats", "trees move a lot"],
+        "taboo": ["windy", "wind", "air", "strong"]
+    },
+    {
+        "id": "its-stormy",
+        "term": "It's stormy",
+        "type": "Weather sentence",
+        "category": "Unit 1 weather",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-stormy.webp",
+        "brief": "The weather is dangerous or intense, usually with heavy rain, wind, thunder, or lightning.",
+        "familyContext": "People usually cancel outdoor plans and stay inside when it is stormy.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it for strong weather that changes plans.",
+        "clues": ["dangerous weather", "thunder or lightning", "stay inside"],
+        "taboo": ["stormy", "storm", "thunder", "lightning"]
+    },
+    {
+        "id": "its-pouring",
+        "term": "It's pouring",
+        "type": "Common weather expression",
+        "category": "Unit 1 weather",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-pouring.webp",
+        "brief": "It is raining very heavily.",
+        "familyContext": "People use this informal expression when normal rain becomes very heavy.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it in everyday English when there is a lot of rain right now.",
+        "clues": ["very heavy rain", "streets get wet fast", "an umbrella may not be enough"],
+        "taboo": ["pouring", "rain", "heavy", "umbrella"]
+    },
+    {
+        "id": "its-hot",
+        "term": "It's hot",
+        "type": "Weather sentence",
+        "category": "Unit 1 temperature",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-hot.webp",
+        "brief": "The temperature is high.",
+        "familyContext": "People may wear light clothes, drink water, or look for shade when it is hot.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it to describe high temperature and choose comfortable clothes or activities.",
+        "clues": ["high temperature", "drink water", "wear light clothes"],
+        "taboo": ["hot", "temperature", "heat", "warm"]
+    },
+    {
+        "id": "its-cold",
+        "term": "It's cold",
+        "type": "Weather sentence",
+        "category": "Unit 1 temperature",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-cold.webp",
+        "brief": "The temperature is low.",
+        "familyContext": "People may wear a jacket, sweater, or scarf when it is cold.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it to describe low temperature and explain what people are wearing.",
+        "clues": ["low temperature", "wear a jacket", "need warm clothes"],
+        "taboo": ["cold", "temperature", "jacket", "warm"]
+    },
+    {
+        "id": "go-outside",
+        "term": "go outside",
+        "type": "Going-out phrase",
+        "category": "Unit 1 plans",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/weather-action-roulette-hero.webp",
+        "brief": "To leave a building or room and be outdoors.",
+        "familyContext": "Students choose an activity they are doing outside depending on the weather.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it when the weather allows an outdoor activity.",
+        "clues": ["leave the house", "outdoors", "play or walk"],
+        "taboo": ["go", "outside", "outdoors", "leave"]
+    },
+    {
+        "id": "stay-inside",
+        "term": "stay inside",
+        "type": "Going-out phrase",
+        "category": "Unit 1 plans",
+        "unit": "unit1",
+        "unitLabel": "Unit 1: weather and going out",
+        "image": "/assets/img/english-basic-2/unit-1-going-out/audio-listening-weather-plan-change.webp",
+        "brief": "To remain indoors instead of going out.",
+        "familyContext": "People often stay inside when it is stormy, cold, or raining heavily.",
+        "contextLabel": "Unit 1 context",
+        "speakingHelp": "Use it when weather changes a plan.",
+        "clues": ["remain at home", "indoors", "bad weather plan"],
+        "taboo": ["stay", "inside", "home", "indoors"]
+    }
+]
+
+
+BASIC2_UNIT2_IMPOSTOR_CARDS = [
+    {
+        "id": "jacket",
+        "term": "jacket",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/jacket.webp",
+        "brief": "A piece of clothing for the upper body, often used when the weather is cool or cold.",
+        "familyContext": "A student may ask how much this item costs or say that it is too small or too big.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when describing what someone is wearing or buying.",
+        "clues": ["upper body", "cold weather", "over a shirt"],
+        "taboo": ["jacket", "coat", "wear", "cold"]
+    },
+    {
+        "id": "sweater",
+        "term": "sweater",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/sweater.webp",
+        "brief": "A warm piece of clothing for the upper body.",
+        "familyContext": "Someone wears this item when it is cold or when they need a warmer outfit.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it with size, fit, and weather descriptions.",
+        "clues": ["warm clothes", "upper body", "good for cold days"],
+        "taboo": ["sweater", "warm", "cold", "wool"]
+    },
+    {
+        "id": "t-shirt",
+        "term": "T-shirt",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/t-shirt.webp",
+        "brief": "A simple short-sleeved shirt, often used in casual outfits.",
+        "familyContext": "Someone may wear it with jeans or shorts on a hot or relaxed day.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when describing casual clothing.",
+        "clues": ["casual top", "short sleeves", "good for hot weather"],
+        "taboo": ["shirt", "t-shirt", "top", "sleeves"]
+    },
+    {
+        "id": "shirt",
+        "term": "shirt",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/shirt.webp",
+        "brief": "A clothing item for the upper body, often more formal than a T-shirt.",
+        "familyContext": "A student may wear this item for a class event, work, or a concert entrance.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when comparing casual and more formal clothing.",
+        "clues": ["upper body", "buttons sometimes", "more formal top"],
+        "taboo": ["shirt", "t-shirt", "top", "buttons"]
+    },
+    {
+        "id": "jeans",
+        "term": "jeans",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/jeans.webp",
+        "brief": "Casual pants usually made of denim.",
+        "familyContext": "Someone may say these are too long, too tight, or perfect for a concert.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when describing lower-body clothing and fit.",
+        "clues": ["denim", "casual pants", "lower body"],
+        "taboo": ["jeans", "denim", "pants", "blue"]
+    },
+    {
+        "id": "pants",
+        "term": "pants",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/pants.webp",
+        "brief": "Clothing for the legs.",
+        "familyContext": "Students can talk about size, price, color, and whether this item fits well.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it for general lower-body clothing.",
+        "clues": ["legs", "lower body", "not a skirt"],
+        "taboo": ["pants", "trousers", "legs", "lower"]
+    },
+    {
+        "id": "dress",
+        "term": "dress",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/dress.webp",
+        "brief": "A one-piece clothing item that covers the upper body and part of the legs.",
+        "familyContext": "Someone may choose it for a concert, party, or special day.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when describing outfits for events.",
+        "clues": ["one piece", "event outfit", "upper and lower body"],
+        "taboo": ["dress", "skirt", "one-piece", "party"]
+    },
+    {
+        "id": "skirt",
+        "term": "skirt",
+        "type": "Clothing item",
+        "category": "Unit 2 clothes",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/skirt.webp",
+        "brief": "A clothing item worn from the waist down.",
+        "familyContext": "A student may compare it with pants or a dress when choosing an outfit.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when talking about lower-body clothing and choices.",
+        "clues": ["waist down", "not pants", "outfit choice"],
+        "taboo": ["skirt", "dress", "waist", "legs"]
+    },
+    {
+        "id": "scarf",
+        "term": "scarf",
+        "type": "Accessory",
+        "category": "Unit 2 accessories",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/scarf.webp",
+        "brief": "An accessory worn around the neck, often for warmth or style.",
+        "familyContext": "Someone may wear it when it is cold or to complete an outfit.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it with weather and accessory descriptions.",
+        "clues": ["around the neck", "accessory", "cold weather"],
+        "taboo": ["scarf", "neck", "warm", "accessory"]
+    },
+    {
+        "id": "hat",
+        "term": "hat",
+        "type": "Accessory",
+        "category": "Unit 2 accessories",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/hat.webp",
+        "brief": "An accessory worn on the head.",
+        "familyContext": "People may wear it for sun, cold weather, style, or a casual outfit.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when describing accessories and weather choices.",
+        "clues": ["on your head", "sun or style", "accessory"],
+        "taboo": ["hat", "head", "cap", "wear"]
+    },
+    {
+        "id": "sunglasses",
+        "term": "sunglasses",
+        "type": "Accessory",
+        "category": "Unit 2 accessories",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/sunglasses.webp",
+        "brief": "Dark glasses used to protect the eyes from sunlight.",
+        "familyContext": "People use this accessory on sunny days or with a casual outfit.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when connecting clothing with sunny weather.",
+        "clues": ["protect eyes", "sunny day", "dark glasses"],
+        "taboo": ["sunglasses", "sun", "eyes", "glasses"]
+    },
+    {
+        "id": "watch",
+        "term": "watch",
+        "type": "Accessory",
+        "category": "Unit 2 accessories",
+        "unit": "unit2",
+        "unitLabel": "Unit 2: clothes and shopping",
+        "image": "/assets/img/english-basic-2/unit-2-shopping-experiences/cards/watch.webp",
+        "brief": "An accessory worn on the wrist to tell the time.",
+        "familyContext": "A student may ask the price of this item or describe it as part of an outfit.",
+        "contextLabel": "Unit 2 context",
+        "speakingHelp": "Use it when describing accessories, price, and personal style.",
+        "clues": ["on your wrist", "tells time", "small accessory"],
+        "taboo": ["watch", "time", "wrist", "clock"]
+    }
+]
+
+
+BASIC2_IMPOSTOR_DECKS = {
+    "unit1": {
+        "label": "Unit 1: weather and going out",
+        "shortLabel": "Unit 1 vocabulary",
+        "cards": BASIC2_UNIT1_IMPOSTOR_CARDS
+    },
+    "unit2": {
+        "label": "Unit 2: clothes and shopping",
+        "shortLabel": "Unit 2 vocabulary",
+        "cards": BASIC2_UNIT2_IMPOSTOR_CARDS
+    }
+}
+
+
+def clean_basic2_impostor_deck(value):
+    deck = clean_text(value, 20).lower()
+    return deck if deck in BASIC2_IMPOSTOR_DECKS else "unit1"
+
+
+def basic2_impostor_deck_config(value):
+    return BASIC2_IMPOSTOR_DECKS.get(clean_basic2_impostor_deck(value), BASIC2_IMPOSTOR_DECKS["unit1"])
+
+
+def default_basic2_impostor_store():
+    return {"rooms": {}}
+
+
+def read_basic2_impostor_store():
+    data = read_json_file(BASIC2_IMPOSTOR_PATH, default_basic2_impostor_store())
+    if not isinstance(data.get("rooms"), dict):
+        data["rooms"] = {}
+    return data
+
+
+def write_basic2_impostor_store(data):
+    write_json_file(BASIC2_IMPOSTOR_PATH, data, ".basic2-impostor-")
+
+
+def basic2_impostor_card_public(card):
+    if not isinstance(card, dict):
+        return None
+    return {
+        "id": clean_text(card.get("id"), 80),
+        "term": clean_text(card.get("term"), 120),
+        "type": clean_text(card.get("type"), 80),
+        "category": clean_text(card.get("category"), 100),
+        "unit": clean_basic2_impostor_deck(card.get("unit")),
+        "unitLabel": clean_text(card.get("unitLabel"), 120),
+        "image": clean_text(card.get("image"), 240),
+        "brief": clean_text(card.get("brief"), 500),
+        "familyContext": clean_text(card.get("familyContext"), 500),
+        "contextLabel": clean_text(card.get("contextLabel"), 80),
+        "speakingHelp": clean_text(card.get("speakingHelp"), 500),
+        "clues": [clean_text(item, 120) for item in card.get("clues", []) if isinstance(item, str)][:4],
+        "taboo": [clean_text(item, 80) for item in card.get("taboo", []) if isinstance(item, str)][:4]
+    }
+
+
+def basic2_impostor_room_payload(room, player_token="", teacher_token=""):
+    players = french8_imposteur_players(room)
+    status = clean_text(room.get("status"), 40) or "waiting"
+    is_revealed = status == "revealed"
+    current = french8_imposteur_find_player(room, player_token)
+    is_teacher = clean_text(teacher_token, 200) and hmac.compare_digest(
+        clean_text(teacher_token, 200),
+        clean_text(room.get("teacherToken"), 200)
+    )
+    ready_count = sum(1 for player in players if player.get("readyAt"))
+    votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+    current_round = french8_imposteur_current_round(room)
+    vote_count = sum(1 for vote_value in votes.values() if french8_imposteur_vote_suspect_id(vote_value, room))
+    card = basic2_impostor_card_public(room.get("card"))
+    deck_key = clean_basic2_impostor_deck(room.get("deck"))
+    deck_config = basic2_impostor_deck_config(deck_key)
+    impostor_ids = {clean_text(item, 40) for item in room.get("impostorIds", []) if clean_text(item, 40)}
+    payload = {
+        "room": {
+            "code": clean_imposteur_room_code(room.get("code")),
+            "status": status,
+            "round": current_round,
+            "deck": deck_key,
+            "deckLabel": deck_config.get("label"),
+            "deckShortLabel": deck_config.get("shortLabel"),
+            "playerCount": len(players),
+            "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS,
+            "maxPlayers": FRENCH8_IMPOSTEUR_MAX_PLAYERS,
+            "impostorCount": len(impostor_ids) if impostor_ids else (2 if len(players) > 8 else 1),
+            "readyCount": ready_count,
+            "allReady": bool(players) and ready_count == len(players),
+            "voteCount": vote_count,
+            "createdAt": room.get("createdAt"),
+            "updatedAt": room.get("updatedAt")
+        },
+        "players": [french8_imposteur_player_public(player, room, is_revealed) for player in players],
+        "currentPlayer": None,
+        "teacher": None,
+        "result": None
+    }
+    if card:
+        payload["room"]["category"] = card.get("category")
+    if current:
+        current_id = clean_text(current.get("id"), 40)
+        role = "impostor" if current_id in impostor_ids else ("citizen" if room.get("card") else "waiting")
+        player_payload = french8_imposteur_player_public(current, room, is_revealed)
+        player_payload["role"] = role
+        if role == "citizen" and status in ("briefing", "discussion", "voting", "revealed"):
+            player_payload["card"] = card
+        elif role == "impostor" and status in ("briefing", "discussion", "voting", "revealed"):
+            player_payload["impostorInstruction"] = "You are the impostor. You do not know the secret Basic English 2 item. Listen carefully, stay credible, and infer it from classmates' clues."
+        payload["currentPlayer"] = player_payload
+    if is_teacher:
+        payload["teacher"] = {
+            "ok": True,
+            "card": card,
+            "impostors": [
+                {"id": clean_text(player.get("id"), 40), "name": clean_imposteur_name(player.get("name"))}
+                for player in players
+                if clean_text(player.get("id"), 40) in impostor_ids
+            ]
+        }
+    if is_revealed:
+        impostors = [
+            {"id": clean_text(player.get("id"), 40), "name": clean_imposteur_name(player.get("name"))}
+            for player in players
+            if clean_text(player.get("id"), 40) in impostor_ids
+        ]
+        payload["result"] = {
+            "card": card,
+            "impostors": impostors,
+            "votes": french8_imposteur_vote_summary(room)
+        }
+    return payload
+
+
+def basic2_impostor_get_state(query):
+    room_code = clean_imposteur_room_code((query.get("room") or [""])[0])
+    player_token = clean_text((query.get("playerToken") or [""])[0], 200)
+    teacher_token = clean_text((query.get("teacherToken") or [""])[0], 200)
+    store = read_basic2_impostor_store()
+    french8_imposteur_prune_rooms(store)
+    room = store.get("rooms", {}).get(room_code)
+    if not room:
+        write_basic2_impostor_store(store)
+        return 404, {"error": "room_not_found"}
+    french8_imposteur_touch(room)
+    write_basic2_impostor_store(store)
+    return 200, basic2_impostor_room_payload(room, player_token, teacher_token)
+
+
+def basic2_impostor_action(payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_json"}
+    action = clean_text(payload.get("action"), 40)
+    store = read_basic2_impostor_store()
+    rooms = store.setdefault("rooms", {})
+    french8_imposteur_prune_rooms(store)
+    timestamp = now_iso()
+
+    if action == "create":
+        room_code = french8_imposteur_new_room_code(rooms)
+        teacher_token = secrets.token_urlsafe(24)
+        room = {
+            "code": room_code,
+            "teacherToken": teacher_token,
+            "status": "waiting",
+            "round": 1,
+            "players": [],
+            "votes": {},
+            "impostorIds": [],
+            "card": None,
+            "deck": "unit1",
+            "createdAt": timestamp,
+            "updatedAt": timestamp,
+            "updatedAtEpoch": int(time.time())
+        }
+        rooms[room_code] = room
+        write_basic2_impostor_store(store)
+        return 200, {"ok": True, "roomCode": room_code, "teacherToken": teacher_token, "state": basic2_impostor_room_payload(room, teacher_token=teacher_token)}
+
+    if action == "reset-all":
+        room_refs = payload.get("rooms")
+        if not isinstance(room_refs, list) or not room_refs:
+            write_basic2_impostor_store(store)
+            return 400, {"error": "invalid_room_list"}
+        cleared_codes = []
+        ignored_count = 0
+        for reference in room_refs[:30]:
+            if not isinstance(reference, dict):
+                ignored_count += 1
+                continue
+            reference_code = clean_imposteur_room_code(reference.get("roomCode") or reference.get("room"))
+            reference_token = clean_text(reference.get("teacherToken"), 200)
+            referenced_room = rooms.get(reference_code)
+            stored_token = clean_text(referenced_room.get("teacherToken"), 200) if isinstance(referenced_room, dict) else ""
+            if not referenced_room or not reference_token or not stored_token or not hmac.compare_digest(reference_token, stored_token):
+                ignored_count += 1
+                continue
+            rooms.pop(reference_code, None)
+            cleared_codes.append(reference_code)
+        write_basic2_impostor_store(store)
+        return 200, {
+            "ok": True,
+            "resetAll": True,
+            "clearedRooms": len(cleared_codes),
+            "ignoredRooms": ignored_count
+        }
+
+    room_code = clean_imposteur_room_code(payload.get("roomCode") or payload.get("room"))
+    room = rooms.get(room_code)
+    if not room:
+        write_basic2_impostor_store(store)
+        return 404, {"error": "room_not_found"}
+    players = french8_imposteur_players(room)
+
+    try:
+        if action == "join":
+            name = clean_imposteur_name(payload.get("name"))
+            if len(name) < 2:
+                return 400, {"error": "name_required"}
+            player_token = clean_text(payload.get("playerToken"), 200)
+            existing = french8_imposteur_find_player(room, player_token)
+            if existing:
+                existing["name"] = name
+                existing["lastSeenAt"] = timestamp
+            else:
+                normalized = normalize_name(name)
+                if any(normalize_name(player.get("name")) == normalized for player in players):
+                    return 409, {"error": "name_taken"}
+                if len(players) >= FRENCH8_IMPOSTEUR_MAX_PLAYERS:
+                    return 409, {"error": "room_full"}
+                player_token = secrets.token_urlsafe(24)
+                players.append({
+                    "id": french8_imposteur_new_player_id(room),
+                    "name": name,
+                    "token": player_token,
+                    "joinedAt": timestamp,
+                    "lastSeenAt": timestamp,
+                    "readyAt": None
+                })
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "roomCode": room_code, "playerToken": player_token, "state": basic2_impostor_room_payload(room, player_token=player_token)}
+
+        if action == "distribute":
+            french8_imposteur_require_teacher(room, payload)
+            if len(players) < FRENCH8_IMPOSTEUR_MIN_PLAYERS:
+                return 409, {"error": "not_enough_players", "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS}
+            deck_key = clean_basic2_impostor_deck(payload.get("deck") or room.get("deck"))
+            deck_config = basic2_impostor_deck_config(deck_key)
+            card = secrets.choice(deck_config.get("cards") or BASIC2_UNIT1_IMPOSTOR_CARDS)
+            impostor_count = 2 if len(players) > 8 else 1
+            impostors = secrets.SystemRandom().sample(players, impostor_count)
+            room["status"] = "briefing"
+            room["deck"] = deck_key
+            room["card"] = card
+            room["impostorIds"] = [clean_text(player.get("id"), 40) for player in impostors]
+            room["votes"] = {}
+            for player in players:
+                player["readyAt"] = None
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "state": basic2_impostor_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "confirm":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) not in ("briefing", "discussion"):
+                return 409, {"error": "not_in_briefing"}
+            player["readyAt"] = timestamp
+            if all(item.get("readyAt") for item in players):
+                room["status"] = "discussion"
+                room["discussionStartedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "state": basic2_impostor_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "force-discussion":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) != "briefing":
+                return 409, {"error": "not_in_briefing"}
+            room["status"] = "discussion"
+            room["discussionStartedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "state": basic2_impostor_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "open-vote":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) not in ("discussion", "briefing"):
+                return 409, {"error": "vote_not_available"}
+            room["status"] = "voting"
+            room["voteOpenedAt"] = timestamp
+            room["votes"] = {}
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "state": basic2_impostor_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "vote":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            suspect_id = clean_text(payload.get("suspectId"), 40)
+            if not player:
+                return 403, {"error": "player_required"}
+            if clean_text(room.get("status"), 40) != "voting":
+                return 409, {"error": "vote_closed"}
+            if not any(clean_text(item.get("id"), 40) == suspect_id for item in players):
+                return 400, {"error": "invalid_suspect"}
+            voter_id = clean_text(player.get("id"), 40)
+            if suspect_id == voter_id:
+                return 400, {"error": "self_vote_forbidden"}
+            votes = room.setdefault("votes", {})
+            if not isinstance(votes, dict):
+                votes = {}
+                room["votes"] = votes
+            votes[voter_id] = {
+                "suspectId": suspect_id,
+                "round": french8_imposteur_current_round(room),
+                "votedAt": timestamp
+            }
+            player["votedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "state": basic2_impostor_room_payload(room, player_token=payload.get("playerToken"))}
+
+        if action == "reveal":
+            french8_imposteur_require_teacher(room, payload)
+            if clean_text(room.get("status"), 40) not in ("discussion", "voting"):
+                return 409, {"error": "reveal_not_available"}
+            room["status"] = "revealed"
+            room["revealedAt"] = timestamp
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "state": basic2_impostor_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "reset":
+            french8_imposteur_require_teacher(room, payload)
+            room["status"] = "waiting"
+            room["round"] = int(room.get("round") or 1) + 1
+            room["votes"] = {}
+            room["impostorIds"] = []
+            room["card"] = None
+            room["deck"] = clean_basic2_impostor_deck(payload.get("deck") or room.get("deck"))
+            for player in players:
+                player["readyAt"] = None
+                player.pop("votedAt", None)
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "state": basic2_impostor_room_payload(room, teacher_token=payload.get("teacherToken"))}
+
+        if action == "close-room":
+            french8_imposteur_require_teacher(room, payload)
+            rooms.pop(room_code, None)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True, "closed": True}
+
+        if action == "leave":
+            player = french8_imposteur_find_player(room, payload.get("playerToken"))
+            if not player:
+                return 403, {"error": "player_required"}
+            player_id = clean_text(player.get("id"), 40)
+            room["players"] = [item for item in players if clean_text(item.get("id"), 40) != player_id]
+            votes = room.get("votes") if isinstance(room.get("votes"), dict) else {}
+            votes.pop(player_id, None)
+            room["votes"] = {
+                voter: vote_value
+                for voter, vote_value in votes.items()
+                if french8_imposteur_vote_suspect_id(vote_value, room) != player_id
+            }
+            room["impostorIds"] = [item for item in room.get("impostorIds", []) if clean_text(item, 40) != player_id]
+            french8_imposteur_touch(room)
+            write_basic2_impostor_store(store)
+            return 200, {"ok": True}
+    except PermissionError as error:
+        return 403, {"error": str(error)}
+
+    write_basic2_impostor_store(store)
     return 400, {"error": "invalid_action"}
 
 
@@ -15737,6 +16455,13 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, payload)
             return
 
+        if parsed.path == "/api/basic2/impostor/state":
+            query = urllib.parse.parse_qs(parsed.query)
+            with data_lock:
+                status, payload = basic2_impostor_get_state(query)
+            json_response(self, status, payload)
+            return
+
         if parsed.path == "/api/intermediate/decision-room/state":
             query = urllib.parse.parse_qs(parsed.query)
             with data_lock:
@@ -17345,6 +18070,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 return
             with data_lock:
                 status, result = intermediate_unit4_impostor_action(payload)
+            json_response(self, status, result)
+            return
+
+        if parsed.path == "/api/basic2/impostor":
+            payload = self.read_json_body()
+            if payload is None:
+                return
+            with data_lock:
+                status, result = basic2_impostor_action(payload)
             json_response(self, status, result)
             return
 

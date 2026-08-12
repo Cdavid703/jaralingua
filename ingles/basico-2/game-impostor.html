@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Vocabulary Impostor | Basic English Course 2 | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260727-basic2-hero-scroll" />
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    .basic2-impostor-page{--intermediate-navy:#071f4f;--intermediate-border:rgba(15,23,42,.12);--intermediate-shadow:0 18px 40px rgba(15,23,42,.1);--intermediate-muted:#526173}
+    .impostor-hero{background:linear-gradient(135deg,rgba(7,31,79,.92),rgba(18,59,143,.66),rgba(15,159,110,.34)),url("../../assets/img/english-basic-2/games/impostor-game-preview.png") center/cover no-repeat;color:#fff}
+    .impostor-hero .lesson-hero-content p,.impostor-hero .eyebrow{color:#fff}
+    .impostor-hero .lesson-hero-content .eyebrow{color:var(--intermediate-navy)!important;background:rgba(255,255,255,.94)}
+    .game-layout{display:grid;grid-template-columns:minmax(280px,.78fr) minmax(0,1.22fr);gap:1rem;align-items:start}
+    .section-kicker,.topic-label{text-transform:uppercase;color:#be123c;font-weight:900;letter-spacing:.1em;font-size:.76rem}
+    .btn-main,.btn-soft,.btn-danger-soft{border-radius:999px;font-weight:900;padding:.72rem 1rem;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;text-decoration:none;border:0;cursor:pointer}
+    .btn-main{background:#0f766e;color:#fff;box-shadow:0 14px 28px rgba(15,118,110,.18)}
+    .btn-main:hover{color:#fff;background:#0b5f59}
+    .btn-soft{background:#fff;color:var(--intermediate-navy);border:1px solid var(--intermediate-border)}
+    .btn-soft:hover{background:#eef5ff;color:var(--intermediate-navy)}
+    .btn-danger-soft{background:#fff1f2;color:#7f1d1d;border:1px solid #fecaca}
+    .btn-danger-soft:hover{background:#ffe4e6;color:#7f1d1d}
+    .btn-main:active,.btn-soft:active,.btn-danger-soft:active,.btn:active,.vocab-unit-btn:active{transform:translateY(1px) scale(.99)}
+    .is-working{position:relative;filter:saturate(.85);pointer-events:none}
+    .is-working::after{content:"";width:.85rem;height:.85rem;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .w-100{width:100%}.mt-2{margin-top:.5rem}.mb-1{margin-bottom:.25rem}
+    button:disabled{opacity:.45;cursor:not-allowed}
+    button:not(:disabled):active{transform:translateY(1px);filter:brightness(.96)}
+    button.is-working{cursor:progress;box-shadow:0 0 0 3px rgba(15,118,110,.16)}
+    .game-panel,.support-card,.private-card,.vote-box,.result-box-final{background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;box-shadow:var(--intermediate-shadow);overflow:hidden}
+    .panel-head{padding:1rem 1.15rem;background:linear-gradient(135deg,#071f4f,#0f766e);color:#fff}
+    .panel-head h2,.panel-head h3{margin:0;color:#fff}
+    .panel-body{padding:1rem}
+    .status-message{margin:0 0 1rem;padding:.9rem 1rem;border-radius:8px;font-weight:900;line-height:1.55}
+    .status-message.info{background:#eef5ff;color:var(--intermediate-navy)}
+    .status-message.success{background:#ecfdf5;color:#064e3b}
+    .status-message.error{background:#fff1f2;color:#7f1d1d}
+    .room-code{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:1rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border);margin-bottom:1rem}
+    .room-code strong{font-size:clamp(2rem,6vw,3.2rem);letter-spacing:.12em;color:var(--intermediate-navy);line-height:1}
+    .status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem;margin-bottom:1rem}
+    .status-card{padding:.8rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
+    .status-card span{display:block;color:var(--intermediate-muted);font-size:.8rem;font-weight:800}
+    .status-card strong{display:block;color:var(--intermediate-navy);font-size:1.25rem}
+    .teacher-actions,.join-form{display:grid;gap:.65rem}
+    .join-form[hidden]{display:none!important}
+    .teacher-actions{grid-template-columns:1fr}
+    .vocabulary-finish-box{display:grid;gap:.65rem;margin:.2rem 0;padding:.85rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
+    .vocabulary-finish-box p{margin:0;color:var(--intermediate-muted);font-weight:800;line-height:1.45}
+    .vocab-button-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:.5rem}
+    .vocab-unit-btn{border-radius:999px;padding:.62rem .7rem;text-align:center;text-decoration:none;background:#fff;color:var(--intermediate-navy);border:1px solid var(--intermediate-border);font-weight:900;cursor:pointer}
+    .vocab-unit-btn:hover,.vocab-unit-btn.active{background:#eef5ff;color:#0f766e;border-color:#0f766e}
+    .selected-deck-note{margin:.15rem 0 0!important;color:#0f766e!important;font-weight:900!important}
+    .join-form input{width:100%;border:1px solid var(--intermediate-border);border-radius:8px;padding:.82rem 1rem;font-weight:800;color:var(--intermediate-navy);background:#fff}
+    .join-row{display:grid;grid-template-columns:minmax(120px,.8fr) minmax(160px,1.1fr) minmax(120px,.55fr);gap:.55rem}
+    .student-connection-status{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin:0 0 1rem;padding:.78rem .85rem;border-radius:8px;background:#ecfdf5;border:1px solid #99f6e4;color:#064e3b;font-weight:900}
+    .student-connection-status[hidden]{display:none!important}
+    .student-connection-status span{min-width:0;overflow-wrap:anywhere}
+    .student-connection-status .btn-soft{flex:0 0 auto;padding:.55rem .8rem}
+    .players-list{list-style:none;margin:0;padding:0;display:grid;gap:.55rem}
+    .players-list li{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.72rem .8rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border)}
+    .players-list span{font-weight:900;color:var(--intermediate-navy)}
+    .players-list em{font-style:normal;color:var(--intermediate-muted);font-weight:800;font-size:.86rem;text-align:right}
+    .role-chip{margin-left:.35rem;border-radius:999px;background:#eef5ff;color:var(--intermediate-navy);font-size:.72rem;padding:.18rem .45rem;text-transform:uppercase}
+    .muted-line{color:var(--intermediate-muted);font-weight:800}
+    .private-card,.vote-box{display:grid;grid-template-columns:minmax(220px,.74fr) minmax(0,1fr);gap:0;align-items:stretch}
+    .private-card img,.vote-box img{width:100%;height:100%;min-height:280px;object-fit:cover}
+    .private-card>div,.vote-box>div{padding:1.05rem}
+    .private-card h3,.vote-box h3,.result-box-final h3{color:var(--intermediate-navy);font-weight:900;margin:.15rem 0 .6rem}
+    .private-card p,.vote-box p,.result-box-final p,.support-card p,.support-card li{color:var(--intermediate-muted);line-height:1.65}
+    .private-card.impostor{border-color:#fecaca}
+    .private-card.citizen{border-color:#99f6e4}
+    .category-line{display:inline-flex!important;border-radius:999px;background:#eef5ff;color:var(--intermediate-navy)!important;padding:.38rem .7rem;font-weight:900;margin:.1rem 0 .65rem}
+    .meaning-block{background:#f8fbff;border:1px solid var(--intermediate-border);border-radius:8px;padding:.75rem;margin:.65rem 0}
+    .meaning-block strong{display:block;color:var(--intermediate-navy);margin-bottom:.25rem}
+    .meaning-block p{margin:0}
+    .mini-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.8rem}
+    .mini-grid div{border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border);padding:.75rem}
+    .mini-grid strong{display:block;color:var(--intermediate-navy);margin-bottom:.35rem}
+    .mini-grid ul,.private-card ul{margin:0;padding-left:1.05rem;color:var(--intermediate-muted);line-height:1.55}
+    .ready-note{font-weight:900;color:#047857!important;margin:1rem 0 0}
+    .vote-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.65rem}
+    .vote-options label{display:flex;align-items:center;gap:.55rem;border:1px solid var(--intermediate-border);background:#f8fbff;border-radius:8px;padding:.75rem;font-weight:900;color:var(--intermediate-navy);cursor:pointer}
+    .vote-options label.is-selected{border-color:#0f766e;background:#ecfdf5;box-shadow:0 0 0 3px rgba(15,118,110,.14)}
+    .vote-options input{accent-color:#0f766e}
+    .vote-choice-note{grid-column:1/-1;margin:.25rem 0 0!important}
+    .vote-options button{grid-column:1/-1}
+    .result-box-final{margin-top:1rem;padding:1rem}
+    .vote-summary{list-style:none;margin:1rem 0 0;padding:0;display:grid;gap:.5rem}
+    .vote-summary li{display:flex;justify-content:space-between;gap:.75rem;background:#f8fbff;border:1px solid var(--intermediate-border);border-radius:8px;padding:.7rem .85rem}
+    .vote-summary span{font-weight:900;color:var(--intermediate-navy)}
+    .support-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1rem}
+    .support-card{padding:1rem}
+    .support-card h3{font-size:1.05rem;color:var(--intermediate-navy);font-weight:900;margin:.15rem 0 .55rem}
+    .support-card ul{margin:0;padding-left:1rem;color:var(--intermediate-muted);line-height:1.62}
+    .sound-toggle{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin:0 0 1rem;padding:.75rem .85rem;border-radius:8px;background:#f8fbff;border:1px solid var(--intermediate-border);font-weight:900;color:var(--intermediate-navy)}
+    .sound-toggle span{display:flex;align-items:center;gap:.45rem}
+    .sound-toggle input{width:1.15rem;height:1.15rem;accent-color:#0f766e}
+    .teacher-action-guide{margin:.8rem 0 1rem;padding:.8rem .9rem;border-left:4px solid #0f766e;border-radius:6px;background:#ecfdf5;color:#064e3b;font-weight:900;line-height:1.5}
+    .qr-panel{margin:-.25rem 0 1rem;padding:1rem;border-radius:8px;background:#fff;border:1px solid var(--intermediate-border);box-shadow:0 14px 30px rgba(15,23,42,.08)}
+    .qr-panel[hidden]{display:none!important}
+    .qr-copy{display:grid;grid-template-columns:minmax(0,1fr) 156px;align-items:center;gap:1rem}
+    .qr-copy h3{margin:0;color:var(--intermediate-navy);font-size:1.05rem;font-weight:900}
+    .qr-copy p:not(.section-kicker){margin:.35rem 0 0;color:var(--intermediate-muted);line-height:1.55;font-size:.92rem}
+    .qr-code-box{width:156px;max-width:100%;aspect-ratio:1;background:#fff;border:1px solid var(--intermediate-border);border-radius:8px;padding:.45rem}
+    .qr-svg{display:block;width:100%;height:100%}
+    .qr-link{display:block;margin:.75rem 0;color:var(--intermediate-navy);font-weight:900;text-decoration:none;overflow-wrap:anywhere}
+    .qr-link:hover{color:#0f766e}
+    .qr-error{margin:0;color:#7f1d1d;font-weight:900}
+    .auth-gate{margin:0 0 1rem;padding:1rem;border-radius:8px;background:#eef5ff;border:1px solid var(--intermediate-border);color:var(--intermediate-navy)}
+    .auth-gate[hidden]{display:none!important}
+    .auth-gate h3{margin:0 0 .35rem;font-size:1.05rem;font-weight:900;color:var(--intermediate-navy)}
+    .auth-gate p{margin:0 0 .8rem;color:var(--intermediate-muted);line-height:1.55;font-weight:800}
+    body.student-only .game-layout{grid-template-columns:1fr}
+    body.student-only .teacher-panel{display:none!important}
+    @media(max-width:1000px){.game-layout,.support-grid{grid-template-columns:1fr}.private-card,.vote-box{grid-template-columns:1fr}.private-card img,.vote-box img{height:280px;min-height:0}.join-row{grid-template-columns:1fr}.vocab-button-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px){
+      .basic2-impostor-page{max-width:100%;overflow-x:hidden}
+      .site-header .navbar{flex-direction:column;align-items:center;gap:.55rem;width:100%;max-width:100vw;padding:8px 10px;overflow:hidden;box-sizing:border-box}
+      .site-header .brand img{height:38px}
+      .site-header .nav-links{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;gap:6px!important;overflow-x:hidden!important;max-width:100%!important;padding:2px 0;box-sizing:border-box}
+      .site-header .nav-links li{min-width:0!important}
+      .site-header .nav-links a{display:flex;align-items:center;justify-content:center;min-height:34px;width:100%;padding:0 8px;font-size:.76rem;white-space:normal!important;text-align:center;line-height:1.15}
+      .global-course-switcher{position:static;display:flex;justify-content:center;width:100%;max-width:100%;margin:.35rem 0 .2rem;padding:0 12px;box-sizing:border-box}
+      .global-course-switcher summary{min-height:40px}
+      .global-course-switcher nav{right:auto;left:50%;top:calc(100% + .5rem);bottom:auto;transform:translateX(-50%);width:min(260px,calc(100vw - 24px))}
+      .jaralingua-auth{display:block!important}
+      .impostor-hero{display:block;width:100vw;max-width:100vw;margin:0;padding:36px 12px 40px}
+      .impostor-hero .lesson-hero-content{width:calc(100vw - 24px)!important;max-width:calc(100vw - 24px)!important;margin:0 auto;padding:26px 20px;border-radius:24px;overflow:hidden}
+      .impostor-hero .lesson-hero-content h1{font-size:clamp(2rem,9vw,2.6rem);line-height:1.08}
+      .impostor-hero .lesson-hero-content p{font-size:.98rem;line-height:1.55}
+      .impostor-hero .lesson-meta{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;width:100%}
+      .impostor-hero .lesson-meta span{justify-content:center;text-align:center;white-space:normal;line-height:1.15;padding:8px 10px}
+      .room-code{align-items:flex-start;flex-direction:column}
+      .student-connection-status{align-items:stretch;flex-direction:column}
+      .student-connection-status .btn-soft{width:100%}
+      .status-grid,.mini-grid,.vocab-button-grid{grid-template-columns:1fr}
+      .players-list li{align-items:flex-start;flex-direction:column}
+      .vote-options{grid-template-columns:1fr}
+      .qr-copy{grid-template-columns:1fr}
+      .qr-code-box{width:min(220px,100%);margin:0 auto}
+      .private-card img,.vote-box img{height:clamp(220px,72vw,300px);min-height:0}
+      .private-card>div,.vote-box>div{min-width:0;overflow-wrap:anywhere}
+      .hero-actions .btn,.btn{width:100%}
+    }
+  </style>
+</head>
+<body class="english-basic-page basic2-page basic2-impostor-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English Course 1</a><a href="./index.html">Basic English Course 2</a><a href="../intermediate/index.html">Intermediate English</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Basic Course 2</a></li><li><a href="games.html">Games</a></li></ul></nav></header>
+  <main>
+    <section class="lesson-hero impostor-hero">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab - Vocabulary Speaking Game</p>
+        <h1>The Vocabulary Impostor</h1>
+        <p>A live hidden-role conversation game. The teacher chooses Unit 1 weather and going-out vocabulary or Unit 2 clothes and shopping vocabulary. Most students receive one secret item; the impostor must infer it from the discussion.</p>
+        <div class="lesson-meta"><span>Units 1-2</span><span>Vocabulary</span><span>Hidden role</span><span>Live speaking</span></div>
+        <div class="hero-actions"><a href="#game" class="btn btn-primary">Open game room</a><a href="games.html" class="btn btn-secondary">Back to games</a></div>
+      </div>
+    </section>
+
+    <section class="premium-lesson-container" id="game">
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Live room</p><h2>Create, Join, Confirm, Discuss, Vote</h2></div></div>
+        <p>The teacher controls the phases. Students see only their private role card on their own device.</p>
+        <div id="statusMessage" class="status-message info" role="status" aria-live="polite" hidden></div>
+        <div class="game-layout">
+          <aside class="game-panel teacher-panel" id="teacherPanel" hidden>
+            <div class="panel-head"><h2>Teacher Control</h2></div>
+            <div class="panel-body">
+              <div class="room-code"><div><p class="section-kicker mb-1">Room code</p><strong id="roomCodeDisplay">----</strong></div><button type="button" class="btn btn-secondary" id="copyCodeBtn"><i class="bi bi-copy"></i> Copy</button></div>
+              <div class="status-grid"><div class="status-card"><span>Players</span><strong id="playerCount">0</strong></div><div class="status-card"><span>Roles received</span><strong id="readyCount">0</strong></div><div class="status-card"><span>Votes</span><strong id="voteCount">0</strong></div></div>
+              <p class="topic-label">Status</p>
+              <h3 id="statusLabel">No room</h3>
+              <p id="statusHint">Create a room or enter a code to join the game.</p>
+              <p class="teacher-action-guide" id="teacherActionGuide" aria-live="polite">Next step: create one room and share its code with the class.</p>
+              <div class="teacher-actions">
+                <button type="button" class="btn btn-primary" id="createRoomBtn"><i class="bi bi-plus-circle"></i> Create room</button>
+                <button type="button" class="btn btn-secondary" id="distributeBtn"><i class="bi bi-shuffle"></i> Distribute roles</button>
+                <button type="button" class="btn btn-secondary" id="forceDiscussionBtn"><i class="bi bi-forward-fill"></i> Start discussion anyway</button>
+                <button type="button" class="btn btn-primary" id="openVoteBtn"><i class="bi bi-person-check-fill"></i> We have a suspect</button>
+                <div class="vocabulary-finish-box" aria-label="Choose the vocabulary deck for this impostor game">
+                  <p class="section-kicker mb-1">Vocabulary deck</p>
+                  <h3 style="margin:.1rem 0;color:var(--intermediate-navy)">Choose before distributing roles</h3>
+                  <p>The selected button decides which unit vocabulary the server will use for the secret card.</p>
+                  <div class="vocab-button-grid">
+                    <button class="vocab-unit-btn active" type="button" data-vocab-deck="unit1">Unit 1 weather</button>
+                    <button class="vocab-unit-btn" type="button" data-vocab-deck="unit2">Unit 2 clothes</button>
+                  </div>
+                  <p class="selected-deck-note" id="selectedDeckNote">Selected: Unit 1 weather and going out</p>
+                </div>
+                <button type="button" class="btn btn-secondary" id="revealBtn"><i class="bi bi-eye-fill"></i> Reveal result</button>
+                <button type="button" class="btn btn-secondary" id="resetBtn"><i class="bi bi-arrow-counterclockwise"></i> Reset room</button>
+                <button type="button" class="btn-danger-soft" id="resetAllRoomsBtn"><i class="bi bi-exclamation-triangle"></i> Reset all rooms</button>
+              </div>
+              <p class="topic-label" style="margin-top:1rem">Players</p>
+              <ul class="players-list" id="playersList"></ul>
+            </div>
+          </aside>
+
+          <section class="game-panel student-panel" id="studentPanel">
+            <div class="panel-head"><h2>Student Area</h2></div>
+            <div class="panel-body">
+              <div class="auth-gate" id="studentAuthGate" hidden><h3>Sign-in required</h3><p>Sign in to join the room. The QR prepares the code, but the game must be linked to a student account.</p><button type="button" class="btn btn-primary" id="openAuthFromGame"><i class="bi bi-person-circle"></i> Sign in</button></div>
+              <div class="student-connection-status" id="studentConnectionStatus" role="status" aria-live="polite" hidden><span id="studentConnectionText"></span><button type="button" class="btn-soft" id="studentLeaveRoomBtn"><i class="bi bi-box-arrow-left"></i> Leave room</button></div>
+              <form class="join-form" id="joinForm" hidden><div class="join-row"><input id="roomCode" maxlength="6" autocomplete="off" placeholder="Room code" /><input id="playerName" maxlength="80" autocomplete="name" placeholder="Your name" /><button type="submit" class="btn btn-primary" id="joinSubmitBtn"><i class="bi bi-box-arrow-in-right"></i> Join</button></div></form>
+              <div id="roleCard"></div>
+              <div id="votePanel" style="margin-top:1rem"></div>
+              <div id="resultPanel"></div>
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <section class="support-grid">
+        <article class="support-card"><p class="topic-label">Rules</p><h3>Do not reveal the secret item</h3><ul><li>Ask and answer in English.</li><li>Use examples from the selected unit.</li><li>Do not say the exact word or expression.</li><li>Vote only when the teacher opens the phase.</li></ul></article>
+        <article class="support-card"><p class="topic-label">Decks</p><h3>Vocabulary in this game</h3><ul><li>Unit 1: weather, going out, staying in, current actions.</li><li>Unit 2: clothing, accessories, size, fit, prices, and shopping.</li></ul></article>
+        <article class="support-card"><p class="topic-label">Speaking moves</p><h3>Useful discussion language</h3><ul><li>I think it is connected to...</li><li>People use it when...</li><li>Your clue sounds too general.</li><li>I suspect this person because...</li></ul></article>
+      </section>
+    </section>
+  </main>
+  <footer class="site-footer"><p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p></footer>
+  <script src="../../assets/js/english-basic2-impostor.js?v=20260812-basic2-impostor"></script>
+  <script src="../../assets/js/jaralingua-back-button.js?v=20260717-language"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>

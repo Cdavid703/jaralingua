@@ -90,6 +90,13 @@ node tools/test_basic2_top_nav_auth.mjs
 node tools/test_basic2_hero_scroll.mjs
 ```
 
+Cuando se cree o modifique el juego del impostor de Basic 2, ejecutar tambien:
+
+```bash
+python tools/test_basic2_impostor_game.py
+node tools/test_basic2_impostor_ui.cjs
+```
+
 Si se despliega a produccion, repetir las pruebas contra `https://www.jaralingua.com`.
 
 ## 7. Criterio de terminado
