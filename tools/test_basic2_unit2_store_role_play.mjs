@@ -74,6 +74,23 @@ const audioStatus = await page.evaluate(async () => {
 assert.ok(audioStatus.readyState >= 1, "Expression audio metadata should load.");
 assert.ok(Number.isFinite(audioStatus.duration) && audioStatus.duration > 0, "Expression audio duration should be available.");
 
+const teacherModelContrast = await page.locator(".roleplay-model .roleplay-board p").first().evaluate((node) => {
+  const paragraph = getComputedStyle(node);
+  const board = getComputedStyle(node.closest(".roleplay-board"));
+  const heading = getComputedStyle(document.querySelector(".roleplay-model h2"));
+  const model = getComputedStyle(document.querySelector(".roleplay-model"));
+  return {
+    boardText: paragraph.color,
+    boardBackground: board.backgroundColor,
+    teacherTitle: heading.color,
+    teacherPanel: model.backgroundColor
+  };
+});
+assert.equal(teacherModelContrast.boardText, "rgb(255, 255, 255)", "Teacher model board text must be white on the dark board.");
+assert.equal(teacherModelContrast.boardBackground, "rgb(7, 31, 79)", "Teacher model board must keep the dark blue background.");
+assert.equal(teacherModelContrast.teacherTitle, "rgb(7, 31, 79)", "Teacher model title must be dark on the white card.");
+assert.equal(teacherModelContrast.teacherPanel, "rgb(255, 255, 255)", "Teacher model panel must be white.");
+
 assert.deepEqual(errors, [], "Page should not emit console errors.");
 
 await browser.close();
