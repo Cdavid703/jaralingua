@@ -17,10 +17,18 @@ assert.match(practiceLab, /Pair \/ Trio Speaking/, "Practice Lab card must ident
 assert.match(pageSource, /Pairs or trios/, "Activity must restrict grouping to pairs or trios.");
 assert.match(pageSource, /One phrasal verb/, "Activity must require a phrasal verb.");
 assert.match(pageSource, /One idiom or expression/, "Activity must require an idiom or expression.");
+assert.match(pageSource, /Conversation paths/, "Activity must include conversation paths.");
+assert.match(pageSource, /Jacket for a concert/, "Activity must include the jacket conversation path.");
+assert.match(pageSource, /Role cards/, "Activity must include role cards.");
+assert.match(pageSource, /Customer starters/, "Activity must include sentence starters.");
+assert.match(pageSource, /Pronunciation checklist/, "Activity must include the pronunciation checklist.");
 assert.match(pageSource, /Board preparation/, "Activity must include board preparation instructions.");
 assert.match(pageSource, /Example conversation to perform with one student/, "Activity must include a teacher-student model conversation.");
 assert.match(pageSource, /data-expression-audio="audio\/unit2\/expressions\/try-on\.mp3"/, "Activity must reuse Unit 2 expression audio cards.");
 assert.match(pageSource, /english-basic2-expression-audio\.js/, "Activity must load the expression audio client.");
+assert.doesNotMatch(pageSource, /Teacher quick feedback guide/i, "The approved scope excludes a teacher quick feedback guide.");
+assert.doesNotMatch(pageSource, /Challenge options/i, "The approved scope excludes challenge options.");
+assert.doesNotMatch(pageSource, /Board template visual/i, "The approved scope excludes a board template visual.");
 
 for (const image of ["store-role-play-hero.png", "store-role-play-board-prep.png"]) {
   const imagePath = path.join(ROOT, "assets", "img", "english-basic-2", "unit-2-shopping-experiences", image);
