@@ -974,7 +974,7 @@
       voteDraft = { round: currentRound, suspectId: "" };
     }
     var savedSuspectId = cleanPlayerId(player.voteSuspectId);
-    var selectedSuspectId = savedSuspectId || voteDraft.suspectId;
+    var selectedSuspectId = voteDraft.suspectId || savedSuspectId;
     var voteGroupName = "suspect-" + cleanRoomCode(room.code || localState.roomCode) + "-r" + currentRound;
     var options = (payload.players || []).filter(function (item) { return item.id !== player.id; }).map(function (item) {
       var checked = selectedSuspectId === item.id ? " checked" : "";

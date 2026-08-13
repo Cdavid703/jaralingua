@@ -34,6 +34,9 @@
     body.student-only .teacher-panel{display:none!important}
     @media(max-width:575px){.qr-copy{grid-template-columns:1fr}.qr-code-box{width:min(220px,100%);margin:0 auto}.qr-link{text-align:center}}
   </style>
+  <style>
+    .vote-options label.is-selected{border-color:var(--red);background:#fff3f4;box-shadow:0 0 0 3px rgba(214,40,57,.12)}
+  </style>
 </head>
 <body>
   <div class="global-course-switcher" aria-label="Cours"><details><summary><span>Cours</span></summary><nav><a href="../../../index.html">Accueil</a><a href="../../index.html">Français</a><a href="../index.html">Français Niveau 7</a><a href="../../Niveau%208/index.html">Français Niveau 8</a><a href="../../../ingles/index.html">Anglais</a></nav></details></div>
@@ -51,7 +54,7 @@
 
   <footer><div class="container d-flex flex-wrap justify-content-between gap-3"><div><h2 class="h4 fw-bold">L'Imposteur · Français Niveau 7</h2><p class="mb-0 opacity-75">Jeu oral en direct pour pratiquer le vocabulaire, la déduction et l'argumentation.</p></div><a href="../jeux.html"><i class="bi bi-arrow-left"></i> Retour aux jeux</a></div></footer>
   <script src="../../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
-  <script src="../../../assets/js/french7-imposteur.js?v=20260716-n7-imposteur-vocab"></script>
+  <script src="../../../assets/js/french7-imposteur.js?v=20260813-vote-draft"></script>
   <script src="../../../assets/js/jaralingua-back-button.js"></script>
   <script src="../../../assets/js/google-auth-config.js"></script>
   <script src="https://accounts.google.com/gsi/client" async defer></script>

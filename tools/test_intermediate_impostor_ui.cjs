@@ -233,14 +233,14 @@ async function testStudentVoteAndResponsive(browser) {
     assert.equal((await page.locator(".jara-back-button span").innerText()).trim(), "Back");
     await assertResponsive(page, viewport.label);
     if (viewport.label === "mobile-390x844") {
-      await page.locator('input[name="suspect"][value="p2"]').check();
+      await page.locator('input[data-suspect-option][value="p2"]').check();
       await page.locator('#voteForm button[type="submit"]').click();
       assert.match(await waitForStatus(page, "Vote recorded"), /Vote recorded/);
       assert.match(await page.locator("#votePanel").innerText(), /Your vote is saved/);
-      await page.locator('input[name="suspect"][value="p3"]').check();
+      await page.locator('input[data-suspect-option][value="p3"]').check();
       await page.locator('#voteForm button[type="submit"]').click();
       await waitForStatus(page, "Vote recorded");
-      assert.equal(await page.locator('input[name="suspect"][value="p3"]').isChecked(), true);
+      assert.equal(await page.locator('input[data-suspect-option][value="p3"]').isChecked(), true);
       assert.match(await page.locator("#statusMessage").innerText(), /still change it/);
     }
     await context.close();

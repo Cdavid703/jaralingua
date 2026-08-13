@@ -25,6 +25,7 @@
   var sfxCache = {};
   var pollTimer = null;
   var lastPayload = null;
+  var voteDraft = { round: 0, suspectId: "" };
   var authPollTimer = null;
   var GOOGLE_USER_KEY = "jaralingua_google_user";
   var MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
@@ -59,6 +60,10 @@
 
   function cleanRoomCode(value) {
     return String(value || "").toUpperCase().replace(/[^A-Z0-9]/g, "").slice(0, 6);
+  }
+
+  function cleanPlayerId(value) {
+    return String(value || "").replace(/[^A-Za-z0-9_-]/g, "").slice(0, 40);
   }
 
   function normalizeEmail(value) {
@@ -794,6 +799,62 @@
       '<button type="submit" class="btn-main"><i class="bi bi-send-check-fill"></i> Envoyer mon vote</button></form></div></section>');
   }
 
+  function renderVote(payload) {
+    var room = payload.room || {};
+    var player = payload.currentPlayer;
+    if (room.status !== "voting" || !player) {
+      setHtml("#votePanel", "");
+      return;
+    }
+    var currentRound = Number(room.round || 1);
+    if (voteDraft.round !== currentRound) {
+      voteDraft = { round: currentRound, suspectId: "" };
+    }
+    var savedSuspectId = cleanPlayerId(player.voteSuspectId);
+    var selectedSuspectId = voteDraft.suspectId || savedSuspectId;
+    var voteGroupName = "suspect-" + cleanRoomCode(room.code || localState.roomCode) + "-r" + currentRound;
+    var options = (payload.players || []).filter(function (item) { return item.id !== player.id; }).map(function (item) {
+      var itemId = cleanPlayerId(item.id);
+      var checked = selectedSuspectId === itemId ? " checked" : "";
+      return '<label class="' + (checked ? "is-selected" : "") + '"><input type="radio" name="' + escapeHtml(voteGroupName) + '" data-suspect-option value="' + escapeHtml(item.id) + '"' + checked + ' autocomplete="off"><span>' + escapeHtml(item.name) + '</span></label>';
+    }).join("");
+    var selectedName = playerNameById(payload.players || [], selectedSuspectId);
+    var selectionNote = selectedSuspectId
+      ? '<p class="ready-note vote-choice-note" id="voteChoiceNote"><i class="bi bi-person-check"></i> Selection : ' + escapeHtml(selectedName) + '. Envoie ou modifie ton vote avant la revelation.</p>'
+      : '<p class="muted-line vote-choice-note" id="voteChoiceNote">Aucun suspect selectionne. Choisis un camarade avant d’envoyer.</p>';
+    var savedNote = player.hasVoted
+      ? '<p class="ready-note"><i class="bi bi-check2-circle"></i> Ton vote est enregistre. Tu peux encore le modifier avant la revelation.</p>'
+      : "";
+    var buttonLabel = player.hasVoted ? "Modifier mon vote" : "Envoyer mon vote";
+    setHtml("#votePanel", '<section class="vote-box active"><img src="../img/jeux/jeu-imposteur-vote.png" alt="Vote imposteur">' +
+      '<div><p class="section-kicker">Vote secret</p><h3>Qui est l\'imposteur ?</h3>' +
+      '<p>Choisis la personne qui semblait ne pas connaitre le mot secret.</p>' + savedNote +
+      '<form id="voteForm" class="vote-options" autocomplete="off" data-vote-round="' + currentRound + '">' + options + selectionNote +
+      '<button type="submit" class="btn-main"><i class="bi bi-send-check-fill"></i> ' + buttonLabel + '</button></form></div></section>');
+  }
+
+  function playerNameById(players, id) {
+    var cleanId = cleanPlayerId(id);
+    var found = (players || []).find(function (item) { return cleanPlayerId(item && item.id) === cleanId; });
+    return found && found.name ? found.name : "ce camarade";
+  }
+
+  function handleVoteSelection(input) {
+    var form = input.closest("#voteForm");
+    var round = Number((form && form.getAttribute("data-vote-round")) || (lastPayload && lastPayload.room && lastPayload.room.round) || 1);
+    voteDraft = { round: round, suspectId: cleanPlayerId(input.value) };
+    if (form) {
+      Array.prototype.forEach.call(form.querySelectorAll("label"), function (label) {
+        label.classList.toggle("is-selected", label.contains(input));
+      });
+    }
+    var note = $("#voteChoiceNote");
+    if (note) {
+      note.className = "ready-note vote-choice-note";
+      note.innerHTML = '<i class="bi bi-person-check"></i> Selection : ' + escapeHtml(playerNameById((lastPayload && lastPayload.players) || [], input.value)) + '. Envoie ou modifie ton vote avant la revelation.';
+    }
+  }
+
   function renderResult(payload) {
     var result = payload.result;
     if (!result) {
@@ -969,6 +1030,33 @@
     }
   }
 
+  async function submitVote(event) {
+    event.preventDefault();
+    var form = event.target;
+    var selected = form && form.querySelector('input[data-suspect-option]:checked');
+    if (!selected) {
+      showMessage("Choisis un suspect avant d'envoyer ton vote.", "error");
+      return;
+    }
+    voteDraft = {
+      round: Number((form && form.getAttribute("data-vote-round")) || (lastPayload && lastPayload.room && lastPayload.room.round) || 1),
+      suspectId: cleanPlayerId(selected.value)
+    };
+    try {
+      var result = await request("vote", {
+        roomCode: localState.roomCode,
+        playerToken: localState.playerToken,
+        suspectId: selected.value
+      });
+      lastPayload = result.state;
+      render(lastPayload);
+      showMessage("Vote enregistre. Tu peux encore le modifier avant la revelation.", "success");
+      playSfx("voteSubmitted");
+    } catch (error) {
+      showMessage(messageForError(error), "error");
+    }
+  }
+
   function bindEvents() {
     $("#createRoomBtn") && $("#createRoomBtn").addEventListener("click", handleCreateRoom);
     $("#joinForm") && $("#joinForm").addEventListener("submit", handleJoin);
@@ -993,6 +1081,10 @@
     });
     document.addEventListener("click", function (event) {
       if (event.target && event.target.id === "confirmRoleBtn") confirmRole();
+    });
+    document.addEventListener("change", function (event) {
+      var option = event.target && event.target.closest ? event.target.closest("[data-suspect-option]") : null;
+      if (option) handleVoteSelection(option);
     });
     document.addEventListener("submit", function (event) {
       if (event.target && event.target.id === "voteForm") submitVote(event);
