@@ -7784,6 +7784,7 @@ BASIC2_IMPOSTOR_DECKS = {
         "cards": BASIC2_UNIT2_IMPOSTOR_CARDS
     }
 }
+BASIC2_IMPOSTOR_MAX_PLAYERS = None
 
 
 def clean_basic2_impostor_deck(value):
@@ -7857,7 +7858,7 @@ def basic2_impostor_room_payload(room, player_token="", teacher_token=""):
             "deckShortLabel": deck_config.get("shortLabel"),
             "playerCount": len(players),
             "minPlayers": FRENCH8_IMPOSTEUR_MIN_PLAYERS,
-            "maxPlayers": FRENCH8_IMPOSTEUR_MAX_PLAYERS,
+            "maxPlayers": BASIC2_IMPOSTOR_MAX_PLAYERS,
             "impostorCount": len(impostor_ids) if impostor_ids else (2 if len(players) > 8 else 1),
             "readyCount": ready_count,
             "allReady": bool(players) and ready_count == len(players),
@@ -8000,8 +8001,6 @@ def basic2_impostor_action(payload):
                 normalized = normalize_name(name)
                 if any(normalize_name(player.get("name")) == normalized for player in players):
                     return 409, {"error": "name_taken"}
-                if len(players) >= FRENCH8_IMPOSTEUR_MAX_PLAYERS:
-                    return 409, {"error": "room_full"}
                 player_token = secrets.token_urlsafe(24)
                 players.append({
                     "id": french8_imposteur_new_player_id(room),

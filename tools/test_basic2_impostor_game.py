@@ -61,6 +61,17 @@ def main():
         assert status == 200, first_room
         status, second_room = action("create")
         assert status == 200, second_room
+        assert second_room["state"]["room"]["maxPlayers"] is None
+
+        for index in range(1, 31):
+            status, joined = action(
+                "join",
+                roomCode=first_room["roomCode"],
+                name=f"Capacity Student {index}",
+            )
+            assert status == 200, (index, joined)
+            assert joined["state"]["room"]["playerCount"] == index
+            assert joined["state"]["room"]["maxPlayers"] is None
 
         status, unscoped_reset = action("reset-all")
         assert status == 400 and unscoped_reset["error"] == "invalid_room_list", unscoped_reset
