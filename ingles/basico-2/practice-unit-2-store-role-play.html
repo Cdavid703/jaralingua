@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Store Role-Play | Unit 2 | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260813-basic2-store-role-play" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <style>
+    .roleplay-page {
+      overflow-x: hidden;
+    }
+
+    .roleplay-shell {
+      width: min(1220px, calc(100% - 32px));
+      margin: 34px auto 72px;
+      display: grid;
+      gap: 22px;
+    }
+
+    .roleplay-panel,
+    .roleplay-card,
+    .roleplay-image-card,
+    .roleplay-board-card {
+      border-radius: 26px;
+      background: #ffffff;
+      border: 1px solid rgba(15, 23, 42, 0.08);
+      box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+      overflow: hidden;
+    }
+
+    .roleplay-panel {
+      padding: clamp(1rem, 2.6vw, 1.7rem);
+    }
+
+    .roleplay-panel h2,
+    .roleplay-panel h3,
+    .roleplay-card h3,
+    .roleplay-board-card h3 {
+      color: #071f4f;
+      margin-top: 0;
+    }
+
+    .roleplay-panel p,
+    .roleplay-card p,
+    .roleplay-board-card p,
+    .roleplay-panel li {
+      color: #475569;
+      line-height: 1.65;
+    }
+
+    .roleplay-grid,
+    .roleplay-requirement-grid,
+    .roleplay-image-grid,
+    .roleplay-prep-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .roleplay-grid,
+    .roleplay-requirement-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .roleplay-image-grid,
+    .roleplay-prep-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .roleplay-card,
+    .roleplay-board-card {
+      padding: 18px;
+      background: linear-gradient(145deg, #ffffff, #f8fbff);
+    }
+
+    .roleplay-card b,
+    .roleplay-step-number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background: #123b8f;
+      color: #ffffff;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    .roleplay-image-card img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .roleplay-image-card div {
+      padding: 16px;
+    }
+
+    .roleplay-checklist {
+      display: grid;
+      gap: 10px;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .roleplay-checklist li {
+      border-radius: 16px;
+      background: #eef4ff;
+      padding: 12px 14px;
+      font-weight: 800;
+    }
+
+    .roleplay-board {
+      border-radius: 22px;
+      background: #071f4f;
+      color: #ffffff;
+      padding: clamp(1rem, 2.4vw, 1.5rem);
+      display: grid;
+      gap: 12px;
+    }
+
+    .roleplay-board p {
+      margin: 0;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffffff;
+    }
+
+    .roleplay-board strong {
+      color: #ffd166;
+    }
+
+    .roleplay-model {
+      border-radius: 26px;
+      padding: clamp(1rem, 2.6vw, 1.7rem);
+      background: #071f4f;
+      color: #ffffff;
+      box-shadow: 0 18px 40px rgba(7, 31, 79, 0.18);
+    }
+
+    .roleplay-model h2,
+    .roleplay-model p {
+      color: #ffffff;
+    }
+
+    .roleplay-dialogue {
+      display: grid;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .roleplay-dialogue p {
+      margin: 0;
+      border-radius: 16px;
+      padding: 12px 14px;
+      background: rgba(255, 255, 255, 0.1);
+      line-height: 1.55;
+    }
+
+    .roleplay-dialogue strong {
+      color: #ffd166;
+    }
+
+    .roleplay-note {
+      border-left: 6px solid #f97316;
+      background: #fff7ed;
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: #7c2d12;
+      font-weight: 800;
+    }
+
+    @media (max-width: 980px) {
+      .roleplay-grid,
+      .roleplay-requirement-grid,
+      .roleplay-image-grid,
+      .roleplay-prep-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="english-basic-page basic2-page roleplay-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="games.html">Games</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-basic-2/unit-2-shopping-experiences/store-role-play-hero.png')">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Unit 2 · Speaking production</p>
+        <h1>Store Role-Play: Shopping Conversation &amp; Mini Presentation</h1>
+        <p>Students work in pairs or groups of three to simulate a real clothing-store conversation using Unit 2 vocabulary, prices, sizes, phrasal verbs, and idioms.</p>
+        <div class="lesson-meta"><span>Pairs or trios</span><span>Store conversation</span><span>Phrasal verbs</span><span>Idioms</span></div>
+        <div class="hero-actions">
+          <a href="#activity-flow" class="btn btn-primary">Start planning</a>
+          <a href="practice-lab.html#unit-2-folder" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/store-role-play-hero.png" alt="Adult learners simulating a clothing store conversation in English" /></aside>
+    </section>
+
+    <section class="roleplay-shell" id="activity-flow">
+      <article class="roleplay-panel">
+        <p class="eyebrow">Objective</p>
+        <h2>What students will do</h2>
+        <p>Students will create and present a short shopping conversation. One student enters a clothing store as the customer, another student acts as the shop assistant, and a third student may join as a friend or second customer.</p>
+        <div class="roleplay-grid">
+          <div class="roleplay-card"><b>2</b><h3>Pair option</h3><p>Student A is the customer. Student B is the shop assistant.</p></div>
+          <div class="roleplay-card"><b>3</b><h3>Trio option</h3><p>Student A is the customer, Student B is the shop assistant, and Student C is a friend or second customer.</p></div>
+          <div class="roleplay-card"><b>0%</b><h3>Class production</h3><p>This is a speaking practice activity. The teacher gives oral feedback during presentations.</p></div>
+        </div>
+      </article>
+
+      <article class="roleplay-panel">
+        <p class="eyebrow">Methodology</p>
+        <h2>How the activity works</h2>
+        <div class="roleplay-image-grid">
+          <figure class="roleplay-image-card">
+            <img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/store-role-play-hero.png" alt="Students acting as customer and shop assistant in a clothing store" />
+            <div><h3>1. Simulate the store</h3><p>The group prepares a natural clothing-store scene: greeting, help, item, size, color, price, fitting room, decision, and closing.</p></div>
+          </figure>
+          <figure class="roleplay-image-card">
+            <img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/store-role-play-board-prep.png" alt="Students preparing phrasal verb and idiom examples on a classroom board" />
+            <div><h3>2. Prepare the board</h3><p>Before presenting, the group writes the phrasal verb and idiom or expression they will use, plus the complete sentence where each one appears.</p></div>
+          </figure>
+        </div>
+      </article>
+
+      <article class="roleplay-panel">
+        <p class="eyebrow">Required language</p>
+        <h2>Every group must include</h2>
+        <div class="roleplay-requirement-grid">
+          <div class="roleplay-card"><span class="roleplay-step-number">01</span><h3>Clothes and accessories</h3><p>Use Unit 2 vocabulary such as jacket, jeans, dress, sweater, shoes, scarf, sunglasses, watch, or hat.</p></div>
+          <div class="roleplay-card"><span class="roleplay-step-number">02</span><h3>Size, color, and fit</h3><p>Ask or answer about size, color, or fit: small, medium, large, extra large, black, blue, too big, too small, or it fits well.</p></div>
+          <div class="roleplay-card"><span class="roleplay-step-number">03</span><h3>Prices</h3><p>Ask and answer a price question: <strong>How much is it?</strong> or <strong>How much does it cost?</strong></p></div>
+          <div class="roleplay-card"><span class="roleplay-step-number">04</span><h3>One phrasal verb</h3><p>Use at least one: try on, put on, take off, pick out, look for, pay for, check out, sell out, go with, or dress up.</p></div>
+          <div class="roleplay-card"><span class="roleplay-step-number">05</span><h3>One idiom or expression</h3><p>Use at least one: fit like a glove, cost an arm and a leg, break the bank, worth every penny, for a steal, on sale, or a good deal.</p></div>
+          <div class="roleplay-card"><span class="roleplay-step-number">06</span><h3>Clear pronunciation</h3><p>Speak clearly and do not read too fast. Give special attention to the phrasal verb and the idiom or expression.</p></div>
+        </div>
+      </article>
+
+      <article class="roleplay-panel">
+        <p class="eyebrow">Board preparation</p>
+        <h2>What students write before presenting</h2>
+        <div class="roleplay-board">
+          <p><strong>Phrasal verb:</strong> try on</p>
+          <p><strong>Sentence:</strong> Can I try on this jacket?</p>
+          <p><strong>Idiom / expression:</strong> fit like a glove</p>
+          <p><strong>Sentence:</strong> This jacket fits like a glove.</p>
+        </div>
+        <p class="roleplay-note">The board is not extra decoration. It helps the class notice the required language before hearing it in the conversation.</p>
+      </article>
+
+      <article class="roleplay-panel">
+        <p class="eyebrow">Planning guide</p>
+        <h2>Students complete these ideas before rehearsing</h2>
+        <div class="roleplay-prep-grid">
+          <div class="roleplay-board-card"><h3>Conversation information</h3><ul class="roleplay-checklist"><li>Customer name:</li><li>Shop assistant name:</li><li>Item:</li><li>Color:</li><li>Size:</li><li>Price:</li></ul></div>
+          <div class="roleplay-board-card"><h3>Required expression plan</h3><ul class="roleplay-checklist"><li>Phrasal verb:</li><li>Sentence with phrasal verb:</li><li>Idiom / expression:</li><li>Sentence with idiom / expression:</li><li>Pronunciation focus:</li><li>Final decision: buy it / not buy it</li></ul></div>
+        </div>
+      </article>
+
+      <article class="roleplay-panel">
+        <p class="eyebrow">Listen and choose</p>
+        <h2>Useful phrasal verbs and idioms</h2>
+        <p>Students can click the cards before rehearsing. They should choose only what they can pronounce and use naturally in their conversation.</p>
+        <div class="expression-grid">
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/try-on.mp3" tabindex="0" role="button" aria-label="Listen to: try on"><span class="expression-type">phrasal verb</span><h3>try on</h3><span class="spanish-meaning">probarse ropa</span><p><strong>Can I try on this jacket?</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/look-for.mp3" tabindex="0" role="button" aria-label="Listen to: look for"><span class="expression-type">phrasal verb</span><h3>look for</h3><span class="spanish-meaning">buscar</span><p><strong>I am looking for a black jacket.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/pick-out.mp3" tabindex="0" role="button" aria-label="Listen to: pick out"><span class="expression-type">phrasal verb</span><h3>pick out</h3><span class="spanish-meaning">escoger / elegir</span><p><strong>I need to pick out a dress.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/go-with.mp3" tabindex="0" role="button" aria-label="Listen to: go with"><span class="expression-type">phrasal verb</span><h3>go with</h3><span class="spanish-meaning">combinar con</span><p><strong>These shoes go with your jeans.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/fit-like-a-glove.mp3" tabindex="0" role="button" aria-label="Listen to: fit like a glove"><span class="expression-type">idiom</span><h3>fit like a glove</h3><span class="spanish-meaning">quedar perfectamente</span><p><strong>This jacket fits like a glove.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/cost-an-arm-and-a-leg.mp3" tabindex="0" role="button" aria-label="Listen to: cost an arm and a leg"><span class="expression-type">idiom</span><h3>cost an arm and a leg</h3><span class="spanish-meaning">costar un ojo de la cara</span><p><strong>That coat costs an arm and a leg.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/a-good-deal.mp3" tabindex="0" role="button" aria-label="Listen to: a good deal"><span class="expression-type">expression</span><h3>a good deal</h3><span class="spanish-meaning">una buena oferta</span><p><strong>These shoes are a good deal.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+          <article class="expression-card" data-expression-audio="audio/unit2/expressions/worth-every-penny.mp3" tabindex="0" role="button" aria-label="Listen to: worth every penny"><span class="expression-type">idiom</span><h3>worth every penny</h3><span class="spanish-meaning">vale cada centavo</span><p><strong>These boots are worth every penny.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+        </div>
+      </article>
+
+      <article class="roleplay-panel">
+        <p class="eyebrow">Teacher timing</p>
+        <h2>Suggested class flow</h2>
+        <div class="roleplay-grid">
+          <div class="roleplay-card"><b>5</b><h3>Choose roles</h3><p>Pairs or trios choose who is the customer, shop assistant, and optional friend.</p></div>
+          <div class="roleplay-card"><b>10</b><h3>Prepare and rehearse</h3><p>Groups complete the planning guide and practice pronunciation.</p></div>
+          <div class="roleplay-card"><b>3</b><h3>Present</h3><p>Each group writes the required expressions on the board and performs the conversation.</p></div>
+        </div>
+      </article>
+
+      <article class="roleplay-model">
+        <p class="eyebrow">Teacher model</p>
+        <h2>Example conversation to perform with one student</h2>
+        <p>Use this model at the end of the explanation so students understand the activity before they prepare their own version.</p>
+        <div class="roleplay-board" aria-label="Board model for the example conversation">
+          <p><strong>Phrasal verb:</strong> try on</p>
+          <p><strong>Sentence:</strong> Can I try on this jacket?</p>
+          <p><strong>Idiom / expression:</strong> fit like a glove</p>
+          <p><strong>Sentence:</strong> This jacket fits like a glove.</p>
+        </div>
+        <div class="roleplay-dialogue">
+          <p><strong>Teacher / Shop assistant:</strong> Good afternoon. Can I help you?</p>
+          <p><strong>Student / Customer:</strong> Yes, please. I am looking for a black jacket.</p>
+          <p><strong>Teacher / Shop assistant:</strong> Of course. What size are you?</p>
+          <p><strong>Student / Customer:</strong> I am a medium. Do you have this jacket in medium?</p>
+          <p><strong>Teacher / Shop assistant:</strong> Yes, we do. Here you are.</p>
+          <p><strong>Student / Customer:</strong> Great. Can I try on this jacket?</p>
+          <p><strong>Teacher / Shop assistant:</strong> Sure. The fitting rooms are over there.</p>
+          <p><strong>Student / Customer:</strong> It fits like a glove. How much does it cost?</p>
+          <p><strong>Teacher / Shop assistant:</strong> It costs eighty thousand pesos. It is on sale today.</p>
+          <p><strong>Student / Customer:</strong> That is a good deal. I will take it.</p>
+          <p><strong>Teacher / Shop assistant:</strong> Excellent. You can pay for it at the front desk.</p>
+        </div>
+      </article>
+
+      <div class="basic2-resource-links">
+        <a href="practice-lab.html#unit-2-folder">Back to Unit 2 Practice Lab</a>
+        <a href="unit-2-shopping-experiences.html">Review Unit 2 explanation</a>
+        <a href="idioms-phrasal-verbs.html#unit-2-expressions">Open Unit 2 expression bank</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/english-basic2-expression-audio.js?v=20260813-unit2-role-play"></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
