@@ -433,6 +433,10 @@
       const response = await fetch(API_PATH, { method: "POST", headers: { "Content-Type": blob.type || "audio/webm" }, body: blob });
       const payload = await response.json().catch(() => ({}));
       if (!response.ok) throw new Error(payload.error || `Server error (${response.status}).`);
+      const returnedLanguage = String(payload.language_code || payload.language || "").toLowerCase();
+      if (returnedLanguage && !returnedLanguage.startsWith("en")) {
+        throw new Error("The transcription service did not return English analysis. Please retry this recording.");
+      }
       const transcript = (payload.text || "").trim();
       const audioStats = payload.audio || {};
       if (!transcript) {

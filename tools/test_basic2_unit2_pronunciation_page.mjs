@@ -1,8 +1,17 @@
 import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
 import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const { chromium } = require("C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright");
+
+const ROOT = process.cwd();
+const scriptSource = fs.readFileSync(path.join(ROOT, "assets/js/english-basic2-pronunciation-unit2.js"), "utf8");
+assert.match(scriptSource, /\/api\/english-basic\/pronunciation-assessment/, "Unit 2 pronunciation must use the English Basic transcription endpoint.");
+assert.doesNotMatch(scriptSource, /\/api\/french8\/pronunciation-assessment/, "Unit 2 pronunciation must never use the French transcription endpoint.");
+assert.match(scriptSource, /language_code \|\| payload\.language/, "Unit 2 pronunciation must inspect the returned transcription language.");
+assert.match(scriptSource, /!returnedLanguage\.startsWith\("en"\)/, "Unit 2 pronunciation must reject non-English transcription analysis.");
 
 const BASE_URL = process.env.BASIC2_UNIT2_PRONUNCIATION_TEST_BASE_URL || "http://127.0.0.1:8020";
 const browser = await chromium.launch({
