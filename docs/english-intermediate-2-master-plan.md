@@ -3609,3 +3609,80 @@ Se añadió `tools/test_intermediate2_unit2_explanation.py`, que valida sin leva
 - ausencia de `speechSynthesis`, Teaching Route y el nombre reutilizado `Maya`.
 
 La implementación debe cerrar con commit, push, despliegue y comprobación directa de HTML, CSS, hero y catorce MP3 en producción.
+
+## 45. Implementación confirmada — Unit 2 Listening Part 1
+
+### 45.1 Alcance aprobado
+
+Se construyó únicamente la primera actividad de Unit 2:
+
+- tipo: Listening;
+- título: `The Call Before Midnight`;
+- serie narrativa: `The Answer Before Midnight`;
+- posición: Activity 01 de Unit 2 en Practice Lab;
+- duración del audio: aproximadamente `01:24`;
+- carácter: práctica formativa privada;
+- entrega al profesor: no;
+- peso en la grilla: `0%`.
+
+El reading que continuará la historia no se creó en esta fase. Su futuro inicio será el contenido del correo que Salomé recibe al final del audio, pero no existe enlace activo ni se inventa su desenlace.
+
+### 45.2 Historia y propósito pedagógico
+
+Salomé debe responder antes de medianoche a una beca completa para estudiar diseño urbano en otra ciudad. La oportunidad entra en conflicto con su promesa de dirigir un proyecto de biblioteca comunitaria. Durante una llamada con Mr. Vega, recuerda que dos años antes rechazó una pasantía sin preguntar si las fechas eran flexibles. Mr. Vega le aconseja pensar la oferta, contactar a la fundación, buscar un posible acuerdo y sopesar las consecuencias. A las 11:15 llega un correo; la actividad termina con `The first sentence... it changes everything.`
+
+La historia integra `dream of`, `hope`, second conditional, `regret + -ing`, `wish + past perfect`, consejo con `If I were you`, `could` y `might`, los phrasal verbs `turn down`, `think over` y `work out`, el idiom `at a crossroads` y las expresiones `weigh the consequences` y `live with a decision`.
+
+### 45.3 Diseño de la actividad
+
+Después de un hero compacto, no fijo y sin repetición de portada, aparece el buscador por tema o palabra clave. El recorrido incluye:
+
+1. ruta de tres escuchas;
+2. vocabulario previo dentro de desplegables;
+3. reproductor nativo con velocidades `0.75x`, `1x` y `1.25x`;
+4. primera escucha para idea general;
+5. segunda escucha para evidencia;
+6. tercera escucha para lenguaje;
+7. diez preguntas de comprensión con retroalimentación que cita la evidencia correcta;
+8. seis tarjetas de language noticing;
+9. transcripción completa colapsada;
+10. recomendación oral de 45 segundos con ejemplo de interacción;
+11. aviso visible de que el reading Part 2 todavía no ha sido construido.
+
+La página está optimizada para celular: hero en flujo normal, buscador inmediato, bloques de una columna, controles táctiles amplios, reproductor al ancho disponible, botones apilados y ausencia de banner sticky.
+
+### 45.4 Producción ElevenLabs
+
+El diálogo fue generado mediante el flujo oficial del repositorio:
+
+- proveedor: ElevenLabs;
+- modelo: `eleven_v3` mediante `text-to-dialogue`;
+- Salomé: Sarah, voice ID `EXAVITQu4vr4xnSDxMaL`;
+- Mr. Vega: Sean, voice ID `DwwuoY7Uz8AP8zrY5TAo`;
+- formato: MP3 44.1 kHz, 128 kbps;
+- archivo: `ingles/intermediate-2/audio/unit-2/the-call-before-midnight.mp3`;
+- guion: `ingles/intermediate-2/audio/unit-2/listening-scripts.md`;
+- metadatos: `the-call-before-midnight.elevenlabs.json`;
+- generador reproducible: `tools/generate_intermediate2_unit2_call_before_midnight_audio.ps1`;
+- voice cast: `tools/elevenlabs_voice_cast.intermediate2-unit2-listening.json`.
+
+No se usa `speechSynthesis`, voz del navegador, audio provisional ni simulación sin MP3.
+
+### 45.5 Imagen profesional
+
+La actividad usa una imagen original 16:9 creada específicamente para la historia en `assets/img/english-intermediate-2/unit-2/call-before-midnight-listening/call-before-midnight-listening-hero-v1.webp`. Salomé aparece a la derecha durante la llamada nocturna; el escritorio contiene un correo abstracto, un plano urbano y documentación de la beca; el lado izquierdo conserva espacio negativo para el título HTML. No contiene texto incrustado, logos, watermark, blackboard ni collage. La copia publicada está optimizada como WebP para reducir el peso en celulares.
+
+### 45.6 Catálogo y arquitectura
+
+La actividad pertenece solamente a Practice Lab. El catálogo central se amplió con el primer elemento de Unit 2 y ahora alimenta dos rutas:
+
+- `practice-lab.html#unit-2-folder`;
+- `listening-library.html#unit-2-listenings`.
+
+Los JavaScript de ambas páginas dejaron de filtrar exclusivamente Unit 1. Ahora agrupan los contenidos publicados por unidad, actualizan sus contadores y aplican búsqueda global sin duplicar manualmente las tarjetas.
+
+El orden proyectado de Unit 2 queda documentado como Listening Part 1, Reading Part 2, Pronunciation y Conversation Coach. Los elementos 2–4 son ruta planificada, no actividades implementadas.
+
+### 45.7 Cierre técnico obligatorio
+
+Esta actividad se valida sin levantar servidor local. Debe cerrar con validación estática del HTML, JavaScript, catálogo, imagen, MP3, guion y metadatos; commit atómico; push; despliegue; y comprobación HTTP directa en producción de la página, el audio, la imagen, Practice Lab y Listening Library.

@@ -1,15 +1,15 @@
 (function () {
   "use strict";
   const DATA_URL = "../../assets/data/english-intermediate-2-content.json";
-  const grid = document.getElementById("unit1ActivityGrid");
+  const units = [
+    { number: 1, grid: document.getElementById("unit1ActivityGrid"), count: document.getElementById("unit1ActivityCount"), empty: document.getElementById("practiceLabEmpty") },
+    { number: 2, grid: document.getElementById("unit2ActivityGrid"), count: document.getElementById("unit2ActivityCount"), empty: document.getElementById("practiceLabUnit2Empty") }
+  ];
   const search = document.getElementById("practiceLabSearch");
   const clear = document.getElementById("practiceLabClear");
-  const empty = document.getElementById("practiceLabEmpty");
   const resultCount = document.getElementById("practiceLabResultCount");
-  const unitCount = document.getElementById("unit1ActivityCount");
   const total = document.getElementById("labActivityTotal");
   const filters = [...document.querySelectorAll("[data-lab-filter]")];
-  let items = [];
   let activeFilter = "all";
 
   function escapeHtml(value) {
@@ -21,7 +21,7 @@
   }
 
   function searchText(item) {
-    return normalize([item.title, item.subtitle, item.summary, item.skillLabel, item.product, ...(item.searchKeywords || [])].join(" "));
+    return normalize([`Unit ${item.unit}`, item.title, item.subtitle, item.summary, item.skillLabel, item.product, ...(item.searchKeywords || [])].join(" "));
   }
 
   function card(item) {
@@ -38,16 +38,23 @@
 
   function update() {
     const query = normalize(search.value.trim());
-    const cards = [...grid.querySelectorAll(".ie2-lab-card")];
     let visible = 0;
-    cards.forEach((element) => {
-      const matchesFilter = activeFilter === "all" || element.dataset.type === activeFilter;
-      const matchesQuery = !query || element.dataset.search.includes(query);
-      element.hidden = !(matchesFilter && matchesQuery);
-      if (!element.hidden) visible += 1;
+    units.forEach((unit) => {
+      const cards = [...unit.grid.querySelectorAll(".ie2-lab-card")];
+      let unitVisible = 0;
+      cards.forEach((element) => {
+        const matchesFilter = activeFilter === "all" || element.dataset.type === activeFilter;
+        const matchesQuery = !query || element.dataset.search.includes(query);
+        element.hidden = !(matchesFilter && matchesQuery);
+        if (!element.hidden) {
+          unitVisible += 1;
+          visible += 1;
+        }
+      });
+      unit.empty.hidden = unitVisible !== 0;
+      if ((query || activeFilter !== "all") && unitVisible > 0) unit.grid.closest("details").open = true;
     });
     resultCount.textContent = `${visible} ${visible === 1 ? "activity" : "activities"}`;
-    empty.hidden = visible !== 0;
     clear.hidden = !search.value;
   }
 
@@ -56,13 +63,16 @@
       const response = await fetch(DATA_URL, { cache: "no-store" });
       if (!response.ok) throw new Error("Catalog unavailable");
       const payload = await response.json();
-      items = (payload.items || []).filter((item) => item.status === "published" && Number(item.unit) === 1).sort((a, b) => (a.order || 999) - (b.order || 999) || a.title.localeCompare(b.title));
-      grid.innerHTML = items.map(card).join("");
-      total.textContent = String(items.length);
-      unitCount.textContent = `${items.length} ${items.length === 1 ? "activity" : "activities"}`;
+      const published = (payload.items || []).filter((item) => item.status === "published");
+      units.forEach((unit) => {
+        const unitItems = published.filter((item) => Number(item.unit) === unit.number).sort((a, b) => (a.order || 999) - (b.order || 999) || a.title.localeCompare(b.title));
+        unit.grid.innerHTML = unitItems.map(card).join("");
+        unit.count.textContent = `${unitItems.length} ${unitItems.length === 1 ? "activity" : "activities"}`;
+      });
+      total.textContent = String(published.filter((item) => units.some((unit) => unit.number === Number(item.unit))).length);
       update();
     } catch (_) {
-      grid.innerHTML = '<p class="ie2-lab-empty">The activity catalog could not be loaded. Refresh the page to try again.</p>';
+      units.forEach((unit) => { unit.grid.innerHTML = '<p class="ie2-lab-empty">The activity catalog could not be loaded. Refresh the page to try again.</p>'; });
       resultCount.textContent = "Catalog unavailable";
     }
   }
@@ -75,4 +85,4 @@
     update();
   }));
   load();
-})();
+}());

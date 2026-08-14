@@ -2155,6 +2155,23 @@
   color: #ffffff;
 }
 
+.ie2-midnight-listening-page .ie2-listening-hero {
+  background:
+    linear-gradient(90deg, rgba(3, 12, 32, 0.98) 0%, rgba(3, 12, 32, 0.91) 37%, rgba(3, 12, 32, 0.34) 68%, rgba(3, 12, 32, 0.06) 100%),
+    url("../img/english-intermediate-2/unit-2/call-before-midnight-listening/call-before-midnight-listening-hero-v1.webp") center / cover no-repeat;
+}
+
+.ie2-midnight-listening-page .ie2-listen-pass-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.intermediate2-button.is-disabled {
+  border-color: rgba(89, 104, 123, 0.2);
+  background: #eef2f7;
+  color: #66758a;
+  cursor: not-allowed;
+}
+
 .ie2-listening-hero-content {
   width: min(1180px, calc(100% - 36px));
   margin-inline: auto;
@@ -2327,13 +2344,26 @@
   gap: 0.7rem;
 }
 
-.ie2-speaker-row img {
+.ie2-speaker-row img,
+.ie2-speaker-avatar {
   width: 64px;
   height: 64px;
   display: block;
   border: 2px solid rgba(255, 255, 255, 0.82);
   border-radius: 8px;
+}
+
+.ie2-speaker-row img {
   object-fit: cover;
+}
+
+.ie2-speaker-avatar {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #ffda81, #f59e8b);
+  color: var(--ie2-navy);
+  font-weight: 950;
+  letter-spacing: -0.04em;
 }
 
 .ie2-speaker-row strong,
@@ -2586,6 +2616,12 @@
       url("../img/english-intermediate-2/unit-1/noras-voice-note-listening/noras-voice-note-listening-hero-v1.png") 67% center / cover no-repeat;
   }
 
+  .ie2-midnight-listening-page .ie2-listening-hero {
+    background:
+      linear-gradient(180deg, rgba(3, 12, 32, 0.1) 0%, rgba(3, 12, 32, 0.62) 42%, rgba(3, 12, 32, 0.98) 100%),
+      url("../img/english-intermediate-2/unit-2/call-before-midnight-listening/call-before-midnight-listening-hero-v1.webp") 70% center / cover no-repeat;
+  }
+
   .ie2-listening-hero-content,
   .ie2-listening-shell {
     width: min(100% - 24px, 1180px);
@@ -2620,6 +2656,10 @@
   .ie2-listening-vocab-grid,
   .ie2-listen-pass-grid,
   .ie2-speaking-prompt-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ie2-midnight-listening-page .ie2-listen-pass-grid {
     grid-template-columns: 1fr;
   }
 

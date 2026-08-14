@@ -1,0 +1,34 @@
+{
+  "audioProvider": "elevenlabs",
+  "model": "eleven_v3",
+  "generationMode": "dialogue",
+  "language": "en",
+  "accent": "General American English",
+  "voices": [
+    {
+      "character": "Salome",
+      "voiceName": "Sarah - Clear US",
+      "voiceId": "EXAVITQu4vr4xnSDxMaL"
+    },
+    {
+      "character": "Mr. Vega",
+      "voiceName": "Sean - Expressive and Conversational",
+      "voiceId": "DwwuoY7Uz8AP8zrY5TAo"
+    }
+  ],
+  "generationSettings": {
+    "seed": 220826,
+    "outputFormat": "mp3_44100_128",
+    "applyTextNormalization": "auto"
+  },
+  "audioVersion": "2026.1",
+  "scriptHref": "/ingles/intermediate-2/audio/unit-2/listening-scripts.md",
+  "audioHref": "/ingles/intermediate-2/audio/unit-2/the-call-before-midnight.mp3",
+  "duration": "01:24",
+  "durationSeconds": 83.52,
+  "fileBytes": 1336259,
+  "generatedAt": "2026-08-14",
+  "generator": "tools/generate_intermediate2_unit2_call_before_midnight_audio.ps1",
+  "licenseNote": "Generated for JaraLingua course use",
+  "qualityStatus": "approved"
+}

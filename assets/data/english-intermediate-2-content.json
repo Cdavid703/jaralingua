@@ -187,6 +187,52 @@
         "get back in touch",
         "keep in touch"
       ]
+    },
+    {
+      "id": "unit-2-the-call-before-midnight",
+      "unit": 2,
+      "order": 1,
+      "type": "listening",
+      "skillLabel": "Listening",
+      "title": "The Call Before Midnight",
+      "subtitle": "The Answer Before Midnight · Part 1",
+      "summary": "Salomé asks Mr. Vega for advice about a scholarship, a community promise and a past regret before an unexpected email changes the situation.",
+      "image": "/assets/img/english-intermediate-2/unit-2/call-before-midnight-listening/call-before-midnight-listening-hero-v1.webp",
+      "media": "/ingles/intermediate-2/audio/unit-2/the-call-before-midnight.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "ie2-unit2-salome-vega-dialogue-01",
+      "audioVersion": "2026.1",
+      "scriptHref": "/ingles/intermediate-2/audio/unit-2/listening-scripts.md",
+      "workshopHref": "/ingles/intermediate-2/listening-unit-2-the-call-before-midnight.html",
+      "duration": "01:24",
+      "durationSeconds": 83.52,
+      "activityDuration": "20 minutes",
+      "product": "Three listening passes, ten questions and a 45-second recommendation",
+      "questionCount": 10,
+      "speakers": ["Salomé", "Mr. Vega"],
+      "accent": "General American English",
+      "transcriptPolicy": "after-three-listens",
+      "status": "published",
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "searchKeywords": [
+        "Unit 2",
+        "listening",
+        "scholarship",
+        "urban design",
+        "dilemma",
+        "advice",
+        "regret",
+        "wish",
+        "second conditional",
+        "at a crossroads",
+        "think over",
+        "work out",
+        "weigh the consequences",
+        "Part 1"
+      ]
     }
   ]
 }
