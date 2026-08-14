@@ -82,8 +82,8 @@ def main() -> None:
     assert text.count("<audio ") == 1
     assert "speechSynthesis" not in text
     assert "Maya" not in text
-    assert "Part 2 reading · Coming next" in text
-    assert "href=\"./reading-unit-2" not in text
+    assert "Part 2 reading · Coming next" not in text
+    assert 'href="./reading-unit-2-the-six-week-window.html"' in text
     assert text.index('class="ie2-listening-hero"') < text.index("data-course-search-panel") < text.index('id="listening-activity"')
 
     assert AUDIO.read_bytes()[:3] == b"ID3"

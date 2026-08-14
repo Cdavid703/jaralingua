@@ -3618,7 +3618,7 @@ Se construyó únicamente la primera actividad de Unit 2:
 
 - tipo: Listening;
 - título: `The Call Before Midnight`;
-- serie narrativa: `The Answer Before Midnight`;
+- serie narrativa: `The Midnight Decision`;
 - posición: Activity 01 de Unit 2 en Practice Lab;
 - duración del audio: aproximadamente `01:24`;
 - carácter: práctica formativa privada;
@@ -3686,3 +3686,96 @@ El orden proyectado de Unit 2 queda documentado como Listening Part 1, Reading P
 ### 45.7 Cierre técnico obligatorio
 
 Esta actividad se valida sin levantar servidor local. Debe cerrar con validación estática del HTML, JavaScript, catálogo, imagen, MP3, guion y metadatos; commit atómico; push; despliegue; y comprobación HTTP directa en producción de la página, el audio, la imagen, Practice Lab y Listening Library.
+
+## 46. Implementación confirmada — Unit 2 Reading Part 2
+
+### 46.1 Identidad y alcance
+
+Se construyó la continuación directa de `The Call Before Midnight`:
+
+- título: `The Six-Week Window`;
+- serie: `The Midnight Decision`;
+- tipo: Reading;
+- posición: Activity 02 de Unit 2 en Practice Lab;
+- estructura: cinco capítulos;
+- comprensión: diez preguntas de selección múltiple;
+- respuesta escrita abierta: no;
+- entrega al profesor: no;
+- peso en Grades: `0%`.
+
+La actividad no contiene textarea, borrador local, contador de palabras, botón de copia, formulario de entrega ni final product escrito.
+
+### 46.2 Continuidad narrativa
+
+El correo que cerró el listening ofrece considerar una prórroga de seis semanas. La opción está condicionada a que Salomé presente antes del mediodía un plan de transición, participe en una entrevista y nombre una coordinadora local para el proyecto de biblioteca.
+
+La lectura muestra que el nuevo dato no elimina el dilema. Salomé debe:
+
+1. contarle la situación completa a Lucía;
+2. reconocer que debió involucrar antes al equipo;
+3. distribuir responsabilidades entre varias personas;
+4. aceptar que entregar liderazgo también implica perder control;
+5. explicar honestamente el conflicto a la fundación;
+6. aceptar una solución imperfecta pero sostenible.
+
+El desenlace evita una solución mágica. La prórroga requiere más trabajo, una conversación incómoda, un cronograma verificable, liderazgo compartido y límites claros para la participación futura de Salomé.
+
+### 46.3 Estructura pedagógica
+
+Después del hero compacto aparece inmediatamente el buscador. La página contiene:
+
+- recapitulación breve de Part 1;
+- tres propósitos de lectura: hechos, evidencia y lenguaje;
+- ocho expresiones de vocabulario en desplegables;
+- predicción previa no evaluativa;
+- cinco capítulos con pausas de evidencia;
+- seis tarjetas de language detective;
+- diez preguntas con retroalimentación textual específica;
+- cierre y regreso a Unit 2 Practice Lab.
+
+Las preguntas cubren idea principal, detalles, condiciones, referencia contextual, inferencia, significado de vocabulario, evidencia del aprendizaje del personaje y resumen global. La secuencia correcta es `B, C, A, B, C, A, C, B, A, C`, sin patrón repetitivo simple.
+
+### 46.4 Lenguaje integrado
+
+La historia vuelve a presentar en contexto:
+
+- `wish + past perfect`;
+- `regret + -ing`;
+- second conditional;
+- consejo con `should not`;
+- `step up`;
+- `hand something over`;
+- `count on someone`;
+- `have second thoughts`;
+- `weigh the consequences`;
+- vocabulario de deferral, condiciones, coordinación y transición.
+
+Las categorías idiom, phrasal verb y phrasal-prepositional verb permanecen diferenciadas en el análisis.
+
+### 46.5 Imagen y contrato móvil
+
+Se generó una imagen profesional nueva, diferente de la llamada nocturna:
+
+- archivo: `assets/img/english-intermediate-2/unit-2/answer-before-midnight-reading/answer-before-midnight-reading-hero-v1.webp`;
+- escena: Salomé y Lucía elaborando el plan de transición en la biblioteca comunitaria por la mañana;
+- composición: personajes a la derecha y espacio negativo a la izquierda para el título HTML;
+- formato publicado: WebP optimizado;
+- restricciones: sin texto incrustado, logos, watermark, blackboard, collage ni emociones exageradas.
+
+El hero permanece dentro del flujo normal. En celular usa altura automática, el contenido pasa a una columna, los desplegables y preguntas conservan áreas táctiles amplias y no existe banner fijo o sticky.
+
+### 46.6 Navegación y catálogo
+
+El final del listening ahora abre `reading-unit-2-the-six-week-window.html`. El reading enlaza de regreso a Part 1, a la explicación de Unit 2 y a la carpeta correspondiente de Practice Lab.
+
+El catálogo central registra la lectura con `order: 2`, `questionCount: 10`, `chapterCount: 5`, `writtenResponse: false`, `teacherSubmission: false` y `gradebookWeight: 0`.
+
+Practice Lab actualiza:
+
+- total general: siete actividades publicadas;
+- Unit 2: dos actividades;
+- secuencia: Listening live, Reading live, Pronunciation planned y Conversation planned.
+
+### 46.7 Cierre técnico obligatorio
+
+La implementación se valida sin servidor local. Esta fase debe terminar con prueba estática, commit atómico, push, despliegue selectivo que preserve el estado existente del VPS y comprobación HTTP directa de la página, imagen, catálogo, Practice Lab y enlace desde Part 1.
