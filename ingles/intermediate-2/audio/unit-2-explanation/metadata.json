@@ -1,0 +1,33 @@
+{
+  "provider": "ElevenLabs",
+  "model": "eleven_multilingual_v2",
+  "voice": "Sarah",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "language": "en",
+  "accent": "General American English",
+  "outputFormat": "mp3_44100_128",
+  "voiceSettings": {
+    "stability": 0.64,
+    "similarityBoost": 0.82,
+    "style": 0.14,
+    "speakerBoost": true
+  },
+  "source": "scripts.md",
+  "generator": "tools/generate_intermediate2_unit2_explanation_audio.ps1",
+  "files": [
+    "wish-hope-dream-goal.mp3",
+    "present-wishes.mp3",
+    "wish-could.mp3",
+    "future-wishes-complaints.mp3",
+    "past-wishes-regrets.mp3",
+    "second-conditional.mp3",
+    "reasoning-through-dilemmas.mp3",
+    "advice-strength.mp3",
+    "responding-to-advice.mp3",
+    "unit-2-vocabulary.mp3",
+    "decision-phrasal-verbs.mp3",
+    "fixed-expressions-idioms.mp3",
+    "unit-2-sound-practice.mp3",
+    "unit-2-integrated-model.mp3"
+  ]
+}

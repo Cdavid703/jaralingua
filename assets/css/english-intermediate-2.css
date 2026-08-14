@@ -2997,23 +2997,35 @@
   line-height: 1.4;
 }
 
-/* Intermediate English Course 2: complete Unit 1 explanation */
-.ie2-unit1-hero {
+/* Intermediate English Course 2: complete unit explanations */
+.ie2-unit1-hero,
+.ie2-unit2-hero {
   min-height: min(540px, 66vh);
   display: grid;
   align-items: end;
   padding: 92px max(18px, calc((100% - 1180px) / 2)) 44px;
-  background:
-    linear-gradient(90deg, rgba(3, 12, 32, 0.95) 0%, rgba(7, 31, 79, 0.8) 48%, rgba(7, 31, 79, 0.2) 100%),
-    url("../img/english-intermediate-2/units/unit-1-relationships-hero-v1.webp") center / cover no-repeat;
   color: #ffffff;
 }
 
-.ie2-unit1-hero-copy {
+.ie2-unit1-hero {
+  background:
+    linear-gradient(90deg, rgba(3, 12, 32, 0.95) 0%, rgba(7, 31, 79, 0.8) 48%, rgba(7, 31, 79, 0.2) 100%),
+    url("../img/english-intermediate-2/units/unit-1-relationships-hero-v1.webp") center / cover no-repeat;
+}
+
+.ie2-unit2-hero {
+  background:
+    linear-gradient(90deg, rgba(3, 12, 32, 0.97) 0%, rgba(7, 31, 79, 0.84) 48%, rgba(7, 31, 79, 0.12) 100%),
+    url("../img/english-intermediate-2/units/unit-2-wishes-dilemmas-hero-v1.webp") center / cover no-repeat;
+}
+
+.ie2-unit1-hero-copy,
+.ie2-unit2-hero-copy {
   width: min(760px, 100%);
 }
 
-.ie2-unit1-hero h1 {
+.ie2-unit1-hero h1,
+.ie2-unit2-hero h1 {
   max-width: 14ch;
   margin: 0;
   color: #ffffff;
@@ -3022,7 +3034,13 @@
   text-shadow: 0 3px 24px rgba(0, 0, 0, 0.45);
 }
 
-.ie2-unit1-hero p:not(.intermediate2-kicker) {
+.ie2-unit2-hero h1 {
+  max-width: 21ch;
+  font-size: clamp(2.1rem, 5.2vw, 4.2rem);
+}
+
+.ie2-unit1-hero p:not(.intermediate2-kicker),
+.ie2-unit2-hero p:not(.intermediate2-kicker) {
   max-width: 700px;
   margin: 0.85rem 0 0;
   color: rgba(255, 255, 255, 0.93);
@@ -3532,6 +3550,10 @@
 .ie2-mark-phrasal { background: #efe3ff; }
 .ie2-mark-expression { background: #dff4f8; }
 .ie2-mark-idiom { background: #ffe2df; }
+.ie2-mark-wish { background: #fff0d0; }
+.ie2-mark-conditional { background: #dfeaff; }
+.ie2-mark-advice { background: #dff5ee; }
+.ie2-mark-regret { background: #ffe2df; }
 
 .ie2-language-legend {
   display: flex;
@@ -3554,6 +3576,10 @@
 .ie2-language-legend .phrasal { background: #efe3ff; }
 .ie2-language-legend .expression { background: #dff4f8; }
 .ie2-language-legend .idiom { background: #ffe2df; }
+.ie2-language-legend .wish { background: #fff0d0; }
+.ie2-language-legend .conditional { background: #dfeaff; }
+.ie2-language-legend .advice { background: #dff5ee; }
+.ie2-language-legend .regret { background: #ffe2df; }
 
 .ie2-theory-next {
   display: grid;
@@ -3612,7 +3638,8 @@
 
 @media (max-width: 700px) {
   .ie2-course-map-page .ie2-overview-hero,
-  .ie2-unit1-hero {
+  .ie2-unit1-hero,
+  .ie2-unit2-hero {
     min-height: auto;
     padding: 34px 18px 28px;
   }
@@ -3629,12 +3656,26 @@
       url("../img/english-intermediate-2/units/unit-1-relationships-hero-v1.webp") 58% center / cover no-repeat;
   }
 
-  .ie2-unit1-hero h1 {
+  .ie2-unit2-hero {
+    background:
+      linear-gradient(180deg, rgba(3, 12, 32, 0.18) 0%, rgba(3, 12, 32, 0.77) 44%, rgba(3, 12, 32, 0.97) 100%),
+      url("../img/english-intermediate-2/units/unit-2-wishes-dilemmas-hero-v1.webp") 70% center / cover no-repeat;
+  }
+
+  .ie2-unit1-hero h1,
+  .ie2-unit2-hero h1 {
     max-width: 12ch;
     font-size: clamp(2rem, 10vw, 3rem);
   }
 
-  .ie2-unit1-hero p:not(.intermediate2-kicker) {
+  .ie2-unit2-hero h1 {
+    max-width: 21ch;
+    font-size: clamp(1.8rem, 8vw, 2.55rem);
+    line-height: 1.04;
+  }
+
+  .ie2-unit1-hero p:not(.intermediate2-kicker),
+  .ie2-unit2-hero p:not(.intermediate2-kicker) {
     font-size: 0.94rem;
     line-height: 1.43;
   }

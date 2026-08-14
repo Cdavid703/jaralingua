@@ -3420,3 +3420,192 @@ Corrección aplicada:
 - se actualiza la versión de `style.css` en `ingles/index.html` para evitar que producción conserve el estilo defectuoso en caché.
 
 Esta corrección se valida sin servidor local y debe cerrar con commit, push, despliegue y comprobación directa del index en producción.
+
+## 44. Implementación confirmada — explicación completa de Unit 2
+
+### 44.1 Alcance aprobado
+
+Se construyó la página explicativa independiente:
+
+- `ingles/intermediate-2/unit-2-wishes-dilemmas-advice.html`;
+- título: `Wishes, Dreams, Dilemmas, Advice and Regrets`;
+- sesiones: 3–5;
+- evaluación relacionada: `Midterm Writing Task — 20% — 22 de agosto de 2026 — Session 5`.
+
+La página enseña el contenido directamente al estudiante. No contiene una ruta docente, actividades independientes, puntuación, entregas ni formularios de evaluación.
+
+### 44.2 Hilo temático y estructura pedagógica
+
+La unidad se organiza alrededor de la relación entre la realidad actual, las posibilidades imaginadas, las decisiones difíciles y aquello que una persona cambiaría del pasado.
+
+Después de un hero compacto y el buscador aparecen catorce secciones desplegables:
+
+1. `Wish, hope, dream, or goal?`;
+2. present wishes;
+3. wishes about ability or possibility;
+4. future wishes and complaints;
+5. past wishes and regrets;
+6. second conditional;
+7. understanding and discussing dilemmas;
+8. giving advice at the right strength;
+9. responding to advice;
+10. vocabulary for goals, choices and consequences;
+11. decision and goal phrasal verbs;
+12. fixed expressions and idioms;
+13. sound practice;
+14. complete integrated model.
+
+Solo el primer bloque inicia abierto. Los demás permanecen compactos y pueden encontrarse por tema, forma, vocabulario, expresión o ejemplo mediante el buscador situado inmediatamente después del hero.
+
+### 44.3 Contrastes gramaticales enseñados
+
+La explicación no presenta fórmulas aisladas. Cada forma incluye significado, realidad implícita, situación de uso, contraste, error común y modelo completo.
+
+Se enseña de manera explícita:
+
+- `hope` para una posibilidad real;
+- `dream of/about + noun/-ing` para una aspiración importante;
+- `goal` para un resultado que puede convertirse en plan;
+- `wish + past simple` para una realidad presente diferente;
+- `wish + could` para una habilidad o posibilidad no disponible;
+- `wish + would` para un cambio deseado o una queja, normalmente fuera del control del hablante;
+- `wish + past perfect` para imaginar un pasado diferente;
+- `regret + noun/-ing` para nombrar el arrepentimiento;
+- `should have + past participle` para evaluar una mejor acción pasada;
+- second conditional con `If + past, would/could/might + base verb`;
+- `What would you do if...?`;
+- `If I were you...` como consejo hipotético;
+- uso recomendado de `were` y reconocimiento de `was` como variante conversacional;
+- orden de cláusulas, uso de coma y prohibición normal de `would` dentro de la cláusula con `if`;
+- diferencia entre `advice` como sustantivo incontable y `advise` como verbo;
+- patrones correctos con `suggest`, `could`, `might want to`, `should`, `If I were you` y `had better`.
+
+### 44.4 Marco para dilemas
+
+La página diferencia:
+
+- un problema que necesita solución;
+- una elección entre alternativas;
+- un dilema en el que compiten valores o cada opción tiene una consecuencia.
+
+El estudiante recibe un marco de seis pasos:
+
+1. identificar los hechos;
+2. reconocer a las personas afectadas;
+3. nombrar opciones realistas;
+4. predecir consecuencias;
+5. identificar valores como honestidad, justicia, lealtad, privacidad y responsabilidad;
+6. justificar una posición.
+
+Los ejemplos son universitarios, laborales y comunitarios. No se usan situaciones traumáticas ni respuestas moralizantes.
+
+### 44.5 Clasificación de expresiones
+
+Las categorías permanecen separadas y se explica su diferencia.
+
+**Phrasal y phrasal-prepositional verbs:**
+
+- `think something over`;
+- `go for something`;
+- `give something up`;
+- `work something out / work out`;
+- `end up`;
+- `look back on something`.
+
+**Fixed expressions y collocations:**
+
+- `make a wish`;
+- `pursue a dream`;
+- `achieve a goal`;
+- `face a dilemma`;
+- `weigh the consequences`;
+- `live with a decision`.
+
+**Idioms:**
+
+- `be at a crossroads`;
+- `a dream come true`;
+- `have second thoughts`;
+- `learn the hard way`;
+- `if I had my way`.
+
+Cada tarjeta presenta categoría, aproximación en español, significado, patrón o matiz y ejemplos.
+
+### 44.6 Sound practice y modelo integrado
+
+Sound Practice enseña:
+
+- `I'd + base verb` como `I would`;
+- `I'd + past participle` como `I had`;
+- enlace natural en `would you`;
+- reducción de `should have / should've` sin aceptar la escritura incorrecta `should of`;
+- diferencia sonora entre `advice` /s/ y `advise` /z/;
+- estrés de la condición imaginada y su consecuencia.
+
+El modelo final sigue a Valentina ante una posible beca en otra ciudad. Integra de manera natural una esperanza, un sueño, un deseo presente, una pregunta hipotética, second conditional, consejo diplomático, respuesta al consejo, tres formas de arrepentimiento y una decisión razonada. Cada selección queda anotada y explicada. No se reutiliza el nombre `Maya`.
+
+### 44.7 Audio ElevenLabs
+
+Se produjeron catorce MP3 reales, uno por cada sección:
+
+- proveedor: ElevenLabs;
+- voz: Sarah;
+- voice ID: `EXAVITQu4vr4xnSDxMaL`;
+- modelo: `eleven_multilingual_v2`;
+- formato: MP3 44.1 kHz, 128 kbps;
+- carpeta: `ingles/intermediate-2/audio/unit-2-explanation/`;
+- guiones canónicos: `ingles/intermediate-2/audio/unit-2-explanation/scripts.md`;
+- metadatos: `ingles/intermediate-2/audio/unit-2-explanation/metadata.json`;
+- generador reproducible: `tools/generate_intermediate2_unit2_explanation_audio.ps1`.
+
+No existe `speechSynthesis`, voz del navegador ni botón conectado a un archivo provisional.
+
+### 44.8 Imagen profesional y diseño móvil
+
+Se creó una fotografía editorial exclusiva para la página:
+
+- `assets/img/english-intermediate-2/units/unit-2-wishes-dilemmas-hero-v1.webp`;
+- 1600 × 900 px;
+- WebP optimizado;
+- adulto considerando dos opciones junto a una orientadora en un entorno universitario;
+- espacio negativo para el texto HTML;
+- sin texto incrustado, logos, blackboards, símbolos moralizantes ni situaciones traumáticas.
+
+La miniatura `unit-2-wishes-dilemmas-v1.webp` permanece en Course Overview y no se repite dentro de la explicación. El hero nuevo aparece una sola vez, permanece en el flujo normal y cambia a altura automática en celular.
+
+El contrato móvil incluye:
+
+- buscador inmediatamente después del hero;
+- una sola columna por debajo de 700 px;
+- desplegables con áreas táctiles amplias;
+- reproductores al ancho disponible;
+- botones apilados;
+- ausencia de banner fijo o sticky;
+- ausencia de segunda portada, imagen o título repetido;
+- prevención de overflow horizontal en 360, 390 y 430 px.
+
+### 44.9 Navegación y propiedad del contenido
+
+La tarjeta de Unit 2 en `course-overview.html` abre la explicación completa y conserva el acceso contextual a `practice-lab.html#unit-2-folder`.
+
+La carpeta de Unit 2 en Practice Lab permanece con cero actividades. No se creó reading, listening, juego, taller, pronunciation, Conversation Coach ni entregable durante esta fase. Cada actividad futura requerirá plan y aprobación independiente.
+
+La alerta `Midterm Writing Task — 20%` aparece como orientación de calendario. La evaluación oficial pertenece a Evaluations y no se implementa dentro de la página teórica ni mediante Blackboard.
+
+### 44.10 Validación estática sin servidor local
+
+Se añadió `tools/test_intermediate2_unit2_explanation.py`, que valida sin levantar servidor:
+
+- balance de etiquetas HTML;
+- catorce secciones teóricas y catorce audios;
+- identificadores únicos;
+- existencia de todos los `href` y `src` locales;
+- MP3 reales con encabezado ID3 y tamaño mínimo;
+- guiones y metadatos ElevenLabs;
+- hero exclusivo y selector móvil;
+- buscador anterior al contenido;
+- enlace correcto desde Course Overview;
+- separación con Practice Lab;
+- ausencia de `speechSynthesis`, Teaching Route y el nombre reutilizado `Maya`.
+
+La implementación debe cerrar con commit, push, despliegue y comprobación directa de HTML, CSS, hero y catorce MP3 en producción.
