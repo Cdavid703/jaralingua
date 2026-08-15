@@ -3913,3 +3913,43 @@ La grabación final se habilita únicamente al completar las secciones guiadas q
 Antes de dar por terminada una actividad de pronunciación se deben validar sintaxis, estructura, enlaces, texto y guion exactos, catálogo de Practice Lab, ausencia de voz del navegador, existencia y encabezados de todos los MP3, reproducción de una palabra, repetición, cambio de etapa, entrega idempotente y vista móvil/tablet/escritorio. No se levantan servidores locales: la verificación final se realiza en producción.
 
 Cada actividad, ajuste o página terminada exige: actualizar este Markdown, prueba correspondiente, commit atómico, push, despliegue selectivo, comprobación en producción y confirmación al usuario con el enlace publicado.
+
+## 49. Estándar global de pantalla expandida — todos los dispositivos
+
+Intermediate English Course 2 se diseña como una aplicación de pantalla aprovechada, no como una página con una columna central estrecha. Esta regla es obligatoria para **todo** el contenido: index, Course Overview, Practice Lab, unidades, listenings, readings, pronunciation, juegos, Conversation Coach, biblioteca, calendario, evaluaciones y cualquier actividad futura.
+
+### 49.1 Regla de anchura
+
+En teléfonos, tablets, portátiles y computadores de escritorio, el contenido debe expandirse al ancho disponible de la pantalla. Se prohíben los contenedores centrales con `max-width` reducido que produzcan franjas vacías grandes a ambos lados o que obliguen a bajar más de lo necesario durante una clase.
+
+La implementación usa `width: 100%`, `max-width: none` cuando corresponda y `box-sizing: border-box`; no usa `100vw`, porque puede producir scroll horizontal. Los fondos, hero, buscadores, paneles, resultados, actividades, tarjetas, envío y biblioteca alcanzan el ancho completo de la aplicación.
+
+El único espacio lateral permitido es un relleno interno de seguridad, no un contenedor estrecho: se adapta a bordes táctiles, muescas y esquinas curvas en teléfono, y a una separación visual mínima en pantallas grandes. Ese relleno nunca debe convertir la interfaz nuevamente en una columna centrada.
+
+### 49.2 Composición por dispositivo
+
+| Pantalla | Composición obligatoria |
+| --- | --- |
+| Teléfono vertical | Una columna de ancho completo. Paneles, tarjetas, buscador, lectura, audio, grabación y envío ocupan la pantalla; los elementos internos se apilan sin scroll horizontal. |
+| Teléfono horizontal | Ancho completo. Se pueden usar dos columnas solo si los controles siguen siendo grandes y legibles; de lo contrario, una columna amplia. |
+| Tablet | Ancho completo. Las tarjetas y ayudas usan dos o más columnas cuando mejora la lectura; las actividades principales nunca quedan comprimidas en un riel lateral. |
+| Portátil | Ancho completo. La práctica puede compartir fila con el resultado, y los apoyos se distribuyen en cuadrícula ancha debajo. |
+| Escritorio | Ancho completo. Los paneles se expanden y organizan en cuadrículas útiles; no se conservan márgenes laterales vacíos por costumbre. |
+
+### 49.3 Jerarquía visual sin desperdicio de altura
+
+La expansión horizontal debe reducir scroll vertical, no añadir contenido redundante. Cada página presenta primero el objetivo y la acción principal; después muestra práctica, resultado y apoyos relacionados. Un hero solo aparece una vez, nunca es fijo o sticky y no repite título, imagen o instrucciones más abajo.
+
+En actividades, la fila superior contiene la práctica y, si está disponible, el resultado. Las guías, tarjetas de foco, biblioteca, entrega y vista docente se distribuyen después en bloques anchos o cuadrículas; nunca se acumulan como un riel lateral infinito que deje un vacío grande junto a la actividad principal.
+
+### 49.4 Controles, lectura y accesibilidad
+
+Expandir la aplicación no autoriza controles pequeños. Los botones, tarjetas, entradas, reproductores y zonas de grabación deben conservar áreas táctiles cómodas. Los textos, ejemplos y lecturas usan el ancho expandido de su panel, interlineado claro, tipografía escalable y relleno interno seguro. No se fuerza una anchura estrecha solo por una regla visual heredada.
+
+La interfaz debe respetar `env(safe-area-inset-left)` y `env(safe-area-inset-right)` en teléfonos compatibles, evitar desbordamiento horizontal y permitir navegación por teclado, lector de pantalla y toque.
+
+### 49.5 Aplicación y verificación obligatorias
+
+Antes de declarar una página terminada se revisan explícitamente estas cinco vistas: teléfono vertical, teléfono horizontal, tablet, portátil y escritorio. La prueba confirma que el contenido usa el ancho disponible, que no hay márgenes laterales vacíos importantes, que no existe scroll horizontal y que la actividad principal aparece antes que apoyos secundarios.
+
+La adopción se hace por fases: primero estructuras globales de Intermediate 2 (index, Course Overview y Practice Lab), después actividades existentes y, finalmente, cada página nueva desde su primera versión. Cada fase actualiza este Markdown, incorpora prueba, commit, push, despliegue selectivo y verificación en producción.
