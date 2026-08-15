@@ -3975,3 +3975,9 @@ Cada familia mantiene una composición útil, no una ampliación vacía:
 - **Pronunciation:** todas las unidades siguen el mismo ancho expandido con áreas seguras. La práctica, modelos ElevenLabs, resultados, apoyos, entrega y buzón conservan las agrupaciones compactas definidas en las secciones 47 y 48.
 
 La regla técnica común usa `width: 100%`, `max-width: none`, `box-sizing: border-box` y gutters con `env(safe-area-inset-*)`. En pantallas grandes se prefieren cuadrículas con mínimo legible; en tablet y móvil se reducen columnas antes de comprimir controles. Ninguna página de esta lista puede reintroducir un límite central estrecho sin una excepción documentada, pedagógica y aprobada.
+
+### 49.8 Regla permanente desde este momento
+
+Desde este momento, **toda** página, sección, unidad y actividad nueva de Intermediate English Course 2 debe construirse desde su primera versión con este estándar: pantalla aprovechada en teléfono, tablet, portátil y escritorio; gutters seguros; controles cómodos; y contenido relacionado agrupado de forma compacta en franjas o cuadrículas que regresan a una columna cuando sea necesario.
+
+No se permite crear primero una columna central estrecha ni una secuencia vertical redundante para corregirla después. Antes de implementar cualquier contenido nuevo, se debe decidir qué elementos se muestran juntos, qué cuadrícula mejora el aprendizaje y en qué punto se apilan. La revisión de cierre debe probar las cinco vistas definidas en 49.5, actualizar este Markdown, ejecutar la prueba correspondiente, hacer commit, push, despliegue selectivo y comprobación en producción.
