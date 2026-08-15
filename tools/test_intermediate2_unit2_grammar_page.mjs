@@ -7,6 +7,7 @@ const page = fs.readFileSync(path.join(root, "ingles", "intermediate-2", "gramma
 const script = fs.readFileSync(path.join(root, "assets", "js", "english-intermediate2-unit2-grammar.js"), "utf8");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "assets", "data", "english-intermediate-2-content.json"), "utf8"));
 const styles = fs.readFileSync(path.join(root, "assets", "css", "english-intermediate-2.css"), "utf8");
+const practiceLabScript = fs.readFileSync(path.join(root, "assets", "js", "english-intermediate2-practice-lab.js"), "utf8");
 const imagePath = path.join(root, "assets", "img", "english-intermediate-2", "unit-2", "choose-the-pattern-grammar", "choose-the-pattern-grammar-hero-v1.png");
 
 const source = script.match(/var questions = (\[[\s\S]*?\n  \]);\n  var state/);
@@ -29,4 +30,6 @@ assert.ok(item && item.status === "published");
 assert.equal(item.questionCount, 15);
 assert.equal(item.teacherSubmission, false);
 assert.equal(item.affectsAverage, false);
+assert.doesNotMatch(page, /Private practice\s*[·-]\s*0%/i);
+assert.doesNotMatch(practiceLabScript, /Teacher delivery\s*[·-]\s*0%|Private practice\s*[·-]\s*0%/i);
 console.log("Intermediate 2 Unit 2 grammar activity contract passed.");

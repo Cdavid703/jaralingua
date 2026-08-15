@@ -3989,3 +3989,7 @@ No se permite crear primero una columna central estrecha ni una secuencia vertic
 La secuencia cubre: tres usos de **hope** (`hope + clause`, `hope to + verb`, `hope for + noun`); dos de **dream** (`dream of + -ing`); cuatro de **wish** (presente irreal, `could`, `would` y pasado irreal), `wish someone luck`; dos de **goal**; dos de **would like**; y la expresión fija **make a wish**. Cada pregunta presenta una situación completa, se revisa individualmente y explica por qué el patrón encaja. Al cerrar, el estudiante puede repetir únicamente los errores.
 
 La actividad sigue el estándar visual permanente: hero profesional propio sin texto ni watermark, buscador de patrones, introducción breve, una sola decisión visible a la vez, mapa compacto de apoyo y resultado final. No añade audio, por lo que no necesita un botón sonoro; cualquier audio futuro deberá ser un archivo real de ElevenLabs.
+
+### 50.1 Regla de porcentajes para actividades
+
+Las tarjetas y páginas de actividades no muestran `0%`, “Private practice · 0%”, “Teacher delivery · 0%” ni etiquetas equivalentes. Una actividad puede indicar de manera clara que es práctica privada o que se entrega al profesor, pero no presenta porcentaje, peso ni efecto de nota. Los porcentajes se reservan exclusivamente para las evaluaciones oficiales mostradas en Course Overview, calendario y páginas de evaluación.
