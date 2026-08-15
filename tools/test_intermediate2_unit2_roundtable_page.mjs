@@ -1,0 +1,35 @@
+import assert from "node:assert/strict";
+import fs from "node:fs";
+import path from "node:path";
+
+const root = path.resolve(import.meta.dirname, "..");
+const pagePath = path.join(root, "ingles", "intermediate-2", "speaking-unit-2-better-choice-roundtable.html");
+const page = fs.readFileSync(pagePath, "utf8");
+const catalog = JSON.parse(fs.readFileSync(path.join(root, "assets", "data", "english-intermediate-2-content.json"), "utf8"));
+const practiceLab = fs.readFileSync(path.join(root, "ingles", "intermediate-2", "practice-lab.html"), "utf8");
+const styles = fs.readFileSync(path.join(root, "assets", "css", "english-intermediate-2.css"), "utf8");
+const imagePath = path.join(root, "assets", "img", "english-intermediate-2", "unit-2", "better-choice-roundtable", "better-choice-roundtable-hero-v1.png");
+const item = catalog.items.find((entry) => entry.id === "unit-2-better-choice-roundtable");
+
+assert.ok(fs.existsSync(imagePath), "The group-speaking activity needs its professional image asset.");
+assert.ok(item && item.status === "published", "The roundtable must be published in the Unit 2 catalog.");
+assert.equal(item.unit, 2);
+assert.equal(item.order, 5);
+assert.equal(item.type, "speaking-group");
+assert.equal(item.teacherSubmission, false);
+assert.equal(item.affectsAverage, false);
+assert.match(item.workshopHref, /speaking-unit-2-better-choice-roundtable\.html$/);
+assert.match(page, /Practice Lab · Unit 2 Group Speaking/);
+assert.match(page, /data-course-search-panel/);
+assert.match(page, /Moderator/);
+assert.match(page, /Dreamer/);
+assert.match(page, /Realist/);
+assert.match(page, /Adviser/);
+assert.equal((page.match(/data-dilemma=/g) || []).length, 4, "The activity must offer four safe dilemma cards.");
+assert.match(page, /Final mini roundtable/);
+assert.match(page, /60–90 second mini roundtable/);
+assert.doesNotMatch(page, /0%|Teacher delivery|Private practice/i);
+assert.match(practiceLab, /data-lab-filter="speaking-group"/);
+assert.match(practiceLab, /Speaking roundtable · live/);
+assert.match(styles, /Unit 2 group speaking: a compact full-width roundtable/);
+console.log("Intermediate 2 Unit 2 roundtable activity contract passed.");

@@ -338,6 +338,26 @@
       "affectsAverage": false,
       "status": "published",
       "searchKeywords": ["Unit 2", "grammar", "hope", "hope to", "hope for", "dream of", "wish", "goal", "would like", "make a wish", "wishes dreams dilemmas advice regrets"]
+    },
+    {
+      "id": "unit-2-better-choice-roundtable",
+      "unit": 2,
+      "order": 5,
+      "type": "speaking-group",
+      "skillLabel": "Group speaking",
+      "title": "The Better Choice Roundtable",
+      "subtitle": "Discuss a dilemma. Agree on a next step.",
+      "summary": "Work in a group of four: share hopes and wishes, weigh consequences, give advice and finish with one spoken group recommendation.",
+      "image": "/assets/img/english-intermediate-2/unit-2/better-choice-roundtable/better-choice-roundtable-hero-v1.png",
+      "workshopHref": "/ingles/intermediate-2/speaking-unit-2-better-choice-roundtable.html",
+      "duration": "18 minutes",
+      "product": "A 60–90 second live mini roundtable and one shared next step",
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 2", "speaking", "group speaking", "roundtable", "dilemma", "hope", "dream", "wish", "goal", "would like", "advice", "regret", "consequences", "moderator", "dreamer", "realist", "adviser"]
     }
   ]
 }

@@ -4007,3 +4007,15 @@ Antes de publicar o actualizar una actividad de grammar se revisan, y se corrige
 5. **Feedback formativo inmediato:** al escoger una respuesta, la propia tarjeta marca visualmente la elección y el patrón correcto; debajo comunica si encaja o no y explica la razón concreta del error. Si un distractor es una posibilidad válida en inglés general pero no pertenece al patrón exacto trabajado, se declara con honestidad como “no es el patrón objetivo”, nunca como un error absoluto.
 6. **Flujo y acceso:** las 15 decisiones permanecen visibles en cuadrícula compacta —una columna en móvil—, con tres controles alcanzables por teclado, instrucciones legibles y revisión global. No se ocultan preguntas tras una navegación artificial de “siguiente”.
 7. **Contrato verificable:** la prueba estática comprueba cantidad, tres opciones, una respuesta válida, balance A/B/C, familias cubiertas, explicación por distractor, feedback inmediato, ausencia de porcentajes, ausencia de patrones descartados y ausencia de marcas HTML en enunciados u opciones. La automatización no reemplaza la lectura pedagógica completa de los 15 ítems antes del commit y despliegue.
+
+## 51. Implementación confirmada — Unit 2 Group Speaking: The Better Choice Roundtable
+
+`speaking-unit-2-better-choice-roundtable.html` pertenece exclusivamente a la carpeta Unit 2 de Practice Lab. Es la quinta actividad de la unidad, con tipo `speaking-group`, 18 minutos, grupos de cuatro, práctica formativa en vivo y sin grabación, envío docente, porcentaje o efecto en Grades. Su imagen profesional propia muestra a cuatro adultos dialogando alrededor de una mesa, sin texto, watermark ni estética blackboard.
+
+La actividad convierte la lengua de Unit 2 en una interacción real: el grupo selecciona uno de cuatro dilemas seguros y no invasivos —curso o trabajo, mudarse o quedarse, ahorrar o crear, segunda oportunidad— y puede mantenerlo ficticio. Cada estudiante adopta un papel rotativo: Moderator, Dreamer, Realist o Adviser. El diseño prevé además una adaptación explícita para grupos de tres o cinco, por lo que nadie queda sin turno.
+
+La conversación se organiza en cuatro rondas conectadas: abrir el caso, nombrar la esperanza o el sueño, pesar una consecuencia y un consejo, y acordar un siguiente paso. Los apoyos lingüísticos usan `hope`, `dream`, `wish`, `goal`, `would like`, preguntas de seguimiento y consejo condicional sin convertir la pantalla en un guion para memorizar.
+
+Al final, la página explica visual y oralmente la mini mesa redonda obligatoria: Moderator nombra el dilema; Dreamer expresa la esperanza; Realist explica una consecuencia; Adviser formula la recomendación; y el grupo en conjunto declara un siguiente paso. El producto es una conclusión hablada de 60–90 segundos, no un texto, una prueba ni una entrega. El buscador, el catálogo y el filtro Group speaking indexan la actividad por unidad, skill, roles y lenguaje de Unit 2.
+
+El cierre técnico de cada modificación incluye prueba estática, verificación de HTML, catálogo e imagen, commit, push, despliegue selectivo y revisión directa de producción; no se levanta servidor local.
