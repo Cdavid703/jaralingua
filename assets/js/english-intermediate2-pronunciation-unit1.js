@@ -63,8 +63,8 @@
   let maxInputLevel = 0;
   let shadowMode = false;
   let clientSubmissionId = "";
-  let wordCueTimer = null;
-  let activeWordButton = null;
+  let wordAudio = null;
+  let activeWordAudioButton = null;
 
   const stagePanel = document.createElement("div");
   stagePanel.className = "stage-panel";
@@ -166,7 +166,7 @@
 
   function updateStageUI() {
     const stage = currentStage();
-    stopWordCue();
+    stopWordAudio();
     stageCounter.textContent = stage.final ? "Final challenge" : `Guided practice - ${currentStageIndex + 1} of ${GUIDED_COUNT}`;
     stageTitle.textContent = stage.final ? "Now read the complete paragraph" : stage.label;
     stageProgress.innerHTML = STAGES.map((item, index) => {
@@ -241,71 +241,59 @@
       sourceButton.setAttribute("aria-pressed", "true");
     }
     wordHelp.hidden = false;
-    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> How to pronounce “${word}”</strong><span>${pronunciationTip(word)} Playing this moment from the ElevenLabs model now; then repeat the full meaning group.</span>`;
-    playWordCue(wordIndex, sourceButton);
+    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> How to pronounce “${word}”</strong><span>${pronunciationTip(word)} Listen to the exact ElevenLabs word model, then repeat the full meaning group.</span>`;
+    if (wordAudioFile(word)) {
+      const replayButton = document.createElement("button");
+      replayButton.type = "button";
+      replayButton.className = "word-model-replay";
+      replayButton.innerHTML = '<i class="bi bi-play-fill"></i> Listen to this word';
+      replayButton.addEventListener("click", () => playWordAudio(word, sourceButton));
+      wordHelp.appendChild(replayButton);
+      playWordAudio(word, sourceButton);
+    }
     requestAnimationFrame(() => wordHelp.scrollIntoView({ behavior: "smooth", block: "nearest" }));
   }
 
-  function wordTimingWeight(part) {
-    const word = spokenWord(part);
-    const letters = word.replace(/[^A-Za-z]/g, "").length;
-    let weight = .28 + Math.min(letters, 13) * .075;
-    if (/[,;:]/.test(part)) weight += .13;
-    if (/[.!?]$/.test(part)) weight += .25;
-    return weight;
+  function wordAudioFile(word) {
+    const base = String(PAGE_CONFIG.wordAudioBase || "").replace(/\/$/, "");
+    const key = normalizeWord(word).replace(/[^a-z0-9]/g, "");
+    return base && key ? `${base}/${key}.mp3` : "";
   }
 
-  function wordCue(wordIndex) {
-    const parts = currentStage().text.split(/\s+/).filter(Boolean);
-    if (!Number.isInteger(wordIndex) || wordIndex < 0 || wordIndex >= parts.length || !Number.isFinite(modelAudio.duration) || modelAudio.duration <= 0) return null;
-    const weights = parts.map(wordTimingWeight);
-    const leadIn = .08;
-    const leadOut = .12;
-    const usableDuration = Math.max(.4, modelAudio.duration - leadIn - leadOut);
-    const totalWeight = weights.reduce((total, value) => total + value, 0);
-    const before = weights.slice(0, wordIndex).reduce((total, value) => total + value, 0);
-    const through = before + weights[wordIndex];
-    return {
-      start: Math.max(0, leadIn + usableDuration * (before / totalWeight) - .07),
-      end: Math.min(modelAudio.duration, leadIn + usableDuration * (through / totalWeight) + .18)
-    };
-  }
-
-  function stopWordCue() {
-    if (wordCueTimer) clearTimeout(wordCueTimer);
-    wordCueTimer = null;
-    activeWordButton?.classList.remove("is-playing");
-    activeWordButton = null;
-  }
-
-  async function playWordCue(wordIndex, sourceButton) {
-    const cue = wordCue(wordIndex);
-    if (!cue) {
-      const requestedStage = currentStageIndex;
-      wordHelp.querySelector("span").textContent = `${pronunciationTip(sourceButton?.dataset.spoken || "")} The ElevenLabs model is loading this short reference.`;
-      modelAudio.addEventListener("loadedmetadata", () => {
-        if (requestedStage === currentStageIndex && sourceButton?.isConnected) playWordCue(wordIndex, sourceButton);
-      }, { once: true });
-      return;
+  function stopWordAudio() {
+    if (wordAudio) {
+      wordAudio.pause();
+      wordAudio.currentTime = 0;
     }
-    stopWordCue();
+    activeWordAudioButton?.classList.remove("is-playing");
+    activeWordAudioButton = null;
+  }
+
+  async function playWordAudio(word, sourceButton) {
+    const source = wordAudioFile(word);
+    const replayButton = wordHelp.querySelector(".word-model-replay");
+    if (!source) return;
+    stopWordAudio();
     modelAudio.pause();
-    modelAudio.currentTime = cue.start;
-    modelAudio.playbackRate = currentPlaybackRate();
-    activeWordButton = sourceButton;
+    modelButton.querySelector("i").className = "bi bi-play-fill";
+    activeWordAudioButton = sourceButton;
     sourceButton?.classList.add("is-playing");
+    wordAudio = new Audio(source);
+    wordAudio.preload = "auto";
+    wordAudio.addEventListener("ended", () => {
+      sourceButton?.classList.remove("is-playing");
+      if (replayButton) replayButton.innerHTML = '<i class="bi bi-arrow-repeat"></i> Listen again';
+    }, { once: true });
+    wordAudio.addEventListener("error", () => {
+      sourceButton?.classList.remove("is-playing");
+      if (replayButton) replayButton.textContent = "Word model unavailable";
+    }, { once: true });
     try {
-      await modelAudio.play();
-      modelButton.querySelector("i").className = "bi bi-pause-fill";
-      const clipLength = Math.max(.22, (cue.end - cue.start) / currentPlaybackRate());
-      wordCueTimer = setTimeout(() => {
-        modelAudio.pause();
-        modelButton.querySelector("i").className = "bi bi-play-fill";
-        stopWordCue();
-      }, clipLength * 1000);
+      await wordAudio.play();
+      if (replayButton) replayButton.innerHTML = '<i class="bi bi-volume-up"></i> Playing ElevenLabs model';
     } catch (_error) {
       sourceButton?.classList.remove("is-playing");
-      wordHelp.querySelector("span").textContent = `${pronunciationTip(sourceButton?.dataset.spoken || "")} The model could not start. Tap the word once more.`;
+      if (replayButton) replayButton.textContent = "Tap to listen again";
     }
   }
 
@@ -622,7 +610,7 @@
   }
 
   function resetAttempt(clearAudio = true) {
-    stopWordCue();
+    stopWordAudio();
     if (mediaRecorder?.state === "recording") {
       discardRecording = true;
       mediaRecorder.stop();
@@ -961,7 +949,7 @@
   }
 
   modelButton.addEventListener("click", async () => {
-    stopWordCue();
+    stopWordAudio();
     if (modelAudio.paused) {
       try {
         modelAudio.playbackRate = currentPlaybackRate();
@@ -979,7 +967,7 @@
   speedButtons.forEach((button) => button.addEventListener("click", () => setPlaybackRate(Number(button.dataset.speed))));
   if (shadowModeButton) {
     shadowModeButton.addEventListener("click", async () => {
-      stopWordCue();
+      stopWordAudio();
       shadowMode = !shadowMode;
       shadowModeButton.classList.toggle("is-active", shadowMode);
       shadowModeStatus.textContent = shadowMode ? "On - listen, then repeat immediately" : "Off";

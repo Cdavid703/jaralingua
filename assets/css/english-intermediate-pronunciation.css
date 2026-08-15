@@ -48,6 +48,8 @@
 .word-help { display: grid; gap: .35rem; margin: .7rem 0 1rem; padding: 1rem; border: 2px solid rgba(18, 59, 143, .24); border-radius: 12px; background: #eaf0ff; color: var(--pron-muted); }
 .word-help strong { color: var(--pron-navy); }
 .word-help[hidden] { display: none; }
+.word-model-replay { justify-self: start; min-height: 38px; border: 0; border-radius: 9px; padding: .5rem .75rem; background: var(--pron-navy); color: #fff; font: inherit; font-weight: 900; cursor: pointer; }
+.word-model-replay:disabled { opacity: .6; cursor: not-allowed; }
 .record-zone { margin-top: 1.2rem; padding: 1.2rem; border: 2px dashed rgba(18, 59, 143, .25); border-radius: 18px; text-align: center; }
 .microphone-picker { display: grid; gap: .35rem; max-width: 620px; margin: 0 auto 1rem; text-align: left; color: var(--pron-navy); font-weight: 900; }
 .microphone-picker select { width: 100%; min-height: 46px; padding: .65rem .8rem; border: 1px solid rgba(7, 31, 79, .23); border-radius: 10px; background: #fff; color: var(--pron-navy); font-size: 1rem; }

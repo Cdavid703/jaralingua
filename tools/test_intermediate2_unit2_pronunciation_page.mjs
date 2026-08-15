@@ -28,10 +28,10 @@ assert.match(engine, /canonicalSpeech/);
 assert.match(engine, /aria-controls="wordHelp"/);
 assert.match(engine, /How to pronounce/);
 assert.match(engine, /scrollIntoView\(\{ behavior: "smooth", block: "nearest" \}\)/);
-assert.match(engine, /function wordCue\(/);
-assert.match(engine, /modelAudio\.currentTime = cue\.start/);
-assert.match(engine, /setTimeout\(\(\) => \{/);
-assert.match(engine, /loadedmetadata/);
+assert.match(config, /wordAudioBase/);
+assert.match(engine, /function wordAudioFile\(/);
+assert.match(engine, /new Audio\(source\)/);
+assert.match(engine, /word-model-replay/);
 assert.match(engine, /Tap to hear this word in the ElevenLabs model/);
 
 for (const match of page.matchAll(/(?:href|src)="([^"]+)"/g)) {
@@ -75,6 +75,15 @@ for (const relativePath of [
   const absolutePath = path.join(root, relativePath);
   assert.ok(fs.existsSync(absolutePath), `Missing asset: ${relativePath}`);
   assert.ok(fs.statSync(absolutePath).size > 10000, `Asset is too small: ${relativePath}`);
+}
+
+const wordAudioDirectory = path.join(root, "ingles", "intermediate-2", "audio", "pronunciation", "unit-2-intermediate2", "words");
+const wordAudioFiles = fs.readdirSync(wordAudioDirectory).filter((file) => file.endsWith(".mp3"));
+assert.equal(wordAudioFiles.length, 47);
+for (const file of ["crossroads.mp3", "id.mp3", "shouldve.mp3", "advice.mp3", "advise.mp3"]) {
+  const absolutePath = path.join(wordAudioDirectory, file);
+  assert.ok(fs.existsSync(absolutePath), `Missing word model: ${file}`);
+  assert.ok(fs.statSync(absolutePath).size > 1000, `Word model is too small: ${file}`);
 }
 
 console.log("Intermediate 2 Unit 2 pronunciation page contract passed.");

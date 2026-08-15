@@ -17,6 +17,7 @@
     submissionPrefix: "ie2-u2",
     activityTitle: "Unit 2 Pronunciation - The Choice I'd Make Differently",
     product: "complete reflection about a decision, advice and regret",
+    wordAudioBase: "audio/pronunciation/unit-2-intermediate2/words",
     speechEquivalences: [
       ["I would", "I'd"],
       ["I had", "I'd"],
