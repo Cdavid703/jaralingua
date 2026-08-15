@@ -17,6 +17,11 @@
     submissionPrefix: "ie2-u2",
     activityTitle: "Unit 2 Pronunciation - The Choice I'd Make Differently",
     product: "complete reflection about a decision, advice and regret",
+    speechEquivalences: [
+      ["I would", "I'd"],
+      ["I had", "I'd"],
+      ["should have", "should've"]
+    ],
     tips: {
       "crossroads": "Stress the first syllable: CROSS-roads. Keep the final /dz/ sound clear.",
       "i'd": "Listen to the next verb. Before a base verb, I'd means I would; before a past participle, it means I had.",

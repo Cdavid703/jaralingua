@@ -126,8 +126,19 @@
     return lower.normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z'-]/g, "").replace(/^[-']+|[-']+$/g, "");
   }
 
+  function canonicalSpeech(value) {
+    let output = String(value || "");
+    const equivalences = Array.isArray(PAGE_CONFIG.speechEquivalences) ? PAGE_CONFIG.speechEquivalences : [];
+    equivalences.forEach((pair) => {
+      if (!Array.isArray(pair) || pair.length !== 2 || !pair[0] || !pair[1]) return;
+      const escaped = String(pair[0]).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      output = output.replace(new RegExp(`\\b${escaped}\\b`, "gi"), String(pair[1]));
+    });
+    return output;
+  }
+
   function tokens(value) {
-    return value.split(/\s+/).map(normalizeWord).filter(Boolean);
+    return canonicalSpeech(value).split(/\s+/).map(normalizeWord).filter(Boolean);
   }
 
   function spokenWord(value) {

@@ -23,6 +23,8 @@ assert.doesNotMatch(page + config + engine, /speechSynthesis|SpeechSynthesisUtte
 assert.match(config, /\/api\/english-intermediate\/pronunciation-assessment|apiPath/);
 assert.match(config, /\/api\/intermediate2\/unit2-pronunciation\/submit/);
 assert.match(page + config, /gradebook|Grades|teacher/i);
+assert.match(config, /speechEquivalences/);
+assert.match(engine, /canonicalSpeech/);
 
 for (const match of page.matchAll(/(?:href|src)="([^"]+)"/g)) {
   const reference = match[1];
