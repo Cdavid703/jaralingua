@@ -94,6 +94,10 @@
   nextButton.insertAdjacentElement("beforebegin", retryButton);
   const wordHelp = document.createElement("div");
   wordHelp.className = "word-help";
+  wordHelp.id = "wordHelp";
+  wordHelp.setAttribute("role", "status");
+  wordHelp.setAttribute("aria-live", "polite");
+  wordHelp.tabIndex = -1;
   wordHelp.hidden = true;
   readingText.insertAdjacentElement("afterend", wordHelp);
   const levelMeter = document.createElement("div");
@@ -150,8 +154,12 @@
     readingText.innerHTML = currentStage().text.split(/(\s+)/).map((part) => {
       if (/^\s+$/.test(part)) return part;
       const state = states[index++] || "";
-      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${spokenWord(part)}" title="Show pronunciation note">${part}</button>`;
+      const word = spokenWord(part);
+      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${word}" aria-controls="wordHelp" aria-label="Get pronunciation help for ${word}" title="Tap for pronunciation help">${part}</button>`;
     }).join("");
+    readingText.querySelectorAll(".reading-word").forEach((button) => {
+      button.addEventListener("click", () => showWordHelp(button.dataset.spoken, button));
+    });
   }
 
   function updateStageUI() {
@@ -219,10 +227,19 @@
     return "Listen to the complete word, then repeat it slowly with the same stress and number of syllables.";
   }
 
-  function showWordHelp(word) {
+  function showWordHelp(word, sourceButton = null) {
     if (!word) return;
+    readingText.querySelectorAll(".reading-word.is-selected").forEach((button) => {
+      button.classList.remove("is-selected");
+      button.setAttribute("aria-pressed", "false");
+    });
+    if (sourceButton) {
+      sourceButton.classList.add("is-selected");
+      sourceButton.setAttribute("aria-pressed", "true");
+    }
     wordHelp.hidden = false;
-    wordHelp.innerHTML = `<strong><i class="bi bi-info-circle"></i> ${word}</strong><span>${pronunciationTip(word)} Listen to the professional model for the full audio reference.</span>`;
+    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> How to pronounce “${word}”</strong><span>${pronunciationTip(word)} Listen to the ElevenLabs model again, then repeat the full meaning group.</span>`;
+    requestAnimationFrame(() => wordHelp.scrollIntoView({ behavior: "smooth", block: "nearest" }));
   }
 
   function startLevelMeter(stream) {
@@ -914,7 +931,10 @@
   resetButton.addEventListener("click", () => resetAttempt(true));
   nextButton.addEventListener("click", advanceStage);
   retryButton.addEventListener("click", () => resetAttempt(true));
-  readingText.addEventListener("click", (event) => { const word = event.target.closest(".reading-word")?.dataset.spoken; if (word) showWordHelp(word); });
+  readingText.addEventListener("click", (event) => {
+    const button = event.target.closest(".reading-word");
+    if (button && !button.classList.contains("is-selected")) showWordHelp(button.dataset.spoken, button);
+  });
 
   submitPanelController = createSubmitPanel();
   submitMount.appendChild(submitPanelController.panel);

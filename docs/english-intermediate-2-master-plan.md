@@ -3842,3 +3842,15 @@ La recepción usa rutas propias de Unit 2 para enviar, consultar y reproducir gr
 ### 47.7 Cierre técnico obligatorio
 
 La actividad se valida sin levantar servidor local. Debe pasar comprobaciones de sintaxis, estructura HTML, catálogo, coincidencia de guiones, encabezados MP3, flujo idempotente y ausencia de `speechSynthesis`. La fase termina únicamente después de commit, push, despliegue selectivo, reinicio seguro del servicio de API cuando corresponda y verificación HTTP directa de página, imagen, audios, catálogo, Practice Lab y rutas de recepción.
+
+### 47.8 Corrección de ayuda por palabra
+
+La guía de pronunciación debe activarse al tocar cualquier palabra del texto, en especial una palabra roja con subrayado ondulado. Cada palabra se construye como botón accesible con una acción directa —no solo por delegación— y declara su relación con el panel de ayuda. Al tocarla:
+
+1. la palabra queda marcada con un contorno azul visible;
+2. aparece el encabezado `How to pronounce “word”`;
+3. se muestra la instrucción fonética o de acento correspondiente;
+4. el panel se desplaza a la vista para que no quede oculto en celular;
+5. se invita a volver a escuchar el modelo profesional ElevenLabs de la sección.
+
+El panel no usa voz del navegador ni audio generado al vuelo. La corrección aplica al motor compartido, por lo que protege Unit 1 y Unit 2 de Intermediate English Course 2.

@@ -25,6 +25,9 @@ assert.match(config, /\/api\/intermediate2\/unit2-pronunciation\/submit/);
 assert.match(page + config, /gradebook|Grades|teacher/i);
 assert.match(config, /speechEquivalences/);
 assert.match(engine, /canonicalSpeech/);
+assert.match(engine, /aria-controls="wordHelp"/);
+assert.match(engine, /How to pronounce/);
+assert.match(engine, /scrollIntoView\(\{ behavior: "smooth", block: "nearest" \}\)/);
 
 for (const match of page.matchAll(/(?:href|src)="([^"]+)"/g)) {
   const reference = match[1];
