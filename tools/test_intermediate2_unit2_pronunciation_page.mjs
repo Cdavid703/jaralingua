@@ -6,11 +6,13 @@ const root = path.resolve(import.meta.dirname, "..");
 const pagePath = path.join(root, "ingles", "intermediate-2", "pronunciation-unit-2-the-choice-id-make-differently.html");
 const configPath = path.join(root, "assets", "js", "english-intermediate2-pronunciation-unit2.js");
 const enginePath = path.join(root, "assets", "js", "english-intermediate2-pronunciation-unit1.js");
+const responsiveStylesPath = path.join(root, "assets", "css", "english-intermediate2-pronunciation.css");
 const catalogPath = path.join(root, "assets", "data", "english-intermediate-2-content.json");
 const scriptPath = path.join(root, "ingles", "intermediate-2", "audio", "pronunciation", "unit-2-the-choice-id-make-differently-script.md");
 const page = fs.readFileSync(pagePath, "utf8");
 const config = fs.readFileSync(configPath, "utf8");
 const engine = fs.readFileSync(enginePath, "utf8");
+const responsiveStyles = fs.readFileSync(responsiveStylesPath, "utf8");
 const sourceScript = fs.readFileSync(scriptPath, "utf8");
 const catalog = JSON.parse(fs.readFileSync(catalogPath, "utf8"));
 
@@ -19,6 +21,7 @@ assert.match(page, /data-course-search-panel/);
 assert.match(page, /Teacher inbox only/);
 assert.match(page, /data-pronunciation-submit-mount/);
 assert.match(page, /ie2-pronunciation-support/);
+assert.match(page, /full-width/);
 assert.match(page, /english-intermediate2-pronunciation-unit2\.js/);
 assert.match(page, /english-intermediate2-pronunciation-unit1\.js/);
 assert.doesNotMatch(page + config + engine, /speechSynthesis|SpeechSynthesisUtterance/);
@@ -36,6 +39,8 @@ assert.match(engine, /new Audio\(source\)/);
 assert.match(engine, /word-model-replay/);
 assert.match(engine, /\[data-pronunciation-submit-mount\]/);
 assert.match(engine, /Tap to hear this word in the ElevenLabs model/);
+assert.match(responsiveStyles, /Full-width application standard/);
+assert.match(responsiveStyles, /\.ie2-pronunciation-unit2-page \.pronunciation-main\{width:100%/);
 
 for (const match of page.matchAll(/(?:href|src)="([^"]+)"/g)) {
   const reference = match[1];

@@ -3953,3 +3953,7 @@ La interfaz debe respetar `env(safe-area-inset-left)` y `env(safe-area-inset-rig
 Antes de declarar una página terminada se revisan explícitamente estas cinco vistas: teléfono vertical, teléfono horizontal, tablet, portátil y escritorio. La prueba confirma que el contenido usa el ancho disponible, que no hay márgenes laterales vacíos importantes, que no existe scroll horizontal y que la actividad principal aparece antes que apoyos secundarios.
 
 La adopción se hace por fases: primero estructuras globales de Intermediate 2 (index, Course Overview y Practice Lab), después actividades existentes y, finalmente, cada página nueva desde su primera versión. Cada fase actualiza este Markdown, incorpora prueba, commit, push, despliegue selectivo y verificación en producción.
+
+### 49.6 Primera adopción: The Choice I'd Make Differently
+
+La primera página adaptada a este estándar es `pronunciation-unit-2-the-choice-id-make-differently.html`. Su navegación, hero, buscador, aviso de entrega, práctica, resultados, apoyos, entrega final y buzón usan el ancho disponible en cada pantalla. La página no conserva el límite central de 1180 px: emplea rellenos internos adaptativos y áreas seguras para proteger el contenido sin desperdiciar los laterales.
