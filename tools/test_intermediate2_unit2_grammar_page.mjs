@@ -20,6 +20,7 @@ assert.ok(questions.every((question) => Number.isInteger(question.answer) && que
 assert.deepEqual([0, 1, 2].map((option) => questions.filter((question) => question.answer === option).length), [5, 5, 5], "Correct answers must be balanced across A, B and C.");
 assert.ok(questions.every((question) => !/[<>]/.test(question.prompt) && question.options.every((option) => !/[<>]/.test(option))), "Prompts and answer options must be plain rendered text, never raw HTML markup.");
 assert.equal(questions[0].options[questions[0].answer], "I hope I get the scholarship.", "Hope + subject + verb must follow the Unit 2 explanation.");
+assert.equal(questions[0].options[1], "I hope that I get the scholarship.", "The first hope item must contrast the requested direct pattern with the extra connector that.");
 assert.equal(questions[2].options[questions[2].answer], "I hope the interview goes well.", "Hope followed by another subject must use a complete clause.");
 for (const family of ["hope + subject + verb", "hope to + verb", "dream of + -ing", "wish + past form", "wish + could", "wish + would", "wish + past perfect", "wish someone luck", "goal is to + verb", "goal of + -ing", "would like + noun", "would like to + verb", "make a wish"]) assert.ok(questions.some((question) => question.family === family), `Missing grammar family: ${family}`);
 assert.match(page, /Choose the Pattern/);
@@ -30,8 +31,11 @@ assert.ok(fs.existsSync(imagePath), "The activity needs its professional image a
 assert.match(page, /grammarCheckAll/);
 assert.match(script, /ie2-grammar-question-list/);
 assert.match(script, /function topicFor/);
+assert.match(script, /function reviewCard/);
+assert.match(script, /questionNode\.addEventListener\("change"/);
+assert.match(script, /Not the target pattern — try again\./);
+assert.ok(questions.every((question) => Array.isArray(question.why) && question.why.length === 3), "Every item must explain why each incorrect selection does not fit.");
 assert.doesNotMatch(script, /escapeHtml\(item\.family\).*<\/span><strong>/);
-assert.doesNotMatch(script, /I hope that/);
 assert.doesNotMatch(page, /I hope that/);
 assert.doesNotMatch(script, /I hope to I get|dreams to designing|Would you like discussing to/);
 assert.match(styles, /Unit 2 grammar activity: all complete-sentence decisions/);
