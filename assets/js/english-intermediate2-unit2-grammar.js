@@ -1,73 +1,59 @@
 (function () {
   "use strict";
   var questions = [
-    { prompt: "I hope ___ the scholarship committee replies this week.", options: ["of", "that", "to"], answer: 1, family: "hope + clause", feedback: "Use <strong>hope + clause</strong> when you name the event you want to happen. <em>That</em> is possible here and can also be omitted: <em>I hope the committee replies.</em>" },
-    { prompt: "We hope ___ the community project before December.", options: ["of completing", "that complete", "to complete"], answer: 2, family: "hope to + verb", feedback: "Use <strong>hope to + base verb</strong> when the person who hopes will perform the action." },
-    { prompt: "The volunteers hope ___ a clear answer by Friday.", options: ["for", "to", "of"], answer: 0, family: "hope for + noun", feedback: "Use <strong>hope for + noun phrase</strong>: <em>hope for a clear answer</em>." },
-    { prompt: "Salomé dreams ___ urban spaces that are safer for families.", options: ["to designing", "of designing", "that designing"], answer: 1, family: "dream of + -ing", feedback: "Use <strong>dream of + -ing</strong> for an aspiration or long-term imagined future." },
-    { prompt: "Her dream ___ a small neighborhood bookstore is becoming more realistic.", options: ["to running", "that run", "of running"], answer: 2, family: "dream of + -ing", feedback: "After the noun <em>dream</em>, use <strong>of + -ing</strong> to name the aspiration." },
-    { prompt: "I wish I ___ more time to consider the offer.", options: ["had", "have", "will have"], answer: 0, family: "wish + past form", feedback: "Use <strong>wish + past form</strong> for a present reality you want to be different. The real situation is that the speaker does not have enough time." },
-    { prompt: "They wish they ___ attend the workshop in person.", options: ["can", "could", "to could"], answer: 1, family: "wish + could", feedback: "Use <strong>wish + could + base verb</strong> for an ability or possibility that is unavailable now." },
-    { prompt: "I wish my neighbor ___ the music down tonight.", options: ["turns", "to turn", "would turn"], answer: 2, family: "wish + would", feedback: "Use <strong>wish + subject + would + verb</strong> for another person's behavior that you want to change." },
-    { prompt: "After missing the deadline, I wish I ___ earlier.", options: ["had applied", "applied", "would apply"], answer: 0, family: "wish + past perfect", feedback: "Use <strong>wish + had + past participle</strong> for a different past. The speaker did not apply earlier." },
-    { prompt: "Before her interview, we all ___ .", options: ["wished her to be lucky", "wished her luck", "made her a wish"], answer: 1, family: "wish someone luck", feedback: "<strong>Wish someone luck</strong> is a common fixed social expression before an important event." },
-    { prompt: "Our goal is ___ a transition plan before the meeting.", options: ["of build", "building to", "to build"], answer: 2, family: "goal is to + verb", feedback: "Use <strong>goal is to + base verb</strong> to state the result you intend to achieve." },
-    { prompt: "Her long-term goal of ___ a team motivates her to study management.", options: ["managing", "to managing", "that manage"], answer: 0, family: "goal of + -ing", feedback: "Use <strong>goal of + -ing</strong> when the goal is followed by an activity." },
-    { prompt: "I would like ___ before I make a final decision.", options: ["to some advice", "some advice", "of some advice"], answer: 1, family: "would like + noun", feedback: "Use <strong>would like + noun</strong> for a polite request: <em>I would like some advice.</em>" },
-    { prompt: "Would you like ___ the consequences with us?", options: ["discussing to", "of discussing", "to discuss"], answer: 2, family: "would like to + verb", feedback: "Use <strong>would like to + base verb</strong> for a polite invitation or desire." },
-    { prompt: "Before blowing out the candles, everyone made ___ .", options: ["a wish", "a hope", "a dream of"], answer: 0, family: "make a wish", feedback: "<strong>Make a wish</strong> is the fixed expression for a special desire, often connected with candles or a meaningful moment." }
+    { prompt: "Choose the sentence that expresses a possible future hope.", options: ["I hope I get the scholarship.", "I hope of getting the scholarship.", "I hope to I get the scholarship."], answer: 0, family: "hope + subject + verb", feedback: "<strong>Hope does not need a preposition here.</strong> Follow it directly with a subject and verb: <em>I hope I get the scholarship.</em>" },
+    { prompt: "Choose the natural sentence when the same people will do the action.", options: ["We hope finishing the project by Friday.", "We hope to finish the project by Friday.", "We hope that finish the project by Friday."], answer: 1, family: "hope to + verb", feedback: "Use <strong>hope to + base verb</strong> when the person who hopes also performs the action." },
+    { prompt: "Choose the sentence that uses <em>hope</em> correctly after a complete subject.", options: ["I hope the interview to go well.", "I hope of the interview going well.", "I hope the interview goes well."], answer: 2, family: "hope + subject + verb", feedback: "Use <strong>hope + subject + verb</strong>: <em>I hope the interview goes well.</em> No preposition is needed." },
+    { prompt: "Choose the natural sentence for an important aspiration.", options: ["Salomé dreams of designing safer urban spaces.", "Salomé dreams to designing safer urban spaces.", "Salomé dreams that designing safer urban spaces."], answer: 0, family: "dream of + -ing", feedback: "Use <strong>dream of + -ing</strong> for an aspiration or long-term imagined future." },
+    { prompt: "Choose the sentence that completes the noun <em>dream</em> correctly.", options: ["Her dream to running a bookstore is becoming realistic.", "Her dream of running a bookstore is becoming realistic.", "Her dream that run a bookstore is becoming realistic."], answer: 1, family: "dream of + -ing", feedback: "After the noun <em>dream</em>, use <strong>of + -ing</strong> to name the aspiration." },
+    { prompt: "Choose the sentence for a present reality the speaker wants to change.", options: ["I wish I have more time to consider the offer.", "I wish I will have more time to consider the offer.", "I wish I had more time to consider the offer."], answer: 2, family: "wish + past form", feedback: "Use <strong>wish + past form</strong> for a present reality you want to be different. The speaker does not have enough time now." },
+    { prompt: "Choose the sentence for an ability or possibility that is unavailable now.", options: ["They wish they could attend the workshop in person.", "They wish they can attend the workshop in person.", "They wish they to could attend the workshop in person."], answer: 0, family: "wish + could", feedback: "Use <strong>wish + could + base verb</strong> for an ability or possibility that is unavailable now." },
+    { prompt: "Choose the sentence about another person's behavior the speaker wants to change.", options: ["I wish my neighbor turns the music down tonight.", "I wish my neighbor would turn the music down tonight.", "I wish my neighbor to turn the music down tonight."], answer: 1, family: "wish + would", feedback: "Use <strong>wish + subject + would + verb</strong> for another person's behavior that you want to change." },
+    { prompt: "Choose the sentence that regrets a different past action.", options: ["After missing the deadline, I wish I applied earlier.", "After missing the deadline, I wish I would apply earlier.", "After missing the deadline, I wish I had applied earlier."], answer: 2, family: "wish + past perfect", feedback: "Use <strong>wish + had + past participle</strong> for a different past. The speaker did not apply earlier." },
+    { prompt: "Choose the natural social expression before an important interview.", options: ["We all wished her luck before the interview.", "We all wished her to be lucky before the interview.", "We all made her a wish before the interview."], answer: 0, family: "wish someone luck", feedback: "<strong>Wish someone luck</strong> is the common fixed expression before an important event." },
+    { prompt: "Choose the sentence that states a planned result.", options: ["Our goal is of build a transition plan before the meeting.", "Our goal is to build a transition plan before the meeting.", "Our goal is building to a transition plan before the meeting."], answer: 1, family: "goal is to + verb", feedback: "Use <strong>goal is to + base verb</strong> to state the result you intend to achieve." },
+    { prompt: "Choose the sentence that names a goal as an activity.", options: ["Her long-term goal of to managing a team motivates her.", "Her long-term goal that manage a team motivates her.", "Her long-term goal of managing a team motivates her."], answer: 2, family: "goal of + -ing", feedback: "Use <strong>goal of + -ing</strong> when a goal is followed by an activity." },
+    { prompt: "Choose the polite request for a thing, not an action.", options: ["I would like some advice before I decide.", "I would like to some advice before I decide.", "I would like of some advice before I decide."], answer: 0, family: "would like + noun", feedback: "Use <strong>would like + noun</strong> for a polite request: <em>I would like some advice.</em>" },
+    { prompt: "Choose the polite invitation to do an action.", options: ["Would you like discussing to the consequences with us?", "Would you like to discuss the consequences with us?", "Would you like of discussing the consequences with us?"], answer: 1, family: "would like to + verb", feedback: "Use <strong>would like to + base verb</strong> for a polite invitation or desire." },
+    { prompt: "Choose the fixed expression for a special desire before blowing out candles.", options: ["Everyone made a hope before blowing out the candles.", "Everyone made a dream of before blowing out the candles.", "Everyone made a wish before blowing out the candles."], answer: 2, family: "make a wish", feedback: "<strong>Make a wish</strong> is the fixed expression for a special desire, often connected with candles or a meaningful moment." }
   ];
-  var state = { index: 0, answers: [], checked: false, active: questions.slice() };
   var questionNode = document.getElementById("grammarQuestion");
   var progressNode = document.getElementById("grammarProgress");
   var progressBar = document.getElementById("grammarProgressBar");
-  var nextButton = document.getElementById("grammarNext");
+  var checkButton = document.getElementById("grammarCheckAll");
   var restartButton = document.getElementById("grammarRestart");
   var resultNode = document.getElementById("grammarResult");
-
   function escapeHtml(value) { return String(value).replace(/[&<>"']/g, function (character) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]; }); }
-  function renderQuestion() {
-    var item = state.active[state.index];
-    state.checked = false;
+  function render() {
     resultNode.hidden = true;
-    nextButton.hidden = true;
-    progressNode.textContent = "Question " + (state.index + 1) + " of " + state.active.length;
-    progressBar.style.width = ((state.index / state.active.length) * 100) + "%";
-    questionNode.innerHTML = '<article class="ie2-grammar-question-card"><div class="ie2-grammar-question-head"><span>' + escapeHtml(item.family) + '</span><strong>' + (state.index + 1) + '</strong></div><h3>' + escapeHtml(item.prompt) + '</h3><fieldset><legend>Choose one answer</legend>' + item.options.map(function (option, index) { return '<label><input type="radio" name="grammarAnswer" value="' + index + '" /><span><b>' + String.fromCharCode(65 + index) + '</b>' + escapeHtml(option) + '</span></label>'; }).join("") + '</fieldset><button class="intermediate2-button primary" type="button" id="grammarCheck">Check response</button><div class="ie2-grammar-feedback" id="grammarFeedback" aria-live="polite"></div></article>';
-    document.getElementById("grammarCheck").addEventListener("click", checkAnswer);
+    progressNode.textContent = "15 questions · choose one answer in every card";
+    progressBar.style.width = "0%";
+    checkButton.hidden = false;
+    questionNode.innerHTML = '<div class="ie2-grammar-question-list">' + questions.map(function (item, questionIndex) { return '<article class="ie2-grammar-question-card" data-question="' + questionIndex + '"><div class="ie2-grammar-question-head"><span>' + escapeHtml(item.family) + '</span><strong>' + (questionIndex + 1) + '</strong></div><h3>' + escapeHtml(item.prompt) + '</h3><fieldset><legend>Choose one complete sentence</legend>' + item.options.map(function (option, optionIndex) { return '<label><input type="radio" name="grammarAnswer' + questionIndex + '" value="' + optionIndex + '" /><span><b>' + String.fromCharCode(65 + optionIndex) + '</b>' + escapeHtml(option) + '</span></label>'; }).join("") + '</fieldset><div class="ie2-grammar-feedback" aria-live="polite"></div></article>'; }).join("") + '</div>';
   }
-  function checkAnswer() {
-    if (state.checked) return;
-    var selected = questionNode.querySelector('input[name="grammarAnswer"]:checked');
-    var feedback = document.getElementById("grammarFeedback");
-    if (!selected) { feedback.className = "ie2-grammar-feedback is-warning"; feedback.textContent = "Choose one answer before checking."; return; }
-    state.checked = true;
-    var item = state.active[state.index];
-    var isCorrect = Number(selected.value) === item.answer;
-    state.answers.push({ item: item, correct: isCorrect });
-    questionNode.querySelectorAll("input").forEach(function (input) { input.disabled = true; });
-    questionNode.querySelectorAll("label").forEach(function (label, index) { label.classList.toggle("is-correct", index === item.answer); label.classList.toggle("is-incorrect", index === Number(selected.value) && !isCorrect); });
-    feedback.className = "ie2-grammar-feedback " + (isCorrect ? "is-correct" : "is-incorrect");
-    feedback.innerHTML = '<strong>' + (isCorrect ? "Correct." : "Not this time.") + '</strong><p>' + item.feedback + '</p>';
-    nextButton.hidden = false;
-    nextButton.innerHTML = state.index === state.active.length - 1 ? 'See my results <i class="bi bi-arrow-right"></i>' : 'Next question <i class="bi bi-arrow-right"></i>';
-  }
-  function showResult() {
-    var correct = state.answers.filter(function (answer) { return answer.correct; }).length;
-    var missed = state.answers.filter(function (answer) { return !answer.correct; });
-    progressNode.textContent = "Challenge complete";
-    progressBar.style.width = "100%";
-    questionNode.innerHTML = "";
-    nextButton.hidden = true;
+  function checkAll() {
+    var answered = 0, correct = 0, missed = [];
+    questions.forEach(function (item, questionIndex) {
+      var card = questionNode.querySelector('[data-question="' + questionIndex + '"]');
+      var selected = card.querySelector('input[name="grammarAnswer' + questionIndex + '"]:checked');
+      var feedback = card.querySelector(".ie2-grammar-feedback");
+      card.querySelectorAll("label").forEach(function (label, optionIndex) { label.classList.remove("is-correct", "is-incorrect"); if (selected) { label.classList.toggle("is-correct", optionIndex === item.answer); label.classList.toggle("is-incorrect", optionIndex === Number(selected.value) && Number(selected.value) !== item.answer); } });
+      if (!selected) { feedback.className = "ie2-grammar-feedback is-warning"; feedback.textContent = "Choose one complete sentence before checking."; return; }
+      answered += 1;
+      var isCorrect = Number(selected.value) === item.answer;
+      if (isCorrect) correct += 1; else missed.push(item);
+      feedback.className = "ie2-grammar-feedback " + (isCorrect ? "is-correct" : "is-incorrect");
+      feedback.innerHTML = '<strong>' + (isCorrect ? "Correct." : "Review this pattern.") + '</strong><p>' + item.feedback + '</p>';
+    });
+    progressBar.style.width = ((answered / questions.length) * 100) + "%";
+    if (answered !== questions.length) { progressNode.textContent = answered + " of 15 answered"; resultNode.hidden = true; questionNode.querySelector(".is-warning")?.scrollIntoView({ behavior: "smooth", block: "center" }); return; }
+    progressNode.textContent = "15 of 15 answered";
     resultNode.hidden = false;
-    resultNode.innerHTML = '<div><span>Your result</span><h3>' + correct + ' / ' + state.answers.length + '</h3><p>' + (missed.length ? 'Review the patterns below, then repeat only the questions that need another look.' : 'Excellent. You selected every Unit 2 pattern accurately.') + '</p></div><div class="ie2-grammar-result-actions">' + (missed.length ? '<button class="intermediate2-button primary" id="grammarRetryMissed" type="button">Repeat ' + missed.length + ' missed ' + (missed.length === 1 ? 'question' : 'questions') + '</button>' : '') + '<button class="intermediate2-button ghost" id="grammarRestartResult" type="button">Restart all 15</button></div>' + (missed.length ? '<ol>' + missed.map(function (answer) { return '<li><strong>' + escapeHtml(answer.item.family) + '</strong><span>' + answer.item.feedback.replace(/<[^>]+>/g, "") + '</span></li>'; }).join("") + '</ol>' : "");
-    document.getElementById("grammarRestartResult").addEventListener("click", restartAll);
-    var retry = document.getElementById("grammarRetryMissed");
-    if (retry) retry.addEventListener("click", function () { state.active = missed.map(function (answer) { return answer.item; }); state.index = 0; state.answers = []; renderQuestion(); });
+    resultNode.innerHTML = '<div><span>Your result</span><h3>' + correct + ' / 15</h3><p>' + (missed.length ? 'Read the feedback in the marked cards, then change any answer and check all 15 again.' : 'Excellent. You selected every Unit 2 pattern accurately.') + '</p></div>' + (missed.length ? '<ol>' + missed.map(function (item) { return '<li><strong>' + escapeHtml(item.family) + '</strong><span>' + item.feedback.replace(/<[^>]+>/g, "") + '</span></li>'; }).join("") + '</ol>' : "");
+    resultNode.scrollIntoView({ behavior: "smooth", block: "nearest" });
   }
-  function next() { if (!state.checked) return; state.index += 1; if (state.index >= state.active.length) showResult(); else renderQuestion(); }
-  function restartAll() { state.active = questions.slice(); state.index = 0; state.answers = []; renderQuestion(); }
-  nextButton.addEventListener("click", next);
-  restartButton.addEventListener("click", restartAll);
-  renderQuestion();
+  function restart() { render(); document.getElementById("grammarChallenge").scrollIntoView({ behavior: "smooth", block: "start" }); }
+  checkButton.addEventListener("click", checkAll);
+  restartButton.addEventListener("click", restart);
+  render();
 }());
