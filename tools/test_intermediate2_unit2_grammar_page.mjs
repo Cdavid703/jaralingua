@@ -26,6 +26,8 @@ assert.match(page, /20260815-full-width-compact/);
 assert.ok(fs.existsSync(imagePath), "The activity needs its professional image asset.");
 assert.match(page, /grammarCheckAll/);
 assert.match(script, /ie2-grammar-question-list/);
+assert.match(script, /function topicFor/);
+assert.doesNotMatch(script, /escapeHtml\(item\.family\).*<\/span><strong>/);
 assert.doesNotMatch(script, /I hope that/);
 assert.doesNotMatch(page, /I hope that/);
 assert.match(styles, /Unit 2 grammar activity: all complete-sentence decisions/);

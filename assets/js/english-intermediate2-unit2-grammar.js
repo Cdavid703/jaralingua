@@ -24,12 +24,20 @@
   var restartButton = document.getElementById("grammarRestart");
   var resultNode = document.getElementById("grammarResult");
   function escapeHtml(value) { return String(value).replace(/[&<>"']/g, function (character) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[character]; }); }
+  function topicFor(item) {
+    if (item.family.indexOf("hope") === 0) return "Hope";
+    if (item.family.indexOf("dream") === 0) return "Dream";
+    if (item.family.indexOf("wish") === 0) return "Wish";
+    if (item.family.indexOf("goal") === 0) return "Goal";
+    if (item.family.indexOf("would like") === 0) return "Would like";
+    return "Make a wish";
+  }
   function render() {
     resultNode.hidden = true;
     progressNode.textContent = "15 questions · choose one answer in every card";
     progressBar.style.width = "0%";
     checkButton.hidden = false;
-    questionNode.innerHTML = '<div class="ie2-grammar-question-list">' + questions.map(function (item, questionIndex) { return '<article class="ie2-grammar-question-card" data-question="' + questionIndex + '"><div class="ie2-grammar-question-head"><span>' + escapeHtml(item.family) + '</span><strong>' + (questionIndex + 1) + '</strong></div><h3>' + escapeHtml(item.prompt) + '</h3><fieldset><legend>Choose one complete sentence</legend>' + item.options.map(function (option, optionIndex) { return '<label><input type="radio" name="grammarAnswer' + questionIndex + '" value="' + optionIndex + '" /><span><b>' + String.fromCharCode(65 + optionIndex) + '</b>' + escapeHtml(option) + '</span></label>'; }).join("") + '</fieldset><div class="ie2-grammar-feedback" aria-live="polite"></div></article>'; }).join("") + '</div>';
+    questionNode.innerHTML = '<div class="ie2-grammar-question-list">' + questions.map(function (item, questionIndex) { return '<article class="ie2-grammar-question-card" data-question="' + questionIndex + '"><div class="ie2-grammar-question-head"><span>' + escapeHtml(topicFor(item)) + '</span><strong>' + (questionIndex + 1) + '</strong></div><h3>' + escapeHtml(item.prompt) + '</h3><fieldset><legend>Choose one complete sentence</legend>' + item.options.map(function (option, optionIndex) { return '<label><input type="radio" name="grammarAnswer' + questionIndex + '" value="' + optionIndex + '" /><span><b>' + String.fromCharCode(65 + optionIndex) + '</b>' + escapeHtml(option) + '</span></label>'; }).join("") + '</fieldset><div class="ie2-grammar-feedback" aria-live="polite"></div></article>'; }).join("") + '</div>';
   }
   function checkAll() {
     var answered = 0, correct = 0, missed = [];

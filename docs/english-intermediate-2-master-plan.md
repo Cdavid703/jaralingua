@@ -3990,6 +3990,8 @@ La secuencia cubre: tres usos de **hope** (`hope + subject + verb` y `hope to + 
 
 La actividad sigue el estándar visual permanente: hero profesional propio sin texto ni watermark, buscador de patrones, introducción breve, las 15 decisiones visibles a la vez en una cuadrícula compacta de dos columnas y una sola columna en móvil, mapa compacto de apoyo y resultado final. El botón único revisa todas las respuestas y muestra el motivo bajo cada tarjeta. No añade audio, por lo que no necesita un botón sonoro; cualquier audio futuro deberá ser un archivo real de ElevenLabs.
 
+Antes de revisar, cada tarjeta muestra solamente la familia general (`Hope`, `Dream`, `Wish`, `Goal`, `Would like` o `Make a wish`) y nunca adelanta la fórmula específica como `hope to + verb` o `wish + past perfect`. La estructura concreta se revela únicamente en la retroalimentación después de que el estudiante haya elegido y revisado su respuesta.
+
 ### 50.1 Regla de porcentajes para actividades
 
 Las tarjetas y páginas de actividades no muestran `0%`, “Private practice · 0%”, “Teacher delivery · 0%” ni etiquetas equivalentes. Una actividad puede indicar de manera clara que es práctica privada o que se entrega al profesor, pero no presenta porcentaje, peso ni efecto de nota. Los porcentajes se reservan exclusivamente para las evaluaciones oficiales mostradas en Course Overview, calendario y páginas de evaluación.
