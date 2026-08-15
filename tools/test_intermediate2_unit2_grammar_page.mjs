@@ -18,6 +18,9 @@ assert.equal(questions.length, 15, "The grammar challenge must contain exactly 1
 assert.ok(questions.every((question) => question.options.length === 3), "Every question must provide exactly three options.");
 assert.ok(questions.every((question) => Number.isInteger(question.answer) && question.answer >= 0 && question.answer < 3), "Every question needs one valid correct option.");
 assert.deepEqual([0, 1, 2].map((option) => questions.filter((question) => question.answer === option).length), [5, 5, 5], "Correct answers must be balanced across A, B and C.");
+assert.ok(questions.every((question) => !/[<>]/.test(question.prompt) && question.options.every((option) => !/[<>]/.test(option))), "Prompts and answer options must be plain rendered text, never raw HTML markup.");
+assert.equal(questions[0].options[questions[0].answer], "I hope I get the scholarship.", "Hope + subject + verb must follow the Unit 2 explanation.");
+assert.equal(questions[2].options[questions[2].answer], "I hope the interview goes well.", "Hope followed by another subject must use a complete clause.");
 for (const family of ["hope + subject + verb", "hope to + verb", "dream of + -ing", "wish + past form", "wish + could", "wish + would", "wish + past perfect", "wish someone luck", "goal is to + verb", "goal of + -ing", "would like + noun", "would like to + verb", "make a wish"]) assert.ok(questions.some((question) => question.family === family), `Missing grammar family: ${family}`);
 assert.match(page, /Choose the Pattern/);
 assert.match(page, /data-course-search-panel/);
@@ -30,6 +33,7 @@ assert.match(script, /function topicFor/);
 assert.doesNotMatch(script, /escapeHtml\(item\.family\).*<\/span><strong>/);
 assert.doesNotMatch(script, /I hope that/);
 assert.doesNotMatch(page, /I hope that/);
+assert.doesNotMatch(script, /I hope to I get|dreams to designing|Would you like discussing to/);
 assert.match(styles, /Unit 2 grammar activity: all complete-sentence decisions/);
 const item = catalog.items.find((entry) => entry.id === "unit-2-choose-the-pattern-grammar");
 assert.ok(item && item.status === "published");

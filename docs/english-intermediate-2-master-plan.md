@@ -3995,3 +3995,14 @@ Antes de revisar, cada tarjeta muestra solamente la familia general (`Hope`, `Dr
 ### 50.1 Regla de porcentajes para actividades
 
 Las tarjetas y páginas de actividades no muestran `0%`, “Private practice · 0%”, “Teacher delivery · 0%” ni etiquetas equivalentes. Una actividad puede indicar de manera clara que es práctica privada o que se entrega al profesor, pero no presenta porcentaje, peso ni efecto de nota. Los porcentajes se reservan exclusivamente para las evaluaciones oficiales mostradas en Course Overview, calendario y páginas de evaluación.
+
+### 50.2 Auditoría técnica y pedagógica obligatoria para práctica gramatical
+
+Antes de publicar o actualizar una actividad de grammar se revisan, y se corrigen si hace falta, los siguientes puntos:
+
+1. **Texto realmente renderizado:** los enunciados y opciones se guardan como texto plano. Ninguna marca de formato (`<em>`, `<strong>` u otra) puede aparecer literalmente al estudiante. El formato solo puede vivir en feedback controlado y confiable.
+2. **Una sola respuesta defendible:** cada una de las tres oraciones se contrasta con el contexto y con la explicación de la unidad. La correcta debe corresponder exactamente al objetivo; las otras dos no pueden ser respuestas alternativas aceptables en ese mismo contexto.
+3. **Distractores pedagógicos:** los errores incorrectos representan confusiones previsibles y cercanas al patrón trabajado (forma verbal, infinitivo, `-ing`, auxiliar, artículo o colocación). No se permiten secuencias de palabras absurdas ni errores que conviertan la pregunta en una adivinanza.
+4. **Sin claves antes de decidir:** la tarjeta solo muestra la familia amplia del tema. La fórmula concreta y la razón aparecen después de revisar; no se imprimen en el rótulo de la pregunta.
+5. **Flujo y acceso:** las 15 decisiones permanecen visibles en cuadrícula compacta —una columna en móvil—, con tres controles alcanzables por teclado, instrucciones legibles y revisión global. No se ocultan preguntas tras una navegación artificial de “siguiente”.
+6. **Contrato verificable:** la prueba estática comprueba cantidad, tres opciones, una respuesta válida, balance A/B/C, familias cubiertas, ausencia de porcentajes, ausencia de patrones descartados y ausencia de marcas HTML en enunciados u opciones. La automatización no reemplaza la lectura pedagógica completa de los 15 ítems antes del commit y despliegue.
