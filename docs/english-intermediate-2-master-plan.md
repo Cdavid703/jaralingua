@@ -3964,7 +3964,7 @@ La segunda adopción es `unit-2-wishes-dilemmas-advice.html`. Su hero, buscador 
 
 ### 49.7 Adopción obligatoria en todo el contenido existente
 
-El estándar ya no queda limitado a las dos primeras páginas. Se aplica a cada página publicada de Intermediate English Course 2: `index.html`, `course-overview.html`, las Unidades 1 y 2, `practice-lab.html`, Listening Library, los dos listenings, los dos readings, Secret Social Circle, Conversation Coach y las dos actividades de pronunciación.
+El estándar ya no queda limitado a las dos primeras páginas. Se aplica a cada página publicada de Intermediate English Course 2: `index.html`, `course-overview.html`, las Unidades 1 y 2, `practice-lab.html`, Listening Library, los dos listenings, los dos readings, Secret Social Circle, Conversation Coach, las dos actividades de pronunciación y `grammar-unit-2-wishes-dreams-goals.html`.
 
 Cada familia mantiene una composición útil, no una ampliación vacía:
 
@@ -3981,3 +3981,11 @@ La regla técnica común usa `width: 100%`, `max-width: none`, `box-sizing: bord
 Desde este momento, **toda** página, sección, unidad y actividad nueva de Intermediate English Course 2 debe construirse desde su primera versión con este estándar: pantalla aprovechada en teléfono, tablet, portátil y escritorio; gutters seguros; controles cómodos; y contenido relacionado agrupado de forma compacta en franjas o cuadrículas que regresan a una columna cuando sea necesario.
 
 No se permite crear primero una columna central estrecha ni una secuencia vertical redundante para corregirla después. Antes de implementar cualquier contenido nuevo, se debe decidir qué elementos se muestran juntos, qué cuadrícula mejora el aprendizaje y en qué punto se apilan. La revisión de cierre debe probar las cinco vistas definidas en 49.5, actualizar este Markdown, ejecutar la prueba correspondiente, hacer commit, push, despliegue selectivo y comprobación en producción.
+
+## 50. Practice Lab · Unit 2 Grammar — Choose the Pattern
+
+`grammar-unit-2-wishes-dreams-goals.html` es una práctica privada, no evaluativa y sin entrega docente. Enseña la selección de patrón, no la memorización de una posición de respuesta: tiene 15 decisiones de opción única, exactamente tres opciones plausibles por pregunta y una sola respuesta correcta. Las respuestas correctas se balancean entre A, B y C y nunca se usan distractores absurdos.
+
+La secuencia cubre: tres usos de **hope** (`hope + clause`, `hope to + verb`, `hope for + noun`); dos de **dream** (`dream of + -ing`); cuatro de **wish** (presente irreal, `could`, `would` y pasado irreal), `wish someone luck`; dos de **goal**; dos de **would like**; y la expresión fija **make a wish**. Cada pregunta presenta una situación completa, se revisa individualmente y explica por qué el patrón encaja. Al cerrar, el estudiante puede repetir únicamente los errores.
+
+La actividad sigue el estándar visual permanente: hero profesional propio sin texto ni watermark, buscador de patrones, introducción breve, una sola decisión visible a la vez, mapa compacto de apoyo y resultado final. No añade audio, por lo que no necesita un botón sonoro; cualquier audio futuro deberá ser un archivo real de ElevenLabs.

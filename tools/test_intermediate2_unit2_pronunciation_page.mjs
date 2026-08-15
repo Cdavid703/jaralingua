@@ -72,8 +72,8 @@ assert.equal(item.gradebookProjected, false);
 assert.equal(item.affectsAverage, false);
 assert.equal(item.status, "published");
 const published = catalog.items.filter((entry) => entry.status === "published");
-assert.equal(published.length, 8);
-assert.equal(published.filter((entry) => entry.unit === 2).length, 3);
+assert.equal(published.length, 9);
+assert.equal(published.filter((entry) => entry.unit === 2).length, 4);
 
 for (const relativePath of [
   "assets/img/english-intermediate-2/unit-2/pronunciation-the-choice-id-make-differently/the-choice-id-make-differently-hero-v1.png",

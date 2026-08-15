@@ -317,6 +317,27 @@
         "consequences",
         "regret"
       ]
+    },
+    {
+      "id": "unit-2-choose-the-pattern-grammar",
+      "unit": 2,
+      "order": 4,
+      "type": "grammar",
+      "skillLabel": "Grammar",
+      "title": "Choose the Pattern",
+      "subtitle": "Wishes, dreams, goals and polite desires",
+      "summary": "Choose one natural grammar pattern for hope, dream, wish, goal, would like and make a wish. Every response gives immediate feedback and a useful example.",
+      "image": "/assets/img/english-intermediate-2/unit-2/choose-the-pattern-grammar/choose-the-pattern-grammar-hero-v1.png",
+      "workshopHref": "/ingles/intermediate-2/grammar-unit-2-wishes-dreams-goals.html",
+      "duration": "12 minutes",
+      "product": "15 grammar decisions with immediate feedback",
+      "questionCount": 15,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 2", "grammar", "hope", "hope to", "hope for", "dream of", "wish", "goal", "would like", "make a wish", "wishes dreams dilemmas advice regrets"]
     }
   ]
 }

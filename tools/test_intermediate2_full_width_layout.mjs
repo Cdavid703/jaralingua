@@ -10,7 +10,7 @@ const coachCss = fs.readFileSync(path.join(root, "assets", "css", "english-inter
 const pronunciationCss = fs.readFileSync(path.join(root, "assets", "css", "english-intermediate2-pronunciation.css"), "utf8");
 const pages = fs.readdirSync(pagesDir).filter((file) => file.endsWith(".html"));
 
-assert.equal(pages.length, 14, "The full-width audit must cover every published Intermediate 2 page.");
+assert.equal(pages.length, 15, "The full-width audit must cover every published Intermediate 2 page.");
 for (const page of pages) {
   const markup = fs.readFileSync(path.join(pagesDir, page), "utf8");
   assert.match(markup, /english-intermediate-2\.css\?v=20260815-full-width-compact/, `${page} must load the shared layout version.`);
