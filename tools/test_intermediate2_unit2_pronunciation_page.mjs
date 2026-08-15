@@ -17,6 +17,8 @@ const catalog = JSON.parse(fs.readFileSync(catalogPath, "utf8"));
 assert.match(page, /Practice Lab · Unit 2 Pronunciation/);
 assert.match(page, /data-course-search-panel/);
 assert.match(page, /Teacher inbox only/);
+assert.match(page, /data-pronunciation-submit-mount/);
+assert.match(page, /ie2-pronunciation-support/);
 assert.match(page, /english-intermediate2-pronunciation-unit2\.js/);
 assert.match(page, /english-intermediate2-pronunciation-unit1\.js/);
 assert.doesNotMatch(page + config + engine, /speechSynthesis|SpeechSynthesisUtterance/);
@@ -32,6 +34,7 @@ assert.match(config, /wordAudioBase/);
 assert.match(engine, /function wordAudioFile\(/);
 assert.match(engine, /new Audio\(source\)/);
 assert.match(engine, /word-model-replay/);
+assert.match(engine, /\[data-pronunciation-submit-mount\]/);
 assert.match(engine, /Tap to hear this word in the ElevenLabs model/);
 
 for (const match of page.matchAll(/(?:href|src)="([^"]+)"/g)) {

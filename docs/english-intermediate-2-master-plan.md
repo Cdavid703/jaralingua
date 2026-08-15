@@ -3860,3 +3860,9 @@ El recorte temporal del audio de una frase no se usa para pronunciación: en esc
 Al tocar una palabra, el cliente detiene cualquier modelo anterior y reproduce exclusivamente su MP3. La palabra queda destacada hasta que termina el audio y el botón permite repetirla. Este patrón conserva la voz profesional, evita `speechSynthesis`, no expone ninguna clave y evita mezclar palabras vecinas. Cualquier actividad futura que adopte esta ayuda debe generar los modelos necesarios, validar que todos sean de ElevenLabs y probar toque de palabra, repetición, cambio de etapa y carga lenta.
 
 El panel no usa voz del navegador ni audio generado al vuelo. La corrección aplica al motor compartido, por lo que protege Unit 1 y Unit 2 de Intermediate English Course 2.
+
+### 47.10 Distribución sin riel infinito
+
+La práctica y el resultado inmediato forman la única fila superior de la actividad. Los bloques de apoyo (`Pronunciation focus` y `Teacher listening guide`) se ubican debajo, como dos paneles anchos con tarjetas compactas en varias columnas; nunca se apilan en una columna lateral más larga que la práctica. La entrega final y el buzón del profesor ocupan una zona inferior propia y se muestran en dos columnas solo cuando existe ancho suficiente.
+
+En tableta, desde 1080 px hacia abajo, la práctica pasa a una sola columna antes de que el riel se vuelva estrecho. En celular las tarjetas de apoyo y la entrega se apilan en una sola columna. Si no hay resultado aún, el riel superior desaparece y la práctica usa el ancho completo. Esta regla evita espacios vacíos extensos, conserva la prioridad de la práctica y se aplica específicamente a Unit 2 Pronunciation.

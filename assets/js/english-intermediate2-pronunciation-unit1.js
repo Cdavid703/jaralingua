@@ -112,14 +112,16 @@
   finalSummary.className = "final-summary";
   finalSummary.hidden = true;
   history.insertAdjacentElement("afterend", finalSummary);
-  const submitMount = document.createElement("div");
-  submitMount.className = "pronunciation-submit-mount";
-  const pronunciationAside = document.querySelector(".pronunciation-layout aside");
-  const lastAsidePanel = pronunciationAside ? pronunciationAside.querySelector(".pronunciation-panel:last-child") : null;
-  if (lastAsidePanel) {
-    lastAsidePanel.insertAdjacentElement("afterend", submitMount);
-  } else {
-    finalSummary.insertAdjacentElement("afterend", submitMount);
+  const submitMount = document.querySelector("[data-pronunciation-submit-mount]") || document.createElement("div");
+  submitMount.classList.add("pronunciation-submit-mount");
+  if (!submitMount.isConnected) {
+    const pronunciationAside = document.querySelector(".pronunciation-layout aside");
+    const lastAsidePanel = pronunciationAside ? pronunciationAside.querySelector(".pronunciation-panel:last-child") : null;
+    if (lastAsidePanel) {
+      lastAsidePanel.insertAdjacentElement("afterend", submitMount);
+    } else {
+      finalSummary.insertAdjacentElement("afterend", submitMount);
+    }
   }
 
   function currentStage() {
