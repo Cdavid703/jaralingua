@@ -12,7 +12,7 @@ assert.match(page, /ie2-unit2-theory-page/);
 assert.match(page, /ie2-unit2-idea-deck/);
 assert.match(page, /data-course-search-panel/);
 assert.match(page, /ElevenLabs meaning model/);
-assert.match(page, /unit2-full-width-compact/);
+assert.match(page, /20260815-full-width-compact/);
 assert.match(styles, /Unit 2 theory: full-width application layout with compact learning groups/);
 assert.match(styles, /\.ie2-unit2-theory-page \.ie2-unit-theory-shell,/);
 assert.match(styles, /width: 100%; max-width: none; box-sizing: border-box/);

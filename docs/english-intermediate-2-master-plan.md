@@ -3961,3 +3961,17 @@ La adopción se hace por fases: primero estructuras globales de Intermediate 2 (
 La primera página adaptada a este estándar es `pronunciation-unit-2-the-choice-id-make-differently.html`. Su navegación, hero, buscador, aviso de entrega, práctica, resultados, apoyos, entrega final y buzón usan el ancho disponible en cada pantalla. La página no conserva el límite central de 1180 px: emplea rellenos internos adaptativos y áreas seguras para proteger el contenido sin desperdiciar los laterales. En pantalla amplia, los controles de modelo, velocidad y Shadow Mode se combinan en una misma franja, y lectura/grabación comparten una zona de trabajo; en pantalla estrecha vuelven a una secuencia de una columna.
 
 La segunda adopción es `unit-2-wishes-dilemmas-advice.html`. Su hero, buscador y acordeones de teoría usan el ancho disponible. La explicación inicial y el banco de conceptos se agrupan en una misma franja amplia; las cuadrículas de contraste y vocabulario aprovechan columnas adicionales cuando existe espacio y vuelven a una columna o cuadrícula reducida en tablet y móvil. El contenido no se estira como texto aislado: se compacta por relaciones pedagógicas.
+
+### 49.7 Adopción obligatoria en todo el contenido existente
+
+El estándar ya no queda limitado a las dos primeras páginas. Se aplica a cada página publicada de Intermediate English Course 2: `index.html`, `course-overview.html`, las Unidades 1 y 2, `practice-lab.html`, Listening Library, los dos listenings, los dos readings, Secret Social Circle, Conversation Coach y las dos actividades de pronunciación.
+
+Cada familia mantiene una composición útil, no una ampliación vacía:
+
+- **Home, Course Overview y teoría:** hero, buscador y acordeones usan la pantalla; explicaciones, fórmulas, contraste y vocabulario se agrupan en cuadrículas que se reducen antes de perder legibilidad.
+- **Practice Lab y Listening Library:** el hero, búsqueda, carpetas y catálogo usan el ancho disponible; las tarjetas se redistribuyen con `auto-fit` para ocupar filas compactas, sin convertir cada tarjeta en una banda excesivamente ancha.
+- **Listening, Reading y juego oral:** hero, buscador y panel de actividad ocupan la aplicación; texto, preguntas, modelos y ayudas se agrupan en paneles y cuadrículas. En móvil vuelven a una sola columna sin desbordamiento.
+- **Conversation Coach:** hero, búsqueda y aplicación ocupan el ancho completo; ruta, apoyo lingüístico, grabación y recapitulación conservan grupos compactos y accesibles.
+- **Pronunciation:** todas las unidades siguen el mismo ancho expandido con áreas seguras. La práctica, modelos ElevenLabs, resultados, apoyos, entrega y buzón conservan las agrupaciones compactas definidas en las secciones 47 y 48.
+
+La regla técnica común usa `width: 100%`, `max-width: none`, `box-sizing: border-box` y gutters con `env(safe-area-inset-*)`. En pantallas grandes se prefieren cuadrículas con mínimo legible; en tablet y móvil se reducen columnas antes de comprimir controles. Ninguna página de esta lista puede reintroducir un límite central estrecho sin una excepción documentada, pedagógica y aprobada.

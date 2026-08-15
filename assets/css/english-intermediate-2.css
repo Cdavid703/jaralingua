@@ -3866,6 +3866,89 @@
   }
 }
 
+/* Intermediate English Course 2: shared full-width, compact composition. */
+.english-intermediate2-page { --ie2-screen-gutter: clamp(1rem, 2vw, 3rem); }
+
+.english-intermediate2-page .navbar {
+  width: 100%;
+  max-width: none;
+  padding-left: max(var(--ie2-screen-gutter), env(safe-area-inset-left));
+  padding-right: max(var(--ie2-screen-gutter), env(safe-area-inset-right));
+}
+
+.english-intermediate2-page .intermediate2-search.course-search-panel,
+.english-intermediate2-page .course-search-empty,
+.english-intermediate2-page .intermediate2-section-head,
+.english-intermediate2-page .intermediate2-dashboard,
+.english-intermediate2-page .intermediate2-unit-band,
+.english-intermediate2-page .intermediate2-schedule,
+.english-intermediate2-page .ie2-overview-shell,
+.english-intermediate2-page .ie2-course-overview-shell,
+.english-intermediate2-page .ie2-unit-theory-shell,
+.english-intermediate2-page .ie2-speaking-hero-content,
+.english-intermediate2-page .ie2-speaking-shell,
+.english-intermediate2-page .ie2-reading-hero-content,
+.english-intermediate2-page .ie2-reading-shell,
+.english-intermediate2-page .ie2-listening-hero-content,
+.english-intermediate2-page .ie2-listening-shell {
+  width: 100%;
+  max-width: none;
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.english-intermediate2-page .intermediate2-search.course-search-panel,
+.english-intermediate2-page .course-search-empty,
+.english-intermediate2-page .intermediate2-section-head,
+.english-intermediate2-page .intermediate2-dashboard,
+.english-intermediate2-page .intermediate2-unit-band,
+.english-intermediate2-page .intermediate2-schedule,
+.english-intermediate2-page .ie2-overview-shell,
+.english-intermediate2-page .ie2-course-overview-shell,
+.english-intermediate2-page .ie2-unit-theory-shell,
+.english-intermediate2-page .ie2-speaking-shell,
+.english-intermediate2-page .ie2-reading-shell,
+.english-intermediate2-page .ie2-listening-shell {
+  padding-left: max(var(--ie2-screen-gutter), env(safe-area-inset-left));
+  padding-right: max(var(--ie2-screen-gutter), env(safe-area-inset-right));
+}
+
+.english-intermediate2-page .ie2-speaking-hero-content,
+.english-intermediate2-page .ie2-reading-hero-content,
+.english-intermediate2-page .ie2-listening-hero-content {
+  padding-left: max(var(--ie2-screen-gutter), env(safe-area-inset-left));
+  padding-right: max(var(--ie2-screen-gutter), env(safe-area-inset-right));
+}
+
+/* On wide screens, related cards use available space as useful compact grids. */
+.english-intermediate2-page .ie2-rule-grid,
+.english-intermediate2-page .ie2-note-grid,
+.english-intermediate2-page .ie2-practice-grid,
+.english-intermediate2-page .ie2-contrast-grid,
+.english-intermediate2-page .ie2-vocabulary-bank,
+.english-intermediate2-page .ie2-definition-grid,
+.english-intermediate2-page .ie2-expression-grid,
+.english-intermediate2-page .ie2-sound-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+}
+
+@media (max-width: 700px) {
+  .english-intermediate2-page { --ie2-screen-gutter: .75rem; }
+  .english-intermediate2-page .intermediate2-search.course-search-panel,
+  .english-intermediate2-page .course-search-empty,
+  .english-intermediate2-page .intermediate2-section-head,
+  .english-intermediate2-page .intermediate2-dashboard,
+  .english-intermediate2-page .intermediate2-unit-band,
+  .english-intermediate2-page .intermediate2-schedule,
+  .english-intermediate2-page .ie2-overview-shell,
+  .english-intermediate2-page .ie2-course-overview-shell,
+  .english-intermediate2-page .ie2-unit-theory-shell,
+  .english-intermediate2-page .ie2-speaking-shell,
+  .english-intermediate2-page .ie2-reading-shell,
+  .english-intermediate2-page .ie2-listening-shell { padding-left: max(var(--ie2-screen-gutter), env(safe-area-inset-left)); padding-right: max(var(--ie2-screen-gutter), env(safe-area-inset-right)); }
+}
+
 /* Unit 2 theory: full-width application layout with compact learning groups. */
 .ie2-unit2-theory-page { --ie2-unit2-gutter: clamp(1rem, 2vw, 3rem); }
 .ie2-unit2-theory-page .navbar { width: 100%; max-width: none; padding-left: max(var(--ie2-unit2-gutter), env(safe-area-inset-left)); padding-right: max(var(--ie2-unit2-gutter), env(safe-area-inset-right)); }

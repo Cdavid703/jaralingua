@@ -11,3 +11,10 @@
 @media(prefers-reduced-motion:reduce){.ie2-lab-card-image img{transition:none}}
 .ie2-lab-folder+.ie2-lab-folder{margin-top:.65rem}.ie2-lab-unit-placeholder{display:grid;place-items:center;width:90px;height:72px;border-radius:11px;background:linear-gradient(135deg,var(--lab-navy),var(--lab-blue));color:#fff;font-size:1.35rem;font-weight:950}.ie2-lab-folder-future{box-shadow:0 8px 20px rgba(7,31,79,.06)}.ie2-lab-folder-future>summary>strong{background:#eef2f7;color:var(--lab-muted)}.ie2-lab-future-heading{margin:1.2rem 0 .65rem;padding:.9rem 1rem;border-left:4px solid var(--lab-gold);border-radius:0 12px 12px 0;background:#fff}.ie2-lab-future-heading h2{margin:.15rem 0;color:var(--lab-navy);font-size:clamp(1.3rem,3vw,1.9rem)}.ie2-lab-future-heading>p:not(.intermediate2-kicker){margin:.4rem 0 0;color:var(--lab-muted);line-height:1.5}
 @media(max-width:640px){.ie2-lab-unit-placeholder{width:64px;height:64px;font-size:1rem}}
+
+/* Shared application-width standard: expand the lab, compact its related cards. */
+.ie2-lab-page{--ie2-screen-gutter:clamp(1rem,2vw,3rem)}
+.ie2-lab-page .navbar,.ie2-lab-page .ie2-lab-hero,.ie2-lab-page .ie2-lab-tools,.ie2-lab-page .ie2-lab-folders{width:100%;max-width:none;box-sizing:border-box;margin-left:0;margin-right:0}
+.ie2-lab-page .navbar,.ie2-lab-page .ie2-lab-hero-copy,.ie2-lab-page .ie2-lab-tools,.ie2-lab-page .ie2-lab-folders{padding-left:max(var(--ie2-screen-gutter),env(safe-area-inset-left));padding-right:max(var(--ie2-screen-gutter),env(safe-area-inset-right))}
+.ie2-lab-page .ie2-lab-hero{margin-top:0;border-radius:0}.ie2-lab-page .ie2-lab-grid{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+@media(max-width:640px){.ie2-lab-page{--ie2-screen-gutter:.75rem}.ie2-lab-page .ie2-lab-hero{width:100%;margin-top:0;border-radius:0}.ie2-lab-page .ie2-lab-tools,.ie2-lab-page .ie2-lab-folders{width:100%}}

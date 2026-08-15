@@ -26,3 +26,10 @@
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}.ie2-coach-mic-button.is-recording{animation:none}}
 .ie2-coach-frames button{padding:.72rem;border-radius:12px;background:#fff;border:1px solid var(--coach2-line);color:var(--coach2-navy);font:inherit;font-weight:850;text-align:left;cursor:pointer}.ie2-coach-frames button:hover,.ie2-coach-frames button:focus-visible{border-color:var(--coach2-teal);outline:2px solid rgba(8,127,120,.15)}
 .ie2-coach-session-review article{display:grid;grid-template-columns:32px minmax(0,1fr);gap:.65rem;margin:.6rem 0;padding:.8rem;border:1px solid var(--coach2-line);border-radius:12px}.ie2-coach-session-review article>span{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--coach2-navy);color:#fff;font-weight:950}.ie2-coach-session-review article strong{color:var(--coach2-navy)}.ie2-coach-session-review article p{margin:.3rem 0;color:var(--coach2-muted)}
+
+/* Shared application-width standard: the conversation stays compact by groups. */
+.ie2-coach-page{--ie2-screen-gutter:clamp(1rem,2vw,3rem)}
+.ie2-coach-page .navbar,.ie2-coach-page .ie2-coach-hero,.ie2-coach-page .ie2-coach-search,.ie2-coach-page .ie2-coach-shell,.ie2-coach-page .course-search-empty{width:100%;max-width:none;box-sizing:border-box;margin-left:0;margin-right:0}
+.ie2-coach-page .navbar,.ie2-coach-page .ie2-coach-search,.ie2-coach-page .ie2-coach-shell,.ie2-coach-page .course-search-empty{padding-left:max(var(--ie2-screen-gutter),env(safe-area-inset-left));padding-right:max(var(--ie2-screen-gutter),env(safe-area-inset-right))}
+.ie2-coach-page .ie2-coach-hero{margin-top:0;border-radius:0}.ie2-coach-page .ie2-coach-language-bank>div{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+@media(max-width:640px){.ie2-coach-page{--ie2-screen-gutter:.75rem}.ie2-coach-page .ie2-coach-hero,.ie2-coach-page .ie2-coach-search,.ie2-coach-page .ie2-coach-shell{width:100%;margin-left:0;margin-right:0}.ie2-coach-page .ie2-coach-hero{margin-top:0;border-radius:0}}
