@@ -13,7 +13,7 @@ const pages = fs.readdirSync(pagesDir).filter((file) => file.endsWith(".html"));
 assert.equal(pages.length, 16, "The full-width audit must cover every published Intermediate 2 page.");
 for (const page of pages) {
   const markup = fs.readFileSync(path.join(pagesDir, page), "utf8");
-  assert.match(markup, /english-intermediate-2\.css\?v=20260815-(?:full-width-compact|unit2-roundtable)/, `${page} must load the shared layout version.`);
+  assert.match(markup, /english-intermediate-2\.css\?v=20260815-(?:full-width-compact|unit2-roundtable|roundtable-cases)/, `${page} must load the shared layout version.`);
 }
 assert.match(mainCss, /shared full-width, compact composition/);
 assert.match(mainCss, /\.english-intermediate2-page \.ie2-unit-theory-shell/);
