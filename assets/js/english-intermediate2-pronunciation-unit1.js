@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const STAGES = [
+  const DEFAULT_STAGES = [
     { label: "Neighbor + who", shortLabel: "1", audio: "audio/pronunciation/unit-1-intermediate2/section-1.mp3", text: "Mr. Okafor is the neighbor who lives across the hall and brings people together." },
     { label: "Comma pause + that", shortLabel: "2", audio: "audio/pronunciation/unit-1-intermediate2/section-2.mp3", text: "Iris, who was in my evening class, is the old classmate that I recently got back in touch with." },
     { label: "New contact + who", shortLabel: "3", audio: "audio/pronunciation/unit-1-intermediate2/section-3.mp3", text: "Gabriel is a photographer who became a new contact after dinner." },
@@ -9,11 +9,17 @@
     { label: "Final challenge", shortLabel: "Final", final: true, audio: "audio/pronunciation/unit-1-intermediate2/people-who-changed-my-circle-model-us.mp3", text: "Mr. Okafor is the neighbor who lives across the hall and brings people together. Iris, who was in my evening class, is the old classmate that I recently got back in touch with. Gabriel is a photographer who became a new contact after dinner. They are people I get on well with, and I want to keep in touch." }
   ];
 
-  const API_PATH = "/api/english-intermediate/pronunciation-assessment";
-  const SUBMIT_PATH = "/api/intermediate2/unit1-pronunciation/submit";
-  const INBOX_PATH = "/api/intermediate2/unit1-pronunciation/submissions";
-  const AUDIO_PATH = "/api/intermediate2/unit1-pronunciation/audio";
-  const STORAGE_KEY = "jaralingua:english-intermediate2:pronunciation-unit1:v1";
+  const PAGE_CONFIG = window.JaraIntermediate2PronunciationConfig || {};
+  const STAGES = Array.isArray(PAGE_CONFIG.stages) && PAGE_CONFIG.stages.length >= 2 ? PAGE_CONFIG.stages : DEFAULT_STAGES;
+  const GUIDED_COUNT = STAGES.filter((stage) => !stage.final).length;
+  const FINAL_STAGE_INDEX = STAGES.findIndex((stage) => stage.final);
+  const API_PATH = PAGE_CONFIG.apiPath || "/api/english-intermediate/pronunciation-assessment";
+  const SUBMIT_PATH = PAGE_CONFIG.submitPath || "/api/intermediate2/unit1-pronunciation/submit";
+  const INBOX_PATH = PAGE_CONFIG.inboxPath || "/api/intermediate2/unit1-pronunciation/submissions";
+  const AUDIO_PATH = PAGE_CONFIG.audioPath || "/api/intermediate2/unit1-pronunciation/audio";
+  const STORAGE_KEY = PAGE_CONFIG.storageKey || "jaralingua:english-intermediate2:pronunciation-unit1:v1";
+  const ACTIVITY_TITLE = PAGE_CONFIG.activityTitle || "Unit 1 Pronunciation - People Who Changed My Circle";
+  const DELIVERY_PRODUCT = PAGE_CONFIG.product || "complete social-circle paragraph";
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const LOCAL_USER_KEY = "jaralingua_local_user";
@@ -139,7 +145,7 @@
 
   function updateStageUI() {
     const stage = currentStage();
-    stageCounter.textContent = stage.final ? "Final challenge" : `Guided practice - ${currentStageIndex + 1} of 4`;
+    stageCounter.textContent = stage.final ? "Final challenge" : `Guided practice - ${currentStageIndex + 1} of ${GUIDED_COUNT}`;
     stageTitle.textContent = stage.final ? "Now read the complete paragraph" : stage.label;
     stageProgress.innerHTML = STAGES.map((item, index) => {
       const classes = ["stage-dot"];
@@ -170,7 +176,7 @@
 
   function pronunciationTip(word) {
     const lower = word.toLocaleLowerCase("en-US");
-    const special = {
+    const special = Object.assign({
       "okafor": "Keep three clear syllables: OH-ka-for. Give the first syllable the strongest stress.",
       "neighbor": "Say NAY-bor with a smooth final American r, then link neighbor_who.",
       "who": "Release a light /h/ sound. After a noun, connect it naturally without losing the word.",
@@ -192,7 +198,7 @@
       "people": "Keep two syllables: PEO-ple.",
       "well": "Stress well at the end of the phrase get_on_well.",
       "keep": "Hold the long vowel, then connect keep_in_touch."
-    };
+    }, PAGE_CONFIG.tips || {});
     if (special[lower]) return special[lower];
     if (/th/.test(lower)) return "Place the tip of your tongue lightly between your teeth and let the air pass.";
     if (/ing$/.test(lower)) return "Finish with the ng sound; do not add a hard g.";
@@ -348,14 +354,14 @@
     document.getElementById("scoreRing").style.setProperty("--score", overall);
     const feedback = document.getElementById("feedback");
     if (currentStage().final) {
-      const guided = stageScores.slice(0, 4).filter(Boolean);
+      const guided = stageScores.slice(0, GUIDED_COUNT).filter(Boolean);
       const guidedAverage = guided.length ? Math.round(guided.reduce((sum, item) => sum + item.overall, 0) / guided.length) : null;
       feedback.textContent = `${feedbackFor(overall, missed, wpm)}${guidedAverage === null ? "" : ` Section average: ${guidedAverage}/100. Final challenge: ${overall}/100.`}`;
       nextButton.innerHTML = '<i class="bi bi-arrow-counterclockwise"></i> Restart the complete activity';
     } else {
       const comparison = previousAttempt ? ` ${overall > previousAttempt.overall ? "You gained" : overall < previousAttempt.overall ? "Change" : "Same score"}${overall === previousAttempt.overall ? "" : ` ${Math.abs(overall - previousAttempt.overall)} points`} compared with your previous attempt.` : "";
       feedback.textContent = feedbackFor(overall, missed, wpm) + comparison;
-      nextButton.innerHTML = currentStageIndex === 3 ? '<i class="bi bi-trophy"></i> Go to the final challenge' : '<i class="bi bi-arrow-right"></i> Next section';
+      nextButton.innerHTML = currentStageIndex === GUIDED_COUNT - 1 ? '<i class="bi bi-trophy"></i> Go to the final challenge' : '<i class="bi bi-arrow-right"></i> Next section';
     }
     nextButton.hidden = false;
     retryButton.hidden = false;
@@ -368,8 +374,8 @@
   }
 
   function renderFinalSummary() {
-    const guided = stageScores.slice(0, 4).filter(Boolean);
-    if (!guided.length || !stageScores[4]) return;
+    const guided = stageScores.slice(0, GUIDED_COUNT).filter(Boolean);
+    if (!guided.length || FINAL_STAGE_INDEX < 0 || !stageScores[FINAL_STAGE_INDEX]) return;
     const bestIndex = guided.reduce((best, score, index) => score.overall > guided[best].overall ? index : best, 0);
     const needsIndex = guided.reduce((lowest, score, index) => score.overall < guided[lowest].overall ? index : lowest, 0);
     const firstAttempts = attemptHistory.flatMap((attempts) => attempts.slice(0, 1));
@@ -377,7 +383,7 @@
     const firstAverage = firstAttempts.length ? Math.round(firstAttempts.reduce((sum, item) => sum + item.overall, 0) / firstAttempts.length) : 0;
     const latestAverage = latestAttempts.length ? Math.round(latestAttempts.reduce((sum, item) => sum + item.overall, 0) / latestAttempts.length) : 0;
     finalSummary.hidden = false;
-    finalSummary.innerHTML = `<h3><i class="bi bi-trophy"></i> Final summary</h3><div><p><span>Best section</span><strong>${STAGES[bestIndex].label} - ${guided[bestIndex].overall}/100</strong></p><p><span>Needs practice</span><strong>${STAGES[needsIndex].label} - ${guided[needsIndex].overall}/100</strong></p><p><span>Progress</span><strong>${firstAverage} -> ${latestAverage}</strong></p><p><span>Final challenge</span><strong>${stageScores[4].overall}/100</strong></p></div>`;
+    finalSummary.innerHTML = `<h3><i class="bi bi-trophy"></i> Final summary</h3><div><p><span>Best section</span><strong>${STAGES[bestIndex].label} - ${guided[bestIndex].overall}/100</strong></p><p><span>Needs practice</span><strong>${STAGES[needsIndex].label} - ${guided[needsIndex].overall}/100</strong></p><p><span>Progress</span><strong>${firstAverage} -> ${latestAverage}</strong></p><p><span>Final challenge</span><strong>${stageScores[FINAL_STAGE_INDEX].overall}/100</strong></p></div>`;
   }
 
   async function transcribeAndEvaluate(blob) {
@@ -617,7 +623,7 @@
 
   function newClientSubmissionId() {
     if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
-    return `ie2-u1-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    return `${PAGE_CONFIG.submissionPrefix || "ie2-u1"}-${Date.now()}-${Math.random().toString(16).slice(2)}`;
   }
 
   function escapeHtml(value) {
@@ -736,7 +742,7 @@
     }
 
     function finalAttempt() {
-      return stageScores[4] || null;
+      return FINAL_STAGE_INDEX >= 0 ? stageScores[FINAL_STAGE_INDEX] || null : null;
     }
 
     function update() {
@@ -759,7 +765,7 @@
       panel.querySelector(".ie2-delivery-preview")?.remove();
       const preview = document.createElement("div");
       preview.className = "ie2-delivery-preview";
-      preview.innerHTML = `<p><strong>Delivery preview</strong></p><p><span>Audio:</span> ${formatTime(recordedDurationMs)}</p><p><span>Product:</span> complete social-circle paragraph</p><p><span>Destination:</span> teacher inbox only · no Grades entry · no percentage.</p>`;
+      preview.innerHTML = `<p><strong>Delivery preview</strong></p><p><span>Audio:</span> ${formatTime(recordedDurationMs)}</p><p><span>Product:</span> ${escapeHtml(DELIVERY_PRODUCT)}</p><p><span>Destination:</span> teacher inbox only · no Grades entry · no percentage.</p>`;
       panel.querySelector(".pronunciation-submit-actions").insertAdjacentElement("beforebegin", preview);
       if (submitState === "submitted") {
         panel.classList.add("is-submitted");
@@ -803,7 +809,7 @@
           body: JSON.stringify({
             clientSubmissionId,
             score100: Math.round(score),
-            activityTitle: "Unit 1 Pronunciation - People Who Changed My Circle",
+            activityTitle: ACTIVITY_TITLE,
             details: Object.assign({}, attempt, { audioDataUrl })
           })
         });

@@ -185,6 +185,10 @@ INTERMEDIATE2_UNIT1_PRONUNCIATION_SUBMISSIONS_PATH = os.environ.get(
     "JARALINGUA_INTERMEDIATE2_UNIT1_PRONUNCIATION_SUBMISSIONS",
     "/var/lib/jaralingua/intermediate2-unit1-pronunciation-submissions.json"
 )
+INTERMEDIATE2_UNIT2_PRONUNCIATION_SUBMISSIONS_PATH = os.environ.get(
+    "JARALINGUA_INTERMEDIATE2_UNIT2_PRONUNCIATION_SUBMISSIONS",
+    "/var/lib/jaralingua/intermediate2-unit2-pronunciation-submissions.json"
+)
 INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR = os.environ.get(
     "JARALINGUA_INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR",
     "/var/lib/jaralingua/intermediate2-pronunciation-audio"
@@ -220,6 +224,14 @@ INTERMEDIATE2_UNIT1_PRONUNCIATION_REFERENCE = (
     "Iris, who was in my evening class, is the old classmate that I recently got back in touch with. "
     "Gabriel is a photographer who became a new contact after dinner. "
     "They are people I get on well with, and I want to keep in touch."
+)
+INTERMEDIATE2_UNIT2_PRONUNCIATION_ID = "intermediate2Unit2TheChoiceIdMakeDifferentlyPronunciation"
+INTERMEDIATE2_UNIT2_PRONUNCIATION_VERSION = "2026.1"
+INTERMEDIATE2_UNIT2_PRONUNCIATION_REFERENCE = (
+    "If I were at a crossroads, I'd think the decision over before I answered. "
+    "I wish I'd asked for more information before I turned that opportunity down. "
+    "I should've weighed the consequences and worked out a compromise, but I learned the hard way. "
+    "Would you advise me to step up or hand the project over? I need clear advice before I decide."
 )
 INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID = "finalOralPartnerCoachFollowUp"
 INTERMEDIATE_FINAL_WRITING_TEST_ID = "intermediateFinalWritingTest20"
@@ -2674,6 +2686,123 @@ def submit_intermediate2_unit1_pronunciation(profile, payload):
         INTERMEDIATE2_UNIT1_PRONUNCIATION_SUBMISSIONS_PATH,
         store,
         ".intermediate2-unit1-pronunciation-"
+    )
+    response = intermediate2_unit1_pronunciation_public_item(submission)
+    response.update({"ok": True, "idempotentReplay": False})
+    return 200, response
+
+
+def read_intermediate2_unit2_pronunciation_submissions():
+    default = {
+        "schemaVersion": 1,
+        "activityId": INTERMEDIATE2_UNIT2_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT2_PRONUNCIATION_VERSION,
+        "submissions": []
+    }
+    path = INTERMEDIATE2_UNIT2_PRONUNCIATION_SUBMISSIONS_PATH
+    if not os.path.exists(path):
+        return default
+    try:
+        with open(path, "r", encoding="utf-8-sig") as handle:
+            data = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return default
+    if not isinstance(data, dict):
+        return default
+    submissions = data.get("submissions")
+    if not isinstance(submissions, list):
+        submissions = []
+    data["schemaVersion"] = 1
+    data["activityId"] = INTERMEDIATE2_UNIT2_PRONUNCIATION_ID
+    data["activityVersion"] = INTERMEDIATE2_UNIT2_PRONUNCIATION_VERSION
+    data["submissions"] = [item for item in submissions if isinstance(item, dict)]
+    return data
+
+
+def submit_intermediate2_unit2_pronunciation(profile, payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_payload"}
+    student_key = intermediate2_pronunciation_student_key(profile)
+    if not student_key:
+        return 403, {"error": "student_identity_missing"}
+    client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+    if len(client_submission_id) < 8:
+        return 400, {"error": "invalid_client_submission_id"}
+    details = payload.get("details") if isinstance(payload.get("details"), dict) else {}
+    reference_text = clean_text(details.get("referenceText"), 3000)
+    if reference_text != INTERMEDIATE2_UNIT2_PRONUNCIATION_REFERENCE:
+        return 400, {"error": "reference_text_mismatch"}
+
+    store = read_intermediate2_unit2_pronunciation_submissions()
+    submissions = store.setdefault("submissions", [])
+    existing = next((
+        item for item in submissions
+        if item.get("studentKey") == student_key
+        and item.get("clientSubmissionId") == client_submission_id
+    ), None)
+    if isinstance(existing, dict):
+        response = intermediate2_unit1_pronunciation_public_item(existing)
+        response.update({"ok": True, "idempotentReplay": True})
+        return 200, response
+
+    metrics = {
+        "overall": clean_score_metric(details.get("overall")),
+        "accuracy": clean_score_metric(details.get("accuracy")),
+        "completeness": clean_score_metric(details.get("completeness")),
+        "fluency": clean_score_metric(details.get("fluency")),
+        "wpm": clean_score_metric(details.get("wpm"), 0, 300)
+    }
+    if any(metrics[key] is None for key in ("overall", "accuracy", "completeness", "fluency")):
+        return 400, {"error": "invalid_metrics"}
+    audio_ref = save_pronunciation_audio(
+        INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR,
+        {"id": student_key, "email": student_key},
+        INTERMEDIATE2_UNIT2_PRONUNCIATION_ID,
+        payload
+    )
+    if not audio_ref:
+        return 400, {"error": "missing_audio"}
+
+    submitted_at = now_iso()
+    attempt_number = 1 + sum(1 for item in submissions if item.get("studentKey") == student_key)
+    receipt_id = submission_receipt_code(
+        local_auth_secret(),
+        INTERMEDIATE2_UNIT2_PRONUNCIATION_ID,
+        INTERMEDIATE2_UNIT2_PRONUNCIATION_VERSION,
+        student_key,
+        submitted_at,
+        client_submission_id
+    )
+    submission = {
+        "activityId": INTERMEDIATE2_UNIT2_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT2_PRONUNCIATION_VERSION,
+        "clientSubmissionId": client_submission_id,
+        "receiptId": receipt_id,
+        "studentKey": student_key,
+        "studentName": clean_text(profile.get("name") or profile.get("fullName") or profile.get("displayName"), 180) or student_key,
+        "studentEmail": normalize_email(profile.get("email")),
+        "submittedAt": submitted_at,
+        "attemptNumber": attempt_number,
+        "overall": metrics["overall"],
+        "accuracy": metrics["accuracy"],
+        "completeness": metrics["completeness"],
+        "fluency": metrics["fluency"],
+        "wpm": metrics["wpm"],
+        "transcript": clean_text(details.get("transcript"), 3000),
+        "referenceText": reference_text,
+        "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
+        "stageLabel": clean_text(details.get("stageLabel"), 120),
+        "audio": audio_ref,
+        "status": "received",
+        "teacherInboxOnly": True,
+        "gradebookProjected": False,
+        "affectsAverage": False
+    }
+    submissions.append(submission)
+    write_json_file(
+        INTERMEDIATE2_UNIT2_PRONUNCIATION_SUBMISSIONS_PATH,
+        store,
+        ".intermediate2-unit2-pronunciation-"
     )
     response = intermediate2_unit1_pronunciation_public_item(submission)
     response.update({"ok": True, "idempotentReplay": False})
@@ -16513,7 +16642,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
 
         if parsed.path in (
             "/api/intermediate2/unit1-pronunciation/submissions",
-            "/api/intermediate2/unit1-pronunciation/audio"
+            "/api/intermediate2/unit1-pronunciation/audio",
+            "/api/intermediate2/unit2-pronunciation/submissions",
+            "/api/intermediate2/unit2-pronunciation/audio"
         ):
             query = urllib.parse.parse_qs(parsed.query)
             with data_lock:
@@ -16521,7 +16652,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 role = grade_user_role(profile, grades_data)
                 is_staff = role in ("admin", "teacher")
                 student_key = intermediate2_pronunciation_student_key(profile)
-                store = read_intermediate2_unit1_pronunciation_submissions()
+                store = (
+                    read_intermediate2_unit2_pronunciation_submissions()
+                    if "/unit2-pronunciation/" in parsed.path
+                    else read_intermediate2_unit1_pronunciation_submissions()
+                )
                 submissions = store.get("submissions", [])
 
                 if parsed.path.endswith("/audio"):
@@ -18109,6 +18244,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/intermediate2/unit1-pronunciation/submit":
             with data_lock:
                 status, response = submit_intermediate2_unit1_pronunciation(profile, payload)
+            json_response(self, status, response)
+            return
+
+        if parsed.path == "/api/intermediate2/unit2-pronunciation/submit":
+            with data_lock:
+                status, response = submit_intermediate2_unit2_pronunciation(profile, payload)
             json_response(self, status, response)
             return
 

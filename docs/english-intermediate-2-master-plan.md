@@ -3779,3 +3779,66 @@ Practice Lab actualiza:
 ### 46.7 Cierre técnico obligatorio
 
 La implementación se valida sin servidor local. Esta fase debe terminar con prueba estática, commit atómico, push, despliegue selectivo que preserve el estado existente del VPS y comprobación HTTP directa de la página, imagen, catálogo, Practice Lab y enlace desde Part 1.
+
+## 47. Implementación confirmada — Unit 2 Pronunciation
+
+### 47.1 Mapeo y decisión pedagógica
+
+Antes de construir la actividad se revisaron tres referencias: el estándar obligatorio de pronunciación, la actividad entregable de Unit 1 de Intermediate 2 y la actividad equivalente de Basic 2. Se conservó el flujo más completo de Intermediate 2: modelo profesional, práctica por etapas, selección de micrófono, medidor de nivel, transcripción temporal, evaluación automática, palabras reconocidas y omitidas, historial de intentos, reto final y entrega independiente al profesor.
+
+No se trasladó la reproducción de palabras mediante `speechSynthesis` presente en actividades antiguas. Todo botón de audio de esta página depende de archivos MP3 reales creados con ElevenLabs.
+
+### 47.2 Identidad y secuencia
+
+- título: `The Choice I'd Make Differently`;
+- tipo: Pronunciation;
+- posición: Activity 03 de Unit 2 en Practice Lab;
+- duración proyectada: 15 minutos;
+- práctica guiada: cuatro secciones obligatorias;
+- cierre: una grabación final que concatena exactamente las cuatro secciones;
+- entrega: buzón independiente del profesor;
+- Grades: sin registro;
+- porcentaje: ninguno;
+- efecto en el promedio: ninguno.
+
+Las cuatro secciones entrenan:
+
+1. `I'd + base verb`, donde `I'd` significa `I would`;
+2. `I'd + past participle`, donde `I'd` significa `I had`;
+3. la reducción correcta `should've`, el estrés de contenido y los grupos de sentido;
+4. la unión `would_you` y el contraste sonoro entre el sustantivo `advice` /s/ y el verbo `advise` /z/.
+
+### 47.3 Contrato de aprendizaje
+
+Cada etapa exige escuchar el modelo, usar Shadow Mode si se necesita, grabar únicamente el texto visible y recibir análisis antes de habilitar la siguiente. La respuesta muestra exactitud, completitud, ritmo, puntaje general, transcripción, reproducción del audio del estudiante y palabras en verde o rojo. Al tocar una palabra aparece una nota de pronunciación escrita; no se genera una voz del navegador.
+
+El reto final se habilita solo después de las cuatro evaluaciones guiadas. Su audio es el único entregable. El panel explica antes de enviar que la recepción ocurre fuera de Grades y genera un comprobante idempotente para impedir duplicados por reconexión o doble toque.
+
+### 47.4 Producción ElevenLabs
+
+- proveedor: ElevenLabs;
+- voz: Sarah;
+- voice ID: `EXAVITQu4vr4xnSDxMaL`;
+- modelo: `eleven_multilingual_v2`;
+- formato: MP3 44.1 kHz, 128 kbps;
+- guion fuente: `ingles/intermediate-2/audio/pronunciation/unit-2-the-choice-id-make-differently-script.md`;
+- carpeta de modelos: `ingles/intermediate-2/audio/pronunciation/unit-2-intermediate2/`;
+- generador reproducible: `tools/generate_intermediate2_unit2_pronunciation_audio.ps1`.
+
+El texto fuente, el texto visible y el texto de referencia validado por el servidor deben coincidir carácter por carácter.
+
+### 47.5 Imagen, búsqueda y móvil
+
+Se creó una imagen profesional exclusiva con un estudiante adulto usando audífonos y micrófono en un espacio de práctica nocturno. La composición deja espacio negativo a la izquierda, mantiene al hablante a la derecha y contiene símbolos visuales discretos de decisión. No incluye texto, logo, watermark ni blackboard.
+
+El hero permanece en el flujo normal y nunca es fijo o sticky. El buscador aparece inmediatamente después del hero. En celular, la imagen se limita a 145 px de alto, los controles ocupan el ancho disponible, las tarjetas se convierten en una sola columna y la entrega permanece al final del recorrido.
+
+### 47.6 Arquitectura y recepción
+
+La actividad pertenece únicamente a Practice Lab. El catálogo la registra con `order: 3`, `audioProvider: elevenlabs`, cuatro secciones, grabación final y `submissionDestination: teacher-inbox-only`. Practice Lab pasa a ocho actividades publicadas, tres en Unit 2, y marca Pronunciation como live.
+
+La recepción usa rutas propias de Unit 2 para enviar, consultar y reproducir grabaciones. El servidor valida identidad, texto exacto, métricas, audio y un `clientSubmissionId`; almacena la entrega por separado, devuelve un comprobante `JLF-` y declara siempre `gradebookProjected: false` y `affectsAverage: false`.
+
+### 47.7 Cierre técnico obligatorio
+
+La actividad se valida sin levantar servidor local. Debe pasar comprobaciones de sintaxis, estructura HTML, catálogo, coincidencia de guiones, encabezados MP3, flujo idempotente y ausencia de `speechSynthesis`. La fase termina únicamente después de commit, push, despliegue selectivo, reinicio seguro del servicio de API cuando corresponda y verificación HTTP directa de página, imagen, audios, catálogo, Practice Lab y rutas de recepción.

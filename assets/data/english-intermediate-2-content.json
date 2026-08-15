@@ -272,6 +272,51 @@
         "advice",
         "consequences"
       ]
+    },
+    {
+      "id": "unit-2-the-choice-id-make-differently-pronunciation",
+      "unit": 2,
+      "order": 3,
+      "type": "pronunciation",
+      "skillLabel": "Pronunciation",
+      "title": "The Choice I'd Make Differently",
+      "subtitle": "Contractions, connected speech and reflective rhythm",
+      "summary": "Four guided pronunciation sections contrast the two meanings of I'd and train should've, would you, advice, advise and sentence stress before one complete reflection.",
+      "image": "/assets/img/english-intermediate-2/unit-2/pronunciation-the-choice-id-make-differently/the-choice-id-make-differently-hero-v1.png",
+      "media": "/ingles/intermediate-2/audio/pronunciation/unit-2-intermediate2/the-choice-id-make-differently-model-us.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "EXAVITQu4vr4xnSDxMaL",
+      "voiceName": "Sarah - General American English",
+      "audioVersion": "2026.1",
+      "scriptHref": "/ingles/intermediate-2/audio/pronunciation/unit-2-the-choice-id-make-differently-script.md",
+      "workshopHref": "/ingles/intermediate-2/pronunciation-unit-2-the-choice-id-make-differently.html",
+      "guidedSectionCount": 4,
+      "duration": "15 minutes",
+      "product": "Four evaluated sections and one final teacher-delivery recording",
+      "finalRecording": true,
+      "teacherSubmission": true,
+      "submissionDestination": "teacher-inbox-only",
+      "gradebookProjected": false,
+      "gradebookWeight": null,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 2",
+        "pronunciation",
+        "I'd",
+        "I would",
+        "I had",
+        "should've",
+        "should have",
+        "would you",
+        "advice",
+        "advise",
+        "sentence stress",
+        "thought groups",
+        "crossroads",
+        "consequences",
+        "regret"
+      ]
     }
   ]
 }

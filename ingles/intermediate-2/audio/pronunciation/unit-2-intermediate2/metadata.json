@@ -1,0 +1,54 @@
+{
+  "activityId": "intermediate2Unit2TheChoiceIdMakeDifferentlyPronunciation",
+  "activityVersion": "2026.1",
+  "provider": "elevenlabs",
+  "mode": "text-to-speech",
+  "modelId": "eleven_multilingual_v2",
+  "voice": {
+    "name": "Sarah",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "accent": "General American English"
+  },
+  "outputFormat": "mp3_44100_128",
+  "voiceSettings": {
+    "stability": 0.64,
+    "similarityBoost": 0.82,
+    "style": 0.14,
+    "useSpeakerBoost": true
+  },
+  "sourceScript": "../unit-2-the-choice-id-make-differently-script.md",
+  "generatedAt": "2026-08-14",
+  "durationMethod": "CBR estimate from 128 kbps output size",
+  "files": [
+    {
+      "name": "section-1.mp3",
+      "bytes": 74022,
+      "durationSeconds": 4.626,
+      "sha256": "ce71d042cee2808c691dfa9d067e2a9b027920e020f4770708e2d66629a646dc"
+    },
+    {
+      "name": "section-2.mp3",
+      "bytes": 67753,
+      "durationSeconds": 4.235,
+      "sha256": "e3c9008f0ad91c12a65df280cae3fa1e05db6c582ea9a6e9e39c9543c9acbc79"
+    },
+    {
+      "name": "section-3.mp3",
+      "bytes": 84889,
+      "durationSeconds": 5.306,
+      "sha256": "615f616aa64ac55961b99e33d3b32441babad824b367c872e5420fbe4c44ab39"
+    },
+    {
+      "name": "section-4.mp3",
+      "bytes": 94502,
+      "durationSeconds": 5.906,
+      "sha256": "e32170418bf5295d166c01ee62427331bd00f777780a4d07a9fd74334dff9592"
+    },
+    {
+      "name": "the-choice-id-make-differently-model-us.mp3",
+      "bytes": 313095,
+      "durationSeconds": 19.568,
+      "sha256": "358d04cf1ffa5d9f773f6f825c98e2a3498b108dfc515a79d4c8aa4af4d20830"
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 :root{--ie2-pron-navy:#071f4f;--ie2-pron-teal:#087f78;--ie2-pron-green:#166534;--ie2-pron-muted:#596a80}
 .ie2-pronunciation-page{overflow-x:hidden;background:#f5f8fc}
 .ie2-pronunciation-hero{--hero-image:url('../img/english-intermediate-2/unit-1/pronunciation-people-who-changed-my-circle/people-who-changed-my-circle-hero-v1.png');position:relative;min-height:0}
+.ie2-pronunciation-unit2-page .ie2-pronunciation-hero{--hero-image:url('../img/english-intermediate-2/unit-2/pronunciation-the-choice-id-make-differently/the-choice-id-make-differently-hero-v1.png')}
 .ie2-pronunciation-hero .lesson-hero-content{border-left:5px solid #14b8a6}
 .ie2-pronunciation-hero .lesson-hero-image img{object-position:center center;aspect-ratio:1.9/1;object-fit:cover}
 .ie2-pronunciation-search{margin:1rem auto 0;width:min(1180px,calc(100% - 2rem))}
