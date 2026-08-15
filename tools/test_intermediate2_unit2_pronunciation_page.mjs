@@ -28,6 +28,11 @@ assert.match(engine, /canonicalSpeech/);
 assert.match(engine, /aria-controls="wordHelp"/);
 assert.match(engine, /How to pronounce/);
 assert.match(engine, /scrollIntoView\(\{ behavior: "smooth", block: "nearest" \}\)/);
+assert.match(engine, /function wordCue\(/);
+assert.match(engine, /modelAudio\.currentTime = cue\.start/);
+assert.match(engine, /setTimeout\(\(\) => \{/);
+assert.match(engine, /loadedmetadata/);
+assert.match(engine, /Tap to hear this word in the ElevenLabs model/);
 
 for (const match of page.matchAll(/(?:href|src)="([^"]+)"/g)) {
   const reference = match[1];

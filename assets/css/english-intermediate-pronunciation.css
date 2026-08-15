@@ -39,6 +39,7 @@
 .reading-word.is-correct { background: #dcf6ec; color: #14634c; }
 .reading-word.is-missed { background: #ffe1e5; color: #9d1831; text-decoration: underline wavy; text-underline-offset: 4px; }
 .reading-word.is-selected { outline: 3px solid #123b8f; outline-offset: 2px; background: #e7edfb; color: #071f4f; }
+.reading-word.is-playing { background: #123b8f; color: #fff; text-decoration: none; }
 .legend { display: flex; flex-wrap: wrap; gap: .7rem; color: var(--pron-muted); font-size: .82rem; }
 .legend span { display: inline-flex; align-items: center; gap: .35rem; }
 .legend i { width: .8rem; height: .8rem; border-radius: .2rem; }

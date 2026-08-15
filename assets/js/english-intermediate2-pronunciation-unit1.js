@@ -63,6 +63,8 @@
   let maxInputLevel = 0;
   let shadowMode = false;
   let clientSubmissionId = "";
+  let wordCueTimer = null;
+  let activeWordButton = null;
 
   const stagePanel = document.createElement("div");
   stagePanel.className = "stage-panel";
@@ -155,15 +157,16 @@
       if (/^\s+$/.test(part)) return part;
       const state = states[index++] || "";
       const word = spokenWord(part);
-      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${word}" aria-controls="wordHelp" aria-label="Get pronunciation help for ${word}" title="Tap for pronunciation help">${part}</button>`;
+      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${word}" aria-controls="wordHelp" aria-label="Hear and get pronunciation help for ${word}" title="Tap to hear this word in the ElevenLabs model">${part}</button>`;
     }).join("");
     readingText.querySelectorAll(".reading-word").forEach((button) => {
-      button.addEventListener("click", () => showWordHelp(button.dataset.spoken, button));
+      button.addEventListener("click", () => showWordHelp(button.dataset.spoken, button, Number(button.dataset.word)));
     });
   }
 
   function updateStageUI() {
     const stage = currentStage();
+    stopWordCue();
     stageCounter.textContent = stage.final ? "Final challenge" : `Guided practice - ${currentStageIndex + 1} of ${GUIDED_COUNT}`;
     stageTitle.textContent = stage.final ? "Now read the complete paragraph" : stage.label;
     stageProgress.innerHTML = STAGES.map((item, index) => {
@@ -227,7 +230,7 @@
     return "Listen to the complete word, then repeat it slowly with the same stress and number of syllables.";
   }
 
-  function showWordHelp(word, sourceButton = null) {
+  function showWordHelp(word, sourceButton = null, wordIndex = -1) {
     if (!word) return;
     readingText.querySelectorAll(".reading-word.is-selected").forEach((button) => {
       button.classList.remove("is-selected");
@@ -238,8 +241,72 @@
       sourceButton.setAttribute("aria-pressed", "true");
     }
     wordHelp.hidden = false;
-    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> How to pronounce “${word}”</strong><span>${pronunciationTip(word)} Listen to the ElevenLabs model again, then repeat the full meaning group.</span>`;
+    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> How to pronounce “${word}”</strong><span>${pronunciationTip(word)} Playing this moment from the ElevenLabs model now; then repeat the full meaning group.</span>`;
+    playWordCue(wordIndex, sourceButton);
     requestAnimationFrame(() => wordHelp.scrollIntoView({ behavior: "smooth", block: "nearest" }));
+  }
+
+  function wordTimingWeight(part) {
+    const word = spokenWord(part);
+    const letters = word.replace(/[^A-Za-z]/g, "").length;
+    let weight = .28 + Math.min(letters, 13) * .075;
+    if (/[,;:]/.test(part)) weight += .13;
+    if (/[.!?]$/.test(part)) weight += .25;
+    return weight;
+  }
+
+  function wordCue(wordIndex) {
+    const parts = currentStage().text.split(/\s+/).filter(Boolean);
+    if (!Number.isInteger(wordIndex) || wordIndex < 0 || wordIndex >= parts.length || !Number.isFinite(modelAudio.duration) || modelAudio.duration <= 0) return null;
+    const weights = parts.map(wordTimingWeight);
+    const leadIn = .08;
+    const leadOut = .12;
+    const usableDuration = Math.max(.4, modelAudio.duration - leadIn - leadOut);
+    const totalWeight = weights.reduce((total, value) => total + value, 0);
+    const before = weights.slice(0, wordIndex).reduce((total, value) => total + value, 0);
+    const through = before + weights[wordIndex];
+    return {
+      start: Math.max(0, leadIn + usableDuration * (before / totalWeight) - .07),
+      end: Math.min(modelAudio.duration, leadIn + usableDuration * (through / totalWeight) + .18)
+    };
+  }
+
+  function stopWordCue() {
+    if (wordCueTimer) clearTimeout(wordCueTimer);
+    wordCueTimer = null;
+    activeWordButton?.classList.remove("is-playing");
+    activeWordButton = null;
+  }
+
+  async function playWordCue(wordIndex, sourceButton) {
+    const cue = wordCue(wordIndex);
+    if (!cue) {
+      const requestedStage = currentStageIndex;
+      wordHelp.querySelector("span").textContent = `${pronunciationTip(sourceButton?.dataset.spoken || "")} The ElevenLabs model is loading this short reference.`;
+      modelAudio.addEventListener("loadedmetadata", () => {
+        if (requestedStage === currentStageIndex && sourceButton?.isConnected) playWordCue(wordIndex, sourceButton);
+      }, { once: true });
+      return;
+    }
+    stopWordCue();
+    modelAudio.pause();
+    modelAudio.currentTime = cue.start;
+    modelAudio.playbackRate = currentPlaybackRate();
+    activeWordButton = sourceButton;
+    sourceButton?.classList.add("is-playing");
+    try {
+      await modelAudio.play();
+      modelButton.querySelector("i").className = "bi bi-pause-fill";
+      const clipLength = Math.max(.22, (cue.end - cue.start) / currentPlaybackRate());
+      wordCueTimer = setTimeout(() => {
+        modelAudio.pause();
+        modelButton.querySelector("i").className = "bi bi-play-fill";
+        stopWordCue();
+      }, clipLength * 1000);
+    } catch (_error) {
+      sourceButton?.classList.remove("is-playing");
+      wordHelp.querySelector("span").textContent = `${pronunciationTip(sourceButton?.dataset.spoken || "")} The model could not start. Tap the word once more.`;
+    }
   }
 
   function startLevelMeter(stream) {
@@ -555,6 +622,7 @@
   }
 
   function resetAttempt(clearAudio = true) {
+    stopWordCue();
     if (mediaRecorder?.state === "recording") {
       discardRecording = true;
       mediaRecorder.stop();
@@ -893,6 +961,7 @@
   }
 
   modelButton.addEventListener("click", async () => {
+    stopWordCue();
     if (modelAudio.paused) {
       try {
         modelAudio.playbackRate = currentPlaybackRate();
@@ -910,6 +979,7 @@
   speedButtons.forEach((button) => button.addEventListener("click", () => setPlaybackRate(Number(button.dataset.speed))));
   if (shadowModeButton) {
     shadowModeButton.addEventListener("click", async () => {
+      stopWordCue();
       shadowMode = !shadowMode;
       shadowModeButton.classList.toggle("is-active", shadowMode);
       shadowModeStatus.textContent = shadowMode ? "On - listen, then repeat immediately" : "Off";
@@ -933,7 +1003,7 @@
   retryButton.addEventListener("click", () => resetAttempt(true));
   readingText.addEventListener("click", (event) => {
     const button = event.target.closest(".reading-word");
-    if (button && !button.classList.contains("is-selected")) showWordHelp(button.dataset.spoken, button);
+    if (button && !button.classList.contains("is-selected")) showWordHelp(button.dataset.spoken, button, Number(button.dataset.word));
   });
 
   submitPanelController = createSubmitPanel();

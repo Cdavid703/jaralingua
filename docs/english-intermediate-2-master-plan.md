@@ -3810,7 +3810,7 @@ Las cuatro secciones entrenan:
 
 ### 47.3 Contrato de aprendizaje
 
-Cada etapa exige escuchar el modelo, usar Shadow Mode si se necesita, grabar únicamente el texto visible y recibir análisis antes de habilitar la siguiente. La respuesta muestra exactitud, completitud, ritmo, puntaje general, transcripción, reproducción del audio del estudiante y palabras en verde o rojo. Al tocar una palabra aparece una nota de pronunciación escrita; no se genera una voz del navegador.
+Cada etapa exige escuchar el modelo, usar Shadow Mode si se necesita, grabar únicamente el texto visible y recibir análisis antes de habilitar la siguiente. La respuesta muestra exactitud, completitud, ritmo, puntaje general, transcripción, reproducción del audio del estudiante y palabras en verde o rojo. Al tocar una palabra aparece una nota de pronunciación escrita y se escucha el fragmento correspondiente del mismo modelo ElevenLabs; no se genera una voz del navegador.
 
 El reto final se habilita solo después de las cuatro evaluaciones guiadas. Su audio es el único entregable. El panel explica antes de enviar que la recepción ocurre fuera de Grades y genera un comprobante idempotente para impedir duplicados por reconexión o doble toque.
 
@@ -3851,6 +3851,12 @@ La guía de pronunciación debe activarse al tocar cualquier palabra del texto, 
 2. aparece el encabezado `How to pronounce “word”`;
 3. se muestra la instrucción fonética o de acento correspondiente;
 4. el panel se desplaza a la vista para que no quede oculto en celular;
-5. se invita a volver a escuchar el modelo profesional ElevenLabs de la sección.
+5. se reproduce de inmediato el fragmento de esa palabra dentro del modelo profesional ElevenLabs de la sección, sin crear MP3 individuales ni recurrir a la voz nativa del navegador.
+
+### 47.9 Recorte reutilizable del modelo ElevenLabs
+
+La interacción no solicita ni almacena clips de palabra. El único archivo reproducido es el modelo ElevenLabs ya publicado para la etapa actual. El cliente calcula la ventana temporal de la palabra a partir del texto visible y de la duración real del modelo, inicia la reproducción en esa ventana y la detiene al terminar el fragmento. La palabra queda destacada mientras se escucha. Si el audio todavía está cargando, la misma pulsación queda enlazada a sus metadatos y se reproduce automáticamente cuando estén listos.
+
+Este patrón conserva la voz profesional, evita `speechSynthesis`, no expone ninguna clave y evita generar decenas de archivos por actividad. Cualquier actividad futura que adopte esta ayuda debe reutilizar el mismo patrón, validar que todos los modelos sean de ElevenLabs y probar toque de palabra, pausa automática, cambio de etapa y carga lenta.
 
 El panel no usa voz del navegador ni audio generado al vuelo. La corrección aplica al motor compartido, por lo que protege Unit 1 y Unit 2 de Intermediate English Course 2.
