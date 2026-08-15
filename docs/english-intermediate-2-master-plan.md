@@ -3866,3 +3866,50 @@ El panel no usa voz del navegador ni audio generado al vuelo. La corrección apl
 La práctica y el resultado inmediato forman la única fila superior de la actividad. Los bloques de apoyo (`Pronunciation focus` y `Teacher listening guide`) se ubican debajo, como dos paneles anchos con tarjetas compactas en varias columnas; nunca se apilan en una columna lateral más larga que la práctica. La entrega final y el buzón del profesor ocupan una zona inferior propia y se muestran en dos columnas solo cuando existe ancho suficiente.
 
 En tableta, desde 1080 px hacia abajo, la práctica pasa a una sola columna antes de que el riel se vuelva estrecho. En celular las tarjetas de apoyo y la entrega se apilan en una sola columna. Si no hay resultado aún, el riel superior desaparece y la práctica usa el ancho completo. Esta regla evita espacios vacíos extensos, conserva la prioridad de la práctica y se aplica específicamente a Unit 2 Pronunciation.
+
+## 48. Estándar obligatorio para futuras actividades de Pronunciation
+
+Toda actividad nueva de pronunciación de Intermediate English Course 2 pertenece exclusivamente a **Practice Lab**. Course Overview solo explica la teoría; nunca debe contener la práctica grabable, el envío ni los resultados. Antes de construirla se debe mapear la actividad equivalente de los niveles ya publicados, documentar su objetivo y crear una imagen profesional propia, relacionada con el tema y sin texto, logo, watermark o blackboard.
+
+### 48.1 Experiencia del estudiante
+
+La página debe conservar este orden de lectura:
+
+1. hero breve y no fijo, con imagen temática, propósito claro, duración, secciones y CTA directo;
+2. buscador de la actividad por palabra clave, estructura o sonido;
+3. aviso breve de que la entrega va al profesor y no afecta Grades;
+4. práctica principal: modelo ElevenLabs, velocidad, Shadow Mode, texto visible, palabras interactivas, selección de micrófono, medidor, grabación, transcripción y evaluación;
+5. resultado inmediato junto a la práctica, sin obligar a desplazarse hasta otro bloque;
+6. apoyos pedagógicos debajo de la práctica: foco de pronunciación y guía de escucha docente;
+7. zona final independiente para entrega y buzón docente.
+
+No se repiten título, hero, imagen ni instrucciones largas dentro de la misma página. La práctica debe aparecer pronto, con contenido útil antes de cualquier panel secundario.
+
+### 48.2 Audio y ayuda por palabra
+
+Todo sonido usa archivos reales de ElevenLabs. Se prohíben `speechSynthesis`, `SpeechSynthesisUtterance`, voces del navegador y claves de ElevenLabs en el cliente. El modelo de cada sección debe coincidir exactamente con el texto visible y el texto validado por el servidor.
+
+Cuando el estudiante toca una palabra —especialmente una marcada en rojo después de la evaluación— debe ver su explicación y oír **solo esa palabra**. No se permite recortar aproximadamente una frase: cada palabra necesaria debe tener su MP3 individual de ElevenLabs, almacenado en la carpeta de audio de la unidad y generado mediante un script reproducible. El toque destaca la palabra, detiene otro modelo activo y permite repetirla al terminar.
+
+### 48.3 Diseño responsivo sin riel infinito
+
+La práctica y, cuando exista, el resultado pueden compartir la fila superior. Las guías, tarjetas de foco, entrega y buzón docente no se acumulan en una columna lateral larga. Deben pasar a bloques inferiores anchos, con tarjetas compactas en varias columnas en escritorio.
+
+Desde 1080 px hacia abajo la composición pasa a una columna antes de que el lateral se vuelva angosto. En celular, tarjetas, entrega y buzón se apilan; no hay hero sticky, banner fijo ni panel que tape el contenido. Si el resultado aún está oculto, la práctica ocupa el ancho completo.
+
+### 48.4 Entrega independiente al profesor
+
+La grabación final se habilita únicamente al completar las secciones guiadas que correspondan. Se entrega al buzón propio del profesor, no a Grades, sin porcentaje y sin efecto en el promedio. El flujo debe:
+
+- explicar de forma visible la política antes de enviar;
+- validar identidad, texto de referencia, métricas, audio y un identificador idempotente;
+- impedir duplicados por doble toque o reconexión;
+- devolver un comprobante de recepción;
+- permitir al profesor ver y escuchar entregas desde el buzón de la actividad;
+- mantener explícitos `gradebookProjected: false` y `affectsAverage: false`.
+
+### 48.5 Cierre de cada implementación
+
+Antes de dar por terminada una actividad de pronunciación se deben validar sintaxis, estructura, enlaces, texto y guion exactos, catálogo de Practice Lab, ausencia de voz del navegador, existencia y encabezados de todos los MP3, reproducción de una palabra, repetición, cambio de etapa, entrega idempotente y vista móvil/tablet/escritorio. No se levantan servidores locales: la verificación final se realiza en producción.
+
+Cada actividad, ajuste o página terminada exige: actualizar este Markdown, prueba correspondiente, commit atómico, push, despliegue selectivo, comprobación en producción y confirmación al usuario con el enlace publicado.
