@@ -27,6 +27,7 @@ assert.ok(fs.existsSync(imagePath), "The activity needs its professional image a
 assert.match(page, /grammarCheckAll/);
 assert.match(script, /ie2-grammar-question-list/);
 assert.doesNotMatch(script, /I hope that/);
+assert.doesNotMatch(page, /I hope that/);
 assert.match(styles, /Unit 2 grammar activity: all complete-sentence decisions/);
 const item = catalog.items.find((entry) => entry.id === "unit-2-choose-the-pattern-grammar");
 assert.ok(item && item.status === "published");
