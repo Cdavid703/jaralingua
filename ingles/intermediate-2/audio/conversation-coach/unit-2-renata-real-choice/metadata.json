@@ -1,0 +1,14 @@
+{
+  "activity": "A New Friend, A Real Choice",
+  "unit": 2,
+  "provider": "ElevenLabs",
+  "voice": {
+    "name": "Sarah - Clear US",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "languageProfile": "english-us"
+  },
+  "generatedOn": "2026-08-14",
+  "fileCount": 22,
+  "source": "scripts.md",
+  "purpose": "Private, non-evaluative Conversation Coach audio."
+}

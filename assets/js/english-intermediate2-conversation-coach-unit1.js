@@ -1,10 +1,12 @@
 (function () {
   "use strict";
 
-  const AUDIO_ROOT = "audio/conversation-coach/unit-1-coffee-with-gabriel/";
+  const COACH_CONFIG = window.IE2ConversationCoachConfig || {};
+  const COACH_NAME = COACH_CONFIG.characterName || "Gabriel";
+  const AUDIO_ROOT = COACH_CONFIG.audioRoot || "audio/conversation-coach/unit-1-coffee-with-gabriel/";
   const API_PATH = "/api/english-intermediate/pronunciation-assessment";
-  const MAX_SECONDS = 30;
-  const TURNS = [
+  const MAX_SECONDS = COACH_CONFIG.maxSeconds || 30;
+  const TURNS = COACH_CONFIG.turns || [
     {
       topic: "Your best friend",
       question: "Tell me about your best friend. What's their name, and what are they like?",
@@ -123,8 +125,11 @@
   document.querySelectorAll("[data-audio-file]").forEach((button) => button.addEventListener("click", () => playGabriel(button.dataset.audioFile, button)));
 
   function selectedReaction(transcript) {
-    if (turnIndex !== 4) return TURNS[turnIndex].reaction;
+    if (TURNS[turnIndex].reaction) return TURNS[turnIndex].reaction;
     const text = String(transcript).toLowerCase();
+    const configuredResponse = (COACH_CONFIG.finalResponses || []).find((response) => (response.terms || []).some((term) => text.includes(String(term).toLowerCase())));
+    if (configuredResponse) return configuredResponse;
+    if (COACH_CONFIG.defaultFinalReaction) return COACH_CONFIG.defaultFinalReaction;
     if (/meet|met/.test(text)) return { text: "I met my best friend, Mateo, while photographing a neighborhood event. He offered to help me carry my equipment, and we hit it off right away.", audio: "answer-how-we-met.mp3" };
     if (/like|personality|describe|kind|quiet|funny/.test(text)) return { text: "My best friend Mateo is calm, dependable and a bit reserved at first. He's the person who always notices when someone needs help.", audio: "answer-personality.mp3" };
     if (/touch|contact|talk|call|message|see each other/.test(text)) return { text: "Mateo and I keep in touch with voice notes during the week, and we usually meet for coffee on Sunday mornings.", audio: "answer-keep-in-touch.mp3" };
@@ -245,7 +250,7 @@
       ui.mic.classList.add("is-recording");
       ui.stop.disabled = false;
       ui.again.disabled = true;
-      ui.status.textContent = "Gabriel is listening";
+      ui.status.textContent = `${COACH_NAME} is listening`;
       ui.help.textContent = "Speak naturally. Finish when your idea is complete.";
       monitorLevel(mediaStream);
       timerId = setInterval(() => {
@@ -297,7 +302,7 @@
       const transcript = String(payload.text || payload.transcript || "").trim();
       if (!transcript) {
         ui.transcript.textContent = "No words were detected. Listen to your recording and try once more.";
-        showRecovery("Gabriel couldn't hear enough English to continue the thread yet.", "recovery-no-speech.mp3", false);
+        showRecovery(`${COACH_NAME} couldn't hear enough English to continue the thread yet.`, "recovery-no-speech.mp3", false);
         return;
       }
       acceptAnswer(transcript);
@@ -327,7 +332,7 @@
     ui.reactionAudio.onclick = () => playGabriel(reaction.audio, ui.reactionAudio);
     ui.reaction.hidden = false;
     ui.next.disabled = false;
-    ui.status.textContent = "Gabriel responded";
+    ui.status.textContent = `${COACH_NAME} responded`;
     playGabriel(reaction.audio, ui.reactionAudio);
   }
 
@@ -364,7 +369,7 @@
     stopCapture();
     ui.interview.hidden = true;
     ui.complete.hidden = false;
-    ui.sessionTranscript.innerHTML = answers.map((answer, index) => `<article><span>${index + 1}</span><div><strong>Gabriel: ${escapeHtml(answer.question)}</strong><p>You: ${escapeHtml(answer.transcript)}</p></div></article>`).join("");
+    ui.sessionTranscript.innerHTML = answers.map((answer, index) => `<article><span>${index + 1}</span><div><strong>${escapeHtml(COACH_NAME)}: ${escapeHtml(answer.question)}</strong><p>You: ${escapeHtml(answer.transcript)}</p></div></article>`).join("");
     playGabriel("closing.mp3", null);
     ui.complete.scrollIntoView({ behavior: "smooth", block: "start" });
   }

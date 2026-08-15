@@ -358,6 +358,35 @@
       "affectsAverage": false,
       "status": "published",
       "searchKeywords": ["Unit 2", "speaking", "group speaking", "roundtable", "dilemma", "hope", "dream", "wish", "goal", "would like", "advice", "regret", "consequences", "moderator", "dreamer", "realist", "adviser"]
+    },
+    {
+      "id": "unit-2-renata-real-choice-conversation-coach",
+      "unit": 2,
+      "order": 6,
+      "type": "conversation-coach",
+      "skillLabel": "Conversation Coach",
+      "title": "A New Friend, A Real Choice",
+      "subtitle": "Meet Renata. Talk through one decision.",
+      "summary": "Begin with a natural introduction, share a future goal, ask about Renata's design course and offer supportive advice about one real dilemma.",
+      "image": "/assets/img/english-intermediate-2/unit-2/renata-real-choice-coach/renata-real-choice-hero-v1.png",
+      "media": "/ingles/intermediate-2/audio/conversation-coach/unit-2-renata-real-choice/welcome.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "EXAVITQu4vr4xnSDxMaL",
+      "voiceName": "Sarah - Clear US",
+      "audioVersion": "2026.1",
+      "scriptHref": "/ingles/intermediate-2/audio/conversation-coach/unit-2-renata-real-choice/scripts.md",
+      "workshopHref": "/ingles/intermediate-2/conversation-coach-unit-2-renata-real-choice.html",
+      "turnCount": 7,
+      "duration": "15 minutes",
+      "product": "Seven connected private recorded conversation turns",
+      "recording": true,
+      "temporaryTranscription": true,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 2", "conversation coach", "Renata", "conversation", "hello", "name", "after class", "hope to", "would like to", "goal", "design course", "specific question", "dilemma", "family", "community project", "advice", "wish I had", "if I were you"]
     }
   ]
 }
