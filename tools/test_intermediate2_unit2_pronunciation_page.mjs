@@ -21,6 +21,8 @@ assert.match(page, /data-course-search-panel/);
 assert.match(page, /Teacher inbox only/);
 assert.match(page, /data-pronunciation-submit-mount/);
 assert.match(page, /ie2-pronunciation-support/);
+assert.match(page, /ie2-pronunciation-control-deck/);
+assert.match(page, /ie2-pronunciation-workspace/);
 assert.match(page, /full-width/);
 assert.match(page, /english-intermediate2-pronunciation-unit2\.js/);
 assert.match(page, /english-intermediate2-pronunciation-unit1\.js/);
@@ -41,6 +43,7 @@ assert.match(engine, /\[data-pronunciation-submit-mount\]/);
 assert.match(engine, /Tap to hear this word in the ElevenLabs model/);
 assert.match(responsiveStyles, /Full-width application standard/);
 assert.match(responsiveStyles, /\.ie2-pronunciation-unit2-page \.pronunciation-main\{width:100%/);
+assert.match(responsiveStyles, /\.ie2-pronunciation-control-deck\{display:grid/);
 
 for (const match of page.matchAll(/(?:href|src)="([^"]+)"/g)) {
   const reference = match[1];

@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate-2.css?v=20260814-intermediate2" />
   <link rel="stylesheet" href="../../assets/css/english-intermediate-pronunciation.css?v=20260814-ie2-unit2" />
-  <link rel="stylesheet" href="../../assets/css/english-intermediate2-pronunciation.css?v=20260815-full-width" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate2-pronunciation.css?v=20260815-full-width-workspace" />
 </head>
 <body class="english-intermediate-page english-intermediate2-page ie2-pronunciation-page ie2-pronunciation-unit2-page">
   <div class="global-course-switcher" aria-label="Courses">
@@ -54,15 +54,13 @@
           <h2 id="practiceTitle">Build one clear reflection, section by section</h2>
           <p class="instructions">Listen for meaning first. Then copy the ElevenLabs model in Shadow Mode, record the exact sentence and review the recognized and missed words. The full reflection unlocks after all four sections have been evaluated.</p>
 
-          <div class="model-player"><button class="round-button" id="modelButton" type="button" aria-label="Play the ElevenLabs model"><i class="bi bi-play-fill"></i></button><div class="player-copy"><strong>Professional model · American English</strong><span>Audio generated with ElevenLabs</span></div><audio id="modelAudio" preload="metadata" src="audio/pronunciation/unit-2-intermediate2/section-1.mp3"></audio></div>
-          <div class="unit-speed-controls" aria-label="Model audio speed"><button type="button" data-speed="0.75">0.75x</button><button type="button" data-speed="1" class="is-active">1x</button><button type="button" data-speed="1.25">1.25x</button></div>
+          <div class="ie2-pronunciation-control-deck">
+            <div class="ie2-model-controls"><div class="model-player"><button class="round-button" id="modelButton" type="button" aria-label="Play the ElevenLabs model"><i class="bi bi-play-fill"></i></button><div class="player-copy"><strong>Professional model · American English</strong><span>Audio generated with ElevenLabs</span></div><audio id="modelAudio" preload="metadata" src="audio/pronunciation/unit-2-intermediate2/section-1.mp3"></audio></div><div class="unit-speed-controls" aria-label="Model audio speed"><button type="button" data-speed="0.75">0.75x</button><button type="button" data-speed="1" class="is-active">1x</button><button type="button" data-speed="1.25">1.25x</button></div></div>
+            <div class="shadow-mode-panel"><h3>Shadow Mode</h3><p>Play the model and repeat immediately. Keep its connected words, strong content words and short pauses.</p><div class="shadow-mode-actions"><button type="button" class="shadow-mode-button" id="shadowModeButton"><i class="bi bi-soundwave"></i> Shadow mode</button><span class="shadow-mode-status" id="shadowModeStatus">Off</span></div></div>
+          </div>
 
-          <div class="shadow-mode-panel"><h3>Shadow Mode</h3><p>Play the model and repeat immediately. Keep its connected words, strong content words and short pauses.</p><div class="shadow-mode-actions"><button type="button" class="shadow-mode-button" id="shadowModeButton"><i class="bi bi-soundwave"></i> Shadow mode</button><span class="shadow-mode-status" id="shadowModeStatus">Off</span></div></div>
-
-          <div class="reading-text" id="readingText" lang="en" aria-label="Text to read"></div>
-          <div class="legend" aria-label="Result legend"><span><i class="ok"></i> recognized word</span><span><i class="miss"></i> word to practice</span></div>
-
-          <div class="record-zone"><button class="mic-button" id="micButton" type="button" aria-label="Start recording"><i class="bi bi-mic-fill"></i></button><p class="record-status" id="recordStatus" aria-live="polite">Ready to practice the first meaning group</p><p class="record-help">Allow microphone access when your browser asks.</p><span class="timer" id="timer">00:00</span><div class="actions"><button class="action-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish and evaluate</button><button class="action-button reset" id="resetButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Start again</button></div><div class="live-transcript" id="liveTranscript" aria-live="polite">Your transcription will appear here after the analysis.</div><audio id="studentAudio" controls hidden></audio></div>
+          <div class="ie2-pronunciation-workspace"><div class="ie2-reading-workspace"><div class="reading-text" id="readingText" lang="en" aria-label="Text to read"></div><div class="legend" aria-label="Result legend"><span><i class="ok"></i> recognized word</span><span><i class="miss"></i> word to practice</span></div></div>
+          <div class="record-zone"><button class="mic-button" id="micButton" type="button" aria-label="Start recording"><i class="bi bi-mic-fill"></i></button><p class="record-status" id="recordStatus" aria-live="polite">Ready to practice the first meaning group</p><p class="record-help">Allow microphone access when your browser asks.</p><span class="timer" id="timer">00:00</span><div class="actions"><button class="action-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish and evaluate</button><button class="action-button reset" id="resetButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Start again</button></div><div class="live-transcript" id="liveTranscript" aria-live="polite">Your transcription will appear here after the analysis.</div><audio id="studentAudio" controls hidden></audio></div></div>
           <div class="unsupported" id="unsupported" hidden>Voice recording is unavailable in this browser. Use the secure JaraLingua page in a recent version of Chrome or Edge.</div>
         </section>
 
