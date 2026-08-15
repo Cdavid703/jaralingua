@@ -3940,6 +3940,8 @@ El único espacio lateral permitido es un relleno interno de seguridad, no un co
 
 La expansión horizontal debe reducir scroll vertical, no añadir contenido redundante. Cada página presenta primero el objetivo y la acción principal; después muestra práctica, resultado y apoyos relacionados. Un hero solo aparece una vez, nunca es fijo o sticky y no repite título, imagen o instrucciones más abajo.
 
+Pantalla expandida no significa estirar cada párrafo, tarjeta o control de forma aislada. El espacio adicional se aprovecha agrupando elementos relacionados en una misma franja o cuadrícula: explicación y conceptos, modelo y controles, lectura y respuesta, o tarjetas de apoyo. Cuando una agrupación deja de ser legible, vuelve a una columna. La meta es mostrar más aprendizaje útil al mismo tiempo, no crear bloques vacíos o demasiado largos.
+
 En actividades, la fila superior contiene la práctica y, si está disponible, el resultado. Las guías, tarjetas de foco, biblioteca, entrega y vista docente se distribuyen después en bloques anchos o cuadrículas; nunca se acumulan como un riel lateral infinito que deje un vacío grande junto a la actividad principal.
 
 ### 49.4 Controles, lectura y accesibilidad
@@ -3957,3 +3959,5 @@ La adopción se hace por fases: primero estructuras globales de Intermediate 2 (
 ### 49.6 Primera adopción: The Choice I'd Make Differently
 
 La primera página adaptada a este estándar es `pronunciation-unit-2-the-choice-id-make-differently.html`. Su navegación, hero, buscador, aviso de entrega, práctica, resultados, apoyos, entrega final y buzón usan el ancho disponible en cada pantalla. La página no conserva el límite central de 1180 px: emplea rellenos internos adaptativos y áreas seguras para proteger el contenido sin desperdiciar los laterales. En pantalla amplia, los controles de modelo, velocidad y Shadow Mode se combinan en una misma franja, y lectura/grabación comparten una zona de trabajo; en pantalla estrecha vuelven a una secuencia de una columna.
+
+La segunda adopción es `unit-2-wishes-dilemmas-advice.html`. Su hero, buscador y acordeones de teoría usan el ancho disponible. La explicación inicial y el banco de conceptos se agrupan en una misma franja amplia; las cuadrículas de contraste y vocabulario aprovechan columnas adicionales cuando existe espacio y vuelven a una columna o cuadrícula reducida en tablet y móvil. El contenido no se estira como texto aislado: se compacta por relaciones pedagógicas.

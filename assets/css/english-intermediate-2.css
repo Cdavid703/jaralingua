@@ -3865,3 +3865,25 @@
     line-height: 1.65;
   }
 }
+
+/* Unit 2 theory: full-width application layout with compact learning groups. */
+.ie2-unit2-theory-page { --ie2-unit2-gutter: clamp(1rem, 2vw, 3rem); }
+.ie2-unit2-theory-page .navbar { width: 100%; max-width: none; padding-left: max(var(--ie2-unit2-gutter), env(safe-area-inset-left)); padding-right: max(var(--ie2-unit2-gutter), env(safe-area-inset-right)); }
+.ie2-unit2-theory-page .ie2-unit2-hero { width: 100%; max-width: none; padding-left: max(var(--ie2-unit2-gutter), env(safe-area-inset-left)); padding-right: max(var(--ie2-unit2-gutter), env(safe-area-inset-right)); }
+.ie2-unit2-theory-page .intermediate2-search.course-search-panel,
+.ie2-unit2-theory-page .ie2-unit-theory-shell,
+.ie2-unit2-theory-page .course-search-empty { width: 100%; max-width: none; box-sizing: border-box; margin-left: 0; margin-right: 0; }
+.ie2-unit2-theory-page .intermediate2-search.course-search-panel { margin-top: 1rem; padding-left: max(var(--ie2-unit2-gutter), env(safe-area-inset-left)); padding-right: max(var(--ie2-unit2-gutter), env(safe-area-inset-right)); }
+.ie2-unit2-theory-page .ie2-unit-theory-shell { margin-top: 1rem; padding-left: max(var(--ie2-unit2-gutter), env(safe-area-inset-left)); padding-right: max(var(--ie2-unit2-gutter), env(safe-area-inset-right)); }
+.ie2-unit2-theory-page .course-search-empty { padding-left: max(var(--ie2-unit2-gutter), env(safe-area-inset-left)); padding-right: max(var(--ie2-unit2-gutter), env(safe-area-inset-right)); }
+.ie2-unit2-theory-page .ie2-theory-body { padding: clamp(1rem, 2vw, 2rem); }
+.ie2-unit2-idea-deck { display: grid; grid-template-columns: minmax(300px, .78fr) minmax(0, 1.22fr); gap: 1rem; align-items: stretch; }
+.ie2-unit2-idea-deck .ie2-key-answer { height: 100%; }
+.ie2-unit2-theory-page .ie2-contrast-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+.ie2-unit2-theory-page .ie2-vocabulary-bank { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+@media (max-width: 980px) { .ie2-unit2-idea-deck { grid-template-columns: 1fr; } }
+@media (max-width: 700px) {
+  .ie2-unit2-theory-page .ie2-unit2-hero { padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
+  .ie2-unit2-theory-page .intermediate2-search.course-search-panel,
+  .ie2-unit2-theory-page .ie2-unit-theory-shell { padding-left: max(.75rem, env(safe-area-inset-left)); padding-right: max(.75rem, env(safe-area-inset-right)); }
+}
