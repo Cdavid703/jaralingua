@@ -3424,6 +3424,31 @@ def basic2_midterm_writing_practice_report_from_payload(payload):
     final_post = clean_text(payload.get("finalPost"), 12000)
     if simple_word_count(final_post) < 100:
         raise ValueError("writing_too_short")
+    draft_sections = {
+        "title": clean_text(payload.get("title"), 500),
+        "greeting": clean_text(payload.get("greeting"), 500),
+        "cityWeather": clean_text(payload.get("cityWeather"), 2500),
+        "currentActivities": clean_text(payload.get("currentActivities"), 2500),
+        "responsibilities": clean_text(payload.get("responsibilities"), 2500),
+        "readerQuestion": clean_text(payload.get("readerQuestion"), 1500),
+        "closing": clean_text(payload.get("closing"), 500)
+    }
+    if simple_word_count(draft_sections["title"]) < 3:
+        raise ValueError("missing_title")
+    if simple_word_count(draft_sections["greeting"]) < 1:
+        raise ValueError("missing_greeting")
+    if simple_word_count(draft_sections["cityWeather"]) < 14 or not re.search(r"\b(weather|sunny|cloudy|rainy|raining|windy|hot|cold|stormy|warm)\b", draft_sections["cityWeather"], re.I):
+        raise ValueError("missing_city_weather")
+    if simple_word_count(draft_sections["currentActivities"]) < 18:
+        raise ValueError("missing_current_activities")
+    if simple_word_count(draft_sections["responsibilities"]) < 18:
+        raise ValueError("missing_responsibilities")
+    if simple_word_count(draft_sections["readerQuestion"]) < 6 or not (re.search(r"\?", draft_sections["readerQuestion"]) or re.search(r"\b(share|tell|write|comment|what about you|how about you)\b", draft_sections["readerQuestion"], re.I)):
+        raise ValueError("missing_reader_question")
+    if simple_word_count(draft_sections["closing"]) < 2:
+        raise ValueError("missing_closing")
+    if not re.search(r"\b(am|is|are|'m|'s|'re)\s+[a-z]+ing\b", final_post, re.I):
+        raise ValueError("missing_present_continuous")
     checklist = payload.get("checklist")
     if not isinstance(checklist, dict):
         checklist = {}
@@ -3457,15 +3482,7 @@ def basic2_midterm_writing_practice_report_from_payload(payload):
             "advice": clean_text_list(self_check.get("advice"), 8, 240),
             "generatedAt": clean_text(self_check.get("generatedAt"), 80)
         },
-        "draftSections": {
-            "title": clean_text(payload.get("title"), 500),
-            "greeting": clean_text(payload.get("greeting"), 500),
-            "cityWeather": clean_text(payload.get("cityWeather"), 2500),
-            "currentActivities": clean_text(payload.get("currentActivities"), 2500),
-            "responsibilities": clean_text(payload.get("responsibilities"), 2500),
-            "readerQuestion": clean_text(payload.get("readerQuestion"), 1500),
-            "closing": clean_text(payload.get("closing"), 500)
-        }
+        "draftSections": draft_sections
     }
 
 
@@ -18504,6 +18521,30 @@ class ProgressHandler(BaseHTTPRequestHandler):
                         write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
+                client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+                if len(client_submission_id) < 8:
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 400, {"error": "missing_client_submission_id"})
+                    return
+                previous = student.get("gradeDetails", {}).get(BASIC2_MIDTERM_WRITING_PRACTICE_ID) if isinstance(student.get("gradeDetails"), dict) else None
+                if isinstance(previous, dict) and clean_text(previous.get("clientSubmissionId"), 120) == client_submission_id:
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 200, {
+                        "ok": True,
+                        "idempotent": True,
+                        "evaluationId": BASIC2_MIDTERM_WRITING_PRACTICE_ID,
+                        "studentName": clean_text(student.get("fullName"), 160),
+                        "submittedAt": previous.get("submittedAt"),
+                        "attemptCount": previous.get("attemptCount", 1),
+                        "wordCount": previous.get("wordCount", 0),
+                        "clientSubmissionId": client_submission_id,
+                        "followUpOnly": True,
+                        "noGrade": True,
+                        "weight": 0
+                    })
+                    return
                 try:
                     report = basic2_midterm_writing_practice_report_from_payload(payload)
                 except ValueError as error:
@@ -18513,7 +18554,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     return
                 if not isinstance(student.get("gradeDetails"), dict):
                     student["gradeDetails"] = {}
-                previous = student["gradeDetails"].get(BASIC2_MIDTERM_WRITING_PRACTICE_ID)
+                submission_history = []
+                if isinstance(previous, dict):
+                    raw_history = previous.get("submissionHistory", [])
+                    if isinstance(raw_history, list):
+                        submission_history = [item for item in raw_history if isinstance(item, dict)][-9:]
+                    if previous.get("submittedAt"):
+                        submission_history.append({
+                            "submittedAt": previous.get("submittedAt"),
+                            "attemptCount": previous.get("attemptCount", 1),
+                            "wordCount": previous.get("wordCount"),
+                            "clientSubmissionId": clean_text(previous.get("clientSubmissionId"), 120),
+                            "activityType": clean_text(previous.get("activityType"), 120)
+                        })
                 try:
                     attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
                 except (TypeError, ValueError):
@@ -18536,7 +18589,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "followUpOnly": True,
                     "noGrade": True,
                     "activity": "Midterm Writing Practice",
-                    "activityType": "Writing practice follow-up"
+                    "activityType": "Writing practice follow-up",
+                    "submissionHistory": submission_history[-10:]
                 }
                 write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                 json_response(self, 200, {
@@ -18545,6 +18599,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "wordCount": report["wordCount"],
+                    "clientSubmissionId": report["clientSubmissionId"],
                     "followUpOnly": True,
                     "noGrade": True,
                     "weight": 0

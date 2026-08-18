@@ -10,6 +10,7 @@
   const copyPostButton = document.getElementById("copyPostButton");
   const resetWritingButton = document.getElementById("resetWritingButton");
   const sendTeacherButton = document.getElementById("sendTeacherButton");
+  const downloadBackupButton = document.getElementById("downloadBackupButton");
   const deliveryStatus = document.getElementById("deliveryStatus");
   const report = document.getElementById("selfCheckReport");
   const reportContent = document.getElementById("selfCheckContent");
@@ -18,6 +19,7 @@
   const STORAGE_KEY = "basic2_midterm_writing_practice_draft";
   const SUBMIT_PATH = "/api/basic2/midterm-writing-practice/submit";
   const SUBMISSION_KEY = "basic2_midterm_writing_practice_submission";
+  const PENDING_SUBMISSION_KEY = "basic2_midterm_writing_practice_pending_submission";
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const LOCAL_USER_KEY = "jaralingua_local_user";
@@ -100,6 +102,11 @@
       if (!raw) return null;
       const saved = JSON.parse(raw);
       if (!saved || typeof saved !== "object") return null;
+      if (saved.exp && Date.now() / 1000 > Number(saved.exp)) {
+        sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
+        return null;
+      }
       if (!sessionRaw && localRaw) sessionStorage.setItem(key, JSON.stringify(saved));
       return Object.assign({ provider: provider }, saved);
     } catch (_error) {
@@ -132,6 +139,65 @@
       localStorage.removeItem(SUBMISSION_KEY);
       return null;
     }
+  }
+
+  function readPendingSubmission() {
+    try {
+      return JSON.parse(localStorage.getItem(PENDING_SUBMISSION_KEY) || "null");
+    } catch (_error) {
+      localStorage.removeItem(PENDING_SUBMISSION_KEY);
+      return null;
+    }
+  }
+
+  function writePendingSubmission(payload) {
+    try {
+      localStorage.setItem(PENDING_SUBMISSION_KEY, JSON.stringify(payload));
+    } catch (_error) {}
+  }
+
+  function clearPendingSubmission() {
+    try {
+      localStorage.removeItem(PENDING_SUBMISSION_KEY);
+    } catch (_error) {}
+  }
+
+  function authHeaders(user, extra) {
+    return Object.assign({}, extra || {}, {
+      Authorization: "Bearer " + user.credential,
+      "X-Jaralingua-Auth-Provider": user.provider || "google",
+      "Content-Type": "application/json"
+    });
+  }
+
+  function wait(ms) {
+    return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
+  }
+
+  async function requestJson(url, options, retries) {
+    options = options || {};
+    retries = Number.isInteger(retries) ? retries : 0;
+    let lastError = null;
+    for (let attempt = 0; attempt <= retries; attempt += 1) {
+      const controller = new AbortController();
+      const timer = window.setTimeout(function () { controller.abort(); }, options.timeout || 18000);
+      try {
+        const response = await fetch(url, Object.assign({}, options, { signal: controller.signal }));
+        const data = await response.json().catch(function () { return {}; });
+        if (!response.ok && response.status >= 500 && attempt < retries) {
+          lastError = Object.assign(new Error("server_retryable"), { status: response.status, data: data });
+          await wait(750 * (attempt + 1));
+          continue;
+        }
+        return { ok: response.ok, status: response.status, data: data };
+      } catch (error) {
+        lastError = error;
+        if (attempt < retries) await wait(750 * (attempt + 1));
+      } finally {
+        window.clearTimeout(timer);
+      }
+    }
+    throw lastError || new Error("request_failed");
   }
 
   function loadDraft() {
@@ -254,10 +320,48 @@
     });
   }
 
+  function backupText() {
+    const post = currentPostText() || cleanText(buildPost());
+    const summary = lastSelfCheck || selfCheckSummary(post);
+    return [
+      "Basic English Course 2 - Midterm Writing Practice",
+      "Emergency local copy",
+      "Generated: " + new Date().toISOString(),
+      "Weight: 0%",
+      "No grade: yes",
+      "",
+      "Words: " + wordList(post).length,
+      "Present continuous detected: " + (hasPresentContinuous(post) ? "yes" : "no"),
+      "Weather vocabulary: " + (summary.weatherVocabulary || []).join(", "),
+      "",
+      "Final post:",
+      post || "(empty)",
+      "",
+      "Self-check advice:",
+      (summary.advice || []).map(function (item) { return "- " + item; }).join("\n")
+    ].join("\n");
+  }
+
+  function downloadBackup() {
+    const text = backupText();
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "basic-2-midterm-writing-practice-backup.txt";
+    document.body.appendChild(link);
+    link.click();
+    window.setTimeout(function () {
+      URL.revokeObjectURL(link.href);
+      link.remove();
+    }, 0);
+    setDeliveryStatus("Emergency copy downloaded. This does not submit the activity; press Send to teacher when the connection is ready.", "pending");
+  }
+
   function resetWriting() {
     fields.forEach(function (field) { field.value = ""; });
     try { localStorage.removeItem(STORAGE_KEY); } catch (_error) {}
     try { localStorage.removeItem(SUBMISSION_KEY); } catch (_error) {}
+    clearPendingSubmission();
     lastSelfCheck = null;
     submitState = "idle";
     submittedMessage = "";
@@ -266,7 +370,7 @@
     update();
   }
 
-  function submissionPayload() {
+  function createSubmissionPayload() {
     const state = checks();
     const post = currentPostText() || cleanText(buildPost());
     return {
@@ -292,6 +396,28 @@
     };
   }
 
+  function submissionPayload() {
+    const post = currentPostText() || cleanText(buildPost());
+    const state = checks();
+    const pending = readPendingSubmission();
+    if (
+      pending &&
+      pending.finalPost === post &&
+      pending.checklist &&
+      Object.keys(state).every(function (key) { return Boolean(pending.checklist[key]) === Boolean(state[key]); })
+    ) {
+      pending.selfCheck = lastSelfCheck || pending.selfCheck || selfCheckSummary(post);
+      pending.updatedAt = new Date().toISOString();
+      writePendingSubmission(pending);
+      return pending;
+    }
+    const payload = createSubmissionPayload();
+    payload.createdAt = new Date().toISOString();
+    payload.updatedAt = payload.createdAt;
+    writePendingSubmission(payload);
+    return payload;
+  }
+
   async function submitToTeacher() {
     const state = checks();
     const ready = Object.keys(state).every(function (key) { return state[key]; });
@@ -310,31 +436,34 @@
     setDeliveryStatus("Sending your writing practice to the teacher...", "pending");
     update();
     try {
-      const response = await fetch(SUBMIT_PATH, {
+      const payload = submissionPayload();
+      const result = await requestJson(SUBMIT_PATH, {
         method: "POST",
-        headers: {
-          Authorization: "Bearer " + user.credential,
-          "X-Jaralingua-Auth-Provider": user.provider || "google",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(submissionPayload())
-      });
-      const payload = await response.json().catch(function () { return {}; });
-      if (!response.ok) {
-        if (payload.error === "student_not_authorized") throw new Error("This account is not linked to a Basic English Course 2 student record.");
-        if (payload.error === "writing_too_short") throw new Error("Your post needs at least 100 words before it can be sent.");
-        if (payload.error === "incomplete_writing_requirements") throw new Error("Complete all writing requirements and generate the self-check again.");
+        headers: authHeaders(user),
+        body: JSON.stringify(payload),
+        timeout: 22000
+      }, 1);
+      if (!result.ok) {
+        if (result.data.error === "student_not_authorized") throw new Error("This account is not linked to a Basic English Course 2 student record.");
+        if (result.data.error === "missing_client_submission_id") throw new Error("The delivery code was missing. Refresh the page and try again; your text is still saved.");
+        if (result.data.error === "writing_too_short") throw new Error("Your post needs at least 100 words before it can be sent.");
+        if (result.data.error === "incomplete_writing_requirements") throw new Error("Complete all writing requirements and generate the self-check again.");
+        if (result.data.error === "missing_present_continuous") throw new Error("Add at least one clear present continuous sentence, then generate the self-check again.");
+        if (/^missing_/.test(result.data.error || "")) throw new Error("One required writing section is incomplete. Review the checklist and generate the self-check again.");
         throw new Error("The writing practice could not be submitted.");
       }
       submitState = "submitted";
       submittedMessage = "Submitted to teacher. This is a 0% deliverable, has no grade, and does not affect your course average.";
       localStorage.setItem(SUBMISSION_KEY, JSON.stringify({
-        submittedAt: payload.submittedAt || new Date().toISOString(),
-        wordCount: payload.wordCount,
-        attemptCount: payload.attemptCount,
+        submittedAt: result.data.submittedAt || new Date().toISOString(),
+        wordCount: result.data.wordCount,
+        attemptCount: result.data.attemptCount,
+        clientSubmissionId: result.data.clientSubmissionId || payload.clientSubmissionId,
+        idempotent: Boolean(result.data.idempotent),
         noGrade: true,
         weight: 0
       }));
+      clearPendingSubmission();
       setDeliveryStatus(submittedMessage, "success");
     } catch (error) {
       submitState = "error";
@@ -349,6 +478,7 @@
       lastSelfCheck = null;
       submitState = "idle";
       submittedMessage = "";
+      clearPendingSubmission();
       if (report) report.hidden = true;
       update();
     });
@@ -358,6 +488,7 @@
       lastSelfCheck = null;
       submitState = "idle";
       submittedMessage = "";
+      clearPendingSubmission();
       if (report) report.hidden = true;
       const count = wordList(currentPostText()).length;
       if (wordCount) wordCount.textContent = String(count);
@@ -369,6 +500,7 @@
   if (copyPostButton) copyPostButton.addEventListener("click", copyPost);
   if (resetWritingButton) resetWritingButton.addEventListener("click", resetWriting);
   if (sendTeacherButton) sendTeacherButton.addEventListener("click", submitToTeacher);
+  if (downloadBackupButton) downloadBackupButton.addEventListener("click", downloadBackup);
 
   loadDraft();
   const savedSubmission = readSubmission();

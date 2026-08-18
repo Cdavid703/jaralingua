@@ -69,7 +69,20 @@ Las actividades regulares de unidad deben ir en **Practice Lab** o **Games**, se
 
 Las practicas tipo examen, simulacros y evaluaciones oficiales deben ir en **Evaluations and Exam Practice**. No deben quedar regadas como tarjetas sueltas dentro del home principal ni mezcladas dentro de Practice Lab, salvo un enlace de navegacion que lleve al centro de examenes.
 
-## 6. Checklist antes de terminar una pagina
+## 6. Entregas al profesor y blindaje contra errores
+
+Toda actividad de Basic English Course 2 que envie evidencia al profesor, aunque tenga peso 0%, debe implementar estas defensas:
+
+- `clientSubmissionId` estable para que un reintento no duplique la entrega;
+- reintento seguro cuando haya timeout o corte de red;
+- copia local del trabajo antes de enviar;
+- mensaje claro si la sesion expiro o el correo no esta autorizado;
+- validacion del servidor sobre el contenido real, no solo sobre el checklist visual del navegador;
+- respuesta idempotente del servidor si recibe dos veces la misma entrega;
+- ningun registro numerico en `grades` cuando el entregable sea 0% sin nota;
+- estado visible en la pestana **Deliverables** de la grilla.
+
+## 7. Checklist antes de terminar una pagina
 
 Antes de dar una pagina o actividad como terminada:
 
@@ -86,10 +99,11 @@ Antes de dar una pagina o actividad como terminada:
 - [ ] Se reviso portatil/escritorio.
 - [ ] Si es una actividad, aparece en Practice Lab o Games segun corresponda.
 - [ ] Si es practica tipo examen, simulacro o evaluacion oficial, aparece en Evaluations and Exam Practice.
+- [ ] Si se envia al profesor, tiene `clientSubmissionId`, reintento seguro, copia local y endpoint idempotente.
 - [ ] Si es listening, reading o video listening, las respuestas no tienen patron obvio.
 - [ ] Si hay audios, controles o transcripciones, son usables en pantalla tactil.
 
-## 7. Validacion tecnica recomendada
+## 8. Validacion tecnica recomendada
 
 Cuando se toque el header, hero, responsive o autenticacion de Basic 2, ejecutar:
 
@@ -107,7 +121,7 @@ node tools/test_basic2_impostor_ui.cjs
 
 Si se despliega a produccion, repetir las pruebas contra `https://www.jaralingua.com`.
 
-## 8. Criterio de terminado
+## 9. Criterio de terminado
 
 Una pagina de Basic English Course 2 no se considera terminada solamente porque cargue o porque visualmente se parezca a otra.
 
