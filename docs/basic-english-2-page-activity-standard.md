@@ -15,6 +15,7 @@ Aplica a todas las piezas actuales y futuras de Basic English Course 2:
 - Listening Library;
 - Games;
 - Grades;
+- Evaluations and Exam Practice;
 - video listening;
 - audio listening;
 - reading;
@@ -62,7 +63,13 @@ No se permite:
 
 La imagen puede compartirse entre la tarjeta de la actividad y su hero, pero dos actividades diferentes no deben compartir la misma imagen principal. Si una actividad se crea primero con imagen temporal, no se considera terminada hasta reemplazarla por una imagen profesional unica.
 
-## 5. Checklist antes de terminar una pagina
+## 5. Ubicacion de actividades y examenes
+
+Las actividades regulares de unidad deben ir en **Practice Lab** o **Games**, segun su tipo.
+
+Las practicas tipo examen, simulacros y evaluaciones oficiales deben ir en **Evaluations and Exam Practice**. No deben quedar regadas como tarjetas sueltas dentro del home principal ni mezcladas dentro de Practice Lab, salvo un enlace de navegacion que lleve al centro de examenes.
+
+## 6. Checklist antes de terminar una pagina
 
 Antes de dar una pagina o actividad como terminada:
 
@@ -78,10 +85,11 @@ Antes de dar una pagina o actividad como terminada:
 - [ ] Se reviso tablet vertical.
 - [ ] Se reviso portatil/escritorio.
 - [ ] Si es una actividad, aparece en Practice Lab o Games segun corresponda.
+- [ ] Si es practica tipo examen, simulacro o evaluacion oficial, aparece en Evaluations and Exam Practice.
 - [ ] Si es listening, reading o video listening, las respuestas no tienen patron obvio.
 - [ ] Si hay audios, controles o transcripciones, son usables en pantalla tactil.
 
-## 6. Validacion tecnica recomendada
+## 7. Validacion tecnica recomendada
 
 Cuando se toque el header, hero, responsive o autenticacion de Basic 2, ejecutar:
 
@@ -99,7 +107,7 @@ node tools/test_basic2_impostor_ui.cjs
 
 Si se despliega a produccion, repetir las pruebas contra `https://www.jaralingua.com`.
 
-## 7. Criterio de terminado
+## 8. Criterio de terminado
 
 Una pagina de Basic English Course 2 no se considera terminada solamente porque cargue o porque visualmente se parezca a otra.
 

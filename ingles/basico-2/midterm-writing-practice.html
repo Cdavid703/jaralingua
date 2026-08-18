@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Midterm Writing Practice | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260727-basic2-hero-scroll" />
+  <style>
+    :root{--midterm-blue:#15345d;--midterm-teal:#087e8b;--midterm-red:#d62839;--midterm-yellow:#ffc857;--midterm-soft:#f4f8ff;--midterm-line:rgba(21,52,93,.14);--midterm-muted:#64748b;--midterm-shadow:0 22px 52px rgba(15,23,42,.13)}
+    .writing-page main{background:linear-gradient(180deg,#f8fbff 0%,#eef5ff 48%,#fff 100%)}
+    .midterm-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.74fr);gap:clamp(1rem,3vw,2rem);align-items:center;min-height:auto;padding:clamp(7rem,12vw,9rem) clamp(1rem,5vw,4rem) clamp(3rem,6vw,5rem);background:linear-gradient(135deg,rgba(21,52,93,.96),rgba(8,126,139,.72));color:#fff}
+    .midterm-hero::after{content:"";position:absolute;inset:auto -8% -34% 42%;height:58%;background:radial-gradient(circle,rgba(255,200,87,.34),transparent 64%);pointer-events:none}
+    .midterm-hero-copy{position:relative;z-index:1;max-width:760px}
+    .midterm-hero-copy h1{font-size:clamp(2.25rem,6vw,5rem);line-height:.96;margin:.45rem 0 1rem;font-weight:900}
+    .midterm-hero-copy p{font-size:clamp(1rem,2vw,1.25rem);line-height:1.7;color:rgba(255,255,255,.9);margin:0 0 1rem}
+    .midterm-hero-image{position:relative;z-index:1;border-radius:30px;overflow:hidden;box-shadow:var(--midterm-shadow);border:1px solid rgba(255,255,255,.22);background:#fff}
+    .midterm-hero-image img{width:100%;height:100%;min-height:320px;object-fit:cover;display:block}
+    .midterm-badges{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0}
+    .midterm-badges span{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;padding:.5rem .75rem;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);font-weight:900}
+    .midterm-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;max-width:1180px;margin:-2rem auto 0;padding:0 1rem;position:relative;z-index:3}
+    .midterm-strip article{background:#fff;border:1px solid var(--midterm-line);border-radius:20px;padding:1rem;box-shadow:0 14px 34px rgba(15,23,42,.08)}
+    .midterm-strip strong{display:block;color:var(--midterm-blue);font-size:1.35rem}
+    .midterm-strip span{color:var(--midterm-muted);font-weight:800;font-size:.9rem}
+    .midterm-shell{max-width:1220px;margin:0 auto;padding:clamp(2rem,5vw,4rem) 1rem}
+    .midterm-section-heading{max-width:850px;margin:0 auto 1.5rem;text-align:center}
+    .midterm-section-heading h2{color:var(--midterm-blue);font-size:clamp(1.8rem,4vw,3rem);font-weight:900;margin:.2rem 0 .6rem}
+    .midterm-section-heading p{color:var(--midterm-muted);line-height:1.7;margin:0}
+    .visual-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0 2.2rem}
+    .visual-guide-card{background:#fff;border:1px solid var(--midterm-line);border-radius:26px;overflow:hidden;box-shadow:var(--midterm-shadow)}
+    .visual-guide-card img{width:100%;height:260px;object-fit:cover;display:block}
+    .visual-guide-card div{padding:1.1rem}
+    .visual-guide-card h3{color:var(--midterm-blue);font-weight:900;margin:0 0 .45rem}
+    .visual-guide-card p{color:var(--midterm-muted);line-height:1.62;margin:0}
+    .exam-frame{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.42fr);gap:1rem;align-items:start}
+    .writing-builder,.writing-sidebar,.preview-panel{background:#fff;border:1px solid var(--midterm-line);border-radius:28px;box-shadow:var(--midterm-shadow)}
+    .writing-builder{padding:clamp(1rem,3vw,1.5rem)}
+    .builder-step{border:1px solid var(--midterm-line);border-radius:22px;padding:1rem;margin-bottom:.85rem;background:#f8fbff}
+    .builder-step header{display:flex;justify-content:space-between;gap:1rem;align-items:flex-start;margin-bottom:.75rem}
+    .builder-step h3{margin:0;color:var(--midterm-blue);font-weight:900;font-size:1.05rem}
+    .builder-step small{display:block;color:var(--midterm-muted);line-height:1.45;margin-top:.18rem}
+    .step-chip{flex:0 0 auto;border-radius:999px;background:#e6f5f6;color:var(--midterm-teal);font-weight:900;padding:.32rem .62rem;font-size:.78rem}
+    .builder-step input,.builder-step textarea{width:100%;border:1px solid rgba(21,52,93,.18);border-radius:16px;padding:.85rem 1rem;font:inherit;color:#1f2937;background:#fff;outline:none}
+    .builder-step textarea{min-height:112px;resize:vertical;line-height:1.6}
+    .builder-step input:focus,.builder-step textarea:focus{border-color:var(--midterm-teal);box-shadow:0 0 0 4px rgba(8,126,139,.1)}
+    .word-meter{position:sticky;top:86px;display:grid;gap:.8rem;padding:1rem}
+    .word-ring{width:152px;height:152px;margin:0 auto;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--midterm-teal) var(--progress,0%),#e8eef7 0)}
+    .word-ring div{width:118px;height:118px;border-radius:50%;display:grid;place-items:center;background:#fff;text-align:center;color:var(--midterm-blue)}
+    .word-ring strong{font-size:2.15rem;line-height:1;font-weight:900}
+    .word-ring span{display:block;color:var(--midterm-muted);font-size:.78rem;font-weight:900}
+    .checklist{display:grid;gap:.55rem}
+    .checklist li{list-style:none;display:grid;grid-template-columns:auto minmax(0,1fr);gap:.55rem;align-items:start;padding:.72rem;border-radius:14px;background:#f8fbff;color:var(--midterm-muted);font-weight:800}
+    .checklist i{color:#94a3b8}
+    .checklist li.done{background:#ecfdf5;color:#166534}
+    .checklist li.done i{color:#16a34a}
+    .status-box{padding:.85rem 1rem;border-radius:16px;background:#fff7df;color:#5c4930;font-weight:850;line-height:1.5}
+    .status-box.ready{background:#ecfdf5;color:#166534}
+    .action-row{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1rem}
+    .midterm-button{border:0;border-radius:999px;padding:.8rem 1rem;font-weight:900;display:inline-flex;align-items:center;justify-content:center;gap:.45rem;cursor:pointer;text-decoration:none}
+    .midterm-button.primary{background:linear-gradient(135deg,var(--midterm-red),#9f1d2a);color:#fff}
+    .midterm-button.secondary{background:#e6f5f6;color:var(--midterm-blue)}
+    .midterm-button:disabled{opacity:.48;cursor:not-allowed}
+    .preview-panel{margin-top:1rem;padding:1.2rem}
+    .preview-panel h2{color:var(--midterm-blue);font-weight:900;margin:.2rem 0 .8rem}
+    .final-post{white-space:pre-wrap;min-height:240px;padding:1rem;border-radius:18px;background:#f8fbff;border:1px dashed rgba(21,52,93,.28);line-height:1.75;color:#1f2937}
+    .rubric-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:.75rem;margin-top:1rem}
+    .rubric-grid article{padding:.9rem;border-radius:18px;background:#fff;border:1px solid var(--midterm-line)}
+    .rubric-grid strong{display:block;color:var(--midterm-blue)}
+    .rubric-grid span{display:block;color:var(--midterm-muted);font-size:.88rem;line-height:1.45;margin-top:.3rem}
+    .model-card{background:#fff;border:1px solid var(--midterm-line);border-radius:26px;padding:1.1rem;box-shadow:0 14px 34px rgba(15,23,42,.08);margin-bottom:1rem}
+    .model-card h3{color:var(--midterm-blue);font-weight:900;margin:0 0 .55rem}
+    .model-card p{color:#334155;line-height:1.7;margin:.45rem 0}
+    .model-card em{color:var(--midterm-muted)}
+    .writing-sidebar .model-card{box-shadow:none;border-radius:20px}
+    @media(max-width:980px){.midterm-hero,.exam-frame{grid-template-columns:1fr}.midterm-hero-image img{max-height:420px}.midterm-strip{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:1rem}.word-meter{position:relative;top:auto}.rubric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:640px){.midterm-hero{padding:6.5rem 1rem 2rem}.visual-guide-grid,.midterm-strip,.rubric-grid{grid-template-columns:1fr}.action-row{display:grid}.midterm-button{width:100%}.builder-step header{display:grid}.visual-guide-card img{height:220px}}
+  </style>
+</head>
+<body class="english-basic-page basic2-page writing-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="evaluations.html">Exams</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="games.html">Games</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="midterm-hero">
+      <div class="midterm-hero-copy">
+        <p class="eyebrow">Basic Course 2 - Midterm preparation</p>
+        <h1>Midterm Writing Practice</h1>
+        <p>
+          Prepare for the magazine-style writing task by creating a complete post
+          about your city, its weather, and the activities you are doing these days.
+        </p>
+        <div class="midterm-badges" aria-label="Writing task requirements">
+          <span><i class="bi bi-pencil-square"></i> Post format</span>
+          <span><i class="bi bi-cloud-sun"></i> City and weather</span>
+          <span><i class="bi bi-person-walking"></i> Activities now</span>
+          <span><i class="bi bi-123"></i> 100+ words</span>
+        </div>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#writingBuilder">Start writing</a>
+          <a class="btn btn-secondary" href="evaluations.html">Back to exams</a>
+        </div>
+      </div>
+      <aside class="midterm-hero-image">
+        <img src="../../assets/img/english-basic-2/exams/midterm-writing-practice-hero.png" alt="Student writing an online magazine post about city weather and activities" />
+      </aside>
+    </section>
+
+    <section class="midterm-strip" aria-label="Practice summary">
+      <article><strong>20%</strong><span>Official exam weight this practice prepares for</span></article>
+      <article><strong>100+</strong><span>Minimum words required before self-check</span></article>
+      <article><strong>5</strong><span>Rubric areas: content, organization, vocabulary, structure, mechanics</span></article>
+      <article><strong>0%</strong><span>This rehearsal is practice, not the official grade</span></article>
+    </section>
+
+    <section class="midterm-shell">
+      <div class="midterm-section-heading">
+        <p class="eyebrow">Visual writing guide</p>
+        <h2>Use the images to plan your ideas</h2>
+        <p>Do not copy a model. Use the visual prompts to decide what to say about your real city, weather, activities, sports, study, and work responsibilities.</p>
+      </div>
+
+      <div class="visual-guide-grid">
+        <article class="visual-guide-card">
+          <img src="../../assets/img/english-basic-2/exams/midterm-writing-city-weather.png" alt="Student observing city weather before writing" />
+          <div>
+            <h3>1. City and weather</h3>
+            <p>Write your city name. Describe common weather and what the weather is like these days: sunny, cloudy, rainy, windy, hot, cold, or stormy.</p>
+          </div>
+        </article>
+        <article class="visual-guide-card">
+          <img src="../../assets/img/english-basic-2/exams/midterm-writing-activities.png" alt="Student planning activities, study, work and sports" />
+          <div>
+            <h3>2. Activities and responsibilities</h3>
+            <p>Use present continuous to say what you are doing now: studying English, working, doing homework, playing sports, helping at home, or preparing projects.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="exam-frame" id="writingBuilder">
+        <section class="writing-builder" aria-labelledby="builderTitle">
+          <p class="eyebrow">Writing builder</p>
+          <h2 id="builderTitle" class="section-title">Build your magazine post</h2>
+          <p class="section-text">Complete every box. The self-check unlocks only when your post has a title, a greeting, city/weather details, current activities, responsibilities, a final question, and at least 100 words.</p>
+
+          <form id="midtermWritingForm" novalidate>
+            <div class="builder-step">
+              <header><div><h3>Post title</h3><small>Write a short title. Example type: A Rainy Week in My City.</small></div><span class="step-chip">Required</span></header>
+              <input id="postTitle" data-writing-field="title" type="text" minlength="3" placeholder="Write your title here" />
+            </div>
+
+            <div class="builder-step">
+              <header><div><h3>Greeting</h3><small>Start like a friendly magazine reader.</small></div><span class="step-chip">Required</span></header>
+              <input id="postGreeting" data-writing-field="greeting" type="text" placeholder="Hi there," />
+            </div>
+
+            <div class="builder-step">
+              <header><div><h3>City and common weather</h3><small>Name your city and describe its usual weather.</small></div><span class="step-chip">Required</span></header>
+              <textarea id="cityWeather" data-writing-field="cityWeather" placeholder="I live in... The weather is usually..."></textarea>
+            </div>
+
+            <div class="builder-step">
+              <header><div><h3>These days</h3><small>Use present continuous: I am studying..., I am working..., I am spending...</small></div><span class="step-chip">Required</span></header>
+              <textarea id="currentActivities" data-writing-field="currentActivities" placeholder="These days, I am..."></textarea>
+            </div>
+
+            <div class="builder-step">
+              <header><div><h3>Sports, study, and work responsibilities</h3><small>Mention at least two areas: sport/activity + study/work/home responsibility.</small></div><span class="step-chip">Required</span></header>
+              <textarea id="responsibilities" data-writing-field="responsibilities" placeholder="I am also... I am practicing... I am preparing..."></textarea>
+            </div>
+
+            <div class="builder-step">
+              <header><div><h3>Final question or invitation</h3><small>End by inviting readers to answer.</small></div><span class="step-chip">Required</span></header>
+              <textarea id="readerQuestion" data-writing-field="readerQuestion" placeholder="What is the weather like in your city?"></textarea>
+            </div>
+
+            <div class="builder-step">
+              <header><div><h3>Closing and signature</h3><small>Close your post naturally.</small></div><span class="step-chip">Required</span></header>
+              <input id="closing" data-writing-field="closing" type="text" placeholder="Take care, Your name" />
+            </div>
+
+            <div class="action-row">
+              <button class="midterm-button primary" type="submit" id="selfCheckButton" disabled><i class="bi bi-check2-circle"></i> Generate my self-check</button>
+              <button class="midterm-button secondary" type="button" id="copyPostButton"><i class="bi bi-clipboard"></i> Copy final post</button>
+              <button class="midterm-button secondary" type="button" id="resetWritingButton"><i class="bi bi-arrow-counterclockwise"></i> Start again</button>
+            </div>
+          </form>
+
+          <section class="preview-panel" aria-labelledby="finalPostTitle">
+            <p class="eyebrow">Editable final post</p>
+            <h2 id="finalPostTitle">Your complete post</h2>
+            <div class="final-post" id="finalPost" contenteditable="true" aria-label="Final post preview">Complete the writing builder to generate your full post here.</div>
+          </section>
+        </section>
+
+        <aside class="writing-sidebar">
+          <div class="word-meter">
+            <div class="word-ring" id="wordRing" style="--progress:0%">
+              <div><strong id="wordCount">0</strong><span>of 100 words</span></div>
+            </div>
+            <div class="status-box" id="writingStatus">Keep writing. Complete all required sections.</div>
+            <ul class="checklist" id="writingChecklist" aria-label="Writing checklist">
+              <li data-check="title"><i class="bi bi-circle"></i><span>Title included</span></li>
+              <li data-check="greeting"><i class="bi bi-circle"></i><span>Friendly greeting included</span></li>
+              <li data-check="cityWeather"><i class="bi bi-circle"></i><span>City and weather described</span></li>
+              <li data-check="currentActivities"><i class="bi bi-circle"></i><span>Current activities included</span></li>
+              <li data-check="responsibilities"><i class="bi bi-circle"></i><span>Sports, study, or work responsibilities included</span></li>
+              <li data-check="readerQuestion"><i class="bi bi-circle"></i><span>Final question or invitation included</span></li>
+              <li data-check="closing"><i class="bi bi-circle"></i><span>Closing/signature included</span></li>
+              <li data-check="words"><i class="bi bi-circle"></i><span>At least 100 words</span></li>
+              <li data-check="continuous"><i class="bi bi-circle"></i><span>Present continuous detected</span></li>
+            </ul>
+
+            <article class="model-card">
+              <h3>Small model</h3>
+              <p><strong>Title:</strong> A Busy Week in Medellin</p>
+              <p><em>Hi there, I live in Medellin. The weather is usually warm, but these days it is cloudy and rainy. I am studying English, doing homework, and spending time with my family...</em></p>
+              <p>This is only a short model. Your post must use your own city and real activities.</p>
+            </article>
+          </div>
+        </aside>
+      </div>
+
+      <section class="preview-panel" id="selfCheckReport" hidden>
+        <p class="eyebrow">Self-check report</p>
+        <h2>Before the official writing task</h2>
+        <div id="selfCheckContent"></div>
+        <div class="rubric-grid">
+          <article><strong>Content /10</strong><span>City, weather, activities, responsibilities, and reader invitation.</span></article>
+          <article><strong>Organization /10</strong><span>Title, greeting, connected ideas, closing, and clear sequence.</span></article>
+          <article><strong>Vocabulary /10</strong><span>Weather, city, activities, sports, study, and work words.</span></article>
+          <article><strong>Structure /10</strong><span>Present continuous, simple present for usual weather, clear sentences.</span></article>
+          <article><strong>Mechanics /10</strong><span>Capitalization, punctuation, spelling, and readable layout.</span></article>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+  <script src="../../assets/js/basic2-midterm-writing-practice.js?v=20260818-midterm-writing-practice"></script>
+</body>
+</html>
