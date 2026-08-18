@@ -75,6 +75,13 @@
     .model-card p{color:#334155;line-height:1.7;margin:.45rem 0}
     .model-card em{color:var(--midterm-muted)}
     .writing-sidebar .model-card{box-shadow:none;border-radius:20px}
+    .teacher-delivery-panel{margin-top:1rem;padding:1.1rem;border-radius:24px;background:linear-gradient(135deg,#eefdf9,#eef5ff);border:1px solid rgba(8,126,139,.2)}
+    .teacher-delivery-panel h3{margin:0 0 .45rem;color:var(--midterm-blue);font-weight:900}
+    .teacher-delivery-panel p{margin:.35rem 0;color:#475569;line-height:1.6}
+    .teacher-delivery-panel .delivery-status{margin:.75rem 0 0;font-weight:850;color:#475569}
+    .teacher-delivery-panel .delivery-status.success{color:#166534}
+    .teacher-delivery-panel .delivery-status.error{color:#b42318}
+    .teacher-delivery-panel .delivery-status.pending{color:#92400e}
     @media(max-width:980px){.midterm-hero,.exam-frame{grid-template-columns:1fr}.midterm-hero-image img{max-height:420px}.midterm-strip{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:1rem}.word-meter{position:relative;top:auto}.rubric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:640px){.midterm-hero{padding:6.5rem 1rem 2rem}.visual-guide-grid,.midterm-strip,.rubric-grid{grid-template-columns:1fr}.action-row{display:grid}.midterm-button{width:100%}.builder-step header{display:grid}.visual-guide-card img{height:220px}}
   </style>
@@ -122,6 +129,7 @@
           <span><i class="bi bi-cloud-sun"></i> City and weather</span>
           <span><i class="bi bi-person-walking"></i> Activities now</span>
           <span><i class="bi bi-123"></i> 100+ words</span>
+          <span><i class="bi bi-send-check"></i> Teacher follow-up · 0%</span>
         </div>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#writingBuilder">Start writing</a>
@@ -137,7 +145,7 @@
       <article><strong>20%</strong><span>Official exam weight this practice prepares for</span></article>
       <article><strong>100+</strong><span>Minimum words required before self-check</span></article>
       <article><strong>5</strong><span>Rubric areas: content, organization, vocabulary, structure, mechanics</span></article>
-      <article><strong>0%</strong><span>This rehearsal is practice, not the official grade</span></article>
+      <article><strong>0%</strong><span>Teacher deliverable. No grade and no effect on the average</span></article>
     </section>
 
     <section class="midterm-shell">
@@ -217,6 +225,21 @@
             <p class="eyebrow">Editable final post</p>
             <h2 id="finalPostTitle">Your complete post</h2>
             <div class="final-post" id="finalPost" contenteditable="true" aria-label="Final post preview">Complete the writing builder to generate your full post here.</div>
+          </section>
+
+          <section class="teacher-delivery-panel" id="teacherDeliveryPanel" aria-labelledby="teacherDeliveryTitle">
+            <h3 id="teacherDeliveryTitle"><i class="bi bi-send-check"></i> Send to teacher · 0%</h3>
+            <p>
+              After generating your self-check, send this writing practice to the
+              teacher as a formative deliverable. It has no grade and does not
+              affect your course average.
+            </p>
+            <button class="midterm-button primary" type="button" id="sendTeacherButton" disabled>
+              <i class="bi bi-send-fill"></i> Send writing practice to teacher
+            </button>
+            <p class="delivery-status" id="deliveryStatus">
+              Complete the writing builder and generate your self-check first.
+            </p>
           </section>
         </section>
 

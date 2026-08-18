@@ -239,6 +239,7 @@ INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
 BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 BASIC2_UNIT1_PRONUNCIATION_ID = "basic2Unit1WeatherGoingOutPronunciation"
 BASIC2_UNIT2_PRONUNCIATION_ID = "basic2Unit2ShoppingConcertPronunciation"
+BASIC2_MIDTERM_WRITING_PRACTICE_ID = "basic2MidtermWritingPracticeFollowUp"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 BUNDLED_FRENCH7_FINAL_EXAM_PATH = os.path.join(REPO_ROOT, "data", "french7-final-exam.local.json")
@@ -642,6 +643,14 @@ BASIC2_UNIT2_PRONUNCIATION_EVALUATION = {
     "weight": 0,
     "type": "Pronunciation follow-up",
     "description": "Reporte de pronunciacion enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
+}
+
+BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION = {
+    "id": BASIC2_MIDTERM_WRITING_PRACTICE_ID,
+    "title": "Basic 2 Midterm Writing Practice - City, Weather and Activities",
+    "weight": 0,
+    "type": "Writing practice follow-up",
+    "description": "Practica escrita enviable al profesor. La entrega queda visible en la grilla, pero no tiene nota y no afecta el promedio."
 }
 
 BASIC_FINAL_WRITING_EVALUATION = {
@@ -3210,6 +3219,8 @@ def ensure_basic2_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_UNIT2_PRONUNCIATION_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION):
+        changed = True
     if grades_data.get("allowStudentIdClaim") is not True:
         grades_data["allowStudentIdClaim"] = True
         changed = True
@@ -3406,6 +3417,55 @@ def basic2_unit1_pronunciation_report_from_payload(payload):
         "finalReferenceText": final_stage.get("referenceText", ""),
         "finalMissedWords": final_stage.get("missedWords", []),
         "clientSubmissionId": clean_text(payload.get("clientSubmissionId"), 120)
+    }
+
+
+def basic2_midterm_writing_practice_report_from_payload(payload):
+    final_post = clean_text(payload.get("finalPost"), 12000)
+    if simple_word_count(final_post) < 100:
+        raise ValueError("writing_too_short")
+    checklist = payload.get("checklist")
+    if not isinstance(checklist, dict):
+        checklist = {}
+    clean_checklist = {}
+    for key in (
+        "title",
+        "greeting",
+        "cityWeather",
+        "currentActivities",
+        "responsibilities",
+        "readerQuestion",
+        "closing",
+        "words",
+        "continuous",
+    ):
+        clean_checklist[key] = bool(checklist.get(key))
+    if not all(clean_checklist.values()):
+        raise ValueError("incomplete_writing_requirements")
+    self_check = payload.get("selfCheck")
+    if not isinstance(self_check, dict):
+        self_check = {}
+    return {
+        "clientSubmissionId": clean_text(payload.get("clientSubmissionId"), 120),
+        "activityTitle": clean_text(payload.get("activityTitle") or BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION["title"], 200),
+        "finalPost": final_post,
+        "wordCount": simple_word_count(final_post),
+        "checklist": clean_checklist,
+        "selfCheck": {
+            "presentContinuousExamples": clean_text_list(self_check.get("presentContinuousExamples"), 12, 80),
+            "weatherVocabulary": clean_text_list(self_check.get("weatherVocabulary"), 12, 80),
+            "advice": clean_text_list(self_check.get("advice"), 8, 240),
+            "generatedAt": clean_text(self_check.get("generatedAt"), 80)
+        },
+        "draftSections": {
+            "title": clean_text(payload.get("title"), 500),
+            "greeting": clean_text(payload.get("greeting"), 500),
+            "cityWeather": clean_text(payload.get("cityWeather"), 2500),
+            "currentActivities": clean_text(payload.get("currentActivities"), 2500),
+            "responsibilities": clean_text(payload.get("responsibilities"), 2500),
+            "readerQuestion": clean_text(payload.get("readerQuestion"), 1500),
+            "closing": clean_text(payload.get("closing"), 500)
+        }
     }
 
 
@@ -18427,6 +18487,66 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path in ("/api/basic2/midterm-writing-practice/submit", "/api/basic/basic2-midterm-writing-practice/submit"):
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                changed = ensure_basic2_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    report = basic2_midterm_writing_practice_report_from_payload(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                previous = student["gradeDetails"].get(BASIC2_MIDTERM_WRITING_PRACTICE_ID)
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                student["gradeDetails"][BASIC2_MIDTERM_WRITING_PRACTICE_ID] = {
+                    "evaluationId": BASIC2_MIDTERM_WRITING_PRACTICE_ID,
+                    "activityTitle": BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION["title"],
+                    "submittedAt": submitted_at,
+                    "wordCount": report["wordCount"],
+                    "finalPost": report["finalPost"],
+                    "draftSections": report["draftSections"],
+                    "checklist": report["checklist"],
+                    "selfCheck": report["selfCheck"],
+                    "clientSubmissionId": report["clientSubmissionId"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "noGrade": True,
+                    "activity": "Midterm Writing Practice",
+                    "activityType": "Writing practice follow-up"
+                }
+                write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": BASIC2_MIDTERM_WRITING_PRACTICE_ID,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "wordCount": report["wordCount"],
+                    "followUpOnly": True,
+                    "noGrade": True,
                     "weight": 0
                 })
             return

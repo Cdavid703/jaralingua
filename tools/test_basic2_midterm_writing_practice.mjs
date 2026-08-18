@@ -14,6 +14,7 @@ function assert(condition, message) {
 const evaluations = read("ingles/basico-2/evaluations.html");
 const practice = read("ingles/basico-2/midterm-writing-practice.html");
 const script = read("assets/js/basic2-midterm-writing-practice.js");
+const server = read("server/progress_api.py");
 const index = read("ingles/basico-2/index.html");
 const practiceLab = read("ingles/basico-2/practice-lab.html");
 
@@ -37,6 +38,8 @@ assert(/data-writing-field="cityWeather"/.test(practice), "Practice page must re
 assert(/data-writing-field="currentActivities"/.test(practice), "Practice page must require current activities writing");
 assert(/data-writing-field="responsibilities"/.test(practice), "Practice page must require responsibility writing");
 assert(/data-writing-field="readerQuestion"/.test(practice), "Practice page must require a final reader question");
+assert(/id="sendTeacherButton"/.test(practice), "Practice page must include a teacher delivery button");
+assert(/Send to teacher · 0%/.test(practice), "Practice page must state the teacher delivery is 0%");
 assert(/basic2-midterm-writing-practice\.js\?v=20260818-midterm-writing-practice/.test(practice), "Practice page must load cache-busted controller");
 assert(!/background-attachment:\s*fixed|position:\s*fixed[^;]*;[^}]*midterm-hero/s.test(practice), "Hero must not be fixed");
 
@@ -44,5 +47,14 @@ assert(/wordList\(post\)\.length >= 100/.test(script), "Controller must enforce 
 assert(/hasPresentContinuous\(post\)/.test(script), "Controller must detect present continuous");
 assert(/localStorage\.setItem\(STORAGE_KEY/.test(script), "Controller must autosave the draft locally");
 assert(/selfCheckButton\.disabled = !ready/.test(script), "Self-check must stay locked until requirements are met");
+assert(/\/api\/basic2\/midterm-writing-practice\/submit/.test(script), "Controller must submit to the Basic 2 writing follow-up endpoint");
+assert(/noGrade:\s*true/.test(script), "Client submission must mark this as no-grade");
+assert(/submitState === "submitted"/.test(script), "Controller must track teacher submission state");
+
+assert(/BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION/.test(server), "Server must define the Basic 2 midterm writing practice evaluation");
+assert(/"weight": 0/.test(server), "Server evaluation must have weight 0");
+assert(/"noGrade": True/.test(server), "Server submission detail must be marked no-grade");
+assert(/\/api\/basic2\/midterm-writing-practice\/submit/.test(server), "Server must expose the Basic 2 midterm writing practice endpoint");
+assert(!/student\.setdefault\("grades", \{\}\)\[BASIC2_MIDTERM_WRITING_PRACTICE_ID\]/.test(server), "No numeric grade should be written for the writing practice deliverable");
 
 console.log("PASS Basic 2 midterm writing practice page");
