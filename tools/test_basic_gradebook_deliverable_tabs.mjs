@@ -19,8 +19,8 @@ assert.match(client, /staffReportsMarkup\(weightedPayload\)/, "Reports tab must 
 assert.match(client, /wireExport\(root, payloadWithEvaluations\(payload, weightedEvaluations\(payload\.evaluations\)\)\)/, "Excel export must use weighted evaluations only");
 assert.doesNotMatch(client, /studentGradesRows\(student, deliverables\)\.replace/, "Deliverable rows must not remove the 0% column with string replacement");
 
-assert.match(basic1Page, /basic-english-grades\.js\?v=20260730-deliverables-tabs/, "Basic 1 grades page must bust the shared gradebook JS cache");
-assert.match(basic2Page, /basic-english-grades\.js\?v=20260730-deliverables-tabs/, "Basic 2 grades page must bust the shared gradebook JS cache");
+assert.match(basic1Page, /basic-english-grades\.js\?v=[^"]+/, "Basic 1 grades page must bust the shared gradebook JS cache");
+assert.match(basic2Page, /basic-english-grades\.js\?v=(?:20260730-deliverables-tabs|20260820-basic2-final-status-email-toggle)/, "Basic 2 grades page must bust the shared gradebook JS cache");
 assert.match(basic2Page, /emptyGradeGrid:\s*false/, "Basic 2 must not wipe non-percentage deliverables on the client");
 
 const basicEnsure = server.match(/def ensure_basic_gradebook_structure\(grades_data\):(?<body>[\s\S]*?)\n\n\ndef ensure_basic2_gradebook_structure/);

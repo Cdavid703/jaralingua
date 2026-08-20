@@ -176,19 +176,25 @@
   }
 
   function approvalStatus(student, evaluations) {
-    if (student && student.approvalStatus) return String(student.approvalStatus);
     const weighted = weightedEvaluations(evaluations);
     const summary = gradeSummary(student, weighted);
+    const configuredWeight = weighted.reduce(function (total, evaluation) {
+      return total + evaluationWeight(evaluation);
+    }, 0);
+    if (configuredWeight < 100 || summary.completedWeight < 100) return "Pending final status";
+    if (student && student.approvalStatus) return String(student.approvalStatus);
     const grades = student && student.grades ? student.grades : {};
     const pendingCount = weighted.filter(function (evaluation) {
       return typeof grades[evaluation.id] !== "number";
     }).length;
-    if (pendingCount > 2 || summary.average == null || summary.average < 3) return "Reprobado";
+    if (pendingCount > 0 || summary.average == null || summary.average < 3) return "Reprobado";
     return "Aprobado";
   }
 
   function approvalClass(status) {
-    return String(status || "").toLowerCase().indexOf("aprob") !== -1 ? "done" : "pending";
+    const normalized = String(status || "").toLowerCase();
+    if (normalized.indexOf("pending final") !== -1 || normalized.indexOf("pendiente") !== -1) return "neutral";
+    return normalized.indexOf("aprob") !== -1 ? "done" : "pending";
   }
 
   function slugify(value) {
@@ -912,7 +918,7 @@
         ${!weightedPayload.evaluations.length ? `<p class="section-text mb-3">${escapeHtml(PAGE_CONFIG.emptyAssessmentsMessage)}</p>` : ""}
         <div class="table-wrap">
           <table class="grades-table">
-            <thead><tr><th>Student</th><th data-email-column>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Aprobado</th></tr></thead>
+            <thead><tr><th>Student</th><th data-email-column>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Course status</th></tr></thead>
             <tbody>${staffStudentRows(weightedPayload)}</tbody>
           </table>
         </div>
@@ -1094,7 +1100,7 @@
         <body>
           <table>
             <tr><td class="title" colspan="${payload.evaluations.length + 6}">${excelCell(PAGE_CONFIG.excelTitle)}</td></tr>
-            <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Aprobado</th></tr>
+            <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th><th>Course status</th></tr>
             ${rows}
           </table>
         </body>

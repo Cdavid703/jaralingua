@@ -15,6 +15,8 @@ assert.match(basic2Grades, /showRosterExport:\s*true/, "Basic English Course 2 m
 assert.match(basic2Grades, /disableAdminEditing:\s*false/, "Basic English Course 2 must expose admin student editing tools");
 assert.match(basic2Grades, /showStudentProfile:\s*true/, "Basic English Course 2 must enable the student profile tab");
 assert.match(basic2Grades, /studentProfileApiPath:\s*"\/api\/basic2\/student-profile"/, "Basic English Course 2 must save student profiles to its own endpoint");
+assert.match(basic2Grades, /#basicEnglishGradesApp\.hide-email-columns \[data-email-column\]/, "Basic English Course 2 must include CSS for the show/hide email column button");
+assert.match(basic2Grades, /basic-english-grades\.js\?v=20260820-basic2-final-status-email-toggle/, "Basic English Course 2 must bust the gradebook JS cache for the final-status and email-toggle fix");
 assert.match(
   basic2Grades,
   /rosterExcelFileName:\s*"basic-english-course-2-student-roster\.xls"/,
@@ -28,6 +30,10 @@ assert.match(gradesEngine, /Remove this student from this course/, "The student 
 assert.doesNotMatch(gradesEngine, /Preview shows the first records only/, "The roster tab should not render a student preview");
 assert.doesNotMatch(gradesEngine, /payload\.students\.slice\(0,\s*6\)/, "The roster tab should not use a preview subset");
 assert.match(gradesEngine, /function exportRosterExcel/, "The gradebook engine must generate the roster Excel file");
+assert.match(gradesEngine, /configuredWeight < 100 \|\| summary\.completedWeight < 100/, "The final approved/failed status must wait until 100% of weighted grades is available");
+assert.match(gradesEngine, /Pending final status/, "The gradebook must show a pending final status before the course reaches 100%");
+assert.match(gradesEngine, /<th>Course status<\/th>/, "The staff grid and Excel must label the final column as course status, not premature approval");
+assert.match(gradesEngine, /setEmailColumnsHidden\(root, !root\.classList\.contains\("hide-email-columns"\)\)/, "The email column toggle must switch the hidden state");
 assert.match(gradesEngine, /function studentProfileMarkup/, "The gradebook engine must render the student profile form");
 assert.match(gradesEngine, /data-student-profile-field="email"/, "The student profile form must include email");
 assert.match(gradesEngine, /data-student-profile-field="documentId"/, "The student profile form must include ID/cédula");
