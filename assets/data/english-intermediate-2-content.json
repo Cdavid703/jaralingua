@@ -409,27 +409,6 @@
       "affectsAverage": false,
       "status": "published",
       "searchKeywords": ["Unit 2", "conversation coach", "Renata", "conversation", "hello", "name", "after class", "hope to", "would like to", "goal", "design course", "specific question", "dilemma", "family", "community project", "advice", "wish I had", "if I were you"]
-    },
-    {
-      "id": "unit-2-midterm-writing-catharsis-practice",
-      "unit": 2,
-      "order": 8,
-      "type": "writing",
-      "skillLabel": "Writing practice",
-      "title": "Midterm Writing Practice",
-      "subtitle": "Catharsis for planning: regrets, wishes and hopes.",
-      "summary": "Prepare a full email to a best friend abroad about a difficult situation, what you would have done differently and a hopeful future plan.",
-      "image": "/assets/img/english-intermediate-2/unit-2/midterm-writing-catharsis/midterm-writing-catharsis-hero-v1.png",
-      "workshopHref": "/ingles/intermediate-2/midterm-writing-practice-catharsis.html",
-      "duration": "35 minutes",
-      "product": "A private approximately 180-word email and formative self-check",
-      "targetWords": 180,
-      "teacherSubmission": false,
-      "gradebookProjected": false,
-      "gradebookWeight": 0,
-      "affectsAverage": false,
-      "status": "published",
-      "searchKeywords": ["Unit 2", "midterm", "writing", "email", "friend abroad", "catharsis", "regret", "wish I had", "should have", "would have", "hope to", "would like to", "dream of", "goal", "future plan", "optimistic closing", "180 words"]
     }
   ]
 }

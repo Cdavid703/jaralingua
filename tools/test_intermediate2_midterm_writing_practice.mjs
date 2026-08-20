@@ -4,6 +4,8 @@ import path from "node:path";
 
 const root = path.resolve(import.meta.dirname, "..");
 const page = fs.readFileSync(path.join(root, "ingles", "intermediate-2", "midterm-writing-practice-catharsis.html"), "utf8");
+const evaluations = fs.readFileSync(path.join(root, "ingles", "intermediate-2", "evaluations.html"), "utf8");
+const home = fs.readFileSync(path.join(root, "ingles", "intermediate-2", "index.html"), "utf8");
 const script = fs.readFileSync(path.join(root, "assets", "js", "english-intermediate2-midterm-writing-practice.js"), "utf8");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "assets", "data", "english-intermediate-2-content.json"), "utf8"));
 const assetDir = path.join(root, "assets", "img", "english-intermediate-2", "unit-2", "midterm-writing-catharsis");
@@ -38,13 +40,11 @@ for (const filename of ["midterm-writing-catharsis-hero-v1.png", "future-plannin
 }
 
 const item = catalog.items.find((activity) => activity.id === "unit-2-midterm-writing-catharsis-practice");
-assert.ok(item, "Midterm writing preparation must appear in the central Practice Lab catalog.");
-assert.equal(item.unit, 2);
-assert.equal(item.type, "writing");
-assert.equal(item.targetWords, 180);
-assert.equal(item.teacherSubmission, false);
-assert.equal(item.gradebookProjected, false);
-assert.equal(item.affectsAverage, false);
-assert.equal(item.status, "published");
+assert.equal(item, undefined, "A mock exam must not appear in the Practice Lab catalog.");
+assert.match(evaluations, /Evaluations and Mock Exams/);
+assert.match(evaluations, /midterm-writing-practice-catharsis\.html/);
+assert.match(evaluations, /preparation only/i);
+assert.doesNotMatch(evaluations, /0%/);
+assert.match(home, /href="\.\/evaluations\.html">Open Evaluations and Mock Exams/);
 
 console.log("Intermediate 2 Unit 2 midterm writing preparation contract passed.");

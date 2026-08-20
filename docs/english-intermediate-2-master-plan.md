@@ -4036,7 +4036,7 @@ El contrato estático `tools/test_intermediate2_unit2_renata_coach_page.mjs` ver
 
 ## 53. Implementación confirmada — Unit 2 Midterm Writing Practice: Catharsis for Planning
 
-`midterm-writing-practice-catharsis.html` es una actividad privada de escritura dentro de Practice Lab, Unidad 2. Reproduce de manera fiel la tarea escrita del midterm sin convertirse en una evaluación: el estudiante redacta un email dirigido a su mejor amigo o amiga en el extranjero, reflexiona sobre una situación difícil de trabajo o familia, explica qué habría hecho diferente y termina con deseos, esperanzas, planes o sueños expresados de manera optimista.
+`midterm-writing-practice-catharsis.html` es un simulacro privado de escritura dentro de **Evaluations and Mock Exams**. Reproduce de manera fiel la tarea escrita del midterm sin convertirse en una evaluación: el estudiante redacta un email dirigido a su mejor amigo o amiga en el extranjero, reflexiona sobre una situación difícil de trabajo o familia, explica qué habría hecho diferente y termina con deseos, esperanzas, planes o sueños expresados de manera optimista.
 
 El formato conserva los rasgos relevantes del examen: campos de email, audiencia personal, propósito reflexivo, objetivo aproximado de 180 palabras, cierre optimista y las cinco áreas de la rúbrica institucional —contenido, organización, vocabulario, estructura y mecánica—. La página no muestra una respuesta modelo completa ni asigna puntaje. En lugar de eso, el constructor guía con siete partes: subject, contexto difícil, regret (`wish I had`, `should have` o `would have`), futuro (`hope to`, `would like to`, `dream of` o `my goal is to`), siguiente paso, cierre positivo y firma.
 
@@ -4044,7 +4044,11 @@ El contador de palabras usa 165 como umbral de preparación y comunica la meta d
 
 Tres imágenes profesionales originales —un estudiante escribiendo, una estudiante que mira hacia una meta futura y dos amistades conectadas a distancia— orientan las ideas sin incluir texto, logos, watermark ni estética blackboard. Su composición sigue el estándar expandido y compacto: hero único, dos guías visuales, editor amplio y checklist lateral en escritorio; una columna cómoda y completa en móvil.
 
-La prueba `tools/test_intermediate2_midterm_writing_practice.mjs` comprueba el formato, lenguaje de Unidad 2, las tres imágenes, guardado local, ausencia de red/audio sintético/entrega, ausencia de porcentajes, catálogo y condiciones privadas. El cierre de la actividad exige prueba estática, commit, push, despliegue selectivo y comprobación de producción sin levantar servidor local.
+El simulacro no pertenece al catálogo ni a la carpeta de Practice Lab: su acceso único se publica desde `evaluations.html`, junto con la información de evaluación oficial. La prueba `tools/test_intermediate2_midterm_writing_practice.mjs` comprueba el formato, lenguaje de Unidad 2, las tres imágenes, guardado local, ausencia de red/audio sintético/entrega, ausencia de porcentajes, la publicación en Evaluations and Mock Exams y su exclusión del catálogo de práctica. El cierre de la actividad exige prueba estática, commit, push, despliegue selectivo y comprobación de producción sin levantar servidor local.
+
+## 54. Evaluations and Mock Exams — regla de ubicación
+
+**Evaluations and Mock Exams** es el único espacio de acceso a simulacros de evaluación. Practice Lab contiene exclusivamente talleres y actividades de práctica por unidad; no debe listar simulacros, aunque estos repasen lenguaje de una unidad concreta. Cada mock debe indicar con claridad que es preparación privada, no tiene porcentaje, no altera Grades y no sustituye la evaluación oficial.
 
 ## 53. Implementación confirmada — Unit 2 Visual Debate: Take a Side
 
