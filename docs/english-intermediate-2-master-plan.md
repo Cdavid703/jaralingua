@@ -4034,6 +4034,18 @@ Todos los 22 audios audibles son MP3 reales de ElevenLabs, generados desde `audi
 
 El contrato estático `tools/test_intermediate2_unit2_renata_coach_page.mjs` verifica los siete turnos, la secuencia pedagógica, la integración configurable, 22 MP3 con tamaño real, imagen profesional, metadatos, ausencia de síntesis del navegador, ausencia de porcentajes y catálogo publicado. El cierre obligatorio conserva la regla del curso: pruebas estáticas sin servidor local, commit, push, despliegue selectivo y comprobación directa en producción.
 
+## 53. Implementación confirmada — Unit 2 Midterm Writing Practice: Catharsis for Planning
+
+`midterm-writing-practice-catharsis.html` es una actividad privada de escritura dentro de Practice Lab, Unidad 2. Reproduce de manera fiel la tarea escrita del midterm sin convertirse en una evaluación: el estudiante redacta un email dirigido a su mejor amigo o amiga en el extranjero, reflexiona sobre una situación difícil de trabajo o familia, explica qué habría hecho diferente y termina con deseos, esperanzas, planes o sueños expresados de manera optimista.
+
+El formato conserva los rasgos relevantes del examen: campos de email, audiencia personal, propósito reflexivo, objetivo aproximado de 180 palabras, cierre optimista y las cinco áreas de la rúbrica institucional —contenido, organización, vocabulario, estructura y mecánica—. La página no muestra una respuesta modelo completa ni asigna puntaje. En lugar de eso, el constructor guía con siete partes: subject, contexto difícil, regret (`wish I had`, `should have` o `would have`), futuro (`hope to`, `would like to`, `dream of` o `my goal is to`), siguiente paso, cierre positivo y firma.
+
+El contador de palabras usa 165 como umbral de preparación y comunica la meta de aproximadamente 180 palabras, sin obligar a añadir relleno artificial. El self-check formativo explica qué requisito falta y recuerda revisar los cinco criterios; no califica, no contacta al servidor, no crea entrega, no usa porcentaje y no aparece en Grades. El borrador se guarda solo en el navegador y puede descargarse como copia privada. La evaluación oficial debe hacerse de forma independiente al abrirse.
+
+Tres imágenes profesionales originales —un estudiante escribiendo, una estudiante que mira hacia una meta futura y dos amistades conectadas a distancia— orientan las ideas sin incluir texto, logos, watermark ni estética blackboard. Su composición sigue el estándar expandido y compacto: hero único, dos guías visuales, editor amplio y checklist lateral en escritorio; una columna cómoda y completa en móvil.
+
+La prueba `tools/test_intermediate2_midterm_writing_practice.mjs` comprueba el formato, lenguaje de Unidad 2, las tres imágenes, guardado local, ausencia de red/audio sintético/entrega, ausencia de porcentajes, catálogo y condiciones privadas. El cierre de la actividad exige prueba estática, commit, push, despliegue selectivo y comprobación de producción sin levantar servidor local.
+
 ## 53. Implementación confirmada — Unit 2 Visual Debate: Take a Side
 
 `speaking-unit-2-take-a-side.html` es la actividad 06 de la Unidad 2 y vive exclusivamente en Practice Lab. Su tipo de catálogo es `speaking-group`, su etiqueta visible es **Visual debate** y su dinámica es formativa, dirigida por el profesor y no evaluativa: no solicita entrega, no calcula nota, no proyecta resultados al gradebook y no afecta el promedio.
