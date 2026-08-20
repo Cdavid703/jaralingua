@@ -6,6 +6,20 @@
   --coach-coral: #e11d48;
   --coach-green: #15803d;
   --coach-soft: #f7fbff;
+  --coach-app-max: 1760px;
+  --coach-app-gutter: clamp(.75rem, 1.45vw, 1.75rem);
+}
+
+/* Shared application-width standard for Basic English Course 2 conversation coach pages. */
+.basic2-conversation-coach-page :is(.coach-hero, .coach-shell, .coach-outcomes) {
+  width: min(var(--coach-app-max), calc(100% - (var(--coach-app-gutter) * 2)));
+  max-width: none;
+  margin-inline: auto;
+}
+
+.basic2-conversation-coach-page :is(.coach-search, .coach-main-grid, .coach-support-grid, .coach-summary-grid) {
+  width: 100%;
+  max-width: none;
 }
 
 .basic2-conversation-coach-page .coach-hero {

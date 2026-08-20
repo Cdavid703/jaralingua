@@ -1,4 +1,5 @@
-.basic2-page {
+.basic2-page,
+.basic2-index-page {
   --basic2-blue: #123b8f;
   --basic2-ink: #071f4f;
   --basic2-red: #c1121f;
@@ -6,6 +7,54 @@
   --basic2-muted: #526173;
   --basic2-soft: #f6f9ff;
   --basic2-warm: #fff7e8;
+  --basic2-app-max: 1760px;
+  --basic2-app-gutter: clamp(0.75rem, 1.45vw, 1.75rem);
+}
+
+.basic2-page,
+.basic2-index-page {
+  overflow-x: hidden;
+}
+
+.basic2-page *,
+.basic2-page *::before,
+.basic2-page *::after,
+.basic2-index-page *,
+.basic2-index-page *::before,
+.basic2-index-page *::after {
+  box-sizing: border-box;
+}
+
+/* Shared application-width standard for Basic English Course 2:
+   full-width compact composition, safe gutters, no narrow central rail. */
+.basic2-page main,
+.basic2-index-page main {
+  width: 100%;
+  max-width: none;
+}
+
+.basic2-page :is(.premium-lesson-container, .lesson-outcome, .quick-access-panel, .basic-intro-section, .course-dashboard, .basic2-unit-list, .basic2-practice-shell, .game-shell, .demonstratives-shell, .price-shell, .roleplay-shell),
+.basic2-index-page :is(.quick-access-panel, .basic-intro-section, .course-dashboard, .basic2-unit-list) {
+  width: min(var(--basic2-app-max), calc(100% - (var(--basic2-app-gutter) * 2))) !important;
+  max-width: none !important;
+  margin-inline: auto;
+}
+
+.basic2-page :is(.course-dashboard, .unit-folder-grid, .basic2-route-grid, .weather-card-grid, .weather-callout-grid, .expression-grid, .listening-library-grid),
+.basic2-index-page :is(.course-dashboard, .unit-folder-grid, .basic2-route-grid) {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)) !important;
+}
+
+.basic2-page :is(.overview-intro, .section-heading, .basic2-exam-note),
+.basic2-index-page :is(.overview-intro, .section-heading, .basic2-exam-note) {
+  width: min(var(--basic2-app-max), calc(100% - (var(--basic2-app-gutter) * 2)));
+  max-width: none;
+  margin-inline: auto;
+}
+
+.basic2-page.hangman-page :is(.container, .games-section > .container) {
+  width: min(var(--basic2-app-max), calc(100% - (var(--basic2-app-gutter) * 2))) !important;
+  max-width: none !important;
 }
 
 .basic2-page .lesson-hero,
@@ -36,7 +85,7 @@
 }
 
 .basic2-route-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
   margin-top: 22px;
 }
 
@@ -86,9 +135,10 @@
 }
 
 .basic2-unit-list {
-  max-width: 1180px;
+  width: min(var(--basic2-app-max), calc(100% - (var(--basic2-app-gutter) * 2)));
+  max-width: none;
   margin: 0 auto;
-  padding: 0 20px 70px;
+  padding: 0 0 70px;
 }
 
 .basic2-unit-card {
@@ -219,12 +269,12 @@
 .comparison-grid,
 .pattern-grid,
 .summary-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
 }
 
 .weather-card-grid,
 .expression-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
 }
 
 .weather-card {
@@ -437,9 +487,10 @@
 }
 
 .basic2-practice-shell {
-  max-width: 1180px;
+  width: min(var(--basic2-app-max), calc(100% - (var(--basic2-app-gutter) * 2)));
+  max-width: none;
   margin: 0 auto;
-  padding: 0 20px 70px;
+  padding: 0 0 70px;
   display: grid;
   gap: 22px;
 }

@@ -73,6 +73,8 @@ Las practicas tipo examen, simulacros y evaluaciones oficiales deben ir en **Eva
 
 Todas las paginas, actividades, practicas tipo examen, simulacros y evaluaciones oficiales de **Basic English Course 2** deben aprovechar el ancho disponible de la pantalla.
 
+Esta regla sigue el estandar de pantalla aprovechada de Intermediate English Course 2: la pagina debe sentirse como una aplicacion de clase y no como una columna central estrecha. Esto no significa estirar cada parrafo, boton o tarjeta de manera artificial. El espacio adicional se usa para agrupar contenido relacionado en franjas, columnas o cuadriculas utiles que reduzcan scroll vertical y permitan ver mas aprendizaje al mismo tiempo.
+
 Reglas obligatorias:
 
 - en escritorio o portatil, el contenido principal no debe quedar encerrado en columnas angostas de `1120px`, `1180px` o `1220px` cuando la pantalla permite mas espacio;
@@ -80,6 +82,16 @@ Reglas obligatorias:
 - las secciones de escritura, lectura, preguntas, grillas, formularios y paneles laterales deben poder expandirse para usar mejor pantallas grandes;
 - en celular y tablet, el margen debe reducirse sin crear scroll horizontal;
 - solo se permite un ancho estrecho cuando el objetivo pedagogico lo justifique claramente, por ejemplo un texto corto centrado, una nota breve o una tarjeta auxiliar, nunca el area principal de trabajo.
+
+Aplicacion por tipo de pagina:
+
+- **Home, Games, Evaluations, Course Overview, Practice Lab, Listening Library e Idioms/Phrasal Verbs:** tarjetas y carpetas usan `auto-fit` para ocupar filas compactas; no quedan de a una o dos tarjetas por fila en escritorio si hay espacio real disponible.
+- **Paginas de teoria:** hero, menu rapido y acordeones usan ancho de aplicacion; las explicaciones se organizan en grupos legibles, no en parrafos larguisimos.
+- **Reading, listening, video listening y talleres:** preguntas, reproductores, modelos y ayudas usan paneles anchos; en movil regresan a una columna sin scroll horizontal.
+- **Pronunciation y Conversation Coach:** la practica principal y el resultado ocupan la fila superior cuando hay ancho; apoyos y resumen se organizan debajo en grillas compactas.
+- **Grades y examenes:** grillas, formularios, escritura y paneles docentes usan el ancho disponible, especialmente en escritorio, manteniendo controles tactiles comodos.
+
+Regla tecnica comun: `width: 100%`, `max-width: none` donde corresponda, `box-sizing: border-box`, gutters seguros con `clamp()` y sin `100vw` en contenedores principales para evitar scroll horizontal.
 
 ## 7. Entregas al profesor y blindaje contra errores
 
