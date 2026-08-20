@@ -173,6 +173,8 @@ BASIC_UNIT6_NEIGHBORHOOD_TEST_EMAILS = {
 OPENAI_IMAGES_MODEL = os.environ.get("JARALINGUA_OPENAI_IMAGES_MODEL", "gpt-image-2").strip() or "gpt-image-2"
 INTERMEDIATE_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate-english-grades.json")
 INTERMEDIATE2_ENGLISH_GRADES_PATH = os.environ.get("JARALINGUA_INTERMEDIATE2_ENGLISH_GRADES_DATA", "/var/lib/jaralingua/intermediate2-english-grades.json")
+INTERMEDIATE2_MIDTERM_WRITING_PATH = os.environ.get("JARALINGUA_INTERMEDIATE2_MIDTERM_WRITING_DATA", "/var/lib/jaralingua/intermediate2-midterm-writing.json")
+INTERMEDIATE2_MIDTERM_WRITING_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_INTERMEDIATE2_MIDTERM_WRITING_SUBMISSIONS", "/var/lib/jaralingua/intermediate2-midterm-writing-submissions.json")
 INTERMEDIATE_INTEGRATED_TASK_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_DATA", "/var/lib/jaralingua/intermediate-integrated-task.json")
 INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_SUBMISSIONS", "/var/lib/jaralingua/intermediate-integrated-task-submissions.json")
 INTERMEDIATE_INTEGRATED_TASK_AUDIO_PATH = os.environ.get("JARALINGUA_INTERMEDIATE_INTEGRATED_TASK_AUDIO", "/var/lib/jaralingua/intermediate-integrated-task-real-us.mp3")
@@ -229,6 +231,7 @@ INTERMEDIATE2_UNIT1_PRONUNCIATION_REFERENCE = (
     "They are people I get on well with, and I want to keep in touch."
 )
 INTERMEDIATE2_UNIT2_PRONUNCIATION_ID = "intermediate2Unit2TheChoiceIdMakeDifferentlyPronunciation"
+INTERMEDIATE2_MIDTERM_WRITING_ID = "intermediate2MidtermWritingTask20"
 INTERMEDIATE2_UNIT2_PRONUNCIATION_VERSION = "2026.1"
 INTERMEDIATE2_UNIT2_PRONUNCIATION_REFERENCE = (
     "If I were at a crossroads, I'd think the decision over before I answered. "
@@ -524,6 +527,22 @@ INTERMEDIATE_FINAL_WRITING_TEST_EVALUATION = {
     "type": "Final writing evaluation",
     "description": "Official Master Chef Internet publication. The teacher reviews the protected submission with the institutional /50 rubric."
 }
+
+INTERMEDIATE2_MIDTERM_WRITING_EVALUATION = {
+    "id": INTERMEDIATE2_MIDTERM_WRITING_ID,
+    "title": "INTERMEDIATE ENGLISH COURSE 2 - MIDTERM WRITING TASK (20%)",
+    "weight": 20,
+    "type": "Midterm writing evaluation",
+    "description": "Official Catharsis for Planning email. The teacher reviews the protected submission with the institutional /50 rubric."
+}
+
+INTERMEDIATE2_MIDTERM_WRITING_RUBRIC = [
+    {"key": "content", "label": "Content", "descriptor": "Successfully completes the task by providing information and ideas with reasonable precision on topics of immediate relevance."},
+    {"key": "composing", "label": "Composing (Organization)", "descriptor": "Links short, discrete simple elements into a connected, linear sequence of points."},
+    {"key": "vocabulary", "label": "Vocabulary", "descriptor": "Uses sufficient vocabulary to express ideas and provide information about familiar or personally relevant topics."},
+    {"key": "structure", "label": "Structure", "descriptor": "Uses familiar grammatical patterns with sufficient accuracy for the intended meaning to be clear."},
+    {"key": "mechanics", "label": "Mechanics", "descriptor": "Produces generally intelligible continuous writing; spelling, punctuation, capitalization, and layout do not interfere with meaning."}
+]
 
 INTERMEDIATE_FINAL_WRITING_RUBRIC = [
     {
@@ -16639,6 +16658,236 @@ def intermediate_final_writing_student_action(profile, payload):
     }
 
 
+def default_intermediate2_midterm_writing_bundle():
+    return {
+        "schemaVersion": 1,
+        "state": {"isOpen": False, "openedAt": None, "closedAt": None, "updatedAt": None, "openedBy": None, "reopenUntilEpoch": None, "reopenUntilLabel": "", "reopenStudentIds": []},
+        "exam": {
+            "id": "intermediate-course-2-midterm-writing-task", "title": "INTERMEDIATE ENGLISH COURSE 2 - MIDTERM WRITING TASK (20%)", "topic": "Catharsis for planning", "taskType": "email", "audience": "best friend abroad", "purpose": "summarize regrets, wishes, hopes, plans, or dreams", "durationMinutes": 50, "targetWords": 180,
+            "prompt": "Write an email to your best friend abroad about a difficult work or family situation, what you would have done differently, and what you wish or plan for your future so that you can start making life better.",
+            "instructions": ["Describe your wishes, hopes, regrets, plans, or dreams.", "Write approximately 180 words.", "End your letter on an optimistic note.", "Spend 50 minutes on this task."], "totalPoints": 50
+        }
+    }
+
+
+def read_intermediate2_midterm_writing_bundle():
+    data = read_basic_final_oral_json(INTERMEDIATE2_MIDTERM_WRITING_PATH, default_intermediate2_midterm_writing_bundle())
+    defaults = default_intermediate2_midterm_writing_bundle()
+    if not isinstance(data.get("state"), dict) or not isinstance(data.get("exam"), dict):
+        raise BasicFinalOralStorageError("invalid_intermediate2_midterm_writing_bundle")
+    for group in ("state", "exam"):
+        for key, value in defaults[group].items():
+            data[group].setdefault(key, value)
+    data["schemaVersion"] = 1
+    return data
+
+
+def write_intermediate2_midterm_writing_bundle(data):
+    write_json_file(INTERMEDIATE2_MIDTERM_WRITING_PATH, data, ".intermediate2-midterm-writing-")
+
+
+def read_intermediate2_midterm_writing_store():
+    data = read_basic_final_oral_json(INTERMEDIATE2_MIDTERM_WRITING_SUBMISSIONS_PATH, {"schemaVersion": 1, "attempts": {}, "submissions": {}, "idempotency": {}, "events": []})
+    for key in ("attempts", "submissions", "idempotency"):
+        if not isinstance(data.get(key), dict):
+            raise BasicFinalOralStorageError("invalid_intermediate2_midterm_writing_store:" + key)
+    if not isinstance(data.get("events"), list):
+        data["events"] = []
+    data["schemaVersion"] = 1
+    return data
+
+
+def write_intermediate2_midterm_writing_store(data):
+    write_json_file(INTERMEDIATE2_MIDTERM_WRITING_SUBMISSIONS_PATH, data, ".intermediate2-midterm-writing-submissions-")
+
+
+def intermediate2_midterm_writing_event(store, event_type, profile=None, student_id="", detail=""):
+    events = store.setdefault("events", [])
+    events.append({"type": clean_text(event_type, 80), "studentId": clean_text(student_id, 40), "actor": normalize_email((profile or {}).get("email")), "detail": clean_text(detail, 500), "at": now_iso()})
+    store["events"] = events[-600:]
+
+
+def intermediate2_midterm_writing_public_exam(bundle):
+    exam = bundle.get("exam", {})
+    return {"id": clean_text(exam.get("id"), 100), "title": clean_text(exam.get("title"), 220), "topic": clean_text(exam.get("topic"), 160), "taskType": clean_text(exam.get("taskType"), 80), "audience": clean_text(exam.get("audience"), 180), "purpose": clean_text(exam.get("purpose"), 280), "durationMinutes": int(exam.get("durationMinutes", 50) or 50), "targetWords": int(exam.get("targetWords", 180) or 180), "prompt": clean_text(exam.get("prompt"), 1800), "instructions": [clean_text(item, 600) for item in exam.get("instructions", []) if clean_text(item, 600)], "totalPoints": clean_exam_number(exam.get("totalPoints", 50))}
+
+
+def intermediate2_midterm_writing_can_start(role, state, student_id):
+    return role in ("admin", "teacher") or (isinstance(state, dict) and state.get("isOpen") is True) or basic_integrated_student_has_reopen(state, student_id)
+
+
+def intermediate2_midterm_writing_apply_gradebook(grades_data, store):
+    changed = ensure_evaluation_template(grades_data, INTERMEDIATE2_MIDTERM_WRITING_EVALUATION)
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        submitted = store.get("submissions", {}).get(student_id)
+        if not isinstance(submitted, dict):
+            continue
+        details = student.setdefault("gradeDetails", {})
+        detail = {"evaluationId": INTERMEDIATE2_MIDTERM_WRITING_ID, "activityTitle": INTERMEDIATE2_MIDTERM_WRITING_EVALUATION["title"], "status": clean_text(submitted.get("status"), 80), "submittedAt": clean_text(submitted.get("submittedAt"), 80), "gradedAt": clean_text(submitted.get("gradedAt"), 80), "receiptId": clean_text(submitted.get("receiptId"), 100), "score50": submitted.get("score50"), "grade": submitted.get("grade"), "pendingTeacherReview": submitted.get("status") != "graded", "officialAssessment": True, "weight": 20}
+        if details.get(INTERMEDIATE2_MIDTERM_WRITING_ID) != detail:
+            details[INTERMEDIATE2_MIDTERM_WRITING_ID] = detail
+            changed = True
+        if submitted.get("status") == "graded" and isinstance(submitted.get("grade"), (int, float)):
+            grades = student.setdefault("grades", {})
+            if grades.get(INTERMEDIATE2_MIDTERM_WRITING_ID) != submitted.get("grade"):
+                grades[INTERMEDIATE2_MIDTERM_WRITING_ID] = submitted.get("grade")
+                changed = True
+    return changed
+
+
+def intermediate2_midterm_writing_state_payload(profile, grades_data, bundle, store):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    state = bundle.get("state", {})
+    attempt = store.get("attempts", {}).get(student_id) if student_id else None
+    submitted = store.get("submissions", {}).get(student_id) if student_id else None
+    return {"role": role, "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True, "state": state, "exam": intermediate2_midterm_writing_public_exam(bundle) if role in ("admin", "teacher") else None, "student": basic_integrated_student_identity(student) if isinstance(student, dict) else None, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, role), "canStart": bool(student_id and intermediate2_midterm_writing_can_start(role, state, student_id) and not isinstance(attempt, dict) and not isinstance(submitted, dict)), "canResume": bool(student_id and isinstance(attempt, dict) and attempt.get("status") == "in_progress" and not isinstance(submitted, dict))}
+
+
+def intermediate2_midterm_writing_health(grades_data, store):
+    students, counts = [], {"total": 0, "inProgress": 0, "pendingReview": 0, "graded": 0}
+    for item in grades_data.get("students", []):
+        if not isinstance(item, dict):
+            continue
+        student_id = clean_text(item.get("id"), 40)
+        attempt, submitted = store.get("attempts", {}).get(student_id), store.get("submissions", {}).get(student_id)
+        status = "not-started"
+        if isinstance(submitted, dict):
+            status = "graded" if submitted.get("status") == "graded" else "pending-review"
+            counts["graded" if status == "graded" else "pendingReview"] += 1
+        elif isinstance(attempt, dict) and attempt.get("status") == "in_progress":
+            status = "in-progress"; counts["inProgress"] += 1
+        counts["total"] += 1
+        students.append({"id": student_id, "fullName": clean_text(item.get("fullName"), 200), "email": normalize_email(item.get("email")), "status": status, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, "teacher")})
+    return {"counts": counts, "students": students}
+
+
+def intermediate2_midterm_writing_start(profile, payload):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    role, student = grade_user_role(profile, grades_data), matched_student_for_profile(profile, grades_data)
+    if not isinstance(student, dict):
+        return 403, {"error": "student_required"}
+    student_id = clean_text(student.get("id"), 40)
+    bundle, store = read_intermediate2_midterm_writing_bundle(), read_intermediate2_midterm_writing_store()
+    submitted = store["submissions"].get(student_id)
+    if isinstance(submitted, dict):
+        return 409, {"error": "already_submitted", "submission": basic_final_writing_submission_public(submitted, role)}
+    existing = store["attempts"].get(student_id)
+    if isinstance(existing, dict) and existing.get("status") == "in_progress":
+        existing["lastSeenAt"] = now_iso(); write_intermediate2_midterm_writing_store(store)
+        return 200, {"ok": True, "resumed": True, "attempt": basic_final_writing_public_attempt(existing), "exam": intermediate2_midterm_writing_public_exam(bundle)}
+    if not intermediate2_midterm_writing_can_start(role, bundle.get("state", {}), student_id):
+        return 403, {"error": "exam_closed", "state": bundle.get("state", {})}
+    started = datetime.now(timezone.utc); duration = max(5, min(180, int(bundle["exam"].get("durationMinutes", 50) or 50)))
+    attempt = {"attemptId": "I2MW-" + secrets.token_hex(8).upper(), "studentId": student_id, "studentName": clean_text(student.get("fullName"), 200), "email": normalize_email(profile.get("email") or student.get("email")), "courseCode": clean_text((payload or {}).get("courseCode"), 40) or "INTERMEDIATE-C2", "status": "in_progress", "startedAt": started.isoformat().replace("+00:00", "Z"), "expiresAt": (started + timedelta(minutes=duration)).isoformat().replace("+00:00", "Z"), "lastSeenAt": now_iso(), "lastSavedAt": None, "submittedAt": None, "revision": 0, "draft": {"from": "", "to": "", "subject": "", "body": "", "updatedAt": None}}
+    store["attempts"][student_id] = attempt; intermediate2_midterm_writing_event(store, "attempt_started", profile, student_id, attempt["attemptId"]); write_intermediate2_midterm_writing_store(store)
+    return 200, {"ok": True, "resumed": False, "attempt": basic_final_writing_public_attempt(attempt), "exam": intermediate2_midterm_writing_public_exam(bundle)}
+
+
+def intermediate2_midterm_writing_save_draft(profile, payload):
+    grades_data, student = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH), matched_student_for_profile(profile, read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH))
+    if not isinstance(student, dict):
+        return 403, {"error": "student_required"}
+    student_id, store = clean_text(student.get("id"), 40), read_intermediate2_midterm_writing_store()
+    attempt = store["attempts"].get(student_id)
+    if not isinstance(attempt, dict) or attempt.get("status") != "in_progress":
+        return 404, {"error": "attempt_not_found"}
+    if clean_text(payload.get("attemptId"), 120) != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    timestamp = now_iso(); attempt["draft"] = {"from": clean_text(payload.get("from"), 160), "to": clean_text(payload.get("to"), 160), "subject": clean_text(payload.get("subject"), 240), "body": clean_basic_writing(payload.get("body")), "updatedAt": timestamp}; attempt["courseCode"] = clean_text(payload.get("courseCode"), 40) or "INTERMEDIATE-C2"; attempt["lastSavedAt"] = timestamp; attempt["lastSeenAt"] = timestamp; attempt["revision"] = int(attempt.get("revision", 0) or 0) + 1
+    write_intermediate2_midterm_writing_store(store)
+    return 200, {"ok": True, "attempt": basic_final_writing_public_attempt(attempt)}
+
+
+def intermediate2_midterm_writing_submit(profile, payload):
+    grades_data, student = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH), matched_student_for_profile(profile, read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH))
+    if not isinstance(student, dict):
+        return 403, {"error": "student_required"}
+    student_id, store = clean_text(student.get("id"), 40), read_intermediate2_midterm_writing_store()
+    submission_key = clean_text(payload.get("clientSubmissionId"), 160)
+    if not submission_key:
+        return 400, {"error": "missing_client_submission_id"}
+    existing = store["submissions"].get(student_id)
+    if isinstance(existing, dict):
+        if store["idempotency"].get(student_id) == submission_key:
+            return 200, {"ok": True, "idempotent": True, "submission": basic_final_writing_submission_public(existing, grade_user_role(profile, grades_data))}
+        return 409, {"error": "already_submitted", "submission": basic_final_writing_submission_public(existing, grade_user_role(profile, grades_data))}
+    attempt = store["attempts"].get(student_id)
+    if not isinstance(attempt, dict) or attempt.get("status") != "in_progress":
+        return 404, {"error": "attempt_not_found"}
+    if clean_text(payload.get("attemptId"), 120) != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    body, timestamp = clean_basic_writing(payload.get("body")), now_iso()
+    submitted = {"receiptId": "I2MW-" + secrets.token_hex(5).upper(), "attemptId": attempt["attemptId"], "studentId": student_id, "studentName": clean_text(student.get("fullName"), 200), "email": normalize_email(profile.get("email") or student.get("email")), "courseCode": clean_text(payload.get("courseCode"), 40) or "INTERMEDIATE-C2", "submittedAt": timestamp, "status": "pending_teacher_review", "workflowStatus": "pending_teacher_review", "wordCount": basic_word_count(body), "from": clean_text(payload.get("from"), 160), "to": clean_text(payload.get("to"), 160), "subject": clean_text(payload.get("subject"), 240), "body": body, "rubric": None, "score50": None, "grade": None, "teacherComments": "", "gradedAt": None, "gradedBy": ""}
+    store["submissions"][student_id] = submitted; store["idempotency"][student_id] = submission_key; attempt["status"] = "submitted"; attempt["submittedAt"] = timestamp; intermediate2_midterm_writing_event(store, "submitted", profile, student_id, submitted["receiptId"]); write_intermediate2_midterm_writing_store(store)
+    if intermediate2_midterm_writing_apply_gradebook(grades_data, store):
+        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    return 200, {"ok": True, "submission": basic_final_writing_submission_public(submitted, grade_user_role(profile, grades_data))}
+
+
+def intermediate2_midterm_writing_grade(profile, payload):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    rubric = payload.get("rubric") if isinstance(payload.get("rubric"), dict) else {}
+    try:
+        rubric = {key: int(rubric.get(key)) for key in ("content", "composing", "vocabulary", "structure", "mechanics")}
+    except (TypeError, ValueError):
+        return 400, {"error": "invalid_rubric"}
+    if any(value < 1 or value > 10 for value in rubric.values()):
+        return 400, {"error": "invalid_rubric"}
+    student_id, store = clean_text(payload.get("studentId"), 40), read_intermediate2_midterm_writing_store(); submitted = store["submissions"].get(student_id)
+    if not isinstance(submitted, dict):
+        return 404, {"error": "submission_not_found"}
+    submitted["rubric"] = rubric; submitted["score50"] = sum(rubric.values()); submitted["grade"] = round(submitted["score50"] / 10, 2); submitted["status"] = "graded"; submitted["workflowStatus"] = "published"; submitted["teacherComments"] = clean_text(payload.get("teacherComments"), 5000); submitted["gradedAt"] = now_iso(); submitted["gradedBy"] = normalize_email(profile.get("email")); intermediate2_midterm_writing_event(store, "graded", profile, student_id, "Teacher published /50 rubric")
+    write_intermediate2_midterm_writing_store(store); intermediate2_midterm_writing_apply_gradebook(grades_data, store); write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    return 200, {"ok": True, "submission": basic_final_writing_submission_public(submitted, "teacher")}
+
+
+def intermediate2_midterm_writing_submissions(profile):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    store = read_intermediate2_midterm_writing_store()
+    if intermediate2_midterm_writing_apply_gradebook(grades_data, store):
+        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    submissions = [basic_final_writing_submission_public(item, "teacher") for item in store["submissions"].values() if isinstance(item, dict)]
+    submissions.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
+    return 200, {"role": grade_user_role(profile, grades_data), "submissions": submissions, "rubricCriteria": INTERMEDIATE2_MIDTERM_WRITING_RUBRIC, "health": intermediate2_midterm_writing_health(grades_data, store)}
+
+
+def intermediate2_midterm_writing_student_action(profile, payload):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    student_id, action = clean_text(payload.get("studentId"), 40), clean_text(payload.get("action"), 80)
+    if action not in ("reset", "reopen", "reset-and-reopen", "close-reopen"):
+        return 400, {"error": "invalid_action"}
+    bundle, store = read_intermediate2_midterm_writing_bundle(), read_intermediate2_midterm_writing_store(); state = bundle["state"]; changed = False
+    if action in ("reset", "reset-and-reopen"):
+        store["attempts"].pop(student_id, None); store["submissions"].pop(student_id, None); store["idempotency"].pop(student_id, None)
+        for item in grades_data.get("students", []):
+            if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id:
+                item.setdefault("grades", {}).pop(INTERMEDIATE2_MIDTERM_WRITING_ID, None); item.setdefault("gradeDetails", {}).pop(INTERMEDIATE2_MIDTERM_WRITING_ID, None); changed = True
+        intermediate2_midterm_writing_event(store, "student_reset", profile, student_id, "Attempt and submission reset")
+    if action in ("reopen", "reset-and-reopen"):
+        try:
+            hours = max(1, min(168, int(payload.get("hours", 48) or 48)))
+        except (TypeError, ValueError):
+            hours = 48
+        allowed = state.setdefault("reopenStudentIds", []); state["reopenStudentIds"] = list({clean_text(item, 40) for item in allowed if clean_text(item, 40)} | {student_id}); state["reopenUntilEpoch"] = int(time.time()) + hours * 3600; state["reopenUntilLabel"] = "Available for selected students for " + str(hours) + " hours"; intermediate2_midterm_writing_event(store, "student_reopened", profile, student_id, state["reopenUntilLabel"])
+    if action == "close-reopen":
+        state["reopenStudentIds"] = [item for item in state.get("reopenStudentIds", []) if clean_text(item, 40) != student_id]; intermediate2_midterm_writing_event(store, "student_reopen_closed", profile, student_id, "Individual reopen removed")
+    state["updatedAt"] = now_iso(); write_intermediate2_midterm_writing_store(store); write_intermediate2_midterm_writing_bundle(bundle)
+    if changed:
+        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    return 200, {"ok": True, "detail": "Student action completed", "health": intermediate2_midterm_writing_health(grades_data, store)}
+
+
 def default_intermediate_integrated_task_bundle():
     return {
         "state": {
@@ -18732,6 +18981,28 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/intermediate2/midterm-writing/state":
+            try:
+                with data_lock:
+                    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                    bundle = read_intermediate2_midterm_writing_bundle()
+                    store = read_intermediate2_midterm_writing_store()
+                    if intermediate2_midterm_writing_apply_gradebook(grades_data, store):
+                        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+                    json_response(self, 200, intermediate2_midterm_writing_state_payload(profile, grades_data, bundle, store))
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/intermediate2/midterm-writing/submissions":
+            try:
+                with data_lock:
+                    status, response = intermediate2_midterm_writing_submissions(profile)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
         if parsed.path == "/api/intermediate2/grades":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
@@ -19026,10 +19297,28 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path == "/api/intermediate2/midterm-writing/start":
+            try:
+                with data_lock:
+                    status, response = intermediate2_midterm_writing_start(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
         if parsed.path == "/api/basic2/midterm-writing/submit":
             try:
                 with data_lock:
                     status, response = basic2_midterm_writing_submit(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/intermediate2/midterm-writing/submit":
+            try:
+                with data_lock:
+                    status, response = intermediate2_midterm_writing_submit(profile, payload)
                     json_response(self, status, response)
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
@@ -22535,6 +22824,30 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path == "/api/intermediate2/midterm-writing/state":
+            try:
+                with data_lock:
+                    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    bundle = read_intermediate2_midterm_writing_bundle()
+                    state = bundle.setdefault("state", {})
+                    desired_open, timestamp = payload.get("isOpen") is True, now_iso()
+                    state["isOpen"], state["updatedAt"] = desired_open, timestamp
+                    if desired_open:
+                        state["openedAt"], state["openedBy"], state["closedAt"] = timestamp, normalize_email(profile.get("email")), None
+                    else:
+                        state["closedAt"] = timestamp
+                    write_intermediate2_midterm_writing_bundle(bundle)
+                    store = read_intermediate2_midterm_writing_store()
+                    intermediate2_midterm_writing_event(store, "exam_opened" if desired_open else "exam_closed", profile, "", "Global Intermediate 2 Midterm Writing availability changed")
+                    write_intermediate2_midterm_writing_store(store)
+                    json_response(self, 200, {"ok": True, "state": state})
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
         if parsed.path == "/api/basic2/midterm-writing/state":
             try:
                 with data_lock:
@@ -22583,6 +22896,15 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path == "/api/intermediate2/midterm-writing/draft":
+            try:
+                with data_lock:
+                    status, response = intermediate2_midterm_writing_save_draft(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
         if parsed.path == "/api/basic2/midterm-writing/submit":
             try:
                 with data_lock:
@@ -22601,10 +22923,28 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path in ("/api/intermediate2/midterm-writing/grade", "/api/intermediate2/midterm-writing/submissions/grade"):
+            try:
+                with data_lock:
+                    status, response = intermediate2_midterm_writing_grade(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
         if parsed.path == "/api/basic2/midterm-writing/student-action":
             try:
                 with data_lock:
                     status, response = basic2_midterm_writing_student_action(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+        if parsed.path == "/api/intermediate2/midterm-writing/student-action":
+            try:
+                with data_lock:
+                    status, response = intermediate2_midterm_writing_student_action(profile, payload)
                     json_response(self, status, response)
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})

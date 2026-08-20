@@ -4050,6 +4050,16 @@ El simulacro no pertenece al catálogo ni a la carpeta de Practice Lab: su acces
 
 **Evaluations and Mock Exams** es el único espacio de acceso a simulacros de evaluación. Practice Lab contiene exclusivamente talleres y actividades de práctica por unidad; no debe listar simulacros, aunque estos repasen lenguaje de una unidad concreta. Cada mock debe indicar con claridad que es preparación privada, no tiene porcentaje, no altera Grades y no sustituye la evaluación oficial.
 
+## 55. Midterm Writing Task oficial — acceso cerrado y activación docente
+
+`intermediate-course-2-midterm-writing-task.html` implementa el examen oficial de Unidad 2: **Catharsis for Planning**. Se mantiene cerrado por defecto y solo la docente o administrador autenticado puede activarlo o cerrarlo. El estudiante debe autenticarse con su cuenta vinculada a Intermediate English Course 2; al abrirse el examen se crea un intento protegido de 50 minutos, con autosave al servidor y copia local de emergencia.
+
+La hoja oficial conserva el formato del examen: email a la mejor amistad que vive fuera del país, situación difícil de trabajo o familia, decisiones que habría cambiado, deseos/esperanzas/planes/sueños, aproximadamente 180 palabras y cierre optimista. La meta de 180 palabras orienta la calidad, pero no bloquea la entrega: el examen oficial debe poder ser recibido incluso si el texto es breve, dejando el juicio pedagógico a la docente.
+
+La entrega usa un `clientSubmissionId` persistente, reintentos con `AbortController`, protección contra doble envío, recibo inmutable y recuperación de un intento ya entregado. Así se evita el problema anterior de que el navegador no supiera si una entrega había llegado. Al cerrar globalmente el examen no se interrumpe la entrega de quien ya posee un intento activo.
+
+El Teacher Control Room permite activar/cerrar, previsualizar sin crear un intento, ver borradores/recibos, reabrir individualmente por 48 horas, restablecer y reabrir, y calificar las cinco áreas institucionales —content, composing (organization), vocabulary, structure y mechanics— de 1 a 10. El total /50 se convierte a nota /5.0 y se publica en la evaluación oficial de peso 20% de Grades únicamente después de la revisión docente. Los simulacros privados permanecen separados y nunca escriben en este flujo.
+
 ## 53. Implementación confirmada — Unit 2 Visual Debate: Take a Side
 
 `speaking-unit-2-take-a-side.html` es la actividad 06 de la Unidad 2 y vive exclusivamente en Practice Lab. Su tipo de catálogo es `speaking-group`, su etiqueta visible es **Visual debate** y su dinámica es formativa, dirigida por el profesor y no evaluativa: no solicita entrega, no calcula nota, no proyecta resultados al gradebook y no afecta el promedio.

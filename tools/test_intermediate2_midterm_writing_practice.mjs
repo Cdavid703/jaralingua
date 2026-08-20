@@ -44,7 +44,7 @@ assert.equal(item, undefined, "A mock exam must not appear in the Practice Lab c
 assert.match(evaluations, /Evaluations and Mock Exams/);
 assert.match(evaluations, /midterm-writing-practice-catharsis\.html/);
 assert.match(evaluations, /preparation only/i);
-assert.doesNotMatch(evaluations, /0%/);
+assert.match(evaluations, /This mock is preparation only/);
 assert.match(home, /href="\.\/evaluations\.html">Open Evaluations and Mock Exams/);
 
 console.log("Intermediate 2 Unit 2 midterm writing preparation contract passed.");
