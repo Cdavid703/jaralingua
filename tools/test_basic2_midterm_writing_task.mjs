@@ -22,6 +22,8 @@ assert(page.includes('itm-plurilingue-logo.svg'), 'ITM Plurilingüe logo is miss
 assert(page.includes('id="adminPanel"'), 'Teacher/admin panel is missing.');
 assert(page.includes('id="activateWritingButton"'), 'Activation button is missing.');
 assert(!/writing-hero\s*\{[^}]*position\s*:\s*fixed/i.test(page), 'Hero must not be fixed in the page.');
+assert(page.includes('.exam-topbar{position:relative!important;top:auto!important'), 'Official exam topbar must scroll with the exam content.');
+assert(page.includes('20260820-submit-hardening-v1'), 'Official exam page must load the hardened submission JS version.');
 
 assert(evaluations.includes('basic-course-2-midterm-writing-task.html'), 'Official exam is not linked from Basic 2 evaluations.');
 assert(evaluations.includes('Official / Teacher activation'), 'Evaluations page must show teacher activation status.');
@@ -31,6 +33,9 @@ assert(js.includes('/api/basic2/midterm-writing/submit'), 'JS submit endpoint is
 assert(js.includes('AbortController'), 'Submission/request timeout protection is missing.');
 assert(js.includes('clientSubmissionId'), 'Client idempotency token is missing.');
 assert(js.includes('localDraft'), 'Local emergency draft is missing.');
+assert(js.includes('submitInFlight'), 'Double-submit guard is missing.');
+assert(js.includes('finally{if(!delivered){setSubmitBusy(false);refreshSubmitAvailability()}}'), 'Submit button recovery guard is missing.');
+assert(js.includes('Your text is preserved locally'), 'Student-facing retry message is missing.');
 assert(js.includes('Write at least 100 words'), 'Minimum word feedback is missing.');
 
 assert(server.includes('BASIC2_MIDTERM_WRITING_EVALUATION_ID = "basic2MidtermWritingTask20"'), 'Basic 2 midterm evaluation id is missing.');
