@@ -69,7 +69,19 @@ Las actividades regulares de unidad deben ir en **Practice Lab** o **Games**, se
 
 Las practicas tipo examen, simulacros y evaluaciones oficiales deben ir en **Evaluations and Exam Practice**. No deben quedar regadas como tarjetas sueltas dentro del home principal ni mezcladas dentro de Practice Lab, salvo un enlace de navegacion que lleve al centro de examenes.
 
-## 6. Entregas al profesor y blindaje contra errores
+## 6. Ancho de pantalla y uso del espacio
+
+Todas las paginas, actividades, practicas tipo examen, simulacros y evaluaciones oficiales de **Basic English Course 2** deben aprovechar el ancho disponible de la pantalla.
+
+Reglas obligatorias:
+
+- en escritorio o portatil, el contenido principal no debe quedar encerrado en columnas angostas de `1120px`, `1180px` o `1220px` cuando la pantalla permite mas espacio;
+- se debe preferir un contenedor fluido, por ejemplo `width: min(1760px, calc(100% - 2rem))`, ajustado al tipo de pagina;
+- las secciones de escritura, lectura, preguntas, grillas, formularios y paneles laterales deben poder expandirse para usar mejor pantallas grandes;
+- en celular y tablet, el margen debe reducirse sin crear scroll horizontal;
+- solo se permite un ancho estrecho cuando el objetivo pedagogico lo justifique claramente, por ejemplo un texto corto centrado, una nota breve o una tarjeta auxiliar, nunca el area principal de trabajo.
+
+## 7. Entregas al profesor y blindaje contra errores
 
 Toda actividad de Basic English Course 2 que envie evidencia al profesor, aunque tenga peso 0%, debe implementar estas defensas:
 
@@ -82,7 +94,7 @@ Toda actividad de Basic English Course 2 que envie evidencia al profesor, aunque
 - ningun registro numerico en `grades` cuando el entregable sea 0% sin nota;
 - estado visible en la pestana **Deliverables** de la grilla.
 
-## 7. Checklist antes de terminar una pagina
+## 8. Checklist antes de terminar una pagina
 
 Antes de dar una pagina o actividad como terminada:
 
@@ -93,6 +105,7 @@ Antes de dar una pagina o actividad como terminada:
 - [ ] El header superior queda compacto en celular y tablet.
 - [ ] El hero/banner se desplaza con el contenido.
 - [ ] Ningun header, hero, toast, modal, panel o boton tapa preguntas, tarjetas, audios, transcripciones, grabadoras o feedback.
+- [ ] El contenido principal aprovecha el ancho de pantalla en escritorio/portatil y no queda encerrado en un contenedor angosto injustificado.
 - [ ] No hay scroll horizontal inesperado.
 - [ ] Se reviso celular vertical.
 - [ ] Se reviso tablet vertical.
@@ -103,7 +116,7 @@ Antes de dar una pagina o actividad como terminada:
 - [ ] Si es listening, reading o video listening, las respuestas no tienen patron obvio.
 - [ ] Si hay audios, controles o transcripciones, son usables en pantalla tactil.
 
-## 8. Validacion tecnica recomendada
+## 9. Validacion tecnica recomendada
 
 Cuando se toque el header, hero, responsive o autenticacion de Basic 2, ejecutar:
 
@@ -121,7 +134,7 @@ node tools/test_basic2_impostor_ui.cjs
 
 Si se despliega a produccion, repetir las pruebas contra `https://www.jaralingua.com`.
 
-## 9. Criterio de terminado
+## 10. Criterio de terminado
 
 Una pagina de Basic English Course 2 no se considera terminada solamente porque cargue o porque visualmente se parezca a otra.
 
@@ -134,6 +147,7 @@ Se considera terminada cuando cumple:
 5. hero no fijo en movil/tablet;
 6. imagen profesional adecuada cuando aplique;
 7. responsive verificado;
-8. cache busting actualizado;
-9. commit realizado;
-10. despliegue y verificacion en produccion cuando el usuario haya pedido publicar.
+8. contenido principal fluido y amplio en escritorio/portatil;
+9. cache busting actualizado;
+10. commit realizado;
+11. despliegue y verificacion en produccion cuando el usuario haya pedido publicar.

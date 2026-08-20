@@ -43,6 +43,9 @@ assert(/id="downloadBackupButton"/.test(practice), "Practice page must include a
 assert(/Send to teacher · 0%/.test(practice), "Practice page must state the teacher delivery is 0%");
 assert(/basic2-midterm-writing-practice\.js\?v=20260818-midterm-writing-practice/.test(practice), "Practice page must load cache-busted controller");
 assert(!/background-attachment:\s*fixed|position:\s*fixed[^;]*;[^}]*midterm-hero/s.test(practice), "Hero must not be fixed");
+assert(/\.midterm-shell\{width:min\(1760px,calc\(100% - 2rem\)\);max-width:none/.test(practice), "Practice shell must use a wide fluid desktop container");
+assert(/\.midterm-strip\{[\s\S]*width:min\(1760px,calc\(100% - 2rem\)\);max-width:none/.test(practice), "Practice strip must use a wide fluid desktop container");
+assert(/\.exam-frame\{display:grid;grid-template-columns:minmax\(0,1fr\) minmax\(320px,\.32fr\)/.test(practice), "Practice writing frame must prioritize the writing area on large screens");
 
 assert(/wordList\(post\)\.length >= 100/.test(script), "Controller must enforce at least 100 words");
 assert(/hasPresentContinuous\(post\)/.test(script), "Controller must detect present continuous");

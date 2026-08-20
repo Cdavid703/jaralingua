@@ -24,6 +24,8 @@ assert(page.includes('id="activateWritingButton"'), 'Activation button is missin
 assert(!/writing-hero\s*\{[^}]*position\s*:\s*fixed/i.test(page), 'Hero must not be fixed in the page.');
 assert(page.includes('.exam-topbar{position:relative!important;top:auto!important'), 'Official exam topbar must scroll with the exam content.');
 assert(page.includes('20260820-submit-hardening-v1'), 'Official exam page must load the hardened submission JS version.');
+assert(page.includes('width:min(1760px,calc(100% - 2rem));max-width:none'), 'Official exam must use wide fluid desktop containers.');
+assert(page.includes('#writingForm{grid-template-columns:minmax(0,1fr) minmax(300px,360px)}'), 'Official exam form must prioritize the writing area on large screens.');
 
 assert(evaluations.includes('basic-course-2-midterm-writing-task.html'), 'Official exam is not linked from Basic 2 evaluations.');
 assert(evaluations.includes('Official / Teacher activation'), 'Evaluations page must show teacher activation status.');

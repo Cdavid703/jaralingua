@@ -14,19 +14,19 @@
     .writing-page main{background:linear-gradient(180deg,#f8fbff 0%,#eef5ff 48%,#fff 100%)}
     .midterm-hero{position:relative;overflow:hidden;display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.74fr);gap:clamp(1rem,3vw,2rem);align-items:center;min-height:auto;padding:clamp(7rem,12vw,9rem) clamp(1rem,5vw,4rem) clamp(3rem,6vw,5rem);background:linear-gradient(135deg,rgba(21,52,93,.96),rgba(8,126,139,.72));color:#fff}
     .midterm-hero::after{content:"";position:absolute;inset:auto -8% -34% 42%;height:58%;background:radial-gradient(circle,rgba(255,200,87,.34),transparent 64%);pointer-events:none}
-    .midterm-hero-copy{position:relative;z-index:1;max-width:760px}
+    .midterm-hero-copy{position:relative;z-index:1;max-width:980px}
     .midterm-hero-copy h1{font-size:clamp(2.25rem,6vw,5rem);line-height:.96;margin:.45rem 0 1rem;font-weight:900}
     .midterm-hero-copy p{font-size:clamp(1rem,2vw,1.25rem);line-height:1.7;color:rgba(255,255,255,.9);margin:0 0 1rem}
     .midterm-hero-image{position:relative;z-index:1;border-radius:30px;overflow:hidden;box-shadow:var(--midterm-shadow);border:1px solid rgba(255,255,255,.22);background:#fff}
     .midterm-hero-image img{width:100%;height:100%;min-height:320px;object-fit:cover;display:block}
     .midterm-badges{display:flex;flex-wrap:wrap;gap:.6rem;margin:1.2rem 0}
     .midterm-badges span{display:inline-flex;align-items:center;gap:.35rem;border-radius:999px;padding:.5rem .75rem;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.2);font-weight:900}
-    .midterm-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;max-width:1180px;margin:-2rem auto 0;padding:0 1rem;position:relative;z-index:3}
+    .midterm-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.8rem;width:min(1760px,calc(100% - 2rem));max-width:none;margin:-2rem auto 0;padding:0;position:relative;z-index:3}
     .midterm-strip article{background:#fff;border:1px solid var(--midterm-line);border-radius:20px;padding:1rem;box-shadow:0 14px 34px rgba(15,23,42,.08)}
     .midterm-strip strong{display:block;color:var(--midterm-blue);font-size:1.35rem}
     .midterm-strip span{color:var(--midterm-muted);font-weight:800;font-size:.9rem}
-    .midterm-shell{max-width:1220px;margin:0 auto;padding:clamp(2rem,5vw,4rem) 1rem}
-    .midterm-section-heading{max-width:850px;margin:0 auto 1.5rem;text-align:center}
+    .midterm-shell{width:min(1760px,calc(100% - 2rem));max-width:none;margin:0 auto;padding:clamp(2rem,5vw,4rem) 0}
+    .midterm-section-heading{max-width:1180px;margin:0 auto 1.5rem;text-align:center}
     .midterm-section-heading h2{color:var(--midterm-blue);font-size:clamp(1.8rem,4vw,3rem);font-weight:900;margin:.2rem 0 .6rem}
     .midterm-section-heading p{color:var(--midterm-muted);line-height:1.7;margin:0}
     .visual-guide-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin:1.5rem 0 2.2rem}
@@ -35,7 +35,7 @@
     .visual-guide-card div{padding:1.1rem}
     .visual-guide-card h3{color:var(--midterm-blue);font-weight:900;margin:0 0 .45rem}
     .visual-guide-card p{color:var(--midterm-muted);line-height:1.62;margin:0}
-    .exam-frame{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,.42fr);gap:1rem;align-items:start}
+    .exam-frame{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.32fr);gap:1rem;align-items:start}
     .writing-builder,.writing-sidebar,.preview-panel{background:#fff;border:1px solid var(--midterm-line);border-radius:28px;box-shadow:var(--midterm-shadow)}
     .writing-builder{padding:clamp(1rem,3vw,1.5rem)}
     .builder-step{border:1px solid var(--midterm-line);border-radius:22px;padding:1rem;margin-bottom:.85rem;background:#f8fbff}
@@ -83,7 +83,7 @@
     .teacher-delivery-panel .delivery-status.error{color:#b42318}
     .teacher-delivery-panel .delivery-status.pending{color:#92400e}
     @media(max-width:980px){.midterm-hero,.exam-frame{grid-template-columns:1fr}.midterm-hero-image img{max-height:420px}.midterm-strip{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:1rem}.word-meter{position:relative;top:auto}.rubric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:640px){.midterm-hero{padding:6.5rem 1rem 2rem}.visual-guide-grid,.midterm-strip,.rubric-grid{grid-template-columns:1fr}.action-row{display:grid}.midterm-button{width:100%}.builder-step header{display:grid}.visual-guide-card img{height:220px}}
+    @media(max-width:640px){.midterm-hero{padding:6.5rem 1rem 2rem}.midterm-shell,.midterm-strip{width:calc(100% - .75rem)}.visual-guide-grid,.midterm-strip,.rubric-grid{grid-template-columns:1fr}.action-row{display:grid}.midterm-button{width:100%}.builder-step header{display:grid}.visual-guide-card img{height:220px}}
   </style>
 </head>
 <body class="english-basic-page basic2-page writing-page">
