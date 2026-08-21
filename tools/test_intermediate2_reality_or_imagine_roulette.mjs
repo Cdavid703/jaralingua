@@ -39,6 +39,10 @@ assert.equal(ifPrompts.length, 10, "There must be ten If prompts.");
 assert.equal(wouldPrompts.length, 10, "There must be ten Would prompts.");
 assert.match(questionBlock[1], /prompt: "If you had a free year/);
 assert.match(questionBlock[1], /prompt: "Would you move abroad/);
+assert.match(questionBlock[1], /If accepting a scholarship meant leaving your family or friends, …/);
+assert.ok(questionBlock[1].includes("Complete it with would + base verb"));
+assert.match(questionBlock[1], /Complete it with an If clause/);
+assert.doesNotMatch(questionBlock[1], /where would you travel|Why or why not\?/);
 assert.match(script, /pool\.splice\(index, 1\)/, "Used names and questions must leave their pools.");
 assert.match(script, /state\.questionPool = questions\.slice\(\)/, "Reset must restore all questions.");
 
@@ -52,6 +56,7 @@ assert.equal(item.teacherRosterLoad, true);
 assert.equal(item.teacherSubmission, false);
 assert.equal(item.gradebookProjected, false);
 assert.equal(item.status, "published");
+assert.match(item.summary, /missing half/);
 assert.match(css, /@media \(max-width: 650px\)/);
 assert.match(css, /env\(safe-area-inset-left\)/);
 assert.doesNotMatch(css, /position:\s*(?:fixed|sticky)/);
