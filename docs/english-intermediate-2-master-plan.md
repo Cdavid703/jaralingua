@@ -4060,6 +4060,10 @@ La entrega usa un `clientSubmissionId` persistente, reintentos con `AbortControl
 
 El Teacher Control Room permite activar/cerrar, previsualizar sin crear un intento, ver borradores/recibos, reabrir individualmente por 48 horas, restablecer y reabrir, y calificar las cinco áreas institucionales —content, composing (organization), vocabulary, structure y mechanics— de 1 a 10. El total /50 se convierte a nota /5.0 y se publica en la evaluación oficial de peso 20% de Grades únicamente después de la revisión docente. Los simulacros privados permanecen separados y nunca escriben en este flujo.
 
+### 55.1 Auditoría responsiva obligatoria para evaluaciones oficiales
+
+Las evaluaciones oficiales se revisan específicamente en anchos de móvil estrecho (360–390 px), móvil amplio, tablet y escritorio. El hero y el formulario deben pasar a una sola columna antes de comprimir el contenido; el topbar de examen nunca será fijo; inputs, imágenes y textarea no pueden producir desbordamiento horizontal; las acciones y tarjetas de estado se apilan en móvil, con controles de ancho completo. Las tablas de monitor docente pueden desplazarse dentro de su propio contenedor, nunca sobre el documento completo.
+
 ## 53. Implementación confirmada — Unit 2 Visual Debate: Take a Side
 
 `speaking-unit-2-take-a-side.html` es la actividad 06 de la Unidad 2 y vive exclusivamente en Practice Lab. Su tipo de catálogo es `speaking-group`, su etiqueta visible es **Visual debate** y su dinámica es formativa, dirigida por el profesor y no evaluativa: no solicita entrega, no calcula nota, no proyecta resultados al gradebook y no afecta el promedio.
