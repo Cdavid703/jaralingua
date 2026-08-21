@@ -409,6 +409,29 @@
       "affectsAverage": false,
       "status": "published",
       "searchKeywords": ["Unit 2", "conversation coach", "Renata", "conversation", "hello", "name", "after class", "hope to", "would like to", "goal", "design course", "specific question", "dilemma", "family", "community project", "advice", "wish I had", "if I were you"]
+    },
+    {
+      "id": "unit-2-reality-or-imagine-roulette",
+      "unit": 2,
+      "order": 8,
+      "type": "speaking-game",
+      "skillLabel": "Speaking game",
+      "title": "Reality or Imagine?",
+      "subtitle": "Two roulettes. One imagined conversation.",
+      "summary": "Project two independent roulettes: one selects a student and the other selects one second-conditional question. Students answer aloud and invite a short follow-up.",
+      "image": "/assets/img/english-intermediate-2/unit-2/reality-or-imagine-roulette/reality-or-imagine-roulette-hero-v1.png",
+      "workshopHref": "/ingles/intermediate-2/speaking-unit-2-reality-or-imagine-roulette.html",
+      "duration": "15–25 minutes",
+      "product": "One live answer and one classmate follow-up per completed round",
+      "questionCount": 20,
+      "questionGroups": { "if": 10, "would": 10 },
+      "teacherRosterLoad": true,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 2", "speaking", "speaking game", "roulette", "wheel", "second conditional", "if", "would", "imagined present", "imagined future", "student roster", "questions and answers", "reality or imagine"]
     }
   ]
 }
