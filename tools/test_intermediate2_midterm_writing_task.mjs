@@ -8,6 +8,7 @@ const page = read("ingles/intermediate-2/intermediate-course-2-midterm-writing-t
 const controller = read("assets/js/english-intermediate2-official-midterm.js");
 const css = read("assets/css/english-intermediate2-official-midterm.css");
 const evaluations = read("ingles/intermediate-2/evaluations.html");
+const home = read("ingles/intermediate-2/index.html");
 const server = read("server/progress_api.py");
 
 for (const id of ["accessPanel", "adminPanel", "readinessPanel", "examPanel", "submittedPanel", "activateWritingButton", "closeWritingButton", "emailFrom", "emailTo", "emailSubject", "emailBody", "submitButton", "wordCounter", "saveStatus", "timerDisplay"]) {
@@ -23,6 +24,8 @@ assert.match(css, /width:min\(1760px,calc\(100% - clamp\(.75rem,3vw,3rem\)\)\)/)
 assert.match(css, /@media\(max-width:640px\)/);
 assert.match(evaluations, /intermediate-course-2-midterm-writing-task\.html/);
 assert.match(evaluations, /Official \/ teacher activation/);
+assert.match(home, /Evaluations and Mock Exams[\s\S]{0,260}href="\.\/evaluations\.html">Open Evaluations and Mock Exams/);
+assert.doesNotMatch(home, /Intermediate English Grades[\s\S]{0,260}href="\.\/evaluations\.html">Open Evaluations and Mock Exams/);
 
 for (const endpoint of ["state", "start", "draft", "submit", "submissions", "submissions/grade", "student-action"]) {
   assert.match(controller, new RegExp(`/api/intermediate2/midterm-writing/${endpoint.replace("/", "\\/")}`));
