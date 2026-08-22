@@ -2617,6 +2617,10 @@
   .ie2-listening-focus-grid {
     grid-template-columns: 1fr;
   }
+
+  .ie2-midnight-listening-page .ie2-listen-pass-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 640px) {

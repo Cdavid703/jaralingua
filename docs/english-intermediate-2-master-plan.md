@@ -3625,7 +3625,7 @@ Se construyó únicamente la primera actividad de Unit 2:
 - entrega al profesor: no;
 - peso en la grilla: `0%`.
 
-El reading que continuará la historia no se creó en esta fase. Su futuro inicio será el contenido del correo que Salomé recibe al final del audio, pero no existe enlace activo ni se inventa su desenlace.
+El reading que continúa la historia ya está publicado como **The Six-Week Window · Part 2**. Su inicio desarrolla el contenido del correo que Salomé recibe al final del audio y el enlace activo aparece al cierre de este listening.
 
 ### 45.2 Historia y propósito pedagógico
 
@@ -3681,11 +3681,26 @@ La actividad pertenece solamente a Practice Lab. El catálogo central se amplió
 
 Los JavaScript de ambas páginas dejaron de filtrar exclusivamente Unit 1. Ahora agrupan los contenidos publicados por unidad, actualizan sus contadores y aplican búsqueda global sin duplicar manualmente las tarjetas.
 
-El orden proyectado de Unit 2 queda documentado como Listening Part 1, Reading Part 2, Pronunciation y Conversation Coach. Los elementos 2–4 son ruta planificada, no actividades implementadas.
+La secuencia publicada de Unit 2 es Listening Part 1, Reading Part 2, Pronunciation y Conversation Coach. Las nuevas actividades posteriores deberán respetar esta continuidad narrativa sin duplicar contenido entre Course Overview y Practice Lab.
 
 ### 45.7 Cierre técnico obligatorio
 
 Esta actividad se valida sin levantar servidor local. Debe cerrar con validación estática del HTML, JavaScript, catálogo, imagen, MP3, guion y metadatos; commit atómico; push; despliegue; y comprobación HTTP directa en producción de la página, el audio, la imagen, Practice Lab y Listening Library.
+
+### 45.8 Corrección de auditoría pedagógica y técnica
+
+La revisión del listening confirmó que el MP3, imagen, guion, metadatos, controles de velocidad, estado accesible, retroalimentación local y composición responsive están integrados sin voz del navegador, nota, entrega o rastreo de calificaciones. A partir de esta auditoría se aplican estas reglas a sus preguntas y flujo:
+
+- las diez respuestas correctas se distribuyen sin una secuencia repetible y las tres letras aparecen de manera balanceada;
+- cada distractor debe ser una interpretación posible de la historia, nunca una respuesta absurda o ajena al contexto;
+- una palabra introducida en Vocabulary Preview no se evalúa con su definición literal: la pregunta debe pedir interpretar su función en la situación escuchada;
+- la prueba combina idea global, detalles, conflicto, consecuencia hipotética, pasado, consejo, posible arreglo, idiom en contexto e inferencias sobre evidencia y final abierto;
+- los botones de las tres escuchas se presentan como **self-check** personal, no como una comprobación falsa del tiempo escuchado;
+- la transcripción es apoyo de accesibilidad disponible cuando haga falta. Se invita a hacer tres escuchas antes cuando sea posible, pero no se bloquea;
+- la producción oral de 45 segundos incluye una lista breve de éxito: una idea con `would`, una cláusula con `if`, razón y consecuencia;
+- en tablet las tres tarjetas de escucha se organizan en dos columnas y en móvil se apilan en una.
+
+El contrato estático `tools/test_intermediate2_unit2_listening_audit.mjs` comprueba el número y balance de preguntas, ausencia de un patrón repetible, soporte de transcripción, auto-chequeo honesto, archivo MP3 y metadatos coincidentes, y la respuesta responsive para tablet. Toda modificación futura de este listening debe mantener este contrato.
 
 ## 46. Implementación confirmada — Unit 2 Reading Part 2
 

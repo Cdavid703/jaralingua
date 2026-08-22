@@ -52,7 +52,7 @@
       button.classList.add("is-complete");
       button.textContent = "Completed · tap to undo";
     }
-    passStatus.textContent = `Listening progress: ${completedPasses.size} of 3 passes marked.`;
+    passStatus.textContent = `Listening self-check: ${completedPasses.size} of 3 passes marked.`;
   }));
 
   checkQuizButton.addEventListener("click", () => {
