@@ -29,7 +29,10 @@ assert.match(script, /const API = "\/api\/intermediate2\/grades"/);
 assert.match(script, /\["admin", "teacher"\]\.includes\(data\.role\)/);
 assert.match(script, /Only names were used/);
 assert.match(script, /JaraLinguaRosterImport\.importFile/);
-assert.doesNotMatch(script, /speechSynthesis|AudioContext|new Audio\(/);
+assert.doesNotMatch(script, /speechSynthesis|new Audio\(/);
+assert.match(script, /startRouletteSound\(\)/);
+assert.match(script, /stopRouletteSound\(true\)/);
+assert.match(script, /createOscillator\(\)/);
 
 const questionBlock = script.match(/const questions = \[([\s\S]*?)\n  \];/);
 assert.ok(questionBlock, "Question set should be present.");
