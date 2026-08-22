@@ -213,7 +213,7 @@
       "accent": "General American English",
       "transcriptPolicy": "after-three-listens",
       "status": "published",
-      "teacherSubmission": false,
+      "teacherSubmission": true,
       "gradebookProjected": false,
       "gradebookWeight": 0,
       "affectsAverage": false,

@@ -3700,6 +3700,8 @@ La revisión del listening confirmó que el MP3, imagen, guion, metadatos, contr
 - la producción oral de 45 segundos incluye una lista breve de éxito: una idea con `would`, una cláusula con `if`, razón y consecuencia;
 - en tablet las tres tarjetas de escucha se organizan en dos columnas y en móvil se apilan en una.
 
+El listening se entrega al docente después de que el estudiante responda y revise las diez preguntas. La entrega guarda únicamente las elecciones completas, el auto-chequeo de escuchas, identidad autenticada, fecha y comprobante `JLF-`; se almacena en un inbox independiente de Unit 2. No crea nota, porcentaje, `gradeDetails` ni registro en Grades. La consulta del inbox entrega nombres al personal docente y al estudiante únicamente sus propios comprobantes; el reintento con el mismo identificador de cliente devuelve el mismo comprobante sin duplicar la entrega.
+
 El contrato estático `tools/test_intermediate2_unit2_listening_audit.mjs` comprueba el número y balance de preguntas, ausencia de un patrón repetible, soporte de transcripción, auto-chequeo honesto, archivo MP3 y metadatos coincidentes, y la respuesta responsive para tablet. Toda modificación futura de este listening debe mantener este contrato.
 
 ## 46. Implementación confirmada — Unit 2 Reading Part 2
