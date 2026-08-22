@@ -76,7 +76,7 @@
       "skillLabel": "Conversation Coach",
       "title": "Coffee with Gabriel",
       "subtitle": "A simple conversation about your best friend",
-      "summary": "Five connected turns guide the learner from introducing a best friend to asking Gabriel a question, with recording, temporary transcription and supportive ElevenLabs reactions.",
+      "summary": "Five connected turns guide the learner from introducing a best friend to asking Gabriel a question, with recording, temporary transcription and supportive audio reactions.",
       "image": "/assets/img/english-intermediate-2/unit-1/coffee-with-gabriel-coach/coffee-with-gabriel-hero-v1.png",
       "media": "/ingles/intermediate-2/audio/conversation-coach/unit-1-coffee-with-gabriel/welcome.mp3",
       "audioProvider": "elevenlabs",
