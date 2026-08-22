@@ -159,7 +159,7 @@
       if (/^\s+$/.test(part)) return part;
       const state = states[index++] || "";
       const word = spokenWord(part);
-      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${word}" aria-controls="wordHelp" aria-label="Hear and get pronunciation help for ${word}" title="Tap to hear this word in the ElevenLabs model">${part}</button>`;
+      return `<button type="button" class="reading-word ${state}" data-word="${index - 1}" data-spoken="${word}" aria-controls="wordHelp" aria-label="Hear and get pronunciation help for ${word}" title="Tap to hear this word in the pronunciation model">${part}</button>`;
     }).join("");
     readingText.querySelectorAll(".reading-word").forEach((button) => {
       button.addEventListener("click", () => showWordHelp(button.dataset.spoken, button, Number(button.dataset.word)));
@@ -243,7 +243,7 @@
       sourceButton.setAttribute("aria-pressed", "true");
     }
     wordHelp.hidden = false;
-    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> How to pronounce “${word}”</strong><span>${pronunciationTip(word)} Listen to the exact ElevenLabs word model, then repeat the full meaning group.</span>`;
+    wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> How to pronounce “${word}”</strong><span>${pronunciationTip(word)} Listen to the exact word model, then repeat the full meaning group.</span>`;
     if (wordAudioFile(word)) {
       const replayButton = document.createElement("button");
       replayButton.type = "button";
@@ -292,7 +292,7 @@
     }, { once: true });
     try {
       await wordAudio.play();
-      if (replayButton) replayButton.innerHTML = '<i class="bi bi-volume-up"></i> Playing ElevenLabs model';
+      if (replayButton) replayButton.innerHTML = '<i class="bi bi-volume-up"></i> Playing model';
     } catch (_error) {
       sourceButton?.classList.remove("is-playing");
       if (replayButton) replayButton.textContent = "Tap to listen again";

@@ -42,7 +42,7 @@
   });
 
   audio.addEventListener("play", function () {
-    audioStatus.textContent = "Playing Nora's ElevenLabs voice note.";
+    audioStatus.textContent = "Playing Nora's voice note.";
   });
 
   audio.addEventListener("pause", function () {

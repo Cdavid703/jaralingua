@@ -36,7 +36,7 @@
     audioStatus.textContent = `Playback speed set to ${speed}x.`;
   }));
 
-  audio.addEventListener("play", () => { audioStatus.textContent = "Playing the ElevenLabs conversation with Salomé and Mr. Vega."; });
+  audio.addEventListener("play", () => { audioStatus.textContent = "Playing the conversation with Salomé and Mr. Vega."; });
   audio.addEventListener("pause", () => { if (!audio.ended) audioStatus.textContent = "Paused. Continue when you are ready."; });
   audio.addEventListener("ended", () => { audioStatus.textContent = "Listening complete. Replay for evidence or continue to the questions."; });
   audio.addEventListener("error", () => { audioStatus.textContent = "The audio could not load. Refresh the page and try again."; });
