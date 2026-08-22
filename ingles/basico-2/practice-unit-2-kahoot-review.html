@@ -12,35 +12,17 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
   <style>
-    :root{--kahoot-navy:#102a54;--kahoot-teal:#087e8b;--kahoot-green:#0f8d5f;--kahoot-line:#d8e5f0;--kahoot-soft:#f4f9fc;--kahoot-red:#e21b3c;--kahoot-blue:#1368ce;--kahoot-yellow:#d89e00;--kahoot-lime:#26890c}
     body.basic2-page{background:linear-gradient(180deg,#f5fbff 0,#fff 48%,#eefbf5 100%)}
-    .kahoot-shell{width:min(1180px,calc(100% - 2rem));margin:1.25rem auto 3rem;display:grid;gap:1.15rem}
-    .kahoot-hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(320px,.98fr);gap:1.25rem;align-items:center;padding:clamp(1rem,3vw,2rem);border-radius:30px;background:#fff;box-shadow:0 20px 55px rgba(16,42,84,.12);overflow:hidden}
-    .kahoot-hero-copy{min-width:0}
-    .kahoot-hero-image{margin:0;border-radius:24px;overflow:hidden;background:#eef7fb;border:1px solid var(--kahoot-line)}
-    .kahoot-hero-image img{display:block;width:100%;height:auto}
-    .kahoot-kicker{display:inline-flex;align-items:center;gap:.45rem;text-transform:uppercase;letter-spacing:.12em;color:var(--kahoot-teal);font-weight:900;font-size:.78rem}
-    .kahoot-hero h1{font-size:clamp(2.2rem,5.2vw,4.65rem);line-height:.95;margin:.7rem 0;color:var(--kahoot-navy);letter-spacing:-.055em}
-    .kahoot-hero p,.kahoot-card p,.kahoot-card li{color:#4d5c70;line-height:1.58}
-    .kahoot-actions,.kahoot-link-row{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
-    .kahoot-button{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:48px;padding:.85rem 1.1rem;border-radius:999px;border:0;text-decoration:none;font-weight:900}
-    .kahoot-button.primary{background:linear-gradient(135deg,var(--kahoot-blue),var(--kahoot-teal));color:#fff;box-shadow:0 16px 32px rgba(19,104,206,.2)}
-    .kahoot-button.secondary{background:#fff;color:var(--kahoot-navy);border:1px solid var(--kahoot-line)}
-    .kahoot-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
-    .kahoot-card{padding:1.1rem;border:1px solid var(--kahoot-line);border-radius:24px;background:#fff;box-shadow:0 14px 35px rgba(16,42,84,.08)}
-    .kahoot-card h2,.kahoot-card h3{color:var(--kahoot-navy);margin:.25rem 0 .6rem}
-    .kahoot-card ul,.kahoot-card ol{padding-left:1.15rem;margin:.6rem 0 0}
-    .kahoot-card li+li{margin-top:.45rem}
-    .kahoot-wide{grid-column:1/-1}
-    .kahoot-focus-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.75rem;margin-top:.85rem}
-    .kahoot-focus-item{padding:.85rem;border-radius:18px;background:var(--kahoot-soft);border:1px solid var(--kahoot-line)}
-    .kahoot-focus-item strong{display:block;color:var(--kahoot-navy);margin-bottom:.25rem}
-    .kahoot-colors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;margin-top:.75rem}
-    .kahoot-color{min-height:80px;border-radius:18px;color:#fff;display:grid;place-items:center;text-align:center;font-weight:950;padding:.7rem}
-    .kahoot-color.red{background:var(--kahoot-red)}.kahoot-color.blue{background:var(--kahoot-blue)}.kahoot-color.yellow{background:var(--kahoot-yellow)}.kahoot-color.green{background:var(--kahoot-lime)}
-    .teacher-note{border-left:6px solid var(--kahoot-teal);background:#eefafa}
-    @media(max-width:920px){.kahoot-hero,.kahoot-grid{grid-template-columns:1fr}.kahoot-focus-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
-    @media(max-width:620px){.kahoot-shell{width:calc(100% - .75rem)}.kahoot-hero{border-radius:22px;padding:1rem}.kahoot-hero h1{font-size:2.25rem}.kahoot-focus-list,.kahoot-colors{grid-template-columns:1fr}.kahoot-button{width:100%}}
+    body.basic2-page .lesson-hero,body.basic2-page .immersive-basic-hero{position:relative!important;top:auto!important}
+    .kahoot-review-shell{width:min(1180px,calc(100% - 2rem));margin:1rem auto 3rem;display:grid;gap:1rem}
+    .kahoot-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
+    .kahoot-review-grid .premium-topic-card{height:100%}
+    .kahoot-answer-colors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;margin-top:.85rem}
+    .kahoot-answer-color{min-height:76px;border-radius:18px;color:#fff;display:grid;place-items:center;text-align:center;font-weight:950;padding:.75rem}
+    .kahoot-answer-color.red{background:#e21b3c}.kahoot-answer-color.blue{background:#1368ce}.kahoot-answer-color.yellow{background:#d89e00}.kahoot-answer-color.green{background:#26890c}
+    .kahoot-direct-link{word-break:break-all;overflow-wrap:anywhere}.kahoot-callout{border-left:6px solid #087e8b;background:#eefafa}
+    @media(max-width:860px){.kahoot-review-grid{grid-template-columns:1fr}.kahoot-answer-colors{grid-template-columns:repeat(2,minmax(0,1fr))}}
+    @media(max-width:640px){.kahoot-review-shell{width:calc(100% - .75rem)}.kahoot-answer-colors{grid-template-columns:1fr}.hero-actions .btn{width:100%}}
   </style>
 </head>
 <body class="english-basic-page basic2-page">
@@ -63,86 +45,66 @@
   </header>
 
   <main>
-    <section class="kahoot-shell">
-      <article class="kahoot-hero">
-        <div class="kahoot-hero-copy">
-          <p class="kahoot-kicker"><i class="bi bi-controller"></i> Practice Lab · Unit 2 · Activity 09</p>
-          <h1>Kahoot Review: Shopping Experiences</h1>
-          <p>Play a fast formative review before the writing task. This Kahoot reviews Unit 2 language without revealing the official exam content.</p>
-          <div class="kahoot-actions">
-            <a class="kahoot-button primary" href="https://play.kahoot.it/v2/?quizId=b76f888b-16ac-4d70-bd16-68a42f5f2873&amp;hostId=ce9a4ba0-8b82-499e-9bdc-a49543d3ed9e" target="_blank" rel="noopener noreferrer"><i class="bi bi-play-circle-fill"></i> Open Kahoot</a>
-            <a class="kahoot-button secondary" href="practice-lab.html#unit-2-folder"><i class="bi bi-arrow-left"></i> Back to Unit 2 Practice Lab</a>
-          </div>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image:url('../../assets/img/english-basic-2/unit-2-shopping-experiences/unit-2-kahoot-review.svg')">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 2 &middot; Activity 09</p>
+        <h1>Kahoot Review: Shopping Experiences</h1>
+        <p>Play a fast teacher-led Kahoot review before the writing task. This activity reviews Unit 2 language without revealing the official exam content.</p>
+        <div class="lesson-meta"><span>Kahoot</span><span>Shopping review</span><span>Teacher-led</span><span>English only</span></div>
+        <div class="hero-actions">
+          <a href="https://play.kahoot.it/v2/?quizId=b76f888b-16ac-4d70-bd16-68a42f5f2873&amp;hostId=ce9a4ba0-8b82-499e-9bdc-a49543d3ed9e" class="btn btn-primary" target="_blank" rel="noopener noreferrer"><i class="bi bi-play-circle-fill"></i> Open Kahoot</a>
+          <a href="practice-lab.html#unit-2-folder" class="btn btn-secondary">Back to Practice Lab</a>
+          <a href="unit-2-shopping-experiences.html" class="btn btn-secondary">Review Unit 2</a>
         </div>
-        <figure class="kahoot-hero-image">
-          <img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/unit-2-kahoot-review.svg" alt="Kahoot review for Unit 2 shopping vocabulary and grammar" />
-        </figure>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/unit-2-kahoot-review.svg" alt="Kahoot review for Unit 2 shopping vocabulary and grammar" /></aside>
+    </section>
+
+    <section class="kahoot-review-shell" aria-label="Kahoot activity instructions">
+      <article class="premium-topic-card kahoot-callout">
+        <div class="topic-heading"><span class="topic-number">01</span><div><p class="topic-label">Activity Goal</p><h2>Review Unit 2 before writing</h2></div></div>
+        <p class="lesson-text">Students will review clothes, accessories, prices, sizes, shopping phrases, demonstratives, phrasal verbs, idioms, simple present, present continuous, and useful sentence writing.</p>
       </article>
 
-      <section class="kahoot-grid" aria-label="Kahoot activity instructions">
-        <article class="kahoot-card">
-          <p class="kahoot-kicker">Goal</p>
-          <h2>What students will review</h2>
-          <p>Students will recognize and use Unit 2 language for shopping situations, clothing descriptions, prices, sizes, and simple writing support.</p>
+      <div class="kahoot-review-grid">
+        <article class="premium-topic-card">
+          <div class="topic-heading"><span class="topic-number">02</span><div><p class="topic-label">Teacher Setup</p><h2>Before starting</h2></div></div>
+          <ol class="lesson-text"><li>Open the Kahoot link and project the game PIN.</li><li>Ask students to join with their real first name and last name initial.</li><li>Tell students that the activity is a review, not the official exam.</li><li>Keep the PDF answer bank for teacher use only.</li></ol>
         </article>
+        <article class="premium-topic-card">
+          <div class="topic-heading"><span class="topic-number">03</span><div><p class="topic-label">Student Instructions</p><h2>During the game</h2></div></div>
+          <ol class="lesson-text"><li>Read each question carefully before choosing an answer.</li><li>Answer in English only.</li><li>After each question, listen to the correction.</li><li>Use the review to prepare your own sentences, not to memorize answers.</li></ol>
+        </article>
+      </div>
 
-        <article class="kahoot-card">
-          <p class="kahoot-kicker">Class setup</p>
-          <h2>Before starting</h2>
-          <ol>
-            <li>The teacher opens the Kahoot link and projects the game PIN.</li>
-            <li>Students join with their real first name and last name initial.</li>
-            <li>The teacher reminds students to answer in English only.</li>
-          </ol>
-        </article>
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">04</span><div><p class="topic-label">Language Checklist</p><h2>What this Kahoot reviews</h2></div></div>
+        <div class="summary-grid">
+          <div class="summary-card"><h3>Clothes and accessories</h3><p>jacket, jeans, boots, scarf, belt, sunglasses, sweater, dress.</p></div>
+          <div class="summary-card"><h3>Demonstratives</h3><p>this, that, these, and those for distance and number.</p></div>
+          <div class="summary-card"><h3>Prices and sizes</h3><p>How much is it? It costs... I am a medium. Do you have this in medium?</p></div>
+          <div class="summary-card"><h3>Shopping expressions</h3><p>try on, on sale, cost an arm and a leg, fit well, What is it like?</p></div>
+        </div>
+      </article>
 
-        <article class="kahoot-card">
-          <p class="kahoot-kicker">Game rules</p>
-          <h2>During the game</h2>
-          <ol>
-            <li>Read each question carefully before choosing an answer.</li>
-            <li>After each question, correct the mistake orally as a class.</li>
-            <li>Use the review to prepare your own sentences, not to memorize answers.</li>
-          </ol>
+      <div class="kahoot-review-grid">
+        <article class="premium-topic-card">
+          <div class="topic-heading"><span class="topic-number">05</span><div><p class="topic-label">Kahoot Colors</p><h2>Answer options</h2></div></div>
+          <p class="lesson-text">Students will see four answer colors in Kahoot. The correct answers are mixed to avoid a visible pattern.</p>
+          <div class="kahoot-answer-colors" aria-label="Kahoot answer color guide"><div class="kahoot-answer-color red">A · Red</div><div class="kahoot-answer-color blue">B · Blue</div><div class="kahoot-answer-color yellow">C · Yellow</div><div class="kahoot-answer-color green">D · Green</div></div>
         </article>
+        <article class="premium-topic-card">
+          <div class="topic-heading"><span class="topic-number">06</span><div><p class="topic-label">Teacher Follow-up</p><h2>After the game</h2></div></div>
+          <ol class="lesson-text"><li>Choose three difficult questions.</li><li>Ask students to explain why the correct answer works.</li><li>Ask students to write two original Unit 2 sentences.</li><li>Connect the sentences to a short shopping or city-description paragraph.</li></ol>
+        </article>
+      </div>
 
-        <article class="kahoot-card kahoot-wide">
-          <p class="kahoot-kicker">Language focus</p>
-          <h2>Unit 2 checklist</h2>
-          <div class="kahoot-focus-list">
-            <div class="kahoot-focus-item"><strong>Clothes and accessories</strong><span>jacket, jeans, boots, scarf, belt, sunglasses.</span></div>
-            <div class="kahoot-focus-item"><strong>Demonstratives</strong><span>this, that, these, those for distance and number.</span></div>
-            <div class="kahoot-focus-item"><strong>Prices and sizes</strong><span>How much is it? It costs... I am a medium.</span></div>
-            <div class="kahoot-focus-item"><strong>Shopping language</strong><span>try on, on sale, cost an arm and a leg, fit well.</span></div>
-          </div>
-        </article>
-
-        <article class="kahoot-card">
-          <p class="kahoot-kicker">Kahoot colors</p>
-          <h2>Answer options</h2>
-          <div class="kahoot-colors" aria-label="Kahoot answer color guide">
-            <div class="kahoot-color red">A · Red</div>
-            <div class="kahoot-color blue">B · Blue</div>
-            <div class="kahoot-color yellow">C · Yellow</div>
-            <div class="kahoot-color green">D · Green</div>
-          </div>
-        </article>
-
-        <article class="kahoot-card teacher-note">
-          <p class="kahoot-kicker">Teacher note</p>
-          <h2>After the game</h2>
-          <p>Choose three difficult questions and ask students to explain why the correct answer works. Then ask them to write two original Unit 2 sentences.</p>
-        </article>
-
-        <article class="kahoot-card">
-          <p class="kahoot-kicker">Teacher material</p>
-          <h2>Question bank PDF</h2>
-          <p>Use the PDF only for teacher setup or post-game feedback. Do not show it to students during the game because it includes correct answers.</p>
-          <div class="kahoot-link-row">
-            <a class="kahoot-button secondary" href="../../assets/pdf/basic2-unit2-writing-exam-kahoot-questions.pdf" target="_blank" rel="noopener noreferrer"><i class="bi bi-file-earmark-pdf"></i> Open PDF</a>
-          </div>
-        </article>
-      </section>
+      <article class="premium-topic-card">
+        <div class="topic-heading"><span class="topic-number">07</span><div><p class="topic-label">Teacher Material</p><h2>Direct links</h2></div></div>
+        <p class="lesson-text"><strong>Kahoot game:</strong> <a class="kahoot-direct-link" href="https://play.kahoot.it/v2/?quizId=b76f888b-16ac-4d70-bd16-68a42f5f2873&amp;hostId=ce9a4ba0-8b82-499e-9bdc-a49543d3ed9e" target="_blank" rel="noopener noreferrer">https://play.kahoot.it/v2/?quizId=b76f888b-16ac-4d70-bd16-68a42f5f2873&amp;hostId=ce9a4ba0-8b82-499e-9bdc-a49543d3ed9e</a></p>
+        <p class="lesson-text"><strong>Question bank PDF:</strong> Use it only for teacher setup or post-game feedback because it includes correct answers.</p>
+        <div class="basic2-resource-links"><a href="https://play.kahoot.it/v2/?quizId=b76f888b-16ac-4d70-bd16-68a42f5f2873&amp;hostId=ce9a4ba0-8b82-499e-9bdc-a49543d3ed9e" target="_blank" rel="noopener noreferrer">Open Kahoot</a><a href="../../assets/pdf/basic2-unit2-writing-exam-kahoot-questions.pdf" target="_blank" rel="noopener noreferrer">Open teacher PDF</a><a href="practice-lab.html#unit-2-folder">Back to Unit 2 Practice Lab</a></div>
+      </article>
     </section>
   </main>
 
