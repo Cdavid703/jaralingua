@@ -41,7 +41,7 @@ assert.match(controller, /submitInFlight/);
 assert.match(controller, /preserved locally/);
 assert.doesNotMatch(controller, /speechSynthesis/);
 
-assert.match(server, /INTERMEDIATE2_MIDTERM_WRITING_ID = "intermediate2MidtermWritingTask20"/);
+assert.match(server, /INTERMEDIATE2_MIDTERM_WRITING_ID = "midtermWritingTask"/);
 assert.match(server, /INTERMEDIATE2_MIDTERM_WRITING_EVALUATION/);
 assert.match(server, /def default_intermediate2_midterm_writing_bundle\(\):[\s\S]*?"isOpen": False/);
 assert.match(server, /missing_client_submission_id/);

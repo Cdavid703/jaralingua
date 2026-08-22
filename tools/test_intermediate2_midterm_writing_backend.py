@@ -10,6 +10,22 @@ SPEC = importlib.util.spec_from_file_location("progress_api", ROOT / "server" / 
 API = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(API)
 
+legacy_gradebook = {
+    "evaluations": [
+        {"id": API.INTERMEDIATE2_MIDTERM_WRITING_ID, "weight": 20},
+        {"id": API.INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID, "weight": 20},
+    ],
+    "students": [{
+        "grades": {API.INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID: 4.2},
+        "gradeDetails": {API.INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID: {"evaluationId": API.INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID, "status": "graded"}},
+    }],
+}
+assert API.migrate_intermediate2_midterm_writing_gradebook(legacy_gradebook) is True
+assert [item["id"] for item in legacy_gradebook["evaluations"]] == [API.INTERMEDIATE2_MIDTERM_WRITING_ID]
+assert legacy_gradebook["students"][0]["grades"] == {API.INTERMEDIATE2_MIDTERM_WRITING_ID: 4.2}
+assert legacy_gradebook["students"][0]["gradeDetails"][API.INTERMEDIATE2_MIDTERM_WRITING_ID]["evaluationId"] == API.INTERMEDIATE2_MIDTERM_WRITING_ID
+assert API.INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID not in legacy_gradebook["students"][0]["gradeDetails"]
+
 with tempfile.TemporaryDirectory(prefix="ie2-midterm-writing-") as folder:
     base = Path(folder)
     grades = base / "grades.json"

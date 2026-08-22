@@ -1,8 +1,10 @@
-﻿(function () {
+(function () {
   const GOOGLE_USER_KEY = "jaralingua_google_user";
   const MICROSOFT_USER_KEY = "jaralingua_microsoft_user";
   const LOCAL_USER_KEY = "jaralingua_local_user";
-  const API_PATH = "/api/intermediate/grades";
+  const API_PATH = window.JARALINGUA_INTERMEDIATE_GRADES_API_PATH || "/api/intermediate/grades";
+  const COURSE_LABEL = window.JARALINGUA_INTERMEDIATE_GRADES_COURSE_LABEL || "Intermediate English Course 1";
+  const FOLLOW_UP_AUDIO_PATH = window.JARALINGUA_INTERMEDIATE_GRADES_AUDIO_PATH || "/api/intermediate/pronunciation-audio";
   const GOOGLE_CLIENT_ID = (window.JARALINGUA_GOOGLE_CLIENT_ID || "").trim();
   const MICROSOFT_CLIENT_ID = (window.JARALINGUA_MICROSOFT_CLIENT_ID || "4e729f8a-d101-4c5d-af68-609d749bc95a").trim();
   const MICROSOFT_TENANT_ID = "e1664f47-3c02-4a23-a559-0f33d25d8f86";
@@ -611,7 +613,7 @@
                   </div>
                   <div class="col-md-4">
                     <label class="form-label fw-bold">Level</label>
-                    <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || "Intermediate English Course 1")}" data-new-student-field="level">
+                    <input class="form-control" value="${escapeHtml((payload.students[0] && payload.students[0].level) || COURSE_LABEL)}" data-new-student-field="level">
                   </div>
                   <div class="col-md-6">
                     <label class="form-label fw-bold">Email</label>
@@ -899,7 +901,7 @@
     if (!holder || !user || !user.credential) return;
     button.disabled = true;
     button.innerHTML = '<i class="bi bi-hourglass-split"></i> Loading audio';
-    fetch("/api/intermediate/pronunciation-audio?studentId=" + encodeURIComponent(studentId) + "&evaluationId=" + encodeURIComponent(evaluationId), {
+    fetch(FOLLOW_UP_AUDIO_PATH + "?studentId=" + encodeURIComponent(studentId) + "&evaluationId=" + encodeURIComponent(evaluationId), {
       headers: {
         Authorization: "Bearer " + user.credential,
         "X-Jaralingua-Auth-Provider": user.provider || "google"
@@ -1037,7 +1039,7 @@
         </head>
         <body>
           <table>
-            <tr><td class="title" colspan="${officialEvaluations.length + 5}">Intermediate English Course 1 - Grades</td></tr>
+            <tr><td class="title" colspan="${officialEvaluations.length + 5}">${escapeHtml(COURSE_LABEL)} - Grades</td></tr>
             <tr><th>ID</th><th>Student</th><th>Email</th>${headers}<th>Average</th><th>Evaluated</th></tr>
             ${rows}
           </table>
@@ -1256,7 +1258,7 @@
     return {
       id: id,
       fullName: fullName,
-      level: cardField(card, "level") || "Intermediate English Course 1",
+      level: cardField(card, "level") || COURSE_LABEL,
       email: cardField(card, "email"),
       emailAliases: original.emailAliases || [],
       contact: cardField(card, "contact"),
@@ -1274,7 +1276,7 @@
     return {
       id: id,
       fullName: fullName,
-      level: newStudentField(card, "level") || "Intermediate English Course 1",
+      level: newStudentField(card, "level") || COURSE_LABEL,
       email: newStudentField(card, "email"),
       emailAliases: [],
       contact: newStudentField(card, "contact"),

@@ -215,7 +215,7 @@
       "status": "published",
       "teacherSubmission": true,
       "gradebookProjected": false,
-      "gradebookWeight": 0,
+      "gradebookWeight": null,
       "affectsAverage": false,
       "searchKeywords": [
         "Unit 2",
@@ -250,9 +250,9 @@
       "questionCount": 10,
       "chapterCount": 5,
       "writtenResponse": false,
-      "teacherSubmission": false,
+      "teacherSubmission": true,
       "gradebookProjected": false,
-      "gradebookWeight": 0,
+      "gradebookWeight": null,
       "affectsAverage": false,
       "status": "published",
       "searchKeywords": [

@@ -80,7 +80,8 @@ def main() -> None:
     assert "<textarea" not in text
     assert "localStorage" not in text
     assert "Save draft" not in text and "Copy response" not in text
-    assert "teacher" not in text.lower()
+    assert "Send to teacher" in text and "Reading inbox" in text
+    assert "0%" not in text
     assert text.index('class="ie2-reading-hero"') < text.index("data-course-search-panel") < text.index('id="reading-activity"')
 
     image_bytes = IMAGE.read_bytes()
@@ -91,21 +92,24 @@ def main() -> None:
     assert "checkSixWeekReading" in script
     assert "Answer all 10 questions" in script
     assert "localStorage" not in script and "textarea" not in script
+    assert "/api/intermediate2/unit2-reading/submit" in script
+    assert "/api/intermediate2/unit2-reading/submissions" in script
 
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     item = next(item for item in catalog["items"] if item["id"] == "unit-2-the-six-week-window-reading")
     assert item["unit"] == 2 and item["order"] == 2 and item["type"] == "reading"
     assert item["questionCount"] == 10 and item["chapterCount"] == 5
-    assert item["writtenResponse"] is False and item["teacherSubmission"] is False
-    assert item["gradebookWeight"] == 0
+    assert item["writtenResponse"] is False and item["teacherSubmission"] is True
+    assert item["gradebookProjected"] is False and item["gradebookWeight"] is None
+    assert item["affectsAverage"] is False
 
     listening = LISTENING.read_text(encoding="utf-8")
     practice = PRACTICE.read_text(encoding="utf-8")
     assert 'href="./reading-unit-2-the-six-week-window.html"' in listening
     assert "Part 2 reading · Coming next" not in listening
-    assert 'id="unit2ActivityCount">2 activities' in practice
+    assert 'id="unit2ActivityCount">8 activities' in practice
     assert "Reading · live" in practice
-    assert 'id="labActivityTotal">7' in practice
+    assert 'id="labActivityTotal">13' in practice
 
     css = CSS.read_text(encoding="utf-8")
     assert ".ie2-midnight-reading-page .ie2-reading-hero" in css

@@ -101,7 +101,8 @@ def main() -> None:
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     item = next(item for item in catalog["items"] if item["id"] == "unit-2-the-call-before-midnight")
     assert item["unit"] == 2 and item["order"] == 1 and item["type"] == "listening"
-    assert item["teacherSubmission"] is False and item["gradebookWeight"] == 0
+    assert item["teacherSubmission"] is True and item["gradebookProjected"] is False
+    assert item["gradebookWeight"] is None and item["affectsAverage"] is False
     assert item["questionCount"] == 10 and len(item["speakers"]) == 2
 
     practice = PRACTICE.read_text(encoding="utf-8")

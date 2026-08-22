@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Intermediate English Grades | JaraLingua</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link href="../../assets/vendor/bootstrap/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="../../assets/vendor/fonts/jaralingua-fonts.css" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #202938;
+      --muted: #64748b;
+      --blue: #2563eb;
+      --green: #16805f;
+      --red: #d62839;
+      --yellow: #f6c453;
+      --surface: #f5f7fb;
+      --white: #ffffff;
+      --line: rgba(32, 41, 56, 0.12);
+      --shadow: 0 22px 55px rgba(21, 34, 62, 0.13);
+    }
+
+    body {
+      margin: 0;
+      font-family: "Nunito", sans-serif;
+      color: var(--ink);
+      background: var(--surface);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .navbar-brand {
+      font-family: "Montserrat", sans-serif;
+    }
+
+    .navbar {
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 32px rgba(21, 34, 62, 0.08);
+    }
+
+    .navbar-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-weight: 900;
+      color: var(--ink);
+    }
+
+    .brand-logo {
+      height: 42px;
+      width: auto;
+    }
+
+    .nav-link {
+      color: var(--ink);
+      font-weight: 800;
+      border-radius: 999px;
+      padding: 0.55rem 0.9rem !important;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--blue);
+      background: rgba(37, 99, 235, 0.08);
+    }
+
+    .hero {
+      min-height: min(660px, 82vh);
+      display: flex;
+      align-items: center;
+      padding: 6.25rem 0 4rem;
+      color: var(--white);
+      background:
+        linear-gradient(110deg, rgba(17, 24, 39, 0.92), rgba(37, 99, 235, 0.66), rgba(22, 128, 95, 0.48)),
+        url("../../assets/img/english-intermediate-2/cards/grades-card-v1.webp") center / cover no-repeat;
+    }
+
+    .badge-course {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.7rem 1rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.16);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .hero h1 {
+      margin-top: 1.2rem;
+      font-weight: 900;
+      line-height: 0.98;
+      letter-spacing: 0;
+      font-size: clamp(2.7rem, 6vw, 5.2rem);
+      text-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+    }
+
+    .hero-text {
+      max-width: 820px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.12rem;
+      line-height: 1.75;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+      margin-top: 1.5rem;
+    }
+
+    .btn-main,
+    .btn-soft {
+      min-height: 46px;
+      border-radius: 999px;
+      font-weight: 900;
+      padding: 0.78rem 1.15rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      border: 0;
+    }
+
+    .btn-main {
+      background: var(--white);
+      color: var(--ink);
+    }
+
+    .btn-soft {
+      background: rgba(255, 255, 255, 0.16);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.24);
+      backdrop-filter: blur(12px);
+    }
+
+    .grades-panel .btn-soft {
+      background: #eef4ff;
+      color: var(--ink);
+      border: 1px solid var(--line);
+      backdrop-filter: none;
+    }
+
+    .global-course-switcher {
+      position: fixed;
+      right: 1rem;
+      top: 5.25rem;
+      z-index: 1200;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .global-course-switcher summary {
+      list-style: none;
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0 1rem;
+      border-radius: 999px;
+      background: var(--ink);
+      color: var(--white);
+      font-weight: 900;
+      box-shadow: 0 14px 32px rgba(15, 23, 42, 0.18);
+      cursor: pointer;
+    }
+
+    .global-course-switcher summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .global-course-switcher summary::after {
+      content: "v";
+      font-size: 0.8rem;
+    }
+
+    .global-course-switcher details[open] summary::after {
+      transform: rotate(180deg);
+    }
+
+    .global-course-switcher nav {
+      position: absolute;
+      right: 0;
+      top: calc(100% + 0.5rem);
+      width: min(250px, calc(100vw - 2rem));
+      display: grid;
+      gap: 0.35rem;
+      padding: 0.65rem;
+      border-radius: 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.18);
+    }
+
+    .global-course-switcher a {
+      display: flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 0 0.85rem;
+      border-radius: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 900;
+    }
+
+    .global-course-switcher a:hover {
+      background: #eef4ff;
+      color: var(--blue);
+    }
+
+    .grades-shell {
+      width: min(1180px, calc(100% - 2rem));
+      margin: -2.2rem auto 0;
+      position: relative;
+      z-index: 2;
+    }
+
+    .grades-card,
+    .grades-panel,
+    .locked-card,
+    .privacy-note {
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .grades-card {
+      padding: clamp(1.1rem, 2.6vw, 2rem);
+    }
+
+    .grades-panel {
+      padding: 1.2rem;
+    }
+
+    .section-kicker {
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      color: var(--red);
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+    }
+
+    .section-title {
+      color: var(--ink);
+      font-size: clamp(1.65rem, 3vw, 2.45rem);
+      font-weight: 900;
+      letter-spacing: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-text {
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.68;
+      margin-bottom: 0;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.85rem;
+      margin-top: 1.1rem;
+    }
+
+    .metric-card {
+      min-height: 112px;
+      border-radius: 8px;
+      padding: 1rem;
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      display: grid;
+      align-content: center;
+      gap: 0.25rem;
+    }
+
+    .metric-card span {
+      color: var(--muted);
+      font-weight: 900;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric-card strong {
+      color: var(--ink);
+      font-size: clamp(1.25rem, 2.7vw, 2rem);
+      line-height: 1.05;
+    }
+
+    .privacy-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      padding: 1rem;
+      background: #eef4ff;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .privacy-note i {
+      font-size: 1.35rem;
+      color: var(--blue);
+      flex: 0 0 auto;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .grades-table {
+      width: 100%;
+      min-width: 760px;
+      border-collapse: collapse;
+    }
+
+    .grades-table th,
+    .grades-table td {
+      padding: 0.85rem;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .grades-table th {
+      color: var(--ink);
+      background: #eef4ff;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .grades-table td {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .gradebook-student-id {
+      display: inline-block;
+      margin-top: 0.2rem;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    [data-official-gradebook]:not([data-show-emails="true"]) .gradebook-email-cell,
+    [data-official-gradebook]:not([data-show-emails="true"]) .grades-table th:nth-child(2),
+    [data-official-gradebook]:not([data-show-emails="true"]) .grades-table td:nth-child(2) {
+      display: none;
+    }
+
+    [data-official-gradebook] .grades-table th:first-child,
+    [data-official-gradebook] .grades-table td:first-child {
+      position: sticky;
+      left: 0;
+      z-index: 1;
+      background: var(--white);
+    }
+
+    [data-official-gradebook] .grades-table th:first-child {
+      z-index: 2;
+      background: #eef4ff;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 30px;
+      padding: 0 0.7rem;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.08);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .status-pill.done {
+      background: rgba(22, 128, 95, 0.12);
+      color: var(--green);
+    }
+
+    .status-pill.pending {
+      background: rgba(246, 196, 83, 0.22);
+      color: #735000;
+    }
+
+    .status-pill.submitted {
+      background: rgba(37, 99, 235, 0.12);
+      color: #194b9f;
+    }
+
+    .locked-card {
+      padding: clamp(1.2rem, 3vw, 2rem);
+      text-align: center;
+    }
+
+    .locked-card i {
+      width: 64px;
+      height: 64px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 8px;
+      background: #eef4ff;
+      color: var(--blue);
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .admin-grade-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.75rem;
+      max-height: 460px;
+      overflow: auto;
+      padding: 0.75rem;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fbff;
+    }
+
+    .staff-tabs {
+      min-width: 0;
+    }
+
+    .staff-tab-nav {
+      position: relative;
+      display: flex;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
+      padding: 0 0.25rem;
+      overflow-x: auto;
+      overscroll-behavior-inline: contain;
+      scrollbar-width: thin;
+      border-bottom: 1px solid var(--line);
+      background: var(--white);
+    }
+
+    .staff-tab {
+      flex: 0 0 auto;
+      min-height: 52px;
+      padding: 0.7rem 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      border: 0;
+      border-bottom: 3px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .staff-tab:hover,
+    .staff-tab:focus-visible {
+      color: var(--blue);
+      background: #f8fbff;
+      outline: none;
+    }
+
+    .staff-tab[aria-selected="true"] {
+      color: var(--blue);
+      border-bottom-color: var(--blue);
+      background: #eef4ff;
+    }
+
+    .staff-tab-count {
+      min-width: 24px;
+      min-height: 24px;
+      padding: 0 0.42rem;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.11);
+      color: var(--blue);
+      font-size: 0.72rem;
+      line-height: 1;
+    }
+
+    .staff-tab-panel[hidden] {
+      display: none !important;
+    }
+
+    .staff-tab-panel:focus {
+      outline: none;
+    }
+
+    .grades-disclosure {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .grades-disclosure > summary,
+    .nested-disclosure > summary {
+      list-style: none;
+      cursor: pointer;
+    }
+
+    .grades-disclosure > summary::-webkit-details-marker,
+    .nested-disclosure > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .grades-disclosure > summary {
+      min-height: 78px;
+      padding: 1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .grades-disclosure > summary:hover,
+    .grades-disclosure > summary:focus-visible {
+      background: #f8fbff;
+    }
+
+    .grades-disclosure[open] > summary {
+      border-bottom: 1px solid var(--line);
+      background: #f8fbff;
+    }
+
+    .disclosure-heading {
+      min-width: 0;
+      display: grid;
+      gap: 0.2rem;
+    }
+
+    .disclosure-heading small {
+      color: var(--red);
+      font-size: 0.72rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .disclosure-heading strong {
+      color: var(--ink);
+      font-size: 1.1rem;
+      overflow-wrap: anywhere;
+    }
+
+    .disclosure-action {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--blue);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .disclosure-action i,
+    .nested-disclosure > summary i,
+    .admin-student-card > summary i {
+      transition: transform 180ms ease;
+    }
+
+    .grades-disclosure[open] > summary .disclosure-action i,
+    .nested-disclosure[open] > summary i,
+    .admin-student-card[open] > summary .bi-chevron-down {
+      transform: rotate(180deg);
+    }
+
+    .grades-disclosure-body {
+      padding: 1.2rem;
+    }
+
+    .nested-disclosure {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #f8fbff;
+    }
+
+    .nested-disclosure > summary {
+      min-height: 52px;
+      padding: 0.8rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--ink);
+      font-weight: 900;
+    }
+
+    .admin-student-card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0;
+      overflow: hidden;
+      background: #f8fbff;
+    }
+
+    .admin-student-card > summary {
+      cursor: pointer;
+      list-style: none;
+      min-height: 68px;
+      padding: 0.9rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--ink);
+    }
+
+    .admin-student-card > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .admin-student-card[open] {
+      background: var(--white);
+    }
+
+    .admin-student-card[open] > summary {
+      border-bottom: 1px solid var(--line);
+      background: #f8fbff;
+    }
+
+    .admin-student-card > summary span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .admin-student-card > summary small {
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .admin-student-body {
+      padding: 1rem;
+    }
+
+    .admin-grade-row {
+      display: grid;
+      grid-template-columns: 1fr 100px;
+      align-items: center;
+      gap: 0.65rem;
+      margin: 0;
+      padding: 0.6rem;
+      border-radius: 8px;
+      background: var(--white);
+      border: 1px solid rgba(32, 41, 56, 0.08);
+      font-weight: 800;
+    }
+
+    .admin-grade-row span {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .footer {
+      background: var(--ink);
+      color: var(--white);
+      padding: 2.4rem 0;
+    }
+
+    .footer a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 900;
+      opacity: 0.86;
+    }
+
+    @media (max-width: 768px) {
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .global-course-switcher {
+        top: auto;
+        right: 0.75rem;
+        bottom: 0.75rem;
+      }
+    }
+
+    @media (max-width: 575px) {
+      .hero {
+        padding-top: 5.75rem;
+        padding-bottom: 3rem;
+        min-height: auto;
+      }
+
+      .hero-actions .btn-main,
+      .hero-actions .btn-soft {
+        width: 100%;
+      }
+
+      .grades-disclosure > summary {
+        align-items: flex-start;
+        padding: 0.9rem 1rem;
+      }
+
+      .disclosure-action span {
+        display: none;
+      }
+
+      .grades-disclosure-body,
+      .admin-student-body {
+        padding: 0.9rem;
+      }
+
+      .admin-grade-row {
+        grid-template-columns: minmax(0, 1fr) 88px;
+      }
+
+      .staff-tab-nav {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.3rem;
+        margin-inline: 0;
+        padding: 0.35rem;
+        overflow: visible;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+
+      .staff-tab {
+        width: 100%;
+        min-width: 0;
+        min-height: 48px;
+        justify-content: flex-start;
+        padding-inline: 0.65rem;
+        border-bottom: 0;
+        border-left: 3px solid transparent;
+        font-size: 0.88rem;
+        white-space: normal;
+        text-align: left;
+        line-height: 1.2;
+      }
+
+      .staff-tab[aria-selected="true"] {
+        border-bottom-color: transparent;
+        border-left-color: var(--blue);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../index.html">English</a>
+        <a href="./index.html">Intermediate English</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+      </nav>
+    </details>
+  </div>
+
+  <nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <img class="brand-logo" src="../../assets/img/jaralingua-logo.png" alt="JaraLingua">
+        <span>Intermediate English</span>
+      </a>
+      <div class="ms-auto me-2 d-flex align-items-center" data-auth-nav-slot></div>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Show menu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav gap-lg-2">
+          <li class="nav-item"><a class="nav-link" href="index.html">Portal</a></li>
+          <li class="nav-item"><a class="nav-link" href="course-overview.html">Course</a></li>
+          <li class="nav-item"><a class="nav-link" href="practice-lab.html">Practice Lab</a></li>
+          <li class="nav-item"><a class="nav-link active" href="notas.html">Grades</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="container">
+      <span class="badge-course"><i class="bi bi-clipboard-data-fill"></i> Private academic progress</span>
+      <h1>Intermediate English Grades</h1>
+      <p class="hero-text">
+        A secure space for students to check their own Intermediate English Course 2 grades. The page requires a verified Google or Microsoft session and the server only returns the record linked to that email.
+      </p>
+      <div class="hero-actions">
+        <a href="#grades" class="btn-main"><i class="bi bi-bar-chart-line-fill"></i> Check grades</a>
+        <a href="index.html" class="btn-soft"><i class="bi bi-arrow-left-circle"></i> Back to portal</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="grades">
+    <div class="grades-shell">
+      <div id="intermediateEnglishGradesApp" class="grades-card" aria-live="polite">
+        <div class="locked-card">
+          <i class="bi bi-hourglass-split"></i>
+          <h2 class="section-title">Loading grades</h2>
+          <p class="section-text">We are verifying your session before showing course information.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container d-flex flex-wrap justify-content-between gap-3">
+      <span>© 2026 JaraLingua</span>
+      <a href="../index.html">Back to English</a>
+    </div>
+  </footer>
+
+  <script src="../../assets/vendor/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script>
+    window.JARALINGUA_MICROSOFT_REDIRECT_URI = window.location.origin + "/ingles/intermediate-2/notas.html";
+  </script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="https://alcdn.msauth.net/browser/2.37.0/js/msal-browser.min.js"></script>
+  <script src="../../assets/js/google-auth.js?v=20260801-auth-panel-mobile"></script>
+  <script src="../../assets/js/english-grade-report-pdf.js?v=20260608-3"></script>
+  <script>
+    window.JARALINGUA_INTERMEDIATE_GRADES_API_PATH = "/api/intermediate2/grades";
+    window.JARALINGUA_INTERMEDIATE_GRADES_COURSE_LABEL = "Intermediate English Course 2";
+    window.JARALINGUA_INTERMEDIATE_GRADES_AUDIO_PATH = "/api/intermediate2/unit2-pronunciation/audio";
+  </script>
+  <script src="../../assets/js/intermediate-english-grades.js?v=20260822-intermediate2-grid"></script>
+  <script src="../../assets/js/jaralingua-back-button.js"></script>
+  <script src="/assets/js/course-switcher.js?v=20260703-courses"></script>
+</body>
+</html>

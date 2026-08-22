@@ -157,6 +157,17 @@
         </form>
       </section>
 
+      <section class="ie2-reading-block ie2-search-item" id="teacher-delivery" data-search-keywords="send teacher delivery receipt reading report completion answers">
+        <p class="intermediate2-kicker">Independent delivery</p>
+        <h2>Send your reading report to the teacher</h2>
+        <p>After you check all ten answers, send your completed reading report. It goes only to the teacher inbox; it does not appear in Grades and has no percentage.</p>
+        <div class="ie2-reading-actions"><button class="intermediate2-button primary" type="button" id="sendSixWeekReading" disabled>Send to teacher</button></div>
+        <p class="ie2-reading-result" id="sixWeekReadingDeliveryStatus" role="status" aria-live="polite">Complete and check all ten answers to unlock delivery.</p>
+      </section>
+      <section class="ie2-reading-block" id="sixWeekReadingTeacherInbox" hidden>
+        <p class="intermediate2-kicker">Teacher view</p><h2>Reading inbox</h2><p>This independent inbox never creates a row, score or percentage in Grades.</p><div id="sixWeekReadingTeacherInboxList" aria-live="polite"></div>
+      </section>
+
       <section class="ie2-reading-next ie2-search-item" data-search-keywords="finish Unit 2 Practice Lab review language no written response">
         <div><p class="intermediate2-kicker">Reading complete</p><h2>The story ends here</h2><p>You followed the decision from the first phone call to the final transition plan. Continue from the Unit 2 Practice Lab when the next activity is approved.</p></div>
         <div class="ie2-reading-actions"><a class="intermediate2-button primary" href="./practice-lab.html#unit-2-folder">Return to Unit 2 activities</a><a class="intermediate2-button" href="./unit-2-wishes-dilemmas-advice.html">Review Unit 2 language</a></div>
@@ -165,8 +176,9 @@
   </main>
 
   <footer class="site-footer"><p>&copy; 2026 JaraLingua. Intermediate English Course 2 reading practice.</p></footer>
+  <script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js?v=20260822-intermediate2-reading"></script>
   <script src="../../assets/js/course-search.js?v=20260814-intermediate2-reading"></script>
-  <script src="../../assets/js/intermediate2-reading-six-week-window.js?v=20260814"></script>
+  <script src="../../assets/js/intermediate2-reading-six-week-window.js?v=20260822-reading-delivery-v2"></script>
   <script src="/assets/js/course-switcher.js?v=20260814-intermediate2"></script>
 </body>
 </html>

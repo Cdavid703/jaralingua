@@ -198,6 +198,10 @@ INTERMEDIATE2_UNIT2_LISTENING_SUBMISSIONS_PATH = os.environ.get(
     "JARALINGUA_INTERMEDIATE2_UNIT2_LISTENING_SUBMISSIONS",
     "/var/lib/jaralingua/intermediate2-unit2-listening-submissions.json"
 )
+INTERMEDIATE2_UNIT2_READING_SUBMISSIONS_PATH = os.environ.get(
+    "JARALINGUA_INTERMEDIATE2_UNIT2_READING_SUBMISSIONS",
+    "/var/lib/jaralingua/intermediate2-unit2-reading-submissions.json"
+)
 INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR = os.environ.get(
     "JARALINGUA_INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR",
     "/var/lib/jaralingua/intermediate2-pronunciation-audio"
@@ -241,7 +245,14 @@ INTERMEDIATE2_UNIT2_LISTENING_ANSWERS = {
     "q1": "c", "q2": "a", "q3": "b", "q4": "c", "q5": "b",
     "q6": "a", "q7": "c", "q8": "a", "q9": "b", "q10": "c"
 }
-INTERMEDIATE2_MIDTERM_WRITING_ID = "intermediate2MidtermWritingTask20"
+INTERMEDIATE2_UNIT2_READING_ID = "intermediate2Unit2TheSixWeekWindowReading"
+INTERMEDIATE2_UNIT2_READING_VERSION = "2026.1"
+INTERMEDIATE2_UNIT2_READING_ANSWERS = {
+    "q1": "b", "q2": "c", "q3": "a", "q4": "b", "q5": "c",
+    "q6": "a", "q7": "c", "q8": "b", "q9": "a", "q10": "c"
+}
+INTERMEDIATE2_MIDTERM_WRITING_ID = "midtermWritingTask"
+INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID = "intermediate2MidtermWritingTask20"
 INTERMEDIATE2_UNIT2_PRONUNCIATION_VERSION = "2026.1"
 INTERMEDIATE2_UNIT2_PRONUNCIATION_REFERENCE = (
     "If I were at a crossroads, I'd think the decision over before I answered. "
@@ -2914,6 +2925,59 @@ def submit_intermediate2_unit2_listening(profile, payload):
     return 200, result
 
 
+def read_intermediate2_unit2_reading_submissions():
+    default = {"schemaVersion": 1, "activityId": INTERMEDIATE2_UNIT2_READING_ID, "activityVersion": INTERMEDIATE2_UNIT2_READING_VERSION, "submissions": []}
+    if not os.path.exists(INTERMEDIATE2_UNIT2_READING_SUBMISSIONS_PATH):
+        return default
+    try:
+        with open(INTERMEDIATE2_UNIT2_READING_SUBMISSIONS_PATH, "r", encoding="utf-8-sig") as handle:
+            data = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return default
+    if not isinstance(data, dict):
+        return default
+    data["schemaVersion"] = 1
+    data["activityId"] = INTERMEDIATE2_UNIT2_READING_ID
+    data["activityVersion"] = INTERMEDIATE2_UNIT2_READING_VERSION
+    data["submissions"] = [item for item in data.get("submissions", []) if isinstance(item, dict)]
+    return data
+
+
+def intermediate2_unit2_reading_public_item(item, include_student=False):
+    result = {"receiptId": clean_text(item.get("receiptId"), 80), "clientSubmissionId": clean_text(item.get("clientSubmissionId"), 120), "submittedAt": clean_text(item.get("submittedAt"), 80), "completedAnswers": min(10, max(0, int(item.get("completedAnswers", 0) or 0))), "status": "received", "teacherInboxOnly": True, "gradebookProjected": False, "affectsAverage": False}
+    if include_student:
+        result["studentName"] = clean_text(item.get("studentName"), 180)
+    return result
+
+
+def submit_intermediate2_unit2_reading(profile, payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_payload"}
+    student_key = intermediate2_pronunciation_student_key(profile)
+    client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+    details = payload.get("details") if isinstance(payload.get("details"), dict) else {}
+    answers = details.get("answers") if isinstance(details.get("answers"), dict) else {}
+    clean_answers = {key: clean_text(answers.get(key), 1).lower() for key in INTERMEDIATE2_UNIT2_READING_ANSWERS}
+    if not student_key:
+        return 403, {"error": "student_identity_missing"}
+    if len(client_submission_id) < 8:
+        return 400, {"error": "invalid_client_submission_id"}
+    if any(value not in ("a", "b", "c") for value in clean_answers.values()):
+        return 400, {"error": "all_answers_required"}
+    store = read_intermediate2_unit2_reading_submissions()
+    existing = next((item for item in store["submissions"] if item.get("studentKey") == student_key and item.get("clientSubmissionId") == client_submission_id), None)
+    if isinstance(existing, dict):
+        result = intermediate2_unit2_reading_public_item(existing)
+        result.update({"ok": True, "idempotentReplay": True})
+        return 200, result
+    submitted_at = now_iso()
+    receipt_id = submission_receipt_code(local_auth_secret(), INTERMEDIATE2_UNIT2_READING_ID, INTERMEDIATE2_UNIT2_READING_VERSION, student_key, submitted_at, client_submission_id)
+    submission = {"activityId": INTERMEDIATE2_UNIT2_READING_ID, "activityVersion": INTERMEDIATE2_UNIT2_READING_VERSION, "clientSubmissionId": client_submission_id, "receiptId": receipt_id, "studentKey": student_key, "studentName": clean_text(profile.get("name") or profile.get("fullName") or profile.get("displayName"), 180) or student_key, "submittedAt": submitted_at, "answers": clean_answers, "completedAnswers": 10, "status": "received", "teacherInboxOnly": True, "gradebookProjected": False, "affectsAverage": False}
+    store["submissions"].append(submission)
+    write_json_file(INTERMEDIATE2_UNIT2_READING_SUBMISSIONS_PATH, store, ".intermediate2-unit2-reading-")
+    result = intermediate2_unit2_reading_public_item(submission)
+    result.update({"ok": True, "idempotentReplay": False})
+    return 200, result
 def attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, audio_dir):
     if not isinstance(student.get("gradeDetails"), dict):
         student["gradeDetails"] = {}
@@ -16782,8 +16846,36 @@ def intermediate2_midterm_writing_can_start(role, state, student_id):
     return role in ("admin", "teacher") or (isinstance(state, dict) and state.get("isOpen") is True) or basic_integrated_student_has_reopen(state, student_id)
 
 
+def migrate_intermediate2_midterm_writing_gradebook(grades_data):
+    changed = False
+    evaluations = grades_data.get("evaluations", [])
+    if isinstance(evaluations, list):
+        filtered = [item for item in evaluations if not isinstance(item, dict) or item.get("id") != INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID]
+        if len(filtered) != len(evaluations):
+            grades_data["evaluations"] = filtered
+            changed = True
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        for field in ("grades", "gradeDetails"):
+            values = student.get(field)
+            if not isinstance(values, dict) or INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID not in values:
+                continue
+            if INTERMEDIATE2_MIDTERM_WRITING_ID not in values:
+                legacy_value = values[INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID]
+                if field == "gradeDetails" and isinstance(legacy_value, dict):
+                    legacy_value = dict(legacy_value)
+                    legacy_value["evaluationId"] = INTERMEDIATE2_MIDTERM_WRITING_ID
+                values[INTERMEDIATE2_MIDTERM_WRITING_ID] = legacy_value
+            values.pop(INTERMEDIATE2_MIDTERM_WRITING_LEGACY_ID, None)
+            changed = True
+    return changed
+
+
 def intermediate2_midterm_writing_apply_gradebook(grades_data, store):
-    changed = ensure_evaluation_template(grades_data, INTERMEDIATE2_MIDTERM_WRITING_EVALUATION)
+    changed = migrate_intermediate2_midterm_writing_gradebook(grades_data)
+    if ensure_evaluation_template(grades_data, INTERMEDIATE2_MIDTERM_WRITING_EVALUATION):
+        changed = True
     for student in grades_data.get("students", []):
         if not isinstance(student, dict):
             continue
@@ -17619,6 +17711,20 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {"ok": True, "role": role, "teacherInbox": is_staff, "gradebookProjected": False, "affectsAverage": False, "items": [intermediate2_unit2_listening_public_item(item, include_student=is_staff) for item in visible]})
             return
 
+        if parsed.path == "/api/intermediate2/unit2-reading/submissions":
+            query = urllib.parse.parse_qs(parsed.query)
+            with data_lock:
+                role = grade_user_role(profile, read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH))
+                is_staff = role in ("admin", "teacher")
+                student_key = intermediate2_pronunciation_student_key(profile)
+                submissions = read_intermediate2_unit2_reading_submissions().get("submissions", [])
+                visible = submissions if is_staff else [item for item in submissions if item.get("studentKey") == student_key]
+                client_submission_id = clean_text((query.get("clientSubmissionId") or [""])[0], 120)
+                if client_submission_id:
+                    visible = [item for item in visible if item.get("clientSubmissionId") == client_submission_id]
+                visible = sorted(visible, key=lambda item: item.get("submittedAt", ""), reverse=True)
+                json_response(self, 200, {"ok": True, "role": role, "teacherInbox": is_staff, "gradebookProjected": False, "affectsAverage": False, "items": [intermediate2_unit2_reading_public_item(item, include_student=is_staff) for item in visible]})
+            return
         if parsed.path in (
             "/api/intermediate2/unit1-pronunciation/submissions",
             "/api/intermediate2/unit1-pronunciation/audio",
@@ -19087,6 +19193,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/intermediate2/grades":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                changed = migrate_intermediate2_midterm_writing_gradebook(grades_data)
+                if ensure_evaluation_template(grades_data, INTERMEDIATE2_MIDTERM_WRITING_EVALUATION):
+                    changed = True
+                if changed:
+                    write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
                 query = urllib.parse.parse_qs(parsed.query)
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
@@ -19319,6 +19430,11 @@ class ProgressHandler(BaseHTTPRequestHandler):
             json_response(self, status, response)
             return
 
+        if parsed.path == "/api/intermediate2/unit2-reading/submit":
+            with data_lock:
+                status, response = submit_intermediate2_unit2_reading(profile, payload)
+            json_response(self, status, response)
+            return
         if parsed.path == "/api/intermediate/final-writing/start":
             try:
                 with data_lock:
