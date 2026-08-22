@@ -12,7 +12,9 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
   <style>
-    body.basic2-page{background:linear-gradient(180deg,#f5fbff 0,#fff 48%,#eefbf5 100%)}
+    body.basic2-page{background:linear-gradient(180deg,#f5fbff 0,#fff 48%,#eefbf5 100%);padding-top:0!important}
+    body.kahoot-review-page .site-header{position:relative!important;top:auto!important;left:auto!important;right:auto!important;z-index:20!important}
+    body.kahoot-review-page .global-course-switcher{position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;width:min(1180px,calc(100% - 2rem));margin:.75rem auto 0;display:flex;justify-content:flex-end;z-index:10!important}
     body.basic2-page .lesson-hero,body.basic2-page .immersive-basic-hero{position:relative!important;top:auto!important}
     .kahoot-review-shell{width:min(1180px,calc(100% - 2rem));margin:1rem auto 3rem;display:grid;gap:1rem}
     .kahoot-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
@@ -25,7 +27,7 @@
     @media(max-width:640px){.kahoot-review-shell{width:calc(100% - .75rem)}.kahoot-answer-colors{grid-template-columns:1fr}.hero-actions .btn{width:100%}}
   </style>
 </head>
-<body class="english-basic-page basic2-page">
+<body class="english-basic-page basic2-page kahoot-review-page">
   <div class="global-course-switcher" aria-label="Courses">
     <details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English Course 1</a><a href="./index.html">Basic English Course 2</a><a href="../intermediate/index.html">Intermediate English</a></nav></details>
   </div>
