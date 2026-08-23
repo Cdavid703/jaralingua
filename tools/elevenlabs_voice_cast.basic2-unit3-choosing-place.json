@@ -1,0 +1,6 @@
+{
+  "speakers": {
+    "Nora": { "voice_id": "XrExE9yKIg1WjnnlVkGX", "name": "Matilda - Professional US", "profile": "english-us", "gender": "female" },
+    "Eli": { "voice_id": "DwwuoY7Uz8AP8zrY5TAo", "name": "Sean - Conversational US", "profile": "english-us", "gender": "male" }
+  }
+}
