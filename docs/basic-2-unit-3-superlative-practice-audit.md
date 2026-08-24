@@ -23,6 +23,6 @@ The Intermediate 1 originals include measurements, world-record facts, broader h
 
 ## Experience requirements
 
-- Each activity has a distinct professional hero image.
+- **Required full-screen composition:** every new Basic English Course 2 page must use the shared application-width layout: available desktop width up to `1760px`, fluid safe gutters, and no narrow central rail. On tablet and mobile, grids must reflow without horizontal overflow or wasted fixed side space.`r`n- Each activity has a distinct professional hero image.
 - The header and hero are explicitly non-sticky and scroll normally on mobile and tablet.
 - The grammar challenge offers selectable A/B/C answers and feedback; it does not require typed writing.
