@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Basic English Course 2 Unit 3 Conversation Coach with Ava Park: a coherent around-the-world conversation with transcription, natural reactions, and private formative feedback." />
+  <title>Around the World with Ava | Unit 3 Conversation Coach | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/conversation-coach-v2.css?v=20260824-basic2-u3-ava" />
+  <link rel="stylesheet" href="../../assets/css/english-basic2-conversation-coach.css?v=20260820-basic2-full-width-compact" />
+</head>
+<body class="english-basic-page basic2-page conversation-coach-page basic2-conversation-coach-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html" aria-current="page">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="coach-hero" aria-labelledby="pageTitle">
+      <div class="coach-hero-copy">
+        <p class="coach-kicker">Basic English Course 2 - Unit 3 - Conversation Coach</p>
+        <h1 id="pageTitle">Around the World with Ava</h1>
+        <p>Have an eight-turn conversation with Ava. Each turn contains one clear task: introduce yourself, choose a place, describe it, compare it, recommend it, then ask Ava one question at a time.</p>
+        <div class="coach-meta"><span>8 connected turns</span><span>One task per turn</span><span>American English</span><span>0.75x / 1x / 1.25x</span><span>Unlimited attempts</span><span>Private result /50</span></div>
+        <div class="coach-actions">
+          <a class="coach-link-button primary" href="#conversationCoachApp"><i class="bi bi-play-fill"></i> Meet Ava</a>
+          <a class="coach-link-button secondary" href="unit-3-around-the-world.html">Review Unit 3</a>
+          <a class="coach-link-button secondary" href="practice-lab.html#unit-3-folder">Back to Unit 3 folder</a>
+        </div>
+      </div>
+      <figure class="coach-hero-visual">
+        <img src="../../assets/img/english-basic-2/unit-3-around-the-world/ava-around-world-conversation-coach-hero.png" width="1536" height="864" fetchpriority="high" decoding="async" alt="Ava Park leading a professional around-the-world English conversation practice" />
+        <figcaption><i class="bi bi-shield-check"></i> Your recording is processed temporarily for transcription. Audio is not stored or sent to your teacher.</figcaption>
+      </figure>
+    </section>
+
+    <section class="coach-outcomes" aria-label="Practice design">
+      <article><i class="bi bi-chat-heart-fill"></i><div><strong>Natural start</strong><span>Start with a greeting, then move one clear step at a time.</span></div></article>
+      <article><i class="bi bi-bag-check-fill"></i><div><strong>Compareping language</strong><span>Use precise place adjectives, comparisons, and recommendations.</span></div></article>
+      <article><i class="bi bi-signpost-split-fill"></i><div><strong>Demonstratives</strong><span>Practice this, that, these, and those in a store situation.</span></div></article>
+    </section>
+
+    <section class="coach-shell" id="conversationCoachApp">
+      <div class="coach-layout">
+        <section class="coach-main" aria-live="polite">
+          <div id="onboardingPanel">
+            <section class="coach-companion-welcome">
+              <figure><img src="../../assets/img/english-basic-2/unit-3-around-the-world/ava-around-world-conversation-coach-hero.png" width="900" height="1125" decoding="async" alt="Ava Park, the Around the World Conversation Coach" /></figure>
+              <div>
+                <p class="coach-kicker">Meet your partner</p>
+                <h2>Hi, I'm Ava Park</h2>
+                <p>I will ask one clear question at a time. We will begin with a friendly introduction, choose a place you know, describe it, compare it, recommend it, and end with two short questions for me.</p>
+                <div class="coach-audio-row">
+                  <button class="coach-audio-button" id="welcomePlayButton" type="button"><i class="bi bi-play-fill"></i><span>Hear Ava's welcome</span></button>
+                  <button class="coach-audio-button" id="instructionsPlayButton" type="button"><i class="bi bi-volume-up-fill"></i><span>Hear instructions</span></button>
+                  <div class="coach-speed" aria-label="Audio speed"><span>Speed</span><button type="button" data-coach-speed="0.75">0.75x</button><button type="button" data-coach-speed="1" class="is-active">1x</button><button type="button" data-coach-speed="1.25">1.25x</button></div>
+                </div>
+                <audio id="welcomeAudio" preload="metadata"></audio>
+                <audio id="instructionsAudio" preload="metadata"></audio>
+              </div>
+            </section>
+
+            <ol class="coach-steps">
+              <li><span>1</span><div><strong>Meet</strong><small>Answer one friendly introduction question.</small></div></li>
+              <li><span>2</span><div><strong>Explore</strong><small>Choose a place you know.</small></div></li>
+              <li><span>3</span><div><strong>Compare</strong><small>Describe, compare, and recommend places.</small></div></li>
+              <li><span>4</span><div><strong>Improve</strong><small>Review your private /50 report and try again.</small></div></li>
+            </ol>
+
+            <section class="coach-mode-panel" aria-labelledby="modeTitle">
+              <div class="coach-section-heading"><div><p class="coach-kicker">Practice mode</p><h3 id="modeTitle">Choose how much support you need</h3></div></div>
+              <div class="coach-mode-grid">
+                <label class="coach-mode-card"><input id="guidedMode" type="radio" name="coachMode" value="guided" checked /><span><i class="bi bi-lightbulb-fill"></i><strong>Guided Rehearsal</strong><small>Open sentence frames, vocabulary, grammar, reactions, and feedback after every response.</small><b>Recommended first</b></span></label>
+                <label class="coach-mode-card"><input id="realMode" type="radio" name="coachMode" value="real" /><span><i class="bi bi-chat-square-quote-fill"></i><strong>Real Conversation</strong><small>Keep support closed and receive detailed feedback in the final report.</small><b>More independent</b></span></label>
+              </div>
+            </section>
+
+            <section class="coach-notes" aria-labelledby="plannerTitle">
+              <div class="coach-section-heading"><div><p class="coach-kicker">Quick planner</p><h3 id="plannerTitle">Prepare ideas, not a script</h3><p>Use these prompts to organize your answer before recording.</p></div></div>
+              <div class="basic2-weather-planner">
+                <article><i class="bi bi-geo-alt"></i><strong>Place</strong><span>city, village, lake, town, museum, mountains</span></article>
+                <article><i class="bi bi-globe-americas"></i><strong>Place adjectives</strong><span>historic, modern, remote, peaceful, scenic, spacious</span></article>
+                <article><i class="bi bi-tags"></i><strong>Compareping</strong><span>quieter than, more crowded than, the most impressive, one of the quietest</span></article>
+                <article><i class="bi bi-hand-index"></i><strong>Pointing</strong><span>place, description, comparison, recommendation</span></article>
+              </div>
+            </section>
+
+            <section class="coach-preflight" aria-label="Microphone check">
+              <div><strong><i class="bi bi-mic-fill"></i> Microphone and playback check</strong><p id="preflightStatus">Record a short three-second test and listen to it before the conversation.</p><audio id="preflightPlayback" controls hidden></audio></div>
+              <button class="coach-button secondary" id="preflightButton" type="button"><i class="bi bi-soundwave"></i> Test microphone</button>
+            </section>
+
+            <div class="coach-start-row">
+              <button class="coach-button primary" id="startConversationButton" type="button"><i class="bi bi-play-fill"></i> Begin with Ava</button>
+              <button class="coach-button secondary" id="reviewPreviousButton" type="button" hidden>Review latest report</button>
+            </div>
+            <p class="coach-resume-note" id="resumeNote" hidden></p>
+          </div>
+
+          <div id="interviewPanel" hidden>
+            <header class="coach-progress-header"><div class="coach-progress-copy"><span id="turnCounter">Turn 1 of 5</span><strong id="turnTopic">Friendly start</strong></div><div class="coach-progress-track" aria-hidden="true"><i id="turnProgress"></i></div></header>
+
+            <section class="coach-stage" id="coachStage" data-state="ready" aria-labelledby="questionText">
+              <figure class="coach-avatar"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/ava-around-world-conversation-coach-hero.png" width="900" height="1125" alt="Ava Park" /></figure>
+              <div>
+                <span class="coach-stage-status" id="coachStageStatus"><i class="bi bi-person-video3"></i> Ava is ready</span>
+                <h2 id="questionText"></h2>
+                <div class="coach-audio-row">
+                  <button class="coach-audio-button" id="questionPlayButton" type="button"><i class="bi bi-play-fill"></i><span>Listen to Ava</span></button>
+                  <div class="coach-speed" aria-label="Question and response audio speed"><span>Speed</span><button type="button" data-coach-speed="0.75">0.75x</button><button type="button" data-coach-speed="1" class="is-active">1x</button><button type="button" data-coach-speed="1.25">1.25x</button></div>
+                </div>
+                <audio id="questionAudio" preload="metadata"></audio>
+                <audio id="reactionAudio" preload="metadata"></audio>
+              </div>
+            </section>
+
+            <details class="coach-support" id="answerSupport" open>
+              <summary><span>Answer support</span><span id="supportSummaryLabel">Use, then personalize</span></summary>
+              <div class="coach-frame-grid" id="answerFrames"></div>
+              <div class="coach-language-grid"><section class="coach-language-panel"><strong>Useful vocabulary</strong><div class="coach-vocabulary" id="vocabularyBank"></div></section><section class="coach-language-panel"><strong>Grammar focus</strong><p class="coach-grammar" id="grammarClue"></p></section></div>
+            </details>
+
+            <section class="coach-recorder" aria-label="Record your answer">
+              <div class="coach-recorder-top"><label><span><i class="bi bi-mic"></i> Microphone in use</span><select class="coach-microphone-select" id="microphoneSelect"><option value="">Default microphone</option></select></label><div class="coach-level"><span>Level</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div></div>
+              <button class="coach-mic-button" id="micButton" type="button" aria-label="Start answering"><i class="bi bi-mic-fill"></i></button>
+              <p class="coach-record-status" id="recordStatus">Ready for your answer</p><p class="coach-record-help" id="recordHelp">Tap the microphone and speak in English.</p><span class="coach-timer" id="recordTimer">00:00 / 00:38</span>
+              <div class="coach-recorder-actions"><button class="coach-button danger" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish answer</button><button class="coach-button secondary" id="recordAgainButton" type="button" disabled><i class="bi bi-arrow-repeat"></i> Record again</button></div>
+              <audio class="coach-student-audio" id="studentAudio" controls hidden></audio>
+              <div class="coach-transcript" id="liveTranscript" aria-live="polite">Your transcript will appear after temporary Whisper analysis.</div>
+              <div class="coach-feedback" id="turnFeedback" hidden></div>
+              <div class="coach-recovery" id="transcriptionRecovery" hidden><p>Your recording remains available on this screen, but the transcription service did not finish. Nothing has been scored.</p><div class="coach-button-row"><button class="coach-button secondary" id="retryTranscriptionButton" type="button">Retry analysis</button><button class="coach-button secondary" id="continueUnscoredButton" type="button">Continue without a score</button><button class="coach-button secondary" id="recoveryRecordAgainButton" type="button">Record again</button></div></div>
+              <div class="coach-unsupported" id="unsupportedMessage" hidden></div>
+            </section>
+
+            <section class="coach-reaction" id="coachReaction" hidden><span class="coach-identity-icon"><i class="bi bi-chat-heart-fill"></i></span><div><h3>Ava responds</h3><p id="coachReactionText"></p></div></section>
+            <div class="coach-navigation"><button class="coach-button primary" id="nextTurnButton" type="button" disabled>Continue <i class="bi bi-arrow-right"></i></button></div>
+          </div>
+
+          <div id="summaryPanel" hidden>
+            <header class="coach-summary-head"><i class="bi bi-check2-circle"></i><p class="coach-kicker">Private practice complete</p><h2>Conversation report</h2><p id="summaryLead"></p></header>
+            <section class="coach-score-report"><div class="coach-score-ring"><div><strong id="summaryScore">--</strong><span>out of 50</span></div></div><div class="coach-score-copy"><p class="coach-kicker">Formative estimate</p><h3 id="summaryReadiness">Practice report</h3><p id="summaryComparison"></p><small id="summaryCoverage">This result is not a grade and is never sent to your teacher.</small></div></section>
+            <div class="coach-summary-metrics" id="summaryMetrics"></div>
+            <div class="coach-guidance-grid"><section><p class="coach-kicker">Strengths</p><h3>What worked</h3><ul id="summaryStrengths"></ul></section><section><p class="coach-kicker">Priorities</p><h3>Practice next</h3><ul id="summaryPriorities"></ul></section></div>
+            <section class="coach-report-section"><div class="coach-section-heading"><div><p class="coach-kicker">Pronunciation clarity</p><h3>Words to repeat</h3></div></div><div class="coach-word-list" id="summaryWords"></div><p class="coach-disclaimer"><i class="bi bi-info-circle"></i> Lower Whisper confidence may come from pronunciation, background noise, microphone quality, or proper names. It is not a phonetic diagnosis.</p></section>
+            <section class="coach-report-section"><div class="coach-section-heading"><div><p class="coach-kicker">Unlimited attempts</p><h3>Recent practice on this device</h3></div><button class="coach-button secondary" id="clearHistoryButton" type="button">Clear history</button></div><div class="coach-history" id="attemptHistory"></div></section>
+            <section class="coach-report-section"><div class="coach-section-heading"><div><p class="coach-kicker">Turn by turn</p><h3>Review your conversation</h3></div></div><div class="coach-answer-review" id="summaryAnswers"></div></section>
+            <div class="coach-summary-actions"><button class="coach-button primary" id="restartConversationButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> New full conversation</button><button class="coach-button secondary" id="weakPracticeButton" type="button"><i class="bi bi-bullseye"></i> Practice two priority turns</button><button class="coach-button secondary" id="closingPlayButton" type="button"><i class="bi bi-volume-up-fill"></i> Hear Ava's closing</button><a class="coach-link-button secondary" href="practice-lab.html#unit-3-folder">Back to Unit 3 folder</a></div>
+          </div>
+        </section>
+
+        <aside class="coach-sidebar">
+          <section><p class="coach-kicker">Connected attempt</p><h2>Every conversation includes</h2><ul class="coach-sidebar-list"><li><i class="bi bi-chat-heart"></i><span><strong>Friendly context</strong><small>Start normally, then progress one simple step at a time.</small></span></li><li><i class="bi bi-geo-alt"></i><span><strong>Place and plan</strong><small>Choose and describe a place you know.</small></span></li><li><i class="bi bi-bag"></i><span><strong>Place language</strong><small>Use Unit 3 descriptions, comparatives, and superlatives.</small></span></li><li><i class="bi bi-question-circle"></i><span><strong>Your questions</strong><small>Ask Ava one clear question in each of the final two turns.</small></span></li></ul></section>
+          <section><p class="coach-kicker">Rubric - 50 points</p><h3>Five formative criteria</h3><ul class="coach-sidebar-list"><li><i class="bi bi-bullseye"></i><span>Task completion - 10</span></li><li><i class="bi bi-arrow-left-right"></i><span>Interaction - 10</span></li><li><i class="bi bi-spellcheck"></i><span>Vocabulary and structures - 10</span></li><li><i class="bi bi-speedometer2"></i><span>Fluency - 10</span></li><li><i class="bi bi-soundwave"></i><span>Approximate pronunciation clarity - 10</span></li></ul></section>
+          <section><p class="coach-kicker">Privacy</p><h3>Your voice is not stored</h3><p>Audio is processed temporarily by JaraLingua's transcription service. Only the written report and attempt history may remain in this browser. There is no teacher submission or Grades record.</p></section>
+        </aside>
+      </div>
+    </section>
+
+    <div class="coach-floating-dock" id="floatingMicDock" hidden><div class="coach-floating-copy"><span id="floatingTurnLabel">Turn 1</span><strong id="floatingStatus">Ready to answer</strong></div><span class="coach-floating-timer" id="floatingTimer">00:00 / 00:38</span><button class="coach-icon-button" id="floatingMicButton" type="button"><i class="bi bi-mic-fill"></i><span>Answer</span></button><button class="coach-icon-button stop" id="floatingStopButton" type="button" hidden><i class="bi bi-stop-fill"></i><span>Finish</span></button></div>
+    <div class="coach-toast" id="coachToast" role="status" aria-live="polite" hidden></div>
+  </main>
+
+  <footer class="site-footer"><p>Basic English Course 2 - Unit 3 Conversation Coach - Private formative practice</p></footer>
+  <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../../assets/js/conversation-coach-data/english-basic-2-unit-3-around-world-ava.js?v=20260824-u3-ava"></script>
+  <script src="../../assets/js/conversation-coach-v2.js?v=20260730-question-starters"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
