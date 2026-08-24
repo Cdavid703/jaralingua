@@ -636,3 +636,52 @@ body.english-basic-page .youtube-growth-panel {
     max-width: 96px !important;
   }
 }
+/* Basic English Course 1: application-width standard.
+   Course Overview and every Practice Lab activity use the available screen width
+   without a narrow 1180px central rail, while retaining safe fluid gutters. */
+body.english-basic-page:not(.basic2-page) {
+  --basic1-app-max: 1760px;
+  --basic1-app-gutter: clamp(0.75rem, 1.45vw, 1.75rem);
+}
+
+body.english-basic-page:not(.basic2-page) main {
+  width: 100%;
+  max-width: none;
+}
+
+body.english-basic-page:not(.basic2-page) .navbar {
+  width: min(var(--basic1-app-max), calc(100% - (var(--basic1-app-gutter) * 2)));
+  max-width: none;
+}
+
+body.english-basic-page:not(.basic2-page) :is(
+  .quick-access-panel,
+  .overview-intro,
+  .overview-sections,
+  .practice-unit-folders,
+  .course-dashboard,
+  .basic-intro-section,
+  .lesson-outcome,
+  .premium-lesson-container,
+  .lesson-next-section,
+  .pronunciation-main,
+  .game-shell,
+  .course-search-panel,
+  .course-search-empty
+) {
+  width: min(var(--basic1-app-max), calc(100% - (var(--basic1-app-gutter) * 2))) !important;
+  max-width: none !important;
+  box-sizing: border-box;
+  margin-inline: auto;
+}
+
+body.english-basic-page:not(.basic2-page) :is(.overview-hero, .lesson-hero, .immersive-basic-hero) {
+  position: relative !important;
+  top: auto !important;
+  background-attachment: scroll !important;
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box;
+  margin-inline: 0 !important;
+  padding-inline: max(var(--basic1-app-gutter), calc((100% - var(--basic1-app-max)) / 2)) !important;
+}
