@@ -1,20 +1,33 @@
-# Basic English Course 2 — Unit 3: Compare the Places
+# Basic English Course 2 — Unit 3: Comparative Forms Challenge
 
 ## Purpose
 
-A 15-item guided grammar activity that applies comparatives and superlatives to the exact places from the Unit 3 listening and reading. Students select A, B, or C; there is no open writing.
+A 15-item guided grammar activity that practises only comparative forms from Topic 08 of Unit 3. Students choose A, B, or C; there is no open writing, delivery, percentage, or teacher queue.
 
 ## Language target
 
-- Short adjectives: `quieter`, `older`, `longer`, `taller`; `the quietest`.
-- Long adjectives: `more crowded`, `more remote`, `more impressive`, `more peaceful`, `more touristy`, `more spacious`; `the most scenic`, `the most impressive`, `the most crowded`.
-- Pattern: `one of the + superlative + plural noun`.
+The questions cover every rule already explained in the teaching page:
 
-## Design and feedback
+- Short adjective + `-er`: `cold → colder`, `old → older`, `tall → taller`.
+- Ending in `e` + `-r`: `large → larger`, `nice → nicer`.
+- Consonant-vowel-consonant: double the final consonant + `-er`: `big → bigger`, `hot → hotter`.
+- Long adjective: `more + adjective`: `more expensive`, `more beautiful`, `more interesting`, `more historic`.
+- Irregular adjective: `good → better`, `bad → worse`, `far → farther`.
 
-- 15 questions with context from Valeria and Lake Miran.
-- Correct-letter sequence: B, C, A, B, C, A, C, B, A, C, B, A, B, C, A. It is deliberately mixed.
-- Wrong answers receive the correct form plus a concise grammar explanation after Check answers.
-- The hero image is an independent professional image for this activity.
-- Standard Basic English 2 responsive layout is used; the hero is never fixed and scrolls with the page on mobile and tablet.
+## Item design
+
+- 15 place-based, meaningful comparison sentences.
+- One accurate answer and two plausible grammar confusions in every item.
+- Answer key: B, A, C, C, B, A, C, B, A, C, B, A, C, B, A.
+- The answer positions are balanced: five A answers, five B answers, and five C answers.
+- Superlatives were removed from this activity because they are addressed separately in Unit 3.
+
+## Feedback and layout
+
+- `Check answers` gives a score and specific feedback for every question.
+- Every feedback message identifies the rule and restates the complete correct comparison.
+- `Reset` clears all selected answers safely.
+- A meaning-first note explains that comparative grammar describes a real difference between two things; it is not a mechanical tense change.
+- The page uses a distinct professional hero image at `assets/img/english-basic-2/unit-3-around-the-world/comparative-forms-challenge-hero.png`.
+- The header and hero are never fixed; they scroll naturally on phones, tablets, and computers.
 - Linked as Activity 04 in `practice-lab.html#unit-3-folder`.
