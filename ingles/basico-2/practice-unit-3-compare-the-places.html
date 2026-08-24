@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Compare the Places | Unit 3 | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260820-basic2-full-width-compact" />
+</head>
+<body class="english-basic-page basic2-page">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+        <li><a href="unit-3-around-the-world.html">Unit 3</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero" style="--hero-image: url('../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp');">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab &middot; Unit 3 &middot; Activity 02</p>
+        <h1>Compare the Places</h1>
+        <p>Choose accurate comparative and superlative forms to compare cities, landmarks, and natural places. Check each choice with grammar-based feedback.</p>
+        <div class="lesson-meta"><span>Grammar Practice</span><span>A / B / C</span><span>15 questions</span><span>Checked feedback</span></div>
+        <div class="hero-actions">
+          <a href="#quiz" class="btn btn-primary">Start comparison practice</a>
+          <a href="practice-lab.html" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="Adult English learners comparing city and lake destinations" /></aside>
+    </section>
+
+    <section class="basic2-practice-shell">
+      <section class="basic2-practice-panel">
+        <p class="eyebrow">Activity objective</p>
+        <h2>Compare places accurately</h2>
+        <p>Students choose A, B, or C rather than write free answers. Each item asks them to make a meaningful comparison, then gives feedback about the comparative or superlative form.</p>
+        <div class="basic2-practice-kpis">
+          <span>4 grammar cards</span>
+          <span>15 multiple-choice questions</span>
+          <span>Place-based contexts</span>
+          <span>Score: 0 / 15</span>
+        </div>
+      </section>
+
+      <section class="basic2-practice-panel">
+        <p class="eyebrow">Grammar guide</p>
+        <h2>Review before comparing</h2>
+        <div class="ing-rule-grid">
+          <article class="ing-rule-card"><span class="ing-rule-chip">Comparative 1</span><h3>Short adjectives: <code>-er</code></h3><p><code>quiet</code> &rarr; <code>quieter</code><br /><code>old</code> &rarr; <code>older</code><br /><code>tall</code> &rarr; <code>taller</code></p></article>
+          <article class="ing-rule-card"><span class="ing-rule-chip">Comparative 2</span><h3>Long adjectives: <code>more + adjective</code></h3><p><code>more crowded</code><br /><code>more peaceful</code><br /><code>more impressive</code></p></article>
+          <article class="ing-rule-card"><span class="ing-rule-chip">Superlative 1</span><h3>Short adjectives: <code>the -est</code></h3><p><code>the quietest</code><br /><code>the tallest</code><br /><code>the oldest</code></p></article>
+          <article class="ing-rule-card"><span class="ing-rule-chip">Superlative 2</span><h3>Long adjectives: <code>the most + adjective</code></h3><p><code>the most scenic</code><br /><code>the most touristy</code><br /><code>the most impressive</code></p></article>
+        </div>
+      </section>
+
+      <section class="basic2-practice-panel" id="quiz">
+        <div class="ing-quiz-toolbar">
+          <div>
+            <p class="eyebrow">Grammar Practice</p>
+            <h2>Choose the best comparison</h2>
+          </div>
+          <div class="weather-callout-actions">
+            <span class="ing-score-pill" id="ingScore">Score: 0 / 15</span>
+            <button class="weather-callout-btn" type="button" id="ingCheck">Check answers</button>
+            <button class="weather-callout-btn secondary" type="button" id="ingReset">Reset</button>
+          </div>
+        </div>
+        <div class="ing-question-grid" id="ingQuestionGrid" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2026 JaraLingua. English and French for step-by-step learning.</p>
+  </footer>
+
+  <script>
+    (function () {
+      const questions = [
+        { section: "Short adjective", prompt: "Lake Miran is ___ than Valeria at night.", instruction: "Choose the correct comparative form.", options: [{label:"A",text:"quietter"},{label:"B",text:"quieter"},{label:"C",text:"more quiet"}], answer:"B", feedback:"For a short adjective ending in y, change y to i and add -er: quiet -> quieter. More quiet can appear for emphasis, but quieter is the expected form here." },
+        { section: "Long adjective", prompt: "Valeria's main square is ___ than Lake Miran's lakefront at noon.", instruction: "Choose the best description.", options: [{label:"A",text:"more crowd"},{label:"B",text:"crowdeder"},{label:"C",text:"more crowded"}], answer:"C", feedback:"Crowded is a longer adjective, so use more: more crowded." },
+        { section: "Long adjective", prompt: "Lake Miran is ___ from the capital than Valeria.", instruction: "Choose the correct comparative form.", options: [{label:"A",text:"more remote"},{label:"B",text:"remotest"},{label:"C",text:"most remote"}], answer:"A", feedback:"Use more + remote for this comparison: Lake Miran is more remote than Valeria." },
+        { section: "Long adjective", prompt: "The museum in Valeria is ___ than the small local gallery.", instruction: "Choose the best comparison.", options: [{label:"A",text:"impressiver"},{label:"B",text:"more impressive"},{label:"C",text:"most impressive"}], answer:"B", feedback:"Use more + impressive when comparing two places or things." },
+        { section: "Superlative", prompt: "The old tower is ___ landmark in Valeria.", instruction: "Choose the correct superlative form.", options: [{label:"A",text:"more impressive"},{label:"B",text:"impressivest"},{label:"C",text:"the most impressive"}], answer:"C", feedback:"Use the most + impressive for a long-adjective superlative: the most impressive landmark." },
+        { section: "Superlative", prompt: "Lake Miran is ___ place in the guide for nature photos.", instruction: "Choose the correct superlative form.", options: [{label:"A",text:"the most scenic"},{label:"B",text:"more scenic"},{label:"C",text:"scenicest"}], answer:"A", feedback:"Use the most + scenic when one place has the highest degree in a group." },
+        { section: "Short adjective", prompt: "The bus trip to Lake Miran is ___ than the train to Valeria.", instruction: "Choose the correct comparative form.", options: [{label:"A",text:"more long"},{label:"B",text:"longest"},{label:"C",text:"longer"}], answer:"C", feedback:"Long is a short adjective, so use longer when comparing two trips." },
+        { section: "Short adjective", prompt: "Valeria's old center is ___ than its new train station.", instruction: "Choose the best comparison.", options: [{label:"A",text:"old"},{label:"B",text:"older"},{label:"C",text:"oldest"}], answer:"B", feedback:"Use older when comparing two things: the old center is older than the station." },
+        { section: "Superlative", prompt: "At noon, the main square is ___ place in Valeria.", instruction: "Choose the correct superlative form.", options: [{label:"A",text:"the most crowded"},{label:"B",text:"more crowded"},{label:"C",text:"crowdedest"}], answer:"A", feedback:"Use the most crowded because the square has the highest degree of crowding in the city at that time." },
+        { section: "Long adjective", prompt: "Lake Miran is ___ than the city for a calm weekend.", instruction: "Choose the best comparison.", options: [{label:"A",text:"peaceful"},{label:"B",text:"most peaceful"},{label:"C",text:"more peaceful"}], answer:"C", feedback:"Use more peaceful to compare Lake Miran with the city." },
+        { section: "Long adjective", prompt: "Modern city centers are often ___ than remote villages.", instruction: "Choose the best comparison.", options: [{label:"A",text:"touristiest"},{label:"B",text:"more touristy"},{label:"C",text:"most touristy"}], answer:"B", feedback:"Use more touristy to compare the typical character of two types of places." },
+        { section: "Long adjective", prompt: "The hotel rooms are ___ than the rooms in the small city hostel.", instruction: "Choose the correct comparative form.", options: [{label:"A",text:"more spacious"},{label:"B",text:"spaciousest"},{label:"C",text:"most spacious"}], answer:"A", feedback:"Use more spacious when comparing the rooms in two different accommodations." },
+        { section: "Short adjective", prompt: "Valeria's tower is ___ than the cafés nearby.", instruction: "Choose the correct comparative form.", options: [{label:"A",text:"tall"},{label:"B",text:"taller"},{label:"C",text:"tallest"}], answer:"B", feedback:"Use taller to compare the tower with the cafés." },
+        { section: "Superlative", prompt: "Lake Miran is one of ___ places in the guide.", instruction: "Choose the complete phrase.", options: [{label:"A",text:"quietest"},{label:"B",text:"quieter"},{label:"C",text:"the quietest"}], answer:"C", feedback:"The pattern is one of the + superlative + plural noun: one of the quietest places." },
+        { section: "Long adjective", prompt: "The museum is ___ than a regular café.", instruction: "Choose the best comparison.", options: [{label:"A",text:"more historic"},{label:"B",text:"most historic"},{label:"C",text:"historicest"}], answer:"A", feedback:"Use more historic to compare the museum with a regular café." }
+      ];
+
+      const grid = document.getElementById("ingQuestionGrid");
+      const score = document.getElementById("ingScore");
+      const answered = new Map();
+      let checked = false;
+
+      function escapeHtml(value) {
+        return String(value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function updateScore() {
+        const correct = questions.filter(function (question, index) {
+          return answered.get(index) === question.answer;
+        }).length;
+        score.textContent = "Score: " + correct + " / " + questions.length;
+      }
+
+      function renderQuestions() {
+        grid.innerHTML = "";
+        questions.forEach(function (question, index) {
+          const card = document.createElement("article");
+          card.className = "ing-question-card";
+          card.dataset.index = String(index);
+          card.innerHTML = [
+            '<span class="ing-rule-chip">' + escapeHtml(question.section) + '</span>',
+            '<h3>' + (index + 1) + '. ' + escapeHtml(question.prompt) + '</h3>',
+            '<p>' + escapeHtml(question.instruction) + '</p>',
+            '<div class="ing-option-list">' + question.options.map(function (option) {
+              return '<button type="button" class="ing-option" data-option="' + escapeHtml(option.label) + '"><strong>' + escapeHtml(option.label) + '.</strong> ' + escapeHtml(option.text) + '</button>';
+            }).join("") + '</div>',
+            '<div class="ing-feedback">Choose A, B, or C. Then press Check answers.</div>'
+          ].join("");
+          grid.appendChild(card);
+        });
+      }
+
+      function selectAnswer(card, optionLabel) {
+        const index = Number(card.dataset.index);
+        const buttons = Array.from(card.querySelectorAll(".ing-option"));
+        answered.set(index, optionLabel);
+        buttons.forEach(function (button) {
+          const buttonOption = button.getAttribute("data-option");
+          button.classList.remove("is-selected", "is-correct", "is-incorrect");
+          if (buttonOption === optionLabel) button.classList.add("is-selected");
+        });
+        if (checked) checkAnswers();
+      }
+
+      function checkAnswers() {
+        checked = true;
+        questions.forEach(function (question, index) {
+          const card = grid.querySelector('[data-index="' + index + '"]');
+          const selected = answered.get(index);
+          const buttons = Array.from(card.querySelectorAll(".ing-option"));
+          const feedback = card.querySelector(".ing-feedback");
+
+          buttons.forEach(function (button) {
+            const buttonOption = button.getAttribute("data-option");
+            button.classList.remove("is-correct", "is-incorrect");
+            if (buttonOption === question.answer) button.classList.add("is-correct");
+            if (selected && buttonOption === selected && selected !== question.answer) button.classList.add("is-incorrect");
+          });
+
+          if (!selected) {
+            feedback.className = "ing-feedback is-incorrect";
+            feedback.textContent = "No answer selected yet. Choose A, B, or C, then check again.";
+            return;
+          }
+
+          const isCorrect = selected === question.answer;
+          feedback.className = "ing-feedback " + (isCorrect ? "is-correct" : "is-incorrect");
+          feedback.textContent = (isCorrect ? "Correct. " : "Review this one. ") + question.feedback;
+        });
+        updateScore();
+      }
+
+      grid.addEventListener("click", function (event) {
+        const button = event.target.closest(".ing-option");
+        if (!button) return;
+        const card = button.closest(".ing-question-card");
+        selectAnswer(card, button.getAttribute("data-option"));
+      });
+
+      document.getElementById("ingCheck").addEventListener("click", checkAnswers);
+
+      document.getElementById("ingReset").addEventListener("click", function () {
+        answered.clear();
+        checked = false;
+        renderQuestions();
+        updateScore();
+      });
+
+      renderQuestions();
+      updateScore();
+    })();
+  </script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>
