@@ -15,8 +15,8 @@
   ];
 
   const $ = (id) => document.getElementById(id);
-  const ui = { start: $("coachStart"), live: $("coachLive"), complete: $("coachComplete"), startButton: $("startCoach"), restart: $("restartCoach"), counter: $("turnCounter"), topic: $("turnTopic"), progress: $("turnProgress"), prompt: $("coachPrompt"), suggestion: $("answerSuggestion").querySelector("span"), replay: $("replayCoach"), audio: $("miaAudio"), record: $("recordButton"), next: $("nextTurn"), status: $("recordStatus"), timer: $("recordTimer"), transcript: $("studentTranscript"), studentAudio: $("studentAudio"), reply: $("coachReply"), replyText: $("coachReplyText"), recovery: $("recoveryMessage") };
-  let index = 0, speed = 1, stream = null, recorder = null, chunks = [], startedAt = 0, timerId = null, recordingUrl = "", recordingBlob = null, activeAudioButton = null;
+  const ui = { start: $("coachStart"), live: $("coachLive"), complete: $("coachComplete"), startButton: $("startCoach"), restart: $("restartCoach"), counter: $("turnCounter"), topic: $("turnTopic"), progress: $("turnProgress"), prompt: $("coachPrompt"), suggestion: $("answerSuggestion").querySelector("span"), replay: $("replayCoach"), audio: $("miaAudio"), record: $("recordButton"), next: $("nextTurn"), status: $("recordStatus"), timer: $("recordTimer"), levelBar: $("coachLevelBar"), levelText: $("coachLevelText"), transcript: $("studentTranscript"), studentAudio: $("studentAudio"), reply: $("coachReply"), replyText: $("coachReplyText"), recovery: $("recoveryMessage") };
+  let index = 0, speed = 1, stream = null, recorder = null, chunks = [], startedAt = 0, timerId = null, recordingUrl = "", recordingBlob = null, activeAudioButton = null, audioContext = null, analyser = null, meterFrame = 0, meterSource = null;
 
   function audioUrl(file) { return new URL(AUDIO_ROOT + file, window.location.href).href; }
   function setPlaying(button, playing) { if (!button) return; button.classList.toggle("is-playing", playing); }
@@ -25,7 +25,7 @@
   ui.audio.addEventListener("pause", () => setPlaying(activeAudioButton, false));
 
   function resetAnswer() {
-    if (recordingUrl) URL.revokeObjectURL(recordingUrl); recordingUrl = ""; recordingBlob = null; chunks = [];
+    stopMeter(); if (recordingUrl) URL.revokeObjectURL(recordingUrl); recordingUrl = ""; recordingBlob = null; chunks = [];
     ui.status.textContent = "Tap the microphone and answer naturally."; ui.timer.textContent = "00:00 / 00:45"; ui.transcript.hidden = true; ui.transcript.textContent = ""; ui.studentAudio.hidden = true; ui.studentAudio.removeAttribute("src"); ui.reply.hidden = true; ui.replyText.textContent = ""; ui.recovery.hidden = true; ui.recovery.textContent = ""; ui.next.disabled = true; ui.record.disabled = false; ui.record.classList.remove("is-recording"); ui.record.innerHTML = '<i class="bi bi-mic-fill"></i><span>Speak</span>';
   }
 
@@ -35,14 +35,17 @@
   }
 
   function preferredMimeType() { return ["audio/webm;codecs=opus", "audio/webm", "audio/mp4"].find((type) => window.MediaRecorder?.isTypeSupported?.(type)) || ""; }
-  function stopTracks() { if (stream) stream.getTracks().forEach((track) => track.stop()); stream = null; }
+  function resetMeter() { if (ui.levelBar) ui.levelBar.style.width = "0%"; if (ui.levelText) ui.levelText.textContent = "Waiting for your voice"; }
+  function stopMeter() { if (meterFrame) window.cancelAnimationFrame(meterFrame); meterFrame = 0; if (meterSource) { try { meterSource.disconnect(); } catch (_) {} } meterSource = null; analyser = null; if (audioContext) { const currentContext = audioContext; audioContext = null; currentContext.close().catch(() => {}); } resetMeter(); }
+  function startMeter(micStream) { const Context = window.AudioContext || window.webkitAudioContext; if (!Context || !ui.levelBar || !ui.levelText) return; try { audioContext = new Context(); meterSource = audioContext.createMediaStreamSource(micStream); analyser = audioContext.createAnalyser(); analyser.fftSize = 256; meterSource.connect(analyser); const samples = new Uint8Array(analyser.fftSize); ui.levelText.textContent = "Listening for your voice"; const draw = () => { if (!analyser) return; analyser.getByteTimeDomainData(samples); let energy = 0; for (const sample of samples) { const normalized = (sample - 128) / 128; energy += normalized * normalized; } const level = Math.min(100, Math.round(Math.sqrt(energy / samples.length) * 360)); ui.levelBar.style.width = `${Math.max(3, level)}%`; ui.levelText.textContent = level > 8 ? "Voice detected" : "Listening for your voice"; meterFrame = window.requestAnimationFrame(draw); }; draw(); } catch (_) { resetMeter(); } }
+  function stopTracks() { stopMeter(); if (stream) stream.getTracks().forEach((track) => track.stop()); stream = null; }
   function updateTimer() { const seconds = Math.min(MAX_SECONDS, Math.floor((Date.now() - startedAt) / 1000)); ui.timer.textContent = `00:${String(seconds).padStart(2, "0")} / 00:45`; if (seconds >= MAX_SECONDS) finishRecording(); }
   async function startRecording() {
     try {
-      stream = await navigator.mediaDevices.getUserMedia({ audio: true }); chunks = []; const mime = preferredMimeType(); recorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream); recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); }; recorder.onstop = () => processRecording(mime || recorder.mimeType); recorder.start(250); startedAt = Date.now(); timerId = window.setInterval(updateTimer, 250); ui.status.textContent = "Mia is listening. Speak naturally, then tap Finish."; ui.record.classList.add("is-recording"); ui.record.innerHTML = '<i class="bi bi-stop-fill"></i><span>Finish</span>';
+      stream = await navigator.mediaDevices.getUserMedia({ audio: true }); startMeter(stream); chunks = []; const mime = preferredMimeType(); recorder = mime ? new MediaRecorder(stream, { mimeType: mime }) : new MediaRecorder(stream); recorder.ondataavailable = (event) => { if (event.data.size) chunks.push(event.data); }; recorder.onstop = () => processRecording(mime || recorder.mimeType); recorder.start(250); startedAt = Date.now(); timerId = window.setInterval(updateTimer, 250); ui.status.textContent = "Mia is listening. Speak naturally, then tap Finish."; ui.record.classList.add("is-recording"); ui.record.innerHTML = '<i class="bi bi-stop-fill"></i><span>Finish</span>';
     } catch (error) { ui.status.textContent = error.name === "NotAllowedError" ? "Allow the microphone, then try again." : "The microphone is unavailable. Check your browser and try again."; }
   }
-  function finishRecording() { if (recorder?.state === "recording") recorder.stop(); if (timerId) window.clearInterval(timerId); timerId = null; ui.record.disabled = true; ui.record.classList.remove("is-recording"); ui.status.textContent = "Preparing your private transcript."; }
+  function finishRecording() { if (recorder?.state === "recording") recorder.stop(); if (timerId) window.clearInterval(timerId); timerId = null; stopMeter(); ui.record.disabled = true; ui.record.classList.remove("is-recording"); ui.status.textContent = "Preparing your private transcript."; }
   async function processRecording(mime) {
     stopTracks(); recordingBlob = new Blob(chunks, { type: mime || "audio/webm" }); if (!recordingBlob.size) { allowContinue("No audio was recorded. You can continue or record this turn again."); return; }
     recordingUrl = URL.createObjectURL(recordingBlob); ui.studentAudio.src = recordingUrl; ui.studentAudio.hidden = false; await transcribe(recordingBlob);
