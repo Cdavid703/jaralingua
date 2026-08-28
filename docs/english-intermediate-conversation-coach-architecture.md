@@ -153,4 +153,3 @@ inventar una interfaz aparte:
   pueden cerrar para la simulación realista.
 - No hay ninguna entrega, nota, porcentaje o escritura en la grilla para esta
   práctica privada.
-
