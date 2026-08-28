@@ -18,7 +18,7 @@ assert.match(page, /A real catch-up, not an interview/);
 assert.match(page, /id="recordButton"/);
 assert.match(page, /id="answerSuggestion"/);
 assert.match(page, /Private practice\. No score or submission/);
-assert.match(page, /old-friend-v1\.webp/, "Mia must have a visible photo.");
+assert.match(page, /mia-conversation-coach-v1\.png/, "Mia must have a visible photo.");
 assert.match(page, /ie2moc-start-partner/, "The welcome must show Mia as the conversation partner.");
 assert.equal(script.includes("Try:"), false, "Suggested answers must not include a filler label.");
 assert.equal(script.includes("…"), false, "Suggested answers must not contain blanks or ellipses.");
