@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Midterm Oral Conversation Coach | Intermediate English Course 2</title>
+  <meta name="description" content="A compact, mobile-first conversation coach for the Intermediate Course 2 Midterm Oral Task: reconnect, discuss relationship dilemmas, give advice and talk about dating." />
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260828-ie2-oral-coach" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate-2.css?v=20260828-ie2-oral-coach" />
+  <link rel="stylesheet" href="../../assets/css/english-intermediate2-midterm-oral-coach.css?v=20260828-v1" />
+</head>
+<body class="english-intermediate2-page ie2-midterm-oral-coach-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../index.html">English</a><a href="./index.html">Intermediate English Course 2</a><a href="./evaluations.html">Evaluations and Mock Exams</a></nav></details></div>
+  <header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a><ul class="nav-links"><li><a href="./evaluations.html">Evaluations</a></li><li><a href="#oralCoach">Conversation coach</a></li></ul></nav></header>
+  <main>
+    <section class="ie2moc-intro"><p>Midterm Oral Task · 20%</p><h1>Talk it through with Mia</h1><span>Private mock · 7 connected turns · aim for 5+ minutes</span></section>
+    <section class="ie2moc-app" id="oralCoach" aria-labelledby="coachTitle">
+      <div class="ie2moc-start" id="coachStart">
+        <p class="ie2moc-eyebrow">Your conversation partner</p><h2 id="coachTitle">A real catch-up, not an interview</h2>
+        <p>Mia is an old friend you have not seen for years. First, you reconnect naturally. Then you talk about a friend’s relationship problem, your own love-life dilemma, advice, and dating.</p>
+        <p class="ie2moc-note"><i class="bi bi-shield-check"></i> Practice only. Nothing is graded, submitted, or stored.</p>
+        <button type="button" class="ie2moc-primary" id="startCoach"><i class="bi bi-play-fill"></i> Start the conversation</button>
+      </div>
+      <div class="ie2moc-live" id="coachLive" hidden>
+        <header class="ie2moc-progress"><span id="turnCounter">1 / 7</span><strong id="turnTopic">Seeing an old friend</strong><i><b id="turnProgress"></b></i></header>
+        <section class="ie2moc-message" aria-live="polite"><div class="ie2moc-avatar" aria-hidden="true">M</div><div><span>Mia</span><h2 id="coachPrompt"></h2><div class="ie2moc-listen"><button type="button" id="replayCoach"><i class="bi bi-volume-up-fill"></i> Listen</button><button type="button" data-speed="0.75">0.75×</button><button type="button" data-speed="1" class="is-active">1×</button></div></div></section>
+        <p class="ie2moc-suggestion" id="answerSuggestion" aria-live="polite"><i class="bi bi-lightbulb-fill"></i> <span></span></p>
+        <section class="ie2moc-answer" aria-label="Your answer"><div class="ie2moc-answer-head"><strong>Your turn</strong><span id="recordTimer">00:00 / 00:45</span></div><p id="recordStatus" aria-live="polite">Tap the microphone and answer naturally.</p><div class="ie2moc-transcript" id="studentTranscript" aria-live="polite" hidden></div><audio id="studentAudio" controls hidden></audio><div class="ie2moc-reply" id="coachReply" hidden><span>Mia replies</span><p id="coachReplyText"></p></div><p class="ie2moc-recovery" id="recoveryMessage" hidden></p></section>
+        <div class="ie2moc-action-dock" id="actionDock"><button type="button" class="ie2moc-mic" id="recordButton"><i class="bi bi-mic-fill"></i><span>Speak</span></button><button type="button" class="ie2moc-next" id="nextTurn" disabled>Continue <i class="bi bi-arrow-right"></i></button></div>
+      </div>
+      <div class="ie2moc-complete" id="coachComplete" hidden><i class="bi bi-chat-heart-fill"></i><p class="ie2moc-eyebrow">Mock complete</p><h2>You held a real conversation</h2><p>You started warmly, caught up with an old friend, discussed a relationship dilemma, used conditional language, gave advice, and talked about dating.</p><button type="button" class="ie2moc-primary" id="restartCoach"><i class="bi bi-arrow-counterclockwise"></i> Practice again</button></div>
+      <audio id="miaAudio" preload="metadata"></audio>
+    </section>
+  </main>
+  <footer class="site-footer"><p>Intermediate English Course 2 · Midterm Oral Conversation Coach · Private practice</p></footer>
+  <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../../assets/js/english-intermediate2-midterm-oral-coach.js?v=20260828-v1"></script>
+  <script src="/assets/js/course-switcher.js?v=20260815-intermediate2"></script>
+</body>
+</html>

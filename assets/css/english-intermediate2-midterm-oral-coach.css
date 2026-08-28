@@ -1,0 +1,51 @@
+:root { --ie2moc-ink: #142b47; --ie2moc-teal: #087d8b; --ie2moc-blue: #174f92; --ie2moc-pale: #edf7f8; --ie2moc-coral: #c83e58; }
+.ie2-midterm-oral-coach-page { background: linear-gradient(180deg, #f4fafb 0, #fff 34rem); color: var(--ie2moc-ink); }
+.ie2moc-intro, .ie2moc-app { width: min(100% - 2rem, 760px); margin-inline: auto; }
+.ie2moc-intro { padding: 2.1rem 0 1rem; }
+.ie2moc-intro p, .ie2moc-eyebrow { margin: 0 0 .35rem; color: var(--ie2moc-teal); font-size: .76rem; font-weight: 900; letter-spacing: .09em; text-transform: uppercase; }
+.ie2moc-intro h1 { margin: 0; color: var(--ie2moc-ink); font-size: clamp(2rem, 7vw, 3.4rem); line-height: 1; letter-spacing: -.045em; }
+.ie2moc-intro > span { display: block; margin-top: .55rem; color: #5f7081; font-size: .92rem; font-weight: 700; }
+.ie2moc-app { margin-bottom: 2rem; overflow: hidden; border: 1px solid rgba(23, 79, 146, .13); border-radius: 24px; background: #fff; box-shadow: 0 18px 42px rgba(18, 47, 75, .1); }
+.ie2moc-start, .ie2moc-complete { padding: clamp(1.15rem, 4vw, 2rem); }
+.ie2moc-start h2, .ie2moc-complete h2 { margin: 0; color: var(--ie2moc-ink); font-size: clamp(1.45rem, 5vw, 2.1rem); line-height: 1.08; }
+.ie2moc-start > p:not(.ie2moc-eyebrow), .ie2moc-complete > p:not(.ie2moc-eyebrow) { margin: .8rem 0; color: #536779; line-height: 1.58; }
+.ie2moc-note { display: flex; gap: .45rem; align-items: flex-start; padding: .65rem .75rem; border-radius: 12px; background: var(--ie2moc-pale); color: #286372 !important; font-size: .84rem; font-weight: 700; line-height: 1.42 !important; }
+.ie2moc-primary, .ie2moc-mic, .ie2moc-next { border: 0; border-radius: 14px; display: inline-flex; align-items: center; justify-content: center; gap: .45rem; font: inherit; font-weight: 900; cursor: pointer; }
+.ie2moc-primary { width: 100%; min-height: 54px; margin-top: .85rem; padding: .75rem 1rem; background: linear-gradient(135deg, var(--ie2moc-teal), var(--ie2moc-blue)); color: #fff; box-shadow: 0 10px 23px rgba(8, 125, 139, .22); }
+.ie2moc-progress { display: grid; grid-template-columns: auto 1fr; gap: .35rem .75rem; align-items: center; padding: .75rem 1rem; border-bottom: 1px solid rgba(23, 79, 146, .1); background: #fbfeff; }
+.ie2moc-progress span { color: var(--ie2moc-teal); font-size: .75rem; font-weight: 900; }
+.ie2moc-progress strong { min-width: 0; overflow: hidden; color: var(--ie2moc-ink); font-size: .9rem; text-overflow: ellipsis; white-space: nowrap; }
+.ie2moc-progress i { grid-column: 1 / -1; height: 5px; overflow: hidden; border-radius: 999px; background: #d9ebef; }
+.ie2moc-progress i b { display: block; width: 14%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--ie2moc-teal), #43a8a8); transition: width .24s ease; }
+.ie2moc-message { display: grid; grid-template-columns: 42px minmax(0, 1fr); gap: .7rem; padding: 1rem 1rem .65rem; }
+.ie2moc-avatar { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, #e3f5f4, #b9dfe3); color: var(--ie2moc-teal); font-weight: 900; }
+.ie2moc-message span, .ie2moc-reply span { color: var(--ie2moc-teal); font-size: .73rem; font-weight: 900; letter-spacing: .06em; text-transform: uppercase; }
+.ie2moc-message h2 { margin: .22rem 0 .55rem; color: var(--ie2moc-ink); font-size: clamp(1.12rem, 4.6vw, 1.42rem); line-height: 1.28; }
+.ie2moc-listen { display: flex; gap: .4rem; align-items: center; }
+.ie2moc-listen button { min-height: 34px; border: 1px solid rgba(8, 125, 139, .2); border-radius: 9px; padding: .35rem .52rem; background: #fff; color: var(--ie2moc-teal); font: inherit; font-size: .76rem; font-weight: 900; cursor: pointer; }
+.ie2moc-listen button.is-active { border-color: var(--ie2moc-teal); background: var(--ie2moc-teal); color: #fff; }
+.ie2moc-suggestion { min-height: 0; margin: 0 1rem; padding: .65rem .75rem; border-left: 4px solid #e5b23b; border-radius: 0 10px 10px 0; background: #fff9e9; color: #6b5313; font-size: .88rem; line-height: 1.4; }
+.ie2moc-suggestion i { margin-right: .25rem; color: #bf8813; }
+.ie2moc-answer { margin-top: .8rem; padding: .85rem 1rem 1rem; border-top: 1px solid rgba(23, 79, 146, .1); }
+.ie2moc-answer-head { display: flex; justify-content: space-between; gap: .75rem; align-items: center; }
+.ie2moc-answer-head strong { color: var(--ie2moc-ink); }
+.ie2moc-answer-head span { color: var(--ie2moc-coral); font-size: .78rem; font-weight: 900; font-variant-numeric: tabular-nums; }
+.ie2moc-answer > p#recordStatus { min-height: 1.35em; margin: .3rem 0 0; color: #627385; font-size: .86rem; }
+.ie2moc-transcript, .ie2moc-reply, .ie2moc-recovery { margin-top: .65rem; padding: .72rem; border-radius: 12px; line-height: 1.46; }
+.ie2moc-transcript { border: 1px solid rgba(23, 79, 146, .15); background: #f8fbfd; color: #41586e; }
+.ie2moc-reply { border-left: 4px solid var(--ie2moc-teal); background: var(--ie2moc-pale); }
+.ie2moc-reply p { margin: .22rem 0 0; color: #315360; }
+.ie2moc-recovery { border: 1px solid #e8c46d; background: #fff9e9; color: #6a5010; font-size: .86rem; }
+.ie2moc-answer audio { width: 100%; margin-top: .6rem; }
+.ie2moc-action-dock { position: sticky; bottom: 0; z-index: 5; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .6rem; padding: .75rem max(.8rem, env(safe-area-inset-right)) max(.75rem, env(safe-area-inset-bottom)) max(.8rem, env(safe-area-inset-left)); border-top: 1px solid rgba(23, 79, 146, .12); background: rgba(255, 255, 255, .97); box-shadow: 0 -8px 24px rgba(20, 43, 71, .08); backdrop-filter: blur(12px); }
+.ie2moc-mic, .ie2moc-next { min-height: 54px; padding: .7rem .5rem; }
+.ie2moc-mic { background: linear-gradient(135deg, var(--ie2moc-coral), #9e2840); color: #fff; }
+.ie2moc-mic.is-recording { animation: ie2moc-pulse 1.2s ease-in-out infinite; }
+.ie2moc-next { background: linear-gradient(135deg, var(--ie2moc-teal), var(--ie2moc-blue)); color: #fff; }
+.ie2moc-next:disabled { cursor: not-allowed; opacity: .43; }
+.ie2moc-complete { text-align: center; }
+.ie2moc-complete > i { display: grid; width: 58px; height: 58px; place-items: center; margin: 0 auto .7rem; border-radius: 50%; background: var(--ie2moc-pale); color: var(--ie2moc-teal); font-size: 1.7rem; }
+@keyframes ie2moc-pulse { 50% { box-shadow: 0 0 0 7px rgba(200, 62, 88, .16); } }
+@media (max-width: 760px) { .ie2-midterm-oral-coach-page .site-header .nav-links { display: none !important; } .ie2moc-intro, .ie2moc-app { width: min(100% - 1rem, 760px); } .ie2moc-intro { padding-top: 1.15rem; } .ie2moc-app { border-radius: 18px; } }
+@media (max-width: 420px) { .ie2moc-message { grid-template-columns: 36px minmax(0, 1fr); padding-inline: .75rem; } .ie2moc-avatar { width: 36px; height: 36px; } .ie2moc-suggestion, .ie2moc-answer { margin-inline: .75rem; } .ie2moc-answer { padding-inline: 0; } .ie2moc-message h2 { font-size: 1.08rem; } }
+@media (prefers-reduced-motion: reduce) { .ie2moc-progress i b, .ie2moc-mic.is-recording { animation: none; transition: none; } }

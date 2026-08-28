@@ -1,0 +1,9 @@
+{
+  "activityId": "intermediate2MidtermOralConversationCoach",
+  "provider": "ElevenLabs",
+  "voice": { "name": "Sarah", "voiceId": "EXAVITQu4vr4xnSDxMaL", "accent": "General American English" },
+  "model": "eleven_multilingual_v2",
+  "format": "mp3_44100_128",
+  "source": "scripts.md",
+  "purpose": "Private, mobile-first practice for the Intermediate Course 2 Midterm Oral Task."
+}
