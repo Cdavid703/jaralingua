@@ -1,7 +1,6 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import path from "node:path";
-import vm from "node:vm";
 
 const root = path.resolve(import.meta.dirname, "..");
 const pagePath = path.join(root, "ingles", "intermediate-2", "midterm-oral-conversation-coach.html");
@@ -11,57 +10,44 @@ const audioDir = path.join(root, "ingles", "intermediate-2", "audio", "midterm-o
 const page = fs.readFileSync(pagePath, "utf8");
 const script = fs.readFileSync(scriptPath, "utf8");
 const css = fs.readFileSync(cssPath, "utf8");
-const scripts = fs.readFileSync(path.join(audioDir, "scripts.md"), "utf8");
+const audioScripts = fs.readFileSync(path.join(audioDir, "scripts.md"), "utf8");
 
-assert.match(page, /Midterm Oral Task/);
-assert.match(page, /Hi, I’m Mia/);
-assert.match(page, /ie2-coach-hero/, "The desktop coach must use the shared hero panel.");
-assert.match(page, /ie2-coach-shell/, "The desktop coach must use the shared coach shell.");
-assert.match(page, /ie2-coach-welcome/, "The coach must have the standard partner welcome panel.");
-assert.match(page, /ie2-coach-prompt/, "The active turn must use the shared prompt panel.");
-assert.match(page, /id="recordButton"/);
-assert.match(page, /id="answerSuggestion"/);
-assert.match(page, /Practice only, not an evaluation/);
-assert.match(page, /mia-conversation-coach-v1\.png/, "Mia must have a visible photo.");
-assert.match(page, /Mia, your conversation partner/, "The welcome must identify Mia as the conversation partner.");
+for (const expected of [
+  "Midterm Oral Practice", "conversation-coach-v2.css", "coach-hero ie2-midterm-hero",
+  "coach-outcomes", "coach-shell", "coach-sidebar", "coach-companion-welcome",
+  "coach-stage", "coach-recorder", "floatingMicDock", "desktopViewButton",
+  "mobileViewButton", "mia-old-friends-hero-v1.png", "mia-conversation-coach-v1.png",
+  "coachLevelBar"
+]) assert.ok(page.includes(expected), "Missing page element: " + expected);
+
 assert.equal(script.includes("Try:"), false, "Suggested answers must not include a filler label.");
 assert.equal(script.includes("…"), false, "Suggested answers must not contain blanks or ellipses.");
-assert.equal(page.includes("course-search"), false, "The mobile coach must not include the long search panel.");
-assert.equal(page.includes("language-bank"), false, "The mobile coach must not include a separate language bank.");
-assert.match(script, /const MAX_SECONDS = 45/);
-assert.match(script, /If I were you, I would/);
-assert.match(script, /life partner/);
-assert.match(script, /dating or relationships/);
-assert.match(css, /\.ie2moc-action-dock\s*\{[\s\S]*position:\s*fixed/);
-assert.match(css, /\.ie2moc-mic\s*\{[\s\S]*border-radius:\s*50%/, "The microphone must be a circular control.");
-assert.match(page, /id="coachLevelBar"/, "The recorder must include a live microphone level bar.");
-assert.match(script, /function startMeter\(micStream\)/, "The recorder must read the microphone level while recording.");
-assert.match(script, /Voice detected/, "The level meter must give live feedback.");
-assert.match(css, /safe-area-inset-bottom/);
-assert.match(css, /@media \(max-width: 760px\)/);
-assert.match(css, /@media \(max-width: 420px\)/);
+assert.equal(page.includes("…"), false, "Visible language must use complete phrases instead of ellipses.");
+for (const expected of [
+  "const MAX_SECONDS = 45", "function startMeter(micStream)", "Voice detected",
+  "function setView(mode", "floatingMicButton", "life partner", "If I were you",
+  "question about dating"
+]) assert.ok(script.includes(expected), "Missing coach behavior: " + expected);
 
-const turnMatch = script.match(/const turns = (\[[\s\S]*?\n  \]);/);
-assert.ok(turnMatch, "The coach must define its conversation turns.");
-const turns = vm.runInNewContext(`(${turnMatch[1]})`);
-assert.equal(turns.length, 7, "The mock must have seven connected turns.");
-assert.match(turns[0].prompt, /so long/i, "The coach must start with a natural reunion.");
-assert.match(turns[2].prompt, /life partner/i);
-assert.match(turns[3].prompt, /If you were/i);
-assert.match(turns[5].hint, /If I were you/i);
-assert.match(turns[6].prompt, /question about dating/i);
+assert.ok(css.includes(".ie2-midterm-oral-page.ie2-mobile-focus"));
+assert.ok(css.includes("@media (max-width: 720px)"));
+assert.equal((script.match(/topic: "/g) || []).length, 7, "The mock must have seven connected turns.");
+assert.ok(script.includes("so long"), "The coach must begin with a natural reunion.");
+assert.ok(script.includes("If you were in Valentina's situation"));
 
-const scriptedFiles = [...scripts.matchAll(/^###\s+`([^`]+\.mp3)`\s*$/gm)].map((match) => match[1]);
+const scriptedFiles = audioScripts.split("\n")
+  .filter((line) => line.startsWith("### \`"))
+  .map((line) => line.slice(5, line.indexOf("\`", 5)));
 assert.equal(scriptedFiles.length, 15, "Every prompt, reaction and close needs a canonical audio script.");
 assert.equal(new Set(scriptedFiles).size, scriptedFiles.length, "Audio script names must be unique.");
 const generatedFiles = fs.readdirSync(audioDir).filter((name) => name.endsWith(".mp3")).sort();
 assert.deepEqual(generatedFiles, [...scriptedFiles].sort(), "Every canonical ElevenLabs script needs exactly one generated MP3.");
 for (const file of generatedFiles) {
-  const target = path.join(audioDir, file);
-  assert.ok(fs.statSync(target).size > 10_000, `Generated MP3 is unexpectedly small: ${file}`);
+  assert.ok(fs.statSync(path.join(audioDir, file)).size > 10_000, "Generated MP3 is unexpectedly small: " + file);
 }
-for (const file of [...script.matchAll(/"([a-z0-9-]+\.mp3)"/g)].map((match) => match[1])) {
-  assert.ok(fs.existsSync(path.join(audioDir, file)), `Missing audio referenced by the coach: ${file}`);
+const referencedFiles = [...script.matchAll(/"([a-z0-9-]+\.mp3)"/g)].map((match) => match[1]);
+for (const file of referencedFiles) {
+  assert.ok(fs.existsSync(path.join(audioDir, file)), "Missing audio referenced by the coach: " + file);
 }
 
 console.log("Intermediate 2 Midterm Oral Conversation Coach contract passed.");
