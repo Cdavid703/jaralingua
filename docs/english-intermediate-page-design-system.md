@@ -260,4 +260,3 @@ iteración debe comenzar comparando el mock con la plantilla de página completa
 de `final-oral-partner-coach.html`, pero manteniendo la condición funcional de
 Intermedio 2: práctica privada sin nota, sin envío al docente y sin alterar las
 Unidades 1 y 2.
-
