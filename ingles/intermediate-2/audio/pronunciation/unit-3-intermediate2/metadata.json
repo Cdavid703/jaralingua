@@ -1,0 +1,55 @@
+{
+  "activityId": "intermediate2Unit3SoundClearTechSupportPronunciation",
+  "activityVersion": "2026.1",
+  "provider": "elevenlabs",
+  "mode": "text-to-speech",
+  "modelId": "eleven_multilingual_v2",
+  "voice": {
+    "name": "Sarah",
+    "voiceId": "EXAVITQu4vr4xnSDxMaL",
+    "accent": "General American English"
+  },
+  "outputFormat": "mp3_44100_128",
+  "voiceSettings": {
+    "stability": 0.64,
+    "similarityBoost": 0.82,
+    "style": 0.14,
+    "useSpeakerBoost": true
+  },
+  "sourceScript": "../unit-3-sound-clear-tech-support-script.md",
+  "generatedAt": "2026-08-29",
+  "durationMethod": "CBR estimate from 128 kbps output size",
+  "wordModelCount": 52,
+  "files": [
+    {
+      "name": "section-1.mp3",
+      "bytes": 76112,
+      "durationSeconds": 4.757,
+      "sha256": "9408a1f90a07d2f0a24b265eca1c70df2b8a5c22f1d653507fd1bdbfece1edea"
+    },
+    {
+      "name": "section-2.mp3",
+      "bytes": 61902,
+      "durationSeconds": 3.869,
+      "sha256": "3208e6a1c1d88b5f61e968515d607a1fa4610f02301f0ce2740bb34c2ff1dbe0"
+    },
+    {
+      "name": "section-3.mp3",
+      "bytes": 79038,
+      "durationSeconds": 4.94,
+      "sha256": "1e5cfada111671f515bc3868275ab15e04379effefdf7f79661eece3fc45100f"
+    },
+    {
+      "name": "section-4.mp3",
+      "bytes": 136298,
+      "durationSeconds": 8.519,
+      "sha256": "ec78fc1dc564610c6c62c35168107260c0b1990557442c766f62499758908f35"
+    },
+    {
+      "name": "sound-clear-in-tech-support-model-us.mp3",
+      "bytes": 356981,
+      "durationSeconds": 22.311,
+      "sha256": "a6c9e94f0ea74e55e4688f2bc2865006b784c8a08e450c079194ed46bc52728f"
+    }
+  ]
+}

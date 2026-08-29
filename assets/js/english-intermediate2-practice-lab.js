@@ -3,12 +3,14 @@
   const DATA_URL = "../../assets/data/english-intermediate-2-content.json";
   const units = [
     { number: 1, grid: document.getElementById("unit1ActivityGrid"), count: document.getElementById("unit1ActivityCount"), empty: document.getElementById("practiceLabEmpty") },
-    { number: 2, grid: document.getElementById("unit2ActivityGrid"), count: document.getElementById("unit2ActivityCount"), empty: document.getElementById("practiceLabUnit2Empty") }
+    { number: 2, grid: document.getElementById("unit2ActivityGrid"), count: document.getElementById("unit2ActivityCount"), empty: document.getElementById("practiceLabUnit2Empty") },
+    { number: 3, grid: document.getElementById("unit3ActivityGrid"), count: document.getElementById("unit3ActivityCount"), empty: document.getElementById("practiceLabUnit3Empty") }
   ];
   const search = document.getElementById("practiceLabSearch");
   const clear = document.getElementById("practiceLabClear");
   const resultCount = document.getElementById("practiceLabResultCount");
   const total = document.getElementById("labActivityTotal");
+  const activeUnitTotal = document.getElementById("labActiveUnitTotal");
   const filters = [...document.querySelectorAll("[data-lab-filter]")];
   let activeFilter = "all";
 
@@ -67,6 +69,7 @@
         unit.count.textContent = `${unitItems.length} ${unitItems.length === 1 ? "activity" : "activities"}`;
       });
       total.textContent = String(published.filter((item) => units.some((unit) => unit.number === Number(item.unit))).length);
+      activeUnitTotal.textContent = String(new Set(published.map((item) => Number(item.unit)).filter((number) => units.some((unit) => unit.number === number))).size);
       update();
     } catch (_) {
       units.forEach((unit) => { unit.grid.innerHTML = '<p class="ie2-lab-empty">The activity catalog could not be loaded. Refresh the page to try again.</p>'; });
