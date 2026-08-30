@@ -56,7 +56,7 @@ The page does not reteach present simple versus present continuous (Unit 1), sho
 - Short diary, voicemail, and WhatsApp production tasks.
 ## -ed pronunciation teaching block
 
-The Unit 4 explanation page now expands Topic 06 into a dedicated, self-contained pronunciation block.
+The Unit 4 explanation page now integrates the pronunciation block into Topic 04, Regular verbs: spelling and pronunciation with -ed.
 
 - It teaches the physical reason for the three sounds: a voiceless final base-verb sound leads to `/t/`; a vowel or voiced final sound leads to `/d/`; and final `/t/` or `/d/` requires an extra `/ɪd/` syllable.
 - The learner is explicitly told to listen to the last **sound**, not simply the final spelling. `laughed` is used as the key counterexample: its final sound is `/f/`, therefore `-ed` is `/t/`.
