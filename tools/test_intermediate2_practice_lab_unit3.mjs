@@ -5,6 +5,7 @@ import path from "node:path";
 const root = path.resolve(import.meta.dirname, "..");
 const page = fs.readFileSync(path.join(root, "ingles", "intermediate-2", "practice-lab.html"), "utf8");
 const controller = fs.readFileSync(path.join(root, "assets", "js", "english-intermediate2-practice-lab.js"), "utf8");
+const styles = fs.readFileSync(path.join(root, "assets", "css", "english-intermediate2-practice-lab.css"), "utf8");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "assets", "data", "english-intermediate-2-content.json"), "utf8"));
 
 assert.match(page, /<details class="ie2-lab-folder" id="unit-3-folder" open>/);
@@ -23,6 +24,10 @@ assert.equal(unit3.length, 1);
 assert.equal(unit3[0].id, "unit-3-sound-clear-tech-support-pronunciation");
 assert.equal(unit3[0].gradebookProjected, false);
 assert.equal(unit3[0].affectsAverage, false);
+
+assert.match(page, /english-intermediate2-practice-lab\.css\?v=20260830-unit3-compact-card/);
+assert.match(styles, /#unit3ActivityGrid\{grid-template-columns:minmax\(250px,360px\);justify-content:start\}/);
+assert.match(styles, /#unit3ActivityGrid\{grid-template-columns:1fr\}/);
 
 console.log("Intermediate 2 Practice Lab Unit 3 integration passed.");
 
