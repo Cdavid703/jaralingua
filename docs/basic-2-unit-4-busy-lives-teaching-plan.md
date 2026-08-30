@@ -54,3 +54,13 @@ The page does not reteach present simple versus present continuous (Unit 1), sho
 - `-ed` sound listening and pronunciation.
 - Question/answer transformation with `Did` and `didn't`.
 - Short diary, voicemail, and WhatsApp production tasks.
+## -ed pronunciation teaching block
+
+The Unit 4 explanation page now expands Topic 06 into a dedicated, self-contained pronunciation block.
+
+- It teaches the physical reason for the three sounds: a voiceless final base-verb sound leads to `/t/`; a vowel or voiced final sound leads to `/d/`; and final `/t/` or `/d/` requires an extra `/ɪd/` syllable.
+- The learner is explicitly told to listen to the last **sound**, not simply the final spelling. `laughed` is used as the key counterexample: its final sound is `/f/`, therefore `-ed` is `/t/`.
+- Each category includes the rule, a throat-vibration check, a contrast model, and six individual clickable verbs.
+- Twenty-one real ElevenLabs MP3 files are stored in `ingles/basico-2/audio/unit4/pronunciation/ed-endings/`: 18 word models and 3 category contrasts.
+- Controls offer 0.75× and 1.0× playback. No browser speech-synthesis fallback is used.
+- The entire Unit 4 page, including this topic, remains closed by default; students choose when to open it.
