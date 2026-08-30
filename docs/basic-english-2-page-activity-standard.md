@@ -87,6 +87,7 @@ Aplicacion por tipo de pagina:
 
 - **Home, Games, Evaluations, Course Overview, Practice Lab, Listening Library e Idioms/Phrasal Verbs:** tarjetas y carpetas usan `auto-fit` para ocupar filas compactas; no quedan de a una o dos tarjetas por fila en escritorio si hay espacio real disponible.
 - **Paginas de teoria:** hero, menu rapido y acordeones usan ancho de aplicacion; las explicaciones se organizan en grupos legibles, no en parrafos larguisimos.
+- **Course Overview y Practice Lab:** ningun acordeon, carpeta de unidad, acceso rapido o actividad queda desplegado por defecto; el estudiante decide que abrir.
 - **Reading, listening, video listening y talleres:** preguntas, reproductores, modelos y ayudas usan paneles anchos; en movil regresan a una columna sin scroll horizontal.
 - **Pronunciation y Conversation Coach:** la practica principal y el resultado ocupan la fila superior cuando hay ancho; apoyos y resumen se organizan debajo en grillas compactas.
 - **Grades y examenes:** grillas, formularios, escritura y paneles docentes usan el ancho disponible, especialmente en escritorio, manteniendo controles tactiles comodos.
