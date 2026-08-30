@@ -50,6 +50,12 @@ Reglas obligatorias:
 - debe dejar visible el contenido despues de iniciar scroll;
 - debe funcionar en celular vertical, celular horizontal, tablet vertical y tablet horizontal.
 
+### Hero horizontal y visible
+
+- **Todo hero nuevo o modificado se compone como una franja horizontal en escritorio y portátil:** el bloque de contenido y el bloque visual deben ser columnas hermanas dentro del hero; nunca se anida la imagen dentro de la tarjeta de texto.
+- El hero aprovecha todo el ancho disponible de la aplicación. No se crea una columna estrecha y alta ni se fuerza una altura de viewport que deje espacio vacío o esconda contenido.
+- La imagen del hero se usa en formato horizontal/paisaje, con recorte profesional. En tablet y celular las columnas se apilan —texto y después imagen— y conservan desplazamiento normal.
+- Cualquier estilo genérico que limite el hero a una franja estrecha o lo convierta en un bloque vertical debe anularse explícitamente en Basic English Course 2.
 ## 4. Imagen profesional
 
 Cada actividad nueva de Basic English Course 2 debe tener una imagen profesional propia cuando se entregue como pagina final. Esta regla aplica especialmente a reading, listening, video listening, pronunciacion, conversation coach, grammar practice, vocabulary activities y juegos por unidad.
