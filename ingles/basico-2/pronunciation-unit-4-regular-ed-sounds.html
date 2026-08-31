@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pronunciation Unit 4: Regular -ed Sounds | Basic English Course 2</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png" sizes="96x96" />
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-pronunciation.css?v=20260820-basic2-full-width-compact" />
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260830-basic2-horizontal-hero" />
+</head>
+<body class="english-basic-page basic2-page pronunciation-page-basic2">
+  <div class="global-course-switcher" aria-label="Courses">
+    <details>
+      <summary><span>Courses</span></summary>
+      <nav>
+        <a href="../../index.html">Home</a>
+        <a href="../../frances/index.html">French</a>
+        <a href="../../frances/Niveau%207/index.html">French Level 7</a>
+        <a href="../index.html">English</a>
+        <a href="../basico/index.html">Basic English Course 1</a>
+        <a href="./index.html">Basic English Course 2</a>
+        <a href="../intermediate/index.html">Intermediate English</a>
+      </nav>
+    </details>
+  </div>
+
+  <header class="site-header">
+    <nav class="navbar">
+      <a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo" /></a>
+      <ul class="nav-links">
+        <li><a href="../../index.html">Home</a></li>
+        <li><a href="../index.html">English</a></li>
+        <li><a href="index.html">Basic Course 2</a></li>
+        <li><a href="course-overview.html">Course Overview</a></li>
+        <li><a href="practice-lab.html">Practice Lab</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="lesson-hero immersive-basic-hero pronunciation-hero" style="--hero-image:url('../../assets/img/english-basic-2/unit-4-busy-lives/regular-ed-pronunciation-studio-hero.png')">
+      <div class="lesson-hero-content">
+        <p class="eyebrow">Practice Lab · Unit 4 · Pronunciation</p>
+        <h1>Regular -ed Pronunciation Studio</h1>
+        <p>Practice regular past verbs with the three -ed sounds: /t/, /d/, and /ɪd/. Complete three focused sound sections and one final challenge.</p>
+        <div class="lesson-meta"><span>Unit 4</span><span>Regular past verbs</span><span>3 sound sections</span><span>Teacher follow-up · 0%</span></div>
+        <div class="hero-actions">
+          <a href="#pronunciation-activity" class="btn btn-primary"><i class="bi bi-mic-fill"></i> Start practicing</a>
+          <a href="practice-lab.html#unit-4-folder" class="btn btn-secondary">Back to Practice Lab</a>
+        </div>
+      </div>
+      <aside class="lesson-hero-image">
+        <img src="../../assets/img/english-basic-2/unit-4-busy-lives/regular-ed-pronunciation-studio-hero.png" width="1536" height="864" fetchpriority="high" decoding="async" alt="Adult English learner practicing regular past verb endings with a microphone" />
+      </aside>
+    </section>
+
+    <section class="lesson-outcome">
+      <div class="outcome-card">
+        <span class="outcome-label">Practice goal</span>
+        <h2>Pronounce regular past endings clearly in real Unit 4 language</h2>
+        <p>The student listens to the three professional sound models, records each section, receives word-level feedback, and can replay every target verb with its own ElevenLabs recording before sending a 0% follow-up report to the teacher.</p>
+      </div>
+    </section>
+
+    <section class="pronunciation-main" id="pronunciation-activity">
+      <div class="pronunciation-layout">
+        <section class="pronunciation-panel" aria-labelledby="practiceTitle">
+          <p class="eyebrow">3 guided sound sections · 1 final challenge</p>
+          <h2 id="practiceTitle">Read the regular past sound groups</h2>
+          <p class="instructions">Take it step by step: listen to the model, choose the speed if needed, read the section shown, review the highlighted words, then continue.</p>
+
+          <div class="model-player">
+            <button class="round-button" id="modelButton" type="button" aria-label="Play the model"><i class="bi bi-play-fill"></i></button>
+            <div class="player-copy">
+              <strong>Professional model · American English</strong>
+              <span>Audio generated with ElevenLabs</span>
+            </div>
+            <audio id="modelAudio" preload="metadata" src="audio/unit4/pronunciation/ed-endings/ed-t-contrast.mp3"></audio>
+          </div>
+
+          <div class="playback-tools" aria-label="Audio speed controls">
+            <span>Model speed</span>
+            <button type="button" data-speed="0.75">0.75</button>
+            <button type="button" data-speed="1">1.0</button>
+          </div>
+
+          <div class="shadow-mode-row">
+            <button class="action-button reset" id="shadowModeButton" type="button"><i class="bi bi-ear"></i> Shadow mode</button>
+            <span id="shadowModeStatus">Off</span>
+          </div>
+
+          <div class="reading-text" id="readingText" lang="en" aria-label="Text to read"></div>
+          <div class="legend" aria-label="Result legend"><span><i class="ok"></i> recognized word</span><span><i class="miss"></i> word to practice</span></div>
+
+          <div class="record-zone">
+            <button class="mic-button" id="micButton" type="button" aria-label="Start recording"><i class="bi bi-mic-fill"></i></button>
+            <p class="record-status" id="recordStatus" aria-live="polite">Ready to practice Unit 4 regular -ed sounds</p>
+            <p class="record-help">Allow microphone access when your browser asks.</p>
+            <span class="timer" id="timer">00:00</span>
+            <div class="actions">
+              <button class="action-button stop" id="stopButton" type="button" disabled><i class="bi bi-stop-fill"></i> Finish and evaluate</button>
+              <button class="action-button reset" id="resetButton" type="button"><i class="bi bi-arrow-counterclockwise"></i> Start again</button>
+            </div>
+            <div class="live-transcript" id="liveTranscript" aria-live="polite">Your transcription will appear here after the analysis.</div>
+            <audio id="studentAudio" controls hidden></audio>
+          </div>
+          <div class="unsupported" id="unsupported" hidden>Voice recording is unavailable in this browser. Use a recent version of Chrome or Edge.</div>
+        </section>
+
+        <aside>
+          <section class="pronunciation-panel results" id="results" aria-labelledby="resultTitle" hidden>
+            <p class="eyebrow">Your result</p>
+            <h2 id="resultTitle">Reading summary</h2>
+            <div class="score-ring" id="scoreRing"><div><strong id="overallScore">0</strong><span>out of 100</span></div></div>
+            <div class="metrics">
+              <div class="metric"><strong id="accuracyScore">0%</strong><span>Accuracy</span></div>
+              <div class="metric"><strong id="completenessScore">0%</strong><span>Completeness</span></div>
+              <div class="metric"><strong id="fluencyScore">0%</strong><span>Rhythm</span></div>
+            </div>
+            <div class="feedback" id="feedback"></div>
+          </section>
+
+          <section class="pronunciation-panel" style="margin-top:1rem">
+            <p class="eyebrow">Focus points</p>
+            <h3>Before you record</h3>
+            <div class="tips">
+              <div class="tip"><i class="bi bi-volume-down"></i><p>For <strong>/t/</strong>, do not add a new syllable: <strong>worked</strong>, <strong>watched</strong>, and <strong>washed</strong> end quickly.</p></div>
+              <div class="tip"><i class="bi bi-volume-up"></i><p>For <strong>/d/</strong>, keep the voice active to the end: <strong>played</strong>, <strong>cleaned</strong>, <strong>called</strong>, and <strong>stayed</strong>.</p></div>
+              <div class="tip"><i class="bi bi-soundwave"></i><p>For <strong>/ɪd/</strong>, say one extra syllable clearly: <strong>wanted</strong>, <strong>needed</strong>, <strong>started</strong>, and <strong>visited</strong>.</p></div>
+            </div>
+          </section>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><p>Basic English Course 2 · Unit 4 regular -ed pronunciation practice</p></footer>
+  <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../../assets/js/english-basic2-pronunciation-unit4.js?v=20260830-regular-ed-pronunciation"></script>
+  <script src="../../assets/js/google-auth-config.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script>
+  <script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
+</body>
+</html>

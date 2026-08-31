@@ -279,6 +279,7 @@ BASIC_UNIT6_NEIGHBORHOOD_AI_ID = "unit6NeighborhoodAiImageLab"
 BASIC2_UNIT1_PRONUNCIATION_ID = "basic2Unit1WeatherGoingOutPronunciation"
 BASIC2_UNIT2_PRONUNCIATION_ID = "basic2Unit2ShoppingConcertPronunciation"
 BASIC2_UNIT3_PRONUNCIATION_ID = "basic2Unit3AroundWorldPronunciation"
+BASIC2_UNIT4_PRONUNCIATION_ID = "basic2Unit4RegularEdPronunciation"
 BASIC2_MIDTERM_WRITING_PRACTICE_ID = "basic2MidtermWritingPracticeFollowUp"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -704,6 +705,13 @@ BASIC2_UNIT2_PRONUNCIATION_EVALUATION = {
 BASIC2_UNIT3_PRONUNCIATION_EVALUATION = {
     "id": BASIC2_UNIT3_PRONUNCIATION_ID,
     "title": "Basic 2 Unit 3 Follow-up - Around the World Pronunciation",
+    "weight": 0,
+    "type": "Pronunciation follow-up",
+    "description": "Reporte de pronunciacion enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
+}
+BASIC2_UNIT4_PRONUNCIATION_EVALUATION = {
+    "id": BASIC2_UNIT4_PRONUNCIATION_ID,
+    "title": "Basic 2 Unit 4 Follow-up - Regular -ed Pronunciation Studio",
     "weight": 0,
     "type": "Pronunciation follow-up",
     "description": "Reporte de pronunciacion enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
@@ -3517,6 +3525,8 @@ def ensure_basic2_gradebook_structure(grades_data):
     if ensure_evaluation_template(grades_data, BASIC2_UNIT2_PRONUNCIATION_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_UNIT3_PRONUNCIATION_EVALUATION):
+        changed = True
+    if ensure_evaluation_template(grades_data, BASIC2_UNIT4_PRONUNCIATION_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION):
         changed = True
@@ -19849,6 +19859,67 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, {
                     "ok": True,
                     "evaluationId": BASIC2_UNIT3_PRONUNCIATION_ID,
+                    "score100": report["score100"],
+                    "grade": report["grade"],
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path in ("/api/basic2/unit4-regular-ed-pronunciation/submit", "/api/basic/basic2-unit4-regular-ed-pronunciation/submit"):
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                changed = ensure_basic2_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    report = basic2_unit1_pronunciation_report_from_payload(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                previous = student["gradeDetails"].get(BASIC2_UNIT4_PRONUNCIATION_ID)
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[BASIC2_UNIT4_PRONUNCIATION_ID] = report["grade"]
+                student["gradeDetails"][BASIC2_UNIT4_PRONUNCIATION_ID] = {
+                    "evaluationId": BASIC2_UNIT4_PRONUNCIATION_ID,
+                    "activityTitle": BASIC2_UNIT4_PRONUNCIATION_EVALUATION["title"],
+                    "submittedAt": submitted_at,
+                    "score100": report["score100"],
+                    "grade": report["grade"],
+                    "stageScores": report["stageScores"],
+                    "finalTranscript": report["finalTranscript"],
+                    "finalReferenceText": report["finalReferenceText"],
+                    "finalMissedWords": report["finalMissedWords"],
+                    "clientSubmissionId": report["clientSubmissionId"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Regular -ed Pronunciation Studio",
+                    "activityType": "Pronunciation follow-up"
+                }
+                write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": BASIC2_UNIT4_PRONUNCIATION_ID,
                     "score100": report["score100"],
                     "grade": report["grade"],
                     "submittedAt": submitted_at,
