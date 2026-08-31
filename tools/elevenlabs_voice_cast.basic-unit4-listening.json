@@ -1,0 +1,16 @@
+{
+  "speakers": {
+    "Daniel": {
+      "voice_id": "DwwuoY7Uz8AP8zrY5TAo",
+      "name": "Sean - Professional US",
+      "profile": "english-us",
+      "gender": "male"
+    },
+    "Valeria": {
+      "voice_id": "hpp4J3VqNfWAUOO0d1Us",
+      "name": "Bella - Bright US",
+      "profile": "english-us",
+      "gender": "female"
+    }
+  }
+}
