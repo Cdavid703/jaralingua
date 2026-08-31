@@ -9,7 +9,7 @@
     ['Why was Daniel tired when he arrived home?', ['He did not eat dinner.', 'He was on the go all day.', 'He watched a long movie.'], 'B', '“On the go” means busy and active in several places or activities.'],
     ['What did Daniel do before he called it a night?', ['He cooked pasta and watched a movie.', 'He bought a jacket.', 'He studied with Valeria.'], 'A', 'In the evening, Daniel cooked pasta, watched a movie, and then went to bed.'],
     ['Who called Daniel just before bed?', ['Mateo', 'A bus driver', 'Valeria'], 'C', 'Valeria called Daniel and asked for his help on Sunday morning.'],
-    ['What will readers discover in Part 2?', ['Whether Daniel won the soccer game.', 'Where Daniel and Valeria were going on Sunday.', 'What jacket Valeria bought.'], 'B', 'The reading ends before Daniel learns their Sunday destination; Part 2 will reveal it.']
+    ['Where did Valeria ask Daniel to meet her on Sunday?', ['At the community garden.', 'At the bus station.', 'At Mateo’s apartment.'], 'B', 'Valeria asked Daniel to meet her at the bus station on Sunday morning.']
   ];
   const letters = ['A', 'B', 'C'];
   const root = document.getElementById('readingQuestions');
