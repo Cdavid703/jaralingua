@@ -3,6 +3,7 @@
 
   const COLORS = ["#f6d365", "#60a5fa", "#34d399", "#f97316", "#f9a8d4", "#a7f3d0", "#facc15", "#93c5fd", "#fb7185", "#c4b5fd"];
   const state = { originalNames: [], pool: [], currentStudent: "", history: [], rotation: 0, spinning: false, seconds: 900, timerRunning: false, timerId: null };
+  const soundState = { audioContext: null, tickTimer: null, active: false };
   const $ = function (id) { return document.getElementById(id); };
   const cleanName = function (value) { return String(value || "").trim(); };
 
@@ -43,6 +44,49 @@
     const node = $("rosterStatus");
     node.textContent = message;
     node.className = "roulette-status" + (type ? " " + type : "");
+  }
+
+  function audioContext() {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return null;
+    if (!soundState.audioContext) soundState.audioContext = new AudioContextClass();
+    if (soundState.audioContext.state === "suspended") soundState.audioContext.resume().catch(function () {});
+    return soundState.audioContext;
+  }
+
+  function playTone(frequency, duration, volume, type) {
+    const context = audioContext();
+    if (!context) return;
+    const oscillator = context.createOscillator();
+    const gain = context.createGain();
+    oscillator.type = type || "sine";
+    oscillator.frequency.setValueAtTime(frequency, context.currentTime);
+    gain.gain.setValueAtTime(0.0001, context.currentTime);
+    gain.gain.exponentialRampToValueAtTime(volume || 0.05, context.currentTime + 0.012);
+    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + duration);
+    oscillator.connect(gain);
+    gain.connect(context.destination);
+    oscillator.start();
+    oscillator.stop(context.currentTime + duration + 0.03);
+  }
+
+  function startRouletteSound() {
+    if (soundState.active) return;
+    soundState.active = true;
+    playTone(392, 0.075, 0.055, "square");
+    soundState.tickTimer = window.setInterval(function () {
+      playTone(440 + Math.random() * 260, 0.04, 0.035, "square");
+    }, 92);
+  }
+
+  function stopRouletteSound(success) {
+    soundState.active = false;
+    if (soundState.tickTimer) window.clearInterval(soundState.tickTimer);
+    soundState.tickTimer = null;
+    if (!success) return;
+    playTone(659, 0.08, 0.075, "sine");
+    window.setTimeout(function () { playTone(784, 0.11, 0.07, "sine"); }, 88);
+    window.setTimeout(function () { playTone(988, 0.16, 0.065, "sine"); }, 180);
   }
 
   function renderWheel() {
@@ -138,11 +182,13 @@
     const slice = 360 / state.pool.length;
     const target = 360 - (index * slice + slice / 2);
     state.spinning = true;
+    startRouletteSound();
     state.rotation += 1440 + target - (state.rotation % 360);
     render();
     window.setTimeout(function () {
       state.currentStudent = state.pool[index];
       state.spinning = false;
+      stopRouletteSound(true);
       render();
     }, 2350);
   }
@@ -158,6 +204,7 @@
 
   function cancelTurn() {
     if (!state.currentStudent) return;
+    stopRouletteSound(false);
     state.currentStudent = "";
     render();
   }
