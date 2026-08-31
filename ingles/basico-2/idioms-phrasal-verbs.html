@@ -9,6 +9,19 @@
   <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth" />
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header" />
   <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260830-basic2-horizontal-hero" />
+<style>body.basic2-page { margin: 0; overflow-x: clip; }
+  .expression-library-intro { width: min(1760px, calc(100% - 48px)); margin: 1.5rem auto; padding: 1.5rem; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 1.4rem; align-items: center; border: 1px solid rgba(16, 91, 133, .16); border-radius: 22px; background: linear-gradient(120deg, #fff 0%, #f0f8fb 100%); box-shadow: 0 12px 28px rgba(14, 54, 88, .08); }
+  .expression-library-intro h2 { margin: .2rem 0 .5rem; color: #092f59; }
+  .expression-library-intro p { margin: 0; max-width: 760px; color: #426071; }
+  .expression-library-keys { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: .55rem; }
+  .expression-library-keys span { padding: .55rem .72rem; border-radius: 999px; color: #15466c; background: #fff; border: 1px solid #cae2ed; font-size: .88rem; }
+  .expression-library-keys b { display: inline-grid; place-items: center; min-width: 1.65rem; margin-right: .25rem; color: #fff; background: #087f8c; border-radius: 999px; font-size: .72rem; }
+  .expression-bank-list { width: min(1760px, calc(100% - 48px)); margin-inline: auto; }
+  .expression-bank-list .basic2-unit-card { margin-bottom: 1.15rem; }
+  .expression-bank-list .expression-card { min-height: 198px; }
+  .expression-bank-list .expression-card.is-playing { outline: 3px solid #16a6a1; outline-offset: 2px; }
+  @media (max-width: 760px) { .lesson-hero.immersive-basic-hero { width: 100% !important; margin-inline: 0 !important; } .site-header { overflow: hidden; } .site-header .nav-links li:nth-child(n+4) { display: none; } .expression-library-intro, .expression-bank-list { width: min(100% - 24px, 1760px); } .expression-library-intro { grid-template-columns: 1fr; padding: 1.1rem; } .expression-library-keys { justify-content: flex-start; } }
+</style>
 </head>
 <body class="english-basic-page basic2-page">
   <div class="global-course-switcher" aria-label="Courses">
@@ -44,10 +57,10 @@
       <div class="lesson-hero-content">
         <p class="eyebrow">Basic English Course 2</p>
         <h1>Basic Idioms and Phrasal Verbs</h1>
-        <p>This bank collects useful expressions from the course. Each card includes an approximate Spanish meaning, a short usage explanation, and an example in context.</p>
-        <div class="lesson-meta"><span>Unit 1 ready</span><span>Spanish meaning</span><span>Context examples</span></div>
+        <p>This bank collects the phrasal verbs, idioms, and useful expressions taught in Units 1 to 4. Each card includes an approximate Spanish meaning, a short usage explanation, a natural example, and a listening model.</p>
+        <div class="lesson-meta"><span>Units 1–4 ready</span><span>Spanish meaning</span><span>Click to listen</span></div>
         <div class="hero-actions">
-          <a href="#unit-1-expressions" class="btn btn-primary">Open Unit 1 expressions</a>
+          <a href="#unit-1-expressions" class="btn btn-primary">Browse expression banks</a>
           <a href="index.html" class="btn btn-secondary">Back to Course 2</a>
         </div>
       </div>
@@ -56,18 +69,31 @@
 
     <section class="quick-access-panel compact" aria-label="Quick navigation">
       <div class="quick-access-header"><h2>Expression bank</h2><span>Course 2</span></div>
-      <details class="quick-access-dropdown" open>
+      <details class="quick-access-dropdown">
         <summary>Choose a unit bank</summary>
         <div class="quick-link-list">
           <a href="#unit-1-expressions"><b>01</b><span>Unit 1: Going Out</span></a>
           <a href="#unit-2-expressions"><b>02</b><span>Unit 2: Shopping and Clothes</span></a>
-          <a href="#future-units"><b>03-06</b><span>Future unit expression banks</span></a>
+          <a href="#unit-3-expressions"><b>03</b><span>Unit 3: Around the World</span></a>
+          <a href="#unit-4-expressions"><b>04</b><span>Unit 4: Busy Lives</span></a>
         </div>
       </details>
     </section>
 
-    <section class="basic2-unit-list">
-      <details class="basic2-unit-card" id="unit-1-expressions" open>
+    <section class="expression-library-intro" aria-label="How to use the expression bank">
+  <div>
+    <p class="eyebrow">Built from Course Overview</p>
+    <h2>Use one expression at a time.</h2>
+    <p>Open a unit, choose a group, then listen to any card. The translation is an approximation: the example is the guide for real English use.</p>
+  </div>
+  <div class="expression-library-keys">
+    <span><b>PV</b> Phrasal verb</span>
+    <span><b>ID</b> Idiom</span>
+    <span><b>EX</b> Useful expression</span>
+  </div>
+</section>
+<section class="basic2-unit-list expression-bank-list">
+      <details class="basic2-unit-card" id="unit-1-expressions">
         <summary>
           <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-1-going-out/unit-1-going-out-hero.webp" alt="Adult learners talking before going out" /></div>
           <div class="basic2-unit-title">
@@ -80,7 +106,7 @@
         <div class="basic2-unit-body">
           <div class="basic2-objective"><strong>How to read these cards:</strong> The Spanish meaning is approximate. The explanation tells students when the expression is natural in English.</div>
 
-          <details class="basic2-topic" open>
+          <details class="basic2-topic">
             <summary><b>PV</b> Phrasal verbs</summary>
             <div class="basic2-topic-body">
               <div class="expression-grid">
@@ -98,7 +124,7 @@
             </div>
           </details>
 
-          <details class="basic2-topic" open>
+          <details class="basic2-topic">
             <summary><b>ID</b> Idioms and common expressions</summary>
             <div class="basic2-topic-body">
               <div class="expression-grid">
@@ -123,7 +149,7 @@
         </div>
       </details>
 
-      <details class="basic2-unit-card" id="unit-2-expressions" open>
+      <details class="basic2-unit-card" id="unit-2-expressions">
         <summary>
           <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-2-shopping-experiences/unit-2-shopping-experiences-hero.webp" alt="Adult learners practicing shopping expressions in a clothing store" /></div>
           <div class="basic2-unit-title">
@@ -136,7 +162,7 @@
         <div class="basic2-unit-body">
           <div class="basic2-objective"><strong>How to read these cards:</strong> Phrasal verbs often change meaning when the particle changes. The Spanish meaning is approximate, and the example shows the natural shopping context.</div>
 
-          <details class="basic2-topic" open>
+          <details class="basic2-topic">
             <summary><b>PV</b> Phrasal verbs</summary>
             <div class="basic2-topic-body">
               <div class="expression-grid">
@@ -154,7 +180,7 @@
             </div>
           </details>
 
-          <details class="basic2-topic" open>
+          <details class="basic2-topic">
             <summary><b>EX</b> Common shopping expressions</summary>
             <div class="basic2-topic-body">
               <div class="expression-grid">
@@ -169,7 +195,7 @@
             </div>
           </details>
 
-          <details class="basic2-topic" open>
+          <details class="basic2-topic">
             <summary><b>ID</b> Idioms and common expressions</summary>
             <div class="basic2-topic-body">
               <div class="expression-grid">
@@ -186,20 +212,51 @@
         </div>
       </details>
 
-      <details class="basic2-unit-card" id="future-units">
-        <summary>
-          <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/idioms-phrasal-verbs-banner.webp" alt="Future expression bank preview" /></div>
-          <div class="basic2-unit-title">
-            <span class="basic2-mini-label">Units 3-6</span>
-            <h3>Future Expression Banks</h3>
-            <p>Travel, past experiences, memories, and food expressions will be added unit by unit.</p>
-          </div>
-          <span class="basic2-unit-toggle">Open status</span>
-        </summary>
-        <div class="basic2-unit-body">
-          <div class="basic2-objective"><strong>Status:</strong> Reserved for later units.</div>
-        </div>
-      </details>
+      <details class="basic2-unit-card" id="unit-3-expressions">
+  <summary>
+    <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-3-around-the-world/unit-3-around-the-world-hero.webp" alt="Travelers comparing places around the world" /></div>
+    <div class="basic2-unit-title"><span class="basic2-mini-label">Unit 3</span><h3>Around the World</h3><p>Travel, places, movement, and natural travel language.</p></div>
+    <span class="basic2-unit-toggle">Open bank</span>
+  </summary>
+  <div class="basic2-unit-body">
+    <div class="basic2-objective"><strong>Unit focus:</strong> These expressions belong to the travel and places section of Unit 3. Listen first, then notice the example sentence.</div>
+    <details class="basic2-topic"><summary><b>PV</b> Travel phrasal verbs</summary><div class="basic2-topic-body"><div class="expression-grid">
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/travel-around.mp3"><span class="expression-type">phrasal verb</span><h3>travel around</h3><span class="spanish-meaning">viajar por diferentes lugares</span><p>Visit several places on one trip. <strong>I want to travel around Europe.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/go-abroad.mp3"><span class="expression-type">phrasal verb</span><h3>go abroad</h3><span class="spanish-meaning">ir al extranjero</span><p>Travel to another country. <strong>She wants to go abroad next year.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/get-around.mp3"><span class="expression-type">phrasal verb</span><h3>get around</h3><span class="spanish-meaning">moverse por un lugar</span><p>Move from place to place in a city or country. <strong>It is easy to get around by train.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/check-in.mp3"><span class="expression-type">phrasal verb</span><h3>check in</h3><span class="spanish-meaning">registrarse</span><p>Register at a hotel or airport. <strong>We need to check in at the hotel.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/check-out.mp3"><span class="expression-type">phrasal verb</span><h3>check out</h3><span class="spanish-meaning">salir del hotel / mirar algo</span><p>Leave a hotel, or look at something interesting. <strong>Let’s check out the museum.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/take-off.mp3"><span class="expression-type">phrasal verb</span><h3>take off</h3><span class="spanish-meaning">despegar</span><p>Use it when a plane leaves the ground. <strong>The plane takes off at 8 a.m.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/come-back.mp3"><span class="expression-type">phrasal verb</span><h3>come back</h3><span class="spanish-meaning">regresar</span><p>Return to a place. <strong>I want to come back to Mexico.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+    </div></div></details>
+    <details class="basic2-topic"><summary><b>ID</b> Travel idioms</summary><div class="basic2-topic-body"><div class="expression-grid">
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/travel-light.mp3"><span class="expression-type">idiom</span><h3>travel light</h3><span class="spanish-meaning">viajar con poco equipaje</span><p>Travel with few things. <strong>I travel light when I visit hot countries.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/hit-the-road.mp3"><span class="expression-type">idiom</span><h3>hit the road</h3><span class="spanish-meaning">ponerse en camino</span><p>Start a trip or leave. <strong>It’s early. Let’s hit the road.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit3/expressions/change-of-scenery.mp3"><span class="expression-type">idiom</span><h3>a change of scenery</h3><span class="spanish-meaning">cambiar de ambiente</span><p>Go somewhere different to feel refreshed. <strong>I need a change of scenery.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+    </div></div></details>
+  </div>
+</details>
+
+<details class="basic2-unit-card" id="unit-4-expressions">
+  <summary>
+    <div class="basic2-unit-thumb"><img src="../../assets/img/english-basic-2/unit-4-busy-lives/unit-4-busy-lives-hero.png" alt="Adult learner thinking about a busy past week" /></div>
+    <div class="basic2-unit-title"><span class="basic2-mini-label">Unit 4</span><h3>Busy Lives</h3><p>Completed actions, busy routines, and past-time expressions.</p></div>
+    <span class="basic2-unit-toggle">Open bank</span>
+  </summary>
+  <div class="basic2-unit-body">
+    <div class="basic2-objective"><strong>Unit focus:</strong> These expressions support Unit 4’s simple-past stories. The past form in the example is intentional.</div>
+    <details class="basic2-topic"><summary><b>PV</b> Phrasal verbs for past events</summary><div class="basic2-topic-body"><div class="expression-grid">
+      <article class="expression-card" data-expression-audio="audio/unit4/expressions/wake-up.mp3"><span class="expression-type">phrasal verb</span><h3>wake up → woke up</h3><span class="spanish-meaning">despertarse</span><p>Stop sleeping and become awake. <strong>I woke up early yesterday.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit1/expressions/hang-out.mp3"><span class="expression-type">phrasal verb</span><h3>hang out → hung out</h3><span class="spanish-meaning">pasar el rato / salir</span><p>Spend relaxed time with other people. <strong>We hung out after class.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit1/expressions/come-over.mp3"><span class="expression-type">phrasal verb</span><h3>come over → came over</h3><span class="spanish-meaning">venir a casa de alguien</span><p>Go to someone’s home or current place. <strong>My cousin came over last night.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit4/expressions/pick-up.mp3"><span class="expression-type">phrasal verb</span><h3>pick up → picked up</h3><span class="spanish-meaning">recoger / pasar por alguien</span><p>Go somewhere to collect a person. <strong>I picked up my friend after work.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+    </div></div></details>
+    <details class="basic2-topic"><summary><b>ID</b> Busy-life idioms</summary><div class="basic2-topic-body"><div class="expression-grid">
+      <article class="expression-card" data-expression-audio="audio/unit4/expressions/on-the-go.mp3"><span class="expression-type">idiomatic expression</span><h3>be on the go</h3><span class="spanish-meaning">estar muy ocupado, de un lado a otro</span><p>Be active and busy, moving between tasks or places. <strong>I was on the go all day.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+      <article class="expression-card" data-expression-audio="audio/unit4/expressions/call-it-a-night.mp3"><span class="expression-type">idiomatic expression</span><h3>call it a night</h3><span class="spanish-meaning">dar por terminado el día o la noche</span><p>Decide to stop an evening activity and go home or rest. <strong>We called it a night at ten.</strong></p><span class="expression-audio-hint">Click to listen</span></article>
+    </div></div></details>
+  </div>
+</details>
     </section>
   </main>
 
