@@ -282,6 +282,7 @@
 
   let activeExpressionAudio = null;
   let activeExpressionButton = null;
+  let expressionSpeed = 1;
 
   function stopExpressionAudio() {
     if (activeExpressionAudio) {
@@ -306,6 +307,7 @@
     stopExpressionAudio();
     activeExpressionButton = button;
     activeExpressionAudio = new Audio(source);
+    activeExpressionAudio.playbackRate = expressionSpeed;
     activeExpressionAudio.addEventListener("ended", stopExpressionAudio, { once: true });
     activeExpressionAudio.addEventListener("error", function () {
       stopExpressionAudio();
@@ -327,6 +329,18 @@
   $("playModelAudio").addEventListener("click", playModel);
   document.querySelectorAll("[data-expression-audio]").forEach(function (button) {
     button.addEventListener("click", function () { playExpression(button); });
+  });
+  document.querySelectorAll("[data-expression-speed]").forEach(function (button) {
+    button.addEventListener("click", function () {
+      expressionSpeed = Number(button.getAttribute("data-expression-speed")) || 1;
+      if (activeExpressionAudio) activeExpressionAudio.playbackRate = expressionSpeed;
+      document.querySelectorAll("[data-expression-speed]").forEach(function (item) {
+        const active = Number(item.getAttribute("data-expression-speed")) === expressionSpeed;
+        item.classList.toggle("is-active", active);
+        item.setAttribute("aria-pressed", active ? "true" : "false");
+      });
+      $("expressionSpeedStatus").textContent = "Expressions play at " + (expressionSpeed === 1 ? "1.0" : expressionSpeed) + "x.";
+    });
   });
   window.addEventListener("resize", render);
   updateTimer();
