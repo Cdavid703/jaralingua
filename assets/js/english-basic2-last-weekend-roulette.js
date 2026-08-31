@@ -233,6 +233,43 @@
     $("modelAudioStatus").textContent = "Model paused.";
   }
 
+  let activeExpressionAudio = null;
+  let activeExpressionButton = null;
+
+  function stopExpressionAudio() {
+    if (activeExpressionAudio) {
+      activeExpressionAudio.pause();
+      activeExpressionAudio.currentTime = 0;
+    }
+    if (activeExpressionButton) {
+      activeExpressionButton.classList.remove("is-playing");
+      activeExpressionButton.querySelector("span").textContent = "Listen";
+    }
+    activeExpressionAudio = null;
+    activeExpressionButton = null;
+  }
+
+  function playExpression(button) {
+    const source = button.getAttribute("data-expression-audio");
+    if (!source) return;
+    if (activeExpressionButton === button) {
+      stopExpressionAudio();
+      return;
+    }
+    stopExpressionAudio();
+    activeExpressionButton = button;
+    activeExpressionAudio = new Audio(source);
+    activeExpressionAudio.addEventListener("ended", stopExpressionAudio, { once: true });
+    activeExpressionAudio.addEventListener("error", function () {
+      stopExpressionAudio();
+      $("rosterStatus").textContent = "This pronunciation model is temporarily unavailable.";
+    }, { once: true });
+    activeExpressionAudio.play().then(function () {
+      button.classList.add("is-playing");
+      button.querySelector("span").textContent = "Playing…";
+    }).catch(stopExpressionAudio);
+  }
+
   $("loadRosterBtn").addEventListener("click", loadRoster);
   $("resetRosterBtn").addEventListener("click", resetParticipants);
   $("spinStudentBtn").addEventListener("click", spinStudent);
@@ -241,6 +278,9 @@
   $("timerToggle").addEventListener("click", toggleTimer);
   $("timerReset").addEventListener("click", resetTimer);
   $("playModelAudio").addEventListener("click", playModel);
+  document.querySelectorAll("[data-expression-audio]").forEach(function (button) {
+    button.addEventListener("click", function () { playExpression(button); });
+  });
   window.addEventListener("resize", render);
   updateTimer();
   render();
