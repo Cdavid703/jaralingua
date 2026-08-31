@@ -20,10 +20,10 @@
     body.kahoot-review-page .nav-links{display:flex!important;flex:1 1 auto!important;min-width:0!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;gap:.35rem!important;overflow-x:auto!important;overflow-y:hidden!important;padding:.2rem 0!important;white-space:nowrap!important;scrollbar-width:thin!important}
     body.kahoot-review-page .nav-links li{flex:0 0 auto!important}
     body.kahoot-review-page .nav-links a{display:inline-flex!important;align-items:center!important;min-height:36px!important;padding:0 .65rem!important;border-radius:999px!important;font-size:.78rem!important;line-height:1!important;white-space:nowrap!important}
-    body.kahoot-review-page .global-course-switcher{position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;width:min(1180px,calc(100% - 2rem));margin:.75rem auto 0;display:flex;justify-content:flex-end;z-index:10!important}
+    body.kahoot-review-page .global-course-switcher{position:relative!important;top:auto!important;right:auto!important;bottom:auto!important;width:min(var(--basic2-app-max),calc(100% - (var(--basic2-app-gutter) * 2)));margin:.75rem auto 0;display:flex;justify-content:flex-end;z-index:10!important}
     @media(max-width:420px){body.kahoot-review-page .navbar{min-height:58px!important;padding:.35rem .55rem!important}body.kahoot-review-page .logo img{height:34px!important;max-width:82px!important;max-height:34px!important}body.kahoot-review-page .nav-links a{min-height:34px!important;padding:0 .55rem!important;font-size:.74rem!important}}
     body.basic2-page .lesson-hero,body.basic2-page .immersive-basic-hero{position:relative!important;top:auto!important}
-    .kahoot-review-shell{width:min(1180px,calc(100% - 2rem));margin:1rem auto 3rem;display:grid;gap:1rem}
+    .kahoot-review-shell{width:min(var(--basic2-app-max),calc(100% - (var(--basic2-app-gutter) * 2)));margin:1rem auto 3rem;display:grid;gap:1rem}
     .kahoot-review-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}
     .kahoot-review-grid .premium-topic-card{height:100%}
     .kahoot-answer-colors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.7rem;margin-top:.85rem}
@@ -33,6 +33,7 @@
     @media(max-width:860px){.kahoot-review-grid{grid-template-columns:1fr}.kahoot-answer-colors{grid-template-columns:repeat(2,minmax(0,1fr))}}
     @media(max-width:640px){.kahoot-review-shell{width:calc(100% - .75rem)}.kahoot-answer-colors{grid-template-columns:1fr}.hero-actions .btn{width:100%}}
   </style>
+  <link rel="stylesheet" href="../../assets/css/english-basic-2.css?v=20260830-basic2-horizontal-hero" />
 </head>
 <body class="english-basic-page basic2-page kahoot-review-page">
   <div class="global-course-switcher" aria-label="Courses">
