@@ -50,6 +50,6 @@
     </div>
   </main>
   <script>(()=>{const guide=document.querySelector('[data-ed-guide]');if(!guide)return;let player=null,speed=1;const status=guide.querySelector('[data-ed-status]');const say=(m)=>{if(status)status.textContent=m;};guide.querySelectorAll('[data-ed-speed]').forEach((b)=>b.addEventListener('click',()=>{speed=Number(b.dataset.edSpeed)||1;guide.querySelectorAll('[data-ed-speed]').forEach((x)=>x.classList.toggle('is-active',Number(x.dataset.edSpeed)===speed));if(player)player.playbackRate=speed;say(`Audio speed: ${speed.toFixed(2)}×.`);}));guide.querySelectorAll('[data-ed-audio]').forEach((b)=>b.addEventListener('click',async()=>{if(player){player.pause();player.currentTime=0;}player=new Audio(b.dataset.edAudio);player.preload='auto';player.playbackRate=speed;player.addEventListener('error',()=>say('This ElevenLabs model is unavailable. Please tell your teacher.'),{once:true});try{await player.play();say(`Playing the ElevenLabs model at ${speed.toFixed(2)}×.`);}catch(_error){say('Tap the audio button again to play the ElevenLabs model.');}}));})();</script>  <script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script><script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
-  <script src="/assets/js/page-qr-access.js?v=20260901-1"></script>
+  <script src="/assets/js/page-qr-access.js?v=20260901-2"></script>
 </body>
 </html>

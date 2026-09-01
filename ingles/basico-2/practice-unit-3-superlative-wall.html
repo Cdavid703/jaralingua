@@ -34,5 +34,5 @@
   tabs.onclick=e=>{let b=e.target.closest('[data-tab]');if(b){active=+b.dataset.tab;render()}};grid.onclick=e=>{let b=e.target.closest('[data-card]');if(!b)return;grid.querySelectorAll('.wall-card').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');let x=walls[active].c[+b.dataset.card];model.innerHTML='<h3>Say this model answer</h3><p><strong>'+x[4]+'</strong></p><p>'+x[5]+'</p>';model.hidden=false;model.scrollIntoView({block:'nearest',behavior:'smooth'})};render();
   })();
   </script><script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script><script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script>
-  <script src="/assets/js/page-qr-access.js?v=20260901-1"></script>
+  <script src="/assets/js/page-qr-access.js?v=20260901-2"></script>
 </body></html>
