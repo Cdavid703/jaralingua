@@ -1,5 +1,6 @@
 param(
-  [switch]$Overwrite
+  [switch]$Overwrite,
+  [string[]]$Files
 )
 
 # This follows the established Intermediate 2 conversation-coach pattern:
@@ -38,6 +39,11 @@ for ($index = 0; $index -lt $content.Count; $index++) {
 }
 if ($items.Count -ne 15) { throw "Expected 15 canonical audio clips, found $($items.Count)" }
 if (($items.File | Select-Object -Unique).Count -ne $items.Count) { throw "Duplicate MP3 names in scripts.md" }
+if ($Files.Count -gt 0) {
+  $unknown = $Files | Where-Object { $_ -notin $items.File }
+  if ($unknown) { throw "Unknown canonical audio file(s): $($unknown -join ', ')" }
+  $items = @($items | Where-Object { $_.File -in $Files })
+}
 
 $headers = @{ "xi-api-key" = $apiKey; "Accept" = "audio/mpeg" }
 $uri = "https://api.elevenlabs.io/v1/text-to-speech/${voiceId}?output_format=mp3_44100_128"

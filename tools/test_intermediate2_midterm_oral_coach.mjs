@@ -22,8 +22,8 @@ assert.equal(script.includes(String.fromCharCode(0x2026)), false, "Suggested ans
 assert.equal(page.includes(String.fromCharCode(0x2026)), false, "Visible language must use complete phrases instead of ellipses.");
 for (const expected of [
   "const MAX_SECONDS = 45", "function startMeter(micStream)", "Voice detected",
-  "function setView(mode", "floatingMicButton", "life partner", "If I were you",
-  "question about dating"
+  "function setView(mode", "floatingMicButton", "serious lie", "If I were you",
+  "about dating or relationships"
 ]) assert.ok(script.includes(expected), "Missing coach behavior: " + expected);
 
 assert.ok(css.includes(".ie2-midterm-oral-page .ie2m-hero-banner"));
@@ -33,6 +33,21 @@ assert.ok(css.includes("@media (max-width: 800px)"));
 assert.equal((script.match(/topic: "/g) || []).length, 7, "The mock must have seven connected turns.");
 assert.ok(script.includes("so long"), "The coach must begin with a natural reunion.");
 assert.ok(script.includes("If you were in Valentina's situation"));
+assert.ok(script.includes("Ready when you are. Tap the microphone to answer."));
+assert.ok(script.includes('controls("Answer", false, false)'));
+assert.ok(script.includes("without sharing anything personal"), "The coach must offer a privacy-safe fictional alternative.");
+assert.equal(page.includes("Ready for your response"), false, "The initial recording instruction must be actionable.");
+assert.equal(/<details\b[^>]*\bopen\b/i.test(page), false, "Coach support must start closed.");
+for (const prompt of [...script.matchAll(/prompt: "([^"]+)"/g)].map((match) => match[1])) {
+  assert.equal((prompt.match(/\?/g) || []).length, 1, "Each coach turn must ask exactly one question: " + prompt);
+}
+
+const intermediate2Pages = fs.readdirSync(path.join(root, "ingles", "intermediate-2"))
+  .filter((name) => name.endsWith(".html"));
+for (const file of intermediate2Pages) {
+  const markup = fs.readFileSync(path.join(root, "ingles", "intermediate-2", file), "utf8");
+  assert.equal(/<details\b[^>]*\bopen\b/i.test(markup), false, "Details must start closed: " + file);
+}
 
 const marker = String.fromCharCode(96);
 const scriptedFiles = audioScripts.split("\n")

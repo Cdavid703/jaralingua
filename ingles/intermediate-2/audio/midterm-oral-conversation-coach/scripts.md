@@ -4,7 +4,7 @@ Canonical ElevenLabs source. Mia speaks in warm, natural General American Englis
 
 ### `turn-1-warm-hello.mp3`
 
-Oh wow, is that really you? I can't believe it has been so long! Hi! How have you been?
+Hi! I can't believe it has been so long. How have you been?
 
 ### `reaction-1-warm-hello.mp3`
 
@@ -12,7 +12,7 @@ I'm really happy to see you too. I've been busy, but I often thought about our s
 
 ### `turn-2-catching-up.mp3`
 
-I know! Tell me, what have you been doing lately? Are you still in touch with anyone from school?
+What have you been doing lately?
 
 ### `reaction-2-catching-up.mp3`
 
@@ -20,7 +20,7 @@ That's lovely. It is strange how quickly time passes, but some friendships still
 
 ### `turn-3-common-friend.mp3`
 
-Do you remember Valentina? She went through a terrible situation. Her life partner lied to her about something important, and now she does not know whether to stay or leave. What do you think about it?
+Valentina is unsure whether to stay with her partner after a serious lie. What do you think she should do?
 
 ### `reaction-3-common-friend.mp3`
 
@@ -36,11 +36,11 @@ I understand. It would be a painful decision, but thinking about trust and respe
 
 ### `turn-5-your-dilemma.mp3`
 
-And you? Are you facing any dilemma in your love life or relationships these days? You can tell me; I'm your friend.
+Would you rather discuss an imaginary relationship dilemma or a general decision?
 
 ### `reaction-5-your-dilemma.mp3`
 
-Thank you for trusting me with that. Relationship dilemmas can be hard because feelings and practical choices are often mixed together.
+That makes sense. You can practice thoughtful advice without sharing anything personal.
 
 ### `turn-6-give-advice.mp3`
 
@@ -52,7 +52,7 @@ That is helpful advice. I think I need to be honest and take things slowly inste
 
 ### `turn-7-dating-question.mp3`
 
-Before we go, ask me one question about dating or relationships. Then we can make plans to see each other again.
+What question would you like to ask me about dating or relationships before we go?
 
 ### `reaction-7-dating-close.mp3`
 

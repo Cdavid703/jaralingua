@@ -482,6 +482,46 @@
         "mustn't",
         "password"
       ]
+    },
+    {
+      "id": "unit-3-technology-functions-memory",
+      "unit": 3,
+      "order": 2,
+      "type": "vocabulary-game",
+      "skillLabel": "Vocabulary game",
+      "title": "Technology Functions Memory",
+      "subtitle": "Match the device, name it and explain its function.",
+      "summary": "Two teams match twelve professional device images with their names and functions, hear a clear model, and say what each device is used to do before the teacher awards a point.",
+      "image": "/assets/img/english-intermediate-2/unit-3/technology-functions-device-roulette/smartphone-v1.png",
+      "workshopHref": "/ingles/intermediate-2/game-unit-3-technology-functions-memory.html",
+      "duration": "15 minutes",
+      "product": "Twelve device-function statements in a live team game",
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 3", "technology", "memory", "device", "function", "smartphone", "router", "appliance", "used to"]
+    },
+    {
+      "id": "unit-3-what-is-it-for-device-roulette",
+      "unit": 3,
+      "order": 3,
+      "type": "speaking-game",
+      "skillLabel": "Speaking game",
+      "title": "What Is It For? Device Roulette",
+      "subtitle": "Name the device, explain its purpose and give an instruction.",
+      "summary": "A classroom roulette selects a student and a device. The learner names the object, says what it is used for and gives a short sequenced instruction with teacher support.",
+      "image": "/assets/img/english-intermediate-2/unit-3/technology-functions-device-roulette/router-v1.png",
+      "workshopHref": "/ingles/intermediate-2/speaking-unit-3-what-is-it-for-device-roulette.html",
+      "duration": "20 minutes",
+      "product": "One complete device-function-and-instruction response per selected student",
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 3", "technology", "speaking", "roulette", "wheel", "device", "function", "instructions", "what is it for", "used to"]
     }
   ]
 }

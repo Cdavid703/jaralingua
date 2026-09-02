@@ -97,6 +97,8 @@ def check_local_references(page: Path, parser: PageParser) -> None:
 def main() -> None:
     overview_text, overview = parse_page(OVERVIEW)
     unit_text, unit = parse_page(UNIT_ONE)
+    overview_search_text = " ".join(overview_text.split())
+    unit_search_text = " ".join(unit_text.split())
     check_local_references(OVERVIEW, overview)
     check_local_references(UNIT_ONE, unit)
 
@@ -123,13 +125,13 @@ def main() -> None:
     }
     assert {attrs.get("id") for attrs in theory_topics} == expected_topic_ids
 
-    assert "speechSynthesis" not in overview_text + unit_text
-    assert "Teaching Route" not in overview_text + unit_text
-    assert "How Unit 1 will be taught" not in overview_text + unit_text
-    assert "fixed / multiword expressions" in unit_text
-    assert "Classification: idioms" in unit_text
-    assert "do not describe different kinds of actions" in unit_text
-    assert "Use <strong>who</strong>, never <strong>that</strong>" in unit_text
+    assert "speechSynthesis" not in overview_search_text + unit_search_text
+    assert "Teaching Route" not in overview_search_text + unit_search_text
+    assert "How Unit 1 will be taught" not in overview_search_text + unit_search_text
+    assert "fixed / multiword expressions" in unit_search_text
+    assert "Classification: idioms" in unit_search_text
+    assert "do not describe different kinds of actions" in unit_search_text
+    assert "Use <strong>who</strong>, never <strong>that</strong>" in unit_search_text
 
     individual_activity_fragments = (
         "speaking-secret-social-circle",
@@ -138,7 +140,7 @@ def main() -> None:
         "pronunciation-unit-1-people-who-changed-my-circle",
         "conversation-coach-unit-1-coffee-with-gabriel",
     )
-    assert not any(fragment in overview_text for fragment in individual_activity_fragments)
+    assert not any(fragment in overview_search_text for fragment in individual_activity_fragments)
 
     assert (AUDIO_ROOT / "scripts.md").exists()
     assert (AUDIO_ROOT / "metadata.json").exists()

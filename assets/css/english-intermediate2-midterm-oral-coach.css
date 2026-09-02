@@ -379,3 +379,35 @@
   .ie2-midterm-oral-page .coach-steps { grid-template-columns: 1fr; }
   .ie2-midterm-oral-page .ie2m-hero-content .intermediate2-actions > * { width: 100%; }
 }
+
+/* Keep every spoken-action control readable on small screens. Labels may wrap,
+   but neither the button nor the fixed mobile dock may overflow the viewport. */
+.ie2-midterm-oral-page .coach-audio-row,
+.ie2-midterm-oral-page .coach-speed,
+.ie2-midterm-oral-page .coach-floating-copy,
+.ie2-midterm-oral-page .coach-button,
+.ie2-midterm-oral-page .coach-audio-button,
+.ie2-midterm-oral-page .coach-icon-button {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.ie2-midterm-oral-page .coach-button,
+.ie2-midterm-oral-page .coach-audio-button,
+.ie2-midterm-oral-page .coach-icon-button {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.ie2-midterm-oral-page .coach-record-status,
+.ie2-midterm-oral-page .coach-record-help,
+.ie2-midterm-oral-page .coach-floating-copy strong {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 470px) {
+  .ie2-midterm-oral-page .coach-floating-dock { gap: .45rem; }
+  .ie2-midterm-oral-page .coach-icon-button { min-width: 0; padding-inline: .65rem; }
+}
