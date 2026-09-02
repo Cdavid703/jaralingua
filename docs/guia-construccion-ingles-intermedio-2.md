@@ -22,33 +22,33 @@ El producto no debe pedir respuestas personales sensibles. Las situaciones de di
 
 ### Estado actual del curso
 
-| Unidad | Tema | Estado web | Próxima referencia pedagógica |
-| --- | --- | --- | --- |
-| 1 | Relationships and Meeting People | Desarrollada | Relaciones, relativos, descripciones, conversación social |
-| 2 | Wishes, Dilemmas and Advice | Desarrollada | Deseos, arrepentimientos, segundo condicional y consejos |
-| 3 | Technology and Digital Safety | Explicación y pronunciación disponibles; faltan varios componentes | Tecnología, preguntas embebidas, phrasal verbs, seguridad digital |
-| 4 | Movies, Reviews and Music Trends | Pendiente | Reseñas, trama, present perfect y tendencias |
-| 5 | Speculation, Feelings, Community and Satire | Pendiente | `must/might`, impresiones, estados de ánimo y sátira |
-| 6 | News, Reported Speech and Natural Disasters | Pendiente | Noticias, reported speech, secuenciación y emergencias |
+| Unidad | Tema                                        | Estado web                                                         | Próxima referencia pedagógica                                     |
+| ------ | ------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| 1      | Relationships and Meeting People            | Desarrollada                                                       | Relaciones, relativos, descripciones, conversación social         |
+| 2      | Wishes, Dilemmas and Advice                 | Desarrollada                                                       | Deseos, arrepentimientos, segundo condicional y consejos          |
+| 3      | Technology and Digital Safety               | Explicación y pronunciación disponibles; faltan varios componentes | Tecnología, preguntas embebidas, phrasal verbs, seguridad digital |
+| 4      | Movies, Reviews and Music Trends            | Pendiente                                                          | Reseñas, trama, present perfect y tendencias                      |
+| 5      | Speculation, Feelings, Community and Satire | Pendiente                                                          | `must/might`, impresiones, estados de ánimo y sátira              |
+| 6      | News, Reported Speech and Natural Disasters | Pendiente                                                          | Noticias, reported speech, secuenciación y emergencias            |
 
 La meta mínima de una unidad completa desde la Unidad 4 es: explicación, carpeta de práctica, listening, reading, pronunciación, actividad de gramática, tarea de speaking y producto escrito o comunicativo. La guía anterior de estilo que existe en `docs/english-intermediate-style-guide.md` fue titulada para Course 1; sirve como antecedente pedagógico, pero este documento gobierna el Course 2.
 
 ### Repositorios y archivos de referencia
 
-| Necesidad | Fuente principal |
-| --- | --- |
-| Shell, tokens, ancho y responsive de Intermedio 2 | `assets/css/english-intermediate-2.css` |
-| Página de inicio y tarjetas del curso | `ingles/intermediate-2/index.html` |
-| Overview y mapa de unidades | `ingles/intermediate-2/course-overview.html` |
-| Explicaciones de unidad | `unit-1-relationships-meeting-people.html`, `unit-2-wishes-dilemmas-advice.html`, `unit-3-technology-digital-safety.html` |
-| Prácticas y catálogo | `practice-lab.html`, `assets/js/english-intermediate2-practice-lab.js`, `assets/data/english-intermediate-2-content.json` |
-| QR de acceso a página | `assets/js/page-qr-access.js`, `assets/img/page-qr/` |
-| Conversación | `conversation-coach-unit-1-coffee-with-gabriel.html`, `assets/js/english-intermediate2-conversation-coach-unit1.js`, `assets/css/english-intermediate2-conversation-coach.css` |
-| Pronunciación | `pronunciation-unit-2-the-choice-id-make-differently.html`, `assets/js/english-intermediate2-pronunciation-unit2.js`, `assets/css/english-intermediate2-pronunciation.css` |
-| Listening | `listening-unit-2-the-call-before-midnight.html`, `assets/js/intermediate2-listening-call-before-midnight.js` |
-| Reading | `reading-unit-2-the-six-week-window.html`, `assets/js/intermediate2-reading-six-week-window.js` |
-| Back-end y entregas | `server/progress_api.py` |
-| Patrón equivalente en Básico 2 | `ingles/basico-2/`, `assets/css/english-basic-2.css`, `assets/css/english-basic-responsive.css` |
+| Necesidad                                         | Fuente principal                                                                                                                                                               |
+| ------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Shell, tokens, ancho y responsive de Intermedio 2 | `assets/css/english-intermediate-2.css`                                                                                                                                        |
+| Página de inicio y tarjetas del curso             | `ingles/intermediate-2/index.html`                                                                                                                                             |
+| Overview y mapa de unidades                       | `ingles/intermediate-2/course-overview.html`                                                                                                                                   |
+| Explicaciones de unidad                           | `unit-1-relationships-meeting-people.html`, `unit-2-wishes-dilemmas-advice.html`, `unit-3-technology-digital-safety.html`                                                      |
+| Prácticas y catálogo                              | `practice-lab.html`, `assets/js/english-intermediate2-practice-lab.js`, `assets/data/english-intermediate-2-content.json`                                                      |
+| QR de acceso a página                             | `assets/js/page-qr-access.js`, `assets/img/page-qr/`                                                                                                                           |
+| Conversación                                      | `conversation-coach-unit-1-coffee-with-gabriel.html`, `assets/js/english-intermediate2-conversation-coach-unit1.js`, `assets/css/english-intermediate2-conversation-coach.css` |
+| Pronunciación                                     | `pronunciation-unit-2-the-choice-id-make-differently.html`, `assets/js/english-intermediate2-pronunciation-unit2.js`, `assets/css/english-intermediate2-pronunciation.css`     |
+| Listening                                         | `listening-unit-2-the-call-before-midnight.html`, `assets/js/intermediate2-listening-call-before-midnight.js`                                                                  |
+| Reading                                           | `reading-unit-2-the-six-week-window.html`, `assets/js/intermediate2-reading-six-week-window.js`                                                                                |
+| Back-end y entregas                               | `server/progress_api.py`                                                                                                                                                       |
+| Patrón equivalente en Básico 2                    | `ingles/basico-2/`, `assets/css/english-basic-2.css`, `assets/css/english-basic-responsive.css`                                                                                |
 
 ## 2. Identidad visual y sistema de estilos
 
@@ -62,16 +62,16 @@ No introducir una hoja CSS global nueva para una página aislada si el component
 
 Usar los tokens existentes, no valores de color arbitrarios:
 
-| Token | Uso |
-| --- | --- |
-| `--ie2-navy` `#071f4f` | títulos, navegación, estructura y evaluación |
-| `--ie2-blue` `#2454a6` | navegación secundaria y marcadores de progreso |
-| `--ie2-teal` `#0f766e` | acciones principales, colaboración y éxito |
-| `--ie2-coral` `#c8463f` | alertas, evaluación, errores y pronunciación focalizada |
-| `--ie2-gold` `#d9a441` | reflexión, tips y chips destacados |
-| `--ie2-ink` / `--ie2-muted` | texto principal / secundario |
-| `--ie2-paper` / `--ie2-soft` | superficies y fondo |
-| `--ie2-line` / `--ie2-shadow` | borde y profundidad de tarjetas |
+| Token                         | Uso                                                     |
+| ----------------------------- | ------------------------------------------------------- |
+| `--ie2-navy` `#071f4f`        | títulos, navegación, estructura y evaluación            |
+| `--ie2-blue` `#2454a6`        | navegación secundaria y marcadores de progreso          |
+| `--ie2-teal` `#0f766e`        | acciones principales, colaboración y éxito              |
+| `--ie2-coral` `#c8463f`       | alertas, evaluación, errores y pronunciación focalizada |
+| `--ie2-gold` `#d9a441`        | reflexión, tips y chips destacados                      |
+| `--ie2-ink` / `--ie2-muted`   | texto principal / secundario                            |
+| `--ie2-paper` / `--ie2-soft`  | superficies y fondo                                     |
+| `--ie2-line` / `--ie2-shadow` | borde y profundidad de tarjetas                         |
 
 Las superficies repetidas usan borde sutil, fondo blanco y radio de `8px`. La excepción son componentes de interacción que ya tienen una identidad definida en su CSS especializado. No usar color como único indicador: agregar texto, icono o estado visible.
 
@@ -117,12 +117,12 @@ El curso es primero utilizable en celular y también apto para proyección de au
 
 ### Breakpoints existentes
 
-| Tamaño | Contrato |
-| --- | --- |
-| Escritorio, `> 980px` | dashboard y grids principales en tres columnas; hero amplio; CTA en línea cuando caben. |
-| Tableta, `<= 980px` | grids principales en dos columnas; pasaportes de unidad en una columna; el contenido conserva márgenes y botones cómodos. |
-| Celular, `<= 640px` | una columna; shell `calc(100% - 24px)`; hero corto con degradado más oscuro; navegación horizontal desplazable; CTA en grid de dos columnas si son breves o una columna si el texto lo exige. |
-| QR en celular, `<= 620px` | tarjeta QR reducida a `84px`, código a `66px`, con espacio reservado dentro del hero. |
+| Tamaño                    | Contrato                                                                                                                                                                                      |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Escritorio, `> 980px`     | dashboard y grids principales en tres columnas; hero amplio; CTA en línea cuando caben.                                                                                                       |
+| Tableta, `<= 980px`       | grids principales en dos columnas; pasaportes de unidad en una columna; el contenido conserva márgenes y botones cómodos.                                                                     |
+| Celular, `<= 640px`       | una columna; shell `calc(100% - 24px)`; hero corto con degradado más oscuro; navegación horizontal desplazable; CTA en grid de dos columnas si son breves o una columna si el texto lo exige. |
+| QR en celular, `<= 620px` | tarjeta QR reducida a `84px`, código a `66px`, con espacio reservado dentro del hero.                                                                                                         |
 
 ### Reglas que no se negocian
 
@@ -279,6 +279,12 @@ Toda actividad debe declarar con claridad:
 
 Para juegos de vocabulario, ruletas, memory, role cards o debates, reutilizar el patrón de Básico 2: instrucciones simples, tarjetas grandes, feedback visible, controles operables por teclado y una versión que no dependa de hover. En Intermedio 2, la tarea debe pedir justificar, comparar, negociar, matizar o reaccionar; no limitarse a identificar una palabra.
 
+#### Diseño obligatorio de las tarjetas de Practice Lab
+
+Todas las unidades comparten una sola retícula: cuatro columnas de ancho estable en escritorio cuando haya espacio, dos en tableta y una en móvil. Usar `repeat(auto-fill, minmax(250px, 1fr))`, nunca `auto-fit` ni una excepción por unidad: si una unidad tiene una, dos o tres actividades, se conservan los mismos anchos y el espacio restante de la fila queda vacío. Así una nueva tarjeta no crece ni cambia el ritmo visual de las que ya existen.
+
+Cada tarjeta conserva: imagen 16:9, número de orden, etiquetas de tipo/política, título, subtítulo, resumen, duración/producto y CTA a la página. El catálogo es la fuente de las tarjetas; el HTML de Practice Lab solo aporta la retícula, el contador y la secuencia. Verificar visualmente la unidad recién ampliada junto a una unidad con cuatro o más tarjetas antes de publicar.
+
 ### 7.4 Conversation Coach
 
 El coach es una práctica oral guiada, no una evaluación por defecto. Tomar como patrón `conversation-coach-unit-1-coffee-with-gabriel.html` y su CSS/JS especializado.
@@ -331,7 +337,7 @@ Usar `reading-unit-2-the-six-week-window.html` como patrón. La página debe inc
 1. Hero, objetivo y QR.
 2. Ruta previa, vocabulario, predicción y propósito de lectura.
 3. Texto en capítulos o segmentos cortos, navegación interna y pausas con preguntas de evidencia.
-4. Bloque de *language detective* para observar la lengua meta dentro del texto, no como lista desconectada.
+4. Bloque de _language detective_ para observar la lengua meta dentro del texto, no como lista desconectada.
 5. Diez preguntas de comprensión, evidencia, inferencia y vocabulario; feedback escrito y reset.
 6. Producción o entrega solo después de completar y revisar la comprensión.
 
@@ -346,6 +352,18 @@ Las páginas de speaking (`take-a-side`, `reality-or-imagine-roulette`, `better-
 - frase banco, modelo breve y criterios de éxito;
 - instrucciones de docente y de estudiante separadas cuando sea necesario;
 - alternativa sin revelar datos personales ni registrar audio por defecto.
+
+#### Patrón visual único para juegos, memory y ruletas
+
+No crear un sistema visual aislado para cada juego. La referencia obligatoria para banner, consola y ruleta es `speaking-unit-2-reality-or-imagine-roulette.html`; para el contexto visual de Unidad 3, usar como referencia el banner de `pronunciation-unit-3-sound-clear-tech-support.html`.
+
+1. **Banner:** shell estándar, bloque de texto azul oscuro a la izquierda y **una sola** imagen profesional 16:9 a la derecha. Mantener la proporción del patrón (`min-height: min(610px, 65vh)` en escritorio), título de hasta diez caracteres de ancho, chips, CTA y QR estándar. No usar collages de cuatro imágenes, mosaicos ni imágenes decorativas que compitan con el objetivo.
+2. **Memory / vocabulary game:** después del banner, dos tarjetas de orientación, marcador de equipos y tablero. El tablero usa seis columnas en escritorio y tres en móvil; las tarjetas mantienen proporción, foco visible, feedback textual, audio modelo y reinicio. El resultado de un match solicita producción oral antes del punto.
+3. **Ruleta:** presentar primero el flujo y la configuración; después, dos `wheel cards` idénticas en una fila en escritorio y una columna en tableta/móvil. Cada una incluye número, título, explicación breve, contador, puntero externo, rueda de máximo 360 px, botón, resultado legible y estado accesible. La rueda no ocupa todo el ancho de la tarjeta ni se agranda con pantallas grandes.
+4. **Datos y cierre:** el roster se mantiene solo en el dispositivo, no se califican los juegos por defecto y cada turno se registra únicamente en la tabla local de la sesión. La selección manual, la ayuda docente y el historial empiezan cerrados o sin revelar datos.
+5. **Móvil:** a 650 px el banner pasa a una columna, la imagen se limita a 220–280 px y botones/controles ocupan una columna. A 390 px la rueda se limita a 288 px; no debe aparecer scroll horizontal ni texto cortado.
+
+La nueva actividad debe reutilizar las clases y tokens existentes o extender el CSS de su familia; no duplicar colores, sombras, radios y breakpoints con valores distintos. Antes de aceptar una página, comparar captura de escritorio y 390 px con la actividad de referencia y añadir una prueba estática que cubra retícula, banner, QR y controles.
 
 Un QR de sala en vivo se diferencia del QR de página: muestra cómo unirse, enlace directo y copia de enlace, y se genera a partir del estado de la sala. Mantener ese QR dentro del componente de sala; no sustituye el QR estándar de acceso a página.
 

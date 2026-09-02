@@ -1,1 +1,228 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="description" content="A teacher-led Unit 3 roulette for explaining device functions and giving short instructions."><title>What Is It For? Device Roulette | Intermediate English Course 2</title><link rel="icon" href="/favicon.ico" sizes="any"><link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css"><link rel="stylesheet" href="../../assets/css/style.css"><link rel="stylesheet" href="../../assets/css/english-intermediate-2.css"><link rel="stylesheet" href="../../assets/css/english-intermediate2-technology-functions-games.css"></head><body class="english-intermediate2-page ie2-tech-game"><div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../index.html">English</a><a href="./index.html">Intermediate English Course 2</a><a href="./practice-lab.html">Practice Lab</a></nav></details></div><header class="site-header"><nav class="navbar"><a href="../../index.html" class="brand"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua Logo"></a><ul class="nav-links"><li><a href="./unit-3-technology-digital-safety.html#how-it-works">Unit 3 language</a></li><li><a href="./practice-lab.html#unit-3-folder">Practice Lab</a></li></ul></nav></header><main><section class="tg-hero"><div class="tg-copy"><p class="tg-kicker">Practice Lab · Unit 3 · Activity 03</p><h1>What Is It For?</h1><p>The teacher loads student names. One roulette selects the speaker and another selects a device. The student names it, explains its function and gives a short instruction.</p><div class="tg-chips"><span class="tg-chip">Two roulettes</span><span class="tg-chip">12 devices</span><span class="tg-chip">Professional model audio</span><span class="tg-chip">No grade</span></div><div class="tg-actions"><a class="tg-btn light" href="#rouletteGame">Open the roulette</a><a class="tg-btn" href="./unit-3-technology-digital-safety.html#how-it-works">Review functions</a></div></div><figure class="tg-hero-art"><img src="../../assets/img/english-intermediate-2/unit-3/technology-functions-device-roulette/laptop-v1.png" alt="Laptop"><img src="../../assets/img/english-intermediate-2/unit-3/technology-functions-device-roulette/blender-v1.png" alt="Blender"><img src="../../assets/img/english-intermediate-2/unit-3/technology-functions-device-roulette/refrigerator-v1.png" alt="Refrigerator"><img src="../../assets/img/english-intermediate-2/unit-3/technology-functions-device-roulette/air-conditioner-v1.png" alt="Air conditioner"></figure></section><section class="tg-shell" id="rouletteGame"><div class="tg-info"><article class="tg-panel"><p class="tg-kicker">Teacher flow</p><h2>One student, one device, one complete response</h2><div class="tg-steps"><div class="tg-step"><b>1</b><span>Load or paste student names.</span></div><div class="tg-step"><b>2</b><span>Spin the student and device roulettes.</span></div><div class="tg-step"><b>3</b><span>Ask: “What is it for?” Then ask for one instruction.</span></div></div></article><aside class="tg-panel"><p class="tg-kicker">Response frame</p><p><strong>This is a/an ___.</strong><br>It is used to ___.<br><strong>First</strong>, ___. <strong>Then</strong>, ___.</p></aside></div><div class="tg-setup"><article class="tg-panel"><h2>Student names</h2><textarea id="rouletteRoster" aria-label="Student names, one per line" placeholder="Paste one student name per line"></textarea><div class="tg-actions"><button class="tg-btn" id="loadRoster" type="button">Load names</button><button class="tg-btn light" id="resetRoulette" type="button">Reset activity</button></div></article><aside class="tg-panel"><h3>Choose a device manually</h3><p>Use this option when the teacher wants to repeat or select a device directly.</p><div class="tg-device-list" id="manualDeviceList"></div></aside></div><div class="tg-wheels"><article class="tg-panel"><h2>Who will answer?</h2><div class="tg-wheel" id="studentWheel"></div><div class="tg-actions"><button class="tg-btn" id="spinStudent" type="button">Spin student</button></div><div class="tg-result" id="studentResult"></div></article><article class="tg-panel"><h2>What is it for?</h2><div class="tg-wheel" id="deviceWheel"></div><div class="tg-actions"><button class="tg-btn teal" id="spinDevice" type="button">Spin device</button></div><div class="tg-result" id="deviceResult"></div></article></div><p class="tg-status" id="rouletteStatus" aria-live="polite">Paste student names, then load the roster.</p><section class="tg-panel tg-reveal" id="deviceReveal" hidden><img class="tg-reveal-image" id="rouletteDeviceImage" alt=""><div><p class="tg-kicker">Device selected</p><h2 id="rouletteDeviceTitle"></h2><p class="tg-model" id="rouletteModel"></p><details><summary>Teacher support: short instruction</summary><p id="rouletteInstruction"></p></details><div class="tg-actions"><button class="tg-btn teal" id="finishRound" type="button">Finish this round</button></div></div></section><section class="tg-panel"><h3>Completed rounds</h3><div class="tg-history-wrap"><table class="tg-history"><thead><tr><th>Round</th><th>Student</th><th>Device</th></tr></thead><tbody id="rouletteHistory"></tbody></table></div></section></section></main><footer class="site-footer"><p>Intermediate English Course 2 · Unit 3 Practice Lab</p></footer><script src="../../assets/js/english-intermediate2-technology-functions-data.js"></script><script src="../../assets/js/english-intermediate2-device-roulette.js"></script><script src="/assets/js/course-switcher.js"></script><script src="/assets/js/page-qr-access.js?v=20260901-2"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,viewport-fit=cover"
+    />
+    <meta
+      name="description"
+      content="A teacher-led Unit 3 roulette for explaining device functions and giving short instructions."
+    />
+    <title>
+      What Is It For? Device Roulette | Intermediate English Course 2
+    </title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link
+      rel="stylesheet"
+      href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="../../assets/css/style.css" />
+    <link rel="stylesheet" href="../../assets/css/english-intermediate-2.css" />
+    <link
+      rel="stylesheet"
+      href="../../assets/css/english-intermediate2-technology-functions-games.css"
+    />
+  </head>
+  <body class="english-intermediate2-page ie2-tech-game">
+    <div class="global-course-switcher" aria-label="Courses">
+      <details>
+        <summary><span>Courses</span></summary>
+        <nav>
+          <a href="../../index.html">Home</a><a href="../index.html">English</a
+          ><a href="./index.html">Intermediate English Course 2</a
+          ><a href="./practice-lab.html">Practice Lab</a>
+        </nav>
+      </details>
+    </div>
+    <header class="site-header">
+      <nav class="navbar">
+        <a href="../../index.html" class="brand"
+          ><img
+            src="../../assets/img/jaralingua-logo.png"
+            alt="JaraLingua Logo"
+        /></a>
+        <ul class="nav-links">
+          <li>
+            <a href="./unit-3-technology-digital-safety.html#how-it-works"
+              >Unit 3 language</a
+            >
+          </li>
+          <li><a href="./practice-lab.html#unit-3-folder">Practice Lab</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section class="tg-hero">
+        <div class="tg-copy">
+          <p class="tg-kicker">Practice Lab · Unit 3 · Activity 03</p>
+          <h1>What Is It For?</h1>
+          <p>
+            The teacher loads student names. One roulette selects the speaker
+            and another selects a device. The student names it, explains its
+            function and gives a short instruction.
+          </p>
+          <div class="tg-chips">
+            <span class="tg-chip">Two roulettes</span
+            ><span class="tg-chip">12 devices</span
+            ><span class="tg-chip">Professional model audio</span
+            ><span class="tg-chip">No grade</span>
+          </div>
+          <div class="tg-actions">
+            <a class="tg-btn light" href="#rouletteGame">Open the roulette</a
+            ><a
+              class="tg-btn"
+              href="./unit-3-technology-digital-safety.html#how-it-works"
+              >Review functions</a
+            >
+          </div>
+        </div>
+        <figure class="tg-hero-art">
+          <img
+            src="../../assets/img/english-intermediate-2/unit-3/pronunciation-tech-support-digital-safety/pronunciation-tech-support-hero-v1.png"
+            alt="A learner practicing clear English for technology support and digital safety"
+          />
+        </figure>
+      </section>
+      <section class="tg-shell" id="rouletteGame">
+        <div class="tg-info">
+          <article class="tg-panel">
+            <p class="tg-kicker">Teacher flow</p>
+            <h2>One student, one device, one complete response</h2>
+            <div class="tg-steps">
+              <div class="tg-step">
+                <b>1</b><span>Load or paste student names.</span>
+              </div>
+              <div class="tg-step">
+                <b>2</b><span>Spin the student and device roulettes.</span>
+              </div>
+              <div class="tg-step">
+                <b>3</b
+                ><span
+                  >Ask: “What is it for?” Then ask for one instruction.</span
+                >
+              </div>
+            </div>
+          </article>
+          <aside class="tg-panel">
+            <p class="tg-kicker">Response frame</p>
+            <p>
+              <strong>This is a/an ___.</strong><br />It is used to ___.<br /><strong
+                >First</strong
+              >, ___. <strong>Then</strong>, ___.
+            </p>
+          </aside>
+        </div>
+        <div class="tg-setup">
+          <article class="tg-panel">
+            <h2>Student names</h2>
+            <textarea
+              id="rouletteRoster"
+              aria-label="Student names, one per line"
+              placeholder="Paste one student name per line"
+            ></textarea>
+            <div class="tg-actions">
+              <button class="tg-btn" id="loadRoster" type="button">
+                Load names</button
+              ><button class="tg-btn light" id="resetRoulette" type="button">
+                Reset activity
+              </button>
+            </div>
+          </article>
+          <aside class="tg-panel">
+            <h3>Choose a device manually</h3>
+            <p>
+              Use this option when the teacher wants to repeat or select a
+              device directly.
+            </p>
+            <div class="tg-device-list" id="manualDeviceList"></div>
+          </aside>
+        </div>
+        <div class="tg-wheels">
+          <article class="tg-wheel-card">
+            <div class="tg-wheel-heading">
+              <div>
+                <p class="tg-kicker">Roulette 1</p>
+                <h2>Who will answer?</h2>
+                <p>Each selected student leaves the pool after one turn.</p>
+              </div>
+              <span class="tg-count" id="studentCount">0</span>
+            </div>
+            <div class="tg-wheel-zone">
+              <div class="tg-pointer" aria-hidden="true"></div>
+              <div class="tg-wheel" id="studentWheel"></div>
+              <button class="tg-btn" id="spinStudent" type="button">
+                Spin student
+              </button>
+            </div>
+            <div class="tg-result" id="studentResult"></div>
+          </article>
+          <article class="tg-wheel-card">
+            <div class="tg-wheel-heading">
+              <div>
+                <p class="tg-kicker">Roulette 2</p>
+                <h2>What is it for?</h2>
+                <p>
+                  The learner names the device, explains its function and gives
+                  one instruction.
+                </p>
+              </div>
+              <span class="tg-count" id="deviceCount">12</span>
+            </div>
+            <div class="tg-wheel-zone">
+              <div class="tg-pointer" aria-hidden="true"></div>
+              <div class="tg-wheel" id="deviceWheel"></div>
+              <button class="tg-btn teal" id="spinDevice" type="button">
+                Spin device
+              </button>
+            </div>
+            <div class="tg-result" id="deviceResult"></div>
+          </article>
+        </div>
+        <p class="tg-status" id="rouletteStatus" aria-live="polite">
+          Paste student names, then load the roster.
+        </p>
+        <section class="tg-panel tg-reveal" id="deviceReveal" hidden>
+          <img class="tg-reveal-image" id="rouletteDeviceImage" alt="" />
+          <div>
+            <p class="tg-kicker">Device selected</p>
+            <h2 id="rouletteDeviceTitle"></h2>
+            <p class="tg-model" id="rouletteModel"></p>
+            <details>
+              <summary>Teacher support: short instruction</summary>
+              <p id="rouletteInstruction"></p>
+            </details>
+            <div class="tg-actions">
+              <button class="tg-btn teal" id="finishRound" type="button">
+                Finish this round
+              </button>
+            </div>
+          </div>
+        </section>
+        <section class="tg-panel">
+          <h3>Completed rounds</h3>
+          <div class="tg-history-wrap">
+            <table class="tg-history">
+              <thead>
+                <tr>
+                  <th>Round</th>
+                  <th>Student</th>
+                  <th>Device</th>
+                </tr>
+              </thead>
+              <tbody id="rouletteHistory"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <p>Intermediate English Course 2 · Unit 3 Practice Lab</p>
+    </footer>
+    <script src="../../assets/js/english-intermediate2-technology-functions-data.js"></script>
+    <script src="../../assets/js/english-intermediate2-device-roulette.js"></script>
+    <script src="/assets/js/course-switcher.js"></script>
+    <script src="/assets/js/page-qr-access.js?v=20260901-2"></script>
+  </body>
+</html>

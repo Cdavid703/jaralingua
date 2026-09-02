@@ -1,15 +1,171 @@
-(() => { "use strict";
-  const data = window.Intermediate2TechnologyFunctions, devices = data.devices, $ = (id) => document.getElementById(id);
-  const ui = { board: $("memoryBoard"), status: $("memoryStatus"), turn: $("memoryTurn"), score: [$("memoryScore0"), $("memoryScore1")], team: [$("memoryTeam0"), $("memoryTeam1")], gate: $("memoryGate"), gateImage: $("memoryGateImage"), gateTitle: $("memoryGateTitle"), gateModel: $("memoryGateModel"), history: $("memoryHistory") };
-  let deck = [], selected = [], team = 0, score = [0, 0], matches = 0, locked = false, pending = null, history = [], activeAudio = null;
-  const shuffle = (items) => { for (let i = items.length - 1; i; i--) { const j = Math.floor(Math.random() * (i + 1)); [items[i], items[j]] = [items[j], items[i]]; } return items; };
+(() => {
+  "use strict";
+  const data = window.Intermediate2TechnologyFunctions,
+    devices = data.devices,
+    $ = (id) => document.getElementById(id);
+  const ui = {
+    board: $("memoryBoard"),
+    status: $("memoryStatus"),
+    turn: $("memoryTurn"),
+    score: [$("memoryScore0"), $("memoryScore1")],
+    team: [$("memoryTeam0"), $("memoryTeam1")],
+    gate: $("memoryGate"),
+    gateImage: $("memoryGateImage"),
+    gateTitle: $("memoryGateTitle"),
+    gateModel: $("memoryGateModel"),
+    history: $("memoryHistory"),
+  };
+  let deck = [],
+    selected = [],
+    team = 0,
+    score = [0, 0],
+    matches = 0,
+    locked = false,
+    pending = null,
+    history = [],
+    activeAudio = null;
+  const shuffle = (items) => {
+    for (let i = items.length - 1; i; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [items[i], items[j]] = [items[j], items[i]];
+    }
+    return items;
+  };
   const name = (index) => ui.team[index].value.trim() || `Team ${index + 1}`;
-  function speak(file) { if (activeAudio) activeAudio.pause(); activeAudio = new Audio(data.audioRoot + file); activeAudio.play().catch(() => { ui.status.textContent = "The pronunciation clip is unavailable. Check the audio file."; }); }
-  function status(text) { ui.status.textContent = text; ui.turn.textContent = name(team); ui.team.forEach((item, index) => item.closest(".tg-team").classList.toggle("active", index === team)); }
-  function render() { ui.board.innerHTML = ""; deck.forEach((card, index) => { const button = document.createElement("button"); button.type = "button"; button.className = "tg-card" + (card.flipped ? " flip" : "") + (card.matched ? " matched" : ""); button.setAttribute("aria-label", card.flipped || card.matched ? card.device.label : `Hidden card ${index + 1}`); button.innerHTML = `<span class="tg-face tg-back">?</span><span class="tg-face tg-front">${card.kind === "image" ? `<img src="${card.device.image}" alt="${card.device.label}" />` : `<span class="tg-word">${card.device.label}<small>used to ${card.device.functionText}</small></span>`}</span>`; button.addEventListener("click", () => choose(index)); ui.board.append(button); }); ui.score.forEach((item, index) => item.textContent = score[index]); }
-  function choose(index) { const card = deck[index]; if (locked || card.matched || card.flipped || selected.length === 2) return; card.flipped = true; selected.push(index); speak(card.device.wordAudio); render(); status(`${name(team)} revealed ${card.device.label}.`); if (selected.length === 2) { locked = true; window.setTimeout(check, 650); } }
-  function check() { const [a, b] = selected.map((index) => deck[index]); if (a.device.id === b.device.id && a.kind !== b.kind) { a.matched = b.matched = true; pending = a.device; ui.gateImage.src = pending.image; ui.gateImage.alt = pending.label; ui.gateTitle.textContent = pending.label; ui.gateModel.textContent = `This is a ${pending.label.toLowerCase()}. It is used to ${pending.functionText}.`; ui.gate.showModal(); speak(pending.modelAudio); status(`Match found. ${name(team)} must say the model before the teacher awards the point.`); return; } status(`No match. The turn passes to ${name(1 - team)}.`); window.setTimeout(() => { a.flipped = b.flipped = false; selected = []; team = 1 - team; locked = false; render(); status(`${name(team)}: choose the first card.`); }, 900); }
-  function award() { if (!pending) return; score[team]++; matches++; history.push({ team: name(team), device: pending.label }); ui.history.innerHTML = history.map((item, index) => `<li>${index + 1}. ${item.team}: ${item.device}</li>`).join(""); ui.gate.close(); selected = []; pending = null; locked = false; render(); status(`${name(team)} earns a point and plays again.`); if (matches === devices.length) status("All device pairs are complete. Start a new game when the class is ready."); }
-  function reset() { deck = shuffle(devices.flatMap((device) => ["image", "word"].map((kind) => ({ device, kind, flipped: false, matched: false })))); selected = []; team = 0; score = [0, 0]; matches = 0; locked = false; pending = null; history = []; ui.history.innerHTML = "<li>No matched device yet.</li>"; render(); status(`${name(team)}: choose the first card.`); }
-  $("memoryNewGame").addEventListener("click", reset); $("memoryListenAgain").addEventListener("click", () => pending && speak(pending.modelAudio)); $("memoryAward").addEventListener("click", award); $("memoryCloseGate").addEventListener("click", () => { ui.gate.close(); locked = false; selected.forEach((index) => deck[index].flipped = false); selected = []; render(); status(`${name(team)}: choose the first card again.`); }); ui.team.forEach((input) => input.addEventListener("input", () => status(ui.status.textContent))); reset();
+  function speak(file) {
+    if (activeAudio) activeAudio.pause();
+    activeAudio = new Audio(data.audioRoot + file);
+    activeAudio.play().catch(() => {
+      ui.status.textContent =
+        "The pronunciation clip is unavailable. Check the audio file.";
+    });
+  }
+  function status(text) {
+    ui.status.textContent = text;
+    ui.turn.textContent = name(team);
+    ui.team.forEach((item, index) =>
+      item.closest(".tg-team").classList.toggle("active", index === team),
+    );
+  }
+  function render() {
+    ui.board.innerHTML = "";
+    deck.forEach((card, index) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className =
+        "tg-card" +
+        (card.flipped ? " flip" : "") +
+        (card.matched ? " matched" : "");
+      button.setAttribute(
+        "aria-label",
+        card.flipped || card.matched
+          ? card.device.label
+          : `Hidden card ${index + 1}`,
+      );
+      button.innerHTML = `<span class="tg-face tg-back">?</span><span class="tg-face tg-front">${card.kind === "image" ? `<img src="${card.device.image}" alt="${card.device.label}" />` : `<span class="tg-word">${card.device.label}<small>used to ${card.device.functionText}</small></span>`}</span>`;
+      button.addEventListener("click", () => choose(index));
+      ui.board.append(button);
+    });
+    ui.score.forEach((item, index) => (item.textContent = score[index]));
+  }
+  function choose(index) {
+    const card = deck[index];
+    if (locked || card.matched || card.flipped || selected.length === 2) return;
+    card.flipped = true;
+    selected.push(index);
+    speak(card.device.wordAudio);
+    render();
+    status(`${name(team)} revealed ${card.device.label}.`);
+    if (selected.length === 2) {
+      locked = true;
+      window.setTimeout(check, 650);
+    }
+  }
+  function check() {
+    const [a, b] = selected.map((index) => deck[index]);
+    if (a.device.id === b.device.id && a.kind !== b.kind) {
+      a.matched = b.matched = true;
+      pending = a.device;
+      ui.gateImage.src = pending.image;
+      ui.gateImage.alt = pending.label;
+      ui.gateTitle.textContent = pending.label;
+      ui.gateModel.textContent = `This is a ${pending.label.toLowerCase()}. It is used to ${pending.functionText}.`;
+      ui.gate.showModal();
+      speak(pending.modelAudio);
+      status(
+        `Match found. ${name(team)} must say the model before the teacher awards the point.`,
+      );
+      return;
+    }
+    status(`No match. The turn passes to ${name(1 - team)}.`);
+    window.setTimeout(() => {
+      a.flipped = b.flipped = false;
+      selected = [];
+      team = 1 - team;
+      locked = false;
+      render();
+      status(`${name(team)}: choose the first card.`);
+    }, 900);
+  }
+  function award() {
+    if (!pending) return;
+    score[team]++;
+    matches++;
+    history.push({ team: name(team), device: pending.label });
+    ui.history.innerHTML = history
+      .map(
+        (item, index) => `<li>${index + 1}. ${item.team}: ${item.device}</li>`,
+      )
+      .join("");
+    ui.gate.close();
+    selected = [];
+    pending = null;
+    locked = false;
+    render();
+    status(`${name(team)} earns a point and plays again.`);
+    if (matches === devices.length)
+      status(
+        "All device pairs are complete. Start a new game when the class is ready.",
+      );
+  }
+  function reset() {
+    deck = shuffle(
+      devices.flatMap((device) =>
+        ["image", "word"].map((kind) => ({
+          device,
+          kind,
+          flipped: false,
+          matched: false,
+        })),
+      ),
+    );
+    selected = [];
+    team = 0;
+    score = [0, 0];
+    matches = 0;
+    locked = false;
+    pending = null;
+    history = [];
+    ui.history.innerHTML = "<li>No matched device yet.</li>";
+    render();
+    status(`${name(team)}: choose the first card.`);
+  }
+  $("memoryNewGame").addEventListener("click", reset);
+  $("memoryListenAgain").addEventListener(
+    "click",
+    () => pending && speak(pending.modelAudio),
+  );
+  $("memoryAward").addEventListener("click", award);
+  $("memoryCloseGate").addEventListener("click", () => {
+    ui.gate.close();
+    locked = false;
+    selected.forEach((index) => (deck[index].flipped = false));
+    selected = [];
+    render();
+    status(`${name(team)}: choose the first card again.`);
+  });
+  ui.team.forEach((input) =>
+    input.addEventListener("input", () => status(ui.status.textContent)),
+  );
+  reset();
 })();
