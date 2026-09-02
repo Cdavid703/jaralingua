@@ -436,6 +436,21 @@ Cada actividad publicada tiene dos rutas que deben quedar completas: la **ruta d
 6. La activación automática requiere `.githooks/post-commit`, `core.hooksPath=.githooks` y un `deploy.local.env` local (ignorado por Git). Nunca escribir claves, hostnames privados ni secretos en esta guía o en el repositorio. Si falta cualquiera de esos elementos, el commit puede llegar a GitHub pero **no** se debe afirmar que llegó al VPS: ejecutar el procedimiento aprobado desde una máquina configurada o usar la integración de despliegue del proveedor.
 7. Tras el despliegue, abrir la URL pública de Practice Lab y las URLs de las actividades nuevas. Confirmar que el contador de la unidad, la secuencia y las tarjetas son actuales, que HTML, imágenes, QR y audio devuelven respuesta correcta y que el QR abre la URL canónica. Si una versión anterior sigue visible, hacer recarga forzada y revisar la caché del CDN antes de cambiar código.
 
+### Mapa de producción validado
+
+El despliegue estático vigente, comprobado para las demás áreas y validado el 1 de septiembre de 2026, usa el clon de producción en `/var/www/jaralingua.com`. El destino SSH se expresa como `root@jaralingua.com`; la clave local autorizada se encuentra en el perfil SSH del equipo. Para el contenido estático de Inglés no hace falta reiniciar Nginx: el `git reset --hard origin/main` actualiza los archivos servidos.
+
+La configuración local esperada —sin copiar ninguna clave al repositorio— es:
+
+```env
+AUTO_DEPLOY_BRANCH=main
+AUTO_DEPLOY_REMOTE=origin
+VPS_SSH_TARGET=root@jaralingua.com
+VPS_APP_DIR=/var/www/jaralingua.com
+VPS_SSH_KEY=C:\Users\USER\.ssh\id_ed25519
+VPS_GIT_REMOTE=origin
+```
+
 El detalle operativo y la plantilla segura viven en [auto-deploy.md](auto-deploy.md). Para las actividades de **Technology Functions** de Unidad 3, la lista de publicación comprende las dos páginas, sus 12 imágenes, 24 clips de audio, los dos QR, el catálogo, Practice Lab y sus dos entradas de sitemap.
 
 ## 11. Decisiones pendientes antes de ampliar el curso

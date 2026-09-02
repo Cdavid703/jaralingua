@@ -36,14 +36,19 @@ cd /var/www
 git clone https://github.com/Cdavid703/jaralingua.git jaralingua
 ```
 
+### Mapa validado de esta instalación
+
+Para el sitio JaraLingua actualmente publicado, el clon del servidor está en `/var/www/jaralingua.com`. El destino se usa como `root@jaralingua.com`; la llave privada permanece en el perfil SSH local y no se versiona. Las páginas y assets estáticos de los cursos se sirven directamente desde ese clon, por lo que no requieren recargar Nginx después del `git reset --hard origin/main`.
+
 Luego en `deploy.local.env`:
 
 ```env
 AUTO_DEPLOY_BRANCH=main
 AUTO_DEPLOY_REMOTE=origin
-VPS_SSH_TARGET=deploy@tu-vps.example.com
-VPS_APP_DIR=/var/www/jaralingua
-VPS_SSH_KEY=.jaralingua-local/ssh/jaralingua_vps_ed25519
+VPS_SSH_TARGET=root@jaralingua.com
+VPS_APP_DIR=/var/www/jaralingua.com
+VPS_SSH_KEY=C:\Users\USER\.ssh\id_ed25519
+VPS_GIT_REMOTE=origin
 ```
 
 Si el sitio necesita recargar Nginx u otro servicio:
