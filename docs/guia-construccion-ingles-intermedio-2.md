@@ -355,13 +355,13 @@ Las páginas de speaking (`take-a-side`, `reality-or-imagine-roulette`, `better-
 
 #### Patrón visual único para juegos, memory y ruletas
 
-No crear un sistema visual aislado para cada juego. La referencia obligatoria para banner, consola y ruleta es `speaking-unit-2-reality-or-imagine-roulette.html`; para el contexto visual de Unidad 3, usar como referencia el banner de `pronunciation-unit-3-sound-clear-tech-support.html`.
+No crear un sistema visual aislado para cada juego. La referencia obligatoria del **hero** es `intermediate-2/index.html`; para consola y ruletas es `speaking-unit-2-reality-or-imagine-roulette.html`. La imagen temática de Unidad 3 se toma de `pronunciation-unit-3-sound-clear-tech-support.html`.
 
-1. **Banner:** shell estándar, bloque de texto azul oscuro a la izquierda y **una sola** imagen profesional 16:9 a la derecha. Mantener la proporción del patrón (`min-height: min(610px, 65vh)` en escritorio), título de hasta diez caracteres de ancho, chips, CTA y QR estándar. No usar collages de cuatro imágenes, mosaicos ni imágenes decorativas que compitan con el objetivo.
+1. **Banner / hero:** replicar la arquitectura de `intermediate-2/index.html`: **una sola imagen profesional a ancho completo como fondo**, degradado azul oscuro de izquierda a derecha, contenido superpuesto y alineado abajo, kicker dorado en cápsula, título blanco con sombra, chips translúcidos y CTA rectangulares de 8 px. En páginas de actividad se usa una versión más pequeña (`min-height: min(520px, 58vh)`, título de hasta 17 caracteres de ancho y `font-size: clamp(2.05rem, 4vw, 3.65rem)`), conservando la imagen temática de la actividad. No volver al diseño dividido de bloque azul + imagen lateral y no usar collages o mosaicos.
 2. **Memory / vocabulary game:** después del banner, dos tarjetas de orientación, marcador de equipos y tablero. El tablero usa seis columnas en escritorio y tres en móvil; las tarjetas mantienen proporción, foco visible, feedback textual, audio modelo y reinicio. El resultado de un match solicita producción oral antes del punto.
 3. **Ruleta:** presentar primero el flujo y la configuración; después, dos `wheel cards` idénticas en una fila en escritorio y una columna en tableta/móvil. Cada una incluye número, título, explicación breve, contador, puntero externo, rueda de máximo 360 px, botón, resultado legible y estado accesible. La rueda no ocupa todo el ancho de la tarjeta ni se agranda con pantallas grandes.
 4. **Datos y cierre:** el roster se mantiene solo en el dispositivo, no se califican los juegos por defecto y cada turno se registra únicamente en la tabla local de la sesión. La selección manual, la ayuda docente y el historial empiezan cerrados o sin revelar datos.
-5. **Móvil:** a 650 px el banner pasa a una columna, la imagen se limita a 220–280 px y botones/controles ocupan una columna. A 390 px la rueda se limita a 288 px; no debe aparecer scroll horizontal ni texto cortado.
+5. **Móvil:** a 650 px el hero mantiene la imagen como fondo, cambia a degradado vertical, usa `min-height: auto`, padding de 30 × 18 px, chips y CTA en dos columnas y título de máximo 3 rem. Los controles del cuerpo sí ocupan una columna. A 390 px la rueda se limita a 288 px; no debe aparecer scroll horizontal ni texto cortado.
 
 #### Patrón pedagógico obligatorio: `What Is It For?` (Unidad 3)
 

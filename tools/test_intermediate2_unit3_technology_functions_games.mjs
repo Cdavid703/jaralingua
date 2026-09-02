@@ -91,13 +91,8 @@ for (const [name, markup, title] of [
     false,
     `${name} support must start closed.`,
   );
-  const hero = markup.match(/<figure class="tg-hero-art">([\s\S]*?)<\/figure>/);
-  assert.ok(hero, `${name} needs the standard single-image banner.`);
-  assert.equal(
-    (hero[1].match(/<img\b/g) || []).length,
-    1,
-    `${name} banner must use one professional image, not a collage.`,
-  );
+  assert.ok(markup.includes('<section class="tg-hero">'), `${name} needs the standard full-bleed hero.`);
+  assert.equal(markup.includes('class="tg-hero-art"'), false, `${name} must not use the old split image hero.`);
 }
 
 assert.ok(memoryPage.includes('id="memoryBoard"'));
@@ -121,7 +116,11 @@ assert.ok(rouletteScript.includes('ui.image.alt = ""'));
 assert.equal(rouletteScript.includes("modelAudio"), false, "The roulette must not play or reveal a model answer.");
 assert.equal(roulettePage.includes('id="rouletteDeviceTitle"'), false, "The selected device name must not be written on screen.");
 assert.equal(roulettePage.includes('id="rouletteInstruction"'), false, "The roulette must not give the instruction answer.");
-assert.ok(gameCss.includes("min-height: min(610px, 65vh)"));
+assert.ok(gameCss.includes("min-height: min(520px, 58vh)"));
+assert.ok(gameCss.includes("linear-gradient("));
+assert.ok(gameCss.includes("pronunciation-tech-support-hero-v1.png"));
+assert.ok(gameCss.includes(".tg-hero .tg-kicker"));
+assert.ok(gameCss.includes(".tg-hero .tg-btn"));
 assert.ok(gameCss.includes(".tg-wheel-card"));
 assert.ok(gameCss.includes("width: min(360px, 100%)"));
 assert.ok(gameCss.includes(".tg-device-picker"));

@@ -13,32 +13,41 @@
 }
 .tg-hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.03fr) minmax(380px, 0.97fr);
-  min-height: min(610px, 65vh);
+  align-items: end;
+  min-height: min(520px, 58vh);
+  padding: 52px max(18px, calc((100% - 1180px) / 2)) 36px;
+  position: relative;
   overflow: hidden;
-  background: #092453;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 12, 32, 0.92) 0%,
+      rgba(7, 31, 79, 0.76) 43%,
+      rgba(7, 31, 79, 0.14) 100%
+    ),
+    url("../img/english-intermediate-2/unit-3/pronunciation-tech-support-digital-safety/pronunciation-tech-support-hero-v1.png")
+      56% center / cover no-repeat;
   color: #fff;
 }
 .tg-copy {
-  display: grid;
-  align-content: center;
-  padding: clamp(2rem, 5vw, 5rem)
-    max(clamp(1rem, 3vw, 3.25rem), env(safe-area-inset-left));
+  width: min(690px, 100%);
 }
 .tg-copy h1 {
-  max-width: 10ch;
-  margin: 0.2rem 0 0.8rem;
-  font-size: clamp(2.55rem, 6vw, 5.35rem);
-  line-height: 0.94;
-  letter-spacing: -0.055em;
+  max-width: 17ch;
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.05rem, 4vw, 3.65rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
   overflow-wrap: anywhere;
+  text-shadow: 0 3px 24px rgba(0, 0, 0, 0.45);
 }
 .tg-copy p {
   max-width: 660px;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.9);
-  font-size: clamp(1rem, 1.8vw, 1.18rem);
-  line-height: 1.58;
+  margin: 0.85rem 0 0;
+  color: rgba(255, 255, 255, 0.93);
+  font-size: clamp(0.96rem, 1.6vw, 1.12rem);
+  line-height: 1.55;
 }
 .tg-kicker {
   margin: 0;
@@ -47,6 +56,15 @@
   font-weight: 900;
   letter-spacing: 0.12em;
   text-transform: uppercase;
+}
+.tg-hero .tg-kicker {
+  width: fit-content;
+  margin: 0 0 0.7rem;
+  padding: 0.38rem 0.62rem;
+  border-radius: 999px;
+  background: rgba(217, 164, 65, 0.18);
+  color: #ffda81;
+  letter-spacing: 0.08em;
 }
 .tg-chips,
 .tg-actions,
@@ -66,6 +84,17 @@
   border: 1px solid rgba(255, 255, 255, 0.25);
   font-size: 0.8rem;
 }
+.tg-hero .tg-chip {
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.38rem 0.58rem;
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.15;
+  backdrop-filter: blur(10px);
+}
 .tg-btn {
   min-height: 44px;
   border: 0;
@@ -83,23 +112,22 @@
 .tg-btn.teal {
   background: var(--tg-teal);
 }
+.tg-hero .tg-btn {
+  min-height: 46px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 8px;
+  padding: 0.72rem 1rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+}
+.tg-hero .tg-btn.light {
+  background: #fff;
+  color: var(--tg-navy);
+}
 .tg-btn:focus-visible,
 .tg-card:focus-visible {
   outline: 3px solid var(--tg-gold);
   outline-offset: 3px;
-}
-.tg-hero-art {
-  min-height: 100%;
-  margin: 0;
-  background: #dae8fb;
-}
-.tg-hero-art img {
-  width: 100%;
-  height: 100%;
-  min-height: 390px;
-  display: block;
-  object-fit: cover;
-  object-position: center;
 }
 .tg-shell {
   width: 100%;
@@ -246,6 +274,7 @@
 }
 .tg-team {
   display: flex;
+  min-width: 0;
   justify-content: space-between;
   gap: 0.5rem;
   align-items: center;
@@ -258,6 +287,7 @@
   border-color: var(--tg-teal);
 }
 .tg-team input {
+  width: 100%;
   min-width: 0;
   border: 0;
   font: inherit;
@@ -529,21 +559,11 @@
   overflow: auto;
 }
 @media (max-width: 980px) {
-  .tg-hero,
   .tg-info,
   .tg-setup,
   .tg-wheels,
   .tg-reveal {
     grid-template-columns: 1fr;
-  }
-  .tg-hero-art {
-    min-height: 250px;
-    max-height: 360px;
-  }
-  .tg-hero-art img {
-    min-height: 250px;
-    max-height: 360px;
-    object-position: center 40%;
   }
 }
 @media (max-width: 760px) {
@@ -553,7 +573,7 @@
     padding: 0.55rem;
   }
   .tg-toolbar {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
   .tg-turn {
     grid-column: 1/-1;
@@ -571,23 +591,42 @@
 }
 @media (max-width: 650px) {
   .tg-hero {
-    min-height: 0;
+    min-height: auto;
+    align-items: end;
+    padding: 30px 18px;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(3, 12, 32, 0.22) 0%,
+        rgba(3, 12, 32, 0.84) 48%,
+        rgba(3, 12, 32, 0.96) 100%
+      ),
+      url("../img/english-intermediate-2/unit-3/pronunciation-tech-support-digital-safety/pronunciation-tech-support-hero-v1.png")
+        58% center / cover no-repeat;
   }
   .tg-copy {
-    padding-top: 2rem;
-    padding-bottom: 1.4rem;
+    width: 100%;
   }
   .tg-copy h1 {
-    max-width: 100%;
-    font-size: clamp(2.35rem, 13vw, 3.45rem);
+    max-width: 14ch;
+    font-size: clamp(2rem, 10vw, 2.75rem);
   }
   .tg-copy p {
+    margin-top: 0.75rem;
     font-size: 0.96rem;
+    line-height: 1.45;
   }
-  .tg-hero-art,
-  .tg-hero-art img {
-    min-height: 220px;
-    max-height: 280px;
+  .tg-hero .tg-chips {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.42rem;
+  }
+  .tg-hero .tg-chip {
+    justify-content: center;
+    min-height: 32px;
+    padding: 0.34rem 0.48rem;
+    font-size: 0.74rem;
+    text-align: center;
   }
   .tg-actions,
   .tg-controls {
@@ -596,6 +635,16 @@
   }
   .tg-btn {
     width: 100%;
+  }
+  .tg-hero .tg-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin-top: 1rem;
+  }
+  .tg-hero .tg-btn {
+    min-height: 42px;
+    padding: 0.58rem 0.55rem;
+    font-size: 0.78rem;
   }
   .tg-wheel {
     width: min(320px, 86vw);
