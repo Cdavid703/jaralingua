@@ -103,8 +103,11 @@ for (const [name, markup, title] of [
 assert.ok(memoryPage.includes('id="memoryBoard"'));
 assert.ok(memoryPage.includes("Teacher: award point"));
 assert.ok(roulettePage.includes('id="rouletteRoster"'));
-assert.ok(roulettePage.includes("Choose a device manually"));
-assert.ok(roulettePage.includes("What is it for?"));
+assert.ok(roulettePage.includes('id="loadCourseRoster"'));
+assert.ok(roulettePage.includes("Load Intermediate 2 names"));
+assert.ok(roulettePage.includes("Choose a device image manually"));
+assert.ok(roulettePage.includes("This is a/an ___."));
+assert.ok(roulettePage.includes("It is used to ___."));
 assert.ok(roulettePage.includes('class="tg-wheel-card"'));
 assert.ok(roulettePage.includes('class="tg-wheel-zone"'));
 assert.ok(roulettePage.includes('class="tg-pointer"'));
@@ -112,9 +115,16 @@ assert.ok(memoryScript.includes("devices.flatMap"));
 assert.ok(memoryScript.includes("modelAudio"));
 assert.ok(rouletteScript.includes("function names(value)"));
 assert.ok(rouletteScript.includes("function selectDevice"));
+assert.ok(rouletteScript.includes('const GRADEBOOK_API = "/api/intermediate2/grades"'));
+assert.ok(rouletteScript.includes("async function loadCourseRoster"));
+assert.ok(rouletteScript.includes('ui.image.alt = ""'));
+assert.equal(rouletteScript.includes("modelAudio"), false, "The roulette must not play or reveal a model answer.");
+assert.equal(roulettePage.includes('id="rouletteDeviceTitle"'), false, "The selected device name must not be written on screen.");
+assert.equal(roulettePage.includes('id="rouletteInstruction"'), false, "The roulette must not give the instruction answer.");
 assert.ok(gameCss.includes("min-height: min(610px, 65vh)"));
 assert.ok(gameCss.includes(".tg-wheel-card"));
 assert.ok(gameCss.includes("width: min(360px, 100%)"));
+assert.ok(gameCss.includes(".tg-device-picker"));
 assert.ok(practiceLabCss.includes("repeat(auto-fill, minmax(250px, 1fr))"));
 assert.equal(
   practiceLabCss.includes("#unit3ActivityGrid"),

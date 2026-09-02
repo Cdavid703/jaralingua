@@ -363,6 +363,18 @@ No crear un sistema visual aislado para cada juego. La referencia obligatoria pa
 4. **Datos y cierre:** el roster se mantiene solo en el dispositivo, no se califican los juegos por defecto y cada turno se registra únicamente en la tabla local de la sesión. La selección manual, la ayuda docente y el historial empiezan cerrados o sin revelar datos.
 5. **Móvil:** a 650 px el banner pasa a una columna, la imagen se limita a 220–280 px y botones/controles ocupan una columna. A 390 px la rueda se limita a 288 px; no debe aparecer scroll horizontal ni texto cortado.
 
+#### Patrón pedagógico obligatorio: `What Is It For?` (Unidad 3)
+
+Esta ruleta es una práctica de producción oral, no una ficha que entregue la respuesta. Su secuencia no se puede simplificar ni añadir un tercer objetivo:
+
+1. El docente pulsa **Load Intermediate 2 names**. El botón usa la misma sesión protegida y `GET /api/intermediate2/grades` de la ruleta de Unidad 2; únicamente una cuenta con rol `teacher` o `admin` puede cargar **todos** los registros de `students[].fullName` de Intermedio 2. Se eliminan duplicados, se muestran en el cuadro y se conservan solo en memoria local de la página. No se muestran notas, correos, IDs ni datos adicionales. Como contingencia se permiten nombres pegados manualmente.
+2. La primera ruleta selecciona un estudiante. La segunda selecciona un aparato de los 12 disponibles.
+3. Al seleccionar el aparato, la pantalla revela exclusivamente su fotografía. No debe mostrar nombre, función, descripción, modelo, pista, instrucción, transcript ni audio-modelo: esos elementos convertirían la actividad en una respuesta guiada en vez de una intervención oral.
+4. El alumno responde en este orden: **(a)** nombra el aparato: *“This is a/an ___.”*; **(b)** explica la función: *“It is used to ___.”* El docente escucha, pide una corrección breve o apoyo de la clase después de la respuesta y termina la ronda.
+5. El selector manual presenta las 12 fotografías numeradas, sin rótulos ni `alt` que delaten la respuesta; permite repetir o escoger una imagen, pero mantiene exactamente las mismas dos intervenciones. El historial local conserva el estudiante y una miniatura, no el nombre/solución del aparato.
+
+La interfaz debe explicar esta dinámica en tres lugares: flujo docente, tarjeta de tarea del estudiante y panel de imagen seleccionada. La rueda y el selector manual nunca sustituyen la producción del alumno con texto de respuesta. Los audios de palabra/modelo pertenecen al juego de memoria previo, donde se adquiere y practica el vocabulario; no se reproducen en esta ruleta.
+
 La nueva actividad debe reutilizar las clases y tokens existentes o extender el CSS de su familia; no duplicar colores, sombras, radios y breakpoints con valores distintos. Antes de aceptar una página, comparar captura de escritorio y 390 px con la actividad de referencia y añadir una prueba estática que cubra retícula, banner, QR y controles.
 
 Un QR de sala en vivo se diferencia del QR de página: muestra cómo unirse, enlace directo y copia de enlace, y se genera a partir del estado de la sala. Mantener ese QR dentro del componente de sala; no sustituye el QR estándar de acceso a página.

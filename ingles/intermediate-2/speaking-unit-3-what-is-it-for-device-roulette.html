@@ -8,7 +8,7 @@
     />
     <meta
       name="description"
-      content="A teacher-led Unit 3 roulette for explaining device functions and giving short instructions."
+      content="A teacher-led Unit 3 roulette in which a learner names a device and explains its function from an image."
     />
     <title>
       What Is It For? Device Roulette | Intermediate English Course 2
@@ -59,14 +59,15 @@
           <p class="tg-kicker">Practice Lab · Unit 3 · Activity 03</p>
           <h1>What Is It For?</h1>
           <p>
-            The teacher loads student names. One roulette selects the speaker
-            and another selects a device. The student names it, explains its
-            function and gives a short instruction.
+            The teacher loads the class roster. One roulette selects the
+            speaker and another selects one device image. The student first
+            names the device, then explains what it is used for.
           </p>
           <div class="tg-chips">
             <span class="tg-chip">Two roulettes</span
             ><span class="tg-chip">12 devices</span
-            ><span class="tg-chip">Professional model audio</span
+            ><span class="tg-chip">Image-only prompt</span
+            ><span class="tg-chip">Two spoken steps</span
             ><span class="tg-chip">No grade</span>
           </div>
           <div class="tg-actions">
@@ -89,54 +90,62 @@
         <div class="tg-info">
           <article class="tg-panel">
             <p class="tg-kicker">Teacher flow</p>
-            <h2>One student, one device, one complete response</h2>
+            <h2>One student, one image, two spoken steps</h2>
+            <p>
+              Project the activity. The device roulette intentionally reveals
+              only an image: it does not give the name, function, model or an
+              instruction. The learner must supply the language aloud.
+            </p>
             <div class="tg-steps">
               <div class="tg-step">
-                <b>1</b><span>Load or paste student names.</span>
+                <b>1</b><span>Load all Intermediate 2 student names, then spin the speaker roulette.</span>
               </div>
               <div class="tg-step">
-                <b>2</b><span>Spin the student and device roulettes.</span>
+                <b>2</b><span>Spin the device roulette. Show the selected image only.</span>
               </div>
               <div class="tg-step">
-                <b>3</b
-                ><span
-                  >Ask: “What is it for?” Then ask for one instruction.</span
-                >
+                <b>3</b><span>Student says its name first, then what it is used for. Finish and repeat.</span>
               </div>
             </div>
           </article>
           <aside class="tg-panel">
-            <p class="tg-kicker">Response frame</p>
-            <p>
-              <strong>This is a/an ___.</strong><br />It is used to ___.<br /><strong
-                >First</strong
-              >, ___. <strong>Then</strong>, ___.
-            </p>
+            <p class="tg-kicker">Student task</p>
+            <h2>Look, name it, explain it</h2>
+            <ol class="tg-response-list">
+              <li><strong>Name the appliance or device:</strong> “This is a/an ___.”</li>
+              <li><strong>Say its function:</strong> “It is used to ___.”</li>
+            </ol>
+            <p class="tg-note">There is no written answer on the selected image. The teacher listens and invites a brief correction or class support only after the student responds.</p>
           </aside>
         </div>
         <div class="tg-setup">
           <article class="tg-panel">
             <h2>Student names</h2>
+            <p>Use the protected roster button to load every Intermediate English Course 2 student. It reads names only; no grades or personal data are shown.</p>
             <textarea
               id="rouletteRoster"
               aria-label="Student names, one per line"
-              placeholder="Paste one student name per line"
+              placeholder="The course roster will appear here, or paste one student name per line"
             ></textarea>
             <div class="tg-actions">
-              <button class="tg-btn" id="loadRoster" type="button">
-                Load names</button
+              <button class="tg-btn" id="loadCourseRoster" type="button">
+                Load Intermediate 2 names</button
+              ><button class="tg-btn light" id="loadRoster" type="button">
+                Load pasted names</button
               ><button class="tg-btn light" id="resetRoulette" type="button">
                 Reset activity
               </button>
             </div>
           </article>
           <aside class="tg-panel">
-            <h3>Choose a device manually</h3>
+            <h3>Choose a device image manually</h3>
             <p>
-              Use this option when the teacher wants to repeat or select a
-              device directly.
+              Use this board to repeat or choose any remaining image directly.
+              It is the same oral task: the learner names the image, then says
+              what it is used for. The board deliberately has no written
+              device names or functions.
             </p>
-            <div class="tg-device-list" id="manualDeviceList"></div>
+            <div class="tg-device-picker" id="manualDeviceList"></div>
           </aside>
         </div>
         <div class="tg-wheels">
@@ -162,10 +171,10 @@
             <div class="tg-wheel-heading">
               <div>
                 <p class="tg-kicker">Roulette 2</p>
-                <h2>What is it for?</h2>
+                <h2>Which device image?</h2>
                 <p>
-                  The learner names the device, explains its function and gives
-                  one instruction.
+                  The selected image is the prompt. The learner names it, then
+                  explains its function aloud.
                 </p>
               </div>
               <span class="tg-count" id="deviceCount">12</span>
@@ -177,7 +186,7 @@
                 Spin device
               </button>
             </div>
-            <div class="tg-result" id="deviceResult"></div>
+            <div class="tg-result" id="deviceResult" aria-live="polite"></div>
           </article>
         </div>
         <p class="tg-status" id="rouletteStatus" aria-live="polite">
@@ -187,12 +196,12 @@
           <img class="tg-reveal-image" id="rouletteDeviceImage" alt="" />
           <div>
             <p class="tg-kicker">Device selected</p>
-            <h2 id="rouletteDeviceTitle"></h2>
-            <p class="tg-model" id="rouletteModel"></p>
-            <details>
-              <summary>Teacher support: short instruction</summary>
-              <p id="rouletteInstruction"></p>
-            </details>
+            <h2>Speak about the image</h2>
+            <ol class="tg-response-list">
+              <li>Say the name: <strong>“This is a/an ___.”</strong></li>
+              <li>Say its function: <strong>“It is used to ___.”</strong></li>
+            </ol>
+            <p class="tg-note">The image is the only device clue. Do not reveal a written answer before the learner speaks.</p>
             <div class="tg-actions">
               <button class="tg-btn teal" id="finishRound" type="button">
                 Finish this round
@@ -208,7 +217,7 @@
                 <tr>
                   <th>Round</th>
                   <th>Student</th>
-                  <th>Device</th>
+                  <th>Device image</th>
                 </tr>
               </thead>
               <tbody id="rouletteHistory"></tbody>
@@ -220,6 +229,9 @@
     <footer class="site-footer">
       <p>Intermediate English Course 2 · Unit 3 Practice Lab</p>
     </footer>
+    <script src="../../assets/js/google-auth-config.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="../../assets/js/google-auth.js"></script>
     <script src="../../assets/js/english-intermediate2-technology-functions-data.js"></script>
     <script src="../../assets/js/english-intermediate2-device-roulette.js"></script>
     <script src="/assets/js/course-switcher.js"></script>
