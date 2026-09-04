@@ -50,7 +50,7 @@
     const requestedPage = params.get("page");
     const requestedWidth = Number(params.get("width"));
     const pages = requestedPage ? allPages.filter((page) => page === requestedPage) : allPages;
-    const widths = requestedWidth ? [requestedWidth] : [390, 768, 1024];
+    const widths = requestedWidth ? [requestedWidth] : [320, 390, 768, 1024];
     const frame = document.getElementById("auditFrame");
     const status = document.getElementById("status");
     const output = document.getElementById("results");
@@ -131,7 +131,7 @@
       document.body.dataset.auditComplete = "true";
       document.body.dataset.auditFailures = String(failures.length);
       status.textContent = failures.length ? `Completed with ${failures.length} failure(s).` : `Passed: ${checks} viewport checks across ${pages.length} pages.`;
-      output.textContent = failures.length ? failures.join("\n") : "No document-level horizontal overflow detected at 390px, 768px or 1024px.";
+      output.textContent = failures.length ? failures.join("\n") : "No document-level horizontal overflow detected at 320px, 390px, 768px or 1024px.";
     }
 
     run();
