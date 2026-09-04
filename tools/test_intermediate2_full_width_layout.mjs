@@ -13,7 +13,12 @@ const pages = fs.readdirSync(pagesDir).filter((file) => file.endsWith(".html"));
 assert.ok(pages.length >= 17, "The full-width audit must cover every published Intermediate 2 page, including the Unit 2 Conversation Coach.");
 for (const page of pages) {
   const markup = fs.readFileSync(path.join(pagesDir, page), "utf8");
-  assert.match(markup, /english-intermediate-2\.css\?v=20260815-(?:full-width-compact|unit2-roundtable|roundtable-cases|unit2-renata-coach|unit2-visual-debate)/, `${page} must load the shared layout version.`);
+  if (page === "notas.html") {
+    assert.match(markup, /bootstrap\.min\.css/);
+    assert.match(markup, /overflow-x:\s*hidden/);
+    continue;
+  }
+  assert.match(markup, /english-intermediate-2\.css\?v=20260904-responsive-auth-v2/, `${page} must load the current shared responsive layout version.`);
 }
 assert.match(mainCss, /shared full-width, compact composition/);
 assert.match(mainCss, /\.english-intermediate2-page \.ie2-unit-theory-shell/);

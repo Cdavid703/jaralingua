@@ -135,6 +135,14 @@ El curso es primero utilizable en celular y también apto para proyección de au
 - Las tablas o listas largas deben tener alternativa apilada, wrapper horizontal explícito o una estructura de tarjetas. Nunca romper el viewport.
 - Probar 320 px, 390 px, 768 px, 1024 px y escritorio antes de publicar.
 
+### Auditoría transversal registrada el 4 de septiembre de 2026
+
+Se revisaron las **28 páginas HTML** existentes de Intermedio 2, agrupadas así: inicio/overview y tres explicaciones de unidad; Practice Lab, Listening Library, Evaluations y Grades; cinco actividades de Unidad 1; ocho de Unidad 2; tres de Unidad 3; Midterm Writing Practice, Midterm Oral Coach y la evaluación escrita oficial.
+
+El contrato automatizado `tools/test_intermediate2_page_contract.mjs` comprueba para cada archivo: `meta viewport`, scripts compartidos de autenticación, orden de carga y al menos una regla responsive de tableta/móvil alcanzable. `tools/intermediate2-responsive-audit.html` carga las 28 páginas dentro de viewports reales de **390, 768 y 1024 px**, ignora únicamente el contenido deliberadamente recortado dentro de un control con scroll propio y falla ante cualquier elemento que realmente desborde el viewport. La corrida registrada terminó con **84/84 comprobaciones aprobadas y cero desbordamientos visibles**. Cada nueva página debe añadirse a ambos inventarios y ejecutar las dos verificaciones antes de publicarse.
+
+La navegación compartida limita `.navbar` y `.nav-links` al ancho del viewport; en móvil los enlaces y **Sign in** permanecen dentro de una franja con desplazamiento horizontal propio. Los copies de hero que alojan el QR deben usar `width: auto`, `max-width: 100%` y `min-width: 0` en móvil: así el espacio reservado por `page-qr-access.js` no se suma por fuera del padding del banner.
+
 ## 4. Shell obligatorio de una página de Intermedio 2
 
 Cada página publicada debe mantener este orden conceptual:
@@ -145,7 +153,21 @@ Cada página publicada debe mantener este orden conceptual:
 4. `global-course-switcher` con enlaces a Home, English, Course Home, Course Overview y Practice Lab.
 5. `site-header` y `navbar`, con logo, enlaces pertinentes y destino claro.
 6. `<main>`: hero, búsqueda cuando la página tiene muchos bloques, contenido, siguiente paso y footer.
-7. Scripts de la actividad, autenticación solo cuando corresponde, búsqueda, course switcher y QR como último script.
+7. Scripts de la actividad, autenticación compartida obligatoria, búsqueda, course switcher y QR como último script.
+
+### Acceso superior obligatorio en todas las páginas
+
+Las 28 páginas HTML de Intermedio 2 deben mostrar **Sign in** en la navegación superior, incluso cuando la actividad sea privada, no tenga entrega o no use todavía datos del estudiante. El acceso común permite conservar la sesión y evita que el estudiante tenga que regresar al inicio para conectarse.
+
+Orden mínimo antes de los scripts propios de la actividad:
+
+```html
+<script src="../../assets/js/google-auth-config.js"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="../../assets/js/google-auth.js"></script>
+```
+
+`google-auth.js` debe reconocer tanto `/ingles/intermediate/` como `/ingles/intermediate-2/`, insertar el control dentro de `.site-header .nav-links` y usar el panel móvil fijo a `max-width: 680px`. No crear botones de autenticación distintos por actividad.
 
 Las páginas extensas usan búsqueda con `data-course-search-panel`, `data-course-search-input`, `data-search-target`, `data-search-items` y `data-search-keywords` por bloque. Debe haber botón Clear, conteo y mensaje de cero resultados. No agregar búsqueda a una actividad muy corta que no gana nada con ella.
 
@@ -283,7 +305,7 @@ Para juegos de vocabulario, ruletas, memory, role cards o debates, reutilizar el
 
 Todas las unidades comparten una sola retícula: cuatro columnas de ancho estable en escritorio cuando haya espacio, dos en tableta y una en móvil. Usar `repeat(auto-fill, minmax(250px, 1fr))`, nunca `auto-fit` ni una excepción por unidad: si una unidad tiene una, dos o tres actividades, se conservan los mismos anchos y el espacio restante de la fila queda vacío. Así una nueva tarjeta no crece ni cambia el ritmo visual de las que ya existen.
 
-Cada tarjeta conserva: imagen 16:9, número de orden, etiquetas de tipo/política, título, subtítulo, resumen, duración/producto y CTA a la página. El catálogo es la fuente de las tarjetas; el HTML de Practice Lab solo aporta la retícula, el contador y la secuencia. Verificar visualmente la unidad recién ampliada junto a una unidad con cuatro o más tarjetas antes de publicar.
+Cada tarjeta de actividad es deliberadamente mínima: conserva **imagen 16:9, una sola etiqueta de tipo** (`Grammar`, `Listening`, `Reading`, `Pronunciation`, `Conversation Coach`, `Speaking game`, etc.) y **título**. Se eliminan número visible, subtítulo, resumen, duración, producto y botón repetitivo; toda la tarjeta funciona como enlace con un `aria-label` explícito. Los campos descriptivos permanecen en el catálogo para búsqueda y metadatos, pero no se renderizan. El catálogo es la fuente de las tarjetas; el HTML de Practice Lab solo aporta la retícula, el contador y la secuencia.
 
 ### 7.4 Conversation Coach
 
@@ -357,7 +379,7 @@ Las páginas de speaking (`take-a-side`, `reality-or-imagine-roulette`, `better-
 
 No crear un sistema visual aislado para cada juego. La referencia obligatoria del **hero** es `intermediate-2/index.html`; para consola y ruletas es `speaking-unit-2-reality-or-imagine-roulette.html`. La imagen temática de Unidad 3 se toma de `pronunciation-unit-3-sound-clear-tech-support.html`.
 
-1. **Banner / hero:** replicar la arquitectura de `intermediate-2/index.html`: **una sola imagen profesional a ancho completo como fondo**, degradado azul oscuro de izquierda a derecha, contenido superpuesto y alineado abajo, kicker dorado en cápsula, título blanco con sombra, chips translúcidos y CTA rectangulares de 8 px. En páginas de actividad se usa una versión más pequeña (`min-height: min(520px, 58vh)`, título de hasta 17 caracteres de ancho y `font-size: clamp(2.05rem, 4vw, 3.65rem)`), conservando la imagen temática de la actividad. No volver al diseño dividido de bloque azul + imagen lateral y no usar collages o mosaicos.
+1. **Banner / hero:** replicar la arquitectura de `intermediate-2/index.html`: **una sola imagen profesional a ancho completo como fondo**, degradado azul oscuro de izquierda a derecha, contenido superpuesto y alineado abajo, kicker dorado en cápsula, título blanco con sombra, chips translúcidos y CTA rectangulares de 8 px. En páginas de actividad se usa una versión más pequeña (`min-height: min(520px, 58vh)`, título de hasta 17 caracteres de ancho y `font-size: clamp(2.05rem, 4vw, 3.65rem)`), conservando la imagen temática de la actividad. **Cada actividad debe tener su propia imagen identificable y la tarjeta de Practice Lab debe reutilizar esa misma imagen; no compartir un banner genérico entre memory, ruleta, listening, reading o pronunciación.** No volver al diseño dividido de bloque azul + imagen lateral y no usar collages o mosaicos.
 2. **Memory / vocabulary game:** después del banner, dos tarjetas de orientación, marcador de equipos y tablero. El tablero usa seis columnas en escritorio y tres en móvil; las tarjetas mantienen proporción, foco visible, feedback textual, audio modelo y reinicio. El resultado de un match solicita producción oral antes del punto.
 3. **Ruleta:** presentar primero el flujo y la configuración; después, dos `wheel cards` idénticas en una fila en escritorio y una columna en tableta/móvil. Cada una incluye número, título, explicación breve, contador, puntero externo, rueda de máximo 360 px, botón, resultado legible y estado accesible. La rueda no ocupa todo el ancho de la tarjeta ni se agranda con pantallas grandes.
 4. **Datos y cierre:** el roster se mantiene solo en el dispositivo, no se califican los juegos por defecto y cada turno se registra únicamente en la tabla local de la sesión. La selección manual, la ayuda docente y el historial empiezan cerrados o sin revelar datos.

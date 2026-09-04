@@ -26,10 +26,17 @@
 
 .english-intermediate2-page .navbar {
   align-items: center;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .english-intermediate2-page .nav-links {
+  width: 100%;
+  max-width: 100%;
   min-width: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .english-intermediate2-page *,
@@ -1250,8 +1257,11 @@
 
   .english-intermediate2-page .navbar {
     display: grid;
+    width: 100%;
+    max-width: 100%;
     gap: 0.65rem;
     padding: 0.7rem 0.85rem;
+    overflow: hidden;
   }
 
   .english-intermediate2-page .brand {
@@ -1259,6 +1269,8 @@
   }
 
   .english-intermediate2-page .nav-links {
+    width: 100%;
+    max-width: 100%;
     flex-wrap: nowrap;
     justify-content: flex-start;
     gap: 0.45rem;
@@ -3698,6 +3710,13 @@
   .ie2-unit2-hero {
     min-height: auto;
     padding: 34px 18px 28px;
+  }
+
+  .ie2-unit1-hero-copy,
+  .ie2-unit2-hero-copy {
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
   }
 
   .ie2-course-map-page .ie2-overview-hero {

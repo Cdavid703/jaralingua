@@ -118,7 +118,13 @@ assert.equal(roulettePage.includes('id="rouletteDeviceTitle"'), false, "The sele
 assert.equal(roulettePage.includes('id="rouletteInstruction"'), false, "The roulette must not give the instruction answer.");
 assert.ok(gameCss.includes("min-height: min(520px, 58vh)"));
 assert.ok(gameCss.includes("linear-gradient("));
-assert.ok(gameCss.includes("pronunciation-tech-support-hero-v1.png"));
+assert.ok(gameCss.includes("technology-functions-memory-hero-v1.png"));
+assert.ok(gameCss.includes("what-is-it-for-device-roulette-hero-v1.png"));
+assert.notEqual(
+  gameCss.indexOf("technology-functions-memory-hero-v1.png"),
+  gameCss.indexOf("what-is-it-for-device-roulette-hero-v1.png"),
+  "Each activity needs a distinct hero image.",
+);
 assert.ok(gameCss.includes(".tg-hero .tg-kicker"));
 assert.ok(gameCss.includes(".tg-hero .tg-btn"));
 assert.ok(gameCss.includes(".tg-wheel-card"));

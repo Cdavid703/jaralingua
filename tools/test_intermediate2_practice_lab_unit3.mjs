@@ -8,26 +8,37 @@ const controller = fs.readFileSync(path.join(root, "assets", "js", "english-inte
 const styles = fs.readFileSync(path.join(root, "assets", "css", "english-intermediate2-practice-lab.css"), "utf8");
 const catalog = JSON.parse(fs.readFileSync(path.join(root, "assets", "data", "english-intermediate-2-content.json"), "utf8"));
 
-assert.match(page, /<details class="ie2-lab-folder" id="unit-3-folder" open>/);
+assert.match(page, /<details class="ie2-lab-folder" id="unit-3-folder">/);
+assert.doesNotMatch(page, /<details class="ie2-lab-folder"[^>]*\sopen[\s>]/);
 assert.doesNotMatch(page, /ie2-lab-folder-future" id="unit-3-folder"/);
 assert.match(page, /id="unit3ActivityGrid"/);
-assert.match(page, /id="unit3ActivityCount">1 activity/);
+assert.match(page, /id="unit3ActivityCount">3 activities/);
 assert.match(page, /Pronunciation · live/);
+assert.match(page, /Technology Functions Memory · live/);
+assert.match(page, /What Is It For\? Device Roulette · live/);
 assert.match(page, /Listening · next/);
 assert.match(page, /href="#unit-3-folder">Open newest activity/);
 assert.match(controller, /number: 3, grid: document\.getElementById\("unit3ActivityGrid"\)/);
 assert.match(controller, /labActiveUnitTotal/);
+assert.match(controller, /<a class="ie2-lab-card"/);
+assert.match(controller, /<span class="ie2-lab-tag">/);
+assert.doesNotMatch(controller, /ie2-lab-card-(?:subtitle|summary|meta|number)/);
+assert.doesNotMatch(controller, /Open activity/);
 
 const published = catalog.items.filter((item) => item.status === "published");
 const unit3 = published.filter((item) => Number(item.unit) === 3);
-assert.equal(unit3.length, 1);
-assert.equal(unit3[0].id, "unit-3-sound-clear-tech-support-pronunciation");
-assert.equal(unit3[0].gradebookProjected, false);
-assert.equal(unit3[0].affectsAverage, false);
+assert.equal(unit3.length, 3);
+assert.deepEqual(unit3.map((item) => item.id), [
+  "unit-3-sound-clear-tech-support-pronunciation",
+  "unit-3-technology-functions-memory",
+  "unit-3-what-is-it-for-device-roulette",
+]);
+assert.ok(unit3.every((item) => item.gradebookProjected === false));
+assert.ok(unit3.every((item) => item.affectsAverage === false));
 
-assert.match(page, /english-intermediate2-practice-lab\.css\?v=20260830-unit3-compact-card/);
-assert.match(styles, /#unit3ActivityGrid\{grid-template-columns:minmax\(250px,360px\);justify-content:start\}/);
-assert.match(styles, /#unit3ActivityGrid\{grid-template-columns:1fr\}/);
+assert.match(page, /english-intermediate2-practice-lab\.css\?v=20260904-minimal-cards/);
+assert.match(styles, /repeat\(auto-fill, minmax\(250px, 1fr\)\)/);
+assert.match(styles, /\.ie2-lab-card:hover/);
+assert.match(styles, /min-height: 112px/);
 
 console.log("Intermediate 2 Practice Lab Unit 3 integration passed.");
-

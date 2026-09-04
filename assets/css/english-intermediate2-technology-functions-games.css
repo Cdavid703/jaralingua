@@ -8,6 +8,12 @@
   color: #102033;
   overflow-x: clip;
 }
+.ie2-tech-memory-page {
+  --tg-hero-image: url("../img/english-intermediate-2/unit-3/technology-functions-memory/technology-functions-memory-hero-v1.png");
+}
+.ie2-tech-roulette-page {
+  --tg-hero-image: url("../img/english-intermediate-2/unit-3/technology-functions-device-roulette/what-is-it-for-device-roulette-hero-v1.png");
+}
 .ie2-tech-game * {
   box-sizing: border-box;
 }
@@ -25,8 +31,7 @@
       rgba(7, 31, 79, 0.76) 43%,
       rgba(7, 31, 79, 0.14) 100%
     ),
-    url("../img/english-intermediate-2/unit-3/pronunciation-tech-support-digital-safety/pronunciation-tech-support-hero-v1.png")
-      56% center / cover no-repeat;
+    var(--tg-hero-image) 56% center / cover no-repeat;
   color: #fff;
 }
 .tg-copy {
@@ -601,8 +606,7 @@
         rgba(3, 12, 32, 0.84) 48%,
         rgba(3, 12, 32, 0.96) 100%
       ),
-      url("../img/english-intermediate-2/unit-3/pronunciation-tech-support-digital-safety/pronunciation-tech-support-hero-v1.png")
-        58% center / cover no-repeat;
+      var(--tg-hero-image) 58% center / cover no-repeat;
   }
   .tg-copy {
     width: 100%;

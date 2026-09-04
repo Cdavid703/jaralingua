@@ -1546,7 +1546,7 @@
   function createNavAccess() {
     const explicitSlot = document.querySelector(".site-header [data-auth-nav-slot], [data-auth-nav-slot]");
     const isBasic2 = document.body && document.body.matches(".basic2-page, .basic2-index-page");
-    const isIntermediate = /\/ingles\/intermediate\//i.test(location.pathname);
+    const isIntermediate = /\/ingles\/intermediate(?:-2)?\//i.test(location.pathname);
     if (isIntermediate && document.body) document.body.classList.add("jl-intermediate-auth-nav");
     let intermediateBootstrapSlot = null;
     if (isIntermediate && !explicitSlot) {

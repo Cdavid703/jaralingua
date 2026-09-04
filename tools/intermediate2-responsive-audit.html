@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intermediate 2 responsive audit</title>
+  <style>
+    body { margin: 0; padding: 16px; background: #f4f7fb; color: #142033; font: 15px/1.45 system-ui, sans-serif; }
+    iframe { position: fixed; left: -10000px; top: 0; border: 0; }
+    pre { padding: 14px; border-radius: 10px; background: #071f4f; color: #fff; white-space: pre-wrap; }
+  </style>
+</head>
+<body>
+  <h1>Intermediate 2 responsive audit</h1>
+  <p id="status">Running…</p>
+  <pre id="results"></pre>
+  <iframe id="auditFrame" title="Responsive page under test"></iframe>
+  <script>
+    const allPages = [
+      "conversation-coach-unit-1-coffee-with-gabriel.html",
+      "conversation-coach-unit-2-renata-real-choice.html",
+      "course-overview.html",
+      "evaluations.html",
+      "game-unit-3-technology-functions-memory.html",
+      "grammar-unit-2-wishes-dreams-goals.html",
+      "index.html",
+      "intermediate-course-2-midterm-writing-task.html",
+      "listening-library.html",
+      "listening-unit-1-noras-voice-note.html",
+      "listening-unit-2-the-call-before-midnight.html",
+      "midterm-oral-conversation-coach.html",
+      "midterm-writing-practice-catharsis.html",
+      "notas.html",
+      "practice-lab.html",
+      "pronunciation-unit-1-people-who-changed-my-circle.html",
+      "pronunciation-unit-2-the-choice-id-make-differently.html",
+      "pronunciation-unit-3-sound-clear-tech-support.html",
+      "reading-unit-1-saturday-table.html",
+      "reading-unit-2-the-six-week-window.html",
+      "speaking-secret-social-circle.html",
+      "speaking-unit-2-better-choice-roundtable.html",
+      "speaking-unit-2-reality-or-imagine-roulette.html",
+      "speaking-unit-2-take-a-side.html",
+      "speaking-unit-3-what-is-it-for-device-roulette.html",
+      "unit-1-relationships-meeting-people.html",
+      "unit-2-wishes-dilemmas-advice.html",
+      "unit-3-technology-digital-safety.html"
+    ];
+    const params = new URLSearchParams(location.search);
+    const requestedPage = params.get("page");
+    const requestedWidth = Number(params.get("width"));
+    const pages = requestedPage ? allPages.filter((page) => page === requestedPage) : allPages;
+    const widths = requestedWidth ? [requestedWidth] : [390, 768, 1024];
+    const frame = document.getElementById("auditFrame");
+    const status = document.getElementById("status");
+    const output = document.getElementById("results");
+    const failures = [];
+    const runToken = Date.now();
+
+    function waitForLoad(url) {
+      return new Promise((resolve) => {
+        const timer = setTimeout(() => resolve({ timeout: true }), 5000);
+        frame.onload = () => {
+          clearTimeout(timer);
+          setTimeout(() => resolve({ timeout: false }), 180);
+        };
+        frame.src = url;
+      });
+    }
+
+    async function run() {
+      let checks = 0;
+      for (const width of widths) {
+        frame.style.width = `${width}px`;
+        frame.style.height = "900px";
+        for (const page of pages) {
+          status.textContent = `Checking ${page} at ${width}px…`;
+          const loaded = await waitForLoad(`../ingles/intermediate-2/${page}?responsiveAudit=${width}&run=${runToken}`);
+          checks += 1;
+          if (loaded.timeout || !frame.contentDocument) {
+            failures.push(`${page} @ ${width}px: load timeout`);
+            continue;
+          }
+          const doc = frame.contentDocument;
+          const clientWidth = doc.documentElement.clientWidth;
+          const scrollWidth = doc.documentElement.scrollWidth;
+          if (scrollWidth > clientWidth + 1) {
+            const isClippedByScrollableAncestor = (element) => {
+              let ancestor = element.parentElement;
+              const rect = element.getBoundingClientRect();
+              while (ancestor && ancestor !== doc.body) {
+                const ancestorRect = ancestor.getBoundingClientRect();
+                const overflowX = getComputedStyle(ancestor).overflowX;
+                if (["auto", "scroll", "hidden", "clip"].includes(overflowX)
+                  && (rect.left < ancestorRect.left - 1 || rect.right > ancestorRect.right + 1)) {
+                  return true;
+                }
+                ancestor = ancestor.parentElement;
+              }
+              return false;
+            };
+            const offender = [...doc.body.querySelectorAll("*")]
+              .map((element) => {
+                const rect = element.getBoundingClientRect();
+                return { element, left: rect.left, right: rect.right, width: rect.width };
+              })
+              .filter((item) => item.left < -1 || item.right > clientWidth + 1)
+              .filter((item) => !isClippedByScrollableAncestor(item.element))
+              .sort((a, b) => b.right - a.right)[0];
+            if (!offender) continue;
+            const identity = offender
+              ? `${offender.element.tagName.toLowerCase()}${offender.element.id ? `#${offender.element.id}` : ""}${offender.element.classList.length ? `.${[...offender.element.classList].join(".")}` : ""} (${Math.round(offender.width)}px; parent ${offender.element.parentElement?.tagName.toLowerCase() || "none"}.${[...(offender.element.parentElement?.classList || [])].join(".")}; text ${JSON.stringify((offender.element.innerText || "").slice(0, 80))})`
+              : "unknown element";
+            const ancestorDetails = offender
+              ? [offender.element, offender.element.parentElement, offender.element.parentElement?.parentElement]
+                .filter(Boolean)
+                .map((element) => {
+                  const rect = element.getBoundingClientRect();
+                  const styles = getComputedStyle(element);
+                  return `${element.tagName.toLowerCase()}.${[...element.classList].join(".")}{left:${Math.round(rect.left)},right:${Math.round(rect.right)},width:${Math.round(rect.width)},client:${element.clientWidth},scroll:${element.scrollWidth},overflow-x:${styles.overflowX},display:${styles.display}}`;
+                })
+                .join(" -> ")
+              : "";
+            const loadedSharedCss = [...doc.styleSheets]
+              .map((sheet) => sheet.href || "inline")
+              .find((href) => href.includes("english-intermediate-2.css")) || "shared-css-not-found";
+            failures.push(`${page} @ ${width}px: horizontal overflow ${scrollWidth}px > ${clientWidth}px; ${identity}; ${ancestorDetails}; css ${loadedSharedCss}`);
+          }
+        }
+      }
+      document.body.dataset.auditComplete = "true";
+      document.body.dataset.auditFailures = String(failures.length);
+      status.textContent = failures.length ? `Completed with ${failures.length} failure(s).` : `Passed: ${checks} viewport checks across ${pages.length} pages.`;
+      output.textContent = failures.length ? failures.join("\n") : "No document-level horizontal overflow detected at 390px, 768px or 1024px.";
+    }
+
+    run();
+  </script>
+</body>
+</html>

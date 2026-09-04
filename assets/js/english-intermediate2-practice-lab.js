@@ -27,12 +27,10 @@
   }
 
   function card(item) {
-    const duration = item.activityDuration || item.duration || "Self-paced";
-    return `<article class="ie2-lab-card" data-type="${escapeHtml(item.type)}" data-search="${escapeHtml(searchText(item))}">
-      <figure class="ie2-lab-card-image"><img src="${escapeHtml(item.image)}" alt="" loading="lazy" /><span class="ie2-lab-card-number">${String(item.order).padStart(2, "0")}</span></figure>
-      <div class="ie2-lab-card-tags"><span class="ie2-lab-tag">${escapeHtml(item.skillLabel || item.type)}</span></div>
-      <div class="ie2-lab-card-body"><h3>${escapeHtml(item.title)}</h3><p class="ie2-lab-card-subtitle">${escapeHtml(item.subtitle)}</p><p class="ie2-lab-card-summary">${escapeHtml(item.summary)}</p><div class="ie2-lab-card-meta"><span><i class="bi bi-clock"></i>${escapeHtml(duration)}</span><span><i class="bi bi-check2-circle"></i>${escapeHtml(item.product || "Complete the activity")}</span></div><a class="intermediate2-card-action" href="${escapeHtml(item.workshopHref)}">Open activity</a></div>
-    </article>`;
+    return `<a class="ie2-lab-card" href="${escapeHtml(item.workshopHref)}" data-type="${escapeHtml(item.type)}" data-search="${escapeHtml(searchText(item))}" aria-label="Open ${escapeHtml(item.title)}">
+      <figure class="ie2-lab-card-image"><img src="${escapeHtml(item.image)}" alt="" loading="lazy" /></figure>
+      <div class="ie2-lab-card-body"><span class="ie2-lab-tag">${escapeHtml(item.skillLabel || item.type)}</span><h3>${escapeHtml(item.title)}</h3></div>
+    </a>`;
   }
 
   function update() {
