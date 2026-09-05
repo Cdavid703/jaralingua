@@ -23,13 +23,16 @@
   }
 
   function searchText(item) {
-    return normalize([`Unit ${item.unit}`, item.title, item.subtitle, item.summary, item.skillLabel, item.product, ...(item.searchKeywords || [])].join(" "));
+    return normalize([`Unit ${item.unit}`, item.title, item.cardSummary, item.subtitle, item.summary, item.skillLabel, item.product, ...(item.searchKeywords || [])].join(" "));
   }
 
   function card(item) {
+    const shortReview = item.cardSummary
+      ? `<p class="ie2-lab-card-summary">${escapeHtml(item.cardSummary)}</p>`
+      : "";
     return `<a class="ie2-lab-card" href="${escapeHtml(item.workshopHref)}" data-type="${escapeHtml(item.type)}" data-search="${escapeHtml(searchText(item))}" aria-label="Open ${escapeHtml(item.title)}">
       <figure class="ie2-lab-card-image"><img src="${escapeHtml(item.image)}" alt="" loading="lazy" /></figure>
-      <div class="ie2-lab-card-body"><span class="ie2-lab-tag">${escapeHtml(item.skillLabel || item.type)}</span><h3>${escapeHtml(item.title)}</h3></div>
+      <div class="ie2-lab-card-body"><span class="ie2-lab-tag">${escapeHtml(item.skillLabel || item.type)}</span><h3>${escapeHtml(item.title)}</h3>${shortReview}</div>
     </a>`;
   }
 

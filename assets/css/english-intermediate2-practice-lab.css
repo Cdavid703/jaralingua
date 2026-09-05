@@ -345,6 +345,16 @@
   font-size: 1.16rem;
   line-height: 1.15;
 }
+.ie2-lab-card-summary {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  color: var(--lab-muted);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
 .ie2-lab-empty {
   margin: 0.5rem 0 0;
   padding: 1rem;
@@ -556,6 +566,10 @@
   }
   .ie2-lab-card h3 {
     font-size: 1rem;
+  }
+  .ie2-lab-card-summary {
+    font-size: 0.78rem;
+    line-height: 1.32;
   }
   .ie2-lab-future {
     padding: 0.8rem;

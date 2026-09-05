@@ -22,7 +22,8 @@ assert.match(controller, /number: 3, grid: document\.getElementById\("unit3Activ
 assert.match(controller, /labActiveUnitTotal/);
 assert.match(controller, /<a class="ie2-lab-card"/);
 assert.match(controller, /<span class="ie2-lab-tag">/);
-assert.doesNotMatch(controller, /ie2-lab-card-(?:subtitle|summary|meta|number)/);
+assert.match(controller, /ie2-lab-card-summary/);
+assert.doesNotMatch(controller, /ie2-lab-card-(?:subtitle|meta|number)/);
 assert.doesNotMatch(controller, /Open activity/);
 
 const published = catalog.items.filter((item) => item.status === "published");
@@ -35,10 +36,13 @@ assert.deepEqual(unit3.map((item) => item.id), [
 ]);
 assert.ok(unit3.every((item) => item.gradebookProjected === false));
 assert.ok(unit3.every((item) => item.affectsAverage === false));
+assert.ok(unit3.every((item) => typeof item.cardSummary === "string" && item.cardSummary.length > 0 && item.cardSummary.length <= 90));
+assert.ok(unit3.every((item) => item.cardSummary.trim().endsWith(".")));
 
-assert.match(page, /english-intermediate2-practice-lab\.css\?v=20260904-minimal-cards/);
+assert.match(page, /english-intermediate2-practice-lab\.css\?v=20260904-unit3-one-line-cards/);
 assert.match(styles, /repeat\(auto-fill, minmax\(250px, 1fr\)\)/);
 assert.match(styles, /\.ie2-lab-card:hover/);
+assert.match(styles, /-webkit-line-clamp: 2/);
 assert.match(styles, /min-height: 112px/);
 
 console.log("Intermediate 2 Practice Lab Unit 3 integration passed.");
