@@ -572,11 +572,11 @@ INTERMEDIATE2_MIDTERM_WRITING_EVALUATION = {
 }
 
 INTERMEDIATE2_MIDTERM_WRITING_RUBRIC = [
-    {"key": "content", "label": "Content", "descriptor": "Successfully completes the task by providing information and ideas with reasonable precision on topics of immediate relevance."},
+    {"key": "content", "label": "Communication of ideas", "descriptor": "Communicates information and ideas with reasonable clarity and precision. Task coverage belongs in formative feedback and is not deducted from this score."},
     {"key": "composing", "label": "Composing (Organization)", "descriptor": "Links short, discrete simple elements into a connected, linear sequence of points."},
     {"key": "vocabulary", "label": "Vocabulary", "descriptor": "Uses sufficient vocabulary to express ideas and provide information about familiar or personally relevant topics."},
     {"key": "structure", "label": "Structure", "descriptor": "Uses familiar grammatical patterns with sufficient accuracy for the intended meaning to be clear."},
-    {"key": "mechanics", "label": "Mechanics", "descriptor": "Produces generally intelligible continuous writing; spelling, punctuation, capitalization, and layout do not interfere with meaning."}
+    {"key": "mechanics", "label": "Spelling and presentation", "descriptor": "Spelling, capitalization, and layout support intelligible continuous writing. Punctuation belongs in formative feedback and is not deducted from this score."}
 ]
 
 INTERMEDIATE_FINAL_WRITING_RUBRIC = [
