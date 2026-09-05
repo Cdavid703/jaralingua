@@ -28,8 +28,7 @@ assert.equal((page.match(/data-listen-pass=/g) || []).length, 3, "three listenin
 assert.equal((page.match(/data-audio-speed=/g) || []).length, 3, "three playback speeds required");
 assert.match(page, /Open the complete transcript/);
 assert.match(page, /Nothing is recorded, submitted or added to Grades/);
-assert.match(page, /aria-disabled="true"/);
-assert.doesNotMatch(page, /href="[^"]*reading-unit-3/i, "future reading must not create a broken link");
+assert.match(page, /href="\.\/reading-unit-3-the-session-that-stayed-open\.html">Read Part 2<\/a>/);
 
 const audioPath = "ingles/intermediate-2/audio/unit-3/the-message-before-the-workshop.mp3";
 const heroPath = "assets/img/english-intermediate-2/unit-3/message-before-workshop-listening/message-before-workshop-listening-hero-v1.png";

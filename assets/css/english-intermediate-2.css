@@ -1525,6 +1525,18 @@
     url("../img/english-intermediate-2/unit-2/answer-before-midnight-reading/answer-before-midnight-reading-hero-v1.webp") center / cover no-repeat;
 }
 
+.ie2-session-reading-page .ie2-reading-hero {
+  min-height: clamp(400px, 47vw, 560px);
+  background:
+    linear-gradient(90deg, rgba(3, 12, 32, 0.96) 0%, rgba(3, 12, 32, 0.82) 38%, rgba(3, 12, 32, 0.25) 68%, rgba(3, 12, 32, 0.03) 100%),
+    url("../img/english-intermediate-2/unit-3/session-stayed-open-reading/session-stayed-open-reading-hero-v1.png") center / cover no-repeat;
+}
+
+.ie2-session-reading-page .ie2-reading-hero h1 {
+  max-width: 14ch;
+  font-size: clamp(2.35rem, 5.25vw, 4.35rem);
+}
+
 .ie2-reading-hero-content {
   width: min(1180px, calc(100% - 36px));
   margin-inline: auto;
@@ -2083,6 +2095,27 @@
     background:
       linear-gradient(180deg, rgba(3, 12, 32, 0.1) 0%, rgba(3, 12, 32, 0.64) 42%, rgba(3, 12, 32, 0.98) 100%),
       url("../img/english-intermediate-2/unit-2/answer-before-midnight-reading/answer-before-midnight-reading-hero-v1.webp") 69% center / cover no-repeat;
+  }
+
+  .ie2-session-reading-page .ie2-reading-hero {
+    background:
+      linear-gradient(180deg, rgba(3, 12, 32, 0.08) 0%, rgba(3, 12, 32, 0.62) 42%, rgba(3, 12, 32, 0.98) 100%),
+      url("../img/english-intermediate-2/unit-3/session-stayed-open-reading/session-stayed-open-reading-hero-v1.png") 70% center / cover no-repeat;
+  }
+
+  .ie2-session-reading-page .ie2-reading-hero h1 {
+    max-width: 13ch;
+    font-size: clamp(2rem, 9.2vw, 3rem);
+  }
+
+  .ie2-session-reading-page .ie2-chapter-nav {
+    display: grid;
+    grid-template-columns: 1fr;
+    overflow-x: visible;
+  }
+
+  .ie2-session-reading-page .ie2-chapter-nav a {
+    text-align: center;
   }
 
   .ie2-reading-hero-content,

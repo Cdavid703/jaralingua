@@ -12,12 +12,12 @@ assert.match(page, /<details class="ie2-lab-folder" id="unit-3-folder">/);
 assert.doesNotMatch(page, /<details class="ie2-lab-folder"[^>]*\sopen[\s>]/);
 assert.doesNotMatch(page, /ie2-lab-folder-future" id="unit-3-folder"/);
 assert.match(page, /id="unit3ActivityGrid"/);
-assert.match(page, /id="unit3ActivityCount">4 activities/);
+assert.match(page, /id="unit3ActivityCount">5 activities/);
 assert.match(page, /Pronunciation · live/);
 assert.match(page, /Technology Functions Memory · live/);
 assert.match(page, /What Is It For\? Device Roulette · live/);
 assert.match(page, /The Message Before the Workshop · live/);
-assert.match(page, /Reading · next/);
+assert.match(page, /The Session That Stayed Open · live/);
 assert.match(page, /href="#unit-3-folder">Open newest activity/);
 assert.match(controller, /number: 3, grid: document\.getElementById\("unit3ActivityGrid"\)/);
 assert.match(controller, /labActiveUnitTotal/);
@@ -29,12 +29,13 @@ assert.doesNotMatch(controller, /Open activity/);
 
 const published = catalog.items.filter((item) => item.status === "published");
 const unit3 = published.filter((item) => Number(item.unit) === 3);
-assert.equal(unit3.length, 4);
+assert.equal(unit3.length, 5);
 assert.deepEqual(unit3.map((item) => item.id), [
   "unit-3-sound-clear-tech-support-pronunciation",
   "unit-3-technology-functions-memory",
   "unit-3-what-is-it-for-device-roulette",
   "unit-3-the-message-before-the-workshop-listening",
+  "unit-3-the-session-that-stayed-open-reading",
 ]);
 assert.ok(unit3.every((item) => item.gradebookProjected === false));
 assert.ok(unit3.every((item) => item.affectsAverage === false));

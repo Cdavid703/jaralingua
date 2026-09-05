@@ -551,6 +551,30 @@
       "affectsAverage": false,
       "status": "published",
       "searchKeywords": ["Unit 3", "listening", "technology", "digital safety", "phishing", "support message", "sign-in alert", "embedded questions", "instructions", "must not", "put off", "look up"]
+    },
+    {
+      "id": "unit-3-the-session-that-stayed-open-reading",
+      "unit": 3,
+      "order": 5,
+      "type": "reading",
+      "skillLabel": "Reading",
+      "title": "The Session That Stayed Open",
+      "cardSummary": "Follow Camila's account recovery and separate two technology problems.",
+      "subtitle": "The Message Before the Workshop · Part 2",
+      "summary": "Camila removes an unsafe shared link, protects the workshop group and discovers that the projector failure and account attack were separate problems.",
+      "image": "/assets/img/english-intermediate-2/unit-3/session-stayed-open-reading/session-stayed-open-reading-hero-v1.png",
+      "workshopHref": "/ingles/intermediate-2/reading-unit-3-the-session-that-stayed-open.html",
+      "duration": "15 minutes",
+      "product": "Three short sections, language analysis and eight evidence questions",
+      "questionCount": 8,
+      "chapterCount": 3,
+      "writtenResponse": false,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 3", "reading", "Part 2", "technology", "digital safety", "active session", "public link", "account recovery", "embedded questions", "take down", "look up", "back up", "up and running"]
     }
   ]
 }
