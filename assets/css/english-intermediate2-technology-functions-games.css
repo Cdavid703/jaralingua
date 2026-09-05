@@ -248,24 +248,71 @@
   transform: rotateY(180deg);
   background: #fff;
 }
-.tg-front img {
+.tg-card-visual {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.tg-card-visual::after {
+  content: "";
+  position: absolute;
+  inset: 38% 0 0;
+  background: linear-gradient(180deg, transparent, rgba(4, 20, 49, 0.94));
+  pointer-events: none;
+}
+.tg-card-visual img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+.tg-card-label {
+  position: absolute;
+  z-index: 1;
+  right: 0.38rem;
+  bottom: 0.38rem;
+  left: 0.38rem;
+  color: #fff;
+  font-size: clamp(0.68rem, 1.12vw, 0.92rem);
+  font-weight: 950;
+  line-height: 1.15;
+  text-align: center;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.75);
+}
+.tg-card-visual.is-language::after {
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 20, 49, 0.04) 0%,
+    rgba(4, 20, 49, 0.2) 34%,
+    rgba(4, 20, 49, 0.96) 72%
+  );
+}
 .tg-word {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  display: grid;
+  align-content: end;
   padding: 0.55rem;
   text-align: center;
-  color: var(--tg-navy);
+  color: #fff;
   font-size: clamp(0.72rem, 1.5vw, 1rem);
   font-weight: 950;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+.tg-word .tg-card-label {
+  position: static;
+  font-size: inherit;
 }
 .tg-word small {
   display: block;
   margin-top: 0.35rem;
-  color: #536173;
+  color: rgba(255, 255, 255, 0.88);
   font-size: 0.7em;
   font-weight: 700;
+  line-height: 1.25;
 }
 .tg-card.matched .tg-front {
   box-shadow: inset 0 0 0 4px var(--tg-gold);

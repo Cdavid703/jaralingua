@@ -62,7 +62,12 @@
           ? card.device.label
           : `Hidden card ${index + 1}`,
       );
-      button.innerHTML = `<span class="tg-face tg-back">?</span><span class="tg-face tg-front">${card.kind === "image" ? `<img src="${card.device.image}" alt="${card.device.label}" />` : `<span class="tg-word">${card.device.label}<small>used to ${card.device.functionText}</small></span>`}</span>`;
+      const writtenName = `<strong class="tg-card-label">${card.device.label}</strong>`;
+      const revealedContent =
+        card.kind === "image"
+          ? `<span class="tg-card-visual"><img src="${card.device.image}" alt="" decoding="async" />${writtenName}</span>`
+          : `<span class="tg-card-visual is-language"><img src="${card.device.image}" alt="" decoding="async" /><span class="tg-word">${writtenName}<small>used to ${card.device.functionText}</small></span></span>`;
+      button.innerHTML = `<span class="tg-face tg-back">?</span><span class="tg-face tg-front">${revealedContent}</span>`;
       button.addEventListener("click", () => choose(index));
       ui.board.append(button);
     });
