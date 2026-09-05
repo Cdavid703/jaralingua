@@ -1,0 +1,16 @@
+{
+  "speakers": {
+    "Camila": {
+      "voice_id": "EXAVITQu4vr4xnSDxMaL",
+      "name": "Sarah - Clear US",
+      "profile": "english-us",
+      "gender": "female"
+    },
+    "Daniel": {
+      "voice_id": "DwwuoY7Uz8AP8zrY5TAo",
+      "name": "Sean - Expressive and Conversational",
+      "profile": "english-us",
+      "gender": "male"
+    }
+  }
+}

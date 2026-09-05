@@ -26,7 +26,7 @@ El producto no debe pedir respuestas personales sensibles. Las situaciones de di
 | ------ | ------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------------------------------------- |
 | 1      | Relationships and Meeting People            | Desarrollada                                                       | Relaciones, relativos, descripciones, conversación social         |
 | 2      | Wishes, Dilemmas and Advice                 | Desarrollada                                                       | Deseos, arrepentimientos, segundo condicional y consejos          |
-| 3      | Technology and Digital Safety               | Explicación y pronunciación disponibles; faltan varios componentes | Tecnología, preguntas embebidas, phrasal verbs, seguridad digital |
+| 3      | Technology and Digital Safety               | Explicación, pronunciación, juegos y listening disponibles; reading planificado | Tecnología, preguntas embebidas, phrasal verbs, seguridad digital |
 | 4      | Movies, Reviews and Music Trends            | Pendiente                                                          | Reseñas, trama, present perfect y tendencias                      |
 | 5      | Speculation, Feelings, Community and Satire | Pendiente                                                          | `must/might`, impresiones, estados de ánimo y sátira              |
 | 6      | News, Reported Speech and Natural Disasters | Pendiente                                                          | Noticias, reported speech, secuenciación y emergencias            |
@@ -363,6 +363,8 @@ La implementación actual usa `assets/js/english-intermediate2-pronunciation-uni
 ### 7.6 Listening
 
 Usar `listening-unit-2-the-call-before-midnight.html` como referencia completa.
+
+La referencia publicada de Unidad 3 es `listening-unit-3-the-message-before-the-workshop.html`: diálogo profesional de dos voces, tres escuchas, diez preguntas, transcript cerrado inicialmente, noticing de lengua, producción oral privada y final abierto hacia un reading breve. Su imagen es exclusiva, su tarjeta usa `cardSummary` y el audio/guion viven en `audio/unit-3/`. Esta actividad no se entrega ni afecta Grades; no añadir envío docente sin una decisión pedagógica explícita.
 
 1. Hero: situación, nivel de escucha, número de preguntas, voces y QR.
 2. Antes de escuchar: ruta, vocabulario preview y predicción.

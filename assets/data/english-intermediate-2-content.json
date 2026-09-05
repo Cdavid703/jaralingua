@@ -525,6 +525,32 @@
       "affectsAverage": false,
       "status": "published",
       "searchKeywords": ["Unit 3", "technology", "speaking", "roulette", "wheel", "device", "function", "instructions", "what is it for", "used to"]
+    },
+    {
+      "id": "unit-3-the-message-before-the-workshop-listening",
+      "unit": 3,
+      "order": 4,
+      "type": "listening",
+      "skillLabel": "Listening",
+      "title": "The Message Before the Workshop",
+      "cardSummary": "Identify a false support message and follow the first safety steps.",
+      "subtitle": "A technical problem becomes a digital-safety incident.",
+      "summary": "Camila calls Daniel when a projector problem, a suspicious support link and an unfamiliar account alert interrupt her workshop preparation.",
+      "image": "/assets/img/english-intermediate-2/unit-3/message-before-workshop-listening/message-before-workshop-listening-hero-v1.png",
+      "media": "/ingles/intermediate-2/audio/unit-3/the-message-before-the-workshop.mp3",
+      "audioProvider": "elevenlabs",
+      "audioVersion": "2026.1",
+      "scriptHref": "/ingles/intermediate-2/audio/unit-3/listening-scripts.md",
+      "workshopHref": "/ingles/intermediate-2/listening-unit-3-the-message-before-the-workshop.html",
+      "duration": "01:33",
+      "durationSeconds": 92.53,
+      "product": "Three listening passes, ten questions and a 45-second incident report",
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": ["Unit 3", "listening", "technology", "digital safety", "phishing", "support message", "sign-in alert", "embedded questions", "instructions", "must not", "put off", "look up"]
     }
   ]
 }

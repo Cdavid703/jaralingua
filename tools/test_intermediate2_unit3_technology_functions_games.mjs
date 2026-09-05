@@ -204,7 +204,7 @@ for (const expected of [
     `Sitemap is missing ${id}.`,
   );
 }
-assert.ok(practiceLab.includes('id="unit3ActivityCount">3 activities'));
+assert.ok(practiceLab.includes('id="unit3ActivityCount">4 activities'));
 
 console.log(
   "Intermediate 2 Unit 3 technology-functions games contract passed.",

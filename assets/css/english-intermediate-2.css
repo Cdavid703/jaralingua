@@ -2185,6 +2185,21 @@
     url("../img/english-intermediate-2/unit-2/call-before-midnight-listening/call-before-midnight-listening-hero-v1.webp") center / cover no-repeat;
 }
 
+.ie2-message-listening-page .ie2-listening-hero {
+  background:
+    linear-gradient(90deg, rgba(3, 12, 32, 0.98) 0%, rgba(3, 12, 32, 0.91) 38%, rgba(3, 12, 32, 0.32) 69%, rgba(3, 12, 32, 0.04) 100%),
+    url("../img/english-intermediate-2/unit-3/message-before-workshop-listening/message-before-workshop-listening-hero-v1.png") center / cover no-repeat;
+}
+
+.ie2-message-listening-page .ie2-listen-pass-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ie2-message-listening-page .ie2-listening-hero h1 {
+  max-width: 14ch;
+  font-size: clamp(2.35rem, 5.4vw, 4.35rem);
+}
+
 .ie2-midnight-listening-page .ie2-listen-pass-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
@@ -2650,6 +2665,17 @@
       url("../img/english-intermediate-2/unit-2/call-before-midnight-listening/call-before-midnight-listening-hero-v1.webp") 70% center / cover no-repeat;
   }
 
+  .ie2-message-listening-page .ie2-listening-hero {
+    background:
+      linear-gradient(180deg, rgba(3, 12, 32, 0.1) 0%, rgba(3, 12, 32, 0.64) 42%, rgba(3, 12, 32, 0.98) 100%),
+      url("../img/english-intermediate-2/unit-3/message-before-workshop-listening/message-before-workshop-listening-hero-v1.png") 68% center / cover no-repeat;
+  }
+
+  .ie2-message-listening-page .ie2-listening-hero h1 {
+    max-width: 13ch;
+    font-size: clamp(2rem, 9.5vw, 3rem);
+  }
+
   .ie2-listening-hero-content,
   .ie2-listening-shell {
     width: min(100% - 24px, 1180px);
@@ -2688,6 +2714,10 @@
   }
 
   .ie2-midnight-listening-page .ie2-listen-pass-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ie2-message-listening-page .ie2-listen-pass-grid {
     grid-template-columns: 1fr;
   }
 

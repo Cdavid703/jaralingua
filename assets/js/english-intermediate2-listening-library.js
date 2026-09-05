@@ -2,7 +2,8 @@
   "use strict";
   const units = [
     { number: 1, grid: document.getElementById("unit1ListeningGrid"), count: document.getElementById("unit1ListeningCount"), empty: document.getElementById("unit1ListeningEmpty") },
-    { number: 2, grid: document.getElementById("unit2ListeningGrid"), count: document.getElementById("unit2ListeningCount"), empty: document.getElementById("unit2ListeningEmpty") }
+    { number: 2, grid: document.getElementById("unit2ListeningGrid"), count: document.getElementById("unit2ListeningCount"), empty: document.getElementById("unit2ListeningEmpty") },
+    { number: 3, grid: document.getElementById("unit3ListeningGrid"), count: document.getElementById("unit3ListeningCount"), empty: document.getElementById("unit3ListeningEmpty") }
   ];
   const search = document.getElementById("listeningLibrarySearch");
   const clear = document.getElementById("listeningLibraryClear");
@@ -15,8 +16,8 @@
   const searchable = (item) => normalize([`Unit ${item.unit}`, item.title, item.subtitle, item.summary, item.product, ...(item.searchKeywords || [])].join(" "));
 
   function card(item) {
-    const activityTime = item.activityDuration || item.duration || "Self-paced";
-    return `<article class="ie2-lab-card" data-search="${escapeHtml(searchable(item))}"><figure class="ie2-lab-card-image"><img src="${escapeHtml(item.image)}" alt="" loading="lazy" /><span class="ie2-lab-card-number">${String(item.order).padStart(2, "0")}</span></figure><div class="ie2-lab-card-tags"><span class="ie2-lab-tag">${escapeHtml(item.skillLabel || "Listening")}</span><span class="ie2-lab-tag private">Professional audio</span></div><div class="ie2-lab-card-body"><h3>${escapeHtml(item.title)}</h3><p class="ie2-lab-card-subtitle">${escapeHtml(item.subtitle)}</p><p class="ie2-lab-card-summary">${escapeHtml(item.summary)}</p><div class="ie2-lab-card-meta"><span><i class="bi bi-clock"></i>${escapeHtml(activityTime)}</span><span><i class="bi bi-headphones"></i>${escapeHtml(item.product || "Complete the listening")}</span></div><a class="intermediate2-card-action" href="${escapeHtml(item.workshopHref)}">Open listening</a></div></article>`;
+    const shortSummary = item.cardSummary || item.subtitle || "Practice focused listening.";
+    return `<article class="ie2-lab-card" data-search="${escapeHtml(searchable(item))}"><figure class="ie2-lab-card-image"><img src="${escapeHtml(item.image)}" alt="" loading="lazy" /></figure><div class="ie2-lab-card-tags"><span class="ie2-lab-tag">${escapeHtml(item.skillLabel || "Listening")}</span></div><div class="ie2-lab-card-body"><h3>${escapeHtml(item.title)}</h3><p class="ie2-lab-card-summary">${escapeHtml(shortSummary)}</p><a class="intermediate2-card-action" href="${escapeHtml(item.workshopHref)}">Open listening</a></div></article>`;
   }
 
   function update() {

@@ -1,0 +1,26 @@
+{
+  "audioProvider": "elevenlabs",
+  "model": "eleven_v3",
+  "generationMode": "dialogue",
+  "language": "en",
+  "accent": "General American English",
+  "voices": [
+    { "character": "Camila", "voiceName": "Sarah - Clear US", "voiceId": "EXAVITQu4vr4xnSDxMaL" },
+    { "character": "Daniel", "voiceName": "Sean - Expressive and Conversational", "voiceId": "DwwuoY7Uz8AP8zrY5TAo" }
+  ],
+  "generationSettings": {
+    "seed": 3050926,
+    "outputFormat": "mp3_44100_128",
+    "applyTextNormalization": "auto"
+  },
+  "audioVersion": "2026.1",
+  "scriptHref": "/ingles/intermediate-2/audio/unit-3/listening-scripts.md",
+  "audioHref": "/ingles/intermediate-2/audio/unit-3/the-message-before-the-workshop.mp3",
+  "duration": "01:33",
+  "durationSeconds": 92.53,
+  "fileBytes": 1480873,
+  "generatedAt": "2026-09-05",
+  "generator": "tools/generate_intermediate2_unit3_message_before_workshop_audio.ps1",
+  "licenseNote": "Generated for JaraLingua course use",
+  "qualityStatus": "approved"
+}
