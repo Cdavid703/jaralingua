@@ -49,6 +49,7 @@
     const params = new URLSearchParams(location.search);
     const requestedPage = params.get("page");
     const requestedWidth = Number(params.get("width"));
+    const requestedOpen = params.get("open");
     const pages = requestedPage ? allPages.filter((page) => page === requestedPage) : allPages;
     const widths = requestedWidth ? [requestedWidth] : [320, 390, 768, 1024];
     const frame = document.getElementById("auditFrame");
@@ -82,6 +83,13 @@
             continue;
           }
           const doc = frame.contentDocument;
+          if (requestedOpen) {
+            const expandable = doc.getElementById(requestedOpen);
+            if (expandable instanceof HTMLDetailsElement) {
+              expandable.open = true;
+              await new Promise((resolve) => setTimeout(resolve, 80));
+            }
+          }
           const clientWidth = doc.documentElement.clientWidth;
           const scrollWidth = doc.documentElement.scrollWidth;
           if (scrollWidth > clientWidth + 1) {

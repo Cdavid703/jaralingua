@@ -17,7 +17,7 @@ const result = {
   feedbackLogic: fs.readFileSync('assets/js/english-intermediate2-unit3-explanation.js', 'utf8').includes('private and has no score')
 };
 
-if (result.topics !== 9 || result.checks !== 8 || result.audioReferences !== 9 || result.uniqueAudios !== 9 || result.missingAudios.length || !result.courseOverviewLinked || !result.noMalformedCss || !result.feedbackLogic) {
+if (result.topics !== 9 || result.checks !== 8 || result.audioReferences !== 17 || result.uniqueAudios !== 17 || result.missingAudios.length || !result.courseOverviewLinked || !result.noMalformedCss || !result.feedbackLogic) {
   throw new Error(`Unit 3 explanation validation failed: ${JSON.stringify(result)}`);
 }
 console.log(`PASS ${JSON.stringify(result)}`);

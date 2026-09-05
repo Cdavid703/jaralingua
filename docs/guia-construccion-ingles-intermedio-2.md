@@ -286,6 +286,25 @@ Evitar bloques de texto masivo. Usar tarjetas `ie2-*`, tablas solo para comparac
 
 **Regla de apertura por defecto.** En todo Intermedio 2, las carpetas de Practice Lab, unidades del Overview, bloques de explicación y ayudas de actividades empiezan cerrados: no usar el atributo `open` en `<details>`. El estudiante o docente decide qué abrir. Las anclas y la búsqueda pueden llevar al bloque, pero no deben desplegarlo automáticamente salvo una necesidad de accesibilidad documentada.
 
+#### Patrón obligatorio para phrasal verbs e idioms
+
+La referencia pedagógica es la sección **Expressions** de `ingles/intermediate/unit-4-family-problems-memories.html`: categoría y contexto antes de memorizar, significado, situación de uso, varios modelos y expresiones relacionadas. Intermedio 2 conserva esa profundidad y añade enseñanza explícita de orden y pronunciación. La implementación canónica actual es `unit-3-technology-digital-safety.html#phrasal-verbs`.
+
+Toda sección de phrasal verbs debe seguir esta secuencia:
+
+1. Explicar primero qué es un *phrasal verb*: verbo principal + partícula que funcionan como una unidad léxica y pueden producir un significado distinto al verbo aislado.
+2. Compararlo brevemente con una expresión fija y un idiom. No llamar phrasal verb a cualquier combinación de palabras.
+3. Declarar la gramática de cada entrada: transitivo/intransitivo y separable/inseparable. Para los separables, mostrar las dos posiciones posibles del sustantivo y la posición obligatoria del pronombre: `turn down the volume`, `turn the volume down`, `turn it down`.
+4. Presentar cada entrada en una tarjeta amplia con equivalencia aproximada, significado contextual, ejemplo con sustantivo, ejemplo con pronombre cuando corresponda, situación/registro y pauta de sonido. Nunca volver al mosaico de tres columnas de microtarjetas con texto encerrado o altura artificialmente corta.
+5. Incluir en la misma sección 2–4 idioms conectados con el tema de la unidad. Identificarlos como idioms, explicar el significado figurativo, contexto y registro, y modelar la expresión completa; no mezclarlos silenciosamente con la categoría gramatical de phrasal verb.
+6. Cerrar con errores frecuentes, comprobación breve y una producción que use las expresiones en contexto.
+
+La retícula usa como máximo dos columnas en escritorio y una sola columna por debajo de 700 px; el texto tiene `line-height` mínimo de 1.5, `overflow-wrap`, padding suficiente y sin alturas fijas. Una imagen profesional contextual puede acompañar la introducción, pero no reemplaza la explicación. A 320, 390, 768 y 1024 px no puede haber scroll horizontal, recorte ni controles fuera de la tarjeta.
+
+La pronunciación no se resuelve con un audio combinado que recite toda la lista. Cada expresión tiene su MP3 profesional individual, guion verificable y dos acciones: modelo lento a 0.75x y natural a 1x. En los phrasal verbs separables, el guion incluye la forma aislada, un ejemplo con sustantivo y uno con pronombre; la pauta visual explica enlace, consonantes finales, acento y reducción. Los idioms se graban como grupos completos de sentido. El `<audio>` local sigue siendo la fuente accesible, los botones reflejan reproducción con `aria-pressed` y solo puede sonar un modelo a la vez. La marca del proveedor y sus credenciales nunca aparecen en la interfaz.
+
+En la Unidad 3 existen nueve modelos en `audio/unit-3-explanation/phrasal-verbs-and-idioms/`, generados por `tools/generate_intermediate2_unit3_phrasal_idiom_audio.ps1`; los guiones canónicos están en `audio/unit-3-explanation/scripts.md`.
+
 ### 7.3 Practice Lab y actividades base
 
 `practice-lab.html` es el índice operativo de ejercicios. Organiza por `<details>` de unidad y presenta tarjetas desde el catálogo `assets/data/english-intermediate-2-content.json` cuando aplica.

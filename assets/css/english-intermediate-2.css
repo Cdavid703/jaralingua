@@ -4027,3 +4027,105 @@
 .ie2-unit3-theory-page .ie2-vocabulary-bank { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
 @media (max-width: 980px) { .ie2-unit3-learning-route { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 700px) { .ie2-unit3-theory-page { --ie2-unit3-gutter: .75rem; }.ie2-unit3-hero { min-height: auto; padding-top: 2.4rem; padding-bottom: 2rem; background: linear-gradient(180deg, rgba(3,12,32,.16) 0%, rgba(3,12,32,.78) 44%, rgba(3,12,32,.97) 100%), url('../img/english-intermediate-2/units/unit-3-technology-safety-v1.webp') center / cover no-repeat; }.ie2-unit3-hero h1 { font-size: clamp(2rem, 10vw, 3.1rem); }.ie2-unit3-hero p:not(.intermediate2-kicker) { font-size: .95rem; line-height: 1.46; }.ie2-unit3-learning-route { grid-template-columns: 1fr; }.ie2-unit3-transfer { grid-template-columns: 1fr; }.ie2-unit3-theory-page .intermediate2-search.course-search-panel, .ie2-unit3-theory-page .ie2-unit-theory-shell { padding-left: max(.75rem, env(safe-area-inset-left)); padding-right: max(.75rem, env(safe-area-inset-right)); } }
+
+/* Unit 3 expressions: Level 1's context-rich pattern, with room for grammar and sound. */
+.ie2-unit3-expression-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+.ie2-unit3-expression-intro .ie2-section-intro { margin: 0; }
+.ie2-unit3-expression-intro .ie2-section-intro p { max-width: 76ch; }
+.ie2-unit3-expression-visual {
+  position: relative;
+  min-height: 280px;
+  margin: 0;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--ie2-navy);
+}
+.ie2-unit3-expression-visual img { width: 100%; height: 100%; min-height: 280px; object-fit: cover; }
+.ie2-unit3-expression-visual figcaption {
+  position: absolute;
+  inset: auto .75rem .75rem;
+  display: grid;
+  gap: .18rem;
+  padding: .75rem;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 12px;
+  background: rgba(5,24,57,.88);
+  color: #fff;
+  backdrop-filter: blur(8px);
+}
+.ie2-unit3-expression-visual figcaption strong { color: #fff; }
+.ie2-unit3-expression-visual figcaption span { color: rgba(255,255,255,.84); font-size: .86rem; line-height: 1.4; }
+.ie2-unit3-expression-compare { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 1rem; }
+.ie2-unit3-expression-compare article { min-height: 0; }
+.ie2-unit3-pronunciation-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: clamp(1rem, 2vw, 1.45rem);
+  border: 1px solid rgba(15,118,110,.22);
+  border-radius: 16px;
+  background: linear-gradient(135deg, #edf9f7, #f7fbff);
+}
+.ie2-unit3-pronunciation-map span { color: var(--ie2-teal); font-size: .76rem; font-weight: 950; letter-spacing: .05em; text-transform: uppercase; }
+.ie2-unit3-pronunciation-map h3 { margin: .25rem 0 .45rem; color: var(--ie2-navy); font-size: clamp(1.2rem, 2vw, 1.6rem); }
+.ie2-unit3-pronunciation-map p { margin: 0; color: var(--ie2-muted); line-height: 1.58; }
+.ie2-unit3-pronunciation-map ul { display: grid; gap: .55rem; align-content: center; margin: 0; padding: 0; list-style: none; }
+.ie2-unit3-pronunciation-map li { padding: .62rem .72rem; border-radius: 10px; background: #fff; color: var(--ie2-ink); line-height: 1.4; }
+.ie2-unit3-expression-grid,
+.ie2-unit3-idiom-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; }
+.ie2-unit3-idiom-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+.ie2-unit3-expression-card {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(1rem, 1.8vw, 1.3rem);
+  border: 1px solid rgba(7,31,79,.13);
+  border-top: 4px solid var(--ie2-blue);
+  border-radius: 0 0 15px 15px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(7,31,79,.06);
+}
+.ie2-unit3-expression-card.is-idiom { border-top-color: #a85b12; background: #fffaf4; }
+.ie2-unit3-expression-card h3 { margin: .55rem 0 .45rem; color: var(--ie2-navy); font-size: clamp(1.35rem, 2.2vw, 1.75rem); }
+.ie2-unit3-expression-card p { margin: .25rem 0; overflow-wrap: anywhere; color: var(--ie2-ink); line-height: 1.55; }
+.ie2-unit3-sound-cue { margin-top: auto !important; padding-top: .65rem; }
+.ie2-unit3-sound-cue mark { padding: .15rem .35rem; border-radius: 6px; background: #e9f3ff; color: var(--ie2-navy); font-weight: 900; }
+.ie2-unit3-audio-model { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5rem; margin-top: .7rem; }
+.ie2-unit3-audio-model audio { display: none; }
+.ie2-unit3-audio-model button {
+  min-height: 42px;
+  padding: .55rem .65rem;
+  border: 1px solid rgba(36,84,166,.25);
+  border-radius: 10px;
+  background: #eef4ff;
+  color: var(--ie2-navy);
+  font: inherit;
+  font-size: .82rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+.ie2-unit3-audio-model button:hover,
+.ie2-unit3-audio-model button:focus-visible,
+.ie2-unit3-audio-model button.is-playing { border-color: var(--ie2-teal); outline: none; background: var(--ie2-teal); color: #fff; }
+.ie2-unit3-category-note { max-width: 82ch; margin: 0 0 .8rem; padding: .72rem .8rem; border-left: 4px solid #a85b12; background: #fff7ed; color: var(--ie2-ink); line-height: 1.5; }
+@media (max-width: 900px) {
+  .ie2-unit3-expression-intro,
+  .ie2-unit3-pronunciation-map { grid-template-columns: 1fr; }
+  .ie2-unit3-expression-visual,
+  .ie2-unit3-expression-visual img { min-height: 230px; max-height: 330px; }
+  .ie2-unit3-expression-compare { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .ie2-unit3-expression-grid,
+  .ie2-unit3-idiom-grid { grid-template-columns: minmax(0, 1fr); }
+  .ie2-unit3-idiom-grid > :last-child:nth-child(odd) { grid-column: auto; }
+  .ie2-unit3-expression-card { padding: .9rem; }
+  .ie2-unit3-expression-visual,
+  .ie2-unit3-expression-visual img { min-height: 210px; }
+}

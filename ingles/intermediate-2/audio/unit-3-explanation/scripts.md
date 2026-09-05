@@ -24,7 +24,29 @@ You use a cloud drive to store files. To give clear instructions, use one action
 ## Technology phrasal verbs
 File: `technology-phrasal-verbs.mp3`
 
+Status: legacy combined model retained for compatibility. The page now uses the individual, context-rich models below so the learner can repeat one target at a time.
+
 Hook up the monitor to the laptop. Look up the error code online. The antenna cannot pick up a signal. Do not put off the security update. Turn down the volume. Do not take the device apart without guidance. With a noun object, you can say turn down the volume or turn the volume down. With a pronoun, the pronoun goes in the middle: turn it down, look it up, and take it apart.
+
+## Individual phrasal-verb and idiom pronunciation models
+
+Folder: `phrasal-verbs-and-idioms/`
+
+Generator: `tools/generate_intermediate2_unit3_phrasal_idiom_audio.ps1`
+
+Playback: each file is available as a 0.75x slow model and a 1x natural model. The slower version is produced in the browser from the same professional source so meaning, wording and voice remain identical.
+
+- `hook-up.mp3`: Hook up. Hook up the monitor to the laptop. Hook it up before the meeting.
+- `look-up.mp3`: Look up. Look up the error code online. Look it up before you call support.
+- `pick-up.mp3`: Pick up. The antenna cannot pick up a signal. It cannot pick it up inside this room.
+- `put-off.mp3`: Put off. Do not put off the security update. Do not put it off until tomorrow.
+- `turn-down.mp3`: Turn down. Turn down the volume. Turn it down during the call.
+- `take-apart.mp3`: Take apart. Do not take the device apart without guidance. Do not take it apart yourself.
+- `up-and-running.mp3`: Up and running. The network is up and running again.
+- `at-the-touch-of-a-button.mp3`: At the touch of a button. You can back up the files at the touch of a button.
+- `not-rocket-science.mp3`: It is not rocket science. Updating the app is not rocket science when you follow the steps.
+
+The first six models deliberately include the phrasal verb alone, a noun object and a pronoun object. This lets the audio teach both pronunciation and word order. The last three model the complete idiom in context; idioms are never separated into literal word-by-word definitions.
 
 ## Balanced technology comparisons
 File: `balanced-technology-comparisons.mp3`

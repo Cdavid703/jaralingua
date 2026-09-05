@@ -23,4 +23,53 @@
         : 'Not yet. Compare the grammar and meaning with the explanation above, then try again. This check is private and has no score.';
     });
   });
+
+  const expressionAudioButtons = Array.from(document.querySelectorAll('[data-expression-audio]'));
+  const expressionAudios = Array.from(document.querySelectorAll('.ie2-unit3-audio-model audio'));
+
+  const resetExpressionAudioState = (audio) => {
+    expressionAudioButtons
+      .filter((button) => button.dataset.expressionAudio === audio.id)
+      .forEach((button) => {
+        button.classList.remove('is-playing');
+        button.setAttribute('aria-pressed', 'false');
+      });
+  };
+
+  expressionAudios.forEach((audio) => {
+    audio.addEventListener('ended', () => resetExpressionAudioState(audio));
+    audio.addEventListener('error', () => resetExpressionAudioState(audio));
+  });
+
+  expressionAudioButtons.forEach((button) => {
+    button.setAttribute('aria-pressed', 'false');
+    const expressionName = button.closest('.ie2-unit3-expression-card')?.querySelector('h3')?.textContent?.trim();
+    if (expressionName) button.setAttribute('aria-label', `${button.textContent.trim()}: ${expressionName}`);
+    button.addEventListener('click', async () => {
+      const audio = document.getElementById(button.dataset.expressionAudio || '');
+      if (!(audio instanceof HTMLAudioElement)) return;
+
+      expressionAudios.forEach((candidate) => {
+        if (candidate !== audio) {
+          candidate.pause();
+          candidate.currentTime = 0;
+        }
+      });
+      expressionAudioButtons.forEach((candidate) => {
+        candidate.classList.remove('is-playing');
+        candidate.setAttribute('aria-pressed', 'false');
+      });
+
+      audio.pause();
+      audio.currentTime = 0;
+      audio.playbackRate = Number(button.dataset.rate) || 1;
+      button.classList.add('is-playing');
+      button.setAttribute('aria-pressed', 'true');
+      try {
+        await audio.play();
+      } catch (error) {
+        resetExpressionAudioState(audio);
+      }
+    });
+  });
 })();
