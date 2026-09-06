@@ -231,6 +231,144 @@
   vertical-align: middle;
 }
 
+/* Unit 5 - Looking Back */
+.lookback-page {
+  --lookback-navy: #082b59;
+  --lookback-blue: #0d5b9f;
+  --lookback-sky: #eaf5ff;
+  --lookback-gold: #d88a15;
+  --lookback-rose: #a8425f;
+  --lookback-ink: #172b46;
+  --lookback-muted: #566b84;
+  background: #f5f9fd;
+  color: var(--lookback-ink);
+}
+
+.lookback-page .lookback-hero {
+  max-width: none;
+  min-height: 430px;
+  margin: 0;
+  padding: clamp(2.3rem, 5vw, 5rem) clamp(1rem, 6vw, 7rem);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(330px, .78fr);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 5rem);
+  background: linear-gradient(105deg, rgba(3, 29, 66, .96) 0%, rgba(8, 43, 89, .91) 49%, rgba(10, 52, 97, .45) 100%), var(--hero-image) center / cover;
+}
+
+.lookback-page .lookback-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 13% 18%, rgba(241, 177, 62, .22), transparent 28%);
+  pointer-events: none;
+}
+
+.lookback-page .lookback-hero > * { position: relative; z-index: 1; }
+.lookback-page .lookback-hero .lesson-hero-content { max-width: 760px; color: #fff; }
+.lookback-page .lookback-hero h1 { color: #fff; margin: .35rem 0 .9rem; font-size: clamp(2.4rem, 5.6vw, 5.15rem); line-height: .96; letter-spacing: -.055em; }
+.lookback-page .lookback-hero .eyebrow { color: #ffd786; }
+.lookback-page .lookback-hero .hero-copy { margin: 0; max-width: 64ch; color: rgba(255,255,255,.92); font-size: clamp(1rem, 1.5vw, 1.18rem); line-height: 1.65; }
+.lookback-page .lookback-hero .lesson-meta { margin-top: 1.2rem; }
+.lookback-page .lookback-hero .lesson-meta span { background: rgba(255,255,255,.16); color: #fff; border: 1px solid rgba(255,255,255,.25); }
+.lookback-page .lookback-hero .hero-actions { margin-top: 1.35rem; }
+.lookback-page .lookback-hero .btn-secondary { border-color: rgba(255,255,255,.65); color: #fff; background: transparent; }
+.lookback-page .lookback-hero .btn-secondary:hover { background: rgba(255,255,255,.14); }
+.lookback-page .lookback-hero-image { margin: 0; border-radius: 28px; overflow: hidden; box-shadow: 0 24px 55px rgba(0,0,0,.24); border: 1px solid rgba(255,255,255,.24); }
+.lookback-page .lookback-hero-image img { width: 100%; display: block; aspect-ratio: 4 / 3; object-fit: cover; }
+
+.lookback-page .lookback-shell { width: min(1480px, 100%); margin: 0 auto; padding: clamp(1.15rem, 3vw, 3rem) clamp(.75rem, 3vw, 2rem) clamp(3rem, 7vw, 7rem); }
+.lookback-page .unit-objective { padding: clamp(1.15rem, 2.8vw, 1.7rem); border-radius: 24px; border-left: 7px solid var(--lookback-gold); background: linear-gradient(135deg, #fff8e9, #fff); box-shadow: 0 12px 28px rgba(20, 54, 94, .09); line-height: 1.7; }
+.lookback-page .unit-objective strong { color: var(--lookback-navy); }
+.lookback-page .unit-roadmap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem; margin: 1.15rem 0 1.5rem; }
+.lookback-page .roadmap-step { padding: .9rem 1rem; background: #fff; border: 1px solid #dce9f5; border-radius: 16px; color: var(--lookback-muted); font-size: .9rem; }
+.lookback-page .roadmap-step b { display: block; color: var(--lookback-blue); margin-bottom: .2rem; }
+
+.lookback-page .lookback-topic { margin: 0 0 1rem; overflow: hidden; border: 1px solid #dce8f3; border-radius: 22px; background: #fff; box-shadow: 0 9px 23px rgba(30, 66, 106, .07); }
+.lookback-page .lookback-topic > summary { list-style: none; display: grid; grid-template-columns: 46px minmax(0, 1fr) auto; align-items: center; gap: 14px; cursor: pointer; padding: 1rem clamp(1rem, 2.2vw, 1.5rem); }
+.lookback-page .lookback-topic > summary::-webkit-details-marker { display: none; }
+.lookback-page .lookback-topic[open] > summary { border-bottom: 1px solid #e5eef7; background: linear-gradient(90deg, #f3f9ff, #fff); }
+.lookback-page .topic-number { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; color: #fff; background: linear-gradient(135deg, var(--lookback-blue), var(--lookback-navy)); font-size: .84rem; font-weight: 900; }
+.lookback-page .topic-title strong { display: block; color: var(--lookback-navy); font-size: clamp(1rem, 1.8vw, 1.2rem); }
+.lookback-page .topic-title small { display: block; margin-top: .2rem; color: var(--lookback-muted); }
+.lookback-page .topic-toggle { color: var(--lookback-blue); font-weight: 900; font-size: .85rem; white-space: nowrap; }
+.lookback-page .lookback-topic[open] .topic-toggle::before { content: "Close"; }
+.lookback-page .lookback-topic:not([open]) .topic-toggle::before { content: "Open"; }
+.lookback-page .lookback-topic-body { padding: clamp(1rem, 3vw, 1.7rem); color: var(--lookback-ink); line-height: 1.65; }
+.lookback-page .topic-task { margin: 0 0 1rem; padding: .85rem 1rem; border-radius: 13px; background: var(--lookback-sky); color: #244d77; }
+
+.lookback-page .timeline-strip, .lookback-page .story-strip { display: flex; align-items: center; gap: .55rem; flex-wrap: wrap; margin: 1rem 0; padding: 1rem; border-radius: 16px; background: #f7fbff; border: 1px solid #d9e9f7; }
+.lookback-page .timeline-strip b, .lookback-page .story-strip b { color: var(--lookback-blue); }
+.lookback-page .timeline-arrow { color: var(--lookback-gold); font-size: 1.45rem; font-weight: 900; }
+.lookback-page .formula { margin: 1rem 0; padding: .95rem 1.1rem; border-radius: 15px; background: var(--lookback-navy); color: #fff; font-weight: 800; text-align: center; overflow-wrap: anywhere; }
+.lookback-page .formula em { color: #ffda8d; font-style: normal; }
+.lookback-page .compare-grid, .lookback-page .example-grid, .lookback-page .memory-grid, .lookback-page .expression-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
+.lookback-page .compare-card, .lookback-page .example-card, .lookback-page .memory-card, .lookback-page .expression-card { padding: 1rem; border: 1px solid #dce8f3; border-radius: 16px; background: #fff; }
+.lookback-page .compare-card.present { border-top: 4px solid #23a083; }
+.lookback-page .compare-card.past { border-top: 4px solid var(--lookback-gold); background: #fffaf0; }
+.lookback-page .compare-card strong, .lookback-page .example-card strong, .lookback-page .memory-card strong, .lookback-page .expression-card strong { display: block; color: var(--lookback-navy); }
+.lookback-page .compare-card p, .lookback-page .example-card p, .lookback-page .memory-card p, .lookback-page .expression-card p { margin: .4rem 0 0; color: var(--lookback-muted); }
+.lookback-page .be-map { display: grid; grid-template-columns: minmax(0, 1fr) 54px minmax(0, 1fr); align-items: stretch; gap: .9rem; margin: 1rem 0; }
+.lookback-page .be-column { padding: 1rem; border-radius: 18px; border: 1px solid #d9e6f2; background: #fff; }
+.lookback-page .be-column h3 { margin: 0 0 .65rem; color: var(--lookback-navy); font-size: 1rem; }
+.lookback-page .be-column.past { background: #fffaf0; border-color: #f0d398; }
+.lookback-page .be-arrow { display: grid; place-items: center; color: var(--lookback-gold); font-weight: 950; font-size: 2.1rem; }
+.lookback-page .form-row { display: grid; grid-template-columns: minmax(86px, .7fr) 36px minmax(92px, 1fr); gap: .45rem; align-items: center; padding: .55rem 0; border-bottom: 1px dashed #d8e5f1; }
+.lookback-page .form-row:last-child { border-bottom: 0; }
+.lookback-page .form-row .subject { font-weight: 850; color: var(--lookback-ink); }
+.lookback-page .form-row .arrow { color: var(--lookback-gold); text-align: center; font-weight: 900; }
+.lookback-page .audio-word, .lookback-page .audio-sentence { border: 0; cursor: pointer; font: inherit; font-weight: 900; text-align: left; color: var(--lookback-navy); background: #eaf4ff; border-radius: 10px; padding: .48rem .62rem; transition: transform .18s ease, background .18s ease; }
+.lookback-page .audio-word:hover, .lookback-page .audio-sentence:hover, .lookback-page .audio-word:focus-visible, .lookback-page .audio-sentence:focus-visible { outline: 3px solid rgba(216, 138, 21, .32); background: #d6ebff; transform: translateY(-1px); }
+.lookback-page .audio-word::after { content: "  ▶"; color: var(--lookback-blue); font-size: .72em; }
+.lookback-page .audio-sentence { width: 100%; margin-top: .75rem; line-height: 1.35; }
+.lookback-page .audio-sentence::after { content: "  ▶ Listen"; color: var(--lookback-blue); font-size: .78em; white-space: nowrap; }
+.lookback-page .audio-note { margin: .75rem 0 0; color: var(--lookback-muted); font-size: .88rem; }
+.lookback-page .audio-controls { display: flex; gap: .55rem; align-items: center; flex-wrap: wrap; margin: 1rem 0 0; padding: .8rem; border-radius: 13px; background: #f1f7fd; }
+.lookback-page .audio-controls strong { color: var(--lookback-navy); }
+.lookback-page .audio-speed { border: 1px solid #a8c8e5; background: #fff; color: var(--lookback-navy); border-radius: 8px; padding: .34rem .55rem; font-weight: 900; cursor: pointer; }
+.lookback-page .audio-speed.is-active { background: var(--lookback-blue); color: #fff; border-color: var(--lookback-blue); }
+.lookback-page .audio-status { margin: 0; font-size: .83rem; color: var(--lookback-muted); }
+.lookback-page .good-bad { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin: 1rem 0; }
+.lookback-page .good-bad > div { padding: .9rem; border-radius: 14px; }
+.lookback-page .good { background: #ecf9f2; color: #1d6b4b; }
+.lookback-page .bad { background: #fff0f1; color: #923849; }
+.lookback-page .question-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .85rem; margin: 1rem 0; }
+.lookback-page .question-card { padding: 1rem; border-radius: 16px; background: #f8fbff; border: 1px solid #d8e8f5; }
+.lookback-page .question-card strong { color: var(--lookback-blue); }
+.lookback-page .question-card p { margin: .4rem 0 0; }
+.lookback-page .word-bank { display: flex; gap: .55rem; flex-wrap: wrap; margin: 1rem 0; }
+.lookback-page .word-bank .audio-word { min-width: 92px; text-align: center; }
+.lookback-page .story-model { margin: 1rem 0; padding: 1rem 1.15rem; border-radius: 16px; border-left: 5px solid var(--lookback-gold); background: #fff8ea; line-height: 1.75; }
+.lookback-page .expression-card.pv { border-top: 4px solid #177eb7; }
+.lookback-page .expression-card.idiom { border-top: 4px solid var(--lookback-rose); }
+.lookback-page .checklist { columns: 2; margin: .7rem 0 0; padding-left: 1.25rem; }
+.lookback-page .checklist li { margin: .5rem 0; break-inside: avoid; }
+.lookback-page .return-links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1.35rem; }
+.lookback-page .return-links a { display: inline-flex; text-decoration: none; border-radius: 999px; padding: .75rem 1rem; background: var(--lookback-navy); color: #fff; font-weight: 900; }
+
+@media (max-width: 920px) {
+  .lookback-page .lookback-hero { grid-template-columns: 1fr; min-height: 0; }
+  .lookback-page .lookback-hero-image { max-width: 680px; width: 100%; }
+  .lookback-page .unit-roadmap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lookback-page .compare-grid, .lookback-page .example-grid, .lookback-page .memory-grid, .lookback-page .expression-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .lookback-page .lookback-hero { padding: 1.8rem 1rem 2rem; }
+  .lookback-page .lookback-hero .lesson-hero-content { padding-right: 96px; }
+  .lookback-page .lookback-topic > summary { grid-template-columns: 38px minmax(0, 1fr) auto; gap: 10px; padding: .9rem; }
+  .lookback-page .topic-number { width: 32px; height: 32px; font-size: .74rem; }
+  .lookback-page .topic-title small { font-size: .78rem; }
+  .lookback-page .topic-toggle { font-size: 0; }
+  .lookback-page .topic-toggle::before { font-size: .77rem; }
+  .lookback-page .unit-roadmap, .lookback-page .compare-grid, .lookback-page .example-grid, .lookback-page .memory-grid, .lookback-page .expression-grid, .lookback-page .question-board, .lookback-page .good-bad { grid-template-columns: 1fr; }
+  .lookback-page .be-map { grid-template-columns: 1fr; }
+  .lookback-page .be-arrow { transform: rotate(90deg); min-height: 28px; }
+  .lookback-page .checklist { columns: 1; }
+}
+
 .basic2-unit-toggle {
   border-radius: 999px;
   padding: 9px 13px;
