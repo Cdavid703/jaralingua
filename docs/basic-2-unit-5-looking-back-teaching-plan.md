@@ -54,7 +54,7 @@ Twenty-five individual ElevenLabs MP3 models are stored in `ingles/basico-2/audi
 - The answer key is balanced across A, B, and C with no repeating visual pattern.
 - Feedback explains the subject-to-form match and the past meaning after the student checks answers; retries are unlimited.
 - The activity deliberately practises only `was`, `were`, `wasn't`, and `weren't`. It does not test `did` or past action-verb forms, which were taught in Unit 4.
-- Selected cards use the existing individual Unit 5 ElevenLabs models with 0.75x and 1.0x speed controls.
+- No answer-model audio is shown inside the quiz, so no button can reveal an answer before the student chooses. Individual ElevenLabs pronunciation models remain available on the Unit 5 teaching page.
 - The activity has a unique professional horizontal hero and two professional picture contexts. The header and hero remain in normal scroll flow, and the two-question grid becomes one column on narrow screens.
 
 ## Technical and design requirements
