@@ -2,7 +2,7 @@
 
 ## Scope
 
-This is the Course Overview teaching page for Unit 5. Practice Lab activities, assessments, and teacher deliverables are intentionally out of scope until planned separately.
+This document began as the Course Overview teaching plan for Unit 5. The first approved Practice Lab activity is now included; further activities, assessments, and teacher deliverables remain planned separately.
 
 ## Pacing-guide alignment
 
@@ -46,6 +46,16 @@ Every teaching topic is a closed-by-default `<details>` section and begins with 
 ## Audio contract
 
 Twenty-five individual ElevenLabs MP3 models are stored in `ingles/basico-2/audio/unit5/past-be/`. They include individual forms (`was`, `were`, `wasn't`, `weren't`), complete affirmative/negative/question models, irregular past forms, past `go/get` expressions, and the Unit 5 idioms. The page offers 0.75x and 1.0x playback; every button plays only its own selected model.
+
+## Practice Lab activity 01 - Past be: Memory Grammar Lab
+
+- Route: `ingles/basico-2/practice-unit-5-past-be-memory-lab.html`.
+- Fifteen A/B/C decisions: five affirmative sentences, four negative sentences, four questions or short-answer contexts, and two picture-based meaning checks.
+- The answer key is balanced across A, B, and C with no repeating visual pattern.
+- Feedback explains the subject-to-form match and the past meaning after the student checks answers; retries are unlimited.
+- The activity deliberately practises only `was`, `were`, `wasn't`, and `weren't`. It does not test `did` or past action-verb forms, which were taught in Unit 4.
+- Selected cards use the existing individual Unit 5 ElevenLabs models with 0.75x and 1.0x speed controls.
+- The activity has a unique professional horizontal hero and two professional picture contexts. The header and hero remain in normal scroll flow, and the two-question grid becomes one column on narrow screens.
 
 ## Technical and design requirements
 
