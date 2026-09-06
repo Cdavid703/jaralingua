@@ -186,7 +186,49 @@
 
 .basic2-unit-title p {
   margin: 0;
-  line-height: 1.65;
+  line-height: 1.5;
+  max-width: 72ch;
+}
+
+/* Practice Lab: concise activity cards keep the image and the learning type visible first. */
+.basic2-page .unit-folder-grid .course-section-image {
+  height: 150px;
+}
+
+.basic2-page .unit-folder-grid .course-section-content {
+  padding: 15px 16px 16px;
+}
+
+.basic2-page .unit-folder-grid .section-number {
+  width: 27px;
+  height: 27px;
+  margin: 0 7px 9px 0;
+  font-size: 0.74rem;
+  vertical-align: middle;
+}
+
+.basic2-page .unit-folder-grid .course-section-content h3 {
+  font-size: 1.05rem;
+  line-height: 1.2;
+  margin: 0 0 7px;
+}
+
+.basic2-page .unit-folder-grid .course-section-content p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.38;
+  margin: 0 0 13px;
+}
+
+.basic2-page .unit-folder-grid .course-section-content .course-status {
+  min-height: 27px;
+  margin: 0 0 9px;
+  padding: 0 9px;
+  font-size: 0.75rem;
+  vertical-align: middle;
 }
 
 .basic2-unit-toggle {
