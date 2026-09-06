@@ -57,6 +57,15 @@ Twenty-five individual ElevenLabs MP3 models are stored in `ingles/basico-2/audi
 - No answer-model audio is shown inside the quiz, so no button can reveal an answer before the student chooses. Individual ElevenLabs pronunciation models remain available on the Unit 5 teaching page.
 - The activity has a unique professional horizontal hero and two professional picture contexts. The header and hero remain in normal scroll flow, and the two-question grid becomes one column on narrow screens.
 
+## Practice Lab activity 02 - Goldilocks and the Three Bears
+
+- Route: `ingles/basico-2/reading-unit-5-goldilocks-and-the-three-bears.html`.
+- A public-domain story adapted for A2 learners. It reinforces `was / were` in a meaningful narrative instead of treating the forms as isolated blanks.
+- Ten pre-reading vocabulary cards have individual ElevenLabs models: cottage, forest, porridge, bowl, empty, chair, soft, hard, asleep, and scared.
+- The book advances one page at a time. Large screens show the current and next page together; phone screens show one readable page. Each two-page spread includes one original professional illustration.
+- Students can play the visible page or the whole story. The final spread queues a narrator and distinct character voices for Papa Bear, Mama Bear, and Baby Bear. Playback is available at 0.75x or 1.0x.
+- The story closes with ten A/B/C comprehension questions. The answer distribution is deliberately mixed and feedback directs students to the relevant story detail.
+
 ## Technical and design requirements
 
 - Route: `ingles/basico-2/unit-5-looking-back.html`.
