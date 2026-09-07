@@ -65,6 +65,8 @@ Twenty-five individual ElevenLabs MP3 models are stored in `ingles/basico-2/audi
 - The book advances one page at a time. Large screens show the current and next page together; phone screens show one readable page. Each two-page spread includes one original professional illustration.
 - Students can play the visible page or the whole story. The final spread queues a narrator and distinct character voices for Papa Bear, Mama Bear, and Baby Bear. Playback is available at 0.75x or 1.0x.
 - The story closes with ten A/B/C comprehension questions. The answer distribution is deliberately mixed and feedback directs students to the relevant story detail.
+- Book-navigation standard: a page turn advances exactly one page. Forward/back controls, keyboard arrows, and horizontal touch swipes use the same visible 3D paper-turn motion and a short browser-generated paper-rustle sound; neither depends on a remote sound-effect file.
+- The `Chairs and beds` page has its own original illustration so that the middle of the story is not an empty text-only page. Several comprehension questions require a small inference or distinguish a past state from an action, while remaining appropriate for A2.
 
 ## Technical and design requirements
 
