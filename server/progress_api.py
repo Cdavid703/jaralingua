@@ -3697,9 +3697,9 @@ def intermediate_pronunciation_grade_from_payload(payload):
     return int(round(score100)), grade
 
 
-def basic2_unit1_pronunciation_report_from_payload(payload):
+def basic2_unit1_pronunciation_report_from_payload(payload, expected_stages=7):
     raw_scores = payload.get("stageScores")
-    if not isinstance(raw_scores, list) or len(raw_scores) != 7:
+    if not isinstance(raw_scores, list) or len(raw_scores) != expected_stages:
         raise ValueError("incomplete_pronunciation_report")
     stage_scores = []
     total_score = 0.0
@@ -3724,7 +3724,7 @@ def basic2_unit1_pronunciation_report_from_payload(payload):
             "transcript": clean_text(item.get("transcript"), 3000),
             "referenceText": clean_text(item.get("referenceText"), 3000),
             "missedWords": clean_text_list(item.get("missedWords"), 40, 80),
-            "final": bool(item.get("final")) or index == 6,
+            "final": bool(item.get("final")) or index == expected_stages - 1,
             "at": clean_text(item.get("at"), 80)
         })
     score100 = int(round(total_score / len(stage_scores)))
@@ -19840,18 +19840,21 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if not isinstance(student.get("gradeDetails"), dict):
                     student["gradeDetails"] = {}
                 previous = student["gradeDetails"].get(BASIC2_UNIT3_PRONUNCIATION_ID)
+                if isinstance(previous, dict) and report["clientSubmissionId"] and previous.get("clientSubmissionId") == report["clientSubmissionId"]:
+                    json_response(self, 200, {"ok": True, "evaluationId": BASIC2_UNIT3_PRONUNCIATION_ID, "grade": None, "score100": previous["score100"], "submittedAt": previous["submittedAt"], "weight": 0})
+                    return
                 try:
                     attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
                 except (TypeError, ValueError):
                     attempt_count = 1
                 submitted_at = now_iso()
-                student.setdefault("grades", {})[BASIC2_UNIT3_PRONUNCIATION_ID] = report["grade"]
+                student.setdefault("grades", {})[BASIC2_UNIT3_PRONUNCIATION_ID] = None
                 student["gradeDetails"][BASIC2_UNIT3_PRONUNCIATION_ID] = {
                     "evaluationId": BASIC2_UNIT3_PRONUNCIATION_ID,
                     "activityTitle": BASIC2_UNIT3_PRONUNCIATION_EVALUATION["title"],
                     "submittedAt": submitted_at,
                     "score100": report["score100"],
-                    "grade": report["grade"],
+                    "grade": None,
                     "stageScores": report["stageScores"],
                     "finalTranscript": report["finalTranscript"],
                     "finalReferenceText": report["finalReferenceText"],
@@ -19870,7 +19873,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "ok": True,
                     "evaluationId": BASIC2_UNIT3_PRONUNCIATION_ID,
                     "score100": report["score100"],
-                    "grade": report["grade"],
+                    "grade": None,
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
@@ -19892,7 +19895,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 403, {"error": "student_not_authorized"})
                     return
                 try:
-                    report = basic2_unit1_pronunciation_report_from_payload(payload)
+                    report = basic2_unit1_pronunciation_report_from_payload(payload, expected_stages=4)
                 except ValueError as error:
                     if changed:
                         write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
@@ -19901,18 +19904,21 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 if not isinstance(student.get("gradeDetails"), dict):
                     student["gradeDetails"] = {}
                 previous = student["gradeDetails"].get(BASIC2_UNIT4_PRONUNCIATION_ID)
+                if isinstance(previous, dict) and report["clientSubmissionId"] and previous.get("clientSubmissionId") == report["clientSubmissionId"]:
+                    json_response(self, 200, {"ok": True, "evaluationId": BASIC2_UNIT4_PRONUNCIATION_ID, "grade": None, "score100": previous["score100"], "submittedAt": previous["submittedAt"], "weight": 0})
+                    return
                 try:
                     attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
                 except (TypeError, ValueError):
                     attempt_count = 1
                 submitted_at = now_iso()
-                student.setdefault("grades", {})[BASIC2_UNIT4_PRONUNCIATION_ID] = report["grade"]
+                student.setdefault("grades", {})[BASIC2_UNIT4_PRONUNCIATION_ID] = None
                 student["gradeDetails"][BASIC2_UNIT4_PRONUNCIATION_ID] = {
                     "evaluationId": BASIC2_UNIT4_PRONUNCIATION_ID,
                     "activityTitle": BASIC2_UNIT4_PRONUNCIATION_EVALUATION["title"],
                     "submittedAt": submitted_at,
                     "score100": report["score100"],
-                    "grade": report["grade"],
+                    "grade": None,
                     "stageScores": report["stageScores"],
                     "finalTranscript": report["finalTranscript"],
                     "finalReferenceText": report["finalReferenceText"],
@@ -19931,7 +19937,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "ok": True,
                     "evaluationId": BASIC2_UNIT4_PRONUNCIATION_ID,
                     "score100": report["score100"],
-                    "grade": report["grade"],
+                    "grade": None,
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
@@ -19963,20 +19969,20 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     student["gradeDetails"] = {}
                 previous = student["gradeDetails"].get(BASIC2_UNIT5_PRONUNCIATION_ID)
                 if isinstance(previous, dict) and report["clientSubmissionId"] and previous.get("clientSubmissionId") == report["clientSubmissionId"]:
-                    json_response(self, 200, {"ok": True, "evaluationId": BASIC2_UNIT5_PRONUNCIATION_ID, "grade": previous["grade"], "score100": previous["score100"], "submittedAt": previous["submittedAt"], "weight": 0})
+                    json_response(self, 200, {"ok": True, "evaluationId": BASIC2_UNIT5_PRONUNCIATION_ID, "grade": None, "score100": previous["score100"], "submittedAt": previous["submittedAt"], "weight": 0})
                     return
                 try:
                     attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
                 except (TypeError, ValueError):
                     attempt_count = 1
                 submitted_at = now_iso()
-                student.setdefault("grades", {})[BASIC2_UNIT5_PRONUNCIATION_ID] = report["grade"]
+                student.setdefault("grades", {})[BASIC2_UNIT5_PRONUNCIATION_ID] = None
                 student["gradeDetails"][BASIC2_UNIT5_PRONUNCIATION_ID] = {
                     "evaluationId": BASIC2_UNIT5_PRONUNCIATION_ID,
                     "activityTitle": BASIC2_UNIT5_PRONUNCIATION_EVALUATION["title"],
                     "submittedAt": submitted_at,
                     "score100": report["score100"],
-                    "grade": report["grade"],
+                    "grade": None,
                     "stageScores": report["stageScores"],
                     "finalTranscript": report["finalTranscript"],
                     "finalReferenceText": report["finalReferenceText"],
@@ -19995,7 +20001,7 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "ok": True,
                     "evaluationId": BASIC2_UNIT5_PRONUNCIATION_ID,
                     "score100": report["score100"],
-                    "grade": report["grade"],
+                    "grade": None,
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,

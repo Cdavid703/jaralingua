@@ -620,10 +620,13 @@
   }
 
   function readUser() {
+    const active = window.JaraLinguaAuth?.getUser?.() || window.JaraLinguaCurrentUser;
+    if (active?.credential) return active;
     return readStoredUser(GOOGLE_USER_KEY, "google") || readStoredUser(MICROSOFT_USER_KEY, "microsoft") || readStoredUser(LOCAL_USER_KEY, "local");
   }
 
   function openLoginPanel() {
+    if (window.JaraLinguaAuth?.openPanel) { window.JaraLinguaAuth.openPanel(); return; }
     const trigger = document.querySelector("[data-auth-toggle], [data-auth-nav-toggle]");
     if (trigger) trigger.click();
   }
@@ -637,10 +640,10 @@
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
       <h3><i class="bi bi-send-check"></i> Send to teacher</h3>
-      <p>This pronunciation follow-up sends a written report to the teacher: scores, transcript, missed words, and unit focus. It has weight 0 and does not affect the accumulated percentage.</p>
+      <p>This pronunciation follow-up sends a written report to the teacher: scores, transcript, missed words, and unit focus. This is an ungraded deliverable and does not affect your course average.</p>
       <div class="pronunciation-submit-metrics">
         <span><b data-submit-score>--</b><small>Activity average</small></span>
-        <span><b data-submit-grade>--</b><small>Reference grade / 5</small></span>
+        <span><b data-submit-grade>Ungraded</b><small>Teacher follow-up</small></span>
       </div>
       <div class="pronunciation-submit-actions">
         <button type="button" class="action-button reset" data-submit-reset><i class="bi bi-arrow-repeat"></i> Reset full challenge</button>
@@ -654,12 +657,13 @@
     const resetButton = panel.querySelector("[data-submit-reset]");
     const statusNode = panel.querySelector("[data-submit-status]");
     let submitState = "idle";
+    let pendingSubmissionId = null;
     let submittedMessage = "";
     try {
       const savedSubmission = JSON.parse(localStorage.getItem(SUBMISSION_KEY) || "null");
       if (savedSubmission && savedSubmission.submittedAt) {
         submitState = "submitted";
-        submittedMessage = "Submitted to teacher. Reference grade: " + Number(savedSubmission.grade || 0).toFixed(2) + "/5. Weight: 0.";
+        submittedMessage = "Submitted to teacher. This is an ungraded deliverable.";
       }
     } catch (_error) {
       localStorage.removeItem(SUBMISSION_KEY);
@@ -683,7 +687,7 @@
         panel.classList.remove("is-submitted");
         panel.querySelector(".pronunciation-delivery-preview")?.remove();
         scoreNode.textContent = "--";
-        gradeNode.textContent = "--";
+        gradeNode.textContent = "Ungraded";
         submitButton.disabled = true;
         submitButton.innerHTML = '<i class="bi bi-send-fill"></i> Send to teacher';
         if (submitState !== "submitted" && submitState !== "error") {
@@ -692,11 +696,11 @@
         return;
       }
       scoreNode.textContent = report.average + "/100";
-      gradeNode.textContent = report.grade.toFixed(2) + "/5";
+      gradeNode.textContent = "Ungraded";
       panel.querySelector(".pronunciation-delivery-preview")?.remove();
       const preview = document.createElement("div");
       preview.className = "pronunciation-delivery-preview";
-      preview.innerHTML = `<p><strong>Delivery preview</strong></p><p><span>Sections:</span> ${STAGES.length} completed</p><p><span>Final text:</span> ${report.finalAttempt.referenceText}</p><p><span>Gradebook:</span> follow-up activity, weight 0, visible to teacher.</p>`;
+      preview.innerHTML = `<p><strong>Delivery preview</strong></p><p><span>Sections:</span> ${STAGES.length} completed</p><p><span>Final text:</span> ${report.finalAttempt.referenceText}</p><p><span>Gradebook:</span> ungraded deliverable, visible to teacher.</p>`;
       panel.querySelector(".pronunciation-submit-actions").insertAdjacentElement("beforebegin", preview);
       if (submitState === "submitted") {
         panel.classList.add("is-submitted");
@@ -731,7 +735,12 @@
       setStatus("Preparing your pronunciation report and sending it to the teacher...", "pending");
       update();
       try {
-        const response = await fetch(SUBMIT_PATH, {
+        const controller = new AbortController();
+        const sendTimeout = setTimeout(() => controller.abort(), 45000);
+        let response, payload;
+        try {
+        response = await fetch(SUBMIT_PATH, {
+          signal: controller.signal,
           method: "POST",
           headers: {
             Authorization: "Bearer " + user.credential,
@@ -739,7 +748,7 @@
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            clientSubmissionId: Date.now() + "-" + Math.random().toString(16).slice(2),
+            clientSubmissionId: pendingSubmissionId || (pendingSubmissionId = Date.now() + "-" + Math.random().toString(16).slice(2)),
             activityTitle: "Basic 2 Unit 3 Pronunciation - Around the World",
             stageScores: stageScores.map((score, index) => Object.assign({}, score, {
               stage: STAGES[index].label,
@@ -747,21 +756,23 @@
             })),
             summary: {
               score100: report.average,
-              grade: report.grade,
+              grade: null,
               weight: 0,
               followUpOnly: true,
               doesNotAffectAverage: true
             }
           })
         });
-        const payload = await response.json().catch(() => ({}));
+        payload = await response.json().catch(() => ({}));
+        } finally { clearTimeout(sendTimeout); }
         if (!response.ok) {
+          if (response.status === 401) { openLoginPanel(); throw new Error("Your session needs to be renewed. Sign in above, then press Send to teacher again. Your completed sections are saved."); }
+          if (payload.error === "incomplete_pronunciation_report") throw new Error("The server could not validate the completed sections. Reload this page and retry; your progress is saved.");
           if (payload.error === "student_not_authorized") throw new Error("This account is not linked to a Basic English student record.");
           throw new Error("The activity could not be submitted.");
         }
         submitState = "submitted";
-        const referenceGrade = Number(payload.grade).toFixed(2);
-        submittedMessage = "Submitted to teacher. Your teacher can now see the pronunciation report. Reference grade: " + referenceGrade + "/5. Weight: 0.";
+        submittedMessage = "Submitted to teacher. Your teacher can now see the report. No grade is assigned.";
         localStorage.setItem(SUBMISSION_KEY, JSON.stringify({ submittedAt: payload.submittedAt || new Date().toISOString(), grade: payload.grade, score100: payload.score100 }));
         setStatus(submittedMessage, "success");
       } catch (error) {
@@ -778,12 +789,14 @@
       resetAttempt(true);
       updateStageUI();
       submitState = "idle";
+      pendingSubmissionId = null;
       submittedMessage = "";
       update();
       setStatus("Full pronunciation challenge reset. You can start again.", "pending");
       stagePanel.scrollIntoView({ behavior: "smooth", block: "center" });
     });
     submitButton.addEventListener("click", submit);
+    window.addEventListener("jaralingua:auth-changed", update);
     update();
     return { panel, update };
   }
