@@ -57,10 +57,24 @@
       ['Who was asleep in the small bed?',['Baby Bear.','Mama Bear.','Goldilocks.'],'C','Goldilocks was asleep in the small bed.'],
       ['What lesson did Goldilocks learn at the end?',['Every cottage is empty.','She should ask before entering someone else’s home.','The bears were always angry.'],'B','The ending says that Goldilocks became careful and asked before entering someone else’s home.']
     ];
-    const letters = ['A','B','C']; let pageIndex = -1; let speed = 1; let player = null; let queue = []; let queueIndex = 0; let flipAudioContext = null; const status = document.getElementById('bookAudioStatus'); const left = document.getElementById('bookLeft'); const right = document.getElementById('bookRight'); const storybook = document.querySelector('.storybook');
+const letters = ['A','B','C']; let pageIndex = -1; let speed = 1; let player = null; let queue = []; let queueIndex = 0; const pageFlipAudio = new Audio(base + "page-turn.wav"); pageFlipAudio.preload = "auto"; const status = document.getElementById('bookAudioStatus'); const left = document.getElementById('bookLeft'); const right = document.getElementById('bookRight'); const storybook = document.querySelector('.storybook');
     function stop(){ if(player){player.pause();player.currentTime=0;} player=null;queue=[];queueIndex=0; }
     function renderPage(target, index){ const page=index===-1?cover:pages[index];target.className='book-page book-left'+(page.cover?' book-cover':'');target.innerHTML=`<span class="book-page-number">${page.cover?'Cover':`Page ${index+1}`}</span><h3>${page.title}</h3>${page.image?`<figure><img src="${page.image}" alt="${page.alt}">${page.caption?`<figcaption>${page.caption}</figcaption>`:''}</figure>`:''}<p>${page.text}</p>`; }
-    function pageTurnSound(){try{const AudioCtx=window.AudioContext||window.webkitAudioContext;if(!AudioCtx)return;flipAudioContext=flipAudioContext||new AudioCtx();if(flipAudioContext.state==='suspended')flipAudioContext.resume();const length=Math.floor(flipAudioContext.sampleRate*.16);const buffer=flipAudioContext.createBuffer(1,length,flipAudioContext.sampleRate);const data=buffer.getChannelData(0);for(let index=0;index<length;index++){const fade=1-index/length;data[index]=(Math.random()*2-1)*fade*fade;}const source=flipAudioContext.createBufferSource();const filter=flipAudioContext.createBiquadFilter();const gain=flipAudioContext.createGain();source.buffer=buffer;filter.type='bandpass';filter.frequency.setValueAtTime(1150,flipAudioContext.currentTime);filter.Q.value=.65;gain.gain.setValueAtTime(.0001,flipAudioContext.currentTime);gain.gain.exponentialRampToValueAtTime(.15,flipAudioContext.currentTime+.018);gain.gain.exponentialRampToValueAtTime(.0001,flipAudioContext.currentTime+.16);source.connect(filter).connect(gain).connect(flipAudioContext.destination);source.start();}catch(_){}}
+    function pageTurnSound(){
+      // Native media playback is started directly inside click/touch/key gestures.
+      // Do not await loading or AudioContext.resume(): mobile activation is transient.
+      try {
+        pageFlipAudio.pause();
+        pageFlipAudio.currentTime = 0;
+        pageFlipAudio.volume = 1;
+        const playing = pageFlipAudio.play();
+        if (playing && typeof playing.catch === 'function') playing.catch(() => {
+          status.textContent = 'Page turned. If you cannot hear the sound, raise your media volume and tap Next page again.';
+        });
+      } catch (_) {
+        status.textContent = 'Page turned. Tap Next page again to retry the page sound.';
+      }
+    }
     function renderBook(direction){ renderPage(left,pageIndex);right.hidden=true;document.getElementById('bookProgress').textContent=pageIndex===-1?'Cover':`Page ${pageIndex+1} of ${pages.length}`;document.getElementById('previousPage').disabled=pageIndex===-1;document.getElementById('nextPage').disabled=pageIndex===pages.length-1;document.getElementById('nextPage').textContent=pageIndex===-1?'Open book →':pageIndex===pages.length-1?'The end':'Next page →';document.getElementById('readPage').disabled=pageIndex===-1;if(direction){storybook.classList.remove('is-turn-forward','is-turn-back');void storybook.offsetWidth;storybook.classList.add(direction==='back'?'is-turn-back':'is-turn-forward');}}
     function turnPage(nextIndex,direction){if(nextIndex===pageIndex)return;stop();pageTurnSound();pageIndex=nextIndex;renderBook(direction);}
     function playQueue(files,label){ stop();queue=files.map(file=>base+file);queueIndex=0; status.textContent=`Reading ${label} at ${speed.toFixed(2)}×.`; const next=()=>{if(queueIndex>=queue.length){status.textContent='Audio finished.';stop();return;}player=new Audio(queue[queueIndex++]);player.playbackRate=speed;player.addEventListener('ended',next,{once:true});player.addEventListener('error',()=>{status.textContent='This audio model is unavailable. Please tell your teacher.';stop();},{once:true});player.play().catch(()=>status.textContent='Tap the audio button again to play.');};next();}
