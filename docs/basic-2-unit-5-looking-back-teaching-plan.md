@@ -70,7 +70,15 @@ The reading uses a one-sheet storybook sequence: Cover, then Pages 1 through 6. 
 - Book-navigation standard: a page turn advances exactly one page. Forward/back controls, keyboard arrows, and horizontal touch swipes use the same visible 3D paper-turn motion and a short browser-generated paper-rustle sound; neither depends on a remote sound-effect file.
 - The `Chairs and beds` page has its own original illustration so that the middle of the story is not an empty text-only page. Several comprehension questions require a small inference or distinguish a past state from an action, while remaining appropriate for A2.
 
-## Technical and design requirements
+## Practice Lab activity 03 - A New Ending for Goldilocks
+
+- Route: `ingles/basico-2/practice-unit-5-a-new-ending.html`. Teams of two or three create an original 60–90 word replacement for page 6, beginning when the bears find Goldilocks asleep.
+- No model ending, suggested plot or sample paragraph. English instructions require both was and were, at least one wasn't/weren't negative, past action verbs, one taught phrasal verb and one taught idiom used meaningfully.
+- Students create one AI illustration matching their own ending; one member reads the whole ending. All members help write, check and rehearse. Pronunciation, pauses and clarity receive explicit emphasis.
+- An optional closed expression reference links to the existing library. An interactive preparation checklist is for classroom use, without a submission or percentage grade.
+- Unique professional team-work hero, full-width responsive content, normal-flow header/hero, shared expandable QR, and compact Practice Lab card. Unit folder stays closed by default.
+
+## Technical and design requirements (teaching page)
 
 - Route: `ingles/basico-2/unit-5-looking-back.html`.
 - A new professional horizontal hero is used only for Unit 5.
