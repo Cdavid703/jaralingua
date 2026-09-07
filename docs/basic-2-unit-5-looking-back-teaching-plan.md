@@ -59,6 +59,8 @@ Twenty-five individual ElevenLabs MP3 models are stored in `ingles/basico-2/audi
 
 ## Practice Lab activity 02 - Goldilocks and the Three Bears
 
+The reading uses a one-sheet storybook sequence: Cover, then Pages 1 through 6. Each Next action reveals exactly one new page, so a previous page is never repeated in the same turn. Every narrative page includes an original illustration, a caption, and its corresponding audio model. The story has a clear classic ending: Goldilocks wakes up, runs home, and never returns to the bears' cottage.
+
 - Route: `ingles/basico-2/reading-unit-5-goldilocks-and-the-three-bears.html`.
 - A public-domain story adapted for A2 learners. It reinforces `was / were` in a meaningful narrative instead of treating the forms as isolated blanks.
 - Ten pre-reading vocabulary cards have individual ElevenLabs models: cottage, forest, porridge, bowl, empty, chair, soft, hard, asleep, and scared.

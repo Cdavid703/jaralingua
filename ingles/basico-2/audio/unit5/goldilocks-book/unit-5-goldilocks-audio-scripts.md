@@ -120,4 +120,4 @@ Someone is asleep in my bed!
 
 File: `story-page-06-ending.mp3`
 
-Goldilocks woke up. She was scared, so she ran home. After that day, she was careful when a house was empty.
+Goldilocks woke up. She was scared, so she ran home as fast as she could. She never went back to the bears' cottage. From then on, she was careful and asked before entering someone else's home.
