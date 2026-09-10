@@ -1,0 +1,6 @@
+const fs=require('node:fs'),path=require('node:path');
+const dir=path.join(__dirname,'../ingles/basico-2/audio/unit5/yesterday-pictures');fs.mkdirSync(dir,{recursive:true});
+const rate=44100,duration=3.5,n=Math.ceil(rate*duration),pcm=Buffer.alloc(n*2);let seed=83;const ticks=[];for(let t=0;t<2.95;t+=.045+.09*(t/3)**2)ticks.push(t);
+for(let i=0;i<n;i++){const t=i/rate;let v=0;seed=(Math.imul(seed,1664525)+1013904223)>>>0;const noise=seed/2147483648-1;for(const at of ticks){const dt=t-at;if(dt>=0&&dt<.025)v+=noise*.35*Math.exp(-dt*180);}for(const [at,f] of [[3,523.25],[3.1,659.25],[3.2,783.99]]){const dt=t-at;if(dt>=0&&dt<.3)v+=.2*Math.sin(2*Math.PI*f*dt)*Math.exp(-dt*11)*Math.min(1,dt/.008);}pcm.writeInt16LE(Math.round(Math.max(-1,Math.min(1,v))*32767),i*2);}
+const h=Buffer.alloc(44);h.write('RIFF');h.writeUInt32LE(pcm.length+36,4);h.write('WAVE',8);h.write('fmt ',12);h.writeUInt32LE(16,16);h.writeUInt16LE(1,20);h.writeUInt16LE(1,22);h.writeUInt32LE(rate,24);h.writeUInt32LE(rate*2,28);h.writeUInt16LE(2,32);h.writeUInt16LE(16,34);h.write('data',36);h.writeUInt32LE(pcm.length,40);fs.writeFileSync(path.join(dir,'roulette.wav'),Buffer.concat([h,pcm]));
+fs.copyFileSync(path.join(__dirname,'../ingles/basico-2/audio/unit5/goldilocks-book/page-turn.wav'),path.join(dir,'card-flip.wav'));
