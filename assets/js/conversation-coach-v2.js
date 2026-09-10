@@ -221,13 +221,14 @@
     elements.onboarding.hidden = name !== "onboarding";
     elements.interview.hidden = name !== "interview";
     elements.summary.hidden = name !== "summary";
-    const inConversation = name === "interview";
+    const inConversation = name === "interview" && config.ui?.floatingDock !== false;
     elements.dock.hidden = !inConversation;
     document.body.classList.toggle("has-floating-dock", inConversation);
   }
 
   function setStage(state, label) {
     elements.stage.dataset.state = state;
+    if (config.ui?.compactFeedback) label = {ready:`${coachFirstName} · Ready`,speaking:`${coachFirstName} · Speaking`,listening:"Listening",analyzing:"Checking your answer",responding:`${coachFirstName} replies`,complete:"Conversation complete"}[state] || label;
     const icons = {
       ready: "bi-person-video3",
       speaking: "bi-volume-up-fill",
@@ -363,13 +364,13 @@
     elements.frames.innerHTML = (question.frames || []).map((frame) => `<div class="coach-frame">${escapeHtml(frame)}</div>`).join("");
     elements.vocabulary.innerHTML = (question.vocabulary || []).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
     elements.grammar.textContent = question.grammar || "";
-    elements.support.open = session.mode === "guided";
+    elements.support.open = session.mode === "guided" && !config.ui?.supportStartsClosed;
     elements.supportLabel.textContent = session.mode === "guided" ? "Use, then personalize" : "Optional support";
     elements.feedback.hidden = true;
     elements.feedback.innerHTML = "";
     elements.recovery.hidden = true;
     elements.reaction.hidden = true;
-    elements.transcript.textContent = "Your transcript will appear after temporary Whisper analysis.";
+    elements.transcript.textContent = config.ui?.compactFeedback ? "Your words will appear here." : "Your transcript will appear after temporary Whisper analysis.";
     elements.transcript.classList.remove("has-text");
     elements.studentAudio.hidden = true;
     elements.studentAudio.removeAttribute("src");
@@ -672,7 +673,7 @@
 
   function countQuestionStarters(text) {
     const normalized = normalize(text);
-    const auxiliary = "(?:is|are|do|does|did|can|would|could|should|will|have|has)";
+    const auxiliary = "(?:is|are|was|were|do|does|did|can|would|could|should|will|have|has)";
     const starterPattern = new RegExp(`\\b(?:what'?s|what\\s+${auxiliary}|how\\s+(?:${auxiliary}|much|many|old|far|long|often)|where\\s+${auxiliary}|why\\s+${auxiliary}|who\\s+${auxiliary}|which\\s+\\w+|${auxiliary}\\s+(?:i|you|we|they|he|she|it))\\b`, "g");
     return (normalized.match(starterPattern) || []).length;
   }
@@ -680,6 +681,14 @@
   function evaluateCheck(transcript, check) {
     const normalized = normalize(transcript);
     const checkType = check.kind || check.type;
+    if (check.pattern) {
+      const matches = (normalized.match(new RegExp(check.pattern, "g")) || []).length;
+      return { label: check.label, met: matches >= (Number(check.minMatches) || 1), matches };
+    }
+    if (checkType === "word-count") {
+      const matches = countWords(transcript);
+      return { label: check.label, met: matches >= (Number(check.minMatches) || 1), matches };
+    }
     if (checkType === "question-starters" || checkType === "questionStarters") {
       const matches = countQuestionStarters(normalized);
       const needed = Number(check.minMatches) || 2;
@@ -715,9 +724,10 @@
 
     const task = clampScore(2 + checkRatio * 6 + lengthRatio * 2);
     const interaction = question.interaction
-      ? clampScore(2 + Math.min(2, questionStarterCount) * 3 + checkRatio * 2)
+      ? clampScore(2 + Math.min(1, questionStarterCount / (Number(question.expectedQuestionCount) || 2)) * 6 + checkRatio * 2)
       : clampScore(4 + checkRatio * 3 + Math.min(2, connectorCount) + lengthRatio);
-    const language = clampScore(3 + Math.min(4, unitMatchCount * 1.5) + checkRatio * 2 + Math.min(1, connectorCount));
+    const corrections = (config.feedbackRules || []).filter(rule => new RegExp(rule.pattern, "i").test(normalized)).map(rule => rule.explanation);
+    const language = clampScore(3 + Math.min(4, unitMatchCount * 1.5) + checkRatio * 2 + Math.min(1, connectorCount) - Math.min(4, corrections.length * 2));
     const paceValue = wordsPerMinute >= 60 && wordsPerMinute <= 165 ? 4 : wordsPerMinute >= 40 && wordsPerMinute <= 190 ? 2.5 : 1;
     const fluency = clampScore(2 + paceValue + lengthRatio * 3 + (seconds >= 6 ? 1 : 0));
     const clarity = clampScore(averageConfidence * 10);
@@ -725,32 +735,33 @@
     const total = Object.values(metrics).reduce((sum, value) => sum + value, 0);
     const lowConfidence = clearWords.filter((item) => item.probability < .68).slice(0, 8);
     const missing = checks.filter((check) => !check.met).map((check) => check.label);
-    const message = total >= 43
+    const message = corrections.length ? corrections.join(" ") : total >= 43
       ? "Your answer is detailed, relevant, and ready for a more independent attempt."
       : total >= 34
         ? `Your answer communicates the main idea. ${missing.length ? `Add ${missing[0]} next time.` : `Add one more precise ${unitShortLabel} expression next time.`}`
         : `Build the answer again with a complete structure${missing.length ? ` and include ${missing[0]}` : " and one specific detail"}.`;
-    return { total, metrics, checks, wordCount, durationSeconds: Math.round(seconds), wordsPerMinute: Math.round(wordsPerMinute), lowConfidence, message };
+    return { total, metrics, checks, wordCount, durationSeconds: Math.round(seconds), wordsPerMinute: Math.round(wordsPerMinute), lowConfidence, message, corrections };
   }
 
   function feedbackMarkup(answer, question) {
     const metrics = (config.rubric || []).map((criterion) => `<div class="coach-feedback-metric"><strong>${answer.analysis.metrics[criterion.key]}</strong><span>${escapeHtml(criterion.label)} /10</span></div>`).join("");
     const checks = answer.analysis.checks.map((check) => `<span class="coach-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i> ${escapeHtml(check.label)}</span>`).join("");
     const lowWords = answer.analysis.lowConfidence.length ? `<p class="coach-feedback-copy"><strong>Repeat more clearly:</strong> ${answer.analysis.lowConfidence.map((item) => escapeHtml(item.word)).join(", ")}. This is only a transcription-confidence signal.</p>` : "";
+    if (config.ui?.compactFeedback) return `<p class="coach-feedback-copy"><strong>Practice: ${answer.analysis.total}/50.</strong> ${escapeHtml(answer.analysis.message)}</p>${lowWords}<details><summary>Example and score details</summary><p class="coach-model"><strong>One possible answer:</strong><br>${escapeHtml(question.improved || "")}</p><div class="coach-checks">${checks}</div><div class="coach-feedback-grid">${metrics}</div></details>`;
     return `<div class="coach-feedback-grid">${metrics}</div><div class="coach-checks">${checks}</div><p class="coach-feedback-copy">${escapeHtml(answer.analysis.message)}</p>${lowWords}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(question.improved || "")}</p>`;
   }
 
   function roleReversalResponses(transcript) {
     const normalized = normalize(transcript);
     const matches = (config.interactionResponses || []).filter((response) => (response.terms || []).some((term) => normalized.includes(normalize(term))));
-    if (matches.length) return matches.slice(0, 2);
+    if (matches.length) return matches.slice(0, Number(config.maxInteractionResponses) || 2);
     return config.defaultInteractionResponse ? [config.defaultInteractionResponse] : [];
   }
 
   function evidenceResponses(transcript, entries = []) {
     const normalized = normalize(transcript);
     const matches = entries.filter((entry) => (entry.terms || []).some((term) => normalized.includes(normalize(term))));
-    return matches.length ? matches.slice(0, 2) : [];
+    return matches.length ? matches.slice(0, Number(config.maxReactionResponses) || 2) : [];
   }
 
   function responseEntries(answer, question, evaluatedPrompt = question) {
@@ -793,7 +804,7 @@
     elements.frames.innerHTML = (followUp.frames || []).map((frame) => `<div class="coach-frame">${escapeHtml(frame)}</div>`).join("");
     elements.vocabulary.innerHTML = (followUp.vocabulary || []).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
     elements.grammar.textContent = followUp.grammar || "";
-    elements.support.open = session.mode === "guided";
+    elements.support.open = session.mode === "guided" && !config.ui?.supportStartsClosed;
     elements.supportLabel.textContent = session.mode === "guided" ? "Follow-up support" : "Optional support";
     elements.recovery.hidden = true;
     elements.reaction.hidden = false;
@@ -830,7 +841,7 @@
     elements.recovery.hidden = true;
     elements.feedback.hidden = true;
     elements.transcript.textContent = "Analyzing your temporary recording. Please wait.";
-    setRecordStatus("Checking your English answer", "Whisper is transcribing the recording. No score is created without usable speech.");
+    setRecordStatus("Checking your English answer", config.ui?.compactFeedback ? "Preparing your transcript and feedback…" : "Whisper is transcribing the recording. No score is created without usable speech.");
     setStage("analyzing", `${coachFirstName} is checking your answer`);
     updateControls();
     try {
