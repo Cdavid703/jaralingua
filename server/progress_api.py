@@ -19450,6 +19450,18 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 })
             return
 
+        if parsed.path == "/api/basic2/unit5-goldilocks-listening/transcript":
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) != "admin":
+                    json_response(self, 403, {"error": "admin_only"})
+                    return
+                json_response(self, 200, {
+                    "title": "Goldilocks: The Next Morning",
+                    "transcript": "The next morning, Goldilocks was at home with her mother. She wasn't hungry, but she was worried. Her mother asked, \"Were the bears angry?\" \"They were surprised,\" Goldilocks answered. \"I was scared, so I ran home.\"\n\nHer mother opened an old photo album. In one picture, she was a little girl beside a forest. It was a trip down memory lane. \"I was lost there once,\" she said. \"A kind woman helped me.\"\n\nGoldilocks felt better, but she knew that entering the cottage was wrong. She wrote a short note to say sorry. Her father left it outside the bears' gate. Goldilocks stayed at home; she didn't go back to the cottage.\n\nThat afternoon, she went back to the garden with her mother. They were relaxed. Goldilocks got over her fear, but she remembered an important lesson: always ask before entering someone else's home."
+                })
+            return
+
         if parsed.path == "/api/intermediate/unit6-video-listening/transcript":
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
