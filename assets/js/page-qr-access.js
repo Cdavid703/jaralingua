@@ -23,7 +23,7 @@
       ".ie2-coach-hero-copy", ".ie2-overview-hero-copy", ".ie2e-hero-copy", ".ie2-grammar-hero-copy", ".ie2-lab-hero-copy",
       ".ie2-listening-hero-content", ".ie2-reading-hero-content", ".ie2-speaking-hero-content", ".ie2-roundtable-hero-copy",
       ".rr-hero-copy", ".vd-hero-copy", ".ie2-unit1-hero-copy", ".ie2-unit2-hero-copy", ".ie2-unit3-hero-copy", ".ie2w-hero-copy",
-      ".ie2m-hero-content"
+      ".ie2m-hero-content", ".ie2-unit4-hero-copy"
     ].join(", ")) || document.querySelector("h1")?.parentElement;
   }
 

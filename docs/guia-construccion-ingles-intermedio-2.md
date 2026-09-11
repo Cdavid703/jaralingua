@@ -27,7 +27,7 @@ El producto no debe pedir respuestas personales sensibles. Las situaciones de di
 | 1      | Relationships and Meeting People            | Desarrollada                                                       | Relaciones, relativos, descripciones, conversación social         |
 | 2      | Wishes, Dilemmas and Advice                 | Desarrollada                                                       | Deseos, arrepentimientos, segundo condicional y consejos          |
 | 3      | Technology and Digital Safety               | Explicación, pronunciación, juegos, listening y reading disponibles | Tecnología, preguntas embebidas, phrasal verbs, seguridad digital |
-| 4      | Movies, Reviews and Music Trends            | Pendiente                                                          | Reseñas, trama, present perfect y tendencias                      |
+| 4      | Movies, Reviews and Music Trends            | Explicación completa                                                          | Reseñas, trama, present perfect y tendencias                      |
 | 5      | Speculation, Feelings, Community and Satire | Pendiente                                                          | `must/might`, impresiones, estados de ánimo y sátira              |
 | 6      | News, Reported Speech and Natural Disasters | Pendiente                                                          | Noticias, reported speech, secuenciación y emergencias            |
 
@@ -548,3 +548,12 @@ El detalle operativo y la plantilla segura viven en [auto-deploy.md](auto-deploy
 5. Adaptar en tableta y celular antes de pulir el escritorio.
 6. Ejecutar las pruebas, revisar accesibilidad, escanear QR y validar manualmente la interacción.
 7. Publicar solo cuando contenido, media, enlaces, entrega y política de datos estén alineados.
+
+
+## Unidad 4 explicación implementada en septiembre de 2026
+
+La explicación unit-4-movies-music-and-reviews.html aplica once bloques cerrados inicialmente, modelos de película ficticia, 27 audios individuales/contextuales, 11 comprobaciones con retroalimentación específica, cuatro recursos visuales originales, cronologías y contraste de tres funciones verbales. La comparación de tendencias usa muestras explícitamente ficticias: no sustituirlas por afirmaciones históricas sin fuentes.
+
+El generador canónico es tools/build_intermediate2_unit4_explanation.py; el texto se sirve como HTML estático. El tema vive en el CSS compartido y las interacciones en english-intermediate2-unit4-explanation.js. Las imágenes de paneles se recortan por CSS conservando sus proporciones. El QR usa la URL pública de la página y el host .ie2-unit4-hero-copy. Los audios conservan guion, inventario y hash por archivo; la auditoría transcribe los 27 modelos.
+
+Prueba funcional: tools/test_intermediate2_unit4_explanation.mjs, con 320, 390, 768, 1024 y 1440 px, bloques abiertos y cerrados, búsqueda, feedback, Sign in, imágenes, QR y reproducción única. No incorpora calificaciones, grabación ni envíos. Practice Lab se desarrollará por separado.
