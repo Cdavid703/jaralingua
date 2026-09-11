@@ -35,6 +35,8 @@ def main():
                 return
             raise RuntimeError('Existing audio differs from canonical script: '+item['file'])
         payload={'text':item['text'],'model_id':'eleven_multilingual_v2','language_code':'en','voice_settings':{'stability':0.58,'similarity_boost':0.82,'style':0.12,'use_speaker_boost':True}}
+        if item['file']=='word-original-v2.mp3':
+            payload.update(previous_text='The first film is the original film.',next_text='The original story comes before the sequel.')
         for attempt in range(3):
             request=urllib.request.Request(f'https://api.elevenlabs.io/v1/text-to-speech/{VOICE}?output_format=mp3_44100_128',data=json.dumps(payload).encode('utf-8'),headers={'xi-api-key':key,'Accept':'audio/mpeg','Content-Type':'application/json'},method='POST')
             try:

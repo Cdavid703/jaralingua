@@ -21,3 +21,7 @@ Use case: scientific-educational. Asset type: music-video style triptych for an 
 
 ## Film vocabulary miniatures (2026-09-11)
 ImageGen: film-vocabulary.png, 4 columns × 2 rows, no text. Row 1: plot (connected story photos on a desk), setting (station), character (Mara in teal with guitar), cast (four actors). Row 2: performance (expressive Elena), scene (filming at station bench), ending (Mara bows to applause), soundtrack (guitar and headphones in recording studio). Maintain the fictional film visual style and clearly separated equal panels.
+
+
+## Music vocabulary miniatures (2026-09-11)
+ImageGen original photographic contact sheet, 4 columns × 3 rows, no labels, teal/navy/gold studio photography with diverse adult musicians. Row 1: artist singing; band playing; track waveform; album vinyl collection. Row 2: lyrics songwriter; chorus group singing; beat drummer; melody piano. Row 3: music video filming; views smartphone watcher; chart ranked bars; hit cheering audience. Equal panels, centered subjects for compact thumbnails.

@@ -437,7 +437,12 @@
         grid-column: 2;
       }
     }
-  </style>
+
+.expression-pronunciation{font:inherit;text-align:left;color:inherit;background:none;border:0;border-bottom:2px dotted #087f79;cursor:pointer;min-height:44px;padding:.2rem 0}
+.expression-pronunciation span{font-size:.6em;color:#087f79;white-space:nowrap}
+.expression-pronunciation[aria-pressed=true]{background:#e1f2ec}
+.expression-pronunciation:focus-visible{outline:3px solid #087f79;outline-offset:4px}
+</style>
 </head>
 
 <body>
@@ -523,7 +528,7 @@
     </section>
 
     <section class="idioms-block" id="idioms-list">
-      <h2 class="section-title">Intermediate idioms</h2>
+      <h2 class="section-title">Intermediate idioms and phrasal verbs</h2>
 
       <p class="section-subtitle">
         Select an idiom from the list. The content will open on the right side without
@@ -730,6 +735,203 @@
       }
     ];
 
+    const unit4Expressions = [
+  {
+    "icon": "♫",
+    "title": "come out",
+    "category": "Phrasal verb · intransitive · Course 2 / Unit 4",
+    "meaning": "To be released or become available.",
+    "usage": "Use this expression when discussing films, music or entertainment. No object follows this meaning of come out. Do not say “come the film out”.",
+    "example": "The sequel came out last month.",
+    "phrase": "come OUT · connect the final /m/ to the vowel in out.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "It came out last month."
+      }
+    ],
+    "prompt": "Describe a film or music experience using come out.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/come-out.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "put on",
+    "category": "Phrasal verb · transitive and separable · Course 2 / Unit 4",
+    "meaning": "To start playing a recording.",
+    "usage": "Use this expression when discussing films, music or entertainment. A noun can go in either position; a pronoun must go between put and on.",
+    "example": "Put on the soundtrack. / Put the soundtrack on.",
+    "phrase": "put it ON · keep the three words in one group.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "Put it on."
+      }
+    ],
+    "prompt": "Describe a film or music experience using put on.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/put-on.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "turn up",
+    "category": "Phrasal verb · transitive and separable · Course 2 / Unit 4",
+    "meaning": "To increase the volume.",
+    "usage": "Use this expression when discussing films, music or entertainment. This meaning concerns volume. The object pronoun goes in the middle.",
+    "example": "Turn up the music. / Turn the music up.",
+    "phrase": "turn it UP · link it to up; emphasize the change.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "Turn it up."
+      }
+    ],
+    "prompt": "Describe a film or music experience using turn up.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/turn-up.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "turn down",
+    "category": "Phrasal verb · transitive and separable · Course 2 / Unit 4",
+    "meaning": "To reduce the volume.",
+    "usage": "Use this expression when discussing films, music or entertainment. This meaning concerns volume. Do not say “turn down it”.",
+    "example": "Turn down the music. / Turn the music down.",
+    "phrase": "turn it DOWN · keep the final /n/ clear.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "Turn it down."
+      }
+    ],
+    "prompt": "Describe a film or music experience using turn down.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/turn-down.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "find out",
+    "category": "Phrasal verb · transitive or intransitive · Course 2 / Unit 4",
+    "meaning": "To discover information.",
+    "usage": "Use this expression when discussing films, music or entertainment. A noun object may be separated; the first noun example is more natural here. Pronouns go in the middle. Keep the complete idea (subject + verb) after out: “We found out who wrote it.”",
+    "example": "We found out the release date. / We found the release date out.",
+    "phrase": "find OUT · link /d/ to the vowel in out.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "We found it out yesterday."
+      }
+    ],
+    "prompt": "Describe a film or music experience using find out.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/find-out.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "stand out",
+    "category": "Phrasal verb · intransitive · Course 2 / Unit 4",
+    "meaning": "To be particularly noticeable.",
+    "usage": "Use this expression when discussing films, music or entertainment. There is no direct object. You can add “from”: it stands out from the other performances.",
+    "example": "Her performance stands out.",
+    "phrase": "stand OUT · keep the /d/ before the vowel.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "It stands out."
+      }
+    ],
+    "prompt": "Describe a film or music experience using stand out.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/stand-out.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "steal the show",
+    "category": "Idiom · Course 2 / Unit 4",
+    "meaning": "To attract the most attention and praise.",
+    "usage": "Use this expression when discussing films, music or entertainment. Informal praise. Nothing is literally stolen.",
+    "example": "The supporting actor steals the show.",
+    "phrase": "steal the SHOW · the is light; stress show.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "Her performance steals the show."
+      }
+    ],
+    "prompt": "Describe a film or music experience using steal the show.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/steal-the-show.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "on the edge of your seat",
+    "category": "Idiom · Course 2 / Unit 4",
+    "meaning": "Very excited or tense because you want to know what happens next.",
+    "usage": "Use this expression when discussing films, music or entertainment. Informal reaction to suspense. Adjust my/your/our to the person.",
+    "example": "The final scene kept me on the edge of my seat.",
+    "phrase": "on the EDGE of my SEAT · speak as a complete group.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "The thriller will keep you on the edge of your seat."
+      }
+    ],
+    "prompt": "Describe a film or music experience using on the edge of your seat.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/edge-of-seat.mp3"
+  },
+  {
+    "icon": "♫",
+    "title": "music to my ears",
+    "category": "Idiom · Course 2 / Unit 4",
+    "meaning": "News or words that are very pleasing to hear.",
+    "usage": "Use this expression when discussing films, music or entertainment. This expression reacts to good news; it is not simply a description of a song.",
+    "example": "“The concert is free!” That is music to my ears.",
+    "phrase": "MUSIC to my EARS · make music and ears prominent.",
+    "conversation": [
+      {
+        "speaker": "Alex",
+        "text": "How can I use this expression?"
+      },
+      {
+        "speaker": "Sam",
+        "text": "Your good news is music to my ears."
+      }
+    ],
+    "prompt": "Describe a film or music experience using music to my ears.",
+    "audio": "../intermediate-2/audio/unit-4-explanation/music-to-ears.mp3"
+  }
+];
+    for (const entry of unit4Expressions) {
+      const existing = idioms.findIndex(item => item.title.toLowerCase() === entry.title.toLowerCase());
+      if (existing >= 0) idioms[existing] = {...idioms[existing], ...entry};
+      else idioms.push(entry);
+    }
+    let expressionAudio = null;
     const menu = document.getElementById("idiom-menu");
     const display = document.getElementById("idiom-display");
 
@@ -761,6 +963,7 @@
     }
 
     function renderIdiom(index) {
+      if (expressionAudio) expressionAudio.pause();
       const idiom = idioms[index];
 
       const conversationHtml = idiom.conversation.map((line, lineIndex) => {
@@ -776,7 +979,7 @@
       display.innerHTML = `
         <div class="idiom-display-header">
           <div>
-            <h2>${idiom.title}</h2>
+            <h2 id="expression-title">${idiom.title}</h2>
             <span class="idiom-category">${idiom.category}</span>
           </div>
 
@@ -812,6 +1015,30 @@
           <strong>Speaking prompt:</strong> ${idiom.prompt}
         </div>
       `;
+
+      if (idiom.audio) {
+        const heading = display.querySelector('#expression-title');
+        const listen = document.createElement('button');
+        listen.type = 'button';
+        listen.className = 'expression-pronunciation';
+        listen.textContent = idiom.title;
+        const mark = document.createElement('span');
+        mark.textContent = ' ◖))'; mark.setAttribute('aria-hidden','true');
+        listen.append(mark);
+        listen.setAttribute('aria-label','Listen at 0.75 speed: '+idiom.title);
+        listen.setAttribute('aria-pressed','false');
+        heading.replaceChildren(listen);
+        expressionAudio = new Audio(idiom.audio);
+        const clip = expressionAudio;
+        clip.playbackRate = 0.75;
+        for (const event of ['play','pause','ended']) clip.addEventListener(event, () => listen.setAttribute('aria-pressed', String(!clip.paused && !clip.ended)));
+        listen.addEventListener('click', async () => {
+          if (!clip.paused) { clip.pause(); return; }
+          clip.currentTime = 0;
+          try { await clip.play(); }
+          catch { listen.setAttribute('aria-pressed','false'); }
+        });
+      }
     }
 
     renderMenu();

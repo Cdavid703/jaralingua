@@ -90,9 +90,9 @@
     "text": "Prequel."
   },
   {
-    "file": "word-original.mp3",
+    "file": "word-original-v2.mp3",
     "title": "Original",
-    "text": "Original."
+    "text": "Original. The original film."
   },
   {
     "file": "word-sequel.mp3",
@@ -135,6 +135,46 @@
     "text": "The film is set in a small railway station. The story follows Mara, a young musician. First, she discovers an old melody in her guitar case. Then, she meets Elena, a station worker who recognizes it. However, the final part is missing. They rehearse together. Eventually, they perform for the commuters."
   },
   {
+    "file": "opinion-moving.mp3",
+    "title": "Moving",
+    "text": "Moving."
+  },
+  {
+    "file": "opinion-gripping.mp3",
+    "title": "gripping",
+    "text": "gripping."
+  },
+  {
+    "file": "opinion-hilarious.mp3",
+    "title": "hilarious",
+    "text": "hilarious."
+  },
+  {
+    "file": "opinion-predictable.mp3",
+    "title": "Predictable",
+    "text": "Predictable."
+  },
+  {
+    "file": "opinion-confusing.mp3",
+    "title": "confusing",
+    "text": "confusing."
+  },
+  {
+    "file": "opinion-disappointing.mp3",
+    "title": "disappointing",
+    "text": "disappointing."
+  },
+  {
+    "file": "opinion-catchy.mp3",
+    "title": "Catchy",
+    "text": "Catchy."
+  },
+  {
+    "file": "opinion-convincing.mp3",
+    "title": "convincing",
+    "text": "convincing."
+  },
+  {
     "file": "opinion-model.mp3",
     "title": "An opinion with evidence",
     "text": "The concert scene is exciting, and I felt excited when the music began. The soundtrack is memorable because one melody connects the story. We hear it when Mara finds the sheet music and again at the concert. Although some scenes are slow, the acting is convincing."
@@ -145,9 +185,109 @@
     "text": "I’ve seen The Last Platform twice, and I watched it again last Saturday. This fictional drama is set in a small railway station. The story follows Mara, a young musician who finds an unfinished melody. She meets a station worker who recognizes it, and they try to discover its history together. The acting is convincing, and the soundtrack is especially moving because the same melody connects important scenes. Although the middle is a little slow, the relationship between the two women keeps the story interesting. Overall, I recommend watching it if you enjoy quiet stories about friendship and music. It is worth watching for its warm performances, even if you usually prefer faster films."
   },
   {
+    "file": "music-word-artist.mp3",
+    "title": "Artist",
+    "text": "Artist."
+  },
+  {
+    "file": "music-word-band.mp3",
+    "title": "Band",
+    "text": "Band."
+  },
+  {
+    "file": "music-word-track.mp3",
+    "title": "Track",
+    "text": "Track."
+  },
+  {
+    "file": "music-word-album.mp3",
+    "title": "Album",
+    "text": "Album."
+  },
+  {
+    "file": "music-word-lyrics.mp3",
+    "title": "Lyrics",
+    "text": "Lyrics."
+  },
+  {
+    "file": "music-word-chorus.mp3",
+    "title": "Chorus",
+    "text": "Chorus."
+  },
+  {
+    "file": "music-word-beat.mp3",
+    "title": "Beat",
+    "text": "Beat."
+  },
+  {
+    "file": "music-word-melody.mp3",
+    "title": "Melody",
+    "text": "Melody."
+  },
+  {
+    "file": "music-word-music-video.mp3",
+    "title": "Music video",
+    "text": "Music video."
+  },
+  {
+    "file": "music-word-views.mp3",
+    "title": "Views",
+    "text": "Views."
+  },
+  {
+    "file": "music-word-chart.mp3",
+    "title": "Chart",
+    "text": "Chart."
+  },
+  {
+    "file": "music-word-hit.mp3",
+    "title": "Hit",
+    "text": "Hit."
+  },
+  {
     "file": "music-vocabulary.mp3",
     "title": "Music and video vocabulary",
     "text": "Artist. Band. Track. Album. Lyrics. Chorus. Beat. Melody. Music video. Views. Chart. Hit. This pop track has a catchy chorus and a steady beat. Its video combines a band performance with a short narrative."
+  },
+  {
+    "file": "compare-genre.mp3",
+    "title": "Genre",
+    "text": "Genre"
+  },
+  {
+    "file": "compare-artists.mp3",
+    "title": "Artists",
+    "text": "Artists"
+  },
+  {
+    "file": "compare-main-visual-style.mp3",
+    "title": "Main visual style",
+    "text": "Main visual style"
+  },
+  {
+    "file": "compare-main-distribution-in-this-sample.mp3",
+    "title": "Main distribution in this sample",
+    "text": "Main distribution in this sample"
+  },
+  {
+    "file": "compare-similarity.mp3",
+    "title": "Similarity",
+    "text": "Similarity"
+  },
+  {
+    "file": "compare-difference.mp3",
+    "title": "Difference",
+    "text": "Difference"
+  },
+  {
+    "file": "compare-change-across-the-samples.mp3",
+    "title": "Change across the samples",
+    "text": "Change across the samples"
+  },
+  {
+    "file": "compare-a-finished-period.mp3",
+    "title": "A finished period",
+    "text": "A finished period"
   },
   {
     "file": "trends-model.mp3",

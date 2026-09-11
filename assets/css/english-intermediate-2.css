@@ -4344,3 +4344,6 @@
 .u4-vocab-grid,.u4-adverb-grid{grid-template-columns:minmax(0,1fr)}
 .u4-vocab-card .u4-crop{height:150px}
 }
+
+/* Expression cards keep their content and grow vertically across four desktop columns. */
+@media(min-width:1100px){.u4-expressions{grid-template-columns:repeat(4,minmax(0,1fr))}}

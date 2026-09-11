@@ -112,9 +112,9 @@ Prequel.
 
 ## Original
 
-File: `word-original.mp3`
+File: `word-original-v2.mp3`
 
-Original.
+Original. The original film.
 
 ## Sequel
 
@@ -164,6 +164,54 @@ File: `plot-model.mp3`
 
 The film is set in a small railway station. The story follows Mara, a young musician. First, she discovers an old melody in her guitar case. Then, she meets Elena, a station worker who recognizes it. However, the final part is missing. They rehearse together. Eventually, they perform for the commuters.
 
+## Moving
+
+File: `opinion-moving.mp3`
+
+Moving.
+
+## gripping
+
+File: `opinion-gripping.mp3`
+
+gripping.
+
+## hilarious
+
+File: `opinion-hilarious.mp3`
+
+hilarious.
+
+## Predictable
+
+File: `opinion-predictable.mp3`
+
+Predictable.
+
+## confusing
+
+File: `opinion-confusing.mp3`
+
+confusing.
+
+## disappointing
+
+File: `opinion-disappointing.mp3`
+
+disappointing.
+
+## Catchy
+
+File: `opinion-catchy.mp3`
+
+Catchy.
+
+## convincing
+
+File: `opinion-convincing.mp3`
+
+convincing.
+
 ## An opinion with evidence
 
 File: `opinion-model.mp3`
@@ -176,11 +224,131 @@ File: `review-model.mp3`
 
 I’ve seen The Last Platform twice, and I watched it again last Saturday. This fictional drama is set in a small railway station. The story follows Mara, a young musician who finds an unfinished melody. She meets a station worker who recognizes it, and they try to discover its history together. The acting is convincing, and the soundtrack is especially moving because the same melody connects important scenes. Although the middle is a little slow, the relationship between the two women keeps the story interesting. Overall, I recommend watching it if you enjoy quiet stories about friendship and music. It is worth watching for its warm performances, even if you usually prefer faster films.
 
+## Artist
+
+File: `music-word-artist.mp3`
+
+Artist.
+
+## Band
+
+File: `music-word-band.mp3`
+
+Band.
+
+## Track
+
+File: `music-word-track.mp3`
+
+Track.
+
+## Album
+
+File: `music-word-album.mp3`
+
+Album.
+
+## Lyrics
+
+File: `music-word-lyrics.mp3`
+
+Lyrics.
+
+## Chorus
+
+File: `music-word-chorus.mp3`
+
+Chorus.
+
+## Beat
+
+File: `music-word-beat.mp3`
+
+Beat.
+
+## Melody
+
+File: `music-word-melody.mp3`
+
+Melody.
+
+## Music video
+
+File: `music-word-music-video.mp3`
+
+Music video.
+
+## Views
+
+File: `music-word-views.mp3`
+
+Views.
+
+## Chart
+
+File: `music-word-chart.mp3`
+
+Chart.
+
+## Hit
+
+File: `music-word-hit.mp3`
+
+Hit.
+
 ## Music and video vocabulary
 
 File: `music-vocabulary.mp3`
 
 Artist. Band. Track. Album. Lyrics. Chorus. Beat. Melody. Music video. Views. Chart. Hit. This pop track has a catchy chorus and a steady beat. Its video combines a band performance with a short narrative.
+
+## Genre
+
+File: `compare-genre.mp3`
+
+Genre
+
+## Artists
+
+File: `compare-artists.mp3`
+
+Artists
+
+## Main visual style
+
+File: `compare-main-visual-style.mp3`
+
+Main visual style
+
+## Main distribution in this sample
+
+File: `compare-main-distribution-in-this-sample.mp3`
+
+Main distribution in this sample
+
+## Similarity
+
+File: `compare-similarity.mp3`
+
+Similarity
+
+## Difference
+
+File: `compare-difference.mp3`
+
+Difference
+
+## Change across the samples
+
+File: `compare-change-across-the-samples.mp3`
+
+Change across the samples
+
+## A finished period
+
+File: `compare-a-finished-period.mp3`
+
+A finished period
 
 ## Comparing two selections
 

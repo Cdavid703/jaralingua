@@ -18,7 +18,7 @@
     ['pause', 'ended', 'ratechange'].forEach((event) => audio.addEventListener(event, () => sync(audio)));
     audio.addEventListener('error', () => {
       sync(audio);
-      audio.closest('.u4-audio').querySelector('.u4-audio-status').textContent = 'Audio could not load. You can read the audio text below and try again.';
+      audio.closest('.u4-audio').querySelector('.u4-audio-status').textContent = 'Audio could not load. Tap the text to try again.';
     });
   }
   buttons.forEach((button) => button.addEventListener('click', async () => {
@@ -32,8 +32,9 @@
     audio.playbackRate = Number(button.dataset.rate);
     audio.currentTime = 0;
     try { await audio.play(); }
-    catch {
-      audio.closest('.u4-audio').querySelector('.u4-audio-status').textContent = 'Playback did not start. Try the audio player, or read the audio text.';
+    catch (error) {
+      if (error.name === 'AbortError') { sync(audio); return; }
+      audio.closest('.u4-audio').querySelector('.u4-audio-status').textContent = 'Playback did not start. Tap the text to try again.';
       sync(audio);
     }
   }));

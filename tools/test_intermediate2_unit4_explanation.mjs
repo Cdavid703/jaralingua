@@ -17,7 +17,7 @@ assert.equal(response.status(),200);
 await page.addStyleTag({content:'* {scroll-behavior:auto!important}'});
 assert.equal(await page.locator('#unit4-content > details').count(),11);
 assert.equal(await page.locator('details[open]').count(),0);
-assert.equal(await page.locator('audio').count(),42);
+assert.equal(await page.locator('audio').count(),70);
 await page.locator('.jl-page-qr-open').click();
 assert.equal(await page.locator('#jlPageQrDialog').evaluate(e=>e.open),true);
 await page.keyboard.press('Escape');
@@ -30,7 +30,7 @@ assert.ok(await page.locator('#unit4-content > details:not([hidden])').count()>0
 assert.equal(await page.locator('details[open]').count(),0);
 await page.locator('[data-course-search-clear]').click();
 assert.equal(await page.locator('.u4-check,.u4-use,.u4-can-do,input[type=radio],input[type=checkbox]').count(),0);
-assert.equal(await page.locator('.u4-inline-audio').count(),15);
+assert.equal(await page.locator('.u4-inline-audio').count(),52);
 const dimensions=[];
 for(const width of [320,390,768,1200,1440,1920]){
   await page.setViewportSize({width,height:900});
@@ -46,6 +46,7 @@ for(const width of [320,390,768,1200,1440,1920]){
 genres:getComputedStyle(document.querySelector('.u4-genre-grid')).gridTemplateColumns.split(' ').length,
 vocab:getComputedStyle(document.querySelector('.u4-vocab-grid')).gridTemplateColumns.split(' ').length,
 shell:document.querySelector('.ie2-unit-theory-shell').getBoundingClientRect().width}));
+if(width>=1100) assert.equal(await page.locator('.u4-expressions').first().evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),4);
 assert.equal(columns.genres,width>1100?3:width>700?2:1);
 assert.equal(columns.vocab,width>=1400?4:width>=1100?3:width>700?2:1);
 assert.ok(columns.shell>width*.9,'Full-width shell');
@@ -80,7 +81,7 @@ assert.equal(await page.locator('#audio-plot-model').evaluate(a=>a.playbackRate)
 await page.waitForFunction(()=>document.querySelector('[data-u4-audio="audio-plot-model"][data-rate="0.75"]').getAttribute('aria-pressed')==='true');
 await page.locator('#audio-plot-model').evaluate(a=>a.pause());
 await page.waitForFunction(()=>document.querySelector('[data-u4-audio="audio-plot-model"][data-rate="0.75"]').getAttribute('aria-pressed')==='false');
-for(const slug of ['word-prequel','word-original','word-sequel','already-watched','yet-question','yet-negative','just-released']){
+for(const slug of ['word-prequel','word-original-v2','word-sequel','already-watched','yet-question','yet-negative','just-released']){
 const audio=page.locator('#audio-'+slug);
 await audio.evaluate(a=>a.muted=true);
 await page.locator('[data-u4-audio="audio-'+slug+'"]').click();
@@ -88,8 +89,11 @@ await page.waitForFunction(id=>!document.getElementById(id).paused,'audio-'+slug
 assert.equal(await audio.evaluate(a=>a.playbackRate),.75);
 await audio.evaluate(a=>a.pause());
 }
+assert.equal(await page.locator('#expressions .u4-audio-actions,#expressions audio[controls]').count(),0);
+assert.equal(await page.locator('.u4-music-vocab .u4-card').count(),12);
+assert.ok(!(await page.locator('main').innerText()).match(/\bclauses?\b/i));
 assert.deepEqual(failures,[]);
-fs.writeFileSync(path.join(dest,'results.json'),JSON.stringify({topics:11,checks:0,audios:42,dimensions,images:imageResult.length,qr:true,search:true,auth:true,audioExclusivity:true,failures},null,2));
+fs.writeFileSync(path.join(dest,'results.json'),JSON.stringify({topics:11,checks:0,audios:70,dimensions,images:imageResult.length,qr:true,search:true,auth:true,audioExclusivity:true,failures},null,2));
 await browser.close();
 console.log('PASS: Unit 4 checks, assets, auth, QR, audio playback and 6 responsive widths.');
 
