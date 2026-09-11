@@ -103,3 +103,7 @@ La futura página se propone en `ingles/intermediate-2/unit-4-movies-music-and-r
 La revisión comprobará contenido y retroalimentación, pronunciación y correspondencia con guiones, carga de imágenes, enlaces, logo y acceso, ampliación del QR, navegación por teclado y lectura de bloques abiertos. Revisar 320, 390, 768 y 1024 px, además de escritorio amplio: sin desbordamiento, palabras recortadas, botones estrechos ni texto encerrado.
 
 Orden de producción posterior a la revisión del plan: cerrar contenido y modelos → preparar recursos visuales y audios → construir la página → verificar pedagogía y diseño → conectar Course Overview → seguir el flujo de publicación documentado cuando se solicite la implementación.
+
+
+## Revisión aplicada — 11 de septiembre de 2026
+Se sustituye el plan de checks y producción dentro de esta explicación: todas las actividades corresponden a Practice Lab. Esta página conserva únicamente enseñanza, ejemplos resueltos, comparaciones y pronunciación. Ancho completo adaptable, géneros en tres columnas de escritorio, ocho miniaturas de vocabulario en tres o cuatro columnas y quince nuevos audios pulsables (42 en total). Se amplía ever/never y se incorporan las cuatro frases solicitadas de already/yet/just a 0.75×. Verificación a 320, 390, 768, 1200, 1440 y 1920 px sin desbordamiento horizontal.

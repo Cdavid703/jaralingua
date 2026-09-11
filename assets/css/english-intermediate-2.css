@@ -4320,3 +4320,27 @@
  .u4-hero-inner {padding:1.5rem 0}
  .u4-hero .ie2-overview-chips span {font-size:.82rem}
 }
+
+/* Unit 4: full-width teaching layout with compact, regrouped cards. */
+.u4-shell,.u4-hero-inner,.ie2-unit4-theory-page .ie2-unit-theory-shell{width:calc(100% - clamp(24px,4vw,72px));max-width:none}
+.u4-vocab-grid,.u4-adverb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem;margin:1.4rem 0}
+.u4-vocab-card{padding:0;overflow:hidden}
+.u4-vocab-card>div:not(.u4-crop){padding:1rem}
+.u4-vocab-card .u4-crop{height:140px;aspect-ratio:auto}
+.u4-inline-audio{display:inline-block;padding:0;margin:0;border:0;max-width:100%;vertical-align:middle}
+.u4-inline-audio audio{display:none}
+.u4-inline-audio button{font:inherit;color:var(--ie2-navy);background:transparent;border:0;border-bottom:2px dotted var(--ie2-teal);padding:.35rem .15rem;min-height:44px;cursor:pointer;line-height:1.5;text-align:left;max-width:100%}
+.u4-inline-audio button:hover,.u4-inline-audio button[aria-pressed=true]{background:#e1f2ec;color:#145437}
+.u4-listen-mark{color:var(--ie2-teal);font-size:.8em;white-space:nowrap}
+.u4-inline-audio .u4-audio-status{display:block;font-size:.85rem}
+.u4-inline-audio .u4-audio-status:empty{display:none}
+@media(min-width:1100px){
+.u4-genre-grid,.u4-vocab-grid,.u4-grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(min-width:1400px){
+.u4-vocab-grid,.u4-adverb-grid,.u4-grid-4,.u4-storyboard{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:700px){
+.u4-vocab-grid,.u4-adverb-grid{grid-template-columns:minmax(0,1fr)}
+.u4-vocab-card .u4-crop{height:150px}
+}

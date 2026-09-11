@@ -1,29 +1,6 @@
-/* Unit 4: local formative checks and mutually exclusive audio models. */
+/* Unit 4: clickable pronunciation and mutually exclusive audio models. */
 (() => {
   'use strict';
-  document.querySelectorAll('.u4-check').forEach((form) => {
-    const feedback = form.querySelector('.u4-feedback');
-    const clear = () => {
-      form.querySelectorAll('label').forEach((label) => label.classList.remove('is-correct', 'is-incorrect'));
-      feedback.textContent = '';
-      feedback.className = 'u4-feedback';
-    };
-    form.addEventListener('submit', (event) => event.preventDefault());
-    form.addEventListener('change', clear);
-    form.querySelector('[data-u4-check]').addEventListener('click', () => {
-      clear();
-      const selected = form.querySelector('input:checked');
-      if (!selected) {
-        feedback.textContent = 'Choose a response first.';
-        form.querySelector('input')?.focus();
-        return;
-      }
-      const correct = selected.value === form.dataset.correct;
-      selected.closest('label').classList.add(correct ? 'is-correct' : 'is-incorrect');
-      feedback.classList.add(correct ? 'is-correct' : 'is-incorrect');
-      feedback.textContent = selected.dataset.feedback;
-    });
-  });
   const audios = [...document.querySelectorAll('.u4-audio audio')];
   const buttons = [...document.querySelectorAll('[data-u4-audio]')];
   const sync = (audio) => {

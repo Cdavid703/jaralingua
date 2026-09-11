@@ -17,3 +17,7 @@ Use case: illustration-story. Asset type: four-panel cinematic storyboard for fi
 ## music-styles.png
 
 Use case: scientific-educational. Asset type: music-video style triptych for an adult English lesson. Create a wide cinematic triptych with EXACTLY THREE equal columns, edge-to-edge panels with no gutters or borders, boundaries precisely at one third and two thirds. Left: performance music video, adult live band performing with singer and guitar on stage under warm spotlights. Center: narrative music video, emotional reunion between two adult friends at a railway station, visible station environment, cinematic storytelling. Right: conceptual music video, one adult dancer in an expressive pose surrounded by abstract teal, violet, and amber colored lighting, surreal artistic visual composition. Three styles immediately distinct and readable on mobile. Professional photorealistic cinematic images. No text, lettering, numbers, labels, logos, captions, borders, or watermarks.
+
+
+## Film vocabulary miniatures (2026-09-11)
+ImageGen: film-vocabulary.png, 4 columns × 2 rows, no text. Row 1: plot (connected story photos on a desk), setting (station), character (Mara in teal with guitar), cast (four actors). Row 2: performance (expressive Elena), scene (filming at station bench), ending (Mara bows to applause), soundtrack (guitar and headphones in recording studio). Maintain the fictional film visual style and clearly separated equal panels.

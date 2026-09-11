@@ -40,9 +40,84 @@
     "text": "Documentary. A filmmaker follows wildlife in its natural environment."
   },
   {
+    "file": "vocab-plot.mp3",
+    "title": "Plot",
+    "text": "Plot."
+  },
+  {
+    "file": "vocab-setting.mp3",
+    "title": "Setting",
+    "text": "Setting."
+  },
+  {
+    "file": "vocab-character.mp3",
+    "title": "Character",
+    "text": "Character."
+  },
+  {
+    "file": "vocab-cast.mp3",
+    "title": "Cast",
+    "text": "Cast."
+  },
+  {
+    "file": "vocab-performance.mp3",
+    "title": "Performance",
+    "text": "Performance."
+  },
+  {
+    "file": "vocab-scene.mp3",
+    "title": "Scene",
+    "text": "Scene."
+  },
+  {
+    "file": "vocab-ending.mp3",
+    "title": "Ending",
+    "text": "Ending."
+  },
+  {
+    "file": "vocab-soundtrack.mp3",
+    "title": "Soundtrack",
+    "text": "Soundtrack."
+  },
+  {
     "file": "film-elements.mp3",
     "title": "Film elements in context",
     "text": "Plot. Setting. Character. Cast. Performance. Scene. Ending. Soundtrack. The film is set in a railway station. Mara is the main character. The soundtrack connects the scenes through one melody."
+  },
+  {
+    "file": "word-prequel.mp3",
+    "title": "Prequel",
+    "text": "Prequel."
+  },
+  {
+    "file": "word-original.mp3",
+    "title": "Original",
+    "text": "Original."
+  },
+  {
+    "file": "word-sequel.mp3",
+    "title": "Sequel",
+    "text": "Sequel."
+  },
+  {
+    "file": "already-watched.mp3",
+    "title": "I’ve already watched it.",
+    "text": "I’ve already watched it."
+  },
+  {
+    "file": "yet-question.mp3",
+    "title": "Have you watched it yet?",
+    "text": "Have you watched it yet?"
+  },
+  {
+    "file": "yet-negative.mp3",
+    "title": "I haven’t watched it yet.",
+    "text": "I haven’t watched it yet."
+  },
+  {
+    "file": "just-released.mp3",
+    "title": "The band has just released a song.",
+    "text": "The band has just released a song."
   },
   {
     "file": "present-perfect.mp3",

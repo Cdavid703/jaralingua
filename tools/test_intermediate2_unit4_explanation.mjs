@@ -17,7 +17,7 @@ assert.equal(response.status(),200);
 await page.addStyleTag({content:'* {scroll-behavior:auto!important}'});
 assert.equal(await page.locator('#unit4-content > details').count(),11);
 assert.equal(await page.locator('details[open]').count(),0);
-assert.equal(await page.locator('audio').count(),27);
+assert.equal(await page.locator('audio').count(),42);
 await page.locator('.jl-page-qr-open').click();
 assert.equal(await page.locator('#jlPageQrDialog').evaluate(e=>e.open),true);
 await page.keyboard.press('Escape');
@@ -29,26 +29,10 @@ await page.locator('#u4-search').fill('participle');
 assert.ok(await page.locator('#unit4-content > details:not([hidden])').count()>0);
 assert.equal(await page.locator('details[open]').count(),0);
 await page.locator('[data-course-search-clear]').click();
-const checks=page.locator('.u4-check');
-for(let i=0;i<await checks.count();i++){
-  const form=checks.nth(i);
-  await form.evaluate(e=>e.closest('.ie2-theory-topic').open=true);
-  await form.locator('[data-u4-check]').click();
-  assert.match(await form.locator('.u4-feedback').innerText(),/Choose/);
-  const right=await form.getAttribute('data-correct');
-  const wrong=String((Number(right)+1)%3);
-  await form.locator('input[value="'+wrong+'"]').check();
-  await form.locator('[data-u4-check]').click();
-  assert.ok((await form.locator('.u4-feedback').getAttribute('class')).includes('is-incorrect'));
-  const wrongText=await form.locator('.u4-feedback').innerText();
-  assert.ok(wrongText.length>30);
-  await form.locator('input[value="'+right+'"]').check();
-  assert.equal(await form.locator('.u4-feedback').innerText(),'');
-  await form.locator('[data-u4-check]').click();
-  assert.match(await form.locator('.u4-feedback').innerText(),/^Correct/);
-}
+assert.equal(await page.locator('.u4-check,.u4-use,.u4-can-do,input[type=radio],input[type=checkbox]').count(),0);
+assert.equal(await page.locator('.u4-inline-audio').count(),15);
 const dimensions=[];
-for(const width of [320,390,768,1024,1440]){
+for(const width of [320,390,768,1200,1440,1920]){
   await page.setViewportSize({width,height:900});
   await page.evaluate(()=>document.querySelectorAll('details').forEach(d=>d.open=false));
   await page.evaluate(()=>window.scrollTo(0,0));
@@ -58,7 +42,14 @@ for(const width of [320,390,768,1024,1440]){
   await page.evaluate(()=>document.querySelectorAll('#unit4-content details').forEach(d=>d.open=true));
   const open=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,client:document.documentElement.clientWidth}));
   assert.ok(open.scroll<=width+1,'open overflow '+width+' '+JSON.stringify(open));
-  dimensions.push({width,closed,open});
+  const columns=await page.evaluate(()=>({
+genres:getComputedStyle(document.querySelector('.u4-genre-grid')).gridTemplateColumns.split(' ').length,
+vocab:getComputedStyle(document.querySelector('.u4-vocab-grid')).gridTemplateColumns.split(' ').length,
+shell:document.querySelector('.ie2-unit-theory-shell').getBoundingClientRect().width}));
+assert.equal(columns.genres,width>1100?3:width>700?2:1);
+assert.equal(columns.vocab,width>=1400?4:width>=1100?3:width>700?2:1);
+assert.ok(columns.shell>width*.9,'Full-width shell');
+dimensions.push({width,closed,open,columns});
 }
 await page.setViewportSize({width:1440,height:1000});
 await page.locator('img').evaluateAll(async images=>{await Promise.all(images.map(async i=>{i.loading='eager';try {await i.decode()} catch {}}))});
@@ -89,8 +80,16 @@ assert.equal(await page.locator('#audio-plot-model').evaluate(a=>a.playbackRate)
 await page.waitForFunction(()=>document.querySelector('[data-u4-audio="audio-plot-model"][data-rate="0.75"]').getAttribute('aria-pressed')==='true');
 await page.locator('#audio-plot-model').evaluate(a=>a.pause());
 await page.waitForFunction(()=>document.querySelector('[data-u4-audio="audio-plot-model"][data-rate="0.75"]').getAttribute('aria-pressed')==='false');
+for(const slug of ['word-prequel','word-original','word-sequel','already-watched','yet-question','yet-negative','just-released']){
+const audio=page.locator('#audio-'+slug);
+await audio.evaluate(a=>a.muted=true);
+await page.locator('[data-u4-audio="audio-'+slug+'"]').click();
+await page.waitForFunction(id=>!document.getElementById(id).paused,'audio-'+slug);
+assert.equal(await audio.evaluate(a=>a.playbackRate),.75);
+await audio.evaluate(a=>a.pause());
+}
 assert.deepEqual(failures,[]);
-fs.writeFileSync(path.join(dest,'results.json'),JSON.stringify({topics:11,checks:11,audios:27,dimensions,images:imageResult.length,qr:true,search:true,auth:true,audioExclusivity:true,failures},null,2));
+fs.writeFileSync(path.join(dest,'results.json'),JSON.stringify({topics:11,checks:0,audios:42,dimensions,images:imageResult.length,qr:true,search:true,auth:true,audioExclusivity:true,failures},null,2));
 await browser.close();
-console.log('PASS: Unit 4 checks, assets, auth, QR, audio playback and 5 responsive widths.');
+console.log('PASS: Unit 4 checks, assets, auth, QR, audio playback and 6 responsive widths.');
 

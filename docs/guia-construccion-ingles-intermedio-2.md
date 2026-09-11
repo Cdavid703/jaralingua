@@ -79,7 +79,7 @@ Las superficies repetidas usan borde sutil, fondo blanco y radio de `8px`. La ex
 
 Intermedio 2 usa composición amplia, no un riel central estrecho:
 
-- Shell estándar: `width: min(1180px, calc(100% - 36px))`.
+- Shell estándar: ancho completo con márgenes adaptables; reagrupar las tarjetas según el espacio disponible.
 - Hero de inicio y overview: imagen de fondo de ancho completo, degradado oscuro desde la izquierda y contenido alineado al borde inferior.
 - Dashboard: tres columnas en escritorio; tarjetas con imagen `4 / 3`, número, estado, título, resumen y CTA.
 - Grids de contenido: `repeat(auto-fit, minmax(min(100%, 250px), 1fr))` cuando la cantidad de tarjetas es variable.
@@ -109,7 +109,7 @@ Para una imagen nueva:
 
 ### Diferencia útil frente a Básico 2
 
-Básico 2 aporta una buena referencia de navegación didáctica: hero, objetivos, rutas, tarjetas, listening, juegos, pronunciación y QR. Sin embargo, usa un shell de hasta `1760px`, radios de `22px`, azul más brillante y una estructura visual más lúdica. En Intermedio 2 se conservan los flujos pedagógicos, los controles accesibles y la estrategia mobile-first, pero se usan los tokens `--ie2-*`, radios de `8px` y el shell de `1180px`.
+Básico 2 aporta una buena referencia de navegación didáctica: hero, objetivos, rutas, tarjetas, listening, juegos, pronunciación y QR. Sin embargo, usa un shell de hasta `1760px`, radios de `22px`, azul más brillante y una estructura visual más lúdica. En Intermedio 2 se conservan los flujos pedagógicos, los controles accesibles y la estrategia mobile-first, pero se usan los tokens `--ie2-*`, radios de `8px` y un shell de ancho completo con márgenes adaptables.
 
 ## 3. Responsividad: contrato para escritorio, tableta y celular
 
@@ -557,3 +557,7 @@ La explicación unit-4-movies-music-and-reviews.html aplica once bloques cerrado
 El generador canónico es tools/build_intermediate2_unit4_explanation.py; el texto se sirve como HTML estático. El tema vive en el CSS compartido y las interacciones en english-intermediate2-unit4-explanation.js. Las imágenes de paneles se recortan por CSS conservando sus proporciones. El QR usa la URL pública de la página y el host .ie2-unit4-hero-copy. Los audios conservan guion, inventario y hash por archivo; la auditoría transcribe los 27 modelos.
 
 Prueba funcional: tools/test_intermediate2_unit4_explanation.mjs, con 320, 390, 768, 1024 y 1440 px, bloques abiertos y cerrados, búsqueda, feedback, Sign in, imágenes, QR y reproducción única. No incorpora calificaciones, grabación ni envíos. Practice Lab se desarrollará por separado.
+
+
+### Corrección obligatoria de diseño y pedagogía — 11 de septiembre de 2026
+Todas las páginas deben aprovechar el ancho de pantalla reorganizando las tarjetas, sin limitar el contenido a 1180 px ni estirar dos columnas. La explicación de Unidad 4 usa tres géneros por fila en escritorio y tres o cuatro tarjetas de vocabulario con miniaturas según el ancho; móvil usa una columna. Course Overview contiene explicación, ejemplos resueltos y audios de pronunciación. Los ejercicios, cuestionarios, consignas de producción y autoevaluaciones pertenecen a Practice Lab y no se incluyen en páginas de explicación. Esta regla sustituye cualquier indicación previa de checks dentro de la explicación. Prequel, Original, Sequel y ocho términos de cine son pulsables; las cuatro frases de already/yet/just se escuchan a 0.75×. Se amplió ever/never con significado, posición, patrones, respuestas y contraste de negación. Total: 42 audios, cero ejercicios en la explicación.

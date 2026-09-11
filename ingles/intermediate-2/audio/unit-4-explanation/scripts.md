@@ -50,11 +50,101 @@ File: `genre-documentary.mp3`
 
 Documentary. A filmmaker follows wildlife in its natural environment.
 
+## Plot
+
+File: `vocab-plot.mp3`
+
+Plot.
+
+## Setting
+
+File: `vocab-setting.mp3`
+
+Setting.
+
+## Character
+
+File: `vocab-character.mp3`
+
+Character.
+
+## Cast
+
+File: `vocab-cast.mp3`
+
+Cast.
+
+## Performance
+
+File: `vocab-performance.mp3`
+
+Performance.
+
+## Scene
+
+File: `vocab-scene.mp3`
+
+Scene.
+
+## Ending
+
+File: `vocab-ending.mp3`
+
+Ending.
+
+## Soundtrack
+
+File: `vocab-soundtrack.mp3`
+
+Soundtrack.
+
 ## Film elements in context
 
 File: `film-elements.mp3`
 
 Plot. Setting. Character. Cast. Performance. Scene. Ending. Soundtrack. The film is set in a railway station. Mara is the main character. The soundtrack connects the scenes through one melody.
+
+## Prequel
+
+File: `word-prequel.mp3`
+
+Prequel.
+
+## Original
+
+File: `word-original.mp3`
+
+Original.
+
+## Sequel
+
+File: `word-sequel.mp3`
+
+Sequel.
+
+## I’ve already watched it.
+
+File: `already-watched.mp3`
+
+I’ve already watched it.
+
+## Have you watched it yet?
+
+File: `yet-question.mp3`
+
+Have you watched it yet?
+
+## I haven’t watched it yet.
+
+File: `yet-negative.mp3`
+
+I haven’t watched it yet.
+
+## The band has just released a song.
+
+File: `just-released.mp3`
+
+The band has just released a song.
 
 ## Have you ever seen it?
 
