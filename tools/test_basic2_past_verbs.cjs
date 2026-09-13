@@ -27,12 +27,18 @@ const server=http.createServer((req,res)=>{const p=path.resolve(root,'.'+decodeU
   for(const width of [1440,1024,768,390,320]){await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));const d=await page.evaluate(()=>({scroll:document.documentElement.scrollWidth,shell:document.querySelector('.past-shell').getBoundingClientRect().width,hero:getComputedStyle(document.querySelector('.pron-library-hero')).position,header:getComputedStyle(document.querySelector('.site-header')).position}));assert.ok(d.scroll<=width+2,JSON.stringify(d));assert.ok(d.shell>=width-46);assert.ok(!['fixed','sticky'].includes(d.hero));assert.ok(!['fixed','sticky'].includes(d.header));assert.equal(await page.locator('details[open]').count(),0);await page.locator('.jl-page-qr-open').click();const q=await page.locator('.jl-page-qr-dialog').boundingBox();assert.ok(Math.abs(q.x+q.width/2-width/2)<2);await page.locator('.jl-page-qr-close').click();if([1440,390].includes(width))await page.screenshot({path:path.join(out,'page-'+width+'.png'),fullPage:true});}
   await page.setViewportSize({width:1440,height:900});
   for(const u of urls){const response=await page.request.get(base+u);assert.equal(response.status(),200,u);}
-  await page.locator('#modelButton').click();await page.waitForFunction(()=>document.querySelector('#modelAudio').currentTime>0);assert.equal(await page.locator('#modelAudio').evaluate(a=>a.playbackRate),.75);
+  assert.equal(await page.locator('#modelButton').count(),0);
+  await page.setViewportSize({width:390,height:900});
+  const wordBox=await page.locator('#readingText').boundingBox(),speedBox=await page.locator('.past-inline-speed').boundingBox();
+  assert.ok(Math.abs(wordBox.y+wordBox.height/2-speedBox.y-speedBox.height/2)<2,'Word and speed should share a row');
+  await page.setViewportSize({width:1440,height:900});
+  await page.locator('.reading-word').first().click();await page.waitForFunction(()=>document.querySelector('#modelAudio').currentTime>0);assert.equal(await page.locator('#modelAudio').evaluate(a=>a.playbackRate),.75);
   await page.locator('[data-speed="1"]').click();assert.equal(await page.locator('#modelAudio').evaluate(a=>a.playbackRate),1);
-  await page.locator('.reading-word').first().click();assert.ok((await page.locator('#modelAudio').getAttribute('src')).endsWith('/worked.mp3'));
+  assert.ok((await page.locator('#modelAudio').getAttribute('src')).endsWith('/worked.mp3'));
   await page.waitForFunction(()=>document.querySelector('.reading-word').getAttribute('aria-pressed')==='true');
   assert.equal(await page.locator('.reading-word').first().evaluate(b=>getComputedStyle(b).borderBottomStyle),'dotted');
   await page.locator('.reading-word').first().click();assert.ok(await page.locator('#modelAudio').evaluate(a=>a.paused));assert.equal(await page.locator('.reading-word').first().getAttribute('aria-pressed'),'false');
+  await page.locator('#stageSelect').selectOption('10');await page.locator('.sentence-model-text').click();await page.waitForFunction(()=>document.querySelector('#modelAudio').currentTime>0);assert.ok((await page.locator('#modelAudio').getAttribute('src')).endsWith('/t-sentence-1.mp3'));await page.locator('#stageSelect').selectOption('0');
   assert.equal(await page.locator('#recordButton .bi-mic-fill').count(),1);
   const mic=await page.locator('#recordButton').boundingBox();assert.equal(mic.width,86);assert.equal(mic.height,86);assert.equal(await page.locator('#recordButton').getAttribute('aria-label'),'Start recording');
   const attempt=async()=>{await page.locator('#recordButton').click();await page.waitForFunction(()=>!document.querySelector('#stopButton').disabled);assert.equal(await page.locator('#recordButton').getAttribute('aria-pressed'),'true');await page.locator('#stopButton').click();await page.waitForFunction(()=>!document.querySelector('#recordButton').disabled);assert.equal(await page.locator('#recordButton').getAttribute('aria-pressed'),'false');};

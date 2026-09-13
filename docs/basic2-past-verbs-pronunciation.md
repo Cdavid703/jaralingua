@@ -24,6 +24,8 @@ Image prompt: Professional horizontal editorial photo of an adult woman with sho
 
 ## Regression checks
 
+2026-09-13 simplification: removed the separate Hear model button and all its event/control references. Listening speeds sit in the same flex row as the clickable target, wrapping only when needed to avoid overflow. Sentence challenges retain a clickable full-sentence text model in the context line, plus individual clickable words. Teacher delivery is explicitly labeled Ungraded; existing grade-null, weight-zero behavior and practice scores remain unchanged.
+
 2026-09-13 interface update: use Intermediate 2 Unit 4's dotted-underlined inline audio pattern, with aria-pressed playback state and tap-again pause. Keep correctness colors independent of playback highlighting. The start control is now the familiar 86px circular microphone with the existing Bootstrap microphone icon, accessible label, active recording indication and reduced-motion support. Audio assets, scoring, saved progress and delivery contract are unchanged.
 
 Run tools/test_basic2_past_verbs.cjs, tools/test_basic2_past_verbs_delivery.py, tools/test_basic2_pronunciation_library.cjs and tools/test_basic2_pronunciation_deliveries.py. Check individual audio playback/word paths, speeds, imperfect recognition advancement, best attempts, account isolation, delivery retries, 320/390/768/1440 layouts and no default-open Practice Lab folders. Backend tests use in-memory student data only.

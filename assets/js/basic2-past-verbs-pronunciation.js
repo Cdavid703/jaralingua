@@ -36,7 +36,8 @@
     $('recordButton').setAttribute('aria-pressed', String(recording));
     $('recordButton').setAttribute('aria-label', recording ? 'Recording in progress' : 'Start recording');
     $('recordButton').title = recording ? 'Recording in progress' : 'Start recording';
-    for (const id of ['recordButton','stageSelect','previousButton','retryButton','resetButton','microphoneSelect','modelButton']) $(id).disabled=busy||sending;
+    for (const id of ['recordButton','stageSelect','previousButton','retryButton','resetButton','microphoneSelect']) $(id).disabled=busy||sending;
+    document.querySelectorAll('.reading-word,.sentence-model-text').forEach(b=>b.disabled=busy||sending);
     $('previousButton').disabled=busy||sending||state.index===0;
     $('nextButton').disabled=busy||sending||!state.scores[state.index];
     $('stopButton').disabled=!recorder||recorder.state!=='recording';
@@ -69,7 +70,7 @@
     setControls();
   }
   function syncModelButtons() {
-    document.querySelectorAll('.reading-word, #modelButton').forEach(b=>b.setAttribute('aria-pressed',String(b===activeModelButton&&!model.paused&&!model.ended)));
+    document.querySelectorAll('.reading-word,.sentence-model-text').forEach(b=>b.setAttribute('aria-pressed',String(b===activeModelButton&&!model.paused&&!model.ended)));
   }
   function stopModel() {audioSequence++;model.pause();activeModelButton=null;syncModelButtons();}
   ['play','pause','ended'].forEach(event=>model.addEventListener(event,syncModelButtons));
@@ -81,6 +82,12 @@
     text('ruleTitle',`Remember the rule: ${g.sound}`);text('ruleText',g.rule);text('ruleTip',g.tip);
     text('stageCounter',`${s.kind==='word'?'Verb '+(offset+1)+' of 10':'Sentence '+(offset-9)+' of 3'} · ${g.sound}`);
     text('baseForm',s.base?`${s.base} → ${s.text}`:'Now use the past verb in context.');
+    if(s.kind==='sentence'){
+      const sentence=document.createElement('button');sentence.type='button';sentence.className='sentence-model-text';sentence.textContent=s.text;
+      sentence.setAttribute('aria-label','Listen to the whole sentence: '+s.text);sentence.setAttribute('aria-pressed','false');
+      sentence.addEventListener('click',()=>{if(!busy&&!sending)play(s.audio,s.text,sentence);});
+      $('baseForm').replaceChildren(document.createTextNode('Full sentence: '),sentence);
+    }
     $('stageSelect').value=String(state.index);
     document.querySelectorAll('#groupTabs button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.group===s.group)));
     renderWords();$('attemptResult').hidden=true;text('timer','00:00');
@@ -209,7 +216,6 @@
       data.groups.forEach(g=>{const b=document.createElement('button');b.type='button';b.dataset.group=g.id;b.textContent=`${g.sound} · 10 verbs + 3 phrases`;b.addEventListener('click',()=>{state.index=data.stages.findIndex(s=>s.group===g.id);save();render();});$('groupTabs').append(b);});
       data.stages.forEach((s,i)=>$('stageSelect').add(new Option(`${i+1}. ${s.text}`,String(i))));
       $('stageSelect').addEventListener('change',()=>{state.index=Number($('stageSelect').value);save();render();});
-      $('modelButton').addEventListener('click',()=>play(stage().audio,stage().text,$('modelButton')));
       document.querySelectorAll('[data-speed]').forEach(b=>b.addEventListener('click',()=>{speed=Number(b.dataset.speed);model.playbackRate=speed;document.querySelectorAll('[data-speed]').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));}));
       $('recordButton').addEventListener('click',record);$('stopButton').addEventListener('click',()=>{if(recorder?.state==='recording'){recorder.stop();$('stopButton').disabled=true;}});
       $('retryAnalysis').addEventListener('click',analyze);$('retryButton').addEventListener('click',record);

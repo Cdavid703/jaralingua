@@ -28,3 +28,11 @@
 .past-shell #recordButton.is-recording{opacity:1;animation:past-mic-pulse 1.25s infinite;outline:3px solid #b91642;outline-offset:4px}
 @keyframes past-mic-pulse{50%{box-shadow:0 0 0 12px #b916421c}}
 @media(prefers-reduced-motion:reduce){.past-shell #recordButton.is-recording{animation:none}}
+
+.past-word-row{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:12px 0}
+.past-word-row #readingText{min-width:0;padding:0;flex:1 1 160px}
+.past-inline-speed{flex:0 0 auto;gap:6px;flex-wrap:nowrap;font-size:.88rem}
+.past-inline-speed button{padding:8px;min-width:44px}
+.past-shell .sentence-model-text{font:inherit;min-height:44px;padding:3px 2px;color:#123d56;background:transparent;border:0;border-bottom:2px dotted #147087;border-radius:3px;text-align:left}
+.past-shell .sentence-model-text:hover,.past-shell .sentence-model-text[aria-pressed=true]{background:#e1f2ec;color:#145437}
+@media(max-width:500px){.past-word-row{gap:8px}.past-word-row #readingText{flex:1 1 100px;font-size:1.65rem}.past-inline-speed{gap:4px;font-size:.8rem}.past-inline-speed button{padding:8px 5px}.past-inline-speed>span{font-size:.75rem}}
