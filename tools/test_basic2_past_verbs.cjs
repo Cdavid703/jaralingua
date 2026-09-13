@@ -30,7 +30,12 @@ const server=http.createServer((req,res)=>{const p=path.resolve(root,'.'+decodeU
   await page.locator('#modelButton').click();await page.waitForFunction(()=>document.querySelector('#modelAudio').currentTime>0);assert.equal(await page.locator('#modelAudio').evaluate(a=>a.playbackRate),.75);
   await page.locator('[data-speed="1"]').click();assert.equal(await page.locator('#modelAudio').evaluate(a=>a.playbackRate),1);
   await page.locator('.reading-word').first().click();assert.ok((await page.locator('#modelAudio').getAttribute('src')).endsWith('/worked.mp3'));
-  const attempt=async()=>{await page.locator('#recordButton').click();await page.waitForFunction(()=>!document.querySelector('#stopButton').disabled);await page.locator('#stopButton').click();await page.waitForFunction(()=>!document.querySelector('#recordButton').disabled);};
+  await page.waitForFunction(()=>document.querySelector('.reading-word').getAttribute('aria-pressed')==='true');
+  assert.equal(await page.locator('.reading-word').first().evaluate(b=>getComputedStyle(b).borderBottomStyle),'dotted');
+  await page.locator('.reading-word').first().click();assert.ok(await page.locator('#modelAudio').evaluate(a=>a.paused));assert.equal(await page.locator('.reading-word').first().getAttribute('aria-pressed'),'false');
+  assert.equal(await page.locator('#recordButton .bi-mic-fill').count(),1);
+  const mic=await page.locator('#recordButton').boundingBox();assert.equal(mic.width,86);assert.equal(mic.height,86);assert.equal(await page.locator('#recordButton').getAttribute('aria-label'),'Start recording');
+  const attempt=async()=>{await page.locator('#recordButton').click();await page.waitForFunction(()=>!document.querySelector('#stopButton').disabled);assert.equal(await page.locator('#recordButton').getAttribute('aria-pressed'),'true');await page.locator('#stopButton').click();await page.waitForFunction(()=>!document.querySelector('#recordButton').disabled);assert.equal(await page.locator('#recordButton').getAttribute('aria-pressed'),'false');};
   assert.ok(await page.locator('#nextButton').isDisabled());await attempt();assert.ok(!(await page.locator('#nextButton').isDisabled()));assert.match(await page.locator('#attemptScore').innerText(),/This attempt: 0/);
   answer='worked';await attempt();answer='wrong';await attempt();assert.match(await page.locator('#attemptScore').innerText(),/This attempt: 0.*Best: 100/);
   await page.locator('#nextButton').click();failAnalysis=true;await attempt();assert.ok(await page.locator('#nextButton').isDisabled());assert.ok(await page.locator('#retryAnalysis').isVisible());failAnalysis=false;language='fr';await attempt();assert.ok(await page.locator('#nextButton').isDisabled());language='en';

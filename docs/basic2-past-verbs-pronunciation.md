@@ -24,6 +24,8 @@ Image prompt: Professional horizontal editorial photo of an adult woman with sho
 
 ## Regression checks
 
+2026-09-13 interface update: use Intermediate 2 Unit 4's dotted-underlined inline audio pattern, with aria-pressed playback state and tap-again pause. Keep correctness colors independent of playback highlighting. The start control is now the familiar 86px circular microphone with the existing Bootstrap microphone icon, accessible label, active recording indication and reduced-motion support. Audio assets, scoring, saved progress and delivery contract are unchanged.
+
 Run tools/test_basic2_past_verbs.cjs, tools/test_basic2_past_verbs_delivery.py, tools/test_basic2_pronunciation_library.cjs and tools/test_basic2_pronunciation_deliveries.py. Check individual audio playback/word paths, speeds, imperfect recognition advancement, best attempts, account isolation, delivery retries, 320/390/768/1440 layouts and no default-open Practice Lab folders. Backend tests use in-memory student data only.
 
 2026-09-12 verification: all four regression commands passed. Browser recordings and delivery failures were simulated (no actual student records); all 54 distinct model/word audio paths were checked, with real browser playback and speed controls. Live English transcription returned the expected text for walked, opened, counted and “We visited a friend.” Top login was checked separately with the real shared auth script. Local browser widths 320, 390, 768, 1024, 1440 had no horizontal overflow; QR enlargement centered. Next scrolls to the new challenge or rule. No physical-device microphone test was performed.

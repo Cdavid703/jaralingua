@@ -6,7 +6,7 @@
   const SUBMIT = '/api/basic2/unit4-past-verbs-step-by-step/submit';
   const PREFIX = 'jaralingua:basic2:past-verbs-step-by-step:v1:';
   let data, state, owner, busy = false, sending = false, recorder, stream, context, frame, interval;
-  let startTime = 0, peak = 0, blob = null, playbackURL = null, speed = .75, audioSequence = 0;
+  let startTime = 0, peak = 0, blob = null, playbackURL = null, speed = .75, audioSequence = 0, activeModelButton = null;
   const model = $('modelAudio');
   const tokens = text => String(text).toLowerCase().match(/[a-z]+(?:'[a-z]+)?/g) || [];
   const user = () => window.JaraLinguaAuth?.getUser?.() || window.JaraLinguaCurrentUser || null;
@@ -31,6 +31,11 @@
   }
   function text(id,value) { $(id).textContent=value; }
   function setControls() {
+    const recording = recorder?.state === 'recording';
+    $('recordButton').classList.toggle('is-recording', recording);
+    $('recordButton').setAttribute('aria-pressed', String(recording));
+    $('recordButton').setAttribute('aria-label', recording ? 'Recording in progress' : 'Start recording');
+    $('recordButton').title = recording ? 'Recording in progress' : 'Start recording';
     for (const id of ['recordButton','stageSelect','previousButton','retryButton','resetButton','microphoneSelect','modelButton']) $(id).disabled=busy||sending;
     $('previousButton').disabled=busy||sending||state.index===0;
     $('nextButton').disabled=busy||sending||!state.scores[state.index];
@@ -43,7 +48,8 @@
     $('readingText').replaceChildren();
     stage().text.split(/\s+/).forEach((word,i)=>{
       const b=document.createElement('button'); b.type='button'; b.className='reading-word '+(states[i]||''); b.textContent=word;
-      b.title='Listen to '+word; b.addEventListener('click',()=>{if(!busy)play(data.wordAudio[tokens(word)[0]],word);});
+      b.title='Listen to '+word;b.setAttribute('aria-label','Listen to '+word);b.setAttribute('aria-pressed','false');
+      b.addEventListener('click',()=>{if(!busy&&!sending)play(data.wordAudio[tokens(word)[0]],word,b);});
       $('readingText').append(b,document.createTextNode(' '));
     });
   }
@@ -62,7 +68,11 @@
     else if(!sending)text('submitStatus',completed()===39?'Report ready. Sign in with your registered account to send it.':'Complete all 39 challenges first.');
     setControls();
   }
-  function stopModel() {audioSequence++;model.pause();}
+  function syncModelButtons() {
+    document.querySelectorAll('.reading-word, #modelButton').forEach(b=>b.setAttribute('aria-pressed',String(b===activeModelButton&&!model.paused&&!model.ended)));
+  }
+  function stopModel() {audioSequence++;model.pause();activeModelButton=null;syncModelButtons();}
+  ['play','pause','ended'].forEach(event=>model.addEventListener(event,syncModelButtons));
   function render() {
     stopModel();blob=null;$('retryAnalysis').hidden=true;
     if(playbackURL){URL.revokeObjectURL(playbackURL);playbackURL=null;}
@@ -78,12 +88,14 @@
     text('audioStatus','Tap any word to hear it separately.');
     text('nextButton',state.index===38?'View my result':'Next →');progress();
   }
-  async function play(url,label) {
+  async function play(url,label,button) {
     if(!url){text('audioStatus','This model is unavailable. Please try again later.');return;}
+    if(button===activeModelButton&&!model.paused&&!model.ended){stopModel();text('audioStatus','Tap any word to hear it separately.');return;}
     stopModel();const sequence=audioSequence;
+    activeModelButton=button;
     model.src=url;model.playbackRate=speed;
-    try {await model.play();if(sequence===audioSequence)text('audioStatus',`Listening: ${label} · ${speed}×`);}
-    catch (_) {if(sequence===audioSequence)text('audioStatus','Audio could not play. Check your connection and tap again.');}
+    try {await model.play();if(sequence===audioSequence){syncModelButtons();text('audioStatus','Tap again to pause. Tap another word to listen.');}}
+    catch (_) {if(sequence===audioSequence){stopModel();text('audioStatus','Audio could not play. Check your connection and tap again.');}}
   }
   // Token alignment, not phoneme assessment. Deliberately no timing/fluency penalty.
   function assess(reference,transcript) {
@@ -197,7 +209,7 @@
       data.groups.forEach(g=>{const b=document.createElement('button');b.type='button';b.dataset.group=g.id;b.textContent=`${g.sound} · 10 verbs + 3 phrases`;b.addEventListener('click',()=>{state.index=data.stages.findIndex(s=>s.group===g.id);save();render();});$('groupTabs').append(b);});
       data.stages.forEach((s,i)=>$('stageSelect').add(new Option(`${i+1}. ${s.text}`,String(i))));
       $('stageSelect').addEventListener('change',()=>{state.index=Number($('stageSelect').value);save();render();});
-      $('modelButton').addEventListener('click',()=>play(stage().audio,stage().text));
+      $('modelButton').addEventListener('click',()=>play(stage().audio,stage().text,$('modelButton')));
       document.querySelectorAll('[data-speed]').forEach(b=>b.addEventListener('click',()=>{speed=Number(b.dataset.speed);model.playbackRate=speed;document.querySelectorAll('[data-speed]').forEach(n=>n.setAttribute('aria-pressed',String(n===b)));}));
       $('recordButton').addEventListener('click',record);$('stopButton').addEventListener('click',()=>{if(recorder?.state==='recording'){recorder.stop();$('stopButton').disabled=true;}});
       $('retryAnalysis').addEventListener('click',analyze);$('retryButton').addEventListener('click',record);

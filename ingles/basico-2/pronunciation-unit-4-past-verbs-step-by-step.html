@@ -6,8 +6,9 @@
   <link rel="icon" href="/favicon.ico">
   <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth">
   <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header">
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css">
   <link rel="stylesheet" href="../../assets/css/basic2-pronunciation-library.css?v=20260912-1">
-  <link rel="stylesheet" href="../../assets/css/basic2-past-verbs-pronunciation.css?v=20260912-1">
+  <link rel="stylesheet" href="../../assets/css/basic2-past-verbs-pronunciation.css?v=20260913-1">
 </head>
 <body class="english-basic-page basic2-page pronunciation-library-page past-verbs-page">
   <div class="global-course-switcher"><details><summary>Courses</summary><nav><a href="../../index.html">Home</a><a href="../index.html">English</a><a href="index.html">Basic English 2</a><a href="course-overview.html">Course Overview</a><a href="practice-lab.html">Practice Lab</a><a href="pronunciation-library.html">Pronunciation Library</a></nav></details></div>
@@ -28,7 +29,7 @@
           <p class="past-hint" id="audioStatus" role="status">Tap any word to hear it separately.</p><audio id="modelAudio" preload="none"></audio>
           <label class="past-mic-label">Microphone <select id="microphoneSelect"><option value="">Default microphone</option></select></label>
           <div class="past-meter"><span>Input level</span><meter id="inputLevel" min="0" max="100" value="0">0</meter><span id="timer">00:00</span></div>
-          <div class="past-controls"><button id="recordButton" type="button">● Record</button><button id="stopButton" type="button" disabled>Stop and check</button><button id="retryAnalysis" type="button" hidden>Retry analysis</button></div>
+          <div class="past-controls past-record-controls"><button id="recordButton" class="mic-button" type="button" aria-label="Start recording" aria-pressed="false" title="Start recording"><i class="bi bi-mic-fill" aria-hidden="true"></i></button><button id="stopButton" type="button" disabled>Stop and check</button><button id="retryAnalysis" type="button" hidden>Retry analysis</button></div>
           <p id="recordStatus" role="status">Allow microphone access, then say only the word or sentence shown.</p>
           <details id="micHelp"><summary>Microphone help</summary><p>Use HTTPS and allow the microphone in your browser's site settings. On iPhone/iPad, check Safari website settings; on Android, check browser and app microphone permissions. Close other apps using the microphone, or select another input above.</p></details>
           <audio id="studentAudio" controls hidden></audio>
@@ -49,6 +50,6 @@
   </main>
   <footer class="site-footer"><p>JaraLingua · Basic English Course 2</p></footer>
   <script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js?v=20260727-basic2-top-nav-auth"></script><script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script><script src="/assets/js/page-qr-access.js?v=20260901-2"></script>
-  <script src="../../assets/js/basic2-past-verbs-pronunciation.js?v=20260912-1"></script>
+  <script src="../../assets/js/basic2-past-verbs-pronunciation.js?v=20260913-1"></script>
 </body>
 </html>
