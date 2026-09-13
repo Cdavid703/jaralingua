@@ -22,4 +22,6 @@ Prompt: Original professional editorial photograph for an adult English Pronunci
 
 ## Scope and verification
 
+2026-09-12: Added a sixth activity, Unit 4 Past Verbs: Step-by-Step Pronunciation (30 verbs + 9 short sentences). Keep both Unit 4 activities in the catalog and in Practice Lab. See basic2-past-verbs-pronunciation.md for audio reuse, scoring and ungraded delivery.
+
 Only the Basic 2 home, new library, library styles/image/QR, this documentation and its test are changed. No pronunciation activity, Practice Lab entry, backend, grade or student data is modified. Verify 320/390/768/1024/1440px widths, image loading, card links, closed sections, scrolling header/hero, QR enlargement and top sign-in. Publish only the scoped files; leave unrelated dirty work intact.

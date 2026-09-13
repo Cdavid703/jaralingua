@@ -1,0 +1,502 @@
+{
+  "version": 1,
+  "title": "Past Verbs: Step-by-Step Pronunciation",
+  "groups": [
+    {
+      "id": "t",
+      "sound": "/t/",
+      "rule": "After the voiceless sounds /p/, /k/, /f/, /s/, /ʃ/, and /tʃ/, pronounce -ed as /t/. Do not add an extra syllable.",
+      "tip": "The last SOUND of the base verb matters, not its last letter. For /t/ and /d/, use the /ɪd/ rule instead."
+    },
+    {
+      "id": "d",
+      "sound": "/d/",
+      "rule": "After a vowel sound or a voiced consonant sound other than /d/, pronounce -ed as /d/. Do not add an extra syllable.",
+      "tip": "Voiced sounds use vibration in your throat. Play ends in a vowel sound: played has one syllable."
+    },
+    {
+      "id": "id",
+      "sound": "/ɪd/",
+      "rule": "When the base verb ends in the sound /t/ or /d/, pronounce -ed as /ɪd/. This adds one extra syllable.",
+      "tip": "Want → wanted (one → two syllables). Need → needed (one → two syllables). The ending has a short vowel, not a long “ee”."
+    }
+  ],
+  "stages": [
+    {
+      "id": "t-worked",
+      "group": "t",
+      "kind": "word",
+      "base": "work",
+      "text": "worked",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/worked.mp3"
+    },
+    {
+      "id": "t-walked",
+      "group": "t",
+      "kind": "word",
+      "base": "walk",
+      "text": "walked",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/walked.mp3"
+    },
+    {
+      "id": "t-watched",
+      "group": "t",
+      "kind": "word",
+      "base": "watch",
+      "text": "watched",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/watched.mp3"
+    },
+    {
+      "id": "t-washed",
+      "group": "t",
+      "kind": "word",
+      "base": "wash",
+      "text": "washed",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/washed.mp3"
+    },
+    {
+      "id": "t-helped",
+      "group": "t",
+      "kind": "word",
+      "base": "help",
+      "text": "helped",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/helped.mp3"
+    },
+    {
+      "id": "t-stopped",
+      "group": "t",
+      "kind": "word",
+      "base": "stop",
+      "text": "stopped",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/stopped.mp3"
+    },
+    {
+      "id": "t-cooked",
+      "group": "t",
+      "kind": "word",
+      "base": "cook",
+      "text": "cooked",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/cooked.mp3"
+    },
+    {
+      "id": "t-laughed",
+      "group": "t",
+      "kind": "word",
+      "base": "laugh",
+      "text": "laughed",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/laughed.mp3"
+    },
+    {
+      "id": "t-danced",
+      "group": "t",
+      "kind": "word",
+      "base": "dance",
+      "text": "danced",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/danced.mp3"
+    },
+    {
+      "id": "t-finished",
+      "group": "t",
+      "kind": "word",
+      "base": "finish",
+      "text": "finished",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/finished.mp3"
+    },
+    {
+      "id": "t-sentence-1",
+      "group": "t",
+      "kind": "sentence",
+      "text": "I worked yesterday.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/t-sentence-1.mp3"
+    },
+    {
+      "id": "t-sentence-2",
+      "group": "t",
+      "kind": "sentence",
+      "text": "She watched a film.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/t-sentence-2.mp3"
+    },
+    {
+      "id": "t-sentence-3",
+      "group": "t",
+      "kind": "sentence",
+      "text": "We cooked dinner.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/t-sentence-3.mp3"
+    },
+    {
+      "id": "d-played",
+      "group": "d",
+      "kind": "word",
+      "base": "play",
+      "text": "played",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/played.mp3"
+    },
+    {
+      "id": "d-stayed",
+      "group": "d",
+      "kind": "word",
+      "base": "stay",
+      "text": "stayed",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/stayed.mp3"
+    },
+    {
+      "id": "d-cleaned",
+      "group": "d",
+      "kind": "word",
+      "base": "clean",
+      "text": "cleaned",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/cleaned.mp3"
+    },
+    {
+      "id": "d-called",
+      "group": "d",
+      "kind": "word",
+      "base": "call",
+      "text": "called",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/called.mp3"
+    },
+    {
+      "id": "d-opened",
+      "group": "d",
+      "kind": "word",
+      "base": "open",
+      "text": "opened",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/opened.mp3"
+    },
+    {
+      "id": "d-listened",
+      "group": "d",
+      "kind": "word",
+      "base": "listen",
+      "text": "listened",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/listened.mp3"
+    },
+    {
+      "id": "d-lived",
+      "group": "d",
+      "kind": "word",
+      "base": "live",
+      "text": "lived",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/lived.mp3"
+    },
+    {
+      "id": "d-loved",
+      "group": "d",
+      "kind": "word",
+      "base": "love",
+      "text": "loved",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/loved.mp3"
+    },
+    {
+      "id": "d-enjoyed",
+      "group": "d",
+      "kind": "word",
+      "base": "enjoy",
+      "text": "enjoyed",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/enjoyed.mp3"
+    },
+    {
+      "id": "d-learned",
+      "group": "d",
+      "kind": "word",
+      "base": "learn",
+      "text": "learned",
+      "audio": "/ingles/intermediate-2/audio/pronunciation/unit-2-intermediate2/words/learned.mp3"
+    },
+    {
+      "id": "d-sentence-1",
+      "group": "d",
+      "kind": "sentence",
+      "text": "I played football.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/d-sentence-1.mp3"
+    },
+    {
+      "id": "d-sentence-2",
+      "group": "d",
+      "kind": "sentence",
+      "text": "She cleaned her room.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/d-sentence-2.mp3"
+    },
+    {
+      "id": "d-sentence-3",
+      "group": "d",
+      "kind": "sentence",
+      "text": "We enjoyed the film.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/d-sentence-3.mp3"
+    },
+    {
+      "id": "id-wanted",
+      "group": "id",
+      "kind": "word",
+      "base": "want",
+      "text": "wanted",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/wanted.mp3"
+    },
+    {
+      "id": "id-needed",
+      "group": "id",
+      "kind": "word",
+      "base": "need",
+      "text": "needed",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/needed.mp3"
+    },
+    {
+      "id": "id-visited",
+      "group": "id",
+      "kind": "word",
+      "base": "visit",
+      "text": "visited",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/visited.mp3"
+    },
+    {
+      "id": "id-started",
+      "group": "id",
+      "kind": "word",
+      "base": "start",
+      "text": "started",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/started.mp3"
+    },
+    {
+      "id": "id-waited",
+      "group": "id",
+      "kind": "word",
+      "base": "wait",
+      "text": "waited",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/waited.mp3"
+    },
+    {
+      "id": "id-decided",
+      "group": "id",
+      "kind": "word",
+      "base": "decide",
+      "text": "decided",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/decided.mp3"
+    },
+    {
+      "id": "id-invited",
+      "group": "id",
+      "kind": "word",
+      "base": "invite",
+      "text": "invited",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/invited.mp3"
+    },
+    {
+      "id": "id-ended",
+      "group": "id",
+      "kind": "word",
+      "base": "end",
+      "text": "ended",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/ended.mp3"
+    },
+    {
+      "id": "id-painted",
+      "group": "id",
+      "kind": "word",
+      "base": "paint",
+      "text": "painted",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/painted.mp3"
+    },
+    {
+      "id": "id-counted",
+      "group": "id",
+      "kind": "word",
+      "base": "count",
+      "text": "counted",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/counted.mp3"
+    },
+    {
+      "id": "id-sentence-1",
+      "group": "id",
+      "kind": "sentence",
+      "text": "I wanted some water.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/id-sentence-1.mp3"
+    },
+    {
+      "id": "id-sentence-2",
+      "group": "id",
+      "kind": "sentence",
+      "text": "She needed help.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/id-sentence-2.mp3"
+    },
+    {
+      "id": "id-sentence-3",
+      "group": "id",
+      "kind": "sentence",
+      "text": "We visited a friend.",
+      "audio": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/id-sentence-3.mp3"
+    }
+  ],
+  "wordAudio": {
+    "worked": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/worked.mp3",
+    "walked": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/walked.mp3",
+    "watched": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/watched.mp3",
+    "washed": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/washed.mp3",
+    "helped": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/helped.mp3",
+    "stopped": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/stopped.mp3",
+    "cooked": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/cooked.mp3",
+    "laughed": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/laughed.mp3",
+    "danced": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/danced.mp3",
+    "finished": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/finished.mp3",
+    "i": "/ingles/basico-2/audio/unit5/pronunciation/words/i.mp3",
+    "yesterday": "/ingles/basico-2/audio/unit5/pronunciation/words/yesterday.mp3",
+    "she": "/ingles/basico-2/audio/unit5/pronunciation/words/she.mp3",
+    "a": "/ingles/basico-2/audio/unit5/pronunciation/words/a.mp3",
+    "film": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/film.mp3",
+    "we": "/ingles/basico-2/audio/unit5/pronunciation/words/we.mp3",
+    "dinner": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/dinner.mp3",
+    "played": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/played.mp3",
+    "stayed": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/stayed.mp3",
+    "cleaned": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/cleaned.mp3",
+    "called": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/called.mp3",
+    "opened": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/opened.mp3",
+    "listened": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/listened.mp3",
+    "lived": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/lived.mp3",
+    "loved": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/loved.mp3",
+    "enjoyed": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/enjoyed.mp3",
+    "learned": "/ingles/intermediate-2/audio/pronunciation/unit-2-intermediate2/words/learned.mp3",
+    "football": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/football.mp3",
+    "her": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/her.mp3",
+    "room": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/room.mp3",
+    "the": "/ingles/basico-2/audio/unit5/pronunciation/words/the.mp3",
+    "wanted": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/wanted.mp3",
+    "needed": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/needed.mp3",
+    "visited": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/visited.mp3",
+    "started": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/started.mp3",
+    "waited": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/waited.mp3",
+    "decided": "/ingles/basico-2/audio/unit4/pronunciation/ed-endings/words/decided.mp3",
+    "invited": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/invited.mp3",
+    "ended": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/ended.mp3",
+    "painted": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/painted.mp3",
+    "counted": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/counted.mp3",
+    "some": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/some.mp3",
+    "water": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/water.mp3",
+    "help": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/help.mp3",
+    "friend": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/friend.mp3"
+  },
+  "newAudio": [
+    {
+      "text": "walked",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/walked.mp3"
+    },
+    {
+      "text": "helped",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/helped.mp3"
+    },
+    {
+      "text": "stopped",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/stopped.mp3"
+    },
+    {
+      "text": "danced",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/danced.mp3"
+    },
+    {
+      "text": "finished",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/finished.mp3"
+    },
+    {
+      "text": "I worked yesterday.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/t-sentence-1.mp3"
+    },
+    {
+      "text": "She watched a film.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/t-sentence-2.mp3"
+    },
+    {
+      "text": "film",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/film.mp3"
+    },
+    {
+      "text": "We cooked dinner.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/t-sentence-3.mp3"
+    },
+    {
+      "text": "dinner",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/dinner.mp3"
+    },
+    {
+      "text": "opened",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/opened.mp3"
+    },
+    {
+      "text": "listened",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/listened.mp3"
+    },
+    {
+      "text": "loved",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/loved.mp3"
+    },
+    {
+      "text": "enjoyed",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/enjoyed.mp3"
+    },
+    {
+      "text": "I played football.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/d-sentence-1.mp3"
+    },
+    {
+      "text": "football",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/football.mp3"
+    },
+    {
+      "text": "She cleaned her room.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/d-sentence-2.mp3"
+    },
+    {
+      "text": "her",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/her.mp3"
+    },
+    {
+      "text": "room",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/room.mp3"
+    },
+    {
+      "text": "We enjoyed the film.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/d-sentence-3.mp3"
+    },
+    {
+      "text": "invited",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/invited.mp3"
+    },
+    {
+      "text": "ended",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/ended.mp3"
+    },
+    {
+      "text": "painted",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/painted.mp3"
+    },
+    {
+      "text": "counted",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/counted.mp3"
+    },
+    {
+      "text": "I wanted some water.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/id-sentence-1.mp3"
+    },
+    {
+      "text": "some",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/some.mp3"
+    },
+    {
+      "text": "water",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/water.mp3"
+    },
+    {
+      "text": "She needed help.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/id-sentence-2.mp3"
+    },
+    {
+      "text": "help",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/help.mp3"
+    },
+    {
+      "text": "We visited a friend.",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/id-sentence-3.mp3"
+    },
+    {
+      "text": "friend",
+      "url": "/ingles/basico-2/audio/unit4/pronunciation/step-by-step/words/friend.mp3"
+    }
+  ]
+}

@@ -280,6 +280,7 @@ BASIC2_UNIT1_PRONUNCIATION_ID = "basic2Unit1WeatherGoingOutPronunciation"
 BASIC2_UNIT2_PRONUNCIATION_ID = "basic2Unit2ShoppingConcertPronunciation"
 BASIC2_UNIT3_PRONUNCIATION_ID = "basic2Unit3AroundWorldPronunciation"
 BASIC2_UNIT4_PRONUNCIATION_ID = "basic2Unit4RegularEdPronunciation"
+BASIC2_PAST_VERBS_PRONUNCIATION_ID = "basic2Unit4PastVerbsStepByStep"
 BASIC2_UNIT5_PRONUNCIATION_ID = "basic2Unit5LookingBackPronunciation"
 BASIC2_MIDTERM_WRITING_PRACTICE_ID = "basic2MidtermWritingPracticeFollowUp"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
@@ -717,6 +718,54 @@ BASIC2_UNIT4_PRONUNCIATION_EVALUATION = {
     "type": "Pronunciation follow-up",
     "description": "Reporte de pronunciacion enviable al profesor. La entrega queda visible en la grilla, pero su peso es 0 y no afecta el promedio."
 }
+BASIC2_PAST_VERBS_PRONUNCIATION_EVALUATION = {
+    "id": BASIC2_PAST_VERBS_PRONUNCIATION_ID,
+    "title": "Basic 2 Unit 4 Follow-up - Past Verbs: Step-by-Step Pronunciation",
+    "weight": 0,
+    "type": "Pronunciation follow-up",
+    "description": "Thirty individual verbs and nine short sentences; recognition feedback only, no course grade."
+}
+BASIC2_PAST_VERBS_STAGES = (
+    ("t-worked", "worked"),
+    ("t-walked", "walked"),
+    ("t-watched", "watched"),
+    ("t-washed", "washed"),
+    ("t-helped", "helped"),
+    ("t-stopped", "stopped"),
+    ("t-cooked", "cooked"),
+    ("t-laughed", "laughed"),
+    ("t-danced", "danced"),
+    ("t-finished", "finished"),
+    ("t-sentence-1", "I worked yesterday."),
+    ("t-sentence-2", "She watched a film."),
+    ("t-sentence-3", "We cooked dinner."),
+    ("d-played", "played"),
+    ("d-stayed", "stayed"),
+    ("d-cleaned", "cleaned"),
+    ("d-called", "called"),
+    ("d-opened", "opened"),
+    ("d-listened", "listened"),
+    ("d-lived", "lived"),
+    ("d-loved", "loved"),
+    ("d-enjoyed", "enjoyed"),
+    ("d-learned", "learned"),
+    ("d-sentence-1", "I played football."),
+    ("d-sentence-2", "She cleaned her room."),
+    ("d-sentence-3", "We enjoyed the film."),
+    ("id-wanted", "wanted"),
+    ("id-needed", "needed"),
+    ("id-visited", "visited"),
+    ("id-started", "started"),
+    ("id-waited", "waited"),
+    ("id-decided", "decided"),
+    ("id-invited", "invited"),
+    ("id-ended", "ended"),
+    ("id-painted", "painted"),
+    ("id-counted", "counted"),
+    ("id-sentence-1", "I wanted some water."),
+    ("id-sentence-2", "She needed help."),
+    ("id-sentence-3", "We visited a friend."),
+)
 BASIC2_UNIT5_PRONUNCIATION_EVALUATION = {
     "id": BASIC2_UNIT5_PRONUNCIATION_ID,
     "title": "Basic 2 Unit 5 Follow-up - Looking Back Pronunciation Studio",
@@ -3538,6 +3587,8 @@ def ensure_basic2_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_UNIT4_PRONUNCIATION_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, BASIC2_PAST_VERBS_PRONUNCIATION_EVALUATION):
+        changed = True
     if ensure_evaluation_template(grades_data, BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_MIDTERM_WRITING_EVALUATION):
@@ -3739,6 +3790,23 @@ def basic2_unit1_pronunciation_report_from_payload(payload, expected_stages=7):
         "finalMissedWords": final_stage.get("missedWords", []),
         "clientSubmissionId": clean_text(payload.get("clientSubmissionId"), 120)
     }
+
+
+def basic2_past_verbs_pronunciation_report(payload):
+    report = basic2_unit1_pronunciation_report_from_payload(payload, expected_stages=39)
+    if not report["clientSubmissionId"]:
+        raise ValueError("missing_submission_id")
+    for item, (stage_id, reference) in zip(report["stageScores"], BASIC2_PAST_VERBS_STAGES):
+        if item["stage"] != stage_id or item["referenceText"] != reference:
+            raise ValueError("invalid_pronunciation_stage")
+        item["final"] = False
+        item["fluency"] = None  # Deliberately slow practice: no pace penalty.
+    report["groupScores"] = {
+        group: int(round(sum(s["overall"] for s in report["stageScores"][start:start + 13]) / 13))
+        for group, start in (("t", 0), ("d", 13), ("id", 26))
+    }
+    report["grade"] = None
+    return report
 
 
 def basic2_midterm_writing_practice_report_from_payload(payload):
@@ -19891,6 +19959,48 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "followUpOnly": True,
                     "weight": 0
                 })
+            return
+
+        if parsed.path == "/api/basic2/unit4-past-verbs-step-by-step/submit":
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    report = basic2_past_verbs_pronunciation_report(payload)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                ensure_basic2_gradebook_structure(grades_data)
+                details = student.setdefault("gradeDetails", {})
+                previous = details.get(BASIC2_PAST_VERBS_PRONUNCIATION_ID) or {}
+                if previous.get("clientSubmissionId") == report["clientSubmissionId"]:
+                    json_response(self, 200, {"ok": True, "submittedAt": previous["submittedAt"], "score100": previous["score100"], "grade": None, "weight": 0})
+                    return
+                submitted_at = now_iso()
+                details[BASIC2_PAST_VERBS_PRONUNCIATION_ID] = {
+                    **report,
+                    "evaluationId": BASIC2_PAST_VERBS_PRONUNCIATION_ID,
+                    "activityTitle": BASIC2_PAST_VERBS_PRONUNCIATION_EVALUATION["title"],
+                    "activity": "Past Verbs: Step-by-Step Pronunciation",
+                    "activityType": "Pronunciation follow-up",
+                    "submittedAt": submitted_at,
+                    "status": "submitted",
+                    "weight": 0,
+                    "grade": None,
+                    "followUpOnly": True,
+                    "doesNotAffectAverage": True,
+                    "scoreType": "word_recognition_estimate",
+                    "attemptCount": int(previous.get("attemptCount", 0)) + 1
+                }
+                student.setdefault("grades", {})[BASIC2_PAST_VERBS_PRONUNCIATION_ID] = None
+                write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                json_response(self, 200, {"ok": True, "submittedAt": submitted_at, "score100": report["score100"], "grade": None, "weight": 0})
             return
 
         if parsed.path in ("/api/basic2/unit4-regular-ed-pronunciation/submit", "/api/basic/basic2-unit4-regular-ed-pronunciation/submit"):

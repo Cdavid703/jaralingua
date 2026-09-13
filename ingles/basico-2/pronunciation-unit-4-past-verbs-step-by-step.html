@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Past Verbs: Step-by-Step Pronunciation | Basic English 2</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth">
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header">
+  <link rel="stylesheet" href="../../assets/css/basic2-pronunciation-library.css?v=20260912-1">
+  <link rel="stylesheet" href="../../assets/css/basic2-past-verbs-pronunciation.css?v=20260912-1">
+</head>
+<body class="english-basic-page basic2-page pronunciation-library-page past-verbs-page">
+  <div class="global-course-switcher"><details><summary>Courses</summary><nav><a href="../../index.html">Home</a><a href="../index.html">English</a><a href="index.html">Basic English 2</a><a href="course-overview.html">Course Overview</a><a href="practice-lab.html">Practice Lab</a><a href="pronunciation-library.html">Pronunciation Library</a></nav></details></div>
+  <header class="site-header"><nav class="navbar" aria-label="Main navigation"><a class="brand" href="../../index.html"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Basic English 2</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul></nav></header>
+  <main>
+    <section class="pron-library-hero"><div class="hero-text"><p class="eyebrow">Unit 4 · Pronunciation</p><h1>Past Verbs: Step-by-Step Pronunciation</h1><p>Remember the rule. Say one verb at a time. Then try a short sentence.</p><div class="pron-library-actions"><a class="pron-library-button" href="#practice">Start practicing</a><a class="pron-library-button secondary" href="pronunciation-library.html">Pronunciation Library</a></div></div><figure><img src="../../assets/img/english-basic-2/unit-4-busy-lives/past-verbs-step-by-step-hero.png" alt="Learner slowly practicing verbs with a vocabulary card and microphone" fetchpriority="high"></figure></section>
+    <section class="past-shell" id="practice" aria-labelledby="practiceTitle">
+      <h2 id="practiceTitle">Listen. Speak slowly. Keep going.</h2>
+      <p class="past-intro">10 verbs + 3 short sentences per sound. Repeat as often as you like. A low score never blocks Next.</p>
+      <p id="saveStatus" role="status"></p>
+      <div id="groupTabs" class="past-groups" aria-label="Choose an ending"></div>
+      <div class="past-rule"><h3 id="ruleTitle">Loading the sound rule…</h3><p id="ruleText"></p><p id="ruleTip"></p></div>
+      <div class="past-layout">
+        <section class="past-panel" aria-label="Current pronunciation challenge">
+          <div class="past-step"><strong id="stageCounter"></strong><label>Go to a challenge <select id="stageSelect" aria-label="Choose a challenge"></select></label></div>
+          <p id="baseForm"></p><div id="readingText" lang="en" aria-label="Words to pronounce"></div>
+          <div class="past-controls"><button id="modelButton" type="button">▶ Hear model</button><span>Speed</span><button type="button" data-speed="0.75" aria-pressed="true">0.75×</button><button type="button" data-speed="1" aria-pressed="false">1.0×</button></div>
+          <p class="past-hint" id="audioStatus" role="status">Tap any word to hear it separately.</p><audio id="modelAudio" preload="none"></audio>
+          <label class="past-mic-label">Microphone <select id="microphoneSelect"><option value="">Default microphone</option></select></label>
+          <div class="past-meter"><span>Input level</span><meter id="inputLevel" min="0" max="100" value="0">0</meter><span id="timer">00:00</span></div>
+          <div class="past-controls"><button id="recordButton" type="button">● Record</button><button id="stopButton" type="button" disabled>Stop and check</button><button id="retryAnalysis" type="button" hidden>Retry analysis</button></div>
+          <p id="recordStatus" role="status">Allow microphone access, then say only the word or sentence shown.</p>
+          <details id="micHelp"><summary>Microphone help</summary><p>Use HTTPS and allow the microphone in your browser's site settings. On iPhone/iPad, check Safari website settings; on Android, check browser and app microphone permissions. Close other apps using the microphone, or select another input above.</p></details>
+          <audio id="studentAudio" controls hidden></audio>
+          <section id="attemptResult" hidden aria-labelledby="attemptTitle"><h3 id="attemptTitle">This attempt</h3><p id="transcript"></p><p id="attemptScore"></p><p id="feedback"></p><p class="past-hint">Green: recognized. Red: not matched. Tap a word to listen again.</p></section>
+          <div class="past-controls past-navigation"><button id="previousButton" type="button">← Previous</button><button id="retryButton" type="button">Try again</button><button id="nextButton" type="button" disabled>Next →</button></div>
+        </section>
+        <aside class="past-panel" aria-label="Progress and teacher report">
+          <h3>Your progress</h3><p id="completionCount">0 of 39 completed</p><progress id="completionBar" max="39" value="0"></progress>
+          <div id="groupScores" class="past-group-scores"></div><p id="overallScore">Complete all 39 challenges for your final result.</p>
+          <p class="past-hint">Scores estimate word recognition, not exact /t/, /d/, or /ɪd/ pronunciation. Speaking slowly does not lower your score. Your best attempt counts.</p>
+          <h3>Send to teacher</h3><p class="past-hint">Send your scores and transcripts when all challenges are complete. This report does not affect your course average.</p>
+          <button id="submitButton" type="button" disabled>Send to teacher</button><p id="submitStatus" role="status">Complete all 39 challenges first.</p>
+          <details><summary>Review saved attempts</summary><div id="attemptHistory"></div></details>
+          <button id="resetButton" class="past-reset" type="button">Reset my practice</button>
+        </aside>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer"><p>JaraLingua · Basic English Course 2</p></footer>
+  <script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js?v=20260727-basic2-top-nav-auth"></script><script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script><script src="/assets/js/page-qr-access.js?v=20260901-2"></script>
+  <script src="../../assets/js/basic2-past-verbs-pronunciation.js?v=20260912-1"></script>
+</body>
+</html>

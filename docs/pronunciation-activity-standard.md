@@ -1,5 +1,9 @@
 # Estándar JaraLingua para actividades de pronunciación
 
+## Excepción aprobada: Basic 2 Unit 4, Past Verbs: Step-by-Step (2026-09-12)
+
+La nueva actividad usa 39 retos: tres bloques de 10 verbos individuales y 3 frases. No tiene lectura final concatenada. Recordatorio de regla por bloque, audios individuales existentes reutilizados si el texto coincide, y ElevenLabs solo para faltantes. El estudiante avanza tras un intento evaluado incluso con cero puntos; repetir es opcional. No se penaliza lentitud ni se puntúa ritmo en este ejercicio deliberadamente lento. La puntuación refleja reconocimiento de palabras, no diagnóstico fonético de /t/, /d/, /ɪd/. Entrega al docente independiente, sin peso en la nota. Hero horizontal en escritorio, ancho disponible completo con márgenes seguros, sin elementos fijos que tapen el contenido; QR dentro del título y login superior. Esta excepción sustituye aquí los requisitos antiguos de hero grande, panel francés, métrica de fluidez y desafío final. Ver docs/basic2-past-verbs-pronunciation.md.
+
 Este documento es la fuente de referencia para crear, revisar o corregir cualquier actividad de pronunciación en JaraLingua. Antes de construir una actividad nueva, se debe comparar contra este patrón para que todas queden con la misma experiencia visual, pedagógica y técnica.
 
 Actividad canónica de referencia:
