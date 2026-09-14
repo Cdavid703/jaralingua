@@ -1,0 +1,342 @@
+{
+  "title": "Compare the Past",
+  "time": "Last weekend",
+  "cards": [
+    {
+      "id": "backpacks",
+      "number": 1,
+      "title": "The park bench",
+      "labels": [
+        "A · Blue backpack",
+        "B · Red backpack"
+      ],
+      "facts": [
+        "",
+        ""
+      ],
+      "alt": "Two backpacks on matching benches beside identical bottles: a large blue backpack and a small red backpack.",
+      "image": "/assets/img/english-basic-2/compare-the-past/backpacks.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was the blue backpack bigger than the red backpack?",
+          "answer": "Yes, it was. The blue backpack was bigger than the red backpack.",
+          "correct": true
+        },
+        {
+          "question": "Was the red backpack bigger than the blue backpack?",
+          "answer": "No, it wasn’t. The red backpack was smaller than the blue backpack.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "trees",
+      "number": 2,
+      "title": "Two parks",
+      "labels": [
+        "A · Park A",
+        "B · Park B"
+      ],
+      "facts": [
+        "",
+        ""
+      ],
+      "alt": "Three young short trees in Park A and three tall mature trees in Park B, with matching benches.",
+      "image": "/assets/img/english-basic-2/compare-the-past/trees.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Were the trees in Park A taller than the trees in Park B?",
+          "answer": "No, they weren’t. The trees in Park A were shorter than the trees in Park B.",
+          "correct": false
+        },
+        {
+          "question": "Were the trees in Park B taller than the trees in Park A?",
+          "answer": "Yes, they were. The trees in Park B were taller than the trees in Park A.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "buildings",
+      "number": 3,
+      "title": "The city buildings",
+      "labels": [
+        "A · Blue building",
+        "B · Yellow building"
+      ],
+      "facts": [
+        "",
+        ""
+      ],
+      "alt": "A tall blue building and a short yellow building, shown at the same scale.",
+      "image": "/assets/img/english-basic-2/compare-the-past/buildings.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was the yellow building taller than the blue building?",
+          "answer": "No, it wasn’t. The yellow building was shorter than the blue building.",
+          "correct": false
+        },
+        {
+          "question": "Was the blue building shorter than the yellow building?",
+          "answer": "No, it wasn’t. The blue building was taller than the yellow building.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "scarves",
+      "number": 4,
+      "title": "The clothes display",
+      "labels": [
+        "A · Red scarves",
+        "B · Green scarves"
+      ],
+      "facts": [
+        "",
+        ""
+      ],
+      "alt": "Two long red scarves and two short green scarves on matching display rails.",
+      "image": "/assets/img/english-basic-2/compare-the-past/scarves.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Were the red scarves longer than the green scarves?",
+          "answer": "Yes, they were. The red scarves were longer than the green scarves.",
+          "correct": true
+        },
+        {
+          "question": "Were the green scarves shorter than the red scarves?",
+          "answer": "Yes, they were. The green scarves were shorter than the red scarves.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "cold-day",
+      "number": 5,
+      "title": "Two town visits",
+      "labels": [
+        "A · Town A",
+        "B · Town B"
+      ],
+      "facts": [
+        "Temperature: 2°C",
+        "Temperature: 28°C"
+      ],
+      "alt": "A cold mountain town with people in coats and a warm sunny town with people in light clothing.",
+      "image": "/assets/img/english-basic-2/compare-the-past/cold-day.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was Town B colder than Town A?",
+          "answer": "No, it wasn’t. Town B was warmer than Town A.",
+          "correct": false
+        },
+        {
+          "question": "Was Town A colder than Town B?",
+          "answer": "Yes, it was. Town A was colder than Town B.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "warm-day",
+      "number": 6,
+      "title": "Two picnic days",
+      "labels": [
+        "A · Saturday",
+        "B · Sunday"
+      ],
+      "facts": [
+        "Temperature: 30°C",
+        "Temperature: 16°C"
+      ],
+      "alt": "Friends at a sunny lakeside picnic on Saturday and at a cool cloudy picnic on Sunday.",
+      "image": "/assets/img/english-basic-2/compare-the-past/warm-day.png",
+      "time": "Last weekend · Saturday and Sunday",
+      "questions": [
+        {
+          "question": "Was Saturday warmer than Sunday?",
+          "answer": "Yes, it was. Saturday was warmer than Sunday.",
+          "correct": true
+        },
+        {
+          "question": "Was Sunday warmer than Saturday?",
+          "answer": "No, it wasn’t. Sunday was colder than Saturday.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "jackets",
+      "number": 7,
+      "title": "Saturday’s jacket prices",
+      "labels": [
+        "A · Red jacket",
+        "B · Blue jacket"
+      ],
+      "facts": [
+        "COP $80,000",
+        "COP $120,000"
+      ],
+      "alt": "Red and blue jackets displayed in a clothing store; the red jacket cost 80,000 pesos and the blue jacket 120,000 pesos.",
+      "image": "/assets/img/english-basic-2/compare-the-past/jackets.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was the red jacket more expensive than the blue jacket?",
+          "answer": "No, it wasn’t. The red jacket was cheaper than the blue jacket.",
+          "correct": false
+        },
+        {
+          "question": "Was the blue jacket cheaper than the red jacket?",
+          "answer": "No, it wasn’t. The blue jacket was more expensive than the red jacket.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "shoes",
+      "number": 8,
+      "title": "Saturday’s shoe prices",
+      "labels": [
+        "A · White shoes",
+        "B · Black shoes"
+      ],
+      "facts": [
+        "USD $90 · per pair",
+        "USD $40 · per pair"
+      ],
+      "alt": "White sneakers and black sneakers, priced per pair at 90 US dollars and 40 US dollars.",
+      "image": "/assets/img/english-basic-2/compare-the-past/shoes.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Were the black shoes cheaper than the white shoes?",
+          "answer": "Yes, they were. The black shoes were cheaper than the white shoes.",
+          "correct": true
+        },
+        {
+          "question": "Were the white shoes more expensive than the black shoes?",
+          "answer": "Yes, they were. The white shoes were more expensive than the black shoes.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "parks",
+      "number": 9,
+      "title": "An afternoon at the park",
+      "labels": [
+        "A · Park A",
+        "B · Park B"
+      ],
+      "facts": [
+        "Sound level: 32 dB",
+        "Sound level: 78 dB"
+      ],
+      "alt": "Park A has a reader by a lake; Park B has a crowd and a concert. Sound readings show 32 and 78 decibels.",
+      "image": "/assets/img/english-basic-2/compare-the-past/parks.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was Park A quieter than Park B?",
+          "answer": "Yes, it was. Park A was quieter than Park B.",
+          "correct": true
+        },
+        {
+          "question": "Was Park A more crowded than Park B?",
+          "answer": "No, it wasn’t. Park B was more crowded than Park A.",
+          "correct": false
+        }
+      ]
+    },
+    {
+      "id": "shops",
+      "number": 10,
+      "title": "The Saturday shoppers",
+      "labels": [
+        "A · Shop A",
+        "B · Shop B"
+      ],
+      "facts": [
+        "",
+        ""
+      ],
+      "alt": "Shop A has many customers between clothing racks; Shop B has one customer and empty aisles.",
+      "image": "/assets/img/english-basic-2/compare-the-past/shops.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was Shop B more crowded than Shop A?",
+          "answer": "No, it wasn’t. Shop A was more crowded than Shop B.",
+          "correct": false
+        },
+        {
+          "question": "Was Shop A busier than Shop B?",
+          "answer": "Yes, it was. Shop A was busier than Shop B.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "beaches",
+      "number": 11,
+      "title": "Last weekend at the beach",
+      "labels": [
+        "A · Beach A",
+        "B · Beach B"
+      ],
+      "facts": [
+        "",
+        ""
+      ],
+      "alt": "Beach A has scattered bottles and wrappers; Beach B has clean sand, with the same hut and umbrella.",
+      "image": "/assets/img/english-basic-2/compare-the-past/beaches.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was Beach A cleaner than Beach B?",
+          "answer": "No, it wasn’t. Beach B was cleaner than Beach A.",
+          "correct": false
+        },
+        {
+          "question": "Was Beach B cleaner than Beach A?",
+          "answer": "Yes, it was. Beach B was cleaner than Beach A.",
+          "correct": true
+        }
+      ]
+    },
+    {
+      "id": "streets",
+      "number": 12,
+      "title": "Saturday on two streets",
+      "labels": [
+        "A · Street A",
+        "B · Street B"
+      ],
+      "facts": [
+        "",
+        ""
+      ],
+      "alt": "Street A has many pedestrians, cars and litter; Street B has one pedestrian, no cars and a clean pavement.",
+      "image": "/assets/img/english-basic-2/compare-the-past/streets.png",
+      "time": "Last Saturday",
+      "questions": [
+        {
+          "question": "Was Street A busier than Street B?",
+          "answer": "Yes, it was. Street A was busier than Street B.",
+          "correct": true
+        },
+        {
+          "question": "Was Street A cleaner than Street B?",
+          "answer": "No, it wasn’t. Street B was cleaner than Street A.",
+          "correct": false
+        }
+      ]
+    }
+  ]
+}
