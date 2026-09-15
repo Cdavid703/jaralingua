@@ -34,7 +34,8 @@ function assertGuardBeforeScoring(source, scoringCall, label) {
   const assessmentPosition = page.indexOf("french8-pronunciation-assessment.js");
   const controllerPosition = page.indexOf("pronunciation-a1.js");
   assert.ok(assessmentPosition >= 0 && controllerPosition > assessmentPosition, "French 1 must load the validator before its controller");
-  assert.equal((page.match(new RegExp(CACHE_KEY, "g")) || []).length, 2, "French 1 must publish the microphone-guard cache key");
+  assert.ok(page.includes(`french8-pronunciation-assessment.js?${CACHE_KEY}`), "French 1 keeps the shared recording guard");
+  assert.ok(page.includes("pronunciation-a1.js?v=20260915-cohort-deliveries"), "French 1 publishes the new delivery controller");
 }
 
 const level8Activities = [

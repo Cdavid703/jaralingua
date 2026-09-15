@@ -44,7 +44,7 @@
       ],
       tips: [
         ["bi-volume-mute", "Les terminaisons -e, -es et -ent ne se prononcent pas dans les verbes du premier groupe."],
-        ["bi-link-45deg", "Dans « nous travaillons ensemble », faites la liaison entre « travaillons » et « ensemble »."],
+        ["bi-link-45deg", "Lisez « nous travaillons ensemble » comme un groupe de sens, sans pause au milieu."],
         ["bi-music-note", "Gardez un rythme régulier : sujet + verbe + complément."]
       ]
     },
@@ -67,7 +67,7 @@
       ],
       tips: [
         ["bi-volume-mute", "Les terminaisons -e, -es et -ent ne se prononcent pas dans les verbes du premier groupe."],
-        ["bi-link-45deg", "Dans « nous travaillons ensemble », faites la liaison entre « travaillons » et « ensemble »."],
+        ["bi-link-45deg", "Lisez « nous travaillons ensemble » comme un groupe de sens, sans pause au milieu."],
         ["bi-music-note", "Gardez un rythme régulier : sujet + verbe + complément."]
       ]
     },
@@ -114,7 +114,7 @@
       tips: [
         ["bi-person-hearts", "Dans « frère », ouvrez bien le son « è »."],
         ["bi-volume-mute", "Dans « grands-parents », le d de « grands » est muet."],
-        ["bi-link-45deg", "Dans « habitent à », faites une liaison douce : habitent-à."]
+        ["bi-link-45deg", "Dans « habitent à », le t fait déjà partie du son du verbe : enchaînez-le avec à. La terminaison -ent ne se prononce pas."]
       ]
     },
     "theme-6": {
@@ -160,7 +160,7 @@
       tips: [
         ["bi-house-door", "Dans « chambre », gardez le son nasal de « an » et ne prononcez pas le b séparément."],
         ["bi-link-45deg", "Dans « il y a », dites les trois mots comme un groupe très fluide : il-y-a."],
-        ["bi-volume-mute", "Dans « lit », « près » et « balcon », les consonnes finales restent très légères ou muettes selon le mot."]
+        ["bi-volume-mute", "Dans « lit » et « près », ne prononcez pas le t ni le s final. Dans « balcon », on forme une voyelle nasale : n’ajoutez pas un son n séparé."]
       ]
     },
     "theme-8": {
@@ -222,7 +222,6 @@
   const MICROSOFT_KEY = "jaralingua_microsoft_user";
   const LOCAL_KEY = "jaralingua_local_gradebook_user:french1GradesApp";
   const EVALUABLE_PRONUNCIATION = {
-    "theme-1": { evaluationId: "pronunciationTheme1", label: "Thème 1 · Premiers contacts" },
     "theme-3": { evaluationId: "pronunciationTheme3", label: "Thème 3 · Les verbes du premier groupe" },
     "theme-5": { evaluationId: "pronunciationTheme5", label: "Thème 5 · Famille et relations" },
     "theme-7": { evaluationId: "pronunciationTheme7", label: "Thème 7 · Maison et environnement" }
@@ -303,8 +302,8 @@
       panel.className = "pronunciation-submit-panel is-formative";
       panel.innerHTML = `
         <h3><i class="bi bi-info-circle"></i> Pratique formative</h3>
-        <p>Cette activité sert à s'entraîner et ne s'envoie pas au professeur. Les activités évaluées du Niveau 1 sont les thèmes 1, 3, 5 et 7.</p>
-        <p class="mb-0"><small>Si votre professeur vous demande la troisième remise de prononciation, ouvrez le thème 5. Si elle vous demande le thème 3, ouvrez « Prononciation des verbes en -er ».</small></p>
+        <p>Cette activité sert à s'entraîner et ne s'envoie pas au professeur. Les activités évaluées du Niveau 1 sont les thèmes 3, 5 et 7 : chacune compte pour 5 % de la note du cours.</p>
+        <p class="mb-0"><small>Les trois remises sont : verbes en -er (thème 3), famille (thème 5) et maison (thème 7).</small></p>
       `;
       return { panel, update() {} };
     }
@@ -312,7 +311,7 @@
     panel.className = "pronunciation-submit-panel";
     panel.innerHTML = `
       <h3><i class="bi bi-send-check"></i> Envoi au professeur</h3>
-      <p data-pronunciation-submit-copy>Cette activité est évaluée. Terminez le défi final pour envoyer la note obtenue au professeur.</p>
+      <p data-pronunciation-submit-copy>Cette activité compte pour 5 % de la note du cours. Terminez le défi final pour envoyer votre enregistrement et votre estimation provisoire au professeur.</p>
       <div class="pronunciation-submit-metrics">
         <span><b data-pronunciation-score>--</b><small>Défi final</small></span>
         <span><b data-pronunciation-grade>--</b><small>Note / 5</small></span>
@@ -340,47 +339,32 @@
     function update() {
       const attempt = finalAttempt();
       const score = Number(attempt && attempt.overall);
-      if (!Number.isFinite(score)) {
+      if (!attempt || !Number.isFinite(score)) {
         scoreNode.textContent = "--";
         gradeNode.textContent = "--";
         submitButton.disabled = true;
-        copyNode.textContent = `${gradeConfig.label} est évaluable. Le bouton s’active après le défi final.`;
+        copyNode.textContent = `${gradeConfig.label} : 5 % de la note du cours. Le bouton s’active après le défi final.`;
         return;
       }
       scoreNode.textContent = `${Math.round(score)}/100`;
       gradeNode.textContent = `${gradeFromScore(score).toFixed(2)}/5`;
       submitButton.disabled = false;
-      copyNode.textContent = "Votre défi final peut être envoyé avec la note obtenue. La note sera inscrite dans le carnet du Niveau 1.";
-    }
-
-    function blobToDataUrl(blob) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result || "");
-        reader.onerror = () => reject(reader.error || new Error("audio_read_error"));
-        reader.readAsDataURL(blob);
-      });
+      copyNode.textContent = "Cette remise compte pour 5 % du cours. Votre audio et l’estimation provisoire seront transmis au professeur, qui pourra réviser la note.";
     }
 
     async function currentFinalAudioDataUrl(attempt) {
       if (attempt && typeof attempt.audioDataUrl === "string" && attempt.audioDataUrl.startsWith("data:")) {
         return attempt.audioDataUrl;
       }
-      if (!els.playback || !els.playback.src || !els.playback.src.startsWith("blob:")) return "";
-      try {
-        const response = await fetch(els.playback.src);
-        if (!response.ok) return "";
-        const blob = await response.blob();
-        return await blobToDataUrl(blob);
-      } catch (_error) {
-        return "";
-      }
+      // Only the audio attached to this scored attempt is valid evidence.
+      // The playback control may contain another section or a rejected retry.
+      return "";
     }
 
     async function submitGrade() {
       const attempt = finalAttempt();
       const score = Number(attempt && attempt.overall);
-      if (!Number.isFinite(score)) {
+      if (!attempt || !Number.isFinite(score)) {
         setStatus("Terminez d'abord le défi final avant d'envoyer.", "error");
         update();
         return;
@@ -395,6 +379,7 @@
       setStatus("Envoi en cours...", "pending");
       try {
         const audioDataUrl = await currentFinalAudioDataUrl(attempt);
+        if (!audioDataUrl) throw new Error("L’enregistrement final manque. Enregistrez de nouveau le défi final pour que votre professeur puisse l’écouter et réviser la note.");
         const details = Object.assign({}, attempt);
         if (audioDataUrl) details.audioDataUrl = audioDataUrl;
         const response = await fetch(GRADE_API_PATH, {
@@ -413,6 +398,7 @@
         });
         const payload = await response.json().catch(() => ({}));
         if (!response.ok) {
+          if (payload.error === "audio_required") throw new Error("L’audio n’a pas pu être conservé. Enregistrez de nouveau le défi final avant l’envoi.");
           if (payload.error === "score_too_low") throw new Error("La note obtenue devrait pouvoir être envoyée. Actualisez la page et réessayez.");
           if (payload.error === "student_not_authorized") throw new Error("Votre compte n’est pas associé au carnet du Niveau 1.");
           throw new Error("L’envoi n’a pas pu être terminé.");
@@ -702,32 +688,46 @@
 
   function pronunciationTip(word) {
     const lower = word.toLocaleLowerCase("fr-FR");
-    if (/[é]/.test(lower) || /(?:er|ez)$/.test(lower)) return "Le son é se prononce /e/, comme une voyelle fermée et nette.";
-    if (/[èêë]/.test(lower) || /(?:ais|ait|aient)$/.test(lower)) return "Le son è se prononce /ɛ/, avec la bouche un peu plus ouverte que pour é.";
-    if (/eau|au/.test(lower)) return "Le groupe eau ou au se prononce /o/ : gardez les lèvres arrondies.";
-    if (/ou/.test(lower)) return "Le groupe ou se prononce /u/, avec les lèvres bien arrondies.";
-    if (/u/.test(lower)) return "Pour le son u /y/, arrondissez les lèvres comme pour ou, mais gardez la langue en position de i.";
-    if (/(?:an|en|on|in|ain|ein|un)/.test(lower)) return "Voyelle nasale : laissez passer l’air par le nez sans prononcer séparément le n final.";
-    if (/oi/.test(lower)) return "Le groupe oi se prononce /wa/, en une seule émission fluide.";
-    if (/gn/.test(lower)) return "Le groupe gn se prononce /ɲ/, comme le ñ espagnol.";
-    if (/ch/.test(lower)) return "Le groupe ch se prononce /ʃ/, comme le son ch dans chat.";
-    if (/r/.test(lower)) return "Le r français se produit doucement au fond de la gorge, sans rouler la langue.";
-    if (/(?:ent|s|t|d|x|z)$/.test(lower)) return "Attention à la consonne finale : elle est souvent muette en français.";
-    return "Écoutez le mot complet, puis répétez-le lentement en conservant tous ses accents et ses syllabes.";
+    const tips = {
+      "tu": "Arrondissez les lèvres pour le son u. Ce son est différent de ou.",
+      "nous": "Le groupe ou forme un seul son. Le s final est muet dans le mot isolé.",
+      "frère": "Ouvrez la bouche pour le son è, puis écoutez le r final.",
+      "lit": "Le t final est muet dans ce mot.",
+      "près": "Le s final est muet dans ce mot.",
+      "balcon": "La fin on est nasale : n’ajoutez pas un n séparé.",
+      "habitent": "La terminaison -ent est muette. Le t du verbe habiter reste audible.",
+      "famille": "Écoutez la fin du mot, qui ne se prononce pas comme deux l séparés."
+    };
+    return tips[lower] || "Écoutez le mot complet, puis répétez-le lentement. Réécoutez ensuite la phrase pour entendre ses enchaînements.";
   }
 
   function speakWord(word) {
-    if (!word || !window.speechSynthesis) return;
+    if (!word) return;
+    els.modelAudio.pause();
+    els.modelButton.querySelector("i").className = "bi bi-play-fill";
+    if (els.playback) els.playback.pause();
+    els.wordHelp.hidden = false;
+    els.wordHelp.textContent = `Écoutez « ${word} », répétez-le, puis enregistrez à nouveau cette section.`;
+    if (!window.speechSynthesis || !window.SpeechSynthesisUtterance) {
+      els.wordHelp.textContent = "La lecture des mots n’est pas disponible dans ce navigateur. Écoutez le modèle français puis réessayez la section.";
+      return;
+    }
     speechSynthesis.cancel();
+    speechSynthesis.resume?.();
     const utterance = new SpeechSynthesisUtterance(word);
     const voices = speechSynthesis.getVoices();
     const frenchVoice = voices.find((voice) => voice.lang.toLowerCase() === "fr-fr") || voices.find((voice) => voice.lang.toLowerCase().startsWith("fr"));
+    if (!frenchVoice) {
+      els.wordHelp.textContent = "Aucune voix française n’est disponible. Activez une voix française dans les réglages de votre appareil, puis touchez à nouveau le mot. Le modèle audio reste disponible.";
+      return;
+    }
     utterance.lang = "fr-FR";
     utterance.rate = 0.72;
     if (frenchVoice) utterance.voice = frenchVoice;
+    utterance.onerror = () => { els.wordHelp.textContent = "Le mot n’a pas pu être lu. Touchez-le à nouveau ou écoutez le modèle français."; };
     speechSynthesis.speak(utterance);
     els.wordHelp.hidden = false;
-    els.wordHelp.innerHTML = `<strong><i class="bi bi-volume-up"></i> ${word}</strong><span>${pronunciationTip(word)}</span>`;
+    els.wordHelp.textContent = `${word} — ${pronunciationTip(word)} Écoutez, répétez, puis enregistrez de nouveau la section. La reconnaissance fournit une estimation, à confirmer par votre professeur.`;
   }
 
   function formatTime(ms) {

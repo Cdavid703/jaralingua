@@ -34,7 +34,7 @@
           {
             "id": "v2",
             "type": "mcq",
-            "prompt": "On va au cinéma pour voir un film.",
+            "prompt": "On va au ___ pour voir un film.",
             "options": [
               "hôtel",
               "cinéma",
@@ -623,6 +623,6 @@
         ]
       }
     ],
-    "version": "2026-07-20-final-audit-v2"
+    "version": "2026-09-15-cohort-v3"
   }
 }

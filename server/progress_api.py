@@ -1062,14 +1062,6 @@ FRENCH8_BASE_EVALUATIONS = {
 }
 
 FRENCH1_PRONUNCIATION_EVALUATIONS = {
-    "pronunciationTheme1": {
-        "id": "pronunciationTheme1",
-        "title": "Prononciation thème 1 - Premiers contacts",
-        "weight": 5,
-        "type": "Prononciation",
-        "displayDate": "Semaine du thème 1",
-        "description": "Défi final de prononciation du thème 1. La note obtenue peut être envoyée au professeur."
-    },
     "pronunciationTheme3": {
         "id": "pronunciationTheme3",
         "title": "Prononciation thème 3 - Les verbes du premier groupe",
@@ -1144,6 +1136,13 @@ FRENCH2_FINAL_EXAM_EVALUATION = {
 }
 
 FRENCH1_CORE_EVALUATIONS = {
+    "evaluationPending5": {
+        "id": "evaluationPending5",
+        "title": "Évaluation à définir (5 %)",
+        "weight": 5,
+        "type": "À définir",
+        "description": "Pourcentage disponible après le passage à trois remises de prononciation. À définir par le professeur."
+    },
     "finalExam": {
         "id": "finalExam",
         "title": "Examen final A1.1",
@@ -1736,9 +1735,9 @@ def local_auth_secret():
     return secret
 
 
-def sign_local_profile(profile):
+def sign_local_profile(profile, ttl_seconds=30 * 24 * 60 * 60):
     payload = dict(profile)
-    payload["exp"] = int(time.time()) + 30 * 24 * 60 * 60
+    payload["exp"] = int(time.time()) + ttl_seconds
     body = b64url_encode(json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode("utf-8"))
     signature = hmac.new(local_auth_secret(), body.encode("ascii"), hashlib.sha256).digest()
     return body + "." + b64url_encode(signature), payload["exp"]
@@ -3180,11 +3179,13 @@ def submit_intermediate2_unit2_reading(profile, payload):
     result = intermediate2_unit2_reading_public_item(submission)
     result.update({"ok": True, "idempotentReplay": False})
     return 200, result
-def attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, audio_dir):
+def attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, audio_dir, require_audio=False):
     if not isinstance(student.get("gradeDetails"), dict):
         student["gradeDetails"] = {}
     previous_detail = student["gradeDetails"].get(evaluation_id)
     audio_ref = save_pronunciation_audio(audio_dir, student, evaluation_id, payload)
+    if require_audio and not audio_ref:
+        raise ValueError("audio_required")
     next_detail = clean_pronunciation_submission_details(payload, evaluation_id, score100, grade)
     if audio_ref:
         if isinstance(previous_detail, dict):
@@ -3344,7 +3345,7 @@ def ensure_evaluation_defaults(grades_data, template):
 
 def ensure_french1_gradebook_structure(grades_data):
     changed = False
-    obsolete_ids = {"participation", "ecoute", "lecture", "prononciation", "evaluationApreciser15"}
+    obsolete_ids = {"participation", "ecoute", "lecture", "prononciation", "evaluationApreciser15", "pronunciationTheme1"}
     evaluations = grades_data.setdefault("evaluations", [])
     filtered = [item for item in evaluations if not (isinstance(item, dict) and item.get("id") in obsolete_ids)]
     if len(filtered) != len(evaluations):
@@ -9929,7 +9930,7 @@ def final_exam_access_credentials(profile, config, attempt, exam):
         "examAttemptId": attempt_id,
         "examVersion": exam_version,
     }
-    token, expires_at = sign_local_profile(signed_profile)
+    token, expires_at = sign_local_profile(signed_profile, ttl_seconds=12 * 60 * 60)
     return {
         "examAccessToken": token,
         "examAccessExp": expires_at,
@@ -22790,8 +22791,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     json_response(self, 400, {"error": str(error)})
                     return
                 ensure_french1_gradebook_structure(grades_data)
+                try:
+                    attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, FRENCH1_PRONUNCIATION_AUDIO_DIR, require_audio=True)
+                except ValueError as error:
+                    json_response(self, 400, {"error": str(error)})
+                    return
                 student.setdefault("grades", {})[evaluation_id] = grade
-                attach_pronunciation_submission(student, evaluation_id, payload, score100, grade, FRENCH1_PRONUNCIATION_AUDIO_DIR)
                 write_json_file(FRENCH1_GRADES_PATH, grades_data, ".french1-grades-")
                 json_response(self, 200, {
                     "ok": True,

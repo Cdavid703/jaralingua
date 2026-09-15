@@ -58,7 +58,7 @@ EXPECTED_VOCABULARY_ANSWERS = {
 # remises par la professeure. Elle empêche qu'une correction apportée ailleurs
 # dans l'examen modifie silencieusement cette banque validée.
 EXPECTED_VOCABULARY_FINGERPRINTS = {
-    "Niveau 1": "378571fe1e6fdd6c02545d80e706a8b3970e89717f70b75d9c68797505abb622",
+    "Niveau 1": "90525d787fcf1a386a7d1ac7d30cfd7122561b2c738e1eb07f90ba43e48f260b",
     "Niveau 2": "57f50447665fcef1b0f97fafe4137244f217c6138f421b95cd6cb086a8e216a0",
 }
 
@@ -260,9 +260,9 @@ class FrenchFinalExamTests(unittest.TestCase):
             for level, bundle in self.bundles.items()
         }
         self.assertEqual(
-            set(versions.values()),
-            {EXPECTED_EXAM_VERSION},
-            f"Les deux niveaux doivent partager la version {EXPECTED_EXAM_VERSION}: {versions}",
+            versions,
+            {"Niveau 1": "2026-09-15-cohort-v3", "Niveau 2": EXPECTED_EXAM_VERSION},
+            f"Chaque niveau doit utiliser sa version publiée : {versions}",
         )
 
     def test_exam_versions_and_point_structure(self) -> None:
@@ -702,11 +702,11 @@ class FrenchFinalExamTests(unittest.TestCase):
                     audio_block.group("body"),
                     "Le 401 du MP3 protégé doit activer une récupération non destructive",
                 )
-                self.assertIn(
-                    '"exam"',
-                    audio_block.group("body"),
-                    "L’audio étudiant doit utiliser la crédential limitée à la tentative",
-                )
+                if "examFetchWithExternalFallback(API.audio" in audio_block.group("body"):
+                    self.assertIn('authenticatedFetch(url, options, "exam")', html)
+                else:
+                    self.assertIn('"exam"', audio_block.group("body"),
+                                  "L’audio étudiant doit utiliser la crédential limitée à la tentative")
 
                 submitted_boundary = (
                     r"renderAutomaticStartLoading" if level == "french8" else r"renderStartGate"
