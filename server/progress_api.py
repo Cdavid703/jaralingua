@@ -19519,6 +19519,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 })
             return
 
+
+        if parsed.path == "/api/basic2/unit5-my-holidays/transcript":
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                json_response(self, 200, {
+                    "title": "My Holidays",
+                    "transcript": "Daniel: Hi, Valeria! It's good to see you again. Where did you go on vacation?\n\nValeria: Hi! I went to Santa Marta for five days.\n\nDaniel: Nice! Who did you go with?\n\nValeria: My sister. Our parents stayed in Medellin because they were working.\n\nDaniel: Where did you stay?\n\nValeria: In a small hotel near the beach. It wasn't expensive, and the people were friendly.\n\nDaniel: What was the weather like?\n\nValeria: It was sunny most days, but it rained on Tuesday. We stayed inside that morning.\n\nDaniel: What did you do there when it was sunny?\n\nValeria: We swam and walked along the beach. In the evenings, we hung out at a little cafe. We didn't go shopping.\n\nDaniel: That sounds relaxing. Who did you visit?\n\nValeria: My uncle. He lives there, and he cooked fish for us one evening.\n\nDaniel: Was there a problem during your vacation?\n\nValeria: Yes, a small one on Wednesday. My sister wasn't well.\n\nDaniel: Oh no! What happened?\n\nValeria: She felt sick after a long boat trip. We went back to the hotel and called it a night. She was fine the next morning.\n\nDaniel: I'm glad she felt better. Why did you stay home for the last few days of your holiday?\n\nValeria: After we returned to Medellin, I needed to study for an English exam. I wasn't sick!\n\nDaniel: So, how was your vacation overall?\n\nValeria: It was wonderful, even with that problem. The best part was spending time with my sister. And you?\n\nDaniel: I stayed home, watched movies, and fixed my bike. It was quiet, but I enjoyed it.\n\nValeria: A quiet holiday sounds good too!"
+                })
+            return
+
         if parsed.path == "/api/basic2/unit5-goldilocks-listening/transcript":
             with data_lock:
                 grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
