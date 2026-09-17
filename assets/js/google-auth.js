@@ -2391,7 +2391,18 @@
   function saveActivityField(element) {
     if (!currentUser || restoringActivity || !isActivityField(element)) return;
     const draft = readActivityDraft();
-    draft.fields[fieldKey(element)] = fieldValue(element);
+    // Native radio groups uncheck their previous choice without firing another
+    // change event. Save the complete group so draft restoration cannot revive
+    // an older checked option after a DOM update.
+    if (element.type === "radio" && element.name) {
+      activityFields().filter(function (field) {
+        return field.type === "radio" && field.name === element.name && field.form === element.form;
+      }).forEach(function (field) {
+        draft.fields[fieldKey(field)] = fieldValue(field);
+      });
+    } else {
+      draft.fields[fieldKey(element)] = fieldValue(element);
+    }
     draft.updatedAt = new Date().toISOString();
     saveActivityDraft(draft);
     updateActivityPanelCount();

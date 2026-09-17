@@ -1,5 +1,9 @@
 # My Holidays — Unit 5 listening exam practice
 
+## 2026-09-17 answer-change regression
+
+Confirmed with a signed-in mock account: selecting A, then C, then B restored C after 120 ms. The shared autosave stored only the newly checked radio, leaving previous options true in the draft. DOM changes (including the answered counter) triggered draft restoration, which rechecked the last old true value in DOM order. Fixed `saveActivityField` to snapshot all radio options in the same name/form group, including unchecked siblings. Other field types are unchanged. The page bumps the auth-script version to invalidate cached code. Regression tests use mock authentication and intercept every API request (no student data), click/tap each option in all ten questions, wait for delayed restores, and verify changes before and after checking answers.
+
 Approved placement: Practice Lab Unit 5 Activity 09, with links from Evaluations and Listening Library. Explicit user-approved exception to the default exam-practice placement rule; one canonical page, no duplicate activity.
 
 Purpose: prepare for BASIC COURSE 2 INTEGRATED TASK (20%), My holidays. Original dialogue practises destination, companions, accommodation, weather, activities, relatives, problems, responses, reasons and overall feelings. It does not reproduce the exam's eight conversations or supply its answer key. No submission or gradebook mutation.
