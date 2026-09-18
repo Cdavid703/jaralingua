@@ -4,7 +4,8 @@
   const units = [
     { number: 1, grid: document.getElementById("unit1ActivityGrid"), count: document.getElementById("unit1ActivityCount"), empty: document.getElementById("practiceLabEmpty") },
     { number: 2, grid: document.getElementById("unit2ActivityGrid"), count: document.getElementById("unit2ActivityCount"), empty: document.getElementById("practiceLabUnit2Empty") },
-    { number: 3, grid: document.getElementById("unit3ActivityGrid"), count: document.getElementById("unit3ActivityCount"), empty: document.getElementById("practiceLabUnit3Empty") }
+    { number: 3, grid: document.getElementById("unit3ActivityGrid"), count: document.getElementById("unit3ActivityCount"), empty: document.getElementById("practiceLabUnit3Empty") },
+    { number: 4, grid: document.getElementById("unit4ActivityGrid"), count: document.getElementById("unit4ActivityCount"), empty: document.getElementById("practiceLabUnit4Empty") }
   ];
   const search = document.getElementById("practiceLabSearch");
   const clear = document.getElementById("practiceLabClear");

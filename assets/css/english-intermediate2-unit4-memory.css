@@ -1,0 +1,39 @@
+
+.mm-shell{padding:2rem 0 4rem}
+.mm-intro{display:grid;grid-template-columns:1fr 1fr;gap:2rem;line-height:1.65}
+.mm-intro h2{color:var(--ie2-navy);margin:.4rem 0}
+.mm-intro ol{padding-left:1.5rem}.mm-intro li{padding:.35rem}
+.mm-settings{display:flex;align-items:end;flex-wrap:wrap;gap:1rem;padding:1.2rem;background:white;border:1px solid var(--ie2-line);border-radius:8px;margin:1.4rem 0}
+.mm-settings label{display:grid;gap:.4rem;flex:1;min-width:180px;font-weight:750;color:var(--ie2-navy)}
+.mm-settings select{font:inherit;padding:.7rem;width:100%;min-height:44px;border:1px solid var(--ie2-line);border-radius:8px;background:white;color:var(--ie2-navy)}
+.mm-settings p{flex-basis:100%;margin:0}
+.mm-score{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;background:var(--ie2-navy);color:white;padding:1rem;border-radius:8px}
+.mm-feedback{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem;min-height:85px;padding:.7rem 0}
+.mm-feedback p{margin:0;line-height:1.6}
+.mm-board{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1rem}
+.mm-card{min-width:0;min-height:230px;position:relative;border:2px solid var(--ie2-line);border-radius:8px;background:white;overflow:hidden;display:flex}
+.mm-cover{width:100%;border:0;padding:1rem;cursor:pointer;background:linear-gradient(145deg,#0c244b,#13666b);color:white;font:inherit;display:grid;place-content:center;gap:.8rem;min-height:230px}
+.mm-cover strong{font-size:2rem}.mm-cover span{font-weight:750;letter-spacing:.07em}
+.mm-cover:hover{background:#1b7273}
+.mm-face{width:100%;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:stretch;text-align:center;gap:.8rem;padding:1rem;overflow-wrap:anywhere}
+.mm-face p{margin:0;font-size:.95rem;line-height:1.5}
+.mm-picture{padding:0;justify-content:flex-start}.mm-picture p{padding:.3rem .8rem .8rem}
+.mm-picture .u4-crop{height:130px;aspect-ratio:auto;flex-shrink:0}
+.mm-word{font-size:clamp(1.15rem,1.8vw,1.65rem)}
+.mm-listen{font:inherit;line-height:1.4;color:var(--ie2-navy);background:transparent;border:0;border-bottom:2px dotted var(--ie2-teal);cursor:pointer;min-height:44px;padding:.35rem .15rem;max-width:100%;overflow-wrap:anywhere}
+.mm-listen span{font-size:.75em;color:var(--ie2-teal);white-space:nowrap}
+.mm-listen[aria-pressed=true]{background:#dcf1e9}
+.mm-card.is-matched{border-color:var(--ie2-teal);background:#f0faf5}
+.mm-card.is-matched::after{content:'✓';position:absolute;right:5px;top:5px;background:#146046;color:white;border-radius:50%;width:24px;height:24px;text-align:center;font-weight:900}
+.mm-kind{font-size:.8rem;color:var(--ie2-muted);text-transform:uppercase;letter-spacing:.08em}
+.mm-review{margin:2rem 0}.mm-review-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.mm-review-card{padding:1rem;border:1px solid var(--ie2-line);border-radius:8px;background:white;min-width:0}
+.mm-review-card h3{margin:0;font-size:1.2rem}.mm-review-card p{line-height:1.6}
+.mm-review-card blockquote{margin:.7rem 0 0;border-left:3px solid var(--ie2-teal);padding:.6rem;background:#eef5f7;line-height:1.6}
+.mm-complete{background:#e9f5ef;border-left:5px solid var(--ie2-teal);padding:1.5rem;margin-top:1.5rem;border-radius:8px}
+.mm-complete h2{margin-top:0}
+.mm-shell button:disabled{opacity:.55;cursor:wait}
+@media(min-width:1700px){.mm-board{grid-template-columns:repeat(8,minmax(0,1fr))}}
+@media(max-width:1100px){.mm-board{grid-template-columns:repeat(4,minmax(0,1fr))}.mm-review-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.mm-intro{grid-template-columns:1fr;gap:.3rem}.mm-board{grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}.mm-review-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.mm-card,.mm-cover{min-height:210px}.mm-picture .u4-crop{height:100px}.mm-face{padding:.65rem}.mm-picture{padding:0}.mm-settings{padding:.8rem}.mm-settings label{min-width:100%}.mm-settings button{width:100%}.mm-intro p{margin-bottom:0}}
+@media(max-width:390px){.mm-review-grid{grid-template-columns:1fr}.mm-card,.mm-cover{min-height:220px}.mm-word{font-size:1.1rem}}

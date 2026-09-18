@@ -1,0 +1,61 @@
+
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {createRequire} from 'node:module';
+const require=createRequire(import.meta.url);
+const {chromium}=require('C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const base=process.env.U4_BASE_URL||'http://127.0.0.1:8024';
+fs.mkdirSync('tmp/unit4-projection-qa',{recursive:true});
+const browser=await chromium.launch({channel:'chrome',headless:true});
+const page=await browser.newPage({viewport:{width:1440,height:1000}});
+const errors=[];page.on('pageerror',e=>errors.push(e.message));
+await page.goto(base+'/ingles/intermediate-2/unit-4-movies-music-and-reviews.html',{waitUntil:'networkidle'});
+await page.addStyleTag({content:'*{scroll-behavior:auto!important}'});
+assert.equal(await page.locator('.u4-project-open').count(),31);
+for(const [section,count] of [['movies-and-genres',8],['film-elements',8],['music-videos',15]]){
+ await page.locator('#'+section).evaluate(e=>e.open=true);
+ const trigger=page.locator('#'+section+' .u4-project-open').first();
+ await trigger.focus();await page.keyboard.press('Enter');
+ await page.waitForSelector('.u4-project-visual svg');
+ assert.equal(await page.locator('.u4-projector').evaluate(e=>e.open),true);
+ assert.match(await page.locator('#u4-projection-count').innerText(),new RegExp('1 / '+count));
+ assert.equal(await page.locator('.u4-project-prev').isDisabled(),true);
+ const svg=await page.locator('.u4-project-visual svg').evaluate(e=>({box:e.getAttribute('viewBox').split(' ').map(Number),w:Number(e.querySelector('image').getAttribute('width')),h:Number(e.querySelector('image').getAttribute('height'))}));
+ assert.equal(svg.box[2],svg.w/4);
+ assert.equal(svg.box[3],svg.h/(section==='music-videos'?3:2));
+ assert.ok((await page.locator('.u4-project-description').innerText()).length>20);
+ await page.locator('.u4-project-listen').click();
+ await page.waitForFunction(()=>document.querySelector('.u4-project-listen').getAttribute('aria-pressed')==='true');
+ await page.keyboard.press('ArrowRight');
+ assert.match(await page.locator('#u4-projection-count').innerText(),/2 \/ /);
+ assert.equal(await page.locator('audio').evaluateAll(es=>es.some(e=>!e.paused)),false);
+ await page.keyboard.press('ArrowLeft');
+ await page.keyboard.press('Escape');
+ assert.equal(await page.locator('.u4-projector').evaluate(e=>e.open),false);
+ assert.equal(await trigger.evaluate(e=>e===document.activeElement),true);
+}
+await page.locator('#film-elements .u4-project-open').first().click();
+await page.locator('.u4-project-fullscreen').click();
+await page.waitForFunction(()=>document.fullscreenElement===document.documentElement);
+await page.locator('.u4-project-fullscreen').click();
+await page.waitForFunction(()=>!document.fullscreenElement);
+await page.locator('.u4-project-close').click();
+await page.locator('#present-perfect').evaluate(e=>e.open=true);
+assert.ok((await page.locator('#present-perfect').innerText()).includes('There is no rule'));
+for(const width of [320,390,768,1024,1440,1920]){
+ await page.setViewportSize({width,height:900});
+ await page.locator('#film-elements .u4-project-open').first().click();
+ await page.waitForSelector('.u4-project-visual svg');
+ const fit=await page.locator('.u4-projector').evaluate(e=>({w:e.clientWidth,scroll:e.scrollWidth,h:e.clientHeight}));
+ assert.ok(Math.abs(fit.w-width)<=1);
+ assert.ok(fit.scroll<=width+1,'Overflow '+width);
+ assert.equal(fit.h,900);
+ await page.screenshot({path:'tmp/unit4-projection-qa/projection-'+width+'.jpg',quality:65});
+ await page.locator('.u4-project-close').click();
+}
+await page.locator('#music-videos .u4-project-open').last().click();
+assert.equal(await page.locator('.u4-project-next').isDisabled(),true);
+assert.equal(await page.locator('#u4-projection-title').innerText(),'Conceptual');
+await page.keyboard.press('Escape');
+assert.deepEqual(errors,[]);
+await browser.close();console.log('PASS projection: 31 cards, full cells, pronunciation, navigation, focus, close, six sizes and see/watch explanation');
