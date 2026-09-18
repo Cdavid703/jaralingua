@@ -18,3 +18,13 @@
 @media(max-width:390px){.ff-gallery{grid-template-columns:1fr}}
 
 .ff-intro .intermediate2-kicker{color:var(--ie2-navy);background:#e7edf6}.ff-projector header>div:first-child{flex:1;min-width:0}.ff-projector header>div:last-child{display:flex;gap:.5rem}.ff-projector h2,.ff-workspace h3,#ff-class-info{overflow-wrap:anywhere}
+
+/* The shared navigation clips dropdowns; keep this activity's sign-in in the viewport.
+   Removing the header backdrop filter also prevents it containing fixed descendants. */
+.ie2-film-festival-page .site-header{z-index:1400;overflow:visible;backdrop-filter:none;-webkit-backdrop-filter:none}
+.ie2-film-festival-page .navbar,.ie2-film-festival-page .nav-links{overflow:visible}
+.ie2-film-festival-page .nav-links{flex-wrap:wrap}
+.ie2-film-festival-page .jaralingua-auth-nav .auth-panel{position:fixed;top:88px;right:18px;left:auto;bottom:auto;width:min(380px,calc(100vw - 36px));height:auto;max-height:calc(100dvh - 106px);overflow-y:auto}
+@media(max-width:760px){.ie2-film-festival-page .jaralingua-auth-nav .auth-panel{top:max(12px,env(safe-area-inset-top));right:12px;left:12px;bottom:auto;width:auto;max-height:calc(100dvh - 24px);height:auto}}
+
+.ie2-film-festival-page .u4-hero-image{object-position:center top}

@@ -35,3 +35,9 @@ Published activity: /ingles/intermediate-2/speaking-unit-4-film-festival.html
 
 ## Release
 Deploy only the festival module, API route changes, page/assets, QR, catalog, Practice Lab and sitemap. Compare existing remote file hashes before replacing files and create a dated backup. Compile Python, restart only jaralingua-progress-api.service, verify health and anonymous 401 responses. On failed restart/health checks restore the backed-up code and restart. Never reset the remote checkout or alter other-course work. Production verification creates no fictitious student submissions.
+
+## Activity artwork and sign-in overlay
+- Dedicated generated hero/card: assets/img/english-intermediate-2/unit-4/film-festival/film-festival-hero-v1.png (built-in image_gen, 2026-09-18).
+- Final prompt: cinematic editorial photograph of an adult student presenting at a university film festival, classmates seated in the foreground, projector beam, and a wordless mountain-traveler scene under a golden moon on a large screen. Presenter/screen on the right; dark uncluttered left third for HTML title. Realistic natural faces; navy/teal with warm gold light. Landscape 1536x1024; no text, logos, watermarks or UI.
+- The festival has a scoped body class. Its navigation allows the auth panel to overflow; the header backdrop filter is removed so fixed panel positioning uses the viewport. Both navbar and activity sign-in controls use the existing auth panel, above the hero.
+- Regression: node tools/test_intermediate2_film_festival_layers.mjs; set FESTIVAL_ORIGIN for public checks. Tests actual elementFromPoint hit targets at multiple positions, viewport bounds and both sign-in triggers at 320/390/768/1440 px.
