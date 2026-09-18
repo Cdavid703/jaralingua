@@ -17736,6 +17736,40 @@ def sync_intermediate_manual_grade_edits(existing, next_data, profile):
         write_intermediate_final_writing_store(writing_store)
 
 
+
+def handle_film_festival(handler, profile, parsed, payload=None):
+    if not parsed.path.startswith("/api/intermediate2/film-festival/"):
+        return False
+    from film_festival import FilmFestival, FestivalError
+    grades = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    student = matched_student_for_profile(profile, grades)
+    actor = {
+        "role": grade_user_role(profile, grades),
+        "key": intermediate2_pronunciation_student_key(profile),
+        "name": clean_text((student or {}).get("fullName") or profile.get("name") or profile.get("displayName"), 180) or "Student"
+    }
+    if not actor["key"]:
+        json_response(handler, 403, {"error": "identity_required"})
+        return True
+    festival = FilmFestival(os.environ.get("JARALINGUA_FILM_FESTIVAL_DB", "/var/lib/jaralingua/film-festival.sqlite3"))
+    action = parsed.path.rsplit("/", 1)[-1]
+    query = {key: values[0] for key, values in urllib.parse.parse_qs(parsed.query).items()}
+    try:
+        if handler.command == "GET" and action == "state":
+            json_response(handler, 200, festival.state(actor, query))
+        elif handler.command == "GET" and action == "image":
+            binary_response(handler, 200, festival.image(actor, query.get("id", "")), "image/jpeg")
+        elif handler.command == "POST":
+            json_response(handler, 200, festival.action(actor, action, payload))
+        else:
+            json_response(handler, 404, {"error": "unknown_route"})
+    except FestivalError as error:
+        json_response(handler, error.status, {"error": error.message})
+    except Exception as error:
+        print("Film festival storage failure:", type(error).__name__, flush=True)
+        json_response(handler, 503, {"error": "festival_temporarily_unavailable"})
+    return True
+
 class ProgressHandler(BaseHTTPRequestHandler):
     server_version = "JaraLinguaProgress/1.0"
 
@@ -17922,6 +17956,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
 
         profile = self.require_user()
         if not profile:
+            return
+        if handle_film_festival(self, profile, parsed):
             return
 
         if parsed.path == "/api/intermediate2/unit2-listening/submissions":
@@ -19657,6 +19693,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
         payload = self.read_json_body()
         if payload is None:
+            return
+        if handle_film_festival(self, profile, parsed, payload):
             return
         if (parsed.path.startswith("/api/intermediate/") or parsed.path.startswith("/api/basic/") or parsed.path.startswith("/api/basic2/")) and isinstance(payload, dict):
             profile = dict(profile)
