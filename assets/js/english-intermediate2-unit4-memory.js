@@ -1,142 +1,148 @@
 
-/* Unit 4 picture/word memory: explicit turns, reusable pronunciation, no graded score. */
+/* Unit 4 memory follows the course team-game pattern: two pictures, oral model, teacher point. */
 (() => {
   'use strict';
-  const $ = id => document.getElementById(id);
-  const board=$('memory-board'), topic=$('memory-topic'), size=$('memory-size');
-  const status=$('memory-status'), next=$('memory-next');
-  const review=$('memory-review'), complete=$('memory-complete');
-  let vocabulary=[], deck=[], selected=[], matches=0, attempts=0, locked=false;
-  let currentAudio=null, currentListen=null;
+  const $=id=>document.getElementById(id),board=$('memory-board'),topic=$('memory-topic'),size=$('memory-size'),gate=$('memory-gate');
+  const teams=[$('memoryTeam0'),$('memoryTeam1')],scores=[$('memoryScore0'),$('memoryScore1')];
   const labels={film:'What makes a movie',genres:'Movie genres',music:'Music and media',mixed:'Mixed vocabulary'};
-  function shuffle(items) {
-    const result=[...items];
-    for(let i=result.length-1;i>0;i--) {
-      const j=Math.floor(Math.random()*(i+1));
-      [result[i],result[j]]=[result[j],result[i]];
+  const imageRoot='../../assets/img/english-intermediate-2/unit-4/explanation/';
+  let vocabulary=[],deck=[],selected=[],team=0,points=[0,0],matches=0,locked=false,pending=null,timer=null,audio=null,audioButton=null;
+  const sheets=new Map();
+  const teamName=i=>teams[i].value.trim()||'Team '+(i+1);
+  function shuffle(items){
+    const result=[...items];for(let i=result.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[result[i],result[j]]=[result[j],result[i]];}return result;
+  }
+  function stopAudio(){if(audio)audio.pause();if(audioButton)audioButton.setAttribute('aria-pressed','false');audio=null;audioButton=null;}
+  async function speak(item,button=null){
+    if(button===audioButton&&audio&&!audio.paused){stopAudio();return;}
+    stopAudio();const clip=new Audio('audio/unit-4-explanation/'+item.audio);audio=clip;audioButton=button;clip.playbackRate=.75;
+    const sync=()=>button?.setAttribute('aria-pressed',String(!clip.paused&&!clip.ended));
+    ['play','pause','ended'].forEach(event=>clip.addEventListener(event,sync));
+    $('memory-audio-status').textContent='';$('memory-gate-status').textContent='';
+    try{await clip.play();}catch(error){
+      if(error.name!=='AbortError')(gate.open?$('memory-gate-status'):$('memory-audio-status')).textContent='Audio could not play. Tap the word to try again.';
+      sync();
     }
-    return result;
   }
-  function stopAudio() {
-    if(currentAudio) currentAudio.pause();
-    if(currentListen) currentListen.setAttribute('aria-pressed','false');
-    currentAudio=null;currentListen=null;
+  function listen(item){
+    const button=document.createElement('button');button.type='button';button.className='mm-listen';
+    button.textContent=item.term+' ';const mark=document.createElement('span');mark.textContent='◖))';mark.setAttribute('aria-hidden','true');button.append(mark);
+    button.setAttribute('aria-label','Listen at 0.75 speed: '+item.term);button.setAttribute('aria-pressed','false');
+    button.addEventListener('click',()=>speak(item,button));return button;
   }
-  function pronunciation(item) {
-    const button=document.createElement('button');
-    button.type='button';button.className='mm-listen';
-    button.append(document.createTextNode(item.term+' '));
-    const mark=document.createElement('span');mark.textContent='◖))';mark.setAttribute('aria-hidden','true');button.append(mark);
-    button.setAttribute('aria-label','Listen at 0.75 speed: '+item.term);
-    button.setAttribute('aria-pressed','false');
-    button.addEventListener('click',async()=>{
-      if(currentListen===button && currentAudio && !currentAudio.paused){stopAudio();return;}
-      stopAudio();
-      const audio=new Audio('audio/unit-4-explanation/'+item.audio);
-      currentAudio=audio;currentListen=button;audio.playbackRate=.75;
-      const sync=()=>button.setAttribute('aria-pressed',String(!audio.paused&&!audio.ended));
-      ['play','pause','ended'].forEach(event=>audio.addEventListener(event,sync));
-      $('memory-audio-status').textContent='';
-      try{await audio.play();}
-      catch(error){if(error.name!=='AbortError') $('memory-audio-status').textContent='Audio could not play. Tap the word to try again.';sync();}
-    });
-    return button;
+  function art(item,key){
+    const image=sheets.get(item.sheet),w=image.naturalWidth/item.cols,h=image.naturalHeight/item.rows;
+    const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');
+    svg.setAttribute('viewBox',[item.col*w,item.row*h,w,h].join(' '));svg.setAttribute('preserveAspectRatio','xMidYMid meet');
+    svg.setAttribute('role','img');svg.setAttribute('aria-label',item.term);
+    const defs=document.createElementNS(ns,'defs'),clip=document.createElementNS(ns,'clipPath'),rect=document.createElementNS(ns,'rect');
+    clip.id='memory-image-'+key;rect.setAttribute('x',item.col*w);rect.setAttribute('y',item.row*h);rect.setAttribute('width',w);rect.setAttribute('height',h);
+    clip.append(rect);defs.append(clip);
+    const picture=document.createElementNS(ns,'image');picture.setAttribute('href',image.src);picture.setAttribute('width',image.naturalWidth);picture.setAttribute('height',image.naturalHeight);picture.setAttribute('clip-path','url(#'+clip.id+')');
+    svg.append(defs,picture);
+    const wrapper=document.createElement('span');wrapper.className='mm-art';wrapper.append(svg);return wrapper;
   }
-  function face(card,index) {
-    const el=document.createElement('div');el.className='mm-face';el.hidden=true;el.tabIndex=-1;
-    el.id='memory-face-'+index;
-    if(card.kind==='picture'){
-      el.classList.add('mm-picture');
-      const crop=document.createElement('div');crop.className='u4-crop';
-      for(const [key,value] of Object.entries({cols:card.item.cols,rows:card.item.rows,col:card.item.col,row:card.item.row})) crop.style.setProperty('--'+key,value);
-      const img=document.createElement('img');
-      img.src='../../assets/img/english-intermediate-2/unit-4/explanation/'+card.item.sheet;
-      img.alt=card.item.definition;img.loading='eager';
-      crop.append(img);el.append(crop);
-      const clue=document.createElement('p');clue.textContent=card.item.definition;el.append(clue);
-    }else{
-      el.classList.add('mm-word');
-      const kind=document.createElement('span');kind.className='mm-kind';kind.textContent='Word';el.append(kind,pronunciation(card.item));
-    }
-    return el;
+  function status(text){
+    $('memory-status').textContent=text;$('memoryTurn').textContent=teamName(team);
+    teams.forEach((input,i)=>input.closest('.tg-team').classList.toggle('active',i===team));
+    scores.forEach((el,i)=>el.textContent=points[i]);$('memory-matches').textContent=matches+' / '+deck.length/2;
   }
-  function draw() {
+  function updateCard(card){
+    card.button.classList.toggle('flip',card.open);card.button.classList.toggle('matched',card.matched);
+    card.front.setAttribute('aria-hidden',String(!card.open&&!card.matched));
+    card.back.setAttribute('aria-hidden',String(card.open||card.matched));
+    card.button.setAttribute('aria-label',card.open||card.matched?card.item.term+'. Tap to listen.':'Hidden card '+(card.index+1));
+  }
+  function draw(){
     board.replaceChildren();
     deck.forEach((card,index)=>{
-      const tile=document.createElement('article');tile.className='mm-card';tile.dataset.pair=card.item.id;tile.dataset.kind=card.kind;
-      const cover=document.createElement('button');cover.type='button';cover.className='mm-cover';
-      cover.setAttribute('aria-label','Reveal card '+(index+1));cover.setAttribute('aria-controls','memory-face-'+index);
-      const number=document.createElement('strong');number.textContent=index+1;
-      const back=document.createElement('span');back.textContent='MOVIES + MUSIC';
-      cover.append(number,back);cover.addEventListener('click',()=>reveal(index));
-      const front=face(card,index);tile.append(cover,front);board.append(tile);
-      card.tile=tile;card.cover=cover;card.front=front;
+      card.index=index;
+      const button=document.createElement('button');button.type='button';button.className='tg-card';button.dataset.pair=card.item.id;
+      const back=document.createElement('span');back.className='tg-face tg-back';back.textContent='?';
+      const front=document.createElement('span');front.className='tg-face tg-front';
+      const visual=document.createElement('span');visual.className='tg-card-visual';
+      const caption=document.createElement('strong');caption.className='tg-card-label';caption.textContent=card.item.term+' ◖))';
+      visual.append(art(card.item,'card-'+index),caption);front.append(visual);button.append(back,front);board.append(button);
+      card.button=button;card.front=front;card.back=back;updateCard(card);
+      button.addEventListener('click',()=>choose(index));
     });
   }
-  function counters() {$('memory-matches').textContent=matches+' / '+deck.length/2;$('memory-attempts').textContent=attempts;}
-  function focusAvailable(){const available=deck.find(card=>!card.matched&&!card.open);if(available)available.cover.focus();}
-  function addReview(item) {
-    $('memory-review-empty').hidden=true;
-    const card=document.createElement('article');card.className='mm-review-card';
-    const title=document.createElement('h3');title.append(pronunciation(item));
-    const meaning=document.createElement('p');meaning.textContent=item.definition;
-    const example=document.createElement('blockquote');example.textContent=item.example;
-    card.append(title,meaning,example);review.append(card);
-  }
-  function reveal(index) {
+  function focusAvailable(){deck.find(card=>!card.matched&&!card.open)?.button.focus();}
+  function choose(index){
     const card=deck[index];
-    if(locked||card.open||card.matched)return;
-    card.open=true;card.cover.hidden=true;card.front.hidden=false;selected.push(index);
-    (card.front.querySelector('button')||card.front).focus();
-    if(selected.length===1){status.textContent='One card revealed. Find its picture or word partner.';return;}
-    attempts++;
-    const first=deck[selected[0]],second=card;
-    if(first.item.id===second.item.id && first.kind!==second.kind){
-      first.matched=second.matched=true;
-      first.tile.classList.add('is-matched');second.tile.classList.add('is-matched');
-      matches++;selected=[];addReview(card.item);counters();
-      status.textContent='Match: '+card.item.term+'. Listen and say it, then find another pair.';
-      if(matches===deck.length/2){
-        complete.hidden=false;
-        $('memory-result').textContent='You matched all '+matches+' pairs in '+attempts+' attempts.';
-        status.textContent='Round complete! All '+matches+' pairs found.';
-        complete.focus();
-      }
+    if(locked)return;
+    if(card.matched||card.open){speak(card.item);return;}
+    card.open=true;selected.push(index);updateCard(card);speak(card.item);
+    status(teamName(team)+' revealed '+card.item.term+'.');
+    if(selected.length!==2)return;
+    locked=true;
+    const [a,b]=selected.map(i=>deck[i]);
+    if(a.item.id===b.item.id){
+      pending=a.item;
+      $('memory-gate-image').replaceChildren(art(pending,'gate'));
+      $('memory-gate-title').replaceChildren(listen(pending));
+      $('memory-gate-meaning').textContent=pending.definition;
+      $('memory-gate-example').textContent=pending.example;
+      gate.showModal();speak(pending,$('memory-gate-title').querySelector('button'));
+      status('Pair found. '+teamName(team)+' says the word and the example before the teacher awards the point.');
     }else{
-      locked=true;next.hidden=false;
-      status.textContent='Not a pair. Compare the picture’s meaning with the word. Take your time, then try two more.';
-      next.focus();counters();
+      status('No match. Look at both pictures. The turn passes to '+teamName(1-team)+'.');
+      timer=setTimeout(()=>{
+        timer=null;selected.forEach(i=>{deck[i].open=false;updateCard(deck[i]);});selected=[];locked=false;team=1-team;stopAudio();
+        status(teamName(team)+': choose two cards.');focusAvailable();
+      },1600);
     }
   }
-  next.addEventListener('click',()=>{
-    stopAudio();
-    selected.forEach(index=>{const card=deck[index];card.open=false;card.front.hidden=true;card.cover.hidden=false;});
-    selected=[];locked=false;next.hidden=true;status.textContent='Choose two cards.';focusAvailable();
-  });
-  function updateSize() {
-    const available=topic.value==='mixed'?vocabulary.length:vocabulary.filter(item=>item.topic===topic.value).length;
-    [...size.options].forEach(option=>option.disabled=Number(option.value)>available);
-    if(Number(size.value)>available)size.value='8';
+  function award(){
+    if(!pending)return;
+    const item=pending;
+    selected.forEach(i=>{deck[i].matched=true;updateCard(deck[i]);});
+    points[team]++;matches++;selected=[];pending=null;locked=false;stopAudio();gate.close();
+    const history=$('memory-history');if(matches===1)history.replaceChildren();
+    const li=document.createElement('li');li.append(document.createTextNode(teamName(team)+': '),listen(item));history.append(li);
+    status(teamName(team)+' earns a point and plays again.');
+    if(matches===deck.length/2){
+      $('memory-complete').hidden=false;
+      const outcome=points[0]===points[1]?'It is a tie!':teamName(points[0]>points[1]?0:1)+' wins!';
+      $('memory-result').textContent=outcome+' '+teamName(0)+': '+points[0]+' · '+teamName(1)+': '+points[1]+'. All '+matches+' pairs found.';
+      status('Game complete. '+outcome);$('memory-complete').focus();
+    }else focusAvailable();
   }
-  function start(focus=true) {
-    stopAudio();
+  function retry(){
+    if(!pending)return;
+    selected.forEach(i=>{deck[i].open=false;updateCard(deck[i]);});pending=null;selected=[];locked=false;stopAudio();
+    gate.close();status(teamName(team)+': try the pair again.');focusAvailable();
+  }
+  function updateSize(){
+    const count=topic.value==='mixed'?vocabulary.length:vocabulary.filter(item=>item.topic===topic.value).length;
+    [...size.options].forEach(option=>option.disabled=Number(option.value)>count);
+    if(Number(size.value)>count)size.value='8';
+  }
+  function start(focus=true){
+    clearTimeout(timer);timer=null;stopAudio();pending=null;if(gate.open)gate.close();
     const pool=topic.value==='mixed'?vocabulary:vocabulary.filter(item=>item.topic===topic.value);
     const chosen=shuffle(pool).slice(0,Number(size.value));
-    deck=shuffle(chosen.flatMap(item=>[{item,kind:'picture'},{item,kind:'word'}]));
-    selected=[];matches=0;attempts=0;locked=false;next.hidden=true;complete.hidden=true;
-    review.replaceChildren();$('memory-review-empty').hidden=false;$('memory-audio-status').textContent='';
-    $('memory-round').textContent=labels[topic.value]+' · '+chosen.length+' pairs';
-    status.textContent='Choose two cards. Match a picture and its meaning with the word.';
-    counters();draw();if(focus)focusAvailable();
+    deck=shuffle(chosen.flatMap(item=>[{item,open:false,matched:false},{item,open:false,matched:false}]));
+    team=0;points=[0,0];matches=0;selected=[];locked=false;
+    $('memory-history').replaceChildren(Object.assign(document.createElement('li'),{textContent:'No matched pair yet.'}));
+    $('memory-complete').hidden=true;$('memory-audio-status').textContent='';
+    $('memory-round').textContent=labels[topic.value]+' · '+chosen.length+' picture pairs';
+    draw();status(teamName(team)+': choose two cards.');if(focus)focusAvailable();
   }
+  $('memory-award').addEventListener('click',award);$('memory-retry').addEventListener('click',retry);
+  gate.addEventListener('cancel',event=>{event.preventDefault();retry();});
   topic.addEventListener('change',updateSize);
   $('memory-settings').addEventListener('submit',event=>{event.preventDefault();if(vocabulary.length)start();});
   $('memory-again').addEventListener('click',()=>start());
+  teams.forEach(input=>input.addEventListener('input',()=>status('Current turn: '+teamName(team)+'.')));
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio();});
   fetch('../../assets/data/english-intermediate2-unit4-memory.json')
     .then(response=>{if(!response.ok)throw new Error('Vocabulary unavailable');return response.json();})
-    .then(items=>{
-      if(!Array.isArray(items)||items.length!==28||new Set(items.map(item=>item.id)).size!==28)throw new Error('Invalid vocabulary');
+    .then(async items=>{
+      if(!Array.isArray(items)||items.length!==28||new Set(items.map(i=>i.id)).size!==28)throw new Error('Invalid vocabulary');
+      await Promise.all([...new Set(items.map(i=>i.sheet))].map(sheet=>new Promise((resolve,reject)=>{
+        const image=new Image();image.onload=()=>{sheets.set(sheet,image);resolve();};image.onerror=reject;image.src=imageRoot+sheet;
+      })));
       vocabulary=items;updateSize();$('memory-start').disabled=false;start(false);
-    }).catch(()=>{status.textContent='The vocabulary could not load. Refresh this page to try again, or open the Unit 4 language review below.';$('memory-round').textContent='Vocabulary unavailable';});
+    }).catch(()=>{$('memory-status').textContent='The pictures could not load. Refresh this page to try again.';});
 })();
