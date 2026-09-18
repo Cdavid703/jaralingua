@@ -575,3 +575,7 @@ Movies & Music Memory se publica en Practice Lab → Unit 4: 28 términos (8 ele
 
 ### Corrección del juego de memoria — 18 de septiembre de 2026
 Movies & Music Memory sigue el patrón de los juegos de memoria existentes (Unidad 3 de Course 2 y juegos de alimentos y Around the World): dos equipos con nombres editables y puntuación, reversos con interrogación, giro de tarjeta, imagen y nombre en TODAS las tarjetas reveladas, parejas de la misma imagen. Los errores se ocultan y cambian el turno. Un acierto abre una imagen grande, pronunciación a 0.75×, definición y ejemplo; el docente concede el punto después de la respuesta oral y el equipo mantiene el turno. Try again o Escape devuelven la pareja al tablero sin conceder puntos. Esta mecánica sustituye la variante individual anterior de imagen y palabra en tarjetas diferentes. Las tres láminas de imágenes se precargan antes de habilitar el juego; un reinicio cancela los temporizadores pendientes.
+
+
+### Tarjetas numeradas y filas completas
+El juego de Unidad 4 muestra números del 1 al total de tarjetas, tanto en reverso como en la cara revelada. Ronda principal: 9 parejas, 18 tarjetas y tres filas de seis en escritorio. Opciones: 6, 9 o 12 parejas según vocabulario disponible; el número de columnas se ajusta para dividir exactamente el total de tarjetas en cada ancho. Audience completa los elementos de cine y Musical los géneros: 30 términos en total. Ambos reutilizan imágenes del nivel y tienen audio individual en audio/unit-4-memory/.

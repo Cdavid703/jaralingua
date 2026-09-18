@@ -362,5 +362,33 @@
     "cols": 4,
     "rows": 2,
     "audio": "genre-documentary.mp3"
+  },
+  {
+    "id": "film-audience",
+    "topic": "film",
+    "term": "Audience",
+    "definition": "The people who watch a film or performance.",
+    "example": "The audience enjoys the film together.",
+    "sheet": "hero.png",
+    "col": 0,
+    "row": 0,
+    "cols": 1,
+    "rows": 1,
+    "audio": "audience.mp3",
+    "audioSet": "memory"
+  },
+  {
+    "id": "genre-musical",
+    "topic": "genres",
+    "term": "Musical",
+    "definition": "A film in which songs and musical performances help tell the story.",
+    "example": "The characters sing about their dreams in this musical.",
+    "sheet": "music-styles.png",
+    "col": 0,
+    "row": 0,
+    "cols": 3,
+    "rows": 1,
+    "audio": "musical.mp3",
+    "audioSet": "memory"
   }
 ]

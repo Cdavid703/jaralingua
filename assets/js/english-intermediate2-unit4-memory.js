@@ -15,7 +15,7 @@
   function stopAudio(){if(audio)audio.pause();if(audioButton)audioButton.setAttribute('aria-pressed','false');audio=null;audioButton=null;}
   async function speak(item,button=null){
     if(button===audioButton&&audio&&!audio.paused){stopAudio();return;}
-    stopAudio();const clip=new Audio('audio/unit-4-explanation/'+item.audio);audio=clip;audioButton=button;clip.playbackRate=.75;
+    stopAudio();const clip=new Audio('audio/'+(item.audioSet==='memory'?'unit-4-memory/':'unit-4-explanation/')+item.audio);audio=clip;audioButton=button;clip.playbackRate=.75;
     const sync=()=>button?.setAttribute('aria-pressed',String(!clip.paused&&!clip.ended));
     ['play','pause','ended'].forEach(event=>clip.addEventListener(event,sync));
     $('memory-audio-status').textContent='';$('memory-gate-status').textContent='';
@@ -58,11 +58,12 @@
     deck.forEach((card,index)=>{
       card.index=index;
       const button=document.createElement('button');button.type='button';button.className='tg-card';button.dataset.pair=card.item.id;
-      const back=document.createElement('span');back.className='tg-face tg-back';back.textContent='?';
+      const back=document.createElement('span');back.className='tg-face tg-back';back.textContent=index+1;
       const front=document.createElement('span');front.className='tg-face tg-front';
       const visual=document.createElement('span');visual.className='tg-card-visual';
       const caption=document.createElement('strong');caption.className='tg-card-label';caption.textContent=card.item.term+' ◖))';
-      visual.append(art(card.item,'card-'+index),caption);front.append(visual);button.append(back,front);board.append(button);
+      const number=document.createElement('span');number.className='mm-card-number';number.textContent=index+1;number.setAttribute('aria-hidden','true');
+      visual.append(art(card.item,'card-'+index),caption,number);front.append(visual);button.append(back,front);board.append(button);
       card.button=button;card.front=front;card.back=back;updateCard(card);
       button.addEventListener('click',()=>choose(index));
     });
@@ -116,7 +117,7 @@
   function updateSize(){
     const count=topic.value==='mixed'?vocabulary.length:vocabulary.filter(item=>item.topic===topic.value).length;
     [...size.options].forEach(option=>option.disabled=Number(option.value)>count);
-    if(Number(size.value)>count)size.value='8';
+    if(Number(size.value)>count)size.value='9';
   }
   function start(focus=true){
     clearTimeout(timer);timer=null;stopAudio();pending=null;if(gate.open)gate.close();
@@ -127,6 +128,7 @@
     $('memory-history').replaceChildren(Object.assign(document.createElement('li'),{textContent:'No matched pair yet.'}));
     $('memory-complete').hidden=true;$('memory-audio-status').textContent='';
     $('memory-round').textContent=labels[topic.value]+' · '+chosen.length+' picture pairs';
+    board.dataset.pairs=chosen.length;
     draw();status(teamName(team)+': choose two cards.');if(focus)focusAvailable();
   }
   $('memory-award').addEventListener('click',award);$('memory-retry').addEventListener('click',retry);
@@ -136,10 +138,10 @@
   $('memory-again').addEventListener('click',()=>start());
   teams.forEach(input=>input.addEventListener('input',()=>status('Current turn: '+teamName(team)+'.')));
   document.addEventListener('visibilitychange',()=>{if(document.hidden)stopAudio();});
-  fetch('../../assets/data/english-intermediate2-unit4-memory.json')
+  fetch('../../assets/data/english-intermediate2-unit4-memory.json', {cache:'no-store'})
     .then(response=>{if(!response.ok)throw new Error('Vocabulary unavailable');return response.json();})
     .then(async items=>{
-      if(!Array.isArray(items)||items.length!==28||new Set(items.map(i=>i.id)).size!==28)throw new Error('Invalid vocabulary');
+      if(!Array.isArray(items)||items.length!==30||new Set(items.map(i=>i.id)).size!==30)throw new Error('Invalid vocabulary');
       await Promise.all([...new Set(items.map(i=>i.sheet))].map(sheet=>new Promise((resolve,reject)=>{
         const image=new Image();image.onload=()=>{sheets.set(sheet,image);resolve();};image.onerror=reject;image.src=imageRoot+sheet;
       })));
