@@ -17957,6 +17957,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
         profile = self.require_user()
         if not profile:
             return
+        from basic2_integrated_routes import handle as handle_basic2_integrated
+        if handle_basic2_integrated(self, profile, parsed, globals()):
+            return
         if handle_film_festival(self, profile, parsed):
             return
 
@@ -19275,7 +19278,14 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/basic2/grades":
             with data_lock:
                 grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
-                if ensure_basic2_gradebook_structure(grades_data):
+                from basic2_integrated_routes import reconcile as reconcile_basic2_integrated
+                basic2_changed = ensure_basic2_gradebook_structure(grades_data)
+                try:
+                    if reconcile_basic2_integrated(globals(), grades_data):
+                        basic2_changed = True
+                except Exception as error:
+                    print("Basic 2 integrated reconciliation:", type(error).__name__, flush=True)
+                if basic2_changed:
                     write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
                 query = urllib.parse.parse_qs(parsed.query)
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
@@ -19693,6 +19703,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
         payload = self.read_json_body()
         if payload is None:
+            return
+        from basic2_integrated_routes import handle as handle_basic2_integrated
+        if handle_basic2_integrated(self, profile, parsed, globals(), payload):
             return
         if handle_film_festival(self, profile, parsed, payload):
             return

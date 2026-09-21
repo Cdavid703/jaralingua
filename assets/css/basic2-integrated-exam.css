@@ -1,0 +1,41 @@
+
+.basic2-integrated-exam{--ix-gap:clamp(12px,2vw,30px);font-size:16px;margin:0;padding:0;background:#f4f7fb}
+.basic2-integrated-exam *{box-sizing:border-box}
+.basic2-integrated-exam .site-header,.basic2-integrated-exam .ix-hero{position:relative!important;inset:auto!important;background-attachment:scroll!important}
+.basic2-integrated-exam .lesson-hero-content{width:100%;max-width:none;background:transparent;margin:0;padding:18px 22px;border-radius:0;box-shadow:none}
+.basic2-integrated-exam .ix-hero{width:100%;max-width:none;min-height:0}
+.basic2-integrated-exam.basic2-page .lesson-hero-content.jl-page-qr-host{padding:18px 146px 18px 22px!important;min-height:168px}
+.basic2-integrated-exam .site-header .navbar{flex-direction:row!important;flex-wrap:wrap;gap:8px;width:100%;max-width:none;padding:8px 14px}
+.basic2-integrated-exam .site-header .brand{flex:0 0 34px;margin:0}
+.basic2-integrated-exam .site-header .brand img{width:34px;height:34px;object-fit:contain}
+.basic2-integrated-exam .site-header .nav-links{width:auto!important;flex:1 1 auto;gap:6px;margin:0;padding:0}
+.basic2-integrated-exam .site-header .nav-links a{padding:8px;font-size:.86rem;min-height:40px}
+@media(max-width:620px){.basic2-integrated-exam.basic2-page .lesson-hero-content.jl-page-qr-host{padding:16px 104px 16px 16px!important}.basic2-integrated-exam .ix-hero h1{font-size:1.4rem;overflow-wrap:normal}.basic2-integrated-exam .ix-hero p{font-size:.95rem}}
+.basic2-integrated-exam #ix-form{font-family:Georgia,'Times New Roman',serif}
+.basic2-integrated-exam #ix-form button,.basic2-integrated-exam .ix-audio{font-family:Arial,sans-serif}
+.basic2-integrated-exam .ix-paper-intro p{margin:.35rem 0}
+.basic2-integrated-exam #ix-writing{font-family:Georgia,'Times New Roman',serif;background:repeating-linear-gradient(white,white 31px,#c3ccd4 32px);line-height:32px}
+.basic2-integrated-exam [hidden]{display:none!important}.basic2-integrated-exam .site-header{position:relative;z-index:1400;overflow:visible;backdrop-filter:none;-webkit-backdrop-filter:none}
+.basic2-integrated-exam .navbar,.basic2-integrated-exam .nav-links{overflow:visible}.basic2-integrated-exam .nav-links{flex-wrap:wrap}
+.basic2-integrated-exam .jaralingua-auth-nav .auth-panel{position:fixed;top:88px;right:18px;left:auto;bottom:auto;width:min(380px,calc(100vw - 36px));height:auto;max-height:calc(100dvh - 106px);overflow-y:auto}
+.ix-institution{background:white;padding:10px var(--ix-gap);text-align:center}.ix-institution img{display:block;width:100%;max-width:1123px;height:auto;margin:auto}.ix-institution:last-child{padding-top:32px}
+.ix-hero{position:relative;padding:1.5rem var(--ix-gap);background:#0b254d;color:white}.ix-hero h1{margin:.3rem 0;font-size:clamp(1.7rem,3vw,2.7rem);color:white}.ix-hero h2{color:#ffe1a0;margin:.5rem 0 0;font-size:1.25rem}.ix-hero p{margin:.35rem 0}
+.ix-shell{width:100%;max-width:none;padding:var(--ix-gap);margin:0}.ix-panel{background:white;border:1px solid #dce3eb;border-radius:10px;padding:clamp(1rem,2vw,1.8rem);margin-bottom:1.2rem;min-width:0}.ix-panel h2{margin-top:0;color:#0b254d}.ix-panel p,.ix-panel li{line-height:1.65}.ix-panel li{margin:.4rem 0}.ix-panel small{font-size:1rem;font-weight:500}
+.ix-shell button{min-height:48px;padding:.7rem 1.1rem;border:1px solid #116d64;border-radius:8px;background:#0f766e;color:white;font:inherit;font-weight:750;cursor:pointer}.ix-shell button.ix-secondary{background:white;color:#173b67;border-color:#aabbd0}.ix-shell button:disabled{opacity:.5;cursor:not-allowed}
+.ix-shell button:focus-visible,.ix-shell input:focus-visible,.ix-shell textarea:focus-visible,.ix-shell select:focus-visible{outline:3px solid #d9a441;outline-offset:3px}.ix-actions{display:flex;flex-wrap:wrap;gap:.7rem}.ix-small{font-size:.9rem;color:#526378}
+.ix-shell label{font-weight:650}.ix-shell input:not([type=radio]),.ix-shell select,.ix-shell textarea{display:block;width:100%;min-width:0;min-height:44px;padding:.8rem;border:1px solid #aabbd0;border-radius:7px;background:white;font:inherit;color:#142033;margin:.4rem 0 1rem}
+#ix-ready label{display:block;max-width:440px}#ix-fields{border:0;padding:0;margin:0;min-width:0}.ix-exam-heading{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem}.ix-exam-heading p{flex-basis:100%}
+.ix-audio{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin:1rem 0}.ix-audio audio{width:min(100%,460px)}.ix-audio p{flex-basis:100%;margin:0}
+.ix-questions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 2rem}.ix-question{border:0;border-top:1px solid #e0e6ed;margin:0;padding:1rem 0;min-width:0}.ix-question legend{font-weight:750;line-height:1.5;padding:.6rem 0;color:#0b254d;max-width:100%}.ix-question label{display:flex;align-items:flex-start;gap:.7rem;min-height:48px;padding:.65rem;border:1px solid #e5ebf2;border-radius:6px;margin:.4rem 0;font-weight:450;cursor:pointer;line-height:1.45}.ix-question label:has(input:checked){border-color:#0f766e;background:#eef8f5}.ix-question input{width:20px;height:20px;flex-shrink:0;margin:1px 0 0}
+.ix-writing-head{display:flex;justify-content:space-between;align-items:center;gap:1rem}#ix-timer{font-size:1.6rem;font-weight:800;font-variant-numeric:tabular-nums;color:#0b254d}.ix-writing-label{display:block;margin-top:1rem}#ix-writing{min-height:350px;resize:vertical;line-height:1.7}#ix-writing:disabled{background:#f3f5f8}
+.ix-delivery{padding:1rem 0 2rem}#ix-submit{display:block;width:100%;min-height:66px;font-size:clamp(1.2rem,2vw,1.5rem);box-shadow:0 5px 12px #0f766e26}#ix-save-status,#ix-submit-status{min-height:1.5rem;margin:.5rem 0}
+#ix-monitor{margin-top:1.5rem;display:grid;gap:1rem}.ix-review{border:1px solid #d4deea;border-radius:8px;padding:1rem;min-width:0}.ix-review h3{margin-top:0}.ix-review pre,#ix-private-materials pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;line-height:1.7}.ix-rubric{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem}.ix-review label{display:block}.ix-review .ix-grade-status{color:#0f766e}#ix-private-materials{padding:1rem 0}#ix-private-materials p{white-space:pre-wrap}.ix-panel summary{cursor:pointer;font-weight:700;min-height:44px;padding:.7rem 0}
+@media(max-width:900px){.ix-rubric{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.basic2-integrated-exam .jaralingua-auth-nav .auth-panel{top:12px;right:12px;left:12px;bottom:auto;width:auto;height:auto;max-height:calc(100dvh - 24px)}.ix-questions{grid-template-columns:1fr}.ix-actions button{flex:1 1 170px}.ix-hero{padding-top:1rem;padding-bottom:1rem}}
+@media(max-width:390px){.ix-rubric{grid-template-columns:1fr}.ix-writing-head{flex-wrap:wrap}}
+
+.ix-speed{display:flex;align-items:center;gap:.45rem}.ix-speed button[aria-pressed=true]{background:#173b67;color:#fff;border-color:#173b67}
+.ix-submit-shortcut{display:inline-flex;padding:.8rem 1.1rem;margin:0 0 1rem;border:2px solid #0f766e;border-radius:8px;color:#075b55;background:#e8f8f5;text-decoration:none;font-weight:750;min-height:48px;align-items:center}
+#ix-delivery{scroll-margin-top:20px}#ix-delivery h2{color:#0b254d}#ix-submit:disabled{opacity:.8}
+#ix-transcript-dialog{width:min(760px,calc(100vw - 28px));max-height:calc(100dvh - 40px);box-sizing:border-box;padding:clamp(16px,3vw,30px);border:1px solid #aabbd0;border-radius:14px;color:#142033;background:white;overflow-y:auto}
+#ix-transcript-dialog::backdrop{background:#071b39aa}.ix-transcript-heading{display:flex;align-items:center;justify-content:space-between;gap:1rem}.ix-transcript-heading h2{margin:0;color:#0b254d}#ix-transcript-content p{font-size:1.05rem;line-height:1.7;white-space:pre-wrap}
