@@ -16,6 +16,8 @@ This is separate from the Unit 5 My Holidays practice. Do not replace its audio 
 
 ## Access, grading and delivery
 
+- Session recovery: an HTTP 401 displays “Reconnect and keep my exam” instead of leaving students with `invalid_token`. Before reconnecting, a verified local copy preserves the text and answers; a pending delivery keeps its original submission ID. Sign in again with the same account, restore the draft and retry. Invalid/expired credentials are never accepted by the backend. Test: `node tools/test_basic2_integrated_auth_recovery.mjs` with the disposable test server.
+
 - Closed by default. Only verified Basic 2 teacher/admin accounts may open access, preview, read the transcript/key and grade submissions.
 - Students must sign in with an account linked to the Basic 2 roster. Claimed student IDs are not used to bypass account matching.
 - Transcript, answer key and audio are not served as public static assets. Exam questions are returned only after a valid attempt starts; no correct-answer fields are returned to students.

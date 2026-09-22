@@ -4,6 +4,18 @@
 const $=id=>document.getElementById(id),prefix='/api/basic2/integrated-task/';
 let user=null,epoch=0,state=null,attempt=null,preview=false,dirty=false,saveFlight=null,saveTimer=null,timer=null;
 let audioUrl=null,audioAllowed=false,submitting=false,pending=null,conflict=null,activeAudio=null;
+let authRecovery=false;
+const recovery=document.createElement('section');recovery.className='ix-panel';recovery.hidden=true;recovery.setAttribute('role','alert');
+const recoveryText=document.createElement('p');recoveryText.textContent='Your sign-in session needs to be renewed. Keep this page open. Reconnect with the same account, then send your exam again. Your answers and writing will be restored.';
+const reconnect=document.createElement('button');reconnect.type='button';reconnect.textContent='Reconnect and keep my exam';
+recovery.append(recoveryText,reconnect);document.querySelector('.ix-shell').prepend(recovery);
+reconnect.onclick=()=>{
+ if(attempt&&!preview){const copy={...formValues(),savedAt:Date.now()};putLocal('draft',copy);if(readLocal('draft')?.writing!==copy.writing){alert('This browser cannot keep a recovery copy. Copy your writing before signing in again. Your exam is still on this screen.');return;}}
+ if(pending)putLocal('pending',pending);
+ const signout=document.querySelector('[data-auth-signout]');if(signout)signout.click();
+ window.JaraLinguaAuth?.openPanel();
+};
+function recoverAuth(){authRecovery=true;localDraft();if(pending)putLocal('pending',pending);clearTimeout(saveTimer);recovery.hidden=false;}
 const audio=$('ix-audio');
 let playbackRate=1;
 function setPlaybackRate(rate){playbackRate=rate;audio.defaultPlaybackRate=rate;audio.playbackRate=rate;document.querySelectorAll('[data-ix-rate]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.ixRate)===rate)));}
@@ -19,7 +31,7 @@ const storageKey=kind=>'basic2-integrated-2026-1:'+identity()+':'+(attempt?.id||
 function readLocal(kind){try{return JSON.parse(localStorage.getItem(storageKey(kind))||'null');}catch{return null;}}
 function putLocal(kind,value){try{localStorage.setItem(storageKey(kind),JSON.stringify(value));}catch{}}
 function removeLocal(kind){try{localStorage.removeItem(storageKey(kind));}catch{}}
-function report(error,id='ix-status'){if(error.code!=='session_changed')$(id).textContent=messages[error.code]||error.message||'The request failed. Try again.';}
+function report(error,id='ix-status'){if(error.code!=='session_changed')$(id).textContent=error.status===401?'Your session needs renewal. Use “Reconnect and keep my exam”, sign in with the same account, and send again.':messages[error.code]||error.message||'The request failed. Try again.';}
 async function request(action,payload,binary=false){
  if(!user?.credential)throw Object.assign(new Error('Sign in to continue.'),{code:'not_signed_in'});
  const ticket=epoch,controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),30000);
@@ -29,7 +41,7 @@ async function request(action,payload,binary=false){
    ...(payload!==undefined?{body:JSON.stringify(payload)}:{})});
   const data=binary&&response.ok?await response.blob():await response.json();
   if(ticket!==epoch)throw Object.assign(new Error('session_changed'),{code:'session_changed'});
-  if(!response.ok)throw Object.assign(new Error(data.error||'Request failed.'),{code:data.error,data,status:response.status});
+  if(!response.ok){if(response.status===401)recoverAuth();throw Object.assign(new Error(data.error||'Request failed.'),{code:data.error,data,status:response.status});}
   return data;
  }finally{clearTimeout(timeout);}
 }
@@ -38,7 +50,7 @@ function formValues(){const answers={};for(let n=1;n<=10;n++){const checked=docu
  return {attemptId:attempt?.id,revision:attempt?.revision,answers,writing:$('ix-writing').value,courseCode:attempt?.courseCode||$('ix-course').value.trim()};}
 function localDraft(){if(user&&attempt&&!preview&&!state?.submission&&dirty)putLocal('draft',{...formValues(),savedAt:Date.now()});}
 function updateCount(){$('ix-word-count').textContent=countWords($('ix-writing').value)+' / 30 words';}
-function changed(){updateCount();if(preview||!attempt||pending)return;dirty=true;localDraft();clearTimeout(saveTimer);saveTimer=setTimeout(()=>saveDraft().catch(()=>{}),900);}
+function changed(){updateCount();if(preview||!attempt||pending)return;dirty=true;localDraft();clearTimeout(saveTimer);if(!authRecovery)saveTimer=setTimeout(()=>saveDraft().catch(()=>{}),900);}
 async function saveDraft(){
  if(preview||!attempt||state?.submission||conflict)return;
  if(saveFlight){await saveFlight;if(dirty)return saveDraft();return;}
@@ -50,7 +62,7 @@ async function saveDraft(){
    if(!dirty){removeLocal('draft');$('ix-save-status').textContent='Draft saved.';}
   }catch(error){if(ticket!==epoch)return;dirty=true;localDraft();
    if(error.code==='draft_conflict'){conflict=error.data.attempt;$('ix-conflict').hidden=false;}
-   $('ix-save-status').textContent=error.code==='draft_conflict'?messages.draft_conflict:'Saved on this device. Server save needs a retry.';
+   $('ix-save-status').textContent=error.status===401?'Session renewal needed. Your draft is kept on this device.':error.code==='draft_conflict'?messages.draft_conflict:'Saved on this device. Server save needs a retry.';
    throw error;
   }finally{if(ticket===epoch)saveFlight=null;}
  })();
@@ -126,7 +138,7 @@ function teacherView(){
 }
 async function load(){
  const ticket=epoch;if(!user?.credential){panels('access');$('ix-login').hidden=false;$('ix-status').textContent='Sign in with your course account.';return;}
- const result=await request('state');if(ticket!==epoch)return;state=result;preview=false;attempt=result.attempt||null;
+ const result=await request('state');if(ticket!==epoch)return;authRecovery=false;recovery.hidden=true;state=result;preview=false;attempt=result.attempt||null;
  if(['teacher','admin'].includes(result.role)){teacherView();return;}
  if(!result.student){panels('access');$('ix-status').textContent=messages.account_not_linked;$('ix-login').hidden=false;return;}
  if(result.submission){showReceipt(result.submission);return;}
@@ -170,6 +182,7 @@ audio.addEventListener('error',()=>{$('ix-audio-status').textContent='Audio coul
 audio.addEventListener('ended',()=>{audioAllowed=true;playLabel();});
 $('ix-form').onsubmit=async event=>{
  event.preventDefault();
+ if(authRecovery){localDraft();recovery.hidden=false;recovery.scrollIntoView({block:'center'});return;}
  if(preview){$('ix-submit-status').textContent='Teacher preview: the button is active. Students use it to send their exam; no teacher submission is created.';return;}
  if(submitting||conflict)return;
  if(!attempt.writingStartedAt){$('ix-writing-start').scrollIntoView({block:'center'});report({code:'start_writing_first'},'ix-submit-status');return;}
@@ -204,7 +217,7 @@ if(document.readyState!=='complete')window.addEventListener('load',authChanged,{
 window.addEventListener('beforeunload',localDraft);
 document.addEventListener('visibilitychange',()=>{if(document.hidden){localDraft();saveDraft().catch(()=>{});}});
 setInterval(async()=>{
- if(!user?.credential||!attempt||preview||state?.submission||submitting)return;
+ if(!user?.credential||!attempt||preview||state?.submission||submitting||authRecovery)return;
  try{const fresh=await request('state');if(fresh.attempt?.id===attempt?.id){attempt.listenLimit=fresh.attempt.listenLimit;attempt.plays=fresh.attempt.plays;playLabel();
   if(fresh.submission){localDraft();state.submission=fresh.submission;showReceipt(fresh.submission);}}}catch{}
 },20000);
