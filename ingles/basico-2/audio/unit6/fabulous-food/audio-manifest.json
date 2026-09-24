@@ -1,0 +1,577 @@
+{
+  "cucumber": {
+    "text": "cucumber",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/cucumber-word.mp3",
+    "reused": true
+  },
+  "onion": {
+    "text": "onion",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/onion-word.mp3",
+    "reused": true
+  },
+  "potato": {
+    "text": "potato",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/potato-word.mp3",
+    "reused": true
+  },
+  "pepper": {
+    "text": "pepper",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/pepper-word.mp3",
+    "reused": true
+  },
+  "mushroom": {
+    "text": "mushroom",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/mushroom-word.mp3",
+    "reused": true
+  },
+  "carrot": {
+    "text": "carrot",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/carrot.mp3",
+    "reused": false
+  },
+  "pineapple": {
+    "text": "pineapple",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/pineapple-word.mp3",
+    "reused": true
+  },
+  "grapes": {
+    "text": "grapes",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/grapes-word.mp3",
+    "reused": true
+  },
+  "watermelon": {
+    "text": "watermelon",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/watermelon-word.mp3",
+    "reused": true
+  },
+  "apple": {
+    "text": "apple",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/apple.mp3",
+    "reused": false
+  },
+  "pear": {
+    "text": "pear",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/pear.mp3",
+    "reused": false
+  },
+  "avocado": {
+    "text": "avocado",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/avocado.mp3",
+    "reused": false
+  },
+  "flour": {
+    "text": "flour",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/flour-word.mp3",
+    "reused": true
+  },
+  "butter": {
+    "text": "butter",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/butter-word.mp3",
+    "reused": true
+  },
+  "rice": {
+    "text": "rice",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/rice.mp3",
+    "reused": false
+  },
+  "cheese": {
+    "text": "cheese",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/cheese.mp3",
+    "reused": false
+  },
+  "bread": {
+    "text": "bread",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/bread.mp3",
+    "reused": false
+  },
+  "egg": {
+    "text": "egg",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/egg.mp3",
+    "reused": false
+  },
+  "cereal": {
+    "text": "cereal",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/cereal-word.mp3",
+    "reused": true
+  },
+  "soup": {
+    "text": "soup",
+    "path": "/ingles/intermediate/audio/unit-5-food-memory/soup-word.mp3",
+    "reused": true
+  },
+  "salad": {
+    "text": "salad",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/salad.mp3",
+    "reused": false
+  },
+  "grilled-chicken": {
+    "text": "grilled chicken",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/grilled-chicken.mp3",
+    "reused": false
+  },
+  "noodles": {
+    "text": "noodles",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/noodles.mp3",
+    "reused": false
+  },
+  "dessert": {
+    "text": "dessert",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/dessert.mp3",
+    "reused": false
+  },
+  "i-usually-have-breakfast-at-seven": {
+    "text": "I usually have breakfast at seven.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/i-usually-have-breakfast-at-seven.mp3",
+    "reused": false
+  },
+  "i-prefer-rice-to-pasta": {
+    "text": "I prefer rice to pasta.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/i-prefer-rice-to-pasta.mp3",
+    "reused": false
+  },
+  "i-do-not-eat-meat": {
+    "text": "I do not eat meat.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/i-do-not-eat-meat.mp3",
+    "reused": false
+  },
+  "a-slice-of-bread": {
+    "text": "a slice of bread",
+    "path": "/ingles/intermediate/audio/unit-5-market-basket/a-slice-of-bread.mp3",
+    "reused": true
+  },
+  "a-bowl-of-soup": {
+    "text": "a bowl of soup",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/a-bowl-of-soup.mp3",
+    "reused": false
+  },
+  "a-piece-of-cheese": {
+    "text": "a piece of cheese",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/a-piece-of-cheese.mp3",
+    "reused": false
+  },
+  "a-glass-of-water": {
+    "text": "a glass of water",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/a-glass-of-water.mp3",
+    "reused": false
+  },
+  "a-bottle-of-juice": {
+    "text": "a bottle of juice",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/a-bottle-of-juice.mp3",
+    "reused": false
+  },
+  "a-cup-of-rice": {
+    "text": "a cup of rice",
+    "path": "/ingles/intermediate/audio/unit-5-market-basket/a-cup-of-rice.mp3",
+    "reused": true
+  },
+  "would-you-like-some-soup": {
+    "text": "Would you like some soup?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/would-you-like-some-soup.mp3",
+    "reused": false
+  },
+  "can-i-have-some-water-please": {
+    "text": "Can I have some water, please?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/can-i-have-some-water-please.mp3",
+    "reused": false
+  },
+  "how-many-tomatoes-do-we-need": {
+    "text": "How many tomatoes do we need?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/how-many-tomatoes-do-we-need.mp3",
+    "reused": false
+  },
+  "how-much-rice-do-we-need": {
+    "text": "How much rice do we need?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/how-much-rice-do-we-need.mp3",
+    "reused": false
+  },
+  "sweet": {
+    "text": "sweet",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/sweet.mp3",
+    "reused": false
+  },
+  "salty": {
+    "text": "salty",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/salty.mp3",
+    "reused": false
+  },
+  "sour": {
+    "text": "sour",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/sour.mp3",
+    "reused": false
+  },
+  "bitter": {
+    "text": "bitter",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/bitter.mp3",
+    "reused": false
+  },
+  "spicy": {
+    "text": "spicy",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/spicy.mp3",
+    "reused": false
+  },
+  "crunchy": {
+    "text": "crunchy",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/crunchy.mp3",
+    "reused": false
+  },
+  "crispy": {
+    "text": "crispy",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/crispy.mp3",
+    "reused": false
+  },
+  "creamy": {
+    "text": "creamy",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/creamy.mp3",
+    "reused": false
+  },
+  "tender": {
+    "text": "tender",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/tender.mp3",
+    "reused": false
+  },
+  "chewy": {
+    "text": "chewy",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/chewy.mp3",
+    "reused": false
+  },
+  "hot": {
+    "text": "hot",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/hot.mp3",
+    "reused": false
+  },
+  "warm": {
+    "text": "warm",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/warm.mp3",
+    "reused": false
+  },
+  "cold": {
+    "text": "cold",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/cold.mp3",
+    "reused": false
+  },
+  "grilled": {
+    "text": "grilled",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/grilled.mp3",
+    "reused": false
+  },
+  "fried": {
+    "text": "fried",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/fried.mp3",
+    "reused": false
+  },
+  "baked": {
+    "text": "baked",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/baked.mp3",
+    "reused": false
+  },
+  "steamed": {
+    "text": "steamed",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/steamed.mp3",
+    "reused": false
+  },
+  "tasty": {
+    "text": "tasty",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/tasty.mp3",
+    "reused": false
+  },
+  "bland": {
+    "text": "bland",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/bland.mp3",
+    "reused": false
+  },
+  "greasy": {
+    "text": "greasy",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/greasy.mp3",
+    "reused": false
+  },
+  "fresh": {
+    "text": "fresh",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/fresh.mp3",
+    "reused": false
+  },
+  "this-soup-contains-potatoes-and-carrots": {
+    "text": "This soup contains potatoes and carrots.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/this-soup-contains-potatoes-and-carrots.mp3",
+    "reused": false
+  },
+  "wash": {
+    "text": "wash",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/wash.mp3",
+    "reused": false
+  },
+  "peel": {
+    "text": "peel",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/peel.mp3",
+    "reused": false
+  },
+  "cut": {
+    "text": "cut",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/cut.mp3",
+    "reused": false
+  },
+  "mix": {
+    "text": "mix",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/mix.mp3",
+    "reused": false
+  },
+  "add": {
+    "text": "add",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/add.mp3",
+    "reused": false
+  },
+  "cook": {
+    "text": "cook",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/cook.mp3",
+    "reused": false
+  },
+  "serve": {
+    "text": "serve",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/serve.mp3",
+    "reused": false
+  },
+  "do-you-like-coffee": {
+    "text": "Do you like coffee?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/do-you-like-coffee.mp3",
+    "reused": false
+  },
+  "would-you-like-some-coffee": {
+    "text": "Would you like some coffee?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/would-you-like-some-coffee.mp3",
+    "reused": false
+  },
+  "yes-please": {
+    "text": "Yes, please.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/yes-please.mp3",
+    "reused": false
+  },
+  "no-thank-you-i-would-prefer-water": {
+    "text": "No, thank you. I would prefer water.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/no-thank-you-i-would-prefer-water.mp3",
+    "reused": false
+  },
+  "restaurant-1": {
+    "text": "A table for two, please.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-1.mp3",
+    "reused": false
+  },
+  "restaurant-2": {
+    "text": "Of course. Here is the menu.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-2.mp3",
+    "reused": false
+  },
+  "restaurant-3": {
+    "text": "What does the vegetable soup contain?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-3.mp3",
+    "reused": false
+  },
+  "restaurant-4": {
+    "text": "It contains potatoes, carrots, and onions.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-4.mp3",
+    "reused": false
+  },
+  "restaurant-5": {
+    "text": "I would like the grilled chicken, please. Can I have it without onions?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-5.mp3",
+    "reused": false
+  },
+  "restaurant-6": {
+    "text": "Let me check with the kitchen. Would you like rice or a salad?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-6.mp3",
+    "reused": false
+  },
+  "restaurant-7": {
+    "text": "A salad, please, and a glass of water.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-7.mp3",
+    "reused": false
+  },
+  "restaurant-8": {
+    "text": "Certainly.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-8.mp3",
+    "reused": false
+  },
+  "restaurant-9": {
+    "text": "Could we have the check, please?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-9.mp3",
+    "reused": false
+  },
+  "restaurant-10": {
+    "text": "Of course. Here is your check.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/restaurant-10.mp3",
+    "reused": false
+  },
+  "can-i-have-it-without-onions-please": {
+    "text": "Can I have it without onions, please?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/can-i-have-it-without-onions-please.mp3",
+    "reused": false
+  },
+  "i-am-allergic-to-peanuts-could-you-check-with-the-kitchen": {
+    "text": "I am allergic to peanuts. Could you check with the kitchen?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/i-am-allergic-to-peanuts-could-you-check-with-the-kitchen.mp3",
+    "reused": false
+  },
+  "do-you-have-a-vegetarian-option": {
+    "text": "Do you have a vegetarian option?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/do-you-have-a-vegetarian-option.mp3",
+    "reused": false
+  },
+  "let-me-check-with-the-kitchen": {
+    "text": "Let me check with the kitchen.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/let-me-check-with-the-kitchen.mp3",
+    "reused": false
+  },
+  "this-dish-contains-milk": {
+    "text": "This dish contains milk.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/this-dish-contains-milk.mp3",
+    "reused": false
+  },
+  "we-have-a-vegetable-soup": {
+    "text": "We have a vegetable soup.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/we-have-a-vegetable-soup.mp3",
+    "reused": false
+  },
+  "garden-table-is-quieter-and-cheaper-than-city-kitchen-but-its-service-is-slower": {
+    "text": "Garden Table is quieter and cheaper than City Kitchen, but its service is slower.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/garden-table-is-quieter-and-cheaper-than-city-kitchen-but-its-service-is-slower.mp3",
+    "reused": false
+  },
+  "eat-out": {
+    "text": "eat out",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/eat-out.mp3",
+    "reused": false
+  },
+  "we-sometimes-eat-out-on-fridays": {
+    "text": "We sometimes eat out on Fridays.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/we-sometimes-eat-out-on-fridays.mp3",
+    "reused": false
+  },
+  "heat-up": {
+    "text": "heat up",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/heat-up.mp3",
+    "reused": false
+  },
+  "heat-up-the-soup-before-lunch": {
+    "text": "Heat up the soup before lunch.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/heat-up-the-soup-before-lunch.mp3",
+    "reused": false
+  },
+  "cut-up": {
+    "text": "cut up",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/cut-up.mp3",
+    "reused": false
+  },
+  "cut-up-the-vegetables-for-the-salad": {
+    "text": "Cut up the vegetables for the salad.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/cut-up-the-vegetables-for-the-salad.mp3",
+    "reused": false
+  },
+  "run-out-of": {
+    "text": "run out of",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/run-out-of.mp3",
+    "reused": false
+  },
+  "we-ran-out-of-milk-this-morning": {
+    "text": "We ran out of milk this morning.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/we-ran-out-of-milk-this-morning.mp3",
+    "reused": false
+  },
+  "cut-down-on": {
+    "text": "cut down on",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/cut-down-on.mp3",
+    "reused": false
+  },
+  "i-am-cutting-down-on-sugary-drinks": {
+    "text": "I am cutting down on sugary drinks.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/i-am-cutting-down-on-sugary-drinks.mp3",
+    "reused": false
+  },
+  "have-a-sweet-tooth": {
+    "text": "have a sweet tooth",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/have-a-sweet-tooth.mp3",
+    "reused": false
+  },
+  "i-have-a-sweet-tooth-so-i-love-desserts": {
+    "text": "I have a sweet tooth, so I love desserts.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/i-have-a-sweet-tooth-so-i-love-desserts.mp3",
+    "reused": false
+  },
+  "make-someone-s-mouth-water": {
+    "text": "make someone's mouth water",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/make-someone-s-mouth-water.mp3",
+    "reused": false
+  },
+  "the-smell-of-fresh-bread-makes-my-mouth-water": {
+    "text": "The smell of fresh bread makes my mouth water.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/the-smell-of-fresh-bread-makes-my-mouth-water.mp3",
+    "reused": false
+  },
+  "not-someone-s-cup-of-tea": {
+    "text": "not someone's cup of tea",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/not-someone-s-cup-of-tea.mp3",
+    "reused": false
+  },
+  "very-spicy-food-is-not-my-cup-of-tea": {
+    "text": "Very spicy food is not my cup of tea.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/very-spicy-food-is-not-my-cup-of-tea.mp3",
+    "reused": false
+  },
+  "a-piece-of-cake": {
+    "text": "a piece of cake",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/a-piece-of-cake.mp3",
+    "reused": false
+  },
+  "making-this-simple-salad-is-a-piece-of-cake": {
+    "text": "Making this simple salad is a piece of cake.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/making-this-simple-salad-is-a-piece-of-cake.mp3",
+    "reused": false
+  },
+  "the-icing-on-the-cake": {
+    "text": "the icing on the cake",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/the-icing-on-the-cake.mp3",
+    "reused": false
+  },
+  "the-meal-was-wonderful-and-the-free-dessert-was-the-icing-on-the-cake": {
+    "text": "The meal was wonderful, and the free dessert was the icing on the cake.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/the-meal-was-wonderful-and-the-free-dessert-was-the-icing-on-the-cake.mp3",
+    "reused": false
+  },
+  "vegetables": {
+    "text": "vegetables",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/vegetables.mp3",
+    "reused": false
+  },
+  "recipe": {
+    "text": "recipe",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/recipe.mp3",
+    "reused": false
+  },
+  "lettuce": {
+    "text": "lettuce",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/lettuce.mp3",
+    "reused": false
+  },
+  "juice": {
+    "text": "juice",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/juice.mp3",
+    "reused": false
+  },
+  "soap": {
+    "text": "soap",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/soap.mp3",
+    "reused": false
+  },
+  "desert-place": {
+    "text": "desert",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/desert-place.mp3",
+    "reused": false
+  },
+  "i-d-like-a-salad-please": {
+    "text": "I'd like a salad, please.",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/i-d-like-a-salad-please.mp3",
+    "reused": false
+  },
+  "could-we-have-some-water-please": {
+    "text": "Could we have some water, please?",
+    "path": "/ingles/basico-2/audio/unit6/fabulous-food/could-we-have-some-water-please.mp3",
+    "reused": false
+  }
+}
