@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>At the Restaurant with Ethan | Basic English Course 2</title>
+  <meta name="description" content="Practice a restaurant conversation with Ethan, one question at a time, with a microphone and transcript.">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../../assets/vendor/fonts/jaralingua-fonts.css">
+  <link rel="stylesheet" href="../../assets/css/style.css?v=20260727-basic2-top-nav-auth">
+  <link rel="stylesheet" href="../../assets/css/english-basic-responsive.css?v=20260727-basic2-compact-header">
+  <link rel="stylesheet" href="../../assets/css/conversation-coach-v2.css?v=20260824-basic2-u3-ava">
+  <link rel="stylesheet" href="../../assets/css/basic2-nora-coach.css?v=20260910-1">
+<link rel="stylesheet" href="/assets/css/basic2-unit6-restaurant.css?v=20260924-1"></head>
+<body class="english-basic-page basic2-page conversation-coach-page nora-coach-page food-restaurant-page">
+  <div class="global-course-switcher" aria-label="Courses"><details><summary>Courses</summary><nav><a href="../../index.html">Home</a><a href="../index.html">English</a><a href="index.html">Basic English 2</a><a href="course-overview.html">Course</a><a href="practice-lab.html">Practice Lab</a></nav></details></div>
+  <header class="site-header"><nav class="navbar" aria-label="Main navigation"><a class="brand" href="../../index.html"><img src="../../assets/img/jaralingua-logo.png" alt="JaraLingua"></a><ul class="nav-links"><li><a href="../../index.html">Home</a></li><li><a href="../index.html">English</a></li><li><a href="index.html">Basic English 2</a></li><li><a href="practice-lab.html">Practice Lab</a></li></ul><div id="google-auth-container" class="google-auth-container"></div></nav></header>
+  <main>
+    <section class="coach-hero"><div class="coach-hero-copy"><p class="coach-kicker">Unit 6 · Conversation Coach</p><h1>At the Restaurant with Ethan</h1><p>Order food, ask about ingredients, and give an opinion — one question at a time.</p><a class="coach-link-button secondary" href="unit-6-fabulous-food.html">Review Unit 6</a></div><figure class="nora-hero-image"><img src="/assets/img/english-intermediate/unit-5/restaurant-coach/cedar-stone-hero-v1.webp" alt="Ethan welcoming a customer to a restaurant" width="1536" height="1024" fetchpriority="high"></figure></section>
+    <section class="coach-shell" id="conversationCoachApp">
+      <div id="onboardingPanel" class="nora-panel">
+        <h2>Let’s chat.</h2><p>Listen, record one or two sentences, then hear Ethan’s reply. Eight turns, at your pace.</p>
+        <div class="coach-audio-row"><button class="coach-audio-button" id="welcomePlayButton" type="button">Hear Ethan</button><button class="coach-audio-button" id="instructionsPlayButton" type="button">How it works</button><div class="coach-speed" aria-label="Audio speed"><span>Speed</span><button type="button" data-coach-speed="0.75">0.75x</button><button type="button" data-coach-speed="1" class="is-active">1x</button></div></div>
+        <audio id="welcomeAudio" preload="metadata"></audio><audio id="instructionsAudio" preload="metadata"></audio>
+        <details class="u6-menu"><summary>Garden Table · menu and ingredients</summary><div class="u6-menu-grid"><article><h3>Vegetable soup · COP 12,000</h3><p>Potatoes, carrots, onions, water, and a little salt. Vegetable stock; no chili.</p></article><article><h3>Chicken with rice · COP 25,000</h3><p>Chicken, rice, and a small salad. Ask the kitchen about changes.</p></article><article><h3>Salad · COP 15,000</h3><p>Lettuce, tomatoes, cheese, and a little oil. Contains dairy.</p></article><article><h3>Drinks</h3><p>Water · COP 3,000<br>Juice · COP 5,000<br>Coffee · COP 5,000</p></article></div><p>This is a practice menu. For an allergy, ask staff to check ingredients and cross-contact; removing an ingredient is not a safety guarantee.</p></details><div class="nora-mode"><label><input type="radio" id="guidedMode" name="coachMode" checked> Feedback after each answer</label><label><input type="radio" id="realMode" name="coachMode"> Feedback at the end</label></div>
+        <div class="coach-preflight"><div><p id="preflightStatus">Check your microphone before starting.</p><audio id="preflightPlayback" controls hidden></audio></div><button class="coach-button secondary" id="preflightButton" type="button">Test microphone</button></div>
+        <div class="coach-start-row"><button class="coach-button primary" id="startConversationButton" type="button">Start conversation</button><button class="coach-button secondary" id="reviewPreviousButton" type="button" hidden>Latest report</button></div><p id="resumeNote" hidden></p>
+        <p class="nora-privacy">Private practice. Audio is processed for transcription; only your written report is saved on this device. No teacher submission.</p>
+      </div>
+      <div id="interviewPanel" hidden>
+        <header class="coach-progress-header"><div class="coach-progress-copy"><span id="turnCounter">Turn 1 of 8</span><strong id="turnTopic">Hello</strong></div><div class="coach-progress-track" aria-hidden="true"><i id="turnProgress"></i></div></header>
+        <div class="nora-turn-grid">
+          <div class="nora-prompt-column">
+            <section class="coach-stage" id="coachStage" data-state="ready" aria-labelledby="questionText"><figure class="coach-avatar"><img src="/assets/img/english-intermediate/unit-5/restaurant-coach/ethan-cole-portrait-v1.webp" alt="Ethan Cole"></figure><div><span class="coach-stage-status" id="coachStageStatus">Ethan is ready</span><h2 id="questionText"></h2><div class="coach-audio-row"><button class="coach-audio-button" id="questionPlayButton" type="button">Listen again</button><div class="coach-speed" aria-label="Question speed"><span>Speed</span><button type="button" data-coach-speed="0.75">0.75x</button><button type="button" data-coach-speed="1" class="is-active">1x</button></div></div><audio id="questionAudio" preload="metadata"></audio><audio id="reactionAudio" preload="metadata"></audio></div></section>
+            <details class="u6-menu"><summary>Garden Table · menu and ingredients</summary><div class="u6-menu-grid"><article><h3>Vegetable soup · COP 12,000</h3><p>Potatoes, carrots, onions, water, and a little salt. Vegetable stock; no chili.</p></article><article><h3>Chicken with rice · COP 25,000</h3><p>Chicken, rice, and a small salad. Ask the kitchen about changes.</p></article><article><h3>Salad · COP 15,000</h3><p>Lettuce, tomatoes, cheese, and a little oil. Contains dairy.</p></article><article><h3>Drinks</h3><p>Water · COP 3,000<br>Juice · COP 5,000<br>Coffee · COP 5,000</p></article></div><p>This is a practice menu. For an allergy, ask staff to check ingredients and cross-contact; removing an ingredient is not a safety guarantee.</p></details><details class="coach-support" id="answerSupport"><summary><span>Need an idea?</span><small id="supportSummaryLabel">Examples and vocabulary</small></summary><div class="coach-frame-grid" id="answerFrames"></div><div class="coach-vocabulary" id="vocabularyBank"></div><p class="coach-grammar" id="grammarClue"></p></details>
+            <section class="coach-reaction" id="coachReaction" hidden><div><h3>Ethan replies</h3><p id="coachReactionText"></p></div></section>
+          </div>
+          <section class="coach-recorder" aria-label="Your answer">
+            <details class="nora-mic-settings"><summary>Microphone settings</summary><label>Microphone <select class="coach-microphone-select" id="microphoneSelect"><option value="">Default microphone</option></select></label><div class="coach-level"><span>Level</span><div><i id="levelMeterBar"></i></div><b id="levelMeterValue">Waiting</b></div></details>
+            <div class="nora-record-row"><button class="coach-mic-button" id="micButton" type="button" aria-label="Record your answer"><i class="bi bi-mic-fill"></i></button><div><p class="coach-record-status" id="recordStatus" role="status">Ready for your answer</p><p class="coach-record-help" id="recordHelp">Speak in English.</p><span class="coach-timer" id="recordTimer">00:00 / 00:30</span></div></div>
+            <div class="coach-recorder-actions"><button class="coach-button danger" id="stopButton" type="button" disabled>Stop recording</button><button class="coach-button secondary" id="recordAgainButton" type="button" disabled>Record again</button></div>
+            <audio class="coach-student-audio" id="studentAudio" controls hidden></audio><div class="coach-transcript" id="liveTranscript" aria-live="polite">Your words will appear here.</div><div class="coach-feedback" id="turnFeedback" hidden></div>
+            <div class="coach-recovery" id="transcriptionRecovery" hidden><p>Analysis did not finish. Your recording is still available; no score was invented.</p><div class="coach-button-row"><button class="coach-button secondary" id="retryTranscriptionButton" type="button">Retry analysis</button><button class="coach-button secondary" id="continueUnscoredButton" type="button">Continue unscored</button><button class="coach-button secondary" id="recoveryRecordAgainButton" type="button">Record again</button></div></div><div class="coach-unsupported" id="unsupportedMessage" hidden></div>
+            <div class="coach-navigation"><button class="coach-button primary" id="nextTurnButton" type="button" disabled>Continue</button></div>
+          </section>
+        </div>
+      </div>
+      <div id="summaryPanel" class="nora-panel" hidden>
+        <h2>Your conversation</h2><p id="summaryLead"></p><section class="nora-result"><strong><span id="summaryScore">--</span>/50</strong><div><h3 id="summaryReadiness">Practice report</h3><p id="summaryComparison"></p><small id="summaryCoverage">Practice estimate, not a course grade.</small></div></section>
+        <div class="coach-guidance-grid"><section><h3>What worked</h3><ul id="summaryStrengths"></ul></section><section><h3>Try next</h3><ul id="summaryPriorities"></ul></section></div>
+        <details class="nora-report-details"><summary>Score and pronunciation details</summary><div class="coach-summary-metrics" id="summaryMetrics"></div><div class="coach-word-list" id="summaryWords"></div><p class="nora-privacy">Automatic checks are approximate. Transcription confidence is not a phonetic diagnosis; noise and names can affect it.</p></details>
+        <details class="nora-report-details"><summary>Review each answer</summary><div class="coach-answer-review" id="summaryAnswers"></div></details>
+        <details class="nora-report-details"><summary>Practice history on this device</summary><div class="coach-history" id="attemptHistory"></div><button class="coach-button secondary" id="clearHistoryButton" type="button">Clear history</button></details>
+        <div class="coach-summary-actions"><button class="coach-button primary" id="restartConversationButton" type="button">Start again</button><button class="coach-button secondary" id="weakPracticeButton" type="button">Practice two turns</button><button class="coach-button secondary" id="closingPlayButton" type="button">Hear Ethan’s goodbye</button><a class="coach-link-button secondary" href="practice-lab.html#unit-6-folder">Back to Unit 6</a></div>
+      </div>
+    </section>
+    <!-- Shared engine hooks; compact activity deliberately has no floating microphone dock. -->
+    <div id="floatingMicDock" hidden><span id="floatingTurnLabel"></span><span id="floatingStatus"></span><span id="floatingTimer"></span><button id="floatingMicButton" type="button">Record</button><button id="floatingStopButton" type="button">Stop</button></div>
+    <div class="coach-toast" id="coachToast" role="status" aria-live="polite" hidden></div>
+  </main>
+  <footer class="site-footer"><p>JaraLingua · Basic English 2</p></footer>
+  <script src="../../assets/js/microphone-permissions.js?v=20260624-mic-audit"></script>
+  <script src="../../assets/js/conversation-coach-data/english-basic-2-unit-6-restaurant.js?v=20260910-1"></script>
+  <script src="../../assets/js/conversation-coach-v2.js?v=20260910-compact-coach"></script>
+  <script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js?v=20260727-basic2-compact-header"></script><script src="/assets/js/course-switcher.js?v=20260724-basic-2"></script><script src="/assets/js/page-qr-access.js?v=20260901-2"></script>
+</body>
+</html>
