@@ -1,0 +1,44 @@
+/* Scoped repair: no changes to other Unit 6 activities. */
+.basic2-page.food-page[data-food-practice="countable"] main,
+.basic2-page.food-page[data-food-practice="countable"] .food-shell{width:100%;max-width:none;min-width:0}
+.basic2-page.food-page[data-food-practice="countable"] .lesson-hero{min-height:0!important;height:auto!important;position:relative!important;overflow:visible}
+.basic2-page.food-page[data-food-practice="countable"] .lesson-hero-content{min-width:0}
+.basic2-page.food-page[data-food-practice="countable"] .lesson-hero h1{font-size:clamp(1.75rem,3vw,2.65rem)!important;line-height:1.15!important;overflow-wrap:anywhere;max-width:100%;margin:12px 0!important}
+.basic2-page.food-page[data-food-practice="countable"] .hero-copy{font-size:1rem!important;line-height:1.5!important;margin:0}
+.basic2-page.food-page[data-food-practice="countable"] .hero-actions{display:flex!important;flex-direction:row!important;flex-wrap:wrap;gap:8px;margin-top:16px}
+.basic2-page.food-page[data-food-practice="countable"] .hero-actions a{width:auto!important;min-width:0;flex:0 1 auto;min-height:44px;padding:10px 14px;text-align:center;font-size:.95rem}
+.basic2-page.food-page[data-food-practice="countable"] .food-hero-image{min-width:0;overflow:hidden;border-radius:18px}
+.basic2-page.food-page[data-food-practice="countable"] .food-hero-image img{display:block;width:100%;height:100%;max-height:300px;object-fit:cover}
+.basic2-page.food-page[data-food-practice="countable"] .fp-question{min-inline-size:0;min-width:0;width:100%;max-width:100%;overflow-wrap:anywhere}
+/* Floated thumbnails must never reduce the width of the response column. */
+.basic2-page.food-page[data-food-practice="countable"] .fp-question legend{float:left;display:block;box-sizing:border-box;max-width:100%;padding:0;line-height:1.5}
+.basic2-page.food-page[data-food-practice="countable"] .fp-question:has(.fp-question-image) legend{width:calc(100% - 84px)}
+.basic2-page.food-page[data-food-practice="countable"] .fp-question-image{float:right;clear:none!important;display:block;width:70px;height:58px;margin:0 0 10px 10px;object-fit:contain}
+.basic2-page.food-page[data-food-practice="countable"] .fp-choices{clear:both;min-width:0;width:100%;grid-template-columns:minmax(0,1fr)}
+.basic2-page.food-page[data-food-practice="countable"] .fp-choices label{width:100%;min-width:0;max-width:100%;align-items:flex-start;min-height:48px}
+.basic2-page.food-page[data-food-practice="countable"] .fp-choices input{margin-top:2px}
+.basic2-page.food-page[data-food-practice="countable"] .fp-choices span{min-width:0;flex:1;line-height:1.5}
+.basic2-page.food-page[data-food-practice="countable"] .fp-toolbar{min-width:0}
+.basic2-page.food-page[data-food-practice="countable"] .fp-toolbar p{min-width:0;overflow-wrap:anywhere}
+@media(max-width:1024px){
+ .basic2-page.food-page[data-food-practice="countable"] .lesson-hero{grid-template-columns:minmax(0,1fr)!important;gap:14px;padding:16px 12px}
+ .basic2-page.food-page[data-food-practice="countable"] .lesson-hero-content{padding-top:18px!important;padding-bottom:18px!important}
+ .basic2-page.food-page[data-food-practice="countable"] .lesson-hero h1{font-size:2rem!important}
+ .basic2-page.food-page[data-food-practice="countable"] .food-hero-image img{height:180px;max-height:180px;aspect-ratio:auto}
+ .basic2-page.food-page[data-food-practice="countable"] .food-shell{padding:14px 12px}
+}
+@media(max-width:740px){
+ .basic2-page.food-page[data-food-practice="countable"] .fp-question-grid{grid-template-columns:minmax(0,1fr)}
+ .basic2-page.food-page[data-food-practice="countable"] .fp-toolbar p{flex-basis:100%;margin:8px 0}
+ .basic2-page.food-page[data-food-practice="countable"] .fp-toolbar button{flex:1 1 120px}
+}
+@media(max-width:550px){
+ .basic2-page.food-page[data-food-practice="countable"] .lesson-hero-content{padding:14px!important}
+ .basic2-page.food-page[data-food-practice="countable"] .lesson-hero .eyebrow{font-size:.75rem;min-height:94px;margin-right:94px}
+ .basic2-page.food-page[data-food-practice="countable"] .lesson-hero h1{font-size:1.75rem!important}
+ .basic2-page.food-page[data-food-practice="countable"] .hero-copy{font-size:.95rem!important}
+ .basic2-page.food-page[data-food-practice="countable"] .hero-actions{display:grid!important;grid-template-columns:1fr 1fr}
+ .basic2-page.food-page[data-food-practice="countable"] .hero-actions a{font-size:.85rem;padding:10px 6px}
+ .basic2-page.food-page[data-food-practice="countable"] .food-hero-image img{height:140px;max-height:140px}
+ .basic2-page.food-page[data-food-practice="countable"] .fp-question{padding:14px}
+}
