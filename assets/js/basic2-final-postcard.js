@@ -4,9 +4,9 @@
   const titles = ['The beginning of our trip', 'Our vacation experience', 'A memorable moment'];
   const prompts = ['Where did you go? When? Who traveled with you?', 'What did you do? What were the place and the weather like?', 'What funny or embarrassing thing happened? How did you feel? How did it end?'];
   let user = null, state = null, team = null, epoch = 0, dirty = false, saving = null, saveTimer = null, conflict = null, busy = false, recovery = false, pending = null;
-  let selectedMembers = [], loading = false;
+  let selectedMembers = [], loading = false, previewMode = false, previewStudent = 'preview-1';
   const node = (tag, text, cls) => { const n = document.createElement(tag); if (text !== undefined) n.textContent = text; if (cls) n.className = cls; return n; };
-  const sid = () => state?.student?.id;
+  const sid = () => previewMode ? previewStudent : state?.student?.id;
   const isStaff = () => ['teacher', 'admin'].includes(state?.role);
   const count = text => (text.match(/[\p{L}\p{N}_]+(?:['’\-][\p{L}\p{N}_]+)*/gu) || []).length;
   const localKey = kind => `basic2-final-postcard:${String(user?.email || user?.sub || '').toLowerCase()}:${team?.id}:${kind}`;
@@ -28,6 +28,7 @@
   function errorText(e) { return e.status === 401 ? 'Your session expired. Reconnect with the same account to continue.' : e.name === 'AbortError' ? 'The request timed out. Your work is kept. Please retry.' : messages[e.code] || e.message || 'Connection failed. Try again.'; }
   function report(e, id = 'status') { if (e.code !== 'session_changed') $(id).textContent = errorText(e); }
   async function request(action, payload) {
+    if (previewMode && payload !== undefined) throw new Error('Teacher preview does not send changes to the server.');
     if (!user?.credential) throw new Error('Sign in with your course account.');
     const token = epoch, abort = new AbortController(), timeout = setTimeout(() => abort.abort(), 20000);
     try {
@@ -56,6 +57,7 @@
     $('signatures').textContent = team.members.map(m => m.name).join(', ');
   }
   function clock() {
+    if (previewMode) { $('time').textContent = '50:00 · Preview — timer paused'; return; }
     if (!team?.deadline || team.status !== 'writing') { $('time').textContent = ''; return; }
     const seconds = Math.max(0, Math.ceil((Date.parse(team.deadline) - Date.now()) / 1000));
     $('time').textContent = seconds ? 'Team time left: ' + Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0') : 'Time is up. You can still send your work; the teacher will see that it arrived late.';
@@ -71,9 +73,10 @@
   }
   function studentView(force = false) {
     $('admin').hidden = true; $('student').hidden = !team;
-    if (!state.student) { $('status').textContent = messages.account_not_linked; return; }
+    if (!previewMode && !state.student) { $('status').textContent = messages.account_not_linked; return; }
     if (!team) { $('status').textContent = messages.team_not_assigned; return; }
     $('status').textContent = team.status === 'submitted' ? 'Your team’s delivery is confirmed.' : state.isOpen ? 'Exam access is open.' : team.startedAt ? 'New starts are closed. Your team can finish and submit.' : messages.exam_closed;
+    if (previewMode) $('status').textContent = 'Teacher preview · The real exam remains ' + (state.isOpen ? 'open.' : 'closed.');
     $('team-heading').textContent = team.name + ' · ' + team.courseCode;
     $('members').textContent = team.members.map(m => m.name).join(' · ');
     $('start').hidden = team.status !== 'assigned'; $('start').disabled = !state.isOpen || busy;
@@ -88,7 +91,7 @@
         card.append(node('p', 'Written by ' + author));
         if (p.author === sid()) {
           const label = node('label', 'Your contribution'), input = node('textarea'); input.id = 'pc-part-' + i; input.maxLength = 5000; input.spellcheck = false; input.autocomplete = 'off'; input.value = p.text; label.htmlFor = input.id; label.append(input); card.append(label);
-          input.oninput = () => { dirty = true; backup(); preview(); $('save').textContent = 'Unsaved changes — saving shortly…'; clearTimeout(saveTimer); if (!recovery) saveTimer = setTimeout(() => save().catch(() => {}), 900); };
+          input.oninput = () => { if (previewMode) { capturePreview(); team.ready = []; preview(); $('save').textContent = 'Preview writing only — nothing is saved to the server.'; $('ready').disabled = false; $('ready-status').textContent = 'Preview: writing changed. Review the postcard again.'; return; } dirty = true; backup(); preview(); $('save').textContent = 'Unsaved changes — saving shortly…'; clearTimeout(saveTimer); if (!recovery) saveTimer = setTimeout(() => save().catch(() => {}), 900); };
         } else { const text = node('p', p.text || 'Waiting for your teammate to write.', 'pc-other'); text.id = 'pc-other-' + i; card.append(text); }
         $('parts').append(card);
       });
@@ -102,6 +105,7 @@
     preview();
   }
   async function save() {
+    if (previewMode) { capturePreview(); $('save').textContent = 'Preview only — no real draft was saved.'; return; }
     if (!team || team.status !== 'writing' || recovery || conflict || pending) return;
     if (saving) { await saving; if (dirty) return save(); return; }
     if (!dirty) return;
@@ -135,6 +139,30 @@
     studentView();
   }
   function button(text, fn, secondary = false) { const b = node('button', text, secondary ? 'pc-secondary' : undefined); b.type = 'button'; b.onclick = fn; return b; }
+  function capturePreview() {
+    if (!previewMode || !team) return;
+    team.parts.forEach((p, i) => { if (p.author === previewStudent && $('part-' + i)) p.text = $('part-' + i).value; });
+  }
+  function startPreview() {
+    if (!isStaff()) return;
+    clearTimeout(saveTimer); previewMode = true; previewStudent = 'preview-1'; dirty = false; pending = null; conflict = null;
+    team = { id: 'preview-only', name: 'Preview team', courseCode: 'DEMO', status: 'writing', startedAt: null, deadline: null,
+      members: [1,2,3].map(n => ({ id: 'preview-' + n, name: 'Student ' + n })),
+      parts: [1,2,3].map(n => ({ author: 'preview-' + n, text: '', revision: 0 })), picture: 'coast', ready: [], reviews: {} };
+    $('preview-controls').hidden = false; $('preview-student').value = previewStudent;
+    $('conflict').hidden = true; $('delivery-status').textContent = '';
+    $('save').textContent = 'Preview only — your test writing will be discarded when you leave.';
+    studentView(true); $('preview-controls').scrollIntoView({ block: 'start' });
+  }
+  function endPreview() {
+    if (!previewMode) return;
+    previewMode = false; team = null; dirty = false; pending = null; conflict = null; clearTimeout(saveTimer);
+    $('preview-controls').hidden = true; $('student').hidden = true; $('parts').replaceChildren(); $('preview-text').replaceChildren();
+    $('save').textContent = ''; $('delivery-status').textContent = ''; $('time').textContent = '';
+    $('admin').hidden = !isStaff();
+    $('status').textContent = (state.isOpen ? 'Open' : 'Closed') + ' · ' + state.teams.length + ' teams';
+    $('preview').focus();
+  }
   function teacherView() {
     $('admin').hidden = false; $('student').hidden = true;
     $('status').textContent = (state.isOpen ? 'Open' : 'Closed') + ' · ' + state.teams.length + ' teams';
@@ -174,6 +202,7 @@
     });
   }
   async function load() {
+    if (previewMode) { endPreview(); return; }
     if (!user?.credential) { $('status').textContent = 'Sign in with your course account.'; return; }
     const token = epoch; loading = true; $('refresh').disabled = true; $('fields').disabled = true;
     try {
@@ -184,6 +213,14 @@
     } finally { if (token === epoch) { loading = false; $('refresh').disabled = false; $('fields').disabled = busy || Boolean(pending); } }
   }
   async function action(name, extra = {}) {
+    if (previewMode) {
+      capturePreview();
+      if (name === 'picture') { team.picture = extra.picture; team.ready = []; }
+      if (name === 'ready' && !team.ready.includes(sid())) team.ready.push(sid());
+      studentView();
+      $('delivery-status').textContent = name === 'submit' ? 'Preview only — the Submit button works. No exam was sent, no receipt was created and no grades were changed.' : name === 'ready' ? 'Preview review confirmed. No student record was changed.' : '';
+      return;
+    }
     if (busy || conflict || recovery) return;
     busy = true; clearTimeout(saveTimer); $('submit').disabled = true; $('ready').disabled = true; $('fields').disabled = true;
     try {
@@ -210,6 +247,9 @@
     } finally { busy = false; if (team) studentView(); }
   }
   $('form').onsubmit = e => e.preventDefault();
+  $('preview').onclick = startPreview;
+  $('preview-exit').onclick = endPreview;
+  $('preview-student').onchange = () => { if (!previewMode) return; capturePreview(); previewStudent = $('preview-student').value; studentView(true); };
   $('save-button').onclick = () => save().catch(e => report(e, 'save'));
   $('refresh').onclick = () => load().catch(e => report(e));
   $('login').onclick = () => window.JaraLinguaAuth?.openPanel();
@@ -228,7 +268,8 @@
   };
   function authChanged() {
     backup(); epoch++; clearTimeout(saveTimer); user = window.JaraLinguaAuth?.getUser() || window.JaraLinguaCurrentUser || null;
-    state = null; team = null; dirty = false; saving = null; pending = null; conflict = null; busy = false; recovery = false; loading = false;
+    state = null; team = null; dirty = false; saving = null; pending = null; conflict = null; busy = false; recovery = false; loading = false; previewMode = false;
+    $('preview-controls').hidden = true; $('refresh').disabled = false;
     $('admin').hidden = true; $('student').hidden = true; $('reconnect').hidden = true; $('conflict').hidden = true; $('parts').replaceChildren(); $('teams').replaceChildren(); $('roster').replaceChildren(); $('result').replaceChildren();
     $('login').textContent = user ? 'Account' : 'Sign in'; $('status').textContent = user ? 'Checking access…' : 'Sign in with your course account.';
     load().catch(e => report(e));

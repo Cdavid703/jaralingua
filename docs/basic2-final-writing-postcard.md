@@ -13,6 +13,8 @@ Source: user-supplied `Basic_Course_2_Final_Writing_Task.docx` (2026-09-28). Gro
 
 ## Teacher controls and grades
 
+- `Preview exam · Vista previa` is available to teachers and administrators even while the exam is closed and no teams exist. It reuses the student workspace with a synthetic three-person team, switches between each author's perspective, supports picture changes and test writing, and shows the complete postcard and word count. The timer is paused. Save/review/submit are demonstrations only: no POST requests, local draft storage, team creation, real receipt or grade changes. Returning or changing accounts discards the preview. The actual open/closed setting is preserved.
+
 - Closed by default; only Basic 2 teacher/admin can activate, assign teams, read all teams and grade. Only unstarted teams can be removed for reassignment.
 - One delivery per team, separate rubric/feedback per student. Five scores 1–10; grade = sum / 10. Evaluation `basic2FinalWritingTask20`, weight 20. Ungraded work stays pending without a numeric grade.
 - Teacher can reopen an ungraded team for another 50-minute correction period. Previous delivery is retained in the audit history. Already graded teams cannot be reopened through this page.
@@ -34,5 +36,6 @@ Source: user-supplied `Basic_Course_2_Final_Writing_Task.docx` (2026-09-28). Gro
 ## QA and release
 
 - `python -B tools/test_basic2_final_postcard.py`: disposable database; authorization, owner validation, independent saves, conflicts, all-member confirmation, duplicate/restarted receipts, pair/trio constraints, reopen, individual grading and preservation of existing grades.
+- `node tools/test_basic2_final_postcard_preview.cjs`: teacher/admin preview while closed, all three authors, editable fields and word count, picture switching, simulated save/review/submit, no POST requests or local storage, student denial, logout reset and mobile/tablet/desktop widths.
 - `node tools/test_basic2_final_postcard_ui.cjs`: starts and stops a temporary synthetic QA server on 8798; checks responsive layouts, collaborative writes, reconnect/offline recovery and teacher review. Never use real student accounts in QA. For manual debugging only, run `python -B tools/test_basic2_final_postcard.py --serve 8798` separately, without launching the self-contained browser suite.
 - Only deploy the scoped files and the three small API hooks; the checkout contains unrelated changes. Keep the exam closed during release. Preserve all production databases and current student grades.
