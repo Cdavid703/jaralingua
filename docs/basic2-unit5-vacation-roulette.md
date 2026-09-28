@@ -31,7 +31,7 @@ The exam's postcard, word count, shared written delivery and fifth content promp
 - Loading has a 20-second timeout, retry messages and expired-session guidance. Authentication changes abort pending requests, cancel spins and clear all names. Late responses from a previous account cannot restore the roster.
 - No hardcoded student list or player cap. Duplicate IDs are discarded. Attendance and reload controls are locked during a selected/animated turn.
 - Selection uses `crypto.getRandomValues`; the animation and result use the same frozen candidate list.
-- Reuses existing `yesterday-pictures/roulette.wav` and `card-flip.wav`. Sounds start from user taps, with a mute toggle and an explicit blocked-audio message. Native reduced-motion settings are honored.
+- Reuses existing `yesterday-pictures/roulette.wav` and `card-flip.wav`. Sounds start from user taps, with a mute toggle and an explicit blocked-audio message. Spins last 3.5 seconds with an audible final chime. Reduced-motion devices use one gentle base turn instead of five fast turns; the visual preference never cuts the audio short.
 - Full-width responsive layout; horizontal desktop hero; header and hero are in normal document flow. Two question cards per row on phones; wheels stack on narrow screens. No floating login or score.
 - Small QR stays **inside the hero title box**; click enlarges a centered vector SVG. No additional QR row or external QR service.
 - All disclosures and the Unit 5 catalog folder remain closed initially. The catalog card has a category and one short description, with no 0% badge.
@@ -48,3 +48,9 @@ The exam's postcard, word count, shared written delivery and fifth content promp
 `node tools/test_basic2_vacation_roulette.cjs` uses only synthetic student fixtures. It verifies the four questions; 10/15-minute timer; expired-session retry; student-role denial; duplicate filtering; attendance; no-repeat rounds; sound and mute/blocked handling; logout and late-response safety; 320/390/768/820/1024/1440/1920-pixel layouts; centered question and QR dialogs; all image assets; closed folders and the 10-card catalog.
 
 Publication is static only, with no database changes or service restart. The release tool patches only the new Unit 5 card and count in the existing catalog, preserving unrelated Unit 6 work and unrelated staged files. Existing course exams and grades are not modified.
+
+### Regression: spin and audio effects (2026-09-28)
+
+The initial reduced-motion branch removed the CSS transition and paused the wheel WAV after only 100 ms. Reproduced with an actual browser configured for reduced motion; normal-motion playback worked. Replaced the transition with frame-driven deceleration over 3.5 seconds (gentler travel for reduced motion) and removed the early audio pause. Both wheels use the same animation and frozen-selection geometry. Account changes cancel the frame loop as well as the timer. CSS/JS cache versions were bumped.
+
+`node tools/test_basic2_vacation_roulette_effects.cjs` measures transforms at two points during **both** spins in normal and reduced-motion configurations and checks **real, non-mocked** WAV playback progress/decoding through the final chime. Default mode serves the edited local JS/CSS over the public page with synthetic roster data; set `ROULETTE_TEST_LIVE=1` to verify only deployed assets. A mock `play()` call and an HTTP 200 are not sufficient evidence that the animation and sound work.

@@ -9,7 +9,7 @@
     {id:'activities', name:'4 · Activities', text:'What did you do there?', hint:'First, I… Then, I…'}
   ];
   const state = {roster:[], absent:new Set(), used:new Set(), questionUsed:new Set(), student:null,
-    question:null, spinning:false, loading:false, muted:false, epoch:0, spinTimer:null, controller:null};
+    question:null, spinning:false, loading:false, muted:false, epoch:0, spinTimer:null, spinFrame:null, controller:null};
   const sounds = {
     wheel:new Audio('/ingles/basico-2/audio/unit5/yesterday-pictures/roulette.wav'),
     turn:new Audio('/ingles/basico-2/audio/unit5/yesterday-pictures/card-flip.wav')
@@ -17,9 +17,12 @@
   Object.values(sounds).forEach(a => { a.preload = 'auto'; a.volume = .65; });
   function play(which) {
     if (state.muted) return;
-    const a = sounds[which]; a.currentTime = 0;
-    const attempt = a.play();
-    attempt?.catch(() => { $('sound-status').textContent = 'Sound was blocked. Check the device volume and tap Sound off, then Sound on to try again.'; });
+    const a = sounds[which];
+    // Some mobile engines cannot seek before metadata is ready. Still call play
+    // synchronously from the tap so that the user-activation permission is kept.
+    try { a.currentTime = 0; } catch (_) { /* The initial playback starts at zero. */ }
+    const blocked = () => { $('sound-status').textContent = 'Sound was blocked. Check the device volume and tap Sound off, then Sound on to try again.'; };
+    try { a.play()?.catch(blocked); } catch (_) { blocked(); }
   }
   function stopSounds() { Object.values(sounds).forEach(a => { a.pause(); a.currentTime = 0; }); }
   const user = () => window.JaraLinguaAuth?.getUser?.() || window.JaraLinguaCurrentUser;
@@ -88,7 +91,7 @@
   function clearTurn() {state.student=null; state.question=null; $('dialog').close(); renderTurn(); drawWheels(); controls();}
   function clearSession() {
     state.epoch++; state.controller?.abort(); state.controller=null;
-    clearTimeout(state.spinTimer); stopSounds(); state.spinning=false; state.loading=false;
+    clearTimeout(state.spinTimer); cancelAnimationFrame(state.spinFrame); stopSounds(); state.spinning=false; state.loading=false;
     state.roster=[]; state.absent.clear(); state.used.clear(); state.questionUsed.clear();
     $('attendance').open=false; renderRoster(); clearTurn();
     $('roster-status').textContent='Teacher or administrator: sign in above, then load the current course list.';
@@ -127,17 +130,28 @@
     const rows=kind==='student'?candidates():questionCandidates(); if(!rows.length) return;
     const index=randomIndex(rows.length), selected=rows[index], canvas=$(kind+'-wheel'), epoch=state.epoch;
     state.spinning=true; controls(); draw(canvas,rows,'');
-    // Selection and wheel geometry use the same frozen list throughout the spin.
-    void canvas.offsetWidth; canvas.classList.add('hr-spinning');
-    canvas.style.transform=`rotate(${1800+360-(index+.5)*360/rows.length}deg)`;
-    play('wheel');
+    // Animate actual frames, including on devices with reduced-motion enabled.
+    // A gentler base turn replaces five fast turns in that mode; audio duration
+    // is independent of the visual preference and includes the final chime.
     const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const duration=3500, started=performance.now();
+    const angle=(reduced?360:1800)+360-(index+.5)*360/rows.length;
+    canvas.classList.add('hr-spinning');
+    const frame=now=>{
+      if(epoch!==state.epoch || !state.spinning) return;
+      const progress=Math.min(1,Math.max(0,(now-started)/duration));
+      canvas.style.transform=`rotate(${angle*(1-Math.pow(1-progress,3))}deg)`;
+      if(progress<1) state.spinFrame=requestAnimationFrame(frame);
+    };
+    state.spinFrame=requestAnimationFrame(frame);
+    play('wheel');
     state.spinTimer=setTimeout(()=>{
       syncAccount();
       if(epoch!==state.epoch || !identity()) return;
+      cancelAnimationFrame(state.spinFrame); canvas.style.transform=`rotate(${angle}deg)`;
+      canvas.classList.remove('hr-spinning');
       state[kind]=selected; state.spinning=false; renderTurn(); controls();
-      if(reduced) sounds.wheel.pause();
-    },reduced?100:3050);
+    },duration);
   }
   $('load').addEventListener('click',loadRoster);
   $('spin-student').addEventListener('click',()=>spin('student'));
