@@ -9,6 +9,7 @@ from datetime import datetime, timezone, timedelta
 from basic2_integrated_exam import ExamError, need, clean, words, stamp
 
 EVALUATION = {"id": "basic2FinalWritingTask20", "title": "Basic Course 2 - Final Writing Task (20%)", "weight": 20}
+WRITING_HOURS = 48
 RUBRIC = {"content": "Content", "composing": "Organization", "vocabulary": "Vocabulary", "structure": "Structure", "mechanics": "Spelling, punctuation and layout"}
 PICTURES = {
     "coast": "/assets/img/english-basic-2/yesterday-pictures/beach.png",
@@ -40,6 +41,17 @@ class PostcardExam:
                 CREATE TABLE IF NOT EXISTS audit (id INTEGER PRIMARY KEY, actor TEXT NOT NULL, action TEXT NOT NULL, at TEXT NOT NULL, detail TEXT NOT NULL);
             """)
             con.execute("BEGIN IMMEDIATE")
+            # Teacher-authorized extension, including teams already writing.
+            # Preserve reopened periods, text, revision counters and confirmations.
+            for row in con.execute("SELECT id, record FROM teams").fetchall():
+                team = json.loads(row["record"])
+                if team.get("status") == "writing" and team.get("deadline") and team.get("durationHours") != WRITING_HOURS:
+                    previous = datetime.fromisoformat(team["deadline"])
+                    team["deadline"] = (previous + timedelta(hours=WRITING_HOURS, minutes=-50)).isoformat()
+                    team["durationHours"] = WRITING_HOURS
+                    con.execute("UPDATE teams SET record=? WHERE id=?", (json.dumps(team), row["id"]))
+                    con.execute("INSERT INTO audit(actor,action,at,detail) VALUES(?,?,?,?)",
+                                ("teacher-authorized-duration-extension", "extend-time-48-hours", stamp(), row["id"]))
             yield con
             con.commit()
         except Exception:
@@ -138,7 +150,7 @@ class PostcardExam:
                     need(not team["reviews"], 409, "graded_team_cannot_reopen")
                     team["history"].append({k:team[k] for k in ("receiptId", "submittedAt", "parts")})
                     team.update(status="writing", ready=[], receiptId=None, submittedAt=None, revision=team["revision"]+1,
-                                deadline=(datetime.now(timezone.utc)+timedelta(minutes=50)).isoformat())
+                                deadline=(datetime.now(timezone.utc)+timedelta(hours=WRITING_HOURS)).isoformat(), durationHours=WRITING_HOURS)
                     team.pop("lastSubmissionKey", None)
                 self.save(con, team, actor, action)
                 return {"ok": True, "team": self.public(team, actor)}
@@ -151,7 +163,7 @@ class PostcardExam:
             if action == "start":
                 if team["status"] == "assigned":
                     need(json.loads(con.execute("SELECT value FROM settings WHERE key='isOpen'").fetchone()[0]), 403, "exam_closed")
-                    team.update(status="writing", startedAt=stamp(), deadline=(datetime.now(timezone.utc)+timedelta(minutes=50)).isoformat())
+                    team.update(status="writing", startedAt=stamp(), deadline=(datetime.now(timezone.utc)+timedelta(hours=WRITING_HOURS)).isoformat(), durationHours=WRITING_HOURS)
                     self.save(con, team, actor, action)
                 return {"ok": True, "team": self.public(team, actor)}
             need(team["status"] == "writing", 409, "start_first")

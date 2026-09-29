@@ -7,7 +7,7 @@ Source: user-supplied `Basic_Course_2_Final_Writing_Task.docx` (2026-09-28). Gro
 - Teams of 2–3 write one postcard. Everyone signs in with their Basic 2 account. The teacher assigns roster members in selection order; parts 1/2/3 go to members 1/2/3 (in pairs, member 1 writes parts 1 and 3).
 - Three parts: where/when/company; activities and descriptions; funny or embarrassing anecdote and ending. Each member edits only their own parts. The combined preview adds title, greeting and signatures.
 - About 120 words total. The counter counts the body, not the fixed greeting/signatures. Outside 100–150 words, submission asks for explicit confirmation; this is a warning, not a new exam requirement. The teacher decides how to assess length.
-- 50-minute shared timer begins once. Closing new starts does not interrupt existing teams. Expired time never destroys writing or blocks submission; the receipt marks it late.
+- Teacher-authorized update: **48-hour shared timer (two days)** begins once. Existing writing periods are extended from 50 minutes to 48 hours transactionally and only once, preserving all contributions and confirmations. Closing new starts does not interrupt existing teams. Expired time never destroys writing or blocks submission; the receipt marks it late.
 - A picture is chosen from three existing course visuals. There is no solved model to copy. All instructions are in English. Planning suggestions and rubric explanations live in closed disclosures.
 - Every member confirms the current postcard on their own account. A text/picture change clears confirmations. One student submits after all confirm. Every team member sees the same receipt.
 
@@ -17,7 +17,7 @@ Source: user-supplied `Basic_Course_2_Final_Writing_Task.docx` (2026-09-28). Gro
 
 - Closed by default; only Basic 2 teacher/admin can activate, assign teams, read all teams and grade. Only unstarted teams can be removed for reassignment.
 - One delivery per team, separate rubric/feedback per student. Five scores 1–10; grade = sum / 10. Evaluation `basic2FinalWritingTask20`, weight 20. Ungraded work stays pending without a numeric grade.
-- Teacher can reopen an ungraded team for another 50-minute correction period. Previous delivery is retained in the audit history. Already graded teams cannot be reopened through this page.
+- Teacher can reopen an ungraded team for another 48-hour correction period. Previous delivery is retained in the audit history. Already graded teams cannot be reopened through this page.
 - Shared team writing is visible to teammates. Only the student's own grade/feedback is returned to them. Roster names are teacher-only; no student emails/IDs are exposed in a public list.
 
 ## Durability and isolation

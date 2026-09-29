@@ -57,10 +57,10 @@
     $('signatures').textContent = team.members.map(m => m.name).join(', ');
   }
   function clock() {
-    if (previewMode) { $('time').textContent = '50:00 · Preview — timer paused'; return; }
+    if (previewMode) { $('time').textContent = '48:00:00 · Preview — timer paused'; return; }
     if (!team?.deadline || team.status !== 'writing') { $('time').textContent = ''; return; }
     const seconds = Math.max(0, Math.ceil((Date.parse(team.deadline) - Date.now()) / 1000));
-    $('time').textContent = seconds ? 'Team time left: ' + Math.floor(seconds / 60) + ':' + String(seconds % 60).padStart(2, '0') : 'Time is up. You can still send your work; the teacher will see that it arrived late.';
+    $('time').textContent = seconds ? 'Team time left: ' + Math.floor(seconds / 3600) + ':' + String(Math.floor(seconds / 60) % 60).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0') : 'Time is up. You can still send your work; the teacher will see that it arrived late.';
   }
   function receipt() {
     $('writing').hidden = true; $('start').hidden = true; $('receipt').hidden = false;
