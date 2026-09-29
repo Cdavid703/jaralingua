@@ -1590,7 +1590,24 @@
           }
           renderSubmitted(result.data.result);
         } catch (error) {
-          setSubmitStatus(error.message || "Erreur d’envoi. Vos réponses restent sur cette page.", "error");
+          // A lost HTTP response does not mean the server rejected the copy.
+          // Repeating the idempotent submission also repairs a gradebook write
+          // interrupted after the copy was saved. A status-only GET cannot.
+          try {
+            const check = await request(API.submit, {
+              method: "POST",
+              body: JSON.stringify({ answers, examVersion: currentExam?.version || "", attemptId: currentAttemptId, autoSubmit })
+            }, 15000, "exam");
+            const receipt = check.data?.result;
+            if ((check.ok || check.data?.error === "already_submitted") && receipt &&
+                String(receipt.studentId || "") === String(currentStudentId) &&
+                String(receipt.attemptId || "") === String(currentAttemptId) &&
+                String(receipt.examVersion || "") === String(currentExam?.version || "") &&
+                (receipt.receiptCode || receipt.receipt?.code || receipt.submissionId)) {
+              return renderSubmitted(receipt);
+            }
+          } catch (_receiptError) { /* Keep the form and draft for retry. */ }
+          setSubmitStatus(`${error.message || "La confirmation de l’envoi n’a pas été reçue."} Vos réponses sont conservées. Vérifiez votre connexion puis réessayez l’envoi ; une copie déjà reçue ne sera pas enregistrée deux fois.`, "error");
           submitting = false;
           submittingAutomatically = false;
           updateSubmitAvailability();
@@ -1605,8 +1622,11 @@
         if ((currentStudentId && resultStudentId !== currentStudentId) ||
             (currentAttemptId && resultAttemptId !== String(currentAttemptId)) ||
             (currentExam?.version && resultVersion !== String(currentExam.version))) {
+          submitting = false;
+          submittingAutomatically = false;
           clearExamAccess();
           showReconnectNotice("Le reçu appartient à un autre étudiant ou à une autre tentative. Le formulaire et son brouillon restent intacts.");
+          updateSubmitAvailability();
           return;
         }
         const confirmedReceipt = result?.receiptCode || result?.receipt?.code || result?.submissionId;
@@ -1644,7 +1664,7 @@
           : !(result?.resultReleased === false || result?.resultsReleased === false) && (result?.resultReleased === true || result?.resultsReleased === true || result?.releaseResults === true);
         const receipt = result?.receiptCode || result?.receipt?.code || result?.submissionId || "Enregistré";
         els.access.innerHTML = `
-          <div class="submitted-panel">
+          <div class="submitted-panel" role="status" aria-live="polite" tabindex="-1" data-submission-receipt>
             <p class="section-kicker">Examen soumis</p>
             <h2 class="section-title">Votre examen final a été enregistré</h2>
             <p class="section-text">${released ? "La note finale est publiée dans le carnet de notes." : "La copie a bien été reçue. La note restera masquée jusqu’à sa publication par le professeur."} Les réponses correctes ne sont jamais affichées ici.</p>
@@ -1661,6 +1681,9 @@
             </div>
           </div>`;
         els.form.innerHTML = "";
+        const receiptPanel = els.access.querySelector("[data-submission-receipt]");
+        receiptPanel?.focus({ preventScroll: true });
+        receiptPanel?.scrollIntoView({ behavior: "smooth", block: "center" });
       }
 
       function renderStartGate(payload) {
