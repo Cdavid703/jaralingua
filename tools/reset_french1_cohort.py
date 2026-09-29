@@ -85,12 +85,14 @@ def main():
     try:
         for name, result in zip(names, results):
             dest = args.data_dir / name
-            stat = dest.stat()
+            # The API runs as the owner of its private data directory. A file
+            # previously written by root must not propagate root-only access.
+            owner = args.data_dir.stat()
             temp = dest.with_suffix('.cohort-tmp')
             temp.write_text(json.dumps(result, ensure_ascii=False, indent=2), encoding='utf-8')
-            os.chmod(temp, stat.st_mode)
+            os.chmod(temp, 0o600)
             if hasattr(os, 'chown'):
-                os.chown(temp, stat.st_uid, stat.st_gid)
+                os.chown(temp, owner.st_uid, owner.st_gid)
             os.replace(temp, dest)
     except Exception:
         for name in names:
