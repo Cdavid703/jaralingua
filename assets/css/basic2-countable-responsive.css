@@ -10,9 +10,9 @@
 .basic2-page.food-page[data-food-practice="countable"] .food-hero-image{min-width:0;overflow:hidden;border-radius:18px}
 .basic2-page.food-page[data-food-practice="countable"] .food-hero-image img{display:block;width:100%;height:100%;max-height:300px;object-fit:cover}
 .basic2-page.food-page[data-food-practice="countable"] .fp-question{min-inline-size:0;min-width:0;width:100%;max-width:100%;overflow-wrap:anywhere}
-/* Floated thumbnails must never reduce the width of the response column. */
+/* The image/answers wrapper clears the legend: no floated tiny thumbnails. */
 .basic2-page.food-page[data-food-practice="countable"] .fp-question legend{float:left;display:block;box-sizing:border-box;max-width:100%;padding:0;line-height:1.5}
-.basic2-page.food-page[data-food-practice="countable"] .fp-question:has(.fp-question-image) legend{width:calc(100% - 84px)}
+.basic2-page.food-page[data-food-practice="countable"] .fp-question legend{width:100%}
 .basic2-page.food-page[data-food-practice="countable"] .fp-question-image{float:right;clear:none!important;display:block;width:70px;height:58px;margin:0 0 10px 10px;object-fit:contain}
 .basic2-page.food-page[data-food-practice="countable"] .fp-choices{clear:both;min-width:0;width:100%;grid-template-columns:minmax(0,1fr)}
 .basic2-page.food-page[data-food-practice="countable"] .fp-choices label{width:100%;min-width:0;max-width:100%;align-items:flex-start;min-height:48px}
@@ -20,6 +20,20 @@
 .basic2-page.food-page[data-food-practice="countable"] .fp-choices span{min-width:0;flex:1;line-height:1.5}
 .basic2-page.food-page[data-food-practice="countable"] .fp-toolbar{min-width:0}
 .basic2-page.food-page[data-food-practice="countable"] .fp-toolbar p{min-width:0;overflow-wrap:anywhere}
+.basic2-page.food-page[data-food-practice="countable"] .fp-question{container-type:inline-size}
+.cq-answer-layout{clear:both;display:grid;grid-template-columns:minmax(0,1fr);gap:14px;width:100%;min-width:0}
+.cq-picture{position:relative;display:block;width:100%;height:210px;min-width:0;padding:8px;border:1px solid #c4d6dc;border-radius:12px;background:#fcfaf4;cursor:zoom-in;overflow:hidden}
+.cq-picture .cq-food-image{display:block;width:100%;height:100%;object-fit:contain;float:none;margin:0;border-radius:8px}
+.cq-zoom-hint{position:absolute;bottom:7px;right:7px;padding:4px 8px;border-radius:6px;background:#153955;color:#fff;font-size:.75rem;line-height:1.5;font-weight:700}
+.cq-picture-tip{color:#264a60;line-height:1.5}
+.cq-image-dialog{position:fixed;inset:0;margin:auto;width:min(940px,94vw);max-width:94vw;max-height:94vh;max-height:94dvh;padding:14px;border:0;border-radius:14px;background:#fff;color:#153955;overflow:auto}
+.cq-image-dialog::backdrop{background:#071a2ce6}
+.cq-image-dialog figure{margin:0;text-align:center}
+.cq-image-dialog img{display:block;width:100%;height:min(72vh,800px);height:min(72dvh,800px);object-fit:contain}
+.cq-image-dialog figcaption{margin:8px 0 0;font-size:.9rem}
+.cq-close{display:block;margin:0 0 10px auto;min-height:44px;padding:8px 15px;border:0;border-radius:9px;background:#153955;color:#fff;font:inherit;font-weight:700;cursor:pointer}
+@container(min-width:480px){.cq-answer-layout{grid-template-columns:minmax(190px,.85fr) minmax(0,1.15fr);align-items:start}.cq-picture{height:230px}}
+@media(max-width:740px){.cq-picture{height:200px}}
 @media(max-width:1024px){
  .basic2-page.food-page[data-food-practice="countable"] .lesson-hero{grid-template-columns:minmax(0,1fr)!important;gap:14px;padding:16px 12px}
  .basic2-page.food-page[data-food-practice="countable"] .lesson-hero-content{padding-top:18px!important;padding-bottom:18px!important}
