@@ -1,0 +1,37 @@
+/* Food Quantities only: WebKit can shrink an auto-sized grid to zero beside
+   a floated fieldset legend. Clear the heading and explicitly reserve the
+   illustration's 90px width + 12px margin; do not change the shared games. */
+body[data-food-practice="quantities"] {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body[data-food-practice="quantities"] .fp-question {
+  min-inline-size: 0;
+  height: auto;
+}
+body[data-food-practice="quantities"] .fp-question legend {
+  max-width: 100%;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+body[data-food-practice="quantities"] .fp-choices {
+  clear: left;
+  width: 100%;
+  min-width: 0;
+}
+body[data-food-practice="quantities"] .fp-question-image + .fp-choices {
+  width: calc(100% - 102px);
+}
+body[data-food-practice="quantities"] .fp-choices label,
+body[data-food-practice="quantities"] .fp-choices span {
+  min-width: 0;
+  line-height: 1.5;
+}
+body[data-food-practice="quantities"] .fp-choices input {
+  margin: 0;
+}
+@media (max-width: 740px) {
+  body[data-food-practice="quantities"] .fp-question-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
