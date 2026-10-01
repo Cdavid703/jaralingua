@@ -26,6 +26,14 @@ const base=process.env.MARKET_BASE_URL||'http://127.0.0.1:8046';
   await page.getByRole('heading',{name:'Market Basket Challenge',exact:true}).waitFor();
   assert.equal(await page.locator('[data-food]').count(),12);
   assert.equal(await page.locator('[data-quantity-card]').count(),8);
+  for(const [width,height] of [[360,800],[390,844],[820,1180],[1180,820],[1440,900]]){
+    await page.setViewportSize({width,height});await page.evaluate(()=>scrollTo(0,0));
+    await page.locator('.mb-qr img').evaluate(img=>img.decode());
+    const issues=await page.evaluate(()=>{const bad=[],r=e=>e.getBoundingClientRect();if(document.documentElement.scrollWidth>innerWidth+1)bad.push('overflow');const hero=document.querySelector('.market-hero');if(r(hero).height>(innerWidth>900?570:700))bad.push('oversized hero');for(const e of [hero,document.querySelector('.site-header')])if(['fixed','sticky'].includes(getComputedStyle(e).position))bad.push('fixed banner');const q=r(document.querySelector('.mb-qr'));for(const e of document.querySelectorAll('.market-title-block h1,.market-title-block .eyebrow')){const a=r(e);if(a.left<q.right&&a.right>q.left&&a.top<q.bottom&&a.bottom>q.top)bad.push('QR overlap');}return bad;});
+    assert.deepEqual(issues,[],name+' '+width);
+    await page.locator('#marketQrOpen').click();const box=await page.locator('#marketQrDialog').boundingBox();assert(Math.abs(box.x+box.width/2-width/2)<2);assert(Math.abs(box.y+box.height/2-height/2)<2);await page.locator('#marketQrClose').click();
+    if(width===390||width===1440)await page.screenshot({path:require('node:path').resolve(__dirname,'../qa/market-'+name+'-'+width+'.png')});
+  }
   await page.locator('[data-food="0"]').click();
   await page.locator('[data-category="countable"]').click();
   assert.equal(await page.locator('#liveSorted').innerText(),'1/12');
