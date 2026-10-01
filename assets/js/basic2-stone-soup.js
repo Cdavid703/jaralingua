@@ -85,7 +85,9 @@
    catch(_){if(ticket!==generation)return;mode='';audioButtons();announce('Audio could not start. Check your connection, then tap Read again.');}
  }
  $('stoneReadPage').addEventListener('click',()=>playStory(false));$('stoneReadAll').addEventListener('click',()=>playStory(true));
- $('stonePause').addEventListener('click',()=>{if(!mode)return;if(narration.paused)narration.play().catch(()=>announce('Tap Resume again to continue.'));else narration.pause();audioButtons();});
+ // A deliberate pause invalidates the pending play promise. Its AbortError
+ // must not clear the reading mode or disable Resume on a slow connection.
+ $('stonePause').addEventListener('click',()=>{if(!mode)return;generation++;if(narration.paused)narration.play().catch(()=>announce('Tap Resume again to continue.'));else narration.pause();audioButtons();});
  narration.addEventListener('play',audioButtons);narration.addEventListener('pause',audioButtons);
  $('stoneStop').addEventListener('click',()=>stopNarration('Audio stopped.'));
  narration.addEventListener('timeupdate',()=>{if(mode!=='all')return;let target=0;media.pages.forEach((p,i)=>{if(narration.currentTime>=p.start)target=i;});if(target!==page)turnTo(target,{automatic:true});});

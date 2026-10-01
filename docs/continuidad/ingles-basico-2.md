@@ -85,4 +85,8 @@ Después se pidió un listening de hasta 1:15 con diez preguntas. Hubo reportes 
 2. Leer plan y auditoría relacionados en `docs/`.
 3. Comparar los archivos relevantes de GitHub con producción; conservar cambios ajenos.
 4. Verificar requisitos visuales, pedagógicos, de audio y entrega según el caso.
-5. Informar por separado pruebas locales, commit, push y despliegue. No hay publicación automática.
+5. Informar por separado pruebas locales, commit, push y despliegue. La autorización vigente para cambios solicitados está en `docs/jaralingua-publishing-preference.md`; no exige pedir de nuevo permiso para cada publicación normal dentro del alcance autorizado.
+
+## Actualización de publicación — 1 de octubre de 2026
+
+Stone Soup y Fabulous Food Pronunciation Studio están publicados; Practice Lab contiene ocho actividades y la biblioteca incluye pronunciación de Unidad 6. El endpoint de entrega sin nota se integró conservando las diferencias existentes del servidor. Ver `docs/unit6-release-20261001.md` para pruebas y límites. El listening independiente de hasta 1:15 no se encontró y no forma parte de esta publicación.

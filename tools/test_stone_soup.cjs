@@ -38,11 +38,14 @@ const root=path.resolve(__dirname,'..'),base=process.env.STONE_SOUP_BASE_URL||'h
  assert(await page.locator('#stoneNext').isDisabled());assert.match(await page.locator('.the-end').innerText(),/The End/);
  await page.locator('#stonePrevious').click();await page.waitForTimeout(750);assert.equal(await page.locator('#stonePageSelect').inputValue(),'4');
  const sound=await page.locator('#stoneTurnAudio').evaluate(e=>({duration:e.duration,error:e.error?.code,time:e.currentTime}));assert(sound.duration>0&&!sound.error&&sound.time>0,'Page sound not decoded/played');
+ // Reproduce a pending play promise interrupted by an intentional pause.
+ await page.evaluate(()=>{const a=document.querySelector('#stoneNarration'),original=a.play.bind(a);a.play=function(){a.play=original;const actual=original();return new Promise((resolve,reject)=>{actual.then(()=>setTimeout(resolve,1000),reject);a.addEventListener('pause',()=>reject(new DOMException('Paused while loading','AbortError')),{once:true});});};});
  await page.locator('#stoneReadPage').click();await page.waitForFunction(()=>!document.querySelector('#stoneNarration').paused);
  assert.match(await page.locator('#stoneNarration').getAttribute('src'),/page-5.mp3/);
  await page.locator('#stoneReader [data-rate="0.75"]').click();assert.equal(await page.locator('#stoneNarration').evaluate(e=>e.playbackRate),.75);
- await page.locator('#stonePause').click();assert(await page.locator('#stoneNarration').evaluate(e=>e.paused));await page.locator('#stonePause').click();
- await page.locator('#stoneReadAll').click();await page.waitForFunction(()=>!document.querySelector('#stoneNarration').paused);await page.waitForTimeout(800);
+ await page.locator('#stonePause').click();assert(await page.locator('#stoneNarration').evaluate(e=>e.paused));await page.waitForTimeout(100);assert(await page.locator('#stonePause').isEnabled(),'Pause during loading must keep Resume enabled');await page.locator('#stonePause').click();
+ await page.waitForFunction(()=>{const a=document.querySelector('#stoneNarration');return !a.paused&&a.readyState>=2&&a.currentTime>0;});
+ await page.locator('#stoneReadAll').click();await page.waitForFunction(()=>{const a=document.querySelector('#stoneNarration');return !a.paused&&a.readyState>=2&&a.currentTime>0;});await page.waitForTimeout(800);
  assert.equal(await page.locator('#stonePageSelect').inputValue(),'0');assert.match(await page.locator('#stoneNarration').getAttribute('src'),/full-story.mp3/);
  for(let i=1;i<6;i++){await page.evaluate(i=>{const e=document.querySelector('#stoneNarration');e.currentTime=window.StoneSoupAudio.pages[i].start+.1;e.dispatchEvent(new Event('timeupdate'));},i);await page.waitForTimeout(750);assert.equal(await page.locator('#stonePageSelect').inputValue(),String(i));}
  await page.locator('#stoneFontUp').click();assert.equal(await page.locator('#stoneReader').evaluate(e=>e.style.getPropertyValue('--story-zoom')),'1.1');

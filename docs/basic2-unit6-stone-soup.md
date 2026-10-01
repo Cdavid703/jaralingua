@@ -1,10 +1,10 @@
 # Unit 6 — Stone Soup interactive reading
 
-Status: built and tested in development; not committed or published. Do not publish unrelated pending pronunciation/backend work with this activity.
+Status: published on 2026-10-01 with the owner's authorization, together with Unit 6 pronunciation and its separately tested API integration. See `docs/unit6-release-20261001.md` for release checks, backups and limitations.
 
 ## Scope and pedagogy
 
-- Practice Lab / Unit 6 / activity 07, Reading: Stone Soup.
+- Practice Lab / Unit 6 / activity 08, Reading: Stone Soup (Market Basket Challenge is 06 and pronunciation is 07).
 - Original 225-word retelling of the traditional tale, six illustrated pages with a complete ending. Not copied from a modern edition.
 - Unit 6 focus: food, ingredients, countable/uncountable quantities, some/any, a few/a little, polite requests, portions, cut up, and make someone's mouth water. Familiar past narration supports the story.
 - Ten clickable vocabulary words before the book; five columns on wide screens, two on phones.
@@ -48,4 +48,4 @@ Automated Chromium touch-context checks at 360×800, 390×844, 844×390, 820×11
 
 Verified full-viewport reader and portrait advice, ordered page navigation, animation and decoded playing paper sound, individual/full narration, time-based page synchronisation, speed/pause, enlarged text, closing cleanup, all vocabulary/page audio URLs, mutable quiz answers before/after check, scoring, feedback, balanced shuffle, persistence/reset, reduced motion, centered QR, and no page errors. These are browser-emulated viewport tests, not physical iOS/Android device certification.
 
-Run tools/test_stone_soup.cjs with PLAYWRIGHT_MODULE and STONE_SOUP_BASE_URL as appropriate. The preview server must support byte ranges for audio seeking. Production verification remains pending publication approval.
+Run tools/test_stone_soup.cjs with PLAYWRIGHT_MODULE and STONE_SOUP_BASE_URL as appropriate; STONE_SOUP_BROWSER=webkit selects WebKit. The preview server must support byte ranges for audio seeking. The October 1 production check exposed an interrupted-play race: pausing while narration was loading could disable Resume. Explicit pause/resume now invalidates the older play promise, and the test reproduces that AbortError.

@@ -2,7 +2,7 @@
 
 ## Alcance y estado
 
-Implementación preparada el 29 de septiembre de 2026. No publicada todavía. Página: `ingles/basico-2/pronunciation-unit-6-fabulous-food.html`. Enlazada desde Practice Lab, carpeta de Unidad 6, y Pronunciation Library. No se modifica Course Overview ni se crean notas reales.
+Implementación preparada el 29 de septiembre y publicada el 1 de octubre de 2026 con autorización del docente. Página: `ingles/basico-2/pronunciation-unit-6-fabulous-food.html`. Enlazada desde Practice Lab, carpeta de Unidad 6 (actividad 07), y Pronunciation Library. No se modifica Course Overview ni se crean notas reales para probar. Ver `docs/unit6-release-20261001.md`.
 
 Se tomó la página de pronunciación de Unidad 5 como referencia visual y de entrega. La lógica nueva está aislada en `assets/js/english-basic2-pronunciation-unit6.js`; no cambia el comportamiento de las actividades anteriores.
 
@@ -55,8 +55,8 @@ El identificador y la copia del informe se guardan antes de la solicitud. Los re
 
 Estas pruebas no sustituyen una prueba física de micrófono en Safari/iPad o Android ni una entrega autenticada de prueba después del despliegue.
 
-## Publicación pendiente
+## Publicación realizada y límites de verificación
 
-Revisar cambios precisos antes de commit/push/publicación. El backend en GitHub y producción tienen diferencias previas: no reemplazar todo `server/progress_api.py` de producción con esta copia. Aplicar solo la integración de Unidad 6 tras conciliar esas diferencias; requiere pruebas y despliegue de API separado del publicador estático. Publicar la interfaz únicamente cuando el endpoint esté disponible. Después verificar recibo y visualización en Deliverables con una cuenta de prueba autorizada.
+Se realizó commit, push y publicación con respaldo. Como GitHub y producción tienen diferencias previas, solo se aplicó el delta de Unidad 6 sobre el servidor publicado, mediante `tools/deploy_unit6_pronunciation_api.py`. La API quedó saludable y la ruta rechaza entregas sin autenticación con HTTP 401. Las pruebas de recibo e idempotencia se hicieron con datos ficticios en memoria y la interfaz con API interceptada; no equivalen a una entrega real. Sigue pendiente comprobar una entrega y su visualización en Deliverables con una cuenta de prueba autorizada y un micrófono físico.
 
-Los índices de desarrollo y producción consultados durante esta tarea tenían cinco actividades en Unidad 6; esta integración añade pronunciación como sexta. No se reconstruyó ni publicó ningún listening histórico que no estuviera en esos índices.
+Practice Lab publicado tiene ocho actividades en Unidad 6, incluida Market Basket Challenge (06), pronunciación (07) y Stone Soup (08). No se reconstruyó ni publicó el listening independiente que no se encontró en los archivos revisados.

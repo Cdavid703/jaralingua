@@ -33,7 +33,7 @@ El administrador dispone de `/usr/local/sbin/jaralingua-publish`. Recibe un SHA 
 /usr/local/sbin/jaralingua-publish --commit FULL_SHA ingles/basico-2/index.html
 ```
 
-Solo tras revisión y autorización de publicación, añadir `--apply` al mismo comando. El commit debe estar contenido en `origin/main`; el script hace fetch. No se concedió sudo al usuario de desarrollo.
+Solo tras revisión y autorización de publicación, añadir `--apply` al mismo comando. El commit debe estar contenido en `origin/main`; el script hace fetch. No se concedió sudo al usuario de desarrollo. La autorización permanente para cambios solicitados está en `docs/jaralingua-publishing-preference.md`: evita pedir permiso de nuevo para cada publicación normal, sin ampliar su alcance.
 
 El publicador guarda archivos anteriores y manifiesto en `/var/backups/jaralingua/vps-publish`. Reemplaza cada archivo de forma atómica, pero el conjunto no es una transacción única. Verificar después de publicar y revisar el manifiesto antes de una recuperación. No acepta carpetas, eliminaciones, backend ni bases de datos.
 
