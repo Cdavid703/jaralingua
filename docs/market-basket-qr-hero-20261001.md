@@ -5,3 +5,9 @@ The Basic 2 Unit 6 card intentionally opens the original Intermediate 1 activity
 Added a local SVG QR for the canonical activity URL, inside the title panel, opening in a centered large dialog. The shared QR script was deliberately not replaced: production and Git versions differ, and its path allowlist excludes Intermediate 1. Scoped page CSS creates a compact horizontal desktop hero, stacks a short visual on phones/tablets, makes the header/hero scroll normally and uses application-width content. The authorized existing image is retained.
 
 Extended the existing Market Basket regression test for compact hero geometry, no overflow, QR image loading, title separation and modal centering at 360/390/820/1180/1440 widths in WebKit and Chrome. Sorting controls and the original Basic 2 access link remain covered. Publish only the new stylesheet, vector QR and this activity HTML; no academic records or server changes.
+
+## Follow-up: reported immobile mobile banner
+
+Fresh production tests in WebKit and Chrome at 390px did not reproduce a fixed hero: scrolling 1,000px moved both header and hero upward exactly 1,000px, with no visible fixed/sticky elements. This does not rule out a stale mobile document, resource load failure or device-specific issue.
+
+Added critical inline flow/scroll styles to protect the header, hero and title panel before the activity stylesheet loads; bumped its version. Compact two-column hero actions further reduce mobile height. Regression now measures actual scroll displacement at every viewport, not only computed position, and performs a native Chromium touch-swipe via CDP. No claim of physical-device testing. If a report persists, request the precise URL/device screenshot rather than assuming a cache cause.

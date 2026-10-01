@@ -172,7 +172,17 @@
     }
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
   </style>
-  <link rel="stylesheet" href="/assets/css/market-basket-compact.css?v=20261001-1" />
+  <style id="market-scroll-critical">
+    /* Keep the header and hero in document flow even before the page CSS loads. */
+    body.market-basket-page .site-header,
+    body.market-basket-page .market-hero,
+    body.market-basket-page .market-hero .lesson-hero-content{position:relative!important;inset:auto!important;transform:none!important}
+    body.market-basket-page .market-hero{min-height:0!important;height:auto!important;background-attachment:scroll!important;padding:20px!important}
+    body.market-basket-page .market-hero::before,
+    body.market-basket-page .market-hero::after{position:absolute!important;background-attachment:scroll!important;pointer-events:none}
+    @media(max-width:900px){body.market-basket-page .market-hero{padding:12px!important}}
+  </style>
+  <link rel="stylesheet" href="/assets/css/market-basket-compact.css?v=20261001-scroll-2" />
 </head>
 <body class="english-intermediate-page market-basket-page">
   <div class="global-course-switcher" aria-label="Courses"><details><summary><span>Courses</span></summary><nav><a href="../../index.html">Home</a><a href="../../frances/index.html">French</a><a href="../../frances/Niveau%207/index.html">French Level 7</a><a href="../index.html">English</a><a href="../basico/index.html">Basic English</a><a href="./index.html">Intermediate English</a></nav></details></div>
