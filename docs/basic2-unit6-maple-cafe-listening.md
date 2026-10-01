@@ -25,3 +25,16 @@ Generated with the built-in image tool. Workspace asset: `assets/img/english-bas
 ## Verification and deployment
 
 Run `tools/test_unit6_maple_listening.cjs` with MAPLE_BASE_URL for local/public UI checks. Run `tools/test_unit6_maple_transcript.py` with UNIT6_API_SOURCE to validate actual dev/live-merged route AST using synthetic roles and no real student data. API source differs between development and production: apply only the reviewed transcript-route delta and its new module, with backups; never replace live API wholesale. Publish assets/page before index links. No database changes or synthetic real submissions are required.
+
+### Published and verified — 2026-10-01
+
+- Release commit: `4b3a7aab817226f778d49fd04031abe680bda62c`, pushed to main.
+- Production URL: https://www.jaralingua.com/ingles/basico-2/audio-listening-unit-6-maple-cafe.html
+- Local and public browser tests passed in WebKit and Chrome at widths 360, 390, 768, 820, 1024, 1440 and 1920. These are automated browser/viewport tests, not claims of physical iPad testing.
+- Verified normal-flow hero/header, full-width shell, no QR/text overlap, readable answer labels, centered enlarged QR, real MP3 playback, both speeds, touch answer changes before/after checking, score persistence, 25 balanced shuffles per browser, transcript UI logout clearing, audio retry and both index links.
+- Staff authorization was exercised against the real route AST with synthetic teacher/admin/student/guest roles; browser staff UI used mocked authorized responses. No real student account or submission was used. Public unauthenticated transcript request returns 401, API health returns 200.
+- Stone Soup and original Market Basket access regression tests passed locally after updating the expected folder total to nine cards.
+- API backup: `/var/backups/jaralingua/unit6-maple-api/20261001T225147Z-lhaut457`.
+- Assets/page backup manifest: `/var/backups/jaralingua/vps-publish/20261001T225149Z-ll08aqdn/manifest.json`.
+- Index backup manifest: `/var/backups/jaralingua/vps-publish/20261001T225215Z-4xx7ird6/manifest.json`.
+- Only the new read-only route and transcript module were installed in the backend; production-only API code was preserved. No grades, roster entries or submissions were modified.
