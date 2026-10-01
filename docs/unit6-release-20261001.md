@@ -24,3 +24,5 @@ No real academic records are used as test fixtures. Production checks include pu
 - Index backup manifest: `/var/backups/jaralingua/vps-publish/20261001T221851Z-1omk1cjs/manifest.json`.
 - API health HTTP 200; unauthenticated pronunciation submission HTTP 401. Pronunciation frontend suite passed against production with fake microphone/mocked assessment and submission.
 - Production book testing detected a pause-during-load race in the original implementation. The follow-up invalidates the older play promise on intentional Pause/Resume and adds a deterministic interrupted-play regression test; the page script version was bumped.
+- Fix commit `411ad5f6987c1ee3f9318ad28a7d91c37c6d0757` published with backup `/var/backups/jaralingua/vps-publish/20261001T222541Z-ujz_1k7k/manifest.json`. The complete Stone Soup suite then passed against production in both Chromium and WebKit, including the interrupted-play regression, all narration resources, ten questions and eight-card index.
+- All reported existing activity files and supporting documentation are committed/pushed. The separate Unit 6 listening was not present and was not fabricated or reported as published.
