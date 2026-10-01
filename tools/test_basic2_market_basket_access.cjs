@@ -10,7 +10,7 @@ const base=process.env.MARKET_BASE_URL||'http://127.0.0.1:8046';
   const folder=page.locator('#unit-6-folder');
   assert.equal(await folder.getAttribute('open'),null);
   await folder.locator('summary').click();
-  assert.equal(await folder.locator('.course-section-card').count(),8);
+  assert.equal(await folder.locator('.course-section-card').count(),9);
   const card=folder.locator('.course-section-card').filter({has:page.getByRole('heading',{name:'Market Basket Challenge',exact:true})});
   assert.equal(await card.count(),1);
   assert.equal(await card.locator('a').getAttribute('href'),'/ingles/intermediate/practice-unit-5-countable-uncountable-food.html');
@@ -29,7 +29,7 @@ const base=process.env.MARKET_BASE_URL||'http://127.0.0.1:8046';
   await page.locator('[data-food="0"]').click();
   await page.locator('[data-category="countable"]').click();
   assert.equal(await page.locator('#liveSorted').innerText(),'1/12');
-  console.log('PASS '+name+': closed Unit 6 folder, eight cards, original link, responsive card and original sorting interaction.');
+  console.log('PASS '+name+': closed Unit 6 folder, nine cards, original link, responsive card and original sorting interaction.');
   await browser.close();
  }
 })().catch(e=>{console.error(e);process.exit(1)});

@@ -72,7 +72,7 @@ const root=path.resolve(__dirname,'..'),base=process.env.STONE_SOUP_BASE_URL||'h
  assert((await page.locator('#stoneReader').boundingBox()).height>=842);await page.locator('#closeStoneBook').click();
  await page.goto(base+'/ingles/basico-2/practice-lab.html',{waitUntil:'networkidle'});
  assert.equal(await page.locator('#unit-6-folder[open]').count(),0);await page.locator('#unit-6-folder summary').click();
- assert.equal(await page.locator('#unit-6-folder .course-section-card').count(),8);
+ assert.equal(await page.locator('#unit-6-folder .course-section-card').count(),9);
  assert.equal(await page.locator('#unit-6-folder a[href="reading-unit-6-stone-soup.html"]').count(),1);
  assert.deepEqual(errors,[]);console.log('PASS: six viewports, fullscreen and fallback, portrait advice, images, page sequence/animation/sound, narration, speed/pause, mutable shuffled quiz, reduced motion, QR, Practice Lab link.');
  await browser.close();

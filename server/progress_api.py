@@ -19609,6 +19609,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
 
 
+        if parsed.path == "/api/basic2/unit6-maple-cafe/transcript":
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                from basic2_unit6_listening import TITLE, TRANSCRIPT
+                json_response(self, 200, {"title": TITLE, "transcript": TRANSCRIPT})
+            return
+
         if parsed.path == "/api/basic2/unit5-my-holidays/transcript":
             with data_lock:
                 grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)

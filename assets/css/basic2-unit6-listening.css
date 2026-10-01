@@ -1,0 +1,49 @@
+/* Full-width, normal-flow listening; no fixed activity panels. */
+.maple-listening{margin:0;background:#f3f7fb;color:#163a52}
+.maple-listening *{box-sizing:border-box}
+.maple-listening [hidden]{display:none!important}
+.maple-listening .site-header,.maple-listening .global-course-switcher,.maple-listening .lesson-hero{position:relative!important;inset:auto!important;background-attachment:scroll!important}
+.maple-listening .navbar{max-width:none;width:100%;min-width:0}
+.maple-listening .nav-links{min-width:0;overflow-x:auto;flex-wrap:nowrap}
+.maple-listening .lesson-hero{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:22px;width:100%!important;max-width:none!important;margin:0!important;padding:clamp(12px,2.4vw,32px)!important;min-height:0!important;background:#0c274b!important}
+.maple-listening .lesson-hero>*{min-width:0}
+.maple-listening .lesson-hero-content{width:auto;max-width:none;margin:0;padding:24px;background:#102f55;border:1px solid #476483;border-radius:20px;color:white;align-self:stretch}
+body.maple-listening .lesson-hero .lesson-hero-content.jl-page-qr-host{padding:24px 142px 24px 24px!important}
+.maple-listening .lesson-hero-content h1{color:white;font-size:clamp(1.9rem,3.4vw,3.25rem)!important;line-height:1.12;margin:16px 0}
+.maple-listening .hero-copy{color:#e0ecf5;font-size:1.02rem;line-height:1.55}
+.maple-listening .eyebrow{color:#d4eee8;font-weight:800;font-size:.8rem;letter-spacing:.06em}
+.maple-listening .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.maple-listening .hero-actions a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 16px;border-radius:12px;background:white;color:#102f55;font-weight:800;text-decoration:none}
+.maple-listening .hero-actions a:first-child{background:#d9093f;color:white}
+.maple-hero-image{margin:0;overflow:hidden;border-radius:20px;min-height:220px}
+.maple-hero-image img{display:block;width:100%;height:100%;max-height:400px;object-fit:cover}
+.maple-shell{width:100%;max-width:none;margin:0;padding:clamp(12px,2.4vw,32px)}
+.maple-objective{padding:16px 20px;background:#e7f2f3;border:1px solid #b7d4d7;border-radius:16px;margin-bottom:20px;line-height:1.55}
+.maple-listen-row{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:stretch}
+.maple-panel{min-width:0;padding:clamp(16px,2vw,28px);background:#fff;border:1px solid #cfdee8;border-radius:20px;box-shadow:0 8px 24px #102f5509}
+.maple-listening h2{color:#103a60;font-size:clamp(1.35rem,2.2vw,1.85rem);margin:6px 0 12px;line-height:1.2}
+.maple-panel p,.maple-panel li{line-height:1.6}.maple-panel p{margin:8px 0;color:#345568}
+.maple-listening .maple-kicker{font-size:.76rem;letter-spacing:.08em;text-transform:uppercase;font-weight:850;color:#176c63;margin:0 0 8px}
+.maple-focus{background:#113e61;color:white}.maple-focus h2,.maple-focus p,.maple-focus li{color:#fff}.maple-focus .maple-kicker{color:#d2eee6}
+.maple-focus ul{padding-left:22px;margin:10px 0 20px}.maple-focus li{margin:10px 0}
+.maple-focus details{background:#ffffff12;padding:12px;border:1px solid #62809a;border-radius:12px}.maple-focus summary{cursor:pointer;font-weight:800;min-height:28px}.maple-focus details p{font-size:.92rem}
+.maple-listening audio{display:block;width:100%;max-width:100%;margin:24px 0 12px}
+.maple-listening button{font:inherit;min-height:44px;padding:10px 15px;border:1px solid #abc4d4;border-radius:10px;cursor:pointer;background:white;color:#143e5c;font-weight:750;white-space:normal}
+.maple-listening button:focus-visible,.maple-listening a:focus-visible,.maple-listening summary:focus-visible{outline:3px solid #e62556;outline-offset:3px}
+.maple-speed{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.maple-speed button[aria-pressed=true]{background:#145c55;color:white;border-color:#145c55}.maple-speed span{color:#355667;font-size:.9rem}
+.maple-error{background:#fff1f2;border:1px solid #d78990;border-radius:12px;padding:12px;margin-top:12px}
+#teacherTools{margin-top:18px}#teacherTranscript{margin-top:12px;background:#eef5f7;border:1px solid #bacfdc;border-radius:12px;padding:16px}#transcriptText{white-space:pre-wrap;overflow-wrap:anywhere}
+.maple-quiz{margin-top:24px}.maple-quiz-heading{display:flex;gap:16px;justify-content:space-between;align-items:center;flex-wrap:wrap}.maple-quiz-heading p{margin:4px 0 12px}
+.maple-actions{display:flex;gap:10px;flex-wrap:wrap}#mapleCheck,#mapleCheckBottom{background:#0c3c65;color:white;border-color:#0c3c65}
+.maple-progress{display:flex;gap:15px;flex-wrap:wrap;justify-content:space-between;padding:14px 0;font-weight:700;color:#315167}
+#mapleQuestions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:18px}
+.maple-question{min-width:0;padding:18px;background:white;border:1px solid #cadbe7;border-radius:16px;margin:0}
+.maple-question legend{float:left;width:100%;font-size:1.03rem;font-weight:800;line-height:1.4;margin:0 0 14px;padding:0;color:#123d5d}
+.maple-choices{clear:both;width:100%;min-width:0;display:block}
+.maple-choices label{position:relative;display:block;margin-bottom:9px;padding:12px 12px 12px 42px;min-height:48px;border:1px solid #bacee0;background:#f5f9fc;border-radius:11px;cursor:pointer;color:#163d58;line-height:1.4;overflow-wrap:anywhere}
+.maple-choices label:last-child{margin-bottom:0}.maple-choices input{position:absolute;left:12px;top:13px;width:20px;height:20px;margin:0;accent-color:#0b6b60}.maple-choices span{display:block;min-width:0}
+.maple-choices label.is-correct{border-color:#26825d;background:#eaf7ef}.maple-choices label.is-wrong{border-color:#bb4153;background:#fff0f2}
+.maple-feedback{clear:both;border-left:4px solid #20766c;background:#edf6f5;color:#234d52;padding:10px 12px;line-height:1.55;margin:12px 0 0}
+.maple-result{background:#e7f2f5;padding:14px;border-radius:12px;color:#143f58}.maple-note{color:#526777;font-size:.9rem;line-height:1.5}
+@media(max-width:900px){.maple-listening .lesson-hero{grid-template-columns:1fr!important}.maple-hero-image img{height:280px;object-position:center 30%}.maple-listen-row{grid-template-columns:1fr}.maple-listening .lesson-hero-content h1{font-size:2rem!important}}
+@media(max-width:620px){#mapleQuestions{grid-template-columns:1fr}body.maple-listening .lesson-hero .lesson-hero-content.jl-page-qr-host{padding:18px!important}.maple-listening .lesson-hero-content .eyebrow{min-height:100px;padding-right:85px;margin:0}.maple-listening .lesson-hero-content{padding:18px}.maple-hero-image img{height:220px}.maple-question{padding:15px}.maple-speed span{flex-basis:100%}}
