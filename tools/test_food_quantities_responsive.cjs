@@ -10,6 +10,9 @@ const qa=path.resolve(__dirname,'../qa/food-quantities');fs.mkdirSync(qa,{recurs
   await page.route('https://accounts.google.com/**',r=>r.fulfill({body:''}));
   await page.goto(base+'/ingles/basico-2/practice-unit-6-food-quantities.html',{waitUntil:'networkidle'});
   assert.equal(await page.locator('.fp-question').count(),15);
+  const reminder=page.locator('#quantityReminder');
+  assert.equal(await reminder.getAttribute('open'),null);
+  assert.deepEqual(await reminder.locator('h2').allTextContents(),['A few','Some','Many','Much','A little']);
   async function imagesLoaded(){
    assert.equal(await page.locator('.fp-question img').count(),15,'Every question needs its food image');
    await page.locator('.fp-question img').evaluateAll(imgs=>Promise.all(imgs.map(img=>{img.loading='eager';return Promise.race([img.decode(),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Image timed out: '+img.src)),15000))]);})));
@@ -20,6 +23,11 @@ const qa=path.resolve(__dirname,'../qa/food-quantities');fs.mkdirSync(qa,{recurs
   await imagesLoaded();
   for(const [width,height] of sizes){
    await page.setViewportSize({width,height});await page.evaluate(()=>scrollTo(0,0));
+   await reminder.locator('summary').click();
+   assert(await reminder.locator('h2').first().isVisible());
+   assert(await reminder.evaluate(e=>{const r=e.getBoundingClientRect();return document.documentElement.scrollWidth<=innerWidth+1&&[...e.querySelectorAll('article')].every(a=>{const b=a.getBoundingClientRect();return b.left>=r.left&&b.right<=r.right&&a.scrollWidth<=a.clientWidth+1;});}));
+   if([390,820,1440].includes(width)){await reminder.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(qa,`${name}-${width}-reminder.png`)});}
+   await reminder.locator('summary').click();
    async function geometry(){
     const result=await page.evaluate(()=>{
      const failures=[],rect=e=>e.getBoundingClientRect();
