@@ -57,6 +57,8 @@
       ['cucumber','/quantity-mission-foods-v2/cucumber-slices.webp','cucumber'],['soup','/quantity-mission-foods-v2/vegetable-soup.webp','soup'],['flour','/quantity-mission-foods-v2/flour.webp','flour'],['mushroom','/quantity-mission-foods-v2/mushrooms.webp','mushroom']
     ].map(([word,picture,audio])=>({word,image:picture.startsWith('/')?images+picture.slice(1):foodImage(picture),audio:['cucumber','soup','flour','mushroom'].includes(audio)?'/ingles/intermediate/audio/unit-5-food-memory/'+audio+'-word.mp3':'/ingles/basico-2/audio/unit6/fabulous-food/'+audio+'.mp3'}))}
   };
+  activities.quantities.questions[5].image='/assets/img/english-basic-2/food-quantities/butter.png';
+  activities.quantities.questions[9].image=images+'quantity-mission-foods-v2/vegetable-soup.webp';
   activities.memory.foods.find(f=>f.word==='chicken').audio='/ingles/basico-2/audio/unit6/restaurant-coach/chicken.mp3';
   window.Basic2FoodPractice=activities;
 })();

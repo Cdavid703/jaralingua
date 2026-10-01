@@ -10,6 +10,14 @@ const qa=path.resolve(__dirname,'../qa/food-quantities');fs.mkdirSync(qa,{recurs
   await page.route('https://accounts.google.com/**',r=>r.fulfill({body:''}));
   await page.goto(base+'/ingles/basico-2/practice-unit-6-food-quantities.html',{waitUntil:'networkidle'});
   assert.equal(await page.locator('.fp-question').count(),15);
+  async function imagesLoaded(){
+   assert.equal(await page.locator('.fp-question img').count(),15,'Every question needs its food image');
+   await page.locator('.fp-question img').evaluateAll(imgs=>Promise.all(imgs.map(img=>{img.loading='eager';return Promise.race([img.decode(),new Promise((_,reject)=>setTimeout(()=>reject(new Error('Image timed out: '+img.src)),15000))]);})));
+   assert(await page.locator('.fp-question img').evaluateAll(imgs=>imgs.every(img=>img.naturalWidth>0&&img.naturalHeight>0)));
+   assert((await page.locator('.fp-question').nth(5).locator('img').getAttribute('src')).endsWith('/butter.png'));
+   assert((await page.locator('.fp-question').nth(9).locator('img').getAttribute('src')).endsWith('/vegetable-soup.webp'));
+  }
+  await imagesLoaded();
   for(const [width,height] of sizes){
    await page.setViewportSize({width,height});await page.evaluate(()=>scrollTo(0,0));
    async function geometry(){
@@ -36,9 +44,11 @@ const qa=path.resolve(__dirname,'../qa/food-quantities');fs.mkdirSync(qa,{recurs
    await geometry();await page.locator('#fpCheck').click();await geometry();
    const radios=page.locator('input[name="question-0"]');await radios.nth(0).tap();await radios.nth(2).tap();assert(await radios.nth(2).isChecked());
    await page.locator('#fpCheck').click();await radios.nth(1).tap();assert(await radios.nth(1).isChecked());
-   await page.locator('#fpReset').click();assert.equal(await page.locator('input:checked').count(),0);await geometry();
+   await page.locator('#fpReset').click();assert.equal(await page.locator('input:checked').count(),0);await imagesLoaded();await geometry();
    if([390,820,1180].includes(width)){await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:path.join(qa,`${name}-${width}-hero.png`)});await page.locator('#foodPractice').scrollIntoViewIfNeeded();await page.screenshot({path:path.join(qa,`${name}-${width}-questions.png`)});}
   }
-  assert.deepEqual(errors,[]);console.log('PASS '+name+': nine viewports, card bounds, heading/image/options/feedback separation, touch answer changes, check/reset, QR and scrolling hero.');await browser.close();
+  await page.locator('.fp-question').nth(5).screenshot({path:path.join(qa,`${name}-butter.png`)});
+  await page.locator('.fp-question').nth(9).screenshot({path:path.join(qa,`${name}-soup.png`)});
+  assert.deepEqual(errors,[]);console.log('PASS '+name+': all 15 food images decoded (including after reset), nine viewports, card bounds, heading/image/options/feedback separation, touch answer changes, check/reset, QR and scrolling hero.');await browser.close();
  }
 })().catch(e=>{console.error(e);process.exit(1)});
