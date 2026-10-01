@@ -1,0 +1,45 @@
+/* Scoped food studio: fluid panels, normal document flow, touch-friendly controls. */
+.pronunciation-page-basic2{overflow-x:clip}
+.pronunciation-page-basic2 *{box-sizing:border-box}
+.pronunciation-page-basic2 .lesson-hero{margin:0!important}
+.pronunciation-page-basic2 .lesson-hero-content h1{font-size:clamp(1.75rem,3.2vw,3rem);line-height:1.12;overflow-wrap:normal}
+.pronunciation-page-basic2 .lesson-hero-content p{font-size:1rem;line-height:1.5}
+.pronunciation-page-basic2 .lesson-hero-content{min-width:0}
+.pronunciation-page-basic2 .pronunciation-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px;width:100%;align-items:start}
+.pronunciation-layout>*{min-width:0}
+.pronunciation-layout aside,.pronunciation-panel,.record-zone{position:static!important;max-width:none!important}
+.food-warmup{width:calc(100% - 48px);margin:24px auto;color:#143c53}
+.food-warmup h2{margin-bottom:6px}.food-warmup>p{margin-top:0}
+.food-sound-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.food-sound-grid article{background:#fff;border:1px solid #c9dce7;border-radius:16px;padding:16px;min-width:0}
+.food-sound-grid article>strong{display:block;margin-bottom:10px;color:#073561}
+.food-sound-grid article p{font-size:.9rem;line-height:1.45;margin:10px 0 0;color:#365569}
+.food-sound-grid article>div{display:flex;flex-wrap:wrap;gap:6px}
+.food-sound-grid button,.food-review-words button{background:#edf6fa;color:#073561;border:1px solid #9dbbcd;border-radius:9px;padding:9px 11px;min-height:44px;cursor:pointer;font:inherit}
+.food-audio-status{font-size:.9rem;color:#255168;min-height:1.3em}
+.stage-panel{display:flex;flex-wrap:wrap;gap:12px;margin:14px 0}.stage-panel strong{color:#073561}
+#stageProgress{display:flex;flex-wrap:wrap;gap:6px;width:100%}
+#stageProgress button{min-width:44px;min-height:44px;border:1px solid #9cb4c4;border-radius:10px;background:#f2f7fa;color:#123853;cursor:pointer;font-weight:700}
+#stageProgress button[aria-current=step]{background:#073561;color:#fff}
+.pronunciation-page-basic2 button:disabled{opacity:.55;cursor:not-allowed}
+.pronunciation-page-basic2 [hidden]{display:none!important}
+.reading-text{font-size:clamp(1.12rem,1.6vw,1.5rem)!important;line-height:1.9;overflow-wrap:anywhere;text-align:left!important}
+.pronunciation-page-basic2 .instructions,.pronunciation-page-basic2 .legend,.pronunciation-page-basic2 .tip p,.pronunciation-page-basic2 .record-help,.pronunciation-page-basic2 .live-transcript{color:#365569}
+.reading-text .reading-word{min-height:44px;padding:3px 5px;max-width:100%;border-radius:5px}
+.reading-word.is-missed{color:#9e2133;background:#fff0f1}.reading-word.is-correct{color:#145f43;background:#e9f8ef}
+.food-mic-tools{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px;width:100%;margin-bottom:14px;color:#143c53}
+.food-mic-tools select{width:100%;min-width:0;min-height:44px;border:1px solid #aac1cf;border-radius:8px;padding:8px;background:white;color:#143c53}
+.food-mic-tools meter{width:100%;height:20px}
+.food-next-actions{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.food-next-actions button,#sendReport{background:#073561;color:white;border:0;border-radius:12px;padding:12px 16px;min-height:44px;font:inherit;cursor:pointer}
+.food-delivery{margin-top:16px;color:#173c50!important;background:#fff!important}
+.food-delivery h2{color:#073561!important}.food-delivery p{color:#315365!important;line-height:1.55;font-size:.95rem;overflow-wrap:anywhere}
+#deliveryStatus{font-weight:700}
+.pronunciation-page-basic2 audio{width:100%;max-width:100%}
+.pronunciation-page-basic2 .playback-tools{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.pronunciation-page-basic2 .playback-tools button{min-width:48px;min-height:44px}
+.pronunciation-page-basic2 .live-transcript{overflow-wrap:anywhere}
+.pronunciation-page-basic2 button:focus-visible{outline:3px solid #e22354;outline-offset:3px}
+@media(max-width:1050px){.food-sound-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pronunciation-page-basic2 .pronunciation-layout{grid-template-columns:1fr}}
+@media(max-width:850px){.food-warmup{width:calc(100% - 24px)}.pronunciation-page-basic2 .lesson-hero-content{padding-left:16px;padding-bottom:16px}.pronunciation-page-basic2 .lesson-hero-content h1{font-size:1.75rem}.pronunciation-page-basic2 .lesson-hero-image img{height:220px}.pronunciation-panel{padding:16px!important}.food-sound-grid article{padding:12px}.metrics{gap:6px!important}}
+@media(max-width:360px){.food-sound-grid{grid-template-columns:1fr}}

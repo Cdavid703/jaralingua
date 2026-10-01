@@ -282,6 +282,7 @@ BASIC2_UNIT3_PRONUNCIATION_ID = "basic2Unit3AroundWorldPronunciation"
 BASIC2_UNIT4_PRONUNCIATION_ID = "basic2Unit4RegularEdPronunciation"
 BASIC2_PAST_VERBS_PRONUNCIATION_ID = "basic2Unit4PastVerbsStepByStep"
 BASIC2_UNIT5_PRONUNCIATION_ID = "basic2Unit5LookingBackPronunciation"
+BASIC2_UNIT6_PRONUNCIATION_ID = "basic2Unit6FoodPronunciation"
 BASIC2_MIDTERM_WRITING_PRACTICE_ID = "basic2MidtermWritingPracticeFollowUp"
 LOCAL_AUTH_SECRET_PATH = os.environ.get("JARALINGUA_LOCAL_AUTH_SECRET_PATH", "/var/lib/jaralingua/local-auth-secret")
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
@@ -773,6 +774,21 @@ BASIC2_UNIT5_PRONUNCIATION_EVALUATION = {
     "type": "Pronunciation follow-up",
     "description": "Past be and memories pronunciation report for teacher follow-up; does not affect the course average."
 }
+BASIC2_UNIT6_PRONUNCIATION_EVALUATION = {
+    "id": BASIC2_UNIT6_PRONUNCIATION_ID,
+    "title": "Basic 2 Unit 6 Follow-up - Fabulous Food Pronunciation Studio",
+    "weight": 0,
+    "type": "Pronunciation follow-up",
+    "description": "Food and restaurant pronunciation report. Ungraded teacher follow-up; does not affect the course average."
+}
+BASIC2_UNIT6_PRONUNCIATION_TEXTS = (
+    "This recipe has vegetables, chicken, and rice. There is some lettuce in the salad.",
+    "We need two slices of bread, a bowl of soup, and a bottle of water.",
+    "I'd like some grilled chicken, please. Could we have some water, please?",
+    "The chicken was tender, and the vegetables were crunchy. The soup was hot, but it wasn't spicy.",
+    "Please cut up the vegetables and heat up the soup. We ran out of bread.",
+    "We sometimes eat out on Fridays. I have a sweet tooth, so I usually order dessert.",
+)
 BASIC2_MIDTERM_WRITING_PRACTICE_EVALUATION = {
     "id": BASIC2_MIDTERM_WRITING_PRACTICE_ID,
     "title": "Basic 2 Midterm Writing Practice - City, Weather and Activities",
@@ -3586,6 +3602,8 @@ def ensure_basic2_gradebook_structure(grades_data):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_UNIT5_PRONUNCIATION_EVALUATION):
         changed = True
+    if ensure_evaluation_template(grades_data, BASIC2_UNIT6_PRONUNCIATION_EVALUATION):
+        changed = True
     if ensure_evaluation_template(grades_data, BASIC2_UNIT4_PRONUNCIATION_EVALUATION):
         changed = True
     if ensure_evaluation_template(grades_data, BASIC2_PAST_VERBS_PRONUNCIATION_EVALUATION):
@@ -3791,6 +3809,22 @@ def basic2_unit1_pronunciation_report_from_payload(payload, expected_stages=7):
         "finalMissedWords": final_stage.get("missedWords", []),
         "clientSubmissionId": clean_text(payload.get("clientSubmissionId"), 120)
     }
+
+
+def basic2_unit6_pronunciation_report(payload):
+    report = basic2_unit1_pronunciation_report_from_payload(payload)
+    if len(report["clientSubmissionId"]) < 8:
+        raise ValueError("missing_submission_id")
+    expected = (*BASIC2_UNIT6_PRONUNCIATION_TEXTS, " ".join(BASIC2_UNIT6_PRONUNCIATION_TEXTS))
+    for index, (item, reference) in enumerate(zip(report["stageScores"], expected)):
+        if item["referenceText"] != reference or not item["transcript"]:
+            raise ValueError("invalid_pronunciation_stage")
+        if any(item[key] is None or not math.isfinite(item[key]) for key in ("overall", "accuracy", "completeness")):
+            raise ValueError("invalid_pronunciation_score")
+        item["final"] = index == 6
+        item["fluency"] = None  # Deliberately slow practice is not penalized.
+    report["grade"] = None
+    return report
 
 
 def basic2_past_verbs_pronunciation_report(payload):
@@ -20204,6 +20238,71 @@ class ProgressHandler(BaseHTTPRequestHandler):
                     "submittedAt": submitted_at,
                     "attemptCount": attempt_count,
                     "followUpOnly": True,
+                    "weight": 0
+                })
+            return
+
+        if parsed.path == "/api/basic2/unit6-food-pronunciation/submit":
+            if not isinstance(payload, dict):
+                json_response(self, 400, {"error": "invalid_payload"})
+                return
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                changed = ensure_basic2_gradebook_structure(grades_data)
+                student = matched_student_for_profile(profile, grades_data)
+                if not isinstance(student, dict):
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 403, {"error": "student_not_authorized"})
+                    return
+                try:
+                    report = basic2_unit6_pronunciation_report(payload)
+                except ValueError as error:
+                    if changed:
+                        write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                    json_response(self, 400, {"error": str(error)})
+                    return
+                if not isinstance(student.get("gradeDetails"), dict):
+                    student["gradeDetails"] = {}
+                previous = student["gradeDetails"].get(BASIC2_UNIT6_PRONUNCIATION_ID)
+                if isinstance(previous, dict) and report["clientSubmissionId"] and previous.get("clientSubmissionId") == report["clientSubmissionId"]:
+                    json_response(self, 200, {"ok": True, "evaluationId": BASIC2_UNIT6_PRONUNCIATION_ID, "grade": None, "score100": previous["score100"], "submittedAt": previous["submittedAt"], "weight": 0, "clientSubmissionId": report["clientSubmissionId"]})
+                    return
+                try:
+                    attempt_count = int(previous.get("attemptCount", 0)) + 1 if isinstance(previous, dict) else 1
+                except (TypeError, ValueError):
+                    attempt_count = 1
+                submitted_at = now_iso()
+                student.setdefault("grades", {})[BASIC2_UNIT6_PRONUNCIATION_ID] = None
+                student["gradeDetails"][BASIC2_UNIT6_PRONUNCIATION_ID] = {
+                    "evaluationId": BASIC2_UNIT6_PRONUNCIATION_ID,
+                    "activityTitle": BASIC2_UNIT6_PRONUNCIATION_EVALUATION["title"],
+                    "submittedAt": submitted_at,
+                    "score100": report["score100"],
+                    "grade": None,
+                    "stageScores": report["stageScores"],
+                    "finalTranscript": report["finalTranscript"],
+                    "finalReferenceText": report["finalReferenceText"],
+                    "finalMissedWords": report["finalMissedWords"],
+                    "clientSubmissionId": report["clientSubmissionId"],
+                    "attemptCount": attempt_count,
+                    "status": "submitted",
+                    "weight": 0,
+                    "doesNotAffectAverage": True,
+                    "followUpOnly": True,
+                    "activity": "Fabulous Food Pronunciation Studio",
+                    "activityType": "Pronunciation follow-up"
+                }
+                write_json_file(BASIC2_ENGLISH_GRADES_PATH, grades_data, ".basic2-grades-")
+                json_response(self, 200, {
+                    "ok": True,
+                    "evaluationId": BASIC2_UNIT6_PRONUNCIATION_ID,
+                    "score100": report["score100"],
+                    "grade": None,
+                    "submittedAt": submitted_at,
+                    "attemptCount": attempt_count,
+                    "followUpOnly": True,
+                    "clientSubmissionId": report["clientSubmissionId"],
                     "weight": 0
                 })
             return
