@@ -1,0 +1,78 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "id": "00d89c6761d9ad",
+      "file": "00d89c6761d9ad.mp3",
+      "text": "impression",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "28bc91651bb674a62d204b0fd6da4f3dc620991615c2c64d1d6ea644c53dde97"
+    },
+    {
+      "id": "d7da7f50f4c0b7",
+      "file": "d7da7f50f4c0b7.mp3",
+      "text": "tiring",
+      "kind": "phrase",
+      "bytes": 13836,
+      "sha256": "147e870e8140342fefbd5216166dd8af81d3b029d115314b07d3f7f4a61a4bd7"
+    },
+    {
+      "id": "cda3103e7c3938",
+      "file": "cda3103e7c3938.mp3",
+      "text": "satire",
+      "kind": "phrase",
+      "bytes": 17598,
+      "sha256": "b6d69fac9dfe9497ecc1ed563bd48dda9219c699b2f239235cd583582d2f8c6b"
+    },
+    {
+      "id": "75b781dc604221",
+      "file": "75b781dc604221.mp3",
+      "text": "He might simply be concentrating.",
+      "kind": "phrase",
+      "bytes": 35988,
+      "sha256": "2f81b67ae37899180249164ca112957657312c9601e279d866ce700aaf20df68"
+    },
+    {
+      "id": "ed36ea0d37196b",
+      "file": "ed36ea0d37196b.mp3",
+      "text": "And you must be tired.",
+      "kind": "phrase",
+      "bytes": 24703,
+      "sha256": "09b12513a2ed8e44d4ccdbafa19abb8694b293c9a67bccbe56d575afe8ae02fd"
+    },
+    {
+      "id": "d5c6b33608de1b",
+      "file": "d5c6b33608de1b.mp3",
+      "text": "At first, I felt confused because the instructions were confusing.",
+      "kind": "phrase",
+      "bytes": 63573,
+      "sha256": "0f836e07885c00e6751e70bee354ad4e6847f148d7b8cf5103ff8491d5c6a0ce"
+    },
+    {
+      "id": "e2791bdd55a29b",
+      "file": "e2791bdd55a29b.mp3",
+      "text": "That can’t be a real news report.",
+      "kind": "phrase",
+      "bytes": 34316,
+      "sha256": "f8fd39b9668bed28721a80e76b21339dfeff95a9bced9afede86702ddea9f12c"
+    },
+    {
+      "id": "968f91a2b684b4",
+      "file": "968f91a2b684b4.mp3",
+      "text": "The poster is funny, although the work is tiring.",
+      "kind": "phrase",
+      "bytes": 50199,
+      "sha256": "4c0b9bcbabf0cadca448de3cc35af6b5c1973121fccef2ae59eefc095f08af02"
+    },
+    {
+      "id": "1f729262c72f0b",
+      "file": "1f729262c72f0b.mp3",
+      "text": "A friendly question can help break the ice.",
+      "kind": "phrase",
+      "bytes": 44765,
+      "sha256": "26c0123a5955ec966f6b5f2004902ddd99f320262b4a90b9e0bc35ba294878c0"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "tool": "Built-in image_gen",
+  "images": [
+    {
+      "slug": "01-station",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. At a quiet modern train platform, four adults meet unexpectedly. A woman with a rolling suitcase pauses with one hand near her chest, a man with a small plain gift bag opens his arms slightly, and two friends exchange surprised smiles. A train is visible behind them with no signage. Show luggage and their reactions clearly; no obvious romance or single predetermined story.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-061ba2c9-1cad-4380-96ef-51f4f114fff0.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/01-station.webp"
+    },
+    {
+      "slug": "02-picnic",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. Four adult friends at a park picnic caught by sudden light rain. One opens a large umbrella, one protects a small homemade cake with a clear container, one holds a damp picnic blanket, another laughs while reaching for a tipped empty cup. Mixed mild surprise and amused determination, trees and wet grass, no text on objects.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-14837412-8071-4228-8968-a311d84a7e1b.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/02-picnic.webp"
+    },
+    {
+      "slug": "03-model",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. Three adult students at a craft workshop table notice a small handmade clay tower that has partly collapsed. One holds an intact piece and looks uncertain, a second gently offers a wooden tool and reassuring gesture, a third studies the fallen pieces with concentration. Materials are clearly visible and everyone's faces are unobstructed. Do not show an injury.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-6294635e-58a6-4e4e-86f1-34de6d23a56a.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/03-model.webp"
+    },
+    {
+      "slug": "04-bags",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. Inside a cafe, two adults stand beside a table with two nearly identical plain backpacks. One person has opened a bag and is holding a bright knitted scarf, looking puzzled; the other compares a matching scarf in their hand with a hesitant smile. A third friend watches attentively. The bag contents and the exchange suggest a mix-up without confirming what happened. No writing or labels.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-2632c88a-cf32-4afa-87f4-8bfbb688318e.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/04-bags.webp"
+    },
+    {
+      "slug": "05-celebration",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. A cozy living-room doorway during a small gathering. A tired-looking adult arriving with a work bag pauses as three friends turn toward them; one holds a small cake with simple unlit candles, another has loosely hanging party decorations. Reactions include surprise, an uncertain smile, and excitement. Warm late-afternoon light. No banners or any text.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-a54bde95-4563-4dc6-b8a7-733ddef2a036.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/05-celebration.webp"
+    },
+    {
+      "slug": "06-plant",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. Four adult neighbors in a shared courtyard after light rain. A large terracotta plant pot has cracked, soil has spilled, and the plant lies gently tilted. One kneels supporting the root ball, another brings a new plain pot, one offers garden gloves, another looks concerned while holding a watering can. Clear signs of a problem and cooperative actions. No labels or writing.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-09c6b7be-1f79-4201-bed5-dbb0a715ca19.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/06-plant.webp"
+    },
+    {
+      "slug": "07-screen",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. A university project demonstration with four adults. At the front table a student holds a small science model beside a laptop and a completely dark blank wall screen; another kneels checking an unplugged cable while two teammates exchange an encouraging smile and a puzzled expression. Show cable, laptop, model, people clearly. No written content, brands or classroom posters.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-ec1f279d-9fbc-40eb-9686-c19deaae9f06.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/07-screen.webp"
+    },
+    {
+      "slug": "08-trail",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. Three adult hikers pause at a fork on an easy green woodland trail. One holds an unfolded paper map with only unlabeled colored lines and no symbols or writing, another points toward a distant wooden footbridge, a third looks at dark clouds while holding a rain jacket. Backpacks and two trail directions visible. Mood uncertain but calm, nobody in danger. No trail signs.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-b3e29eed-008c-4dd4-94bc-f3260823f5c4.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/08-trail.webp"
+    },
+    {
+      "slug": "09-rehearsal",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. Four adult friends at an informal music rehearsal in a community room. A guitarist pauses, a singer holds a microphone away from their face, a person at a small keyboard turns toward the doorway, and a new arrival carries a violin case and looks uncertain. The seated musicians react with curiosity and a welcoming gesture. Instruments and faces clear. No sheet music or writing, no brands.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-d6c14710-ac0b-4e37-8ddb-55e0ce711aff.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/09-rehearsal.webp"
+    },
+    {
+      "slug": "10-dinner",
+      "prompt": "Use case: photorealistic-natural. Asset: a NEW landscape 3:2 photo for an adult English group storytelling activity. Natural editorial photography, realistic faces and hands, medium-wide framing with clearly visible people, objects and actions; soft cinematic daylight, restrained natural expressions, subtle navy/teal and warm neutral colors. The scene should suggest a story with more than one plausible interpretation. No text, numbers, letters, signs, logos, watermarks, captions, writing on clothes, collage or speech bubbles. At a shared apartment dinner, two arriving adult friends each hold an identical covered casserole dish while a host looks at both with a surprised amused expression. Another friend behind the table is placing plates and smiling. The table has place settings and a nearly empty serving area. A visual coincidence or misunderstanding that can become a warm story. No writing or logos.",
+      "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-5772e6aa-04c9-4144-bfbf-f94d5d87400c.png",
+      "asset": "assets/img/english-intermediate-2/unit-5/group-stories/10-dinner.webp"
+    }
+  ]
+}

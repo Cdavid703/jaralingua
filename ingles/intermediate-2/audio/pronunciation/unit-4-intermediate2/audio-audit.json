@@ -1,0 +1,38 @@
+[
+  {
+    "file": "section-1.mp3",
+    "expected": "Have you ever seen this science fiction movie? I've already watched the original, but I haven't seen the sequel yet.",
+    "heard": "Have you ever seen this science fiction movie? I've already watched the original, but I haven't seen the sequel yet.",
+    "matched": true
+  },
+  {
+    "file": "section-2.mp3",
+    "expected": "The plot is gripping because the characters face a difficult choice. Although the ending is predictable, the acting is convincing.",
+    "heard": "The plot is gripping because the characters face a difficult choice. Although the ending is predictable, the acting is convincing.",
+    "matched": true
+  },
+  {
+    "file": "section-3.mp3",
+    "expected": "The band has just released a catchy soundtrack. The music brings the characters to life and makes the story memorable.",
+    "heard": "The band has just released a catchy soundtrack. The music brings the characters to life and makes the story memorable.",
+    "matched": true
+  },
+  {
+    "file": "section-4.mp3",
+    "expected": "If you're looking for a great movie, check it out. It kept me on the edge of my seat.",
+    "heard": "If you're looking for a great movie, check it out. It kept me on the edge of my seat.",
+    "matched": true
+  },
+  {
+    "file": "make-your-movie-review-clear-model-us.mp3",
+    "expected": "Have you ever seen this science fiction movie? I've already watched the original, but I haven't seen the sequel yet. The plot is gripping because the characters face a difficult choice. Although the ending is predictable, the acting is convincing. The band has just released a catchy soundtrack. The music brings the characters to life and makes the story memorable. If you're looking for a great movie, check it out. It kept me on the edge of my seat.",
+    "heard": "Have you ever seen this science fiction movie? I've already watched the original, but I haven't seen the sequel yet. The plot is gripping because the characters face a difficult choice. Although the ending is predictable, the acting is convincing. The band has just released a catchy soundtrack. The music brings the characters to life and makes the story memorable. If you're looking for a great movie, check it out. It kept me on the edge of my seat.",
+    "matched": true
+  },
+  {
+    "file": "words/original.mp3",
+    "expected": "original",
+    "heard": "Original",
+    "matched": true
+  }
+]

@@ -1,0 +1,184 @@
+/* Intermediate Course 2: page-specific refinements. Core layout comes from conversation-coach-v2.css. */
+.ie2-midterm-oral-page {
+  background:
+    radial-gradient(circle at 88% 8%, rgba(217, 164, 65, .13), transparent 23rem),
+    var(--coach-soft);
+}
+
+.ie2-midterm-hero { margin-top: 1.25rem; }
+.ie2-midterm-hero .coach-hero-visual img { object-position: center 48%; }
+
+.ie2-context {
+  margin: .4rem 0 0;
+  color: var(--coach-muted);
+  font-size: .88rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.ie2-view-panel {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(36, 84, 166, .2);
+  border-radius: 8px;
+  background: linear-gradient(135deg, #edf3ff, #f8fafc);
+}
+
+.ie2-view-panel h3 { margin: .1rem 0 .3rem; color: var(--coach-navy); }
+.ie2-view-panel p:not(.coach-kicker) { margin: 0; color: var(--coach-muted); line-height: 1.48; }
+
+.ie2-view-actions {
+  display: inline-flex;
+  flex: 0 0 auto;
+  padding: .28rem;
+  border: 1px solid var(--coach-line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.ie2-view-actions button {
+  min-height: 38px;
+  border: 0;
+  border-radius: 6px;
+  padding: .45rem .65rem;
+  background: transparent;
+  color: var(--coach-navy);
+  cursor: pointer;
+  font-weight: 900;
+}
+
+.ie2-view-actions button.is-active { background: var(--coach-navy); color: #fff; }
+.ie2-view-actions button:focus-visible { outline: 3px solid rgba(36, 84, 166, .3); outline-offset: 2px; }
+
+.ie2-midterm-oral-page .coach-frame-grid { grid-template-columns: 1fr; }
+.ie2-midterm-oral-page #answerSuggestion {
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: var(--coach-navy);
+  cursor: default;
+  font: inherit;
+  font-weight: 800;
+  line-height: 1.52;
+  text-align: left;
+}
+
+.restaurant-stage-list {
+  display: grid;
+  gap: .55rem;
+  margin: .7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.restaurant-stage-list li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr);
+  gap: .55rem;
+  align-items: start;
+}
+
+.restaurant-stage-list li > span {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 8px;
+  background: #e8f6f3;
+  color: var(--coach-teal);
+  font-size: .8rem;
+  font-weight: 900;
+}
+
+.restaurant-stage-list strong,
+.restaurant-stage-list small { display: block; }
+
+.restaurant-stage-list strong { color: var(--coach-navy); font-size: .9rem; }
+.restaurant-stage-list small { margin-top: .12rem; color: var(--coach-muted); line-height: 1.35; }
+
+.sidebar-language { display: flex; flex-wrap: wrap; gap: .4rem; }
+.sidebar-language span {
+  padding: .4rem .52rem;
+  border: 1px solid var(--coach-line);
+  border-radius: 999px;
+  background: #f8fafc;
+  color: var(--coach-navy);
+  font-size: .78rem;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.coach-complete {
+  padding: clamp(1.5rem, 5vw, 3rem);
+  text-align: center;
+}
+
+.coach-complete > i {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  margin: 0 auto .75rem;
+  border-radius: 50%;
+  background: #e8f6f3;
+  color: var(--coach-teal);
+  font-size: 1.75rem;
+}
+
+.coach-complete h2 { margin: .25rem 0 .5rem; color: var(--coach-navy); }
+.coach-complete > p:not(.coach-kicker) { max-width: 640px; margin: 0 auto 1rem; color: var(--coach-muted); line-height: 1.55; }
+
+.coach-floating-dock.is-recording { border-color: rgba(255, 255, 255, .7); }
+.coach-floating-dock.is-recording .coach-icon-button { background: var(--coach-coral); color: #fff; }
+
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-outcomes,
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-sidebar,
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-steps,
+.ie2-midterm-oral-page.ie2-mobile-focus .ie2-view-panel { display: none; }
+
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-hero {
+  grid-template-columns: 104px minmax(0, 1fr);
+  gap: .8rem;
+  align-items: center;
+  margin-top: .6rem;
+  padding: .75rem;
+}
+
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-hero-visual { grid-column: 1; grid-row: 1; border-radius: 50%; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-hero-visual img { aspect-ratio: 1; object-position: 75% center; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-hero h1 { font-size: clamp(1.75rem, 9vw, 2.5rem); }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-hero-copy > p:not(.coach-kicker),
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-meta { display: none; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-actions { margin-top: .55rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-actions .secondary { display: none; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-shell { margin-top: .6rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-main { padding: .75rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-companion-welcome { grid-template-columns: 78px minmax(0, 1fr); padding: .7rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-companion-welcome figure { width: 78px; height: 94px; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-companion-welcome h2 { font-size: 1.3rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-companion-welcome p:not(.coach-kicker) { font-size: .88rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-stage { grid-template-columns: 74px minmax(0, 1fr); padding: .75rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-avatar { width: 74px; height: 92px; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-stage h2 { font-size: 1.16rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-recorder-top,
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-record-help { display: none; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-mic-button { width: 72px; height: 72px; margin: .6rem auto .35rem; font-size: 1.7rem; }
+.ie2-midterm-oral-page.ie2-mobile-focus .coach-navigation { display: none; }
+
+@media (max-width: 720px) {
+  .ie2-midterm-hero .coach-hero-visual img { max-height: 280px; }
+  .ie2-view-panel { align-items: stretch; flex-direction: column; }
+  .ie2-view-actions { width: 100%; }
+  .ie2-view-actions button { flex: 1; }
+  .sidebar-language span { font-size: .75rem; }
+}
+
+@media (max-width: 470px) {
+  .ie2-midterm-oral-page:not(.ie2-mobile-focus) .ie2-view-panel { padding: .75rem; }
+  .ie2-midterm-oral-page:not(.ie2-mobile-focus) .coach-companion-welcome figure { aspect-ratio: 5 / 4; }
+}

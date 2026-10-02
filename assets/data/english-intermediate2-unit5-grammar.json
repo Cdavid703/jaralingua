@@ -1,0 +1,225 @@
+{
+  "title": "Read the Clues",
+  "questions": [
+    {
+      "id": 1,
+      "options": [
+        "might",
+        "must",
+        "can’t"
+      ],
+      "title": "The night shift",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/tired.webp",
+      "alt": "A volunteer yawning beside boxes of donated food.",
+      "clues": "Leo worked all night and has not slept. He is yawning.",
+      "goal": "strong positive deduction",
+      "sentence": "He ___ be tired.",
+      "answer": "must",
+      "why": {
+        "must": "The lack of sleep and his yawning strongly support this deduction. Here, must means almost sure, not an obligation.",
+        "might": "This sentence is possible, but might expresses uncertainty. The task asks for a strong deduction.",
+        "can’t": "This means you are almost sure he is not tired. The clues point in the opposite direction."
+      },
+      "model": "He must be tired.",
+      "audio": "audio/unit-5-explanation/8a7dfdba48f384.mp3"
+    },
+    {
+      "id": 2,
+      "options": [
+        "must",
+        "might",
+        "can’t"
+      ],
+      "title": "The empty backpack",
+      "image": "/assets/img/english-intermediate-2/unit-5/grammar/empty-bag.webp",
+      "alt": "Two students check an empty backpack with open pockets.",
+      "clues": "Nora has emptied her backpack and checked every pocket twice. Nothing is left inside, but her keys are still missing.",
+      "goal": "strong negative deduction",
+      "sentence": "The keys ___ be in the backpack.",
+      "answer": "can’t",
+      "why": {
+        "must": "Must be in the backpack conflicts with the evidence: the bag and all its pockets are empty.",
+        "might": "Might leaves the bag as a possible location. The task asks you to rule it out using the completed search.",
+        "can’t": "The bag and every pocket have been checked and are empty. The clues let us rule out that location."
+      },
+      "model": "The keys can’t be in the backpack.",
+      "audio": "audio/unit-5-grammar/312b441d67b4a0.mp3"
+    },
+    {
+      "id": 3,
+      "options": [
+        "can’t",
+        "must",
+        "might"
+      ],
+      "title": "A call from London",
+      "image": "/assets/img/english-intermediate-2/unit-5/grammar/video-call.webp",
+      "alt": "A classroom laptop shows a friend on a video call from London.",
+      "clues": "You are in a classroom in Medellín. Your friend Emma is speaking to you on a live video call from London right now.",
+      "goal": "strong negative deduction",
+      "sentence": "Emma ___ be in your classroom now.",
+      "answer": "can’t",
+      "why": {
+        "must": "Must be in your classroom conflicts with the clue that she is in London right now.",
+        "might": "Might would leave the classroom as a possible location. The live call from London rules that out in this situation.",
+        "can’t": "She is in London at this moment, so you can rule out her being in your classroom in Medellín at the same time."
+      },
+      "model": "Emma can’t be in your classroom now.",
+      "audio": "audio/unit-5-grammar/d7337937931db5.mp3"
+    },
+    {
+      "id": 4,
+      "options": [
+        "can’t",
+        "might",
+        "must"
+      ],
+      "title": "The result is in",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/relieved.webp",
+      "alt": "A student smiles with relaxed shoulders after a presentation.",
+      "clues": "Mia was afraid she had failed her presentation. She has just learned that she passed. Now she smiles and her shoulders relax.",
+      "goal": "strong positive deduction",
+      "sentence": "She ___ be relieved.",
+      "answer": "must",
+      "why": {
+        "must": "The good result and her change in expression strongly suggest relief. We are making a deduction from several clues.",
+        "might": "Might is possible English, but it is less certain. The instruction asks for a strong deduction.",
+        "can’t": "Can’t be relieved means almost sure she is not relieved. Her reaction and the good news support the opposite."
+      },
+      "model": "She must be relieved.",
+      "audio": "audio/unit-5-grammar/20dd779a68dfc1.mp3"
+    },
+    {
+      "id": 5,
+      "options": [
+        "might",
+        "can’t",
+        "must"
+      ],
+      "title": "Before the presentation",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/presentation.webp",
+      "alt": "A student holds note cards before speaking to classmates.",
+      "clues": "Ana is holding her notes tightly before speaking. You have not asked how she feels. She could be nervous, or she could simply be concentrating.",
+      "goal": "possibility, without being sure",
+      "sentence": "She ___ be nervous.",
+      "answer": "might",
+      "why": {
+        "must": "Holding notes tightly does not prove nervousness. The situation gives another possible explanation.",
+        "might": "Nervousness is a possible explanation, but we are not sure. Might leaves room for another explanation.",
+        "can’t": "The clues do not rule out nervousness. Can’t would express much stronger certainty that she is not nervous."
+      },
+      "model": "She might be nervous.",
+      "audio": "audio/unit-5-grammar/7e3bc18b230612.mp3"
+    },
+    {
+      "id": 6,
+      "options": [
+        "can’t",
+        "might",
+        "must"
+      ],
+      "title": "During the talk",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/bored.webp",
+      "alt": "A learner rests his cheek on his hand during a talk.",
+      "clues": "Ben rests his cheek on his hand during a talk. You do not know whether he is bored, tired or thinking carefully.",
+      "goal": "possibility, without being sure",
+      "sentence": "He ___ be bored.",
+      "answer": "might",
+      "why": {
+        "must": "His posture alone is not enough for this strong conclusion. He could also be tired or thinking.",
+        "might": "Boredom is one possible explanation. The other possibilities mean we should not sound certain.",
+        "can’t": "Nothing here rules out boredom. Can’t would express certainty that he is not bored."
+      },
+      "model": "He might be bored.",
+      "audio": "audio/unit-5-grammar/349ed6ea6d59bb.mp3"
+    },
+    {
+      "id": 7,
+      "options": [
+        "might",
+        "must",
+        "can’t"
+      ],
+      "title": "A wet arrival",
+      "image": "/assets/img/english-intermediate-2/unit-5/grammar/rain.webp",
+      "alt": "A volunteer arrives with a wet jacket and a dripping umbrella.",
+      "clues": "Luis has just come in from outside. His jacket is wet, water is dripping from his umbrella, and you hear heavy rain on the roof.",
+      "goal": "strong positive deduction",
+      "sentence": "It ___ be raining outside.",
+      "answer": "must",
+      "why": {
+        "must": "The wet jacket, dripping umbrella and sound on the roof give strong evidence of rain.",
+        "might": "Might expresses a possibility, but the task asks for a strong deduction supported by several clues.",
+        "can’t": "Can’t be raining means almost sure it is not raining. That conflicts with the clues."
+      },
+      "model": "It must be raining outside.",
+      "audio": "audio/unit-5-grammar/29bd289dd6713a.mp3"
+    },
+    {
+      "id": 8,
+      "options": [
+        "can’t",
+        "must",
+        "might"
+      ],
+      "title": "A locked library",
+      "image": "/assets/img/english-intermediate-2/unit-5/grammar/closed-library.webp",
+      "alt": "Two students check a locked library entrance with a dark interior.",
+      "clues": "It is 9 p.m. The library closes at 6 p.m. today. The entrance is locked, the lights are off, and no special event is scheduled.",
+      "goal": "strong negative deduction",
+      "sentence": "The library ___ be open to visitors now.",
+      "answer": "can’t",
+      "why": {
+        "must": "Must be open means you are almost sure it is open. The closing time, locked door and dark interior support the opposite.",
+        "might": "Might be open leaves this possibility open. The task asks for a strong negative deduction from the clues.",
+        "can’t": "The closing time, locked door and dark interior strongly suggest it is not open to visitors now. This is a deduction, not a rule."
+      },
+      "model": "The library can’t be open to visitors now.",
+      "audio": "audio/unit-5-grammar/96485a04e1ac7f.mp3"
+    },
+    {
+      "id": 9,
+      "options": [
+        "must",
+        "can’t",
+        "might"
+      ],
+      "title": "At the bus stop",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/waiting.webp",
+      "alt": "A woman checks her watch at a bus stop.",
+      "clues": "Sara is looking at her watch at a bus stop. You do not know her plans. Perhaps she is meeting a friend, or perhaps she is waiting for a bus.",
+      "goal": "possibility, without being sure",
+      "sentence": "She ___ be waiting for a friend.",
+      "answer": "might",
+      "why": {
+        "must": "Checking a watch does not tell us who she is waiting for. Must would express more certainty than these clues support.",
+        "might": "Meeting a friend is one possible explanation. We do not have enough information to be sure.",
+        "can’t": "Nothing rules out meeting a friend. Can’t would express a strong negative deduction."
+      },
+      "model": "She might be waiting for a friend.",
+      "audio": "audio/unit-5-explanation/662535d75b18b4.mp3"
+    },
+    {
+      "id": 10,
+      "options": [
+        "can’t",
+        "must",
+        "might"
+      ],
+      "title": "At the museum",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/interested.webp",
+      "alt": "Museum visitors lean forward and watch a guide demonstrate a model.",
+      "clues": "The visitors lean forward, ask many questions and ask the guide to continue. They have stayed much longer than planned.",
+      "goal": "strong positive deduction",
+      "sentence": "They ___ be interested in the exhibition.",
+      "answer": "must",
+      "why": {
+        "must": "Their attention, questions and wish to stay longer strongly support interest. Must expresses this strong deduction.",
+        "might": "Might expresses only a possibility. The task asks for the stronger deduction supported by several clues.",
+        "can’t": "Can’t be interested means almost sure they are not interested. Their actions strongly suggest the opposite."
+      },
+      "model": "They must be interested in the exhibition.",
+      "audio": "audio/unit-5-grammar/4a8bb3f84dd2b1.mp3"
+    }
+  ]
+}

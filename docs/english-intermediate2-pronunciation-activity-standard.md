@@ -170,3 +170,6 @@ The new item in `english-intermediate-2-content.json` must include:
   - `tools/test_intermediate2_unit3_pronunciation_delivery.py`.
 - Practice Lab sequence: pronunciation is the first published Unit 3 activity;
   listening, reading and Conversation Coach remain the next planned activities.
+## Mandatory QR before publication
+
+Every pronunciation page must include the shared page QR component and its matching SVG. Verify visibility and enlargement in production. Follow docs/english-intermediate2-page-standard.md and run the course page contract; missing QR assets fail the check.

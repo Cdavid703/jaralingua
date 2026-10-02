@@ -1,0 +1,567 @@
+{
+  "title": "One Picture, Many Impressions",
+  "scenes": [
+    {
+      "id": 0,
+      "title": "Before speaking",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/presentation.webp",
+      "alt": "A student holds notes in front of classmates.",
+      "context": "A student holds notes in front of classmates.",
+      "words": [
+        "nervous",
+        "interested",
+        "interesting"
+      ],
+      "models": [
+        "She looks nervous because she is holding her notes tightly.",
+        "It looks like a class presentation. The classmates seem interested.",
+        "Perhaps she feels confident and is simply waiting to begin."
+      ],
+      "expression": "break the ice",
+      "suggestion": "Suggest a friendly question that could make the first conversation easier."
+    },
+    {
+      "id": 1,
+      "title": "During the talk",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/bored.webp",
+      "alt": "A person rests their cheek on one hand while listening.",
+      "context": "A person rests their cheek on one hand while listening.",
+      "words": [
+        "bored",
+        "boring",
+        "tired"
+      ],
+      "models": [
+        "He looks bored. I guess the talk is not interesting to him.",
+        "Perhaps he is tired, although the talk is interesting.",
+        "He seems quiet, but he could be thinking carefully."
+      ],
+      "expression": "cheer up",
+      "suggestion": "Suggest a friendly action that could help someone feel happier. Do not assume the person is sad."
+    },
+    {
+      "id": 2,
+      "title": "At the museum",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/interested.webp",
+      "alt": "Visitors watch a guide demonstrate a model.",
+      "context": "Visitors watch a guide demonstrate a model.",
+      "words": [
+        "interested",
+        "interesting",
+        "confused"
+      ],
+      "models": [
+        "The visitors look interested because they are watching closely.",
+        "The demonstration seems interesting, but perhaps some parts are confusing.",
+        "I think it looks like a group learning how a machine works."
+      ],
+      "expression": "look up to",
+      "suggestion": "Imagine why a learner might admire someone. Give a reason based on their actions."
+    },
+    {
+      "id": 3,
+      "title": "On the screen",
+      "image": "/assets/img/english-intermediate-2/unit-5/behind-the-picture/02-screen.webp",
+      "alt": "Two people react to something on a laptop.",
+      "context": "Two people react to something on a laptop.",
+      "words": [
+        "surprised",
+        "surprising",
+        "excited"
+      ],
+      "models": [
+        "He looks surprised because his hand is over his mouth.",
+        "She seems excited. Perhaps they have received good news.",
+        "It looks like they are watching something funny, but we cannot see the screen."
+      ],
+      "expression": "be on cloud nine",
+      "suggestion": "Use this if your interpretation involves very good news or strong happiness."
+    },
+    {
+      "id": 4,
+      "title": "Following the instructions",
+      "image": "/assets/img/english-intermediate-2/unit-5/behind-the-picture/08-task.webp",
+      "alt": "Two people examine loose pieces and a partly built model.",
+      "context": "Two people examine loose pieces and a partly built model.",
+      "words": [
+        "confused",
+        "confusing",
+        "interested"
+      ],
+      "models": [
+        "He looks confused. Perhaps the instructions are confusing.",
+        "She seems interested in how the model works.",
+        "I guess they enjoy the challenge, even though it looks difficult."
+      ],
+      "expression": "get along with",
+      "suggestion": "Describe how the people seem to work together. Give a visible clue."
+    },
+    {
+      "id": 5,
+      "title": "A round of applause",
+      "image": "/assets/img/english-intermediate-2/unit-5/behind-the-picture/04-presentation.webp",
+      "alt": "One person holds notes while other people clap.",
+      "context": "One person holds notes while other people clap.",
+      "words": [
+        "relieved",
+        "proud",
+        "embarrassed"
+      ],
+      "models": [
+        "The speaker seems relieved because the presentation appears to be over.",
+        "I think the classmates look pleased with the presentation.",
+        "Perhaps the speaker feels embarrassed by all the attention."
+      ],
+      "expression": "be on cloud nine",
+      "suggestion": "Use this if your interpretation involves very good news or strong happiness."
+    },
+    {
+      "id": 6,
+      "title": "Checking the time",
+      "image": "/assets/img/english-intermediate-2/unit-5/explanation/waiting.webp",
+      "alt": "A person at a bus stop checks the time.",
+      "context": "A person at a bus stop checks the time.",
+      "words": [
+        "worried",
+        "nervous",
+        "relieved"
+      ],
+      "models": [
+        "She looks worried because she is checking the time.",
+        "I guess she is waiting for a bus, but perhaps she is meeting a friend.",
+        "She seems calm to me. Checking the time does not prove she is nervous."
+      ],
+      "expression": "calm down",
+      "suggestion": "Suggest a gentle way to relax if the person feels nervous. Avoid giving an impatient order."
+    },
+    {
+      "id": 7,
+      "title": "Arranging the supplies",
+      "image": "/assets/img/english-intermediate-2/unit-5/behind-the-picture/07-community.webp",
+      "alt": "People carry boxes and arrange food packages.",
+      "context": "People carry boxes and arrange food packages.",
+      "words": [
+        "helpful",
+        "organized",
+        "grateful"
+      ],
+      "models": [
+        "It looks like a group preparing donations.",
+        "The people seem helpful because they are arranging supplies together.",
+        "Perhaps they are preparing an event rather than donating the food."
+      ],
+      "expression": "reach out to",
+      "suggestion": "Imagine who the group could contact to offer or ask for help."
+    },
+    {
+      "id": 8,
+      "title": "Listening to the group",
+      "image": "/assets/img/english-intermediate-2/unit-5/behind-the-picture/06-group.webp",
+      "alt": "Several people talk while one person listens with an open notebook.",
+      "context": "Several people talk while one person listens with an open notebook.",
+      "words": [
+        "interested",
+        "thoughtful",
+        "concentrating"
+      ],
+      "models": [
+        "The quiet person looks interested in the conversation.",
+        "I guess they are concentrating before sharing an idea.",
+        "Perhaps this is a new group and someone needs time to feel comfortable."
+      ],
+      "expression": "fit in",
+      "suggestion": "Explain what could help someone feel welcome in the group."
+    },
+    {
+      "id": 9,
+      "title": "Inside the gift",
+      "image": "/assets/img/english-intermediate-2/unit-5/behind-the-picture/05-bag.webp",
+      "alt": "Two people look into a bag; its contents are hidden.",
+      "context": "Two people look into a bag; its contents are hidden.",
+      "words": [
+        "excited",
+        "surprised",
+        "disappointed"
+      ],
+      "models": [
+        "They seem excited about what is inside the bag.",
+        "I think the gift looks surprising to them.",
+        "Perhaps one person is disappointed, but we need more information."
+      ],
+      "expression": "be on cloud nine",
+      "suggestion": "Use this if your interpretation involves very good news or strong happiness."
+    },
+    {
+      "id": 10,
+      "title": "Finding a piece",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/11-puzzle.webp",
+      "alt": "A group works on a wooden puzzle.",
+      "context": "A group works on a wooden puzzle.",
+      "words": [
+        "confused",
+        "confusing",
+        "interested"
+      ],
+      "models": [
+        "The puzzle seems confusing because several pieces are still loose.",
+        "The group looks interested in solving it together.",
+        "I guess one person has found a solution while another is still thinking."
+      ],
+      "expression": "get along with",
+      "suggestion": "Describe how the people seem to work together. Give a visible clue."
+    },
+    {
+      "id": 11,
+      "title": "A moment on the bench",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/12-support.webp",
+      "alt": "Two friends sit beside a sports bag; one offers water.",
+      "context": "Two friends sit beside a sports bag; one offers water.",
+      "words": [
+        "disappointed",
+        "worried",
+        "grateful"
+      ],
+      "models": [
+        "One friend looks disappointed, but the reason is not clear.",
+        "The other person seems supportive because they are offering water.",
+        "Perhaps they are just resting after exercise rather than feeling sad."
+      ],
+      "expression": "cheer up",
+      "suggestion": "Suggest a friendly action that could help someone feel happier. Do not assume the person is sad."
+    },
+    {
+      "id": 12,
+      "title": "Getting things ready",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/13-gathering.webp",
+      "alt": "People arrange decorations, cups and a cake.",
+      "context": "People arrange decorations, cups and a cake.",
+      "words": [
+        "excited",
+        "exciting",
+        "surprised"
+      ],
+      "models": [
+        "It looks like a celebration is being prepared.",
+        "The activity seems exciting, and some people look happy.",
+        "Perhaps they are planning a surprise for someone."
+      ],
+      "expression": "be on cloud nine",
+      "suggestion": "Use this if your interpretation involves very good news or strong happiness."
+    },
+    {
+      "id": 13,
+      "title": "A quiet cup",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/14-cup.webp",
+      "alt": "A person holds a mug; tissues are on the table.",
+      "context": "A person holds a mug; tissues are on the table.",
+      "words": [
+        "tired",
+        "worried",
+        "relieved"
+      ],
+      "models": [
+        "He looks tired, and perhaps he is taking a break.",
+        "I guess he feels under the weather because there are tissues nearby.",
+        "He seems thoughtful. The tissues alone do not tell us how he feels."
+      ],
+      "expression": "feel under the weather",
+      "suggestion": "Use this only as a possibility about feeling a little ill. The picture does not prove illness."
+    },
+    {
+      "id": 14,
+      "title": "Working on a project",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/15-project.webp",
+      "alt": "Two people share materials while building a model.",
+      "context": "Two people share materials while building a model.",
+      "words": [
+        "interested",
+        "confident",
+        "confusing"
+      ],
+      "models": [
+        "They seem to get along with each other because they are sharing materials.",
+        "The project looks interesting, although some steps could be confusing.",
+        "I think one person looks confident while the other watches carefully."
+      ],
+      "expression": "get along with",
+      "suggestion": "Describe how the people seem to work together. Give a visible clue."
+    },
+    {
+      "id": 15,
+      "title": "Learning a new skill",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/16-learning.webp",
+      "alt": "One person demonstrates a clay technique while another watches.",
+      "context": "One person demonstrates a clay technique while another watches.",
+      "words": [
+        "interested",
+        "interesting",
+        "confident"
+      ],
+      "models": [
+        "The learner looks interested in the demonstration.",
+        "The person demonstrating seems patient and confident.",
+        "Perhaps the learner admires this person and wants to learn more."
+      ],
+      "expression": "look up to",
+      "suggestion": "Imagine why a learner might admire someone. Give a reason based on their actions."
+    },
+    {
+      "id": 16,
+      "title": "Making space",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/17-space.webp",
+      "alt": "Someone pulls out a chair and gestures toward a person arriving.",
+      "context": "Someone pulls out a chair and gestures toward a person arriving.",
+      "words": [
+        "helpful",
+        "nervous",
+        "welcoming"
+      ],
+      "models": [
+        "The person offering a chair seems welcoming.",
+        "The newcomer looks unsure, but perhaps they already know the group.",
+        "I think this looks like an invitation to join a discussion."
+      ],
+      "expression": "stand up for",
+      "suggestion": "If someone were being left out, how could another person stand up for them? The image does not prove exclusion."
+    },
+    {
+      "id": 17,
+      "title": "Outside the frame",
+      "image": "/assets/img/english-intermediate-2/unit-5/behind-the-picture/10-looking.webp",
+      "alt": "Several people look in the same direction at something we cannot see.",
+      "context": "Several people look in the same direction at something we cannot see.",
+      "words": [
+        "surprised",
+        "surprising",
+        "confused"
+      ],
+      "models": [
+        "They look surprised by something outside the picture.",
+        "Perhaps they are watching an exciting performance.",
+        "One person seems confused. I guess they do not all understand what is happening."
+      ],
+      "expression": "open up",
+      "suggestion": "Imagine a friendly question that could help someone share an impression. Sharing is optional."
+    },
+    {
+      "id": 18,
+      "title": "Before the door opens",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/19-door.webp",
+      "alt": "A person holds a folder near a closed door and empty chairs.",
+      "context": "A person holds a folder near a closed door and empty chairs.",
+      "words": [
+        "nervous",
+        "confident",
+        "worried"
+      ],
+      "models": [
+        "She looks nervous because she is holding the folder close.",
+        "It looks like she is waiting for an appointment.",
+        "Perhaps she feels confident and is taking a moment to prepare."
+      ],
+      "expression": "calm down",
+      "suggestion": "Suggest a gentle way to relax if the person feels nervous. Avoid giving an impatient order."
+    },
+    {
+      "id": 19,
+      "title": "Picking things up",
+      "image": "/assets/img/english-intermediate-2/unit-5/many-impressions/20-help.webp",
+      "alt": "Several people collect papers and pencils from the floor.",
+      "context": "Several people collect papers and pencils from the floor.",
+      "words": [
+        "embarrassed",
+        "grateful",
+        "helpful"
+      ],
+      "models": [
+        "One person might feel embarrassed about dropping the materials.",
+        "The others seem helpful because they are picking things up.",
+        "I think the person receiving the notebook looks grateful."
+      ],
+      "expression": "have a heart of gold",
+      "suggestion": "Use this as a warm compliment for a helpful action, not as proof of someone’s whole personality."
+    }
+  ],
+  "frames": [
+    [
+      "Appearance",
+      "She looks nervous."
+    ],
+    [
+      "General impression",
+      "She seems relieved."
+    ],
+    [
+      "Looks like + noun",
+      "He looks like a volunteer."
+    ],
+    [
+      "Looks like + complete idea",
+      "It looks like he needs help."
+    ],
+    [
+      "Feeling",
+      "I feel bored."
+    ],
+    [
+      "Cause",
+      "The instructions are confusing."
+    ],
+    [
+      "Opinion",
+      "I think she is worried."
+    ],
+    [
+      "A guess",
+      "I guess he is waiting for a friend."
+    ],
+    [
+      "A possibility",
+      "Perhaps she needs more time."
+    ],
+    [
+      "Another possibility",
+      "Maybe she is tired."
+    ],
+    [
+      "Give a clue",
+      "I think this because"
+    ],
+    [
+      "Respond",
+      "That’s possible, but"
+    ],
+    [
+      "Agree with a reason",
+      "I agree because"
+    ]
+  ],
+  "demo": [
+    [
+      "Give an impression",
+      "She looks nervous."
+    ],
+    [
+      "Interpret the scene",
+      "It looks like a class presentation."
+    ],
+    [
+      "Feeling and possible cause",
+      "The classmates look interested. Perhaps the topic is interesting."
+    ],
+    [
+      "Opinion with a clue",
+      "I think she is preparing to speak because she is holding her notes."
+    ],
+    [
+      "Optional expression",
+      "A friendly question could help break the ice."
+    ]
+  ],
+  "expressions": {
+    "cheer up": {
+      "kind": "Phrasal verb",
+      "spanish": "Animarse / animar a alguien"
+    },
+    "calm down": {
+      "kind": "Phrasal verb",
+      "spanish": "Calmarse"
+    },
+    "open up": {
+      "kind": "Phrasal verb",
+      "spanish": "Abrirse y hablar de los sentimientos"
+    },
+    "fit in": {
+      "kind": "Phrasal verb",
+      "spanish": "Encajar / sentirse integrado"
+    },
+    "get along with": {
+      "kind": "Phrasal verb",
+      "spanish": "Llevarse bien con"
+    },
+    "reach out to": {
+      "kind": "Phrasal verb",
+      "spanish": "Contactar para ofrecer o pedir ayuda"
+    },
+    "stand up for": {
+      "kind": "Phrasal verb",
+      "spanish": "Defender / apoyar"
+    },
+    "look up to": {
+      "kind": "Phrasal verb",
+      "spanish": "Admirar / respetar"
+    },
+    "break the ice": {
+      "kind": "Idiom",
+      "spanish": "Romper el hielo"
+    },
+    "feel under the weather": {
+      "kind": "Idiom",
+      "spanish": "Sentirse indispuesto / un poco enfermo"
+    },
+    "be on cloud nine": {
+      "kind": "Idiom",
+      "spanish": "Estar feliz de la vida"
+    },
+    "have a heart of gold": {
+      "kind": "Idiom",
+      "spanish": "Tener un corazón de oro"
+    }
+  },
+  "audio": {
+    "She looks nervous.": "audio/unit-5-explanation/0c497577f6dc52.mp3",
+    "She seems relieved.": "audio/unit-5-explanation/ff7cf96bbfc73b.mp3",
+    "He looks like a volunteer.": "audio/unit-5-explanation/37577618c30c8c.mp3",
+    "It looks like he needs help.": "audio/unit-5-explanation/86e24080cd2cde.mp3",
+    "I feel bored.": "audio/unit-5-explanation/d56c5d6d07c9e1.mp3",
+    "The instructions are confusing.": "audio/unit-5-explanation/2ca9ce5b994d11.mp3",
+    "I think she is worried.": "audio/unit-5-explanation/58913c53719cd0.mp3",
+    "I guess he is waiting for a friend.": "audio/unit-5-explanation/9e103cd8c7b43f.mp3",
+    "Perhaps she needs more time.": "audio/unit-5-explanation/c15a06e08755d7.mp3",
+    "Maybe she is tired.": "audio/unit-5-explanation/bb8d89e2b5b49c.mp3",
+    "I think this because": "audio/unit-5-picture/df0644bdb07be5.mp3",
+    "That’s possible, but": "audio/unit-5-picture/2742220e1bb94b.mp3",
+    "I agree because": "audio/unit-5-picture/e026a20bafe796.mp3",
+    "It looks like a class presentation.": "audio/unit-5-impressions/418fc346195000.mp3",
+    "The classmates look interested. Perhaps the topic is interesting.": "audio/unit-5-impressions/1dbe09673eaf3e.mp3",
+    "I think she is preparing to speak because she is holding her notes.": "audio/unit-5-impressions/783a031fd9b4ab.mp3",
+    "A friendly question could help break the ice.": "audio/unit-5-impressions/1592f600191a6f.mp3",
+    "nervous": "audio/unit-5-explanation/fb3a7850111f29.mp3",
+    "interested": "audio/unit-5-explanation/a30d5f870e0bcb.mp3",
+    "interesting": "audio/unit-5-explanation/637ab2808704d8.mp3",
+    "bored": "audio/unit-5-explanation/60e6aa4ad2d315.mp3",
+    "boring": "audio/unit-5-explanation/f953f70b913234.mp3",
+    "tired": "audio/unit-5-explanation/c405760daf9bc3.mp3",
+    "confused": "audio/unit-5-explanation/f1937e8bf25a4b.mp3",
+    "surprised": "audio/unit-5-explanation/0f471c347284f2.mp3",
+    "surprising": "audio/unit-5-explanation/3fc414de196c5d.mp3",
+    "excited": "audio/unit-5-explanation/8d1c8a7a12c373.mp3",
+    "confusing": "audio/unit-5-explanation/9c0a2c8e1b0309.mp3",
+    "relieved": "audio/unit-5-explanation/4469b61507b9c6.mp3",
+    "proud": "audio/unit-5-explanation/d069c85283b98c.mp3",
+    "embarrassed": "audio/unit-5-explanation/f12e1aedc45deb.mp3",
+    "worried": "audio/unit-5-explanation/13d9ead0ef6e1b.mp3",
+    "helpful": "audio/unit-5-picture/8678e47531eae3.mp3",
+    "organized": "audio/unit-5-picture/94fe812e9549a3.mp3",
+    "grateful": "audio/unit-5-explanation/8652b6b8e1b1f9.mp3",
+    "thoughtful": "audio/unit-5-picture/63c6ce2675dc8f.mp3",
+    "concentrating": "audio/unit-5-picture/b73197aa729108.mp3",
+    "disappointed": "audio/unit-5-explanation/364d78e6fc3db7.mp3",
+    "exciting": "audio/unit-5-explanation/5ae666e5b1a641.mp3",
+    "confident": "audio/unit-5-explanation/26c8cca6e668df.mp3",
+    "welcoming": "audio/unit-5-picture/908c8cca2e39e2.mp3",
+    "break the ice": "audio/unit-5-explanation/a35f5be4690a02.mp3",
+    "cheer up": "audio/unit-5-explanation/582d818dd242dd.mp3",
+    "look up to": "audio/unit-5-explanation/e64bef04711a4d.mp3",
+    "be on cloud nine": "audio/unit-5-explanation/369ea54ca04098.mp3",
+    "get along with": "audio/unit-5-explanation/33919b395e0771.mp3",
+    "calm down": "audio/unit-5-explanation/82ac382339aea9.mp3",
+    "reach out to": "audio/unit-5-explanation/5d732cb45d5998.mp3",
+    "fit in": "audio/unit-5-explanation/d4393349113d7c.mp3",
+    "feel under the weather": "audio/unit-5-explanation/f2a3a9ff91df70.mp3",
+    "stand up for": "audio/unit-5-explanation/99f30f876f9d7c.mp3",
+    "open up": "audio/unit-5-explanation/8236b1047b23d2.mp3",
+    "have a heart of gold": "audio/unit-5-explanation/ac4efdc2278a7c.mp3",
+    "What clue makes you think that?": "audio/unit-5-impressions/c43342230e2ce2.mp3"
+  }
+}

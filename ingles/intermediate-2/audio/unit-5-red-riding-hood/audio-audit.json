@@ -1,0 +1,240 @@
+[
+  {
+    "file": "phrase-9e9fcb4d3b7004.mp3",
+    "expected": "You look excited",
+    "heard": "You look excited",
+    "matched": true,
+    "sha256": "9212b21b1113505043459745226a1b3a77d453fac1c91030f29ccfec4d477c63"
+  },
+  {
+    "file": "page-01-cd2e503d535279.mp3",
+    "expected": "A basket for Grandma. One bright morning, Little Red puts on her red cape. Her mother gives her a basket of bread and honey. \"You look excited,\" her mother says. \"Grandma is feeling under the weather. Take this basket to her, but stay on the path.\" \"I want to cheer her up,\" Little Red says. She waves goodbye and walks towards the forest.",
+    "heard": "A basket for Grandma. One bright morning, Little Red puts on her red cape. Her mother gives her a basket of bread and honey. \"You look excited,\" her mother says. \"Grandma is feeling under the weather. Take this basket to her, but stay on the path.\" \"I want to cheer her up,\" Little Red says. She waves goodbye and walks towards the forest.",
+    "matched": true,
+    "sha256": "fee92c6ed1cb0e2356f5820fc8ab33c1b05e7abf8a85a17c16698c09c9d0f9bd"
+  },
+  {
+    "file": "phrase-51db25b53e6d0a.mp3",
+    "expected": "feeling under the weather",
+    "heard": "Feeling under the weather",
+    "matched": true,
+    "sha256": "f60fb7786828646540ee77c9d94647e5e8b5a9a56c5b68b0f468fe5c447d4e1b"
+  },
+  {
+    "file": "phrase-2598da20087b41.mp3",
+    "expected": "cheer her up",
+    "heard": "Cheer her up",
+    "matched": true,
+    "sha256": "8907a286be7adb50b40c6e2afa6d3d8c0986ed4fc3730698ea2a7a8c87cd49d9"
+  },
+  {
+    "file": "phrase-9b06096ea128cf.mp3",
+    "expected": "He seems friendly",
+    "heard": "He seems friendly",
+    "matched": true,
+    "sha256": "25e759c9c8dfced0813c9db9acc5f9db48479fd6bf63c1b4411a266ba04da2c7"
+  },
+  {
+    "file": "page-02-3396300f83fa7a.mp3",
+    "expected": "A friendly stranger. Under a tall oak tree, a wolf steps onto the path. \"Good morning! Where are you going?\" he asks politely. \"To Grandma's cottage, near the old bridge,\" Little Red replies. \"He seems friendly,\" she thinks. \"I guess he wants to help.\" The wolf points towards some flowers. \"Those would make a lovely present.\" Little Red smiles. She does not notice his hungry eyes.",
+    "heard": "A friendly stranger. Under a tall oak tree, a wolf steps onto the path. \"Good morning. Where are you going?\" He asks politely. \"To Grandma's cottage near the old bridge,\" Little Red replies. He seems friendly, she thinks. I guess he wants to help. The wolf points towards some flowers. \"Those would make a lovely present.\" Little Red smiles. She does not notice his hungry eyes.",
+    "matched": true,
+    "sha256": "938171c9d43a513d6574dd513681fcd65c0775db348cf0527a9ac0a93e20c89a"
+  },
+  {
+    "file": "phrase-5bff51281aab70.mp3",
+    "expected": "I guess he wants to help",
+    "heard": "I guess he wants to help",
+    "matched": true,
+    "sha256": "6471cbad5ceb07f5148c8d97eb5e28c3a5ab0f00ad861e33025e38de78aff66b"
+  },
+  {
+    "file": "phrase-c0bcb6b0f26a7c.mp3",
+    "expected": "She does not notice his hungry eyes",
+    "heard": "She does not notice his hungry eyes.",
+    "matched": true,
+    "sha256": "5b17003b60d96473e614018ebe8ad335f51ffea5f17d1cc267164eb6b21acb29"
+  },
+  {
+    "file": "phrase-c188d3e18a0bb8.mp3",
+    "expected": "feels tired",
+    "heard": "feels tired",
+    "matched": true,
+    "sha256": "a734197c096878ff79f82e481a23c85c759e9c3ffc89c15f8869d2029e654020"
+  },
+  {
+    "file": "page-03-2f54589c5cc993.mp3",
+    "expected": "Off the path. Little Red steps off the path to pick flowers. The wolf runs towards the cottage by a shorter route. Soon, Little Red feels tired. The long walk is tiring, but the flowers are beautiful. Suddenly, something moves behind the leaves. \"It might be a rabbit,\" she whispers. \"Perhaps it is hiding from me.\" She picks up her basket and returns to the path.",
+    "heard": "Off the path. Little Red steps off the path to pick flowers. The wolf runs towards the cottage by a shorter route. Soon, Little Red feels tired. The long walk is tiring, but the flowers are beautiful. Suddenly, something moves behind the leaves. \"It might be a rabbit,\" she whispers. \"Perhaps it is hiding from me.\" She picks up her basket and returns to the path.",
+    "matched": true,
+    "sha256": "b809d3b7f80caab4e187c0ce75a7825a782b1deda6c7f1d1193c48da72975699"
+  },
+  {
+    "file": "phrase-26078b38997d3a.mp3",
+    "expected": "The long walk is tiring",
+    "heard": "The long walk is tiring.",
+    "matched": true,
+    "sha256": "dcdfc718392aad45df31a56a6ae3e8c661eef0284c888d14a209d61316816250"
+  },
+  {
+    "file": "phrase-2dc7fba00d6642.mp3",
+    "expected": "It might be a rabbit",
+    "heard": "It might be a rabbit",
+    "matched": true,
+    "sha256": "1d3690c1df7c0a2fe5e53300e11464ab8bb4000fb6edc14e0a34c14375fabc7c"
+  },
+  {
+    "file": "phrase-e87edd05bccc2e.mp3",
+    "expected": "She looks frightened",
+    "heard": "She looks frightened",
+    "matched": true,
+    "sha256": "e93c667bc40e8f28f296aef4150b1ec4702864767a72653189826a874c3246b6"
+  },
+  {
+    "file": "page-04-2808ef7fce2ace.mp3",
+    "expected": "The wolf arrives first. At the cottage, Grandma sees the wolf through the window. She looks frightened. She quickly hides in the pantry and locks its door from the inside. The wolf enters the cottage. He puts on a spare pair of Grandma's glasses and her nightcap, then climbs into her bed. He looks like Grandma from a distance, but his long ears stick out. He waits quietly.",
+    "heard": "The wolf arrives first. At the cottage, Grandma sees the wolf through the window. She looks frightened. She quickly hides in the pantry and locks its door from the inside. The wolf enters the cottage. He puts on a spare pair of Grandma's glasses and her nightcap, then climbs into her bed. He looks like Grandma from a distance, but his long ears stick out. He waits quietly.",
+    "matched": true,
+    "sha256": "aad31fb525aacd0cead82705c36b368bee354d5ac10b1e574853dfc4f7de086b"
+  },
+  {
+    "file": "phrase-30dcf7b8cc768c.mp3",
+    "expected": "puts on",
+    "heard": "puts on",
+    "matched": true,
+    "sha256": "0517a4d7d32e3d465b58ec83dbe1a2870cb42ace3dcb508cfa01927468e725d5"
+  },
+  {
+    "file": "phrase-8c87e45a548193.mp3",
+    "expected": "He looks like Grandma",
+    "heard": "He looks like grandma.",
+    "matched": true,
+    "sha256": "14fa1a7bf9cb5771344bf3a973d4847193a635c8662a7f64d1721b41ee78b6f4"
+  },
+  {
+    "file": "page-05-8b011c244d1fff.mp3",
+    "expected": "Something looks strange. Little Red knocks and steps inside. \"Grandma, your voice sounds different. Are you all right?\" \"I have a cold, my dear,\" says the wolf. Little Red looks confused. His explanation is confusing because she can see a furry paw on the blanket. \"She might be ill,\" Little Red thinks. \"But something looks strange. Why are her ears so big?\" She stays close to the open door.",
+    "heard": "Something looks strange. Little Red knocks and steps inside. \"Grandma, your voice sounds different. Are you all right?\" \"I have a cold, my dear,\" says the wolf. Little Red looks confused. His explanation is confusing because she can see a furry paw on the blanket. She might be ill, Little Red thinks, but something looks strange. Why are her ears so big? She stays close to the open door.",
+    "matched": true,
+    "sha256": "6ff4be7122fcb1d4099747e0b1e74c464ee20c66ed343d992781fe87b1b18fb7"
+  },
+  {
+    "file": "phrase-4e932283e1338d.mp3",
+    "expected": "Little Red looks confused",
+    "heard": "Little Red looks confused",
+    "matched": true,
+    "sha256": "0474b8fd70bbc0926c0f1b7c5f70aae1b809c5a8328b47ba8b9afe04be0a427f"
+  },
+  {
+    "file": "phrase-a0b1df13127b5e.mp3",
+    "expected": "His explanation is confusing",
+    "heard": "His explanation is confusing",
+    "matched": true,
+    "sha256": "13f3a162a84090665d94e75655876169cc3aaf348787cbc83759430661ed6e86"
+  },
+  {
+    "file": "phrase-ba2f5a02a38065.mp3",
+    "expected": "She might be ill",
+    "heard": "She might be ill",
+    "matched": true,
+    "sha256": "956d202973c3cac3c8836c720cb9bb8d7ae1a66676b7957966ae69c11e4c23e2"
+  },
+  {
+    "file": "phrase-43c555cf1e4582.mp3",
+    "expected": "That can't be Grandma",
+    "heard": "That can't be Grandma",
+    "matched": true,
+    "sha256": "d048a374bfa75a4b3622b83a3f1f20a146076ec89e9105d616c75be72cf1b135"
+  },
+  {
+    "file": "page-06-be8c9f738b75f9.mp3",
+    "expected": "Those are a wolf's teeth!. \"Grandma, what big eyes you have!\" says Little Red. The wolf lifts his head, opens his mouth and shows his sharp teeth. \"That can't be Grandma. Those are a wolf's teeth!\" Little Red cries. \"It must be the wolf from the forest!\" The sight is frightening, and she feels frightened. She takes a breath, tries to calm down and calls for help. A forester outside hears her.",
+    "heard": "Those are a wolf's teeth. \"Grandma, what big eyes you have,\" says Little Red. The wolf lifts his head, opens his mouth, and shows his sharp teeth. \"That can't be Grandma. Those are a wolf's teeth,\" Little Red cries. \"It must be the wolf from the forest.\" The sight is frightening, and she feels frightened. She takes a breath, tries to calm down, and calls for help. A forester outside hears her.",
+    "matched": true,
+    "sha256": "8f20cc6df431399f040328a91c75316547091e473eff2fbc2d8e40fb722a2867"
+  },
+  {
+    "file": "phrase-3e72952196630d.mp3",
+    "expected": "It must be the wolf",
+    "heard": "It must be the wolf",
+    "matched": true,
+    "sha256": "cff28eb01846f0cc8db277958ab3f980387e2558bdc0bc4a1ce00b1c22f6f431"
+  },
+  {
+    "file": "phrase-82ac382339aea9.mp3",
+    "expected": "calm down",
+    "heard": "Calm down",
+    "matched": true,
+    "sha256": "9ce311b47155a1df798fa55bbc68091683cdda2cb0345c4b2b4650a9a10b2f4a"
+  },
+  {
+    "file": "phrase-0485df8c54f463.mp3",
+    "expected": "runs away",
+    "heard": "Runs away",
+    "matched": true,
+    "sha256": "30bee9fb0f50b470ee25ccf199530ccf3493620a070babc73ca1ebac9db66c8f"
+  },
+  {
+    "file": "page-07-29749190c7a736.mp3",
+    "expected": "Help at the door. The forester steps into the cottage. The surprised wolf jumps out of bed and runs away through the back door. \"Where is Grandma?\" asks the forester. Then they hear a voice from the pantry: \"I'm in here!\" Grandma unlocks the door and comes out safely. Little Red hugs her. \"You seem relieved,\" the forester says. \"I am,\" Grandma replies. \"Thank you for helping us. You have a heart of gold.\"",
+    "heard": "Help at the door. The forester steps into the cottage. The surprised wolf jumps out of bed and runs away through the back door. \"Where is Grandma?\" asks the forester. Then they hear a voice from the pantry. \"I'm in here.\" Grandma unlocks the door and comes out safely. Little Red hugs her. \"You seem relieved,\" the forester says. \"I am,\" Grandma replies. \"Thank you for helping us. You have a heart of gold.\"",
+    "matched": true,
+    "sha256": "9b2e75f87805aa8930decaa408b837c40bec50316b30a4562c3b9f4f622b7913"
+  },
+  {
+    "file": "phrase-18423a244e2f8c.mp3",
+    "expected": "You seem relieved",
+    "heard": "You seem relieved",
+    "matched": true,
+    "sha256": "8dc1ec3f44dd427dc418cc8e3b1a99fa0dee9a2baa9eb69e1351ea59c3a2d736"
+  },
+  {
+    "file": "phrase-ac4efdc2278a7c.mp3",
+    "expected": "have a heart of gold",
+    "heard": "Have a heart of gold",
+    "matched": true,
+    "sha256": "2d663b103ad81283a021cac2076d8f734bd8d9efbe5cc18f367f702b58fae9f7"
+  },
+  {
+    "file": "phrase-384fb05ccc7f16.mp3",
+    "expected": "I think I understand now",
+    "heard": "I think I understand now",
+    "matched": true,
+    "sha256": "c80a07861c4932b6a9ddb2812542dc65c139c72dbd2bfe7db595ef181c65697d"
+  },
+  {
+    "file": "page-08-877401f07d8eed.mp3",
+    "expected": "A better ending. Soon, everyone sits around the table with bread, honey and warm tea. Little Red puts the flowers in a little vase. \"I think I understand now,\" she says. \"The wolf seemed friendly, but I needed to look more carefully.\" Grandma smiles. \"A first impression can be wrong. Look for clues, ask questions and get help when you need it.\" Little Red feels grateful. This visit finally cheers Grandma up.",
+    "heard": "A better ending. Soon, everyone sits around the table with bread, honey, and warm tea. Little Red puts the flowers in a little vase. \"I think I understand now,\" she says. \"The wolf seemed friendly, but I needed to look more carefully.\" Grandma smiles. \"A first impression can be wrong. Look for clues, ask questions, and get help when you need it.\" Little Red feels grateful. This visit finally cheers Grandma up.",
+    "matched": true,
+    "sha256": "d9cb4bcbf81981d7cee813d60510715df576bdde9b92d14d14b0dad4e173537a"
+  },
+  {
+    "file": "phrase-d27676cef926bd.mp3",
+    "expected": "Look for clues",
+    "heard": "Look for clues",
+    "matched": true,
+    "sha256": "54f2aa232da99676e6a1c3ea6be18d824a0d34ed6c7ce050ae1818c5cad3752a"
+  },
+  {
+    "file": "phrase-ba12a415c408bd.mp3",
+    "expected": "cheers Grandma up",
+    "heard": "Cheers, Grandma Up",
+    "matched": true,
+    "sha256": "52a00bd6d4f0ce02e3f2545f5ebe452f928783960eba8e07a622a7780a836315"
+  },
+  {
+    "file": "library-9a8d685c930380.mp3",
+    "expected": "run away",
+    "heard": "Run away",
+    "matched": true,
+    "sha256": "5917185ff8efcde1b10bcc1656d556f73d8188e3490f97ae7f4c879e5d351302"
+  },
+  {
+    "file": "library-49252bab082713.mp3",
+    "expected": "look for",
+    "heard": "Look for",
+    "matched": true,
+    "sha256": "2adfc0204d874bcddb3d35000f5dd9d51c518f8e8b9f4a214296ab5d2e7c2d57"
+  }
+]

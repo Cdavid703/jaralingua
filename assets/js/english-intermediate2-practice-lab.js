@@ -5,7 +5,8 @@
     { number: 1, grid: document.getElementById("unit1ActivityGrid"), count: document.getElementById("unit1ActivityCount"), empty: document.getElementById("practiceLabEmpty") },
     { number: 2, grid: document.getElementById("unit2ActivityGrid"), count: document.getElementById("unit2ActivityCount"), empty: document.getElementById("practiceLabUnit2Empty") },
     { number: 3, grid: document.getElementById("unit3ActivityGrid"), count: document.getElementById("unit3ActivityCount"), empty: document.getElementById("practiceLabUnit3Empty") },
-    { number: 4, grid: document.getElementById("unit4ActivityGrid"), count: document.getElementById("unit4ActivityCount"), empty: document.getElementById("practiceLabUnit4Empty") }
+    { number: 4, grid: document.getElementById("unit4ActivityGrid"), count: document.getElementById("unit4ActivityCount"), empty: document.getElementById("practiceLabUnit4Empty") },
+    { number: 5, grid: document.getElementById("unit5ActivityGrid"), count: document.getElementById("unit5ActivityCount"), empty: document.getElementById("practiceLabUnit5Empty") }
   ];
   const search = document.getElementById("practiceLabSearch");
   const clear = document.getElementById("practiceLabClear");
@@ -40,7 +41,7 @@
   function update() {
     const query = normalize(search.value.trim());
     let visible = 0;
-    units.forEach((unit) => {
+    units.filter(unit => unit.grid).forEach((unit) => {
       const cards = [...unit.grid.querySelectorAll(".ie2-lab-card")];
       let unitVisible = 0;
       cards.forEach((element) => {
@@ -65,7 +66,7 @@
       if (!response.ok) throw new Error("Catalog unavailable");
       const payload = await response.json();
       const published = (payload.items || []).filter((item) => item.status === "published");
-      units.forEach((unit) => {
+      units.filter(unit => unit.grid).forEach((unit) => {
         const unitItems = published.filter((item) => Number(item.unit) === unit.number).sort((a, b) => (a.order || 999) - (b.order || 999) || a.title.localeCompare(b.title));
         unit.grid.innerHTML = unitItems.map(card).join("");
         unit.count.textContent = `${unitItems.length} ${unitItems.length === 1 ? "activity" : "activities"}`;
@@ -74,7 +75,7 @@
       activeUnitTotal.textContent = String(new Set(published.map((item) => Number(item.unit)).filter((number) => units.some((unit) => unit.number === number))).size);
       update();
     } catch (_) {
-      units.forEach((unit) => { unit.grid.innerHTML = '<p class="ie2-lab-empty">The activity catalog could not be loaded. Refresh the page to try again.</p>'; });
+      units.filter(unit => unit.grid).forEach((unit) => { unit.grid.innerHTML = '<p class="ie2-lab-empty">The activity catalog could not be loaded. Refresh the page to try again.</p>'; });
       resultCount.textContent = "Catalog unavailable";
     }
   }
@@ -86,5 +87,7 @@
     filters.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
     update();
   }));
+  function openUnitHash() { const node = document.getElementById(location.hash.slice(1)); if (node && node.matches("details.ie2-lab-folder")) node.open = true; }
+  window.addEventListener("hashchange", openUnitHash); openUnitHash();
   load();
 }());

@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "11-puzzle",
+    "prompt": "Use case: photorealistic-natural. Asset type: landscape 3:2 adult English classroom picture-discussion photo, clear on a television. Natural editorial photography, realistic people, anatomy and hands, soft daylight, visible actions and objects. Subtle expressions permitting different interpretations. No text, captions, readable writing, logos, watermark, collage or exaggerated emotions. Four adult classmates sit around a table fitting pieces of a colorful geometric wooden puzzle together. One turns a piece, another studies the pattern, one smiles and one pauses to think. Pieces and their hands are clearly visible. Bright modern community classroom.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-9ec9b982-122c-4914-9dc3-d3e4035f21ff.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/11-puzzle.webp"
+  },
+  {
+    "slug": "12-support",
+    "prompt": "Use case: photorealistic-natural. Asset type: landscape 3:2 adult English classroom picture-discussion photo, clear on a television. Natural editorial photography, realistic people, anatomy and hands, soft daylight, visible actions and objects. Subtle expressions permitting different interpretations. No text, captions, readable writing, logos, watermark, collage or exaggerated emotions. Two adult friends sit on a bench outside a sports center. One looks down at a sports bag with slightly slumped shoulders; the other sits nearby leaning attentively toward the friend and offering a bottle of water. Suggest a supportive moment after a difficult day, but leave the reason unknown. Medium-wide framing includes faces and visible bag.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-96f1895e-68ed-4b99-b0b3-946b90a1c64c.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/12-support.webp"
+  },
+  {
+    "slug": "13-gathering",
+    "prompt": "Use case: photorealistic-natural. Landscape 3:2 adult English teaching discussion photograph. Natural editorial photography with realistic anatomy, subtle expressions, clear scene clues, soft daylight. No text, readable writing, logos, watermarks or split panels. Four adult friends preparing a small celebration in a community room. One holds a string of simple colored decorations, two arrange cups and a small cake, another has just entered carrying a bag. People exchange restrained smiles, but not everyone has the same expression. The reason for the occasion remains ambiguous. Include the table and faces clearly.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-33f4d0d3-2cbc-4a21-9c12-416a0b40d685.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/13-gathering.webp"
+  },
+  {
+    "slug": "14-cup",
+    "prompt": "Use case: photorealistic-natural. Landscape 3:2 adult English teaching discussion photograph. Natural editorial photography with realistic anatomy, subtle expressions, clear scene clues, soft daylight. No text, readable writing, logos, watermarks or split panels. An adult man at a kitchen table holding a warm mug with both hands. A box of tissues and two used tissues sit on the table, a soft cardigan rests on the chair. He has a subdued thoughtful expression and slightly lowered eyelids. No medicines, medical symbols, thermometer or diagnosis. The scene could suggest tiredness, a cold or a quiet break. Medium wide framing, realistic warm daylight.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-c20161f7-8601-4c03-8bde-4a1543e04d29.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/14-cup.webp"
+  },
+  {
+    "slug": "15-project",
+    "prompt": "Use case: photorealistic-natural. Landscape 3:2 editorial photo for adult English students discussing impressions on a television. Realistic anatomy, candid subtle expressions, soft daylight, clearly visible faces, actions and objects. No writing, text, labels, branding, watermark or collage. Two adult classmates of different genders at a community art table collaborate on a colorful paper-and-cardboard architectural model. One holds two pieces while the other offers tape, both looking at the project; one smiles slightly, the other concentrates. A few materials lie neatly nearby. The entire model and both people are visible.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-b4c53ea5-799e-498c-a410-eaf735053059.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/15-project.webp"
+  },
+  {
+    "slug": "16-learning",
+    "prompt": "Use case: photorealistic-natural. Landscape 3:2 editorial photo for adult English students discussing impressions on a television. Realistic anatomy, candid subtle expressions, soft daylight, clearly visible faces, actions and objects. No writing, text, labels, branding, watermark or collage. An older adult woman patiently demonstrates how to shape a small clay bowl on a table while a younger adult man watches closely and tries with his own clay. Friendly community craft workshop, simple aprons, attentive body language, hands realistically visible. Avoid any written signs. A viewer can interpret interest, uncertainty or admiration.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-a473b7b0-7983-4dd9-980a-9e7f80bad585.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/16-learning.webp"
+  },
+  {
+    "slug": "17-space",
+    "prompt": "Use case: photorealistic-natural. Landscape 3:2 candid editorial photo, adult English lesson projected on TV, realistic anatomy and subtle expressions, bright natural light, complete scene context. No text, readable writing, brand, logo or watermark. At a classroom table with four adults, one standing adult gently pulls out an empty chair and gestures invitingly toward a fifth adult arriving with a notebook, while the seated group turns to notice. Quiet inclusive moment, no aggression or theatrical bullying. The newcomer appears unsure but attentive. Clearly show the invitation gesture, empty chair and different expressions, leaving room to describe welcome, support or an ordinary seating arrangement.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-e3f2d286-4b4a-4802-9f95-4f608025b263.png",
+    "edit": "Removed all writing from screen and board, preserving people and scene.",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/17-space.webp",
+    "editPrompt": "Edit this classroom discussion photograph only to remove every letter, word and number from the wall screen and whiteboard. Make the wall screen show a simple abstract blue geometric pattern without any text and leave the whiteboard blank. Preserve the people, gestures, empty chair, room, camera, colors, anatomy and photographic style exactly. No new text, captions or logos."
+  },
+  {
+    "slug": "19-door",
+    "prompt": "Use case: photorealistic-natural. Landscape 3:2 candid editorial photo, adult English lesson projected on TV, realistic anatomy and subtle expressions, bright natural light, complete scene context. No text, readable writing, brand, logo or watermark. An adult woman stands near a closed classroom door holding a folder against her body. Two empty waiting chairs and a plain unlabelled door are clearly visible. Her shoulders are slightly raised and she pauses as if taking a breath, with a thoughtful expression. She could be preparing for an interview, a presentation or an appointment. Wide enough to show the folder, posture, chairs and door; no room numbers or writing.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-6cc6aa89-9337-4b2e-8d6a-8e0329d7e67f.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/19-door.webp"
+  },
+  {
+    "slug": "20-help",
+    "prompt": "Use case: photorealistic-natural. Asset type: horizontal classroom discussion photograph for adult English students, to be projected on a TV. Scene: Three adult classmates in a bright community classroom gently help a fourth adult gather colored pencils, loose blank sheets and a closed notebook accidentally dropped beside a table. One person crouches to collect pencils, another offers the notebook, the fourth has a small uncertain smile. Make expressions subtle enough for more than one interpretation (embarrassment, gratitude, friendliness, concentration). Natural editorial photography, realistic anatomy and hands, clear visible actions and complete people framed in a landscape 3:2 image, soft daylight, visually consistent with modern adult education photos. No written words, numbers, logos, captions, watermark, exaggerated expressions or split panels.",
+    "path": "C:\\Users\\USER\\.codex\\generated_images\\01a08eab-7836-7f33-bfff-8ed3e81ea6cf\\exec-34dd50fe-0155-4b12-a740-0b568c8fe9d0.png",
+    "asset": "assets/img/english-intermediate-2/unit-5/many-impressions/20-help.webp"
+  }
+]

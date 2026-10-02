@@ -1,0 +1,492 @@
+{
+  "activityId": "intermediate2Unit4MovieReviewPronunciation",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "provider": "elevenlabs",
+  "items": [
+    {
+      "file": "section-1.mp3",
+      "text": "Have you ever seen this science fiction movie? I've already watched the original, but I haven't seen the sequel yet.",
+      "kind": "section",
+      "bytes": 99936,
+      "sha256": "f3d14c0685aa576a186f613130cbf7fbb9bb23eefe90cd3da0fb73006c20cb4c"
+    },
+    {
+      "file": "section-2.mp3",
+      "text": "The plot is gripping because the characters face a difficult choice. Although the ending is predictable, the acting is convincing.",
+      "kind": "section",
+      "bytes": 122924,
+      "sha256": "e0b77e2fb5712f9814fa12c9f88d0552e2fc1b2816f835cc6cbd60b565824192"
+    },
+    {
+      "file": "section-3.mp3",
+      "text": "The band has just released a catchy soundtrack. The music brings the characters to life and makes the story memorable.",
+      "kind": "section",
+      "bytes": 102862,
+      "sha256": "ac9b18b1c547bd6b1e74f22d3eb4f4e120f46999bbdc0da436024fe25fb01739"
+    },
+    {
+      "file": "section-4.mp3",
+      "text": "If you're looking for a great movie, check it out. It kept me on the edge of my seat.",
+      "kind": "section",
+      "bytes": 75276,
+      "sha256": "97edfa85580fb6db30251239c0db4677c82a9a089cbfce0d59860d6a8a506c69"
+    },
+    {
+      "file": "make-your-movie-review-clear-model-us.mp3",
+      "text": "Have you ever seen this science fiction movie? I've already watched the original, but I haven't seen the sequel yet. The plot is gripping because the characters face a difficult choice. Although the ending is predictable, the acting is convincing. The band has just released a catchy soundtrack. The music brings the characters to life and makes the story memorable. If you're looking for a great movie, check it out. It kept me on the edge of my seat.",
+      "kind": "section",
+      "bytes": 405882,
+      "sha256": "ee18a50397b5e060e56c9a559d6a297d32af1526e10650ef84459ee4e3223659"
+    },
+    {
+      "file": "words/a.mp3",
+      "text": "a",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/a.mp3",
+      "sha256": "eb1b49c61ebec89bbebcc64abbc5d3cd8892a84172424c46071fc60dfad64831",
+      "bytes": 9239
+    },
+    {
+      "file": "words/acting.mp3",
+      "text": "acting",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "6b197a29b77ebd2f77ea3c95710093b63cc213de5822014d1a8f01740fa967b9"
+    },
+    {
+      "file": "words/already.mp3",
+      "text": "already",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "00c6be382418aab0e1da7bf3274836c9e4f4ed1790d867575cb584c2f630d043"
+    },
+    {
+      "file": "words/although.mp3",
+      "text": "although",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "8e4e4e205224ab287a74f40a249369bb87a6f00171ac028e55e54139469af9f2"
+    },
+    {
+      "file": "words/and.mp3",
+      "text": "and",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/and.mp3",
+      "sha256": "f442f1593865eb45e3e5e61a1d58d0cb759ed4aaf8570428bbe7f84348f4fcd8",
+      "bytes": 10075
+    },
+    {
+      "file": "words/band.mp3",
+      "text": "band",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/music-word-band.mp3",
+      "sha256": "057d889957391779bcd799018be234cd143c319961975383020314e226c08961",
+      "bytes": 13000
+    },
+    {
+      "file": "words/because.mp3",
+      "text": "because",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "48af3a7a6cfd000bc34b960ebd45544aefc5530ed84d17ac7aa82ef4ad9d4082"
+    },
+    {
+      "file": "words/brings.mp3",
+      "text": "brings",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "578476e217d94ee8fc034a8ea604f1479f2a02e36a2c99ff307014ecb67c9dfc"
+    },
+    {
+      "file": "words/but.mp3",
+      "text": "but",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-2-intermediate2/words/but.mp3",
+      "sha256": "7898f09f5fd846f3832086a36d7e84b22d64b3f093827ae7410a7a7d4267604b",
+      "bytes": 8403
+    },
+    {
+      "file": "words/catchy.mp3",
+      "text": "catchy",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/opinion-catchy.mp3",
+      "sha256": "1603eea01b171e5b04845f959df26027f66bf439f37be16ec00941b8dde59bca",
+      "bytes": 13000
+    },
+    {
+      "file": "words/characters.mp3",
+      "text": "characters",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "f36ff3137f39983736e0482f484eea6232eeca76971992a621d2b2508471cf6f"
+    },
+    {
+      "file": "words/check.mp3",
+      "text": "check",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "89fc3495d398855b060cea8e7d88a6a783b45f5f657cfc079f0d9441ad818a8a"
+    },
+    {
+      "file": "words/choice.mp3",
+      "text": "choice",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "e152e66ecaca449b6e780f6fa1268f733229e3988dbce2a1c2d8ccf974920d1a"
+    },
+    {
+      "file": "words/convincing.mp3",
+      "text": "convincing",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/opinion-convincing.mp3",
+      "sha256": "ef26acabffdbf128d192070198de6ad9a6b33d8cf89734160adba27e20723ec1",
+      "bytes": 16762
+    },
+    {
+      "file": "words/difficult.mp3",
+      "text": "difficult",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "072ade94c16fb3818bc1f98a587de75b201926ec4731bae7d8e442886dee797e"
+    },
+    {
+      "file": "words/edge.mp3",
+      "text": "edge",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "4db7e4eccf612f0bf9d9aa5271c2be09860966806575d4992b1b97dab7739b0d"
+    },
+    {
+      "file": "words/ending.mp3",
+      "text": "ending",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/vocab-ending.mp3",
+      "sha256": "d87c783f3404b1f72cb98ce954b7a94628c421ca979a019b8f6a7cfa267c56b2",
+      "bytes": 14254
+    },
+    {
+      "file": "words/ever.mp3",
+      "text": "ever",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "8e1ee8c385610c94841b160f8b1d3d2b1c860f870ebab03c03e26419f07ec128"
+    },
+    {
+      "file": "words/face.mp3",
+      "text": "face",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "7a068ed0a3da7353c3e9b33e5ef3705edef9d0881451f5f1c918ad0622339008"
+    },
+    {
+      "file": "words/fiction.mp3",
+      "text": "fiction",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "a1749e500860c146b2d6d46ee2fcfb7bca0a821c9d5bdb14853836464e23eb45"
+    },
+    {
+      "file": "words/for.mp3",
+      "text": "for",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/for.mp3",
+      "sha256": "fe8a2f05e5dcb7beef70427a361adb530c7c5d041045390e7e68bc475d1170f7",
+      "bytes": 9239
+    },
+    {
+      "file": "words/great.mp3",
+      "text": "great",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "10cd28905b49dcec6f1ba8d31e1d339161610a034138a4180411e2d97874346d"
+    },
+    {
+      "file": "words/gripping.mp3",
+      "text": "gripping",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/opinion-gripping.mp3",
+      "sha256": "7f11e209e4df13603b67e1402e125bf37e9482a50ae919e5651f45fe5f527fad",
+      "bytes": 13000
+    },
+    {
+      "file": "words/has.mp3",
+      "text": "has",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "964bacb6df698220c0898481f633000cf60422882b479535629fac6f907317d0"
+    },
+    {
+      "file": "words/have.mp3",
+      "text": "have",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "a5b50b8e4cbc5c47f6096717e2cfb10e86014a5b1b1b35349df934e70b54d9e2"
+    },
+    {
+      "file": "words/havent.mp3",
+      "text": "haven't",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "86a98ab2ba7b6ba46c04922064abb1ca70797d88cae5f15cba7f4016999aa875"
+    },
+    {
+      "file": "words/i.mp3",
+      "text": "i",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/i.mp3",
+      "sha256": "89976398de51dbc3305f82886bb2be3e63b96de9cd4b9deeeab71d959e59317b",
+      "bytes": 7567
+    },
+    {
+      "file": "words/ive.mp3",
+      "text": "i've",
+      "kind": "word",
+      "bytes": 9239,
+      "sha256": "c38b03ab0d4c1e0e8a6990f511d455bc707b051d4bca730f9b9f6f5a6ed50fb8"
+    },
+    {
+      "file": "words/if.mp3",
+      "text": "if",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/if.mp3",
+      "sha256": "94808dbb14a9a5ff24e31c4e7cf30a4227a53167aa499abc5867afd3c81701d4",
+      "bytes": 9239
+    },
+    {
+      "file": "words/is.mp3",
+      "text": "is",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/is.mp3",
+      "sha256": "f6883331fd7ac608e0af14e00a84ce8fa51561e7ee13847dcbe803fdb815c314",
+      "bytes": 10075
+    },
+    {
+      "file": "words/it.mp3",
+      "text": "it",
+      "kind": "word",
+      "bytes": 8403,
+      "sha256": "a8cc05394bc6d737f75af9878789f906139beae2e81fba177b5d187fa27433fa"
+    },
+    {
+      "file": "words/just.mp3",
+      "text": "just",
+      "kind": "word",
+      "bytes": 10911,
+      "sha256": "4591212b0f58b8fba5293b6d0dd3ec7cd276e1196b011cc6592b018b867eb859"
+    },
+    {
+      "file": "words/kept.mp3",
+      "text": "kept",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "f8bed7fb9955985e6295269ae30f0b33e100eed85de98821fa1a19300e35ec29"
+    },
+    {
+      "file": "words/life.mp3",
+      "text": "life",
+      "kind": "word",
+      "bytes": 13000,
+      "sha256": "517afa72c3444cb6c3d8c68a0db9f4fc8fb6312e87954a54dc000eb5e08f4ba7"
+    },
+    {
+      "file": "words/looking.mp3",
+      "text": "looking",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "2571376ace2d947159cd568eb133f99a41bcc7e43025f52fd701d626c811e090"
+    },
+    {
+      "file": "words/makes.mp3",
+      "text": "makes",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "d7e2c4aff987108a0c61548e376bd8785346725bf64a4b48089589a2d591c88a"
+    },
+    {
+      "file": "words/me.mp3",
+      "text": "me",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/me.mp3",
+      "sha256": "f7b09b040a4f87cd7da9e3204b559128c9ec169a9940927cae1e4d868e915a73",
+      "bytes": 9239
+    },
+    {
+      "file": "words/memorable.mp3",
+      "text": "memorable",
+      "kind": "word",
+      "bytes": 15090,
+      "sha256": "75a5ca1aa2f62ceef6979c25f099956d0b7a9d69e592f828980c59e719c517f9"
+    },
+    {
+      "file": "words/movie.mp3",
+      "text": "movie",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "27c171361c80622437f4a03fe04e5abbdbbe4b6e71270f07fc53b6bd037e8cc1"
+    },
+    {
+      "file": "words/music.mp3",
+      "text": "music",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "69f1db2b4114ebf1c19c9b7f69334793bc84a2363017ddd4dda1750d2beffc0d"
+    },
+    {
+      "file": "words/my.mp3",
+      "text": "my",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/my.mp3",
+      "sha256": "fb4fd4f7cecb88730f8e9ca07c30cfb71347419c594e402a0ab31509d76fcef1",
+      "bytes": 11328
+    },
+    {
+      "file": "words/of.mp3",
+      "text": "of",
+      "kind": "word",
+      "bytes": 10911,
+      "sha256": "afa6541e2a818d2cada90adc816e9a9942a7e962458a4e56e3659d253de36913"
+    },
+    {
+      "file": "words/on.mp3",
+      "text": "on",
+      "kind": "word",
+      "bytes": 10075,
+      "sha256": "a41ffb2f437b97085d2bef1db9b3e27bfac5af3a2f09a03bcc15dbcceebaafd5"
+    },
+    {
+      "file": "words/original.mp3",
+      "text": "original",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "c0e2ccd71d3717826b4d3a27f048bd0fcf5cfd60603ea4c9863e435661db578c"
+    },
+    {
+      "file": "words/out.mp3",
+      "text": "out",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-2-intermediate2/words/out.mp3",
+      "sha256": "1ee3545749d3866442caa749f167ae6c3654092e6630e9d7a4acfad3c03681b7",
+      "bytes": 10911
+    },
+    {
+      "file": "words/plot.mp3",
+      "text": "plot",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/vocab-plot.mp3",
+      "sha256": "a4fd1b30a88b78caeafa9474cec75a023e674a27eb2d502958a54cc55c48d0b7",
+      "bytes": 11328
+    },
+    {
+      "file": "words/predictable.mp3",
+      "text": "predictable",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/opinion-predictable.mp3",
+      "sha256": "7523561e766b8ca2ced9c37a04908aeead1c2d3035e85a9365f62681d3607534",
+      "bytes": 15090
+    },
+    {
+      "file": "words/released.mp3",
+      "text": "released",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "80b073724fd9a9e44646c543d5d08bb0fc880a1c5b9c0c9ede6d8f48de9964da"
+    },
+    {
+      "file": "words/science.mp3",
+      "text": "science",
+      "kind": "word",
+      "bytes": 15926,
+      "sha256": "73d6222282cb9b3e81ab9f454caf150f19e5c8ea80886db070d8bf7cb06b553f"
+    },
+    {
+      "file": "words/seat.mp3",
+      "text": "seat",
+      "kind": "word",
+      "bytes": 14254,
+      "sha256": "a6f7de48abe061174685b3ffc1ee7b0d0e55510a860a265b62f5f028965b0da1"
+    },
+    {
+      "file": "words/seen.mp3",
+      "text": "seen",
+      "kind": "word",
+      "bytes": 12164,
+      "sha256": "0a5f9cab378132ca12558ef408d3e46c9036482732f2186d4c83e1161d518f5d"
+    },
+    {
+      "file": "words/sequel.mp3",
+      "text": "sequel",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/word-sequel.mp3",
+      "sha256": "c17dd2501d69bb38bd40fe8c75453c25be3c6619e3c6882c7318908e9a99be0e",
+      "bytes": 15926
+    },
+    {
+      "file": "words/soundtrack.mp3",
+      "text": "soundtrack",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/unit-4-explanation/vocab-soundtrack.mp3",
+      "sha256": "257e0a5028f48bd4990c46a8c075fbf57276e29a13f6fb0501b2b64b1db73337",
+      "bytes": 15926
+    },
+    {
+      "file": "words/story.mp3",
+      "text": "story",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "02e4aaee5366560158439fb9c8a4ee15a91fd73c03eecc60388feb6f445d7505"
+    },
+    {
+      "file": "words/the.mp3",
+      "text": "the",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/the.mp3",
+      "sha256": "d32652fec019b868052bb6ce5f6770fad9ee57ff4c6aff257ffebb65f4decbe8",
+      "bytes": 10911
+    },
+    {
+      "file": "words/this.mp3",
+      "text": "this",
+      "kind": "word",
+      "bytes": 10911,
+      "sha256": "2200653545bd3ccbc4b8145f480b95fac4bd5113eb30c238297e9fbd0214d27e"
+    },
+    {
+      "file": "words/to.mp3",
+      "text": "to",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/to.mp3",
+      "sha256": "44eedf0b1fa2cfed8c0f6ca2c7e86198a52170f3f1aa042e0b2564766ec4b299",
+      "bytes": 11328
+    },
+    {
+      "file": "words/watched.mp3",
+      "text": "watched",
+      "kind": "word",
+      "bytes": 13836,
+      "sha256": "66cb79fe6f7831f72a04109c98c99ab1da022834b2583345c6cf6db501ea0144"
+    },
+    {
+      "file": "words/yet.mp3",
+      "text": "yet",
+      "kind": "word",
+      "bytes": 9239,
+      "sha256": "7ed39b2f4893647e3422c40a54c8a42abf979658c2ea760e88d5ab97b3631fb4"
+    },
+    {
+      "file": "words/you.mp3",
+      "text": "you",
+      "kind": "word",
+      "reusedFrom": "ingles/intermediate-2/audio/pronunciation/unit-3-intermediate2/words/you.mp3",
+      "sha256": "1e990fd218f843faa48d06cc3d2a692b17f95b4727b53946db7698254366a636",
+      "bytes": 10075
+    },
+    {
+      "file": "words/youre.mp3",
+      "text": "you're",
+      "kind": "word",
+      "bytes": 11328,
+      "sha256": "dea656fdb36ab8a04f106e60036826346fbc8737cd03262349cf618b05533f14"
+    }
+  ]
+}

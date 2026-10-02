@@ -1,0 +1,219 @@
+[
+  {
+    "file": "e6974d4a1ace97.mp3",
+    "expected": "What can you see?",
+    "heard": "What can you see?",
+    "matched": true,
+    "sha256": "289c747271aaf7029c79c8b7d1bcfb0b4ff18fcc8bf38c2b707ff0b312da22ed"
+  },
+  {
+    "file": "ad120d2ced45cc.mp3",
+    "expected": "What could be happening?",
+    "heard": "What could be happening?",
+    "matched": true,
+    "sha256": "b6ca4e8ae43115a02253d03eb041ba20be0a637508af109a13170c5742410340"
+  },
+  {
+    "file": "4d07e87040a717.mp3",
+    "expected": "What clue supports your idea?",
+    "heard": "What clue supports your idea?",
+    "matched": true,
+    "sha256": "9c07c01c6aaa94ca6c9c14bf90b702c0bb5ab3020572e11ffefe66bc2b9fc708"
+  },
+  {
+    "file": "e03f97be227f67.mp3",
+    "expected": "What does your partner think? How do you respond?",
+    "heard": "What does your partner think? How do you respond?",
+    "matched": true,
+    "sha256": "ed1a57bb91faac831d50eac91989a07ffe1777c404b17301192b9156687d5779"
+  },
+  {
+    "file": "7b82ad581b009b.mp3",
+    "expected": "I can see",
+    "heard": "I can see",
+    "matched": true,
+    "sha256": "709f3fb6a04817437889a2a3c991f33e7d7b133203db2c3637dc1698b3dc88b2"
+  },
+  {
+    "file": "d4585b8811549d.mp3",
+    "expected": "She is holding",
+    "heard": "She is holding",
+    "matched": true,
+    "sha256": "a175f5e3865d6848aa67daf11e90a241733e9124ea471e837cd1c7d433cc5351"
+  },
+  {
+    "file": "ed766c2528fa7e.mp3",
+    "expected": "She might be",
+    "heard": "She might be",
+    "matched": true,
+    "sha256": "758fad4bed1527522fb37ad10e430f1178642ffae6dd3ae9d7bd0eb052088b58"
+  },
+  {
+    "file": "d594c2beccc613.mp3",
+    "expected": "He seems",
+    "heard": "He seems",
+    "matched": true,
+    "sha256": "98d52ddee6b9f1ec7002bbc5bb0834d88900281d4cd1bbbd9a61cd2ff305a202"
+  },
+  {
+    "file": "df0644bdb07be5.mp3",
+    "expected": "I think this because",
+    "heard": "I think this because",
+    "matched": true,
+    "sha256": "32f4d97fcbb0db9df29679681e07ac3e93aaa1ba2af0aba9dc3798d68c4b05fd"
+  },
+  {
+    "file": "33622be0d37847.mp3",
+    "expected": "The picture suggests that",
+    "heard": "The picture suggests that",
+    "matched": true,
+    "sha256": "5f8e49eacc2220d28739ae90af0d0f5e22e895f16319768af980b5b4d5008fd7"
+  },
+  {
+    "file": "2742220e1bb94b.mp3",
+    "expected": "That’s possible, but",
+    "heard": "That's possible, but",
+    "matched": true,
+    "sha256": "ec89f15eb518f4411f8d7811e2dd9220c7f403a52f839ba1dd48e935cea50249"
+  },
+  {
+    "file": "e026a20bafe796.mp3",
+    "expected": "I agree because",
+    "heard": "I agree because",
+    "matched": true,
+    "sha256": "c3d74f5095bd40e2892a3fbea8669ac55d9ec0b868eacfcb7b8bd9115dbe5044"
+  },
+  {
+    "file": "ddf2d7abcb7e97.mp3",
+    "expected": "They are standing",
+    "heard": "They are standing",
+    "matched": true,
+    "sha256": "d90b2e3779a17530a62be6bb51918f8f9f4cc267b889758f261b3c47a092c215"
+  },
+  {
+    "file": "30a26f75233def.mp3",
+    "expected": "I think",
+    "heard": "I think",
+    "matched": true,
+    "sha256": "253ae4c337799ea75244680d7a8e409be47137b07b2883773393d1affea6a4e4"
+  },
+  {
+    "file": "4386fc4f7feb77.mp3",
+    "expected": "Another explanation could be",
+    "heard": "Another explanation could be",
+    "matched": true,
+    "sha256": "ad972532a9c21b65c3b463b638d3e8c92fd1dc2af511ca3ebebdac9837afd64c"
+  },
+  {
+    "file": "55356b40b80aa2.mp3",
+    "expected": "Although",
+    "heard": "Although",
+    "matched": true,
+    "sha256": "b398abf8bbe48776bcf962140fd661a293a297689aaf44be41271e21bca83994"
+  },
+  {
+    "file": "81ac0e30e4c51a.mp3",
+    "expected": "It could be",
+    "heard": "It could be",
+    "matched": true,
+    "sha256": "a03396e8b02829f2c33283e747c43da66888fe797021e65a068b453d4d0cb556"
+  },
+  {
+    "file": "d2a4b68599966c.mp3",
+    "expected": "He must be",
+    "heard": "He must be",
+    "matched": true,
+    "sha256": "3131fcf39e5db490ba88bbd76571d2ac3a4d261e0db5b5ebdfc0d888892d717b"
+  },
+  {
+    "file": "6e709a25078590.mp3",
+    "expected": "That can’t be",
+    "heard": "That can't be",
+    "matched": true,
+    "sha256": "336ef6801eaaf0a8b7235465be5cd718eed946abcd7ad1570ab59609c5e8b63c"
+  },
+  {
+    "file": "80cfa3e7f28dde.mp3",
+    "expected": "waiting",
+    "heard": "waiting",
+    "matched": true,
+    "sha256": "c692ea2ae6ff6257ff60d2c934bf4184f2d1f2101f1afa325678621710cf91b8"
+  },
+  {
+    "file": "c4bdf4d61903b7.mp3",
+    "expected": "wondering",
+    "heard": "wondering",
+    "matched": true,
+    "sha256": "129a775e00776587300b84a1cfd35501ae0f7e3c88bf8b38173a430d122f12c7"
+  },
+  {
+    "file": "0d1d9cf3bd5490.mp3",
+    "expected": "expecting",
+    "heard": "Expecting",
+    "matched": true,
+    "sha256": "cc8a262692083cdea73e0dc6dcaa38791f8db6e989e7292401df27612e04227a"
+  },
+  {
+    "file": "b73197aa729108.mp3",
+    "expected": "concentrating",
+    "heard": "Concentrating",
+    "matched": true,
+    "sha256": "f3d20480add07061fdc84192dcadf70150bf0956866d5926cab3c9a27ae4a58d"
+  },
+  {
+    "file": "63c6ce2675dc8f.mp3",
+    "expected": "thoughtful",
+    "heard": "thoughtful",
+    "matched": true,
+    "sha256": "536dcd23cc17f59361ba49848db11d83d5447564ce3d9f2d7b2320c26556fa68"
+  },
+  {
+    "file": "8678e47531eae3.mp3",
+    "expected": "helpful",
+    "heard": "Helpful",
+    "matched": true,
+    "sha256": "bcf42e0647730e4fec7b1e8711b449e58f91f1a32cca65de91d4e44af75b0399"
+  },
+  {
+    "file": "94fe812e9549a3.mp3",
+    "expected": "organized",
+    "heard": "organized",
+    "matched": true,
+    "sha256": "bd9844548d4c26156e354560b2113c7b101bcdaf2bdb71dd55a4dbafe17c685b"
+  },
+  {
+    "file": "bcf7690127d5b0.mp3",
+    "expected": "unexpected",
+    "heard": "Unexpected",
+    "matched": true,
+    "sha256": "e836e9f96c6069af27c3bc031d53ddbd6573cf0eeee9f0846a2144ad62ff49b6"
+  },
+  {
+    "file": "908c8cca2e39e2.mp3",
+    "expected": "welcoming",
+    "heard": "Welcoming",
+    "matched": true,
+    "sha256": "e660c8e0a8b1a27f0e2f29c9545b6a35de64e566095d193375251957e60e211f"
+  },
+  {
+    "file": "ff0c6b4a5a0713.mp3",
+    "expected": "I can see two drinks and an empty chair. She might be waiting for a friend because there are two cups.",
+    "heard": "I can see two drinks and an empty chair. She might be waiting for a friend because there are two cups.",
+    "matched": true,
+    "sha256": "f67f0b5667234b9c157936c4e24185be4d2695940b1d278203764c7736d4d07d"
+  },
+  {
+    "file": "807de4a9b1e759.mp3",
+    "expected": "That’s possible, but her friend might be ordering some food.",
+    "heard": "That's possible, but her friend might be ordering some food.",
+    "matched": true,
+    "sha256": "553b037daee78f485b67ba786b92fd1833a325b2a2261e55b1445dfa7b0e5147"
+  },
+  {
+    "file": "1f94b3615f5e04.mp3",
+    "expected": "I agree. The empty chair doesn’t mean her friend hasn’t arrived.",
+    "heard": "I agree. The empty chair doesn't mean her friend hasn't arrived.",
+    "matched": true,
+    "sha256": "dbd16d2654ec7608ff9a4e0ddc57b483e498cae7581b5824928231728ce5fab3"
+  }
+]

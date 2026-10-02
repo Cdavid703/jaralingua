@@ -1,0 +1,15 @@
+{
+  "expected": "Maya, are we ready for the community food collection? Look at Alex by the door. He is sitting alone with a notebook. He looks bored. He might simply be concentrating. Being quiet does not always mean someone is bored. That is possible, but he has not spoken to anyone. Do you know him? Yes. This is his first time volunteering. He told me he is checking the guest list and trying to learn everyone’s names. Oh, that changes my impression. And you must be tired. You have been working since six this morning. A little. At first, I felt confused because the instructions were confusing. But we organized the supplies together, so I feel calmer now. What about that poster? It says, Coffee cups demand a holiday. That can’t be a real news report. It is satire. Cups cannot ask for holidays. The joke exaggerates how busy we have been preparing everything. I see. The poster is funny, although the work is tiring. Shall I invite Alex to help us with the boxes? Good idea. A friendly question can help break the ice. Ask him what he enjoys doing. I will. I thought he was not interested, but now I want to hear his story. Exactly. Notice the clues, consider another explanation, and talk to the person before you decide.",
+  "heard": "Maya, are we ready for the community food collection? Look at Alex by the door. He is sitting alone with a notebook. He looks bored He might simply be concentrating. Being quiet does not always mean someone is bored That is possible, but he has not spoken to anyone. Do you know him? Yes. This is his first time volunteering. He told me he is checking the guest list and trying to learn everyone's names Oh, that changes my impression. And you must be tired. You have been working since 6:00 this morning A little. At first, I felt confused because the instructions were confusing, but we organized the supplies together, so I feel calmer now What about that poster? It says, \"Coffee cups demand a holiday.\" That can't be a real news report It is satire. Cups cannot ask for holidays. The joke exaggerates how busy we have been preparing everything I see. The poster is funny, although the work is tiring. Shall I invite Alex to help us with the boxes? Good idea. A friendly question can help break the ice. Ask him what he enjoys doing I will. I thought he was not interested, but now I wanna hear his story Exactly. Notice the clues, consider another explanation, and talk to the person before you decide",
+  "matched": false,
+  "durationSeconds": 84.04,
+  "sha256": "91564d8b686545902a63ed94d69335ec19647bb179b0542f5b44c1beb85c3f2d",
+  "bytes": 1345036,
+  "approvedEquivalences": [
+    "Scribe writes six as 6:00.",
+    "Natural reduction of want to transcribed as wanna.",
+    "Capitalization and punctuation differences."
+  ],
+  "normalizedMeaningMatch": true,
+  "questionFactsCovered": 10
+}

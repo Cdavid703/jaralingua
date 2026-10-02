@@ -5,20 +5,50 @@
     {
       "id": "t",
       "sound": "/t/",
-      "rule": "After the voiceless sounds /p/, /k/, /f/, /s/, /ʃ/, and /tʃ/, pronounce -ed as /t/. Do not add an extra syllable.",
-      "tip": "The last SOUND of the base verb matters, not its last letter. For /t/ and /d/, use the /ɪd/ rule instead."
+      "soundName": "T",
+      "rule": "After the voiceless sounds P (/p/), K (/k/), F (/f/), S (/s/), SH (/ʃ/), and CH (/tʃ/), pronounce -ed as T (/t/). Do not add an extra syllable.",
+      "tip": "The last SOUND of the base verb matters, not its last letter: laugh ends in the F sound, although it is written gh. For T (/t/) and D (/d/), use the ID (/ɪd/) rule instead.",
+      "soundKey": [
+        {"label": "P (/p/)", "note": "Como la p de papá. Ejemplo en inglés: help."},
+        {"label": "K (/k/)", "note": "Como la c de casa, la k de kilo o la qu de queso. Ejemplo: work."},
+        {"label": "F (/f/)", "note": "Como la f de faro. Ejemplo: laugh; aquí gh suena como F."},
+        {"label": "S (/s/)", "note": "Como la s de sol. Ejemplo: dance."},
+        {"label": "SH (/ʃ/)", "note": "Como el sonido prolongado «shhh» al pedir silencio. No equivale a la s ni a la ch del español general. Ejemplo: wash."},
+        {"label": "CH (/tʃ/)", "note": "Parecido a la ch de chico. Ejemplo: watch. No es el mismo sonido que SH."}
+      ]
     },
     {
       "id": "d",
       "sound": "/d/",
-      "rule": "After a vowel sound or a voiced consonant sound other than /d/, pronounce -ed as /d/. Do not add an extra syllable.",
-      "tip": "Voiced sounds use vibration in your throat. Play ends in a vowel sound: played has one syllable."
+      "soundName": "D",
+      "rule": "Pronounce -ed as D (/d/) after any vowel sound or these consonant sounds: B (/b/), G (/g/), V (/v/), Z (/z/), M (/m/), N (/n/), NG (/ŋ/), L (/l/), R (/r/, American English), English J (/dʒ/), voiced TH (/ð/) and ZH (/ʒ/).",
+      "tip": "These are the final SOUNDS of the base verb, not fixed syllables or spelling endings. Do not add a syllable: play → played. Exception: base verbs ending in T (/t/) or D (/d/) take ID (/ɪd/): want → wanted; need → needed.",
+      "endingExamples": [
+        {"label": "Vowel sounds", "note": "play → played; stay → stayed; enjoy → enjoyed. The written y is part of the vowel sound."},
+        {"label": "M (/m/), N (/n/), L (/l/)", "note": "dream → dreamed; clean → cleaned; call → called."},
+        {"label": "B (/b/), G (/g/), R (/r/)", "note": "rub → rubbed; beg → begged; answer → answered (American English)."},
+        {"label": "V (/v/), Z (/z/)", "note": "love → loved; buzz → buzzed. The e in love is silent: the final sound is V."},
+        {"label": "NG (/ŋ/), English J (/dʒ/)", "note": "bang → banged; change → changed. English J is the sound in job, not the Spanish j."},
+        {"label": "Voiced TH (/ð/), ZH (/ʒ/)", "note": "breathe → breathed; massage → massaged. These less frequent endings also take D."}
+      ],
+      "soundKey": [
+        {"label": "D (/d/)", "note": "Como referencia inicial, piensa en la d de día; no es una equivalencia exacta. En played añade el sonido D, no una sílaba «de» ni «id»."},
+        {"label": "Voiced = sonoro", "note": "Las cuerdas vocales vibran, pero no necesitas adivinar: usa las terminaciones y ejemplos de la lista. Una vocal final también lleva D."},
+        {"label": "V (/v/) y Z (/z/)", "note": "V se hace con los dientes superiores y el labio inferior; no es la b española. Z es una s con voz, como en buzz, no la z española."},
+        {"label": "NG (/ŋ/) y J (/dʒ/)", "note": "NG es el sonido final de bang, sin añadir otra g. J es la j inglesa de job; no se pronuncia como la j de jamón."},
+        {"label": "TH (/ð/) y ZH (/ʒ/)", "note": "TH aquí es el sonido con voz de breathe, no el de think. ZH es el sonido central de vision; no equivale a la sh sin voz."}
+      ]
     },
     {
       "id": "id",
       "sound": "/ɪd/",
-      "rule": "When the base verb ends in the sound /t/ or /d/, pronounce -ed as /ɪd/. This adds one extra syllable.",
-      "tip": "Want → wanted (one → two syllables). Need → needed (one → two syllables). The ending has a short vowel, not a long “ee”."
+      "soundName": "ID",
+      "rule": "When the base verb ends in T (/t/) or D (/d/), pronounce -ed as ID (/ɪd/). This adds one extra syllable.",
+      "tip": "Want → wanted (one → two syllables). Need → needed (one → two syllables). The ending has a short vowel, not a long “ee”.",
+      "soundKey": [
+        {"label": "T (/t/) y D (/d/)", "note": "Piensa en la t de té y la d de día como aproximaciones. Identifica el sonido final del verbo base: want termina en T y need en D."},
+        {"label": "ID (/ɪd/)", "note": "El símbolo /ɪ/ representa una vocal inglesa corta, no exactamente la i española. Añade esa vocal y luego D: wanted, needed. Escucha los modelos para imitarla."}
+      ]
     }
   ],
   "stages": [

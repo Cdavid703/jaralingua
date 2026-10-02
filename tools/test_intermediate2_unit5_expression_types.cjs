@@ -1,0 +1,17 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const {chromium,webkit}=require('C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const host='https://www.jaralingua.com',lesson='/ingles/intermediate-2/unit-5-impressions-feelings-and-satire.html',library='/ingles/intermediate/idioms.html';
+const terms=JSON.parse(fs.readFileSync('assets/data/english-intermediate2-unit5-impressions.json','utf8')).expressions;
+(async()=>{const browser=await(process.env.WEBKIT?webkit:chromium).launch(process.env.WEBKIT?{headless:true}:{channel:'chrome',headless:true});try{
+ for(const width of [390,1440]){const page=await browser.newPage({viewport:{width,height:900}});const errors=[];page.on('pageerror',e=>errors.push(e.message));if(!process.env.LIVE)await page.route(host+'/**',async route=>{const p=new URL(route.request().url()).pathname;if(p!==lesson&&p!==library&&!p.includes('english-intermediate2-unit5-explanation.css'))return route.continue();const res=await route.fetch();return route.fulfill({response:res,body:fs.readFileSync(path.resolve('.'+p))});});
+ await page.goto(host+lesson+'#expressions',{waitUntil:'networkidle'});await page.locator('#expressions').evaluate(e=>e.open=true);
+ assert.equal(await page.locator('#expressions .u5-expression-type').count(),12);assert.equal(await page.locator('#expressions .u5-expression-type').evaluateAll(es=>es.filter(e=>e.textContent==='Phrasal verb').length),8);assert.equal(await page.locator('#expressions .u5-expression-type').evaluateAll(es=>es.filter(e=>e.textContent==='Idiom').length),4);
+ for(const [term,meta] of Object.entries(terms)){const card=page.locator('#expressions .u4-card').filter({has:page.locator('h3').filter({hasText:term})}).first();assert.equal(await card.locator('.u5-expression-type').textContent(),meta.kind);assert.equal(await card.locator('[lang="es"]').textContent(),meta.spanish);}
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
+ const grid=page.locator('#expressions .u5-grid').filter({has:page.locator('.u5-expression-type')});if(width===1440)assert.equal(await grid.evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),4);
+ await grid.scrollIntoViewIfNeeded();await page.screenshot({path:'tmp/unit5-impressions-tv/expression-types-'+(process.env.WEBKIT?'webkit':'chrome')+'-'+width+'.jpg'});
+ await page.goto(host+library,{waitUntil:'networkidle'});const names=await page.locator('.idiom-btn-title').allTextContents();assert.equal(names.filter(x=>/under the weather/i.test(x)).length,1);
+ for(const [term,meta] of Object.entries(terms)){await page.locator('.idiom-btn-title').getByText(term,{exact:true}).click();assert((await page.locator('.idiom-display-header .idiom-category').textContent()).startsWith(meta.kind));assert.equal(await page.locator('.meaning-box [lang="es"]').textContent(),meta.spanish);if(width===1440){await page.locator('#expression-title .expression-pronunciation').click();await page.waitForFunction(()=>expressionAudio&&expressionAudio.currentTime>0&&!expressionAudio.error&&(!expressionAudio.paused||expressionAudio.ended));}}
+ assert.deepEqual(errors,[]);console.log(process.env.WEBKIT?'webkit':'chrome',width,'PASS: twelve types, Spanish meanings, library consistency and pronunciation');await page.close();}
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});
+

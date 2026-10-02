@@ -1,0 +1,119 @@
+{
+  "questions": [
+    {
+      "prompt": "What event are Sam and Maya preparing for?",
+      "options": [
+        "A student film festival",
+        "A community food collection",
+        "A job interview"
+      ],
+      "answer": "b",
+      "evidence": "Sam asks whether they are ready for the community food collection."
+    },
+    {
+      "prompt": "What is Alex doing when Sam first notices him?",
+      "options": [
+        "Sitting alone with a notebook",
+        "Carrying boxes through the door",
+        "Talking to a group of guests"
+      ],
+      "answer": "a",
+      "evidence": "Sam describes Alex sitting alone with a notebook."
+    },
+    {
+      "prompt": "What is Sam’s first impression of Alex?",
+      "options": [
+        "He seems very experienced",
+        "He seems excited to meet everyone",
+        "He looks bored and uninterested"
+      ],
+      "answer": "c",
+      "evidence": "Sam says Alex looks bored. Later, he admits that he thought Alex was not interested."
+    },
+    {
+      "prompt": "What alternative explanation does Maya suggest?",
+      "options": [
+        "Alex might be concentrating",
+        "Alex must be angry with Sam",
+        "Alex cannot understand the instructions"
+      ],
+      "answer": "a",
+      "evidence": "Maya says he might simply be concentrating. She does not treat his silence as proof of boredom."
+    },
+    {
+      "prompt": "What does Maya explain about Alex’s notebook?",
+      "options": [
+        "He is writing a complaint about the event",
+        "He is drawing a poster for the door",
+        "He is checking the guest list and learning names"
+      ],
+      "answer": "c",
+      "evidence": "Maya explains that Alex is checking the guest list and trying to learn everyone’s names."
+    },
+    {
+      "prompt": "Why does Sam think Maya must be tired?",
+      "options": [
+        "She says she did not sleep last night",
+        "She has been working since six that morning",
+        "She has just finished a long journey"
+      ],
+      "answer": "b",
+      "evidence": "Sam supports his deduction with the fact that Maya has been working since six that morning."
+    },
+    {
+      "prompt": "Why did Maya feel confused at first?",
+      "options": [
+        "The instructions were confusing",
+        "She could not find Alex’s notebook",
+        "The guests had arrived at the wrong place"
+      ],
+      "answer": "a",
+      "evidence": "Maya says, “I felt confused because the instructions were confusing.”"
+    },
+    {
+      "prompt": "Why is the poster satire rather than a real report?",
+      "options": [
+        "It gives the wrong time for the event",
+        "It tells volunteers to stop working",
+        "It imagines coffee cups asking for a holiday"
+      ],
+      "answer": "c",
+      "evidence": "Maya calls it satire: cups cannot ask for holidays. The joke exaggerates how busy the volunteers have been."
+    },
+    {
+      "prompt": "What does “break the ice” mean in this conversation?",
+      "options": [
+        "Make the drinks colder",
+        "Help start a friendly conversation",
+        "Finish moving the heavy boxes"
+      ],
+      "answer": "b",
+      "evidence": "Maya suggests a friendly question to help Alex begin talking with them."
+    },
+    {
+      "prompt": "What does Sam plan to do next?",
+      "options": [
+        "Invite Alex to help with the boxes and hear his story",
+        "Tell Alex to leave the event",
+        "Ignore Alex until the food collection ends"
+      ],
+      "answer": "a",
+      "evidence": "Sam offers to invite Alex to help with the boxes and says he wants to hear his story."
+    }
+  ],
+  "audio": {
+    "impression": "audio/unit-5-listening/00d89c6761d9ad.mp3",
+    "concentrating": "audio/unit-5-picture/b73197aa729108.mp3",
+    "confused": "audio/unit-5-explanation/f1937e8bf25a4b.mp3",
+    "confusing": "audio/unit-5-explanation/9c0a2c8e1b0309.mp3",
+    "tiring": "audio/unit-5-listening/d7da7f50f4c0b7.mp3",
+    "satire": "audio/unit-5-listening/cda3103e7c3938.mp3",
+    "break the ice": "audio/unit-5-explanation/a35f5be4690a02.mp3",
+    "He might simply be concentrating.": "audio/unit-5-listening/75b781dc604221.mp3",
+    "And you must be tired.": "audio/unit-5-listening/ed36ea0d37196b.mp3",
+    "At first, I felt confused because the instructions were confusing.": "audio/unit-5-listening/d5c6b33608de1b.mp3",
+    "That can’t be a real news report.": "audio/unit-5-listening/e2791bdd55a29b.mp3",
+    "The poster is funny, although the work is tiring.": "audio/unit-5-listening/968f91a2b684b4.mp3",
+    "A friendly question can help break the ice.": "audio/unit-5-listening/1f729262c72f0b.mp3"
+  }
+}

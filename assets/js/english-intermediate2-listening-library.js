@@ -4,7 +4,8 @@
     { number: 1, grid: document.getElementById("unit1ListeningGrid"), count: document.getElementById("unit1ListeningCount"), empty: document.getElementById("unit1ListeningEmpty") },
     { number: 2, grid: document.getElementById("unit2ListeningGrid"), count: document.getElementById("unit2ListeningCount"), empty: document.getElementById("unit2ListeningEmpty") },
     { number: 3, grid: document.getElementById("unit3ListeningGrid"), count: document.getElementById("unit3ListeningCount"), empty: document.getElementById("unit3ListeningEmpty") }
-  ];
+    ,{ number: 5, grid: document.getElementById("unit5ListeningGrid"), count: document.getElementById("unit5ListeningCount"), empty: document.getElementById("unit5ListeningEmpty") }
+  ].filter(unit => unit.grid && unit.count && unit.empty);
   const search = document.getElementById("listeningLibrarySearch");
   const clear = document.getElementById("listeningLibraryClear");
   const result = document.getElementById("listeningResultCount");
@@ -57,6 +58,8 @@
       result.textContent = "Catalog unavailable";
     });
 
+  function openHash() { const folder = document.getElementById(location.hash.slice(1)); if (folder?.matches("details.ie2-lab-folder")) folder.open = true; }
+  window.addEventListener("hashchange", openHash); openHash();
   search.addEventListener("input", update);
   clear.addEventListener("click", () => { search.value = ""; search.focus(); update(); });
 }());

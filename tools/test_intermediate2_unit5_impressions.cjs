@@ -1,0 +1,47 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const {chromium,webkit}=require('C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const host='https://www.jaralingua.com',pathname='/ingles/intermediate-2/speaking-unit-5-one-picture-many-impressions.html',config=JSON.parse(fs.readFileSync('assets/data/english-intermediate2-unit5-impressions.json','utf8'));
+const local=p=>p===pathname||p.includes('english-intermediate2-unit5-impressions.')||p.endsWith('ingles-intermediate-2-speaking-unit-5-one-picture-many-impressions.svg');
+(async()=>{const engine=process.env.WEBKIT?'webkit':'chrome',browser=await(process.env.WEBKIT?webkit:chromium).launch(process.env.WEBKIT?{headless:true}:{channel:'chrome',headless:true});try{
+ assert.equal(config.scenes.length,20);assert.equal(new Set(config.scenes.map(s=>s.image)).size,20);
+ for(const width of process.env.WIDTH?[Number(process.env.WIDTH)]:process.env.QUICK?[390,1440]:[320,390,430,768,1024,1440,1920]){
+  const page=await browser.newPage({viewport:{width,height:process.env.LANDSCAPE?390:width===1920?1080:900},deviceScaleFactor:1});const errors=[];page.on('pageerror',e=>errors.push(e.message));
+  const ref=await page.request.get(host+'/ingles/intermediate-2/grammar-unit-5-read-the-clues.html'),csp=ref.headers()['content-security-policy'];assert(csp);
+  if(!process.env.LIVE)await page.route(host+'/**',async route=>{const p=new URL(route.request().url()).pathname;if(!local(p))return route.continue();return route.fulfill({path:path.resolve('.'+p),headers:p.endsWith('.html')?{'Content-Security-Policy':csp}:{}});});
+  await page.addInitScript(()=>{const A=window.Audio;window.__audios=[];window.Audio=function(...args){const a=new A(...args);window.__audios.push(a);return a};window.Audio.prototype=A.prototype;});
+  await page.goto(host+pathname,{waitUntil:'networkidle'});
+  assert.equal(await page.locator('[data-card]').count(),20);assert.equal(await page.locator('#demo li').count(),5);
+  assert.equal(await page.locator('.mi-grid').evaluate(e=>getComputedStyle(e).gridTemplateColumns.split(' ').length),width>=1700?5:width>1199?4:width>900?3:width>540?2:1);
+  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'page overflow '+width);
+  assert(await page.locator('.jl-page-qr-card img').evaluate(e=>{const r=e.getBoundingClientRect(),c=e.closest('.jl-page-qr-card').getBoundingClientRect();return e.complete&&e.naturalWidth>0&&Math.abs(r.width-r.height)<1&&r.bottom<=c.bottom}));
+  await page.locator('.jl-page-qr-open').click();await page.locator('.jl-page-qr-dialog').waitFor({state:'visible'});if(width===1440)await page.locator('.jl-page-qr-dialog img').screenshot({path:'tmp/unit5-impressions-tv/qr-expanded.png'});await page.keyboard.press('Escape');
+  await page.locator('[data-auth-toggle]').click();await page.locator('[data-local-login-form]').waitFor({state:'visible'});
+  assert(await page.locator('[data-auth-panel]').evaluate(e=>{const r=e.getBoundingClientRect();return r.top>=0&&r.bottom<=innerHeight+1&&r.left>=0&&r.right<=innerWidth+1&&e.contains(document.elementFromPoint(r.left+20,r.top+20))}),'auth '+width);await page.keyboard.press('Escape');
+  await page.locator('#demo [data-audio]').first().click();await page.waitForFunction(()=>__audios[0].currentTime>0&&!__audios[0].paused,null,{timeout:12000});assert.equal(await page.evaluate(()=>__audios[0].playbackRate),.75);
+  await page.locator('#demo [data-speed="1"]').click();assert.equal(await page.evaluate(()=>__audios[0].playbackRate),1);await page.locator('#demo [data-speed="0.75"]').click();
+  await page.locator('#demo [data-open]').click();await page.locator('#miImage').evaluate(e=>e.decode());assert.equal(await page.evaluate(()=>__audios[0].paused),true);
+  assert(await page.locator('#miPanel').isHidden());assert(await page.locator('#miPrev').isDisabled());assert.equal(await page.locator('#miImage').evaluate(e=>getComputedStyle(e).objectFit),'contain');
+  assert(await page.locator('#miProjector').evaluate(e=>{const r=e.getBoundingClientRect();return r.x===0&&r.y===0&&Math.abs(r.width-innerWidth)<2&&Math.abs(r.height-innerHeight)<2}));
+  assert(await page.locator('#miImage').evaluate(e=>{const r=e.getBoundingClientRect();return r.height>80&&r.top>=0&&r.bottom<=innerHeight}),'picture size '+width);
+  await page.locator('[data-support="models"]').click();assert.equal(await page.locator('#miPanel li').count(),3);assert((await page.locator('#miPanel').textContent()).includes(config.scenes[0].models[0]));
+  await page.locator('[data-support="language"]').click();assert.equal(await page.locator('#miPanel .mi-words [data-audio]').count(),3);await page.locator('#miPanel [data-audio]').first().click();await page.waitForFunction(()=>__audios[0].currentTime>0&&(!__audios[0].paused||__audios[0].ended)).catch(async e=>{console.log('MEDIA',await page.evaluate(()=>({src:__audios[0].src,time:__audios[0].currentTime,paused:__audios[0].paused,ended:__audios[0].ended,error:__audios[0].error?.message,ready:__audios[0].readyState,status:document.querySelector('.mi-audio-error')?.textContent})));throw e});
+  await page.locator('[data-support="expression"]').click();assert.equal(await page.evaluate(()=>__audios[0].paused),true);assert.match(await page.locator('#miPanel .mi-kind').textContent(),/Idiom/);assert.match(await page.locator('#miPanel [lang="es"]').textContent(),/Romper el hielo/);
+  if([390,1440,1920].includes(width)){await page.screenshot({path:'tmp/unit5-impressions-tv/'+engine+'-support-'+width+'.jpg',type:'jpeg'});}
+  await page.locator('[data-support="expression"]').click();assert(await page.locator('#miPanel').isHidden());
+  await page.locator('#miNext').focus();await page.keyboard.press('ArrowRight');assert.match(await page.locator('#miTitle').textContent(),/^02 /);assert(await page.locator('#miPanel').isHidden());
+  await page.keyboard.press('ArrowLeft');assert.match(await page.locator('#miTitle').textContent(),/^01 /);
+  if(width===1440&&!process.env.WEBKIT){await page.locator('#miFullscreen').click();await page.waitForFunction(()=>document.fullscreenElement===document.documentElement);await page.locator('#miFullscreen').click();await page.waitForFunction(()=>!document.fullscreenElement);}
+  if([390,1440,1920].includes(width))await page.screenshot({path:'tmp/unit5-impressions-tv/'+engine+'-project-'+width+'.jpg',type:'jpeg'});
+  await page.keyboard.press('Escape');assert.equal(await page.locator('#miProjector').evaluate(e=>e.open),false);assert.equal(await page.evaluate(()=>document.activeElement.closest('#demo')!==null),true);
+  if(width===1440&&!process.env.SKIP_DEEP){
+   const ids=new Set([0,1]);for(let n=0;n<18;n++){await page.locator((n===0?'.mi-toolbar':'#miProjector')+' [data-random]').click();const id=Number((await page.locator('#miTitle').textContent()).slice(0,2))-1;assert(!ids.has(id));ids.add(id);await page.locator('#miImage').evaluate(e=>e.decode());assert(await page.locator('#miPanel').isHidden());}
+   assert.equal(ids.size,20);assert(await page.locator('#miProjector [data-random]').isDisabled());await page.locator('#miProjector [data-new-set]').click();assert.equal(await page.locator('.mi-toolbar [data-deck-status]').textContent(),'20 unseen pictures');assert.equal(await page.locator('[data-visited]').evaluateAll(es=>es.filter(e=>e.textContent).length),0);await page.locator('#miClose').click();
+   const heard=new Set();async function checkAudio(selector){for(const b of await page.locator(selector).all()){const src=await b.getAttribute('data-audio');if(heard.has(src))continue;await b.click();await page.waitForFunction(src=>{const a=__audios[0];return a.src.endsWith(src)&&a.currentTime>0&&!a.error&&(!a.paused||a.ended)},src,{timeout:15000});heard.add(src);}}
+   await page.locator('.mi-teacher-guide summary').click();await checkAudio('main [data-audio]');
+   for(let i=0;i<20;i++){await page.locator('[data-card="'+i+'"] [data-open]').click();await page.locator('#miImage').evaluate(e=>e.decode());await page.locator('[data-support="models"]').click();assert.deepEqual(await page.locator('#miPanel li').allTextContents(),config.scenes[i].models);await page.locator('[data-support="language"]').click();await checkAudio('#miPanel [data-audio]');await page.locator('[data-support="expression"]').click();assert.equal(await page.locator('#miPanel [lang="es"]').textContent(),config.expressions[config.scenes[i].expression].spanish);await checkAudio('#miPanel [data-audio]');await page.locator('#miClose').click();assert.equal(await page.evaluate(()=>__audios[0].paused),true);}
+   assert.equal(heard.size,Object.keys(config.audio).length);console.log(engine,'verified',heard.size,'real MP3 controls and all 20 scene descriptions');
+  }
+  if([390,1440,1920].includes(width)){await page.locator('.mi-grid').evaluate(async e=>{await Promise.all([...e.querySelectorAll('img')].map(i=>{i.loading='eager';return i.decode()}));scrollTo(0,e.getBoundingClientRect().top+scrollY-12)});await page.screenshot({path:'tmp/unit5-impressions-tv/'+engine+'-gallery-'+width+'.jpg',type:'jpeg'});await page.evaluate(()=>scrollTo(0,0));await page.screenshot({path:'tmp/unit5-impressions-tv/'+engine+'-hero-'+width+'.jpg',type:'jpeg'});}
+  assert.deepEqual(errors,[]);console.log(engine,width,'PASS: gallery, audio, QR, login, projector, help and navigation');await page.close();
+ }
+}finally{await browser.close()}})().catch(e=>{console.error(e);process.exit(1)});

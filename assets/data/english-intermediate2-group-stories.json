@@ -1,0 +1,140 @@
+{
+  "pictures": [
+    {
+      "number": 1,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/01-station.webp"
+    },
+    {
+      "number": 2,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/02-picnic.webp"
+    },
+    {
+      "number": 3,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/03-model.webp"
+    },
+    {
+      "number": 4,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/04-bags.webp"
+    },
+    {
+      "number": 5,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/05-celebration.webp"
+    },
+    {
+      "number": 6,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/06-plant.webp"
+    },
+    {
+      "number": 7,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/07-screen.webp"
+    },
+    {
+      "number": 8,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/08-trail.webp"
+    },
+    {
+      "number": 9,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/09-rehearsal.webp"
+    },
+    {
+      "number": 10,
+      "image": "/assets/img/english-intermediate-2/unit-5/group-stories/10-dinner.webp"
+    }
+  ],
+  "frames": [
+    [
+      "Appearance",
+      "She looks nervous."
+    ],
+    [
+      "General impression",
+      "She seems relieved."
+    ],
+    [
+      "Looks like + noun",
+      "He looks like a volunteer."
+    ],
+    [
+      "Looks like + complete idea",
+      "It looks like he needs help."
+    ],
+    [
+      "Feeling",
+      "I feel bored."
+    ],
+    [
+      "Cause",
+      "The instructions are confusing."
+    ],
+    [
+      "Opinion",
+      "I think she is worried."
+    ],
+    [
+      "A guess",
+      "I guess he is waiting for a friend."
+    ],
+    [
+      "A possibility",
+      "Perhaps she needs more time."
+    ],
+    [
+      "Another possibility",
+      "Maybe she is tired."
+    ]
+  ],
+  "expressions": {
+    "cheer up": {
+      "kind": "Phrasal verb",
+      "spanish": "Animarse / animar a alguien"
+    },
+    "calm down": {
+      "kind": "Phrasal verb",
+      "spanish": "Calmarse"
+    },
+    "open up": {
+      "kind": "Phrasal verb",
+      "spanish": "Abrirse y hablar de los sentimientos"
+    },
+    "fit in": {
+      "kind": "Phrasal verb",
+      "spanish": "Encajar / sentirse integrado"
+    },
+    "get along with": {
+      "kind": "Phrasal verb",
+      "spanish": "Llevarse bien con"
+    },
+    "reach out to": {
+      "kind": "Phrasal verb",
+      "spanish": "Contactar para ofrecer o pedir ayuda"
+    },
+    "stand up for": {
+      "kind": "Phrasal verb",
+      "spanish": "Defender / apoyar"
+    },
+    "look up to": {
+      "kind": "Phrasal verb",
+      "spanish": "Admirar / respetar"
+    }
+  },
+  "audio": {
+    "She looks nervous.": "audio/unit-5-explanation/0c497577f6dc52.mp3",
+    "She seems relieved.": "audio/unit-5-explanation/ff7cf96bbfc73b.mp3",
+    "He looks like a volunteer.": "audio/unit-5-explanation/37577618c30c8c.mp3",
+    "It looks like he needs help.": "audio/unit-5-explanation/86e24080cd2cde.mp3",
+    "I feel bored.": "audio/unit-5-explanation/d56c5d6d07c9e1.mp3",
+    "The instructions are confusing.": "audio/unit-5-explanation/2ca9ce5b994d11.mp3",
+    "I think she is worried.": "audio/unit-5-explanation/58913c53719cd0.mp3",
+    "I guess he is waiting for a friend.": "audio/unit-5-explanation/9e103cd8c7b43f.mp3",
+    "Perhaps she needs more time.": "audio/unit-5-explanation/c15a06e08755d7.mp3",
+    "Maybe she is tired.": "audio/unit-5-explanation/bb8d89e2b5b49c.mp3",
+    "cheer up": "audio/unit-5-explanation/582d818dd242dd.mp3",
+    "calm down": "audio/unit-5-explanation/82ac382339aea9.mp3",
+    "open up": "audio/unit-5-explanation/8236b1047b23d2.mp3",
+    "fit in": "audio/unit-5-explanation/d4393349113d7c.mp3",
+    "get along with": "audio/unit-5-explanation/33919b395e0771.mp3",
+    "reach out to": "audio/unit-5-explanation/5d732cb45d5998.mp3",
+    "stand up for": "audio/unit-5-explanation/99f30f876f9d7c.mp3",
+    "look up to": "audio/unit-5-explanation/e64bef04711a4d.mp3"
+  }
+}

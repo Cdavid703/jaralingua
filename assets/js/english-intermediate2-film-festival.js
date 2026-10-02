@@ -1,9 +1,38 @@
 
 (() => {
   'use strict';
+  // Preserve the Google iframe; Safari's top layer escapes navigation clipping.
+  const prepareAuthPanel=()=>{
+    const panel=document.querySelector('[data-auth-panel]');
+    if(!panel||panel.dataset.festivalLayer)return;
+    panel.dataset.festivalLayer='true';
+    const place=()=>{
+      const viewport=window.visualViewport;
+      panel.style.setProperty('--ff-auth-top',((viewport?.offsetTop||0)+12)+'px');
+      panel.style.setProperty('--ff-auth-height',Math.max(120,(viewport?.height||innerHeight)-24)+'px');
+      if(typeof panel.showPopover==='function'){
+        if(!panel.hasAttribute('popover'))panel.setAttribute('popover','manual');
+        if(panel.hidden){if(panel.matches(':popover-open'))panel.hidePopover();}
+        else if(!panel.matches(':popover-open'))panel.showPopover();
+      }
+    };
+    new MutationObserver(place).observe(panel,{attributes:true,attributeFilter:['hidden']});
+    window.visualViewport?.addEventListener('resize',place);
+    window.visualViewport?.addEventListener('scroll',place);
+    place();
+  };
+  new MutationObserver(prepareAuthPanel).observe(document.body,{childList:true,subtree:true});
+  prepareAuthPanel();
+  document.addEventListener('keydown',event=>{
+    if(event.key==='Escape'){
+      const panel=document.querySelector('[data-auth-panel]');
+      if(panel)panel.hidden=true;
+    }
+  });
+
   const $=id=>document.getElementById(id),root='/api/intermediate2/film-festival/';
   let user=null,epoch=0,view=0,state=null,selectedImage='',requestId=null,currentCode='',gradeEntry=null,projectEntry=null;
-  let urls=[],entryImages=new Map(),durations=new Map(),clock=null,elapsed=0,started=0,ownsFullscreen=false;
+  let entryImages=new Map(),durations=new Map(),clock=null,elapsed=0,started=0,ownsFullscreen=false;
   const errors={
     class_not_found:'Class not found. Check the code or choose one of your classes.',
     submissions_closed:'The teacher has closed submissions for this class.',
@@ -40,12 +69,15 @@
   }
   const api=(action,payload)=>request(root+action,payload?{method:'POST',body:JSON.stringify(payload)}:{});
   const blobData=blob=>new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob);});
-  function clearUrls(){urls.forEach(url=>URL.revokeObjectURL(url));urls=[];entryImages.clear();}
+  function clearUrls(){entryImages.clear();}
   async function privateImage(entry){
     const ticket=epoch;
     const blob=await request(entry.imageUrl,{},true);
     if(ticket!==epoch)throw new Error('session_changed');
-    const url=URL.createObjectURL(blob);urls.push(url);entryImages.set(entry.id,url);return {url,blob};
+    // The deployed img-src policy allows data: but intentionally blocks blob:.
+    const url=await blobData(blob);
+    if(ticket!==epoch)throw new Error('session_changed');
+    entryImages.set(entry.id,url);return {url,blob};
   }
   function node(tag,text,cls){const el=document.createElement(tag);if(text!==undefined)el.textContent=text;if(cls)el.className=cls;return el;}
   function formatReview(review){
@@ -81,9 +113,9 @@
     $('ff-my-review').hidden=!entry?.review;$('ff-my-review').replaceChildren();
     if(entry?.review)$('ff-my-review').append(formatReview(entry.review));
     if(entry){
-      const ticket=epoch,{url,blob}=await privateImage(entry);
-      const data=await blobData(blob);if(ticket!==epoch||screen!==view)return;
-      selectedImage=data;$('ff-preview').src=url;$('ff-preview').hidden=false;
+      const ticket=epoch,{url}=await privateImage(entry);
+      if(ticket!==epoch||screen!==view)return;
+      selectedImage=url;$('ff-preview').src=url;$('ff-preview').hidden=false;
     }
   }
   async function renderTeacher(result,screen){
@@ -106,7 +138,7 @@
       const note=node('p',entry.review?'Image '+entry.review.imageGrade.toFixed(2)+'/5 · Review '+entry.review.oralGrade.toFixed(2)+'/5':'Awaiting presentation');
       const evaluate=node('button','Evaluate','intermediate2-button');evaluate.type='button';evaluate.addEventListener('click',()=>openEvaluation(entry));
       card.append(project,note,evaluate);$('ff-gallery').append(card);
-      try{const {url}=await privateImage(entry);if(ticket!==epoch||screen!==view)return;img.src=url;project.disabled=false;}
+      try{const {url}=await privateImage(entry);if(ticket!==epoch||screen!==view)return;img.src=url;await img.decode();if(ticket!==epoch||screen!==view)return;project.disabled=false;}
       catch(error){if(ticket===epoch)note.textContent='Image unavailable. Refresh the gallery to retry.';}
     }));
   }

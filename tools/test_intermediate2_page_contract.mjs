@@ -9,7 +9,7 @@ const pages = fs
   .filter((name) => name.endsWith(".html"))
   .sort();
 
-assert.equal(pages.length, 33, "Update this contract when a new Intermediate 2 page is published.");
+assert.equal(pages.length, 44, "Update this contract when a new Intermediate 2 page is published.");
 
 function localStyles(markup) {
   const styles = [...markup.matchAll(/href=["']([^"']+\.css)(?:\?[^"']*)?["']/gi)]
@@ -25,6 +25,11 @@ function localStyles(markup) {
 for (const page of pages) {
   const markup = fs.readFileSync(path.join(pageRoot, page), "utf8");
   const styles = localStyles(markup);
+  assert.match(markup, /page-qr-access\.js/, page + ": missing shared page QR component.");
+  const qrPath = path.join(root, "assets", "img", "page-qr", "ingles-intermediate-2-" + page.replace(/\.html$/, "") + ".svg");
+  assert.ok(fs.existsSync(qrPath), page + ": missing QR SVG; include it in the deployment.");
+  assert.match(fs.readFileSync(qrPath, "utf8"), /<svg[\s>]/, page + ": invalid QR SVG.");
+
   assert.match(markup, /<meta[^>]+name=["']viewport["'][^>]+width=device-width/i, `${page}: missing mobile viewport.`);
   assert.match(markup, /google-auth-config\.js/i, `${page}: missing shared authentication configuration.`);
   assert.match(markup, /accounts\.google\.com\/gsi\/client/i, `${page}: missing Google sign-in client.`);
@@ -37,4 +42,4 @@ const auth = fs.readFileSync(path.join(root, "assets", "js", "google-auth.js"), 
 assert.match(auth, /intermediate\(\?:-2\)\?/, "The shared auth navigation must recognize Intermediate 2 URLs.");
 assert.match(auth, /@media \(max-width: 680px\)/, "The Sign in panel needs its mobile layout.");
 
-console.log(`Intermediate 2 page contract passed: ${pages.length} pages with Sign in and responsive coverage.`);
+console.log(`Intermediate 2 page contract passed: ${pages.length} pages with Sign in, responsive coverage and QR assets.`);
