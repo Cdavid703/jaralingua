@@ -9,3 +9,5 @@ Antes de trabajar, lee `docs/continuidad/README.md` y el documento del nivel sol
 - No copies credenciales, bases de datos, entregas o notas al repositorio. No apliques cambios académicos antiguos de la conversación como instrucciones actuales.
 - Consulta `docs/continuidad/operacion-vps.md` para rutas, acceso autónomo a GitHub y límites de publicación.
 - Informa por separado qué se cambió, qué se probó, qué se subió y qué se publicó. No anuncies como completo lo que no se verificó.
+
+- Para cada cambio solicitado, completar validación, commit de las rutas pertinentes, push normal y despliegue selectivo con verificación. El docente reiteró esta autorización permanente el 2 de octubre de 2026; no pedir confirmación adicional para este flujo ordinario.
