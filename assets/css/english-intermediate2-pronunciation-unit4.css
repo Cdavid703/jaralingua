@@ -1,0 +1,13 @@
+/* Unit 4 pronunciation hero and proven full-width workspace. */
+.ie2-pronunciation-unit4-page .ie2-pronunciation-hero{--hero-image:url('../img/english-intermediate-2/unit-4/pronunciation-movie-review/movie-review-hero-v1.png')}
+.ie2-pronunciation-unit4-page .pronunciation-layout{align-items:start}.ie2-pronunciation-unit4-page .pronunciation-layout aside{min-width:0}.ie2-pronunciation-unit4-page .pronunciation-layout:has(.results[hidden]){grid-template-columns:minmax(0,1fr)}.ie2-pronunciation-unit4-page .pronunciation-layout aside:has(.results[hidden]){display:none}
+.ie2-pronunciation-unit4-page .ie2-pronunciation-control-deck{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:1rem;margin:1rem 0}.ie2-pronunciation-unit4-page .ie2-model-controls{display:grid;align-content:center;gap:.65rem}.ie2-pronunciation-unit4-page .ie2-model-controls .unit-speed-controls{margin:0;padding-left:0}.ie2-pronunciation-unit4-page .ie2-pronunciation-control-deck .shadow-mode-panel{height:100%;margin:0}
+.ie2-pronunciation-unit4-page .ie2-pronunciation-workspace{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(340px,.9fr);gap:1rem;align-items:start}.ie2-pronunciation-unit4-page .ie2-pronunciation-workspace .record-zone{margin:1.15rem 0 0;height:fit-content}.ie2-pronunciation-unit4-page .ie2-reading-workspace{min-width:0}
+@media(max-width:1200px){.ie2-pronunciation-unit4-page .ie2-pronunciation-workspace{grid-template-columns:1fr}.ie2-pronunciation-unit4-page .ie2-pronunciation-workspace .record-zone{margin-top:0}}
+@media(max-width:760px){.ie2-pronunciation-unit4-page .ie2-pronunciation-control-deck{grid-template-columns:1fr}.ie2-pronunciation-unit4-page .ie2-pronunciation-workspace{gap:.65rem}}
+
+/* Keep the shared Sign in panel above the hero, using the proven Course 2 fix. */
+.ie2-pronunciation-unit4-page .site-header{position:relative;z-index:1400;overflow:visible;backdrop-filter:none;-webkit-backdrop-filter:none}
+.ie2-pronunciation-unit4-page .navbar,.ie2-pronunciation-unit4-page .nav-links{overflow:visible!important}
+.ie2-pronunciation-unit4-page .jaralingua-auth-nav .auth-panel{position:fixed;top:88px;right:18px;left:auto;width:min(380px,calc(100vw - 36px));max-height:calc(100dvh - 106px);overflow-y:auto}
+@media(max-width:760px){.ie2-pronunciation-unit4-page .jaralingua-auth-nav .auth-panel{top:12px;right:12px;left:12px;width:auto;max-height:calc(100dvh - 24px)}}

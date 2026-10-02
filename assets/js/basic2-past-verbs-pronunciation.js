@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById(id);
-  const DATA = '/assets/data/basic2-unit4-past-verbs-pronunciation.json?v=20260912-1';
+  const DATA = '/assets/data/basic2-unit4-past-verbs-pronunciation.json?v=20260913-4';
   const API = '/api/english-basic/pronunciation-assessment';
   const SUBMIT = '/api/basic2/unit4-past-verbs-step-by-step/submit';
   const PREFIX = 'jaralingua:basic2:past-verbs-step-by-step:v1:';
@@ -79,7 +79,11 @@
     if(playbackURL){URL.revokeObjectURL(playbackURL);playbackURL=null;}
     $('studentAudio').pause();$('studentAudio').removeAttribute('src');$('studentAudio').hidden=true;
     const s=stage(),g=data.groups.find(g=>g.id===s.group),offset=state.index%13;
-    text('ruleTitle',`Remember the rule: ${g.sound}`);text('ruleText',g.rule);text('ruleTip',g.tip);
+    text('ruleTitle',`Remember the rule: ${g.soundName} (${g.sound})`);text('ruleText',g.rule);text('ruleTip',g.tip);
+    $('soundKey').replaceChildren();
+    g.soundKey.forEach(entry=>{const p=document.createElement('p'),label=document.createElement('strong');label.textContent=entry.label+' — ';p.append(label,document.createTextNode(entry.note));$('soundKey').append(p);});
+    $('endingExamples').replaceChildren();$('endingExamples').hidden=!g.endingExamples;
+    (g.endingExamples||[]).forEach(entry=>{const p=document.createElement('p'),label=document.createElement('strong');label.textContent=entry.label;p.append(label,document.createTextNode(entry.note));$('endingExamples').append(p);});
     text('stageCounter',`${s.kind==='word'?'Verb '+(offset+1)+' of 10':'Sentence '+(offset-9)+' of 3'} · ${g.sound}`);
     text('baseForm',s.base?`${s.base} → ${s.text}`:'Now use the past verb in context.');
     if(s.kind==='sentence'){

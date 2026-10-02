@@ -1,0 +1,62 @@
+/* Read the Clues: Unit 2 grammar layout, with Unit 5 pictures and projection. */
+.ie2-u5-grammar .ie2-grammar-question-list{grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;gap:1.2rem}
+.ie2-u5-grammar .ie2-grammar-question-card{min-width:0;padding:1rem}
+.ie2-u5-grammar .ie2-grammar-hero{min-height:0}
+.ie2-u5-grammar .ie2-grammar-hero-copy{padding-top:2.5rem;padding-bottom:2.5rem}
+.ie2-u5-grammar .ie2-grammar-hero img{min-height:300px;max-height:580px}
+.ie2-u5-grammar .ie2-grammar-question-card h3{font-size:1.4rem}
+.u5g-picture{position:relative;display:block;width:100%;margin:.8rem 0;padding:0;border:0;border-radius:12px;overflow:hidden;background:#eaf0f5;cursor:zoom-in}
+.u5g-picture img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain}
+.u5g-picture span{position:absolute;bottom:8px;right:8px;padding:6px 9px;border-radius:5px;background:#071f4f;color:white;font-size:.75rem}
+.u5g-clues{color:var(--ie2-ink);font-size:1rem;line-height:1.65}
+.u5g-goal{padding:.7rem;border-left:4px solid var(--ie2-teal);background:#eaf5f3;line-height:1.5}
+.ie2-u5-grammar .ie2-grammar-question-card fieldset{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ie2-u5-grammar .ie2-grammar-question-card legend{grid-column:1/-1;font-size:.85rem}
+.ie2-u5-grammar .ie2-grammar-question-card label span{align-items:center;justify-content:center;gap:.35rem;padding:.6rem .3rem;font-size:1rem}
+.ie2-u5-grammar .ie2-grammar-question-card label b{font-size:.65rem;flex-basis:19px;height:19px}
+.ie2-u5-grammar .ie2-grammar-question-card input:focus-visible+span{outline:3px solid #bf7a14;outline-offset:3px}
+.ie2-u5-grammar .ie2-grammar-feedback:empty{display:none}
+.ie2-u5-grammar .ie2-grammar-feedback{line-height:1.6;font-size:.95rem}
+.u5g-reasons{padding:0;margin:.6rem 0;list-style:none}
+.u5g-reasons li{padding:.7rem 0;border-bottom:1px solid var(--ie2-line)}
+.u5g-reasons li:last-child{border:0}
+.u5g-reasons strong{color:var(--ie2-navy)}
+.u5g-model{font:inherit;text-align:left;line-height:1.5;border:0;border-bottom:2px dotted var(--ie2-teal);padding:.5rem .1rem;min-height:44px;background:transparent;color:var(--ie2-navy);cursor:pointer;font-weight:800}
+.u5g-model[aria-pressed=true]{background:#dcefe8}
+.u5g-model small{color:var(--ie2-teal);white-space:nowrap}
+.u5g-audio-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:1.2rem 0}
+.u5g-audio-toolbar>span{font-weight:750;margin-right:.5rem}
+.u5g-audio-toolbar button,#pictureProjector button{font:inherit;min-height:44px;padding:.5rem .85rem;border:1px solid var(--ie2-teal);border-radius:8px;background:white;color:var(--ie2-navy);cursor:pointer}
+.u5g-audio-toolbar button[aria-pressed=true]{background:var(--ie2-teal);color:white}
+.u5g-guide{padding:1.25rem;border:1px solid var(--ie2-line);border-radius:15px;background:white}
+.u5g-guide summary{cursor:pointer;color:var(--ie2-navy);font-weight:850;min-height:44px;align-content:center}
+.u5g-guide p{line-height:1.6}
+.u5g-guide-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.u5g-guide-grid p{background:#eef5fa;padding:1rem;border-radius:8px}
+.u5g-guide-grid strong{font-size:1.5rem}
+.u5g-note{font-size:.9rem;color:var(--ie2-muted)}
+.u5g-audio-error{display:block;color:#962e1a;font-size:.95rem}
+.ie2-u5-grammar button:focus-visible,.ie2-u5-grammar summary:focus-visible{outline:3px solid #bf7a14;outline-offset:3px}
+#pictureProjector{position:fixed;inset:0;margin:0;width:100vw;max-width:none;height:100vh;height:100dvh;max-height:none;border:0;padding:0;background:#f7f9fc;color:var(--ie2-ink)}
+#pictureProjector[open]{display:flex;flex-direction:column}
+#pictureProjector::backdrop{background:#071f4fed}
+#pictureProjector>header{display:flex;flex-shrink:0;align-items:center;justify-content:space-between;gap:1rem;padding:12px max(16px,env(safe-area-inset-right));background:var(--ie2-navy);color:white}
+.u5g-project-stage{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:2rem;align-items:center;min-height:0;flex:1;padding:2rem;overflow:auto}
+.u5g-project-stage>img{width:100%;height:100%;max-height:calc(100dvh - 130px);object-fit:contain;min-height:0}
+.u5g-project-stage h2{font-size:clamp(1.8rem,3vw,3.2rem)}
+.u5g-project-stage p{font-size:clamp(1.3rem,2vw,2.1rem);line-height:1.55}
+.u5g-project-stage .u5g-model{font-size:clamp(1.3rem,2vw,2.1rem)}
+html.u5g-projecting{overflow:hidden}
+.ie2-u5-grammar .site-header{position:relative;overflow:visible;backdrop-filter:none;-webkit-backdrop-filter:none}
+.ie2-u5-grammar .navbar,.ie2-u5-grammar .nav-links{overflow:visible;flex-wrap:wrap}
+.ie2-u5-grammar .jaralingua-auth-nav .auth-panel{position:fixed;top:var(--u5-auth-top,12px);right:18px;left:auto;bottom:auto;margin:0;width:min(380px,calc(100vw - 36px));height:auto;max-height:var(--u5-auth-height,calc(100dvh - 24px));overflow-y:auto;background:white;color:var(--ie2-ink)}
+@media(max-width:1100px){.ie2-u5-grammar .ie2-grammar-question-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.ie2-u5-grammar .ie2-grammar-question-list,.u5g-guide-grid{grid-template-columns:1fr}.u5g-project-stage{grid-template-columns:1fr;align-content:start;gap:1rem;padding:1rem}.u5g-project-stage>img{height:auto;max-height:45dvh}.ie2-u5-grammar .jaralingua-auth-nav .auth-panel{right:12px;left:12px;width:auto;padding:18px 12px}.ie2-u5-grammar input{font-size:16px}.ie2-u5-grammar .ie2-grammar-hero img{min-height:0;max-height:320px}.ie2-u5-grammar .ie2-grammar-challenge{padding:.75rem}.ie2-u5-grammar .ie2-grammar-question-card{padding:.75rem}.ie2-u5-grammar .ie2-grammar-actions button{width:100%;min-height:48px}}
+@media(prefers-reduced-motion:reduce){.ie2-u5-grammar *{scroll-behavior:auto!important;transition:none!important}}
+.ie2-u5-grammar .ie2-grammar-shell .intermediate2-button.ghost{background:white;color:var(--ie2-navy);border:1px solid var(--ie2-navy)}
+.ie2-u5-grammar .ie2-grammar-result{grid-template-columns:1fr;gap:.6rem}
+#pictureProjector .u5g-model{border:0;border-bottom:2px dotted var(--ie2-teal);border-radius:0;padding:.4rem .1rem;background:transparent;font-weight:800}
+#pictureProjector .u5g-model[aria-pressed=true]{background:#dcefe8}
+/* Hero photo sizing must never stretch the shared QR image. */
+.ie2-u5-grammar .ie2-grammar-hero .jl-page-qr-card img{width:100%;height:100%;min-height:0;max-height:none;aspect-ratio:1;object-fit:contain}
+.ie2-u5-grammar .ie2-grammar-shell .intermediate2-kicker{color:var(--ie2-navy)}

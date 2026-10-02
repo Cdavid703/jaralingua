@@ -1627,6 +1627,9 @@
     if (path.indexOf("/ingles/basico/") !== -1 || /\/ingles\/basico$/i.test(path)) {
       return "/api/basic/grades/login";
     }
+    if (path.indexOf("/ingles/intermediate-2/") !== -1 || /\/ingles\/intermediate-2$/i.test(path)) {
+      return "/api/intermediate2/grades/login";
+    }
     if (path.indexOf("/ingles/intermediate/") !== -1 || /\/ingles\/intermediate$/i.test(path)) {
       return "/api/intermediate/grades/login";
     }

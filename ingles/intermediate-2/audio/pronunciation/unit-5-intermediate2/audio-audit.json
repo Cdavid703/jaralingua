@@ -1,0 +1,68 @@
+[
+  {
+    "file": "section-1.mp3",
+    "expected": "The man looks worried, and his friend seems calm. He looks like a student waiting for an important result.",
+    "heard": "The man looks worried and his friend seems calm. He looks like a student waiting for an important result.",
+    "matched": true
+  },
+  {
+    "file": "section-2.mp3",
+    "expected": "He must be nervous because his hands are shaking. He might be waiting for exam results, but we can't be sure.",
+    "heard": "He must be nervous because his hands are shaking. He might be waiting for exam results, but we can't be sure.",
+    "matched": true
+  },
+  {
+    "file": "section-3.mp3",
+    "expected": "I think he feels tired because the long wait is tiring. I guess he needs support. Perhaps she can cheer him up.",
+    "heard": "I think he feels tired because the long wait is tiring. I guess he needs support. Perhaps she can cheer him up",
+    "matched": true
+  },
+  {
+    "file": "section-4.mp3",
+    "expected": "She seems kind and has a heart of gold. He takes a breath to calm down, and she stays beside him.",
+    "heard": "She seems kind and has a heart of gold. He takes a breath to calm down, and she stays beside him",
+    "matched": true
+  },
+  {
+    "file": "first-impressions-clear-words-model-us.mp3",
+    "expected": "The man looks worried, and his friend seems calm. He looks like a student waiting for an important result. He must be nervous because his hands are shaking. He might be waiting for exam results, but we can't be sure. I think he feels tired because the long wait is tiring. I guess he needs support. Perhaps she can cheer him up. She seems kind and has a heart of gold. He takes a breath to calm down, and she stays beside him.",
+    "heard": "The man looks worried, and his friend seems calm. He looks like a student waiting for an important result. He must be nervous because his hands are shaking. He might be waiting for exam results, but we can't be sure. I think he feels tired because the long wait is tiring. I guess he needs support. Perhaps she can cheer him up. She seems kind and has a heart of gold. He takes a breath to calm down, and she stays beside him",
+    "matched": true
+  },
+  {
+    "file": "words/breath.mp3",
+    "expected": "breath",
+    "heard": "Breath",
+    "matched": true
+  },
+  {
+    "file": "words/cant.mp3",
+    "expected": "can't",
+    "heard": "Can't",
+    "matched": true
+  },
+  {
+    "file": "words/might.mp3",
+    "expected": "might",
+    "heard": "Might",
+    "matched": true
+  },
+  {
+    "file": "words/must.mp3",
+    "expected": "must",
+    "heard": "Must",
+    "matched": true
+  },
+  {
+    "file": "words/tired.mp3",
+    "expected": "tired",
+    "heard": "Tired",
+    "matched": true
+  },
+  {
+    "file": "words/tiring.mp3",
+    "expected": "tiring",
+    "heard": "Tiring",
+    "matched": true
+  }
+]

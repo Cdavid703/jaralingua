@@ -1,0 +1,65 @@
+[
+  {
+    "file": "d7da7f50f4c0b7.mp3",
+    "expected": "tiring",
+    "heard": "Tiring",
+    "matched": true,
+    "sha256": "147e870e8140342fefbd5216166dd8af81d3b029d115314b07d3f7f4a61a4bd7"
+  },
+  {
+    "file": "00d89c6761d9ad.mp3",
+    "expected": "impression",
+    "heard": "Impression",
+    "matched": true,
+    "sha256": "28bc91651bb674a62d204b0fd6da4f3dc620991615c2c64d1d6ea644c53dde97"
+  },
+  {
+    "file": "cda3103e7c3938.mp3",
+    "expected": "satire",
+    "heard": "Satire",
+    "matched": true,
+    "sha256": "b6d69fac9dfe9497ecc1ed563bd48dda9219c699b2f239235cd583582d2f8c6b"
+  },
+  {
+    "file": "75b781dc604221.mp3",
+    "expected": "He might simply be concentrating.",
+    "heard": "He might simply be concentrating.",
+    "matched": true,
+    "sha256": "2f81b67ae37899180249164ca112957657312c9601e279d866ce700aaf20df68"
+  },
+  {
+    "file": "ed36ea0d37196b.mp3",
+    "expected": "And you must be tired.",
+    "heard": "And you must be tired",
+    "matched": true,
+    "sha256": "09b12513a2ed8e44d4ccdbafa19abb8694b293c9a67bccbe56d575afe8ae02fd"
+  },
+  {
+    "file": "d5c6b33608de1b.mp3",
+    "expected": "At first, I felt confused because the instructions were confusing.",
+    "heard": "At first, I felt confused because the instructions were confusing.",
+    "matched": true,
+    "sha256": "0f836e07885c00e6751e70bee354ad4e6847f148d7b8cf5103ff8491d5c6a0ce"
+  },
+  {
+    "file": "e2791bdd55a29b.mp3",
+    "expected": "That can’t be a real news report.",
+    "heard": "That can't be a real news report",
+    "matched": true,
+    "sha256": "f8fd39b9668bed28721a80e76b21339dfeff95a9bced9afede86702ddea9f12c"
+  },
+  {
+    "file": "968f91a2b684b4.mp3",
+    "expected": "The poster is funny, although the work is tiring.",
+    "heard": "The poster is funny, although the work is tiring.",
+    "matched": true,
+    "sha256": "4c0b9bcbabf0cadca448de3cc35af6b5c1973121fccef2ae59eefc095f08af02"
+  },
+  {
+    "file": "1f729262c72f0b.mp3",
+    "expected": "A friendly question can help break the ice.",
+    "heard": "A friendly question can help break the ice.",
+    "matched": true,
+    "sha256": "26c0123a5955ec966f6b5f2004902ddd99f320262b4a90b9e0bc35ba294878c0"
+  }
+]

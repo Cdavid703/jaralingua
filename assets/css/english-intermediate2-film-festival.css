@@ -28,3 +28,9 @@
 @media(max-width:760px){.ie2-film-festival-page .jaralingua-auth-nav .auth-panel{top:max(12px,env(safe-area-inset-top));right:12px;left:12px;bottom:auto;width:auto;max-height:calc(100dvh - 24px);height:auto}}
 
 .ie2-film-festival-page .u4-hero-image{object-position:center top}
+
+/* Override the browser's default centered popover; retain a vh fallback. */
+.ie2-film-festival-page .jaralingua-auth-nav .auth-panel{margin:0;color:var(--ie2-ink);max-height:calc(100vh - 106px)}
+@media(max-width:760px){
+ .ie2-film-festival-page .jaralingua-auth-nav .auth-panel{top:var(--ff-auth-top,12px);max-height:var(--ff-auth-height,calc(100vh - 24px));padding:18px 12px;background:#fff}
+}

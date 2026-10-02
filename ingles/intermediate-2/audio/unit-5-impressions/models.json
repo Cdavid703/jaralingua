@@ -1,0 +1,46 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "id": "418fc346195000",
+      "file": "418fc346195000.mp3",
+      "text": "It looks like a class presentation.",
+      "kind": "phrase",
+      "bytes": 35152,
+      "sha256": "5cc7e1effb11e27194011431d443699bcf88ed49bfe530a33447347e3773dd71"
+    },
+    {
+      "id": "1dbe09673eaf3e",
+      "file": "1dbe09673eaf3e.mp3",
+      "text": "The classmates look interested. Perhaps the topic is interesting.",
+      "kind": "phrase",
+      "bytes": 66499,
+      "sha256": "664cebbaf48425ba7c6014db3d32206976ca833b8f31004296624a1ffa0c5e9e"
+    },
+    {
+      "id": "783a031fd9b4ab",
+      "file": "783a031fd9b4ab.mp3",
+      "text": "I think she is preparing to speak because she is holding her notes.",
+      "kind": "phrase",
+      "bytes": 58140,
+      "sha256": "713c7f014ab82cf771fa7b5f602a3f2cbb37030eef4bc225d7839e0b6a75206f"
+    },
+    {
+      "id": "1592f600191a6f",
+      "file": "1592f600191a6f.mp3",
+      "text": "A friendly question could help break the ice.",
+      "kind": "phrase",
+      "bytes": 41004,
+      "sha256": "a0642939c0705765107c5ff7d83db5aa88602f91d02bb8f388468a7bbb7d6842"
+    },
+    {
+      "id": "c43342230e2ce2",
+      "file": "c43342230e2ce2.mp3",
+      "text": "What clue makes you think that?",
+      "kind": "phrase",
+      "bytes": 27629,
+      "sha256": "c1502e15c0b2db1a210f93ba8250c1db1fe0ef4041e7ee23433b203e98e47003"
+    }
+  ]
+}

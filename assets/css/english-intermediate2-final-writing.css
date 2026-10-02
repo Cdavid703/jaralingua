@@ -1,0 +1,30 @@
+/* Keep the established institutional paper; fixes are scoped to this final. */
+[data-exam-code="intermediate-course-2-final-writing-task"] [hidden]{display:none!important}
+[data-exam-code="intermediate-course-2-final-writing-task"] #sourceRubricPanel{margin:1rem 0;padding:1rem;border:1px solid #dbe5ed;border-radius:12px;line-height:1.6}
+[data-exam-code="intermediate-course-2-final-writing-task"] #sourceRubricPanel summary{cursor:pointer;font-weight:750}
+[data-exam-code="intermediate-course-2-final-writing-task"] .institutional-paper .instructions{padding-left:.3rem}
+[data-exam-code="intermediate-course-2-final-writing-task"] .institutional-paper .instructions ol{padding-left:1.5rem}
+@media(max-width:640px){[data-exam-code="intermediate-course-2-final-writing-task"] .institutional-paper input,[data-exam-code="intermediate-course-2-final-writing-task"] .institutional-paper textarea{font-size:16px}}
+
+/* Both sign-in entry points use the shared panel, anchored to the viewport. */
+[data-exam-code="intermediate-course-2-final-writing-task"] .site-header {
+  /* A backdrop filter would make the header contain its fixed descendants. */
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+[data-exam-code="intermediate-course-2-final-writing-task"] .navbar {
+  overflow: visible;
+}
+[data-exam-code="intermediate-course-2-final-writing-task"] .jaralingua-auth-nav .auth-panel {
+  position: fixed;
+  top: max(76px, calc(env(safe-area-inset-top) + 14px));
+  left: auto;
+  right: max(12px, env(safe-area-inset-right));
+  max-height: calc(100vh - 88px);
+  max-height: calc(100dvh - 88px);
+}
+@media (max-width: 680px) {
+  [data-exam-code="intermediate-course-2-final-writing-task"] .jaralingua-auth-nav .auth-panel {
+    left: max(12px, env(safe-area-inset-left));
+  }
+}

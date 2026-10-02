@@ -1,0 +1,35 @@
+.ie2-u5-listening-page .ie2-listening-hero{background:linear-gradient(90deg,rgba(3,12,32,.98),rgba(3,12,32,.87) 40%,rgba(3,12,32,.26)),url('../img/english-intermediate-2/unit-5/behind-the-picture/07-community.webp') center/cover no-repeat;position:relative;min-height:440px}
+.ie2-u5-listening-page .ie2-listening-hero h1{max-width:15ch;font-size:clamp(2.35rem,5.4vw,4.35rem)}
+.ie2-u5-listening-page .ie2-listening-hero-content{padding-top:1rem;padding-bottom:1rem}
+.ie2-u5-listening-page .ie2-listening-hero .jl-page-qr-card img{width:100%;height:100%;min-height:0;max-height:none;object-fit:contain}
+.ie2-u5-listening-page .ie2-listen-pass-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ie2-u5-listening-page .ie2-reading-quiz{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;align-items:start}
+.ie2-u5-listening-page .ie2-reading-quiz>.ie2-reading-actions,.ie2-u5-listening-page .ie2-reading-quiz>.ie2-reading-result{grid-column:1/-1}
+.ie2-u5-listening-page .ie2-reading-question{margin:0;min-width:0}
+.ie2-u5-listening-page .ie2-reading-question fieldset{border:0;margin:0;padding:0;min-width:0}
+.ie2-u5-listening-page .ie2-reading-question label{min-height:44px;line-height:1.5}
+.ie2-u5-listening-page .ie2-listening-vocab-grid,.ie2-u5-listening-page .ie2-language-detective{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ie2-u5-listening-page .ie2-language-detective h3{color:var(--ie2-teal);font-size:1rem}
+.u5l-say{font:inherit;line-height:1.5;text-align:left;min-height:44px;max-width:100%;padding:.4rem .05rem;border:0;border-bottom:2px dotted var(--ie2-teal);background:transparent;color:var(--ie2-navy);cursor:pointer}
+.u5l-say>span{color:var(--ie2-teal);white-space:nowrap;font-size:.85em}
+.u5l-say:hover,.u5l-say[aria-pressed=true]{background:#dcefe8}
+.u5l-audio-error{display:block;color:#96341f;line-height:1.4;font-size:.9rem}
+.u5l-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+.ie2-u5-listening-page .site-header{position:relative;overflow:visible;backdrop-filter:none;-webkit-backdrop-filter:none}
+.ie2-u5-listening-page .navbar,.ie2-u5-listening-page .nav-links{overflow:visible;flex-wrap:wrap}
+.ie2-u5-listening-page .jaralingua-auth-nav .auth-panel{position:fixed;top:var(--u5-auth-top,12px);right:18px;left:auto;bottom:auto;margin:0;width:min(380px,calc(100vw - 36px));height:auto;max-height:var(--u5-auth-height,calc(100dvh - 24px));overflow-y:auto;background:white;color:var(--ie2-ink)}
+.ie2-u5-listening-page button:focus-visible,.ie2-u5-listening-page summary:focus-visible,.ie2-u5-listening-page input:focus-visible{outline:3px solid #b67614;outline-offset:3px}
+.ie2-u5-listening-page .ie2-listening-block .intermediate2-kicker{color:var(--ie2-navy)}
+@media(max-width:1100px){.ie2-u5-listening-page .ie2-reading-quiz,.ie2-u5-listening-page .ie2-listening-vocab-grid,.ie2-u5-listening-page .ie2-language-detective{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.ie2-u5-listening-page .ie2-reading-quiz,.ie2-u5-listening-page .ie2-listening-vocab-grid,.ie2-u5-listening-page .ie2-language-detective,.ie2-u5-listening-page .ie2-listen-pass-grid{grid-template-columns:1fr}.ie2-u5-listening-page .jaralingua-auth-nav .auth-panel{right:12px;left:12px;width:auto;padding:18px 12px}.ie2-u5-listening-page input{font-size:16px}.ie2-u5-listening-page .ie2-listening-hero{min-height:380px}.ie2-u5-listening-page .ie2-listening-hero h1{font-size:2.6rem}}
+
+.ie2-u5-listening-page [hidden]{display:none!important}
+
+.ie2-u5-listening-page .ie2-reading-question label{display:flex;align-items:flex-start;gap:.6rem}
+.ie2-u5-listening-page .ie2-reading-question label input{flex:0 0 auto;margin-top:.35rem}
+.ie2-u5-listening-page .ie2-reading-question label>span{min-width:0}
+.u5l-option-letter{display:inline-block;min-width:1.4em;color:var(--ie2-navy)}
+.u5l-teacher-tools{margin-top:1rem}
+#teacherTranscript{background:#fff;color:var(--ie2-navy);border-radius:12px;padding:clamp(1rem,2vw,1.5rem);margin-top:1rem;font-weight:400;line-height:1.65}
+#teacherTranscript h3{color:var(--ie2-teal)}
+#transcriptText p{margin:.8rem 0;white-space:pre-wrap}

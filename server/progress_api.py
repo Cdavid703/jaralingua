@@ -198,6 +198,14 @@ INTERMEDIATE2_UNIT3_PRONUNCIATION_SUBMISSIONS_PATH = os.environ.get(
     "JARALINGUA_INTERMEDIATE2_UNIT3_PRONUNCIATION_SUBMISSIONS",
     "/var/lib/jaralingua/intermediate2-unit3-pronunciation-submissions.json"
 )
+INTERMEDIATE2_UNIT4_PRONUNCIATION_SUBMISSIONS_PATH = os.environ.get(
+    "JARALINGUA_INTERMEDIATE2_UNIT4_PRONUNCIATION_SUBMISSIONS",
+    "/var/lib/jaralingua/intermediate2-unit4-pronunciation-submissions.json"
+)
+INTERMEDIATE2_UNIT5_PRONUNCIATION_SUBMISSIONS_PATH = os.environ.get(
+    "JARALINGUA_INTERMEDIATE2_UNIT5_PRONUNCIATION_SUBMISSIONS",
+    "/var/lib/jaralingua/intermediate2-unit5-pronunciation-submissions.json"
+)
 INTERMEDIATE2_UNIT2_LISTENING_SUBMISSIONS_PATH = os.environ.get(
     "JARALINGUA_INTERMEDIATE2_UNIT2_LISTENING_SUBMISSIONS",
     "/var/lib/jaralingua/intermediate2-unit2-listening-submissions.json"
@@ -272,6 +280,12 @@ INTERMEDIATE2_UNIT3_PRONUNCIATION_REFERENCE = (
     "First, hook up the monitor, look up the error code, and turn the volume down. "
     "Identity theft is a serious security risk, so if a suspicious message asks for sensitive information, you mustn't share your password."
 )
+INTERMEDIATE2_UNIT4_PRONUNCIATION_ID = "intermediate2Unit4MovieReviewPronunciation"
+INTERMEDIATE2_UNIT4_PRONUNCIATION_VERSION = "2026.1"
+INTERMEDIATE2_UNIT4_PRONUNCIATION_REFERENCE = "Have you ever seen this science fiction movie? I've already watched the original, but I haven't seen the sequel yet. The plot is gripping because the characters face a difficult choice. Although the ending is predictable, the acting is convincing. The band has just released a catchy soundtrack. The music brings the characters to life and makes the story memorable. If you're looking for a great movie, check it out. It kept me on the edge of my seat."
+INTERMEDIATE2_UNIT5_PRONUNCIATION_ID = "intermediate2Unit5FirstImpressionsPronunciation"
+INTERMEDIATE2_UNIT5_PRONUNCIATION_VERSION = "2026.1"
+INTERMEDIATE2_UNIT5_PRONUNCIATION_REFERENCE = "The man looks worried, and his friend seems calm. He looks like a student waiting for an important result. He must be nervous because his hands are shaking. He might be waiting for exam results, but we can't be sure. I think he feels tired because the long wait is tiring. I guess he needs support. Perhaps she can cheer him up. She seems kind and has a heart of gold. He takes a breath to calm down, and she stays beside him."
 INTERMEDIATE_FINAL_ORAL_PARTNER_COACH_ID = "finalOralPartnerCoachFollowUp"
 INTERMEDIATE_FINAL_WRITING_TEST_ID = "intermediateFinalWritingTest20"
 INTERMEDIATE_INTEGRATED_TASK_ID = "intermediateIntegratedTask20"
@@ -3067,6 +3081,240 @@ def submit_intermediate2_unit3_pronunciation(profile, payload):
     )
     response = intermediate2_unit1_pronunciation_public_item(submission)
     response.update({"ok": True, "idempotentReplay": False})
+    return 200, response
+
+
+def read_intermediate2_unit4_pronunciation_submissions():
+    default = {
+        "schemaVersion": 1,
+        "activityId": INTERMEDIATE2_UNIT4_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT4_PRONUNCIATION_VERSION,
+        "submissions": []
+    }
+    path = INTERMEDIATE2_UNIT4_PRONUNCIATION_SUBMISSIONS_PATH
+    if not os.path.exists(path):
+        return default
+    try:
+        with open(path, "r", encoding="utf-8-sig") as handle:
+            data = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return default
+    if not isinstance(data, dict):
+        return default
+    submissions = data.get("submissions")
+    if not isinstance(submissions, list):
+        submissions = []
+    data["schemaVersion"] = 1
+    data["activityId"] = INTERMEDIATE2_UNIT4_PRONUNCIATION_ID
+    data["activityVersion"] = INTERMEDIATE2_UNIT4_PRONUNCIATION_VERSION
+    data["submissions"] = [item for item in submissions if isinstance(item, dict)]
+    return data
+
+
+def submit_intermediate2_unit4_pronunciation(profile, payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_payload"}
+    student_key = intermediate2_pronunciation_student_key(profile)
+    if not student_key:
+        return 403, {"error": "student_identity_missing"}
+    client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+    if len(client_submission_id) < 8:
+        return 400, {"error": "invalid_client_submission_id"}
+    details = payload.get("details") if isinstance(payload.get("details"), dict) else {}
+    reference_text = clean_text(details.get("referenceText"), 3000)
+    if reference_text != INTERMEDIATE2_UNIT4_PRONUNCIATION_REFERENCE:
+        return 400, {"error": "reference_text_mismatch"}
+
+    store = read_intermediate2_unit4_pronunciation_submissions()
+    submissions = store.setdefault("submissions", [])
+    existing = next((
+        item for item in submissions
+        if item.get("studentKey") == student_key
+        and item.get("clientSubmissionId") == client_submission_id
+    ), None)
+    if isinstance(existing, dict):
+        response = intermediate2_unit1_pronunciation_public_item(existing)
+        response.update({"ok": True, "teacherInboxOnly": True, "idempotentReplay": True})
+        return 200, response
+
+    metrics = {
+        "overall": clean_score_metric(details.get("overall")),
+        "accuracy": clean_score_metric(details.get("accuracy")),
+        "completeness": clean_score_metric(details.get("completeness")),
+        "fluency": clean_score_metric(details.get("fluency")),
+        "wpm": clean_score_metric(details.get("wpm"), 0, 300)
+    }
+    if any(metrics[key] is None for key in ("overall", "accuracy", "completeness", "fluency")):
+        return 400, {"error": "invalid_metrics"}
+    audio_ref = save_pronunciation_audio(
+        INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR,
+        {"id": student_key, "email": student_key},
+        INTERMEDIATE2_UNIT4_PRONUNCIATION_ID,
+        payload
+    )
+    if not audio_ref:
+        return 400, {"error": "missing_audio"}
+
+    submitted_at = now_iso()
+    attempt_number = 1 + sum(1 for item in submissions if item.get("studentKey") == student_key)
+    receipt_id = submission_receipt_code(
+        local_auth_secret(),
+        INTERMEDIATE2_UNIT4_PRONUNCIATION_ID,
+        INTERMEDIATE2_UNIT4_PRONUNCIATION_VERSION,
+        student_key,
+        submitted_at,
+        client_submission_id
+    )
+    submission = {
+        "activityId": INTERMEDIATE2_UNIT4_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT4_PRONUNCIATION_VERSION,
+        "clientSubmissionId": client_submission_id,
+        "receiptId": receipt_id,
+        "studentKey": student_key,
+        "studentName": clean_text(profile.get("name") or profile.get("fullName") or profile.get("displayName"), 180) or student_key,
+        "studentEmail": normalize_email(profile.get("email")),
+        "submittedAt": submitted_at,
+        "attemptNumber": attempt_number,
+        "overall": metrics["overall"],
+        "accuracy": metrics["accuracy"],
+        "completeness": metrics["completeness"],
+        "fluency": metrics["fluency"],
+        "wpm": metrics["wpm"],
+        "transcript": clean_text(details.get("transcript"), 3000),
+        "referenceText": reference_text,
+        "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
+        "stageLabel": clean_text(details.get("stageLabel"), 120),
+        "audio": audio_ref,
+        "status": "received",
+        "teacherInboxOnly": True,
+        "gradebookProjected": False,
+        "affectsAverage": False
+    }
+    submissions.append(submission)
+    write_json_file(
+        INTERMEDIATE2_UNIT4_PRONUNCIATION_SUBMISSIONS_PATH,
+        store,
+        ".intermediate2-unit4-pronunciation-"
+    )
+    response = intermediate2_unit1_pronunciation_public_item(submission)
+    response.update({"ok": True, "teacherInboxOnly": True, "idempotentReplay": False})
+    return 200, response
+
+
+def read_intermediate2_unit5_pronunciation_submissions():
+    default = {
+        "schemaVersion": 1,
+        "activityId": INTERMEDIATE2_UNIT5_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT5_PRONUNCIATION_VERSION,
+        "submissions": []
+    }
+    path = INTERMEDIATE2_UNIT5_PRONUNCIATION_SUBMISSIONS_PATH
+    if not os.path.exists(path):
+        return default
+    try:
+        with open(path, "r", encoding="utf-8-sig") as handle:
+            data = json.load(handle)
+    except (OSError, json.JSONDecodeError):
+        return default
+    if not isinstance(data, dict):
+        return default
+    submissions = data.get("submissions")
+    if not isinstance(submissions, list):
+        submissions = []
+    data["schemaVersion"] = 1
+    data["activityId"] = INTERMEDIATE2_UNIT5_PRONUNCIATION_ID
+    data["activityVersion"] = INTERMEDIATE2_UNIT5_PRONUNCIATION_VERSION
+    data["submissions"] = [item for item in submissions if isinstance(item, dict)]
+    return data
+
+
+def submit_intermediate2_unit5_pronunciation(profile, payload):
+    if not isinstance(payload, dict):
+        return 400, {"error": "invalid_payload"}
+    student_key = intermediate2_pronunciation_student_key(profile)
+    if not student_key:
+        return 403, {"error": "student_identity_missing"}
+    client_submission_id = clean_text(payload.get("clientSubmissionId"), 120)
+    if len(client_submission_id) < 8:
+        return 400, {"error": "invalid_client_submission_id"}
+    details = payload.get("details") if isinstance(payload.get("details"), dict) else {}
+    reference_text = clean_text(details.get("referenceText"), 3000)
+    if reference_text != INTERMEDIATE2_UNIT5_PRONUNCIATION_REFERENCE:
+        return 400, {"error": "reference_text_mismatch"}
+
+    store = read_intermediate2_unit5_pronunciation_submissions()
+    submissions = store.setdefault("submissions", [])
+    existing = next((
+        item for item in submissions
+        if item.get("studentKey") == student_key
+        and item.get("clientSubmissionId") == client_submission_id
+    ), None)
+    if isinstance(existing, dict):
+        response = intermediate2_unit1_pronunciation_public_item(existing)
+        response.update({"ok": True, "teacherInboxOnly": True, "idempotentReplay": True})
+        return 200, response
+
+    metrics = {
+        "overall": clean_score_metric(details.get("overall")),
+        "accuracy": clean_score_metric(details.get("accuracy")),
+        "completeness": clean_score_metric(details.get("completeness")),
+        "fluency": clean_score_metric(details.get("fluency")),
+        "wpm": clean_score_metric(details.get("wpm"), 0, 300)
+    }
+    if any(metrics[key] is None for key in ("overall", "accuracy", "completeness", "fluency")):
+        return 400, {"error": "invalid_metrics"}
+    audio_ref = save_pronunciation_audio(
+        INTERMEDIATE2_PRONUNCIATION_AUDIO_DIR,
+        {"id": student_key, "email": student_key},
+        INTERMEDIATE2_UNIT5_PRONUNCIATION_ID,
+        payload
+    )
+    if not audio_ref:
+        return 400, {"error": "missing_audio"}
+
+    submitted_at = now_iso()
+    attempt_number = 1 + sum(1 for item in submissions if item.get("studentKey") == student_key)
+    receipt_id = submission_receipt_code(
+        local_auth_secret(),
+        INTERMEDIATE2_UNIT5_PRONUNCIATION_ID,
+        INTERMEDIATE2_UNIT5_PRONUNCIATION_VERSION,
+        student_key,
+        submitted_at,
+        client_submission_id
+    )
+    submission = {
+        "activityId": INTERMEDIATE2_UNIT5_PRONUNCIATION_ID,
+        "activityVersion": INTERMEDIATE2_UNIT5_PRONUNCIATION_VERSION,
+        "clientSubmissionId": client_submission_id,
+        "receiptId": receipt_id,
+        "studentKey": student_key,
+        "studentName": clean_text(profile.get("name") or profile.get("fullName") or profile.get("displayName"), 180) or student_key,
+        "studentEmail": normalize_email(profile.get("email")),
+        "submittedAt": submitted_at,
+        "attemptNumber": attempt_number,
+        "overall": metrics["overall"],
+        "accuracy": metrics["accuracy"],
+        "completeness": metrics["completeness"],
+        "fluency": metrics["fluency"],
+        "wpm": metrics["wpm"],
+        "transcript": clean_text(details.get("transcript"), 3000),
+        "referenceText": reference_text,
+        "missedWords": clean_text_list(details.get("missedWords"), 30, 80),
+        "stageLabel": clean_text(details.get("stageLabel"), 120),
+        "audio": audio_ref,
+        "status": "received",
+        "teacherInboxOnly": True,
+        "gradebookProjected": False,
+        "affectsAverage": False
+    }
+    submissions.append(submission)
+    write_json_file(
+        INTERMEDIATE2_UNIT5_PRONUNCIATION_SUBMISSIONS_PATH,
+        store,
+        ".intermediate2-unit5-pronunciation-"
+    )
+    response = intermediate2_unit1_pronunciation_public_item(submission)
+    response.update({"ok": True, "teacherInboxOnly": True, "idempotentReplay": False})
     return 200, response
 
 
@@ -17016,6 +17264,238 @@ def intermediate_final_writing_student_action(profile, payload):
     }
 
 
+# Intermediate 2 final writing: isolated from the midterm; closed by default.
+INTERMEDIATE2_FINAL_WRITING_PATH = os.environ.get("JARALINGUA_INTERMEDIATE2_FINAL_WRITING_DATA", "/var/lib/jaralingua/intermediate2-final-writing.json")
+INTERMEDIATE2_FINAL_WRITING_SUBMISSIONS_PATH = os.environ.get("JARALINGUA_INTERMEDIATE2_FINAL_WRITING_SUBMISSIONS_DATA", "/var/lib/jaralingua/intermediate2-final-writing-submissions.json")
+INTERMEDIATE2_FINAL_WRITING_ID = "intermediate2FinalWritingTask20"
+INTERMEDIATE2_FINAL_WRITING_EVALUATION = {"id": INTERMEDIATE2_FINAL_WRITING_ID, "title": "INTERMEDIATE COURSE 2 - FINAL WRITING TASK (20%)", "weight": 20, "type": "Final writing evaluation", "description": "First Impression: individual informal email; teacher-reviewed /50 rubric."}
+INTERMEDIATE2_FINAL_WRITING_RUBRIC = INTERMEDIATE2_MIDTERM_WRITING_RUBRIC
+
+
+def default_intermediate2_final_writing_bundle():
+    return {'schemaVersion': 1, 'state': {'isOpen': False, 'openedAt': None, 'closedAt': None, 'updatedAt': None, 'openedBy': None, 'reopenUntilEpoch': None, 'reopenUntilLabel': '', 'reopenStudentIds': []}, 'exam': {'id': 'intermediate-course-2-final-writing-task', 'title': 'INTERMEDIATE COURSE 2 – FINAL WRITING TASK (20%)', 'topic': 'First Impression', 'taskType': 'informal e-mail', 'audience': 'your best friend', 'purpose': 'to describe how to make a good first impression', 'durationMinutes': 50, 'targetWords': 200, 'prompt': 'You’re feeling nervous because you’ll meet your partner’s family for the first time this weekend. You decide to write an email to your best friend to share your thoughts and feelings about the upcoming meeting. In your message, explain what you’re planning to do to make a good first impression and what kind of topics you might want to discuss (or avoid!) during the visit.', 'instructions': ['Begin with a friendly greeting and tell your friend how you are feeling about the meeting.', 'Describe what you are planning or doing to make a good first impression (e.g., appearance, behavior, preparation).', 'Use connectors (e.g., first, then, also, however) and introductory sentences to organize your ideas clearly.', 'Share which topics are good to talk about and which ones should be avoided when meeting your partner’s family.', 'End your email with a friendly closing.', 'Write about 200 words.', 'Spend 50 minutes on this task.'], 'totalPoints': 50, 'sourceRubric': ['CONTENT: Successfully completes the task by providing information and ideas with reasonable precision on topics of immediate relevance.', 'COMPOSING (ORGANIZATION): Can link a series of short, discrete simple elements into a connected, linear sequence of points. Can relate a straightforward narrative or description as a linear sequence of points', 'VOCABULARY: Has a sufficient vocabulary to express ideas and to provide information through texts related to topics which are familiar or of personal interest..', 'STRUCTURE: Uses reasonably accurately a repertoire of frequently used grammatical patterns associated with more predictable situations though with noticeable mother tongue influence. Errors occur, but it is clear what he/she is trying to express in his/her texts.', 'MECHANICS: Produces continuous writing which is generally intelligible throughout. Spelling, punctuation, capitalization, and layout are accurate enough and don’t interfere with the meaning or communication purpose of the task.'], 'attribution': 'Created by Juan Marulanda,  November 2025.'}}
+
+
+def read_intermediate2_final_writing_bundle():
+    data = read_basic_final_oral_json(INTERMEDIATE2_FINAL_WRITING_PATH, default_intermediate2_final_writing_bundle())
+    defaults = default_intermediate2_final_writing_bundle()
+    if not isinstance(data.get("state"), dict) or not isinstance(data.get("exam"), dict):
+        raise BasicFinalOralStorageError("invalid_intermediate2_final_writing_bundle")
+    for group in ("state", "exam"):
+        for key, value in defaults[group].items():
+            data[group].setdefault(key, value)
+    data["schemaVersion"] = 1
+    return data
+
+
+def write_intermediate2_final_writing_bundle(data):
+    write_json_file(INTERMEDIATE2_FINAL_WRITING_PATH, data, ".intermediate2-final-writing-")
+
+
+def read_intermediate2_final_writing_store():
+    data = read_basic_final_oral_json(INTERMEDIATE2_FINAL_WRITING_SUBMISSIONS_PATH, {"schemaVersion": 1, "attempts": {}, "submissions": {}, "idempotency": {}, "events": []})
+    for key in ("attempts", "submissions", "idempotency"):
+        if not isinstance(data.get(key), dict):
+            raise BasicFinalOralStorageError("invalid_intermediate2_final_writing_store:" + key)
+    if not isinstance(data.get("events"), list):
+        data["events"] = []
+    data["schemaVersion"] = 1
+    return data
+
+
+def write_intermediate2_final_writing_store(data):
+    write_json_file(INTERMEDIATE2_FINAL_WRITING_SUBMISSIONS_PATH, data, ".intermediate2-final-writing-submissions-")
+
+
+def intermediate2_final_writing_event(store, event_type, profile=None, student_id="", detail=""):
+    events = store.setdefault("events", [])
+    events.append({"type": clean_text(event_type, 80), "studentId": clean_text(student_id, 40), "actor": normalize_email((profile or {}).get("email")), "detail": clean_text(detail, 500), "at": now_iso()})
+    store["events"] = events[-600:]
+
+
+def intermediate2_final_writing_public_exam(bundle):
+    exam = bundle.get("exam", {})
+    return {"id": clean_text(exam.get("id"), 100), "title": clean_text(exam.get("title"), 220), "topic": clean_text(exam.get("topic"), 160), "taskType": clean_text(exam.get("taskType"), 80), "audience": clean_text(exam.get("audience"), 180), "purpose": clean_text(exam.get("purpose"), 280), "durationMinutes": int(exam.get("durationMinutes", 50) or 50), "targetWords": int(exam.get("targetWords", 200) or 200), "prompt": clean_text(exam.get("prompt"), 1800), "instructions": [clean_text(item, 600) for item in exam.get("instructions", []) if clean_text(item, 600)], "totalPoints": clean_exam_number(exam.get("totalPoints", 50))}
+
+
+def intermediate2_final_writing_can_start(role, state, student_id):
+    return role in ("admin", "teacher") or (isinstance(state, dict) and state.get("isOpen") is True) or basic_integrated_student_has_reopen(state, student_id)
+
+
+def intermediate2_final_writing_apply_gradebook(grades_data, store):
+    changed = False
+    if ensure_evaluation_template(grades_data, INTERMEDIATE2_FINAL_WRITING_EVALUATION):
+        changed = True
+    for student in grades_data.get("students", []):
+        if not isinstance(student, dict):
+            continue
+        student_id = clean_text(student.get("id"), 40)
+        submitted = store.get("submissions", {}).get(student_id)
+        if not isinstance(submitted, dict):
+            continue
+        details = student.setdefault("gradeDetails", {})
+        detail = {"evaluationId": INTERMEDIATE2_FINAL_WRITING_ID, "activityTitle": INTERMEDIATE2_FINAL_WRITING_EVALUATION["title"], "status": clean_text(submitted.get("status"), 80), "submittedAt": clean_text(submitted.get("submittedAt"), 80), "gradedAt": clean_text(submitted.get("gradedAt"), 80), "receiptId": clean_text(submitted.get("receiptId"), 100), "score50": submitted.get("score50"), "grade": submitted.get("grade"), "pendingTeacherReview": submitted.get("status") != "graded", "officialAssessment": True, "weight": 20}
+        if details.get(INTERMEDIATE2_FINAL_WRITING_ID) != detail:
+            details[INTERMEDIATE2_FINAL_WRITING_ID] = detail
+            changed = True
+        if submitted.get("status") == "graded" and isinstance(submitted.get("grade"), (int, float)):
+            grades = student.setdefault("grades", {})
+            if grades.get(INTERMEDIATE2_FINAL_WRITING_ID) != submitted.get("grade"):
+                grades[INTERMEDIATE2_FINAL_WRITING_ID] = submitted.get("grade")
+                changed = True
+    return changed
+
+
+def intermediate2_final_writing_state_payload(profile, grades_data, bundle, store):
+    role = grade_user_role(profile, grades_data)
+    student = matched_student_for_profile(profile, grades_data)
+    student_id = clean_text(student.get("id"), 40) if isinstance(student, dict) else ""
+    state = bundle.get("state", {})
+    attempt = store.get("attempts", {}).get(student_id) if student_id else None
+    submitted = store.get("submissions", {}).get(student_id) if student_id else None
+    return {"role": role, "allowStudentIdClaim": grades_data.get("allowStudentIdClaim") is True, "state": state, "exam": intermediate2_final_writing_public_exam(bundle) if role in ("admin", "teacher") else None, "student": basic_integrated_student_identity(student) if isinstance(student, dict) else None, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, role), "canStart": bool(student_id and intermediate2_final_writing_can_start(role, state, student_id) and not isinstance(attempt, dict) and not isinstance(submitted, dict)), "canResume": bool(student_id and isinstance(attempt, dict) and attempt.get("status") == "in_progress" and not isinstance(submitted, dict))}
+
+
+def intermediate2_final_writing_health(grades_data, store):
+    students, counts = [], {"total": 0, "inProgress": 0, "pendingReview": 0, "graded": 0}
+    for item in grades_data.get("students", []):
+        if not isinstance(item, dict):
+            continue
+        student_id = clean_text(item.get("id"), 40)
+        attempt, submitted = store.get("attempts", {}).get(student_id), store.get("submissions", {}).get(student_id)
+        status = "not-started"
+        if isinstance(submitted, dict):
+            status = "graded" if submitted.get("status") == "graded" else "pending-review"
+            counts["graded" if status == "graded" else "pendingReview"] += 1
+        elif isinstance(attempt, dict) and attempt.get("status") == "in_progress":
+            status = "in-progress"; counts["inProgress"] += 1
+        counts["total"] += 1
+        students.append({"id": student_id, "fullName": clean_text(item.get("fullName"), 200), "email": normalize_email(item.get("email")), "status": status, "attempt": basic_final_writing_public_attempt(attempt), "submission": basic_final_writing_submission_public(submitted, "teacher")})
+    return {"counts": counts, "students": students}
+
+
+def intermediate2_final_writing_start(profile, payload):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    role, student = grade_user_role(profile, grades_data), matched_student_for_profile(profile, grades_data)
+    if not isinstance(student, dict):
+        return 403, {"error": "student_required"}
+    student_id = clean_text(student.get("id"), 40)
+    bundle, store = read_intermediate2_final_writing_bundle(), read_intermediate2_final_writing_store()
+    submitted = store["submissions"].get(student_id)
+    if isinstance(submitted, dict):
+        return 409, {"error": "already_submitted", "submission": basic_final_writing_submission_public(submitted, role)}
+    existing = store["attempts"].get(student_id)
+    if isinstance(existing, dict) and existing.get("status") == "in_progress":
+        existing["lastSeenAt"] = now_iso(); write_intermediate2_final_writing_store(store)
+        return 200, {"ok": True, "resumed": True, "attempt": basic_final_writing_public_attempt(existing), "exam": intermediate2_final_writing_public_exam(bundle)}
+    if not intermediate2_final_writing_can_start(role, bundle.get("state", {}), student_id):
+        return 403, {"error": "exam_closed", "state": bundle.get("state", {})}
+    started = datetime.now(timezone.utc); duration = max(5, min(180, int(bundle["exam"].get("durationMinutes", 50) or 50)))
+    attempt = {"attemptId": "I2FW-" + secrets.token_hex(8).upper(), "studentId": student_id, "studentName": clean_text(student.get("fullName"), 200), "email": normalize_email(profile.get("email") or student.get("email")), "courseCode": clean_text((payload or {}).get("courseCode"), 40) or "INTERMEDIATE-C2", "status": "in_progress", "startedAt": started.isoformat().replace("+00:00", "Z"), "expiresAt": (started + timedelta(minutes=duration)).isoformat().replace("+00:00", "Z"), "lastSeenAt": now_iso(), "lastSavedAt": None, "submittedAt": None, "revision": 0, "draft": {"from": "", "to": "", "subject": "", "body": "", "updatedAt": None}}
+    store["attempts"][student_id] = attempt; intermediate2_final_writing_event(store, "attempt_started", profile, student_id, attempt["attemptId"]); write_intermediate2_final_writing_store(store)
+    return 200, {"ok": True, "resumed": False, "attempt": basic_final_writing_public_attempt(attempt), "exam": intermediate2_final_writing_public_exam(bundle)}
+
+
+def intermediate2_final_writing_save_draft(profile, payload):
+    grades_data, student = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH), matched_student_for_profile(profile, read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH))
+    if not isinstance(student, dict):
+        return 403, {"error": "student_required"}
+    student_id, store = clean_text(student.get("id"), 40), read_intermediate2_final_writing_store()
+    attempt = store["attempts"].get(student_id)
+    if not isinstance(attempt, dict) or attempt.get("status") != "in_progress":
+        return 404, {"error": "attempt_not_found"}
+    if clean_text(payload.get("attemptId"), 120) != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    timestamp = now_iso(); attempt["draft"] = {"from": clean_text(payload.get("from"), 160), "to": clean_text(payload.get("to"), 160), "subject": clean_text(payload.get("subject"), 240), "body": clean_basic_writing(payload.get("body")), "updatedAt": timestamp}; attempt["courseCode"] = clean_text(payload.get("courseCode"), 40) or "INTERMEDIATE-C2"; attempt["lastSavedAt"] = timestamp; attempt["lastSeenAt"] = timestamp; attempt["revision"] = int(attempt.get("revision", 0) or 0) + 1
+    write_intermediate2_final_writing_store(store)
+    return 200, {"ok": True, "attempt": basic_final_writing_public_attempt(attempt)}
+
+
+def intermediate2_final_writing_submit(profile, payload):
+    grades_data, student = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH), matched_student_for_profile(profile, read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH))
+    if not isinstance(student, dict):
+        return 403, {"error": "student_required"}
+    student_id, store = clean_text(student.get("id"), 40), read_intermediate2_final_writing_store()
+    submission_key = clean_text(payload.get("clientSubmissionId"), 160)
+    if not submission_key:
+        return 400, {"error": "missing_client_submission_id"}
+    existing = store["submissions"].get(student_id)
+    if isinstance(existing, dict):
+        if store["idempotency"].get(student_id) == submission_key:
+            return 200, {"ok": True, "idempotent": True, "submission": basic_final_writing_submission_public(existing, grade_user_role(profile, grades_data))}
+        return 409, {"error": "already_submitted", "submission": basic_final_writing_submission_public(existing, grade_user_role(profile, grades_data))}
+    attempt = store["attempts"].get(student_id)
+    if not isinstance(attempt, dict) or attempt.get("status") != "in_progress":
+        return 404, {"error": "attempt_not_found"}
+    if clean_text(payload.get("attemptId"), 120) != clean_text(attempt.get("attemptId"), 120):
+        return 409, {"error": "attempt_mismatch"}
+    body, timestamp = clean_basic_writing(payload.get("body")), now_iso()
+    submitted = {"receiptId": "I2FW-" + secrets.token_hex(5).upper(), "attemptId": attempt["attemptId"], "studentId": student_id, "studentName": clean_text(student.get("fullName"), 200), "email": normalize_email(profile.get("email") or student.get("email")), "courseCode": clean_text(payload.get("courseCode"), 40) or "INTERMEDIATE-C2", "submittedAt": timestamp, "status": "pending_teacher_review", "workflowStatus": "pending_teacher_review", "wordCount": basic_word_count(body), "from": clean_text(payload.get("from"), 160), "to": clean_text(payload.get("to"), 160), "subject": clean_text(payload.get("subject"), 240), "body": body, "rubric": None, "score50": None, "grade": None, "teacherComments": "", "gradedAt": None, "gradedBy": ""}
+    store["submissions"][student_id] = submitted; store["idempotency"][student_id] = submission_key; attempt["status"] = "submitted"; attempt["submittedAt"] = timestamp; intermediate2_final_writing_event(store, "submitted", profile, student_id, submitted["receiptId"]); write_intermediate2_final_writing_store(store)
+    if intermediate2_final_writing_apply_gradebook(grades_data, store):
+        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    return 200, {"ok": True, "submission": basic_final_writing_submission_public(submitted, grade_user_role(profile, grades_data))}
+
+
+def intermediate2_final_writing_grade(profile, payload):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    rubric = payload.get("rubric") if isinstance(payload.get("rubric"), dict) else {}
+    try:
+        rubric = {key: int(rubric.get(key)) for key in ("content", "composing", "vocabulary", "structure", "mechanics")}
+    except (TypeError, ValueError):
+        return 400, {"error": "invalid_rubric"}
+    if any(value < 1 or value > 10 for value in rubric.values()):
+        return 400, {"error": "invalid_rubric"}
+    student_id, store = clean_text(payload.get("studentId"), 40), read_intermediate2_final_writing_store(); submitted = store["submissions"].get(student_id)
+    if not isinstance(submitted, dict):
+        return 404, {"error": "submission_not_found"}
+    submitted["rubric"] = rubric; submitted["score50"] = sum(rubric.values()); submitted["grade"] = round(submitted["score50"] / 10, 2); submitted["status"] = "graded"; submitted["workflowStatus"] = "published"; submitted["teacherComments"] = clean_text(payload.get("teacherComments"), 5000); submitted["gradedAt"] = now_iso(); submitted["gradedBy"] = normalize_email(profile.get("email")); intermediate2_final_writing_event(store, "graded", profile, student_id, "Teacher published /50 rubric")
+    write_intermediate2_final_writing_store(store); intermediate2_final_writing_apply_gradebook(grades_data, store); write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    return 200, {"ok": True, "submission": basic_final_writing_submission_public(submitted, "teacher")}
+
+
+def intermediate2_final_writing_submissions(profile):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    store = read_intermediate2_final_writing_store()
+    if intermediate2_final_writing_apply_gradebook(grades_data, store):
+        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    submissions = [basic_final_writing_submission_public(item, "teacher") for item in store["submissions"].values() if isinstance(item, dict)]
+    submissions.sort(key=lambda item: item.get("submittedAt") or "", reverse=True)
+    return 200, {"role": grade_user_role(profile, grades_data), "submissions": submissions, "rubricCriteria": INTERMEDIATE2_FINAL_WRITING_RUBRIC, "sourceRubric": read_intermediate2_final_writing_bundle()["exam"]["sourceRubric"], "health": intermediate2_final_writing_health(grades_data, store)}
+
+
+def intermediate2_final_writing_student_action(profile, payload):
+    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+        return 403, {"error": "forbidden"}
+    student_id, action = clean_text(payload.get("studentId"), 40), clean_text(payload.get("action"), 80)
+    if action not in ("reset", "reopen", "reset-and-reopen", "close-reopen"):
+        return 400, {"error": "invalid_action"}
+    bundle, store = read_intermediate2_final_writing_bundle(), read_intermediate2_final_writing_store(); state = bundle["state"]; changed = False
+    if action in ("reset", "reset-and-reopen"):
+        store["attempts"].pop(student_id, None); store["submissions"].pop(student_id, None); store["idempotency"].pop(student_id, None)
+        for item in grades_data.get("students", []):
+            if isinstance(item, dict) and clean_text(item.get("id"), 40) == student_id:
+                item.setdefault("grades", {}).pop(INTERMEDIATE2_FINAL_WRITING_ID, None); item.setdefault("gradeDetails", {}).pop(INTERMEDIATE2_FINAL_WRITING_ID, None); changed = True
+        intermediate2_final_writing_event(store, "student_reset", profile, student_id, "Attempt and submission reset")
+    if action in ("reopen", "reset-and-reopen"):
+        try:
+            hours = max(1, min(168, int(payload.get("hours", 48) or 48)))
+        except (TypeError, ValueError):
+            hours = 48
+        allowed = state.setdefault("reopenStudentIds", []); state["reopenStudentIds"] = list({clean_text(item, 40) for item in allowed if clean_text(item, 40)} | {student_id}); state["reopenUntilEpoch"] = int(time.time()) + hours * 3600; state["reopenUntilLabel"] = "Available for selected students for " + str(hours) + " hours"; intermediate2_final_writing_event(store, "student_reopened", profile, student_id, state["reopenUntilLabel"])
+    if action == "close-reopen":
+        state["reopenStudentIds"] = [item for item in state.get("reopenStudentIds", []) if clean_text(item, 40) != student_id]; intermediate2_final_writing_event(store, "student_reopen_closed", profile, student_id, "Individual reopen removed")
+    state["updatedAt"] = now_iso(); write_intermediate2_final_writing_store(store); write_intermediate2_final_writing_bundle(bundle)
+    if changed:
+        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+    return 200, {"ok": True, "detail": "Student action completed", "health": intermediate2_final_writing_health(grades_data, store)}
+
+
 def default_intermediate2_midterm_writing_bundle():
     return {
         "schemaVersion": 1,
@@ -17737,6 +18217,58 @@ def sync_intermediate_manual_grade_edits(existing, next_data, profile):
 
 
 
+def intermediate2_integrated_service():
+    from intermediate2_integrated_exam import IntegratedExam
+    local_content = os.path.join(REPO_ROOT, "data", "private", "intermediate2-integrated-task")
+    return IntegratedExam(
+        os.environ.get("JARALINGUA_INTERMEDIATE2_INTEGRATED_DB", "/var/lib/jaralingua/intermediate2-integrated-task.sqlite3"),
+        os.environ.get("JARALINGUA_INTERMEDIATE2_INTEGRATED_CONTENT_DIR",
+                       local_content if os.name == "nt" else "/var/lib/jaralingua/intermediate2-integrated-task"))
+
+
+def handle_intermediate2_integrated(handler, profile, parsed, payload=None):
+    if not parsed.path.startswith("/api/intermediate2/integrated-task/"):
+        return False
+    from intermediate2_integrated_exam import ExamError
+    try:
+        with data_lock:
+            grades = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+            # This exam requires an existing verified account-to-roster link.
+            trusted = {k: v for k, v in profile.items() if k != "_studentIdClaim"}
+            student = matched_student_for_profile(trusted, grades)
+            actor = {"role": grade_user_role(trusted, grades),
+                     "key": intermediate2_pronunciation_student_key(trusted),
+                     "student": {"id": str(student["id"]), "fullName": student["fullName"]} if student else None}
+            exam = intermediate2_integrated_service()
+            action = parsed.path.rsplit("/", 1)[-1]
+            if handler.command == "GET" and action == "state":
+                result = exam.view(actor)
+            elif handler.command == "GET" and action == "audio":
+                binary_response(handler, 200, exam.audio(actor), "audio/mpeg")
+                return True
+            elif handler.command == "POST":
+                result = exam.action(actor, action, payload)
+                if action in ("submit", "grade"):
+                    try:
+                        if exam.project_grades(grades):
+                            write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades, ".intermediate2-grades-")
+                        result["gradebookSynced"] = True
+                    except Exception as error:
+                        # The receipt is already durable; GET Grades reconciles the projection.
+                        result["gradebookSynced"] = False
+                        print("Integrated 2 grade projection:", type(error).__name__, flush=True)
+            else:
+                json_response(handler, 404, {"error": "unknown_route"})
+                return True
+            json_response(handler, 200, result)
+    except ExamError as error:
+        json_response(handler, error.status, {"error": error.message, **error.extra})
+    except Exception as error:
+        print("Integrated 2 exam:", type(error).__name__, flush=True)
+        json_response(handler, 503, {"error": "exam_temporarily_unavailable"})
+    return True
+
+
 def handle_film_festival(handler, profile, parsed, payload=None):
     if not parsed.path.startswith("/api/intermediate2/film-festival/"):
         return False
@@ -17957,6 +18489,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
         profile = self.require_user()
         if not profile:
             return
+        if handle_intermediate2_integrated(self, profile, parsed):
+            return
         from basic2_integrated_routes import handle as handle_basic2_integrated
         if handle_basic2_integrated(self, profile, parsed, globals()):
             return
@@ -17964,6 +18498,19 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if handle_basic2_final_postcard(self, profile, parsed, globals()):
             return
         if handle_film_festival(self, profile, parsed):
+            return
+        from intermediate2_group_stories import handle as handle_group_stories
+        if handle_group_stories(self, profile, parsed, globals()):
+            return
+
+        if parsed.path == "/api/intermediate2/unit5-first-impression/transcript":
+            with data_lock:
+                grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                from intermediate2_unit5_listening import TITLE, TRANSCRIPT
+                json_response(self, 200, {"title": TITLE, "transcript": TRANSCRIPT})
             return
 
         if parsed.path == "/api/intermediate2/unit2-listening/submissions":
@@ -18001,15 +18548,23 @@ class ProgressHandler(BaseHTTPRequestHandler):
             "/api/intermediate2/unit2-pronunciation/submissions",
             "/api/intermediate2/unit2-pronunciation/audio",
             "/api/intermediate2/unit3-pronunciation/submissions",
-            "/api/intermediate2/unit3-pronunciation/audio"
+            "/api/intermediate2/unit3-pronunciation/audio",
+            "/api/intermediate2/unit4-pronunciation/submissions",
+            "/api/intermediate2/unit4-pronunciation/audio",
+            "/api/intermediate2/unit5-pronunciation/submissions",
+            "/api/intermediate2/unit5-pronunciation/audio"
         ):
             query = urllib.parse.parse_qs(parsed.query)
             with data_lock:
-                grades_data = read_grades_data(INTERMEDIATE_ENGLISH_GRADES_PATH)
+                grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH if any(u in parsed.path for u in ("/unit4-pronunciation/", "/unit5-pronunciation/")) else INTERMEDIATE_ENGLISH_GRADES_PATH)
                 role = grade_user_role(profile, grades_data)
                 is_staff = role in ("admin", "teacher")
                 student_key = intermediate2_pronunciation_student_key(profile)
-                if "/unit3-pronunciation/" in parsed.path:
+                if "/unit5-pronunciation/" in parsed.path:
+                    store = read_intermediate2_unit5_pronunciation_submissions()
+                elif "/unit4-pronunciation/" in parsed.path:
+                    store = read_intermediate2_unit4_pronunciation_submissions()
+                elif "/unit3-pronunciation/" in parsed.path:
                     store = read_intermediate2_unit3_pronunciation_submissions()
                 elif "/unit2-pronunciation/" in parsed.path:
                     store = read_intermediate2_unit2_pronunciation_submissions()
@@ -19454,6 +20009,20 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 200, grade_payload_for(profile, grades_data, query))
             return
 
+        if parsed.path == "/api/intermediate2/final-writing/state":
+            try:
+                with data_lock:
+                    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                    bundle = read_intermediate2_final_writing_bundle()
+                    store = read_intermediate2_final_writing_store()
+                    if intermediate2_final_writing_apply_gradebook(grades_data, store):
+                        write_json_file(INTERMEDIATE2_ENGLISH_GRADES_PATH, grades_data, ".intermediate2-grades-")
+                    json_response(self, 200, intermediate2_final_writing_state_payload(profile, grades_data, bundle, store))
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+
         if parsed.path == "/api/intermediate2/midterm-writing/state":
             try:
                 with data_lock:
@@ -19466,6 +20035,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
+
+        if parsed.path == "/api/intermediate2/final-writing/submissions":
+            try:
+                with data_lock:
+                    status, response = intermediate2_final_writing_submissions(profile)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
 
         if parsed.path == "/api/intermediate2/midterm-writing/submissions":
             try:
@@ -19480,6 +20059,10 @@ class ProgressHandler(BaseHTTPRequestHandler):
             with data_lock:
                 grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
                 changed = migrate_intermediate2_midterm_writing_gradebook(grades_data)
+                if intermediate2_integrated_service().project_grades(grades_data):
+                    changed = True
+                if intermediate2_final_writing_apply_gradebook(grades_data, read_intermediate2_final_writing_store()):
+                    changed = True
                 if ensure_evaluation_template(grades_data, INTERMEDIATE2_MIDTERM_WRITING_EVALUATION):
                     changed = True
                 if changed:
@@ -19574,6 +20157,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 })
             return
 
+
+        if parsed.path == "/api/basic2/unit6-maple-cafe/transcript":
+            with data_lock:
+                grades_data = read_grades_data(BASIC2_ENGLISH_GRADES_PATH)
+                if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                    json_response(self, 403, {"error": "teacher_only"})
+                    return
+                from basic2_unit6_listening import TITLE, TRANSCRIPT
+                json_response(self, 200, {"title": TITLE, "transcript": TRANSCRIPT})
+            return
 
         if parsed.path == "/api/basic2/unit5-my-holidays/transcript":
             with data_lock:
@@ -19713,6 +20306,8 @@ class ProgressHandler(BaseHTTPRequestHandler):
         payload = self.read_json_body()
         if payload is None:
             return
+        if handle_intermediate2_integrated(self, profile, parsed, payload):
+            return
         from basic2_integrated_routes import handle as handle_basic2_integrated
         if handle_basic2_integrated(self, profile, parsed, globals(), payload):
             return
@@ -19720,6 +20315,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if handle_basic2_final_postcard(self, profile, parsed, globals(), payload):
             return
         if handle_film_festival(self, profile, parsed, payload):
+            return
+        from intermediate2_group_stories import handle as handle_group_stories
+        if handle_group_stories(self, profile, parsed, globals(), payload):
             return
         if (parsed.path.startswith("/api/intermediate/") or parsed.path.startswith("/api/basic/") or parsed.path.startswith("/api/basic2/")) and isinstance(payload, dict):
             profile = dict(profile)
@@ -19746,6 +20344,18 @@ class ProgressHandler(BaseHTTPRequestHandler):
         if parsed.path == "/api/intermediate2/unit3-pronunciation/submit":
             with data_lock:
                 status, response = submit_intermediate2_unit3_pronunciation(profile, payload)
+            json_response(self, status, response)
+            return
+
+        if parsed.path == "/api/intermediate2/unit4-pronunciation/submit":
+            with data_lock:
+                status, response = submit_intermediate2_unit4_pronunciation(profile, payload)
+            json_response(self, status, response)
+            return
+
+        if parsed.path == "/api/intermediate2/unit5-pronunciation/submit":
+            with data_lock:
+                status, response = submit_intermediate2_unit5_pronunciation(profile, payload)
             json_response(self, status, response)
             return
 
@@ -19825,6 +20435,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path == "/api/intermediate2/final-writing/start":
+            try:
+                with data_lock:
+                    status, response = intermediate2_final_writing_start(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+
         if parsed.path == "/api/intermediate2/midterm-writing/start":
             try:
                 with data_lock:
@@ -19842,6 +20462,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
+
+        if parsed.path == "/api/intermediate2/final-writing/submit":
+            try:
+                with data_lock:
+                    status, response = intermediate2_final_writing_submit(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
 
         if parsed.path == "/api/intermediate2/midterm-writing/submit":
             try:
@@ -23590,6 +24220,31 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path == "/api/intermediate2/final-writing/state":
+            try:
+                with data_lock:
+                    grades_data = read_grades_data(INTERMEDIATE2_ENGLISH_GRADES_PATH)
+                    if grade_user_role(profile, grades_data) not in ("admin", "teacher"):
+                        json_response(self, 403, {"error": "forbidden"})
+                        return
+                    bundle = read_intermediate2_final_writing_bundle()
+                    state = bundle.setdefault("state", {})
+                    desired_open, timestamp = payload.get("isOpen") is True, now_iso()
+                    state["isOpen"], state["updatedAt"] = desired_open, timestamp
+                    if desired_open:
+                        state["openedAt"], state["openedBy"], state["closedAt"] = timestamp, normalize_email(profile.get("email")), None
+                    else:
+                        state["closedAt"] = timestamp
+                    write_intermediate2_final_writing_bundle(bundle)
+                    store = read_intermediate2_final_writing_store()
+                    intermediate2_final_writing_event(store, "exam_opened" if desired_open else "exam_closed", profile, "", "Global Intermediate 2 Final Writing availability changed")
+                    write_intermediate2_final_writing_store(store)
+                    json_response(self, 200, {"ok": True, "state": state})
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+
         if parsed.path == "/api/intermediate2/midterm-writing/state":
             try:
                 with data_lock:
@@ -23662,6 +24317,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path == "/api/intermediate2/final-writing/draft":
+            try:
+                with data_lock:
+                    status, response = intermediate2_final_writing_save_draft(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+
         if parsed.path == "/api/intermediate2/midterm-writing/draft":
             try:
                 with data_lock:
@@ -23689,6 +24354,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
 
+        if parsed.path in ("/api/intermediate2/final-writing/grade", "/api/intermediate2/final-writing/submissions/grade"):
+            try:
+                with data_lock:
+                    status, response = intermediate2_final_writing_grade(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
+
         if parsed.path in ("/api/intermediate2/midterm-writing/grade", "/api/intermediate2/midterm-writing/submissions/grade"):
             try:
                 with data_lock:
@@ -23706,6 +24381,16 @@ class ProgressHandler(BaseHTTPRequestHandler):
             except BasicFinalOralStorageError:
                 json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
             return
+
+        if parsed.path == "/api/intermediate2/final-writing/student-action":
+            try:
+                with data_lock:
+                    status, response = intermediate2_final_writing_student_action(profile, payload)
+                    json_response(self, status, response)
+            except BasicFinalOralStorageError:
+                json_response(self, 503, {"error": "assessment_storage_unavailable", "retryable": False})
+            return
+
 
         if parsed.path == "/api/intermediate2/midterm-writing/student-action":
             try:

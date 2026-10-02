@@ -1,0 +1,70 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "id": "312b441d67b4a0",
+      "file": "312b441d67b4a0.mp3",
+      "text": "The keys can’t be in the backpack.",
+      "kind": "phrase",
+      "bytes": 34316,
+      "sha256": "44de7016e83c20eb1c95e127a25c9c8cf61efd149a1a46990a8a01a5ac9d8f83"
+    },
+    {
+      "id": "d7337937931db5",
+      "file": "d7337937931db5.mp3",
+      "text": "Emma can’t be in your classroom now.",
+      "kind": "phrase",
+      "bytes": 35988,
+      "sha256": "778991d59951b1f0c0287df5cb90a9d39303ea03bd76e294171880c9997748f9"
+    },
+    {
+      "id": "20dd779a68dfc1",
+      "file": "20dd779a68dfc1.mp3",
+      "text": "She must be relieved.",
+      "kind": "phrase",
+      "bytes": 21777,
+      "sha256": "4e80b2ed2d354a1f5fdf02749cdd3c78d39b1ebdda438a041a37ec194fb0e5e8"
+    },
+    {
+      "id": "7e3bc18b230612",
+      "file": "7e3bc18b230612.mp3",
+      "text": "She might be nervous.",
+      "kind": "phrase",
+      "bytes": 20942,
+      "sha256": "1e1893db821e8f2c8e9dd74d3dbaf230de436618528efeb0d1f719ab2907e666"
+    },
+    {
+      "id": "349ed6ea6d59bb",
+      "file": "349ed6ea6d59bb.mp3",
+      "text": "He might be bored.",
+      "kind": "phrase",
+      "bytes": 20942,
+      "sha256": "6e6708ad990579306782d2e1972cd3d153eb02417e0ef1f373c73e5b01c33897"
+    },
+    {
+      "id": "29bd289dd6713a",
+      "file": "29bd289dd6713a.mp3",
+      "text": "It must be raining outside.",
+      "kind": "phrase",
+      "bytes": 28465,
+      "sha256": "e701d72741a62e30e02c82d978105e2167cd5fc2d737ae11fddfa0f0eeb397de"
+    },
+    {
+      "id": "96485a04e1ac7f",
+      "file": "96485a04e1ac7f.mp3",
+      "text": "The library can’t be open to visitors now.",
+      "kind": "phrase",
+      "bytes": 40586,
+      "sha256": "aefb9f92c103d48ac8bb449e582874b3eb8ccc712c8a090f5ac622591deb6cbe"
+    },
+    {
+      "id": "4a8bb3f84dd2b1",
+      "file": "4a8bb3f84dd2b1.mp3",
+      "text": "They must be interested in the exhibition.",
+      "kind": "phrase",
+      "bytes": 36824,
+      "sha256": "23347329b5e48c623ef3dd7fc513a1bc684643ac39565c2a15aaed06cae9bd40"
+    }
+  ]
+}

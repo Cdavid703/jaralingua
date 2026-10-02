@@ -1,0 +1,37 @@
+[
+  {
+    "file": "418fc346195000.mp3",
+    "expected": "It looks like a class presentation.",
+    "heard": "It looks like a class presentation",
+    "matched": true,
+    "sha256": "5cc7e1effb11e27194011431d443699bcf88ed49bfe530a33447347e3773dd71"
+  },
+  {
+    "file": "1dbe09673eaf3e.mp3",
+    "expected": "The classmates look interested. Perhaps the topic is interesting.",
+    "heard": "The classmates look interested. Perhaps the topic is interesting.",
+    "matched": true,
+    "sha256": "664cebbaf48425ba7c6014db3d32206976ca833b8f31004296624a1ffa0c5e9e"
+  },
+  {
+    "file": "783a031fd9b4ab.mp3",
+    "expected": "I think she is preparing to speak because she is holding her notes.",
+    "heard": "I think she is preparing to speak because she is holding her notes",
+    "matched": true,
+    "sha256": "713c7f014ab82cf771fa7b5f602a3f2cbb37030eef4bc225d7839e0b6a75206f"
+  },
+  {
+    "file": "1592f600191a6f.mp3",
+    "expected": "A friendly question could help break the ice.",
+    "heard": "A friendly question could help break the ice.",
+    "matched": true,
+    "sha256": "a0642939c0705765107c5ff7d83db5aa88602f91d02bb8f388468a7bbb7d6842"
+  },
+  {
+    "file": "c43342230e2ce2.mp3",
+    "expected": "What clue makes you think that?",
+    "heard": "What clue makes you think that?",
+    "matched": true,
+    "sha256": "c1502e15c0b2db1a210f93ba8250c1db1fe0ef4041e7ee23433b203e98e47003"
+  }
+]

@@ -1,0 +1,1152 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "accent": "General American",
+  "provider": "ElevenLabs",
+  "items": [
+    {
+      "id": "88b54e3da580f1",
+      "file": "88b54e3da580f1.mp3",
+      "text": "She might be waiting for someone.",
+      "kind": "phrase",
+      "bytes": 29301,
+      "sha256": "49693655c86fd1d9b9942b3739c754a29df4564492f7158ac3a369d58a91269f"
+    },
+    {
+      "id": "ed605c873de6ec",
+      "file": "ed605c873de6ec.mp3",
+      "text": "He must be tired. He has worked all night.",
+      "kind": "phrase",
+      "bytes": 42675,
+      "sha256": "67a0fef5df88610e3d0bc1acd544e60f2a52a0de909f11173a7d44f8238195a2"
+    },
+    {
+      "id": "ef963d4f48cee2",
+      "file": "ef963d4f48cee2.mp3",
+      "text": "She looks nervous, but she might simply be concentrating.",
+      "kind": "phrase",
+      "bytes": 51453,
+      "sha256": "d75c6f5b8ce0e5ef19c816382c6adcf9d2053830ad0aeb2973d6e07bf90e5920"
+    },
+    {
+      "id": "b0cd7848877baf",
+      "file": "b0cd7848877baf.mp3",
+      "text": "The lights are on, and I can hear voices. Someone must be inside.",
+      "kind": "phrase",
+      "bytes": 60648,
+      "sha256": "19dc13d9b92fcb297a7e50f3332411d02180619bda57f937da2fcf6173c4d60c"
+    },
+    {
+      "id": "8e1293ca828b99",
+      "file": "8e1293ca828b99.mp3",
+      "text": "The lights are on. Someone might be inside.",
+      "kind": "phrase",
+      "bytes": 37660,
+      "sha256": "dc91454b1f94e11eef32b2a7c717802c7aa2ecbb02de7af621251fc1aaecc9cb"
+    },
+    {
+      "id": "87cf3f4c85aa96",
+      "file": "87cf3f4c85aa96.mp3",
+      "text": "That can’t be Leo. Leo is in another country today.",
+      "kind": "phrase",
+      "bytes": 54378,
+      "sha256": "6b13a834038c090d4adf0da499847b2b302b2ca4b076f768e7efe460c940bba6"
+    },
+    {
+      "id": "a9a9ab8673ebb8",
+      "file": "a9a9ab8673ebb8.mp3",
+      "text": "The lights may be on a timer. They could switch on automatically.",
+      "kind": "phrase",
+      "bytes": 56050,
+      "sha256": "ab41ca8600b626436ba3b8e751bc1979d216bccc9ba7937c203fc06bad5637f3"
+    },
+    {
+      "id": "f9c771519fa78b",
+      "file": "f9c771519fa78b.mp3",
+      "text": "She might be tired.",
+      "kind": "phrase",
+      "bytes": 20524,
+      "sha256": "d4ada43b919c5ef2990f60488cdb9e048929d3ba68169f68c5b98c539234929e"
+    },
+    {
+      "id": "48430234f7a561",
+      "file": "48430234f7a561.mp3",
+      "text": "She may be tired.",
+      "kind": "phrase",
+      "bytes": 20524,
+      "sha256": "513193b400e065bbb7738176b8be2224cfb99c34c8e35db76c611f5bace85e9e"
+    },
+    {
+      "id": "d638ab3725b848",
+      "file": "d638ab3725b848.mp3",
+      "text": "Could she be waiting for us?",
+      "kind": "phrase",
+      "bytes": 26375,
+      "sha256": "0a9456d8c9df774cdc88f294f2afb18f0b05acc169ab969ad63da153316967c7"
+    },
+    {
+      "id": "662535d75b18b4",
+      "file": "662535d75b18b4.mp3",
+      "text": "She might be waiting for a friend.",
+      "kind": "phrase",
+      "bytes": 29301,
+      "sha256": "183947880849382e4a344dc602caf0d4de5ae51b9e3c1b01c76c39d39ea00d40"
+    },
+    {
+      "id": "417e818ee9658c",
+      "file": "417e818ee9658c.mp3",
+      "text": "She might know the answer.",
+      "kind": "phrase",
+      "bytes": 27211,
+      "sha256": "eb354c2f69fdc9456b8283cc10294b7979ab14679106ef998e1cc5d1f070d2e5"
+    },
+    {
+      "id": "8a7dfdba48f384",
+      "file": "8a7dfdba48f384.mp3",
+      "text": "He must be tired.",
+      "kind": "phrase",
+      "bytes": 23449,
+      "sha256": "15d81d18d8151861e939159faf3a7af7271d7f8a0600550e322fab053366d3c9"
+    },
+    {
+      "id": "5528ca06a51284",
+      "file": "5528ca06a51284.mp3",
+      "text": "You must wear a visitor badge.",
+      "kind": "phrase",
+      "bytes": 27211,
+      "sha256": "15f16741206937319ad1eb14be1f0cf43789b7a47f3b234a09605dee7b34d029"
+    },
+    {
+      "id": "ad9fabbaec232a",
+      "file": "ad9fabbaec232a.mp3",
+      "text": "This can’t be the right room. The room number is different.",
+      "kind": "phrase",
+      "bytes": 52288,
+      "sha256": "c62d50cdfe42a781e280024f78adf83b77f781de858799a1211b39577a3d1d76"
+    },
+    {
+      "id": "881f0d5e5ba965",
+      "file": "881f0d5e5ba965.mp3",
+      "text": "You mustn’t enter this room.",
+      "kind": "phrase",
+      "bytes": 26375,
+      "sha256": "cd36c7daeb5d36535973123a9cf86b4bbd96683b878e0387d6c6e36cc7278bbd"
+    },
+    {
+      "id": "651004ba0dcda3",
+      "file": "651004ba0dcda3.mp3",
+      "text": "She might not be ready yet.",
+      "kind": "phrase",
+      "bytes": 26375,
+      "sha256": "b59f3f48fccd308cc8cba354e783d3f9b15a17cc244e4c836f78b3cfd6954bdf"
+    },
+    {
+      "id": "17789e4c6f3e16",
+      "file": "17789e4c6f3e16.mp3",
+      "text": "You don’t have to bring any food.",
+      "kind": "phrase",
+      "bytes": 28465,
+      "sha256": "fa5fa57a440cc7db679e10141fef1ed303e5a753b65f4af388be9d3bb09f6e3a"
+    },
+    {
+      "id": "3505c80f080abd",
+      "file": "3505c80f080abd.mp3",
+      "text": "She must be tired.",
+      "kind": "phrase",
+      "bytes": 21777,
+      "sha256": "2bba518bdb1cadf83ebb0fdbfa213b9ad1782680b75d3041748e62e84d89c03b"
+    },
+    {
+      "id": "0e81c30283b296",
+      "file": "0e81c30283b296.mp3",
+      "text": "He might be nervous.",
+      "kind": "phrase",
+      "bytes": 22613,
+      "sha256": "26569bcd27d9b1157e6a79d08d896ec8d29b507567231fdacd0007dbf6addb46"
+    },
+    {
+      "id": "1d04b0ccfc31b6",
+      "file": "1d04b0ccfc31b6.mp3",
+      "text": "She must know him.",
+      "kind": "phrase",
+      "bytes": 23449,
+      "sha256": "e7b40bed1d7f0ac022aded25963355549cbea34a1de5844a10ffa3e802dc93be"
+    },
+    {
+      "id": "0c497577f6dc52",
+      "file": "0c497577f6dc52.mp3",
+      "text": "She looks nervous.",
+      "kind": "phrase",
+      "bytes": 20524,
+      "sha256": "1a8f1c98080f87040c481b2f8ebea2cd4dbf86ba46741eee512e14975dcd7116"
+    },
+    {
+      "id": "ff7cf96bbfc73b",
+      "file": "ff7cf96bbfc73b.mp3",
+      "text": "She seems relieved.",
+      "kind": "phrase",
+      "bytes": 21777,
+      "sha256": "107fb7b579072eeae1ea3ffbf97bdff60850ec5a9afb4fd6b747d9d1a5b8e4ff"
+    },
+    {
+      "id": "b9014eb65bce9f",
+      "file": "b9014eb65bce9f.mp3",
+      "text": "The guide seems interesting.",
+      "kind": "phrase",
+      "bytes": 25539,
+      "sha256": "fae83b646fbf7de778c2255820c48a18849c88b07095d8893820341fa69ca00a"
+    },
+    {
+      "id": "e6ab5170218664",
+      "file": "e6ab5170218664.mp3",
+      "text": "She looks confident.",
+      "kind": "phrase",
+      "bytes": 21777,
+      "sha256": "1b1ce96753e8a36907a15398541e30e2f996cd6870a7ce3488391632f3f73e9c"
+    },
+    {
+      "id": "2aaabd3fb54492",
+      "file": "2aaabd3fb54492.mp3",
+      "text": "She seems confident.",
+      "kind": "phrase",
+      "bytes": 24285,
+      "sha256": "97d03f44e6e339490b09ba627076b41f8739faeaf593e24ba1898d9fb6e61cda"
+    },
+    {
+      "id": "37577618c30c8c",
+      "file": "37577618c30c8c.mp3",
+      "text": "He looks like a volunteer.",
+      "kind": "phrase",
+      "bytes": 27211,
+      "sha256": "64b17f818f1338e34f59cc64f0abedd75d304b0acaab59ab3252334a87966c02"
+    },
+    {
+      "id": "86e24080cd2cde",
+      "file": "86e24080cd2cde.mp3",
+      "text": "It looks like he needs help.",
+      "kind": "phrase",
+      "bytes": 23449,
+      "sha256": "f3f047460abe0885e2b4c871ca73301ed92e767cc4aab7ff3fb30c5f26a4e871"
+    },
+    {
+      "id": "c272378456d352",
+      "file": "c272378456d352.mp3",
+      "text": "He seems to know everyone.",
+      "kind": "phrase",
+      "bytes": 24703,
+      "sha256": "1b01854be30850a200e927b594416c6c1158b55a27956b1c72ab06687a3d0c33"
+    },
+    {
+      "id": "ddf2e76286ca2f",
+      "file": "ddf2e76286ca2f.mp3",
+      "text": "She is nervous.",
+      "kind": "phrase",
+      "bytes": 20524,
+      "sha256": "0a2432428286e27bf56aed0ae871f34c0d8d8d7aa118da5ac9a74367d801340b"
+    },
+    {
+      "id": "df8815262c6e8e",
+      "file": "df8815262c6e8e.mp3",
+      "text": "He looks worried. They look worried.",
+      "kind": "phrase",
+      "bytes": 40586,
+      "sha256": "22c529e29ef8394052b4ae6631ae4bd01fa6ba5f8132b331ca0984487552539f"
+    },
+    {
+      "id": "c7955405233716",
+      "file": "c7955405233716.mp3",
+      "text": "Does she seem upset?",
+      "kind": "phrase",
+      "bytes": 22613,
+      "sha256": "ebef8a8f51b12aa8525e848540926245e3b4c230c9d59f80f27227e582fb7e37"
+    },
+    {
+      "id": "4292a5b05f6882",
+      "file": "4292a5b05f6882.mp3",
+      "text": "She doesn’t look worried.",
+      "kind": "phrase",
+      "bytes": 24703,
+      "sha256": "62ae181ea6e7a296e0f5ae486201ce02a7a77e2ae0180bf80e13a6da7c85b17c"
+    },
+    {
+      "id": "be16ad3b5ec5eb",
+      "file": "be16ad3b5ec5eb.mp3",
+      "text": "She looks tired.",
+      "kind": "phrase",
+      "bytes": 18852,
+      "sha256": "e832c7d01663084e6f469912167ab50ad8f08742aa17cc859671d1e73fbef033"
+    },
+    {
+      "id": "1ad164e16aa179",
+      "file": "1ad164e16aa179.mp3",
+      "text": "Does she look nervous?",
+      "kind": "phrase",
+      "bytes": 20524,
+      "sha256": "430f04a638ef9054aeafa842c85ef9c949b98cf099024f82f0b1df9ce0e27fc7"
+    },
+    {
+      "id": "d56c5d6d07c9e1",
+      "file": "d56c5d6d07c9e1.mp3",
+      "text": "I feel bored.",
+      "kind": "phrase",
+      "bytes": 15926,
+      "sha256": "d0c40740ebe3e9b4cad74495b9429fd0230eddac5c0222a19eff4cf733544b25"
+    },
+    {
+      "id": "e096be1c1038c4",
+      "file": "e096be1c1038c4.mp3",
+      "text": "The talk is boring.",
+      "kind": "phrase",
+      "bytes": 20942,
+      "sha256": "dde92434cefc1b9664a4b3c7ee7face95c28c679935035665eb23236df8b1629"
+    },
+    {
+      "id": "60e6aa4ad2d315",
+      "file": "60e6aa4ad2d315.mp3",
+      "text": "bored",
+      "kind": "phrase",
+      "bytes": 13000,
+      "sha256": "8975ff2c26974b4208dac77f98088693bd5137476e72cd161e112f97c1e0b76b"
+    },
+    {
+      "id": "f953f70b913234",
+      "file": "f953f70b913234.mp3",
+      "text": "boring",
+      "kind": "phrase",
+      "bytes": 15926,
+      "sha256": "84d21da0db4a2b3bdc1a824a329b3892ab758d278eb7a232b14603a9b1e0a23e"
+    },
+    {
+      "id": "a30d5f870e0bcb",
+      "file": "a30d5f870e0bcb.mp3",
+      "text": "interested",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "fb3daefac52d6fbb40c95ece0e732da8ed8ee88192702c027fc19df5345e18dc"
+    },
+    {
+      "id": "637ab2808704d8",
+      "file": "637ab2808704d8.mp3",
+      "text": "interesting",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "9515eae92619f9fa5021f918e816af6c393bd662c62ba4925f4e9b920b8d12bb"
+    },
+    {
+      "id": "3f53c1bc759164",
+      "file": "3f53c1bc759164.mp3",
+      "text": "The visitors are interested.",
+      "kind": "phrase",
+      "bytes": 24703,
+      "sha256": "efd78734717ddb919f9c2b7f8ea4af61e10f4f04715e23b54fd4ad6eb650af42"
+    },
+    {
+      "id": "ce6359b63b9b5e",
+      "file": "ce6359b63b9b5e.mp3",
+      "text": "The guide is interesting.",
+      "kind": "phrase",
+      "bytes": 22613,
+      "sha256": "6262c53fc62fc95afc4717e736c901a3dd899e7e05e138af69364d734754b269"
+    },
+    {
+      "id": "8d1c8a7a12c373",
+      "file": "8d1c8a7a12c373.mp3",
+      "text": "excited",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "8c57c01484de3836621fc414e61777db466b48c8e53fc882c6c670fb90c5ec70"
+    },
+    {
+      "id": "5ae666e5b1a641",
+      "file": "5ae666e5b1a641.mp3",
+      "text": "exciting",
+      "kind": "phrase",
+      "bytes": 15090,
+      "sha256": "85a9dc072aad3dcf776d4720e714f2346773eda69615792bf7a2acaf71e13978"
+    },
+    {
+      "id": "84126fa7a5fa24",
+      "file": "84126fa7a5fa24.mp3",
+      "text": "The students are excited.",
+      "kind": "phrase",
+      "bytes": 24285,
+      "sha256": "dfda3f3ee24af8f9381e06e2d2d6f95d089250f9d5558d49567fb9aaafcfe229"
+    },
+    {
+      "id": "adef797171f920",
+      "file": "adef797171f920.mp3",
+      "text": "The project is exciting.",
+      "kind": "phrase",
+      "bytes": 25539,
+      "sha256": "6377b39e3ee2e71cb8ff51e69a8bf0040f4bf93647b32fea58d921d3ad38232c"
+    },
+    {
+      "id": "f1937e8bf25a4b",
+      "file": "f1937e8bf25a4b.mp3",
+      "text": "confused",
+      "kind": "phrase",
+      "bytes": 15926,
+      "sha256": "78d76933e8b5c5d0374f00bd4f56694b73b235db36077e355b8feabee1ef0a4e"
+    },
+    {
+      "id": "9c0a2c8e1b0309",
+      "file": "9c0a2c8e1b0309.mp3",
+      "text": "confusing",
+      "kind": "phrase",
+      "bytes": 17598,
+      "sha256": "f40a373937a837efca845f1ee9f65672373a366a43a3528449b7ab49ce4d7096"
+    },
+    {
+      "id": "120d2f00843c14",
+      "file": "120d2f00843c14.mp3",
+      "text": "I am confused about the instructions.",
+      "kind": "phrase",
+      "bytes": 38078,
+      "sha256": "9cf3393045c2d5a6072de5172a02d642836a0497f9f41e3aba650ec64e0cf252"
+    },
+    {
+      "id": "2ca9ce5b994d11",
+      "file": "2ca9ce5b994d11.mp3",
+      "text": "The instructions are confusing.",
+      "kind": "phrase",
+      "bytes": 31391,
+      "sha256": "2abbdf395491f49bbbaadc7fbeb2122a9a74d051312f93d639b38e3a2ca63809"
+    },
+    {
+      "id": "0f471c347284f2",
+      "file": "0f471c347284f2.mp3",
+      "text": "surprised",
+      "kind": "phrase",
+      "bytes": 17598,
+      "sha256": "4ccc6475a52949ef59ef3377d3820ecd93588e8ee77577350e1d59d950f99d82"
+    },
+    {
+      "id": "3fc414de196c5d",
+      "file": "3fc414de196c5d.mp3",
+      "text": "surprising",
+      "kind": "phrase",
+      "bytes": 17598,
+      "sha256": "357986fb31a7e58deaaa363a8f07f098778a41c9cb6bcda766ece7d64c36695b"
+    },
+    {
+      "id": "7d18bd4f973baa",
+      "file": "7d18bd4f973baa.mp3",
+      "text": "We were surprised by the result.",
+      "kind": "phrase",
+      "bytes": 31391,
+      "sha256": "186a0a2a3141d44ebf9c337478c7b0384d5927b095cb61634a751fb7b48ec938"
+    },
+    {
+      "id": "6af2bfdd931649",
+      "file": "6af2bfdd931649.mp3",
+      "text": "The result was surprising.",
+      "kind": "phrase",
+      "bytes": 27211,
+      "sha256": "db825f5226cafbeb70b695488b50d9e3b305b058c70b7913e81c0f91f4d71546"
+    },
+    {
+      "id": "f12e1aedc45deb",
+      "file": "f12e1aedc45deb.mp3",
+      "text": "embarrassed",
+      "kind": "phrase",
+      "bytes": 17598,
+      "sha256": "ea405e912ee937a3e8ee99d1c7ca2476dbffa5588a33681a7756a3d4ace94b7a"
+    },
+    {
+      "id": "485b57e2138749",
+      "file": "485b57e2138749.mp3",
+      "text": "embarrassing",
+      "kind": "phrase",
+      "bytes": 17598,
+      "sha256": "508cea502d14da25d1219f45b9e15e6e3c7c09fe5ac5c89b098f15bec67d4b8c"
+    },
+    {
+      "id": "fac2f29e06fdc3",
+      "file": "fac2f29e06fdc3.mp3",
+      "text": "He felt embarrassed about the mistake.",
+      "kind": "phrase",
+      "bytes": 35152,
+      "sha256": "10e3f83b5c04841744602cff22cdc27217cff1fe9fcb63a8ba046d33aa96ed53"
+    },
+    {
+      "id": "e509a0ecd77313",
+      "file": "e509a0ecd77313.mp3",
+      "text": "The mistake was embarrassing.",
+      "kind": "phrase",
+      "bytes": 28465,
+      "sha256": "c1c4ede283b331cd39181516dae090c828d2712df92445b3aae618dfab118ac6"
+    },
+    {
+      "id": "0b3166762205da",
+      "file": "0b3166762205da.mp3",
+      "text": "He looks bored. The talk might be boring.",
+      "kind": "phrase",
+      "bytes": 41004,
+      "sha256": "741f60ed341a9272ca74397af9cf80bcdb43235c02b3027f29c417f14e4f8765"
+    },
+    {
+      "id": "f194d1314e7c0e",
+      "file": "f194d1314e7c0e.mp3",
+      "text": "The guide is interesting, and the visitors look interested.",
+      "kind": "phrase",
+      "bytes": 49363,
+      "sha256": "75d3dfe7dbb8a9b44cf1e470b5b88568cad19bb9fe83c436ec9b925f0a2dc24d"
+    },
+    {
+      "id": "00a337401a0eb0",
+      "file": "00a337401a0eb0.mp3",
+      "text": "Bored. Boring.",
+      "kind": "phrase",
+      "bytes": 20942,
+      "sha256": "d760460b395faea6d822ba2289864f8af3cdfad9a74099a3e2e238cd27a1727c"
+    },
+    {
+      "id": "1060ee02ca55dc",
+      "file": "1060ee02ca55dc.mp3",
+      "text": "Confused. Confusing.",
+      "kind": "phrase",
+      "bytes": 26375,
+      "sha256": "85a16f16083afd9ae91d47cc8f04f80de34e0909150c5c4b4a1527c2b8dd63cc"
+    },
+    {
+      "id": "07522b5584a1d5",
+      "file": "07522b5584a1d5.mp3",
+      "text": "Excited. Surprised. Embarrassed.",
+      "kind": "phrase",
+      "bytes": 41004,
+      "sha256": "2603fde98b6bc0f9ea9486d29434ef9e5bad79d45a3f89bc368692298612b19d"
+    },
+    {
+      "id": "4b70945a1d71e5",
+      "file": "4b70945a1d71e5.mp3",
+      "text": "I am bored.",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "77ba653db57dcd36decf81d543ca35499d6d9d51189ba89218670ff16c6f8da4"
+    },
+    {
+      "id": "58913c53719cd0",
+      "file": "58913c53719cd0.mp3",
+      "text": "I think she is worried.",
+      "kind": "phrase",
+      "bytes": 23449,
+      "sha256": "352f503d5d8bf8e4a5436a63f77b97e0185cb3bb4a8db5eb32a6bac302d4e483"
+    },
+    {
+      "id": "9e103cd8c7b43f",
+      "file": "9e103cd8c7b43f.mp3",
+      "text": "I guess he is waiting for a friend.",
+      "kind": "phrase",
+      "bytes": 33062,
+      "sha256": "e8db5998023c02cb6e47181304220c17043ce3cc181f50660ccbe4be45a0dba1"
+    },
+    {
+      "id": "c15a06e08755d7",
+      "file": "c15a06e08755d7.mp3",
+      "text": "Perhaps she needs more time.",
+      "kind": "phrase",
+      "bytes": 27211,
+      "sha256": "a58a549e98eaee0c366689010b5aec36f8f9958e7e55c45e35ae822dfb70fda7"
+    },
+    {
+      "id": "c27e6491ecba5e",
+      "file": "c27e6491ecba5e.mp3",
+      "text": "I don’t think he is angry.",
+      "kind": "phrase",
+      "bytes": 24703,
+      "sha256": "5b8e89f80ff1ad4868a2ad7e751888e625384c9dbce27e42dc30c417115bb229"
+    },
+    {
+      "id": "bb8d89e2b5b49c",
+      "file": "bb8d89e2b5b49c.mp3",
+      "text": "Maybe she is tired.",
+      "kind": "phrase",
+      "bytes": 23449,
+      "sha256": "3188c514944313947f6c32f3142395f12082dbc7c77a596df7e320f4ff51b3b0"
+    },
+    {
+      "id": "2e2bb8335616e3",
+      "file": "2e2bb8335616e3.mp3",
+      "text": "I think she is upset because she is very quiet.",
+      "kind": "phrase",
+      "bytes": 48527,
+      "sha256": "a823839d2d40c7707cffb3bf496671648b2abf5e9794bedd880c1c09b7cf038c"
+    },
+    {
+      "id": "3d0e49ebd371f8",
+      "file": "3d0e49ebd371f8.mp3",
+      "text": "That is possible, but she might just be tired.",
+      "kind": "phrase",
+      "bytes": 44765,
+      "sha256": "0b188718141b841b8679373d8ee1056befde551d36cabd08fb751d6e654ede0a"
+    },
+    {
+      "id": "8d5be9e869aead",
+      "file": "8d5be9e869aead.mp3",
+      "text": "You may be right. We could ask her.",
+      "kind": "phrase",
+      "bytes": 34316,
+      "sha256": "5460b6d4e5c80c4363a258dbc17512b342a7c42cdcfb0947e91c411e0155c39b"
+    },
+    {
+      "id": "b06eade6e216e1",
+      "file": "b06eade6e216e1.mp3",
+      "text": "I think she is tired.",
+      "kind": "phrase",
+      "bytes": 25539,
+      "sha256": "402e5392f9979d64afb2ad31ddc2d3263d5d3dca05168b7439988ce5e2888806"
+    },
+    {
+      "id": "1a57b77c113385",
+      "file": "1a57b77c113385.mp3",
+      "text": "He must be tired because he worked all night.",
+      "kind": "phrase",
+      "bytes": 38914,
+      "sha256": "50a2c2dd035b2e55449f8c994aacbe1e52ff020e7f6b5a274862064f9021ec62"
+    },
+    {
+      "id": "58831b9348bc2f",
+      "file": "58831b9348bc2f.mp3",
+      "text": "He worked all night, so he must be tired.",
+      "kind": "phrase",
+      "bytes": 38078,
+      "sha256": "98c2896144fa8d23ce28ad642903e5587dd7a1dc9325901ff4f8073c727327b1"
+    },
+    {
+      "id": "2f5b64b7047406",
+      "file": "2f5b64b7047406.mp3",
+      "text": "Although she feels nervous, she speaks clearly.",
+      "kind": "phrase",
+      "bytes": 46437,
+      "sha256": "5b8a4c4812fd024602692df8606751ed04a95703d1fba2135cd042255dd5164b"
+    },
+    {
+      "id": "4a584babb96538",
+      "file": "4a584babb96538.mp3",
+      "text": "She feels nervous, but she speaks clearly.",
+      "kind": "phrase",
+      "bytes": 38078,
+      "sha256": "fe240efbeeb8359123c917cd6fe9ea02b15f13fdf1341127c7ac6a1a87e4ae45"
+    },
+    {
+      "id": "a345f8b6366265",
+      "file": "a345f8b6366265.mp3",
+      "text": "She seems relieved because the presentation is over.",
+      "kind": "phrase",
+      "bytes": 49363,
+      "sha256": "f3c4489133c3a0a224618a21fd2d7ec009a3d3d7e20ded638a03d91486bbf791"
+    },
+    {
+      "id": "2aae5c957f7ae1",
+      "file": "2aae5c957f7ae1.mp3",
+      "text": "The trip was delayed because of the rain.",
+      "kind": "phrase",
+      "bytes": 34316,
+      "sha256": "64c43dcecfd0c048c35a739cb3cc54b491a038cbcb0246adfab6ac5b81e6bf1e"
+    },
+    {
+      "id": "22d73e3837e911",
+      "file": "22d73e3837e911.mp3",
+      "text": "The presentation is over, so she seems relieved.",
+      "kind": "phrase",
+      "bytes": 47691,
+      "sha256": "5be1056fd795d6411468014f0d7f83aa808c3f0a7c64a16cc68a84d86ff7b25e"
+    },
+    {
+      "id": "43ae192b958c7e",
+      "file": "43ae192b958c7e.mp3",
+      "text": "He seems shy, but he is very friendly.",
+      "kind": "phrase",
+      "bytes": 39750,
+      "sha256": "8f28a5ec93ec7798bc9353a5f133cca9e298a5ee7b03e42503bb8b1061bcaf87"
+    },
+    {
+      "id": "a5dde24bd62a2d",
+      "file": "a5dde24bd62a2d.mp3",
+      "text": "Although he seems shy, he is very friendly.",
+      "kind": "phrase",
+      "bytes": 43511,
+      "sha256": "d80808a7c221ee2b0f4669a94b42d07e21c872333e38a2576e0843e7afbe46dc"
+    },
+    {
+      "id": "af93e5e5d354fb",
+      "file": "af93e5e5d354fb.mp3",
+      "text": "He seems shy. He is very friendly, though.",
+      "kind": "phrase",
+      "bytes": 41004,
+      "sha256": "49416d61e94059b4c232b85634192861327c2346e5be46e1a462787726c64ef0"
+    },
+    {
+      "id": "91b73dcbce2af1",
+      "file": "91b73dcbce2af1.mp3",
+      "text": "Although she is nervous, she speaks clearly.",
+      "kind": "phrase",
+      "bytes": 43511,
+      "sha256": "19c02673b2ccca32c9d81c0579a7eef625eeb431f5a04c53485784c4cb76acf6"
+    },
+    {
+      "id": "aeb6554f353e4e",
+      "file": "aeb6554f353e4e.mp3",
+      "text": "She speaks clearly although she is nervous.",
+      "kind": "phrase",
+      "bytes": 40586,
+      "sha256": "59aa16067fb1a1361036b50dcb463c163589fba75ead5a268ffe66ea9281c95d"
+    },
+    {
+      "id": "f953ec4e2b8fe1",
+      "file": "f953ec4e2b8fe1.mp3",
+      "text": "Because he worked all night, he is tired.",
+      "kind": "phrase",
+      "bytes": 36824,
+      "sha256": "b5ada8f9fb7df4138d530b9607f8bef5bfaac22fb5d197895e37481376345dd7"
+    },
+    {
+      "id": "e1f9536ced6aec",
+      "file": "e1f9536ced6aec.mp3",
+      "text": "Because she is tired, she is resting.",
+      "kind": "phrase",
+      "bytes": 41839,
+      "sha256": "bb469696f19cb2e20897ce9768f828352b63fede1abcfd78d1cb0a4cc714bb9b"
+    },
+    {
+      "id": "fe7abbd915328d",
+      "file": "fe7abbd915328d.mp3",
+      "text": "Though. Thought. Although she is nervous, she speaks clearly.",
+      "kind": "phrase",
+      "bytes": 64827,
+      "sha256": "b6a5181d69a4f40ddf9b618a0aeffb997fc02911ca5e9b0157d316870c368f5a"
+    },
+    {
+      "id": "fb3a7850111f29",
+      "file": "fb3a7850111f29.mp3",
+      "text": "nervous",
+      "kind": "phrase",
+      "bytes": 13836,
+      "sha256": "2947a436406d3720d2e7f74d8cb326ce4c47f0c8f441524d81450a16fd1c6b65"
+    },
+    {
+      "id": "3af7e8d9cc3f34",
+      "file": "3af7e8d9cc3f34.mp3",
+      "text": "She feels nervous before the presentation.",
+      "kind": "phrase",
+      "bytes": 39750,
+      "sha256": "c4f5f1218c89058c2433a4b879507eb8257e0407931a6b17c9bb1754337dd254"
+    },
+    {
+      "id": "4469b61507b9c6",
+      "file": "4469b61507b9c6.mp3",
+      "text": "relieved",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "36d48c912c1455196d88c92cfe3948bfebeee459ad7f2efcecf4535cbc0d5094"
+    },
+    {
+      "id": "faebb6380bcbce",
+      "file": "faebb6380bcbce.mp3",
+      "text": "She feels relieved after the presentation.",
+      "kind": "phrase",
+      "bytes": 41004,
+      "sha256": "12a3fab4aca4b75f5a990abc67d6e4b0eaee3c4e0f58340a9c040d7096d176bf"
+    },
+    {
+      "id": "13d9ead0ef6e1b",
+      "file": "13d9ead0ef6e1b.mp3",
+      "text": "worried",
+      "kind": "phrase",
+      "bytes": 13836,
+      "sha256": "2d7cc9c45349e5645aa971a43577a626abf183261e8be849568e48a76a695f86"
+    },
+    {
+      "id": "1ab303dc4fdea3",
+      "file": "1ab303dc4fdea3.mp3",
+      "text": "He is worried about missing the bus.",
+      "kind": "phrase",
+      "bytes": 33062,
+      "sha256": "673885cab5a72c82b0b2126b720a65a90591eb0617f4cb885298538af91c9c16"
+    },
+    {
+      "id": "26c8cca6e668df",
+      "file": "26c8cca6e668df.mp3",
+      "text": "confident",
+      "kind": "phrase",
+      "bytes": 15090,
+      "sha256": "2df23ceddf6babbdae4a4f451c87566250474445c6f929be4657e9477a64b8a5"
+    },
+    {
+      "id": "cbec3c5e276787",
+      "file": "cbec3c5e276787.mp3",
+      "text": "She sounds confident when she explains her idea.",
+      "kind": "phrase",
+      "bytes": 47273,
+      "sha256": "70ffcc55cb18846f41676294b0140c7214126f93612dca9baad0f55b34afee6a"
+    },
+    {
+      "id": "79e0d5cefbdac0",
+      "file": "79e0d5cefbdac0.mp3",
+      "text": "He looks bored during the talk.",
+      "kind": "phrase",
+      "bytes": 29301,
+      "sha256": "624e6952648282e7294d206475c69cb62be43eb5814e67e1162dae33c59b753b"
+    },
+    {
+      "id": "30de523ba01d9a",
+      "file": "30de523ba01d9a.mp3",
+      "text": "The visitors are interested in the model.",
+      "kind": "phrase",
+      "bytes": 38914,
+      "sha256": "b7dd017b40678f41edbf0645ad460741c7e80472679a224891b0b0058a6e386b"
+    },
+    {
+      "id": "c405760daf9bc3",
+      "file": "c405760daf9bc3.mp3",
+      "text": "tired",
+      "kind": "phrase",
+      "bytes": 13000,
+      "sha256": "a2570d1f2679de942d2d754109e682410a62e898636517792bd4ef14cd93ccdf"
+    },
+    {
+      "id": "d28b2f5d065a49",
+      "file": "d28b2f5d065a49.mp3",
+      "text": "He feels tired after a long day.",
+      "kind": "phrase",
+      "bytes": 37660,
+      "sha256": "021d19a011462342ba09408612cbe2766d67528fecfd52bb971d975377150089"
+    },
+    {
+      "id": "d069c85283b98c",
+      "file": "d069c85283b98c.mp3",
+      "text": "proud",
+      "kind": "phrase",
+      "bytes": 13836,
+      "sha256": "88ffa3ac683f9c5e46302f380b810ae91866a9d2649a9221455b977890fdcfeb"
+    },
+    {
+      "id": "04b91bebd9099a",
+      "file": "04b91bebd9099a.mp3",
+      "text": "She is proud of her progress.",
+      "kind": "phrase",
+      "bytes": 30137,
+      "sha256": "74641374ba75e78036be3e5abe108a9db78d11278b01c6cada685a0f0d538c82"
+    },
+    {
+      "id": "8fcb78586f0b61",
+      "file": "8fcb78586f0b61.mp3",
+      "text": "He felt embarrassed when he forgot her name.",
+      "kind": "phrase",
+      "bytes": 37660,
+      "sha256": "3638c4944e0daf3fb5015cde1821116ba1ceeefc9bd665ef22a93c3267dbdc3b"
+    },
+    {
+      "id": "6afb642998f6a6",
+      "file": "6afb642998f6a6.mp3",
+      "text": "frustrated",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "dcf13e30ff4eb155c21d9e4eac4cee38c5aca4247b9f6656b07193c1cf5ce1ea"
+    },
+    {
+      "id": "c6967120aa6c69",
+      "file": "c6967120aa6c69.mp3",
+      "text": "She is frustrated because the bus is late.",
+      "kind": "phrase",
+      "bytes": 38914,
+      "sha256": "a8d0dda9d82a9e72be1c9778edaa2c052dd4ddf179ccf8d8e90f6a7d91838745"
+    },
+    {
+      "id": "364d78e6fc3db7",
+      "file": "364d78e6fc3db7.mp3",
+      "text": "disappointed",
+      "kind": "phrase",
+      "bytes": 17598,
+      "sha256": "c9cc797ee490791ce158d9c2d907ecac8c1ecaa18654adb8b58f04f37801d466"
+    },
+    {
+      "id": "ee06bd2d1799e5",
+      "file": "ee06bd2d1799e5.mp3",
+      "text": "He was disappointed with the result.",
+      "kind": "phrase",
+      "bytes": 33898,
+      "sha256": "3459a4a0aa8bf75d3d2be5b69d19027e79675de2d08dc886e9e1f5b69d69e0d6"
+    },
+    {
+      "id": "8652b6b8e1b1f9",
+      "file": "8652b6b8e1b1f9.mp3",
+      "text": "grateful",
+      "kind": "phrase",
+      "bytes": 15090,
+      "sha256": "eec377f56258209cbc084c7b4d97a08596b23d6c9d135c1f7c0d000b82248974"
+    },
+    {
+      "id": "4a7c7a6673dea9",
+      "file": "4a7c7a6673dea9.mp3",
+      "text": "She is grateful for her friend’s support.",
+      "kind": "phrase",
+      "bytes": 35152,
+      "sha256": "bfa0a5e6280ddfe3707f08b85c452bf93e06770b0acd198f9ddd75ade48653f5"
+    },
+    {
+      "id": "582d818dd242dd",
+      "file": "582d818dd242dd.mp3",
+      "text": "cheer up",
+      "kind": "phrase",
+      "bytes": 13836,
+      "sha256": "627cc06ebf7ab534030eececac4f1c280bed14266a79ff2ed9378b8b381bdb93"
+    },
+    {
+      "id": "d5ed43fe33683c",
+      "file": "d5ed43fe33683c.mp3",
+      "text": "Her friend cheered her up.",
+      "kind": "phrase",
+      "bytes": 24703,
+      "sha256": "f53125d51c64003b10741e4e7eae1f1e8382930e78d8d6cbbed8d321eaab7bbc"
+    },
+    {
+      "id": "82ac382339aea9",
+      "file": "82ac382339aea9.mp3",
+      "text": "calm down",
+      "kind": "phrase",
+      "bytes": 15926,
+      "sha256": "f5ae1f8f8b0454ab99793767917053b20a8735f707db2ccaf3cfa01287a598b0"
+    },
+    {
+      "id": "ae3e3119fced8f",
+      "file": "ae3e3119fced8f.mp3",
+      "text": "He took a slow breath to calm down.",
+      "kind": "phrase",
+      "bytes": 34316,
+      "sha256": "c9ef6b9caaccb46186a27fb86de9974f0f5f7d5ba269068e9ac0a89974475543"
+    },
+    {
+      "id": "8236b1047b23d2",
+      "file": "8236b1047b23d2.mp3",
+      "text": "open up",
+      "kind": "phrase",
+      "bytes": 14254,
+      "sha256": "df25111f6b168704631f0916e9f217b301c23166fd4d8c6e774ccc6865b269e6"
+    },
+    {
+      "id": "9ecc59f4d7be07",
+      "file": "9ecc59f4d7be07.mp3",
+      "text": "She opened up to a close friend.",
+      "kind": "phrase",
+      "bytes": 33062,
+      "sha256": "8c21eaef4555d1a3db5bf4c66c78adb94fbf1dd9111a0e95d33fbe187e3f8b23"
+    },
+    {
+      "id": "d4393349113d7c",
+      "file": "d4393349113d7c.mp3",
+      "text": "fit in",
+      "kind": "phrase",
+      "bytes": 13836,
+      "sha256": "2b1f76282ba8a59ca6a61ce4231defc5cb3589a3d911ee4d5cc1546dcbe89027"
+    },
+    {
+      "id": "9fac067b19f1ae",
+      "file": "9fac067b19f1ae.mp3",
+      "text": "He wants to fit in with his new team.",
+      "kind": "phrase",
+      "bytes": 35152,
+      "sha256": "bfb215aad20fcd3698ac13e14ccd91a2d2eb56403295a91f1a1114412240e335"
+    },
+    {
+      "id": "33919b395e0771",
+      "file": "33919b395e0771.mp3",
+      "text": "get along with",
+      "kind": "phrase",
+      "bytes": 16762,
+      "sha256": "785ae3d7431ec2ae9d36ed4bc6fb39d69530afd71d745897ed1fc5ae99fbd12b"
+    },
+    {
+      "id": "1a0cb25a9b0a18",
+      "file": "1a0cb25a9b0a18.mp3",
+      "text": "She gets along with her classmates.",
+      "kind": "phrase",
+      "bytes": 33898,
+      "sha256": "ef58c9332d404ba111451c6d6b767f8c14d5b9cceedd32fe9bfe844fd80e96f6"
+    },
+    {
+      "id": "5d732cb45d5998",
+      "file": "5d732cb45d5998.mp3",
+      "text": "reach out to",
+      "kind": "phrase",
+      "bytes": 19688,
+      "sha256": "a1e89f3f2678703c4b39c84130ebbc325f2d198ec23092136b44a76d3742973e"
+    },
+    {
+      "id": "d4e14b7211a285",
+      "file": "d4e14b7211a285.mp3",
+      "text": "They reached out to a local charity.",
+      "kind": "phrase",
+      "bytes": 35152,
+      "sha256": "bb2a649212cb1b0a3a4fb5f9d5891c41525317c8be266e32690511964a613d09"
+    },
+    {
+      "id": "99f30f876f9d7c",
+      "file": "99f30f876f9d7c.mp3",
+      "text": "stand up for",
+      "kind": "phrase",
+      "bytes": 18852,
+      "sha256": "d636e8c98218c1cd7e8fcbc04582c79e0d7c79cedb9cc6ce6fddae7490626db6"
+    },
+    {
+      "id": "e33c4f8ade3633",
+      "file": "e33c4f8ade3633.mp3",
+      "text": "She stands up for people who need help.",
+      "kind": "phrase",
+      "bytes": 35988,
+      "sha256": "e820bb665502c90274cb854ec19f416e1b0ac2e6559f1463cc4158eab5682a27"
+    },
+    {
+      "id": "e64bef04711a4d",
+      "file": "e64bef04711a4d.mp3",
+      "text": "look up to",
+      "kind": "phrase",
+      "bytes": 15926,
+      "sha256": "692607dc049b46ea44ebf8d66165e8fda27d38b0b7c8979ca9eaea321c3d30c3"
+    },
+    {
+      "id": "e942b1c606f346",
+      "file": "e942b1c606f346.mp3",
+      "text": "I look up to my community teacher.",
+      "kind": "phrase",
+      "bytes": 33898,
+      "sha256": "4f08f56b52041b5f2325dcfb96a48da10efd9e0866bed5a26644d7adc48008ef"
+    },
+    {
+      "id": "a35f5be4690a02",
+      "file": "a35f5be4690a02.mp3",
+      "text": "break the ice",
+      "kind": "phrase",
+      "bytes": 21777,
+      "sha256": "5adc39cdda40176c641d0409126010c9bf25e90a33b785cc0588e244c7dbfde7"
+    },
+    {
+      "id": "a1388b3e72ef38",
+      "file": "a1388b3e72ef38.mp3",
+      "text": "A friendly question can break the ice.",
+      "kind": "phrase",
+      "bytes": 37660,
+      "sha256": "937bc5d61d678cf5ab5d3b1a42a3165ce7a960df34790a2ebdcc22e580a0f969"
+    },
+    {
+      "id": "f2a3a9ff91df70",
+      "file": "f2a3a9ff91df70.mp3",
+      "text": "feel under the weather",
+      "kind": "phrase",
+      "bytes": 28465,
+      "sha256": "2a21b28ffba7129ca95209f404905633ba3a5cdc27fd7562ebe6620de160fbc3"
+    },
+    {
+      "id": "61c866ecb7020a",
+      "file": "61c866ecb7020a.mp3",
+      "text": "He feels under the weather today.",
+      "kind": "phrase",
+      "bytes": 33062,
+      "sha256": "76c8b0619c10b6aaa5cbab29c5a4bce52a22a2e5bfdbbbd7ba938d76c4441cc3"
+    },
+    {
+      "id": "369ea54ca04098",
+      "file": "369ea54ca04098.mp3",
+      "text": "be on cloud nine",
+      "kind": "phrase",
+      "bytes": 22613,
+      "sha256": "bf54f0ab77e86fa9da2a4c8c59c5373b31e181796d9ca076c5d05c990d7b01ec"
+    },
+    {
+      "id": "b4955f1a42aba4",
+      "file": "b4955f1a42aba4.mp3",
+      "text": "She is on cloud nine after hearing the news.",
+      "kind": "phrase",
+      "bytes": 42675,
+      "sha256": "0786668030449342f2cdc9f631d6cf931f2a8e743dc77a9f5d0014a7234c7b4a"
+    },
+    {
+      "id": "ac4efdc2278a7c",
+      "file": "ac4efdc2278a7c.mp3",
+      "text": "have a heart of gold",
+      "kind": "phrase",
+      "bytes": 24703,
+      "sha256": "bd751b1809ed55f3fa6588132e19b2033d2d94f9ea2e3b3e8a68eb53a31578b7"
+    },
+    {
+      "id": "63c7b7aa06f2e1",
+      "file": "63c7b7aa06f2e1.mp3",
+      "text": "Our neighbor has a heart of gold.",
+      "kind": "phrase",
+      "bytes": 31391,
+      "sha256": "eb9e6a9739fef3fe0dcf67520b0e3e86d9d36c28a6cd6a160295cd32d3dabe39"
+    },
+    {
+      "id": "185ce20f032826",
+      "file": "185ce20f032826.mp3",
+      "text": "She seems considerate because she listens carefully.",
+      "kind": "phrase",
+      "bytes": 50199,
+      "sha256": "ff4cf3f947ddaf41da7c8d966abb8406b327a5ad3f4852c85e317bbf3a8e9077"
+    },
+    {
+      "id": "8520e52797c294",
+      "file": "8520e52797c294.mp3",
+      "text": "He organizes free classes, so I think he makes a difference.",
+      "kind": "phrase",
+      "bytes": 55214,
+      "sha256": "49df015e0980f91086f4479c1e2fa283713eedad6d777f0e9fe132db950053ca"
+    },
+    {
+      "id": "f113f0a6059156",
+      "file": "f113f0a6059156.mp3",
+      "text": "Although he is quiet, he makes new students feel welcome.",
+      "kind": "phrase",
+      "bytes": 55214,
+      "sha256": "42355dd3e162f45990e55824193ab431cb473348e0bab1875f41f01b795e4914"
+    },
+    {
+      "id": "cc4678a4a0c4dc",
+      "file": "cc4678a4a0c4dc.mp3",
+      "text": "Maya organizes a free reading group in her neighborhood. She welcomes new members and listens to their ideas. I think she is considerate because she makes time for everyone. At first, some people seem nervous, but a friendly question helps break the ice. Although Maya must be busy, she always prepares carefully. The members look interested, and several have said that they feel more confident. Her work seems simple, but it makes a difference.",
+      "kind": "phrase",
+      "bytes": 415077,
+      "sha256": "d231cb4e921dbe78391c406bc4d9b73ec37a9f632d1fe9794190532cd839762e"
+    },
+    {
+      "id": "0235f8c4d73d21",
+      "file": "0235f8c4d73d21.mp3",
+      "text": "This must be satire because books cannot demand pay.",
+      "kind": "phrase",
+      "bytes": 51035,
+      "sha256": "944b1c84cfeba2f6516c8c9fac2ae8e90a108c92ef082f3e3dba2f7370ee4b71"
+    },
+    {
+      "id": "dfec6f6550b1ec",
+      "file": "dfec6f6550b1ec.mp3",
+      "text": "She must be tired. She might be tired. She can’t be tired.",
+      "kind": "phrase",
+      "bytes": 54378,
+      "sha256": "7bda69f0b22a069d96fcc405a3b1f617647a435e405ec10af77f24a44e370d6d"
+    },
+    {
+      "id": "e1a36541dc9da0",
+      "file": "e1a36541dc9da0.mp3",
+      "text": "She looks worried. She seems relieved.",
+      "kind": "phrase",
+      "bytes": 35988,
+      "sha256": "24c8c1b8bb70acae500154a226228075cc2b6f399d0bc540531c74c2c878ed55"
+    },
+    {
+      "id": "74be2686292188",
+      "file": "74be2686292188.mp3",
+      "text": "Although she looks nervous, she might simply be concentrating.",
+      "kind": "phrase",
+      "bytes": 59812,
+      "sha256": "f2f226d8046c54a926172f98859bb481f83f0ee6bdf6b4917901022fbd1fbf1f"
+    },
+    {
+      "id": "cb368b7800bfe4",
+      "file": "cb368b7800bfe4.mp3",
+      "text": "I think the new student looks nervous because she is holding her notes. She might be worried about the presentation. Although she seems quiet, she could be very friendly. The other students look interested, so the topic must be engaging. After the talk, she seems relieved. My first impression was only a guess. Now I can ask her how she feels.",
+      "kind": "phrase",
+      "bytes": 327306,
+      "sha256": "d711ed888dc20ef00cff075a5d4f859c97846a2c427e144f922e41cb9df13865"
+    }
+  ]
+}

@@ -34,6 +34,6 @@ const out=path.join(root,'tmp/unit6-practice-qa');fs.mkdirSync(out,{recursive:tr
     console.log(`PASS ${key} at ${width}px`);await page.close();
    }
   }
-  const page=await browser.newPage();await page.goto(base+'/ingles/basico-2/practice-lab.html');assert.equal(await page.locator('#unit-6-folder').getAttribute('open'),null);assert.equal(await page.locator('#unit-6-folder .course-section-card').count(),5);assert.deepEqual(errors,[]);console.log('PASS five compact cards in closed Unit 6 folder');
+  const page=await browser.newPage();await page.goto(base+'/ingles/basico-2/practice-lab.html');assert.equal(await page.locator('#unit-6-folder').getAttribute('open'),null);assert.equal(await page.locator('#unit-6-folder .course-section-card').count(),6);assert.deepEqual(errors,[]);console.log('PASS six compact cards in closed Unit 6 folder');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});
