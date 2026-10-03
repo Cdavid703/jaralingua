@@ -43,7 +43,7 @@
     const qrAsset = assetPath();
     const dialogId = "jlPageQrDialog";
     host.classList.add("jl-page-qr-host");
-    if (courseOneLayout) host.classList.add("jl-page-qr-responsive");
+    if (courseOneLayout || /^\/ingles\/intermediate-2\//.test(window.location.pathname)) host.classList.add("jl-page-qr-responsive");
 
     const card = document.createElement("aside");
     card.className = "jl-page-qr-card";
@@ -55,6 +55,8 @@
     dialog.innerHTML = `<button type="button" class="jl-page-qr-close" aria-label="Close enlarged QR code">×</button><h2>Scan to open this page</h2><p>${safeTitle}</p><img src="${qrAsset}" alt="Large QR code to open ${safeTitle} on a phone" width="320" height="320" />`;
 
     const qrImage = card.querySelector("img");
+    // Gallery pages may load dozens of large pictures; prioritize their access QR.
+    qrImage.fetchPriority = "high";
     qrImage.addEventListener("error", () => { card.remove(); dialog.remove(); host.classList.remove("jl-page-qr-host"); }, { once: true });
     card.querySelector("button").addEventListener("click", () => dialog.showModal());
     dialog.querySelector(".jl-page-qr-close").addEventListener("click", () => dialog.close());
