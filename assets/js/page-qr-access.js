@@ -32,7 +32,7 @@
   }
 
   function addQr() {
-    if (!PATH_PATTERN.test(window.location.pathname) || document.querySelector(".page-qr-card, .jl-page-qr-card")) return;
+    if (!PATH_PATTERN.test(window.location.pathname) || document.querySelector(".page-qr-card, .jl-page-qr-card, .mb-qr")) return;
     const host = findHeroCopy();
     if (!host) return;
 

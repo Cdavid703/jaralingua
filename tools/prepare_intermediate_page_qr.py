@@ -17,7 +17,7 @@ GAMES = [
     "ingles/intermediate/stereotype-guessing-game.html",
     "ingles/basico/practice-unit-3-favorite-people.html",
 ]
-SCRIPT = '<script src="/assets/js/page-qr-access.js?v=20261003-intermediate1" defer></script>'
+SCRIPT = '<script src="/assets/js/page-qr-access.js?v=20261003-intermediate1-all" defer></script>'
 
 
 def main():
@@ -37,8 +37,9 @@ def main():
             page.write_bytes(raw)
         asset = ROOT / "assets/img/page-qr" / (name[:-5].replace("/", "-") + ".svg")
         url = "https://www.jaralingua.com/" + name
-        qr = qrcode.make(url, image_factory=qrcode.image.svg.SvgPathImage, border=4)
-        qr.save(asset)
+        if not asset.exists():
+            qr = qrcode.make(url, image_factory=qrcode.image.svg.SvgPathImage, border=4)
+            qr.save(asset)
         print(name)
 
 
