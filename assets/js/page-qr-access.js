@@ -2,9 +2,8 @@
 (() => {
   "use strict";
 
-  const PATH_PATTERN = /^\/ingles\/(?:basico-2|intermediate(?:-2)?)\/[^/]+\.html$|^\/ingles\/basico\/practice-unit-3-favorite-people\.html$/;
-  const courseOneLayout = /^\/ingles\/intermediate\//.test(window.location.pathname) ||
-    window.location.pathname === "/ingles/basico/practice-unit-3-favorite-people.html";
+  const PATH_PATTERN = /^\/ingles\/(?:basico(?:-2)?|intermediate(?:-2)?)\/[^/]+\.html$/;
+  const courseOneLayout = /^\/ingles\/(?:intermediate|basico)\//.test(window.location.pathname);
 
   function assetPath() {
     const slug = window.location.pathname

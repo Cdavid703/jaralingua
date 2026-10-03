@@ -12,7 +12,7 @@ const games = [
   'ingles/intermediate/stereotype-guessing-game.html',
   'ingles/basico/practice-unit-3-favorite-people.html'
 ];
-const pages = process.argv.includes('--games') ? games : [
+const pages = process.argv.includes('--basic1') ? fs.readdirSync(path.join(root, 'ingles/basico')).filter(x => x.endsWith('.html')).map(x => 'ingles/basico/' + x) : process.argv.includes('--games') ? games : [
   ...fs.readdirSync(path.join(root, 'ingles/intermediate')).filter(x => x.endsWith('.html')).map(x => 'ingles/intermediate/' + x),
   games.at(-1)
 ];
@@ -40,6 +40,7 @@ if (shots) fs.mkdirSync(shots, { recursive: true });
         const label = `${name} @ ${width}`;
         const html = fs.readFileSync(path.join(root, name), 'utf8');
         assert.equal((html.match(/<script[^>]+page-qr-access\.js/g) || []).length, 1, label + ': script count');
+        assert.match(html.split('</head>')[0], /<script[^>]+page-qr-access\.js[^>]+fetchpriority="high"/, label + ': QR script must load ahead of gallery images');
         const qrAsset = name => '/assets/img/page-qr/' + name.replace(/\.html$/, '').replaceAll('/', '-') + '.svg';
         assert.ok(fs.existsSync(path.join(root, qrAsset(name))), label + ': missing SVG');
         const destination = redirects[name] || name;
