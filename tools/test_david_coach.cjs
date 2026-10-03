@@ -47,19 +47,19 @@ for(const item of manifest.items){assert.equal(item.text,c.audioScripts[item.fil
  await page.locator('#interviewPanel [data-coach-speed="1.25"]').click();assert.equal(await page.locator('#questionAudio').evaluate(a=>a.playbackRate),1.25);
  await page.locator('#interviewPanel [data-coach-speed="1"]').click();
  async function record(text,dock=false){transcript=text;await page.waitForFunction(()=>!document.querySelector('#micButton').disabled);await page.locator('#micButton').click();await page.waitForFunction(()=>!document.querySelector('#stopButton').disabled).catch(async e=>{console.error('Recorder state:',await page.locator('#turnCounter').innerText(),await page.locator('#recordStatus').innerText(),await page.locator('#unsupportedMessage').textContent());throw e;});await page.waitForTimeout(900);if(dock){await page.evaluate(()=>scrollTo(0,0));await page.locator('#floatingStopButton').click();}else await page.locator('#stopButton').click();}
- async function ready(){await page.waitForFunction(()=>!document.querySelector('#nextTurnButton').disabled);}
+ async function ready(){await page.waitForFunction(()=>!document.querySelector('#recordAgainButton').disabled && document.querySelector('#recordStatus').textContent==='Answer analyzed' && !document.querySelector('#questionPlayButton').disabled);}
  const answers=['Ana',"I'm not nervous because I know they are friendly and kind.","I'm worried about the conversation because I don't know their hobbies.","First I will ask my partner about their interests and check the arrival time.","I will wear a clean shirt and jeans because we are having lunch at home.","I will listen carefully and also offer to help after lunch.","We could talk about food. What do you enjoy cooking at home?","I would avoid salary questions because money can be a private topic.","Hello! It is lovely to meet you. Thank you for inviting me.","Sorry, I didn't catch that. Could you say it again, please?","What would you wear to a relaxed family lunch?","Hi Alex! This weekend I am going to meet my partner's family. I feel excited because I want to know them. First I will ask my partner about their interests. Then I will wear a clean shirt. I will also listen and offer to help. We could talk about food. However I will avoid private questions about salary. Wish me luck! Talk soon."];
  const followups={1:'I could include someone in the conversation and listen to them.',3:'If my bus is late I will call to explain.',6:"What is your favourite dish to cook with your family?",7:"I would prefer to keep that private. Could we talk about your garden?"};
  for(let i=0;i<12;i++){
   await page.waitForFunction(n=>document.querySelector('#turnCounter').textContent===`Turn ${n} of 12`,i+1);
   assert.equal(await page.locator('#answerSupport').getAttribute('open'),null);
   assert(await page.locator('#floatingMicDock').isVisible());
-  if(i===4){await record('What would you wear?');await page.waitForFunction(()=>document.querySelector('#recordStatus').textContent==='Your question answered');assert(await page.locator('#nextTurnButton').isDisabled());assert.match(await page.locator('#coachReactionText').innerText(),/shirt and jeans/);}
+  if(i===4){await record('What would you wear?');await page.waitForFunction(()=>document.querySelector('#recordStatus').textContent==='Your question answered');assert(await page.locator('#nextTurnButton').isEnabled());assert.match(await page.locator('#coachReactionText').innerText(),/shirt and jeans/);}
   await record(answers[i],i===1);
   if(i===0){await ready();assert.match(await page.locator('#coachReactionText').innerText(),/Nice to meet you/);await page.locator('#nameCorrection summary').click();await page.locator('#correctedName').fill('Ángela');await page.locator('#saveCorrectedName').click();assert.equal(await page.locator('#liveTranscript').innerText(),'Ángela');}
   if(followups[i]){
    await page.waitForFunction(()=>document.querySelector('#turnCounter').textContent.includes('Follow-up'));
-   assert(await page.locator('#nextTurnButton').isDisabled());
+   assert(await page.locator('#nextTurnButton').isEnabled());
    if(i===1){assert.match(await page.locator('#coachReactionText').innerText(),/calm/);assert.match(await page.locator('#questionText').innerText(),/someone else/);}
    await page.locator('#answerSupport summary').click();assert((await page.locator('#answerFrames').innerText()).length>10);await page.locator('#answerSupport summary').click();
    await record(followups[i]);
@@ -77,7 +77,7 @@ for(const item of manifest.items){assert.equal(item.text,c.audioScripts[item.fil
  await page.screenshot({path:path.join(out,'report.png'),fullPage:true});
  await page.locator('#restartConversationButton').click();mode='silence';await record('');await page.locator('#transcriptionRecovery').waitFor({state:'visible'});assert(!await page.locator('#turnFeedback').isVisible());
  mode='success';transcript='Ana';await page.locator('#retryTranscriptionButton').click();await ready();await page.locator('#nextTurnButton').click();
- mode='failure';await record('test');await page.locator('#transcriptionRecovery').waitFor({state:'visible'});await page.locator('#continueUnscoredButton').click();await page.waitForFunction(()=>document.querySelector('#turnCounter').textContent.includes('Follow-up'));assert(await page.locator('#nextTurnButton').isDisabled());
+ mode='failure';await record('test');await page.locator('#transcriptionRecovery').waitFor({state:'visible'});await page.locator('#continueUnscoredButton').click();await page.waitForFunction(()=>document.querySelector('#turnCounter').textContent.includes('Follow-up'));assert(await page.locator('#nextTurnButton').isEnabled());
  mode='no-confidence';await record('I feel nervous because it is our first meeting.');await ready();assert(!/null/.test(await page.locator('#turnFeedback').innerText()));
  await page.reload();await page.locator('.david-options>summary').click();await page.locator('#realMode').check();await page.locator('#startConversationButton').click();assert(!await page.locator('#answerSupport').isVisible());
  mode='success';await record('Ana');await ready();assert(!await page.locator('#turnFeedback').isVisible());

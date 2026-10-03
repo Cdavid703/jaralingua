@@ -92,6 +92,8 @@
   let session = freshSession();
   let playbackSpeed = 1;
   let audioBusy = false;
+  let turnRevision = 0;
+  const freeNavigation = Boolean(config.ui?.alwaysAllowNext);
   let lastResponseEntries = [];
   let mediaStream = null;
   let mediaRecorder = null;
@@ -103,6 +105,7 @@
   let currentBlob = null;
   let currentObjectUrl = "";
   let analyzing = false;
+  let transcriptionController = null;
   let levelContext = null;
   let levelAnalyser = null;
   let levelFrame = null;
@@ -269,6 +272,7 @@
 
   async function playAudio(audio, file, options = {}) {
     if (!audio || !file) return false;
+    const revision = turnRevision;
     stopCoachAudio();
     audioBusy = true;
     audio.src = audioPath(file);
@@ -277,6 +281,7 @@
     updateControls();
     try {
       await audio.play();
+      if (revision !== turnRevision) return false;
       await new Promise((resolve, reject) => {
         const cleanup = () => {
           audio.removeEventListener("ended", ended);
@@ -295,6 +300,7 @@
       showToast(error.message || "Audio playback is unavailable.");
       return false;
     } finally {
+      if (revision !== turnRevision) return false;
       audioBusy = false;
       if (options.restoreStage !== false && !analyzing && mediaRecorder?.state !== "recording") setStage("ready", `${coachFirstName} is ready`);
       updateControls();
@@ -309,9 +315,11 @@
   }
 
   async function playAudioQueue(entries) {
+    const revision = turnRevision;
     lastResponseEntries = entries;
     for (const entry of entries) {
       await playAudio(elements.reactionAudio, entry.file, { stageState: "responding", stageLabel: `${coachFirstName} is responding`, restoreStage: false });
+      if (revision !== turnRevision) return;
     }
     setStage("ready", `${coachFirstName} is ready for the next turn`);
   }
@@ -380,7 +388,7 @@
     elements.studentAudio.hidden = true;
     elements.studentAudio.removeAttribute("src");
     elements.unsupported.hidden = true;
-    elements.next.disabled = true;
+    elements.next.disabled = !freeNavigation;
     elements.recordAgain.disabled = true;
     resetTimer();
     setRecordStatus("Ready for your answer", question.interaction ? (config.ui?.interactionRecordHelp || `Ask ${coachFirstName} two different questions in English.`) : "Tap the microphone and answer in English.");
@@ -393,6 +401,7 @@
   }
 
   function beginConversation(ids = null, forcedMode = null) {
+    turnRevision += 1;
     const questionIds = (ids || selectBalancedQuestions()).filter((id) => questionById.has(id));
     if (!questionIds.length) {
       showToast("The question bank is unavailable.");
@@ -542,7 +551,7 @@
     elements.recordAgain.disabled = recording || analyzing || (!currentBlob && !hasAnswer);
     elements.questionPlay.disabled = recording || locked;
     if ($("replyPlayButton")) $("replyPlayButton").disabled = recording || locked || !lastResponseEntries.length;
-    elements.next.disabled = !turnIsComplete() || recording || locked;
+    elements.next.disabled = !freeNavigation && (!turnIsComplete() || recording || locked);
     elements.microphoneSelect.disabled = recording || analyzing;
     elements.floatingMic.hidden = recording;
     elements.floatingStop.hidden = !recording;
@@ -554,9 +563,13 @@
     if (mediaRecorder?.state === "recording" || analyzing || audioBusy || currentPhaseAnswer()) return;
     stopCoachAudio();
     elements.unsupported.hidden = true;
+    const revision = turnRevision;
     try {
-      mediaStream = await requestStream();
+      const stream = await requestStream();
+      if (revision !== turnRevision) { stream.getTracks().forEach(track => track.stop()); return; }
+      mediaStream = stream;
       await refreshMicrophones();
+      if (revision !== turnRevision) return;
       startLevelMeter(mediaStream);
       recordedChunks = [];
       const mimeType = preferredMimeType();
@@ -575,6 +588,7 @@
       updateControls();
       showToast("Recording started.");
     } catch (error) {
+      if (revision !== turnRevision) return;
       const message = microphoneError(error);
       elements.unsupported.hidden = false;
       elements.unsupported.innerHTML = `<strong>Microphone unavailable</strong><br>${escapeHtml(message)}`;
@@ -619,9 +633,12 @@
   }
 
   async function requestTranscription(blob, maxAttempts = 3) {
+    const revision = turnRevision;
     let lastError = null;
     for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      if (revision !== turnRevision) throw new DOMException("Turn skipped", "AbortError");
       const controller = new AbortController();
+      transcriptionController = controller;
       const timeout = window.setTimeout(() => controller.abort(), transcriptionTimeoutMs);
       try {
         const response = await fetch(apiPath, {
@@ -645,11 +662,13 @@
         error.status = response.status;
         throw error;
       } catch (error) {
+        if (revision !== turnRevision) throw error;
         lastError = error;
         const retryable = error.name === "AbortError" || error.name === "TypeError" || error.status === 429 || error.status >= 500;
         if (!retryable || attempt === maxAttempts) throw error;
       } finally {
         clearTimeout(timeout);
+        if (transcriptionController === controller) transcriptionController = null;
       }
       await new Promise((resolve) => window.setTimeout(resolve, 700 * (2 ** (attempt - 1))));
     }
@@ -832,7 +851,7 @@
     elements.studentAudio.hidden = true;
     elements.studentAudio.removeAttribute("src");
     elements.unsupported.hidden = true;
-    elements.next.disabled = true;
+    elements.next.disabled = !freeNavigation;
     elements.recordAgain.disabled = true;
     resetTimer();
     setRecordStatus(`${coachFirstName} has a follow-up`, "Listen, then give a short second response in English.");
@@ -841,21 +860,25 @@
   }
 
   async function presentAdaptiveFollowUp(answer, question) {
+    const revision = turnRevision;
     const followUp = chooseAdaptiveFollowUp(answer, question);
     if (!followUp) {
       await presentMayaResponse(answer, question);
       return;
     }
     if (answer && config.ui?.acknowledgeBeforeFollowUp) await presentMayaResponse(answer, question);
+    if (revision !== turnRevision) return;
     renderAdaptiveFollowUp(followUp);
     showToast(`${coachFirstName} selected a follow-up from your answer evidence.`);
     await playQuestion();
+    if (revision !== turnRevision) return;
     setRecordStatus("Ready for the follow-up", `Answer ${coachFirstName}'s new question in approximately fifteen to twenty seconds.`);
     updateControls();
   }
 
   async function transcribeCurrentRecording() {
     if (!currentBlob || analyzing) return;
+    const revision = turnRevision;
     analyzing = true;
     elements.recovery.hidden = true;
     elements.feedback.hidden = true;
@@ -865,6 +888,7 @@
     updateControls();
     try {
       const payload = await requestTranscription(currentBlob);
+      if (revision !== turnRevision) return;
       const transcript = String(payload.text || payload.transcript || "").trim();
       if (!transcript) {
         const silent = Number(payload.audio?.rms || 0) < .0008;
@@ -881,6 +905,7 @@
         elements.reactionText.textContent = entries.map(entry => entry.text).join(" ") + " " + config.returnToPrompt.text;
         elements.reaction.hidden = false;
         await playAudioQueue([...entries, config.returnToPrompt]);
+        if (revision !== turnRevision) return;
         setRecordStatus("Your question answered", "Now record your answer to the question above.");
         return;
       }
@@ -908,6 +933,7 @@
       if (session.phase === "main" && question.followUpSet && !question.interaction) await presentAdaptiveFollowUp(answer, question);
       else await presentMayaResponse(answer, question, prompt);
     } catch (error) {
+      if (revision !== turnRevision) return;
       const message = error.name === "AbortError" ? "The transcription service took too long to answer." : (error.message || "The transcription service is unavailable.");
       const noSpeechIssue = /silent|no clear english words|no clear words/i.test(message);
       elements.transcript.textContent = message;
@@ -922,6 +948,7 @@
         await playAudioQueue([config.audio.noSpeech]);
       }
     } finally {
+      if (revision !== turnRevision) return;
       analyzing = false;
       updateControls();
     }
@@ -929,6 +956,7 @@
 
   async function continueWithoutScore() {
     if (!currentBlob || analyzing) return;
+    const revision = turnRevision;
     const question = currentQuestion();
     const prompt = currentPrompt();
     const answer = { questionId: question.id, promptId: prompt.id || question.id, prompt: prompt.text, transcript: "", durationMs: recordingDurationMs, analysis: null, unavailable: true };
@@ -949,6 +977,7 @@
       elements.reactionText.textContent = bridge.text;
       elements.reaction.hidden = false;
       await playAudioQueue([bridge]);
+      if (revision !== turnRevision) return;
     }
     setRecordStatus("Turn marked as not analyzed", "No words or score were invented. You may continue.");
     showToast("Turn saved without a score.");
@@ -985,7 +1014,7 @@
     elements.feedback.innerHTML = "";
     elements.recovery.hidden = true;
     elements.reaction.hidden = true;
-    elements.next.disabled = true;
+    elements.next.disabled = !freeNavigation;
     resetTimer();
     setRecordStatus("Ready for a new recording", "Tap the microphone and give a complete answer.");
     setStage("ready", `${coachFirstName} is ready for your new answer`);
@@ -995,7 +1024,22 @@
   }
 
   function nextTurn() {
-    if (!turnIsComplete() || analyzing || audioBusy || mediaRecorder?.state === "recording") return;
+    if (!freeNavigation && (!turnIsComplete() || analyzing || audioBusy || mediaRecorder?.state === "recording")) return;
+    if (freeNavigation) {
+      turnRevision += 1;
+      transcriptionController?.abort();
+      // Discard unfinished work; a late recording/transcript must not answer the next turn.
+      if (mediaRecorder) {
+        mediaRecorder.onstop = null;
+        mediaRecorder.ondataavailable = null;
+        if (mediaRecorder.state === "recording") mediaRecorder.stop();
+        mediaRecorder = null;
+      }
+      stopCoachAudio();
+      releaseCurrentRecording();
+      analyzing = false;
+      elements.mic.classList.remove("is-recording");
+    }
     if (session.currentIndex < session.questionIds.length - 1) {
       session.currentIndex += 1;
       renderQuestion(true);
