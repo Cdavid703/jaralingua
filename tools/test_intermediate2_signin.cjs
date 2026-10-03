@@ -52,6 +52,12 @@ async function reachable(locator, label) {
      await toggle.waitFor({state:'attached'});
      if(await panel.isVisible())await toggle.click();
      await reachable(toggle,label+' Sign in');
+     if(!process.env.AUTH_BASELINE){
+      // Scroll with the form closed: an open panel alone did not cover a disappearing trigger.
+      await page.evaluate(()=>window.scrollTo(0,Math.min(1200,document.body.scrollHeight-innerHeight)));
+      await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      await reachable(toggle,label+' Sign in after page scroll');
+     }
      await toggle.click();
      await panel.waitFor({state:'visible'});
      await reachable(panel,label+' panel');
@@ -71,6 +77,8 @@ async function reachable(locator, label) {
       assert(await panel.isHidden(),label+' close failed');
       await page.setViewportSize({width,height:900});await page.evaluate(()=>scrollTo(0,0));
       await page.evaluate(()=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+      await reachable(toggle,label+' Sign in after returning to top');
+      assert(!await toggle.evaluate(el=>el.closest('.jl-auth-floating')),label+' control did not return to header');
       await toggle.click();await panel.waitFor({state:'visible'});await page.keyboard.press('Escape');
       assert(await panel.isHidden(),label+' Escape failed');
       assert.equal(await toggle.getAttribute('aria-expanded'),'false');
