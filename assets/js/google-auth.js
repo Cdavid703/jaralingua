@@ -11,6 +11,8 @@
   const FALLBACK_CLIENT_ID = "";
   const FALLBACK_MICROSOFT_CLIENT_ID = "4e729f8a-d101-4c5d-af68-609d749bc95a";
   const API_ROOT = "/api";
+  const isIntermediate2 = /^\/ingles\/intermediate-2\//i.test(location.pathname);
+  let intermediate2PanelCleanup = null;
   const CLOUD_SYNC_DELAY = 600;
   const DOWNLOAD_FUNCTIONS = [
     "downloadTranscriptPdf",
@@ -1520,6 +1522,24 @@
         }
       }
     `;
+    style.textContent += `
+      body.jl-intermediate2-auth .site-header{overflow:visible!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;z-index:3000}
+      body.jl-intermediate2-auth .site-header .navbar{overflow:visible!important;display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;align-items:center!important;gap:8px}
+      body.jl-intermediate2-auth .site-header .nav-links{flex:1 1 auto;width:auto;min-width:0}
+      body.jl-intermediate2-auth .jl-intermediate2-auth-slot{display:flex!important;align-items:center;flex:0 0 auto;order:98;margin-left:auto;overflow:visible!important}
+      body.jl-intermediate2-auth .jaralingua-auth-nav .auth-panel.jl-intermediate2-auth-panel{position:fixed!important;inset:auto!important;left:var(--jl-auth-left,12px)!important;top:var(--jl-auth-top,12px)!important;width:var(--jl-auth-width,calc(100vw - 24px))!important;max-width:none!important;height:auto!important;max-height:var(--jl-auth-height,calc(100dvh - 24px))!important;margin:0!important;overflow:auto!important;overscroll-behavior:contain;background:#fff;color:#071f4f;z-index:6000}
+      .jl-intermediate2-auth-panel h2{padding-right:36px}
+      .jl-intermediate2-auth-panel .jl-auth-panel-dismiss{position:absolute;right:10px;top:10px;display:grid;place-items:center;width:32px;height:32px;padding:0;border:0;border-radius:50%;background:#eef4ff;color:#071f4f;cursor:pointer;font:700 24px/1 Arial,sans-serif}
+      @media(max-width:900px){
+        body.jl-intermediate2-auth .site-header .navbar{padding:10px 12px!important}
+        body.jl-intermediate2-auth .site-header .brand{flex:0 0 auto;width:auto;margin:0}
+        body.jl-intermediate2-auth .site-header .brand img{max-width:96px;height:40px;object-fit:contain}
+        body.jl-intermediate2-auth .site-header .nav-links{order:100;flex-basis:100%;width:100%}
+        body.jl-intermediate2-auth .jl-intermediate2-auth-slot .auth-trigger{max-width:150px;min-height:40px}
+        body.jl-intermediate2-auth .jl-course-switcher-top{flex:0 0 auto}
+        .jl-intermediate2-auth-panel input{font-size:16px}
+      }
+    `;
     document.head.appendChild(style);
   }
 
@@ -1544,7 +1564,22 @@
   }
 
   function createNavAccess() {
-    const explicitSlot = document.querySelector(".site-header [data-auth-nav-slot], [data-auth-nav-slot]");
+    let explicitSlot = document.querySelector(".site-header [data-auth-nav-slot], [data-auth-nav-slot]");
+    if (isIntermediate2) {
+      document.body.classList.add("jl-intermediate2-auth");
+      const navbar = document.querySelector(".site-header .navbar, .navbar");
+      if (navbar) {
+        // Keep access outside link rows that activities hide or scroll on phones.
+        const container = navbar.querySelector(":scope > .container, :scope > .container-fluid") || navbar;
+        explicitSlot = container.querySelector(":scope > .jl-intermediate2-auth-slot");
+        if (!explicitSlot) {
+          explicitSlot = document.createElement("div");
+          explicitSlot.className = "jl-intermediate2-auth-slot";
+          explicitSlot.setAttribute("data-auth-nav-slot", "");
+          container.appendChild(explicitSlot);
+        }
+      }
+    }
     const isBasic2 = document.body && document.body.matches(".basic2-page, .basic2-index-page");
     const isIntermediate = /\/ingles\/intermediate(?:-2)?\//i.test(location.pathname);
     if (isIntermediate && document.body) document.body.classList.add("jl-intermediate-auth-nav");
@@ -1575,7 +1610,7 @@
     navRoot = document.createElement("div");
     navRoot.className = "jaralingua-auth-nav";
     navRoot.setAttribute("data-jaralingua-auth-nav", "");
-    if (isIntermediate) navRoot.classList.add("is-course-nav");
+    if (isIntermediate && !isIntermediate2) navRoot.classList.add("is-course-nav");
 
     if (navTarget.matches("ul, ol")) {
       const item = document.createElement("li");
@@ -1788,7 +1823,62 @@
       });
     });
 
+    if (isIntermediate2) prepareIntermediate2AuthPanel(root, panel);
     if (!root.matches("[data-jaralingua-auth-nav]")) renderNavAccess();
+  }
+
+  function prepareIntermediate2AuthPanel(root, panel) {
+    intermediate2PanelCleanup?.();
+    panel.classList.add("jl-intermediate2-auth-panel");
+    panel.id = "jlIntermediate2AuthPanel";
+    if (typeof panel.showPopover === "function") panel.setAttribute("popover", "manual");
+    const trigger = root.querySelector("[data-auth-toggle]");
+    trigger.setAttribute("aria-controls", panel.id);
+    trigger.setAttribute("aria-expanded", "false");
+    const dismiss = document.createElement("button");
+    dismiss.type = "button";
+    dismiss.className = "jl-auth-panel-dismiss";
+    dismiss.setAttribute("aria-label", copy.close);
+    dismiss.textContent = "×";
+    dismiss.addEventListener("click", () => { closePanel(); trigger.focus({ preventScroll: true }); });
+    panel.appendChild(dismiss);
+    const events = new AbortController();
+    const place = () => {
+      trigger.setAttribute("aria-expanded", String(!panel.hidden));
+      if (panel.hidden) {
+        if (panel.hasAttribute("popover") && panel.matches(":popover-open")) panel.hidePopover();
+        return;
+      }
+      const viewport = window.visualViewport;
+      const width = viewport?.width || innerWidth;
+      const height = viewport?.height || innerHeight;
+      const x = viewport?.offsetLeft || 0;
+      const y = viewport?.offsetTop || 0;
+      const anchor = trigger.getBoundingClientRect();
+      const panelWidth = Math.min(380, width - 24);
+      const left = Math.max(x + 12, Math.min(anchor.right - panelWidth, x + width - panelWidth - 12));
+      const top = Math.max(y + 12, Math.min(anchor.bottom + 10, y + height - Math.min(480, height - 24) - 12));
+      panel.style.setProperty("--jl-auth-left", left + "px");
+      panel.style.setProperty("--jl-auth-top", top + "px");
+      panel.style.setProperty("--jl-auth-width", panelWidth + "px");
+      panel.style.setProperty("--jl-auth-height", Math.max(100, y + height - top - 12) + "px");
+      // The top layer escapes clipping and stacking contexts from course headers.
+      if (panel.hasAttribute("popover") && !panel.matches(":popover-open")) panel.showPopover();
+    };
+    const observer = new MutationObserver(place);
+    observer.observe(panel, { attributes: true, attributeFilter: ["hidden"] });
+    window.addEventListener("resize", place, { signal: events.signal });
+    window.addEventListener("scroll", place, { signal: events.signal, passive: true });
+    window.visualViewport?.addEventListener("resize", place, { signal: events.signal });
+    window.visualViewport?.addEventListener("scroll", place, { signal: events.signal });
+    document.addEventListener("keydown", event => {
+      if (event.key === "Escape" && !panel.hidden) {
+        closePanel();
+        trigger.focus({ preventScroll: true });
+      }
+    }, { signal: events.signal });
+    intermediate2PanelCleanup = () => { observer.disconnect(); events.abort(); };
+    place();
   }
 
   function renderNavAccess() {

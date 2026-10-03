@@ -11,3 +11,5 @@ Every new page, including official exams, must ship with its page-access QR:
 - Run `node tools/test_intermediate2_page_contract.mjs` from the repository root. The check must cover the QR script and SVG for every course page.
 
 Use the existing page template, shared authentication and QR component. The QR must not cover the title or controls. Linking to an exam does not authorize opening it: preserve its configured access state.
+
+For Sign in or navigation changes, also run `node tools/test_intermediate2_signin.cjs`. Check every course page at phone, tablet and desktop widths. The trigger and open form must be inside the viewport and receive pointer events; checking only script presence or `hidden=false` does not detect clipping. Verify typing, short viewports, page scrolling, Close and Escape without submitting real credentials.
