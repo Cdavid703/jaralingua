@@ -16,3 +16,7 @@ Este nivel tiene documentación propia y no debe confundirse con Intermedio 1. E
 El docente pidió revisar primero exámenes con notas bajas y, en un caso específico, obviar mayúsculas y puntuación. Esa instrucción puntual no elimina esos criterios de todas las rúbricas. No repetir cambios de nota del historial ni exponer datos personales en documentación pública; consultar entregas actuales cuando se solicite.
 
 En tareas anteriores hubo cambios de este nivel coexistiendo con trabajo de Básico 2. Revisar estado Git y no incluirlos accidentalmente en commits ajenos.
+
+## Unit 5 · The First Visit
+
+El cuento oral del examen final se redujo a 17 páginas por indicación del docente: evitar imágenes casi idénticas. Cada escena debe aportar cambios visibles de lugar, acción o composición. Describir primero, interpretar sentimientos con evidencia, revelar la narración y después predecir. Imágenes y preguntas ampliables para TV, preguntas individuales, audios de ElevenLabs, apoyos de looks/seems/looks like ocultos hasta solicitarlos. Referencia de interacción: Stone Soup de Básico 2, Unidad 6. Consultar [implementación y pruebas](../english-intermediate2-first-visit.md).

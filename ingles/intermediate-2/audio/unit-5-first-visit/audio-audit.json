@@ -1,0 +1,718 @@
+[
+  {
+    "file": "page-01-q2.mp3",
+    "expected": "What is Alex doing? Which objects might tell us about his interests?",
+    "heard": "What is Alex doing? Which objects might tell us about his interests?",
+    "matched": true,
+    "sha256": "a431fbdefeb54c1dc40fafcd7187e5c8b8df5b62894379c75081055a5c9640fe"
+  },
+  {
+    "file": "page-01-q1.mp3",
+    "expected": "Describe the room from left to right. What is on the desk?",
+    "heard": "Describe the room from left to right. What is on the desk?",
+    "matched": true,
+    "sha256": "459b8c25b4787e3d8a181c410a2b428890b9a8e97e5e9cbdd6fe5df64d3430d5"
+  },
+  {
+    "file": "page-01-q3.mp3",
+    "expected": "How does Alex look? Which details support your impression?",
+    "heard": "How does Alex look? Which details support your impression?",
+    "matched": true,
+    "sha256": "7a17d81b5dd2882ec3c1cb05d2ea650ad8a59fa10e95aed570cc5506550dbab1"
+  },
+  {
+    "file": "page-01-q4.mp3",
+    "expected": "What might Alex write back to Maya?",
+    "heard": "What might Alex write back to Maya?",
+    "matched": true,
+    "sha256": "de7987df7a988a97f67e0cf5fd891f1d1c76f14932f8549498b73bb14247f011"
+  },
+  {
+    "file": "page-01-q5.mp3",
+    "expected": "What do you think he will do after answering?",
+    "heard": "What do you think he will do after answering?",
+    "matched": true,
+    "sha256": "60b6c86deebb7020d8c649e1002bb7c644e1b9ee594bda168a88ce9f23cc89a2"
+  },
+  {
+    "file": "page-01.mp3",
+    "expected": "Alex is spending a quiet Friday afternoon at home when his phone lights up. Maya writes, 'Would you like to have dinner with my family tomorrow?' He reads the message twice. Then he starts typing.",
+    "heard": "Alex is spending a quiet Friday afternoon at home when his phone lights up. Maya writes, \"Would you like to have dinner with my family tomorrow?\" He reads the message twice. Then he starts typing",
+    "matched": true,
+    "sha256": "c75547c3dd5429e885327afc69ca64e49502dde062d1b8f3bbc5c2d1f82e84e3"
+  },
+  {
+    "file": "page-02-q1.mp3",
+    "expected": "Compare the two shirts and the shoes in the room.",
+    "heard": "Compare the two shirts and the shoes in the room.",
+    "matched": true,
+    "sha256": "802daeba86e3bd6d5d7e2b1a3f4b89d9c82952d0c9927184090704953c470e95"
+  },
+  {
+    "file": "page-02-q2.mp3",
+    "expected": "Describe what Alex is doing in front of the mirror.",
+    "heard": "Describe what Alex is doing in front of the mirror.",
+    "matched": true,
+    "sha256": "de288c71f07d41562f836931f31559db87bab1b93e8e62700ba13aad136d1536"
+  },
+  {
+    "file": "page-02-q3.mp3",
+    "expected": "How does he seem to feel about choosing clothes? Why?",
+    "heard": "How does he seem to feel about choosing clothes? Why?",
+    "matched": true,
+    "sha256": "cc651630aeee6d2d1b696b5391f1a99b774389292a9fab7c56e3ceae8348d30a"
+  },
+  {
+    "file": "page-02-q4.mp3",
+    "expected": "Which shirt might he choose, and why?",
+    "heard": "Which shirt might he choose and why?",
+    "matched": true,
+    "sha256": "be4ea4a9d7caac054f5c6b43e7c27d8d475d46c0bc50f77fb9f7fdebc041130d"
+  },
+  {
+    "file": "page-02-q5.mp3",
+    "expected": "What small gift could he bring to the family?",
+    "heard": "What small gift could he bring to the family?",
+    "matched": true,
+    "sha256": "b2375296d9265b4287e2e30b8899c13c2b2675f5eb0e02c6eb4ef9d46e858c71"
+  },
+  {
+    "file": "page-02.mp3",
+    "expected": "Alex accepts Maya's invitation. On Saturday, he takes two shirts from his wardrobe and compares them in the mirror. He wants to look neat and feel comfortable. First, he will choose his clothes. Then, he needs to think about a small gift.",
+    "heard": "Alex accepts Maya's invitation. On Saturday, he takes two shirts from his wardrobe and compares them in the mirror. He wants to look neat and feel comfortable. First, he will choose his clothes. Then he needs to think about a small gift.",
+    "matched": true,
+    "sha256": "0ee66cac1681e2eca31aa74f27244b6a6e13826eab0e33ac63fda2350ca56b53"
+  },
+  {
+    "file": "page-03-q1.mp3",
+    "expected": "Describe the flowers, containers and objects on the counter.",
+    "heard": "Describe the flowers, containers, and objects on the counter.",
+    "matched": true,
+    "sha256": "eb0f84aad8e2f6632bff5893546dfb24374312331e9fad170ed02e863cff0cfe"
+  },
+  {
+    "file": "page-03-q2.mp3",
+    "expected": "What are Alex and the florist doing? What can you see outside?",
+    "heard": "What are Alex and the florist doing? What can you see outside?",
+    "matched": true,
+    "sha256": "1518d08423104cb580f4d4644ae410ce492635f4c699ebc742cdec7b6078a71e"
+  },
+  {
+    "file": "page-03-q3.mp3",
+    "expected": "How might Alex feel as he explains the visit? Give a clue.",
+    "heard": "How might Alex feel as he explains the visit? Give a clue.",
+    "matched": true,
+    "sha256": "bbd75d3e0077092c1c20d6946999462bafb37ea2c8a7ebf80aae8531843b32d7"
+  },
+  {
+    "file": "page-03-q4.mp3",
+    "expected": "What could happen to the weather?",
+    "heard": "What could happen to the weather?",
+    "matched": true,
+    "sha256": "16cc3d98a77214e2061bd92ccea2f16fd9f4a5f1bb104dbae9262b0a8df42d5a"
+  },
+  {
+    "file": "page-03-q5.mp3",
+    "expected": "How might Alex protect his gift on the journey?",
+    "heard": "How might Alex protect his gift on the journey?",
+    "matched": true,
+    "sha256": "fdc43cbba6d9a4e440410d96c7e2525a382c67aa752f9f6659e418919760ea20"
+  },
+  {
+    "file": "page-03.mp3",
+    "expected": "Wearing his blue shirt and clean shoes, Alex visits a flower shop. He chooses a simple bouquet. 'I'm meeting my girlfriend's family,' he tells the florist. She ties a ribbon around the flowers. Outside, dark clouds are gathering.",
+    "heard": "Wearing his blue shirt and clean shoes, Alex visits a flower shop. He chooses a simple bouquet. \"I'm meeting my girlfriend's family,\" he tells the florist. She ties a ribbon around the flowers. Outside, dark clouds are gathering.",
+    "matched": true,
+    "sha256": "fe8a87e94149125bec83620a8dd9dab9d10142b669e593f2108dcb7802c06d9d"
+  },
+  {
+    "file": "page-04-q1.mp3",
+    "expected": "Describe the shelter, wet street and people's positions.",
+    "heard": "Describe the shelter, wet street, and people's positions.",
+    "matched": true,
+    "sha256": "a2639a9bd23f7758d669a274f348dd86323858925de3f582a6dfd9dfb7420bd5"
+  },
+  {
+    "file": "page-04-q2.mp3",
+    "expected": "What is Alex doing with the flowers? What is the woman carrying?",
+    "heard": "What is Alex doing with the flowers? What is the woman carrying?",
+    "matched": true,
+    "sha256": "602b0c3737630c100522e0ac519e0487561c5681e7021084062d6189a3b2e171"
+  },
+  {
+    "file": "page-04-q3.mp3",
+    "expected": "How might each person feel? Use a different visual clue for each.",
+    "heard": "How might each person feel? Use a different visual clue for each.",
+    "matched": true,
+    "sha256": "1a01e0a114451ca4ec995b688b94675b8945cddd7e6850a6e849ff28ad2cd881"
+  },
+  {
+    "file": "page-04-q4.mp3",
+    "expected": "What might Alex say to the woman?",
+    "heard": "What might Alex say to the woman?",
+    "matched": true,
+    "sha256": "c46c3b631ceae42fe7bb8b0247ba9711aa222d8983a2550add08631506056e67"
+  },
+  {
+    "file": "page-04-q5.mp3",
+    "expected": "What could happen when he gets on the bus?",
+    "heard": "What could happen when he gets on the bus?",
+    "matched": true,
+    "sha256": "bbfc25928e12557c19028460ce653557688fb674169397b008395de20437cae6"
+  },
+  {
+    "file": "page-05-q1.mp3",
+    "expected": "Describe the inside of the bus and the view through the window.",
+    "heard": "Describe the inside of the bus and the view through the window.",
+    "matched": true,
+    "sha256": "4320620b100d3df5a48a422a7436facfe7b0acb2826764c1b9bddff1eb8cd616"
+  },
+  {
+    "file": "page-04.mp3",
+    "expected": "At the bus stop, rain begins to fall. Alex moves under the shelter and makes room for a woman carrying shopping bags. His sleeve gets a little wet, but the flowers stay dry. A bus approaches through the rain.",
+    "heard": "At the bus stop, rain begins to fall. Alex moves under the shelter and makes room for a woman carrying shopping bags. His sleeve gets a little wet, but the flowers stay dry. A bus approaches through the rain.",
+    "matched": true,
+    "sha256": "d0a919199f923c0d1783132278e52fd017f86a73884cf36bd0b8f2c9c32b0b63"
+  },
+  {
+    "file": "page-05-q2.mp3",
+    "expected": "What are Alex and the other passengers doing?",
+    "heard": "What are Alex and the other passengers doing?",
+    "matched": true,
+    "sha256": "00708aa8cce6c9b7595b2a34002cbb507ef338cde0caf7e80e07e920c391f624"
+  },
+  {
+    "file": "page-05-q3.mp3",
+    "expected": "Does Alex seem more at ease? Explain your impression.",
+    "heard": "Does Alex seem more at ease? Explain your impression",
+    "matched": true,
+    "sha256": "f18aa9bd2b7be96eeec2410edfcd2074453b373c5f3fe50568750ea9bc875178"
+  },
+  {
+    "file": "page-05-q4.mp3",
+    "expected": "What friendly question might he ask?",
+    "heard": "What friendly question might he ask?",
+    "matched": true,
+    "sha256": "d380ca4989c522f8b66535cea1cb6826e8c76003c64b8fb05232c463819d1d13"
+  },
+  {
+    "file": "page-05-q5.mp3",
+    "expected": "What might he learn from this conversation before meeting the family?",
+    "heard": "What might he learn from this conversation before meeting the family?",
+    "matched": true,
+    "sha256": "2c8e5e3dc8e73effb822eb38ffa8c547361896d1348a9ba061cf80fc13d61f0c"
+  },
+  {
+    "file": "page-05.mp3",
+    "expected": "On the bus, Alex looks at his watch again. There is still plenty of time. The woman asks about the flowers, and a short conversation begins. Alex discovers that speaking to someone new feels easier when he asks a simple, friendly question.",
+    "heard": "On the bus, Alex looks at his watch again. There is still plenty of time. The woman asks about the flowers, and a short conversation begins. Alex discovers that speaking to someone new feels easier when he asks a simple, friendly question",
+    "matched": true,
+    "sha256": "f94a18f67c4a69db07aa599f5d5a8fb22b5f9f6914d6cb0ffed6786eab287105"
+  },
+  {
+    "file": "page-06-q1.mp3",
+    "expected": "Compare the houses, gardens and objects along the street.",
+    "heard": "Compare the houses, gardens, and objects along the street.",
+    "matched": true,
+    "sha256": "b9015c022f2a9a1f8eb16d057a5a38207fc4f10a04ede8231dfeecb52368924b"
+  },
+  {
+    "file": "page-06-q2.mp3",
+    "expected": "What is Alex looking at? Describe the light and the pavement.",
+    "heard": "What is Alex looking at? Describe the light and the pavement.",
+    "matched": true,
+    "sha256": "72380bbd90548f2a570e7e3229bcc17194dd44d61992ee0783d635db1f5b5e69"
+  },
+  {
+    "file": "page-06-q3.mp3",
+    "expected": "How might he feel in an unfamiliar street? Support your answer.",
+    "heard": "How might he feel in an unfamiliar street? Support your answer.",
+    "matched": true,
+    "sha256": "a7d178410bddcc45b47e28ba92f9eda4dcc8af814413f25d93e3c4291e79be84"
+  },
+  {
+    "file": "page-06-q5.mp3",
+    "expected": "What could he say when someone opens the door?",
+    "heard": "What could he say when someone opens the door?",
+    "matched": true,
+    "sha256": "6d157080be29160f6d3908f022e9f525e0b1f72b19790ec25cba5b66b38c6f4e"
+  },
+  {
+    "file": "page-06-q4.mp3",
+    "expected": "How might he check that he has the correct house?",
+    "heard": "How might he check that he has the correct house?",
+    "matched": true,
+    "sha256": "948b085abc533290438e4df2c27177ab803b3afac31d77295a1676b4f3a8f441"
+  },
+  {
+    "file": "page-06.mp3",
+    "expected": "When Alex gets off, the rain has stopped. Two houses on the street look very similar. He checks Maya's address on his phone and walks slowly past the gardens. A bicycle beside one gate catches his attention.",
+    "heard": "When Alex gets off, the rain has stopped. Two houses on the street look very similar. He checks Maya's address on his phone and walks slowly past the gardens. A bicycle beside one gate catches his attention",
+    "matched": true,
+    "sha256": "b518e214ddb74c642b090c72c10203bbfb78f369863c003e418c80d5a8cc4d34"
+  },
+  {
+    "file": "page-07-q1.mp3",
+    "expected": "Describe everyone's clothes, positions and gestures.",
+    "heard": "Describe everyone's clothes, positions, and gestures.",
+    "matched": true,
+    "sha256": "96b9c5822cf465aebf99ddf48c10d8e32eccd5987a3dd823b97a84df403ef052"
+  },
+  {
+    "file": "page-07-q3.mp3",
+    "expected": "What is your first impression of Daniel? What can you actually observe?",
+    "heard": "What is your first impression of Daniel? What can you actually observe?",
+    "matched": true,
+    "sha256": "29f8e7516678fbbbbad1f5a1488de931517969e0e83137e50df89fd3b7c91dc7"
+  },
+  {
+    "file": "page-07-q2.mp3",
+    "expected": "What objects make the entrance look like a family home?",
+    "heard": "What objects make the entrance look like a family home?",
+    "matched": true,
+    "sha256": "25170442b72268fadd0435bc500ed30c94fcf874da1e59da445afa1c781744a0"
+  },
+  {
+    "file": "page-07-q4.mp3",
+    "expected": "Why might Daniel be quiet? Suggest two possibilities.",
+    "heard": "Why might Daniel be quiet? Suggest two possibilities.",
+    "matched": true,
+    "sha256": "23ba18b7ac31dc818c98fad1d335f60845f3b890965cb71f440f6117d9fae90b"
+  },
+  {
+    "file": "page-07-q5.mp3",
+    "expected": "What could Alex say to begin a conversation?",
+    "heard": "What could Alex say to begin a conversation?",
+    "matched": true,
+    "sha256": "4d9039f20a8ebd10f4b7f098ba169b3149b01982cc2075e5d129821b8c28805d"
+  },
+  {
+    "file": "page-08-q1.mp3",
+    "expected": "Describe the living room and the photograph they are looking at.",
+    "heard": "Describe the living room and the photograph they are looking at.",
+    "matched": true,
+    "sha256": "74e073aec355a4de0709ea3cf89d008924e8d73bb2e5627f6f3ea81e4def9553"
+  },
+  {
+    "file": "page-07.mp3",
+    "expected": "Maya waves from the doorway and introduces her parents, Elena and Daniel. Alex says hello and offers the flowers. Elena reaches for a vase. Daniel gives a small smile but says very little. Alex wonders if he has done something wrong.",
+    "heard": "Maya waves from the doorway and introduces her parents, Elena and Daniel. Alex says hello and offers the flowers. Elena reaches for a vase. Daniel gives a small smile but says very little. Alex wonders if he has done something wrong.",
+    "matched": true,
+    "sha256": "278479e7d095022bdb802fd60a463c6baf5f0a0f9e7fd47c8e8db39ee8152f0c"
+  },
+  {
+    "file": "page-08-q2.mp3",
+    "expected": "How have Daniel's posture and gestures changed?",
+    "heard": "How have Daniel's posture and gestures changed?",
+    "matched": true,
+    "sha256": "10ea41cb2ddab2b46b3809c1b60d5b08c7d36d8e0f280e6cc14dd839c74b1079"
+  },
+  {
+    "file": "page-08-q3.mp3",
+    "expected": "Who seems interested in the conversation? Give visible evidence.",
+    "heard": "Who seems interested in the conversation? Give visible evidence.",
+    "matched": true,
+    "sha256": "289f8dfa26df355a1cbd95486cfa40c5a8ad0088336fe6243bfe3be26c8b0207"
+  },
+  {
+    "file": "page-08-q4.mp3",
+    "expected": "What could Alex ask about the photograph?",
+    "heard": "What could Alex ask about the photograph?",
+    "matched": true,
+    "sha256": "6c450e7e195a81d8764854a2b20b8db81e95a46e79a2ef6a303769d0e2463a23"
+  },
+  {
+    "file": "page-08-q5.mp3",
+    "expected": "What other interests might the family share with him?",
+    "heard": "What other interests might the family share with him?",
+    "matched": true,
+    "sha256": "65d64fe049ff12459eb502c4f6c3aa8ef992d88ef5a127e7604e1a6bbd2c4313"
+  },
+  {
+    "file": "page-09-q1.mp3",
+    "expected": "Describe the plants, tools and different parts of the garden.",
+    "heard": "Describe the plants, tools, and different parts of the garden.",
+    "matched": true,
+    "sha256": "7d862afc79eb184ee1c40908c8ab19bfde06cc407f74881ccae937aa818ddaca"
+  },
+  {
+    "file": "page-08.mp3",
+    "expected": "Daniel asks Alex to repeat his name: he did not hear it clearly. In the living room, Alex asks about a mountain photograph. Daniel's face brightens. They both enjoy photography! Alex begins to understand how easily a first impression can change.",
+    "heard": "Daniel asks Alex to repeat his name. He did not hear it clearly. In the living room, Alex asks about a mountain photograph. Daniel's face brightens. They both enjoy photography. Alex begins to understand how easily a first impression can change.",
+    "matched": true,
+    "sha256": "e8aa2775623aaa1e5f134706c252655fa47d021e1470b59f9091d6c2d7daf19d"
+  },
+  {
+    "file": "page-09-q2.mp3",
+    "expected": "What are Elena, Alex and Maya doing? Describe their positions.",
+    "heard": "What are Elena, Alex, and Maya doing? Describe their positions",
+    "matched": true,
+    "sha256": "d87791497dd41176303755371a815d5d4b5d326d103934f1d8a3fff57a86dbfb"
+  },
+  {
+    "file": "page-09-q3.mp3",
+    "expected": "How does Elena seem to feel about her garden? Which clues support your idea?",
+    "heard": "How does Elena seem to feel about her garden? Which clues support your idea?",
+    "matched": true,
+    "sha256": "007213c2f79ce4f14980d60d516c3caf241b9d9b91ef23ce67d8b54bdbb7984f"
+  },
+  {
+    "file": "page-09-q4.mp3",
+    "expected": "What follow-up question could Alex ask about growing vegetables?",
+    "heard": "What follow-up question could Alex ask about growing vegetables?",
+    "matched": true,
+    "sha256": "2b319d645b3d0213546c94d7dc9c83b7da12daf9b996ab2ebd06ddd4f58c82f0"
+  },
+  {
+    "file": "page-09-q5.mp3",
+    "expected": "What might he offer to do when they go back into the kitchen?",
+    "heard": "What might he offer to do when they go back into the kitchen?",
+    "matched": true,
+    "sha256": "507d496981a5365ccc0890fa7f7cfee50f6836d9a05979782325f0a0e8802eff"
+  },
+  {
+    "file": "page-10-q1.mp3",
+    "expected": "Describe the food, utensils and different work areas.",
+    "heard": "Describe the food, utensils, and different work areas.",
+    "matched": true,
+    "sha256": "42fd44810a09c0c0461a4b8a5450d538488cd7ec924429aefe4a3fd781a8f016"
+  },
+  {
+    "file": "page-09.mp3",
+    "expected": "Before dinner, Elena shows Alex the garden. He asks about the vegetables and listens carefully. Maya points out the herbs beside the kitchen. Alex decides that hobbies make a good conversation topic. Personal questions about money can wait; there is plenty to discuss here.",
+    "heard": "Before dinner, Elena shows Alex the garden. He asks about the vegetables and listens carefully. Maya points out the herbs beside the kitchen. Alex decides that hobbies make a good conversation topic. Personal questions about money can wait. There is plenty to discuss here",
+    "matched": true,
+    "sha256": "92e7481ef3685986b6ebcb7899629a1c9a6383129e1f73889220e73ff51a5ebd"
+  },
+  {
+    "file": "page-10-q2.mp3",
+    "expected": "What is Elena doing? What could Alex carry to the table?",
+    "heard": "What is Elena doing? What could Alex carry to the table?",
+    "matched": true,
+    "sha256": "4ef940bd3cdf1f97b324d7aee98de46c28966bbc03e7bcbde4fed731ee158d0d"
+  },
+  {
+    "file": "page-10-q4.mp3",
+    "expected": "What could Alex say when he offers to help?",
+    "heard": "What could Alex say when he offers to help?",
+    "matched": true,
+    "sha256": "d2da04f7e18d731a9f465c151343fcce3b6ae5cd778ecab0e3639999b3d7d980"
+  },
+  {
+    "file": "page-10-q3.mp3",
+    "expected": "How might Alex feel when he is given a small task? Explain.",
+    "heard": "How might Alex feel when he is given a small task? Explain.",
+    "matched": true,
+    "sha256": "6baa5132e5b056f717a59a54bd14cf0a75c4be75700f2a36cbcb1db18a907cf0"
+  },
+  {
+    "file": "page-10-q5.mp3",
+    "expected": "What might happen while he is setting the table?",
+    "heard": "What might happen while he is setting the table?",
+    "matched": true,
+    "sha256": "02ce8ee1d48d2b987e690f9b33335abd4bbc35c8086154861874215555f900c2"
+  },
+  {
+    "file": "page-10.mp3",
+    "expected": "Back in the kitchen, Alex asks if he can help. Elena gives him a stack of plates and thanks him. He notices a dish he has never tried before and asks about its ingredients. Then he carries the plates towards the dining room.",
+    "heard": "Back in the kitchen, Alex asks if he can help. Elena gives him a stack of plates and thanks him. He notices a dish he has never tried before and asks about its ingredients. Then he carries the plates towards the dining room",
+    "matched": true,
+    "sha256": "69119afcefea6ec9289058cac08dc7c65d9cb2c99bba5184eaca29b737918277"
+  },
+  {
+    "file": "page-11-q1.mp3",
+    "expected": "Describe exactly what has happened on the table.",
+    "heard": "Describe exactly what has happened on the table",
+    "matched": true,
+    "sha256": "d0c33001622b2c17f75fc8fc848ecefaa3ad3daead9101f1150ca992c9e9ef39"
+  },
+  {
+    "file": "page-11-q2.mp3",
+    "expected": "What are the other people doing in response?",
+    "heard": "What are the other people doing in response?",
+    "matched": true,
+    "sha256": "07347377a1c8649c0bfb430b3f8982844fba68b454adf5ae88520da2cc1fb7c0"
+  },
+  {
+    "file": "page-11-q3.mp3",
+    "expected": "How might Alex feel? Do the family's faces support his worry?",
+    "heard": "How might Alex feel? Do the family's faces support his worry?",
+    "matched": true,
+    "sha256": "9025ca32d5641b041c21878f4a11de95b8ed62e4f6534dec2984375a4635edc2"
+  },
+  {
+    "file": "page-11-q4.mp3",
+    "expected": "What might Elena say to him?",
+    "heard": "What might Elena say to him?",
+    "matched": true,
+    "sha256": "2a2d60722a999c58e3c7bd7ff4cbd42009b483265db19049b84fca38ee762988"
+  },
+  {
+    "file": "page-11-q5.mp3",
+    "expected": "How could Alex help solve this small problem?",
+    "heard": "How could Alex help solve this small problem?",
+    "matched": true,
+    "sha256": "9ca8f70b4d1f28cc3d0d6bc1eb50da56d78ece1c033b6d03be0451af264b893a"
+  },
+  {
+    "file": "page-11.mp3",
+    "expected": "As Alex reaches across the table with the last plate, his sleeve catches a glass. Water spreads across the table. 'I'm so sorry,' he says. Maya brings a towel, and Elena moves the bread. Alex waits anxiously for their reaction.",
+    "heard": "As Alex reaches across the table with the last plate, his sleeve catches a glass. Water spreads across the table. \"I'm so sorry,\" he says. Maya brings a towel, and Elena moves the bread. Alex waits anxiously for their reaction",
+    "matched": true,
+    "sha256": "a0c3ab7e8f6c8e8b2a834a3b47e75afa5321d514abaf63f8c6dbddea6db22aae"
+  },
+  {
+    "file": "page-12-q1.mp3",
+    "expected": "Describe the signs that the meal is continuing.",
+    "heard": "Describe the signs that the meal is continuing.",
+    "matched": true,
+    "sha256": "f5dca58ec9963f80979913deddf534023cf3f44997ea64de078d9fdbdd1b4e75"
+  },
+  {
+    "file": "page-12-q2.mp3",
+    "expected": "What do the hands, faces and positions suggest about the conversation?",
+    "heard": "What do the hands, faces, and positions suggest about the conversation?",
+    "matched": true,
+    "sha256": "c9e8262e369acbe0d5fc04945924c350491ec1eae63c84e7d70240967956727f"
+  },
+  {
+    "file": "page-12-q3.mp3",
+    "expected": "How might Alex feel while speaking about himself? Give a clue.",
+    "heard": "How might Alex feel while speaking about himself? Give a clue.",
+    "matched": true,
+    "sha256": "05c842b5d9e4ca4d38dbd8cc9105849190b283263e8ba3f483d8d121c5abf473"
+  },
+  {
+    "file": "page-12-q4.mp3",
+    "expected": "What friendly question could Alex ask someone at the table?",
+    "heard": "What friendly question could Alex ask someone at the table?",
+    "matched": true,
+    "sha256": "8ded2d39f3ee155ff937ecd41061c76350ece394a38fe90190b85125c07c8ded"
+  },
+  {
+    "file": "page-12-q5.mp3",
+    "expected": "What family story might he hear after dinner?",
+    "heard": "What family story might he hear after dinner?",
+    "matched": true,
+    "sha256": "fb21237020c2e11638c9a76ab1e788755447b7bb81a566265990ebfa83532283"
+  },
+  {
+    "file": "page-12.mp3",
+    "expected": "'It's only water,' Elena says. Alex helps clean up, and everyone sits down to eat. He feels relieved. Daniel asks about his week, so Alex shares a short story and invites others to speak. Also, he remembers to keep his phone away.",
+    "heard": "\"It's only water,\" Elena says. Alex helps clean up and everyone sits down to eat. He feels relieved. Daniel asks about his week, so Alex shares a short story and invites others to speak. Also, he remembers to keep his phone away",
+    "matched": true,
+    "sha256": "728a5242804066fc66cc31d6b43acfef0777d6fa3202becc266e9808bef9579c"
+  },
+  {
+    "file": "page-13-q1.mp3",
+    "expected": "Describe the album and the objects near Rosa.",
+    "heard": "Describe the album and the objects near Rosa.",
+    "matched": true,
+    "sha256": "71b131e4d8c12d5ac5015ba007d48ffa43d681f08af705984feb4437821d1d91"
+  },
+  {
+    "file": "page-13-q2.mp3",
+    "expected": "Describe the photograph and the objects around the chairs. What is Daniel doing in the background?",
+    "heard": "Describe the photograph and the objects around the chairs. What is Daniel doing in the background?",
+    "matched": true,
+    "sha256": "1d379e763bb5461d49f86ce6ee6ed2634b1a32a090450392946637625c05cde0"
+  },
+  {
+    "file": "page-13-q3.mp3",
+    "expected": "How does Rosa seem to feel about the photograph? Give a clue.",
+    "heard": "How does Rosa seem to feel about the photograph? Give a clue.",
+    "matched": true,
+    "sha256": "e4c0223ce607cf2842a6b6462d5445d7538e9651adb9167c81ce730610872907"
+  },
+  {
+    "file": "page-13-q5.mp3",
+    "expected": "What might happen when he returns from the kitchen?",
+    "heard": "What might happen when he returns from the kitchen?",
+    "matched": true,
+    "sha256": "457343ff0f0341388d3aaa112026692a916b3d5914d53bf54f0093e078c4bea2"
+  },
+  {
+    "file": "page-13-q4.mp3",
+    "expected": "Why might Daniel be checking the time? Suggest two possibilities.",
+    "heard": "Why might Daniel be checking the time? Suggest two possibilities.",
+    "matched": true,
+    "sha256": "92160e52fb6c33537b51139e32df7104820507a8e2009436170d573cdc24196e"
+  },
+  {
+    "file": "page-14-q1.mp3",
+    "expected": "Describe the cake, lighting and each person's reaction.",
+    "heard": "Describe the cake, lighting, and each person's reaction",
+    "matched": true,
+    "sha256": "6fd09c31473954166758103c572d37c53af10e9af989462229e1441845de2623"
+  },
+  {
+    "file": "page-13.mp3",
+    "expected": "After dinner, Alex meets Maya's grandmother properly. 'Call me Rosa,' she says, showing him an old photograph beside a bicycle. She tells a funny story about getting lost. Across the room, Daniel checks his watch and disappears into the kitchen.",
+    "heard": "After dinner, Alex meets Maya's grandmother properly. \"Call me Rosa,\" she says, showing him an old photograph beside a bicycle. She tells a funny story about getting lost. Across the room, Daniel checks his watch and disappears into the kitchen.",
+    "matched": true,
+    "sha256": "ba8a30bce72e05483df0a5d4cf676b144c67cb35bf489c96141ba0fafd4f0183"
+  },
+  {
+    "file": "page-14-q2.mp3",
+    "expected": "Which details explain what Daniel was doing earlier?",
+    "heard": "Which details explain what Daniel was doing earlier?",
+    "matched": true,
+    "sha256": "8bb1080926f183c889ef85a41900a1bd2708b20eb9287c3a4de7587fabfb340a"
+  },
+  {
+    "file": "page-14-q3.mp3",
+    "expected": "How might Rosa and Alex feel for different reasons?",
+    "heard": "How might Rosa and Alex feel for different reasons?",
+    "matched": true,
+    "sha256": "1a827f8301df94a9a7995eede0f7b1f3d45ec8de565a38ea0136fc3b582b1962"
+  },
+  {
+    "file": "page-14-q4.mp3",
+    "expected": "What might Alex say to Rosa after the song?",
+    "heard": "What might Alex say to Rosa after the song?",
+    "matched": true,
+    "sha256": "4760662b967f44aec3bfbb3a400170d3613e907fe2fb9bd4f9afb17be7090c81"
+  },
+  {
+    "file": "page-14-q5.mp3",
+    "expected": "What could the family do together before the evening ends?",
+    "heard": "What could the family do together before the evening ends?",
+    "matched": true,
+    "sha256": "0ce6fa9b4068ffabd1d61adb8045abda5755829983c69a55fd5023fe7aa45d64"
+  },
+  {
+    "file": "page-14.mp3",
+    "expected": "The lights grow dim, and Elena enters with a small cake. It is Rosa's birthday! Alex laughs with relief: Daniel was watching the time for a surprise, not waiting for him to leave. The family gathers around Rosa and begins to sing.",
+    "heard": "The lights grow dim, and Elena enters with a small cake. It is Rosa's birthday. Alex laughs with relief. Daniel was watching the time for a surprise, not waiting for him to leave. The family gathers around Rosa and begins to sing",
+    "matched": true,
+    "sha256": "5804287ab2421ed99c8e95f95d6419f6d60c0b563602e6a00fdfec5b65cd236f"
+  },
+  {
+    "file": "page-15-q1.mp3",
+    "expected": "Describe how the family is preparing for the photograph.",
+    "heard": "Describe how the family is preparing for the photograph.",
+    "matched": true,
+    "sha256": "a318171ab4494ae234b1c2982878ebbcaee202b728d84f0083a3393b537ff2d5"
+  },
+  {
+    "file": "page-15-q2.mp3",
+    "expected": "Where are the camera, the people and the objects from the evening?",
+    "heard": "Where are the camera, the people and the objects from the evening?",
+    "matched": true,
+    "sha256": "d0a4f83ee2fea4d394d7552bfa27c4cff86195123748e53c05c2e856d43a3a02"
+  },
+  {
+    "file": "page-15-q3.mp3",
+    "expected": "How might Alex feel when Rosa makes room for him? Why?",
+    "heard": "How might Alex feel when Rosa makes room for him? Why?",
+    "matched": true,
+    "sha256": "e84af8c6d01844e043ee94df7edb5ac561d3220b29bd6ce22135feb485c91ec4"
+  },
+  {
+    "file": "page-15-q4.mp3",
+    "expected": "What might Alex say before the photo is taken?",
+    "heard": "What might Alex say before the photo is taken?",
+    "matched": true,
+    "sha256": "4e86a1f14e189f68e175f401e9aa2036ebd7247ad66a6154626860662fba85a3"
+  },
+  {
+    "file": "page-15-q5.mp3",
+    "expected": "How do you think he will say goodbye?",
+    "heard": "How do you think he will say goodbye?",
+    "matched": true,
+    "sha256": "3fffab17cb46e4619783c31aff78707856819da680f3328994b2315364bcea1e"
+  },
+  {
+    "file": "page-15.mp3",
+    "expected": "After the cake, Daniel suggests a photograph together. Alex offers to take it, but Rosa shakes her head. 'You're part of this evening too,' she says. Daniel places his camera on a small tripod, and everyone moves closer together.",
+    "heard": "After the cake, Daniel suggests a photograph together. Alex offers to take it, but Rosa shakes her head. \"You're part of this evening too,\" she says. Daniel places his camera on a small tripod, and everyone moves closer together",
+    "matched": true,
+    "sha256": "5b6ba14612e92c723aa93e07dc1d159df811bf1f5eade65c345bc462a3f0720c"
+  },
+  {
+    "file": "page-16-q1.mp3",
+    "expected": "Compare this doorway scene with Alex's arrival.",
+    "heard": "Compare this doorway scene with Alex's arrival",
+    "matched": true,
+    "sha256": "2650feaab7e0944b6c1b9a3e5c905d6da401bd62beea8cfb66f20702b7ab90ad"
+  },
+  {
+    "file": "page-16-q3.mp3",
+    "expected": "How does Alex seem different now? Support your comparison.",
+    "heard": "How does Alex seem different now? Support your comparison.",
+    "matched": true,
+    "sha256": "5e29e9c29c677351e25259bfd940963815c74d3b2f66dcc677c8c4bfebe7ce9c"
+  },
+  {
+    "file": "page-16-q2.mp3",
+    "expected": "Describe the gestures, expressions and lighting inside and outside.",
+    "heard": "Describe the gestures, expressions, and lighting inside and outside.",
+    "matched": true,
+    "sha256": "a49da40a5be0e520e8be3362ada65626346cb1405231c6e59ca79264946db047"
+  },
+  {
+    "file": "page-16-q4.mp3",
+    "expected": "What might he tell Maya about the evening?",
+    "heard": "What might he tell Maya about the evening?",
+    "matched": true,
+    "sha256": "fd33b813f3bc3e1296bba478e83081f33e8ea78d0aaf9753f65429ae84ae9c5b"
+  },
+  {
+    "file": "page-16-q5.mp3",
+    "expected": "What might he write to his best friend when he gets home?",
+    "heard": "What might he write to his best friend when he gets home?",
+    "matched": true,
+    "sha256": "4be305d317258bf15b97a03fb88082869a4ce3dff1b9b2f08621d05567500475"
+  },
+  {
+    "file": "page-17-q1.mp3",
+    "expected": "Compare this room and Alex's posture with the first page.",
+    "heard": "Compare this room and Alex's posture with the first page.",
+    "matched": true,
+    "sha256": "ee5f05ac78b97eedbc5303195f548ac0845d305e3ffd9916a8a1d8fdd369f1e7"
+  },
+  {
+    "file": "page-16.mp3",
+    "expected": "At the door, Alex thanks everyone for dinner and for making him feel welcome. He mentions the garden, the photographs and Rosa's story. 'Come again,' Elena says. Walking outside with Maya, Alex realises that making a good impression did not require being perfect.",
+    "heard": "At the door, Alex thanks everyone for dinner and for making him feel welcome. He mentions the garden, the photographs, and Rosa's story. \"Come again,\" Elena says. Walking outside with Maya, Alex realizes that making a good impression did not require being perfect",
+    "matched": false,
+    "sha256": "283461e91620c1a464e8a2527aed548f0a20182466fda6e63908246b5340aac9",
+    "review": "Accepted: ASR American spelling only (realizes/realises or behavior/behaviour); same spoken words."
+  },
+  {
+    "file": "page-17-q2.mp3",
+    "expected": "Which objects connect the beginning and the end of the story?",
+    "heard": "Which objects connect the beginning and the end of the story?",
+    "matched": true,
+    "sha256": "7c322a514538b710c681a45821ac19c7838e3cd54f31228992c9bdc7b29b9f71"
+  },
+  {
+    "file": "page-17-q3.mp3",
+    "expected": "How might he feel as he remembers the evening? Explain.",
+    "heard": "How might he feel as he remembers the evening? Explain.",
+    "matched": true,
+    "sha256": "51024b3a21a13fc37dc33d11f8561c967371cd1b0ecfcd52aa5266e4c4c5bc30"
+  },
+  {
+    "file": "page-17-q4.mp3",
+    "expected": "What friendly opening and closing could he use in his message?",
+    "heard": "What friendly opening and closing could he use in his message?",
+    "matched": true,
+    "sha256": "e5f3bf367615388c1b4a409e7319be613de8e4b86d4be0d8b903e3b7721d39c4"
+  },
+  {
+    "file": "page-17-q5.mp3",
+    "expected": "Retell his experience: feelings, preparation, behaviour and conversation topics. Use first, then, also and however.",
+    "heard": "Retell his experience, feelings, preparation, behavior, and conversation topics. Use first, then also, and however.",
+    "matched": false,
+    "sha256": "d6ed5fc946924171c834f0229bceee89d9b2ef3163ed2f222fe9395cc5bdb74d",
+    "review": "Accepted: ASR American spelling only (realizes/realises or behavior/behaviour); same spoken words."
+  },
+  {
+    "file": "page-17.mp3",
+    "expected": "Back home, Alex writes to his best friend. First, he describes how nervous he felt. Then, he explains what he prepared and what really happened. His best first impression came from listening, asking friendly questions and being himself. The imperfect evening became a happy memory.",
+    "heard": "Back home, Alex writes to his best friend. First, he describes how nervous he felt. Then he explains what he prepared and what really happened. His best first impression came from listening, asking friendly questions, and being himself. The imperfect evening became a happy memory.",
+    "matched": true,
+    "sha256": "b8358a3c1c01568a4e75751c8d64b4e308536b8f90bd0f6e6c8ac023376bbdf2"
+  }
+]

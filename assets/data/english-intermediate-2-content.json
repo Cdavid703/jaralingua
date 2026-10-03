@@ -1070,6 +1070,39 @@
         "recording",
         "missed words"
       ]
+    },
+    {
+      "id": "unit-5-the-first-visit",
+      "unit": 5,
+      "order": 8,
+      "type": "speaking-game",
+      "skillLabel": "Interactive story · Speaking",
+      "title": "The First Visit",
+      "subtitle": "Describe. Interpret. Discover. Predict.",
+      "summary": "Explore seventeen distinct illustrated scenes and discuss first impressions, feelings and friendly conversation before the final writing task.",
+      "cardSummary": "17 illustrated scenes, spoken questions and a book for TV projection.",
+      "image": "/assets/img/english-intermediate-2/unit-5/first-visit/page-01.png",
+      "workshopHref": "/ingles/intermediate-2/speaking-unit-5-the-first-visit.html",
+      "duration": "Teacher-paced · 3 suggested sessions",
+      "product": "Detailed oral descriptions and predictions",
+      "questionCount": 85,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 5",
+        "storybook",
+        "first impression",
+        "final writing practice",
+        "feelings",
+        "looks",
+        "seems",
+        "predict",
+        "family",
+        "ElevenLabs"
+      ]
     }
   ]
 }
