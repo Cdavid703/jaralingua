@@ -1,0 +1,331 @@
+{
+  "language": "en",
+  "translationLanguage": "es",
+  "entries": [
+    {
+      "term": "lights up",
+      "spanish": "Se ilumina; se enciende la pantalla.",
+      "audio": "vocabulary/lights-up.mp3"
+    },
+    {
+      "term": "twice",
+      "spanish": "Dos veces.",
+      "audio": "vocabulary/twice.mp3"
+    },
+    {
+      "term": "typing",
+      "spanish": "Escribiendo en el teléfono o el teclado.",
+      "audio": "vocabulary/typing.mp3"
+    },
+    {
+      "term": "wardrobe",
+      "spanish": "Armario; lugar donde se guarda la ropa.",
+      "audio": "vocabulary/wardrobe.mp3"
+    },
+    {
+      "term": "neat",
+      "spanish": "Arreglado, de aspecto cuidado.",
+      "audio": "vocabulary/neat.mp3"
+    },
+    {
+      "term": "gift",
+      "spanish": "Regalo.",
+      "audio": "vocabulary/gift.mp3"
+    },
+    {
+      "term": "bouquet",
+      "spanish": "Ramo de flores.",
+      "audio": "vocabulary/bouquet.mp3"
+    },
+    {
+      "term": "florist",
+      "spanish": "Florista; persona que vende o prepara flores.",
+      "audio": "vocabulary/florist.mp3"
+    },
+    {
+      "term": "ribbon",
+      "spanish": "Cinta decorativa.",
+      "audio": "vocabulary/ribbon.mp3"
+    },
+    {
+      "term": "clouds are gathering",
+      "spanish": "Se están acumulando nubes.",
+      "audio": "vocabulary/clouds-are-gathering.mp3"
+    },
+    {
+      "term": "shelter",
+      "spanish": "Refugio; aquí, el techo de la parada de autobús.",
+      "audio": "vocabulary/shelter.mp3"
+    },
+    {
+      "term": "makes room for",
+      "spanish": "Le hace espacio a.",
+      "audio": "vocabulary/makes-room-for.mp3"
+    },
+    {
+      "term": "sleeve",
+      "spanish": "Manga de una prenda.",
+      "audio": "vocabulary/sleeve.mp3"
+    },
+    {
+      "term": "approaches",
+      "spanish": "Se acerca.",
+      "audio": "vocabulary/approaches.mp3"
+    },
+    {
+      "term": "plenty of time",
+      "spanish": "Tiempo de sobra.",
+      "audio": "vocabulary/plenty-of-time.mp3"
+    },
+    {
+      "term": "at ease",
+      "spanish": "Cómodo, tranquilo.",
+      "audio": "vocabulary/at-ease.mp3"
+    },
+    {
+      "term": "gets off",
+      "spanish": "Se baja del autobús.",
+      "audio": "vocabulary/gets-off.mp3"
+    },
+    {
+      "term": "gate",
+      "spanish": "Reja o puerta de entrada al jardín.",
+      "audio": "vocabulary/gate.mp3"
+    },
+    {
+      "term": "catches his attention",
+      "spanish": "Le llama la atención.",
+      "audio": "vocabulary/catches-his-attention.mp3"
+    },
+    {
+      "term": "doorway",
+      "spanish": "Entrada o umbral de una puerta.",
+      "audio": "vocabulary/doorway.mp3"
+    },
+    {
+      "term": "waves",
+      "spanish": "Saluda con la mano.",
+      "audio": "vocabulary/waves.mp3"
+    },
+    {
+      "term": "wonders",
+      "spanish": "Se pregunta; tiene la duda.",
+      "audio": "vocabulary/wonders.mp3"
+    },
+    {
+      "term": "hear it clearly",
+      "spanish": "Oírlo con claridad.",
+      "audio": "vocabulary/hear-it-clearly.mp3"
+    },
+    {
+      "term": "face brightens",
+      "spanish": "Se le ilumina la cara; muestra alegría o interés.",
+      "audio": "vocabulary/face-brightens.mp3"
+    },
+    {
+      "term": "posture",
+      "spanish": "Postura corporal.",
+      "audio": "vocabulary/posture.mp3"
+    },
+    {
+      "term": "points out",
+      "spanish": "Señala; indica dónde está algo.",
+      "audio": "vocabulary/points-out.mp3"
+    },
+    {
+      "term": "herbs",
+      "spanish": "Hierbas aromáticas.",
+      "audio": "vocabulary/herbs.mp3"
+    },
+    {
+      "term": "conversation topic",
+      "spanish": "Tema de conversación.",
+      "audio": "vocabulary/conversation-topic.mp3"
+    },
+    {
+      "term": "conversation topics",
+      "spanish": "Temas de conversación.",
+      "audio": "vocabulary/conversation-topics.mp3"
+    },
+    {
+      "term": "a stack of plates",
+      "spanish": "Una pila de platos.",
+      "audio": "vocabulary/a-stack-of-plates.mp3"
+    },
+    {
+      "term": "dish",
+      "spanish": "Plato de comida; una preparación culinaria.",
+      "audio": "vocabulary/dish.mp3"
+    },
+    {
+      "term": "setting the table",
+      "spanish": "Poniendo la mesa.",
+      "audio": "vocabulary/setting-the-table.mp3"
+    },
+    {
+      "term": "reaches across the table",
+      "spanish": "Estira el brazo por encima de la mesa.",
+      "audio": "vocabulary/reaches-across-the-table.mp3"
+    },
+    {
+      "term": "spreads",
+      "spanish": "Se esparce; aquí, el agua se extiende por la mesa.",
+      "audio": "vocabulary/spreads.mp3"
+    },
+    {
+      "term": "anxiously",
+      "spanish": "Con ansiedad o preocupación.",
+      "audio": "vocabulary/anxiously.mp3"
+    },
+    {
+      "term": "clean up",
+      "spanish": "Limpiar y recoger.",
+      "audio": "vocabulary/clean-up.mp3"
+    },
+    {
+      "term": "relieved",
+      "spanish": "Aliviado.",
+      "audio": "vocabulary/relieved.mp3"
+    },
+    {
+      "term": "keep his phone away",
+      "spanish": "Mantener el teléfono guardado, sin usarlo.",
+      "audio": "vocabulary/keep-his-phone-away.mp3"
+    },
+    {
+      "term": "getting lost",
+      "spanish": "Perderse; no encontrar el camino.",
+      "audio": "vocabulary/getting-lost.mp3"
+    },
+    {
+      "term": "disappears",
+      "spanish": "Desaparece; se retira de la vista.",
+      "audio": "vocabulary/disappears.mp3"
+    },
+    {
+      "term": "in the background",
+      "spanish": "Al fondo; en la parte de atrás de la escena.",
+      "audio": "vocabulary/in-the-background.mp3"
+    },
+    {
+      "term": "lights grow dim",
+      "spanish": "Las luces se atenúan; iluminan menos.",
+      "audio": "vocabulary/lights-grow-dim.mp3"
+    },
+    {
+      "term": "with relief",
+      "spanish": "Con alivio.",
+      "audio": "vocabulary/with-relief.mp3"
+    },
+    {
+      "term": "gathers around",
+      "spanish": "Se reúne alrededor de.",
+      "audio": "vocabulary/gathers-around.mp3"
+    },
+    {
+      "term": "shakes her head",
+      "spanish": "Niega con la cabeza.",
+      "audio": "vocabulary/shakes-her-head.mp3"
+    },
+    {
+      "term": "tripod",
+      "spanish": "Trípode; soporte de tres patas para la cámara.",
+      "audio": "vocabulary/tripod.mp3"
+    },
+    {
+      "term": "moves closer",
+      "spanish": "Se acerca más.",
+      "audio": "vocabulary/moves-closer.mp3"
+    },
+    {
+      "term": "feel welcome",
+      "spanish": "Sentirse bienvenido.",
+      "audio": "vocabulary/feel-welcome.mp3"
+    },
+    {
+      "term": "realises",
+      "spanish": "Se da cuenta.",
+      "audio": "vocabulary/realises.mp3"
+    },
+    {
+      "term": "did not require",
+      "spanish": "No requería; no era necesario.",
+      "audio": "vocabulary/did-not-require.mp3"
+    },
+    {
+      "term": "being himself",
+      "spanish": "Siendo él mismo; actuando con naturalidad.",
+      "audio": "vocabulary/being-himself.mp3"
+    },
+    {
+      "term": "memory",
+      "spanish": "Recuerdo.",
+      "audio": "vocabulary/memory.mp3"
+    },
+    {
+      "term": "retell",
+      "spanish": "Volver a contar con tus propias palabras.",
+      "audio": "vocabulary/retell.mp3"
+    },
+    {
+      "term": "He looks",
+      "spanish": "Él se ve; él parece, según su apariencia.",
+      "audio": "vocabulary/he-looks.mp3"
+    },
+    {
+      "term": "She seems",
+      "spanish": "Ella parece.",
+      "audio": "vocabulary/she-seems.mp3"
+    },
+    {
+      "term": "he seems",
+      "spanish": "Él parece.",
+      "audio": "vocabulary/he-seems.mp3"
+    },
+    {
+      "term": "It looks like",
+      "spanish": "Parece; da la impresión de que.",
+      "audio": "vocabulary/it-looks-like.mp3"
+    },
+    {
+      "term": "She might be",
+      "spanish": "Ella podría estar o ser; expresa una posibilidad.",
+      "audio": "vocabulary/she-might-be.mp3"
+    },
+    {
+      "term": "clue",
+      "spanish": "Pista; detalle que ayuda a interpretar algo.",
+      "audio": "vocabulary/clue.mp3"
+    },
+    {
+      "term": "clues",
+      "spanish": "Pistas; detalles que ayudan a interpretar algo.",
+      "audio": "vocabulary/clues.mp3"
+    },
+    {
+      "term": "visible evidence",
+      "spanish": "Evidencia visible; algo que puedes observar.",
+      "audio": "vocabulary/visible-evidence.mp3"
+    },
+    {
+      "term": "Support your answer",
+      "spanish": "Justifica tu respuesta con detalles o pistas.",
+      "audio": "vocabulary/support-your-answer.mp3"
+    },
+    {
+      "term": "follow-up question",
+      "spanish": "Pregunta para continuar o profundizar la conversación.",
+      "audio": "vocabulary/follow-up-question.mp3"
+    },
+    {
+      "term": "could happen",
+      "spanish": "Podría pasar; expresa una posibilidad.",
+      "audio": "vocabulary/could-happen.mp3"
+    },
+    {
+      "term": "unfamiliar",
+      "spanish": "Desconocido; con lo que no estás familiarizado.",
+      "audio": "vocabulary/unfamiliar.mp3"
+    }
+  ]
+}

@@ -24,8 +24,8 @@ def main():
             if 'sha256' in item:
                 assert hashlib.sha256(path.read_bytes()).hexdigest() == item['sha256']
             return
-        payload = dict(text=item['text'], model_id=config['modelId'], language_code='en',
-                       voice_settings=dict(stability=0.64, similarity_boost=0.82, style=0.14, use_speaker_boost=True))
+        payload = dict(text=item.get('generationText', item['text']), model_id=config['modelId'], language_code='en',
+                       voice_settings=item.get('voiceSettings', dict(stability=0.64, similarity_boost=0.82, style=0.14, use_speaker_boost=True)))
         request = urllib.request.Request(
             'https://api.elevenlabs.io/v1/text-to-speech/' + config['voiceId'] + '?output_format=mp3_44100_128',
             data=json.dumps(payload).encode(),

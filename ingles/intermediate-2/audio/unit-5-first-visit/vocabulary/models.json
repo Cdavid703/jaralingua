@@ -1,0 +1,535 @@
+{
+  "provider": "ElevenLabs",
+  "voice": "Sarah",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "modelId": "eleven_multilingual_v2",
+  "items": [
+    {
+      "file": "lights-up.mp3",
+      "text": "lights up",
+      "kind": "vocabulary",
+      "textSha256": "cc8da9994a74dfb5d8a5503474ae337e54ff76e93a6d2d02d61c78d94ca6bfee",
+      "bytes": 15090,
+      "sha256": "e50bab554befee6e6a8491c0e2cbe51f4dc7f450b30e5a66b832701cd260eb2d"
+    },
+    {
+      "file": "twice.mp3",
+      "text": "twice",
+      "kind": "vocabulary",
+      "textSha256": "dc8ffdbf2736dbdf39508017ac594e0d069f3eee9b0f29ece256aa7d831f9ef6",
+      "bytes": 13836,
+      "sha256": "c2d93633738bba42a0ee6cb7749418cdb7f44d641e7f48bedd0a5ed7ec7cd6c0"
+    },
+    {
+      "file": "typing.mp3",
+      "text": "typing",
+      "kind": "vocabulary",
+      "textSha256": "f8fd8e84e5d029290a7de562095cd9d86a6e7fdfec86d76e007ceefb676c5b0a",
+      "bytes": 14254,
+      "sha256": "d2352024ad398edd75684c1b345640ef0e5a8fec3f6ab90bb2d29f498083706a"
+    },
+    {
+      "file": "wardrobe.mp3",
+      "text": "wardrobe",
+      "kind": "vocabulary",
+      "textSha256": "7d4b47cf84bb52b6cab5606f7b0b16b5ebf0c77571953704aea3ce309b18c339",
+      "bytes": 14254,
+      "sha256": "d7e530a4bcb80a1adc9e596d31c620e8f2fe0c3a51e9fb2fe31027a43e645b49"
+    },
+    {
+      "file": "neat.mp3",
+      "text": "neat",
+      "kind": "vocabulary",
+      "textSha256": "60f858c0625d7b4100d5c5b260db766b653e600a54a492f7c9fad2157a226e91",
+      "bytes": 10911,
+      "sha256": "387b7bafd605e767e699ac0dc404f3b624d2852f91d9bcd7a6ed72cd03365331"
+    },
+    {
+      "file": "gift.mp3",
+      "text": "gift",
+      "kind": "vocabulary",
+      "textSha256": "a1954b15a7459a2f7f6c03d87b73963830616feef7c93853fe5c05be996276bc",
+      "bytes": 13836,
+      "sha256": "a6e9da2b077692431560a0cb9689334b7b0a4afc7298b4cb796a14dfacda95e5"
+    },
+    {
+      "file": "bouquet.mp3",
+      "text": "bouquet",
+      "kind": "vocabulary",
+      "textSha256": "9743de27d6a9981a8ca41e945e0185893432a64efa7ddaed5ecf59332b8aa56a",
+      "bytes": 13836,
+      "sha256": "10d0ff6c362ee2448b4c01b96b9d6c7f78e6e852ba0116c9d529b68075e022ad"
+    },
+    {
+      "file": "florist.mp3",
+      "text": "florist",
+      "kind": "vocabulary",
+      "textSha256": "f19a336b55b94a20ad07766814fa4870260140229f5ec559de4221031388a045",
+      "bytes": 15090,
+      "sha256": "1e57d870412029eee4da975b0feb174ff600605d8e75864e985bba944dca5544"
+    },
+    {
+      "file": "ribbon.mp3",
+      "text": "ribbon",
+      "kind": "vocabulary",
+      "textSha256": "affc35bd6c6352aa5960f8db7845839953f83096b390b0bacb2f861440b5ed44",
+      "bytes": 13000,
+      "sha256": "19de1f0db1634a0c3fad246f196f8c967d25832b648296b2735e06f46f84b567"
+    },
+    {
+      "file": "clouds-are-gathering.mp3",
+      "text": "clouds are gathering",
+      "kind": "vocabulary",
+      "textSha256": "f35e1f644ac043bb3dc0ff52dd8aee95612ddeecbd2ec090cf700523497570fa",
+      "bytes": 24285,
+      "sha256": "7512b1cff2e93d55481094e91a1696092ec7673437587eee8bbad76dc366d762"
+    },
+    {
+      "file": "shelter.mp3",
+      "text": "shelter",
+      "kind": "vocabulary",
+      "textSha256": "cd96b5def4ed2b502ab6cc6ce3c04ddd56e194c70949f750b0ab29f3e5ce3dda",
+      "bytes": 15926,
+      "sha256": "68fe4a0a58d687f758b09ba1308219a9d035c16363b582975bf7389c1884c405"
+    },
+    {
+      "file": "makes-room-for.mp3",
+      "text": "makes room for",
+      "kind": "vocabulary",
+      "textSha256": "39d0eede2ba4e962ec0302c83fa255f13ec7d3a606221b9d462af0f7ddb5dc3d",
+      "bytes": 21777,
+      "sha256": "b067961a8710ab00b7c426308c22da28f647eed850a68854388a6841b45df899"
+    },
+    {
+      "file": "sleeve.mp3",
+      "text": "sleeve",
+      "kind": "vocabulary",
+      "textSha256": "18159f6fa757e618ab6e52d3d2ed2df7766083a41f1d737b515a636c0f813d37",
+      "bytes": 15090,
+      "sha256": "2ee458234c4ac2d16dcc5ee37e4f423f6e4fc791dd9431132fdf415ed1d5a232"
+    },
+    {
+      "file": "approaches.mp3",
+      "text": "approaches",
+      "kind": "vocabulary",
+      "textSha256": "1f46b2fdd9382900d2c48d9b80108c2df24eb8866fc2522d6a28f4b7836a7686",
+      "bytes": 16762,
+      "sha256": "2c14e7c7b7be36eaf9c56e10bce23147c0351f497ddfe3549625d62d012edb1b"
+    },
+    {
+      "file": "plenty-of-time.mp3",
+      "text": "plenty of time",
+      "kind": "vocabulary",
+      "textSha256": "991bebb82f51c65eb9f8b691621e85bf9b0a1f171565d46335d677b165293105",
+      "bytes": 19688,
+      "sha256": "8dfee182f239c39b96c3962cc6abb9259f82f174bb124aa47e3279328315ea41"
+    },
+    {
+      "file": "at-ease.mp3",
+      "text": "at ease",
+      "kind": "vocabulary",
+      "textSha256": "2f1b018d6e64f550774f38e43a55ed6e1b5e474a35f1def814540f68018d8b3c",
+      "bytes": 17598,
+      "sha256": "434be7fdf13c6edfa2358d87d9bdceb203a3b1db2c898fb13b5a6fcb95fd2eb4"
+    },
+    {
+      "file": "gets-off.mp3",
+      "text": "gets off",
+      "kind": "vocabulary",
+      "textSha256": "ccddab3300f9d31e6c9239037f1d42065147d7a3c4ecaf1da5ed5ecbe86fb345",
+      "bytes": 15926,
+      "sha256": "0bcdbcc5a5691fc17641a501852d317c7133fb558f64c68b8674532300a62d74"
+    },
+    {
+      "file": "gate.mp3",
+      "text": "gate",
+      "kind": "vocabulary",
+      "textSha256": "c974e17b8e7321ce8c12983de3d0ed4a289821f579bbe0925b0181a4bc8e8d80",
+      "bytes": 11328,
+      "sha256": "a4d81c7d148258ec50ac3bc169b8425d232fc80c3bdb694359f3b37385a92821"
+    },
+    {
+      "file": "catches-his-attention.mp3",
+      "text": "catches his attention",
+      "kind": "vocabulary",
+      "textSha256": "c1de93d0f3e752355c2091a2db30c94b303693df24fd747c434b585f9c4fe118",
+      "bytes": 24285,
+      "sha256": "8a697932de3a56eef448e6bf7973fa96b68bf346d49c5933e014632cdb10aef6"
+    },
+    {
+      "file": "doorway.mp3",
+      "text": "doorway",
+      "kind": "vocabulary",
+      "textSha256": "ace8f89851d1e64d3be3652ff2c9f17a51d0f263c316a8eeda61721e532b6867",
+      "bytes": 15926,
+      "sha256": "a767c4153578758fd96e6a1e0899cdce38341e4d72e726b54b9e0ec9c1ca205e"
+    },
+    {
+      "file": "waves.mp3",
+      "text": "waves",
+      "kind": "vocabulary",
+      "textSha256": "eb81ba5ff779ca24d480493b87b9ad1c6ae8fd62211d6b3e8344c03aa55d495b",
+      "bytes": 14254,
+      "sha256": "33899c5745c91ab2da483985a2db9bc0a7bfc5b0a28180e7d1d09ee3a0c86a57"
+    },
+    {
+      "file": "wonders.mp3",
+      "text": "wonders",
+      "kind": "vocabulary",
+      "textSha256": "6f3170d6db374d81f26be972050cf906ce7fb3cf8416cd94565559d3d07705f8",
+      "bytes": 16762,
+      "sha256": "fe2567aa4c3f1d41ee5691648e35a5343897279abb7998765eaa79c694bd0114"
+    },
+    {
+      "file": "hear-it-clearly.mp3",
+      "text": "hear it clearly",
+      "kind": "vocabulary",
+      "textSha256": "c360a4cdf272c448187bb5db574fe0db8bad8087c848d85734b1b75b630f46f6",
+      "bytes": 18852,
+      "sha256": "94d70127efb77f25ec6fed3d8c6ac9cdbed129a38642fda208684aeda88a0ac5"
+    },
+    {
+      "file": "face-brightens.mp3",
+      "text": "face brightens",
+      "kind": "vocabulary",
+      "textSha256": "7a8027285ef914f0630824ea432e74bba5934e0f4d646bffb4e35e961636d25e",
+      "bytes": 21777,
+      "sha256": "04f55c9c0b159c9a83446a13eeeb37d912cebfce354dcaf9cad98e5eb5ac95be"
+    },
+    {
+      "file": "posture.mp3",
+      "text": "posture",
+      "kind": "vocabulary",
+      "textSha256": "95e53cf467c737c772ed5ddec3631244031444e756d5cf0b3537463430360493",
+      "bytes": 15090,
+      "sha256": "15409ccfc4c7a552dba3cc6f5363d297cf4da7c9545794422deddcb407cb3179"
+    },
+    {
+      "file": "points-out.mp3",
+      "text": "points out",
+      "kind": "vocabulary",
+      "textSha256": "d8108c868c7d7e24cca153da06c56b29be7e2da368c896e01a27f2fe152ace9f",
+      "bytes": 13836,
+      "sha256": "bdda79504d76963cdd4142eaa9b41cadb713142afbb37c2e4754cc34fa405ee7"
+    },
+    {
+      "file": "herbs.mp3",
+      "text": "herbs",
+      "kind": "vocabulary",
+      "textSha256": "3bc4a8a885c931ecc824735274d851dcc118761168ce373dd4eb877a1be1115d",
+      "bytes": 14254,
+      "sha256": "8991ddcab7460ae6d9ae888a2799e5b32759f89ca6249ae9c78f7dd68b754694"
+    },
+    {
+      "file": "conversation-topic.mp3",
+      "text": "conversation topic",
+      "kind": "vocabulary",
+      "textSha256": "8a744dd26bbe70fdaa396816556a3acb3871ba5bf3cea05f7daffb9882df1fb6",
+      "bytes": 22613,
+      "sha256": "dc6f8198687931390e4d972cd220ed9aeac8c7d18cf38d1aacd24f0f1074d8bf"
+    },
+    {
+      "file": "conversation-topics.mp3",
+      "text": "conversation topics",
+      "kind": "vocabulary",
+      "textSha256": "8e4b688b6108be9bb499c31679e7a2c0d32c2c49d8a08d272ca945f00f639f6d",
+      "bytes": 20524,
+      "sha256": "65c71f2d4ba2905cafaacb49f5f0354a8f22b307f30cb184bc6455bcc128d63d"
+    },
+    {
+      "file": "a-stack-of-plates.mp3",
+      "text": "a stack of plates",
+      "kind": "vocabulary",
+      "textSha256": "c4b7842bc70a7a488e6373ebea8df861a4cdef2e96db30d22fa24aaaaab447d3",
+      "bytes": 20942,
+      "sha256": "435548c07d1ce074e381a70a23ad018cd7142ec3531f420431b3423aa58787db"
+    },
+    {
+      "file": "dish.mp3",
+      "text": "dish",
+      "kind": "vocabulary",
+      "textSha256": "edcf27a66a5453a89e3b84305485a21b6e4ea57c590ff8392ab319801a8158da",
+      "bytes": 11328,
+      "sha256": "4c3d7ceaab26a3a37bfeea355e5fdcf758e4aaad4b896fb8ae0256292fa36a08"
+    },
+    {
+      "file": "setting-the-table.mp3",
+      "text": "setting the table",
+      "kind": "vocabulary",
+      "textSha256": "6ab962f593eace9a5b7ed98a022f245e8a97e0bbe0eb188479b9d8c6a5d2ff1a",
+      "bytes": 22613,
+      "sha256": "0d6a6dc8ad573f35fd21cf3c491a52e1895b7fd27fb0eb2e2af69344c2522805"
+    },
+    {
+      "file": "reaches-across-the-table.mp3",
+      "text": "reaches across the table",
+      "kind": "vocabulary",
+      "textSha256": "d64dabd99557feb42138fd55e338bee596d5fbb9355b70807a54c30f217904e7",
+      "bytes": 26375,
+      "sha256": "1e89a13a3476feabb02fc36bea9d7d600ab4c50529ed6b5063fd4fe072c83f41"
+    },
+    {
+      "file": "spreads.mp3",
+      "text": "spreads",
+      "kind": "vocabulary",
+      "textSha256": "060ef2e74d1dcc28737760266c6c8596daad89ffee7940f2499811761990d174",
+      "bytes": 15926,
+      "sha256": "694b4db75269f7e372de6b4d7a821f894bc6ca2804e684862352b3b0007f18e6"
+    },
+    {
+      "file": "anxiously.mp3",
+      "text": "anxiously",
+      "kind": "vocabulary",
+      "textSha256": "06108a895cc4adde4461cc873c96bf94244b9abe3aedf99436400982d24f35b1",
+      "bytes": 15090,
+      "sha256": "80270810e92f7dcd342e79aa44d5d086ba1d4d5de0ab97b3e08efd648cc42e95"
+    },
+    {
+      "file": "clean-up.mp3",
+      "text": "clean up",
+      "kind": "vocabulary",
+      "textSha256": "0ef8e24130d951a0d90fc9126aa6294d1ee5b67724d3041804a87e623726100f",
+      "bytes": 11328,
+      "sha256": "b54ba882155b7a14cd7cec2bae1c36288cbc12bbf1d7bf165572076e567c641f"
+    },
+    {
+      "file": "relieved.mp3",
+      "text": "relieved",
+      "kind": "vocabulary",
+      "textSha256": "4469b61507b9c6fa1dce1802a80fc8b1af03a41b4ffd843efa3e5f662db92be4",
+      "bytes": 16762,
+      "sha256": "f82945df62a1992f29dfe1c24987749beccb23249d10191ba039a9cb7b57829e"
+    },
+    {
+      "file": "keep-his-phone-away.mp3",
+      "text": "keep his phone away",
+      "kind": "vocabulary",
+      "textSha256": "d536b78d6070d74b3d2b50c508e713c4951dc3ba5c30fd77da691c2f7acfd1ce",
+      "bytes": 22613,
+      "sha256": "8b030c39967765f94865be60b392143d49de1bdf121c2d17e88a5852f227cd85"
+    },
+    {
+      "file": "getting-lost.mp3",
+      "text": "getting lost",
+      "kind": "vocabulary",
+      "textSha256": "b61b6aedb5d1ae978b2148d67b9312e6c66608f16dfe4bfbf4c7cdde6c35ef55",
+      "bytes": 17598,
+      "sha256": "fdf7f491d5ed9fa715b2e0e3d208495a21687737eecb38b2b50dbb3fc9d5be07"
+    },
+    {
+      "file": "disappears.mp3",
+      "text": "disappears",
+      "kind": "vocabulary",
+      "textSha256": "78777134179088a9127a8fb88e9659f251ce0955c8f678ae23af71fad36f02da",
+      "bytes": 17598,
+      "sha256": "9222f13d884879b13f4b4d9eb4bf608050f2a4a0080f19dddde6782a0f4860a5"
+    },
+    {
+      "file": "in-the-background.mp3",
+      "text": "in the background",
+      "kind": "vocabulary",
+      "textSha256": "5fe6cf3e1ddf5dc60ec56248fa74ac3cbcf1f9fa3c729854fbb1e806bc1b57dd",
+      "bytes": 18852,
+      "sha256": "d59a5bfd95025ec8e3b14847b9baf926c637319e26af48a17f54966b53a75d76"
+    },
+    {
+      "file": "lights-grow-dim.mp3",
+      "text": "lights grow dim",
+      "kind": "vocabulary",
+      "textSha256": "f7b67405763b39f14dceb1814dcb41366ec589c789c886debc9e0675fd987446",
+      "bytes": 21777,
+      "sha256": "ed64c88f4b41ad9a42d923128aec69241d2186ef0de196734dc61aae2cd33f04"
+    },
+    {
+      "file": "with-relief.mp3",
+      "text": "with relief",
+      "kind": "vocabulary",
+      "textSha256": "a22ad5dd59754cf195ad0a6e875b0b7b4082309c89ac19d87ef7528799493c21",
+      "bytes": 19688,
+      "sha256": "aa34d44bd546f634a222200e885f22442230f4ecd1eed69053a52cc42f362505"
+    },
+    {
+      "file": "gathers-around.mp3",
+      "text": "gathers around",
+      "kind": "vocabulary",
+      "textSha256": "2b7af27a756563f6e300e002ed9f322d622a171a1b9544c4ca0b6d25bd10e598",
+      "bytes": 20942,
+      "sha256": "7fe8fdeddbf99410b038d14797d46a4c4ca4cd6224f084ff1460827127c77c69"
+    },
+    {
+      "file": "shakes-her-head.mp3",
+      "text": "shakes her head",
+      "kind": "vocabulary",
+      "textSha256": "58b5a834506a7ca079b18003f80c8a8021007d37480669d41c006f4a467639ee",
+      "bytes": 18852,
+      "sha256": "2af4c201d5b66bdef3ac7a417ada86200697aabb8bbb2ea6aa00c9e041e7542e"
+    },
+    {
+      "file": "tripod.mp3",
+      "text": "tripod",
+      "kind": "vocabulary",
+      "textSha256": "f6ad9187c3c4ba42fbbf9c341864d77cd7463aceeda5ddd491b31ffc80442e2b",
+      "bytes": 15926,
+      "sha256": "6d153480ea948bd8e56cd1e68e0d462e2030431ae38264b8066d0c58facc9999"
+    },
+    {
+      "file": "moves-closer.mp3",
+      "text": "moves closer",
+      "kind": "vocabulary",
+      "textSha256": "14b019b35e57fd006b6a645d8e0926f1cd993260aabb951c26d8be767b352392",
+      "bytes": 20942,
+      "sha256": "14c38d1b9d23d3b6d5d036d441145f7f24d26070ab39ab6abe1ba410849195fd"
+    },
+    {
+      "file": "feel-welcome.mp3",
+      "text": "feel welcome",
+      "kind": "vocabulary",
+      "textSha256": "117965245d5f34a0cadf1efbc025d8c6e529e5f6395933cda9d2e9b89bdd9186",
+      "bytes": 15926,
+      "sha256": "d07de006ad3e5fb6aaa025fa6dea57ef5cbcf1a5b61aa59135133c04f0c79394"
+    },
+    {
+      "file": "realises.mp3",
+      "text": "realises",
+      "kind": "vocabulary",
+      "textSha256": "06dbacada1edb9b1dc7f7bffdad886cb64ea57a3d1c455a3526832e211075d73",
+      "bytes": 17598,
+      "sha256": "ecd206df7b1500d9eaf9bb663aa1aa225584932d00e1f0557ddd0ac57475ad55"
+    },
+    {
+      "file": "did-not-require.mp3",
+      "text": "did not require",
+      "kind": "vocabulary",
+      "textSha256": "694c9f685e317852bdfe13d7537f9b70485ac1835915f8576e1251581334eb3f",
+      "bytes": 20942,
+      "sha256": "6fc4fb8b1a5eddbfb91d577884fb814a0ef805cb6f602eda6c1ee903e0295b00"
+    },
+    {
+      "file": "being-himself.mp3",
+      "text": "being himself",
+      "kind": "vocabulary",
+      "textSha256": "14a558deb570595c0b68ab90a420cc90e463f3f572c6da45f57fcebc6f007474",
+      "bytes": 20942,
+      "sha256": "a8f5609834203454dc727c86d0b822c28c50b74b5afaa14d6cbe205fc8ecef9f"
+    },
+    {
+      "file": "memory.mp3",
+      "text": "memory",
+      "kind": "vocabulary",
+      "textSha256": "c064fbca9d9de8dd9bb0624984403b28d0da807a69365d4f7fb09123ecb0c405",
+      "bytes": 13000,
+      "sha256": "67f9568c807e21b5810355e23bb3b013c7d68846b70801208bc99410195bc726"
+    },
+    {
+      "file": "retell.mp3",
+      "text": "retell",
+      "kind": "vocabulary",
+      "textSha256": "5eff7368305ca5d5feaff3c7378129f4e6f0366c29575b705502ff477cf0f4d6",
+      "bytes": 13836,
+      "sha256": "e345a53543798537e4654e5dee9cb005e5d4ed3501c1468b3ef86e39fdbd8c66",
+      "generationText": "Retell.",
+      "voiceSettings": {
+        "stability": 0.85,
+        "similarity_boost": 0.82,
+        "style": 0,
+        "use_speaker_boost": true
+      }
+    },
+    {
+      "file": "he-looks.mp3",
+      "text": "He looks",
+      "kind": "vocabulary",
+      "textSha256": "8d94130d787a5dd656d57424d81786776a5efb7185e937b49f67472caa5ca656",
+      "bytes": 13836,
+      "sha256": "38a42f791c7a068bbc42ae76f03e3a47cd610a8ebdb62f31e06cee64be3f05ec"
+    },
+    {
+      "file": "she-seems.mp3",
+      "text": "She seems",
+      "kind": "vocabulary",
+      "textSha256": "bc3f4a560601f324268ddac36db355108ae9850d02b1ec46afdd1fbb41ba0d8d",
+      "bytes": 15926,
+      "sha256": "0f2ba11d4f14deec33b9d71611c3ba4bde2736ad0d686418ade05db9cdd8e74b"
+    },
+    {
+      "file": "he-seems.mp3",
+      "text": "he seems",
+      "kind": "vocabulary",
+      "textSha256": "814c7863d181f01f86aad96467df5bc9a13c9780594a7770a9fda714227ef7c6",
+      "bytes": 15090,
+      "sha256": "2ee28037df3fc614304aabef36772b036edac3afe107820512bdba7e5c8746be"
+    },
+    {
+      "file": "it-looks-like.mp3",
+      "text": "It looks like",
+      "kind": "vocabulary",
+      "textSha256": "e0343fb3fe45426208d19a327a11adc72066037c68729f30b2923f9f2d9ae8d6",
+      "bytes": 15090,
+      "sha256": "4d35e7d45614038d06df0ef2957336588dc688359d2d1e6d242ea87aac0ee529"
+    },
+    {
+      "file": "she-might-be.mp3",
+      "text": "She might be",
+      "kind": "vocabulary",
+      "textSha256": "ed766c2528fa7e5f89b1c723b53d4f293407382c3b63a3ce37087672bdc62e8d",
+      "bytes": 20942,
+      "sha256": "8ec0b67488bd75bef8cdb6e283765a2ecdcb83ed7b0ed405b61d9df1b0a1fc24"
+    },
+    {
+      "file": "clue.mp3",
+      "text": "clue",
+      "kind": "vocabulary",
+      "textSha256": "4c424a68bbc374bc8aa7619d341c742b37fb35af7cccfb2e1a8d0d340e617c16",
+      "bytes": 11328,
+      "sha256": "649d7d7ab358bfecf9eac11233c0f6c3460967ac8180033cdb79ebbe349c8030"
+    },
+    {
+      "file": "clues.mp3",
+      "text": "clues",
+      "kind": "vocabulary",
+      "textSha256": "57a0f1baee7f903eacb5b709f419d84ee014f1fcb22938e2a2ddc8061ea6501d",
+      "bytes": 11328,
+      "sha256": "2c4af7f6f73b734b5456711d152c40c9bb2bc43ed4961bda7859186c741d8964"
+    },
+    {
+      "file": "visible-evidence.mp3",
+      "text": "visible evidence",
+      "kind": "vocabulary",
+      "textSha256": "ed4c70c14fe4c2a62807c5a2200222f0a597e3695401811a2fd7dd20386941c1",
+      "bytes": 20942,
+      "sha256": "65240b7a883f7f48041dd7601d8307509b84ecb17b836c5cb8c52440d0045eb0"
+    },
+    {
+      "file": "support-your-answer.mp3",
+      "text": "Support your answer",
+      "kind": "vocabulary",
+      "textSha256": "397a46d590f5bf0b47aec85adea424142ef2f93e8f4acef9391186d83ecdeca5",
+      "bytes": 24285,
+      "sha256": "e57a88a966eb83bc0683a69a140bf920b7092e4dbfee8d6696c632bccd097c5c"
+    },
+    {
+      "file": "follow-up-question.mp3",
+      "text": "follow-up question",
+      "kind": "vocabulary",
+      "textSha256": "9edc1f5b3b33255bbcf87c2a9f4f41d6d733196ef7cbd3a48d3fdce89ccd47f4",
+      "bytes": 23449,
+      "sha256": "1e2ed8fc5ca9758fb4eb305488f50440986f7008ce0e698487ff79a611472694"
+    },
+    {
+      "file": "could-happen.mp3",
+      "text": "could happen",
+      "kind": "vocabulary",
+      "textSha256": "f9f1a71fba3d36982720297202c0f5a90999ac01145952ef0ec2cbff122bd7fe",
+      "bytes": 16762,
+      "sha256": "50a2bb8b4e87e8d9ca5e2dadb4aa373fe5fdb637806966048557210b9766dfba"
+    },
+    {
+      "file": "unfamiliar.mp3",
+      "text": "unfamiliar",
+      "kind": "vocabulary",
+      "textSha256": "150d3da9e215ceaf71eef38d14b1f334a402e17ffbd1cb9221b1688a7a399403",
+      "bytes": 16762,
+      "sha256": "e3d624c0ddefb70bcca662cfa1b73c7cab154e9b0824c763e25bda23751fa502"
+    }
+  ]
+}

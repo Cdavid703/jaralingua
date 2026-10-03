@@ -13,3 +13,11 @@
 .first-visit-page .fv-hero h1,.first-visit-page .fv-hero p{color:#223a39}
 .first-visit-page .intermediate2-kicker{color:#426b4f;background:transparent;padding:0;font-size:.8rem}
 .first-visit-page .fv-hero .jl-page-qr-open img{width:100%;height:100%;min-height:0;max-height:none;object-fit:contain;border-radius:0}
+/* Vocabulary keeps the reading flow; translation appears on hover or keyboard focus. */
+.fv-reader .fv-vocab-word,.fv-projector .fv-vocab-word{display:inline;max-width:100%;min-height:0;margin:0;padding:0;border:0;border-radius:3px;background:transparent;color:inherit;font:inherit;line-height:inherit;text-align:inherit;white-space:normal;vertical-align:baseline;text-decoration:underline;text-decoration-style:dotted;text-decoration-color:#7c9b8c;text-underline-offset:.16em;cursor:pointer}
+.fv-reader .fv-vocab-word:hover,.fv-reader .fv-vocab-word:focus-visible,.fv-reader .fv-vocab-word.is-playing{background:#e1efdf;color:#175547}
+.fv-projector .fv-vocab-word:hover,.fv-projector .fv-vocab-word:focus-visible,.fv-projector .fv-vocab-word.is-playing{background:#31564e;color:#fff}
+.fv-vocab-hint{font-size:.78rem;line-height:1.4;color:#52645e;margin:0 0 .7rem}
+.fv-vocab-tooltip{position:fixed;z-index:20;box-sizing:border-box;width:max-content;max-width:min(440px,calc(100vw - 24px));padding:.65rem .85rem;border:1px solid #b9cbbb;border-radius:10px;background:#fff;color:#173e36;box-shadow:0 6px 24px #0003;font:500 clamp(1rem,1.5vw,1.35rem)/1.4 system-ui,sans-serif;overflow-wrap:anywhere;text-align:left}
+.fv-projector>.fv-vocab-tooltip{font-size:clamp(1.1rem,2vw,1.8rem);max-width:min(560px,calc(100vw - 24px))}
+.fv-vocab-tooltip[hidden]{display:none!important}

@@ -31,3 +31,15 @@ Click the picture to project it without cropping. Project question shows one lar
 `tools/test_first_visit.cjs` checks all 17 distinct image files, 102 audio hashes and their exact script mapping, all discussion steps and page boundaries, narration hiding, image/question projection, QR opening, native audio playback and speed, cleanup, keyboard navigation and fullscreen refusal. It exercises Chromium at 360×800, 390×844, 844×390, 820×1180, 1440×1000 and 1920×1080. Browser viewport emulation does not certify physical televisions or phones.
 
 Run with `PLAYWRIGHT_MODULE` set to the installed Playwright package and, when needed, `PLAYWRIGHT_BROWSERS_PATH`. `FIRST_VISIT_BASE_URL` defaults to `http://127.0.0.1:8073`; it can target the published site. Screenshots default to a temporary directory, outside the repository.
+
+## Vocabulario contextual: traducción al pasar el mouse y audio al hacer clic
+
+La narración, las preguntas y las ayudas incluyen 65 palabras y expresiones del vocabulario seleccionado, con traducción al español contextual. Se subrayan con puntos sin cambiar el texto ni revelar la narración antes de Discover. Pasar el mouse o enfocar con el teclado muestra la traducción sin emitir audio; hacer clic o pulsar Enter/Espacio reproduce el modelo individual de Sarah (ElevenLabs), a la velocidad seleccionada. En móvil, tocar muestra el significado y reproduce la pronunciación.
+
+El mismo comportamiento funciona en el texto ampliado para TV. La ayuda se coloca dentro del diálogo activo para permanecer visible en pantalla completa; permite mover el puntero sobre la traducción y Escape la cierra antes de cerrar el libro. Cambiar de página, pregunta o modo y cerrar los diálogos retira la ayuda. La pronunciación comparte el reproductor existente: un clic detiene el audio anterior y nunca superpone dos modelos. El fallo del audio ofrece reintento y no impide consultar el significado.
+
+- Glosario: `assets/data/english-intermediate2-first-visit-vocabulary.json`.
+- Interacción: `assets/js/first-visit-vocabulary.js`, integrada en el lector existente.
+- Modelos y auditoría: `ingles/intermediate-2/audio/unit-5-first-visit/vocabulary/`.
+- Generación y verificación: `tools/generate_first_visit_vocabulary_audio.py`, `tools/audit_first_visit_vocabulary_audio.py`. Los scripts reutilizan la producción y auditoría de audios del cuento; conservan las excepciones explícitas de puntuación o ajustes de voz en el manifiesto.
+- Prueba: `node tools/test_first_visit_vocabulary.cjs`, con `FIRST_VISIT_BASE_URL` opcional. Comprueba las 65 entradas y archivos, textos íntegros de las 17 páginas y 85 preguntas, hover sin sonido, foco, clic, toque, Escape, proyección, límites de pantalla, limpieza al navegar, fallo de audio y decodificación de todos los modelos. Complementar con `tools/test_first_visit.cjs` y el contrato de páginas del nivel.

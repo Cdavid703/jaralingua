@@ -3,6 +3,7 @@
   const $ = id => document.getElementById(id);
   const reader = $('fvReader'), projector = $('fvProjector'), audio = $('fvAudio');
   const audioBase = '/ingles/intermediate-2/audio/unit-5-first-visit/';
+  let vocabulary = null;
   let pages = [], pageIndex = 0, step = 0, questionIndex = 0, zoom = 1;
   let projection = 'picture', sound = true, playToken = 0, ownsFullscreen = false;
   let oldOverflow = '', lastFocus = null, projectionFocus = null, turnTimer;
@@ -19,10 +20,27 @@
   }
   function currentText() { return step === 2 ? page().text : questions()[questionIndex].text; }
   function stopAudio() {
-    playToken++;
+    playToken++; vocabulary?.setPlaying(null);
     audio.pause(); audio.removeAttribute('src'); audio.load();
     $('fvAudioStatus').textContent = '';
   }
+  function listenVocabulary(entry, button) {
+    stopAudio();
+    const token = ++playToken;
+    vocabulary.setPlaying(button);
+    audio.src = audioBase + entry.audio;
+    audio.playbackRate = Number($('fvSpeed').value);
+    $('fvAudioStatus').textContent = 'Loading pronunciation: ' + entry.term;
+    audio.play().then(() => {
+      if (token === playToken) $('fvAudioStatus').textContent = entry.term + ' · ElevenLabs · Sarah';
+    }).catch(() => {
+      if (token === playToken) {
+        vocabulary.setPlaying(null);
+        $('fvAudioStatus').textContent = 'Pronunciation could not play. Click the word to retry.';
+      }
+    });
+  }
+  audio.addEventListener('ended', () => vocabulary?.setPlaying(null));
   function listen() {
     stopAudio();
     const token = ++playToken;
@@ -36,12 +54,14 @@
     });
   }
   audio.addEventListener('error', () => {
+    vocabulary?.setPlaying(null);
     if (audio.getAttribute('src')) $('fvAudioStatus').textContent = 'Recording unavailable. Please try again.';
   });
   function renderQuestion() {
+    vocabulary?.hide();
     const isStory = step === 2, qs = questions(), last = pageIndex === pages.length - 1;
     $('fvStepLabel').textContent = isStory ? 'Story · page ' + page().number : (step === 3 && last ? 'Reflect and connect to writing' : labels[step]);
-    $('fvPrompt').textContent = currentText();
+    vocabulary.render($('fvPrompt'), currentText());
     $('fvQuestionCount').textContent = isStory ? '' : `${questionIndex + 1} / ${qs.length}`;
     $('fvQuestionPrev').hidden = isStory; $('fvQuestionNext').hidden = isStory;
     $('fvQuestionPrev').disabled = questionIndex === 0;
@@ -51,7 +71,7 @@
     $('fvTeacherCue').textContent = step === 0 ? (pageIndex ? 'Before describing: I thought…, but now… Add a new detail with each speaker.' : 'Look at the image first. Invite different students to add details.') : step === 1 ? 'An expression is a clue, not proof. Invite another possible interpretation.' : step === 2 ? 'After listening, choose step 4 before turning the page.' : last ? 'The End · Use the ideas to prepare your own informal email.' : 'Hear several predictions. Then turn the page and compare.';
     $('fvStarters').replaceChildren();
     const phrases = step === 3 && last ? ['Hi… / How are you?', 'First,… Then,… Also,… However,…', 'I felt… because… / I decided to…', 'Write soon! / Best wishes,…'] : starters[step];
-    phrases.forEach(text => {const p = document.createElement('p'); p.textContent = text; $('fvStarters').append(p);});
+    phrases.forEach(text => {const p = document.createElement('p'); vocabulary.render(p, text); $('fvStarters').append(p);});
     document.querySelectorAll('[data-stage]').forEach(btn => {
       btn.setAttribute('aria-pressed', String(Number(btn.dataset.stage) === step));
       if (btn.dataset.stage === '3') btn.textContent = last ? '4 · Reflect' : '4 · Predict';
@@ -104,7 +124,7 @@
   $('fvClose').addEventListener('click', () => reader.close());
   reader.addEventListener('close', () => {
     if (projector.open) projector.close();
-    stopAudio(); $('fvPaper').pause(); clearTimeout(turnTimer); $('fvLeaf').className = 'fv-leaf';
+    vocabulary?.hide(); stopAudio(); $('fvPaper').pause(); clearTimeout(turnTimer); $('fvLeaf').className = 'fv-leaf';
     document.body.style.overflow = oldOverflow;
     if (ownsFullscreen && document.fullscreenElement) document.exitFullscreen().catch(() => {});
     ownsFullscreen = false; lastFocus?.focus();
@@ -124,13 +144,14 @@
   $('fvFontDown').addEventListener('click', () => resize(-.1));
   $('fvFontUp').addEventListener('click', () => resize(.1));
   function renderProjection() {
+    vocabulary?.hide();
     const picture = projection === 'picture', story = step === 2;
     projector.classList.toggle('picture-mode', picture);
     $('fvProjectTitle').textContent = `Page ${page().number} · ` + (picture ? 'Describe the picture' : story ? 'Story' : step === 3 && pageIndex === pages.length - 1 ? 'Reflect' : labels[step]);
     $('fvProjectedImage').hidden = !picture; $('fvProjectedText').hidden = picture;
     $('fvProjectListen').hidden = picture; $('fvProjectStop').hidden = picture;
     if (picture) {$('fvProjectedImage').src = page().image; $('fvProjectedImage').alt = page().alt;}
-    else {$('fvProjectedText').textContent = currentText();}
+    else {vocabulary.render($('fvProjectedText'), currentText());}
     $('fvProjectPrev').hidden = story; $('fvProjectNext').hidden = story;
     $('fvProjectPrev').disabled = questionIndex === 0;
     $('fvProjectNext').disabled = questionIndex >= questions().length - 1;
@@ -140,7 +161,7 @@
   $('fvPicture').addEventListener('click', () => project('picture'));
   $('fvProject').addEventListener('click', () => project('text'));
   $('fvProjectClose').addEventListener('click', () => projector.close());
-  projector.addEventListener('close', () => {stopAudio(); projectionFocus?.focus();});
+  projector.addEventListener('close', () => {vocabulary?.hide(); stopAudio(); projectionFocus?.focus();});
   $('fvProjectPrev').addEventListener('click', () => changeQuestion(-1));
   $('fvProjectNext').addEventListener('click', () => changeQuestion(1));
   $('fvProjectListen').addEventListener('click', listen);
@@ -155,9 +176,15 @@
   let touch = null;
   $('fvPicture').addEventListener('touchstart', e => {const t=e.touches[0]; touch={x:t.clientX,y:t.clientY};}, {passive:true});
   $('fvPicture').addEventListener('touchend', e => {if (!touch) return; const t=e.changedTouches[0],dx=t.clientX-touch.x,dy=t.clientY-touch.y; touch=null; if (Math.abs(dx)>80 && Math.abs(dy)<50) {e.preventDefault();turnTo(pageIndex+(dx<0?1:-1));}}, {passive:false});
-  fetch('/assets/data/english-intermediate2-first-visit.json?v=20261002-1').then(response => {
+  const loadJson = url => fetch(url).then(response => {
     if (!response.ok) throw new Error('Story unavailable'); return response.json();
-  }).then(data => {
+  });
+  Promise.all([
+    loadJson('/assets/data/english-intermediate2-first-visit.json?v=20261002-1'),
+    loadJson('/assets/data/english-intermediate2-first-visit-vocabulary.json?v=20261002-vocabulary-1')
+  ]).then(([data, glossary]) => {
+    if (!Array.isArray(glossary.entries) || !glossary.entries.length) throw new Error('Vocabulary unavailable');
+    vocabulary = window.FirstVisitVocabulary(glossary.entries, listenVocabulary);
     if (!Array.isArray(data.pages) || data.pages.length !== 17) throw new Error('Incomplete story');
     pages = data.pages;
     pages.forEach((p,i) => {const option=document.createElement('option');option.value=String(i);option.textContent=`Page ${p.number} of ${pages.length}`;$('fvPage').append(option);});
