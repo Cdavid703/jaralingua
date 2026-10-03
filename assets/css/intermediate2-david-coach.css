@@ -1,0 +1,91 @@
+.david-coach-page .site-header,.david-coach-page .global-course-switcher,.david-coach-page .coach-hero{position:relative!important;inset:auto!important;background-attachment:scroll!important}
+.david-coach-page{margin:0;color:#153b52;background:#f3f7fa}
+.david-coach-page [hidden]{display:none!important}
+.david-coach-page main{width:100%;max-width:none}
+.david-coach-page .coach-hero{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.7fr);gap:22px;width:100%;max-width:none;margin:0;padding:22px;background:#102e4b;min-height:0}
+.david-coach-page .coach-hero-copy{padding:24px;min-width:0;color:#fff;border:1px solid #ffffff26;border-radius:20px;align-content:center}
+.david-coach-page .coach-hero-copy.jl-page-qr-host{padding-right:142px!important}
+.david-coach-page .coach-hero h1{font-size:clamp(1.8rem,3.3vw,3rem);line-height:1.12;margin:8px 0 14px;color:#fff}
+.david-coach-page .coach-hero p{max-width:55ch;line-height:1.55;font-size:1rem;color:#e0edf5}
+.david-coach-page .coach-kicker{font-size:.76rem!important;letter-spacing:.08em;color:#bce2dd!important}
+.david-hero-image{margin:0;min-width:0;overflow:hidden;border-radius:20px}
+.david-hero-image img{display:block;width:100%;height:100%;max-height:290px;object-fit:cover;object-position:center 35%}
+.david-coach-page .coach-shell{width:calc(100% - 44px);max-width:none;margin:22px auto 40px;padding:0}
+.david-panel{padding:24px;background:#fff;border:1px solid #cbdfe7;border-radius:18px}
+.david-coach-page h2,.david-coach-page h3{color:#123c56}
+.david-panel h2{margin:0 0 8px}.david-panel>p{margin:8px 0 16px}
+.david-coach-page .coach-audio-row{gap:10px;flex-wrap:wrap;margin:12px 0}
+.david-mode{display:flex;gap:18px;flex-wrap:wrap;margin:14px 0;color:#25475b}
+.david-mode label{display:flex;align-items:center;gap:8px;min-height:44px}.david-mode input{accent-color:#086574;width:18px;height:18px}
+.david-coach-page .coach-preflight{padding:12px 16px;margin:12px 0;background:#f3f8fa;border-radius:12px}
+.david-coach-page .coach-preflight p{margin:0}.david-privacy{font-size:.84rem;color:#4d6370;line-height:1.5;margin:16px 0 0!important}
+.david-coach-page .coach-progress-header{padding:12px 16px;margin:0 0 14px;background:#fff;border-radius:12px}
+.david-turn-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;align-items:start}
+.david-prompt-column{min-width:0}.david-coach-page .coach-stage{display:grid;grid-template-columns:84px minmax(0,1fr);gap:16px;margin:0;padding:20px;min-height:0;background:#fff;border:1px solid #cbdfe7;box-shadow:none;border-radius:18px}
+.david-coach-page .coach-avatar{align-self:start;width:84px;height:100px;min-height:0;margin:0;overflow:hidden;border-radius:14px}
+.david-coach-page .coach-avatar img{width:100%;height:100%;object-fit:cover;object-position:50% 23%}
+.david-coach-page #questionText{font-size:clamp(1.25rem,2vw,1.65rem);line-height:1.4;margin:10px 0;color:#103b53}
+.david-coach-page .coach-stage-status{color:#096476;font-size:.82rem}
+.david-coach-page .coach-support{margin:12px 0;padding:0 16px;background:#fff;border:1px solid #cbdfe7;border-radius:14px}
+.david-coach-page .coach-support summary{padding:14px 0;color:#134b60;display:flex;gap:12px;flex-wrap:wrap;cursor:pointer}.david-coach-page .coach-support summary small{font-weight:400;font-size:.8rem;color:#4d6571}
+.david-coach-page .coach-frame-grid{grid-template-columns:1fr;gap:8px}.david-coach-page .coach-frame{padding:10px;min-height:0;color:#174358;background:#eff7fa}
+.david-coach-page .coach-vocabulary{margin:12px 0;gap:6px}.david-coach-page .coach-vocabulary span{font-size:.82rem;color:#154c57;background:#e5f3ef;padding:5px 8px}
+.david-coach-page .coach-grammar{margin:10px 0 16px;font-size:.9rem;color:#365567}
+.david-coach-page .coach-recorder{padding:20px;margin:0;border-radius:18px;border:1px solid #cbdfe7;background:#fff;text-align:left;min-width:0}
+.david-mic-settings summary{color:#416272;cursor:pointer;font-size:.85rem;padding:4px 0 10px}.david-mic-settings label{display:block}.david-mic-settings select{width:100%;max-width:100%}.david-mic-settings .coach-level{margin:10px 0}
+.david-record-row{display:flex;align-items:center;gap:18px;margin:12px 0}
+.david-coach-page .coach-mic-button{flex-shrink:0;width:68px;height:68px;min-height:0;margin:0;font-size:1.75rem;box-shadow:0 4px 12px #0f66742a}
+.david-coach-page .coach-record-status{font-size:1rem;margin:0 0 6px;text-align:left}.david-coach-page .coach-record-help{font-size:.88rem;margin:0 0 6px;text-align:left;line-height:1.4}.david-coach-page .coach-timer{display:inline-block;font-size:.85rem}
+.david-coach-page .coach-recorder-actions{justify-content:flex-start;gap:8px;margin:14px 0}.david-coach-page .coach-transcript{padding:12px;min-height:54px;margin:12px 0;color:#294b60;background:#f1f6f9;font-size:.98rem;line-height:1.5}
+.david-coach-page .coach-feedback{padding:12px;margin:12px 0;background:#edf7f1;color:#204e3d;border-radius:12px}.david-coach-page .coach-feedback-copy{font-size:.92rem;line-height:1.5;margin:0 0 8px}.david-coach-page .coach-feedback summary{cursor:pointer;color:#24503e;font-size:.88rem;padding:4px 0}
+.david-coach-page .coach-feedback-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.david-coach-page .coach-feedback-metric{padding:8px}.david-coach-page .coach-model{padding:10px;font-size:.92rem;line-height:1.5}
+.david-coach-page .coach-reaction{display:block;padding:16px;margin:12px 0;background:#e8f3f1;color:#194d48;border-radius:14px}.david-coach-page .coach-reaction h3{font-size:.9rem;margin:0 0 6px;color:#14594f}.david-coach-page .coach-reaction p{margin:0;font-size:1rem;line-height:1.5}
+.david-coach-page .coach-navigation{justify-content:flex-end;margin:14px 0 0}.david-coach-page .coach-button,.david-coach-page .coach-audio-button,.david-coach-page .coach-link-button,.david-coach-page .coach-speed button{min-height:44px;font-size:.9rem}
+.david-coach-page .coach-button{padding:10px 14px}.david-coach-page .coach-speed{flex-wrap:wrap;gap:5px}.david-coach-page .coach-speed button{min-width:44px}
+.david-result{display:flex;align-items:center;gap:20px;padding:16px 0}.david-result>strong{font-size:2.4rem;color:#0d6872}.david-result h3,.david-result p{margin:4px 0}
+.david-report-details{border-top:1px solid #d3e1e8;padding:12px 0}.david-report-details>summary{font-weight:700;cursor:pointer;padding:8px 0}.david-coach-page .coach-guidance-grid{margin:14px 0}.david-coach-page .coach-summary-actions{margin-top:18px}
+.david-coach-page .coach-toast{position:relative;inset:auto;transform:none;max-width:none;width:auto;margin:0 22px 18px;font-size:.84rem;box-shadow:none}
+@media(max-width:800px){.david-coach-page .coach-hero{grid-template-columns:minmax(0,1fr) 220px;padding:14px;gap:14px}.david-coach-page .coach-hero-copy{padding:18px}.david-turn-grid{grid-template-columns:1fr}.david-coach-page .coach-shell{width:calc(100% - 28px);margin-top:16px}.david-coach-page .coach-stage{grid-template-columns:64px minmax(0,1fr);padding:16px;gap:12px}.david-coach-page .coach-avatar{width:64px;height:76px}}
+@media(max-width:600px){.david-coach-page .coach-hero{grid-template-columns:1fr}.david-hero-image{display:none}.david-coach-page .coach-hero-copy.jl-page-qr-host{padding:18px 100px 18px 16px!important}.david-coach-page .coach-hero h1{font-size:1.65rem}.david-panel{padding:18px}.david-coach-page .coach-stage{grid-template-columns:52px minmax(0,1fr);gap:10px}.david-coach-page .coach-avatar{width:52px;height:66px}.david-coach-page .coach-recorder{padding:16px}.david-mode{gap:0}.david-coach-page .coach-stage .coach-audio-row{margin-left:-62px}.david-coach-page .coach-preflight{display:block}.david-coach-page .coach-preflight button{margin-top:10px}.david-coach-page .coach-guidance-grid{grid-template-columns:1fr}.david-coach-page .nav-links li:nth-child(n+4){display:none}}
+
+/* One quiet conversation surface, with optional details kept closed. */
+.david-coach-page .coach-hero{display:block;padding:20px max(20px,calc((100% - 1180px)/2));background:#173f46}
+.david-coach-page .coach-hero-copy{border:0;padding:8px 150px 8px 0;min-height:130px}
+.david-coach-page .coach-hero h1{font-size:clamp(1.8rem,3vw,2.8rem)}
+.david-coach-page .coach-shell{max-width:1180px}
+.david-coach-page .coach-hero-copy.jl-page-qr-host{padding-right:150px!important}
+.david-coach-page .jl-page-qr-open img{min-height:0;width:100%;height:100%;object-fit:contain}
+.david-coach-page .coach-stage{grid-template-columns:120px minmax(0,1fr)}
+.david-coach-page .coach-avatar{width:120px;height:145px}
+.david-coach-page .coach-stage .coach-avatar img{object-position:50% 30%}
+.david-options>summary,#nameCorrection>summary{cursor:pointer;min-height:44px;align-content:center;color:#265361}
+.david-options .coach-preflight{margin-bottom:16px}
+.david-coach-page #nameCorrection input{box-sizing:border-box;max-width:100%;min-height:44px;border:1px solid #aac5ce;border-radius:8px;padding:8px;display:block;margin:8px 0}
+.david-coach-page .coach-floating-dock{position:fixed;left:50%;right:auto;bottom:12px;transform:translateX(-50%);width:min(650px,calc(100% - 24px));box-sizing:border-box;z-index:950;display:flex;align-items:center;gap:16px;padding:12px 16px;border:1px solid #bfd7dc;border-radius:18px;box-shadow:0 5px 28px #102e4b24;background:#fff;color:#173f46}
+.david-coach-page .coach-floating-dock>div{flex:1;min-width:0;display:grid;grid-template-columns:1fr auto;gap:4px 10px}
+.david-coach-page #floatingStatus{font-size:.78rem;grid-column:1;overflow-wrap:anywhere}
+.david-coach-page #floatingTimer{font-size:.8rem;grid-column:2;grid-row:1 / 3}
+.david-coach-page #floatingTurnLabel{font-size:.85rem;font-weight:700}
+.david-coach-page.has-floating-dock{padding-bottom:calc(140px + env(safe-area-inset-bottom))}
+.david-coach-page .coach-toast{position:fixed;left:50%;bottom:120px;transform:translateX(-50%);margin:0;width:max-content;max-width:calc(100% - 40px);z-index:960;pointer-events:none}
+.david-coach-page .coach-stage-status{min-height:24px;display:block}
+.david-coach-page .coach-support summary{min-height:44px;align-items:center}
+.david-coach-page .coach-progress-copy{flex-wrap:wrap;gap:10px}
+.david-coach-page .coach-feedback:has(>details:not([open])){padding:0 12px;background:transparent}
+.david-coach-page .coach-feedback>details>summary{min-height:44px;align-content:center}
+.david-coach-page .navbar{max-width:1400px;margin:auto}
+.david-coach-page .nav-links{flex-wrap:wrap}
+.david-coach-page .coach-recorder-actions{flex-wrap:wrap}
+@media(max-width:800px){.david-coach-page .coach-stage{grid-template-columns:96px minmax(0,1fr)}.david-coach-page .coach-avatar{width:96px;height:116px}.david-coach-page .coach-hero{padding:16px}.david-coach-page .coach-shell{width:calc(100% - 28px)}}
+@media(max-width:600px){.david-coach-page .coach-hero-copy.jl-page-qr-host{padding:8px 90px 8px 0!important}.david-coach-page .coach-stage{grid-template-columns:72px minmax(0,1fr)}.david-coach-page .coach-avatar{width:72px;height:90px}.david-coach-page .coach-stage .coach-audio-row{margin-left:0}.david-coach-page .coach-audio-row .coach-speed{width:100%}.david-coach-page .coach-floating-dock{gap:8px;bottom:max(8px,env(safe-area-inset-bottom));padding:10px}.david-coach-page .coach-floating-dock>div{display:flex;flex-direction:column;gap:2px}.david-coach-page .coach-floating-dock button{font-size:.8rem;max-width:120px}.david-coach-page .coach-hero h1{font-size:1.75rem}.david-coach-page .coach-stage h2{font-size:1.2rem}.david-coach-page .nav-links{display:none}.david-coach-page .coach-hero-copy{min-height:120px}}
+@media(max-width:600px){
+ body.david-coach-page .site-header .navbar{display:flex!important;flex-direction:row!important;flex-wrap:wrap!important;justify-content:space-between!important;gap:8px!important;padding:10px 16px!important;min-height:64px}
+ body.david-coach-page .site-header .nav-links{display:none!important}
+ body.david-coach-page .site-header .brand{margin:0!important;flex:0 0 auto!important;width:auto!important}
+ body.david-coach-page .site-header .brand img{width:48px!important;height:48px!important;object-fit:contain}
+ body.david-coach-page .site-header .global-course-switcher{margin:0!important}
+ body.david-coach-page .site-header .google-auth-container{width:auto!important;margin:0!important}
+ .david-coach-page .coach-hero{padding-top:10px;padding-bottom:10px}
+}
+
+.david-coach-page #replyPlayButton{margin-top:12px}

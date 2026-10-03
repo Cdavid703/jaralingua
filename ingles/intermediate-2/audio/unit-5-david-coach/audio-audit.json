@@ -1,0 +1,401 @@
+[
+  {
+    "file": "reply-name.mp3",
+    "expected": "Nice to meet you! I'm glad you're here. Let's get ready for that first visit.",
+    "heard": "Nice to meet you. I'm glad you're here. Let's get ready for that first visit",
+    "matched": true,
+    "sha256": "b3098da0f016f4a6a63823f4eece320da06d73e9512b8d82aeefdb2f10c8f2fa"
+  },
+  {
+    "file": "david-01.mp3",
+    "expected": "Hi! I'm David, your conversation coach. What's your name?",
+    "heard": "Hi, I'm David, your conversation coach. What's your name?",
+    "matched": true,
+    "sha256": "83bbd5c752cea5faac60355a4a3636eddfc8472e319ea7ae99b7b8f24114c38b"
+  },
+  {
+    "file": "reply-feelings.mp3",
+    "expected": "Thanks for telling me how you feel. First meetings can bring up different emotions.",
+    "heard": "Thanks for telling me how you feel. First meetings can bring up different emotions.",
+    "matched": true,
+    "sha256": "22030d990dd1aafeb929f95acba2569187407171033591a0e11d8527bab1d99e"
+  },
+  {
+    "file": "reply-mixed.mp3",
+    "expected": "Feeling excited and nervous at the same time makes sense. Let's take it one step at a time.",
+    "heard": "Feeling excited and nervous at the same time makes sense. Let's take it one step at a time",
+    "matched": true,
+    "sha256": "d6de8cfaa15944ec4d7671c0cfb7c7066327c40ac7c6594df720683927d8a37a"
+  },
+  {
+    "file": "reply-calm.mp3",
+    "expected": "It sounds as though you're feeling fairly calm. That can help you listen and enjoy getting to know them.",
+    "heard": "It sounds as though you're feeling fairly calm. That can help you listen and enjoy getting to know them.",
+    "matched": true,
+    "sha256": "9d8d286426fd989e3cea53a31cf544f075163f7faf43db6c392a8051c709ecd6"
+  },
+  {
+    "file": "reply-nervous.mp3",
+    "expected": "You mentioned feeling nervous or worried. That's understandable before meeting people who matter to you.",
+    "heard": "You mentioned feeling nervous or worried. That's understandable before meeting people who matter to you.",
+    "matched": true,
+    "sha256": "9b4a6d9b9a22f3e569e87a28fa965fa696165ecddf1b320f6bc67dee88c7b503"
+  },
+  {
+    "file": "reply-excited.mp3",
+    "expected": "You sound excited about the visit. It's a chance to get to know people who are important to your partner.",
+    "heard": "You sound excited about the visit. It's a chance to get to know people who are important to your partner.",
+    "matched": true,
+    "sha256": "15198d4f954777e68ed8d86f06528c38a4a889e501e4b47d9b007484c2354c6e"
+  },
+  {
+    "file": "david-02.mp3",
+    "expected": "Imagine you're meeting your partner's family for the first time this coming weekend. How are you feeling, and why?",
+    "heard": "Imagine you're meeting your partner's family for the first time this coming weekend. How are you feeling and why?",
+    "matched": true,
+    "sha256": "4ce0710c6a20c8eff637ec70495365c6fa4996f557b3864966ae09f0ad6c267b"
+  },
+  {
+    "file": "reply-worries.mp3",
+    "expected": "Thanks for explaining. You don't have to be perfect. Listening and asking a simple question can help.",
+    "heard": "Thanks for explaining. You don't have to be perfect. Listening and asking a simple question can help.",
+    "matched": true,
+    "sha256": "045df6e1c3536508f501ef52864b531beed9b8de89bb8dc8a62a20e3266ebb2e"
+  },
+  {
+    "file": "david-03.mp3",
+    "expected": "What worries you most about the visit? If nothing worries you, tell me what helps you feel confident.",
+    "heard": "What worries you most about the visit? If nothing worries you, tell me what helps you feel confident.",
+    "matched": true,
+    "sha256": "dfa1208c562e4f048c4d842f9094797fcc45f38e67a71ad5b264f2986cdeda87"
+  },
+  {
+    "file": "reply-preparation.mp3",
+    "expected": "Let's think about how that preparation could make the visit easier for everyone.",
+    "heard": "Let's think about how that preparation could make the visit easier for everyone.",
+    "matched": true,
+    "sha256": "f7db9eb997ae685b4e615310e709d8b2ea931ffb86997e0c0014507e0970f106"
+  },
+  {
+    "file": "reply-gift.mp3",
+    "expected": "You mentioned a gift or something to bring. Checking what the family would enjoy is a thoughtful next step.",
+    "heard": "You mentioned a gift or something to bring. Checking what the family would enjoy is a thoughtful next step.",
+    "matched": true,
+    "sha256": "fbab7f463a1417003923fc82eb79c38d19155c4cdf367e8c3066e6ffaed9a36a"
+  },
+  {
+    "file": "reply-ask-partner.mp3",
+    "expected": "Asking your partner can give you useful context. Families have different routines and preferences.",
+    "heard": "Asking your partner can give you useful context. Families have different routines and preferences.",
+    "matched": true,
+    "sha256": "83a91a9c116070b97d563183ec95bb4fecbd5435ee9fd974d5fa00972b530667"
+  },
+  {
+    "file": "david-04.mp3",
+    "expected": "What are you planning to do before the visit to make a good first impression?",
+    "heard": "What are you planning to do before the visit to make a good first impression?",
+    "matched": true,
+    "sha256": "95990e107fb04696fedc35bce985f81c7d1d2559857dbcd770e6220cb3404538"
+  },
+  {
+    "file": "reply-appearance.mp3",
+    "expected": "Your clothes can help you feel comfortable. Matching the occasion matters more than dressing to impress at any cost.",
+    "heard": "Your clothes can help you feel comfortable. Matching the occasion matters more than dressing to impress at any cost.",
+    "matched": true,
+    "sha256": "445026c1799994344d4cdfaaec5e14fbd3d6bc1c9803421b91db6000398cb385"
+  },
+  {
+    "file": "david-05.mp3",
+    "expected": "What will you wear, and why will it suit this visit?",
+    "heard": "What will you wear and why will it suit this visit?",
+    "matched": true,
+    "sha256": "8eea49995fdaac57cad5a4f338406eb1a4dde49537372b10a75123a44d699b7e"
+  },
+  {
+    "file": "reply-behaviour.mp3",
+    "expected": "Small actions can show interest and respect. Let the family's preferences guide you too.",
+    "heard": "Small actions can show interest and respect. Let the family's preferences guide you too.",
+    "matched": true,
+    "sha256": "1ad280296d273d6fe48c05051a84e5593ebce41c3fb35bdda72464e1fc41e218"
+  },
+  {
+    "file": "reply-phone.mp3",
+    "expected": "Putting your phone away can help you give people your attention. You can still explain if you're expecting an urgent call.",
+    "heard": "Putting your phone away can help you give people your attention. You can still explain if you're expecting an urgent call.",
+    "matched": true,
+    "sha256": "c3e2a448ab7d0f9dbab0cff8139efedb5f241e5d9e0b0af69d6dc6cd78c21e22"
+  },
+  {
+    "file": "david-06.mp3",
+    "expected": "How will you show that you're polite and interested while you're with the family? Give me two things you'll do.",
+    "heard": "How will you show that you're polite and interested while you're with the family? Give me two things you'll do",
+    "matched": true,
+    "sha256": "ade1d7e2f123937dc0caa0d9da99c1133d5106c2191805242928c146c06c3a41"
+  },
+  {
+    "file": "reply-topics.mp3",
+    "expected": "An open question gives the other person room to share. Listening to the answer will help you choose what to say next.",
+    "heard": "An open question gives the other person room to share. Listening to the answer will help you choose what to say next.",
+    "matched": true,
+    "sha256": "5dbaa81a59abe00bd4b4635ae5da558b3e26c87519a79aa5627c6cc2745eb41d"
+  },
+  {
+    "file": "david-07.mp3",
+    "expected": "Which topics could you talk about? Choose one and say the actual question you might ask the family.",
+    "heard": "Which topics could you talk about? Choose one and say the actual question you might ask the family",
+    "matched": true,
+    "sha256": "6619350af1d63229236f986437d4ebb43031ac137f7ba6a7a308e9dfbae32b65"
+  },
+  {
+    "file": "reply-boundaries.mp3",
+    "expected": "People have different boundaries. Paying attention to their comfort is a useful guide.",
+    "heard": "People have different boundaries. Paying attention to their comfort is a useful guide.",
+    "matched": true,
+    "sha256": "3fafedba8d2d56e0b96db8b994c217ee064e2aa6188a157ceadda7792d340509"
+  },
+  {
+    "file": "reply-money.mp3",
+    "expected": "Questions about money or salary can feel personal. You could let them decide whether to bring that up.",
+    "heard": "Questions about money or salary can feel personal. You could let them decide whether to bring that up.",
+    "matched": true,
+    "sha256": "b4956cbd828f14ca87d38a886c7cf2b972e29bbeee0651da5f90ea61668dc8b1"
+  },
+  {
+    "file": "david-08.mp3",
+    "expected": "Are there any topics you would avoid at a first meeting, or approach carefully? Why?",
+    "heard": "Are there any topics you would avoid at a first meeting or approach carefully? Why?",
+    "matched": true,
+    "sha256": "37d82a71cfd15dbe193b32b8f3ee28ae235dfeb9c22f65bbae1d6532716b22e7"
+  },
+  {
+    "file": "reply-door.mp3",
+    "expected": "You're very welcome! Please make yourself comfortable. We're glad you could come.",
+    "heard": "You're very welcome. Please make yourself comfortable. We're glad you could come",
+    "matched": true,
+    "sha256": "a7811e77bebe31d96c87bb95b51155976f521dcc6db9baa194693d7199c5b3ad"
+  },
+  {
+    "file": "david-09.mp3",
+    "expected": "Let's role-play. I'm one of your partner's relatives. Hello! It's lovely to meet you. Come in! What do you say?",
+    "heard": "Let's role play. I'm one of your partner's relatives. \"Hello, it's lovely to meet you. Come in.\" What do you say?",
+    "matched": true,
+    "sha256": "1400e0070ab03353cb34e4f215cd43de92ae31b3de40dba94586cbe4ce55dc14"
+  },
+  {
+    "file": "reply-repeat.mp3",
+    "expected": "Of course! I was asking what you like to do at weekends. It's always okay to ask me to repeat something.",
+    "heard": "Of course, I was asking what you like to do at weekends. It's always okay to ask me to repeat something",
+    "matched": true,
+    "sha256": "5d696b904ea20d790111f6182bcfb75e5dcaede4239377a87cf014a6fe3383c6"
+  },
+  {
+    "file": "david-10.mp3",
+    "expected": "During lunch, you don't understand something I say. How could you ask me politely to repeat it?",
+    "heard": "During lunch, you don't understand something I say. How could you ask me politely to repeat it?",
+    "matched": true,
+    "sha256": "ebdaff2c8c2eeab37b13d77ac0f5d66222fb0a632c9297f5ee0c220746714fe1"
+  },
+  {
+    "file": "david-11.mp3",
+    "expected": "Now ask me one question about making a good first impression. You can ask about clothes, feelings, preparation, or conversation.",
+    "heard": "Now ask me one question about making a good first impression. You can ask about clothes, feelings, preparation, or conversation",
+    "matched": true,
+    "sha256": "b976bb5747b93ba79b0a0c5fc5d669b20c6e466fed4613b50b94f33b3b840dad"
+  },
+  {
+    "file": "reply-message.mp3",
+    "expected": "Thank you for sharing your message with me. Keep your own voice and ideas when you write. Your feedback can help you decide what to practise next.",
+    "heard": "Thank you for sharing your message with me. Keep your own voice and ideas when you write. Your feedback can help you decide what to practice next.",
+    "matched": true,
+    "sha256": "dd6e20c02f452daa531dc2d39f26736cdda4c604911cdc9249cb2d815440a1d6"
+  },
+  {
+    "file": "david-12.mp3",
+    "expected": "Before the visit, send your best friend an imaginary voice message. Greet your friend, explain your feelings and plans, mention topics to discuss or avoid, and finish warmly. Use your own ideas from our conversation.",
+    "heard": "Before the visit, send your best friend an imaginary voice message. Greet your friend, explain your feelings and plans, mention topics to discuss or avoid, and finish warmly. Use your own ideas from our conversation",
+    "matched": true,
+    "sha256": "51c8b3f05b47d4d2b00b82be58c75c369499d16bb159e20bc5045a3a8f242c9f"
+  },
+  {
+    "file": "feelings-help.mp3",
+    "expected": "What makes you feel that way about this meeting?",
+    "heard": "What makes you feel that way about this meeting?",
+    "matched": true,
+    "sha256": "c63eba76e5de7a67092b583edae4f1fce35bc48620db2f5c1ae4e09a23855ebe"
+  },
+  {
+    "file": "feelings-extend.mp3",
+    "expected": "What could help you enjoy the meeting, whatever emotions you feel?",
+    "heard": "What could help you enjoy the meeting, whatever emotions you feel?",
+    "matched": true,
+    "sha256": "6e6cfdc012d9eab453e92f852e3d3fde84e7dd3d3e6a76bfbac9d212663570b6"
+  },
+  {
+    "file": "feelings-calm.mp3",
+    "expected": "How could you help someone else feel comfortable at the meeting?",
+    "heard": "How could you help someone else feel comfortable at the meeting?",
+    "matched": true,
+    "sha256": "a11867d066cbdefc7ecd061df2246a3032619727fb8c365a318852cefe8541f8"
+  },
+  {
+    "file": "preparation-help.mp3",
+    "expected": "Choose one thing to prepare. What will you do, and when?",
+    "heard": "Choose one thing to prepare. What will you do and when?",
+    "matched": true,
+    "sha256": "3db66ec79ba1432e083aaca99e6d95eff7342c5ed8f517887f852dbd2d582737"
+  },
+  {
+    "file": "preparation-extend.mp3",
+    "expected": "Suppose your plans change at the last minute. How will you let the family know?",
+    "heard": "Suppose your plans change at the last minute. How will you let the family know?",
+    "matched": true,
+    "sha256": "908b1d798a057d3d59768242456ca6b403975e7a1c64e49993145eaf0352d114"
+  },
+  {
+    "file": "topics-help.mp3",
+    "expected": "Imagine you want to learn about their hobbies. What question could you ask?",
+    "heard": "Imagine you want to learn about their hobbies. What question could you ask?",
+    "matched": true,
+    "sha256": "cc44cc59afd084f9b4081efbd0e5c6f535e7d6f659fd72dc05592445245f92c5"
+  },
+  {
+    "file": "topics-extend.mp3",
+    "expected": "I tell you, 'I love cooking with my family.' What would you ask me next?",
+    "heard": "I tell you I love cooking with my family. What would you ask me next?",
+    "matched": true,
+    "sha256": "29458d9c6dada9a1a4267fd2df1b4e15d25460ed240f0d7b368de4442505dfd2"
+  },
+  {
+    "file": "boundaries-help.mp3",
+    "expected": "Why might that topic make someone uncomfortable at a first meeting?",
+    "heard": "Why might that topic make someone uncomfortable at a first meeting?",
+    "matched": true,
+    "sha256": "d0f1b9ba9ec5928a917ae3d5f4cda33b4bd5592e6d44c93dc4e9f39f86119816"
+  },
+  {
+    "file": "boundaries-extend.mp3",
+    "expected": "If someone brings up a topic you prefer not to discuss, what could you say politely?",
+    "heard": "If someone brings up a topic you prefer not to discuss, what could you say politely?",
+    "matched": true,
+    "sha256": "a77c0e4349929e2253ad9fb1cf7ddf98a750b89b38ba2b76e15e07faffa9df85"
+  },
+  {
+    "file": "answer-clothes.mp3",
+    "expected": "I'd choose something clean and comfortable that suits the occasion. For a relaxed lunch, I'd probably wear a simple shirt and jeans.",
+    "heard": "I'd choose something clean and comfortable that suits the occasion. For a relaxed lunch, I'd probably wear a simple shirt and jeans.",
+    "matched": true,
+    "sha256": "af2ecfbeb9a554d9baee114295e63c0513bdd85e35cf4c46029a7984667658c9"
+  },
+  {
+    "file": "answer-nerves.mp3",
+    "expected": "I'd take a slow breath and focus on getting to know one person at a time. You don't have to impress everyone with a perfect answer.",
+    "heard": "I'd take a slow breath and focus on getting to know one person at a time. You don't have to impress everyone with a perfect answer",
+    "matched": true,
+    "sha256": "b44aa18d83af12d7e9bc326c9994d03b20a86b6d654eb48b4b8b1ad4442019fd"
+  },
+  {
+    "file": "answer-topics.mp3",
+    "expected": "I'd start with hobbies, food, or something they enjoy. Then I'd ask a follow-up based on what they actually said.",
+    "heard": "I'd start with hobbies, food, or something they enjoy. Then I'd ask a follow-up based on what they actually said.",
+    "matched": true,
+    "sha256": "8565116ad3a7fe40abfcd2d0afe41ac905ca392a4d499fc817fa35cb05627b36"
+  },
+  {
+    "file": "answer-avoid.mp3",
+    "expected": "I'd be careful with very personal questions until I knew them better. Different families are comfortable discussing different things.",
+    "heard": "I'd be careful with very personal questions until I knew them better. Different families are comfortable discussing different things.",
+    "matched": true,
+    "sha256": "afe322b622ada6c3938d4869b26f14826a753f3c177da0450b8a7657bb0dd1cb"
+  },
+  {
+    "file": "answer-prepare.mp3",
+    "expected": "I'd ask my partner about the family's routine, check the arrival time, and ask whether I could bring anything.",
+    "heard": "I'd ask my partner about the family's routine, check the arrival time, and ask whether I could bring anything.",
+    "matched": true,
+    "sha256": "e9187b305c515ecdd9efcffe160ac450a98a36a422eee057316d8424546e3ca7"
+  },
+  {
+    "file": "answer-behaviour.mp3",
+    "expected": "I'd greet everyone, listen with interest, and offer to help. I'd also thank the family before leaving.",
+    "heard": "I'd greet everyone, listen with interest, and offer to help. I'd also thank the family before leaving",
+    "matched": true,
+    "sha256": "25e876d06a4c5135dd651c73966beacc4e6adb23c9abb9d57b7b40075e329f8b"
+  },
+  {
+    "file": "answer-name.mp3",
+    "expected": "I'm David, your conversation coach. I'm here to help you practise for that first meeting.",
+    "heard": "I'm David, your conversation coach. I'm here to help you practice for that first meeting",
+    "matched": true,
+    "sha256": "c11c13b20d9b6e19cc7107974eb63af430a0618af30c1c4192c3b4f4afb51f9c"
+  },
+  {
+    "file": "answer-clarify.mp3",
+    "expected": "I'm not sure which topic you mean. Could you ask me about clothes, feelings, preparation, polite behaviour, or conversation?",
+    "heard": "I'm not sure which topic you mean. Could you ask me about clothes, feelings, preparation, polite behavior, or conversation?",
+    "matched": true,
+    "sha256": "b7bf23f9bc8553008bda0b608cb0deeee48e4d7835d9f5cf5b5a2e6fc68963d7"
+  },
+  {
+    "file": "welcome.mp3",
+    "expected": "Hi, I'm David. We'll practise for a first meeting with your partner's family this coming weekend. We'll talk about your feelings, your plans, and what you could say.",
+    "heard": "Hi, I'm David. We'll practice for a first meeting with your partner's family this coming weekend. We'll talk about your feelings, your plans, and what you could say.",
+    "matched": true,
+    "sha256": "252af549e5a6b1c6ecf6d9e2f616b0a793a14f31afc7413bd3fa0df7c2dd7701"
+  },
+  {
+    "file": "instructions.mp3",
+    "expected": "Listen, record your answer, and hear my response. Open Help me answer if you need an idea. Some answers lead to a follow-up question. At the end, use your own ideas in a voice message to your best friend.",
+    "heard": "Listen, record your answer, and hear my response. Open Help Me Answer if you need an idea. Some answers lead to a follow-up question. At the end, use your own ideas in a voice message to your best friend",
+    "matched": true,
+    "sha256": "2b9a3d88ff651dec82d3ff5c09a53596a8d4692e032124b81e470e5963124a61"
+  },
+  {
+    "file": "need-detail.mp3",
+    "expected": "I'm not sure I caught the detail this question needs. You can open the help and try again, or continue practising.",
+    "heard": "I'm not sure I caught the detail this question needs. You can open the help and try again or continue practicing",
+    "matched": true,
+    "sha256": "e2ff995a9851a9b5358e67ee88d486731a607090d7f9b0b8d06004ac24857471"
+  },
+  {
+    "file": "no-speech.mp3",
+    "expected": "I couldn't hear a clear answer. Please check your microphone and try again.",
+    "heard": "I couldn't hear a clear answer. Please check your microphone and try again.",
+    "matched": true,
+    "sha256": "eaf1119cd86625228d2a309a4a4f5033e4b36b0a93639d8c258b9592a7f7589c"
+  },
+  {
+    "file": "service-recovery.mp3",
+    "expected": "The analysis didn't finish, so I can't respond to your words yet. You can retry or continue without feedback for this answer.",
+    "heard": "The analysis didn't finish, so I can't respond to your words yet. You can retry or continue without feedback for this answer",
+    "matched": true,
+    "sha256": "9cdb7f485b812ea6cb1fe15447b7de17a110625b2ca2d11173854030a764ca68"
+  },
+  {
+    "file": "closing.mp3",
+    "expected": "Thanks for the conversation! For your written task, imagine the visit is still ahead of you. Write to your best friend, connect your own ideas, and keep a warm, friendly tone. See you next time!",
+    "heard": "Thanks for the conversation. For your written task, imagine the visit is still ahead of you. Write to your best friend, connect your own ideas, and keep a warm, friendly tone. See you next time",
+    "matched": true,
+    "sha256": "1430891e8f9c1664271bd9152aab30f4525770b4695c11237459f1ce28afd456"
+  },
+  {
+    "file": "reply-cooking.mp3",
+    "expected": "In this role-play, my favourite dish is vegetable pasta. We choose the vegetables together, and everyone helps prepare the meal.",
+    "heard": "In this role play, my favorite dish is vegetable pasta. We choose the vegetables together, and everyone helps prepare the meal.",
+    "matched": true,
+    "sha256": "862c5ef01f83e691b3c21276cba7d3494ec0b2e66cf32e46cab42dfde63a3e7a"
+  },
+  {
+    "file": "reply-followup.mp3",
+    "expected": "Thanks for adding that. Let's keep building your plan for the visit.",
+    "heard": "Thanks for adding that. Let's keep building your plan for the visit",
+    "matched": true,
+    "sha256": "ed3f0cb6e826d31d688f7ce3153f1057f09c05f33a93437501ae352bf78b962f"
+  },
+  {
+    "file": "return-to-prompt.mp3",
+    "expected": "Now, let's come back to your answer to the question on screen.",
+    "heard": "Now let's come back to your answer to the question on screen",
+    "matched": true,
+    "sha256": "067b662940dd4eea8de725b604683bac8ae4eaddd9fc64237ab61db3052a3f96"
+  }
+]

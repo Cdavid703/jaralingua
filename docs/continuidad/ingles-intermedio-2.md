@@ -20,3 +20,7 @@ En tareas anteriores hubo cambios de este nivel coexistiendo con trabajo de Bás
 ## Unit 5 · The First Visit
 
 El cuento oral del examen final se redujo a 17 páginas por indicación del docente: evitar imágenes casi idénticas. Cada escena debe aportar cambios visibles de lugar, acción o composición. Describir primero, interpretar sentimientos con evidencia, revelar la narración y después predecir. Imágenes y preguntas ampliables para TV, preguntas individuales, audios de ElevenLabs, apoyos de looks/seems/looks like ocultos hasta solicitarlos. Referencia de interacción: Stone Soup de Básico 2, Unidad 6. Consultar [implementación y pruebas](../english-intermediate2-first-visit.md).
+
+## Unit 5 · Conversation with David
+
+El docente pidió practicar oralmente los temas exactos del examen final con un coach que pregunte el nombre, reaccione a las respuestas y ofrezca ejemplos bajo demanda. Interfaz breve con retrato ficticio, micrófono, transcripción, QR y adaptación móvil. La voz profesional David no permitía generar audio (`voice_not_fine_tuned`); el 2 de octubre autorizó probar la otra voz David y continuar. La actividad usa la voz clonada `pv8WYYW60prEkDbDXyC0`, no la profesional bloqueada. Doce etapas y cuatro seguimientos, práctica privada sin notas ni entrega. Referencia: [implementación, límites de conversación y pruebas](../english-intermediate2-david-first-impression.md). No confundir el coach con el cuento The First Visit ni cambiar el estado del examen escrito.

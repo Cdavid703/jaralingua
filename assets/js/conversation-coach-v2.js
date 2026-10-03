@@ -92,6 +92,7 @@
   let session = freshSession();
   let playbackSpeed = 1;
   let audioBusy = false;
+  let lastResponseEntries = [];
   let mediaStream = null;
   let mediaRecorder = null;
   let recordedChunks = [];
@@ -308,6 +309,7 @@
   }
 
   async function playAudioQueue(entries) {
+    lastResponseEntries = entries;
     for (const entry of entries) {
       await playAudio(elements.reactionAudio, entry.file, { stageState: "responding", stageLabel: `${coachFirstName} is responding`, restoreStage: false });
     }
@@ -353,6 +355,7 @@
     releaseCurrentRecording();
     session.phase = "main";
     session.activeFollowUp = null;
+    lastResponseEntries = [];
     const total = session.questionIds.length;
     elements.counter.textContent = `Turn ${session.currentIndex + 1} of ${total}`;
     elements.floatingTurn.textContent = `Turn ${session.currentIndex + 1} of ${total}`;
@@ -365,7 +368,9 @@
     elements.vocabulary.innerHTML = (question.vocabulary || []).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
     elements.grammar.textContent = question.grammar || "";
     elements.support.open = session.mode === "guided" && !config.ui?.supportStartsClosed;
-    elements.supportLabel.textContent = session.mode === "guided" ? "Use, then personalize" : "Optional support";
+    elements.supportLabel.textContent = config.ui?.supportLabel || (session.mode === "guided" ? "Use, then personalize" : "Optional support");
+    elements.support.hidden = Boolean(config.ui?.hideRealSupport && session.mode === "real");
+    if ($("nameCorrection")) $("nameCorrection").hidden = true;
     elements.feedback.hidden = true;
     elements.feedback.innerHTML = "";
     elements.recovery.hidden = true;
@@ -381,7 +386,10 @@
     setRecordStatus("Ready for your answer", question.interaction ? (config.ui?.interactionRecordHelp || `Ask ${coachFirstName} two different questions in English.`) : "Tap the microphone and answer in English.");
     setStage("ready", `${coachFirstName} is ready`);
     updateControls();
-    if (autoplay) window.setTimeout(playQuestion, 250);
+    if (autoplay) {
+      if (config.ui?.immediatePrompt) playQuestion();
+      else window.setTimeout(playQuestion, 250);
+    }
   }
 
   function beginConversation(ids = null, forcedMode = null) {
@@ -533,6 +541,7 @@
     elements.stop.disabled = !recording;
     elements.recordAgain.disabled = recording || analyzing || (!currentBlob && !hasAnswer);
     elements.questionPlay.disabled = recording || locked;
+    if ($("replyPlayButton")) $("replyPlayButton").disabled = recording || locked || !lastResponseEntries.length;
     elements.next.disabled = !turnIsComplete() || recording || locked;
     elements.microphoneSelect.disabled = recording || analyzing;
     elements.floatingMic.hidden = recording;
@@ -625,7 +634,7 @@
         if (response.ok) {
           const expectedLanguage = String(config.language || "").toLowerCase();
           const returnedLanguage = String(payload.language_code || payload.language || "").toLowerCase();
-          if (expectedLanguage && returnedLanguage && !returnedLanguage.startsWith(expectedLanguage)) {
+          if (!currentQuestion()?.unscored && expectedLanguage && returnedLanguage && !returnedLanguage.startsWith(expectedLanguage)) {
             const languageError = new Error("The transcription service did not return English analysis. Please retry this recording.");
             languageError.status = 502;
             throw languageError;
@@ -651,7 +660,7 @@
     if (!Array.isArray(words)) return [];
     return words.map((item) => ({
       word: String(item.word || item.text || "").trim(),
-      probability: Number(item.probability ?? item.confidence ?? 1)
+      probability: Number(item.probability ?? item.confidence ?? (config.strictConfidence ? NaN : 1))
     })).filter((item) => item.word && Number.isFinite(item.probability));
   }
 
@@ -730,23 +739,28 @@
     const language = clampScore(3 + Math.min(4, unitMatchCount * 1.5) + checkRatio * 2 + Math.min(1, connectorCount) - Math.min(4, corrections.length * 2));
     const paceValue = wordsPerMinute >= 60 && wordsPerMinute <= 165 ? 4 : wordsPerMinute >= 40 && wordsPerMinute <= 190 ? 2.5 : 1;
     const fluency = clampScore(2 + paceValue + lengthRatio * 3 + (seconds >= 6 ? 1 : 0));
-    const clarity = clampScore(averageConfidence * 10);
+    const clarity = config.strictConfidence && !clearWords.length ? null : clampScore(averageConfidence * 10);
     const metrics = { task, interaction, language, fluency, clarity };
-    const total = Object.values(metrics).reduce((sum, value) => sum + value, 0);
+    const total = Object.values(metrics).some(value => value == null) ? null : Object.values(metrics).reduce((sum, value) => sum + value, 0);
     const lowConfidence = clearWords.filter((item) => item.probability < .68).slice(0, 8);
     const missing = checks.filter((check) => !check.met).map((check) => check.label);
-    const message = corrections.length ? corrections.join(" ") : total >= 43
+    const message = corrections.length ? corrections.join(" ") : total == null && checks.every(check => check.met)
+      ? "Your answer includes the requested details. There is not enough transcription-confidence evidence for a complete estimate."
+      : total >= 43
       ? "Your answer is detailed, relevant, and ready for a more independent attempt."
       : total >= 34
         ? `Your answer communicates the main idea. ${missing.length ? `Add ${missing[0]} next time.` : `Add one more precise ${unitShortLabel} expression next time.`}`
         : `Build the answer again with a complete structure${missing.length ? ` and include ${missing[0]}` : " and one specific detail"}.`;
+    if (question.unscored) return {total:null, metrics:{task:null, interaction:null, language:null, fluency:null, clarity:null}, checks, wordCount, lowConfidence:[], corrections:[], unscored:true, message:"Introduction received. Names are not scored; correct the transcription if needed."};
     return { total, metrics, checks, wordCount, durationSeconds: Math.round(seconds), wordsPerMinute: Math.round(wordsPerMinute), lowConfidence, message, corrections };
   }
 
   function feedbackMarkup(answer, question) {
-    const metrics = (config.rubric || []).map((criterion) => `<div class="coach-feedback-metric"><strong>${answer.analysis.metrics[criterion.key]}</strong><span>${escapeHtml(criterion.label)} /10</span></div>`).join("");
+    if (answer.analysis.unscored) return "<p>Nice to meet you. Your name is not scored.</p>";
+    const metrics = (config.rubric || []).map((criterion) => `<div class="coach-feedback-metric"><strong>${answer.analysis.metrics[criterion.key] ?? "—"}</strong><span>${escapeHtml(criterion.label)} /10</span></div>`).join("");
     const checks = answer.analysis.checks.map((check) => `<span class="coach-check ${check.met ? "is-met" : ""}"><i class="bi ${check.met ? "bi-check-circle-fill" : "bi-circle"}"></i> ${escapeHtml(check.label)}</span>`).join("");
     const lowWords = answer.analysis.lowConfidence.length ? `<p class="coach-feedback-copy"><strong>Repeat more clearly:</strong> ${answer.analysis.lowConfidence.map((item) => escapeHtml(item.word)).join(", ")}. This is only a transcription-confidence signal.</p>` : "";
+    if (config.ui?.collapseFeedback) return `<details><summary>Feedback on this answer</summary><p>${escapeHtml(answer.analysis.message)}</p>${lowWords}<div class="coach-checks">${checks}</div><p class="coach-model">${escapeHtml(question.improved || "")}</p><div class="coach-feedback-grid">${metrics}</div><p>Automatic estimates only. A dash means there is not enough evidence.</p></details>`;
     if (config.ui?.compactFeedback) return `<p class="coach-feedback-copy"><strong>Practice: ${answer.analysis.total}/50.</strong> ${escapeHtml(answer.analysis.message)}</p>${lowWords}<details><summary>Example and score details</summary><p class="coach-model"><strong>One possible answer:</strong><br>${escapeHtml(question.improved || "")}</p><div class="coach-checks">${checks}</div><div class="coach-feedback-grid">${metrics}</div></details>`;
     return `<div class="coach-feedback-grid">${metrics}</div><div class="coach-checks">${checks}</div><p class="coach-feedback-copy">${escapeHtml(answer.analysis.message)}</p>${lowWords}<p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(question.improved || "")}</p>`;
   }
@@ -765,6 +779,7 @@
   }
 
   function responseEntries(answer, question, evaluatedPrompt = question) {
+    if (config.responseResolver) return config.responseResolver(answer, question, evaluatedPrompt);
     if (question.interaction) return roleReversalResponses(answer.transcript);
     const complete = answer.analysis.checks.every((check) => check.met) && answer.analysis.wordCount >= Number(evaluatedPrompt.minWords || 0);
     const evidenceMatched = evidenceResponses(answer.transcript, question.reactionResponses || config.reactionResponses || []);
@@ -777,13 +792,14 @@
     if (!entries.length) return;
     elements.reactionText.textContent = entries.map((entry) => entry.text).join(" ");
     elements.reaction.hidden = false;
-    setRecordStatus("Answer analyzed", question.interaction ? `Listen to ${coachFirstName} answer the topics she recognized.` : `Listen to ${coachFirstName}'s response, then continue.`);
+    setRecordStatus("Answer analyzed", question.interaction ? `Listen to ${coachFirstName} answer the topics in your question.` : `Listen to ${coachFirstName}'s response, then continue.`);
     await playAudioQueue(entries);
   }
 
   function chooseAdaptiveFollowUp(answer, question) {
     const set = config.followUpSets?.[question.followUpSet];
     if (!set) return null;
+    if (config.followUpResolver) return config.followUpResolver(answer, question, set);
     const complete = Boolean(answer?.analysis)
       && answer.analysis.checks.every((check) => check.met)
       && answer.analysis.wordCount >= Number(question.minWords || 0);
@@ -805,11 +821,13 @@
     elements.vocabulary.innerHTML = (followUp.vocabulary || []).map((item) => `<span>${escapeHtml(item)}</span>`).join("");
     elements.grammar.textContent = followUp.grammar || "";
     elements.support.open = session.mode === "guided" && !config.ui?.supportStartsClosed;
-    elements.supportLabel.textContent = session.mode === "guided" ? "Follow-up support" : "Optional support";
+    elements.supportLabel.textContent = config.ui?.supportLabel || (session.mode === "guided" ? "Follow-up support" : "Optional support");
+    elements.support.hidden = Boolean(config.ui?.hideRealSupport && session.mode === "real");
     elements.recovery.hidden = true;
     elements.reaction.hidden = false;
-    elements.reactionText.textContent = followUp.text;
-    elements.transcript.textContent = "Your follow-up transcript will appear after temporary Whisper analysis.";
+    if (!config.ui?.acknowledgeBeforeFollowUp) elements.reactionText.textContent = followUp.text;
+    elements.transcript.textContent = config.ui?.compactFeedback ? "Your follow-up answer will appear here." : "Your follow-up transcript will appear after temporary Whisper analysis.";
+    elements.feedback.hidden = true;
     elements.transcript.classList.remove("has-text");
     elements.studentAudio.hidden = true;
     elements.studentAudio.removeAttribute("src");
@@ -828,6 +846,7 @@
       await presentMayaResponse(answer, question);
       return;
     }
+    if (answer && config.ui?.acknowledgeBeforeFollowUp) await presentMayaResponse(answer, question);
     renderAdaptiveFollowUp(followUp);
     showToast(`${coachFirstName} selected a follow-up from your answer evidence.`);
     await playQuestion();
@@ -855,6 +874,16 @@
       const prompt = currentPrompt();
       const whisperWords = cleanWhisperWords(payload.words);
       const analysis = analyzeAnswer(transcript, recordingDurationMs, whisperWords, prompt);
+      if (config.isStudentQuestion?.(transcript, question, prompt)) {
+        elements.transcript.textContent = transcript;
+        elements.transcript.classList.add("has-text");
+        const entries = config.responseResolver({transcript, analysis}, {...question, interaction:true}, prompt);
+        elements.reactionText.textContent = entries.map(entry => entry.text).join(" ") + " " + config.returnToPrompt.text;
+        elements.reaction.hidden = false;
+        await playAudioQueue([...entries, config.returnToPrompt]);
+        setRecordStatus("Your question answered", "Now record your answer to the question above.");
+        return;
+      }
       const answer = { questionId: question.id, promptId: prompt.id || question.id, prompt: prompt.text, transcript, durationMs: recordingDurationMs, analysis, unavailable: false };
       const turn = currentTurn() || { questionId: question.id, main: null, followUpPrompt: null, followUp: null };
       if (session.phase === "followup") {
@@ -864,6 +893,10 @@
         turn.main = answer;
       }
       session.answers[session.currentIndex] = turn;
+      if (question.unscored && $("nameCorrection")) {
+        $("nameCorrection").hidden = false;
+        $("correctedName").value = transcript;
+      }
       elements.transcript.textContent = transcript;
       elements.transcript.classList.add("has-text");
       if (session.mode === "guided") {
@@ -974,7 +1007,7 @@
   }
 
   function criterionAverage(answers, key) {
-    const analyzed = answers.filter((answer) => answer.analysis);
+    const analyzed = answers.filter((answer) => answer.analysis && Number.isFinite(answer.analysis.metrics[key]));
     if (!analyzed.length) return null;
     return Math.round(analyzed.reduce((sum, answer) => sum + answer.analysis.metrics[key], 0) / analyzed.length);
   }
@@ -986,7 +1019,7 @@
   }
 
   function turnAverage(turn) {
-    const analyzed = turnResponses(turn).filter((answer) => answer.analysis);
+    const analyzed = turnResponses(turn).filter((answer) => answer.analysis && Number.isFinite(answer.analysis.total));
     if (!analyzed.length) return null;
     return Math.round(analyzed.reduce((sum, answer) => sum + answer.analysis.total, 0) / analyzed.length);
   }
@@ -1005,7 +1038,7 @@
   }
 
   function readinessLabel(score) {
-    if (score == null) return "No analyzed turns";
+    if (score == null) return "More evidence needed for a full estimate";
     if (score >= 44) return "Strong conversational readiness";
     if (score >= 37) return "Developing confidently";
     if (score >= 29) return "Useful foundation";
@@ -1110,7 +1143,7 @@
 
   function responseReview(label, prompt, answer, improved) {
     if (!answer) return "";
-    const score = answer.analysis ? `${answer.analysis.total}/50` : "Not analyzed";
+    const score = answer.analysis?.unscored ? "Introduction · not scored" : answer.analysis?.total != null ? `${answer.analysis.total}/50` : "No complete estimate";
     const transcript = answer.transcript || "No transcript was available for this response.";
     const feedback = answer.analysis?.message || "No automatic feedback was created because there was no usable transcription.";
     return `<section class="coach-answer-phase"><div class="coach-answer-phase-heading"><strong>${escapeHtml(label)}</strong><span>${escapeHtml(score)}</span></div><p><strong>${escapeHtml(coachFirstName)} asked:</strong> ${escapeHtml(prompt || answer.prompt || "")}</p><p><strong>You said:</strong> ${escapeHtml(transcript)}</p><p><strong>Feedback:</strong> ${escapeHtml(feedback)}</p><p class="coach-model"><strong>Stronger model:</strong><br>${escapeHtml(improved || "")}</p></section>`;
@@ -1189,6 +1222,7 @@
   elements.start.addEventListener("click", () => beginConversation());
   elements.reviewPrevious.addEventListener("click", reviewLatest);
   elements.questionPlay.addEventListener("click", playQuestion);
+  $("replyPlayButton")?.addEventListener("click", () => playAudioQueue(lastResponseEntries));
   elements.mic.addEventListener("click", startRecording);
   elements.floatingMic.addEventListener("click", startRecording);
   elements.stop.addEventListener("click", stopRecording);
@@ -1207,6 +1241,16 @@
     stopCoachAudio();
     releaseCurrentRecording();
     if (preflightObjectUrl) URL.revokeObjectURL(preflightObjectUrl);
+  });
+
+  $("saveCorrectedName")?.addEventListener("click", () => {
+    if (!currentQuestion()?.unscored || !currentTurn()?.main) return;
+    const value = $("correctedName").value.trim().slice(0, 100);
+    if (!value) { showToast("Please enter your name."); return; }
+    currentTurn().main.transcript = value;
+    currentTurn().main.nameCorrected = true;
+    elements.transcript.textContent = value;
+    showToast("Name corrected. Names do not affect your estimate.");
   });
 
   refreshOnboarding();

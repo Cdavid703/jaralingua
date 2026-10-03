@@ -1103,6 +1103,44 @@
         "family",
         "ElevenLabs"
       ]
+    },
+    {
+      "id": "unit-5-david-first-impression-conversation-coach",
+      "unit": 5,
+      "order": 9,
+      "type": "conversation-coach",
+      "skillLabel": "Conversation Coach",
+      "title": "A Good First Impression",
+      "subtitle": "Talk it through with David.",
+      "summary": "Rehearse the final writing themes aloud before meeting your partner’s family: feelings, preparation, appearance, behaviour and conversation.",
+      "cardSummary": "Meet David, get help when you need it, and develop your own ideas in twelve connected stages.",
+      "image": "/assets/img/english-intermediate-2/unit-5/david-coach/david.png",
+      "media": "/ingles/intermediate-2/audio/unit-5-david-coach/welcome.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "pv8WYYW60prEkDbDXyC0",
+      "voiceName": "David",
+      "scriptHref": "/ingles/intermediate-2/audio/unit-5-david-coach/models.json",
+      "workshopHref": "/ingles/intermediate-2/conversation-coach-unit-5-david-first-impression.html",
+      "turnCount": 12,
+      "duration": "20–30 minutes · at your pace",
+      "product": "Twelve stages, four adaptive follow-ups and a private oral rehearsal",
+      "recording": true,
+      "temporaryTranscription": true,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 5",
+        "first impression",
+        "final writing practice",
+        "David",
+        "feelings",
+        "future plans",
+        "family",
+        "conversation coach"
+      ]
     }
   ]
 }
