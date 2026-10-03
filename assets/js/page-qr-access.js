@@ -3,6 +3,7 @@
   "use strict";
 
   const PATH_PATTERN = /^\/ingles\/(?:basico(?:-2)?|intermediate(?:-2)?)\/[^/]+\.html$/;
+  const isEnglishPortal = window.location.pathname === "/ingles/index.html";
   const courseOneLayout = /^\/ingles\/(?:intermediate|basico)\//.test(window.location.pathname);
 
   function assetPath() {
@@ -19,7 +20,7 @@
 
   function findHeroCopy() {
     // Course 1 has several hero families; the heading's container is their common anchor.
-    if (courseOneLayout) return document.querySelector("h1")?.parentElement;
+    if (courseOneLayout || isEnglishPortal) return document.querySelector("h1")?.parentElement;
     return document.querySelector([
       ".lesson-hero-content", ".overview-hero-content", ".basic-hero-content", ".writing-hero-copy", ".midterm-hero-copy",
       ".coach-hero-copy", ".games-hero-content", ".hero-text", ".intermediate2-hero-content", ".intermediate2-hero-overlay",
@@ -31,7 +32,7 @@
   }
 
   function addQr() {
-    if (!PATH_PATTERN.test(window.location.pathname) || document.querySelector(".page-qr-card, .jl-page-qr-card, .mb-qr")) return;
+    if ((!PATH_PATTERN.test(window.location.pathname) && !isEnglishPortal) || document.querySelector(".page-qr-card, .jl-page-qr-card, .mb-qr")) return;
     const host = findHeroCopy();
     if (!host) return;
 
@@ -42,7 +43,7 @@
     const qrAsset = assetPath();
     const dialogId = "jlPageQrDialog";
     host.classList.add("jl-page-qr-host");
-    if (courseOneLayout || /^\/ingles\/intermediate-2\//.test(window.location.pathname)) host.classList.add("jl-page-qr-responsive");
+    if (courseOneLayout || isEnglishPortal || /^\/ingles\/intermediate-2\//.test(window.location.pathname)) host.classList.add("jl-page-qr-responsive");
 
     const card = document.createElement("aside");
     card.className = "jl-page-qr-card";

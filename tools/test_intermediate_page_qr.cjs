@@ -12,7 +12,7 @@ const games = [
   'ingles/intermediate/stereotype-guessing-game.html',
   'ingles/basico/practice-unit-3-favorite-people.html'
 ];
-const pages = process.argv.includes('--basic1') ? fs.readdirSync(path.join(root, 'ingles/basico')).filter(x => x.endsWith('.html')).map(x => 'ingles/basico/' + x) : process.argv.includes('--games') ? games : [
+const pages = process.argv.includes('--portal') ? ['ingles/index.html'] : process.argv.includes('--basic1') ? fs.readdirSync(path.join(root, 'ingles/basico')).filter(x => x.endsWith('.html')).map(x => 'ingles/basico/' + x) : process.argv.includes('--games') ? games : [
   ...fs.readdirSync(path.join(root, 'ingles/intermediate')).filter(x => x.endsWith('.html')).map(x => 'ingles/intermediate/' + x),
   games.at(-1)
 ];
