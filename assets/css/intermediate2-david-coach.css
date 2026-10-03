@@ -46,10 +46,10 @@
 .david-report-details{border-top:1px solid #d3e1e8;padding:12px 0}.david-report-details>summary{font-weight:700;cursor:pointer;padding:8px 0}.david-coach-page .coach-guidance-grid{margin:14px 0}.david-coach-page .coach-summary-actions{margin-top:18px}
 .david-coach-page .coach-toast{position:relative;inset:auto;transform:none;max-width:none;width:auto;margin:0 22px 18px;font-size:.84rem;box-shadow:none}
 @media(max-width:800px){.david-coach-page .coach-hero{grid-template-columns:minmax(0,1fr) 220px;padding:14px;gap:14px}.david-coach-page .coach-hero-copy{padding:18px}.david-turn-grid{grid-template-columns:1fr}.david-coach-page .coach-shell{width:calc(100% - 28px);margin-top:16px}.david-coach-page .coach-stage{grid-template-columns:64px minmax(0,1fr);padding:16px;gap:12px}.david-coach-page .coach-avatar{width:64px;height:76px}}
-@media(max-width:600px){.david-coach-page .coach-hero{grid-template-columns:1fr}.david-hero-image{display:none}.david-coach-page .coach-hero-copy.jl-page-qr-host{padding:18px 100px 18px 16px!important}.david-coach-page .coach-hero h1{font-size:1.65rem}.david-panel{padding:18px}.david-coach-page .coach-stage{grid-template-columns:52px minmax(0,1fr);gap:10px}.david-coach-page .coach-avatar{width:52px;height:66px}.david-coach-page .coach-recorder{padding:16px}.david-mode{gap:0}.david-coach-page .coach-stage .coach-audio-row{margin-left:-62px}.david-coach-page .coach-preflight{display:block}.david-coach-page .coach-preflight button{margin-top:10px}.david-coach-page .coach-guidance-grid{grid-template-columns:1fr}.david-coach-page .nav-links li:nth-child(n+4){display:none}}
+@media(max-width:600px){.david-coach-page .coach-hero{grid-template-columns:1fr}.david-coach-page .coach-hero-copy.jl-page-qr-host{padding:18px 100px 18px 16px!important}.david-coach-page .coach-hero h1{font-size:1.65rem}.david-panel{padding:18px}.david-coach-page .coach-stage{grid-template-columns:52px minmax(0,1fr);gap:10px}.david-coach-page .coach-avatar{width:52px;height:66px}.david-coach-page .coach-recorder{padding:16px}.david-mode{gap:0}.david-coach-page .coach-stage .coach-audio-row{margin-left:-62px}.david-coach-page .coach-preflight{display:block}.david-coach-page .coach-preflight button{margin-top:10px}.david-coach-page .coach-guidance-grid{grid-template-columns:1fr}.david-coach-page .nav-links li:nth-child(n+4){display:none}}
 
 /* One quiet conversation surface, with optional details kept closed. */
-.david-coach-page .coach-hero{display:block;padding:20px max(20px,calc((100% - 1180px)/2));background:#173f46}
+.david-coach-page .coach-hero{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.8fr);align-items:center;padding:20px max(20px,calc((100% - 1180px)/2));background:#173f46}
 .david-coach-page .coach-hero-copy{border:0;padding:8px 150px 8px 0;min-height:130px}
 .david-coach-page .coach-hero h1{font-size:clamp(1.8rem,3vw,2.8rem)}
 .david-coach-page .coach-shell{max-width:1180px}
@@ -89,3 +89,8 @@
 }
 
 .david-coach-page #replyPlayButton{margin-top:12px}
+
+/* Keep the coach visible in the opening banner at every screen size. */
+.david-coach-page .david-hero-image{display:block;width:100%;height:280px}
+.david-coach-page .david-hero-image img{width:100%;height:100%;max-height:none;object-fit:cover;object-position:center 8%}
+@media(max-width:900px){.david-coach-page .coach-hero{grid-template-columns:minmax(0,1fr)}.david-coach-page .david-hero-image{height:clamp(220px,45vw,320px)}}
