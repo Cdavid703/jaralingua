@@ -15,6 +15,7 @@ for (const c of data.categories) {
  const answers = new Set();
  for (const e of c.entries) {
   assert.ok(e.answer && e.meaning && e.example && e.usage && e.hints.length===3);
+  assert.ok(!e.hints[1].startsWith('Think about this meaning:'), 'Context clue must add information');
   assert.match(e.answer,/^[a-zA-Z ',\-]+$/);
   assert.ok(!answers.has(e.answer.toLowerCase()), 'duplicate '+e.answer);
   answers.add(e.answer.toLowerCase());
@@ -37,7 +38,7 @@ async function setup(browser, viewport, role='teacher', reducedMotion='no-prefer
  await page.route('**/csp-report',r=>r.fulfill({status:204,body:''}));
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
  page.on('response',r=>{if(r.status()>=400 && /\.(mp3|js|css|png|svg|webp)(\?|$)/.test(r.url())) errors.push(r.status()+' '+r.url());});
- await page.goto(base+'/ingles/basico-2/game-hangman.html',{waitUntil:'networkidle'});
+ await page.goto(base+'/ingles/basico-2/game-hangman.html',{waitUntil:'load'});
  page.on('dialog',d=>d.accept());
  return {context,page,errors};
 }
@@ -83,7 +84,7 @@ async function responsive(page,label){
   await solve(page,answer);s=await state(page);assert.equal(s.current.success,true);assert.equal(Object.values(s.scores).reduce((a,b)=>a+b,0),2);
   assert.match(await page.locator('#roundResult').innerText(),/Meaning[\s\S]*Example[\s\S]*Usage/i);
   await page.click('#nextRoundButton');s=await state(page);assert.notEqual(s.current.entryId,first);assert.equal(s.current.hintLevel,1);
-  await page.reload({waitUntil:'networkidle'});assert.equal((await state(page)).current.entryId,s.current.entryId);
+  await page.reload({waitUntil:'load'});assert.equal((await state(page)).current.entryId,s.current.entryId);
   assert.equal(await page.locator('#soundToggleButton').getAttribute('aria-pressed'),'true');
   answer=entries.find(e=>e.id===s.current.entryId).answer;
   const misses=[...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].filter(l=>!answer.toUpperCase().includes(l)).slice(0,6);
@@ -93,10 +94,10 @@ async function responsive(page,label){
   await page.locator('.gallows-wrap').screenshot({path:'/tmp/basic2-hangman-character.png'});
   await page.click('#resetMatchButton');
   await start(page,'Unit 2');s=await state(page);answer=entries.find(e=>e.id===s.current.entryId).answer;
-  await page.evaluate(key=>{const s=JSON.parse(localStorage.getItem(key));s.targetScore=3;localStorage.setItem(key,JSON.stringify(s));},key);await page.reload({waitUntil:'networkidle'});
+  await page.evaluate(key=>{const s=JSON.parse(localStorage.getItem(key));s.targetScore=3;localStorage.setItem(key,JSON.stringify(s));},key);await page.reload({waitUntil:'load'});
   await solve(page,answer);assert.equal((await state(page)).status,'match-complete');assert.ok(await page.isVisible('#winnerPanel'));
   // Legacy Unit 1 sessions must infer their unit and preserve participants.
-  await page.evaluate(key=>{const s=JSON.parse(localStorage.getItem(key));delete s.unit;s.category='basic2-unit1-weather-words';s.status='setup';s.current=null;localStorage.setItem(key,JSON.stringify(s));},key);await page.reload({waitUntil:'networkidle'});
+  await page.evaluate(key=>{const s=JSON.parse(localStorage.getItem(key));delete s.unit;s.category='basic2-unit1-weather-words';s.status='setup';s.current=null;localStorage.setItem(key,JSON.stringify(s));},key);await page.reload({waitUntil:'load'});
   assert.equal(await page.inputValue('#unitSelect'),'Unit 1');
   await page.click('#clearSavedButton');assert.equal(await page.inputValue('#studentNamesInput'),'');
   assert.deepEqual(errors,[]);await context.close();
@@ -109,7 +110,7 @@ async function responsive(page,label){
    const top=await page.locator('.hangman-hero').evaluate(e=>e.getBoundingClientRect().top);await page.evaluate(()=>scrollTo(0,260));
    assert.ok(await page.locator('.hangman-hero').evaluate(e=>e.getBoundingClientRect().top)<top-100);
    await start(page,longest.unit);
-   await page.evaluate(({key,id})=>{const s=JSON.parse(localStorage.getItem(key));s.current.entryId=id;localStorage.setItem(key,JSON.stringify(s));},{key,id:longest.id});await page.reload({waitUntil:'networkidle'});
+   await page.evaluate(({key,id})=>{const s=JSON.parse(localStorage.getItem(key));s.current.entryId=id;localStorage.setItem(key,JSON.stringify(s));},{key,id:longest.id});await page.reload({waitUntil:'load'});
    await responsive(page,`${width}x${height}`);
    assert.ok(await page.locator('#baseKeyboard').evaluate(e=>e.getBoundingClientRect().height<250),'Keyboard should fit in a compact grid');
    await page.locator('#gameConsole').screenshot({path:`/tmp/basic2-hangman-${width}.png`});

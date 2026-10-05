@@ -668,7 +668,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Phrasal verb. Use it in the context shown.",
           "hints": [
             "Leave home for a social activity.",
-            "Think about this meaning: Leave home for a social activity.",
+            "We want to _____ tonight instead of staying home.",
             "2 words; 5 letters in total. It begins with G."
           ]
         },
@@ -679,7 +679,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Phrasal verb. Use it in the context shown.",
           "hints": [
             "Spend informal time with friends.",
-            "Think about this meaning: Spend informal time with friends.",
+            "After class, we like to _____ with our friends.",
             "2 words; 7 letters in total. It begins with H."
           ]
         },
@@ -690,7 +690,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Phrasal verb. Use it in the context shown.",
           "hints": [
             "Meet someone at an agreed place.",
-            "Think about this meaning: Meet someone at an agreed place.",
+            "Let us _____ at the park at three.",
             "2 words; 6 letters in total. It begins with M."
           ]
         },
@@ -712,7 +712,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Phrasal verb. Use it in the context shown.",
           "hints": [
             "Not go out; remain at home.",
-            "Think about this meaning: Not go out; remain at home.",
+            "It is pouring, so we should _____ tonight.",
             "2 words; 6 letters in total. It begins with S."
           ]
         },
@@ -723,7 +723,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Phrasal verb. Use it in the context shown.",
           "hints": [
             "Cancel a plan, event, game, or activity.",
-            "Think about this meaning: Cancel a plan, event, game, or activity.",
+            "The coach may _____ the game because of the storm.",
             "2 words; 7 letters in total. It begins with C."
           ]
         }
@@ -1023,7 +1023,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Phrasal verb. Use it in the context shown.",
           "hints": [
             "Try to find a specific product, size, or color.",
-            "Think about this meaning: Try to find a specific product, size, or color.",
+            "I need to _____ a black jacket in this store.",
             "2 words; 7 letters in total. It begins with L."
           ]
         },
@@ -1056,7 +1056,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Phrasal verb. Use it in the context shown.",
           "hints": [
             "Become unavailable because all items were sold.",
-            "Think about this meaning: Become unavailable because all items were sold.",
+            "These popular sweaters may _____ before the weekend.",
             "2 words; 7 letters in total. It begins with S."
           ]
         },
@@ -1173,7 +1173,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Expression. Use it in the context shown.",
           "hints": [
             "Use it when the size and shape are comfortable.",
-            "Think about this meaning: Use it when the size and shape are comfortable.",
+            "The size and shape are right for me. _____.",
             "3 words; 10 letters in total. It begins with I."
           ]
         }
@@ -1193,7 +1193,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Idiom. Use it in the context shown.",
           "hints": [
             "Informal and playful. Use it when someone shops a lot.",
-            "Think about this meaning: Informal and playful. Use it when someone shops a lot.",
+            "This playful expression describes buying things until you are extremely tired.",
             "4 words; 15 letters in total. It begins with S."
           ]
         },
@@ -1204,7 +1204,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Idiom. Use it in the context shown.",
           "hints": [
             "Informal. Use it for something very expensive.",
-            "Think about this meaning: Informal. Use it for something very expensive.",
+            "That expensive perfume could _____.",
             "6 words; 16 letters in total. It begins with C."
           ]
         },
@@ -1226,7 +1226,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Idiom. Use it in the context shown.",
           "hints": [
             "Use it when clothing fits extremely well.",
-            "Think about this meaning: Use it when clothing fits extremely well.",
+            "I hope this dress will _____: exactly the right size.",
             "4 words; 13 letters in total. It begins with F."
           ]
         },
@@ -1955,7 +1955,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Travel expression. Use it in the context shown.",
           "hints": [
             "Use it when a plane leaves the ground.",
-            "Think about this meaning: Use it when a plane leaves the ground.",
+            "At the airport, we watch the plane _____ and rise into the sky.",
             "2 words; 7 letters in total. It begins with T."
           ]
         },
@@ -3457,7 +3457,7 @@ window.JaraLinguaEnglishBasic2Hangman = {
           "usage": "Multiword expression. The last two entries are idioms; the others are phrasal verbs.",
           "hints": [
             "Be busy and moving from one activity to another.",
-            "Think about this meaning: Be busy and moving from one activity to another.",
+            "Tomorrow is very busy. I will _____ all day.",
             "4 words; 9 letters in total. It begins with B."
           ]
         },
