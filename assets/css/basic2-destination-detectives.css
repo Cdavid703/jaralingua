@@ -1,9 +1,179 @@
-/* Scoped classroom layout: flowing hero, large picture cards, touch controls. */
-body.destination-detectives{--ink:#193d44;--muted:#52686d;--teal:#166c66;--paper:#f6f3eb;margin:0;padding:0;background:var(--paper);color:var(--ink);font-family:Arial,sans-serif;line-height:1.6}.destination-detectives *{box-sizing:border-box}.destination-detectives [hidden]{display:none!important}.destination-detectives .site-header{position:relative!important;inset:auto!important;background:#fff}.destination-detectives .navbar{position:relative!important;max-width:none;min-height:64px;padding:.45rem clamp(.7rem,2vw,2rem);gap:1rem}.destination-detectives .brand img{width:38px;height:38px;object-fit:contain}.destination-detectives .nav-links{flex-wrap:nowrap;overflow-x:auto;white-space:nowrap;gap:1rem}.destination-detectives a{color:var(--teal)}.destination-detectives button,.destination-detectives .dd-button{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;border:1px solid transparent;border-radius:12px;background:var(--teal);color:#fff;padding:.75rem 1.1rem;min-height:46px;cursor:pointer;font:700 .98rem/1.3 Arial,sans-serif;text-decoration:none;text-align:center}.destination-detectives button:hover:not(:disabled),.destination-detectives .dd-button:hover{background:#0e524e;color:#fff}.destination-detectives .dd-secondary{background:#fff;color:var(--ink);border:1px solid #bccac7}.destination-detectives button:disabled{opacity:.45;cursor:not-allowed}.destination-detectives :focus-visible{outline:3px solid #ce671f;outline-offset:4px}.destination-detectives h1,.destination-detectives h2,.destination-detectives h3{color:var(--ink);line-height:1.15;margin:0 0 .65rem}.destination-detectives p{margin:.6rem 0}.dd-shell{width:min(1840px,calc(100% - 3rem));max-width:none;margin:1.4rem auto 3rem}.destination-detectives .dd-hero{display:grid!important;grid-template-columns:1fr 1.3fr!important;position:relative!important;inset:auto!important;max-width:none!important;width:100%!important;min-height:0!important;height:auto!important;margin:0 0 1.4rem!important;padding:0!important;border-radius:24px;overflow:hidden;background:#e5eee6;box-shadow:none!important;gap:0!important}.dd-hero .lesson-hero-content{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:clamp(1.5rem,4vw,4rem);width:100%;max-width:none;background:none;box-shadow:none;border:0}.destination-detectives .dd-hero h1{font-size:clamp(2.2rem,4.3vw,5rem);letter-spacing:-.055em}.dd-hero>img{width:100%;height:100%;max-height:470px;min-height:300px;object-fit:cover;display:block}.destination-detectives .dd-eyebrow{text-transform:uppercase;font-weight:800;font-size:.75rem;letter-spacing:.14em;color:#48645e;margin:0 0 .8rem}.dd-meta{font-size:.85rem;color:var(--muted)}.dd-actions,.dd-heading{display:flex;flex-wrap:wrap;align-items:center;gap:.7rem}.dd-heading{justify-content:space-between;margin-bottom:1rem}.dd-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:1.4rem 0}.dd-steps article{padding:1.2rem;border:1px solid #d5ddd4;border-radius:18px;background:#fffdf9}.dd-steps span{display:block;font-size:.85rem;color:#906139;font-weight:800;margin-bottom:.8rem}.dd-steps h2{font-size:1.2rem}.dd-steps p{font-size:.95rem}.dd-panel{padding:clamp(1rem,2.3vw,2.2rem);background:#fff;border:1px solid #dbe2dc;border-radius:22px;margin:1.4rem 0}.dd-panel h2{font-size:clamp(1.45rem,2.1vw,2rem)}.dd-casting{display:grid;grid-template-columns:minmax(270px,.8fr) 1.2fr;align-items:center;gap:clamp(1rem,4vw,5rem);margin-top:1.5rem}.dd-wheel-area{text-align:center}.dd-wheel-wrap{position:relative;width:min(100%,360px);margin:0 auto 1rem}.dd-wheel-wrap:before{content:'';position:absolute;z-index:1;left:calc(50% - 13px);top:-5px;border-left:13px solid transparent;border-right:13px solid transparent;border-top:25px solid #f3b857;filter:drop-shadow(0 2px 1px #193d44)}.dd-wheel-wrap canvas{display:block;width:100%;height:auto;border-radius:50%;box-shadow:0 8px 30px #163c4322}.dd-pair{display:grid;gap:1rem}.dd-pair article{padding:1.5rem;background:#eef5f0;border-radius:18px;border-left:5px solid var(--teal);overflow-wrap:anywhere}.dd-pair article:nth-child(2){background:#faf0e2;border-color:#b47930}.dd-role{display:block;font-weight:700;font-size:.85rem;letter-spacing:.06em;margin-bottom:.7rem}.dd-pair h3{font-size:clamp(1.3rem,2vw,2rem)}.destination-detectives details{padding:1rem;border:1px solid #d4ddd7;border-radius:12px;margin-top:1rem}.destination-detectives summary{cursor:pointer;font-weight:700;min-height:32px}.dd-roster{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.65rem;margin-top:1rem}.dd-roster label{display:flex;align-items:center;gap:.7rem;overflow-wrap:anywhere}.dd-roster input{width:22px;height:22px;flex-shrink:0;accent-color:var(--teal)}.dd-deck{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-top:1.2rem}.dd-deck button{display:flex;flex-direction:column;aspect-ratio:1.35;min-height:120px;border-radius:16px;background:repeating-linear-gradient(135deg,#245a57 0 14px,#285f5b 14px 15px);border:5px double #acd0bc;color:#fff;position:relative}.dd-deck button span{font-size:2.1rem;line-height:1.2}.dd-deck button small{font-size:.8rem;font-weight:400}.dd-deck button[data-used=true]{background:#e7eee7;color:#3e5d53;border-color:#9cad9c;opacity:.8}.dd-support{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}.dd-support article{border-radius:16px;background:#eef5f0;padding:1.3rem}.dd-support article:nth-child(2){background:#fbf1e5}.dd-support li{margin:.4rem 0}.dd-support ul,.dd-support ol{padding-left:1.4rem}.dd-script{font-size:1.2rem;line-height:1.7}.destination-detectives dialog[id^="dd-"]{width:min(1500px,calc(100% - 2rem));max-width:none;max-height:94dvh;padding:clamp(1rem,2vw,2rem);border:0;border-radius:20px;background:#fffdf8;color:var(--ink);overflow:auto}.destination-detectives dialog[id^="dd-"]::backdrop{background:#102e37d9;backdrop-filter:blur(5px)}.dd-cover{text-align:center;padding:clamp(2rem,8vh,6rem) 1rem;background:#e8f0e9;border-radius:16px}.dd-cover>span{font-size:3.5rem;color:#ac7b39}.dd-cover h3{font-size:2rem}.dd-cover button{margin-top:1.5rem}#dd-picture{display:block;width:100%;height:auto;max-height:65dvh;object-fit:contain;background:#173d44;border-radius:12px;margin-bottom:1rem}.dd-answer{padding:1.5rem;background:#dcedda;border-radius:14px;margin-top:1rem;animation:dd-arrive .45s ease}.dd-answer h3{font-size:2rem}.dd-finish{margin-top:1rem;text-align:right}#dd-zoom{width:calc(100% - 1rem);height:97dvh;padding:.7rem;background:#102e37}#dd-zoom-image{display:block;margin:.7rem auto 0;width:100%;height:calc(100% - 65px);object-fit:contain}.destination-detectives .site-footer{background:transparent;color:var(--muted)}@keyframes dd-arrive{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}@media(max-width:900px){.dd-shell{width:calc(100% - 1.5rem)}.destination-detectives .dd-hero{grid-template-columns:1fr!important}.dd-hero>img{height:auto;min-height:0;max-height:320px}.dd-hero .lesson-hero-content{padding:1.6rem}.dd-hero h1 br{display:none}.dd-steps{grid-template-columns:1fr 1fr}.dd-deck{grid-template-columns:repeat(3,1fr)}}@media(max-width:600px){.destination-detectives .navbar{gap:.5rem}.destination-detectives .nav-links{gap:.7rem}.destination-detectives .nav-links a{font-size:.83rem}.dd-casting,.dd-support{grid-template-columns:1fr}.dd-steps{gap:.6rem}.dd-steps article{padding:.9rem}.dd-deck{grid-template-columns:repeat(2,1fr);gap:.6rem}.dd-heading{align-items:flex-start}.dd-pair article{padding:1rem}.destination-detectives dialog[id^="dd-"]{width:calc(100% - 1rem)}.dd-wheel-wrap{max-width:300px}.dd-panel{padding:1rem}}@media(prefers-reduced-motion:reduce){.dd-answer{animation:none}}
-/* Override legacy hero and broad button treatments on shared auth/QR controls. */
-.destination-detectives .dd-hero .lesson-hero-content p{color:var(--ink)!important;text-shadow:none!important}.destination-detectives .dd-hero h1{text-shadow:none!important}.destination-detectives .site-header .auth-trigger{background:#eff4ff!important;color:#234c7c!important;border:1px solid #c6d5e9!important}.destination-detectives .jl-page-qr-open{background:#fff!important;color:var(--ink)!important}
-
-.destination-detectives .jl-page-qr-open{padding:0;min-height:0;border:0;border-radius:0}.destination-detectives .jl-page-qr-close{padding:0;min-height:34px}.destination-detectives .dd-deck button:disabled{opacity:.76}
-.destination-detectives .navbar{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:space-between!important}.destination-detectives .navbar .brand{flex:0 0 38px;margin:0!important}.destination-detectives .navbar .nav-links{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:flex-start!important;flex:1;min-width:0;margin:0!important;padding:0!important;gap:.6rem}.destination-detectives .navbar .nav-links>li{flex-shrink:0}.destination-detectives .navbar .jl-course-switcher-button{font-size:.85rem;padding:.6rem .8rem}.destination-detectives .dd-hero h1 br{display:initial!important}
-@media(max-width:600px){.destination-detectives .navbar{padding:.45rem .6rem!important;gap:.5rem!important;min-height:64px}.destination-detectives .navbar .nav-links a{padding:.5rem}.destination-detectives .dd-hero h1{font-size:clamp(1.7rem,7.5vw,2.5rem)}}
-@media(max-width:600px){.destination-detectives .dd-hero .dd-eyebrow{max-width:calc(100% - 90px)}}
+/* Basic English 2 identity, using the shared course tokens from english-basic-2.css. */
+body.destination-detectives {
+  --ink: var(--basic2-ink);
+  --muted: var(--basic2-muted);
+  --action: var(--red);
+  margin: 0;
+  padding: 0;
+  background: var(--basic2-soft);
+  color: var(--ink);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+.destination-detectives * { box-sizing: border-box; }
+.destination-detectives [hidden] { display: none !important; }
+.destination-detectives h1, .destination-detectives h2, .destination-detectives h3 {
+  color: var(--ink); line-height: 1.15; margin: 0 0 .65rem;
+}
+.destination-detectives p { margin: .6rem 0; }
+.destination-detectives a { color: var(--basic2-blue); }
+.destination-detectives :focus-visible { outline: 3px solid var(--basic2-blue); outline-offset: 4px; }
+.destination-detectives button[id^="dd-"], .destination-detectives .dd-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: .4rem;
+  border: 1px solid transparent; border-radius: 999px; background: var(--action); color: #fff;
+  padding: .8rem 1.4rem; min-height: 48px; cursor: pointer;
+  font: 800 .98rem/1.3 Arial, Helvetica, sans-serif; text-decoration: none; text-align: center;
+  transition: background .2s, box-shadow .2s;
+}
+.destination-detectives button[id^="dd-"]:hover:not(:disabled), .destination-detectives .dd-button:hover {
+  background: var(--basic2-red); color: #fff; box-shadow: 0 10px 24px #071f4f20;
+}
+.destination-detectives button.dd-secondary, .destination-detectives a.dd-secondary {
+  background: #fff; color: var(--ink); border: 1px solid #cbd7ed;
+}
+.destination-detectives button.dd-secondary:hover:not(:disabled), .destination-detectives a.dd-secondary:hover {
+  background: #eaf1ff; color: var(--ink);
+}
+.destination-detectives button:disabled { opacity: .5; cursor: not-allowed; }
+/* Keep course navigation and its shared auth/course menus compact and in their usual colors. */
+.destination-detectives .site-header { position: relative !important; inset: auto !important; background: #ffffffed; }
+.destination-detectives .navbar {
+  display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important;
+  align-items: center !important; justify-content: space-between !important;
+  max-width: var(--basic2-app-max); min-height: 68px; padding: .5rem var(--basic2-app-gutter); gap: 1rem;
+}
+.destination-detectives .navbar .brand { flex: 0 0 38px; margin: 0 !important; }
+.destination-detectives .brand img { width: 38px; height: 38px; object-fit: contain; }
+.destination-detectives .navbar .nav-links {
+  display: flex !important; flex-direction: row !important; flex-wrap: nowrap !important;
+  align-items: center !important; justify-content: center !important;
+  flex: 1; min-width: 0; margin: 0 !important; padding: 0 !important; gap: clamp(.6rem, 2vw, 2rem);
+  overflow-x: auto; white-space: nowrap;
+}
+.destination-detectives .navbar .nav-links > li { flex-shrink: 0; }
+.destination-detectives .navbar .nav-links a { color: var(--ink); }
+.destination-detectives .navbar .nav-links a:hover { color: var(--action); }
+.destination-detectives .navbar .jl-course-switcher-button { font-size: .9rem; }
+.destination-detectives .site-header .auth-trigger { background: #f8fbff !important; color: var(--ink) !important; border: 1px solid #d4dff3 !important; }
+.destination-detectives .dd-shell { width: 100%; max-width: none; margin: 0 auto 3rem; }
+/* Same navy photographic banner, white type and framed artwork as the course overview. */
+.destination-detectives .dd-hero {
+  display: grid !important; grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr) !important;
+  position: relative !important; inset: auto !important; width: 100% !important; max-width: none !important;
+  min-height: 0 !important; height: auto !important; margin: 0 0 1.5rem !important;
+  padding: clamp(1.5rem, 3vw, 3rem) max(var(--basic2-app-gutter), calc((100% - var(--basic2-app-max)) / 2)) !important;
+  gap: clamp(1rem, 2.5vw, 2.5rem) !important; align-items: center; border-radius: 0;
+  background: linear-gradient(135deg, #030c20ee, #071f4fde 65%, #500c1eb8), url('/assets/img/english-basic-2/destination-detectives/paris.webp') center/cover;
+  box-shadow: 0 18px 36px #071f4f22;
+}
+.destination-detectives .dd-hero .lesson-hero-content {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  min-width: 0; width: 100%; max-width: none; padding: clamp(1.4rem, 3vw, 2.8rem) !important;
+  border: 1px solid #ffffff40; border-radius: 32px; background: #071f4fbd;
+  color: #fff; box-shadow: 0 24px 62px #00000035;
+}
+.destination-detectives .dd-hero h1 {
+  max-width: 100%; font-size: clamp(2.2rem, 4.5vw, 4.6rem); letter-spacing: -.025em;
+  line-height: 1.04; color: #fff; margin: 1.2rem 0 1rem; text-shadow: 0 3px 22px #00000035;
+}
+.destination-detectives .dd-hero .lesson-hero-content p { color: #f1f5ff; text-shadow: none; }
+.destination-detectives .dd-hero .lesson-hero-content .dd-eyebrow {
+  max-width: calc(100% - 105px); padding: .5rem .9rem; border-radius: 999px;
+  color: var(--ink); background: #fffffff0; font-size: .76rem; letter-spacing: .065em;
+}
+.dd-hero > img {
+  display: block; width: 100%; height: auto; max-height: 470px; object-fit: cover;
+  border: 10px solid #ffffff40; border-radius: 32px; box-shadow: 0 28px 70px #00000042;
+}
+.destination-detectives .dd-eyebrow { text-transform: uppercase; font-weight: 900; font-size: .77rem; letter-spacing: .08em; color: var(--basic2-red); margin: 0 0 .8rem; }
+.dd-meta { font-size: .9rem; }
+.dd-actions, .dd-heading { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.dd-heading { justify-content: space-between; margin-bottom: 1rem; }
+.destination-detectives :is(.dd-panel, .dd-steps) {
+  width: min(var(--basic2-app-max), calc(100% - (var(--basic2-app-gutter) * 2))); margin: 1.5rem auto;
+}
+.dd-steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1rem; }
+.dd-steps article, .dd-panel { background: #fff; border: 1px solid #dbe4f2; border-radius: 22px; box-shadow: 0 14px 30px #0f172a12; }
+.dd-steps article { padding: 1.3rem; }
+.dd-steps span { display: inline-grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: var(--basic2-blue); color: #fff; font-size: .85rem; font-weight: 900; margin-bottom: .8rem; }
+.dd-steps h2 { font-size: 1.2rem; }
+.dd-steps p { font-size: .95rem; color: var(--muted); }
+.dd-panel { padding: clamp(1rem, 2.3vw, 2.2rem); }
+.dd-panel h2 { font-size: clamp(1.45rem, 2.1vw, 2rem); }
+.dd-casting { display: grid; grid-template-columns: minmax(270px, .8fr) minmax(0, 1.2fr); align-items: center; gap: clamp(1rem, 4vw, 5rem); margin-top: 1.5rem; }
+.dd-wheel-area { text-align: center; }
+.dd-wheel-wrap { position: relative; width: min(100%, 360px); margin: 0 auto 1rem; }
+.dd-wheel-wrap::before { content: ''; position: absolute; z-index: 1; left: calc(50% - 13px); top: -5px; border-left: 13px solid transparent; border-right: 13px solid transparent; border-top: 25px solid var(--action); filter: drop-shadow(0 2px 1px #071f4f); }
+.dd-wheel-wrap canvas { display: block; width: 100%; height: auto; border-radius: 50%; box-shadow: 0 14px 30px #071f4f26; }
+.dd-pair { display: grid; gap: 1rem; }
+.dd-pair article { padding: 1.5rem; background: var(--basic2-soft); border: 1px solid #d7e3fa; border-left: 5px solid var(--basic2-blue); border-radius: 22px; overflow-wrap: anywhere; }
+.dd-pair article:nth-child(2) { background: #fff4f6; border-color: #f3dbe0; border-left-color: var(--basic2-red); }
+.dd-role { display: block; color: var(--basic2-blue); font-weight: 900; font-size: .85rem; letter-spacing: .04em; margin-bottom: .7rem; }
+.dd-pair article:nth-child(2) .dd-role { color: var(--basic2-red); }
+.dd-pair h3 { font-size: clamp(1.3rem, 2vw, 2rem); }
+.destination-detectives details { padding: 1rem; border: 1px solid #d4dff3; background: #f8fbff; border-radius: 18px; margin-top: 1rem; }
+.destination-detectives summary { cursor: pointer; font-weight: 800; min-height: 32px; }
+.dd-roster { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .65rem; margin-top: 1rem; }
+.dd-roster label { display: flex; align-items: center; gap: .7rem; overflow-wrap: anywhere; }
+.dd-roster input { width: 22px; height: 22px; flex-shrink: 0; accent-color: var(--basic2-blue); }
+.dd-deck { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; margin-top: 1.2rem; }
+.dd-deck button {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .6rem;
+  aspect-ratio: 1.35; min-height: 120px; padding: 1rem; border-radius: 22px;
+  background: linear-gradient(135deg, var(--basic2-ink), var(--basic2-blue));
+  border: 1px solid #ffffff55; border-top: 5px solid var(--action); box-shadow: 0 10px 24px #071f4f1f;
+  color: #fff; cursor: pointer; font-family: inherit;
+}
+.dd-deck button:hover:not(:disabled) { background: var(--basic2-blue); box-shadow: 0 12px 28px #123b8f44; }
+.dd-deck button span { font-size: 2.1rem; line-height: 1.2; font-weight: 900; }
+.dd-deck button small { font-size: .85rem; }
+.destination-detectives .dd-deck button:disabled { opacity: .76; }
+.destination-detectives .dd-deck button[data-used=true] { background: #eaf1ff; color: var(--basic2-blue); border-color: #bfd0ef; opacity: 1; }
+.dd-support { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1rem; margin-top: 1rem; }
+.dd-support article { border: 1px solid #d7e3fa; border-radius: 22px; background: var(--basic2-soft); padding: 1.3rem; }
+.dd-support article:nth-child(2) { background: #fff4f6; border-color: #f3dbe0; }
+.dd-support li { margin: .4rem 0; }
+.dd-support ul, .dd-support ol { padding-left: 1.4rem; }
+.dd-script { font-size: 1.2rem; line-height: 1.7; }
+.destination-detectives dialog[id^="dd-"] { width: min(1500px, calc(100% - 2rem)); max-width: none; max-height: 94dvh; padding: clamp(1rem, 2vw, 2rem); border: 1px solid #dbe4f2; border-radius: 24px; background: #fff; color: var(--ink); overflow: auto; }
+.destination-detectives dialog[id^="dd-"]::backdrop { background: #071f4fd9; backdrop-filter: blur(5px); }
+.dd-cover { text-align: center; padding: clamp(2rem, 8vh, 6rem) 1rem; background: var(--basic2-soft); border: 1px solid #d7e3fa; border-radius: 22px; }
+.dd-cover > span { font-size: 3.5rem; color: var(--basic2-blue); }
+.dd-cover h3 { font-size: 2rem; }
+.dd-cover button { margin-top: 1.5rem; }
+#dd-picture { display: block; width: 100%; height: auto; max-height: 65dvh; object-fit: contain; background: var(--basic2-ink); border-radius: 18px; margin-bottom: 1rem; }
+.dd-answer { padding: 1.5rem; background: #eaf1ff; border-left: 5px solid var(--basic2-blue); border-radius: 18px; margin-top: 1rem; animation: dd-arrive .45s ease; }
+.dd-answer h3 { font-size: 2rem; }
+.dd-finish { margin-top: 1rem; text-align: right; }
+#dd-zoom { width: calc(100% - 1rem); height: 97dvh; padding: .7rem; background: var(--basic2-ink); }
+#dd-zoom-image { display: block; margin: .7rem auto 0; width: 100%; height: calc(100% - 65px); object-fit: contain; }
+.destination-detectives .site-footer { background: var(--basic2-ink); color: #e5edff; padding: 1.5rem; text-align: center; }
+.destination-detectives .jl-page-qr-open { background: #fff; padding: 0; min-height: 0; border: 0; border-radius: 0; }
+.destination-detectives .jl-page-qr-close { padding: 0; min-height: 34px; }
+@keyframes dd-arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+@media (max-width: 980px) {
+  .destination-detectives .dd-hero { grid-template-columns: minmax(0, 1fr) !important; }
+  .dd-hero > img { max-height: 350px; }
+  .dd-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dd-deck { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 600px) {
+  .destination-detectives .navbar { padding: .45rem .6rem !important; gap: .5rem !important; min-height: 64px; }
+  .destination-detectives .navbar .nav-links { justify-content: flex-start !important; }
+  .destination-detectives .navbar .nav-links a { font-size: .83rem; padding: .5rem; }
+  .destination-detectives .navbar .jl-course-switcher-button { font-size: .85rem; padding: .6rem .8rem; }
+  .destination-detectives .dd-hero .lesson-hero-content { padding: 1.2rem !important; border-radius: 22px; }
+  .destination-detectives .dd-hero h1 { font-size: clamp(1.7rem, 8vw, 2.6rem); }
+  .destination-detectives .dd-hero .lesson-hero-content .dd-eyebrow { max-width: calc(100% - 74px); font-size: .65rem; }
+  .dd-hero > img { border-width: 5px; border-radius: 22px; max-height: 260px; }
+  .dd-casting, .dd-support { grid-template-columns: minmax(0, 1fr); }
+  .dd-steps { gap: .6rem; }
+  .dd-steps article { padding: .9rem; }
+  .dd-deck { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .6rem; }
+  .dd-heading { align-items: flex-start; }
+  .dd-pair article { padding: 1rem; }
+  .destination-detectives dialog[id^="dd-"] { width: calc(100% - 1rem); }
+  .dd-wheel-wrap { max-width: 300px; }
+  .dd-panel { padding: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) { .dd-answer { animation: none; } }

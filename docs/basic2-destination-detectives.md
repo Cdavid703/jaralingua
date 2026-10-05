@@ -33,3 +33,7 @@ JARALINGUA_TEST_URL=https://www.jaralingua.com node tools/test_basic2_destinatio
 ```
 
 BROWSER_PATH may override the default macOS Chrome executable. Production roster permissions are checked with synthetic responses, not live student credentials or private student records.
+
+## Visual alignment — 5 October 2026
+
+Teacher requested the established Basic English 2 design. Replaced the initial teal/cream theme with shared Basic 2 navy/blue/red tokens, the navy photo banner and framed illustration used in Course Overview, white headings, red pill buttons, white rounded panels and pale blue support areas. Roulette uses the same blue/red palette. Local and production responsive/auth/audio checks cover the restyled activity.

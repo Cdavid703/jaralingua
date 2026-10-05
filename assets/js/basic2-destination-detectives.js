@@ -39,11 +39,11 @@
     state.deck=[destinations[0],...others];state.seen.clear();renderDeck();
   }
   function draw(){
-    const canvas=$('wheel'),ctx=canvas.getContext('2d'),rows=candidates(),palette=['#166c66','#95643c','#405c79','#755577','#536c39','#925654'];
+    const canvas=$('wheel'),ctx=canvas.getContext('2d'),rows=candidates(),palette=['#123b8f','#c1121f','#071f4f','#1f4e8c','#d7193f','#345bb2'];
     canvas.style.transform='rotate(0deg)';ctx.clearRect(0,0,520,520);
     const entries=rows.length?rows:[{name:state.roster.length?'Round complete':'Load class'}],step=2*Math.PI/entries.length;
     entries.forEach((s,i)=>{const start=-Math.PI/2+i*step;ctx.beginPath();ctx.moveTo(260,260);ctx.arc(260,260,254,start,start+step);ctx.closePath();ctx.fillStyle=palette[i%palette.length];ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();ctx.save();ctx.translate(260,260);ctx.rotate(start+step/2);ctx.fillStyle='#fff';ctx.textAlign='right';ctx.font='bold '+(entries.length>24?13:entries.length>12?16:22)+'px Arial';ctx.fillText(s.name.length>24?s.name.slice(0,22)+'…':s.name,238,7,205);ctx.restore();});
-    ctx.beginPath();ctx.arc(260,260,20,0,2*Math.PI);ctx.fillStyle='#f6f3eb';ctx.fill();
+    ctx.beginPath();ctx.arc(260,260,20,0,2*Math.PI);ctx.fillStyle='#ffffff';ctx.fill();
   }
   function controls(){
     const busy=state.spinning||state.loading;
