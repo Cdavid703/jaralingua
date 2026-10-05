@@ -94,3 +94,7 @@ Stone Soup y Fabulous Food Pronunciation Studio están publicados; Practice Lab 
 ## Hangman — 5 de octubre de 2026
 
 Ampliación a las seis unidades con 457 respuestas y tres pistas progresivas en inglés, selección de unidad/tema/formato, personaje SVG animado y efectos con silencio. Banco y motor propios de Básico 2; conserva claves locales y partidas previas. Ver [alcance, fuentes y validación](../basic2-hangman-units-1-6.md). La versión antigua de 40 respuestas queda como antecedente; la página usa `english-basic-2-hangman-data.js`.
+
+## Destination Detectives — 5 de octubre de 2026
+
+Preparación del final oral en Evaluations and Exam Practice: diez destinos reconocibles con imágenes detalladas, descripción exclusivamente oral, ejemplo para los dos roles y ruleta con sonido que selecciona dos estudiantes distintos de Básico 2. Excluye César y Santiago solo en esta actividad. Control de asistencia y participación en memoria; no envía entregas ni notas. Ver [flujo, imágenes y pruebas](../basic2-destination-detectives.md).
