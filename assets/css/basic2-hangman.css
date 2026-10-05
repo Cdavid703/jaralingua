@@ -1,0 +1,66 @@
+/* Course-specific board: does not restyle Hangman in other courses. */
+.basic2-hangman { --games-navy:#153954; --games-gold:#f4cf78; }
+.basic2-hangman .container { width:min(1760px,calc(100% - 2rem)); max-width:none; }
+.basic2-hangman .hangman-hero { min-height:0!important; padding:2rem 0!important; background:#e9f2f3!important; color:#153954; }
+.basic2-hangman .hangman-hero::before { display:none; }
+.basic2-hangman .hangman-hero>.container { display:grid; grid-template-columns:1.1fr 1fr; align-items:center; gap:2rem; }
+.basic2-hangman .games-hero-content { width:auto!important; max-width:none!important; padding:1rem!important; background:transparent!important; border:0!important; box-shadow:none!important; }
+.basic2-hangman .games-hero h1,.basic2-hangman .games-hero .lead { color:#153954!important; }
+.hangman-hero-art { width:100%; height:280px; object-fit:cover; border-radius:22px; }
+.basic2-hangman .games-section { padding:2rem 0; }
+.basic2-hangman .teacher-setup,.basic2-hangman .game-console { border-radius:20px; overflow:hidden; box-shadow:0 12px 36px #15395412; }
+.basic2-hangman .game-stage { background:#f1f6f5; padding:clamp(.8rem,2vw,1.6rem); }
+.basic2-hangman .puzzle-grid { grid-template-columns:minmax(230px,.65fr) minmax(0,1.5fr); align-items:stretch; }
+.basic2-hangman .gallows-wrap { position:relative; overflow:hidden; border-radius:18px; background:radial-gradient(ellipse at top right,#365975,#122f49 75%); min-height:330px; padding:1rem; }
+.basic2-hangman .gallows { width:min(280px,100%); height:auto; aspect-ratio:1; transform:none; }
+.hangman-scene { width:100%; display:block; overflow:visible; }
+.hangman-scene [data-part] { opacity:0; transform:translateY(-7px); transition:opacity .35s,transform .35s; }
+.hangman-scene [data-part].visible { opacity:1; transform:none; }
+.scene-person { transform-origin:185px 250px; }
+[data-state="won"] .scene-person { animation:happy-hop .8s ease 2; }
+[data-state="won"] .scene-rope { opacity:0; }
+[data-state="lost"] .scene-person { opacity:.7; }
+.scene-message { color:#fff1bf; text-align:center; font-weight:800; margin:0 0 .5rem; }
+.chance-dots { display:flex; justify-content:center; gap:8px; margin-bottom:8px; }
+.chance-dot { width:12px; height:12px; background:#78dcc4; border-radius:50%; transition:background .3s; }
+.chance-dot.used { background:#ee947f; transform:scale(.7); }
+.basic2-hangman .mistake-meter { color:#d8e9ed; font-size:.8rem; }
+.basic2-hangman .puzzle-panel { min-width:0; container-type:inline-size; }
+.basic2-hangman .word-board { border:1px solid #d6e3de; border-radius:15px; min-height:140px; padding:1rem .5rem; }
+.basic2-hangman .word-token { max-width:100%; gap:3px; }
+.basic2-hangman .letter-slot { width:min(34px,calc((100cqw - 30px) / var(--letters) - 3px)); min-width:0; font-size:clamp(.8rem,3.8cqw,1.5rem); }
+.basic2-hangman .clue-panel { border-radius:12px; color:#345369; }
+.basic2-hangman .letter-key { min-height:44px; border-radius:10px; box-shadow:0 3px 0 #d3dedb; }
+.basic2-hangman .letter-key.correct { box-shadow:0 3px 0 #14654b; }
+.basic2-hangman .letter-key.wrong { box-shadow:none; opacity:.55; }
+.basic2-hangman .bank-summary { color:#245846; font-weight:700; line-height:1.5; background:#e7f5ee; padding:.8rem 1rem; border-radius:10px; }
+.basic2-hangman .scoreboard { border-color:#dce9e6; }
+.basic2-hangman .turn-banner { border-radius:12px; }
+.basic2-hangman [data-effect="correct"] .word-board { animation:correct-glow .8s ease; }
+.basic2-hangman [data-effect="wrong"] .gallows-wrap { animation:mistake-nudge .45s ease; }
+.basic2-hangman .gallows-wrap .confetti-piece { pointer-events:none; z-index:2; }
+.basic2-hangman :focus-visible { outline:3px solid #bb6719; outline-offset:3px; }
+@keyframes happy-hop { 50% { transform:translateY(-14px) rotate(-4deg); } }
+@keyframes correct-glow { 40% { box-shadow:0 0 0 5px #87daba80; } }
+@keyframes mistake-nudge { 25%,75% { transform:translateX(-3px); } 50% { transform:translateX(3px); } }
+@media(max-width:1100px) { .basic2-hangman .game-layout { grid-template-columns:1fr; } .basic2-hangman .score-list { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:.6rem; } }
+@media(max-width:760px) {
+ .basic2-hangman .container { width:calc(100% - 1rem); }
+ .basic2-hangman .hangman-hero>.container { grid-template-columns:1fr; gap:.8rem; }
+ .hangman-hero-art { height:190px; }
+ .basic2-hangman .puzzle-grid { grid-template-columns:1fr; }
+ .basic2-hangman .gallows-wrap { min-height:0; padding:.8rem; }
+ .basic2-hangman .gallows { width:190px; margin:auto; }
+ .basic2-hangman .gallows-wrap>div { width:100%; }
+ .basic2-hangman .keyboard-row { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); }
+ .basic2-hangman .letter-key { width:100%; min-width:0; }
+ .basic2-hangman .setup-options { grid-template-columns:1fr; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .basic2-hangman *, .basic2-hangman *::before, .basic2-hangman *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+}
+.basic2-hangman .hangman-hero { margin-top:72px; }
+.basic2-hangman .games-hero .games-btn-soft { color:#153954; background:#fff; border-color:#bccfd9; }
+.basic2-hangman .form-stack { align-content:start; }
+.basic2-hangman .setup-actions { align-items:center; }
+.basic2-hangman #game,.basic2-hangman #gameConsole { scroll-margin-top:90px; }

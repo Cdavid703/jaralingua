@@ -90,3 +90,7 @@ Después se pidió un listening de hasta 1:15 con diez preguntas. Hubo reportes 
 ## Actualización de publicación — 1 de octubre de 2026
 
 Stone Soup y Fabulous Food Pronunciation Studio están publicados; Practice Lab contiene ocho actividades y la biblioteca incluye pronunciación de Unidad 6. El endpoint de entrega sin nota se integró conservando las diferencias existentes del servidor. Ver `docs/unit6-release-20261001.md` para pruebas y límites. El listening independiente de hasta 1:15 no se encontró y no forma parte de esta publicación.
+
+## Hangman — 5 de octubre de 2026
+
+Ampliación a las seis unidades con 457 respuestas y tres pistas progresivas en inglés, selección de unidad/tema/formato, personaje SVG animado y efectos con silencio. Banco y motor propios de Básico 2; conserva claves locales y partidas previas. Ver [alcance, fuentes y validación](../basic2-hangman-units-1-6.md). La versión antigua de 40 respuestas queda como antecedente; la página usa `english-basic-2-hangman-data.js`.
