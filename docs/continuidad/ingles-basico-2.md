@@ -98,3 +98,7 @@ Ampliación a las seis unidades con 457 respuestas y tres pistas progresivas en 
 ## Destination Detectives — 5 de octubre de 2026
 
 Preparación del final oral en Evaluations and Exam Practice: diez destinos reconocibles con imágenes detalladas, descripción exclusivamente oral, ejemplo para los dos roles y ruleta con sonido que selecciona dos estudiantes distintos de Básico 2. Excluye César y Santiago solo en esta actividad. Control de asistencia y participación en memoria; no envía entregas ni notas. Ver [flujo, imágenes y pruebas](../basic2-destination-detectives.md).
+
+## Final Oral Exam — 6 de octubre de 2026
+
+[Travel and Tourism](../basic2-final-oral-travel.md): examen oficial en parejas, nota individual y peso 20%. Mínimo dos minutos para toda la pareja. Registro inmediato para ambas cuentas, abierto desde ahora por decisión explícita del docente; esta excepción sustituye el cierre inicial habitual solo para este examen. Excluye a César, Santiago y Gabriela únicamente del examen oral. Roles preparables de antemano; memorización permitida sin prescribirla. La conversación admite cualquier destino; se guarda una imagen de apoyo y la decisión final del turista, y varias parejas pueden elegir el mismo destino. Audios profesionales ElevenLabs, imágenes/PDF/PPTX proyectables y rúbrica solo para docente, con publicación individual a Grades. Ver el documento de implementación para límites, recuperación, privacidad y pruebas sintéticas.

@@ -1,0 +1,80 @@
+/* Official Basic 2 exam: shared navy, red, white and normal document flow. */
+body.oral-travel { margin:0; background:var(--basic2-soft); color:var(--basic2-ink); font:16px/1.6 Arial,Helvetica,sans-serif; }
+.oral-travel * { box-sizing:border-box; }
+.oral-travel [hidden] { display:none!important; }
+.oral-travel h1,.oral-travel h2,.oral-travel h3 { color:var(--basic2-ink); line-height:1.2; margin:0 0 .7rem; }
+.oral-travel p { margin:.65rem 0; }
+.oral-travel a { color:var(--basic2-blue); }
+.oral-travel :focus-visible { outline:3px solid var(--basic2-blue); outline-offset:4px; }
+.oral-travel button,.oral-travel .ot-button { display:inline-flex; align-items:center; justify-content:center; gap:.5rem; min-height:46px; padding:.7rem 1.2rem; border:1px solid transparent; border-radius:999px; font:800 .95rem/1.3 Arial,Helvetica,sans-serif; background:var(--red); color:white; cursor:pointer; text-decoration:none; }
+.oral-travel button:hover:not(:disabled),.oral-travel .ot-button:hover { background:var(--basic2-red); color:white; }
+.oral-travel button.ot-secondary { background:white; border-color:#cbd7ed; color:var(--basic2-ink); }
+.oral-travel button:disabled { opacity:.5; cursor:not-allowed; }
+.oral-travel .site-header { position:relative!important; inset:auto!important; background:white; }
+.oral-travel .navbar { display:flex!important; flex-direction:row!important; flex-wrap:nowrap!important; justify-content:space-between; align-items:center; min-height:68px; max-width:1760px; gap:1rem; padding:.5rem var(--basic2-app-gutter); }
+.oral-travel .brand { flex:0 0 38px; }
+.oral-travel .brand img { width:38px; height:38px; object-fit:contain; }
+.oral-travel .navbar .nav-links { display:flex!important; flex-direction:row!important; flex-wrap:nowrap!important; align-items:center; min-width:0; margin:0!important; padding:0!important; gap:clamp(.7rem,2vw,2rem); overflow-x:auto; white-space:nowrap; }
+.oral-travel .nav-links > li { flex-shrink:0; }
+.oral-travel .navbar a { color:var(--basic2-ink); }
+.oral-travel .auth-trigger { background:#f8fbff!important; color:var(--basic2-ink)!important; border:1px solid #d4dff3!important; }
+.ot-shell { width:100%; max-width:none; padding-bottom:2rem; }
+.ot-hero { display:grid!important; grid-template-columns:minmax(0,1fr) minmax(0,1.12fr)!important; align-items:center; gap:clamp(1rem,3vw,3rem); position:relative!important; inset:auto!important; height:auto!important; min-height:0!important; width:100%!important; max-width:none!important; padding:clamp(1.5rem,3vw,3rem) max(var(--basic2-app-gutter),calc((100% - 1760px)/2)); background:linear-gradient(135deg,#030c20f2,#071f4fdf 65%,#500c1ec0),url('/assets/img/english-basic-2/final-oral-travel/hero.webp') center/cover; }
+.ot-hero .lesson-hero-content { position:relative; min-width:0; padding:clamp(1.4rem,3vw,2.7rem); border:1px solid #ffffff40; border-radius:30px; background:#071f4fbd; color:white; }
+.oral-travel .ot-hero h1 { color:white; font-size:clamp(2rem,4.2vw,4.5rem); margin:1rem 0; }
+.oral-travel .ot-hero p { color:#f1f5ff; }
+.ot-hero > img { display:block; width:100%; height:auto; max-height:450px; object-fit:cover; border:9px solid #ffffff40; border-radius:30px; }
+.ot-eyebrow { font-size:.8rem; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
+.ot-hero .ot-eyebrow { max-width:calc(100% - 100px); }
+.ot-panel { width:min(1760px,calc(100% - var(--basic2-app-gutter)*2)); margin:1.4rem auto; padding:clamp(1rem,2.2vw,2rem); background:white; border:1px solid #dbe4f2; border-radius:22px; box-shadow:0 12px 28px #071f4f0b; }
+.ot-grid,.ot-two,.ot-steps,.ot-tools { display:grid; gap:1rem; }
+.ot-two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.ot-steps { grid-template-columns:repeat(4,minmax(0,1fr)); }
+.ot-steps article,.ot-role,.ot-tools article { padding:1.2rem; border-radius:18px; border:1px solid #d7e3fa; background:var(--basic2-soft); }
+.ot-role { border-left:5px solid var(--basic2-blue); }
+.ot-role:nth-child(2) { border-left-color:var(--basic2-red); background:#fff4f6; }
+.ot-steps h3 { font-size:1.1rem; }
+.ot-actions,.ot-heading { display:flex; flex-wrap:wrap; align-items:center; gap:.7rem; }
+.ot-heading { justify-content:space-between; margin-bottom:1rem; }
+.oral-travel details { margin-top:1rem; padding:1rem; border:1px solid #d4dff3; border-radius:18px; background:#f8fbff; }
+.oral-travel summary { font-weight:800; cursor:pointer; min-height:32px; }
+.ot-destinations { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:1rem; margin-top:1rem; }
+.oral-travel .ot-destination { display:flex; flex-direction:column; align-items:stretch; justify-content:flex-start; padding:0; overflow:hidden; border:2px solid #d7e3fa; border-radius:18px; background:white; color:var(--basic2-ink); text-align:left; }
+.oral-travel .ot-destination:hover:not(:disabled),.oral-travel .ot-destination[aria-pressed=true] { border-color:var(--basic2-red); background:#fff4f6; color:var(--basic2-ink); }
+.ot-destination img { display:block; width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; }
+.ot-destination span { padding:.65rem .8rem; }
+.ot-destination small { display:block; padding:0 .8rem .8rem; font-weight:400; }
+.ot-tools { grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); margin:1rem 0; }
+.ot-tools strong { color:var(--basic2-blue); }
+.ot-audio { width:100%; max-width:600px; margin:.7rem 0; }
+.ot-dialogue { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.7rem; margin:1rem 0; }
+.ot-turn { padding:.8rem 1rem; border-radius:16px; background:#edf3ff; border-left:4px solid var(--basic2-blue); }
+.ot-turn[data-role=tourist] { background:#fff1f3; border-left-color:var(--basic2-red); }
+.oral-travel label { display:block; font-weight:700; margin:.65rem 0; }
+.oral-travel select,.oral-travel input,.oral-travel textarea { display:block; max-width:100%; width:100%; min-height:46px; padding:.7rem; margin-top:.35rem; border:1px solid #aebed5; border-radius:12px; background:white; color:var(--basic2-ink); font:16px/1.5 Arial,Helvetica,sans-serif; }
+.oral-travel input[type=checkbox] { display:inline; width:22px; min-height:22px; accent-color:var(--basic2-blue); }
+.ot-notice { padding:.8rem 1rem; background:#eef4ff; border-left:4px solid var(--basic2-blue); border-radius:12px; overflow-wrap:anywhere; }
+.ot-pair { padding:1rem; border:1px solid #d7e3fa; border-radius:18px; margin-top:1rem; }
+.ot-files { display:grid; gap:.7rem; margin:1rem 0; }
+.ot-file { padding:1rem; border:1px solid #d7e3fa; border-radius:14px; overflow-wrap:anywhere; }
+.ot-grade-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr)); gap:.75rem; }
+.ot-grade-total { font-size:1.2rem; font-weight:900; }
+.ot-review { margin-top:1rem; padding:1rem; border:1px solid #d4dff3; border-radius:18px; }
+.ot-projector { width:min(1500px,calc(100% - 1rem)); max-width:none; max-height:calc(100dvh - 1rem); padding:1rem; border:0; border-radius:18px; background:#071f4f; color:white; }
+.ot-projector::backdrop { background:#020817dc; }
+.oral-travel .ot-projector h2,.oral-travel .ot-projector p { color:white; }
+.ot-projector img { display:block; width:100%; height:min(65dvh,850px); object-fit:contain; background:#030c20; margin:1rem auto; }
+.ot-projector:fullscreen { width:100%; height:100%; max-height:none; border-radius:0; }
+.ot-projector:fullscreen img { height:calc(100dvh - 180px); }
+.ot-project-status { min-height:1.5rem; }
+.ot-timer { font:900 1.4rem/1.3 monospace; font-variant-numeric:tabular-nums; }
+.oral-travel .jl-page-qr-open { padding:0; border:0; border-radius:0; min-height:0; background:transparent; }
+.ot-projection-screen { min-height:calc(100dvh - 68px); padding:clamp(.8rem,2vw,1.5rem); background:#071f4f; color:white; }
+.oral-travel .ot-projection-screen h1 { color:white; font-size:clamp(1.2rem,2.2vw,2rem); }
+.ot-projection-screen > img { display:block; width:100%; height:65dvh; object-fit:contain; background:#030c20; margin:.7rem 0; }
+.ot-projection-screen:fullscreen { height:100%; overflow:auto; }
+.ot-projection-screen select { max-width:750px; }
+.ot-grade-grid small { display:block; font-weight:400; margin-top:.5rem; }
+@media(max-width:1100px) { .ot-destinations { grid-template-columns:repeat(3,minmax(0,1fr)); } .ot-steps { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:900px) { .ot-hero { grid-template-columns:1fr!important; } .ot-hero > img { max-height:340px; } .ot-two { grid-template-columns:1fr; } }
+@media(max-width:620px) { .ot-destinations { grid-template-columns:repeat(2,minmax(0,1fr)); gap:.6rem; } .ot-dialogue { grid-template-columns:1fr; } .ot-steps { grid-template-columns:1fr; } .ot-hero .lesson-hero-content { padding:1.2rem; } .ot-panel { border-radius:18px; } .ot-projector img { height:55dvh; } }

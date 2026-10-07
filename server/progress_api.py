@@ -18531,6 +18531,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
         from basic2_final_postcard import handle as handle_basic2_final_postcard
         if handle_basic2_final_postcard(self, profile, parsed, globals()):
             return
+        from basic2_oral_exam import handle as handle_basic2_oral
+        if handle_basic2_oral(self, profile, parsed, globals()):
+            return
         if handle_film_festival(self, profile, parsed):
             return
         from intermediate2_group_stories import handle as handle_group_stories
@@ -19873,6 +19876,12 @@ class ProgressHandler(BaseHTTPRequestHandler):
                 from basic2_integrated_routes import reconcile as reconcile_basic2_integrated
                 basic2_changed = ensure_basic2_gradebook_structure(grades_data)
                 try:
+                    from basic2_oral_exam import reconcile as reconcile_basic2_oral
+                    if reconcile_basic2_oral(globals(), grades_data):
+                        basic2_changed = True
+                except Exception as error:
+                    print("Basic 2 oral reconciliation:", type(error).__name__, flush=True)
+                try:
                     from basic2_final_postcard import reconcile as reconcile_basic2_final_postcard
                     if reconcile_basic2_final_postcard(globals(), grades_data):
                         basic2_changed = True
@@ -20347,6 +20356,9 @@ class ProgressHandler(BaseHTTPRequestHandler):
             return
         from basic2_final_postcard import handle as handle_basic2_final_postcard
         if handle_basic2_final_postcard(self, profile, parsed, globals(), payload):
+            return
+        from basic2_oral_exam import handle as handle_basic2_oral
+        if handle_basic2_oral(self, profile, parsed, globals(), payload):
             return
         if handle_film_festival(self, profile, parsed, payload):
             return
