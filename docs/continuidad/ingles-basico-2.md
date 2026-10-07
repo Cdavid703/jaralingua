@@ -72,7 +72,7 @@ Después se pidió un listening de hasta 1:15 con diez preguntas. Hubo reportes 
 
 - Evaluaciones y simulacros en su centro de exámenes. Algunas actividades orales de preparación se enlazan desde su unidad cuando se solicitó expresamente.
 - Midterm Writing e Integrated Task tienen requisitos distintos. No asumir que un examen original tiene listening porque otro sí lo tiene.
-- [Final Writing grupal](../basic2-final-writing-postcard.md): postcard “My last vacation”, equipos de dos o tres, alrededor de 120 palabras, peso 20%. La actualización autorizada es de 48 horas, no el tiempo original de 50 minutos. No volver a extender registros al leer este resumen.
+- [Final Writing individual](../basic2-final-writing-postcard.md): postcard “My last vacation”, una persona por nueva entrega desde el 6 de octubre de 2026; se conservan entregas grupales anteriores. Alrededor de 120 palabras, peso 20%. La actualización autorizada es de 48 horas, no el tiempo original de 50 minutos. No volver a extender registros al leer este resumen.
 - Examen cerrado por defecto, activación docente y vista previa segura para docente/administrador. La vista previa no crea entregas ni notas reales.
 - [Vacation Roulette](../basic2-unit5-vacation-roulette.md): preparación oral de cuatro preguntas, excluye la pregunta de anécdota graciosa/vergonzosa; diez o quince minutos de preparación, ruleta visible y con sonido.
 - Pronunciación de unidades 3, 4 y 5 se reportó como entregable sin peso que no permitía enviar. Consultar [corrección documentada](../basic2-pronunciation-delivery-fix-20260907.md) y probar con datos sintéticos.

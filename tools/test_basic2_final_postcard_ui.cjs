@@ -1,7 +1,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const {spawn} = require('node:child_process');
-const {chromium} = require('C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const {chromium} = require('playwright');
 const base = 'http://127.0.0.1:8798', route = '/ingles/basico-2/basic-course-2-final-writing-task.html';
 const output = process.env.POSTCARD_QA_OUTPUT || 'tmp/basic2-final-postcard';
 const text = [
@@ -11,10 +11,10 @@ const text = [
 ];
 (async () => {
  fs.mkdirSync(output,{recursive:true});
- const server=spawn('C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/python.exe',['-B','tools/test_basic2_final_postcard.py','--serve','8798'],{windowsHide:true,stdio:['ignore','pipe','pipe']});
+ const server=spawn(process.env.POSTCARD_QA_PYTHON || 'python3',['-B','tools/test_basic2_final_postcard.py','--serve','8798'],{windowsHide:true,stdio:['ignore','pipe','pipe']});
  process.on('exit',()=>server.kill());
  await new Promise((resolve,reject)=>{server.stdout.once('data',resolve);server.once('error',reject);server.once('exit',code=>reject(new Error('QA server exited: '+code)));});
- const browser=await chromium.launch({channel:'chrome',headless:true});
+ const browser=await chromium.launch({headless:true});
  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  context.setDefaultTimeout(15000);
  const errors=[];
@@ -25,20 +25,15 @@ const text = [
  try {
   if(!process.argv.includes('--auth-only')){
   const teacher=await setup('teacher');await teacher.locator('#pc-admin').waitFor({state:'visible'});
-  await teacher.getByText('Create a team',{exact:true}).first().click();
-  await teacher.locator('#pc-team-name').fill('Vacation Team');await teacher.locator('#pc-course').fill('TEST-2');
-  for(const id of ['1','2','3'])await teacher.locator(`#pc-roster input[value="${id}"]`).check();
-  await teacher.locator('#pc-team-form button[type=submit]').click();await teacher.locator('#pc-teams h3').waitFor();
-  const a=await setup('1'),b=await setup('2'),c=await setup('3');
-  console.log('Team setup');
+  const a=await setup('1'),b=await setup('2');
   await a.locator('#pc-start').waitFor();assert(await a.locator('#pc-start').isDisabled());
   await teacher.locator('#pc-open').click();await a.locator('#pc-refresh').click();await a.locator('#pc-start').click();await a.locator('#pc-part-0').waitFor();
-  for(const p of [b,c]){await p.locator('#pc-refresh').click();await p.locator('#pc-writing').waitFor({state:'visible'});}
-  assert.equal(await a.locator('textarea').count(),1);
-  // Save all authors through actual HTTP and SQLite.
-  for(const [i,p] of [a,b,c].entries()){await p.locator('#pc-part-'+i).fill(text[i]);await p.locator('#pc-save-button').click();await p.waitForFunction(()=>document.getElementById('pc-save').textContent.includes('saved on the server'));}
-  await a.locator('#pc-refresh').click();await a.waitForFunction(()=>document.getElementById('pc-preview-text').textContent.includes('different shoes'));
-  console.log('Contributions saved');
+  assert.equal(await a.locator('#pc-parts textarea').count(),3);
+  for(let i=0;i<3;i++)await a.locator('#pc-part-'+i).fill(text[i]);
+  await a.locator('#pc-save-button').click();await a.waitForFunction(()=>document.getElementById('pc-save').textContent.includes('saved on the server'));
+  assert.equal((await api('1','state')).team.members.length,1);
+  assert.equal((await api('2','state')).team,null);
+  console.log('Individual start and complete postcard saved');
   // Every viewport must use the available width and keep the QR inside the title.
   for(const width of [320,390,600,768,820,1024,1440,1920]){
    await a.setViewportSize({width,height:900});await a.waitForTimeout(80);
@@ -67,7 +62,7 @@ const text = [
   await a.locator('#pc-part-0').fill(text[0]+' We enjoyed the beach.');await a.locator('#pc-save-button').click();await a.locator('#pc-reconnect').waitFor({state:'visible'});
   await a.unroute('**/api/basic2/final-postcard/draft');await a.evaluate(()=>window.dispatchEvent(new Event('jaralingua:auth-changed')));await a.waitForFunction(()=>document.getElementById('pc-save').textContent.includes('saved on the server'));
   assert((await api('1','state')).team.parts[0].text.endsWith('We enjoyed the beach.'));
-  for(const p of [a,b,c]){await p.locator('#pc-refresh').click();await p.locator('#pc-ready').click();await p.waitForFunction(()=>document.getElementById('pc-delivery-status').textContent.includes('confirmed'));}
+  for(const p of [a]){await p.locator('#pc-refresh').click();await p.locator('#pc-ready').click();await p.waitForFunction(()=>document.getElementById('pc-delivery-status').textContent.includes('confirmed'));}
   // Lost delivery response: retry retrieves the same persisted receipt.
   let lost=false;
   await a.route('**/api/basic2/final-postcard/state',r=>r.abort('failed'));
@@ -80,10 +75,10 @@ const text = [
   await a.locator('#pc-receipt').waitFor({state:'visible'});
   console.log('Lost-response receipt verified');
   await a.unroute('**/api/basic2/final-postcard/state');
-  const receipt=(await api('1','state')).team.receiptId;await b.locator('#pc-refresh').click();await b.locator('#pc-receipt').waitFor();assert((await b.locator('#pc-receipt-text').textContent()).includes(receipt));
+  const receipt=(await api('1','state')).team.receiptId;assert(receipt.startsWith('B2FW-'));assert.equal((await api('2','state')).team,null);
   await teacher.locator('#pc-refresh').click();await teacher.locator('#pc-teams summary').click();
   const gradeForm=teacher.locator('#pc-teams form').first();for(const s of await gradeForm.locator('select').all())await s.selectOption('8');await gradeForm.locator('textarea').fill('Your message is clear. Use went instead of goed in past narratives.');await gradeForm.locator('button').click();await gradeForm.getByText(/Grade saved: 4.0/).waitFor();
-  await a.locator('#pc-refresh').click();await a.getByText('Your grade: 4.0 / 5',{exact:true}).waitFor();await b.locator('#pc-refresh').click();assert(!(await b.locator('#pc-result').textContent()).includes('4.0'));
+  await a.locator('#pc-refresh').click();await a.getByText('Your grade: 4.0 / 5',{exact:true}).waitFor();assert.equal((await api('2','state')).team,null);
   console.log('Individual grades verified');
   }
   const real=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
@@ -93,6 +88,6 @@ const text = [
   assert.equal(await guest.locator('.jaralingua-auth-nav .auth-trigger').evaluate(e=>getComputedStyle(e).color),'rgb(18, 51, 74)');
   assert(await guest.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
   await guest.screenshot({path:output+'/real-auth-mobile.png',fullPage:true});await real.close();
-  assert.deepEqual(errors,[]);const success=process.argv.includes('--auth-only')?'PASS: actual sign-in integration, mobile overflow and readable sign-in contrast.':'PASS: responsive 320–1920, QR modal, three-account editing, stale tabs, offline save, expired auth recovery, lost-response receipt and private individual grades.';fs.writeFileSync(output+(process.argv.includes('--auth-only')?'/auth-result.txt':'/result.txt'),success);console.log(success);
+  assert.deepEqual(errors,[]);const success=process.argv.includes('--auth-only')?'PASS: actual sign-in integration, mobile overflow and readable sign-in contrast.':'PASS: responsive 320–1920, QR modal, individual writing and account isolation, stale tabs, offline save, expired auth recovery, lost-response receipt and private individual grades.';fs.writeFileSync(output+(process.argv.includes('--auth-only')?'/auth-result.txt':'/result.txt'),success);console.log(success);
  } finally {server.kill();await Promise.race([browser.close(),new Promise(resolve=>setTimeout(resolve,5000))]);}
 })().then(()=>process.exit(0)).catch(e=>{console.error(e);process.exit(1);});

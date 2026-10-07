@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const $ = id => document.getElementById('pc-' + id);
-  const titles = ['The beginning of our trip', 'Our vacation experience', 'A memorable moment'];
+  const titles = ['The beginning of my trip', 'My vacation experience', 'A memorable moment'];
   const prompts = ['Where did you go? When? Who traveled with you?', 'What did you do? What were the place and the weather like?', 'What funny or embarrassing thing happened? How did you feel? How did it end?'];
   let user = null, state = null, team = null, epoch = 0, dirty = false, saving = null, saveTimer = null, conflict = null, busy = false, recovery = false, pending = null;
   let selectedMembers = [], loading = false, previewMode = false, previewStudent = 'preview-1';
@@ -14,16 +14,16 @@
   function localPut(kind, data) { try { localStorage.setItem(localKey(kind), JSON.stringify(data)); } catch { $('save').textContent = 'Device backup is unavailable. Keep this page open and save to the server.'; } }
   function localRemove(kind) { try { localStorage.removeItem(localKey(kind)); } catch {} }
   const messages = {
-    exam_closed: 'The exam is closed. Your teacher will open it.', team_not_assigned: 'Ask your teacher to assign you to a team.',
-    account_not_linked: 'This account is not linked to Basic English 2. Ask your teacher for help.', choose_two_or_three: 'Select exactly two or three students.',
-    student_already_assigned: 'A selected student already belongs to a team. Refresh the list.', complete_all_parts: 'All three parts need writing before your team can confirm.',
-    everyone_must_confirm: 'Every member must review and confirm this version from their own account.', team_changed: 'A teammate changed the postcard. Review the updated version and try again.',
+    exam_closed: 'The exam is closed. Your teacher will open it.', team_not_assigned: 'Start your individual exam when access is open.',
+    account_not_linked: 'This account is not linked to Basic English 2. Ask your teacher for help.', choose_one_student: 'Select exactly one student.', assessment_complete: 'Your final writing grade is already recorded.',
+    student_already_assigned: 'A selected student already belongs to a team. Refresh the list.', complete_all_parts: 'Complete the three sections before confirming your postcard.',
+    everyone_must_confirm: 'Every member must review and confirm this version from their own account.', team_changed: 'The postcard changed in another tab. Review the updated version and try again.',
     draft_conflict: 'Another tab changed your writing. Choose which version to keep.', review_changed: 'This review changed elsewhere. Refresh before grading again.',
-    already_submitted: 'Your team has already submitted. Refresh to see the receipt.', submission_changed: 'The submission has changed. Refresh the teacher workspace.',
+    already_submitted: 'Your postcard has already been submitted. Refresh to see the receipt.', submission_changed: 'The submission has changed. Refresh the teacher workspace.',
     exam_temporarily_unavailable: 'The exam service is temporarily unavailable. Your device draft is kept; try again.',
     graded_team_cannot_reopen: 'This team already has a grade. Reopening is unavailable.', team_already_started: 'This team has already started and cannot be removed.',
     invalid_text: 'Check the required text fields and their length.', invalid_rubric: 'Choose a score from 1 to 10 for every criterion.',
-    wrong_team: 'Your team assignment changed. Refresh access.', start_first: 'Start your team’s exam before writing.'
+    wrong_team: 'Your exam assignment changed. Refresh access.', start_first: 'Start your exam before writing.'
   };
   function errorText(e) { return e.status === 401 ? 'Your session expired. Reconnect with the same account to continue.' : e.name === 'AbortError' ? 'The request timed out. Your work is kept. Please retry.' : messages[e.code] || e.message || 'Connection failed. Try again.'; }
   function report(e, id = 'status') { if (e.code !== 'session_changed') $(id).textContent = errorText(e); }
@@ -60,7 +60,7 @@
     if (previewMode) { $('time').textContent = '48:00:00 · Preview — timer paused'; return; }
     if (!team?.deadline || team.status !== 'writing') { $('time').textContent = ''; return; }
     const seconds = Math.max(0, Math.ceil((Date.parse(team.deadline) - Date.now()) / 1000));
-    $('time').textContent = seconds ? 'Team time left: ' + Math.floor(seconds / 3600) + ':' + String(Math.floor(seconds / 60) % 60).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0') : 'Time is up. You can still send your work; the teacher will see that it arrived late.';
+    $('time').textContent = seconds ? 'Time left: ' + Math.floor(seconds / 3600) + ':' + String(Math.floor(seconds / 60) % 60).padStart(2, '0') + ':' + String(seconds % 60).padStart(2, '0') : 'Time is up. You can still send your work; the teacher will see that it arrived late.';
   }
   function receipt() {
     $('writing').hidden = true; $('start').hidden = true; $('receipt').hidden = false;
@@ -72,10 +72,15 @@
     dirty = false; pending = null; localRemove('draft'); localRemove('pending');
   }
   function studentView(force = false) {
-    $('admin').hidden = true; $('student').hidden = !team;
+    $('admin').hidden = true; $('student').hidden = !team && !state?.student;
     if (!previewMode && !state.student) { $('status').textContent = messages.account_not_linked; return; }
-    if (!team) { $('status').textContent = messages.team_not_assigned; return; }
-    $('status').textContent = team.status === 'submitted' ? 'Your team’s delivery is confirmed.' : state.isOpen ? 'Exam access is open.' : team.startedAt ? 'New starts are closed. Your team can finish and submit.' : messages.exam_closed;
+    if (!team) {
+      $('status').textContent = state.assessmentComplete ? messages.assessment_complete : state.isOpen ? 'Individual exam · Write and submit your own complete postcard.' : messages.exam_closed;
+      $('team-heading').textContent = 'My final writing exam'; $('members').textContent = state.student.fullName;
+      $('start').hidden = state.assessmentComplete; $('start').disabled = !state.canStart || busy;
+      $('writing').hidden = true; $('receipt').hidden = true; $('time').textContent = ''; return;
+    }
+    $('status').textContent = team.status === 'submitted' ? 'Your delivery is confirmed.' : state.isOpen ? 'Exam access is open.' : team.startedAt ? 'New starts are closed. You can finish and submit.' : messages.exam_closed;
     if (previewMode) $('status').textContent = 'Teacher preview · The real exam remains ' + (state.isOpen ? 'open.' : 'closed.');
     $('team-heading').textContent = team.name + ' · ' + team.courseCode;
     $('members').textContent = team.members.map(m => m.name).join(' · ');
@@ -88,9 +93,9 @@
       team.parts.forEach((p, i) => {
         const card = node('section', undefined, 'pc-part'); card.append(node('h3', (i + 1) + '. ' + titles[i]), node('p', prompts[i]));
         const author = team.members.find(m => m.id === p.author)?.name || '';
-        card.append(node('p', 'Written by ' + author));
+        card.append(node('p', (team.members.length === 1 ? 'Your writing' : 'Previously assigned to ' + author)));
         if (p.author === sid()) {
-          const label = node('label', 'Your contribution'), input = node('textarea'); input.id = 'pc-part-' + i; input.maxLength = 5000; input.spellcheck = false; input.autocomplete = 'off'; input.value = p.text; label.htmlFor = input.id; label.append(input); card.append(label);
+          const label = node('label', 'Write this section'), input = node('textarea'); input.id = 'pc-part-' + i; input.maxLength = 5000; input.spellcheck = false; input.autocomplete = 'off'; input.value = p.text; label.htmlFor = input.id; label.append(input); card.append(label);
           input.oninput = () => { if (previewMode) { capturePreview(); team.ready = []; preview(); $('save').textContent = 'Preview writing only — nothing is saved to the server.'; $('ready').disabled = false; $('ready-status').textContent = 'Preview: writing changed. Review the postcard again.'; return; } dirty = true; backup(); preview(); $('save').textContent = 'Unsaved changes — saving shortly…'; clearTimeout(saveTimer); if (!recovery) saveTimer = setTimeout(() => save().catch(() => {}), 900); };
         } else { const text = node('p', p.text || 'Waiting for your teammate to write.', 'pc-other'); text.id = 'pc-other-' + i; card.append(text); }
         $('parts').append(card);
@@ -99,9 +104,9 @@
       team.parts.forEach((p, i) => { if (p.author !== sid()) $('other-' + i).textContent = p.text || 'Waiting for your teammate to write.'; else if (!dirty && !saving) $('part-' + i).value = p.text; });
     }
     $('picture').value = team.picture; $('fields').disabled = busy || Boolean(pending);
-    $('ready-status').textContent = 'Reviewed by: ' + (team.members.filter(m => team.ready.includes(m.id)).map(m => m.name).join(', ') || 'No one yet.') + ' Any writing or picture change requires everyone to confirm again.';
+    $('ready-status').textContent = team.members.length === 1 ? (team.ready.includes(sid()) ? 'Your review is confirmed.' : 'Read your complete postcard, then confirm your review.') + ' Any writing or picture change requires you to confirm again.' : 'Reviewed by: ' + (team.members.filter(m => team.ready.includes(m.id)).map(m => m.name).join(', ') || 'No one yet.') + ' Any change requires the original authors to confirm again.';
     $('ready').disabled = busy || team.ready.includes(sid()) || Boolean(pending);
-    $('submit').disabled = busy; $('submit').textContent = pending ? 'Retry and confirm delivery' : 'Send our postcard to the teacher';
+    $('submit').disabled = busy; $('submit').textContent = pending ? 'Retry and confirm delivery' : 'Send my postcard to the teacher';
     preview();
   }
   async function save() {
@@ -146,9 +151,9 @@
   function startPreview() {
     if (!isStaff()) return;
     clearTimeout(saveTimer); previewMode = true; previewStudent = 'preview-1'; dirty = false; pending = null; conflict = null;
-    team = { id: 'preview-only', name: 'Preview team', courseCode: 'DEMO', status: 'writing', startedAt: null, deadline: null,
-      members: [1,2,3].map(n => ({ id: 'preview-' + n, name: 'Student ' + n })),
-      parts: [1,2,3].map(n => ({ author: 'preview-' + n, text: '', revision: 0 })), picture: 'coast', ready: [], reviews: {} };
+    team = { id: 'preview-only', name: 'Individual exam preview', courseCode: 'DEMO', status: 'writing', startedAt: null, deadline: null,
+      members: [{ id: 'preview-1', name: 'Student preview' }],
+      parts: [1,2,3].map(n => ({ author: 'preview-1', text: '', revision: 0 })), picture: 'coast', ready: [], reviews: {} };
     $('preview-controls').hidden = false; $('preview-student').value = previewStudent;
     $('conflict').hidden = true; $('delivery-status').textContent = '';
     $('save').textContent = 'Preview only — your test writing will be discarded when you leave.';
@@ -160,21 +165,21 @@
     $('preview-controls').hidden = true; $('student').hidden = true; $('parts').replaceChildren(); $('preview-text').replaceChildren();
     $('save').textContent = ''; $('delivery-status').textContent = ''; $('time').textContent = '';
     $('admin').hidden = !isStaff();
-    $('status').textContent = (state.isOpen ? 'Open' : 'Closed') + ' · ' + state.teams.length + ' teams';
+    $('status').textContent = (state.isOpen ? 'Open' : 'Closed') + ' · ' + state.teams.length + ' submissions';
     $('preview').focus();
   }
   function teacherView() {
     $('admin').hidden = false; $('student').hidden = true;
-    $('status').textContent = (state.isOpen ? 'Open' : 'Closed') + ' · ' + state.teams.length + ' teams';
+    $('status').textContent = (state.isOpen ? 'Open' : 'Closed') + ' · ' + state.teams.length + ' submissions';
     $('open').disabled = state.isOpen; $('close').disabled = !state.isOpen;
     selectedMembers = [];
     $('roster').replaceChildren(...state.roster.filter(s => !s.assigned).map(s => {
-      const label = node('label'), check = node('input'); check.type = 'checkbox'; check.value = s.id;
-      check.onchange = () => { selectedMembers = selectedMembers.filter(id => id !== s.id); if (check.checked) selectedMembers.push(s.id);
-        $('assignment').textContent = selectedMembers.map((id, i) => `${state.roster.find(m => m.id === id).name}: ${selectedMembers.length === 2 && i === 0 ? 'parts 1 and 3' : 'part ' + (i + 1)}`).join(' · '); };
+      const label = node('label'), check = node('input'); check.type = 'radio'; check.name = 'individual-student'; check.value = s.id;
+      check.onchange = () => { selectedMembers = check.checked ? [s.id] : [];
+        $('assignment').textContent = selectedMembers.map((id, i) => `${state.roster.find(m => m.id === id).name}: ${'all three sections'}`).join(' · '); };
       label.append(check, node('span', s.name)); return label;
     }));
-    $('assignment').textContent = 'Selection order assigns parts 1, 2 and 3. In a pair, the first student writes parts 1 and 3.';
+    $('assignment').textContent = 'Optional: assign one student. Students can also start directly with their own account.';
     $('teams').replaceChildren();
     state.teams.forEach(t => {
       const card = node('article', undefined, 'pc-review'); card.append(node('h3', t.name + ' · ' + t.courseCode), node('p', t.members.map(m => m.name).join(' · ')));
@@ -225,12 +230,12 @@
     busy = true; clearTimeout(saveTimer); $('submit').disabled = true; $('ready').disabled = true; $('fields').disabled = true;
     try {
       if (!pending) { await save(); if (dirty || conflict) throw new Error('Save your writing successfully before continuing.'); }
-      let payload = { teamId: team.id, revision: team.revision, ...extra };
+      let payload = { ...(team ? { teamId: team.id, revision: team.revision } : {}), ...extra };
       if (name === 'submit') {
         if (!pending) {
           const n = count(team.parts.map(p => p.text).join(' '));
           const allowLength = n < 100 || n > 150;
-          if (!confirm(`Send the postcard for all ${team.members.length} members?${allowLength ? ' It has ' + n + ' words; the target is about 120. Your teacher will review the length.' : ''}`)) return;
+          if (!confirm(`${team.members.length === 1 ? "Send your individual postcard?" : "Send the existing postcard for its original authors?"}${allowLength ? ' It has ' + n + ' words; the target is about 120. Your teacher will review the length.' : ''}`)) return;
           payload = { ...payload, requestId: crypto.randomUUID(), allowLength }; pending = payload; localPut('pending', pending);
         } else payload = pending;
         $('delivery-status').textContent = 'Sending… Wait for the receipt.';
@@ -244,7 +249,7 @@
       if (e.code === 'team_changed') { team = e.data.team; studentView(); }
       report(e, 'delivery-status');
       if (pending) $('delivery-status').textContent += ' Delivery is not yet confirmed. Use Retry to check the same delivery.';
-    } finally { busy = false; if (team) studentView(); }
+    } finally { busy = false; if (state && !isStaff()) studentView(); }
   }
   $('form').onsubmit = e => e.preventDefault();
   $('preview').onclick = startPreview;
@@ -263,7 +268,7 @@
   $('local').onclick = () => { team = conflict; conflict = null; $('conflict').hidden = true; dirty = true; backup(); save().catch(e => report(e, 'save')); };
   for (const [id, isOpen] of [['open', true], ['close', false]]) $(id).onclick = async () => { $(id).disabled = true; try { await request('availability', { isOpen }); await load(); } catch (e) { report(e); $(id).disabled = false; } };
   $('team-form').onsubmit = async e => { e.preventDefault(); const submit = e.currentTarget.querySelector('button[type=submit]'); submit.disabled = true;
-    try { await request('create-team', { name: $('team-name').value, courseCode: $('course').value, members: selectedMembers }); $('create-status').textContent = 'Team created.'; $('team-name').value = ''; await load(); }
+    try { await request('create-team', { name: $('team-name').value, courseCode: $('course').value, members: selectedMembers }); $('create-status').textContent = 'Individual assignment created.'; $('team-name').value = ''; await load(); }
     catch (error) { report(error, 'create-status'); } finally { submit.disabled = false; }
   };
   function authChanged() {

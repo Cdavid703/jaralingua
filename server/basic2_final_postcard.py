@@ -1,4 +1,4 @@
-"""Basic 2 final writing: roster teams, individual contributions and durable receipts."""
+"""Basic 2 final writing: individual attempts, legacy team receipts and durable receipts."""
 import json
 import os
 import secrets
@@ -86,11 +86,28 @@ class PostcardExam:
             result.pop("lastSubmissionKey", None)
         return result
 
+    def eligible(self, actor, roster):
+        student = actor.get("student")
+        record = next((s for s in roster if student and str(s["id"]) == student["id"]), None)
+        return record is not None and not isinstance(record.get("grades", {}).get(EVALUATION["id"]), (int, float))
+
+    def create(self, con, actor, student, name, course):
+        sid = str(student["id"])
+        team = dict(id=secrets.token_hex(12), mode="individual", name=name, courseCode=course,
+                    members=[dict(id=sid, name=student["fullName"])],
+                    parts=[dict(author=sid, text="", revision=0) for _ in range(3)],
+                    picture="coast", revision=0, ready=[], status="assigned", startedAt=None, deadline=None,
+                    reviews={}, history=[], receiptId=None, submittedAt=None, updatedAt=stamp())
+        con.execute("INSERT INTO teams VALUES(?,?)", (team["id"], json.dumps(team)))
+        con.execute("INSERT INTO members VALUES(?,?)", (sid, team["id"]))
+        self.save(con, team, actor, "create-individual")
+        return team
+
     def view(self, actor, roster):
         with self.db() as con:
             result = dict(role=actor["role"], student=actor.get("student"),
                           isOpen=json.loads(con.execute("SELECT value FROM settings WHERE key='isOpen'").fetchone()[0]),
-                          pictures=PICTURES, rubric=RUBRIC)
+                          pictures=PICTURES, rubric=RUBRIC, submissionMode="individual")
             if staff(actor):
                 assigned = {r[0] for r in con.execute("SELECT student FROM members")}
                 result["roster"] = [dict(id=str(s["id"]), name=s["fullName"], assigned=str(s["id"]) in assigned) for s in roster]
@@ -98,6 +115,8 @@ class PostcardExam:
             elif actor.get("student"):
                 row = con.execute("SELECT team FROM members WHERE student=?", (actor["student"]["id"],)).fetchone()
                 result["team"] = self.public(self.team(con, row[0]), actor) if row else None
+                result["canStart"] = not row and result["isOpen"] and self.eligible(actor, roster)
+                result["assessmentComplete"] = not row and not self.eligible(actor, roster)
             return result
 
     def action(self, actor, action, payload, roster):
@@ -112,18 +131,12 @@ class PostcardExam:
             if action == "create-team":
                 need(staff(actor), 403, "teacher_required")
                 ids = payload.get("members")
-                need(isinstance(ids, list) and 2 <= len(ids) <= 3 and all(isinstance(s, str) for s in ids) and len(set(ids)) == len(ids), 400, "choose_two_or_three")
-                valid = {str(s["id"]): s["fullName"] for s in roster}
-                need(all(s in valid for s in ids), 400, "student_not_in_course")
-                need(not any(con.execute("SELECT 1 FROM members WHERE student=?", (s,)).fetchone() for s in ids), 409, "student_already_assigned")
-                team = dict(id=secrets.token_hex(12), name=clean(payload.get("name"), 80, 1),
-                            courseCode=clean(payload.get("courseCode"), 60, 1), members=[dict(id=s, name=valid[s]) for s in ids],
-                            parts=[dict(author=ids[i % len(ids)], text="", revision=0) for i in range(3)],
-                            picture="coast", revision=0, ready=[], status="assigned", startedAt=None, deadline=None,
-                            reviews={}, history=[], receiptId=None, submittedAt=None, updatedAt=stamp())
-                con.execute("INSERT INTO teams VALUES(?,?)", (team["id"], json.dumps(team)))
-                con.executemany("INSERT INTO members VALUES(?,?)", [(s, team["id"]) for s in ids])
-                self.save(con, team, actor, action)
+                need(isinstance(ids, list) and len(ids) == 1 and isinstance(ids[0], str), 400, "choose_one_student")
+                student = next((s for s in roster if str(s["id"]) == ids[0]), None)
+                need(student, 400, "student_not_in_course")
+                need(not con.execute("SELECT 1 FROM members WHERE student=?", (ids[0],)).fetchone(), 409, "student_already_assigned")
+                need(self.eligible(dict(student=dict(id=ids[0])), roster), 409, "assessment_complete")
+                team = self.create(con, actor, student, clean(payload.get("name"), 80, 1), clean(payload.get("courseCode"), 60, 1))
                 return {"ok": True, "team": self.public(team, actor)}
             if action in ("grade", "reopen", "delete-team"):
                 need(staff(actor), 403, "teacher_required")
@@ -155,8 +168,15 @@ class PostcardExam:
                 self.save(con, team, actor, action)
                 return {"ok": True, "team": self.public(team, actor)}
             need(not staff(actor), 403, "use_teacher_preview")
+            need(actor.get("student"), 403, "account_not_linked")
+            sid = actor["student"]["id"]
+            if action == "start" and not con.execute("SELECT 1 FROM members WHERE student=?", (sid,)).fetchone():
+                need(not payload.get("teamId"), 403, "wrong_team")
+                need(self.eligible(actor, roster), 409, "assessment_complete")
+                need(json.loads(con.execute("SELECT value FROM settings WHERE key='isOpen'").fetchone()[0]), 403, "exam_closed")
+                self.create(con, actor, actor["student"], actor["student"]["fullName"], "Basic English 2")
             sid, team = self.own(con, actor)
-            need(payload.get("teamId") == team["id"], 403, "wrong_team")
+            need(payload.get("teamId") == team["id"] or (action == "start" and not payload.get("teamId")), 403, "wrong_team")
             if action == "submit" and team["status"] == "submitted":
                 return {"ok": True, "idempotent": True, "team": self.public(team, actor)}
             need(team["status"] != "submitted", 409, "already_submitted")

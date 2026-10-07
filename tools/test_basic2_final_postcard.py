@@ -3,6 +3,7 @@ import argparse
 import copy
 import json
 import sys
+import sqlite3
 import tempfile
 import threading
 from pathlib import Path
@@ -40,14 +41,21 @@ def run_tests(path):
         return exam.action(ACTORS[who], action, kw, ROSTER)
     assert exam.view(TEACHER, ROSTER)['isOpen'] is False
     expect('teacher_required', lambda: call('1', 'availability', isOpen=True))
-    expect('choose_two_or_three', lambda: call('teacher', 'create-team', name='Solo', courseCode='QA', members=['1']))
-    expect('student_not_in_course', lambda: call('teacher', 'create-team', name='X', courseCode='QA', members=['1', '404']))
-    t = call('teacher', 'create-team', name='Team A', courseCode='QA', members=['1','2','3'])['team']
+    expect('choose_one_student', lambda: call('teacher', 'create-team', name='Pair', courseCode='QA', members=['1','2']))
+    expect('student_not_in_course', lambda: call('teacher', 'create-team', name='X', courseCode='QA', members=['404']))
+    # Historical records are fixtures, never new multi-person API assignments.
+    t = call('teacher', 'create-team', name='Legacy', courseCode='QA', members=['1'])['team']
+    t['members'] = [dict(id=x['id'], name=x['fullName']) for x in ROSTER[:3]]
+    t['parts'] = [dict(author=str(i+1), text='', revision=0) for i in range(3)]
+    t.pop('mode')
+    with sqlite3.connect(path) as con:
+        con.execute('UPDATE teams SET record=? WHERE id=?', (json.dumps(t),t['id']))
+        con.executemany('INSERT INTO members VALUES(?,?)', [(str(i),t['id']) for i in (2,3)])
     tid = t['id']
-    expect('student_already_assigned', lambda: call('teacher', 'create-team', name='X', courseCode='QA', members=['1','4']))
+    expect('student_already_assigned', lambda: call('teacher', 'create-team', name='X', courseCode='QA', members=['1']))
     expect('exam_closed', lambda: call('1','start',teamId=tid))
     expect('account_not_linked', lambda: call('stranger','start',teamId=tid))
-    expect('team_not_assigned', lambda: call('4','start',teamId=tid))
+    expect('wrong_team', lambda: call('4','start',teamId=tid))
     assert 'roster' not in exam.view(ACTORS['1'],ROSTER)
     call('teacher','availability',isOpen=True)
     call('1','start',teamId=tid)
@@ -95,10 +103,30 @@ def run_tests(path):
     assert g['students'][0]['grades'][EVALUATION['id']] == 4.2
     assert exam.view(ACTORS['2'],ROSTER)['team']['reviews'] == {}
     expect('graded_team_cannot_reopen',lambda:call('teacher','reopen',teamId=tid,receiptId=t['receiptId']))
-    pair = call('teacher','create-team',name='Pair',courseCode='QA',members=['4','5'])['team']
-    assert [p['author'] for p in pair['parts']] == ['4','5','4']
+    pair = call('teacher','create-team',name='Solo',courseCode='QA',members=['4'])['team']
+    assert [p['author'] for p in pair['parts']] == ['4','4','4']
     call('teacher','delete-team',teamId=pair['id'])
     assert exam.view(ACTORS['4'],ROSTER)['team'] is None
+    # Individual start: no teacher assignment, one account owns the entire exam.
+    expect('exam_closed', lambda: call('4','start'))
+    call('teacher','availability',isOpen=True)
+    assert exam.view(ACTORS['4'],ROSTER)['canStart']
+    solo = call('4','start')['team']
+    assert solo['mode']=='individual' and len(solo['members'])==1
+    assert all(p['author']=='4' for p in solo['parts'])
+    assert call('4','start')['team']['id']==solo['id']
+    expect('team_not_assigned',lambda:call('5','draft',teamId=solo['id'],parts={}))
+    expect('edit_own_parts_only',lambda:call('4','draft',teamId=solo['id'],parts={'0':{'text':'Only one section','revision':0}}))
+    solo=call('4','draft',teamId=solo['id'],parts={str(i):dict(text=t,revision=0) for i,t in enumerate(TEXTS)})['team']
+    solo=call('4','ready',teamId=solo['id'],revision=solo['revision'])['team']
+    solo=call('4','submit',teamId=solo['id'],revision=solo['revision'],requestId='individual-request')['team']
+    assert solo['status']=='submitted' and solo['ready']==['4']
+    assert call('4','submit',teamId=solo['id'],requestId='individual-retry')['team']['receiptId']==solo['receiptId']
+    closed_roster=copy.deepcopy(ROSTER);closed_roster[5]['grades']={EVALUATION['id']:0}
+    assert exam.view(ACTORS['6'],closed_roster)['assessmentComplete']
+    expect('assessment_complete',lambda:exam.action(ACTORS['6'],'start',{},closed_roster))
+    assert exam.view(ACTORS['6'],ROSTER)['team'] is None
+    assert exam.view(ACTORS['1'],ROSTER)['team']['receiptId']==t['receiptId']
     # HTTP adapter must ignore an injected student-ID claim.
     responses=[]
     class Handler: command='POST'
@@ -125,7 +153,7 @@ def run_tests(path):
     for hook in ('if handle_basic2_final_postcard(self, profile, parsed, globals()):','if handle_basic2_final_postcard(self, profile, parsed, globals(), payload):'):
         pos=source.index(hook)
         assert 'profile = self.require_user()' in source[max(0,pos-1800):pos]
-    print('PASS: access, roster, isolation, pair/trio, ownership, concurrent drafts, conflicts, confirmation, receipts, reopen, per-student grading and gradebook preservation.')
+    print('PASS: access, roster, isolation, individual starts, legacy records, ownership, concurrent drafts, conflicts, confirmation, receipts, reopen, per-student grading and gradebook preservation.')
 
 
 def serve(path, port):

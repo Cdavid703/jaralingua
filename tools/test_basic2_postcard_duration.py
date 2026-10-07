@@ -15,7 +15,7 @@ with tempfile.TemporaryDirectory() as tmp:
     roster = [dict(id=str(i),fullName='Test '+str(i)) for i in range(1,3)]
     teacher = dict(role='teacher',key='test-teacher')
     student = dict(role='student',key='test-student',student=roster[0])
-    team = exam.action(teacher,'create-team',dict(name='Test',courseCode='QA',members=['1','2']),roster)['team']
+    team = exam.action(teacher,'create-team',dict(name='Test',courseCode='QA',members=['1']),roster)['team']
     exam.action(teacher,'availability',dict(isOpen=True),roster)
     team = exam.action(student,'start',dict(teamId=team['id']),roster)['team']
     seconds = (datetime.fromisoformat(team['deadline'])-datetime.fromisoformat(team['startedAt'])).total_seconds()
