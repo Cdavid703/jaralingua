@@ -1,12 +1,14 @@
 (() => {
  'use strict';
  const $=id=>document.getElementById('op-'+id),{OralClient,errorText}=window.Basic2OralAPI,client=new OralClient();
- const pair=new URLSearchParams(location.search).get('pair');let identity='',sources=[],index=0,page=1,url=null,load=0;
- function clearImage(){if(url)URL.revokeObjectURL(url);url=null;$('image').hidden=true;$('image').removeAttribute('src');}
+ const pair=new URLSearchParams(location.search).get('pair');let identity='',sources=[],index=0,page=1,load=0;
+ function clearImage(){$('image').hidden=true;$('image').removeAttribute('src');}
  async function show(){const token=++load;clearImage();const source=sources[index];$('prev').disabled=page<=1;$('next').disabled=!source||page>=source.pages;$('count').textContent=source?page+' / '+source.pages:'';
   if(!source)return;$('status').textContent='Loading slide…';try{
    const blob=source.file?await client.request('file/'+source.file+'/'+page):null;if(token!==load)return;
-   if(blob)url=URL.createObjectURL(blob);$('image').src=blob?url:source.image;$('image').alt=source.name+' · Slide '+page;
+   // The site allows data: images but blocks blob: images in its CSP.
+   const image=blob?await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('The slide could not be read. Please try again.'));reader.readAsDataURL(blob);}):source.image;
+   if(token!==load)return;$('image').src=image;$('image').alt=source.name+' · Slide '+page;
    await $('image').decode();if(token!==load)return;$('image').hidden=false;$('status').textContent=source.name;
   }catch(e){if(token===load)$('status').textContent=errorText(e);}
  }

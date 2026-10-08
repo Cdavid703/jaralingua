@@ -5,6 +5,7 @@ const errors=[];
 async function setup(browser,who){
  const context=await browser.newContext({viewport:{width:1366,height:900}});
  await context.route('**/assets/js/google-auth.js*',r=>r.fulfill({contentType:'application/javascript',body:`window.qaUser={credential:'qa-${who}',email:'${who}@qa.invalid',provider:'google'};window.JaraLinguaAuth={getUser:()=>window.qaUser,openPanel:()=>{}};`}));
+ await context.route('**/ingles/basico-2/*.html*',async route=>{const response=await route.fetch();await route.fulfill({response,headers:{...response.headers(),'content-security-policy':"img-src 'self' data: https://accounts.google.com https://*.googleusercontent.com"}});});
  const page=await context.newPage();page.on('pageerror',e=>errors.push(e.message));await page.goto(base+path,{waitUntil:'load'});return {page,context};
 }
 const state=async(page)=>page.evaluate(async()=>{const r=await fetch('/api/basic2/final-oral/state',{headers:{Authorization:'Bearer '+qaUser.credential}});return r.json();});
@@ -53,7 +54,7 @@ const browser=await chromium.launch({headless:true,executablePath:process.env.BR
  const ts=await state(teacher.page);assert.equal(ts.teams[0].reviews[own].published.grade,4);assert.ok(!ts.teams[0].reviews[sam]?.published);
  const popupPromise=teacher.page.waitForEvent('popup');await teacher.page.locator('#ot-teacher-project').click();const popup=await popupPromise;
  await popup.locator('#op-image:visible').waitFor();assert.equal(await popup.locator('.ot-review').count(),0);assert.ok(!/Pronunciation|rubric|40 \/ 50/.test(await popup.locator('body').textContent()));
- await popup.locator('#op-source').selectOption('1');await popup.waitForFunction(()=>document.querySelector('#op-image').src.startsWith('blob:')&&!document.querySelector('#op-image').hidden);
+ await popup.locator('#op-source').selectOption('1');await popup.waitForFunction(()=>document.querySelector('#op-image').src.startsWith('data:image/')&&!document.querySelector('#op-image').hidden);
  await popup.evaluate(()=>{window.qaUser=null;window.dispatchEvent(new Event('jaralingua:auth-changed'));});assert.ok(!(await popup.locator('#op-image').isVisible()));
  await teacher.page.locator('#ot-preview').click();const requests=[];teacher.page.on('request',r=>{if(r.method()==='POST')requests.push(r.url());});
  await teacher.page.locator('#ot-plan-decision').fill('Preview choice.');await teacher.page.locator('#ot-plan-save').click();await teacher.page.waitForTimeout(1100);assert.equal(requests.length,0);await teacher.page.locator('#ot-exit-preview').click();
