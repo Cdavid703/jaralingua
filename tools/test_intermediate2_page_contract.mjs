@@ -9,7 +9,7 @@ const pages = fs
   .filter((name) => name.endsWith(".html"))
   .sort();
 
-assert.equal(pages.length, 46, "Update this contract when a new Intermediate 2 page is published.");
+assert.equal(pages.length, 47, "Update this contract when a new Intermediate 2 page is published.");
 
 function localStyles(markup) {
   const styles = [...markup.matchAll(/href=["']([^"']+\.css)(?:\?[^"']*)?["']/gi)]

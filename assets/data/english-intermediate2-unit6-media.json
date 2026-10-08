@@ -1,6 +1,6 @@
 {
   "title": "Unit 6 \u00b7 News, Reported Speech and Natural Disasters",
-  "status": "Media prepared; complete explanation page not yet built.",
+  "status": "Integrated into the complete Unit 6 explanation.",
   "fictional": true,
   "audioManifest": "/ingles/intermediate-2/audio/unit-6-explanation/models.json",
   "images": [
@@ -144,5 +144,6 @@
       "sha256": "1313134900358afe98e02b06b2078a86c075410ee6518ba0d785d85ea50401ce",
       "alt": "A news presenter delivers a bulletin while a field reporter appears on a studio screen."
     }
-  ]
+  ],
+  "page": "/ingles/intermediate-2/unit-6-news-and-natural-disasters.html"
 }

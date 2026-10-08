@@ -24,3 +24,11 @@ El cuento oral del examen final se redujo a 17 páginas por indicación del doce
 ## Unit 5 · Conversation with David
 
 El docente pidió practicar oralmente los temas exactos del examen final con un coach que pregunte el nombre, reaccione a las respuestas y ofrezca ejemplos bajo demanda. Interfaz breve con retrato ficticio, micrófono, transcripción, QR y adaptación móvil. La voz profesional David no permitía generar audio (`voice_not_fine_tuned`); el 2 de octubre autorizó probar la otra voz David y continuar. La actividad usa la voz clonada `pv8WYYW60prEkDbDXyC0`, no la profesional bloqueada. Doce etapas y cuatro seguimientos, práctica privada sin notas ni entrega. Referencia: [implementación, límites de conversación y pruebas](../english-intermediate2-david-first-impression.md). No confundir el coach con el cuento The First Visit ni cambiar el estado del examen escrito.
+
+## Unit 6 · News, Reported Speech and Natural Disasters
+
+Página `unit-6-news-and-natural-disasters.html`, enlazada desde Course Overview. Diez bloques de teoría cerrados inicialmente: noticias y fuentes; hechos, opiniones y rumores; discurso directo e indirecto; say/tell; cambios de tiempo y referencia; discusión de noticias políticas y de entretenimiento; desastres; narración en pasado; instrucciones; expresiones y boletín. Guía: sesiones 15–16. Escenas y noticias ficticias, sin nueva evaluación.
+
+Reutiliza las 14 imágenes originales y ofrece 65 modelos de audio de ElevenLabs, con transcripciones de enseñanza públicas, velocidad 0.75×/1× y un único reproductor. Vocabulario seleccionado con significado español al pasar el cursor, enfocar o tocar; clic reproduce. Proyección de tarjetas y explicación completa, QR y autenticación compartidos. Los ejercicios futuros permanecen en Practice Lab. Las recomendaciones sobre inundaciones enlazan Ready.gov y la gramática adicional enlaza British Council.
+
+Construcción: `tools/build_intermediate2_unit6_explanation.py`. Pruebas: `tools/test_intermediate2_unit6_explanation.cjs`, contrato de 47 páginas y auditoría transversal de Sign in. Audios e inventario: `audio/unit-6-explanation/models.json` y `assets/data/english-intermediate2-unit6-media.json`. Mantener los MP3 v1 ya publicados por compatibilidad; los cinco phrasal verbs separables usan modelos v2 con sustantivo y pronombre.

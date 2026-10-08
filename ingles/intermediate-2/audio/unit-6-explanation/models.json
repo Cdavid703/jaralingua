@@ -473,58 +473,58 @@
     },
     {
       "id": "expression-find-out",
-      "file": "expression-find-out.mp3",
-      "text": "find out. The reporter wants to find out what happened.",
+      "file": "expression-find-out-v2.mp3",
+      "text": "Find out. The reporter found out the cause. The reporter found it out.",
       "term": "find out",
       "spanish": "averiguar",
       "expressionType": "Phrasal verb",
       "kind": "phrase",
-      "bytes": 51453,
-      "sha256": "884100b763b6a00bd916ec05d1d7b03ec4115906fd172004f429a0c7bfb72114"
+      "bytes": 72351,
+      "sha256": "d325e40533aaeeaa78a93946fbe331f4b17f77deae5900112d7f75c850bc6251"
     },
     {
       "id": "expression-check-out",
-      "file": "expression-check-out.mp3",
-      "text": "check out. The editor will check out the claim before publishing it.",
+      "file": "expression-check-out-v2.mp3",
+      "text": "Check out. The editor checked out the claim. The editor checked it out.",
       "term": "check out",
       "spanish": "comprobar o investigar",
       "expressionType": "Phrasal verb",
       "kind": "phrase",
-      "bytes": 59812,
-      "sha256": "2cfe00d44785df3d89ea77676344badbf547ce5266b2ba0e39c34086a78919f5"
+      "bytes": 76112,
+      "sha256": "6cd5d099c8751d29fac5d8ddb6221cd0210e4b42217922a7567efd3047e469cc"
     },
     {
       "id": "expression-carry-out",
-      "file": "expression-carry-out.mp3",
-      "text": "carry out. Workers carried out an inspection.",
+      "file": "expression-carry-out-v2.mp3",
+      "text": "Carry out. Workers carried out an inspection. Workers carried it out.",
       "term": "carry out",
       "spanish": "llevar a cabo",
       "expressionType": "Phrasal verb",
       "kind": "phrase",
-      "bytes": 51035,
-      "sha256": "eeb813241ce691122c1c3e25f92df22e8bd60d8b23eb5ef7cb3f8f634f66766b"
+      "bytes": 79038,
+      "sha256": "da32b7babb258ba8261817a07edb6160b14a794c809fe2789e164d5970efcd66"
     },
     {
       "id": "expression-point-out",
-      "file": "expression-point-out.mp3",
-      "text": "point out. The witness pointed out a broken window.",
+      "file": "expression-point-out-v2.mp3",
+      "text": "Point out. The witness pointed out a broken window. The witness pointed it out.",
       "term": "point out",
       "spanish": "señalar o destacar",
       "expressionType": "Phrasal verb",
       "kind": "phrase",
-      "bytes": 56050,
-      "sha256": "696b52de938bf26ed09a72d160a2965ef49cbd36c0eeaea286b4e6ff8848d117"
+      "bytes": 84471,
+      "sha256": "7e75a1774336d116d35b02a862d918c92074bb04921a9df00b26221e501e2566"
     },
     {
       "id": "expression-clear-up",
-      "file": "expression-clear-up.mp3",
-      "text": "clear up. The new statement helped clear up the confusion.",
+      "file": "expression-clear-up-v2.mp3",
+      "text": "Clear up. The statement cleared up the confusion. The statement cleared it up.",
       "term": "clear up",
       "spanish": "aclarar",
       "expressionType": "Phrasal verb",
       "kind": "phrase",
-      "bytes": 53960,
-      "sha256": "dcfc7d2df65b3b0d5b8f5de3b9fdd05b6ba11d38dbd968fbd0881076f2b9ad88"
+      "bytes": 76112,
+      "sha256": "d9749b85207ca6ed2b5c0d351c2f64822d2a5b1f5d6689150e6988e9b7072145"
     },
     {
       "id": "expression-word-of-mouth",
@@ -558,6 +558,38 @@
       "kind": "phrase",
       "bytes": 91577,
       "sha256": "61dd36f1f89be667c4206845ac595a3dcfea2dc7f73db5d91c8fca8ea4692011"
+    },
+    {
+      "id": "flood-instruction",
+      "file": "flood-instruction.mp3",
+      "text": "Do not enter floodwater.",
+      "kind": "phrase",
+      "bytes": 24285,
+      "sha256": "0fd0543e5695fe78073a7d84f5d957f0ba0eba3c90af88a9e8ff479453701a88"
+    },
+    {
+      "id": "reported-negative-instruction",
+      "file": "reported-negative-instruction.mp3",
+      "text": "The coordinator told residents not to enter floodwater.",
+      "kind": "phrase",
+      "bytes": 53960,
+      "sha256": "8c415c5ab7dbfb5ad1c808681a15595397c002382ad79aba9b13ec455bb40ee6"
+    },
+    {
+      "id": "information-plan",
+      "file": "information-plan.mp3",
+      "text": "First, check official alerts. Then, follow local instructions. Finally, share only confirmed updates.",
+      "kind": "phrase",
+      "bytes": 114146,
+      "sha256": "1a8f92f2eb34e932eddabc0cb1e68e55e1848be565b580b3609d3006dd27d956"
+    },
+    {
+      "id": "past-endings",
+      "file": "past-endings.mp3",
+      "text": "Reported. Damaged. Rescued.",
+      "kind": "phrase",
+      "bytes": 33062,
+      "sha256": "0cf3d223ee5bb1b29b98b48a374baea3acca80dadafa369229b1b900c83f9bd0"
     }
   ]
 }

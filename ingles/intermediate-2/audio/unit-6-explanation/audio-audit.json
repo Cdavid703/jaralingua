@@ -425,5 +425,68 @@
     "heard": "Take it with a grain of salt. The story has no named source, so take it with a grain of salt.",
     "matched": true,
     "sha256": "61dd36f1f89be667c4206845ac595a3dcfea2dc7f73db5d91c8fca8ea4692011"
+  },
+  {
+    "file": "expression-find-out-v2.mp3",
+    "expected": "Find out. The reporter found out the cause. The reporter found it out.",
+    "heard": "Find out. The reporter found out the cause. The reporter found it out",
+    "matched": true,
+    "sha256": "d325e40533aaeeaa78a93946fbe331f4b17f77deae5900112d7f75c850bc6251"
+  },
+  {
+    "file": "expression-check-out-v2.mp3",
+    "expected": "Check out. The editor checked out the claim. The editor checked it out.",
+    "heard": "Check out. The editor checked out the claim. The editor checked it out",
+    "matched": true,
+    "sha256": "6cd5d099c8751d29fac5d8ddb6221cd0210e4b42217922a7567efd3047e469cc"
+  },
+  {
+    "file": "expression-point-out-v2.mp3",
+    "expected": "Point out. The witness pointed out a broken window. The witness pointed it out.",
+    "heard": "Point out. The witness pointed out a broken window. The witness pointed it out.",
+    "matched": true,
+    "sha256": "7e75a1774336d116d35b02a862d918c92074bb04921a9df00b26221e501e2566"
+  },
+  {
+    "file": "expression-carry-out-v2.mp3",
+    "expected": "Carry out. Workers carried out an inspection. Workers carried it out.",
+    "heard": "Carry out. Workers carried out an inspection. Workers carried it out.",
+    "matched": true,
+    "sha256": "da32b7babb258ba8261817a07edb6160b14a794c809fe2789e164d5970efcd66"
+  },
+  {
+    "file": "flood-instruction.mp3",
+    "expected": "Do not enter floodwater.",
+    "heard": "Do not enter flood water",
+    "matched": true,
+    "sha256": "0fd0543e5695fe78073a7d84f5d957f0ba0eba3c90af88a9e8ff479453701a88"
+  },
+  {
+    "file": "expression-clear-up-v2.mp3",
+    "expected": "Clear up. The statement cleared up the confusion. The statement cleared it up.",
+    "heard": "Clear up. The statement cleared up the confusion. The statement cleared it up.",
+    "matched": true,
+    "sha256": "d9749b85207ca6ed2b5c0d351c2f64822d2a5b1f5d6689150e6988e9b7072145"
+  },
+  {
+    "file": "reported-negative-instruction.mp3",
+    "expected": "The coordinator told residents not to enter floodwater.",
+    "heard": "The coordinator told residents not to enter floodwater.",
+    "matched": true,
+    "sha256": "8c415c5ab7dbfb5ad1c808681a15595397c002382ad79aba9b13ec455bb40ee6"
+  },
+  {
+    "file": "information-plan.mp3",
+    "expected": "First, check official alerts. Then, follow local instructions. Finally, share only confirmed updates.",
+    "heard": "First, check official alerts. Then, follow local instructions. Finally, share only confirmed updates.",
+    "matched": true,
+    "sha256": "1a8f92f2eb34e932eddabc0cb1e68e55e1848be565b580b3609d3006dd27d956"
+  },
+  {
+    "file": "past-endings.mp3",
+    "expected": "Reported. Damaged. Rescued.",
+    "heard": "Reported, damaged, rescued",
+    "matched": true,
+    "sha256": "0cf3d223ee5bb1b29b98b48a374baea3acca80dadafa369229b1b900c83f9bd0"
   }
 ]

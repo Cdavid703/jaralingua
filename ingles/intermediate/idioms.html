@@ -1249,6 +1249,172 @@
       if (existing >= 0) idioms[existing] = {...idioms[existing], ...entry};
       else idioms.push(entry);
     }
+    const unit6Expressions = [
+  {
+    "icon": "◖))",
+    "title": "check out",
+    "category": "Phrasal verb · Course 2 / Unit 6",
+    "meaning": "Examine something to see whether it is accurate or useful.",
+    "usage": "Transitive and separable in this meaning. Conversational. Verify is a more formal alternative.",
+    "example": "check out the claim / check the claim out / check it out",
+    "phrase": "Link check‿out; keep the final /t/.",
+    "conversation": [
+      {
+        "speaker": "Editor",
+        "text": "How would you use this expression in a news report?"
+      },
+      {
+        "speaker": "Reporter",
+        "text": "check out the claim."
+      }
+    ],
+    "prompt": "Use check out in a fictional news report and name the source.",
+    "audio": "../intermediate-2/audio/unit-6-explanation/expression-check-out-v2.mp3",
+    "spanish": "comprobar o investigar"
+  },
+  {
+    "icon": "◖))",
+    "title": "carry out",
+    "category": "Phrasal verb · Course 2 / Unit 6",
+    "meaning": "Perform or complete a task.",
+    "usage": "Transitive and separable. Common in formal reports. The first noun order is often smoother with long objects.",
+    "example": "carry out an inspection / carry an inspection out / carry it out",
+    "phrase": "Link carry‿out; stress the key task.",
+    "conversation": [
+      {
+        "speaker": "Editor",
+        "text": "How would you use this expression in a news report?"
+      },
+      {
+        "speaker": "Reporter",
+        "text": "carry out an inspection."
+      }
+    ],
+    "prompt": "Use carry out in a fictional news report and name the source.",
+    "audio": "../intermediate-2/audio/unit-6-explanation/expression-carry-out-v2.mp3",
+    "spanish": "llevar a cabo"
+  },
+  {
+    "icon": "◖))",
+    "title": "point out",
+    "category": "Phrasal verb · Course 2 / Unit 6",
+    "meaning": "Draw attention to something.",
+    "usage": "Transitive and separable. It can also introduce a clause: she pointed out that the road was closed.",
+    "example": "point out the damage / point the damage out / point it out",
+    "phrase": "Keep point and out connected without losing the /t/.",
+    "conversation": [
+      {
+        "speaker": "Editor",
+        "text": "How would you use this expression in a news report?"
+      },
+      {
+        "speaker": "Reporter",
+        "text": "point out the damage."
+      }
+    ],
+    "prompt": "Use point out in a fictional news report and name the source.",
+    "audio": "../intermediate-2/audio/unit-6-explanation/expression-point-out-v2.mp3",
+    "spanish": "señalar o destacar"
+  },
+  {
+    "icon": "◖))",
+    "title": "clear up",
+    "category": "Phrasal verb · Course 2 / Unit 6",
+    "meaning": "Remove confusion or make something understandable.",
+    "usage": "Transitive and separable in this meaning. Here it means clarify, not improve weather or tidy a room.",
+    "example": "clear up the confusion / clear the confusion up / clear it up",
+    "phrase": "Link clear‿up; stress up.",
+    "conversation": [
+      {
+        "speaker": "Editor",
+        "text": "How would you use this expression in a news report?"
+      },
+      {
+        "speaker": "Reporter",
+        "text": "clear up the confusion."
+      }
+    ],
+    "prompt": "Use clear up in a fictional news report and name the source.",
+    "audio": "../intermediate-2/audio/unit-6-explanation/expression-clear-up-v2.mp3",
+    "spanish": "aclarar"
+  },
+  {
+    "icon": "◖))",
+    "title": "word of mouth",
+    "category": "Idiom · Course 2 / Unit 6",
+    "meaning": "Information passed from one person to another.",
+    "usage": "Fixed idiomatic expression. Everyday language. Being widely repeated does not confirm a report.",
+    "example": "The rumour spread by word of mouth.",
+    "phrase": "Say by word of mouth as one group.",
+    "conversation": [
+      {
+        "speaker": "Editor",
+        "text": "How would you use this expression in a news report?"
+      },
+      {
+        "speaker": "Reporter",
+        "text": "The rumour spread by word of mouth.."
+      }
+    ],
+    "prompt": "Use word of mouth in a fictional news report and name the source.",
+    "audio": "../intermediate-2/audio/unit-6-explanation/expression-word-of-mouth.mp3",
+    "spanish": "de boca en boca"
+  },
+  {
+    "icon": "◖))",
+    "title": "make headlines",
+    "category": "Idiom · Course 2 / Unit 6",
+    "meaning": "Attract prominent attention in the news.",
+    "usage": "Idiomatic expression. Common in media reporting; it does not mean physically creating a headline.",
+    "example": "The concert announcement made headlines.",
+    "phrase": "Stress headlines; make changes to made in the past.",
+    "conversation": [
+      {
+        "speaker": "Editor",
+        "text": "How would you use this expression in a news report?"
+      },
+      {
+        "speaker": "Reporter",
+        "text": "The concert announcement made headlines.."
+      }
+    ],
+    "prompt": "Use make headlines in a fictional news report and name the source.",
+    "audio": "../intermediate-2/audio/unit-6-explanation/expression-make-headlines.mp3",
+    "spanish": "ser noticia o acaparar titulares"
+  },
+  {
+    "icon": "◖))",
+    "title": "take it with a grain of salt",
+    "category": "Idiom · Course 2 / Unit 6",
+    "meaning": "Treat information with some doubt.",
+    "usage": "Idiom. Informal. It expresses caution, not proof that a claim is false.",
+    "example": "The story has no named source, so take it with a grain of salt.",
+    "phrase": "Keep with a grain of salt together as one group.",
+    "conversation": [
+      {
+        "speaker": "Editor",
+        "text": "How would you use this expression in a news report?"
+      },
+      {
+        "speaker": "Reporter",
+        "text": "The story has no named source, so take it with a grain of salt.."
+      }
+    ],
+    "prompt": "Use take it with a grain of salt in a fictional news report and name the source.",
+    "audio": "../intermediate-2/audio/unit-6-explanation/expression-take-it-with-a-grain-of-salt.mp3",
+    "spanish": "tomarlo con reservas"
+  }
+];
+    for (const entry of unit6Expressions) {
+      const existing = idioms.findIndex(item => item.title.toLowerCase() === entry.title.toLowerCase());
+      if (existing >= 0) idioms[existing] = {...idioms[existing], ...entry};
+      else idioms.push(entry);
+    }
+    const newsFindOut = idioms.find(item => item.title.toLowerCase() === 'find out');
+    if (newsFindOut) {
+      newsFindOut.category = 'Phrasal verb · transitive or intransitive · Course 2 / Units 4 and 6';
+      newsFindOut.usage += ' In news reporting: the reporter found out the cause; the reporter found it out.';
+    }
     let expressionAudio = null;
     const menu = document.getElementById("idiom-menu");
     const display = document.getElementById("idiom-display");
