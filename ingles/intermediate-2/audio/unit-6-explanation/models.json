@@ -1,0 +1,563 @@
+{
+  "provider": "ElevenLabs",
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah",
+  "modelId": "eleven_multilingual_v2",
+  "accent": "General American",
+  "context": "Original fictional teaching models. Single narrator; quoted examples are read as grammar models, not a cast dialogue.",
+  "items": [
+    {
+      "id": "newsroom-hero",
+      "file": "newsroom-hero.mp3",
+      "text": "Welcome to our newsroom. In this unit, you will learn to identify sources, report what other people said, and describe events in the past. You will explore political and entertainment news, learn the language of natural disasters, and build a clear news bulletin. The people and events in these teaching examples are fictional.",
+      "kind": "section",
+      "imageId": "newsroom-hero",
+      "bytes": 313931,
+      "sha256": "ee42f600eabbabf6050dbc19782761d75736a87378e84a13d013354e7d606410"
+    },
+    {
+      "id": "checking-sources",
+      "file": "checking-sources.mp3",
+      "text": "The editor is comparing two photographs of the same bridge. Before sharing a report, she checks who published it, when it was taken, and what the evidence shows. A photograph can provide useful information, but it may need context. An opinion expresses a judgement. A rumour is information that has not been confirmed.",
+      "kind": "section",
+      "imageId": "checking-sources",
+      "bytes": 316857,
+      "sha256": "48aea22611ce25bbab8f8aa5842e3bd88220ea1f0145ece4339e5e7106cd7707"
+    },
+    {
+      "id": "witness-interview",
+      "file": "witness-interview.mp3",
+      "text": "This is a fictional teaching example. A journalist interviews Maya outside the library after a storm. Maya says, \"I am worried about the library.\" The journalist writes down her exact words. This is direct speech. The speaker uses I because she is talking about herself. The quotation preserves the words she actually said.",
+      "kind": "section",
+      "imageId": "witness-interview",
+      "bytes": 347368,
+      "sha256": "c6acf015fa28704facd5f076374cfd19e6df746937730172d39fa7242248af20"
+    },
+    {
+      "id": "reporting-the-interview",
+      "file": "reporting-the-interview.mp3",
+      "text": "Later, the journalist tells his editor about the interview. Maya said that she was worried about the library. This is reported speech. I changes to she because the journalist is talking about Maya. Am changes to was because he is reporting her earlier words from a later point in time. The meaning should remain accurate.",
+      "kind": "section",
+      "imageId": "reporting-the-interview",
+      "bytes": 311841,
+      "sha256": "26b18a4aac81fb757473aeffdef49d78be894080dacda3ca782a52f8bb1c0fe6"
+    },
+    {
+      "id": "community-press-conference",
+      "file": "community-press-conference.mp3",
+      "text": "In this fictional news story, a council spokesperson discusses repairs to a community library. She says, \"We will publish the repair plan tomorrow.\" Two days later, a journalist reports that the spokesperson said they would publish the repair plan the following day. The journalist should then check whether the plan was actually published. Reporting a promise does not prove that it was fulfilled.",
+      "kind": "section",
+      "imageId": "community-press-conference",
+      "bytes": 378715,
+      "sha256": "dbe477c3d9999787ee938ac1ae97ef62f25bd2f148c1d04c9809c63fe26734ea"
+    },
+    {
+      "id": "entertainment-interview",
+      "file": "entertainment-interview.mp3",
+      "text": "In this fictional interview, a singer announces a community concert. She says, \"I can perform on Saturday.\" Later, the interviewer reports that the singer said she could perform on Saturday. An announcement from the singer is different from an unconfirmed rumour. When discussing entertainment news, explain where the information came from and separate the person's words from your own opinion.",
+      "kind": "section",
+      "imageId": "entertainment-interview",
+      "bytes": 365758,
+      "sha256": "81ade4a8cd146ec9b66af40045ed23ea1a520248ed716514e78b55dc3e4afbb2"
+    },
+    {
+      "id": "earthquake",
+      "file": "earthquake.mp3",
+      "text": "An earthquake is a sudden shaking of the ground. In this fictional scene, an earthquake damaged several buildings. An assessment team inspected the area from behind a barrier. Notice the past forms: damaged and inspected. The picture shows damage to buildings, but it does not tell us how many people were affected. Do not invent information that the source does not provide.",
+      "kind": "section",
+      "imageId": "earthquake",
+      "bytes": 369519,
+      "sha256": "f90f690d7e8866576d5bc3110847120b3e5c56e967bc654e24640360119cb189"
+    },
+    {
+      "id": "flood",
+      "file": "flood.mp3",
+      "text": "A flood happens when water covers land that is normally dry. In this fictional scene, the river overflowed and flooded a residential street. A rescue crew travelled through the street in a boat. The word flooded describes what happened. The phrase a rescue crew names the people responding. We need a reliable source before reporting numbers or causes.",
+      "kind": "section",
+      "imageId": "flood",
+      "bytes": 349457,
+      "sha256": "c898de161c28bb32f3b04e951034c2c3dceee05f9857e9ccff827bb8a93be26a"
+    },
+    {
+      "id": "hurricane",
+      "file": "hurricane.mp3",
+      "text": "A hurricane is a powerful tropical storm with strong winds and heavy rain. In this fictional scene, the wind bent the palm trees and rain reduced visibility. A reporter could describe the visible conditions, but the image alone cannot tell us the wind speed. Compare the verb forms: bend, bent; reduce, reduced.",
+      "kind": "section",
+      "imageId": "hurricane",
+      "bytes": 328142,
+      "sha256": "12520e454a8ff4f874cee407d84f0f59006c6756f1afa26ffa193a764c7e787b"
+    },
+    {
+      "id": "drought",
+      "file": "drought.mp3",
+      "text": "A drought is a long period with much less rain than a place needs. In this fictional scene, the reservoir has very little water and the ground is dry and cracked. To report a completed event, we could say that water levels fell during the dry season. Fell is the past form of fall.",
+      "kind": "section",
+      "imageId": "drought",
+      "bytes": 284256,
+      "sha256": "9d160da094bb848125f762e332571837a8e368ed010d712096d50eacd66a3349"
+    },
+    {
+      "id": "wildfire",
+      "file": "wildfire.mp3",
+      "text": "A wildfire is an uncontrolled fire that spreads through vegetation. In this fictional scene, a fire burned part of a wooded hillside. Firefighters assessed the situation from a distant observation point. Burned and assessed describe completed actions. Smoke and flames are visible, but the image does not establish how the fire started.",
+      "kind": "section",
+      "imageId": "wildfire",
+      "bytes": 338591,
+      "sha256": "921e17149a8a42e65486414d53140bb9085622e3666579ea496b7bbd184a85eb"
+    },
+    {
+      "id": "landslide",
+      "file": "landslide.mp3",
+      "text": "A landslide happens when rock, soil, or other material moves down a slope. In this fictional scene, rocks and soil blocked a mountain road. Workers closed the road and inspected the damage. First, the material slid down the hillside. Then, the road was closed. These expressions help the listener follow the order of events.",
+      "kind": "section",
+      "imageId": "landslide",
+      "bytes": 326470,
+      "sha256": "8f0c4c0a30304c645225ca633209cd109e22dff8b51c09b12e38b13244b68e7b"
+    },
+    {
+      "id": "community-briefing",
+      "file": "community-briefing.mp3",
+      "text": "In this fictional classroom scenario, a coordinator explains a community information plan. First, identify the official source of updates. Then, check the time and location of each message. Finally, share the confirmed information clearly. The coordinator told the group to check official updates. After told, name the listener, then use to and the base form of the verb.",
+      "kind": "section",
+      "imageId": "community-briefing",
+      "bytes": 372027,
+      "sha256": "55fb30734ba721c87d7fe308d29854f9d3dba3cd22e96815c2aeb5f753ae3720"
+    },
+    {
+      "id": "television-bulletin",
+      "file": "television-bulletin.mp3",
+      "text": "This is a fictional news bulletin for language practice. Good evening. A storm hit Greenford on Monday and damaged the community library. A tree fell near the entrance, and workers closed the building. Maya, a local resident, told our reporter that she was worried about the library. At a briefing on Tuesday, the council spokesperson said they would publish a repair plan the following day. Workers then inspected the roof. The cause of the roof damage is still under investigation. We will update this report when more information is confirmed.",
+      "kind": "section",
+      "imageId": "television-bulletin",
+      "bytes": 514551,
+      "sha256": "dbc65bd5795328579e824d91f314b8c498d5b6e051b04c8a05fe1b8cbfdbe840"
+    },
+    {
+      "id": "direct-worried",
+      "file": "direct-worried.mp3",
+      "text": "I am worried about the library.",
+      "kind": "phrase",
+      "bytes": 31391,
+      "sha256": "4d6884e8a6ae1c79d8102ad6d0ef61af55aaabf196dfc99d623260ab88852816"
+    },
+    {
+      "id": "reported-worried",
+      "file": "reported-worried.mp3",
+      "text": "Maya said that she was worried about the library.",
+      "kind": "phrase",
+      "bytes": 46437,
+      "sha256": "775a2e0eea3c699b1289f6a829db2de94f00b5946bc41f3174ae981fd6e4fec3"
+    },
+    {
+      "id": "said-told",
+      "file": "said-told.mp3",
+      "text": "Maya said that she was worried. Maya told the reporter that she was worried.",
+      "kind": "phrase",
+      "bytes": 71515,
+      "sha256": "441f2a4780408ffba67a71c7943e4816fb60567cd776da6805f1638439946ed2"
+    },
+    {
+      "id": "direct-will",
+      "file": "direct-will.mp3",
+      "text": "We will publish the repair plan tomorrow.",
+      "kind": "phrase",
+      "bytes": 37660,
+      "sha256": "f1147d60cc0815469bb17bcb1f989b608daea94cc7485316eb28621bced782b2"
+    },
+    {
+      "id": "reported-will",
+      "file": "reported-will.mp3",
+      "text": "The spokesperson said they would publish the repair plan the following day.",
+      "kind": "phrase",
+      "bytes": 64827,
+      "sha256": "5f456e48ade35bd785c72a892a93cd20befa8a7f7de1f3e2d0b508ea48a6fe26"
+    },
+    {
+      "id": "direct-can",
+      "file": "direct-can.mp3",
+      "text": "I can perform on Saturday.",
+      "kind": "phrase",
+      "bytes": 27629,
+      "sha256": "2180aa2d8ae91b31a7482f497d3749cec6b75001f9af54ca5fd51a1727a49474"
+    },
+    {
+      "id": "reported-can",
+      "file": "reported-can.mp3",
+      "text": "The singer said she could perform on Saturday.",
+      "kind": "phrase",
+      "bytes": 41004,
+      "sha256": "80f7713cb0e8f243f68f22286098cf60f2122bf431a51824ce84aa304197fcf8"
+    },
+    {
+      "id": "still-true",
+      "file": "still-true.mp3",
+      "text": "The reporter said that the library is still closed.",
+      "kind": "phrase",
+      "bytes": 47273,
+      "sha256": "66e6172f5a73975053a609bc84b55a41bc6f9fa1332628c7d25f96a594b52b2b"
+    },
+    {
+      "id": "source-attribution",
+      "file": "source-attribution.mp3",
+      "text": "According to the council, the inspection is complete.",
+      "kind": "phrase",
+      "bytes": 47691,
+      "sha256": "b0df14f3dde7641cd20175ce4a0c690ea8d75f7f9902c21fc7b804b24e6ee93c"
+    },
+    {
+      "id": "cautious-reporting",
+      "file": "cautious-reporting.mp3",
+      "text": "The report has not been confirmed. We do not yet know the cause.",
+      "kind": "phrase",
+      "bytes": 60648,
+      "sha256": "1b8f1585211760f43bc5583785a961d5cba0419b20f502cf714d1d9208ced40f"
+    },
+    {
+      "id": "past-sequence",
+      "file": "past-sequence.mp3",
+      "text": "First, the storm hit the town. Then, a tree fell. Later, workers inspected the damage.",
+      "kind": "phrase",
+      "bytes": 91159,
+      "sha256": "32b89b2205bf3234e760b27fa6096b41c54390eed466ab45c3db2f1ba1df1516"
+    },
+    {
+      "id": "reported-instruction",
+      "file": "reported-instruction.mp3",
+      "text": "The coordinator told the group to check official updates.",
+      "kind": "phrase",
+      "bytes": 51453,
+      "sha256": "1513a9a3217e67f7ea5438f5d32eceb9c2b820c7d9ff7bccd8a53a49c11c0824"
+    },
+    {
+      "id": "word-headline",
+      "file": "word-headline.mp3",
+      "text": "headline",
+      "kind": "word",
+      "spanish": "titular",
+      "bytes": 13836,
+      "sha256": "8a1c2e410cdb6df71ee7d6145b93b45c438804a5fbc7d9a99ad0c8391d3c9544"
+    },
+    {
+      "id": "word-source",
+      "file": "word-source.mp3",
+      "text": "source",
+      "kind": "word",
+      "spanish": "fuente",
+      "bytes": 16762,
+      "sha256": "06619c7e36a69dbe0ed79c835c80485293ec16188182c4d77e10f45851912b18"
+    },
+    {
+      "id": "word-reporter",
+      "file": "word-reporter.mp3",
+      "text": "reporter",
+      "kind": "word",
+      "spanish": "reportero o periodista",
+      "bytes": 14254,
+      "sha256": "eee29521ee0e3ef0b5c6822566d1898da19a18992804c66ce7849194ba70e717"
+    },
+    {
+      "id": "word-witness",
+      "file": "word-witness.mp3",
+      "text": "witness",
+      "kind": "word",
+      "spanish": "testigo",
+      "bytes": 13836,
+      "sha256": "b73691c93053da41b961a5764a361301a44aa191a7b0b853d2abca7320ebf6ce"
+    },
+    {
+      "id": "word-statement",
+      "file": "word-statement.mp3",
+      "text": "statement",
+      "kind": "word",
+      "spanish": "declaración",
+      "bytes": 13836,
+      "sha256": "0c5ce7539d53ee1eeffa7003060ec2469f72c961b3d1541c7aa2077224077713"
+    },
+    {
+      "id": "word-evidence",
+      "file": "word-evidence.mp3",
+      "text": "evidence",
+      "kind": "word",
+      "spanish": "evidencia o pruebas",
+      "bytes": 13836,
+      "sha256": "d6afe39f65f968991c883babeb16b4e0e90212243785900d4ac93dc03c34e3ee"
+    },
+    {
+      "id": "word-fact",
+      "file": "word-fact.mp3",
+      "text": "fact",
+      "kind": "word",
+      "spanish": "hecho",
+      "bytes": 10075,
+      "sha256": "0c5cc5cb5de95eca86b1153c144124f2d4a237c6272011f6067c5ee6af1a313a"
+    },
+    {
+      "id": "word-opinion",
+      "file": "word-opinion.mp3",
+      "text": "opinion",
+      "kind": "word",
+      "spanish": "opinión",
+      "bytes": 13836,
+      "sha256": "67bb10903fda0fd450772bf0201e7b2e41181f5200484ee622baca462f79822a"
+    },
+    {
+      "id": "word-rumour",
+      "file": "word-rumour.mp3",
+      "text": "rumour",
+      "kind": "word",
+      "spanish": "rumor",
+      "bytes": 14254,
+      "sha256": "43259b5114332ac843909407978677611df4aa52e244659df552c1029af8e99a"
+    },
+    {
+      "id": "word-claim",
+      "file": "word-claim.mp3",
+      "text": "claim",
+      "kind": "word",
+      "spanish": "afirmación",
+      "bytes": 13836,
+      "sha256": "20e5723fed011dca6feb60c439895f245aae9a6e9b1d437b6c6f31642fc0a917"
+    },
+    {
+      "id": "word-council",
+      "file": "word-council.mp3",
+      "text": "council",
+      "kind": "word",
+      "spanish": "concejo o gobierno municipal",
+      "bytes": 14254,
+      "sha256": "5ea3009e4d1fdb186eaa9b2e4219b3873ee289878ef5b963db1471ec8c1024f7"
+    },
+    {
+      "id": "word-spokesperson",
+      "file": "word-spokesperson.mp3",
+      "text": "spokesperson",
+      "kind": "word",
+      "spanish": "portavoz",
+      "bytes": 19688,
+      "sha256": "9e81af582b31af3998d0ab8fe4578d3ec33e32b781123f04a61ab50cb57fce79"
+    },
+    {
+      "id": "word-announcement",
+      "file": "word-announcement.mp3",
+      "text": "announcement",
+      "kind": "word",
+      "spanish": "anuncio",
+      "bytes": 17598,
+      "sha256": "b79f3819ba904264d7aaec802d10767872ab73a21ce561cce9c81548bfd57be9"
+    },
+    {
+      "id": "word-earthquake",
+      "file": "word-earthquake.mp3",
+      "text": "earthquake",
+      "kind": "word",
+      "spanish": "terremoto",
+      "bytes": 15090,
+      "sha256": "c24f5e444d713d5e27f0aee9f849ecddca7ec3dfed319b67c5c52ec85e3fc3c0"
+    },
+    {
+      "id": "word-flood",
+      "file": "word-flood.mp3",
+      "text": "flood",
+      "kind": "word",
+      "spanish": "inundación",
+      "bytes": 13000,
+      "sha256": "ef28fe1c6c666e4838019a575f8a1bc68c179f8917e36f4e2f37effd30413830"
+    },
+    {
+      "id": "word-hurricane",
+      "file": "word-hurricane.mp3",
+      "text": "hurricane",
+      "kind": "word",
+      "spanish": "huracán",
+      "bytes": 15926,
+      "sha256": "a02117c4f5d3dae6e832ce140fea3dcc58c1c72f4367eeaa12a1e7428cf9e70d"
+    },
+    {
+      "id": "word-drought",
+      "file": "word-drought.mp3",
+      "text": "drought",
+      "kind": "word",
+      "spanish": "sequía",
+      "bytes": 14254,
+      "sha256": "76a8334d0c4bb75a8e64d35ccf3b66d5788f76cab0eaa311bf9a95787a4cb69f"
+    },
+    {
+      "id": "word-wildfire",
+      "file": "word-wildfire.mp3",
+      "text": "wildfire",
+      "kind": "word",
+      "spanish": "incendio forestal",
+      "bytes": 17598,
+      "sha256": "9cd850d56ee84e6a1019ae4174c234355afd12a4010a9b5c2a26a73602cf31b7"
+    },
+    {
+      "id": "word-landslide",
+      "file": "word-landslide.mp3",
+      "text": "landslide",
+      "kind": "word",
+      "spanish": "deslizamiento de tierra",
+      "bytes": 16762,
+      "sha256": "9c797daf9c1f178093af26f0aba640b4942fd101aa5f3ad24d8c9417c3b1b51f"
+    },
+    {
+      "id": "word-damage",
+      "file": "word-damage.mp3",
+      "text": "damage",
+      "kind": "word",
+      "spanish": "daño o daños",
+      "bytes": 14254,
+      "sha256": "e02c31d0d5751e2d524b4a4641c64cd3e8c692ba01533142b9f4ee2c23ed8703"
+    },
+    {
+      "id": "word-rescue-crew",
+      "file": "word-rescue-crew.mp3",
+      "text": "rescue crew",
+      "kind": "word",
+      "spanish": "equipo de rescate",
+      "bytes": 18852,
+      "sha256": "6ae76fdea0a4302fed60aca46c6402882da76925bb8e841ac9885df7f8870cd7"
+    },
+    {
+      "id": "word-shelter",
+      "file": "word-shelter.mp3",
+      "text": "shelter",
+      "kind": "word",
+      "spanish": "refugio",
+      "bytes": 16762,
+      "sha256": "5ebc0ac294497bb0cf17eb5debdf7fd682fa95d4586f3ce4e32baffdd9e954d3"
+    },
+    {
+      "id": "word-warning",
+      "file": "word-warning.mp3",
+      "text": "warning",
+      "kind": "word",
+      "spanish": "advertencia o alerta",
+      "bytes": 14254,
+      "sha256": "6da4c8f11ffbf04f4cb03aa2876eb7ef0d11b4ed882cefb955255a5c82f9229f"
+    },
+    {
+      "id": "word-supplies",
+      "file": "word-supplies.mp3",
+      "text": "supplies",
+      "kind": "word",
+      "spanish": "suministros",
+      "bytes": 16762,
+      "sha256": "8fd426aaca1e084867bcf143e94e09b905c851fca436efcba4d8d5fcdbf88069"
+    },
+    {
+      "id": "word-power-outage",
+      "file": "word-power-outage.mp3",
+      "text": "power outage",
+      "kind": "word",
+      "spanish": "corte de electricidad",
+      "bytes": 19688,
+      "sha256": "b66d93118c7a83c76d2487bc84285e45c3c95b6837724a69d0ab042ac4118dee"
+    },
+    {
+      "id": "word-fallen-tree",
+      "file": "word-fallen-tree.mp3",
+      "text": "fallen tree",
+      "kind": "word",
+      "spanish": "árbol caído",
+      "bytes": 19688,
+      "sha256": "1a2866d00811d46fa8da280a62d6bb96014b094b70865204cc174b2b9c30bd7b"
+    },
+    {
+      "id": "word-bulletin",
+      "file": "word-bulletin.mp3",
+      "text": "bulletin",
+      "kind": "word",
+      "spanish": "boletín informativo",
+      "bytes": 18016,
+      "sha256": "376ab90f0e3c9abb1349f28449d8e455ee90b0740b27b5ef15e3b03ccd9c5e0f"
+    },
+    {
+      "id": "expression-find-out",
+      "file": "expression-find-out.mp3",
+      "text": "find out. The reporter wants to find out what happened.",
+      "term": "find out",
+      "spanish": "averiguar",
+      "expressionType": "Phrasal verb",
+      "kind": "phrase",
+      "bytes": 51453,
+      "sha256": "884100b763b6a00bd916ec05d1d7b03ec4115906fd172004f429a0c7bfb72114"
+    },
+    {
+      "id": "expression-check-out",
+      "file": "expression-check-out.mp3",
+      "text": "check out. The editor will check out the claim before publishing it.",
+      "term": "check out",
+      "spanish": "comprobar o investigar",
+      "expressionType": "Phrasal verb",
+      "kind": "phrase",
+      "bytes": 59812,
+      "sha256": "2cfe00d44785df3d89ea77676344badbf547ce5266b2ba0e39c34086a78919f5"
+    },
+    {
+      "id": "expression-carry-out",
+      "file": "expression-carry-out.mp3",
+      "text": "carry out. Workers carried out an inspection.",
+      "term": "carry out",
+      "spanish": "llevar a cabo",
+      "expressionType": "Phrasal verb",
+      "kind": "phrase",
+      "bytes": 51035,
+      "sha256": "eeb813241ce691122c1c3e25f92df22e8bd60d8b23eb5ef7cb3f8f634f66766b"
+    },
+    {
+      "id": "expression-point-out",
+      "file": "expression-point-out.mp3",
+      "text": "point out. The witness pointed out a broken window.",
+      "term": "point out",
+      "spanish": "señalar o destacar",
+      "expressionType": "Phrasal verb",
+      "kind": "phrase",
+      "bytes": 56050,
+      "sha256": "696b52de938bf26ed09a72d160a2965ef49cbd36c0eeaea286b4e6ff8848d117"
+    },
+    {
+      "id": "expression-clear-up",
+      "file": "expression-clear-up.mp3",
+      "text": "clear up. The new statement helped clear up the confusion.",
+      "term": "clear up",
+      "spanish": "aclarar",
+      "expressionType": "Phrasal verb",
+      "kind": "phrase",
+      "bytes": 53960,
+      "sha256": "dcfc7d2df65b3b0d5b8f5de3b9fdd05b6ba11d38dbd968fbd0881076f2b9ad88"
+    },
+    {
+      "id": "expression-word-of-mouth",
+      "file": "expression-word-of-mouth.mp3",
+      "text": "word of mouth. The rumour spread by word of mouth.",
+      "term": "word of mouth",
+      "spanish": "de boca en boca",
+      "expressionType": "Idiom",
+      "kind": "phrase",
+      "bytes": 48527,
+      "sha256": "f121a1f930952f988c2e73246e9713ef0bebb9c160d4918ed9273a0d1a250c6b"
+    },
+    {
+      "id": "expression-make-headlines",
+      "file": "expression-make-headlines.mp3",
+      "text": "make headlines. The concert announcement made headlines.",
+      "term": "make headlines",
+      "spanish": "ser noticia o acaparar titulares",
+      "expressionType": "Idiom",
+      "kind": "phrase",
+      "bytes": 55214,
+      "sha256": "a0edb8bdcab4dc2a45797ecbfa0785caf589695b358538292967f8955529f9ec"
+    },
+    {
+      "id": "expression-take-it-with-a-grain-of-salt",
+      "file": "expression-take-it-with-a-grain-of-salt.mp3",
+      "text": "take it with a grain of salt. The story has no named source, so take it with a grain of salt.",
+      "term": "take it with a grain of salt",
+      "spanish": "tomarlo con reservas",
+      "expressionType": "Idiom",
+      "kind": "phrase",
+      "bytes": 91577,
+      "sha256": "61dd36f1f89be667c4206845ac595a3dcfea2dc7f73db5d91c8fca8ea4692011"
+    }
+  ]
+}

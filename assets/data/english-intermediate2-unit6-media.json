@@ -1,0 +1,148 @@
+{
+  "title": "Unit 6 \u00b7 News, Reported Speech and Natural Disasters",
+  "status": "Media prepared; complete explanation page not yet built.",
+  "fictional": true,
+  "audioManifest": "/ingles/intermediate-2/audio/unit-6-explanation/models.json",
+  "images": [
+    {
+      "id": "newsroom-hero",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/newsroom-hero-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/newsroom-hero.mp3",
+      "width": 1932,
+      "height": 814,
+      "bytes": 124310,
+      "sha256": "e166e80e6c90faf1d8cf1121fb6f0cca86ecb793e681fefe3257311ea69fc208",
+      "alt": "Journalists prepare a television bulletin in a modern newsroom."
+    },
+    {
+      "id": "checking-sources",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/checking-sources-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/checking-sources.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 184924,
+      "sha256": "50291ceeccecf8a656fea771243442936abd8fe3b959ce5015a9d66726df9567",
+      "alt": "An editor and reporter compare photographs of a flooded street and a red bridge."
+    },
+    {
+      "id": "witness-interview",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/witness-interview-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/witness-interview.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 258196,
+      "sha256": "bfd56e54b16678fd63643272f531047786799cb0f3eacf8df4aaf52575566f60",
+      "alt": "A resident in a yellow raincoat speaks to a reporter outside a library after a storm."
+    },
+    {
+      "id": "reporting-the-interview",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/reporting-the-interview-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/reporting-the-interview.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 187412,
+      "sha256": "99dc141d7ec8199db251775bfe99678a04785cf6ddba70efa0ec9729191e7e19",
+      "alt": "A journalist recounts the interview to his editor while the witness appears in a photograph."
+    },
+    {
+      "id": "community-press-conference",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/community-press-conference-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/community-press-conference.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 154060,
+      "sha256": "bf10d76060ed214d1ce11fdf13f965247aad9750f19389329698b64fd2ef95ef",
+      "alt": "A council spokesperson answers questions about repairs to a community library."
+    },
+    {
+      "id": "entertainment-interview",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/entertainment-interview-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/entertainment-interview.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 176748,
+      "sha256": "2ec37bbfb4eb9929ae25d104ca89986ea80a1ad0de1303afbf2becd06fe2a701",
+      "alt": "A fictional singer announces a concert during a studio interview."
+    },
+    {
+      "id": "earthquake",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/earthquake-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/earthquake.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 465950,
+      "sha256": "16fe85cf9df9c17ae910a180336ed74304e71e5f9031330735fee140e92f2870",
+      "alt": "An assessment team examines damaged buildings behind a barrier after an earthquake."
+    },
+    {
+      "id": "flood",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/flood-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/flood.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 371696,
+      "sha256": "bf295134ce13994bfbceacdd97fd639cec416002915b0c571f989d102c0c59c4",
+      "alt": "A rescue boat moves through a flooded residential street as residents watch from high ground."
+    },
+    {
+      "id": "hurricane",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/hurricane-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/hurricane.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 278158,
+      "sha256": "9cd2977f68235491f0844dc851e157160314a76a4863ffb2ccf63ae467049638",
+      "alt": "Strong wind bends palm trees in a coastal town during a hurricane."
+    },
+    {
+      "id": "drought",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/drought-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/drought.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 458490,
+      "sha256": "add23e49f89dc8c1f75f098bf89d9f8b09155f58eb7bd8f71caadd5ee6ababa0",
+      "alt": "A farmer observes cracked ground and a reservoir with a low water level during a drought."
+    },
+    {
+      "id": "wildfire",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/wildfire-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/wildfire.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 361844,
+      "sha256": "4e1a09606b48c2f327a57cb59dfdeda42c9226dc1b68c6d2c99008f524f37430",
+      "alt": "Firefighters observe a distant forest fire from beside their fire engine."
+    },
+    {
+      "id": "landslide",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/landslide-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/landslide.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 479610,
+      "sha256": "f1b0f22a4a900ec68737325d4b94fa19616d60fd0560b4869b34ba7966ed9473",
+      "alt": "Rocks and soil from a landslide block a mountain road behind a barrier."
+    },
+    {
+      "id": "community-briefing",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/community-briefing-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/community-briefing.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 205940,
+      "sha256": "66cf3f003a86e827305848306f5f01a8fc958a1bb92215402dfd76cfe55d91e8",
+      "alt": "A coordinator explains an information map to residents at a community centre."
+    },
+    {
+      "id": "television-bulletin",
+      "image": "/assets/img/english-intermediate-2/unit-6/explanation/television-bulletin-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/television-bulletin.mp3",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 145596,
+      "sha256": "1313134900358afe98e02b06b2078a86c075410ee6518ba0d785d85ea50401ce",
+      "alt": "A news presenter delivers a bulletin while a field reporter appears on a studio screen."
+    }
+  ]
+}
