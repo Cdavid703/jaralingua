@@ -47,7 +47,7 @@
   if(speed){rate=Number(speed.dataset.u6Speed);player.playbackRate=rate;document.querySelectorAll('[data-u6-speed]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.u6Speed)===rate)));}
   if(e.target.closest('[data-u6-stop]'))stop();
  });
- document.querySelectorAll('.ie2-theory-topic').forEach(el=>el.addEventListener('toggle',()=>{if(!el.open){hideTip();if(lastButton&&el.contains(lastButton))stop();}}));
+ document.querySelectorAll('.ie2-theory-topic,.u6-topic-group').forEach(el=>el.addEventListener('toggle',()=>{if(!el.open){hideTip();if(lastButton&&el.contains(lastButton))stop();}}));
  const dialog=document.createElement('dialog');dialog.className='u4-projector u6-projector';dialog.setAttribute('aria-labelledby','u6-project-title');
  dialog.innerHTML='<header class="u4-project-toolbar"><span id="u6-project-count"></span><div><button type="button" data-u6-fullscreen>Full screen</button><button type="button" data-u6-close autofocus>Close ×</button></div></header><div class="u4-project-stage"><div class="u4-project-visual"><img alt=""/></div><div class="u4-project-text"><h2 id="u6-project-title"></h2><div class="u4-project-description"></div><p data-u6-status role="status"></p></div></div><nav class="u4-project-nav" aria-label="Projection cards"><button type="button" data-u6-prev>← Previous</button><div class="u6-audio-settings" role="group" aria-label="Projection audio speed"><button type="button" data-u6-speed="0.75" aria-pressed="true">0.75×</button><button type="button" data-u6-speed="1" aria-pressed="false">1×</button><button type="button" data-u6-stop>Stop audio</button></div><button type="button" data-u6-next>Next →</button></nav>';
  document.body.append(dialog);
@@ -63,6 +63,18 @@
   copy.querySelectorAll('[id]').forEach(e=>e.removeAttribute('id'));
   copy.querySelectorAll('[aria-describedby]').forEach(e=>e.removeAttribute('aria-describedby'));
   copy.querySelectorAll('.u6-project-section').forEach(e=>e.remove());
+  if(textOnly){
+   // Section projection includes its illustrations without inert enlarge buttons.
+   copy.querySelectorAll('.u4-project-open').forEach(button=>{
+    const figure=document.createElement('figure');figure.className='u6-section-image';
+    const picture=button.querySelector('img');picture.loading='eager';figure.append(picture);button.replaceWith(figure);
+   });
+   copy.querySelectorAll('.u6-topic-group').forEach(group=>group.open=true);
+  }else{
+   // Keep a single heading, including any vocabulary pronunciation button.
+   const heading=copy.querySelector('h3');
+   if(heading){dialog.querySelector('h2').replaceChildren(...heading.childNodes);heading.remove();}
+  }
   dialog.querySelector('.u4-project-description').replaceChildren(copy);
   dialog.querySelector('#u6-project-count').textContent=textOnly?'Lesson explanation':(index+1)+' / '+group.length;
   dialog.querySelector('[data-u6-prev]').disabled=index===0;dialog.querySelector('[data-u6-next]').disabled=index===group.length-1;

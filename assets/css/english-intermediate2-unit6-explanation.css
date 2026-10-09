@@ -3,8 +3,8 @@
 .ie2-unit6-theory-page .u6-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .ie2-unit6-theory-page .u6-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}
 .ie2-unit6-theory-page .ie2-theory-body p{line-height:1.65}
-.ie2-unit6-theory-page .u6-scene{padding:0;overflow:hidden;cursor:zoom-in}
-.u6-scene img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:contain;background:#e9edf4}
+.ie2-unit6-theory-page .u6-scene{padding:0;overflow:hidden}
+.u6-scene img{display:block;width:100%;height:auto;max-height:320px;aspect-ratio:3/2;object-fit:contain;background:#e9edf4}
 .u6-scene .u4-card-copy{padding:1rem}
 .u6-say{display:inline;font:inherit;line-height:inherit;text-align:left;color:var(--ie2-navy);border:0;border-bottom:2px dotted var(--ie2-teal);background:transparent;padding:.3rem .1rem;min-height:44px;cursor:pointer;max-width:100%;overflow-wrap:anywhere}
 .u6-say:hover,.u6-say[aria-pressed=true]{background:#dcefe8;color:#145437}
@@ -33,7 +33,6 @@
 .ie2-unit6-theory-page .u4-model{margin:.65rem 0}
 .ie2-unit6-theory-page .u4-formula{gap:.4rem}
 .u6-projector .u4-project-visual img{display:block;width:100%;height:100%;object-fit:contain;min-height:0}
-.u6-projector .u4-project-description h3{display:none}
 .u6-projector .u4-project-description p{font-size:clamp(1.25rem,2.1vw,2.25rem)}
 .u6-projector .u6-audio-settings{margin:0;padding:.4rem .6rem;gap:.35rem}
 .u6-projector .u4-project-text h2{font-size:clamp(1.6rem,3.4vw,3.5rem)}
@@ -61,10 +60,30 @@
 .u6-expression-type{display:inline-block;background:#e5f3ef;color:#145b53;border-radius:99px;padding:.2rem .7rem;font-size:.85rem;font-weight:800}
 .u6-expression-spanish{border-left:3px solid var(--ie2-gold);padding:.5rem .8rem;background:#fff8e8}
 
-.u6-projector.u6-text-only .u4-project-stage{display:block}.u6-projector.u6-text-only .u4-project-visual{display:none}.u6-projector .u4-project-description h3{display:block}.u6-projector .u6-project-section,.u6-projector .u4-project-open{display:none}.u6-projector .u4-project-description .u6-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.u6-projector.u6-text-only .u4-project-text{overflow:visible}.u6-projector .u4-project-description{line-height:1.6}.u6-projector .u4-project-description table{font-size:clamp(1rem,1.7vw,1.6rem)}
+.u6-projector.u6-text-only .u4-project-stage{display:block}.u6-projector.u6-text-only .u4-project-visual{display:none}.u6-projector .u4-project-description h3{display:block}.u6-projector .u6-project-section{display:none}.u6-projector .u4-project-description .u6-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem}.u6-projector.u6-text-only .u4-project-text{overflow:visible}.u6-projector .u4-project-description{line-height:1.6}.u6-projector .u4-project-description table{font-size:clamp(1rem,1.7vw,1.6rem)}
 .u6-tooltip{position:fixed;z-index:2000;width:max-content;max-width:calc(100vw - 24px);padding:.65rem .9rem;border:1px solid #adc7bc;border-radius:8px;background:#fff;color:#123e36;box-shadow:0 8px 28px #0003;font:500 1.1rem/1.4 system-ui;overflow-wrap:anywhere}.u6-tooltip[hidden]{display:none!important}
 .u6-say[data-u6-meaning]{text-decoration:underline dotted;text-underline-offset:.2em}.u6-hint,.u6-source{color:var(--ie2-muted);font-size:.95rem}.u6-support,.u6-transcript{margin:1rem 0;padding:.7rem 1rem;border:1px solid var(--ie2-line);border-radius:8px}.u6-support summary,.u6-transcript summary{cursor:pointer;font-weight:700;min-height:32px}.u6-scene .u4-project-open{width:100%}.u6-audio-settings audio{width:min(100%,300px);max-width:100%}.u6-project-section{margin:0 0 1rem}.u6-projector .u4-project-toolbar{flex-wrap:wrap}.u6-projector .u4-project-nav{flex-wrap:wrap}.u6-projector .u4-project-visual{min-height:0}.u6-projector .u4-project-description .ie2-key-answer{display:none}
 @media(max-width:760px){.u6-projector .u4-project-description .u6-grid{grid-template-columns:1fr}.u6-projector.u6-text-only .u4-project-stage{display:block}.u6-projector .u4-project-nav{gap:.4rem;padding:.6rem}.u6-projector .u6-audio-settings button{min-width:44px;padding:.4rem}.u6-projector .u6-audio-settings{order:3;width:100%;justify-content:center}}
 
 /* The shared QR layout widens these children; keep Unit 6 hero controls inside the copy column. */
 .ie2-unit6-theory-page .u4-hero .ie2-overview-chips,.ie2-unit6-theory-page .u4-hero .intermediate2-actions{width:100%!important;max-width:100%;min-width:0}
+
+/* Reading previews stay compact; the projector keeps the original image available. */
+.ie2-unit6-theory-page main .u6-scene .u4-project-open{align-self:start;background:#e9edf4}
+.ie2-unit6-theory-page .u6-scene .u4-card-copy{min-width:0}
+.u6-topic-group{margin:1rem 0;border:1px solid var(--ie2-line);border-radius:8px;background:white}
+.u6-topic-group>summary{padding:1rem;min-height:48px;font-weight:750;color:var(--ie2-navy);cursor:pointer;line-height:1.5}
+.u6-topic-group>summary:focus-visible{outline:3px solid var(--ie2-gold);outline-offset:2px}
+.u6-group-body{padding:0 1rem 1rem}
+.u6-group-body>.u6-grid{margin:.25rem 0!important}
+.u6-projector .u6-section-image{margin:0;background:#e9edf4}
+.u6-projector .u6-section-image img{max-height:360px}
+.u6-projector .u6-topic-group>summary{font-size:clamp(1.1rem,1.6vw,1.5rem)}
+.u6-projector #u6-project-title .u6-say{font:inherit;color:inherit}
+@media(min-width:900px){
+ .ie2-unit6-theory-page main .ie2-theory-body>.u6-scene{display:grid;grid-template-columns:minmax(0,540px) minmax(0,1fr);align-items:start}
+}
+@media(max-width:760px){
+ .ie2-unit6-theory-page main .u6-scene img{max-height:260px}
+ .u6-group-body{padding:0 .65rem .65rem}
+}
