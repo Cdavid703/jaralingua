@@ -19,3 +19,7 @@ This is an illustrated vocabulary learning story with public captions requested 
 - Functional and layout checks: `tools/test_intermediate2_newsroom.cjs` (320–1920 px and touch); shared 48-page contract and Sign in audit. The browser test checks all twelve images, hover without click, audio, projection/restore, captions, sequential playback, ten-question scoring/retry, catalog discovery and audio failure feedback.
 
 Future additions should use new versions for changed published media, keep each scene visually distinct, and retain ordinary study-sized images plus intentional projection.
+
+## Audio controls correction · 9 October 2026
+
+The native player now receives the current scene or question as soon as the view is rendered, with metadata preloading. Its Play button works before Listen is used, and navigation refreshes the source. Word pronunciation uses a separate hidden player; starting either player pauses the other, preserving the lesson track and its position. The selected speed applies to both. The new `tools/test_intermediate2_newsroom_audio.cjs` regression exercises native Play directly, pause/resume, scene and question navigation, pronunciation isolation, projection and continuous playback at mobile and desktop widths.

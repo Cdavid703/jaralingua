@@ -1,6 +1,7 @@
 /* Illustrated public vocabulary lesson. Answers stay in this browser; no grading API. */
 (()=>{'use strict';
 const $=s=>document.querySelector(s),tv=$('#news-tv'),dialog=$('#news-projector'),audio=$('#news-audio');
+const wordAudio=document.createElement('audio');wordAudio.id='news-word-audio';wordAudio.preload='none';document.body.append(wordAudio);
 let data,index=0,question=0,mode='story',answers=[],graded=false,continuous=false,rate=.75,sequence=0,caption=true,opener=null,ownsFullscreen=false,activeWord=null;
 const tip=document.createElement('div');tip.className='news-tooltip';tip.id='news-tooltip';tip.role='tooltip';tip.lang='es';tip.hidden=true;let target=null,timer;
 function hideTip(){clearTimeout(timer);target?.removeAttribute('aria-describedby');target=null;tip.hidden=true;}
@@ -10,10 +11,28 @@ function leaveTip(){clearTimeout(timer);timer=setTimeout(()=>{if(!tip.matches(':
 tip.addEventListener('pointerenter',()=>clearTimeout(timer));tip.addEventListener('pointerleave',leaveTip);
 document.addEventListener('pointerover',e=>{if(e.pointerType!=='touch')showTip(e.target.closest('[data-word]'));});document.addEventListener('pointerout',e=>{if(e.target.closest('[data-word]'))leaveTip();});document.addEventListener('focusin',e=>showTip(e.target.closest('[data-word]')));document.addEventListener('focusout',leaveTip);document.addEventListener('pointerdown',e=>{if(!e.target.closest('[data-word],.news-tooltip'))hideTip();},true);document.addEventListener('scroll',()=>{if(!tip.hidden)positionTip();},true);window.addEventListener('resize',hideTip);
 const status=text=>$('#news-status').textContent=text;
-function stop(){sequence++;continuous=false;activeWord=null;audio.pause();$('#news-tv [data-news-action=continuous]').setAttribute('aria-pressed','false');syncAudio();}
-function syncAudio(){const playing=!audio.paused&&!audio.ended;tv.querySelectorAll('[data-word]').forEach(e=>e.setAttribute('aria-pressed',String(playing&&e.dataset.word===activeWord)));tv.querySelector('[data-news-action=play]').setAttribute('aria-pressed',String(playing&&!activeWord));}
-async function playFile(file,word=null,keepContinuous=false){if(!keepContinuous)continuous=false;activeWord=word;const ticket=++sequence;audio.pause();audio.src=file;audio.load();audio.playbackRate=rate;status('');tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed',String(continuous));try{await audio.play();if(ticket===sequence)syncAudio();}catch(e){if(ticket===sequence&&e.name!=='AbortError'){continuous=false;tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed','false');status('Audio could not play. Check your connection and press Listen again.');syncAudio();}}}
-['play','pause','ended'].forEach(e=>audio.addEventListener(e,syncAudio));audio.addEventListener('error',()=>{continuous=false;tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed','false');status('Audio could not load. Press Listen to retry.');});
+function stop(){sequence++;continuous=false;activeWord=null;audio.pause();wordAudio.pause();tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed','false');syncAudio();}
+function syncAudio(){const playing=!audio.paused&&!audio.ended,wordPlaying=!wordAudio.paused&&!wordAudio.ended;tv.querySelectorAll('[data-word]').forEach(e=>e.setAttribute('aria-pressed',String(wordPlaying&&e.dataset.word===activeWord)));tv.querySelector('[data-news-action=play]').setAttribute('aria-pressed',String(playing));}
+function prepareNarration(){
+ const file=mode==='quiz'?data.questions[question].audio:data.scenes[index].audio;
+ if(audio.getAttribute('src')!==file){audio.src=file;audio.load();}
+ audio.playbackRate=rate;audio.hidden=mode==='vocabulary';
+ audio.setAttribute('aria-label',mode==='quiz'?'Question '+(question+1)+' audio':'Scene '+(index+1)+' audio');
+}
+async function playFile(file,word=null,keepContinuous=false){
+ if(!keepContinuous)continuous=false;
+ activeWord=word;const ticket=++sequence,player=word?wordAudio:audio;
+ audio.pause();wordAudio.pause();
+ if(player.getAttribute('src')!==file||player.error){player.src=file;player.load();}else player.currentTime=0;
+ player.playbackRate=rate;status('');tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed',String(continuous));
+ try{await player.play();if(ticket===sequence)syncAudio();}catch(e){if(ticket===sequence&&e.name!=='AbortError'){continuous=false;tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed','false');status(word?'Pronunciation could not play. Tap the word to retry.':'Audio could not play. Check your connection and press Listen again.');syncAudio();}}
+}
+for(const player of [audio,wordAudio]){
+ ['play','pause','ended'].forEach(e=>player.addEventListener(e,syncAudio));
+ player.addEventListener('error',()=>{continuous=false;tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed','false');status(player===wordAudio?'Pronunciation could not load. Tap the word to retry.':'Audio could not load. Press Listen to retry.');});
+}
+// Native Play must also stop a word clip and retain the selected lesson speed.
+audio.addEventListener('play',()=>{wordAudio.pause();activeWord=null;audio.playbackRate=rate;status('');syncAudio();});
 audio.addEventListener('ended',()=>{if(continuous&&mode==='story'&&index<data.scenes.length-1){index++;render(false);playFile(data.scenes[index].audio,null,true);}else if(continuous){continuous=false;tv.querySelector('[data-news-action=continuous]').setAttribute('aria-pressed','false');status('End of the report. You can now answer the ten questions.');}});
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 function wordButton(term,label=term){return '<button type="button" class="news-word" data-word="'+esc(term)+'" aria-pressed="false">'+esc(label)+'</button>';}
@@ -27,10 +46,10 @@ $('#news-jump').innerHTML=(quiz?data.questions:data.scenes).map((s,i)=>'<option 
 const prev=tv.querySelector('[data-news-action=previous]'),next=tv.querySelector('[data-news-action=next]');prev.disabled=(quiz?question:index)===0;next.disabled=quiz&&question===9;next.textContent=story&&index===11?'Answer 10 questions →':'Next →';
 if(story){$('#news-image').src=scene.image;$('#news-image').alt=scene.alt;$('#news-headline').hidden=index!==0;$('#news-scene-title').textContent=scene.title;$('#news-caption').innerHTML=annotate(scene.text);$('#news-caption').hidden=!caption;$('#news-word-help').open=false;$('#news-word-card').innerHTML='<h3>'+wordButton(scene.word)+'</h3><p>'+annotate(scene.definition)+'</p><p>'+annotate(scene.prompt)+'</p>';}
 if(quiz){const q=data.questions[question];$('#news-question-title').innerHTML=annotate(q.question);$('#news-choices').innerHTML=q.options.map((s,i)=>'<label><input type="radio" name="news-answer" value="'+i+'" '+(answers[question]===i?'checked ':'')+(graded?'disabled':'')+'/><span><b>'+String.fromCharCode(65+i)+'.</b> '+annotate(s)+'</span></label>').join('');$('#news-feedback').textContent=graded?(answers[question]===q.answer?'Correct. ':'Review this answer. ')+'Answer '+String.fromCharCode(65+q.answer)+': '+q.feedback:'';$('#news-score').textContent=graded?'Result: '+data.questions.filter((q,i)=>q.answer===answers[i]).length+' / 10. Review each question to see the explanation.':'';tv.querySelector('[data-news-action=grade]').hidden=graded||question!==9;tv.querySelector('[data-news-action=retry-quiz]').hidden=!graded;tv.querySelector('[data-news-action=review-scene]').hidden=!graded;}
-syncAudio();}
+prepareNarration();syncAudio();}
 function setMode(m){mode=m;render();}
 $('#news-image').addEventListener('error',()=>status('This picture could not load. Check your connection and select the scene again.'));
-$('#news-speed').addEventListener('change',e=>{rate=Number(e.target.value);audio.playbackRate=rate;});$('#news-jump').addEventListener('change',e=>{if(mode==='quiz')question=Number(e.target.value);else index=Number(e.target.value);render();});$('#news-choices').addEventListener('change',e=>{if(!graded&&e.target.name==='news-answer')answers[question]=Number(e.target.value);});
+$('#news-speed').addEventListener('change',e=>{rate=Number(e.target.value);audio.playbackRate=rate;wordAudio.playbackRate=rate;});$('#news-jump').addEventListener('change',e=>{if(mode==='quiz')question=Number(e.target.value);else index=Number(e.target.value);render();});$('#news-choices').addEventListener('change',e=>{if(!graded&&e.target.name==='news-answer')answers[question]=Number(e.target.value);});
 document.addEventListener('click',e=>{const word=e.target.closest('[data-word]');if(word){showTip(word);playFile(data.glossary.find(w=>w.term===word.dataset.word).audio,word.dataset.word);return;}const scene=e.target.closest('[data-news-scene]');if(scene){index=Number(scene.dataset.newsScene);setMode('story');return;}const button=e.target.closest('[data-news-action]');if(!button||!data)return;const a=button.dataset.newsAction;
 if(['story','vocabulary','quiz'].includes(a))return setMode(a);
 if(a==='play')playFile(mode==='quiz'?data.questions[question].audio:data.scenes[index].audio);
