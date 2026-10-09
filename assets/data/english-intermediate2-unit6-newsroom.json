@@ -1,0 +1,437 @@
+{
+  "title": "Greenford News · Watch, Learn and Report",
+  "fictional": true,
+  "scenes": [
+    {
+      "id": "headline",
+      "word": "headline",
+      "title": "The headline",
+      "definition": "The title that tells us the main news.",
+      "text": "Good evening. This is a fictional news report. Our headline is: A storm hits Greenford. Heavy rain overnight caused problems near the river on Monday morning. We will find out what happened and where our information comes from.",
+      "alt": "An anchor presents a storm report with a red bridge on the studio screen.",
+      "prompt": "Point to the headline on the television.",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/headline-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/headline.mp3"
+    },
+    {
+      "id": "reporter",
+      "word": "reporter",
+      "title": "At River Street",
+      "definition": "A person who gathers information and presents the news.",
+      "text": "Our reporter, Lena, is on River Street. She is standing on dry ground above the water. Her job is to ask questions, check information and explain the news. A camera operator is filming her report.",
+      "alt": "A reporter holds a microphone on dry ground above a flooded street.",
+      "prompt": "Who is holding the microphone?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/reporter-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/reporter.mp3"
+    },
+    {
+      "id": "witness",
+      "word": "witness",
+      "title": "Someone who saw it",
+      "definition": "Someone who saw or experienced an event.",
+      "text": "Mr. Cole is a witness. He saw a tree fall near the library during the storm. He told Lena that he had watched it from his kitchen window. Lena listens carefully and asks what he saw.",
+      "alt": "A resident in a yellow raincoat points to a fallen tree while a reporter listens.",
+      "prompt": "Point to the person who saw the tree fall.",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/witness-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/witness.mp3"
+    },
+    {
+      "id": "flood",
+      "word": "flood",
+      "title": "Water in the street",
+      "definition": "Water covering land that is normally dry.",
+      "text": "Heavy rain made the river overflow. The flood covered part of River Street on Monday morning. Water surrounded parked cars. The red bridge is visible in the distance, but this picture does not tell us whether the bridge is safe.",
+      "alt": "River water covers a street and surrounds parked cars near a red bridge.",
+      "prompt": "What is covering the road?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/flood-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/flood.mp3"
+    },
+    {
+      "id": "damage",
+      "word": "damage",
+      "title": "Outside the library",
+      "definition": "Harm to a building, object or place.",
+      "text": "The reporter can see damage at the library. A fallen tree blocks the entrance, and two front windows are broken. The building is closed. The report does not yet say how much the repairs will cost.",
+      "alt": "A fallen tree blocks a brick library entrance beside two broken windows.",
+      "prompt": "Which parts of the library are damaged?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/damage-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/damage.mp3"
+    },
+    {
+      "id": "warning",
+      "word": "warning",
+      "title": "An official alert",
+      "definition": "A message about a possible danger or problem.",
+      "text": "The town council sent a warning at eight on Monday morning. The alert told residents to avoid River Street and check official updates. A warning helps people understand a risk before they decide what to do.",
+      "alt": "A phone displays a flood warning symbol near a closed riverside path.",
+      "prompt": "Where can you see the warning?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/warning-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/warning.mp3"
+    },
+    {
+      "id": "rescue-crew",
+      "word": "rescue crew",
+      "title": "Help arrives",
+      "definition": "A team trained to help people in danger.",
+      "text": "Later that morning, a rescue crew used a boat to help two residents leave a riverside house. The team took them to dry ground. Lena checked the number with the team before including it in her report.",
+      "alt": "A rescue team helps two residents from a boat onto a dry landing.",
+      "prompt": "Point to the rescue crew. What are they doing?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/rescue-crew-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/rescue-crew.mp3"
+    },
+    {
+      "id": "shelter",
+      "word": "shelter",
+      "title": "A dry place to stay",
+      "definition": "A place where people can stay safely for a time.",
+      "text": "The school gym became a temporary shelter. Volunteers welcomed families who could not return home. Inside, there were beds and blankets. The shelter gave residents a dry place to rest while they waited for more information.",
+      "alt": "A school gym contains camp beds, blankets, families and volunteers.",
+      "prompt": "What tells you this is a place to stay?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/shelter-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/shelter.mp3"
+    },
+    {
+      "id": "supplies",
+      "word": "supplies",
+      "title": "What people need",
+      "definition": "Useful things such as food, water and blankets.",
+      "text": "Volunteers brought supplies to the school gym. The boxes contained food, and the tables held bottled water and blankets. These supplies helped the families at the shelter. More volunteers arrived to organize the donations.",
+      "alt": "Bottled water, food and blankets sit on a distribution table inside a gym.",
+      "prompt": "Name two supplies you can see.",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/supplies-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/supplies.mp3"
+    },
+    {
+      "id": "source",
+      "word": "source",
+      "title": "Where the information comes from",
+      "definition": "The person, document or organization providing information.",
+      "text": "Before the broadcast, the editor checked the source of the shelter information. She used the town council website and its official notice. She checked the date, too. An anonymous message was not enough to confirm the location.",
+      "alt": "An editor checks a town council website and a printed official notice.",
+      "prompt": "Which document could provide information about the shelter?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/source-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/source.mp3"
+    },
+    {
+      "id": "statement",
+      "word": "statement",
+      "title": "The council speaks",
+      "definition": "Something a person or organization says formally.",
+      "text": "At a briefing, the council spokesperson made a statement. She said the library was closed for inspection. She also said the next update would be on Tuesday morning. This was a statement about the plan, not proof that the work was finished.",
+      "alt": "A council spokesperson speaks into microphones at a public briefing.",
+      "prompt": "Who is making the statement?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/statement-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/statement.mp3"
+    },
+    {
+      "id": "evidence",
+      "word": "evidence",
+      "title": "Check before sharing",
+      "definition": "Information that supports or challenges a claim.",
+      "text": "The editor compared photographs of the library before and after the storm. They provided evidence of damage to the entrance and windows. They did not show the cost of repairs. Our report ends with a reminder: check the source and the evidence before sharing news.",
+      "alt": "Two photographs compare the same library before and after a storm.",
+      "prompt": "What changes can you see between the photographs?",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/evidence-v1.webp",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/evidence.mp3"
+    }
+  ],
+  "glossary": [
+    {
+      "term": "headline",
+      "spanish": "titular",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-headline.mp3"
+    },
+    {
+      "term": "reporter",
+      "spanish": "periodista",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-reporter.mp3"
+    },
+    {
+      "term": "witness",
+      "spanish": "testigo",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-witness.mp3"
+    },
+    {
+      "term": "flood",
+      "spanish": "inundación",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-flood.mp3"
+    },
+    {
+      "term": "damage",
+      "spanish": "daños",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-damage.mp3"
+    },
+    {
+      "term": "warning",
+      "spanish": "advertencia",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-warning.mp3"
+    },
+    {
+      "term": "rescue crew",
+      "spanish": "equipo de rescate",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-rescue-crew.mp3"
+    },
+    {
+      "term": "shelter",
+      "spanish": "refugio",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-shelter.mp3"
+    },
+    {
+      "term": "supplies",
+      "spanish": "provisiones",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-supplies.mp3"
+    },
+    {
+      "term": "source",
+      "spanish": "fuente",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-source.mp3"
+    },
+    {
+      "term": "statement",
+      "spanish": "declaración",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-statement.mp3"
+    },
+    {
+      "term": "evidence",
+      "spanish": "evidencia",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-evidence.mp3"
+    },
+    {
+      "term": "storm",
+      "spanish": "tormenta",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-storm.mp3"
+    },
+    {
+      "term": "heavy rain",
+      "spanish": "lluvia intensa",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-heavy-rain.mp3"
+    },
+    {
+      "term": "river",
+      "spanish": "río",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-river.mp3"
+    },
+    {
+      "term": "overflow",
+      "spanish": "desbordarse",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-overflow.mp3"
+    },
+    {
+      "term": "fallen tree",
+      "spanish": "árbol caído",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-fallen-tree.mp3"
+    },
+    {
+      "term": "broken",
+      "spanish": "rotas / rotos",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-broken.mp3"
+    },
+    {
+      "term": "windows",
+      "spanish": "ventanas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-windows.mp3"
+    },
+    {
+      "term": "official",
+      "spanish": "oficial",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-official.mp3"
+    },
+    {
+      "term": "residents",
+      "spanish": "habitantes",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-residents.mp3"
+    },
+    {
+      "term": "volunteers",
+      "spanish": "voluntarios",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-volunteers.mp3"
+    },
+    {
+      "term": "blankets",
+      "spanish": "mantas",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-blankets.mp3"
+    },
+    {
+      "term": "bottled water",
+      "spanish": "agua embotellada",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-bottled-water.mp3"
+    },
+    {
+      "term": "food",
+      "spanish": "comida",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-food.mp3"
+    },
+    {
+      "term": "gym",
+      "spanish": "gimnasio",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-gym.mp3"
+    },
+    {
+      "term": "closed",
+      "spanish": "cerrado",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-closed.mp3"
+    },
+    {
+      "term": "repairs",
+      "spanish": "reparaciones",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-repairs.mp3"
+    },
+    {
+      "term": "briefing",
+      "spanish": "reunión informativa",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-briefing.mp3"
+    },
+    {
+      "term": "claim",
+      "spanish": "afirmación",
+      "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-claim.mp3"
+    },
+    {
+      "term": "anonymous",
+      "spanish": "anónimo / anónima",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-anonymous.mp3"
+    },
+    {
+      "term": "inspection",
+      "spanish": "inspección",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-inspection.mp3"
+    },
+    {
+      "term": "donations",
+      "spanish": "donaciones",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/word-donations.mp3"
+    }
+  ],
+  "questions": [
+    {
+      "id": "question-01",
+      "question": "Which town is the news report about?",
+      "options": [
+        "Greenford",
+        "Mapleton",
+        "Brookfield"
+      ],
+      "answer": 0,
+      "scene": 0,
+      "feedback": "The headline says that a storm hit Greenford.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-01.mp3"
+    },
+    {
+      "id": "question-02",
+      "question": "Where is Lena reporting from?",
+      "options": [
+        "The airport",
+        "River Street",
+        "The town museum"
+      ],
+      "answer": 1,
+      "scene": 1,
+      "feedback": "Lena is on dry ground above the water at River Street.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-02.mp3"
+    },
+    {
+      "id": "question-03",
+      "question": "What did Mr. Cole see during the storm?",
+      "options": [
+        "A boat hit the bridge",
+        "The school gym close",
+        "A tree fall near the library"
+      ],
+      "answer": 2,
+      "scene": 2,
+      "feedback": "Mr. Cole saw the tree fall from his kitchen window.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-03.mp3"
+    },
+    {
+      "id": "question-04",
+      "question": "Why did the river overflow?",
+      "options": [
+        "A bridge was repaired",
+        "There was heavy rain",
+        "Volunteers moved supplies"
+      ],
+      "answer": 1,
+      "scene": 3,
+      "feedback": "Heavy rain made the river overflow and flood the street.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-04.mp3"
+    },
+    {
+      "id": "question-05",
+      "question": "What damage did the report describe at the library?",
+      "options": [
+        "Two broken front windows and a blocked entrance",
+        "A missing roof and a collapsed tower",
+        "Burned books and a damaged kitchen"
+      ],
+      "answer": 0,
+      "scene": 4,
+      "feedback": "The tree blocked the entrance, and two front windows were broken. The photographs also show this damage.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-05.mp3"
+    },
+    {
+      "id": "question-06",
+      "question": "When did the council send its warning?",
+      "options": [
+        "Tuesday afternoon",
+        "Sunday evening",
+        "Monday at eight in the morning"
+      ],
+      "answer": 2,
+      "scene": 5,
+      "feedback": "The council sent the warning at eight on Monday morning.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-06.mp3"
+    },
+    {
+      "id": "question-07",
+      "question": "How many residents did the rescue crew help leave the house?",
+      "options": [
+        "Five",
+        "Two",
+        "Twelve"
+      ],
+      "answer": 1,
+      "scene": 6,
+      "feedback": "The rescue crew helped two residents, and Lena checked that number.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-07.mp3"
+    },
+    {
+      "id": "question-08",
+      "question": "Where was the temporary shelter?",
+      "options": [
+        "In the library",
+        "At the train station",
+        "In the school gym"
+      ],
+      "answer": 2,
+      "scene": 7,
+      "feedback": "The school gym became a temporary shelter for families.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-08.mp3"
+    },
+    {
+      "id": "question-09",
+      "question": "Which supplies were brought to the shelter?",
+      "options": [
+        "Food, bottled water and blankets",
+        "Paint, desks and computers",
+        "Tickets, cameras and microphones"
+      ],
+      "answer": 0,
+      "scene": 8,
+      "feedback": "Volunteers brought food, bottled water and blankets to the gym.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-09.mp3"
+    },
+    {
+      "id": "question-10",
+      "question": "Which source did the editor check for the shelter information?",
+      "options": [
+        "An anonymous message",
+        "The town council website and official notice",
+        "An old concert poster"
+      ],
+      "answer": 1,
+      "scene": 9,
+      "feedback": "The editor checked the council website, its official notice and the date.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-newsroom/question-10.mp3"
+    }
+  ]
+}

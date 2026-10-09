@@ -6,7 +6,8 @@
     { number: 2, grid: document.getElementById("unit2ActivityGrid"), count: document.getElementById("unit2ActivityCount"), empty: document.getElementById("practiceLabUnit2Empty") },
     { number: 3, grid: document.getElementById("unit3ActivityGrid"), count: document.getElementById("unit3ActivityCount"), empty: document.getElementById("practiceLabUnit3Empty") },
     { number: 4, grid: document.getElementById("unit4ActivityGrid"), count: document.getElementById("unit4ActivityCount"), empty: document.getElementById("practiceLabUnit4Empty") },
-    { number: 5, grid: document.getElementById("unit5ActivityGrid"), count: document.getElementById("unit5ActivityCount"), empty: document.getElementById("practiceLabUnit5Empty") }
+    { number: 5, grid: document.getElementById("unit5ActivityGrid"), count: document.getElementById("unit5ActivityCount"), empty: document.getElementById("practiceLabUnit5Empty") },
+    { number: 6, grid: document.getElementById("unit6ActivityGrid"), count: document.getElementById("unit6ActivityCount"), empty: document.getElementById("practiceLabUnit6Empty") }
   ];
   const search = document.getElementById("practiceLabSearch");
   const clear = document.getElementById("practiceLabClear");

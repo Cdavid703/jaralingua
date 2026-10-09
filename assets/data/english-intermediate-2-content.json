@@ -1141,6 +1141,43 @@
         "family",
         "conversation coach"
       ]
+    },
+    {
+      "id": "unit-6-greenford-news-vocabulary",
+      "unit": 6,
+      "order": 1,
+      "type": "reading",
+      "skillLabel": "Vocabulary · illustrated news",
+      "title": "Greenford News",
+      "subtitle": "Watch, learn the words and understand the news.",
+      "summary": "A fictional television report teaches twelve news and emergency words with twelve distinct illustrations, Spanish hover meanings, narrated scenes and ten final comprehension questions.",
+      "cardSummary": "Twelve illustrated scenes, word pronunciation, Spanish hints and ten final questions.",
+      "image": "/assets/img/english-intermediate-2/unit-6/newsroom/headline-v1.webp",
+      "media": "/ingles/intermediate-2/audio/unit-6-newsroom/headline.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "EXAVITQu4vr4xnSDxMaL",
+      "voiceName": "Sarah",
+      "workshopHref": "/ingles/intermediate-2/vocabulary-unit-6-greenford-news.html",
+      "duration": "20–30 minutes · at your pace",
+      "product": "Guided vocabulary learning and ten self-check questions",
+      "recording": false,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 6",
+        "news",
+        "vocabulary",
+        "reporter",
+        "witness",
+        "source",
+        "flood",
+        "television",
+        "Spanish",
+        "comprehension"
+      ]
     }
   ]
 }

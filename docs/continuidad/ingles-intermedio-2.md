@@ -35,3 +35,7 @@ Construcción: `tools/build_intermediate2_unit6_explanation.py`. Pruebas: `tools
 
 
 Ajuste visual del 9 de octubre de 2026: las imágenes de lectura tienen un máximo de 320 px de alto (260 px en móvil), sin recortes; las escenas sueltas llevan imagen y explicación en paralelo desde 900 px. Desastres y expresiones se organizan en grupos desplegables cerrados inicialmente. La proyección de sección conserva sus imágenes y abre una copia de los grupos sin alterar la página; la proyección individual muestra un solo título, conservando la pronunciación del vocabulario. La prueba de Unidad 6 incluye 1920 px, límites de altura y presencia de imágenes al proyectar.
+
+## Unit 6 · Greenford News
+
+El docente aprobó aprender vocabulario mediante un noticiero ilustrado, con traducción al pasar el mouse y diez preguntas finales de comprensión. `vocabulary-unit-6-greenford-news.html` incorpora doce escenas e imágenes distintas, doce tarjetas de palabras principales, 33 términos con ayuda en español, audios de ElevenLabs y proyección. Enlaces desde el vocabulario inicial de la explicación y Practice Lab. Actividad formativa con subtítulos públicos solicitados, sin envío ni calificación académica. Consultar [implementación y pruebas](../english-intermediate2-newsroom.md).

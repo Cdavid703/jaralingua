@@ -1,0 +1,289 @@
+[
+  {
+    "file": "reporter.mp3",
+    "expected": "Our reporter, Lena, is on River Street. She is standing on dry ground above the water. Her job is to ask questions, check information and explain the news. A camera operator is filming her report.",
+    "heard": "Our reporter, Lena, is on River Street. She is standing on dry ground above the water. Her job is to ask questions, check information, and explain the news. A camera operator is filming her report",
+    "matched": true,
+    "sha256": "b11129b775484ef8178285939fa0edd3ed0f6315ed3d747b119c1f8d5b9e8e5f"
+  },
+  {
+    "file": "headline.mp3",
+    "expected": "Good evening. This is a fictional news report. Our headline is: A storm hits Greenford. Heavy rain overnight caused problems near the river on Monday morning. We will find out what happened and where our information comes from.",
+    "heard": "Good evening. This is a fictional news report. Our headline is: A storm hits Greenford. Heavy rain overnight caused problems near the river on Monday morning. We will find out what happened and where our information comes from.",
+    "matched": true,
+    "sha256": "39a5e0756835e718f481344936c89320c556911477f14d498cfa17ae6f1253ae"
+  },
+  {
+    "file": "witness.mp3",
+    "expected": "Mr. Cole is a witness. He saw a tree fall near the library during the storm. He told Lena that he had watched it from his kitchen window. Lena listens carefully and asks what he saw.",
+    "heard": "Mr. Cole is a witness. He saw a tree fall near the library during the storm. He told Lena that he had watched it from his kitchen window. Lena listens carefully and asks what he saw",
+    "matched": true,
+    "sha256": "444f9d63f194e2c1ebabc6d76aaf79ff0cad5c071b3845bc0017c2aabb428b40"
+  },
+  {
+    "file": "flood.mp3",
+    "expected": "Heavy rain made the river overflow. The flood covered part of River Street on Monday morning. Water surrounded parked cars. The red bridge is visible in the distance, but this picture does not tell us whether the bridge is safe.",
+    "heard": "Heavy rain made the river overflow. The flood covered part of River Street on Monday morning. Water surrounded parked cars. The Red Bridge is visible in the distance, but this picture does not tell us whether the bridge is safe.",
+    "matched": true,
+    "sha256": "e2cef8310a47f4669ad9777e53d0984ba075db5743915cd3ba21f53b625c9c62"
+  },
+  {
+    "file": "damage.mp3",
+    "expected": "The reporter can see damage at the library. A fallen tree blocks the entrance, and two front windows are broken. The building is closed. The report does not yet say how much the repairs will cost.",
+    "heard": "The reporter can see damage at the library. A fallen tree blocks the entrance and two front windows are broken. The building is closed. The report does not yet say how much the repairs will cost.",
+    "matched": true,
+    "sha256": "9a496783722406452c494dc2b777e41e382a5c0428528dfa5dad3647989ae5e1"
+  },
+  {
+    "file": "warning.mp3",
+    "expected": "The town council sent a warning at eight on Monday morning. The alert told residents to avoid River Street and check official updates. A warning helps people understand a risk before they decide what to do.",
+    "heard": "The town council sent a warning at eight on Monday morning. The alert told residents to avoid River Street and check official updates. A warning helps people understand a risk before they decide what to do.",
+    "matched": true,
+    "sha256": "eb1d32290feef6bd80c4e1f74747f5312fdad9ecdfa0c537858aab883dcf3358"
+  },
+  {
+    "file": "rescue-crew.mp3",
+    "expected": "Later that morning, a rescue crew used a boat to help two residents leave a riverside house. The team took them to dry ground. Lena checked the number with the team before including it in her report.",
+    "heard": "Later that morning, a rescue crew used a boat to help two residents leave a riverside house. The team took them to dry ground. Lena checked the number with the team before including it in her report.",
+    "matched": true,
+    "sha256": "54514a59ba959073ae6c7ae92c399c295a7bb0df0e625cbc1dff8769e7b5b26b"
+  },
+  {
+    "file": "shelter.mp3",
+    "expected": "The school gym became a temporary shelter. Volunteers welcomed families who could not return home. Inside, there were beds and blankets. The shelter gave residents a dry place to rest while they waited for more information.",
+    "heard": "The school gym became a temporary shelter. Volunteers welcomed families who could not return home. Inside, there were beds and blankets. The shelter gave residents a dry place to rest while they waited for more information.",
+    "matched": true,
+    "sha256": "bba4f883c10e7b68e58395d667ac4db0c44f0a5c75b530105a371a43e35f5a94"
+  },
+  {
+    "file": "supplies.mp3",
+    "expected": "Volunteers brought supplies to the school gym. The boxes contained food, and the tables held bottled water and blankets. These supplies helped the families at the shelter. More volunteers arrived to organize the donations.",
+    "heard": "Volunteers brought supplies to the school gym. The boxes contained food, and the tables held bottled water and blankets. These supplies helped the families at the shelter. More volunteers arrived to organize the donations",
+    "matched": true,
+    "sha256": "961d9e55469590d1ce189b700d7282709bbc8e678d602f0528e2ae9daa60f95a"
+  },
+  {
+    "file": "source.mp3",
+    "expected": "Before the broadcast, the editor checked the source of the shelter information. She used the town council website and its official notice. She checked the date, too. An anonymous message was not enough to confirm the location.",
+    "heard": "Before the broadcast, the editor checked the source of the shelter information. She used the town council website and its official notice. She checked the date too. An anonymous message was not enough to confirm the location",
+    "matched": true,
+    "sha256": "9a7249d54df1ce4c1d851e9bd60af349bfd8cc4262f70c00da4b9cad234cf00e"
+  },
+  {
+    "file": "statement.mp3",
+    "expected": "At a briefing, the council spokesperson made a statement. She said the library was closed for inspection. She also said the next update would be on Tuesday morning. This was a statement about the plan, not proof that the work was finished.",
+    "heard": "At a briefing, the council spokesperson made a statement. She said the library was closed for inspection. She also said the next update would be on Tuesday morning. This was a statement about the plan, not proof that the work was finished.",
+    "matched": true,
+    "sha256": "88d08b9b72d75a8a18987ea6b3db0b0268014e1dccb99cbabfedc2959bbcf57a"
+  },
+  {
+    "file": "evidence.mp3",
+    "expected": "The editor compared photographs of the library before and after the storm. They provided evidence of damage to the entrance and windows. They did not show the cost of repairs. Our report ends with a reminder: check the source and the evidence before sharing news.",
+    "heard": "The editor compared photographs of the library before and after the storm. They provided evidence of damage to the entrance and windows. They did not show the cost of repairs. Our report ends with a reminder. Check the source and the evidence before sharing news",
+    "matched": true,
+    "sha256": "a5535f6e2ff520708a84bf06421d51f90aab6118340b121db9fdefadacb20d52"
+  },
+  {
+    "file": "word-storm.mp3",
+    "expected": "storm.",
+    "heard": "Storm",
+    "matched": true,
+    "sha256": "09760dd44ab1aa508ee8e5a630dd02bed0ad2d40fca7a9c8ddab95b692e096fe"
+  },
+  {
+    "file": "word-heavy-rain.mp3",
+    "expected": "heavy rain.",
+    "heard": "Heavy rain",
+    "matched": true,
+    "sha256": "aae62b943e9ab8782b825dd51370a83ea11b859a9bcc6bf042f22131ba6f9524"
+  },
+  {
+    "file": "word-river.mp3",
+    "expected": "river.",
+    "heard": "River",
+    "matched": true,
+    "sha256": "0257afeaa48b1e067a6f75be792f5eacb6a7405ffc9f14b298daafb9b8bc9e64"
+  },
+  {
+    "file": "word-overflow.mp3",
+    "expected": "overflow.",
+    "heard": "Overflow",
+    "matched": true,
+    "sha256": "bc996e2b66fd33e7749d491d542d6e439e87aa59b86ea51b99725e03ea96e0ac"
+  },
+  {
+    "file": "word-broken.mp3",
+    "expected": "broken.",
+    "heard": "Broken",
+    "matched": true,
+    "sha256": "f8d020720a194520535c72cd3f84a66872baef75bff064faba99b024d066c9b6"
+  },
+  {
+    "file": "word-windows.mp3",
+    "expected": "windows.",
+    "heard": "Windows",
+    "matched": true,
+    "sha256": "c121c2dc6155954db68a989f95337ecf416d08c1ffb9520595600e9354a2539c"
+  },
+  {
+    "file": "word-official.mp3",
+    "expected": "official.",
+    "heard": "Official",
+    "matched": true,
+    "sha256": "7c7b2217554fdf01405fc278612dc57f9ac611f298fe7b5a18012399144d8766"
+  },
+  {
+    "file": "word-residents.mp3",
+    "expected": "residents.",
+    "heard": "Residents",
+    "matched": true,
+    "sha256": "e1a3332048a6aaf98d363412fd2a27e564ab4dee244320a0321c53defd7f5e8f"
+  },
+  {
+    "file": "word-volunteers.mp3",
+    "expected": "volunteers.",
+    "heard": "Volunteers",
+    "matched": true,
+    "sha256": "b26980e583f7accdbca7951852bbd2d03f6d08209b5d130de6b68042bb3bc5a7"
+  },
+  {
+    "file": "word-blankets.mp3",
+    "expected": "blankets.",
+    "heard": "Blankets",
+    "matched": true,
+    "sha256": "9e64f12b21bfd0a61bb39590649997093910143346b60bdfdbe738239b77f85d"
+  },
+  {
+    "file": "word-bottled-water.mp3",
+    "expected": "bottled water.",
+    "heard": "Bottled water",
+    "matched": true,
+    "sha256": "84180c8718f444b6f6ae4c494dfe19cc136d36ee0f1112c704071dab2014f10f"
+  },
+  {
+    "file": "word-food.mp3",
+    "expected": "food.",
+    "heard": "food",
+    "matched": true,
+    "sha256": "fb12e1a79bba3c728861aa08b41a25ebf5f84deb31749c6d8ad8d3b60bc263ae"
+  },
+  {
+    "file": "word-gym.mp3",
+    "expected": "The school gym.",
+    "heard": "The school gym",
+    "matched": true,
+    "sha256": "b32bef4a6fa06c763c80e5402f2958ad8476ae761c0811f556043796d6c4c949"
+  },
+  {
+    "file": "word-closed.mp3",
+    "expected": "closed.",
+    "heard": "Closed",
+    "matched": true,
+    "sha256": "e2aed22706769750745c8eb1b7888ec339dc2ed2c05f5b3ddc1a96ec695fb65c"
+  },
+  {
+    "file": "word-briefing.mp3",
+    "expected": "briefing.",
+    "heard": "Briefing",
+    "matched": true,
+    "sha256": "b12d74a3dc5af57d28abc14d8fda27377e2f67d2359271fdf107b0263c014645"
+  },
+  {
+    "file": "word-repairs.mp3",
+    "expected": "repairs.",
+    "heard": "Repairs",
+    "matched": true,
+    "sha256": "3d13df10f75689f02e2ca022633a37a59bc05f18d096361673f816355823411c"
+  },
+  {
+    "file": "word-anonymous.mp3",
+    "expected": "anonymous.",
+    "heard": "Anonymous",
+    "matched": true,
+    "sha256": "59bfbcfc9c5f7d357fe558e994c8a5e2d160805edb9c9fb6d3e432ed22773385"
+  },
+  {
+    "file": "word-inspection.mp3",
+    "expected": "inspection.",
+    "heard": "Inspection",
+    "matched": true,
+    "sha256": "9d1dac4a372c5f02ae1eb80f46268d5c23f224f75f188a77cf1d432ed1654748"
+  },
+  {
+    "file": "word-donations.mp3",
+    "expected": "donations.",
+    "heard": "Donations",
+    "matched": true,
+    "sha256": "548b1014cbaf496b4a2be790da08fdbcf9906c16ef994c0a8e94e9480c4bcbc9"
+  },
+  {
+    "file": "question-01.mp3",
+    "expected": "Which town is the news report about?",
+    "heard": "Which town is the news report about?",
+    "matched": true,
+    "sha256": "05543ea34144b22e3ce7aed8ae19a44e39cd9f7ff5941a26194bf79c95d385f4"
+  },
+  {
+    "file": "question-02.mp3",
+    "expected": "Where is Lena reporting from?",
+    "heard": "Where is Lena reporting from?",
+    "matched": true,
+    "sha256": "24bc26d888e8241780eaa70f259fc7ee78f8f965fdace156cbd79d06f86da75f"
+  },
+  {
+    "file": "question-03.mp3",
+    "expected": "What did Mr. Cole see during the storm?",
+    "heard": "What did Mr. Cole see during the storm?",
+    "matched": true,
+    "sha256": "4f52090ec52c69c4b4c5ea75fb8ea57162721c480c2bafcd4cbf4b1be799c2f9"
+  },
+  {
+    "file": "question-04.mp3",
+    "expected": "Why did the river overflow?",
+    "heard": "Why did the river overflow?",
+    "matched": true,
+    "sha256": "985ef235052fd3f5f6f715d6e5e26caa9c43d38be0542c1d70facb9d2d955f88"
+  },
+  {
+    "file": "question-05.mp3",
+    "expected": "What damage did the report describe at the library?",
+    "heard": "What damage did the report describe at the library?",
+    "matched": true,
+    "sha256": "815874b234e2b75fa1d926e60b55b2c6fb8c0317dfe3a07b9cc168b58d77cc2e"
+  },
+  {
+    "file": "question-06.mp3",
+    "expected": "When did the council send its warning?",
+    "heard": "When did the council send its warning?",
+    "matched": true,
+    "sha256": "a62e4027001bb83f96fa98bea5f55fca142d5edcade95a6c3c3a8a112095bd16"
+  },
+  {
+    "file": "question-07.mp3",
+    "expected": "How many residents did the rescue crew help leave the house?",
+    "heard": "How many residents did the rescue crew help leave the house?",
+    "matched": true,
+    "sha256": "0b7c2468591e012434d5d637cb3d7f64ebfd06bf1df5e2c7fd55298461380014"
+  },
+  {
+    "file": "question-08.mp3",
+    "expected": "Where was the temporary shelter?",
+    "heard": "Where was the temporary shelter?",
+    "matched": true,
+    "sha256": "f3c6ab0a78f0a7ddb79ffe4458b7cdc29982802b2d3604af47f00c190f24a788"
+  },
+  {
+    "file": "question-09.mp3",
+    "expected": "Which supplies were brought to the shelter?",
+    "heard": "Which supplies were brought to the shelter?",
+    "matched": true,
+    "sha256": "ea13be2cf94c662c1d1f4889a1b7abc5e78f5745abe54d11240aacddec3f6af3"
+  },
+  {
+    "file": "question-10.mp3",
+    "expected": "Which source did the editor check for the shelter information?",
+    "heard": "Which source did the editor check for the shelter information?",
+    "matched": true,
+    "sha256": "c78717b58b7c29b00b3f841018cbe54630dd3b40b7e824dbae1b551bbdc282ae"
+  }
+]

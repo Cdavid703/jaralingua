@@ -1,0 +1,113 @@
+{
+  "method": "Built-in image_gen",
+  "assets": [
+    {
+      "id": "headline",
+      "prompt": "Use case: illustration-story. Asset type: landscape 3:2 educational news scene for adult English learners, one frame, no collage. Create a polished realistic editorial illustration, clear objects, natural faces, navy and teal accents. Scene: a female news anchor with short dark hair and navy blazer sits at a modern television news desk. Behind her a large studio screen displays an aerial view of a fictional small town with a red pedestrian bridge over a river, a storm and flooded riverside street. Calm professional atmosphere, no injuries. This is scene 1 teaching HEADLINE: include a blank clean lower-third strip area for a HTML headline overlay added later, but NO lettering, captions, logos, numbers or watermarks anywhere. Wide clear composition, subject and storm image both legible. Only one image.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/headline-v1.webp",
+      "sha256": "3e6aa8bed06ce2af5afa1870b10f7327d5c8093a9e1ca579bb0d1ade79ef0442",
+      "bytes": 171026
+    },
+    {
+      "id": "reporter",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary REPORTER: a young woman with brown ponytail and teal rain jacket holds an unbranded microphone facing a TV camera on a tripod from a dry elevated riverside viewpoint. Cameraman at right. Flooded street below, red bridge far behind. The journalist is clearly the focal subject; medium wide eye level.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/reporter-v1.webp",
+      "sha256": "5db05c8648967ec1fa70084cf9bffbbed9f92546e1842078108c8be52543adfd",
+      "bytes": 199612
+    },
+    {
+      "id": "witness",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary WITNESS: an older male resident in a mustard yellow raincoat points toward a fallen tree by a red-brick library while a young female reporter with brown ponytail and teal rain jacket listens holding a microphone. They stand on dry paved ground after a storm, puddles and leaves. The resident who saw the event is the focal subject. Medium shot, no other residents.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/witness-v1.webp",
+      "sha256": "c53b6f9773e50be30437e130d700a6242b63f1f7fb906baeb7effed82c2e58da",
+      "bytes": 294856
+    },
+    {
+      "id": "flood",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary FLOOD: elevated wide view of a fictional town river overflowing into River Street, water surrounding parked empty cars and lampposts, red pedestrian bridge in background. Heavy rainfall has stopped. No people in the water, no injuries. Water covering normally dry road must be unmistakable.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/flood-v1.webp",
+      "sha256": "1334d4f35dda7a66ca309e328ca7fae82a1696b00f09b1847d43fb976ac26baf",
+      "bytes": 332226
+    },
+    {
+      "id": "damage",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary DAMAGE: detailed ground level wide view of the outside of a small red brick community library after a storm, fallen leafy tree across the entrance steps and two broken front windows, scattered leaves. Show physical damage clearly. Building remains standing, no ruined city or injured people. Overcast daylight.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/damage-v1.webp",
+      "sha256": "a36f56471607502caa8baccaac3b07a27c59b0b7c7db1375e881454cc1068415",
+      "bytes": 485178
+    },
+    {
+      "id": "warning",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary WARNING: close-up of an adult holding a smartphone showing a large amber warning triangle and simple flood icon with no words; beyond the phone are a cordoned-off wet riverside path and red bridge. The alert is main subject, environment secondary. Leave no fake textual marks.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/warning-v1.webp",
+      "sha256": "cf90c9d7e180df9850146e9def4c591fbc7e3e41c540c172f3e807dcda1c5ad8",
+      "bytes": 160986
+    },
+    {
+      "id": "rescue-crew",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary RESCUE CREW: trained rescue workers wearing high visibility jackets, helmets and flotation vests help two adults from a small rescue boat onto a dry elevated landing beside a flooded riverside house. Coordinated calm assistance, boat at dock, no danger spectacle. Make team and purpose clear, wide shot.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/rescue-crew-v1.webp",
+      "sha256": "99485103d3d5d6d7bbdd4f1a9f211d1dfec18b5ea015b41a27ea04bfcaf4fd99",
+      "bytes": 319414
+    },
+    {
+      "id": "shelter",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary SHELTER: warm dry interior of a school gym serving as a temporary community shelter, neat camp beds with folded blankets, a family resting, volunteers checking arrivals at a table, basketball hoop visible. Wide interior composition, no overcrowding or distress, no text.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/shelter-v1.webp",
+      "sha256": "73fdc7fcf7a3920ea17419b2e100c535e527ecc7adc3874b051a6477d2fb9bc4",
+      "bytes": 222606
+    },
+    {
+      "id": "supplies",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary SUPPLIES: close view of clearly organized bottled water, packaged food without labels, blankets and flashlights on a distribution table inside a school gym, two volunteers carrying cardboard boxes. Supplies dominate foreground, beds softly visible in background. Do not include medical products or logos.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/supplies-v1.webp",
+      "sha256": "7883cdb6d0db99fc1829adf3e312b54ec628cf7e0e5f911d619e2a130e0149ee",
+      "bytes": 231656
+    },
+    {
+      "id": "source",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary SOURCE: an editor at a desk compares an official town council web page on a laptop with a printed municipal notice bearing a simple civic building emblem. No legible text. A small reference photograph of a red-brick library with fallen tree appears on the laptop. Show checking origin of information, neat newsroom setting. Over-the-shoulder close shot.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/source-v1.webp",
+      "sha256": "fc168e7d2f42056e9aa632356287a29197a2e3f673bff9a9e66d390b9182f505",
+      "bytes": 123642
+    },
+    {
+      "id": "statement",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary STATEMENT: a middle-aged female town council spokesperson in a burgundy blazer at a press briefing speaks into several unbranded microphones, holding a document, journalist notebooks visible in foreground. Behind her a photograph shows a red brick library and fallen tree. Public announcement, professional calm mood. No letters or seals.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/statement-v1.webp",
+      "sha256": "2bef643e9ad8884e27d6ba19b86d5b2624b5bf81d2741a40d96930a5707fe34c",
+      "bytes": 194028
+    },
+    {
+      "id": "evidence",
+      "prompt": "Use case: illustration-story. Create one landscape 3:2 polished realistic editorial illustration for an adult English learning fictional television news story. Clear natural anatomy, detailed but readable, calm respectful tone, no injuries. Fictional Greenford has small brick buildings and a red pedestrian bridge near the river. Consistent navy/teal news palette. No lettering, captions, logos, numbers, UI borders or watermarks. No collage. Vocabulary EVIDENCE: close-up of an editor's desk with two clearly visible printed photographs of the SAME red-brick library entrance, one showing it intact on a sunny day and one showing a leafy fallen tree and two broken windows after rain. Magnifying glass and reporter notebook nearby. These comparison photos document the damage. No writing or dates, no other photos.",
+      "width": 1536,
+      "height": 1024,
+      "path": "assets/img/english-intermediate-2/unit-6/newsroom/evidence-v1.webp",
+      "sha256": "33b2ba863d0ef45d5d3ece42ca15e8256afa17bc5b24a61cd37dd5a17eb5a4e3",
+      "bytes": 284678
+    }
+  ]
+}

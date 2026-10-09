@@ -1,0 +1,33 @@
+"""Build the fictional Unit 6 illustrated vocabulary news activity."""
+from pathlib import Path
+import re
+ROOT=Path(__file__).resolve().parents[1]
+PAGE='vocabulary-unit-6-greenford-news.html'
+base=(ROOT/'ingles/intermediate-2/unit-6-news-and-natural-disasters.html').read_text()
+head=base.split('<main>')[0].replace('<body class="','<body class="ie2-newsroom-page ')
+head=re.sub(r'<title>.*?</title>','<title>Greenford News · Vocabulary | Intermediate English Course 2</title>',head)
+head=re.sub(r'<meta name="description"[^>]+>','<meta name="description" content="Learn news vocabulary through twelve illustrated scenes, Spanish word hints, ElevenLabs audio and ten comprehension questions."/>',head)
+head=head.replace('#unit6-content','#newsroom').replace('</head>','<link rel="stylesheet" href="../../assets/css/english-intermediate2-newsroom.css?v=20261009-1"/></head>')
+body='''<main>
+<section class="u4-hero" aria-labelledby="news-title"><img class="u4-hero-image" src="/assets/img/english-intermediate-2/unit-6/newsroom/headline-v1.webp" alt="A news anchor introduces a storm report" width="1536" height="1024" fetchpriority="high"/><div class="u4-hero-inner"><div class="ie2-unit4-hero-copy"><p class="intermediate2-kicker">Unit 6 · Vocabulary through a story</p><h1 id="news-title">Greenford News</h1><p>Watch. Learn the words. Understand the news.</p><div class="ie2-overview-chips"><span>12 illustrated scenes</span><span>10 final questions</span><span>Fictional news</span></div><div class="intermediate2-actions"><a class="intermediate2-button primary" href="#newsroom">Open the television</a><a class="intermediate2-button ghost" href="./practice-lab.html#unit-6-folder">Practice Lab</a></div></div></div></section>
+<section class="news-shell" id="newsroom" aria-label="Illustrated news activity">
+<p class="news-intro">Follow one scene at a time. Hover over underlined words for Spanish; click to hear them. On a phone, tap the word. At the end, answer ten questions about the report.</p>
+<p id="news-load" role="status">Loading the newsroom…</p><button id="news-retry-load" type="button" hidden>Try loading again</button>
+<noscript>This interactive activity needs JavaScript. Please enable it and reload the page.</noscript>
+<div id="news-home"><div id="news-tv" class="news-tv" hidden>
+<div class="news-top"><span class="news-badge">GREENFORD NEWS <small>Fictional report</small></span><span id="news-progress" aria-live="polite"></span><button type="button" data-news-action="project">Project ↗</button></div>
+<div class="news-modes"><button type="button" data-news-action="story" aria-pressed="true">The news</button><button type="button" data-news-action="vocabulary" aria-pressed="false">Our vocabulary</button><button type="button" data-news-action="quiz" aria-pressed="false">10 questions</button></div>
+<section id="news-story" aria-label="Current news scene"><div class="news-screen"><img id="news-image" alt="" width="1536" height="1024"/><div id="news-headline" hidden>A storm hits Greenford</div></div><div class="news-copy"><h2 id="news-scene-title"></h2><div id="news-caption"></div><details id="news-word-help"><summary>Learn this word</summary><div id="news-word-card"></div></details></div></section>
+<section id="news-vocabulary" class="news-copy" aria-label="Vocabulary cards" hidden><h2>Our vocabulary</h2><p>Choose a card to revisit its scene. Hover over the word for Spanish or click to hear it.</p><div id="news-word-grid"></div></section>
+<section id="news-quiz" class="news-copy" aria-label="Ten comprehension questions" hidden><p id="news-quiz-intro">Choose one answer per question. You can discuss it first. This is practice; the result is not submitted.</p><h2 id="news-question-title" tabindex="-1"></h2><fieldset id="news-options"><legend class="news-sr">Choose an answer</legend><div id="news-choices"></div></fieldset><div id="news-feedback" role="status"></div><p id="news-score" role="status"></p><button type="button" data-news-action="review-scene" hidden>Review the scene</button><button type="button" data-news-action="grade" hidden>Check my 10 answers</button><button type="button" data-news-action="retry-quiz" hidden>Try the questions again</button></section>
+<div class="news-controls"><button type="button" data-news-action="previous">← Previous</button><button type="button" data-news-action="play">Listen</button><button type="button" data-news-action="stop">Stop</button><label>Speed <select id="news-speed"><option value="0.75">0.75×</option><option value="1">1×</option></select></label><button type="button" data-news-action="captions" aria-pressed="true">Captions: on</button><button type="button" data-news-action="continuous" aria-pressed="false">Play full report</button><button type="button" data-news-action="next">Next →</button></div>
+<div class="news-bottom"><label for="news-jump">Scene</label><select id="news-jump"></select><audio id="news-audio" controls preload="none" aria-label="Newsroom audio"></audio><p id="news-status" role="status" aria-live="polite"></p></div>
+</div></div>
+<details class="news-teacher"><summary>Classroom guide</summary><p>Play one scene, reveal “Learn this word”, and ask a learner to point to the relevant detail. Repeat the word together. Hide the captions when learners are ready, then replay the report. Project the final questions and choose a learner to explain each answer before selecting it.</p><p>The illustrated captions are public learning support. The story, people and events are fictional.</p></details>
+<div class="intermediate2-actions"><a class="intermediate2-button" href="./unit-6-news-and-natural-disasters.html">Review Unit 6 language</a><a class="intermediate2-button" href="./practice-lab.html#unit-6-folder">More practice</a></div>
+</section></main>
+<dialog id="news-projector" aria-label="Classroom television"><div class="news-project-bar"><button type="button" data-news-action="fullscreen">Full screen</button><button type="button" data-news-action="close-project" autofocus>Close ×</button></div><div id="news-project-slot"></div></dialog>
+<footer class="site-footer"><p>JaraLingua · Intermediate English Course 2</p></footer>
+<script src="../../assets/js/google-auth-config.js"></script><script src="https://accounts.google.com/gsi/client" async defer></script><script src="../../assets/js/google-auth.js?v=20261003-persistent-signin"></script><script src="../../assets/js/english-intermediate2-newsroom.js?v=20261009-1"></script><script src="/assets/js/course-switcher.js"></script></body></html>'''
+(ROOT/'ingles/intermediate-2'/PAGE).write_text(head+body)
+print('Built',PAGE)
