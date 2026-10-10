@@ -8,6 +8,8 @@ Cuatro grupos de significado: noticia y acento de palabras; reported speech y en
 
 ## Recursos y límites
 
+El guion Markdown queda como fuente de auditoría en el repositorio; el servidor bloquea esa extensión por HTTP. El catálogo enlaza al inventario público models.json, que incluye los textos de enseñanza.
+
 64 MP3 de ElevenLabs: cuatro secciones, modelo completo y 59 palabras. Sarah, inglés estadounidense, eleven_multilingual_v2. Se reutilizaron siete palabras exactas con hash verificado; las demás son nuevas. Auditoría de transcripción de los 64 archivos: el artículo a en su forma débil /ə/ se reconoce como uh y se registra explícitamente como variante válida; los demás coinciden por normalización de mayúsculas y puntuación. El sitio real transcribió exactamente la tercera sección usando su reconocedor existente.
 
 Reutiliza el motor compartido de Unidad 1 sin modificarlo. Sus resultados estiman coincidencia de palabras, completitud y ritmo/velocidad; no son diagnóstico fonético ni evaluación del acento. La página lo explica junto al resultado. La prueba de UI usa micrófono simulado y transcripción controlada, y realiza la entrega real en un servidor aislado con cuentas ficticias. No se enviaron grabaciones de alumnos ni se crearon entregas de prueba en producción.
