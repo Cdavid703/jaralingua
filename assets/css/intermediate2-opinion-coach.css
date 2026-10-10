@@ -3,3 +3,26 @@
 @media(max-width:600px){.opinion-coach-page .coach-hero{grid-template-columns:1fr}.opinion-coach-page .david-hero-image{display:none}.opinion-coach-page #opinionImage{max-height:280px}.opinion-coach-page .coach-stage .coach-audio-row{margin-left:0}.opinion-coach-page .coach-stage{grid-template-columns:1fr}.opinion-coach-page .coach-avatar{display:none}}
 @media(prefers-reduced-motion:reduce){.opinion-coach-page *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
 .opinion-coach-page .opinion-conversation-column{min-width:0}.opinion-coach-page .coach-recorder{position:static;margin-top:14px}.opinion-coach-page .coach-toast{position:relative!important;inset:auto!important;transform:none!important;margin:16px auto!important;width:calc(100% - 44px)!important;max-width:none!important}.opinion-coach-page #opinionImage{height:auto;max-height:560px}.opinion-coach-page .coach-stage .coach-audio-row{margin-left:0}
+
+/* Keep the picture, conversation and microphone together across the available width. */
+.opinion-coach-page .coach-shell{max-width:none}
+.opinion-coach-page .david-turn-grid{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr) minmax(0,1fr);gap:18px}
+.opinion-coach-page .coach-recorder{margin:0}
+.opinion-coach-page .coach-hero{padding:20px 22px;background:#092453;grid-template-columns:minmax(0,1fr) minmax(300px,.65fr)}
+.opinion-coach-page .coach-kicker{color:#e8bd60!important}
+.opinion-coach-page .david-hero-image{display:block;height:240px}
+.opinion-coach-page .david-hero-image img{max-height:none;object-position:center;object-fit:cover}
+.opinion-coach-page .david-prompt-column:has(#opinionScene[hidden]){display:none}
+.opinion-coach-page .david-turn-grid:has(#opinionScene[hidden]){grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:768px) and (max-width:979px){
+ .opinion-coach-page .david-turn-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr)}
+ .opinion-coach-page .david-prompt-column{grid-row:span 2}
+ .opinion-coach-page .coach-recorder{grid-column:2}
+ .opinion-coach-page .david-turn-grid:has(#opinionScene[hidden]) .coach-recorder{grid-row:1}
+}
+@media(max-width:767px){
+ .opinion-coach-page .david-turn-grid,.opinion-coach-page .david-turn-grid:has(#opinionScene[hidden]){grid-template-columns:minmax(0,1fr)}
+ .opinion-coach-page .coach-hero{grid-template-columns:minmax(0,1fr);padding:14px}
+ .opinion-coach-page .david-hero-image{display:block;height:220px}
+ .opinion-coach-page #opinionImage{max-height:340px}
+}

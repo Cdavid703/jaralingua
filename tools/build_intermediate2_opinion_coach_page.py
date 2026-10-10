@@ -3,7 +3,7 @@ ROOT=Path(__file__).resolve().parents[1]
 s=(ROOT/'ingles/intermediate-2/conversation-coach-unit-5-david-first-impression.html').read_text()
 s=s.replace('A Good First Impression','My opinion matters').replace('Unit 5','Unit 6').replace('unit-5-folder','unit-6-folder').replace('Your first visit is this weekend. Let’s talk it through.','Five pictures. Your perspective. Let’s talk!').replace('Twelve stages, one conversation. Listen, speak, and hear David’s reply.','Five scenes to describe, interpret and discuss. Practise your ideas before the round table.').replace('Practise the final writing themes aloud: feelings, preparation, appearance, behaviour and conversation before meeting your partner’s family.','Describe five news scenes, practise looks and seems, and develop your own opinions with David.').replace('david-coach-page"','david-coach-page opinion-coach-page"')
 s=s.replace('David, your conversation coach, welcoming you to practise a first meeting','Fictional portrait of David, your coach for discussing news pictures')
-s=s.replace('</head>','<link rel="stylesheet" href="../../assets/css/intermediate2-opinion-coach.css?v=20261009-1"></head>')
+s=s.replace('</head>','<link rel="stylesheet" href="../../assets/css/intermediate2-opinion-coach.css?v=20261010-layout"></head>')
 s=s.replace('<div class="david-prompt-column">','<div class="david-prompt-column"><figure id="opinionScene" hidden><figcaption id="opinionSceneTitle"></figcaption><button id="opinionImageOpen" type="button" aria-label="Enlarge the scene"><img id="opinionImage" alt="" width="1536" height="1024"></button><small>Click the image to explore the details.</small></figure>')
 s=s.replace('<h2 id="questionText"></h2>','<h2 id="questionText"></h2><button type="button" id="opinionQuestionExpand" class="coach-audio-button">Enlarge question</button>')
 s=s.replace('<p class="coach-grammar" id="grammarClue"></p>','<p class="coach-grammar" id="grammarClue"></p><details id="opinionExamples"><summary>Possible answers · Listen and personalize</summary><div id="opinionExamplesBody"></div></details>')
@@ -15,6 +15,6 @@ s=s.replace('<script src="../../assets/js/conversation-coach-v2.js?v=20261003-ne
 s=s.replace('</main>','<dialog id="opinionDialog" aria-label="Enlarged learning material"><button id="opinionDialogClose" type="button" autofocus>Close ×</button><div id="opinionDialogContent"></div></dialog><div id="opinionTooltip" role="tooltip" lang="es" hidden></div></main>')
 a=s.index('<section class="coach-stage"');b=s.index('<section class="coach-recorder"')
 block=s[a:b];block=block[:block.rfind('</div>')]
-s=s[:a]+'</div><div class="opinion-conversation-column">'+block+s[b:]
-s=s.replace('          </section>\n        </div>\n      </div>','          </section>\n        </div></div>\n      </div>')
+s=s[:a]+'</div><div class="opinion-conversation-column">'+block+'</div>'+s[b:]
+s=s.replace('<figure class="david-hero-image"><img src="../../assets/img/english-intermediate-2/unit-5/david-coach/david.png" alt="Fictional portrait of David, your coach for discussing news pictures" width="1254" height="1254"', '<figure class="david-hero-image"><img src="../../assets/img/english-intermediate-2/unit-6/opinion-coach/limited-supplies-v1.webp" alt="Volunteers distributing limited supplies to families at a shelter" width="1536" height="1024"')
 (ROOT/'ingles/intermediate-2/conversation-coach-unit-6-my-opinion-matters.html').write_text(s)
