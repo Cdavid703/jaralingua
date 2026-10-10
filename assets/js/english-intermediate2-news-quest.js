@@ -1,28 +1,28 @@
 /* News Quest: private practice. Recordings never leave this tab; no speech scoring API. */
 (()=>{'use strict';
 const $=s=>document.querySelector(s),app=$('#quest-app');
-let words=[],queue=[],position=0,selected=null,attempts=0,resolved=false,run='main',difficult=new Set(),scheduled=new Set(),firstCorrect=0,choiceCount=0,oralDone=0,oralSkipped=0,revealed=false;
+let words=[],prompts={},queue=[],position=0,selected=null,attempts=0,resolved=false,run='main',difficult=new Set(),scheduled=new Set(),firstCorrect=0,choiceCount=0,oralDone=0,oralSkipped=0,revealed=false;
 const model=document.createElement('audio');model.id='quest-model-audio';model.preload='metadata';document.body.append(model);
-const recording=$('#quest-recording');let audioTicket=0,fxContext=null,fxNodes=[];
+const recording=$('#quest-recording');let audioTicket=0,audioQueue=[],queueSlow=false,fxContext=null,fxNodes=[];
 let recorder=null,stream=null,micContext=null,micFrame=0,micTimer=0,micToken=0,recordURL=null,micBusy=false,peak=0,startedAt=0;
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 const word=id=>words.find(w=>w.id===id),current=()=>queue[position],term=()=>word(current().id);
 function wordButton(w){return '<button type="button" class="quest-word" data-word="'+w.id+'" aria-pressed="false">'+esc(w.term)+'</button>';}
 function audioStatus(s){$('#quest-audio-status').textContent=s;}
-function stopAudio(){audioTicket++;model.pause();recording.pause();document.querySelectorAll('[data-word]').forEach(b=>b.setAttribute('aria-pressed','false'));fxNodes.forEach(n=>{try{n.stop();}catch{}});fxNodes=[];}
-async function play(file,slow=false){
+function stopAudio(){audioTicket++;audioQueue=[];model.pause();recording.pause();document.querySelectorAll('[data-word]').forEach(b=>b.setAttribute('aria-pressed','false'));fxNodes.forEach(n=>{try{n.stop();}catch{}});fxNodes=[];}
+async function play(file,slow=false,tail=[]){
  if(!$('#quest-voice').checked){audioStatus('Voice is off. Turn it on to hear the model.');return;}
  if(micBusy||recorder?.state==='recording'){audioStatus('Finish recording before playing the model.');return;}
- stopAudio();const ticket=audioTicket;audioStatus('');
+ stopAudio();audioQueue=[...tail];queueSlow=slow;const ticket=audioTicket;audioStatus('');
  if(model.getAttribute('src')!==file||model.error){model.src=file;model.load();}else model.currentTime=0;
  model.playbackRate=slow?.75:Number($('#quest-speed').value);
  try{await model.play();if(ticket!==audioTicket) return;document.querySelectorAll('[data-word]').forEach(b=>b.setAttribute('aria-pressed',String(word(b.dataset.word)?.audio===file)));}
- catch(e){if(ticket===audioTicket&&e.name!=='AbortError')audioStatus('Audio could not play. Check your connection and try Listen again.');}
+ catch(e){if(ticket===audioTicket&&e.name!=='AbortError'){audioQueue=[];audioStatus('Audio could not play. Press Repeat question or Listen to try again.');}}
 }
-model.addEventListener('error',()=>audioStatus('Audio is unavailable. Check your connection and try again.'));
-model.addEventListener('ended',()=>document.querySelectorAll('[data-word]').forEach(b=>b.setAttribute('aria-pressed','false')));
-recording.addEventListener('play',()=>{model.pause();$('#quest-self-check').hidden=false;$('#quest-self-check').querySelectorAll('button').forEach(b=>b.disabled=false);});
+model.addEventListener('error',()=>{audioQueue=[];audioStatus('Audio is unavailable. Check your connection and try again.');});
+model.addEventListener('ended',()=>{document.querySelectorAll('[data-word]').forEach(b=>b.setAttribute('aria-pressed','false'));if(audioQueue.length){const [file,...rest]=audioQueue;play(file,queueSlow,rest);}});
+recording.addEventListener('play',()=>{audioTicket++;audioQueue=[];model.pause();$('#quest-self-check').hidden=false;$('#quest-self-check').querySelectorAll('button').forEach(b=>b.disabled=false);});
 function effect(good){
  if(!$('#quest-effects').checked)return;
  try{fxContext??=new (window.AudioContext||window.webkitAudioContext)();fxContext.resume().catch(()=>{});const time=fxContext.currentTime;
@@ -54,8 +54,8 @@ function render(){
  const t=current(),w=term(),oral=t.type==='speak';selected=null;attempts=0;resolved=false;revealed=!(oral&&t.speech==='image');
  $('#quest-count').textContent='Challenge '+(position+1)+' / '+queue.length+(t.revisit?' · revisit':'');$('#quest-progress').max=queue.length;$('#quest-progress').value=position;
  const names={'listen-picture':'Listen → picture','picture-word':'Picture → word','listen-word':'Listen → word',cloze:'Complete the news',speak:'Speaking practice'};
- $('#quest-type').textContent=names[t.type];
- $('#quest-prompt').textContent=oral?(t.speech==='image'?'Look at the picture. Can you say the word?':t.speech==='sentence'?'Listen and say the sentence.':'Listen and say the word.'):{'listen-picture':'Listen. Which picture matches?','picture-word':'Which word matches this picture?','listen-word':'Listen. Which word do you hear?',cloze:'Complete the news sentence.'}[t.type];
+ $('#quest-type').textContent=names[t.type];$('#quest-repeat-question').hidden=t.type==='listen-picture'||t.type==='listen-word';
+ $('#quest-prompt').textContent=prompts[oral?'speak-'+t.speech:t.type].text;
  $('#quest-stimulus').innerHTML=t.type==='picture-word'||oral?'<img src="'+w.image+'" alt="'+esc(w.alt)+'" width="1536" height="1024"/>':t.type==='cloze'?'<p class="quest-cloze">'+esc(w.cloze)+'</p>':'';
  $('#quest-options').hidden=oral;$('#quest-speaking').hidden=!oral;$('#quest-check').hidden=oral;$('#quest-check').disabled=true;$('#quest-next').hidden=true;$('#quest-retry').hidden=true;$('#quest-feedback').innerHTML='';$('#quest-feedback').className='';audioStatus('');
  $('#quest-model-controls').hidden=!['listen-picture','listen-word'].includes(t.type)&&!oral;
@@ -70,12 +70,23 @@ function render(){
   options=shuffle([w,...options]);t.options=options.map(x=>x.id);
   $('#quest-choices').innerHTML=options.map((o,i)=>'<label class="quest-option"><input type="radio" name="quest-answer" value="'+o.id+'"/>'+(t.type==='listen-picture'?'<img src="'+o.image+'" alt="'+esc(o.alt)+'" width="1536" height="1024"/>':'')+'<span><b>'+String.fromCharCode(65+i)+'</b>'+(t.type==='listen-picture'?'Picture '+(i+1):esc(o.term))+'</span></label>').join('');
  }
- $('#quest-prompt').focus({preventScroll:true});$('#quest-game').scrollIntoView({block:'start',behavior:'instant'});
+ $('#quest-prompt').focus({preventScroll:true});$('#quest-game').scrollIntoView({block:'start',behavior:'instant'});playQuestion(true);
+}
+function playQuestion(automatic=false){
+ if(automatic&&!$('#quest-voice').checked)return;
+ const t=current(),w=term();let files;
+ // Listening tasks play only the target word; never read their question aloud.
+ if(t.type==='listen-picture'||t.type==='listen-word')files=[w.audio];
+ else if(t.type==='cloze')files=[prompts.cloze.audio,w.clozeAudio];
+ else if(t.type==='picture-word')files=[prompts['picture-word'].audio];
+ else files=[prompts['speak-'+t.speech].audio,...(t.speech==='image'?[]:[modelFile()])];
+ play(files[0],false,files.slice(1));
 }
 function modelFile(){return current().type==='speak'&&current().speech==='sentence'?term().sentenceAudio:term().audio;}
 function reveal(){revealed=true;$('#quest-reveal').hidden=true;$('#quest-speech-model').hidden=false;$('#quest-tip').hidden=false;$('#quest-model-controls').hidden=false;}
 function check(){
  if(resolved||!selected)return;
+ stopAudio();
  const t=current(),w=term(),good=selected===w.id;attempts++;
  if(attempts===1&&!t.revisit){choiceCount++;if(good)firstCorrect++;}
  $('#quest-choices').querySelectorAll('input').forEach(i=>{i.disabled=true;i.closest('label').classList.toggle('is-wrong',i.checked&&!good);});
@@ -88,7 +99,7 @@ function check(){
  $('#quest-feedback').innerHTML='<strong>'+(good?'That’s right.':'Let’s learn this one.')+'</strong><span class="quest-answer">'+letter+'. '+wordButton(w)+'</span>'+esc(w.spanish)+' · '+esc(w.definition)+'<p>'+esc(w.sentence)+'</p>';
  play(w.sentenceAudio);if(good)effect(true);
 }
-function retry(){if(resolved)return;selected=null;$('#quest-choices').querySelectorAll('input').forEach(i=>{i.disabled=false;i.checked=false;i.closest('label').classList.remove('is-wrong');});$('#quest-retry').hidden=true;$('#quest-feedback').textContent='Try again. You can do this.';$('#quest-check').disabled=true;}
+function retry(){if(resolved)return;selected=null;$('#quest-choices').querySelectorAll('input').forEach(i=>{i.disabled=false;i.checked=false;i.closest('label').classList.remove('is-wrong');});$('#quest-retry').hidden=true;$('#quest-feedback').textContent='Try again. You can do this.';$('#quest-check').disabled=true;playQuestion(true);}
 function oralComplete(needsPractice=false,skipped=false){
  if(resolved)return;
  cancelMic();stopAudio();resolved=true;
@@ -145,13 +156,14 @@ $('#quest-start').addEventListener('click',()=>start());$('#quest-restart').addE
 $('#quest-preview').addEventListener('click',()=>{resetMedia();setView('review');});$('#quest-review-close').addEventListener('click',()=>{resetMedia();setView('intro');});
 $('#quest-choices').addEventListener('change',e=>{if(e.target.name==='quest-answer'&&!resolved){selected=e.target.value;$('#quest-check').disabled=false;}});
 $('#quest-check').addEventListener('click',check);$('#quest-retry').addEventListener('click',retry);$('#quest-next').addEventListener('click',()=>{if(resolved){position++;render();}});
+$('#quest-repeat-question').addEventListener('click',()=>playQuestion());
 $('#quest-listen').addEventListener('click',()=>play(modelFile()));$('#quest-slow').addEventListener('click',()=>play(modelFile(),true));$('#quest-stop-audio').addEventListener('click',stopAudio);
 $('#quest-speed').addEventListener('change',()=>model.playbackRate=Number($('#quest-speed').value));$('#quest-voice').addEventListener('change',()=>{if(!$('#quest-voice').checked)stopAudio();else audioStatus('');});$('#quest-effects').addEventListener('change',()=>{if(!$('#quest-effects').checked){fxNodes.forEach(n=>{try{n.stop();}catch{}});fxNodes=[];}});
 $('#quest-reveal').addEventListener('click',()=>{reveal();play(modelFile());});$('#quest-record').addEventListener('click',startRecording);$('#quest-record-stop').addEventListener('click',()=>{if(recorder?.state==='recording')recorder.stop();});
 $('#quest-aloud').addEventListener('click',()=>{cancelMic();reveal();play(modelFile());$('#quest-mic-status').textContent='Listen, repeat aloud, then choose your own reflection below.';$('#quest-self-check').hidden=false;$('#quest-self-check').querySelectorAll('button').forEach(b=>b.disabled=false);});$('#quest-skip').addEventListener('click',()=>oralComplete(false,true));
 window.addEventListener('pagehide',resetMedia);document.addEventListener('visibilitychange',()=>{if(document.hidden){const active=micBusy||recorder?.state==='recording';stopAudio();if(active){cancelMic();$('#quest-mic-status').textContent='Recording stopped when you left this tab. Try again when you are ready.';}}});
 $('#quest-load-retry').addEventListener('click',()=>location.reload());
-async function init(){try{const response=await fetch('/assets/data/english-intermediate2-news-quest.json?v=20261009-1');if(!response.ok)throw Error('Unavailable');const data=await response.json();if(data.words?.length!==12)throw Error('Incomplete');words=data.words;
+async function init(){try{const response=await fetch('/assets/data/english-intermediate2-news-quest.json?v=20261009-2');if(!response.ok)throw Error('Unavailable');const data=await response.json();if(data.words?.length!==12||!data.prompts)throw Error('Incomplete');words=data.words;prompts=data.prompts;
  $('#quest-cards').innerHTML=words.map(w=>'<article class="quest-card"><img src="'+w.image+'" alt="'+esc(w.alt)+'" loading="lazy" width="1536" height="1024"/><div>'+wordButton(w)+'<p>'+esc(w.definition)+'</p></div></article>').join('');$('#quest-loading').hidden=true;app.hidden=false;
  }catch{$('#quest-loading').textContent='The activity could not load. Check your connection and try again.';$('#quest-load-retry').hidden=false;}}
 init();

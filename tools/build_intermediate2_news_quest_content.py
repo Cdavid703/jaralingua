@@ -13,16 +13,26 @@ rows=[
 ('warning','The council sent a warning.','The council sent a ___ about danger near the river.',['shelter','rescue crew'],'WAR-ning','Use two syllables. Finish with the nasal sound in -ing, without adding a separate g syllable.'),
 ('rescue crew','The rescue crew arrived by boat.','The ___ used a boat to bring people to dry ground.',['headline','damage'],'RES-cue CREW','Say rescue in two syllables, then crew in one. Keep the words connected.'),
 ('shelter','The school became a shelter.','Families stayed in a temporary ___ with beds and blankets.',['witness','headline'],'SHEL-ter','Start with the quiet sh sound. Make SHEL stronger and the last syllable lighter.'),
-('supplies','Volunteers brought supplies.','Volunteers brought ___ such as water, food and blankets.',['evidence','damage'],'sup-PLIES','Make the second syllable stronger. Keep the final voiced z sound.'),
+('supplies','Volunteers brought supplies.','Water, food and blankets are emergency ___.',['evidence','damage'],'sup-PLIES','Make the second syllable stronger. Keep the final voiced z sound.'),
 ('source','Check the source of the news.','The editor checked the original ___ of the information.',['flood','shelter'],'SOURCE','Use one syllable. Keep the final s audible without adding a vowel after it.'),
 ('statement','The council released a statement.','The council released an official ___ explaining its decision.',['witness','flood'],'STATE-ment','Start directly with st, without adding a vowel before it. Make STATE stronger.'),
 ('evidence','The photos provide evidence.','The before-and-after photos provide ___ of the damage.',['supplies','shelter'],'EV-i-dence','Use three syllables. Make the first one stronger and keep the others light.')]
+prompt_texts={
+ 'listen-picture':'Listen. Which picture matches?',
+ 'picture-word':'Which word matches this picture?',
+ 'listen-word':'Listen. Which word do you hear?',
+ 'cloze':'Complete the sentence.',
+ 'speak-word':'Listen and say the word.',
+ 'speak-sentence':'Listen and say the sentence.',
+ 'speak-image':'Look at the picture. Can you say the word?'
+}
+prompts={key:dict(text=text,**({} if key.startswith('listen-') else dict(audio='/ingles/intermediate-2/audio/unit-6-news-quest/prompt-'+key+'-v1.mp3'))) for key,text in prompt_texts.items()}
 words=[]
 for term,sentence,cloze,distractors,stress,tip in rows:
  scene=next(s for s in news['scenes'] if s['word']==term)
  gloss=next(s for s in news['glossary'] if s['term']==term)
- words.append(dict(id=scene['id'],term=term,spanish=gloss['spanish'],image=scene['image'],alt=scene['alt'],definition=scene['definition'],audio=gloss['audio'],sentence=sentence,sentenceAudio='/ingles/intermediate-2/audio/unit-6-news-quest/'+scene['id']+'-sentence.mp3',cloze=cloze,distractors=distractors,stress=stress,tip=tip))
-(ROOT/'assets/data/english-intermediate2-news-quest.json').write_text(json.dumps(dict(title='News Quest',words=words),ensure_ascii=False,indent=2)+'\n')
+ words.append(dict(id=scene['id'],term=term,spanish=gloss['spanish'],image=scene['image'],alt=scene['alt'],definition=scene['definition'],audio=gloss['audio'],sentence=sentence,sentenceAudio='/ingles/intermediate-2/audio/unit-6-news-quest/'+scene['id']+'-sentence.mp3',cloze=cloze,clozeAudio='/ingles/intermediate-2/audio/unit-6-news-quest/'+scene['id']+'-cloze-v1.mp3',distractors=distractors,stress=stress,tip=tip))
+(ROOT/'assets/data/english-intermediate2-news-quest.json').write_text(json.dumps(dict(title='News Quest',prompts=prompts,words=words),ensure_ascii=False,indent=2)+'\n')
 folder=ROOT/'ingles/intermediate-2/audio/unit-6-news-quest';folder.mkdir(parents=True,exist_ok=True)
 manifest=folder/'models.json'
 old=json.loads(manifest.read_text()) if manifest.exists() else {}
@@ -32,5 +42,14 @@ for w in words:
  item=dict(id=w['id'],file=w['id']+'-sentence.mp3',text=w['sentence'],kind='section')
  if cached.get(w['id'],{}).get('text')==item['text']:item.update(cached[w['id']])
  items.append(item)
-manifest.write_text(json.dumps(dict(provider='ElevenLabs',voiceId='EXAVITQu4vr4xnSDxMaL',voiceName='Sarah',modelId='eleven_multilingual_v2',context='One voice models twelve public practice sentences, without speaker labels.',items=items),ensure_ascii=False,indent=2)+'\n')
+for key,prompt in prompts.items():
+ if 'audio' not in prompt:continue
+ item=dict(id='prompt-'+key,file=Path(prompt['audio']).name,text=prompt['text'],kind='section')
+ if cached.get(item['id'],{}).get('text')==item['text']:item.update(cached[item['id']])
+ items.append(item)
+for w in words:
+ item=dict(id=w['id']+'-cloze',file=Path(w['clozeAudio']).name,text=w['cloze'].replace('___','blank'),kind='section')
+ if cached.get(item['id'],{}).get('text')==item['text']:item.update(cached[item['id']])
+ items.append(item)
+manifest.write_text(json.dumps(dict(provider='ElevenLabs',voiceId='EXAVITQu4vr4xnSDxMaL',voiceName='Sarah',modelId='eleven_multilingual_v2',context='One voice models public practice sentences and challenge instructions, without speaker labels. Cloze questions say blank without revealing the answer.',items=items),ensure_ascii=False,indent=2)+'\n')
 print('Built 12 words and canonical sentence models.')

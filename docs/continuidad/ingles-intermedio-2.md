@@ -43,3 +43,5 @@ El docente aprobó aprender vocabulario mediante un noticiero ilustrado, con tra
 ## Unit 6 · News Quest
 
 Actividad aprobada el 9 de octubre de 2026: 24 retos de vocabulario y 12 turnos orales intercalados, con las doce palabras de Greenford News. Imágenes existentes, pronunciaciones de palabras y doce frases nuevas de ElevenLabs, sonidos breves de interacción, repaso diferido de errores y ronda opcional de frases. Página `practice-unit-6-news-quest.html`, enlazada en Practice Lab, Unidad 6. Grabación local con reproducción y autoevaluación guiada; no se presenta reconocimiento de texto como evaluación fonética. Micrófono opcional, sin envío, persistencia de voz ni impacto académico. Consultar [implementación, privacidad y pruebas](../english-intermediate2-news-quest.md).
+
+News Quest incorpora lectura automática de preguntas. Excepción aclarada por el docente: en los retos de escuchar una palabra y escoger imagen o palabra, suena únicamente la palabra objetivo; no se lee la instrucción. Los demás retos tienen pregunta narrada, repetición y cancelación al avanzar o grabar. Las frases incompletas dicen «blank» sin revelar la respuesta.

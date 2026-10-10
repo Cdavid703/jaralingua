@@ -1,5 +1,33 @@
 {
   "title": "News Quest",
+  "prompts": {
+    "listen-picture": {
+      "text": "Listen. Which picture matches?"
+    },
+    "picture-word": {
+      "text": "Which word matches this picture?",
+      "audio": "/ingles/intermediate-2/audio/unit-6-news-quest/prompt-picture-word-v1.mp3"
+    },
+    "listen-word": {
+      "text": "Listen. Which word do you hear?"
+    },
+    "cloze": {
+      "text": "Complete the sentence.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-news-quest/prompt-cloze-v1.mp3"
+    },
+    "speak-word": {
+      "text": "Listen and say the word.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-news-quest/prompt-speak-word-v1.mp3"
+    },
+    "speak-sentence": {
+      "text": "Listen and say the sentence.",
+      "audio": "/ingles/intermediate-2/audio/unit-6-news-quest/prompt-speak-sentence-v1.mp3"
+    },
+    "speak-image": {
+      "text": "Look at the picture. Can you say the word?",
+      "audio": "/ingles/intermediate-2/audio/unit-6-news-quest/prompt-speak-image-v1.mp3"
+    }
+  },
   "words": [
     {
       "id": "headline",
@@ -12,6 +40,7 @@
       "sentence": "The headline tells us the main news.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/headline-sentence.mp3",
       "cloze": "The ___ is the title at the top of a news report.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/headline-cloze-v1.mp3",
       "distractors": [
         "supplies",
         "shelter"
@@ -30,6 +59,7 @@
       "sentence": "The reporter asks questions.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/reporter-sentence.mp3",
       "cloze": "The ___ interviews people and presents the news.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/reporter-cloze-v1.mp3",
       "distractors": [
         "flood",
         "shelter"
@@ -48,6 +78,7 @@
       "sentence": "A witness saw the tree fall.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/witness-sentence.mp3",
       "cloze": "A ___ saw the tree fall and described what happened.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/witness-cloze-v1.mp3",
       "distractors": [
         "headline",
         "warning"
@@ -66,6 +97,7 @@
       "sentence": "The flood covered the road.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/flood-sentence.mp3",
       "cloze": "River water covered the road during the ___.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/flood-cloze-v1.mp3",
       "distractors": [
         "statement",
         "source"
@@ -84,6 +116,7 @@
       "sentence": "The storm caused damage.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/damage-sentence.mp3",
       "cloze": "The broken windows show physical ___ to the library.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/damage-cloze-v1.mp3",
       "distractors": [
         "supplies",
         "reporter"
@@ -102,6 +135,7 @@
       "sentence": "The council sent a warning.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/warning-sentence.mp3",
       "cloze": "The council sent a ___ about danger near the river.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/warning-cloze-v1.mp3",
       "distractors": [
         "shelter",
         "rescue crew"
@@ -120,6 +154,7 @@
       "sentence": "The rescue crew arrived by boat.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/rescue-crew-sentence.mp3",
       "cloze": "The ___ used a boat to bring people to dry ground.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/rescue-crew-cloze-v1.mp3",
       "distractors": [
         "headline",
         "damage"
@@ -138,6 +173,7 @@
       "sentence": "The school became a shelter.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/shelter-sentence.mp3",
       "cloze": "Families stayed in a temporary ___ with beds and blankets.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/shelter-cloze-v1.mp3",
       "distractors": [
         "witness",
         "headline"
@@ -155,7 +191,8 @@
       "audio": "/ingles/intermediate-2/audio/unit-6-explanation/word-supplies.mp3",
       "sentence": "Volunteers brought supplies.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/supplies-sentence.mp3",
-      "cloze": "Volunteers brought ___ such as water, food and blankets.",
+      "cloze": "Water, food and blankets are emergency ___.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/supplies-cloze-v1.mp3",
       "distractors": [
         "evidence",
         "damage"
@@ -174,6 +211,7 @@
       "sentence": "Check the source of the news.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/source-sentence.mp3",
       "cloze": "The editor checked the original ___ of the information.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/source-cloze-v1.mp3",
       "distractors": [
         "flood",
         "shelter"
@@ -192,6 +230,7 @@
       "sentence": "The council released a statement.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/statement-sentence.mp3",
       "cloze": "The council released an official ___ explaining its decision.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/statement-cloze-v1.mp3",
       "distractors": [
         "witness",
         "flood"
@@ -210,6 +249,7 @@
       "sentence": "The photos provide evidence.",
       "sentenceAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/evidence-sentence.mp3",
       "cloze": "The before-and-after photos provide ___ of the damage.",
+      "clozeAudio": "/ingles/intermediate-2/audio/unit-6-news-quest/evidence-cloze-v1.mp3",
       "distractors": [
         "supplies",
         "shelter"

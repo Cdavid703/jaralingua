@@ -82,5 +82,124 @@
     "heard": "The photos provide evidence",
     "matched": true,
     "sha256": "74779397635a0cd9623590fafe1d6ff5de8f772fe617e2a1afcade015326f48a"
+  },
+  {
+    "file": "prompt-cloze-v1.mp3",
+    "expected": "Complete the sentence.",
+    "heard": "Complete the sentence.",
+    "matched": true,
+    "sha256": "81492a76ccf0a9b4b0d8b7c104b511147449a8f50876583e79dd341e0719e0e4"
+  },
+  {
+    "file": "prompt-picture-word-v1.mp3",
+    "expected": "Which word matches this picture?",
+    "heard": "Which word matches this picture?",
+    "matched": true,
+    "sha256": "3fedeff417f784bbed2b66a6cfc13844a126fce46ebe33963d80a4f1907d49a2"
+  },
+  {
+    "file": "prompt-speak-word-v1.mp3",
+    "expected": "Listen and say the word.",
+    "heard": "Listen and say the word.",
+    "matched": true,
+    "sha256": "e7089f645b1caeff8a36936dad40725dc3fcf9a2283bb8b488cc89d97c742f3e"
+  },
+  {
+    "file": "prompt-speak-sentence-v1.mp3",
+    "expected": "Listen and say the sentence.",
+    "heard": "Listen and say the sentence",
+    "matched": true,
+    "sha256": "a230fcb5d6f489607ec77fde95c92b23122f7759c289bf43fecb22f44910bfbd"
+  },
+  {
+    "file": "prompt-speak-image-v1.mp3",
+    "expected": "Look at the picture. Can you say the word?",
+    "heard": "Look at the picture. Can you say the word?",
+    "matched": true,
+    "sha256": "52e6067b870f63dc0b8829f53fb2b028712c7dbaf2eae0875ee33ecfa848abd1"
+  },
+  {
+    "file": "headline-cloze-v1.mp3",
+    "expected": "The blank is the title at the top of a news report.",
+    "heard": "The blank is the title at the top of a news report.",
+    "matched": true,
+    "sha256": "e784fa5c75d3050a1b90a650b220cbb722a38cb122cf6176bdbc4fd6cf41db80"
+  },
+  {
+    "file": "reporter-cloze-v1.mp3",
+    "expected": "The blank interviews people and presents the news.",
+    "heard": "The blank interviews people and presents the news.",
+    "matched": true,
+    "sha256": "3e555cd9cdea9380b25a54e4b14526898bed4ccff5b8870f990e021d88a6d29f"
+  },
+  {
+    "file": "witness-cloze-v1.mp3",
+    "expected": "A blank saw the tree fall and described what happened.",
+    "heard": "A blank saw the tree fall and described what happened.",
+    "matched": true,
+    "sha256": "2b91647cf60f3f8be5eec0789de6787e8ce0da3f5c6d14376db2612184aabe7c"
+  },
+  {
+    "file": "flood-cloze-v1.mp3",
+    "expected": "River water covered the road during the blank.",
+    "heard": "River water covered the road during the blank.",
+    "matched": true,
+    "sha256": "9f6d1245f832ee16bec04cf01fe2a236f410fc0ea1f6e7967766a060f81de5cf"
+  },
+  {
+    "file": "damage-cloze-v1.mp3",
+    "expected": "The broken windows show physical blank to the library.",
+    "heard": "The broken windows show physical blank to the library.",
+    "matched": true,
+    "sha256": "558316cfc4bb12140532562da143941d08a67ce8c58305efd093d1ff61a22e98"
+  },
+  {
+    "file": "warning-cloze-v1.mp3",
+    "expected": "The council sent a blank about danger near the river.",
+    "heard": "The council sent a blank about danger near the river.",
+    "matched": true,
+    "sha256": "0b87f990d97154f75e042a2c6bc15dabf0716e0cf744b9c1157c754121b5098f"
+  },
+  {
+    "file": "rescue-crew-cloze-v1.mp3",
+    "expected": "The blank used a boat to bring people to dry ground.",
+    "heard": "The blank used a boat to bring people to dry ground.",
+    "matched": true,
+    "sha256": "12fb2b6abf80e2fc452447eb70785a58355fe71545887ff99fb36137a0403357"
+  },
+  {
+    "file": "shelter-cloze-v1.mp3",
+    "expected": "Families stayed in a temporary blank with beds and blankets.",
+    "heard": "Families stayed in a temporary blank with beds and blankets.",
+    "matched": true,
+    "sha256": "0bcbbf9809a6d3d7539621036f4e7ea075e76a848013771641b87597f4cfacd9"
+  },
+  {
+    "file": "supplies-cloze-v1.mp3",
+    "expected": "Water, food and blankets are emergency blank.",
+    "heard": "Water, food, and blankets are emergency blank.",
+    "matched": true,
+    "sha256": "555cadc6361c616c941252f792f490846d8419c3ca1108b730ffd3d0381db15a"
+  },
+  {
+    "file": "source-cloze-v1.mp3",
+    "expected": "The editor checked the original blank of the information.",
+    "heard": "The editor checked the original blank of the information.",
+    "matched": true,
+    "sha256": "e715781833975972cd4e87e771708bc52fb274ffe0c34a5a6b6177fe5bfb81c4"
+  },
+  {
+    "file": "evidence-cloze-v1.mp3",
+    "expected": "The before-and-after photos provide blank of the damage.",
+    "heard": "The before and after photos provide blank of the damage.",
+    "matched": true,
+    "sha256": "7b180df688df36d2bea1b8bd142fe20db8a7fd75dd02dd0cbb95452e1d3a106d"
+  },
+  {
+    "file": "statement-cloze-v1.mp3",
+    "expected": "The council released an official blank explaining its decision.",
+    "heard": "The council released an official blank explaining its decision.",
+    "matched": true,
+    "sha256": "eff7ef00d7d54db1a570f5a0fbdca3d46aee6977f763d898e3d4920f0952d050"
   }
 ]
