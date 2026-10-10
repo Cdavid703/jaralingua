@@ -1254,6 +1254,42 @@
         "pictures",
         "conversation"
       ]
+    },
+    {
+      "id": "unit-6-what-did-they-say",
+      "unit": 6,
+      "order": 4,
+      "type": "speaking",
+      "skillLabel": "Pair speaking · Reported speech",
+      "title": "What did they say?",
+      "subtitle": "Describe. Listen. Report.",
+      "summary": "One guided example and ten news pictures. Describe in the present, then report your partner’s words with changes to verbs and pronouns.",
+      "cardSummary": "Eleven pictures, clear A/B models, audio and projection for every step.",
+      "image": "/assets/img/english-intermediate-2/unit-6/reported-speech/hero-v1.webp",
+      "media": "/ingles/intermediate-2/audio/unit-6-reported-speech/guide.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceName": "David",
+      "voiceProfileId": "pv8WYYW60prEkDbDXyC0",
+      "workshopHref": "/ingles/intermediate-2/speaking-unit-6-what-did-they-say.html",
+      "duration": "25–35 minutes · teacher-led",
+      "product": "Ten paired picture descriptions and oral reports",
+      "recording": false,
+      "teacherSubmission": false,
+      "gradebookProjected": false,
+      "gradebookWeight": 0,
+      "affectsAverage": false,
+      "status": "published",
+      "searchKeywords": [
+        "Unit 6",
+        "reported speech",
+        "said",
+        "told",
+        "news",
+        "natural disasters",
+        "pair speaking",
+        "pictures",
+        "What did they say"
+      ]
     }
   ]
 }

@@ -1,0 +1,177 @@
+[
+  {
+    "file": "example-a.mp3",
+    "expected": "A woman is talking to a reporter. There are fallen branches. I can see a microphone.",
+    "heard": "A woman is talking to a reporter. There are fallen branches. I can see a microphone",
+    "matched": true,
+    "sha256": "9605318c52b155917ee0cb0db44a1936acaaf3167f072706618dbd3febebec8e"
+  },
+  {
+    "file": "example-b.mp3",
+    "expected": "Ana said that a woman was talking to a reporter. She said that there were fallen branches. She said that she could see a microphone.",
+    "heard": "Ana said that a woman was talking to a reporter. She said that there were fallen branches. She said that she could see a microphone",
+    "matched": true,
+    "sha256": "1c7f92abb85fa770658834d84055570778899e71d434fb45582d8eb454a2360c"
+  },
+  {
+    "file": "flood-a.mp3",
+    "expected": "The street is flooded. The rescue workers are helping people. I can see a red boat.",
+    "heard": "The street is flooded. The rescue workers are helping people. I can see a red boat",
+    "matched": true,
+    "sha256": "22bf5af209e48ff7a1855080d77bede2c5c6917c3c08ebfea5a121be8c466d8c"
+  },
+  {
+    "file": "flood-b.mp3",
+    "expected": "Ana said that the street was flooded. She said that the rescue workers were helping people. She said that she could see a red boat.",
+    "heard": "Anna said that the street was flooded. She said that the rescue workers were helping people. She said that she could see a red boat.",
+    "matched": true,
+    "sha256": "bc57ebe756cbcfcf55e891d50ab4751f858b4b720664f9f79a96e3e969932a1d"
+  },
+  {
+    "file": "earthquake-a.mp3",
+    "expected": "The buildings are damaged. The inspectors are checking the damage. There is rubble on the ground.",
+    "heard": "The buildings are damaged. The inspectors are checking the damage. There is rubble on the ground",
+    "matched": true,
+    "sha256": "a1c848d4c95d94e1401b46a825b976384ac6e829c91ec5ef1b73a8186173d042"
+  },
+  {
+    "file": "earthquake-b.mp3",
+    "expected": "Ana said that the buildings were damaged. She said that the inspectors were checking the damage. She said that there was rubble on the ground.",
+    "heard": "Anna said that the buildings were damaged. She said that the inspectors were checking the damage. She said that there was rubble on the ground",
+    "matched": true,
+    "sha256": "84cedda238ddc23d18dbc477c2b06f8025a599505a403188abd0ff056ab4d518"
+  },
+  {
+    "file": "wildfire-a.mp3",
+    "expected": "Smoke covers the hills. The firefighters are looking at a map. I can see a fire truck.",
+    "heard": "Smoke covers the hills. The firefighters are looking at a map. I can see a fire truck",
+    "matched": true,
+    "sha256": "0910c32d9b89f1ce6a8a1cb29a55d4d58c2caffca7439b6274bf93267d47781f"
+  },
+  {
+    "file": "wildfire-b.mp3",
+    "expected": "Ana said that smoke covered the hills. She said that the firefighters were looking at a map. She said that she could see a fire truck.",
+    "heard": "Anna said that smoke covered the hills. She said that the firefighters were looking at a map. She said that she could see a fire truck",
+    "matched": true,
+    "sha256": "f98e5a0157473f23c921dfe73d69e6bd881c7dd722752c2d726ab9bf23f076b7"
+  },
+  {
+    "file": "drought-a.mp3",
+    "expected": "The ground is dry. The farmer is looking at the water. The reservoir needs more rain.",
+    "heard": "The ground is dry. The farmer is looking at the water. The reservoir needs more rain",
+    "matched": true,
+    "sha256": "a7ee765b2ea3647210d7ba6fd4735db2fc0fa26fb0a19fff16accc1b9181a8a0"
+  },
+  {
+    "file": "drought-b.mp3",
+    "expected": "Ana said that the ground was dry. She said that the farmer was looking at the water. She said that the reservoir needed more rain.",
+    "heard": "Anna said that the ground was dry. She said that the farmer was looking at the water. She said that the reservoir needed more rain",
+    "matched": true,
+    "sha256": "fd2192a9861bef7ea4df9c4eae8a8ff69ea0e238f2b2adc43b09f4eb2f4013dc"
+  },
+  {
+    "file": "landslide-a.mp3",
+    "expected": "Rocks block the road. An excavator is waiting near the road. The workers are checking the blockage.",
+    "heard": "Rocks block the road. An excavator is waiting near the road. The workers are checking the blockage",
+    "matched": true,
+    "sha256": "55eae7051bcec01aa65ad4c3df34eddf4e1f89f374812c4a89d6171aebd7a8d7"
+  },
+  {
+    "file": "hurricane-a.mp3",
+    "expected": "The wind is strong. The palm trees are bending. There are large waves.",
+    "heard": "The wind is strong. The palm trees are bending. There are large waves",
+    "matched": true,
+    "sha256": "c28c57286e73dcd27883a663a4c4af2fe9ed7d91f44ea363cbdefc0fcde02745"
+  },
+  {
+    "file": "landslide-b.mp3",
+    "expected": "Ana said that rocks blocked the road. She said that an excavator was waiting near the road. She said that the workers were checking the blockage.",
+    "heard": "Anna said that rocks blocked the road. She said that an excavator was waiting near the road. She said that the workers were checking the blockage",
+    "matched": true,
+    "sha256": "0d8223693c2ad816a3232cae392b2c70ee89b69585c831bb7dc581fb856f1aef"
+  },
+  {
+    "file": "hurricane-b.mp3",
+    "expected": "Ana said that the wind was strong. She said that the palm trees were bending. She said that there were large waves.",
+    "heard": "Anna said that the wind was strong. She said that the palm trees were bending. She said that there were large waves",
+    "matched": true,
+    "sha256": "da698e8696a3cd91f284a6fdaa8722ce214d2e77e30d73cc61cffcff25c55f23"
+  },
+  {
+    "file": "interview-a.mp3",
+    "expected": "The musician is talking. The journalist holds a microphone. The camera operator is recording the interview.",
+    "heard": "The musician is talking. The journalist holds a microphone. The camera operator is recording the interview",
+    "matched": true,
+    "sha256": "954cf945bf9d73eb78df7debeb9f061e71bef920acae32369a467c0ea2d5411c"
+  },
+  {
+    "file": "interview-b.mp3",
+    "expected": "Ana said that the musician was talking. She said that the journalist held a microphone. She said that the camera operator was recording the interview.",
+    "heard": "Anna said that the musician was talking. She said that the journalist held a microphone. She said that the camera operator was recording the interview",
+    "matched": true,
+    "sha256": "c5827dad6b2b1ba9a1e2d3624ae9b0586799419afb7330bdb12e0e88c48fcc57"
+  },
+  {
+    "file": "sources-a.mp3",
+    "expected": "The journalists are checking a photograph. The woman is pointing at the laptop. There is a notebook on the desk.",
+    "heard": "The journalists are checking a photograph. The woman is pointing at the laptop. There is a notebook on the desk",
+    "matched": true,
+    "sha256": "91d4143daa2ff735c3ff9739ff17a92fa252cb168ebaf331c79bbc5fc80bf37d"
+  },
+  {
+    "file": "sources-b.mp3",
+    "expected": "Ana said that the journalists were checking a photograph. She said that the woman was pointing at the laptop. She said that there was a notebook on the desk.",
+    "heard": "Anna said that the journalists were checking a photograph. She said that the woman was pointing at the laptop. She said that there was a notebook on the desk",
+    "matched": true,
+    "sha256": "fb13208334532d774fc98b1d4a1d8e50de1d3eb1c24e6fef6d3add41da2e4186"
+  },
+  {
+    "file": "briefing-a.mp3",
+    "expected": "The woman is speaking. A reporter has a question. The man is raising his hand.",
+    "heard": "The woman is speaking. A reporter has a question. The man is raising his hand",
+    "matched": true,
+    "sha256": "afe17b4fe1475a4bcb6af7672384a7c96778a1cc1ca68746933fe20abd69de93"
+  },
+  {
+    "file": "briefing-b.mp3",
+    "expected": "Ana said that the woman was speaking. She said that a reporter had a question. She said that the man was raising his hand.",
+    "heard": "Anna said that the woman was speaking. She said that a reporter had a question. She said that the man was raising his hand",
+    "matched": true,
+    "sha256": "d19312eec4028daec13159748be3c41e58f4ae32bf027d2a84e6471c0a080dd0"
+  },
+  {
+    "file": "shelter-a.mp3",
+    "expected": "The volunteers are giving people water. The families need blankets. There are beds in the shelter.",
+    "heard": "The volunteers are giving people water. The families need blankets. There are beds in the shelter",
+    "matched": true,
+    "sha256": "fa104700e0bf23d5ebc18fef054efa3329d9e1470c2773f6d8f03a1d524f79e0"
+  },
+  {
+    "file": "shelter-b.mp3",
+    "expected": "Ana said that the volunteers were giving people water. She said that the families needed blankets. She said that there were beds in the shelter.",
+    "heard": "Anna said that the volunteers were giving people water. She said that the families needed blankets. She said that there were beds in the shelter",
+    "matched": true,
+    "sha256": "62c4c9a398dc4d89434d9c4d9aec28872878455383b92abf742b5bfa7dfb598e"
+  },
+  {
+    "file": "a.mp3",
+    "expected": "Student A. Look carefully. Describe three details in the present. Say who or what you can see, what is happening, and one more detail. Speak slowly. Pause so your partner can remember.",
+    "heard": "Student A, look carefully. Describe three details in the present. Say who or what you can see, what is happening, and one more detail. Speak slowly. Pause so your partner can remember",
+    "matched": true,
+    "sha256": "993c9d0db3ef9ad3ad5be9bf4bff5a4b6772a0aa88656bb0c52b179df1c66e72"
+  },
+  {
+    "file": "b.mp3",
+    "expected": "Student B. Listen to your partner. Begin with your partner’s name and said that. Report the same three ideas. Change the verbs to the past for this practice. Change I to he, she, or they when it refers to your partner. Keep the original meaning.",
+    "heard": "Student B, listen to your partner. Begin with your partner's name and said that. Report the same three ideas. Change the verbs to the past for this practice. Change I to he, she, or they when it refers to your partner. Keep the original meaning",
+    "matched": true,
+    "sha256": "ec9eabc46fc18bd24b8d4c75c59408e0b7bf5e05af9eb95b65f9cdc8c0db524c"
+  },
+  {
+    "file": "guide.mp3",
+    "expected": "What did they say? Your teacher chooses two students. Student A describes the picture in the present. Student B reports what student A said. The class checks the meaning, the verbs and the pronouns. Then change roles for the next picture.",
+    "heard": "What did they say? Your teacher chooses two students. Student A describes the picture in the present. Student B reports what student A said. The class checks the meaning, the verbs, and the pronouns. Then change roles for the next picture",
+    "matched": true,
+    "sha256": "913cfa00dac92c7e8541fe898d327cb6c7e27c0427f9e3bf11f158f06f85b92c"
+  }
+]

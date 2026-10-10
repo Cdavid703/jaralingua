@@ -55,3 +55,7 @@ Coach visual aprobado para preparar una mesa redonda de cinco preguntas: context
 Conversación guiada con rutas y respuestas pregrabadas, no comprensión generativa ilimitada. Aclara respuestas no reconocidas; no califica opiniones ni inventa puntuación fonética. Informe de cinco opiniones durante la visita, sin persistencia de voz/transcripciones ni envío al docente. Se conserva el motor compartido con extensiones optativas y pruebas de regresión. Referencia: [implementación, recursos y límites](../english-intermediate2-opinion-coach.md).
 
 Ajuste de distribución del coach: imagen, conversación y grabación en una fila desde 980 px; dos columnas en tablet y una en móvil. Banner temático visible en todos los anchos. Se comprueba la geometría real de los tres bloques, además de la proyección.
+
+## Unit 6 · What did they say?
+
+Actividad de parejas: ejemplo guiado más diez escenas distintas de noticias/desastres. A describe tres detalles en presente; B reporta lo dicho por A usando said that y cambios de verbos/pronombres, sin añadir información. Modelos comparables, 25 audios David, ayudas y cada escena ampliables. Galería filtrable y proyector; modelos de práctica cerrados hasta solicitarlos. Once imágenes de actividad y hero propio. Sin grabación, entregas ni notas. Ver [implementación y pruebas](../english-intermediate2-reported-speech.md).

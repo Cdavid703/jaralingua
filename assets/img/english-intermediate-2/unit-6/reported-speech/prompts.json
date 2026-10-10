@@ -1,0 +1,70 @@
+{
+  "tool": "Built-in image_gen",
+  "items": [
+    {
+      "id": "hero",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. An adult English classroom: teacher beside a large wall television showing a storm news photograph, two adult learners facing each other in a speaking exercise, classmates listen. Warm collaborative moment.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-ba206440-dfc9-45d3-aee4-7a0f9654a32c.png"
+    },
+    {
+      "id": "flood",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. A flooded residential street viewed from a safe elevated footbridge, rescue workers in orange life jackets guiding a red inflatable boat between submerged parked cars, two residents observing from the footbridge. Floodwater at doorsteps, cloudy daylight.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-53ecf312-865a-44ec-9afc-3befac386a27.png"
+    },
+    {
+      "id": "earthquake",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Aftermath of an earthquake in a small town square, cracked stone building with rubble behind safety tape, three helmeted inspectors examining damage, untouched tree and parked rescue truck. No injured people.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-ebb37065-d56b-4b44-8e34-6d34d36dc9ae.png"
+    },
+    {
+      "id": "wildfire",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Forest wildfire seen from a distant safe roadside lookout, orange flames and smoke over a far wooded ridge, two firefighters beside a red fire truck in foreground studying a map. Dramatic but non-graphic and nobody near flames.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-d0f92f65-67f3-4834-af52-e52aee6d5906.png"
+    },
+    {
+      "id": "drought",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Drought at a reservoir: a farmer in a straw hat standing beside cracked dry ground, a very small remaining blue pool of water, dry yellow grass, distant hills in bright sun. Human clearly looking at the reservoir.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-e82f4532-22a1-444c-aa9b-87e3710c1493.png"
+    },
+    {
+      "id": "landslide",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. A mountain road blocked by a landslide, brown soil and large rocks covering the road, an excavator parked beyond red and white road barriers, two workers in reflective vests checking the blockage. Overcast clear detail.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-cb9fcc17-62cc-4574-b134-3e51a249050b.png"
+    },
+    {
+      "id": "example",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography with natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, captions, readable text, logos or watermarks. A female reporter holding a microphone interviews a woman in a yellow raincoat after a storm. Fallen branches on the pavement and a closed garden gate in background. Woman gestures while speaking; microphone clearly visible. No danger.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-99d4eb88-3e63-44a8-ad10-8727cc8e8523.png"
+    },
+    {
+      "id": "hurricane",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Powerful coastal storm seen from inside a sheltered room through a broad window: palm trees bending, heavy rain over rough sea, waves near the shore, two closed beach umbrellas and wet promenade. No people outside in danger.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-e66453b6-a66d-4ea3-95ed-e52f6d07ac47.png"
+    },
+    {
+      "id": "interview",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Entertainment news interview in a cozy music studio: female musician with an acoustic guitar beside her, smiling and speaking to a female journalist who holds a microphone, a camera operator filming, headphones and small mixing console. No celebrities.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-a5540bc0-7e73-4c95-b58e-5677a195ed81.png"
+    },
+    {
+      "id": "sources",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Two newsroom journalists checking information: a woman points at a flood photograph on a laptop, a man compares a printed photograph and notebook, second computer shows a weather map without text, daylight office, visible camera on desk.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-c54f8f56-654c-450f-a8e6-9139a58a57bf.png"
+    },
+    {
+      "id": "hero_final",
+      "prompt": "Edit this classroom hero photograph. Preserve the adult people, composition, natural photographic realism, storm photograph on television and collaborative speaking activity. Remove all lettering everywhere: replace the whiteboard at left with a clean plain light wall, replace the chalkboard at right with a clean plain light wall, and remove all news captions and white headline strips from the television so its entire screen shows only the storm photograph. No letters, words, labels, logos, watermarks, writing boards or blackboards anywhere. Landscape 1536x1024.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-4b670986-6423-4659-89bc-8514353ec3fe.png"
+    },
+    {
+      "id": "briefing",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Community press briefing: woman spokesperson standing at a simple lectern, three seated journalists with notebooks, one male journalist raising his hand, a camera on tripod, screen shows a photograph of a damaged bridge without text.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-cf708555-d94d-4628-bd5c-dc279132ad3e.png"
+    },
+    {
+      "id": "shelter",
+      "prompt": "Use case: photorealistic-natural. Asset: English classroom TV projection, landscape 1536x1024. Fictional scene, realistic editorial photography, natural anatomy, rich clear observable details. One coherent scene, no collage, no lettering, readable text, logos or watermarks. Community emergency shelter in a school gym: volunteers giving bottled water and folded blankets to adults and families, one volunteer arranging cardboard supply boxes, rows of temporary beds in background, welcoming calm indoor light.",
+      "source": "/Users/davidaramillo/.codex/generated_images/01a0fee3-6091-78e2-8f34-a847e0164148/exec-6bca235a-184a-4722-bf87-32948f299c58.png"
+    }
+  ]
+}
