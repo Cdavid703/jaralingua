@@ -5,7 +5,15 @@ const {words}=JSON.parse(fs.readFileSync('assets/data/english-intermediate2-news
 const attempts=[];
 async function open(browser,width=1440,setup){
  const p=await browser.newPage({viewport:{width,height:900}});p.setDefaultTimeout(12000);
- p.on('request',r=>{if(r.method()==='POST'&&r.url().startsWith(origin+'/'))attempts.push(r.url());});
+ p.on('request',r=>{
+  if(r.method()!=='POST'||!r.url().startsWith(origin+'/'))return;
+  // Production sends browser-generated report-only CSP notices for shared Google styles.
+  // These contain policy metadata, not recordings; exempt only the exact report format.
+  if(new URL(r.url()).pathname==='/csp-report'&&r.headers()['content-type']==='application/csp-report'){
+   try{const body=JSON.parse(r.postData());if(Object.keys(body).length===1&&body['csp-report']?.disposition==='report')return;}catch{}
+  }
+  attempts.push(r.url());
+ });
  await p.route('**/*',r=>r.request().url().startsWith(origin+'/')?r.continue():r.abort());
  if(setup)await p.addInitScript(setup);
  await p.goto(url,{waitUntil:'domcontentloaded'});await p.locator('#quest-app').waitFor({state:'visible'});return p;
