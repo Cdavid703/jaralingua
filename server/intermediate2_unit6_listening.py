@@ -1,0 +1,3 @@
+"""Fictional news bulletin. Serve only after course teacher/admin authorization."""
+TITLE = 'Greenford News · After the Flood'
+TRANSCRIPT = "Good afternoon. This is Greenford News. Heavy rain flooded River Street this morning. Twelve residents left their homes, but nobody was injured. A rescue worker said that the water was rising quickly. Families are staying at the sports center, where volunteers are providing blankets and hot meals. The mayor said that the main bridge was safe, although the riverside road remained closed. Engineers will inspect that road tomorrow morning. Residents should check the council's website for updates."

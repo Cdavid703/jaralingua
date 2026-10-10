@@ -5,6 +5,7 @@
     { number: 2, grid: document.getElementById("unit2ListeningGrid"), count: document.getElementById("unit2ListeningCount"), empty: document.getElementById("unit2ListeningEmpty") },
     { number: 3, grid: document.getElementById("unit3ListeningGrid"), count: document.getElementById("unit3ListeningCount"), empty: document.getElementById("unit3ListeningEmpty") }
     ,{ number: 5, grid: document.getElementById("unit5ListeningGrid"), count: document.getElementById("unit5ListeningCount"), empty: document.getElementById("unit5ListeningEmpty") }
+, { number: 6, grid: document.getElementById("unit6ListeningGrid"), count: document.getElementById("unit6ListeningCount"), empty: document.getElementById("unit6ListeningEmpty") }
   ].filter(unit => unit.grid && unit.count && unit.empty);
   const search = document.getElementById("listeningLibrarySearch");
   const clear = document.getElementById("listeningLibraryClear");

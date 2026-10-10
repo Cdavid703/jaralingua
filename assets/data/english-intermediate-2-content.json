@@ -1290,6 +1290,46 @@
         "pictures",
         "What did they say"
       ]
+    },
+    {
+      "id": "unit-6-after-the-flood-listening",
+      "unit": 6,
+      "order": 5,
+      "type": "listening",
+      "skillLabel": "Listening",
+      "title": "Greenford News · After the Flood",
+      "subtitle": "A short radio bulletin · eight questions",
+      "summary": "Listen for the main event, key details and reported statements in a fictional local news bulletin.",
+      "image": "/assets/img/english-intermediate-2/unit-6/listening/after-the-flood-hero.webp",
+      "media": "/ingles/intermediate-2/audio/unit-6-listening/after-the-flood.mp3",
+      "audioProvider": "elevenlabs",
+      "voiceProfileId": "EXAVITQu4vr4xnSDxMaL",
+      "audioVersion": "2026.10.09",
+      "workshopHref": "/ingles/intermediate-2/listening-unit-6-after-the-flood.html",
+      "duration": "10–15 minutes · audio under 1 minute",
+      "durationSeconds": 28.839,
+      "activityDuration": "10–15 minutes",
+      "product": "Eight comprehension answers and an oral news summary",
+      "questionCount": 8,
+      "speakers": [
+        "News presenter"
+      ],
+      "accent": "General American English",
+      "transcriptPolicy": "authenticated-teacher-only",
+      "status": "published",
+      "teacherSubmission": false,
+      "gradebookWeight": 0,
+      "searchKeywords": [
+        "Unit 6",
+        "listening",
+        "Greenford",
+        "flood",
+        "news",
+        "reported speech",
+        "eight questions"
+      ],
+      "gradebookProjected": false,
+      "affectsAverage": false
     }
   ]
 }

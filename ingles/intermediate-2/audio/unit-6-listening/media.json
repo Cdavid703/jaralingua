@@ -1,0 +1,11 @@
+{
+  "voiceId": "EXAVITQu4vr4xnSDxMaL",
+  "voiceName": "Sarah",
+  "modelId": "eleven_multilingual_v2",
+  "file": "after-the-flood.mp3",
+  "durationSeconds": 28.839,
+  "bytes": 461888,
+  "sha256": "d8662a51ab81b516ec16240260b60f4a735497574843cd4334c5665df70a9c68",
+  "scriptSha256": "69a6ad84be0f4832df47bd945df7faea7492a74f907fa6b9ac0d13c260f506ac",
+  "transcriptionMatch": 1.0
+}
